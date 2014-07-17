@@ -513,6 +513,8 @@ class ControllerOpenbayAmazon extends Controller {
 		if(empty($json)) {
 			$json = false;
 		}
+
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -555,6 +557,7 @@ class ControllerOpenbayAmazon extends Controller {
 			$json = json_encode('error');
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput($json);
 	}
 
@@ -571,6 +574,7 @@ class ControllerOpenbayAmazon extends Controller {
 			$json = json_encode('error');
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput($json);
 	}
 
@@ -580,6 +584,7 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$json = json_encode($this->model_openbay_amazon->getProductLinks());
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput($json);
 	}
 
@@ -589,6 +594,7 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$json = json_encode($this->model_openbay_amazon->getUnlinkedProducts());
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput($json);
 	}
 
@@ -661,6 +667,7 @@ class ControllerOpenbayAmazon extends Controller {
 			);
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -717,6 +724,7 @@ class ControllerOpenbayAmazon extends Controller {
 			$this->model_openbay_amazon_listing->doBulkSearch($search_data);
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -1045,6 +1053,7 @@ class ControllerOpenbayAmazon extends Controller {
 			$json['message'] = $this->language->get('text_report_request_failed');
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 

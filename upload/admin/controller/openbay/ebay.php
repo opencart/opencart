@@ -365,6 +365,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$json = $this->openbay->ebay->loadSettings();
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -373,6 +374,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$json = $this->openbay->ebay->loadCategories();
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -381,6 +383,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$json = $this->openbay->ebay->loadSellerStore();
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -389,6 +392,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$json = $this->model_openbay_ebay->getCategory($this->request->get['parent']);
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -397,6 +401,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$json = $this->model_openbay_ebay->getSuggestedCategories($this->request->get['qry']);
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -405,6 +410,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$json = $this->model_openbay_ebay->getShippingService($this->request->get['loc'], $this->request->get['type']);
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -413,6 +419,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$json = $this->model_openbay_ebay->getEbayCategorySpecifics($this->request->get['category']);
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -421,6 +428,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$json = $this->model_openbay_ebay->getCategoryFeatures($this->request->get['category']);
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -453,6 +461,7 @@ class ControllerOpenbayEbay extends Controller {
 			$json['error_message'] = $this->language->get('error_generic_fail');
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -500,6 +509,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$json = $this->model_openbay_ebay->getSellerSummary();
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -508,6 +518,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$json = $this->model_openbay_ebay->verifyCreds();
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -524,6 +535,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$json = array('msg' => 'ok');
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -532,6 +544,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$json = array('msg' => 'ok');
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -540,6 +553,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$json = $this->model_openbay_ebay->getProductStock($this->request->get['pid']);
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -563,6 +577,7 @@ class ControllerOpenbayEbay extends Controller {
 			$json['msg'] = $this->language->get('text_ajax_not_subtract');
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -574,6 +589,7 @@ class ControllerOpenbayEbay extends Controller {
 		$json['lasterror']  = $this->openbay->ebay->lasterror;
 		$json['lastmsg']    = $this->openbay->ebay->lastmsg;
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -582,6 +598,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$json = $this->model_openbay_ebay->getPlans();
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -590,6 +607,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$json = $this->model_openbay_ebay->getMyPlan();
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -644,6 +662,7 @@ class ControllerOpenbayEbay extends Controller {
 			}
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -925,6 +944,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$json = $this->model_openbay_ebay->saveItemLink($this->request->get);
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -935,6 +955,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$json = array('error' => false, 'msg' => $this->language->get('item_link_removed'));
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -975,6 +996,7 @@ class ControllerOpenbayEbay extends Controller {
 			$json['data'] = null;
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -992,6 +1014,7 @@ class ControllerOpenbayEbay extends Controller {
 			}
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -1171,11 +1194,14 @@ class ControllerOpenbayEbay extends Controller {
 			);
 
 			if (!empty($listings)) {
+				$this->response->addHeader('Content-Type: application/json');
 				$this->response->setOutput(json_encode(array('error' => false, 'data' => $data)));
 			} else {
+				$this->response->addHeader('Content-Type: application/json');
 				$this->response->setOutput(json_encode(array('error' => true)));
 			}
 		} else {
+			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode(array('error' => true)));
 		}
 	}
@@ -1187,6 +1213,7 @@ class ControllerOpenbayEbay extends Controller {
 
 			$json = $this->model_openbay_ebay->editSave($this->request->post);
 
+			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode($json));
 		} else {
 			$this->response->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL'));
@@ -1610,8 +1637,10 @@ class ControllerOpenbayEbay extends Controller {
 
 					$json = $this->model_openbay_ebay->ebayVerifyAddItem($data, $this->request->get['options']);
 
+					$this->response->addHeader('Content-Type: application/json');
 					$this->response->setOutput(json_encode($json));
 				} else {
+					$this->response->addHeader('Content-Type: application/json');
 					$this->response->setOutput(json_encode(array('error' => true, 'msg' => 'This item is already listed in your eBay account', 'item' => $item_id)));
 				}
 			}
@@ -1778,6 +1807,7 @@ class ControllerOpenbayEbay extends Controller {
 					'ack'       => (string)$verifyResponse['data']['Ack'],
 				);
 
+				$this->response->addHeader('Content-Type: application/json');
 				$this->response->setOutput(json_encode($json));
 			}
 		} else {
@@ -1824,6 +1854,7 @@ class ControllerOpenbayEbay extends Controller {
 
 			$json = $this->model_openbay_ebay->ebayAddItem($data, $this->request->get['options']);
 
+			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode($json));
 		} else {
 			$this->response->redirect($this->url->link('extension/openbay/itemList&token=' . $this->session->data['token']));
@@ -1987,6 +2018,7 @@ class ControllerOpenbayEbay extends Controller {
 					'ack'       => (string)$verifyResponse['data']['Ack'],
 				);
 
+				$this->response->addHeader('Content-Type: application/json');
 				$this->response->setOutput(json_encode($json));
 			}
 		} else {
@@ -2000,6 +2032,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$json = array('error' => false, 'msg' => 'OK');
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -2010,6 +2043,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$json = array('msg' => 'Links repaired');
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -2019,12 +2053,14 @@ class ControllerOpenbayEbay extends Controller {
 
 		$json = array('msg' => 'Locks deleted');
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
 	public function endItem() {
 		$json = $this->openbay->ebay->endItem($this->request->get['id']);
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 }

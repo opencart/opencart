@@ -175,6 +175,7 @@ class ControllerOpenbayEtsy extends Controller {
 	public function getOrders() {
 		$response = $this->openbay->etsy->call('order/get/all', 'GET');
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($response));
 	}
 

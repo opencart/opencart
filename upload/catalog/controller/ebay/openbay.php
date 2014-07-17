@@ -12,6 +12,7 @@ class ControllerEbayOpenbay extends Controller {
 		$this->load->model('openbay/ebay_order');
 
 		if(empty($encrypted)) {
+			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode(array('msg' => 'error 002')));
 		} else {
 			$token  = $this->openbay->ebay->pbkdf2($s1, $s2, 1000, 32);
@@ -36,6 +37,7 @@ class ControllerEbayOpenbay extends Controller {
 						}
 					}
 
+					$this->response->addHeader('Content-Type: application/json');
 					$this->response->setOutput(json_encode(array('msg' => 'ok')));
 				}
 
@@ -52,18 +54,23 @@ class ControllerEbayOpenbay extends Controller {
 						$this->openbay->ebay->log('No link found to previous item');
 					}
 
+					$this->response->addHeader('Content-Type: application/json');
 					$this->response->setOutput(json_encode(array('msg' => 'ok')));
 				}
 
 				if($data['action'] == 'newOrder') {
 					$this->openbay->ebay->log('Action: newOrder / Order data from polling');
 					$this->model_openbay_ebay_openbay->importOrders($data['data2']);
+
+					$this->response->addHeader('Content-Type: application/json');
 					$this->response->setOutput(json_encode(array('msg' => 'ok')));
 				}
 
 				if($data['action'] == 'notificationOrder') {
 					$this->openbay->ebay->log('Action: notificationOrder / Order data from notification');
 					$this->model_openbay_ebay_openbay->importOrders($data['data']);
+
+					$this->response->addHeader('Content-Type: application/json');
 					$this->response->setOutput(json_encode(array('msg' => 'ok')));
 				}
 
@@ -76,6 +83,8 @@ class ControllerEbayOpenbay extends Controller {
 				}
 			} else {
 				$this->openbay->ebay->log('Secret incorrect or module not active.');
+
+				$this->response->addHeader('Content-Type: application/json');
 				$this->response->setOutput(json_encode(array('msg' => 'error 001')));
 			}
 		}
@@ -87,6 +96,8 @@ class ControllerEbayOpenbay extends Controller {
 		$data   = $this->request->post;
 		$secret = $this->config->get('ebay_secret');
 		$active = $this->config->get('ebay_status');
+
+		$this->response->addHeader('Content-Type: application/json');
 
 		if(isset($data['secret']) && $secret == $data['secret'] && $active == 1 && isset($data['data'])) {
 			$this->load->model('openbay/ebay_openbay');
@@ -143,6 +154,9 @@ class ControllerEbayOpenbay extends Controller {
 
 	public function autoSync() {
 		set_time_limit(0);
+
+		$this->response->addHeader('Content-Type: application/json');
+
 		if($this->request->post['process'] == 'categories') {
 			$this->response->setOutput(json_encode($this->openbay->ebay->loadCategories()));
 		}elseif($this->request->post['process'] == 'settings') {

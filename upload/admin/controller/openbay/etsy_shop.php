@@ -5,6 +5,7 @@ class ControllerOpenbayEtsyShop extends Controller {
 	public function getSections() {
 		$shop_sections = $this->openbay->etsy->call('shop/getSections', 'GET');
 
+		$this->response->addHeader('Content-Type: application/json');
 		return $this->response->setOutput(json_encode($shop_sections));
 	}
 }

@@ -510,6 +510,8 @@ class ControllerOpenbayAmazonus extends Controller {
 		if(empty($json)) {
 			$json = false;
 		}
+
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -519,8 +521,8 @@ class ControllerOpenbayAmazonus extends Controller {
 			$product_id = $this->request->get['product_id'];
 			$var = isset($this->request->get['var']) ? $this->request->get['var'] : '';
 		} else {
-			$result = json_encode('error');
-			$this->response->setOutput($result);
+			$this->response->addHeader('Content-Type: application/json');
+			$this->response->setOutput(json_encode('error'));
 			return;
 		}
 
@@ -552,8 +554,8 @@ class ControllerOpenbayAmazonus extends Controller {
 			$this->openbay->amazonus->putStockUpdateBulk(array($product_id));
 		}
 
-		$result = json_encode('ok');
-		$this->response->setOutput($result);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode('ok'));
 		$logger->write('addItemLink() exiting');
 	}
 
@@ -561,16 +563,16 @@ class ControllerOpenbayAmazonus extends Controller {
 		if(isset($this->request->get['amazonus_sku'])) {
 			$amazonus_sku = $this->request->get['amazonus_sku'];
 		} else {
-			$result = json_encode('error');
-			$this->response->setOutput($result);
+			$this->response->addHeader('Content-Type: application/json');
+			$this->response->setOutput(json_encode('error'));
 			return;
 		}
 		$this->load->model('openbay/amazonus');
 
 		$this->model_openbay_amazonus->removeProductLink($amazonus_sku);
 
-		$result = json_encode('ok');
-		$this->response->setOutput($result);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode('ok'));
 	}
 
 	public function getItemLinksAjax() {
@@ -578,8 +580,9 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->load->model('catalog/product');
 
 		$itemLinks = $this->model_openbay_amazonus->getProductLinks();
-		$result = json_encode($itemLinks);
-		$this->response->setOutput($result);
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($itemLinks));
 	}
 
 	public function getUnlinkedItemsAjax() {
@@ -587,8 +590,9 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->load->model('catalog/product');
 
 		$unlinkedProducts = $this->model_openbay_amazonus->getUnlinkedProducts();
-		$result = json_encode($unlinkedProducts);
-		$this->response->setOutput($result);
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($unlinkedProducts));
 	}
 
 	public function deleteSavedAjax() {
@@ -659,6 +663,7 @@ class ControllerOpenbayAmazonus extends Controller {
 			);
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -714,6 +719,7 @@ class ControllerOpenbayAmazonus extends Controller {
 			$this->model_openbay_amazonus_listing->doBulkSearch($search_data);
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -976,6 +982,7 @@ class ControllerOpenbayAmazonus extends Controller {
 			$json['message'] = $this->language->get('text_report_request_failed');
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 

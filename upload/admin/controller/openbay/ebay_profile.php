@@ -337,6 +337,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 			$profile_info['html']           			= $return;
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($profile_info));
 	}
 

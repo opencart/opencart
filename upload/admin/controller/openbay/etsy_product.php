@@ -154,6 +154,8 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			// process the request
 			$response = $this->openbay->etsy->call('product/listing/create', 'POST', $data);
 
+			$this->response->addHeader('Content-Type: application/json');
+
 			if (isset($response['data']['error'])) {
 				$this->response->setOutput(json_encode($response['data']));
 			} else {
@@ -181,6 +183,8 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		if (!$this->error) {
 			$response = $this->openbay->etsy->call('product/listing/'.(int)$data['listing_id'].'/image', 'POST', $data);
 
+			$this->response->addHeader('Content-Type: application/json');
+
 			if (isset($response['data']['error'])) {
 				$this->response->setOutput(json_encode($response['data']));
 			} else {
@@ -194,6 +198,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 		$categories = $this->openbay->etsy->call('product/category/getCategory?tag='.$data['tag'], 'GET');
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($categories));
 	}
 
@@ -202,6 +207,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 		$categories = $this->openbay->etsy->call('product/category/findAllTopCategoryChildren?tag='.$data['tag'], 'GET');
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($categories));
 	}
 
@@ -210,6 +216,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 		$categories = $this->openbay->etsy->call('product/category/findAllSubCategoryChildren?sub_tag='.$data['sub_tag'], 'GET');
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($categories));
 	}
 
@@ -269,6 +276,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 		$this->model_openbay_etsy_product->addLink($data['product_id'], $data['etsy_id'], 1);
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode(array('error' => false)));
 	}
 
@@ -284,6 +292,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 		$this->openbay->etsy->deleteLink($data['etsy_link_id']);
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode(array('error' => false)));
 	}
 
@@ -521,6 +530,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 				$this->openbay->etsy->deleteLink($linked_item['etsy_listing_id']);
 			}
 
+			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode(array('error' => false)));
 		}
 	}
@@ -547,6 +557,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 				$this->openbay->etsy->deleteLink($linked_item['etsy_listing_id']);
 			}
 
+			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode(array('error' => false)));
 		}
 	}
@@ -555,6 +566,8 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$this->load->language('openbay/etsy_links');
 
 		$data = $this->request->post;
+
+		$this->response->addHeader('Content-Type: application/json');
 
 		if (!isset($data['etsy_item_id'])) {
 			echo json_encode(array('error' => $this->language->get('error_etsy_id')));

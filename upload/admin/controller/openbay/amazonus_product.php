@@ -264,6 +264,7 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 		$json = json_encode($this->uploadSaved());
 		ob_clean();
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput($json);
 	}
 
@@ -368,6 +369,7 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 			}
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($result));
 	}
 

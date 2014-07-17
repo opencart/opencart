@@ -279,6 +279,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$json = $this->model_openbay_openbay->ftpTestConnection();
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -287,6 +288,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$json = $this->model_openbay_openbay->ftpUpdateModule();
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -295,6 +297,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$json = $this->model_openbay_openbay->getNotifications();
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -303,6 +306,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$json = $this->model_openbay_openbay->getVersion();
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -336,6 +340,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$json = array('msg' => 'ok');
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -347,6 +352,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$data = $this->model_openbay_openbay->faqGet($this->request->get['qry_route']);
 		$data['faqbtn'] = $this->language->get('text_btn_faq');
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($data));
 	}
 
@@ -355,6 +361,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$json = $this->model_openbay_openbay->faqDismiss($this->request->get['qry_route']);
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -364,6 +371,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$json = array('msg' => 'ok');
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 

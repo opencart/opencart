@@ -400,7 +400,7 @@ class ControllerPaymentPPExpress extends Controller {
 			$json['error'] = $this->language->get('error_data');
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -520,7 +520,7 @@ class ControllerPaymentPPExpress extends Controller {
 			$json['msg'] = 'Missing data';
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -573,7 +573,7 @@ class ControllerPaymentPPExpress extends Controller {
 			$json['msg'] = 'Missing data';
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -1002,12 +1002,12 @@ class ControllerPaymentPPExpress extends Controller {
 				$response['error_msg'] = $result['L_LONGMESSAGE0'];
 			}
 
-			$this->response->setContentType('Content-Type: application/json');
+			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode($response));
 		} else {
 			$response['error'] = true;
 			$response['error_msg'] = 'Enter a start date';
-			$this->response->setContentType('Content-Type: application/json');
+			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode($response));
 		}
 	}

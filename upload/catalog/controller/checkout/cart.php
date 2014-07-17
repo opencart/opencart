@@ -386,7 +386,7 @@ class ControllerCheckoutCart extends Controller {
 			}
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -410,7 +410,7 @@ class ControllerCheckoutCart extends Controller {
 			$this->response->redirect($this->url->link('checkout/cart'));
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -472,7 +472,7 @@ class ControllerCheckoutCart extends Controller {
 			$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 }

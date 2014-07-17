@@ -110,6 +110,7 @@ $registry->set('request', $request);
  
 // Response
 $response = new Response();
+$response->addHeader('Content-Type: text/html; charset=utf-8');
 $response->setCompression($config->get('config_compression'));
 $registry->set('response', $response); 
 		

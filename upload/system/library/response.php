@@ -3,14 +3,9 @@ class Response {
 	private $headers = array();
 	private $level = 0;
 	private $output;
-	private $content_type;
 
 	public function addHeader($header) {
 		$this->headers[] = $header;
-	}
-
-	public function setContentType($type) {
-		$this->content_type = $type;
 	}
 
 	public function redirect($url, $status = 302) {

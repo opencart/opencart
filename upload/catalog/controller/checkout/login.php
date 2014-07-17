@@ -91,7 +91,7 @@ class ControllerCheckoutLogin extends Controller {
 			$this->model_account_activity->addActivity('login', $activity_data);
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 }

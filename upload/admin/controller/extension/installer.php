@@ -208,7 +208,7 @@ class ControllerExtensionInstaller extends Controller {
 			}
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -243,7 +243,7 @@ class ControllerExtensionInstaller extends Controller {
 			unlink($file);
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -327,7 +327,7 @@ class ControllerExtensionInstaller extends Controller {
 			}
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -372,7 +372,7 @@ class ControllerExtensionInstaller extends Controller {
 			}
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -450,7 +450,7 @@ class ControllerExtensionInstaller extends Controller {
 			}
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -477,7 +477,7 @@ class ControllerExtensionInstaller extends Controller {
 			}
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -533,7 +533,7 @@ class ControllerExtensionInstaller extends Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -587,7 +587,7 @@ class ControllerExtensionInstaller extends Controller {
 			$json['success'] = $this->language->get('text_clear');
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 }

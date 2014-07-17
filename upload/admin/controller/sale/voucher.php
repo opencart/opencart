@@ -607,7 +607,7 @@ class ControllerSaleVoucher extends Controller {
 			$json['success'] = $this->language->get('text_sent');
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
   	}
 }

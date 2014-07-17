@@ -128,12 +128,12 @@ class ControllerPaymentBluePayRedirect extends Controller {
 			$this->model_payment_bluepay_redirect->addCard($card_data);
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
 	public function callback() {
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($this->request->get));
 	}
 

@@ -1476,9 +1476,9 @@ $('#button-reward-remove').on('click', function() {
 $('#button-product, #button-voucher, #button-refresh').on('click', function() {	
 	$.ajax({
 		<?php if ($order_id) { ?>
-		url: 'index.php?route=sale/order_api/refresh&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		<?php } else { ?>
-		url: 'index.php?route=sale/order_api/refresh&token=<?php echo $token; ?>',
+		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>',
 		<?php } ?>
 		type: 'post',
 		data: $('#content input[type=\'text\'], #content input[type=\'hidden\'], #content input[type=\'radio\']:checked, #content input[type=\'checkbox\']:checked, #content select, #content textarea'),

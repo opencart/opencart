@@ -134,24 +134,24 @@ class ControllerApiShipping extends Controller {
 		$json = array();		
 		
 		if (!isset($this->session->data['api_id'])) {
-			$json['error']['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		} else {			
 			if ($this->cart->hasShipping()) {
 				// Shipping Address
 				if (!isset($this->session->data['shipping_address'])) {
-					$json['error']['warning'] = $this->language->get('error_address');
+					$json['error'] = $this->language->get('error_address');
 				}
 			
 				// Shipping Method
 				if (empty($this->session->data['shipping_methods'])) {
-					$json['error']['warning'] = $this->language->get('error_no_shipping');	
+					$json['error'] = $this->language->get('error_no_shipping');	
 				} elseif (!isset($this->request->post['shipping_method'])) {
-					$json['error']['warning'] = $this->language->get('error_method');
+					$json['error'] = $this->language->get('error_method');
 				} else {
 					$shipping = explode('.', $this->request->post['shipping_method']);
 		
 					if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
-						$json['error']['warning'] = $this->language->get('error_shipping_method');
+						$json['error'] = $this->language->get('error_shipping_method');
 					}
 				}
 				
@@ -181,7 +181,7 @@ class ControllerApiShipping extends Controller {
 			if ($this->cart->hasShipping()) {
 				// Shipping Address
 				if (!isset($this->session->data['shipping_address'])) {
-					$json['error']['shipping_address'] = $this->language->get('error_address');
+					$json['error'] = $this->language->get('error_address');
 				}			
 				
 				if (!$json) {
@@ -219,7 +219,7 @@ class ControllerApiShipping extends Controller {
 					if ($json['shipping_methods']) {
 						$this->session->data['shipping_methods'] = $json['shipping_methods'];
 					} else {
-						$json['error']['shipping_method'] = $this->language->get('error_no_shipping');
+						$json['error'] = $this->language->get('error_no_shipping');
 					}
 				}
 			}

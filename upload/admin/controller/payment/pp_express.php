@@ -236,18 +236,6 @@ class ControllerPaymentPPExpress extends Controller {
 			$data['pp_express_logo'] = $this->config->get('pp_express_logo');
 		}
 
-		if (isset($this->request->post['pp_express_border_colour'])) {
-			$data['pp_express_border_colour'] = str_replace('#', '', $this->request->post['pp_express_border_colour'] );
-		} else {
-			$data['pp_express_border_colour'] = $this->config->get('pp_express_border_colour');
-		}
-
-		if (isset($this->request->post['pp_express_header_colour'])) {
-			$data['pp_express_header_colour'] = str_replace('#', '', $this->request->post['pp_express_header_colour'] );
-		} else {
-			$data['pp_express_header_colour'] = $this->config->get('pp_express_header_colour');
-		}
-
 		if (isset($this->request->post['pp_express_page_colour'])) {
 			$data['pp_express_page_colour'] = str_replace('#', '', $this->request->post['pp_express_page_colour'] );
 		} else {
@@ -400,7 +388,7 @@ class ControllerPaymentPPExpress extends Controller {
 			$json['error'] = $this->language->get('error_data');
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -520,7 +508,7 @@ class ControllerPaymentPPExpress extends Controller {
 			$json['msg'] = 'Missing data';
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -573,7 +561,7 @@ class ControllerPaymentPPExpress extends Controller {
 			$json['msg'] = 'Missing data';
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -1002,12 +990,12 @@ class ControllerPaymentPPExpress extends Controller {
 				$response['error_msg'] = $result['L_LONGMESSAGE0'];
 			}
 
-			$this->response->setContentType('Content-Type: application/json');
+			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode($response));
 		} else {
 			$response['error'] = true;
 			$response['error_msg'] = 'Enter a start date';
-			$this->response->setContentType('Content-Type: application/json');
+			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode($response));
 		}
 	}

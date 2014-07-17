@@ -116,7 +116,7 @@ class ControllerCheckoutCheckout extends Controller {
 			);
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -141,7 +141,7 @@ class ControllerCheckoutCheckout extends Controller {
 			);
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 }

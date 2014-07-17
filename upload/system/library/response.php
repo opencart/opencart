@@ -3,14 +3,9 @@ class Response {
 	private $headers = array();
 	private $level = 0;
 	private $output;
-	private $content_type;
 
 	public function addHeader($header) {
 		$this->headers[] = $header;
-	}
-
-	public function setContentType($type) {
-		$this->content_type = $type;
 	}
 
 	public function redirect($url, $status = 302) {
@@ -70,12 +65,6 @@ class Response {
 			}
 
 			if (!headers_sent()) {
-				if (empty($this->content_type)) {
-					$this->addHeader('Content-Type: text/html; charset=utf-8');
-				} else {
-					$this->addHeader($this->content_type);
-				}
-
 				foreach ($this->headers as $header) {
 					header($header, true);
 				}

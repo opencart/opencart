@@ -468,7 +468,7 @@ class ControllerPaymentPPProIframe extends Controller {
 			$json['msg'] = $this->language->get('error_missing_data');
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -715,7 +715,7 @@ class ControllerPaymentPPProIframe extends Controller {
 			$json['msg'] = 'Missing data';
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -767,7 +767,7 @@ class ControllerPaymentPPProIframe extends Controller {
 			$json['msg'] = $this->language->get('error_missing_data');
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -915,7 +915,7 @@ class ControllerPaymentPPProIframe extends Controller {
 			$json['error'] = $this->language->get('error_missing_data');
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 

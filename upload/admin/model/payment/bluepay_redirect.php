@@ -213,7 +213,7 @@ class ModelPaymentBluepayredirect extends Model {
 	}
 
 	public function callback() {
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($this->request->get));
 	}
 

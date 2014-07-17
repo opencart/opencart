@@ -317,7 +317,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 			$this->model_payment_sagepay_direct->logger('Response data: ' . print_r($response_data['Status'] . ': ' . $response_data['StatusDetail'], 1));
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 

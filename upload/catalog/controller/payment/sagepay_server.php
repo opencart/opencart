@@ -161,7 +161,7 @@ class ControllerPaymentSagepayServer extends Controller {
 			$json['error'] = $response_data['StatusDetail'];
 		}
 
-		$this->response->setContentType('Content-Type: application/json');
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 

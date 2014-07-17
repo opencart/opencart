@@ -52,7 +52,13 @@ class Event {
 		}
 
 		foreach ($this->events[$event] as $handler) {
-			$this->load->controller($handler, $data);
+			$parts = explode('/', $handler);
+
+			$event = $this->load->event($parts[0] . '/' . $parts[1]);
+
+			if (is_callable(array($event, $parts[2]))) {
+				$event->{$parts[2]}($data);
+			}
 		}
 
 		return true;

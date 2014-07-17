@@ -1459,11 +1459,11 @@ $('#button-reward-remove').on('click', function() {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-                $('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+                $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -1499,7 +1499,7 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 			// Check for errors
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 							
 				// Order Details
@@ -1541,20 +1541,20 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 					}
 
 					if (json['error']['product']['warning']) {
-						$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['warning'] + '</div>');
+						$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['warning'] + '</div>');
 					}	
 										
 					if (json['error']['product']['stock']) {
-						$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['stock'] + '</div>');
+						$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['stock'] + '</div>');
 					}	
 					
 					if (json['error']['product']['store']) {
-						$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['store'] + '</div>');
+						$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['store'] + '</div>');
 					}	
 																
 					if (json['error']['product']['minimum']) {	
 						for (i in json['error']['product']['minimum']) {
-							$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['minimum'][i] + '</div>');
+							$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['minimum'][i] + '</div>');
 						}						
 					}
 				} else {
@@ -1596,27 +1596,27 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 				
 				// Shipping Method	
 				if (json['error']['shipping_method']) {
-					$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['shipping_method'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['shipping_method'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}	
 				
 				// Payment Method
 				if (json['error']['payment_method']) {
-					$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['payment_method'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['payment_method'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}	
 															
 				// Coupon
 				if (json['error']['coupon']) {
-					$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['coupon'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['coupon'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 				
 				// Voucher
 				if (json['error']['voucher']) {
-					$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['voucher'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['voucher'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 				
 				// Reward Points		
 				if (json['error']['reward']) {
-					$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['reward'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['reward'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}	
 			} else {
 				$('input[name=\'product\']').val('');
@@ -1633,7 +1633,7 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 			}
 
 			if (json['success']) {
-				$('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 			
 			if (json['product']) {

@@ -134,20 +134,20 @@ class ControllerApiPayment extends Controller {
 		$json = array();
 		
 		if (!isset($this->session->data['api_id'])) {
-			$json['error']['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		} else {				
 			// Payment Address
 			if (!isset($this->session->data['payment_address'])) {
-				$json['error']['warning'] = $this->language->get('error_address');
+				$json['error'] = $this->language->get('error_address');
 			}
 			
 			// Payment Method
 			if (empty($this->session->data['payment_methods'])) {
-				$json['error']['warning'] = $this->language->get('error_no_payment');	
+				$json['error'] = $this->language->get('error_no_payment');	
 			} elseif (!isset($this->request->post['payment_method'])) {
-				$json['error']['warning'] = $this->language->get('error_method');
+				$json['error'] = $this->language->get('error_method');
 			} elseif (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
-				$json['error']['warning'] = $this->language->get('error_method');
+				$json['error'] = $this->language->get('error_method');
 			}
 					
 			if (!$json) {
@@ -170,7 +170,7 @@ class ControllerApiPayment extends Controller {
 		} else {		
 			// Payment Address
 			if (!isset($this->session->data['payment_address'])) {
-				$json['error']['payment_address'] = $this->language->get('error_address');
+				$json['error'] = $this->language->get('error_address');
 			}		
 			
 			if (!$json) {
@@ -236,7 +236,7 @@ class ControllerApiPayment extends Controller {
 				if ($json['payment_methods']) {
 					$this->session->data['payment_methods'] = $json['payment_methods'];
 				} else {
-					$json['error']['payment_method'] = $this->language->get('error_no_payment');
+					$json['error'] = $this->language->get('error_no_payment');
 				}			
 			}
 		}

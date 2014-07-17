@@ -1,5 +1,5 @@
 <?php
-class ControllerSaleOrderApi extends Controller {	
+class ControllerSaleApi extends Controller {	
 	public function refresh() {
 		$this->load->language('sale/order');
 

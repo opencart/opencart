@@ -236,18 +236,6 @@ class ControllerPaymentPPExpress extends Controller {
 			$data['pp_express_logo'] = $this->config->get('pp_express_logo');
 		}
 
-		if (isset($this->request->post['pp_express_border_colour'])) {
-			$data['pp_express_border_colour'] = str_replace('#', '', $this->request->post['pp_express_border_colour'] );
-		} else {
-			$data['pp_express_border_colour'] = $this->config->get('pp_express_border_colour');
-		}
-
-		if (isset($this->request->post['pp_express_header_colour'])) {
-			$data['pp_express_header_colour'] = str_replace('#', '', $this->request->post['pp_express_header_colour'] );
-		} else {
-			$data['pp_express_header_colour'] = $this->config->get('pp_express_header_colour');
-		}
-
 		if (isset($this->request->post['pp_express_page_colour'])) {
 			$data['pp_express_page_colour'] = str_replace('#', '', $this->request->post['pp_express_page_colour'] );
 		} else {

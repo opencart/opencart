@@ -76,8 +76,6 @@ class ControllerPaymentPPExpress extends Controller {
 			'LOCALECODE'         => 'EN',
 			'LANDINGPAGE'        => 'Login',
 			'HDRIMG'             => $this->model_tool_image->resize($this->config->get('pp_express_logo'), 790, 90),
-			'HDRBORDERCOLOR'     => $this->config->get('pp_express_border_colour'),
-			'HDRBACKCOLOR'       => $this->config->get('pp_express_header_colour'),
 			'PAYFLOWCOLOR'       => $this->config->get('pp_express_page_colour'),
 			'CHANNELTYPE'        => 'Merchant'
 		);
@@ -1278,8 +1276,6 @@ class ControllerPaymentPPExpress extends Controller {
 			'LOCALECODE'         => 'EN',
 			'LANDINGPAGE'        => 'Login',
 			'HDRIMG'             => $this->model_tool_image->resize($this->config->get('pp_express_logo'), 790, 90),
-			'HDRBORDERCOLOR'     => $this->config->get('pp_express_border_colour'),
-			'HDRBACKCOLOR'       => $this->config->get('pp_express_header_colour'),
 			'PAYFLOWCOLOR'       => $this->config->get('pp_express_page_colour'),
 			'CHANNELTYPE'        => 'Merchant',
 			'ALLOWNOTE'          => $this->config->get('pp_express_allow_note')

@@ -162,7 +162,7 @@ class ModelOpenbayAmazonusOrder extends Model {
 			return $row['amazonus_order_id'];
 		}
 
-		return NULL;
+		return null;
 	}
 
 	public function getProductOptionsByVar($product_var) {

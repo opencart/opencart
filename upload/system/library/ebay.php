@@ -2,7 +2,7 @@
 final class Ebay {
 	private $registry;
 	private $url    = 'https://uk.openbaypro.com/';
-	private $noLog  = array('notification/getPublicNotifications/','setup/getEbayCategories/','item/getItemAllList/', 'account/validate/', 'item/getItemListLimited/');
+	private $noLog  = array('notification/getPublicNotifications/', 'setup/getEbayCategories/', 'item/getItemAllList/', 'account/validate/', 'item/getItemListLimited/');
 
 	public function __construct($registry) {
 		$this->registry = $registry;
@@ -423,8 +423,8 @@ final class Ebay {
 		$encoding = mb_detect_encoding($data);
 
 		if($encoding == 'UTF-8') {
-			$data = preg_replace('/[^(\x20-\x7F)]*/','',$data);
-			$data = preg_replace('#\\\\x[0-9a-fA-F]{2,2}#','',$data);
+			$data = preg_replace('/[^(\x20-\x7F)]*/', '',$data);
+			$data = preg_replace('#\\\\x[0-9a-fA-F]{2,2}#', '',$data);
 		}
 
 		$data = json_decode($data);
@@ -1037,7 +1037,7 @@ final class Ebay {
 					$img_used = $img['image_original'];
 				}
 
-				$handle = @fopen($img_used,'r');
+				$handle = @fopen($img_used, 'r');
 
 				if($handle !== false){
 					if(!@copy($img_used, $img['image_new'])){

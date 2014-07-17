@@ -219,14 +219,14 @@ class ModelOpenbayEtsyOrder extends Model {
 		$totals[0] = array(
 			'code'          => 'sub_total',
 			'title'         => $this->language->get('lang_subtotal'),
-			'value'         => number_format((double)$order->price_total, 4,'.',''),
+			'value'         => number_format((double)$order->price_total, 4, '.', ''),
 			'sort_order'    => '1'
 		);
 
 		$totals[1] = array(
 			'code'          => 'shipping',
 			'title'         => $this->language->get('lang_shipping'),
-			'value'         => number_format((double)$order->price_shipping, 4,'.',''),
+			'value'         => number_format((double)$order->price_shipping, 4, '.', ''),
 			'sort_order'    => '3'
 		);
 
@@ -234,7 +234,7 @@ class ModelOpenbayEtsyOrder extends Model {
 			$totals[2] = array(
 				'code'          => 'coupon',
 				'title'         => $this->language->get('lang_discount'),
-				'value'         => number_format((double)$order->amount_discount, 4,'.',''),
+				'value'         => number_format((double)$order->amount_discount, 4, '.', ''),
 				'sort_order'    => '4'
 			);
 		}
@@ -242,7 +242,7 @@ class ModelOpenbayEtsyOrder extends Model {
 		$totals[3] = array(
 			'code'          => 'tax',
 			'title'         => $this->language->get('lang_tax'),
-			'value'         => number_format((double)$order->price_tax, 3,'.',''),
+			'value'         => number_format((double)$order->price_tax, 3, '.', ''),
 			'sort_order'    => '5'
 		);
 

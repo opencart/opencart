@@ -99,7 +99,7 @@ class ModelOpenbayAmazonusProduct extends Model {
 		$sqlValues = array();
 
 		foreach ($data as $product) {
-			$sqlValues[] = " ('" . $this->db->escape($product['sku']) . "', " . (int)$product['quantity'] . ", '" . $this->db->escape($product['asin']) . "', " . (double) $product['price'] . ") ";
+			$sqlValues[] = " ('" . $this->db->escape($product['sku']) . "', " . (int)$product['quantity'] . ", '" . $this->db->escape($product['asin']) . "', " . (double)$product['price'] . ") ";
 		}
 
 		$sql .= implode(',', $sqlValues);

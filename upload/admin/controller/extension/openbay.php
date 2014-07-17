@@ -870,40 +870,40 @@ class ControllerExtensionOpenbay extends Controller {
 
 			$url = '';
  
- 			if (isset($this->request->get['filter_order_id'])) {
- 				$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
- 			}
+			if (isset($this->request->get['filter_order_id'])) {
+				$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
+			}
  
- 			if (isset($this->request->get['filter_customer'])) {
- 				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
- 			}
+			if (isset($this->request->get['filter_customer'])) {
+				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
+			}
  
- 			if (isset($this->request->get['filter_order_status_id'])) {
- 				$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
- 			}
+			if (isset($this->request->get['filter_order_status_id'])) {
+				$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
+			}
  
- 			if (isset($this->request->get['filter_channel'])) {
- 				$url .= '&filter_channel=' . $this->request->get['filter_channel'];
- 			}
+			if (isset($this->request->get['filter_channel'])) {
+				$url .= '&filter_channel=' . $this->request->get['filter_channel'];
+			}
  
- 			if (isset($this->request->get['filter_date_added'])) {
- 				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
- 			}
+			if (isset($this->request->get['filter_date_added'])) {
+				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+			}
  
- 			if (isset($this->request->get['sort'])) {
- 				$url .= '&sort=' . $this->request->get['sort'];
- 			}
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
  
- 			if (isset($this->request->get['order'])) {
- 				$url .= '&order=' . $this->request->get['order'];
- 			}
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
  
- 			if (isset($this->request->get['page'])) {
- 				$url .= '&page=' . $this->request->get['page'];
- 			}
- 			
- 			$data['cancel'] = $this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'] . $url, 'SSL');
- 			$data['button_cancel'] = $this->language->get('button_cancel');
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+
+			$data['cancel'] = $this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['button_cancel'] = $this->language->get('button_cancel');
 			
 			$this->response->setOutput($this->load->view('openbay/openbay_orderlist_confirm.tpl', $data));
 		}

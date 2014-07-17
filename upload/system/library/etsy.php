@@ -77,7 +77,7 @@ final class Etsy {
 				$encoding = mb_detect_encoding($result);
 
 				if($encoding == 'UTF-8') {
-					$result = preg_replace('/[^(\x20-\x7F)]*/','', $result);
+					$result = preg_replace('/[^(\x20-\x7F)]*/', '', $result);
 				}
 
 				$result = json_decode($result, 1);

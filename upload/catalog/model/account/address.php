@@ -9,6 +9,8 @@ class ModelAccountAddress extends Model {
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$this->customer->getId() . "'");
 		}
 
+		$this->event->trigger('customer_add_address');
+
 		return $address_id;
 	}
 
@@ -18,10 +20,14 @@ class ModelAccountAddress extends Model {
 		if (!empty($data['default'])) {
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$this->customer->getId() . "'");
 		}
+
+		$this->event->trigger('customer_edit_address');
 	}
 
 	public function deleteAddress($address_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "address WHERE address_id = '" . (int)$address_id . "' AND customer_id = '" . (int)$this->customer->getId() . "'");
+
+		$this->event->trigger('customer_delete_address');
 	}
 
 	public function getAddress($address_id) {

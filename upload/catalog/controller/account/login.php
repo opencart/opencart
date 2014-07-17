@@ -38,6 +38,8 @@ class ControllerAccountLogin extends Controller {
 					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 				}
 
+				$this->event->trigger('customer_login');
+
 				$this->response->redirect($this->url->link('account/account', '', 'SSL'));
 			}
 		}

@@ -37,6 +37,8 @@ class ModelCatalogReview extends Model {
 				}
 			}
 		}
+
+		$this->event->trigger('review_add', array('review_id' => $this->db->getLastId()));
 	}
 
 	public function getReviewsByProductId($product_id, $start = 0, $limit = 20) {

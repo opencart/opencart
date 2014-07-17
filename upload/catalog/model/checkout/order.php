@@ -64,6 +64,8 @@ class ModelCheckoutOrder extends Model {
 			}
 		}
 		*/
+
+		$this->event->trigger('order_add', array('order_id' => $order_id));
 		
 		return $order_id;
 	}
@@ -147,6 +149,8 @@ class ModelCheckoutOrder extends Model {
 			}
 		}
 		*/
+
+		$this->event->trigger('order_edit');
 	}
 
 	public function deleteOrder($order_id) {
@@ -178,6 +182,8 @@ class ModelCheckoutOrder extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_fraud WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "affiliate_transaction WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE `or`, ort FROM " . DB_PREFIX . "order_recurring `or`, " . DB_PREFIX . "order_recurring_transaction ort WHERE order_id = '" . (int)$order_id . "' AND ort.order_recurring_id = `or`.order_recurring_id");
+
+		$this->event->trigger('order_delete');
 	}
 
 	public function getOrder($order_id) {
@@ -753,6 +759,8 @@ class ModelCheckoutOrder extends Model {
 					}
 				}
 			}
+
+			$this->event->trigger('order_confirm');
 		}
 	}
 
@@ -849,6 +857,8 @@ class ModelCheckoutOrder extends Model {
 				$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
 				$mail->send();
 			}
+
+			$this->event->trigger('order_update');
 		}
 	}
 }

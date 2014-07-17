@@ -170,6 +170,7 @@ class ControllerModuleShipping extends Controller {
 			}
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -198,6 +199,7 @@ class ControllerModuleShipping extends Controller {
 			$json['redirect'] = $this->url->link('checkout/cart');
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -223,6 +225,7 @@ class ControllerModuleShipping extends Controller {
 			);
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 }

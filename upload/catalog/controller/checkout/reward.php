@@ -71,6 +71,7 @@ class ControllerModuleReward extends Controller {
 			$json['redirect'] = $this->url->link($this->request->post['redirect']);
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 }

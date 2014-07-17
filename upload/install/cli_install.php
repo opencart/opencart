@@ -118,6 +118,9 @@ function valid($options) {
 	if ($options['agree_tnc'] !== 'yes') {
 		$missing[] = 'agree_tnc (should be yes)';
 	}
+	if (!preg_match('#/$#', $options['http_server'])) {
+		$options['http_server'] = $options['http_server'].'/';
+	}
 	$valid = count($missing) === 0 && $options['agree_tnc'] === 'yes';
 	return array($valid, $missing);
 }

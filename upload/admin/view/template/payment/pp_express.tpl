@@ -321,18 +321,6 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-border-color"><?php echo $entry_border_colour; ?></label>
-            <div class="col-sm-10">
-              <input type="text" name="pp_express_border_colour" value="<?php echo $pp_express_border_colour; ?>" placeholder="<?php echo $entry_border_colour; ?>" id="input-border-color" class="form-control" />
-              <span class="help-block"><?php echo $entry_colour_help; ?></span> </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-header-color"><?php echo $entry_header_colour; ?></label>
-            <div class="col-sm-10">
-              <input type="text" name="pp_express_header_colour" value="<?php echo $pp_express_header_colour; ?>" placeholder="<?php echo $entry_header_colour; ?>" id="input-header-color" class="form-control" />
-              <span class="help-block"><?php echo $entry_colour_help; ?></span> </div>
-          </div>
-          <div class="form-group">
             <label class="col-sm-2 control-label" for="input-page-color"><?php echo $entry_page_colour; ?></label>
             <div class="col-sm-10">
               <input type="text" name="pp_express_page_colour" value="<?php echo $pp_express_page_colour; ?>" placeholder="<?php echo $entry_page_colour; ?>" id="input-page-color" class="form-control" />

@@ -653,6 +653,7 @@ class ControllerProductProduct extends Controller {
 			}
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -689,6 +690,7 @@ class ControllerProductProduct extends Controller {
 			}
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -764,6 +766,7 @@ class ControllerProductProduct extends Controller {
 			$json['success'] = $this->language->get('text_upload');
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 }

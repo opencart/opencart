@@ -57,6 +57,7 @@ class ControllerModuleVoucher extends Controller {
 			$json['error'] = $this->language->get('error_voucher');
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 }

@@ -15,8 +15,8 @@ $_['text_success']              = 'Success: Your account has been successfully u
 // Entry
 $_['entry_tax']                 = 'Tax ID';
 $_['entry_payment']             = 'Payment Method';
-$_['entry_cheque']              = 'Cheque Payee Name';
-$_['entry_paypal']              = 'PayPal Email Account';
+$_['entry_cheque']              = 'Payee Name';
+$_['entry_paypal']              = 'PayPal Account Email';
 $_['entry_bank_name']           = 'Bank Name';
 $_['entry_bank_branch_number']  = 'ABA/BSB number (Branch Number)';
 $_['entry_bank_swift_code']     = 'SWIFT Code';

@@ -9,7 +9,7 @@ $_['text_return_detail'] = 'Return Details';
 $_['text_description']   = 'Please complete the form below to request an RMA number.';
 $_['text_order']         = 'Order Information';
 $_['text_product']       = 'Product Information &amp; Reason for Return';
-$_['text_message']       = '<p>Thank you for submitting your return request. Your request has been sent to the relevant department for processing.</p><p> You will be notified via e-mail as to the status of your request.</p>';
+$_['text_message']       = '<p>Thank you for submitting your return request. Your request has been sent to the relevant department for processing.</p><p>We will e-mail you when the status your request changes.</p>';
 $_['text_return_id']     = 'Return ID:';
 $_['text_order_id']      = 'Order ID:';
 $_['text_date_ordered']  = 'Order Date:';
@@ -17,7 +17,7 @@ $_['text_status']        = 'Status:';
 $_['text_date_added']    = 'Date Added:';
 $_['text_comment']       = 'Return Comments';
 $_['text_history']       = 'Return History';
-$_['text_empty']         = 'You have not made any previous returns!';
+$_['text_empty']         = 'You have not requested any returns!';
 $_['text_agree']         = 'I have read and agree to the <a href="%s" class="agree"><b>%s</b></a>';
 
 // Column
@@ -51,7 +51,7 @@ $_['entry_fault_detail'] = 'Faulty or other details';
 $_['entry_captcha']      = 'Enter the code in the box below';
 
 // Error
-$_['text_error']         = 'The returns you requested could not be found!';
+$_['text_error']         = 'No returns requests found!';
 $_['error_order_id']     = 'Order ID required!';
 $_['error_firstname']    = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']     = 'Last Name must be between 1 and 32 characters!';
@@ -59,6 +59,6 @@ $_['error_email']        = 'E-Mail Address does not appear to be valid!';
 $_['error_telephone']    = 'Telephone must be between 3 and 32 characters!';
 $_['error_product']      = 'Product Name must be greater than 3 and less than 255 characters!';
 $_['error_model']        = 'Product Model must be greater than 3 and less than 64 characters!';
-$_['error_reason']       = 'You must select at a return product reason!';
+$_['error_reason']       = 'You must select at a reason for return!';
 $_['error_captcha']      = 'Verification code does not match the image!';
-$_['error_agree']        = 'Warning: You must agree to the %s!';
+$_['error_agree']        = 'You must agree to the %s!';

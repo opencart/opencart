@@ -3,14 +3,14 @@
 $_['heading_title']    = 'Shopping Cart';
 
 // Text
-$_['text_success']     = 'Success: You have added <a href="%s">%s</a> to your <a href="%s">shopping cart</a>!';
-$_['text_remove']      = 'Success: You have modified your shopping cart!';
+$_['text_success']     = 'Success: <a href="%s">%s</a> added to your <a href="%s">shopping cart</a>!';
+$_['text_remove']      = 'Success: Shopping cart updated!';
 $_['text_login']       = 'Attention: You must <a href="%s">login</a> or <a href="%s">create an account</a> to view prices!';
 $_['text_items']       = '%s item(s) - %s';
 $_['text_points']      = 'Reward Points: %s';
 $_['text_next']        = 'What would you like to do next?';
-$_['text_next_choice'] = 'Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.';
-$_['text_empty']       = 'Your shopping cart is empty!';
+$_['text_next_choice'] = 'I\'d like to apply a coupon code or reward points OR estimate the shipping fee.';
+$_['text_empty']       = 'Your shopping cart is feeling lonely! Add some products.';
 $_['text_day']         = 'day';
 $_['text_week']        = 'week';
 $_['text_semi_month']  = 'half-month';
@@ -38,5 +38,5 @@ $_['column_total']     = 'Total';
 $_['error_stock']            = 'Products marked with *** are not available in the desired quantity or not in stock!';
 $_['error_minimum']          = 'Minimum order amount for %s is %s!';
 $_['error_required']         = '%s required!';
-$_['error_product']          = 'Warning: There are no products in your cart!';
+$_['error_product']          = 'There are no products in your cart!';
 $_['error_profile_required'] = 'Please select a payment profile!';

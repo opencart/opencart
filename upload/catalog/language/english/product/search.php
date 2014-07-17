@@ -4,11 +4,11 @@ $_['heading_title']     = 'Search';
 $_['heading_tag']		= 'Tag - ';
 
 // Text
-$_['text_search']       = 'Products meeting the search criteria';
+$_['text_search']       = 'Search results';
 $_['text_keyword']      = 'Keywords';
 $_['text_category']     = 'All Categories';
 $_['text_sub_category'] = 'Search in subcategories';
-$_['text_empty']        = 'There is no product that matches the search criteria.';
+$_['text_empty']        = 'No products found. Try widening your search criteria.';
 $_['text_quantity']     = 'Qty:';
 $_['text_manufacturer'] = 'Brand:';
 $_['text_model']        = 'Product Code:';

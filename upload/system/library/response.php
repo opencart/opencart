@@ -65,12 +65,6 @@ class Response {
 			}
 
 			if (!headers_sent()) {
-				if (empty($this->content_type)) {
-					$this->addHeader('Content-Type: text/html; charset=utf-8');
-				} else {
-					$this->addHeader($this->content_type);
-				}
-
 				foreach ($this->headers as $header) {
 					header($header, true);
 				}

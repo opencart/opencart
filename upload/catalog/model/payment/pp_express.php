@@ -173,7 +173,7 @@ class ModelPaymentPPExpress extends Model {
 
 			$data['L_PAYMENTREQUEST_0_DESC' . $i] = substr($data['L_PAYMENTREQUEST_0_DESC' . $i], 0, 126);
 
-			$item_price = $this->currency->format($item['price'], false, false, false);
+			$item_price = $this->currency->format($this->tax->calculate($item['price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false);
 
 			$data['L_PAYMENTREQUEST_0_NAME' . $i] = $item['name'];
 			$data['L_PAYMENTREQUEST_0_NUMBER' . $i] = $item['model'];
@@ -254,7 +254,7 @@ class ModelPaymentPPExpress extends Model {
 		}
 
 		foreach ($total_data as $total_row) {
-			if (!in_array($total_row['code'], array('total', 'sub_total'))) {
+			if (!in_array($total_row['code'], array('total', 'sub_total', 'tax'))) {
 				if ($total_row['value'] != 0) {
 					$item_price = $this->currency->format($total_row['value'], false, false, false);
 

@@ -1,5 +1,17 @@
 <?php
-class ControllerSaleOrderApi extends Controller {	
+class ControllerSaleApi extends Controller {	
+	public function insert() {
+		
+	}
+	
+	public function update() {
+		
+	}
+	
+	public function delete() {
+		
+	}
+	
 	public function refresh() {
 		$this->load->language('sale/order');
 
@@ -284,7 +296,7 @@ class ControllerSaleOrderApi extends Controller {
 							
 		}
 
-		
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));		
 	}
 	

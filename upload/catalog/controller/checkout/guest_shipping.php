@@ -210,6 +210,7 @@ class ControllerCheckoutGuestShipping extends Controller {
 			unset($this->session->data['shipping_methods']);
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 }

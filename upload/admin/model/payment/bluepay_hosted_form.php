@@ -219,7 +219,8 @@ class ModelPaymentBluePayHostedForm extends Model {
 	}
 
 	public function adminCallback() {
-		echo json_encode($this->request->get);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($this->request->get));
 	}
 
 	public function logger($message) {

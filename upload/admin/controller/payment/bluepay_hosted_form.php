@@ -291,6 +291,7 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 			$json['msg'] = 'Missing data';
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -345,6 +346,7 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 			$json['msg'] = $this->language->get('error_data_missing');
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -401,6 +403,7 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 			$json['msg'] = 'Missing data';
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -421,13 +424,12 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 			$this->error['secret_key'] = $this->language->get('error_secret_key');
 		}
 
-
-
 		return !$this->error;
 	}
 
 	public function callback() {
-		echo json_encode($this->request->get);
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($this->request->get));
 	}
 
 }

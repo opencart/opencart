@@ -19,6 +19,8 @@ class ControllerAccountLogout extends Controller {
 			unset($this->session->data['voucher']);
 			unset($this->session->data['vouchers']);
 
+			$this->event->trigger('customer_logout');
+
 			$this->response->redirect($this->url->link('account/logout', '', 'SSL'));
 		}
 

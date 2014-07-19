@@ -134,6 +134,9 @@ $registry->set('length', new Length($registry));
 // User
 $registry->set('user', new User($registry));
 
+// Event
+$registry->set('event', new Event($registry));
+
 // Front Controller
 $controller = new Front($registry);
 

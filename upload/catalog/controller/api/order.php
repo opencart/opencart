@@ -554,6 +554,10 @@ class ControllerApiOrder extends Controller {
 				
 				$order_data['comment'] = $this->session->data['comment'];
 				$order_data['total'] = $total;
+				
+				$this->load->model('checkout/order');
+		
+				$json['order_id'] = $this->model_checkout_order->editOrder($order_data);
 			}
 		}
 		

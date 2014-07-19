@@ -58,31 +58,31 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-customer-firstname"><?php echo $entry_firstname; ?></label>
+            <label class="col-sm-2 control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
             <div class="col-sm-10">
               <input type="text" name="firstname" value="<?php echo $firstname; ?>" id="input-customer-firstname" class="form-control" />
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-customer-lastname"><?php echo $entry_lastname; ?></label>
+            <label class="col-sm-2 control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
             <div class="col-sm-10">
               <input type="text" name="lastname" value="<?php echo $lastname; ?>" id="input-customer-lastname" class="form-control" />
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-customer-email"><?php echo $entry_email; ?></label>
+            <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
             <div class="col-sm-10">
               <input type="text" name="email" value="<?php echo $email; ?>" id="input-customer-email" class="form-control" />
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-customer-telephone"><?php echo $entry_telephone; ?></label>
+            <label class="col-sm-2 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
             <div class="col-sm-10">
               <input type="text" name="telephone" value="<?php echo $telephone; ?>" id="input-customer-telephone" class="form-control" />
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-customer-fax"><?php echo $entry_fax; ?></label>
+            <label class="col-sm-2 control-label" for="input-fax"><?php echo $entry_fax; ?></label>
             <div class="col-sm-10">
               <input type="text" name="fax" value="<?php echo $fax; ?>" id="input-customer-fax" class="form-control" />
             </div>
@@ -1459,11 +1459,11 @@ $('#button-reward-remove').on('click', function() {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-                $('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+                $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -1476,9 +1476,9 @@ $('#button-reward-remove').on('click', function() {
 $('#button-product, #button-voucher, #button-refresh').on('click', function() {	
 	$.ajax({
 		<?php if ($order_id) { ?>
-		url: 'index.php?route=sale/order_api/refresh&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		<?php } else { ?>
-		url: 'index.php?route=sale/order_api/refresh&token=<?php echo $token; ?>',
+		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>',
 		<?php } ?>
 		type: 'post',
 		data: $('#content input[type=\'text\'], #content input[type=\'hidden\'], #content input[type=\'radio\']:checked, #content input[type=\'checkbox\']:checked, #content select, #content textarea'),
@@ -1499,37 +1499,98 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 			// Check for errors
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 							
 				// Order Details
 				if (json['error']['customer']) {
-					for (i in json['error']['customer']) {
-						$('#input-customer-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error']['customer'][i] + '</div>');
+					if (json['error']['customer']['firstname']) {
+						$('input[name=\'firstname\']').after('<div class="text-danger">' + json['error']['customer']['firstname'] + '</div');
+					}					
+					
+					if (json['error']['customer']['lastname']) {
+						$('input[name=\'lastname\']').after('<div class="text-danger">' + json['error']['customer']['lastname'] + '</div');
+					}	
+					
+					if (json['error']['customer']['email']) {
+						$('input[name=\'email\']').after('<div class="text-danger">' + json['error']['customer']['email'] + '</div');
 					}
+					
+					if (json['error']['customer']['telephone']) {
+						$('input[name=\'telephone\']').after('<div class="text-danger">' + json['error']['customer']['telephone'] + '</div');
+					}
+					
+					if (json['error']['customer']['custom_field']) {	
+						for (i in json['error']['customer']['custom_field']) {
+							$('#input-custom-field' + i).after('<div class="text-danger">' + json['error']['customer']['custom_field'][i] + '</div>');
+						}
+					}					
 				}	
 			
 				// Payment Address
 				if (json['error']['payment']) {
-					alert(json['error']['payment'].join('-'));
+					if (json['error']['payment']['firstname']) {
+						$('input[name=\'payment_firstname\']').after('<div class="text-danger">' + json['error']['payment']['firstname'] + '</div');
+					}					
 					
-					for (i in json['error']['payment']) {
-						
-						
-						$('#input-payment-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error']['payment'][i] + '</div>');
-						
-						
-					//	if () {
-							
-					//	} 
+					if (json['error']['payment']['lastname']) {
+						$('input[name=\'payment_lastname\']').after('<div class="text-danger">' + json['error']['payment']['lastname'] + '</div');
+					}	
+					
+					if (json['error']['payment']['address_1']) {
+						$('input[name=\'payment_address_1\']').after('<div class="text-danger">' + json['error']['payment']['address_1'] + '</div');
 					}
+					
+					if (json['error']['payment']['city']) {
+						$('input[name=\'payment_city\']').after('<div class="text-danger">' + json['error']['payment']['city'] + '</div');
+					}
+					
+					if (json['error']['payment']['country']) {
+						$('select[name=\'payment_country_id\']').after('<div class="text-danger">' + json['error']['payment']['country'] + '</div');
+					}	
+					
+					if (json['error']['payment']['zone']) {
+						$('select[name=\'payment_zone_id\']').after('<div class="text-danger">' + json['error']['payment']['zone'] + '</div');
+					}	
+					
+					if (json['error']['payment']['custom_field']) {	
+						for (i in json['error']['payment']['custom_field']) {
+							$('#input-payment-custom-field' + i).after('<div class="text-danger">' + json['error']['payment']['custom_field'][i] + '</div>');
+						}
+					}					
 				}
 			
 				// Shipping	Address
 				if (json['error']['shipping']) {		
-					if (json['error']['shipping']) {
-						$('#input-shipping-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error']['shipping'][i] + '</div>');
+					if (json['error']['shipping']['firstname']) {
+						$('input[name=\'shipping_firstname\']').after('<div class="text-danger">' + json['error']['shipping']['firstname'] + '</div');
+					}					
+					
+					if (json['error']['shipping']['lastname']) {
+						$('input[name=\'shipping_lastname\']').after('<div class="text-danger">' + json['error']['shipping']['lastname'] + '</div');
 					}	
+					
+					if (json['error']['shipping']['address_1']) {
+						$('input[name=\'shipping_address_1\']').after('<div class="text-danger">' + json['error']['shipping']['address_1'] + '</div');
+					}
+					
+					if (json['error']['shipping']['city']) {
+						$('input[name=\'shipping_city\']').after('<div class="text-danger">' + json['error']['shipping']['city'] + '</div');
+					}
+					
+					if (json['error']['shipping']['country']) {
+						$('select[name=\'shipping_country_id\']').after('<div class="text-danger">' + json['error']['shipping']['country'] + '</div');
+					}	
+					
+					if (json['error']['shipping']['zone']) {
+						$('select[name=\'shipping_zone_id\']').after('<div class="text-danger">' + json['error']['shipping']['zone'] + '</div');
+					}	
+					
+					if (json['error']['shipping']['custom_field']) {	
+						for (i in json['error']['shipping']['custom_field']) {
+							$('#input-shipping-custom-field' + i).after('<div class="text-danger">' + json['error']['shipping']['custom_field'][i] + '</div>');
+						}
+					}					
 				}
 				
 				// Products
@@ -1541,20 +1602,20 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 					}
 
 					if (json['error']['product']['warning']) {
-						$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['warning'] + '</div>');
+						$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['warning'] + '</div>');
 					}	
 										
 					if (json['error']['product']['stock']) {
-						$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['stock'] + '</div>');
+						$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['stock'] + '</div>');
 					}	
 					
 					if (json['error']['product']['store']) {
-						$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['store'] + '</div>');
+						$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['store'] + '</div>');
 					}	
 																
 					if (json['error']['product']['minimum']) {	
 						for (i in json['error']['product']['minimum']) {
-							$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['minimum'][i] + '</div>');
+							$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['minimum'][i] + '</div>');
 						}						
 					}
 				} else {
@@ -1596,27 +1657,27 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 				
 				// Shipping Method	
 				if (json['error']['shipping_method']) {
-					$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['shipping_method'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['shipping_method'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}	
 				
 				// Payment Method
 				if (json['error']['payment_method']) {
-					$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['payment_method'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['payment_method'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}	
 															
 				// Coupon
 				if (json['error']['coupon']) {
-					$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['coupon'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['coupon'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 				
 				// Voucher
 				if (json['error']['voucher']) {
-					$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['voucher'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['voucher'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 				
 				// Reward Points		
 				if (json['error']['reward']) {
-					$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['reward'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['reward'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}	
 			} else {
 				$('input[name=\'product\']').val('');
@@ -1633,7 +1694,7 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 			}
 
 			if (json['success']) {
-				$('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 			
 			if (json['product']) {

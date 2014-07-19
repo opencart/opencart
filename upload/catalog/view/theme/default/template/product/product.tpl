@@ -546,7 +546,7 @@ $('#button-review').on('click', function() {
         url: 'index.php?route=product/product/write&product_id=<?php echo $product_id; ?>',
         type: 'post',
         dataType: 'json',
-        data: 'name=' + encodeURIComponent($('input[name=\'name\']').val()) + '&content=' + encodeURIComponent($('textarea[name=\'content\']').val()) + '&rating=' + encodeURIComponent($('input[name=\'rating\']:checked').val() ? $('input[name=\'rating\']:checked').val() : '') + '&captcha=' + encodeURIComponent($('input[name=\'captcha\']').val()),
+        data: 'name=' + encodeURIComponent($('input[name=\'name\']').val()) + '&text=' + encodeURIComponent($('textarea[name=\'text\']').val()) + '&rating=' + encodeURIComponent($('input[name=\'rating\']:checked').val() ? $('input[name=\'rating\']:checked').val() : '') + '&captcha=' + encodeURIComponent($('input[name=\'captcha\']').val()),
         beforeSend: function() {
             $('#button-review').button('loading');
         },
@@ -566,7 +566,7 @@ $('#button-review').on('click', function() {
                 $('#review').after('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 
                 $('input[name=\'name\']').val('');
-                $('textarea[name=\'content\']').val('');
+                $('textarea[name=\'text\']').val('');
                 $('input[name=\'rating\']:checked').prop('checked', false);
                 $('input[name=\'captcha\']').val('');
             }

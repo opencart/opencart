@@ -4,12 +4,12 @@ $_['heading_title']    = 'Affiliate Tracking';
 
 // Text
 $_['text_account']     = 'Account';
-$_['text_description'] = 'To make sure you get paid for referrals you send to us we need to track the referral by placing a tracking code in the URL\'s linking to us. You can use the tools below to generate links to the %s web site.';
+$_['text_description'] = '<p>To ensure that you earn commissions for your referrals, please make sure that when you link to %s, you include YOUR Affiliate Tracking code. The tracking code is how we know that a customer was referred by you (clicked on a link on your website to arrive at our webshop).</p><p>You may use the tools below to automatically generate links including YOUR tracking code.</p>';
 
 // Entry
-$_['entry_code']       = 'Your Tracking Code';
+$_['entry_code']       = 'Your Affiliate Tracking Code';
 $_['entry_generator']  = 'Tracking Link Generator';
 $_['entry_link']       = 'Tracking Link';
 
 // Help
-$_['help_generator']  = 'Type in the name of a product you would like to link to';
+$_['help_generator']  = 'Type the name of a product to which you would like to link';

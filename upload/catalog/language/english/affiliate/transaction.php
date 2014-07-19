@@ -9,6 +9,6 @@ $_['column_amount']      = 'Amount (%s)';
 
 // Text
 $_['text_account']       = 'Account';
-$_['text_transaction']   = 'Your Transactions';
-$_['text_balance']       = 'Your current balance is:';
+$_['text_transaction']   = 'Transactions';
+$_['text_balance']       = 'Current balance:';
 $_['text_empty']         = 'You do not have any transactions!';

@@ -174,10 +174,10 @@ class ControllerSaleApi extends Controller {
 			// Add to cart
 			if (isset($this->request->post['to_name']) || isset($this->request->post['to_email']) || isset($this->request->post['from_name']) || isset($this->request->post['from_email'])) {
 				$voucher_data = array(
-					'to_name'          => $this->request->post['to_name'],
-					'to_email'         => $this->request->post['to_email'],
 					'from_name'        => $this->request->post['from_name'],
 					'from_email'       => $this->request->post['from_email'],
+					'to_name'          => $this->request->post['to_name'],
+					'to_email'         => $this->request->post['to_email'],
 					'voucher_theme_id' => $this->request->post['voucher_theme_id'],
 					'message'          => $this->request->post['message'],
 					'amount'           => $this->request->post['amount']
@@ -275,22 +275,20 @@ class ControllerSaleApi extends Controller {
 				$response = $curl->post($url . 'index.php?route=api/order/add');
 							
 				if (isset($response['error'])) {
-					$json['error']['payment_method'] = $response['error'];
+					$json['error']['warning'] = $response['error'];
+				}
+					
+				$response = $curl->post($url . 'index.php?route=api/order/update');
+							
+				if (isset($response['error'])) {
+					$json['error']['warning'] = $response['error'];
 				}
 				
 				$response = $curl->post($url . 'index.php?route=api/order/confirm');
 							
 				if (isset($response['error'])) {
-					$json['error']['payment_method'] = $response['error'];
-				}						
-			}
-			
-			if (!$json['error']) {
-				$response = $curl->post($url . 'index.php?route=api/order/update');
-							
-				if (isset($response['error'])) {
-					$json['error']['payment_method'] = $response['error'];
-				}			
+					$json['error']['warning'] = $response['error'];
+				}							
 			}			
 			*/
 							

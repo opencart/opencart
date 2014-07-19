@@ -2,14 +2,24 @@
 class ModelMarketingMarketing extends Model {
 	public function addMarketing($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "marketing SET name = '" . $this->db->escape($data['name']) . "', description = '" . $this->db->escape($data['description']) . "', code = '" . $this->db->escape($data['code']) . "', date_added = NOW()");
+
+		$marketing_id = $this->db->getLastId();
+
+		$this->event->trigger('admin_add_marketing', array('marketing_id' => $marketing_id));
+
+		return $marketing_id;
 	}
 
 	public function editMarketing($marketing_id, $data) {
 		$this->db->query("UPDATE " . DB_PREFIX . "marketing SET name = '" . $this->db->escape($data['name']) . "', description = '" . $this->db->escape($data['description']) . "', code = '" . $this->db->escape($data['code']) . "' WHERE marketing_id = '" . (int)$marketing_id . "'");
+
+		$this->event->trigger('admin_edit_marketing');
 	}
 
 	public function deleteMarketing($marketing_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "marketing WHERE marketing_id = '" . (int)$marketing_id . "'");
+
+		$this->event->trigger('admin_delete_marketing');
 	}
 
 	public function getMarketing($marketing_id) {

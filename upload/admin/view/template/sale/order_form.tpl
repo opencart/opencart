@@ -58,31 +58,31 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-customer-firstname"><?php echo $entry_firstname; ?></label>
+            <label class="col-sm-2 control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
             <div class="col-sm-10">
               <input type="text" name="firstname" value="<?php echo $firstname; ?>" id="input-customer-firstname" class="form-control" />
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-customer-lastname"><?php echo $entry_lastname; ?></label>
+            <label class="col-sm-2 control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
             <div class="col-sm-10">
               <input type="text" name="lastname" value="<?php echo $lastname; ?>" id="input-customer-lastname" class="form-control" />
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-customer-email"><?php echo $entry_email; ?></label>
+            <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
             <div class="col-sm-10">
               <input type="text" name="email" value="<?php echo $email; ?>" id="input-customer-email" class="form-control" />
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-customer-telephone"><?php echo $entry_telephone; ?></label>
+            <label class="col-sm-2 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
             <div class="col-sm-10">
               <input type="text" name="telephone" value="<?php echo $telephone; ?>" id="input-customer-telephone" class="form-control" />
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-customer-fax"><?php echo $entry_fax; ?></label>
+            <label class="col-sm-2 control-label" for="input-fax"><?php echo $entry_fax; ?></label>
             <div class="col-sm-10">
               <input type="text" name="fax" value="<?php echo $fax; ?>" id="input-customer-fax" class="form-control" />
             </div>
@@ -1504,42 +1504,27 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 							
 				// Order Details
 				if (json['error']['customer']) {
-					for (i in json['error']['customer']) {
-						$('#input-customer-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error']['customer'][i] + '</div>');
-					}
-					
-					if (json['error']['payment']['firstname']) {
-						$('input[name=\'payment_firstname\']').after('<div class="text-danger">' + json['error']['payment']['firstname'] + '</div');
+					if (json['error']['customer']['firstname']) {
+						$('input[name=\'firstname\']').after('<div class="text-danger">' + json['error']['customer']['firstname'] + '</div');
 					}					
 					
-					if (json['error']['payment']['lastname']) {
-						$('input[name=\'payment_firstname\']').after('<div class="text-danger">' + json['error']['payment']['lastname'] + '</div');
+					if (json['error']['customer']['lastname']) {
+						$('input[name=\'lastname\']').after('<div class="text-danger">' + json['error']['customer']['lastname'] + '</div');
 					}	
 					
-					if (json['error']['payment']['address_1']) {
-						$('input[name=\'payment_address_1\']').after('<div class="text-danger">' + json['error']['payment']['address_1'] + '</div');
+					if (json['error']['customer']['email']) {
+						$('input[name=\'email\']').after('<div class="text-danger">' + json['error']['customer']['email'] + '</div');
 					}
 					
-					if (json['error']['payment']['city']) {
-						$('input[name=\'payment_city\']').after('<div class="text-danger">' + json['error']['payment']['city'] + '</div');
+					if (json['error']['customer']['telephone']) {
+						$('input[name=\'telephone\']').after('<div class="text-danger">' + json['error']['customer']['telephone'] + '</div');
 					}
 					
-					if (json['error']['payment']['country']) {
-						$('select[name=\'payment_country_id\']').after('<div class="text-danger">' + json['error']['payment']['country'] + '</div');
-					}	
-					
-					if (json['error']['payment']['zone']) {
-						$('select[name=\'payment_zone_id\']').after('<div class="text-danger">' + json['error']['payment']['zone'] + '</div');
-					}	
-					
-					if (json['error']['payment']['custom_field']) {	
-						for (i in json['error']['payment']['custom_field']) {
-							$('#input-payment-custom_field' + i).after('<div class="text-danger">' + json['error']['payment']['custom_field'][i] + '</div>');
+					if (json['error']['customer']['custom_field']) {	
+						for (i in json['error']['customer']['custom_field']) {
+							$('#input-custom-field' + i).after('<div class="text-danger">' + json['error']['customer']['custom_field'][i] + '</div>');
 						}
 					}					
-					
-					
-					
 				}	
 			
 				// Payment Address
@@ -1549,7 +1534,7 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 					}					
 					
 					if (json['error']['payment']['lastname']) {
-						$('input[name=\'payment_firstname\']').after('<div class="text-danger">' + json['error']['payment']['lastname'] + '</div');
+						$('input[name=\'payment_lastname\']').after('<div class="text-danger">' + json['error']['payment']['lastname'] + '</div');
 					}	
 					
 					if (json['error']['payment']['address_1']) {
@@ -1570,7 +1555,7 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 					
 					if (json['error']['payment']['custom_field']) {	
 						for (i in json['error']['payment']['custom_field']) {
-							$('#input-payment-custom_field' + i).after('<div class="text-danger">' + json['error']['payment']['custom_field'][i] + '</div>');
+							$('#input-payment-custom-field' + i).after('<div class="text-danger">' + json['error']['payment']['custom_field'][i] + '</div>');
 						}
 					}					
 				}
@@ -1582,7 +1567,7 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 					}					
 					
 					if (json['error']['shipping']['lastname']) {
-						$('input[name=\'shipping_firstname\']').after('<div class="text-danger">' + json['error']['shipping']['lastname'] + '</div');
+						$('input[name=\'shipping_lastname\']').after('<div class="text-danger">' + json['error']['shipping']['lastname'] + '</div');
 					}	
 					
 					if (json['error']['shipping']['address_1']) {
@@ -1603,7 +1588,7 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 					
 					if (json['error']['shipping']['custom_field']) {	
 						for (i in json['error']['shipping']['custom_field']) {
-							$('#input-shipping-custom_field' + i).after('<div class="text-danger">' + json['error']['shipping']['custom_field'][i] + '</div>');
+							$('#input-shipping-custom-field' + i).after('<div class="text-danger">' + json['error']['shipping']['custom_field'][i] + '</div>');
 						}
 					}					
 				}

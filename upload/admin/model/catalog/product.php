@@ -121,6 +121,8 @@ class ModelCatalogProduct extends Model {
 		$this->cache->delete('product');
 
 		$this->event->trigger('admin_add_product', array('product_id' => $product_id));
+
+		return $product_id;
 	}
 
 	public function editProduct($product_id, $data) {

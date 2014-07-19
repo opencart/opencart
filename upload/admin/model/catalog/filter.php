@@ -20,6 +20,10 @@ class ModelCatalogFilter extends Model {
 				}
 			}
 		}
+
+		$this->event->trigger('admin_add_filter', array('filter_id' => $filter_id));
+
+		return $filter_id;
 	}
 
 	public function editFilter($filter_group_id, $data) {
@@ -49,6 +53,8 @@ class ModelCatalogFilter extends Model {
 				}
 			}
 		}
+
+		$this->event->trigger('admin_edit_filter');
 	}
 
 	public function deleteFilter($filter_group_id) {
@@ -56,6 +62,8 @@ class ModelCatalogFilter extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_group_description` WHERE filter_group_id = '" . (int)$filter_group_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter` WHERE filter_group_id = '" . (int)$filter_group_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_description` WHERE filter_group_id = '" . (int)$filter_group_id . "'");
+
+		$this->event->trigger('admin_delete_filter');
 	}
 
 	public function getFilterGroup($filter_group_id) {

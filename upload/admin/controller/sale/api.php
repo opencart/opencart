@@ -1,5 +1,17 @@
 <?php
 class ControllerSaleApi extends Controller {	
+	public function insert() {
+		
+	}
+	
+	public function update() {
+		
+	}
+	
+	public function delete() {
+		
+	}
+	
 	public function refresh() {
 		$this->load->language('sale/order');
 

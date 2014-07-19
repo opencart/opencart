@@ -1507,29 +1507,105 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 					for (i in json['error']['customer']) {
 						$('#input-customer-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error']['customer'][i] + '</div>');
 					}
+					
+					if (json['error']['payment']['firstname']) {
+						$('input[name=\'payment_firstname\']').after('<div class="text-danger">' + json['error']['payment']['firstname'] + '</div');
+					}					
+					
+					if (json['error']['payment']['lastname']) {
+						$('input[name=\'payment_firstname\']').after('<div class="text-danger">' + json['error']['payment']['lastname'] + '</div');
+					}	
+					
+					if (json['error']['payment']['address_1']) {
+						$('input[name=\'payment_address_1\']').after('<div class="text-danger">' + json['error']['payment']['address_1'] + '</div');
+					}
+					
+					if (json['error']['payment']['city']) {
+						$('input[name=\'payment_city\']').after('<div class="text-danger">' + json['error']['payment']['city'] + '</div');
+					}
+					
+					if (json['error']['payment']['country']) {
+						$('select[name=\'payment_country_id\']').after('<div class="text-danger">' + json['error']['payment']['country'] + '</div');
+					}	
+					
+					if (json['error']['payment']['zone']) {
+						$('select[name=\'payment_zone_id\']').after('<div class="text-danger">' + json['error']['payment']['zone'] + '</div');
+					}	
+					
+					if (json['error']['payment']['custom_field']) {	
+						for (i in json['error']['payment']['custom_field']) {
+							$('#input-payment-custom_field' + i).after('<div class="text-danger">' + json['error']['payment']['custom_field'][i] + '</div>');
+						}
+					}					
+					
+					
+					
 				}	
 			
 				// Payment Address
 				if (json['error']['payment']) {
-					alert(json['error']['payment'].join('-'));
+					if (json['error']['payment']['firstname']) {
+						$('input[name=\'payment_firstname\']').after('<div class="text-danger">' + json['error']['payment']['firstname'] + '</div');
+					}					
 					
-					for (i in json['error']['payment']) {
-						
-						
-						$('#input-payment-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error']['payment'][i] + '</div>');
-						
-						
-					//	if () {
-							
-					//	} 
+					if (json['error']['payment']['lastname']) {
+						$('input[name=\'payment_firstname\']').after('<div class="text-danger">' + json['error']['payment']['lastname'] + '</div');
+					}	
+					
+					if (json['error']['payment']['address_1']) {
+						$('input[name=\'payment_address_1\']').after('<div class="text-danger">' + json['error']['payment']['address_1'] + '</div');
 					}
+					
+					if (json['error']['payment']['city']) {
+						$('input[name=\'payment_city\']').after('<div class="text-danger">' + json['error']['payment']['city'] + '</div');
+					}
+					
+					if (json['error']['payment']['country']) {
+						$('select[name=\'payment_country_id\']').after('<div class="text-danger">' + json['error']['payment']['country'] + '</div');
+					}	
+					
+					if (json['error']['payment']['zone']) {
+						$('select[name=\'payment_zone_id\']').after('<div class="text-danger">' + json['error']['payment']['zone'] + '</div');
+					}	
+					
+					if (json['error']['payment']['custom_field']) {	
+						for (i in json['error']['payment']['custom_field']) {
+							$('#input-payment-custom_field' + i).after('<div class="text-danger">' + json['error']['payment']['custom_field'][i] + '</div>');
+						}
+					}					
 				}
 			
 				// Shipping	Address
 				if (json['error']['shipping']) {		
-					if (json['error']['shipping']) {
-						$('#input-shipping-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error']['shipping'][i] + '</div>');
+					if (json['error']['shipping']['firstname']) {
+						$('input[name=\'shipping_firstname\']').after('<div class="text-danger">' + json['error']['shipping']['firstname'] + '</div');
+					}					
+					
+					if (json['error']['shipping']['lastname']) {
+						$('input[name=\'shipping_firstname\']').after('<div class="text-danger">' + json['error']['shipping']['lastname'] + '</div');
 					}	
+					
+					if (json['error']['shipping']['address_1']) {
+						$('input[name=\'shipping_address_1\']').after('<div class="text-danger">' + json['error']['shipping']['address_1'] + '</div');
+					}
+					
+					if (json['error']['shipping']['city']) {
+						$('input[name=\'shipping_city\']').after('<div class="text-danger">' + json['error']['shipping']['city'] + '</div');
+					}
+					
+					if (json['error']['shipping']['country']) {
+						$('select[name=\'shipping_country_id\']').after('<div class="text-danger">' + json['error']['shipping']['country'] + '</div');
+					}	
+					
+					if (json['error']['shipping']['zone']) {
+						$('select[name=\'shipping_zone_id\']').after('<div class="text-danger">' + json['error']['shipping']['zone'] + '</div');
+					}	
+					
+					if (json['error']['shipping']['custom_field']) {	
+						for (i in json['error']['shipping']['custom_field']) {
+							$('#input-shipping-custom_field' + i).after('<div class="text-danger">' + json['error']['shipping']['custom_field'][i] + '</div>');
+						}
+					}					
 				}
 				
 				// Products

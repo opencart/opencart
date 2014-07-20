@@ -6,7 +6,7 @@
         <button type="submit" form="form-backup" data-toggle="tooltip" title="<?php echo $button_backup; ?>" class="btn"><i class="fa fa-download"></i></button>
         <button type="submit" form="form-restore" data-toggle="tooltip" title="<?php echo $button_restore; ?>" class="btn"><i class="fa fa-upload"></i></button>
       </div>
-      <h1><i class="fa fa-exchange fa-lg"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="fa fa-exchange"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">

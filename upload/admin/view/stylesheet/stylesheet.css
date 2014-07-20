@@ -357,10 +357,7 @@ input.form-control, select.form-control {
 .table thead > tr > td, .table tbody > tr > td {
 	vertical-align: middle;
 }
-.table thead tr td {
-	background: #F9F9F9;
-	border-bottom: none;
-}
+
 .table a.asc:after {
 	content: " \f0d7";
 	font-family: FontAwesome;

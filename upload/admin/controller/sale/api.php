@@ -276,19 +276,21 @@ class ControllerSaleApi extends Controller {
 			// Order
 			/*
 			if (!$json['error']) {
-				$response = $curl->post($url . 'index.php?route=api/order/add');
+				$response = $curl->post($url . 'index.php?route=api/order/add', $cookie);
 							
 				if (isset($response['error'])) {
 					$json['error']['warning'] = $response['error'];
 				}
 					
-				$response = $curl->post($url . 'index.php?route=api/order/update');
+				$response = $curl->post($url . 'index.php?route=api/order/update', $cookie);
 							
 				if (isset($response['error'])) {
 					$json['error']['warning'] = $response['error'];
 				}
 				
-				$response = $curl->post($url . 'index.php?route=api/order/confirm');
+				
+				
+				$response = $curl->post($url . 'index.php?route=api/order/history', $cookie, array('order_status_id' => $this->request->post['order_status_id']));
 							
 				if (isset($response['error'])) {
 					$json['error']['warning'] = $response['error'];

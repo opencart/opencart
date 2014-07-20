@@ -737,10 +737,6 @@ class ModelCheckoutOrder extends Model {
 	}
 
 	// If the order status changes to something other than the completed orders status the order details need to be unconfirmed
-	public function unconfirm() {
-		
-	}
-
 	public function update($order_id, $order_status_id, $comment = '', $notify = false) {
 		$order_info = $this->getOrder($order_id);
 

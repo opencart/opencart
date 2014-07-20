@@ -76,8 +76,6 @@ class ControllerPaymentSagepayUS extends Controller {
 		$json = array();
 
 		if ($response[1] == 'A') {
-			$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
-
 			$message  = 'Approval Indicator: ' . $response[1] . "\n";
 			$message .= 'Approval/Error Code: ' . substr($response, 2, 6) . "\n";
 			$message .= 'Approval/Error Message: ' . substr($response, 8, 32) . "\n";
@@ -88,7 +86,7 @@ class ControllerPaymentSagepayUS extends Controller {
 			$message .= 'Reference: ' . substr($response, 46, 10) . "\n";
 			$message .= 'Order Number: ' . substr($response, strpos($response, chr(28)) + 1, strrpos($response, chr(28) - 1)) . "\n";
 
-			$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('sagepay_us_order_status_id'), $message, false);
+			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('sagepay_us_order_status_id'), $message, false);
 
 			$json['redirect'] = $this->url->link('checkout/success');
 		} else {

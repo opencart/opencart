@@ -144,8 +144,6 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 			}
 
 			if ($response_info[1] == '1') {
-				$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
-
 				$message = '';
 
 				if (isset($response_info['5'])) {
@@ -169,7 +167,9 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 				}
 
 				if (!$this->config->get('authorizenet_aim_hash') || (strtoupper($response_info[38]) == strtoupper(md5($this->config->get('authorizenet_aim_hash') . $this->config->get('authorizenet_aim_login') . $response_info[7] . $this->currency->format($order_info['total'], $order_info['currency_code'], 1.00000, false))))) {
-					$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('authorizenet_aim_order_status_id'), $message, false);
+					$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('authorizenet_aim_order_status_id'), $message, false);
+				} else {
+					$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('config_order_status_id'));
 				}
 
 				$json['redirect'] = $this->url->link('checkout/success', '', 'SSL');

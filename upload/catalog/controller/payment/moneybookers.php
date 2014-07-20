@@ -63,7 +63,7 @@ class ControllerPaymentMoneybookers extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
 		if ($order_info) {
-			$this->model_checkout_order->confirm($order_id, $this->config->get('config_order_status_id'));
+			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('config_order_status_id'));
 
 			$verified = true;
 

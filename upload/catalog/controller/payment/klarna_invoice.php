@@ -422,7 +422,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 
 						$comment = sprintf($this->language->get('text_comment'), $invoice_number, $this->config->get('config_currency'), $country_to_currency[$order_info['payment_iso_code_3']], $this->currency->getValue($country_to_currency[$order_info['payment_iso_code_3']]));
 
-						$this->model_checkout_order->confirm($this->session->data['order_id'], $order_status, $comment, 1);
+						$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $order_status, $comment, 1);
 
 						$json['redirect'] = $this->url->link('checkout/success');
 					}

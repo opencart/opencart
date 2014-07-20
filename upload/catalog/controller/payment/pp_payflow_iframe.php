@@ -133,7 +133,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 			$response_params = $this->model_payment_pp_payflow_iframe->call($urlParams);
 
 			if ($order_info['order_status_id'] == 0 && $response_params['RESULT'] == '0' && $this->request->post['RESULT'] == 0) {
-				$this->model_checkout_order->confirm($order_id, $this->config->get('pp_payflow_iframe_order_status_id'));
+				$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('pp_payflow_iframe_order_status_id'));
 
 				if ($this->request->post['TYPE'] == 'S') {
 					$complete = 1;

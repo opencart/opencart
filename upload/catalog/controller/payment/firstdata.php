@@ -21,7 +21,7 @@ class ControllerPaymentFirstdata extends Controller {
 		$data['amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
 		$data['currency'] = $this->model_payment_firstdata->mapCurrency($order_info['currency_code']);
 		$data['merchant_id'] = $this->config->get('firstdata_merchant_id');
-		$data['timestamp'] = date("Y:m:d-H:i:s");
+		$data['timestamp'] = date('Y:m:d-H:i:s');
 		$data['order_id'] = 'CON-' . $this->session->data['order_id'] . 'T' . $data['timestamp'].mt_rand(1, 999);
 		$data['url_success'] = $this->url->link('checkout/success', '', 'SSL');
 		$data['url_fail'] = $this->url->link('payment/firstdata/fail', '', 'SSL');
@@ -90,7 +90,9 @@ class ControllerPaymentFirstdata extends Controller {
 
 	public function notify() {
 		$this->load->model('payment/firstdata');
+		
 		$this->load->model('checkout/order');
+		
 		$this->load->language('payment/firstdata');
 
 		$message = '';
@@ -103,9 +105,10 @@ class ControllerPaymentFirstdata extends Controller {
 			$local_hash = $this->model_payment_firstdata->responseHash($this->request->post['chargetotal'], $this->request->post['currency'], $this->request->post['txndatetime'], $this->request->post['approval_code']);
 
 			if ($local_hash == $this->request->post['notification_hash']) {
-
 				$order_id_parts = explode('T', $this->request->post['oid']);
+				
 				$order_id = (int)$order_id_parts[0];
+				
 				$order_info = $this->model_checkout_order->getOrder($order_id);
 
 				if ($this->request->post['txntype'] == 'preauth' || $this->request->post['txntype'] == 'sale') {
@@ -124,21 +127,21 @@ class ControllerPaymentFirstdata extends Controller {
 						);
 
 						$cvv_codes = array(
-							'M' => $this->language->get('text_card_code_m'),
-							'N' => $this->language->get('text_card_code_n'),
-							'P' => $this->language->get('text_card_code_p'),
-							'S' => $this->language->get('text_card_code_s'),
-							'U' => $this->language->get('text_card_code_u'),
-							'X' => $this->language->get('text_card_code_x'),
+							'M'    => $this->language->get('text_card_code_m'),
+							'N'    => $this->language->get('text_card_code_n'),
+							'P'    => $this->language->get('text_card_code_p'),
+							'S'    => $this->language->get('text_card_code_s'),
+							'U'    => $this->language->get('text_card_code_u'),
+							'X'    => $this->language->get('text_card_code_x'),
 							'NONE' => $this->language->get('text_card_code_blank')
 						);
 
 						$card_types = array(
-							'M' => $this->language->get('text_card_type_m'),
-							'V' => $this->language->get('text_card_type_v'),
-							'C' => $this->language->get('text_card_type_c'),
-							'A' => $this->language->get('text_card_type_a'),
-							'MA' => $this->language->get('text_card_type_ma'),
+							'M'         => $this->language->get('text_card_type_m'),
+							'V'         => $this->language->get('text_card_type_v'),
+							'C'         => $this->language->get('text_card_type_c'),
+							'A'         => $this->language->get('text_card_type_a'),
+							'MA'        => $this->language->get('text_card_type_ma'),
 							'MAESTROUK' => $this->language->get('text_card_type_mauk')
 						);
 
@@ -182,22 +185,22 @@ class ControllerPaymentFirstdata extends Controller {
 								$this->model_payment_firstdata->storeCard($this->request->post['hosteddataid'], $order_info['customer_id'], $this->request->post['expmonth'], $this->request->post['expyear'], $this->request->post['cardnumber']);
 							}
 
-							$this->model_checkout_order->confirm($order_id, $this->config->get('config_order_status_id'));
-
 							$fd_order_id = $this->model_payment_firstdata->addOrder($order_info, $this->request->post['oid'], $this->request->post['tdate']);
 
 							if ($this->config->get('firstdata_auto_settle') == 1) {
 								$this->model_payment_firstdata->addTransaction($fd_order_id, 'payment', $order_info);
-								$this->model_checkout_order->update($order_id, $this->config->get('firstdata_order_status_success_settled_id'), $message, false);
+								
+								$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('firstdata_order_status_success_settled_id'), $message, false);
 							} else {
 								$this->model_payment_firstdata->addTransaction($fd_order_id, 'auth');
-								$this->model_checkout_order->update($order_id, $this->config->get('firstdata_order_status_success_unsettled_id'), $message, false);
+								
+								$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('firstdata_order_status_success_unsettled_id'), $message, false);
 							}
 						} else {
 							$message = $this->request->post['fail_reason'] . '<br />';
 							$message .= $this->language->get('text_response_code_full') . $this->request->post['approval_code'];
 
-							$this->model_payment_firstdata->addHistory($order_id, $this->config->get('firstdata_order_status_decline_id'), $message);
+							$this->model_payment_firstdata->addOrderHistory($order_id, $this->config->get('firstdata_order_status_decline_id'), $message);
 						}
 					}
 				}
@@ -205,18 +208,24 @@ class ControllerPaymentFirstdata extends Controller {
 				if ($this->request->post['txntype'] == 'void') {
 					if ($this->request->post['status'] == 'DECLINED') {
 						$fd_order = $this->model_payment_firstdata->getOrder($order_id);
+						
 						$this->model_payment_firstdata->updateVoidStatus($order_id, 1);
+						
 						$this->model_payment_firstdata->addTransaction($fd_order['firstdata_order_id'], 'void');
-						$this->model_checkout_order->update($order_id, $this->config->get('firstdata_order_status_void_id'), $message, false);
+						
+						$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('firstdata_order_status_void_id'), $message, false);
 					}
 				}
 
 				if ($this->request->post['txntype'] == 'postauth') {
 					if ($this->request->post['status'] == 'APPROVED') {
 						$fd_order = $this->model_payment_firstdata->getOrder($order_id);
+						
 						$this->model_payment_firstdata->updateCaptureStatus($order_id, 1);
+						
 						$this->model_payment_firstdata->addTransaction($fd_order['firstdata_order_id'], 'payment', $order_info);
-						$this->model_checkout_order->update($order_id, $this->config->get('firstdata_order_status_success_settled_id'), $message, false);
+						
+						$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('firstdata_order_status_success_settled_id'), $message, false);
 					}
 				}
 			} else {

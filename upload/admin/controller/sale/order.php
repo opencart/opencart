@@ -1557,54 +1557,8 @@ class ControllerSaleOrder extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function restock() {
-		$this->load->language('sale/order');
-
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {
-			if (isset($this->request->get['order_id'])) {
-				$order_id = $this->request->get['order_id'];
-			} else {
-				$order_id = 0;
-			}
-
-			$this->load->model('sale/order');
-
-			$order_info = $this->model_sale_order->getOrder($order_id);
-
-			if ($order_info) {
-				$this->model_sale_order->restock($this->request->get['order_id']);
-
-				$json['success'] = $this->language->get('text_restock');
-			}
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
 	public function history() {
 		$this->load->language('sale/order');
-
-		$data['error'] = '';
-		$data['success'] = '';
-
-		$this->load->model('sale/order');
-
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
-			if (!$this->user->hasPermission('modify', 'sale/order')) {
-				$data['error'] = $this->language->get('error_permission');
-			}
-
-			if (!$data['error']) {
-				$this->model_sale_order->addOrderHistory($this->request->get['order_id'], $this->request->post);
-
-				$data['success'] = $this->language->get('text_success');
-			}
-		}
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
 
@@ -1620,7 +1574,9 @@ class ControllerSaleOrder extends Controller {
 		}
 
 		$data['histories'] = array();
-
+		
+		$this->load->model('sale/order');
+		
 		$results = $this->model_sale_order->getOrderHistories($this->request->get['order_id'], ($page - 1) * 10, 10);
 
 		foreach ($results as $result) {

@@ -289,6 +289,22 @@ class ModelCheckoutOrder extends Model {
 
 	public function addOrderHistory($order_id, $order_status_id, $comment = '', $notify = false) {
 		$order_info = $this->getOrder($order_id);
+		
+		// If past order status is not complete but new status is complete then commence completing the order
+		if ($order_info['order_status_id'] != $this->config->get('config_complete_status_id') && $order_status_id == $this->config->get('config_complete_status_id')) {
+		
+		
+		
+		
+		
+		// If old order status is complete but new status is not then commence restock, and remove coupon, voucher and reward history	
+		} elseif ($order_info['order_status_id'] == $this->config->get('config_complete_status_id') && $order_status_id != $this->config->get('config_complete_status_id')) {
+		
+		
+		// Else just send an email out	
+		} else {
+			
+		}
 
 		if ($order_info && !$order_info['order_status_id']) {
 			// Fraud Detection
@@ -664,7 +680,6 @@ class ModelCheckoutOrder extends Model {
 				$mail->setHtml($html);
 				$mail->setText($text);
 				$mail->send();
-
 			}
 
 			// Admin Alert Mail

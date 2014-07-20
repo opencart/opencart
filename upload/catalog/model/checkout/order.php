@@ -287,7 +287,7 @@ class ModelCheckoutOrder extends Model {
 		}
 	}
 
-	public function confirm($order_id, $order_status_id, $comment = '', $notify = false) {
+	public function addOrderHistory($order_id, $order_status_id, $comment = '', $notify = false) {
 		$order_info = $this->getOrder($order_id);
 
 		if ($order_info && !$order_info['order_status_id']) {

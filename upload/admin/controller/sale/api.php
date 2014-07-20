@@ -12,6 +12,10 @@ class ControllerSaleApi extends Controller {
 		
 	}
 	
+	public function history() {
+		
+	}
+	
 	public function refresh() {
 		$this->load->language('sale/order');
 

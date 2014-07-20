@@ -521,10 +521,6 @@ class ControllerSaleOrder extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 
-		$this->load->model('setting/store');
-
-		$data['stores'] = $this->model_setting_store->getStores();
-
 		if ($this->request->server['HTTPS']) {
 			$data['store_url'] = HTTPS_CATALOG;
 		} else {
@@ -574,74 +570,57 @@ class ControllerSaleOrder extends Controller {
 			$data['shipping_custom_field'] = $order_info['shipping_custom_field'];			
 			$data['shipping_method'] = $order_info['shipping_method'];
 			$data['shipping_code'] = $order_info['shipping_code'];
-
-			if (isset($this->request->get['order_id'])) {
-				$order_products = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
-			} else {
-				$order_products = array();
-			}
-	
-			$this->load->model('catalog/product');
-	
+			
 			$data['order_products'] = array();
+			
+			$order_products = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
 	
 			foreach ($order_products as $order_product) {
-				if (isset($order_product['order_option'])) {
-					$order_option = $order_product['order_option'];
-				} elseif (isset($this->request->get['order_id'])) {
-					$order_option = $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $order_product['order_product_id']);
-				} else {
-					$order_option = array();
-				}
-	
 				$data['order_products'][] = array(
-					'order_product_id' => $order_product['order_product_id'],
-					'product_id'       => $order_product['product_id'],
-					'name'             => $order_product['name'],
-					'model'            => $order_product['model'],
-					'option'           => $order_option,
-					'quantity'         => $order_product['quantity'],
-					'price'            => $order_product['price'],
-					'total'            => $order_product['total'],
-					'tax'              => $order_product['tax'],
-					'reward'           => $order_product['reward']
+					'product_id' => $order_product['product_id'],
+					'name'       => $order_product['name'],
+					'model'      => $order_product['model'],
+					'option'     => $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $order_product['order_product_id']),
+					'quantity'   => $order_product['quantity'],
+					'price'      => $order_product['price'],
+					'total'      => $order_product['total']
 				);
 			}
 			
 			$data['order_vouchers'] = $this->model_sale_order->getOrderVouchers($this->request->get['order_id']);
+
+			$data['coupon'] = '';
+			$data['voucher'] = '';
+			$data['reward'] = '';	
+			
+			$data['order_totals'] = array();			
 			
 			$order_totals = $this->model_sale_order->getOrderTotals($this->request->get['order_id']);
-			
-		$data['order_totals'] = array();
-
-		foreach ($order_totals as $order_total) {
-			$data['order_totals'][] = array(
-				'order_total_id' => $order_total['order_total_id'],
-				'code'           => $order_total['code'],
-				'title'          => $order_total['title'],
-				'text'           => $this->currency->format($order_total['value'], $order_info['currency_code'], $order_info['currency_value']),
-				'value'          => $order_total['value'],
-				'sort_order'     => $order_total['sort_order']
-			);
-
-			// If coupon, voucher or reward points
-			$start = strpos($order_total['title'], '(') + 1;
-			$end = strrpos($order_total['title'], ')');
-
-			if ($start && $end) {
-				if ($order_total['code'] == 'coupon') {
-					$data['coupon'] = substr($order_total['title'], $start, $end - $start);
+	
+			foreach ($order_totals as $order_total) {
+				$data['order_totals'][] = array(
+					'title' => $order_total['title'],
+					'text'  => $this->currency->format($order_total['value'], $order_info['currency_code'], $order_info['currency_value']),
+				);
+	
+				// If coupon, voucher or reward points
+				$start = strpos($order_total['title'], '(') + 1;
+				$end = strrpos($order_total['title'], ')');
+	
+				if ($start && $end) {
+					if ($order_total['code'] == 'coupon') {
+						$data['coupon'] = substr($order_total['title'], $start, $end - $start);
+					}
+	
+					if ($order_total['code'] == 'voucher') {
+						$data['voucher'] = substr($order_total['title'], $start, $end - $start);
+					}
+	
+					if ($order_total['code'] == 'reward') {
+						$data['reward'] = substr($order_total['title'], $start, $end - $start);
+					}
 				}
-
-				if ($order_total['code'] == 'voucher') {
-					$data['voucher'] = substr($order_total['title'], $start, $end - $start);
-				}
-
-				if ($order_total['code'] == 'reward') {
-					$data['reward'] = substr($order_total['title'], $start, $end - $start);
-				}
-			}
-		}			
+			}			
 			
 			
 			$data['order_status_id'] = $order_info['order_status_id'];
@@ -694,9 +673,7 @@ class ControllerSaleOrder extends Controller {
 			$data['order_totals'] = array();
 
 			$data['order_status_id'] = '';
-
-
-				
+			
 			$data['comment'] = '';
 			$data['affiliate'] = '';
 			$data['affiliate_id'] = '';
@@ -706,6 +683,11 @@ class ControllerSaleOrder extends Controller {
 			$data['reward'] = '';			
 		}
 
+		// Stores
+		$this->load->model('setting/store');
+
+		$data['stores'] = $this->model_setting_store->getStores();
+		
 		// Customer Groups
 		$this->load->model('sale/customer_group');
 

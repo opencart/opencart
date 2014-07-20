@@ -30,7 +30,7 @@
       <div class="tab-pane active" id="tab-general">
         <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-modification">
           <div class="table-responsive">
-            <table class="table table-bordered table-hover">
+            <table class="table table-striped table-hover">
               <thead>
                 <tr>
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>

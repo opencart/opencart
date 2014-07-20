@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="table-responsive">
-      <table class="table table-bordered table-hover">
+      <table class="table table-striped table-hover">
         <thead>
           <tr>
             <td class="text-left"><?php echo $column_ip; ?></td>

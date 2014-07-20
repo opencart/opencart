@@ -2,9 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="button" id="button-restock" data-toggle="tooltip" data-placement="left" title="<?php echo $button_restock; ?>" class="btn"><i class="fa fa-undo"></i></button>
-        <a href="<?php echo $invoice; ?>" target="_blank" data-toggle="tooltip" title="<?php echo $button_invoice; ?>" class="btn"><i class="fa fa-print"></i></a> <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a></div>
+      <div class="pull-right"><a href="<?php echo $invoice; ?>" target="_blank" data-toggle="tooltip" title="<?php echo $button_invoice; ?>" class="btn"><i class="fa fa-print"></i></a> <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a></div>
       <h1><i class="fa fa-info-circle fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
@@ -837,9 +835,9 @@ $('#history').load('index.php?route=sale/order/history&token=<?php echo $token; 
 
 $('#button-history').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order/history&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		url: 'index.php?route=sale/api/history&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		type: 'post',
-		dataType: 'html',
+		dataType: 'json',
 		data: 'order_status_id=' + encodeURIComponent($('select[name=\'order_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&append=' + ($('input[name=\'append\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
 		beforeSend: function() {
 			$('#button-history i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
@@ -849,8 +847,10 @@ $('#button-history').on('click', function() {
 			$('#button-history i').replaceWith('<i class="fa fa-plus-circle"></i>');
 			$('#button-history').prop('disabled', false);
 		},
-		success: function(html) {
+		success: function(json) {
 			$('.alert').remove();
+			
+			$('#history').load('index.php?route=sale/order/history&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
 			
 			$('#history').html(html);
 			

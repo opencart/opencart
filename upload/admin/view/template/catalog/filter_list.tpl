@@ -5,7 +5,7 @@
       <div class="pull-right"><a href="<?php echo $insert; ?>" data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn"><i class="fa fa-plus-circle"></i></a>
         <button type="button" class="btn" data-toggle="tooltip" title="<?php echo $button_delete; ?>" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-filter').submit() : false;"><i class="fa fa-times-circle"></i></button>
       </div>
-      <h1><i class="fa fa-bars fa-lg"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="fa fa-bars"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">

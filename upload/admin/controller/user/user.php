@@ -292,6 +292,12 @@ class ControllerUserUser extends Controller {
 			$data['error_username'] = '';
 		}
 
+		if (isset($this->error['email'])) {
+			$data['error_email'] = $this->error['email'];
+		} else {
+			$data['error_email'] = '';
+		}
+
 		if (isset($this->error['password'])) {
 			$data['error_password'] = $this->error['password'];
 		} else {
@@ -470,6 +476,22 @@ class ControllerUserUser extends Controller {
 
 		if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
 			$this->error['lastname'] = $this->language->get('error_lastname');
+		}
+
+		if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email'])) {
+			$this->error['email'] = $this->language->get('error_email');
+		}
+
+		$user_info = $this->model_user_user->getUserByEmail($this->request->post['email']);
+
+		if (!isset($this->request->get['user_id'])) {
+			if ($user_info) {
+				$this->error['email'] = $this->language->get('error_email_exists');
+			}
+		} else {
+			if ($user_info && ($this->request->get['user_id'] != $user_info['user_id'])) {
+				$this->error['email'] = $this->language->get('error_email_exists');
+			}
 		}
 
 		if ($this->request->post['password'] || (!isset($this->request->get['user_id']))) {

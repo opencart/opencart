@@ -75,6 +75,8 @@ class ModelToolBackup extends Model {
 			}
 		}
 
+		$this->event->trigger('admin_backup');
+
 		return $output;
 	}
 }

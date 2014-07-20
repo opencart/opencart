@@ -54,6 +54,8 @@ class ModelCatalogCategory extends Model {
 		$this->cache->delete('category');
 
 		$this->event->trigger('admin_add_category', array('category_id' => $category_id));
+
+		return $category_id;
 	}
 
 	public function editCategory($category_id, $data) {
@@ -217,24 +219,24 @@ class ModelCatalogCategory extends Model {
 		}
 
 		$sql .= " GROUP BY cp.category_id";
-               
+
 		$sort_data = array(
 			'name',
 			'sort_order'
-		);     
-		
+		);
+
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];  
+			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY sort_order";       
+			$sql .= " ORDER BY sort_order";
 		}
-		
+
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
 			$sql .= " DESC";
 		} else {
 			$sql .= " ASC";
 		}
-				
+
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {
 				$data['start'] = 0;

@@ -1,20 +1,5 @@
 <?php
 class ModelSaleOrder extends Model {
-	public function restock($order_id) {
-		// Restock products that require restocking
-		$product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
-
-		foreach($product_query->rows as $product) {
-			$this->db->query("UPDATE `" . DB_PREFIX . "product` SET quantity = (quantity + " . (int)$product['quantity'] . ") WHERE product_id = '" . (int)$product['product_id'] . "' AND subtract = '1'");
-
-			$option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$product['order_product_id'] . "'");
-
-			foreach ($option_query->rows as $option) {
-				$this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity + " . (int)$product['quantity'] . ") WHERE product_option_value_id = '" . (int)$option['product_option_value_id'] . "' AND subtract = '1'");
-			}
-		}
-	}
-
 	public function getOrder($order_id) {
 		$order_query = $this->db->query("SELECT *, (SELECT CONCAT(c.firstname, ' ', c.lastname) FROM " . DB_PREFIX . "customer c WHERE c.customer_id = o.customer_id) AS customer FROM `" . DB_PREFIX . "order` o WHERE o.order_id = '" . (int)$order_id . "'");
 
@@ -74,11 +59,9 @@ class ModelSaleOrder extends Model {
 			$affiliate_info = $this->model_marketing_affiliate->getAffiliate($affiliate_id);
 
 			if ($affiliate_info) {
-				$affiliate_firstname = $affiliate_info['firstname'];
-				$affiliate_lastname = $affiliate_info['lastname'];
+				$affiliate = $affiliate_info['firstname'] . ' ' . $affiliate_info['lastname'];
 			} else {
-				$affiliate_firstname = '';
-				$affiliate_lastname = '';
+				$affiliate = '';
 			}
 
 			$this->load->model('localisation/language');
@@ -152,8 +135,7 @@ class ModelSaleOrder extends Model {
 				'reward'                  => $reward,
 				'order_status_id'         => $order_query->row['order_status_id'],
 				'affiliate_id'            => $order_query->row['affiliate_id'],
-				'affiliate_firstname'     => $affiliate_firstname,
-				'affiliate_lastname'      => $affiliate_lastname,
+				'affiliate'               => $affiliate,
 				'commission'              => $order_query->row['commission'],
 				'language_id'             => $order_query->row['language_id'],
 				'language_code'           => $language_code,

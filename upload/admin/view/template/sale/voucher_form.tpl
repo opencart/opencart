@@ -4,7 +4,7 @@
     <div class="container-fluid">
       <div class="pull-right">
         <?php if ($voucher_id) { ?>
-        <button type="button" id="button-send" data-toggle="tooltip" title="<?php echo $button_send; ?>" class="btn"><i class="fa fa-envelope"></i></button>
+        <button type="button" id="button-send" data-toggle="tooltip" title="<?php echo $button_send; ?>" class="btn btn-primary"><i class="fa fa-envelope"></i></button>
         <?php } ?>
         <button type="submit" form="form-voucher" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-check-circle"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>

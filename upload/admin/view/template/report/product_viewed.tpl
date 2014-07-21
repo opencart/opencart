@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="<?php echo $reset; ?>" data-toggle="tooltip" title="<?php echo $button_reset; ?>" class="btn"><i class="fa fa-refresh"></i></a></div>
+      <div class="pull-right"><a href="<?php echo $reset; ?>" data-toggle="tooltip" title="<?php echo $button_reset; ?>" class="btn btn-danger"><i class="fa fa-refresh"></i></a></div>
       <h1><i class="fa fa-bar-chart-o"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>

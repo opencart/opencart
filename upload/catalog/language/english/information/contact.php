@@ -9,9 +9,9 @@ $_['text_contact']   = 'Contact Form';
 $_['text_address']   = 'Address';
 $_['text_telephone'] = 'Telephone';
 $_['text_fax']       = 'Fax';
-$_['text_open']      = 'Opening Times';
+$_['text_open']      = 'Opening Hours';
 $_['text_comment']   = 'Comments';
-$_['text_success']   = '<p>Your enquiry has been successfully sent to the store owner!</p>';
+$_['text_success']   = '<p>We have received your enauiry and will get back to you as soon as possible.</p>';
 
 // Entry
 $_['entry_name']     = 'Your Name';

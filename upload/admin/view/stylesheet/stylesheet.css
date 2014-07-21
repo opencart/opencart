@@ -6,6 +6,12 @@ html, body {
 h1, h2, h3, h4, h5, h6, p {
 	margin-top: 0;
 }
+.page-header {
+	margin-top: 20px; 
+}
+.page-header h1 {
+	font-size: 24px;
+}
 /* fix for bootstrap hidden and visible */
 span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: inline;
@@ -15,9 +21,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	width: 100%;
 	position: relative;
 	overflow: hidden;
-}
-.page-header h1 {
-	font-size: 24px;
 }
 #header {
 	min-height: 45px;
@@ -108,6 +111,9 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #column-left.active {
 	width: 235px;
 }
+#content {
+	padding-bottom: 40px;	
+}
 
 /* Menu Active */
 /* Desktop */
@@ -118,18 +124,11 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #column-left.active + #content {
 	margin-left: 235px;
 }
-#column-left.active + #content + #footer {
-	margin-left: 235px;
-}
 }
 
 /* Mobile */
 @media (max-width: 767px) {
 #column-left.active + #content {
-	position: relative;
-	left: 235px;
-}
-#column-left.active + #content + #footer {
 	position: relative;
 	left: 235px;
 }
@@ -198,36 +197,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	text-align: center;
 	color: #000000;
 }
-/* panel */
-/*
-.panel-default > .panel-heading {
-	background-color: #F7F7F7;
-	padding: 5px 15px;
-}
-.panel-default > .panel-heading .btn {
-	font-size: 18px;
-	color: #B7B7B7;
-	background: none;
-	padding: 4px 8px;
-}
-.panel-default > .panel-heading .btn:hover {
-	color: #777777;
-}
-.panel-title {
-	padding: 5px 0;
-	text-shadow: 1px 1px 0 #FFF;
-}
-.panel-title i {
-	color: #34C9DF;
-}
-*/
 
-
-
-.alert {
-	font-size: 12px;
-	padding: 10px;
-}
 .nav-tabs {
 	margin-bottom: 15px;
 }
@@ -236,11 +206,9 @@ div.required .control-label:before, td.required:before {
 	color: #F00;
 	font-weight: bold;
 }
+
 label.control-label {
 	font-weight: normal;
-}
-.form-control {
-	padding: 5px 12px;
 }
 
 .table thead > tr > td, .table tbody > tr > td {
@@ -259,6 +227,7 @@ label.control-label {
 .pagination {
 	margin: 0;
 }
+
 .img-thumbnail i {
 	color: #FFFFFF;
 	background-color: #EEEEEE;

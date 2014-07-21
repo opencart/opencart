@@ -1,7 +1,7 @@
 <?php
 class ControllerSaleOrder extends Controller {
 	private $error = array();
-
+	
 	public function index() {
 		$this->load->language('sale/order');
 
@@ -34,14 +34,14 @@ class ControllerSaleOrder extends Controller {
 
   	public function delete() {
 		$this->load->language('sale/order');
-		
-		if ($this->validateDelete()) {
-			
-			
-			
-			
 
-			
+		if ($this->validateDelete()) {
+
+
+
+
+
+
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

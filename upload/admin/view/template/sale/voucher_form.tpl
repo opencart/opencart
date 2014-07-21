@@ -7,7 +7,7 @@
         <button type="button" id="button-send" data-toggle="tooltip" title="<?php echo $button_send; ?>" class="btn"><i class="fa fa-envelope"></i></button>
         <?php } ?>
         <button type="submit" form="form-voucher" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn"><i class="fa fa-check-circle"></i></button>
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a></div>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1><i class="fa fa-pencil-square"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>

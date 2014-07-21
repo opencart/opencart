@@ -1933,6 +1933,7 @@ class ControllerSaleOrder extends Controller {
 		$data['lang'] = $this->language->get('code');
 
 		$data['text_shipping'] = $this->language->get('text_shipping');
+		$data['text_picklist'] = $this->language->get('text_picklist');
 
 		$data['text_order_detail'] = $this->language->get('text_order_detail');
 		$data['text_order_id'] = $this->language->get('text_order_id');

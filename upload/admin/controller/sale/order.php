@@ -593,14 +593,14 @@ class ControllerSaleOrder extends Controller {
 			$data['voucher'] = '';
 			$data['reward'] = '';	
 			
-			$data['order_totals'] = array();			
+			$data['order_totals'] = array();
 			
 			$order_totals = $this->model_sale_order->getOrderTotals($this->request->get['order_id']);
 	
 			foreach ($order_totals as $order_total) {
 				$data['order_totals'][] = array(
 					'title' => $order_total['title'],
-					'text'  => $this->currency->format($order_total['value'], $order_info['currency_code'], $order_info['currency_value']),
+					'value' => $this->currency->format($order_total['value'], $order_info['currency_code'], $order_info['currency_value']),
 				);
 	
 				// If coupon, voucher or reward points

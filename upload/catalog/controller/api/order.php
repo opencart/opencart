@@ -615,7 +615,7 @@ class ControllerApiOrder extends Controller {
 			
 			$this->load->model('checkout/order');
 			
-			$this->model_checkout_order->addOrderHistory($this->request->get['order_id'], $this->request->post['order_id'], $this->request->post['comment'], $this->request->post['notify']);
+			//$this->model_checkout_order->addOrderHistory($this->request->get['order_id'], $this->request->post['order_status_id'], $this->request->post['comment'], $this->request->post['notify']);
 		
 			$json['success'] = $this->language->get('text_success');
 		}

@@ -43,6 +43,8 @@ class ControllerSaleApi extends Controller {
 		}		
 		
 		if (isset($response['cookie'])) {
+			$cookie = $response['cookie'];
+			
 			// Customer
 			$customer_data = array(
 				'customer_id'       => $this->request->post['customer_id'],
@@ -55,7 +57,7 @@ class ControllerSaleApi extends Controller {
 				'custom_field'      => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : array(),
 			);
 			
-			$response = $this->api($url . 'index.php?route=api/customer', $response['cookie'], $customer_data);
+			$response = $this->api($url . 'index.php?route=api/customer', $cookie, $customer_data);
 			
 			if (isset($response['error'])) {
 				$json['error']['customer'] = $response['error'];
@@ -75,7 +77,7 @@ class ControllerSaleApi extends Controller {
 				'custom_field' => isset($this->request->post['payment_custom_field']) ? $this->request->post['payment_custom_field'] : array()
 			);
 					
-			$response = $this->api($url . 'index.php?route=api/payment/address', $response['cookie'], $payment_address);
+			$response = $this->api($url . 'index.php?route=api/payment/address', $cookie, $payment_address);
 					
 			if (isset($response['error'])) {
 				$json['error']['payment'] = $response['error'];
@@ -95,7 +97,7 @@ class ControllerSaleApi extends Controller {
 				'custom_field' => isset($this->request->post['shipping_custom_field']) ? $this->request->post['shipping_custom_field'] : array()
 			);		
 			
-			$response = $this->api($url . 'index.php?route=api/shipping/address', $response['cookie'], $shipping_address);
+			$response = $this->api($url . 'index.php?route=api/shipping/address', $cookie, $shipping_address);
 			
 			if (isset($response['error'])) {
 				$json['error']['shipping'] = $response['error'];
@@ -117,7 +119,7 @@ class ControllerSaleApi extends Controller {
 						'override'   => true
 					);
 	
-					$response = $this->api($url . 'index.php?route=api/cart/add', $response['cookie'], $product_data);
+					$response = $this->api($url . 'index.php?route=api/cart/add', $cookie, $product_data);
 					
 					if (isset($response['error'])) {
 						$json['error']['product'] = $response['error'];
@@ -147,7 +149,7 @@ class ControllerSaleApi extends Controller {
 					'quantity'   => $quantity
 				);
 				
-				$response = $this->api($url . 'index.php?route=api/cart/add', $response['cookie'], $product_data);
+				$response = $this->api($url . 'index.php?route=api/cart/add', $cookie, $product_data);
 						
 				if (isset($response['error'])) {
 					$json['error']['product'] = $response['error'];
@@ -157,7 +159,7 @@ class ControllerSaleApi extends Controller {
 			// Vouchers
 			if (isset($this->request->post['order_voucher'])) {
 				foreach ($this->request->post['order_voucher'] as $order_voucher) {
-					$response = $this->api($url . 'index.php?route=api/voucher/add', $response['cookie'], $order_voucher);
+					$response = $this->api($url . 'index.php?route=api/voucher/add', $cookie, $order_voucher);
 						
 					if (isset($response['error'])) {
 						$json['error']['vouchers'] = $response['error'];
@@ -179,7 +181,7 @@ class ControllerSaleApi extends Controller {
 					'amount'           => $this->request->post['amount']
 				);
 				
-				$response = $this->api($url . 'index.php?route=api/voucher/add', $response['cookie'], $voucher_data);
+				$response = $this->api($url . 'index.php?route=api/voucher/add', $cookie, $voucher_data);
 				
 				if (isset($response['error'])) {
 					$json['error']['vouchers'] = $response['error'];
@@ -188,7 +190,7 @@ class ControllerSaleApi extends Controller {
 			
 			// Coupon
 			if ($this->request->post['coupon']) {
-				$response = $this->api($url . 'index.php?route=api/coupon', $response['cookie'], array('coupon' => $this->request->post['coupon']));
+				$response = $this->api($url . 'index.php?route=api/coupon', $cookie, array('coupon' => $this->request->post['coupon']));
 							
 				if (isset($response['error'])) {
 					$json['error']['coupon'] = $response['error'];
@@ -197,7 +199,7 @@ class ControllerSaleApi extends Controller {
 			
 			// Voucher
 			if ($this->request->post['voucher']) {
-				$response = $this->api($url . 'index.php?route=api/voucher', $response['cookie'], array('voucher' => $this->request->post['voucher']));
+				$response = $this->api($url . 'index.php?route=api/voucher', $cookie, array('voucher' => $this->request->post['voucher']));
 			
 				if (isset($response['error'])) {
 					$json['error']['voucher'] = $response['error'];
@@ -206,7 +208,7 @@ class ControllerSaleApi extends Controller {
 			
 			// Reward Points
 			if ($this->request->post['reward']) {
-				$response = $this->api($url . 'index.php?route=api/reward', $response['cookie'], array('reward' => $this->request->post['reward']));
+				$response = $this->api($url . 'index.php?route=api/reward', $cookie, array('reward' => $this->request->post['reward']));
 				
 				if (isset($response['error'])) {
 					$json['error']['reward'] = $response['error'];
@@ -214,7 +216,7 @@ class ControllerSaleApi extends Controller {
 			}
 							
 			// Shipping Methods	
-			$response = $this->api($url . 'index.php?route=api/shipping/methods', $response['cookie']);
+			$response = $this->api($url . 'index.php?route=api/shipping/methods', $cookie);
 				
 			if (isset($response['error'])) {
 				$json['error']['shipping_method'] = $response['error'];
@@ -223,14 +225,14 @@ class ControllerSaleApi extends Controller {
 			}
 			
 			// Shipping Method
-			$response = $this->api($url . 'index.php?route=api/shipping/method', $response['cookie'], array('shipping_method' => $this->request->post['shipping_code']));
+			$response = $this->api($url . 'index.php?route=api/shipping/method', $cookie, array('shipping_method' => $this->request->post['shipping_code']));
 				
 			if (isset($response['error'])) {
 				$json['error']['shipping_method'] = $response['error'];
 			}
 			
 			// Payment Methods	
-			$response = $this->api($url . 'index.php?route=api/payment/methods', $response['cookie']);
+			$response = $this->api($url . 'index.php?route=api/payment/methods', $cookie);
 			
 			if (isset($response['error'])) {
 				$json['error']['payment_method'] = $response['error'];
@@ -239,14 +241,14 @@ class ControllerSaleApi extends Controller {
 			}
 			
 			// Payment Method
-			$response = $this->api($url . 'index.php?route=api/payment/method', $response['cookie'], array('payment_method' => $this->request->post['payment_code']));
+			$response = $this->api($url . 'index.php?route=api/payment/method', $cookie, array('payment_method' => $this->request->post['payment_code']));
 				
 			if (isset($response['error'])) {
 				$json['error']['payment_method'] = $response['error'];
 			}	
 			
 			// Products
-			$response = $this->api($url . 'index.php?route=api/cart/products', $response['cookie']);
+			$response = $this->api($url . 'index.php?route=api/cart/products', $cookie);
 			
 			if (isset($response['product'])) {
 				$json['product'] = $response['product'];
@@ -258,7 +260,7 @@ class ControllerSaleApi extends Controller {
 			}
 					
 			// Totals
-			$response = $this->api($url . 'index.php?route=api/cart/totals', $response['cookie']);
+			$response = $this->api($url . 'index.php?route=api/cart/totals', $cookie);
 			
 			if (isset($response['total'])) {
 				$json['total'] = $response['total'];
@@ -268,13 +270,13 @@ class ControllerSaleApi extends Controller {
 			// Order
 			/*
 			if (!$json['error']) {
-				$response = $curl->post($url . 'index.php?route=api/order/add', $response['cookie']);
+				$response = $curl->post($url . 'index.php?route=api/order/add', $cookie);
 							
 				if (isset($response['error'])) {
 					$json['error']['warning'] = $response['error'];
 				}
 					
-				$response = $curl->post($url . 'index.php?route=api/order/update', $response['cookie']);
+				$response = $curl->post($url . 'index.php?route=api/order/update', $cookie);
 							
 				if (isset($response['error'])) {
 					$json['error']['warning'] = $response['error'];
@@ -282,7 +284,7 @@ class ControllerSaleApi extends Controller {
 				
 				
 				
-				$response = $curl->post($url . 'index.php?route=api/order/history', $response['cookie'], array('order_status_id' => $this->request->post['order_status_id']));
+				$response = $curl->post($url . 'index.php?route=api/order/history', $cookie, array('order_status_id' => $this->request->post['order_status_id']));
 							
 				if (isset($response['error'])) {
 					$json['error']['warning'] = $response['error'];
@@ -295,7 +297,6 @@ class ControllerSaleApi extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));		
 	}
-
 	
 	public function history() {
 		$json = array();
@@ -310,7 +311,7 @@ class ControllerSaleApi extends Controller {
 				'password' => $api_info['password']
 			);
 			
-			$response = $this->api(HTTP_CATALOG . 'index.php?route=api/login', '', $api_data);
+			$response = $this->api(HTTPS_CATALOG . 'index.php?route=api/login', '', $api_data);
 			
 			if (isset($response['error'])) {
 				$json['error'] = $response['error'];
@@ -318,11 +319,7 @@ class ControllerSaleApi extends Controller {
 		}
 		
 		if (isset($response['cookie'])) {
-			$response = $this->api(HTTP_CATALOG. 'index.php?route=api/order/history&order_id=' . $this->request->get['order_id'], $response['cookie'], $this->request->post);
-			
-			if (isset($response['error'])) {
-				$json['error'] = $response['error'];
-			}	
+			$json = $this->api(HTTPS_CATALOG . 'index.php?route=api/order/history&order_id=' . $this->request->get['order_id'], $response['cookie'], $this->request->post);
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');

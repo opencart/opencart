@@ -686,35 +686,6 @@ $(document).delegate('#button-invoice', 'click', function() {
 	});
 });
 
-$(document).delegate('#button-restock', 'click', function() {
-	$.ajax({
-		url: 'index.php?route=sale/order/restock&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-restock i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
-			$('#button-restock').prop('disabled', true);			
-		},
-		complete: function() {
-			$('#button-restock i').replaceWith('<i class="fa fa-reply"></i>');
-			$('#button-restock').prop('disabled', false);
-		},
-		success: function(json) {
-			$('.alert').remove();
-						
-			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
-			}
-			
-			if (json['success']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
-			}
-		},			
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
-
 $(document).delegate('#button-reward-add', 'click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/addreward&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
@@ -855,7 +826,7 @@ $('#button-history').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/api/history&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		type: 'post',
-		dataType: 'html',
+		dataType: 'json',
 		data: 'order_status_id=' + encodeURIComponent($('select[name=\'order_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&append=' + ($('input[name=\'append\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
 		beforeSend: function() {
 			$('#button-history i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
@@ -866,18 +837,16 @@ $('#button-history').on('click', function() {
 			$('#button-history').prop('disabled', false);
 		},
 		success: function(json) {
-			alert(json);
-			
 			$('.alert').remove();
 			
 			if (json['error']) {
-				$('#content > .container-fluid').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#history').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			} 
 		
 			if (json['success']) {
 				$('#history').load('index.php?route=sale/order/history&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
 				
-				$('#history').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#history').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
 				$('textarea[name=\'comment\']').val('');
 				

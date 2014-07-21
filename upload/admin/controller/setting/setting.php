@@ -752,10 +752,10 @@ class ControllerSettingSetting extends Controller {
 			$data['config_account_mail'] = $this->config->get('config_account_mail');
 		}
 
-		if (isset($this->request->post['config_api'])) {
-			$data['config_api'] = $this->request->post['config_api'];
+		if (isset($this->request->post['config_api_id'])) {
+			$data['config_api_id'] = $this->request->post['config_api_id'];
 		} else {
-			$data['config_api'] = $this->config->get('config_api');
+			$data['config_api_id'] = $this->config->get('config_api_id');
 		}
 
 		$this->load->model('user/api');

@@ -918,6 +918,7 @@ class ControllerSaleOrder extends Controller {
 			$data['entry_comment'] = $this->language->get('entry_comment');
 
 			$data['button_invoice'] = $this->language->get('button_invoice');
+			$data['button_shipping'] = $this->language->get('button_shipping');
 			$data['button_cancel'] = $this->language->get('button_cancel');
 			$data['button_generate'] = $this->language->get('button_generate');
 			$data['button_reward_add'] = $this->language->get('button_reward_add');
@@ -1956,6 +1957,7 @@ class ControllerSaleOrder extends Controller {
 		$data['column_location'] = $this->language->get('column_location');
 		$data['column_reference'] = $this->language->get('column_reference');
 		$data['column_product'] = $this->language->get('column_product');
+		$data['column_weight'] = $this->language->get('column_weight');
 		$data['column_model'] = $this->language->get('column_model');
 		$data['column_quantity'] = $this->language->get('column_quantity');
 		$data['column_comment'] = $this->language->get('column_comment');

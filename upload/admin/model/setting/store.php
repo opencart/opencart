@@ -5,6 +5,13 @@ class ModelSettingStore extends Model {
 
 		$store_id = $this->db->getLastId();
 
+		// Layout Route
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "layout_route WHERE store_id = '0'");
+
+		foreach ($query->rows as $layout_route) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "layout_route SET layout_id = '" . (int)$layout_route['layout_id'] . "', route = '" . $this->db->escape($layout_route['route']) . "', store_id = '" . (int)$store_id . "'");
+		}
+
 		$this->cache->delete('store');
 
 		$this->event->trigger('admin_add_store', array('store_id' => $store_id));
@@ -22,6 +29,7 @@ class ModelSettingStore extends Model {
 
 	public function deleteStore($store_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "store WHERE store_id = '" . (int)$store_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "layout_route WHERE store_id = '" . (int)$store_id . "'");
 
 		$this->cache->delete('store');
 

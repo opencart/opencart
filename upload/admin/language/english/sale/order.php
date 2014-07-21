@@ -114,6 +114,7 @@ $_['text_risk_score']                         = 'Risk Score:';
 $_['text_queries_remaining']                  = 'Queries Remaining:';
 $_['text_maxmind_id']                         = 'Maxmind ID:';
 $_['text_error']                              = 'Error:';
+$_['text_picklist']                           = 'Dispatch note';
 
 // Column
 $_['column_order_id']                         = 'Order ID';
@@ -131,6 +132,7 @@ $_['column_notify']                           = 'Customer Notified';
 $_['column_location']                         = 'Location';
 $_['column_reference']                        = 'Reference';
 $_['column_action']                           = 'Action';
+$_['column_weight']                           = 'Product weight';
 
 // Entry
 $_['entry_store']                             = 'Store';

@@ -98,8 +98,6 @@ class ControllerPaymentWebPaymentSoftware extends Controller {
 
 		//If successful log transaction in opencart system
 		if ('00' === (string)$xml->response_code) {
-			$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
-
 			$message = '';
 
 			$message .= 'Response Code: ';
@@ -138,7 +136,7 @@ class ControllerPaymentWebPaymentSoftware extends Controller {
 				$message .= (string)$xml->response_text . "\n";
 			}
 
-			$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('web_payment_software_order_status_id'), $message, false);
+			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('web_payment_software_order_status_id'), $message, false);
 
 			$json['redirect'] = $this->url->link('checkout/success', '', 'SSL');
 		} else {

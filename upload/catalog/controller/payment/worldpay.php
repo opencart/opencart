@@ -62,15 +62,6 @@ class ControllerPaymentWorldPay extends Controller {
 		$data['text_failure_wait'] = sprintf($this->language->get('text_failure_wait'), $this->url->link('checkout/checkout', '', 'SSL'));
 
 		if (isset($this->request->post['transStatus']) && $this->request->post['transStatus'] == 'Y') {
-			$this->load->model('checkout/order');
-
-			// If returned successful but callbackPW doesn't match, set order to pendind and record reason
-			if (isset($this->request->post['callbackPW']) && ($this->request->post['callbackPW'] == $this->config->get('worldpay_password'))) {
-				$this->model_checkout_order->confirm($this->request->post['cartId'], $this->config->get('worldpay_order_status_id'));
-			} else {
-				$this->model_checkout_order->confirm($this->request->post['cartId'], $this->config->get('config_order_status_id'), $this->language->get('text_pw_mismatch'));
-			}
-
 			$message = '';
 
 			if (isset($this->request->post['transId'])) {
@@ -105,8 +96,15 @@ class ControllerPaymentWorldPay extends Controller {
 				$message .= 'wafMerchMessage: ' . $this->request->post['wafMerchMessage'] . "\n";
 			}
 
-			$this->model_checkout_order->update($this->request->post['cartId'], $this->config->get('worldpay_order_status_id'), $message, false);
+			$this->load->model('checkout/order');
 
+			// If returned successful but callbackPW doesn't match, set order to pendind and record reason
+			if (isset($this->request->post['callbackPW']) && ($this->request->post['callbackPW'] == $this->config->get('worldpay_password'))) {
+				$this->model_checkout_order->addOrderHistory($this->request->post['cartId'], $this->config->get('worldpay_order_status_id'), $message, false);
+			} else {
+				$this->model_checkout_order->addOrderHistory($this->request->post['cartId'], $this->config->get('config_order_status_id'), $this->language->get('text_pw_mismatch'));
+			}
+			
 			$data['continue'] = $this->url->link('checkout/success');
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/worldpay_success.tpl')) {

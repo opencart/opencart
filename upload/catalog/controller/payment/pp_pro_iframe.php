@@ -177,12 +177,12 @@ class ControllerPaymentPPProIframe extends Controller {
 
 						$this->model_payment_pp_pro_iframe->addTransaction($paypal_transaction_data);
 
-						$this->model_checkout_order->confirm($order_id, $order_status_id);
+						$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
 					} else {
-						$this->model_checkout_order->update($order_id, $order_status_id);
+						$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
 					}
 				} else {
-					$this->model_checkout_order->confirm($order_id, $this->config->get('config_order_status_id'));
+					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('config_order_status_id'));
 				}
 			}
 
@@ -261,7 +261,6 @@ class ControllerPaymentPPProIframe extends Controller {
 		$s_data['L_BUTTONVAR55'] = 'template=templateD';
 		$s_data['L_BUTTONVAR56'] = 'return=' . $this->url->link('checkout/success', '', 'SSL');
 		$s_data['L_BUTTONVAR57'] = 'custom=' . $this->encryption->encrypt($order_info['order_id']);
-
 
 		if ($this->config->get('pp_pro_iframe_test')) {
 			$url = 'https://api-3t.sandbox.paypal.com/nvp';

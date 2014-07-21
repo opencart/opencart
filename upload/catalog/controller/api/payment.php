@@ -125,7 +125,8 @@ class ControllerApiPayment extends Controller {
 			}
 		}
 		
-		$this->response->setOutput(json_encode($json));		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));			
 	}
 	
 	public function method() {
@@ -157,7 +158,8 @@ class ControllerApiPayment extends Controller {
 			}
 		}
 		
-		$this->response->setOutput(json_encode($json));	
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
 	}		
 	
 	public function methods() {
@@ -241,6 +243,7 @@ class ControllerApiPayment extends Controller {
 			}
 		}
 		
-		$this->response->setOutput(json_encode($json));		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));			
 	}
 }

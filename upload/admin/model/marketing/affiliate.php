@@ -2,6 +2,12 @@
 class ModelMarketingAffiliate extends Model {
 	public function addAffiliate($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "affiliate SET firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "', company = '" . $this->db->escape($data['company']) . "', website = '" . $this->db->escape($data['website']) . "', address_1 = '" . $this->db->escape($data['address_1']) . "', address_2 = '" . $this->db->escape($data['address_2']) . "', city = '" . $this->db->escape($data['city']) . "', postcode = '" . $this->db->escape($data['postcode']) . "', country_id = '" . (int)$data['country_id'] . "', zone_id = '" . (int)$data['zone_id'] . "', code = '" . $this->db->escape($data['code']) . "', commission = '" . (float)$data['commission'] . "', tax = '" . $this->db->escape($data['tax']) . "', payment = '" . $this->db->escape($data['payment']) . "', cheque = '" . $this->db->escape($data['cheque']) . "', paypal = '" . $this->db->escape($data['paypal']) . "', bank_name = '" . $this->db->escape($data['bank_name']) . "', bank_branch_number = '" . $this->db->escape($data['bank_branch_number']) . "', bank_swift_code = '" . $this->db->escape($data['bank_swift_code']) . "', bank_account_name = '" . $this->db->escape($data['bank_account_name']) . "', bank_account_number = '" . $this->db->escape($data['bank_account_number']) . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
+
+		$affiliate_id = $this->db->getLastId();
+
+		$this->event->trigger('admin_add_affiliate', array('affiliate_id' => $affiliate_id));
+
+		return $affiliate_id;
 	}
 
 	public function editAffiliate($affiliate_id, $data) {
@@ -10,12 +16,16 @@ class ModelMarketingAffiliate extends Model {
 		if ($data['password']) {
 			$this->db->query("UPDATE " . DB_PREFIX . "affiliate SET salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "' WHERE affiliate_id = '" . (int)$affiliate_id . "'");
 		}
+
+		$this->event->trigger('admin_edit_affiliate');
 	}
 
 	public function deleteAffiliate($affiliate_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "affiliate WHERE affiliate_id = '" . (int)$affiliate_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "affiliate_activity WHERE affiliate_id = '" . (int)$affiliate_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "affiliate_transaction WHERE affiliate_id = '" . (int)$affiliate_id . "'");
+
+		$this->event->trigger('admin_delete_affiliate');
 	}
 
 	public function getAffiliate($affiliate_id) {
@@ -123,6 +133,8 @@ class ModelMarketingAffiliate extends Model {
 			$mail->setSubject(sprintf($this->language->get('text_approve_subject'), $this->config->get('config_name')));
 			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
 			$mail->send();
+
+			$this->event->trigger('admin_approve_affiliate');
 		}
 	}
 
@@ -190,6 +202,8 @@ class ModelMarketingAffiliate extends Model {
 		if ($affiliate_info) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "affiliate_transaction SET affiliate_id = '" . (int)$affiliate_id . "', order_id = '" . (float)$order_id . "', description = '" . $this->db->escape($description) . "', amount = '" . (float)$amount . "', date_added = NOW()");
 
+			$affiliate_transaction_id = $this->db->getLastId();
+
 			$this->load->language('mail/affiliate');
 
 			$message  = sprintf($this->language->get('text_transaction_received'), $this->currency->format($amount, $this->config->get('config_currency'))) . "\n\n";
@@ -202,11 +216,17 @@ class ModelMarketingAffiliate extends Model {
 			$mail->setSubject(sprintf($this->language->get('text_transaction_subject'), $this->config->get('config_name')));
 			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
 			$mail->send();
+
+			$this->event->trigger('admin_add_affiliate_transaction', array('affiliate_transaction_id' => $affiliate_transaction_id));
+
+			return $affiliate_transaction_id;
 		}
 	}
 
 	public function deleteTransaction($order_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "affiliate_transaction WHERE order_id = '" . (int)$order_id . "'");
+
+		$this->event->trigger('admin_delete_affiliate_transaction');
 	}
 
 	public function getTransactions($affiliate_id, $start = 0, $limit = 10) {

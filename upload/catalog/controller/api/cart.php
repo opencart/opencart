@@ -57,7 +57,8 @@ class ControllerApiCart extends Controller {
 			}
 		}
 		
-		$this->response->setOutput(json_encode($json));	
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
 	}	
 		
 	public function update() {
@@ -79,7 +80,8 @@ class ControllerApiCart extends Controller {
 			unset($this->session->data['reward']);
 		}
 		
-		$this->response->setOutput(json_encode($json));
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
 	}
 	
 	public function remove() {
@@ -104,7 +106,8 @@ class ControllerApiCart extends Controller {
 			}
 		}
 		
-		$this->response->setOutput(json_encode($json));
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
 	}
 		
 	public function products() {
@@ -191,7 +194,8 @@ class ControllerApiCart extends Controller {
 			}
 		}
 		
-		$this->response->setOutput(json_encode($json));
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
 	}
 	
 	function totals() {
@@ -243,6 +247,7 @@ class ControllerApiCart extends Controller {
 			}
 		}
 		
-		$this->response->setOutput(json_encode($json));
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
 	}
 }

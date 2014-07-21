@@ -8,6 +8,10 @@ class ModelCatalogAttribute extends Model {
 		foreach ($data['attribute_description'] as $language_id => $value) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_description SET attribute_id = '" . (int)$attribute_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
 		}
+
+		$this->event->trigger('admin_add_attribute', array('attribute_id' => $attribute_id));
+
+		return $attribute_id;
 	}
 
 	public function editAttribute($attribute_id, $data) {
@@ -18,11 +22,15 @@ class ModelCatalogAttribute extends Model {
 		foreach ($data['attribute_description'] as $language_id => $value) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_description SET attribute_id = '" . (int)$attribute_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
 		}
+
+		$this->event->trigger('admin_edit_attribute');
 	}
 
 	public function deleteAttribute($attribute_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "attribute WHERE attribute_id = '" . (int)$attribute_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "attribute_description WHERE attribute_id = '" . (int)$attribute_id . "'");
+
+		$this->event->trigger('admin_delete_attribute');
 	}
 
 	public function getAttribute($attribute_id) {

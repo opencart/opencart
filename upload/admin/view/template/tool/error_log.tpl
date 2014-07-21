@@ -2,8 +2,8 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="<?php echo $clear; ?>" data-toggle="tooltip" title="<?php echo $button_clear; ?>" class="btn"><i class="fa fa-eraser"></i></a></div>
-      <h1><i class="fa fa-exclamation-circle fa-lg"></i> <?php echo $heading_title; ?></h1>
+      <div class="pull-right"><a href="<?php echo $clear; ?>" data-toggle="tooltip" title="<?php echo $button_clear; ?>" class="btn btn-danger"><i class="fa fa-eraser"></i></a></div>
+      <h1><i class="fa fa-exclamation-circle"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">

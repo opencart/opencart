@@ -3,9 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button id="button-send" data-toggle="tooltip" title="<?php echo $button_send; ?>" class="btn" onclick="send('index.php?route=marketing/contact/send&token=<?php echo $token; ?>');"><i class="fa fa-envelope"></i></button>
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a></div>
-      <h1><i class="fa fa-envelope fa-lg"></i> <?php echo $heading_title; ?></h1>
+        <button id="button-send" data-toggle="tooltip" title="<?php echo $button_send; ?>" class="btn btn-primary" onclick="send('index.php?route=marketing/contact/send&token=<?php echo $token; ?>');"><i class="fa fa-envelope"></i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1><i class="fa fa-envelope"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">
@@ -206,7 +206,7 @@ function send(url) {
 			
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '</div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '</div>');
 				}
 				
 				if (json['error']['subject']) {
@@ -220,13 +220,13 @@ function send(url) {
 			
 			if (json['next']) {
 				if (json['success']) {
-					$('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i>  ' + json['success'] + '</div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i>  ' + json['success'] + '</div>');
 					
 					send(json['next']);
 				}		
 			} else {
 				if (json['success']) {
-					$('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+					$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 				}					
 			}				
 		}

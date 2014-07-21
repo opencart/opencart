@@ -22,6 +22,8 @@ class ModelCatalogManufacturer extends Model {
 		$this->cache->delete('manufacturer');
 
 		$this->event->trigger('admin_add_manufacturer', array('manufacturer_id' => $manufacturer_id));
+
+		return $manufacturer_id;
 	}
 
 	public function editManufacturer($manufacturer_id, $data) {

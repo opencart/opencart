@@ -111,7 +111,7 @@ class ControllerPaymentPaymate extends Controller {
 				$this->response->setOutput($this->load->view('default/template/common/success.tpl', $data));
 			}
 		} else {
-			$this->model_checkout_order->confirm($order_id, $this->config->get('paymate_order_status_id'));
+			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('paymate_order_status_id'));
 
 			$this->response->redirect($this->url->link('checkout/success'));
 		}

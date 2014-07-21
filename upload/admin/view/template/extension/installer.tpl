@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <h1><i class="fa fa-puzzle-piece fa-lg"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="fa fa-puzzle-piece"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">
@@ -165,11 +165,11 @@ $('#button-clear').bind('click', function() {
 			$('.alert').remove();
 				
 			if (json['error']) {
-				$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			} 
 		
 			if (json['success']) {
-				$('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
 				$('#button-clear').prop('disabled', true);
 			}

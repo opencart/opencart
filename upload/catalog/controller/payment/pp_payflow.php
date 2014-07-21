@@ -150,8 +150,6 @@ class ControllerPaymentPPPayflow extends Controller {
 		$json = array();
 
 		if ($response_info['RESULT'] == '0') {
-			$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
-
 			$message = '';
 
 			if (isset($response_info['AVSCODE'])) {
@@ -166,7 +164,7 @@ class ControllerPaymentPPPayflow extends Controller {
 				$message .= 'TRANSACTIONID: ' . $response_info['TRANSACTIONID'] . "\n";
 			}
 
-			$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('pp_payflow_order_status_id'), $message, false);
+			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('pp_payflow_order_status_id'), $message, false);
 
 			$json['success'] = $this->url->link('checkout/success');
 		} else {

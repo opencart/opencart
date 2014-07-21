@@ -651,7 +651,8 @@ class ControllerPaymentAmazonCheckout extends Controller {
 			$this->response->redirect($this->url->link('payment/amazon_checkout/failure', '', 'SSL'));
 		}
 
-		$this->model_checkout_order->confirm($order['order_id'], $this->config->get('amazon_checkout_order_default_status'));
+		$this->model_checkout_order->addOrderHistory($order['order_id'], $this->config->get('amazon_checkout_order_default_status'));
+		
 		$this->response->redirect($this->url->link('payment/amazon_checkout/success', 'amazon_order_id=' . $amazon_order_ids[0], 'SSL'));
 	}
 

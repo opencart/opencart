@@ -101,8 +101,6 @@ class ControllerPaymentPerpetualPayments extends Controller {
 			$data = explode('|', $response);
 
 			if (isset($data[0]) && $data[0] == 'A') {
-				$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
-
 				$message = '';
 
 				if (isset($data[1])) {
@@ -121,7 +119,7 @@ class ControllerPaymentPerpetualPayments extends Controller {
 					$message .= $this->language->get('text_authorisation') . ' ' . $data[3] . "\n";
 				}
 
-				$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('perpetual_payments_order_status_id'), $message, false);
+				$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('perpetual_payments_order_status_id'), $message, false);
 
 				$json['redirect'] = $this->url->link('checkout/success');
 			} else {

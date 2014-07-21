@@ -178,16 +178,14 @@ class ControllerPaymentRealex extends Controller {
 			}
 
 			if ($this->request->post['RESULT'] == "00") {
-				$this->model_checkout_order->confirm($order_id, $this->config->get('config_order_status_id'));
-
 				$realex_order_id = $this->model_payment_realex->addOrder($order_info, $this->request->post['PASREF'], $this->request->post['AUTHCODE'], $this->request->post['ACCOUNT'], $this->request->post['ORDER_ID']);
 
 				if ($auto_settle == 1) {
 					$this->model_payment_realex->addTransaction($realex_order_id, 'payment', $order_info);
-					$this->model_checkout_order->update($order_id, $this->config->get('realex_order_status_success_settled_id'), $message, false);
+					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('realex_order_status_success_settled_id'), $message, false);
 				} else {
 					$this->model_payment_realex->addTransaction($realex_order_id, 'auth', 0.00);
-					$this->model_checkout_order->update($order_id, $this->config->get('realex_order_status_success_unsettled_id'), $message, false);
+					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('realex_order_status_success_unsettled_id'), $message, false);
 				}
 
 				$data['text_response'] = $this->language->get('text_success');

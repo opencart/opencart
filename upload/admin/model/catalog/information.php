@@ -28,6 +28,10 @@ class ModelCatalogInformation extends Model {
 		}
 
 		$this->cache->delete('information');
+
+		$this->event->trigger('admin_add_information', array('information_id' => $information_id));
+
+		return $information_id;
 	}
 
 	public function editInformation($information_id, $data) {
@@ -64,6 +68,8 @@ class ModelCatalogInformation extends Model {
 		}
 
 		$this->cache->delete('information');
+
+		$this->event->trigger('admin_edit_information');
 	}
 
 	public function deleteInformation($information_id) {
@@ -74,6 +80,8 @@ class ModelCatalogInformation extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'information_id=" . (int)$information_id . "'");
 
 		$this->cache->delete('information');
+
+		$this->event->trigger('admin_delete_information');
 	}
 
 	public function getInformation($information_id) {

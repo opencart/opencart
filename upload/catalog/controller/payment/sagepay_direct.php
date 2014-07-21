@@ -255,8 +255,6 @@ class ControllerPaymentSagepayDirect extends Controller {
 
 			$json['TermUrl'] = $this->url->link('payment/sagepay_direct/callback', '', 'SSL');
 		} elseif ($response_data['Status'] == 'OK' || $response_data['Status'] == 'AUTHENTICATED' || $response_data['Status'] == 'REGISTERED') {
-			$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
-
 			$message = '';
 
 			if (isset($response_data['TxAuthNo'])) {
@@ -291,7 +289,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 
 			$this->model_payment_sagepay_direct->addTransaction($sagepay_direct_order_id, $this->config->get('sagepay_direct_transaction'), $order_info);
 
-			$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('sagepay_direct_order_status_id'), $message, false);
+			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('sagepay_direct_order_status_id'), $message, false);
 
 			if (!empty($response_data['Token']) && $this->customer->isLogged()) {
 				$card_data = array();
@@ -300,11 +298,13 @@ class ControllerPaymentSagepayDirect extends Controller {
 				$card_data['Last4Digits'] = substr(str_replace(' ', '', $payment_data['CardNumber']), -4, 4);
 				$card_data['ExpiryDate'] = $this->request->post['cc_expire_date_month'] . '/' . substr($this->request->post['cc_expire_date_year'], 2);
 				$card_data['CardType'] = $payment_data['CardType'];
+				
 				$this->model_payment_sagepay_direct->addFullCard($this->session->data['order_id'], $card_data);
 			}
 
 			if ($this->config->get('sagepay_direct_transaction') == 'PAYMENT') {
 				$recurring_products = $this->cart->getRecurringProducts();
+				
 				//loop through any products that are recurring items
 				foreach ($recurring_products as $item) {
 					$this->model_payment_sagepay_direct->recurringPayment($item, $payment_data['VendorTxCode']);
@@ -314,6 +314,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 			$json['redirect'] = $this->url->link('checkout/success', '', 'SSL');
 		} else {
 			$json['error'] = $response_data['Status'] . ': ' . $response_data['StatusDetail'];
+			
 			$this->model_payment_sagepay_direct->logger('Response data: ' . print_r($response_data['Status'] . ': ' . $response_data['StatusDetail'], 1));
 		}
 
@@ -322,9 +323,10 @@ class ControllerPaymentSagepayDirect extends Controller {
 	}
 
 	public function callback() {
-
 		$this->load->model('payment/sagepay_direct');
+		
 		$this->load->language('payment/sagepay_direct');
+		
 		$this->load->model('checkout/order');
 
 		if (isset($this->session->data['order_id'])) {
@@ -339,9 +341,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 			$response_data = $this->model_payment_sagepay_direct->sendCurl($url, $this->request->post);
 
 			if ($response_data['Status'] == 'OK' || $response_data['Status'] == 'AUTHENTICATED' || $response_data['Status'] == 'REGISTERED') {
-
-
-				$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
+				$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('config_order_status_id'));
 
 				$message = '';
 
@@ -378,14 +378,14 @@ class ControllerPaymentSagepayDirect extends Controller {
 				$this->model_payment_sagepay_direct->updateOrder($order_info, $response_data);
 
 				$sagepay_order_info = $this->model_payment_sagepay_direct->getOrder($this->session->data['order_id']);
+				
 				$this->model_payment_sagepay_direct->logger('sagepay_direct_order_id: ' . print_r($sagepay_order_info['sagepay_direct_order_id'], 1));
 
 				$this->model_payment_sagepay_direct->logger('$order_info: ' . print_r($order_info, 1));
 
-
 				$this->model_payment_sagepay_direct->addTransaction($sagepay_order_info['sagepay_direct_order_id'], $this->config->get('sagepay_direct_transaction'), $order_info);
 
-				$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('sagepay_direct_order_status_id'), $message, false);
+				$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('sagepay_direct_order_status_id'), $message, false);
 
 				if (!empty($response_data['Token']) && $this->customer->isLogged()) {
 					$this->model_payment_sagepay_direct->updateCard($this->session->data['order_id'], $response_data['Token']);
@@ -395,6 +395,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 
 				if ($this->config->get('sagepay_direct_transaction') == 'PAYMENT') {
 					$recurring_products = $this->cart->getRecurringProducts();
+					
 					//loop through any products that are recurring items
 					foreach ($recurring_products as $item) {
 						$this->model_payment_sagepay_direct->recurringPayment($item, $sagepay_order_info['VendorTxCode']);

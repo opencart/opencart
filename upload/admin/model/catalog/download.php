@@ -10,6 +10,8 @@ class ModelCatalogDownload extends Model {
       	}
 
 		$this->event->trigger('admin_add_download', array('download_id' => $download_id));
+
+		return $download_id;
 	}
 
 	public function editDownload($download_id, $data) {

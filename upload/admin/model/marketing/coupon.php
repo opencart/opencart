@@ -16,6 +16,10 @@ class ModelMarketingCoupon extends Model {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "coupon_category SET coupon_id = '" . (int)$coupon_id . "', category_id = '" . (int)$category_id . "'");
 			}
 		}
+
+		$this->event->trigger('admin_add_coupon', array('coupon_id' => $coupon_id));
+
+		return $coupon_id;
 	}
 
 	public function editCoupon($coupon_id, $data) {
@@ -36,6 +40,8 @@ class ModelMarketingCoupon extends Model {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "coupon_category SET coupon_id = '" . (int)$coupon_id . "', category_id = '" . (int)$category_id . "'");
 			}
 		}
+
+		$this->event->trigger('admin_edit_coupon');
 	}
 
 	public function deleteCoupon($coupon_id) {
@@ -43,6 +49,8 @@ class ModelMarketingCoupon extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_product WHERE coupon_id = '" . (int)$coupon_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_category WHERE coupon_id = '" . (int)$coupon_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_history WHERE coupon_id = '" . (int)$coupon_id . "'");
+
+		$this->event->trigger('admin_delete_coupon');
 	}
 
 	public function getCoupon($coupon_id) {
@@ -126,10 +134,6 @@ class ModelMarketingCoupon extends Model {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "coupon");
 
 		return $query->row['total'];
-	}
-
-	public function addCouponHistory($coupon_id, $order_id, $customer_id, $value) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "coupon_history SET coupon_id = '" . (int)$coupon_id . "', order_id = '" . (int)$order_id . "', customer_id = '" . (int)$customer_id . "', amount = '" . (float)$order_total['value'] . "', date_added = NOW()");
 	}
 
 	public function getCouponHistories($coupon_id, $start = 0, $limit = 10) {

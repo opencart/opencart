@@ -1,43 +1,17 @@
-@font-face{ 
-    font-family: 'liberation_sansregular';
-    src: url('LiberationSans-Regular-webfont.eot');
-    src: url('LiberationSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('LiberationSans-Regular-webfont.woff') format('woff'),
-         url('LiberationSans-Regular-webfont.ttf') format('truetype'),
-         url('LiberationSans-Regular-webfont.svg#liberation_sansregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic);
-
 html, body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
 }
-body {
-	font-family: 'liberation_sansregular', Arial, sans-serif;
-	font-weight: 400;
-	font-size: 14px;
-	color: #31373d;
-	line-height: 18px;
-	background: #FFFFFF;
-	/*
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: subpixel-antialiased !important; 
-	-webkit-backface-visibility: hidden; 
-	-moz-backface-visibility: hidden; 
-	-ms-backface-visibility: hidden;*/
-}
 h1, h2, h3, h4, h5, h6, p {
 	margin-top: 0;
 }
-
-a, a:visited {
-	color: #34C9DF;
+.page-header {
+	margin-top: 20px; 
 }
-
+.page-header h1 {
+	font-size: 24px;
+}
 /* fix for bootstrap hidden and visible */
 span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: inline;
@@ -48,12 +22,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	position: relative;
 	overflow: hidden;
 }
-
-
-.page-header h1 {
-	font-size: 24px;
-}
-
 #header {
 	min-height: 45px;
 	background: #FFFFFF;
@@ -78,22 +46,18 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 
 /* Mobile */
 @media (max-width: 767px) {
-	#header .navbar-header {
-		margin-right: 0px;
-		margin-left: 0px;
-		float: left;
-		
-	}
-	
-	#header .navbar-brand {
-		margin-left: -15px;
-	}
+#header .navbar-header {
+	margin-right: 0px;
+	margin-left: 0px;
+	float: left;
 }
-
+#header .navbar-brand {
+	margin-left: -15px;
+}
+}
 #header #button-menu + .navbar-brand {
 	padding: 10px 15px 4px 20px;
 }
-	
 #header .nav > li > a {
 	padding: 3px 15px 3px 15px;
 	margin: 0;
@@ -107,16 +71,13 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #header .nav > li > a > img {
 	border: 1px solid #CCC;
 }
-
 #header .nav > li.open > a, #header .nav > li.active > a, #header .nav > li > a:hover {
 	background: rgba(0, 0, 0, 0.3);
 	color: #FFF;
 }
-
 #header .nav > li > a > i {
 	font-size: 18px;
 }
-
 #header .nav > li > a > .label {
 	text-shadow: none;
 	padding: 1px 4px;
@@ -137,11 +98,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	background: rgba(0, 0, 0, 0.3);
 	color: #FFF;
 }
-
-
-
-
-
 #column-left {
 	width: 0px;
 	height: 100%;
@@ -155,11 +111,9 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #column-left.active {
 	width: 235px;
 }
-/*
 #content {
-	padding: 15px 15px 0px 15px;
+	padding-bottom: 40px;	
 }
-*/
 
 /* Menu Active */
 /* Desktop */
@@ -170,9 +124,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #column-left.active + #content {
 	margin-left: 235px;
 }
-#column-left.active + #content + #footer {
-	margin-left: 235px;
-}
 }
 
 /* Mobile */
@@ -181,28 +132,12 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	position: relative;
 	left: 235px;
 }
-#column-left.active + #content + #footer {
-	position: relative;
-	left: 235px;
 }
-}
-
-
-.page-header > h1 {
-	font-family: 'Source Sans Pro', sans-serif;
-	font-weight: 100;
-}
-
-
 #menu, #menu ul, #menu li {
 	padding: 0;
 	margin: 0;
 	list-style: none;
 }
-
-
-
-
 #menu li a {
 	color: #999999;
 	border-bottom: 1px solid #3F3F3F;
@@ -214,12 +149,9 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #menu li ul {
 	background-color: #222222;
 }
-
-
 #menu > li > a {
 	padding-left: 15px;
 }
-
 #menu li.active > a {
 	color: #FFFFFF;
 }
@@ -244,7 +176,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	font-family: FontAwesome;
 	content: "\f107";
 	float: right;
-	margin-right: 8px;	
+	margin-right: 8px;
 }
 #column-left #menu li ul a {
 	padding-left: 48px;
@@ -258,15 +190,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #column-left #menu li li li li ul a {
 	padding-left: 123px;
 }
-
-
-
-
-
-
-
-
-
 /* footer */
 #footer {
 	height: 100px;
@@ -275,37 +198,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	color: #000000;
 }
 
-
-/* panel */
-/*
-.panel-default > .panel-heading {
-	background-color: #F7F7F7;
-	padding: 5px 15px;
-}
-.panel-default > .panel-heading .btn {
-	font-size: 18px;
-	color: #B7B7B7;
-	background: none;
-	padding: 4px 8px;
-}
-.panel-default > .panel-heading .btn:hover {
-	color: #777777;
-}
-.panel-title {
-	padding: 5px 0;
-	text-shadow: 1px 1px 0 #FFF;
-}
-.panel-title i {
-	color: #34C9DF;
-}
-*/
-
-
-
-.alert {
-	font-size: 12px;
-	padding: 10px;
-}
 .nav-tabs {
 	margin-bottom: 15px;
 }
@@ -314,52 +206,13 @@ div.required .control-label:before, td.required:before {
 	color: #F00;
 	font-weight: bold;
 }
+
 label.control-label {
 	font-weight: normal;
 }
-.form-control {
-	padding: 5px 12px;
-}
-input.form-control, select.form-control {
-	height: 31px;
-}
-/*
-.btn {
-	font-size: 13px;
-	border-radius: 4px;
-	border: none;
-}
-.btn-xs {
-	font-size: 10px;
-}
-.btn-sm {
-	font-size: 11px;
-}
-.btn-md {
-	font-size: 13px;
-}
-.btn-lg {
-	font-size: 15px;
-}
-.btn-group > .btn, .btn-group > .dropdown-menu, .btn-group > .popover {
-	font-size: 13px;
-}
-.btn-group > .btn-xs {
-	font-size: 10px;
-}
-.btn-group > .btn-sm {
-	font-size: 11x;
-}
-.btn-group > .btn-lg {
-	font-size: 15px;
-}
-*/
+
 .table thead > tr > td, .table tbody > tr > td {
 	vertical-align: middle;
-}
-.table thead tr td {
-	background: #F9F9F9;
-	border-bottom: none;
 }
 .table a.asc:after {
 	content: " \f0d7";
@@ -374,6 +227,7 @@ input.form-control, select.form-control {
 .pagination {
 	margin: 0;
 }
+
 .img-thumbnail i {
 	color: #FFFFFF;
 	background-color: #EEEEEE;
@@ -384,7 +238,4 @@ input.form-control, select.form-control {
 	padding-top: 20px;
 	vertical-align: middle;
 	display: inline-block;
-}
-.btn-primary:visited {
-    color: #fff;
 }

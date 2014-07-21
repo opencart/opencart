@@ -86,6 +86,7 @@ class ControllerApiCustomer extends Controller {
 			}
 		}
 		
-		$this->response->setOutput(json_encode($json));					
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));						
 	}
 }

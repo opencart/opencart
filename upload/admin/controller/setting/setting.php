@@ -248,7 +248,7 @@ class ControllerSettingSetting extends Controller {
 			$data['error_owner'] = '';
 		}
 
-		if (isset($this->error['address_1'])) {
+		if (isset($this->error['address'])) {
 			$data['error_address'] = $this->error['address'];
 		} else {
 			$data['error_address'] = '';
@@ -454,7 +454,7 @@ class ControllerSettingSetting extends Controller {
 			$data['config_owner'] = $this->config->get('config_owner');
 		}
 
-		if (isset($this->request->post['config_address_1'])) {
+		if (isset($this->request->post['config_address'])) {
 			$data['config_address'] = $this->request->post['config_address'];
 		} else {
 			$data['config_address'] = $this->config->get('config_address');
@@ -751,17 +751,17 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_account_mail'] = $this->config->get('config_account_mail');
 		}
-		
-		if (isset($this->request->post['config_api'])) {
-			$data['config_api'] = $this->request->post['config_api'];
+
+		if (isset($this->request->post['config_api_id'])) {
+			$data['config_api_id'] = $this->request->post['config_api_id'];
 		} else {
-			$data['config_api'] = $this->config->get('config_api');
+			$data['config_api_id'] = $this->config->get('config_api_id');
 		}
 
 		$this->load->model('user/api');
 
 		$data['apis'] = $this->model_user_api->getApis();
-				
+
 		if (isset($this->request->post['config_cart_weight'])) {
 			$data['config_cart_weight'] = $this->request->post['config_cart_weight'];
 		} else {

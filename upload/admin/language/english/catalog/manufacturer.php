@@ -22,9 +22,9 @@ $_['entry_sort_order']   = 'Sort Order';
 $_['entry_type']         = 'Type';
 
 // Help
-$_['help_keyword']      = 'Do not use spaces, instead replace spaces with - and make sure the keyword is globally unique.';
+$_['help_keyword']       = 'Do not use spaces, instead replace spaces with - and make sure the keyword is globally unique.';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify manufacturers!';
-$_['error_name']         = 'Manufacturer Name must be between 3 and 64 characters!';
+$_['error_name']         = 'Manufacturer Name must be between 2 and 64 characters!';
 $_['error_product']      = 'Warning: This manufacturer cannot be deleted as it is currently assigned to %s products!';

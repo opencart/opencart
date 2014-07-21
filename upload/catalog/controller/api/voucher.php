@@ -27,7 +27,8 @@ class ControllerApiVoucher extends Controller {
 			}
 		}
 		
-		$this->response->setOutput(json_encode($json));		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));				
 	}
 	
 	public function add() {
@@ -95,7 +96,8 @@ class ControllerApiVoucher extends Controller {
 			}
 		}
 		
-		$this->response->setOutput(json_encode($json));
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
 	}
 	
 	public function remove() {
@@ -111,6 +113,7 @@ class ControllerApiVoucher extends Controller {
 			$json['success'] = $this->language->get('text_cart');
 		}
 		
-		$this->response->setOutput(json_encode($json));
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
 	}
 }

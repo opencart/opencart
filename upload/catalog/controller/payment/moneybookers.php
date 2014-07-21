@@ -63,7 +63,7 @@ class ControllerPaymentMoneybookers extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
 		if ($order_info) {
-			$this->model_checkout_order->confirm($order_id, $this->config->get('config_order_status_id'));
+			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('config_order_status_id'));
 
 			$verified = true;
 
@@ -87,19 +87,19 @@ class ControllerPaymentMoneybookers extends Controller {
 			if ($verified) {
 				switch($this->request->post['status']) {
 					case '2':
-						$this->model_checkout_order->update($order_id, $this->config->get('moneybookers_order_status_id'), '', true);
+						$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('moneybookers_order_status_id'), '', true);
 						break;
 					case '0':
-						$this->model_checkout_order->update($order_id, $this->config->get('moneybookers_pending_status_id'), '', true);
+						$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('moneybookers_pending_status_id'), '', true);
 						break;
 					case '-1':
-						$this->model_checkout_order->update($order_id, $this->config->get('moneybookers_canceled_status_id'), '', true);
+						$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('moneybookers_canceled_status_id'), '', true);
 						break;
 					case '-2':
-						$this->model_checkout_order->update($order_id, $this->config->get('moneybookers_failed_status_id'), '', true);
+						$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('moneybookers_failed_status_id'), '', true);
 						break;
 					case '-3':
-						$this->model_checkout_order->update($order_id, $this->config->get('moneybookers_chargeback_status_id'), '', true);
+						$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('moneybookers_chargeback_status_id'), '', true);
 						break;
 				}
 			} else {

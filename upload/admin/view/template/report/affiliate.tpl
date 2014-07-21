@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <h1><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="fa fa-bar-chart-o"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">
@@ -32,7 +32,7 @@
       </div>
     </div>
     <div class="table-responsive">
-      <table class="table table-bordered table-hover">
+      <table class="table table-striped table-hover">
         <thead>
           <tr>
             <td class="text-left"><?php echo $column_affiliate; ?></td>

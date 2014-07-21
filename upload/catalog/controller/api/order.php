@@ -306,7 +306,8 @@ class ControllerApiOrder extends Controller {
 			$json['success'] = $this->language->get('text_success');
 		}
 		
-		$this->response->setOutput(json_encode($json));	
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));			
 	}
 	
 	public function edit() {
@@ -561,7 +562,8 @@ class ControllerApiOrder extends Controller {
 			}
 		}
 		
-		$this->response->setOutput(json_encode($json));				
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));						
 	}
 	
 	public function delete() {
@@ -589,7 +591,7 @@ class ControllerApiOrder extends Controller {
 		$this->response->setOutput(json_encode($json));	
 	}
 	
-	public function confirm() {
+	public function history() {
 		$this->load->language('api/order');
 		
 		$json = array();		
@@ -597,19 +599,28 @@ class ControllerApiOrder extends Controller {
 		if (!isset($this->session->data['api_id'])) {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		} else {
+			// Add keys for missing post vars
+			$keys = array(
+				'order_status_id',
+				'notify',
+				'append',
+				'comment'
+			);
 			
-		}		
-	}
-	
-	public function unconfirm() {
-		$this->load->language('api/order');
-		
-		$json = array();		
-		
-		if (!isset($this->session->data['api_id'])) {
-			$json['error']['warning'] = $this->language->get('error_permission');
-		} else {
+			foreach ($keys as $key) {
+				if (!isset($this->request->post[$key])) {
+					$this->request->post[$key] = '';
+				}
+			}
 			
-		}		
+			$this->load->model('checkout/order');
+			
+			//$this->model_checkout_order->addOrderHistory($this->request->get['order_id'], $this->request->post['order_status_id'], $this->request->post['comment'], $this->request->post['notify']);
+		
+			$json['success'] = $this->language->get('text_success');
+		}
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));						
 	}
 }

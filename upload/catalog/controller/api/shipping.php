@@ -125,7 +125,8 @@ class ControllerApiShipping extends Controller {
 			}
 		}
 		
-		$this->response->setOutput(json_encode($json));	
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
 	}
 	
 	public function method() {
@@ -167,7 +168,8 @@ class ControllerApiShipping extends Controller {
 			}
 		}
 		
-		$this->response->setOutput(json_encode($json));	
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
 	}	
 	
 	public function methods() {
@@ -225,6 +227,7 @@ class ControllerApiShipping extends Controller {
 			}
 		}
 		
-		$this->response->setOutput(json_encode($json));	
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
 	}
 }	

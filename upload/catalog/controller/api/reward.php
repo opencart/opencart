@@ -37,7 +37,8 @@ class ControllerApiReward extends Controller {
 			}
 		}
 
-		$this->response->setOutput(json_encode($json));
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
 	}
 	
 	public function maximum() {
@@ -57,7 +58,8 @@ class ControllerApiReward extends Controller {
 			}
 		}
 		
-		$this->response->setOutput(json_encode($json));				
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));					
 	}
 	
 	public function available() {
@@ -71,6 +73,7 @@ class ControllerApiReward extends Controller {
 			$json['points'] = $this->customer->getRewardPoints();
 		}
 		
-		$this->response->setOutput(json_encode($json));				
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));						
 	}
 }

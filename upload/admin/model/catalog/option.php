@@ -22,6 +22,8 @@ class ModelCatalogOption extends Model {
 		}
 
 		$this->event->trigger('admin_add_option', array('option_id' => $option_id));
+
+		return $option_id;
 	}
 
 	public function editOption($option_id, $data) {

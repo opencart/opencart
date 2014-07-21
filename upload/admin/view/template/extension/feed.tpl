@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <h1><i class="fa fa-upload fa-lg"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="fa fa-upload"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">
@@ -17,7 +17,7 @@
     </div>
     <?php } ?>
     <div class="table-responsive">
-      <table class="table table-bordered table-hover">
+      <table class="table table-striped table-hover">
         <thead>
           <tr>
             <td class="text-left"><?php echo $column_name; ?></td>
@@ -39,7 +39,7 @@
               <?php if (!$extension['installed']) { ?>
               <a href="<?php echo $extension['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
               <?php } else { ?>
-              <a href="<?php echo $extension['uninstall']; ?>" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
+              <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $extension['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
               <?php } ?></td>
           </tr>
           <?php } ?>

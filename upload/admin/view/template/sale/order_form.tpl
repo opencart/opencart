@@ -3,8 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-order" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn"><i class="fa fa-check-circle"></i></button>
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a></div>
+        <button type="button" id="button-save" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-check-circle"></i></button>
+        <button type="button" id="button-refresh" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn btn-warning"><i class="fa fa-refresh"></i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
       <h1><i class="fa fa-pencil-square"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
@@ -60,31 +61,31 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="firstname" value="<?php echo $firstname; ?>" id="input-customer-firstname" class="form-control" />
+              <input type="text" name="firstname" value="<?php echo $firstname; ?>" id="input-firstname" class="form-control" />
             </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="lastname" value="<?php echo $lastname; ?>" id="input-customer-lastname" class="form-control" />
+              <input type="text" name="lastname" value="<?php echo $lastname; ?>" id="input-lastname" class="form-control" />
             </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="email" value="<?php echo $email; ?>" id="input-customer-email" class="form-control" />
+              <input type="text" name="email" value="<?php echo $email; ?>" id="input-email" class="form-control" />
             </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="telephone" value="<?php echo $telephone; ?>" id="input-customer-telephone" class="form-control" />
+              <input type="text" name="telephone" value="<?php echo $telephone; ?>" id="input-telephone" class="form-control" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-fax"><?php echo $entry_fax; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="fax" value="<?php echo $fax; ?>" id="input-customer-fax" class="form-control" />
+              <input type="text" name="fax" value="<?php echo $fax; ?>" id="input-fax" class="form-control" />
             </div>
           </div>
           <?php foreach ($custom_fields as $custom_field) { ?>
@@ -711,10 +712,6 @@
                 <?php foreach ($order_vouchers as $order_voucher) { ?>
                 <tr id="voucher-row<?php echo $voucher_row; ?>">
                   <td class="text-left"><?php echo $order_voucher['description']; ?>
-                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][order_voucher_id]" value="<?php echo $order_voucher['order_voucher_id']; ?>" />
-                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][voucher_id]" value="<?php echo $order_voucher['voucher_id']; ?>" />
-                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][description]" value="<?php echo $order_voucher['description']; ?>" />
-                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][code]" value="<?php echo $order_voucher['code']; ?>" />
                     <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][from_name]" value="<?php echo $order_voucher['from_name']; ?>" />
                     <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][from_email]" value="<?php echo $order_voucher['from_email']; ?>" />
                     <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][to_name]" value="<?php echo $order_voucher['to_name']; ?>" />
@@ -916,10 +913,6 @@
               </div>
             </div>
           </fieldset>
-          <div class="text-right">
-            <button type="button" id="button-save" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_save; ?></button>
-            <button type="button" id="button-refresh" class="btn btn-primary"><i class="fa fa-refresh"></i> <?php echo $button_refresh; ?></button>
-          </div>
         </div>
       </div>
     </form>
@@ -1475,11 +1468,13 @@ $('#button-reward-remove').on('click', function() {
 <script type="text/javascript"><!--
 $('#button-product, #button-voucher, #button-refresh').on('click', function() {	
 	$.ajax({
+		
 		<?php if ($order_id) { ?>
 		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		<?php } else { ?>
 		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>',
 		<?php } ?>
+		
 		type: 'post',
 		data: $('#content input[type=\'text\'], #content input[type=\'hidden\'], #content input[type=\'radio\']:checked, #content input[type=\'checkbox\']:checked, #content select, #content textarea'),
 		dataType: 'html',
@@ -1760,8 +1755,6 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 					 
 					html += '<tr id="voucher-row' + voucher_row + '">';
 					html += '  <td class="text-left">' + voucher['description'];
-					html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][description]" value="' + voucher['description'] + '" />';
-					html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][code]" value="' + voucher['code'] + '" />';
 					html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][from_name]" value="' + voucher['from_name'] + '" />';
 					html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][from_email]" value="' + voucher['from_email'] + '" />';
 					html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][to_name]" value="' + voucher['to_name'] + '" />';

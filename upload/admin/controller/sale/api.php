@@ -13,8 +13,6 @@ class ControllerSaleApi extends Controller {
 	}
 	
 	public function refresh() {
-		$this->load->language('sale/order');
-
 		$json = array();
 		
 		$this->load->model('setting/store');
@@ -174,10 +172,10 @@ class ControllerSaleApi extends Controller {
 			// Add to cart
 			if (isset($this->request->post['to_name']) || isset($this->request->post['to_email']) || isset($this->request->post['from_name']) || isset($this->request->post['from_email'])) {
 				$voucher_data = array(
-					'to_name'          => $this->request->post['to_name'],
-					'to_email'         => $this->request->post['to_email'],
 					'from_name'        => $this->request->post['from_name'],
 					'from_email'       => $this->request->post['from_email'],
+					'to_name'          => $this->request->post['to_name'],
+					'to_email'         => $this->request->post['to_email'],
 					'voucher_theme_id' => $this->request->post['voucher_theme_id'],
 					'message'          => $this->request->post['message'],
 					'amount'           => $this->request->post['amount']
@@ -272,30 +270,58 @@ class ControllerSaleApi extends Controller {
 			// Order
 			/*
 			if (!$json['error']) {
-				$response = $curl->post($url . 'index.php?route=api/order/add');
+				$response = $curl->post($url . 'index.php?route=api/order/add', $cookie);
 							
 				if (isset($response['error'])) {
-					$json['error']['payment_method'] = $response['error'];
+					$json['error']['warning'] = $response['error'];
+				}
+					
+				$response = $curl->post($url . 'index.php?route=api/order/update', $cookie);
+							
+				if (isset($response['error'])) {
+					$json['error']['warning'] = $response['error'];
 				}
 				
-				$response = $curl->post($url . 'index.php?route=api/order/confirm');
+				
+				
+				$response = $curl->post($url . 'index.php?route=api/order/history', $cookie, array('order_status_id' => $this->request->post['order_status_id']));
 							
 				if (isset($response['error'])) {
-					$json['error']['payment_method'] = $response['error'];
-				}						
-			}
-			
-			if (!$json['error']) {
-				$response = $curl->post($url . 'index.php?route=api/order/update');
-							
-				if (isset($response['error'])) {
-					$json['error']['payment_method'] = $response['error'];
-				}			
+					$json['error']['warning'] = $response['error'];
+				}							
 			}			
 			*/
 							
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
+	}
+	
+	public function history() {
+		$json = array();
+		
+		$this->load->model('user/api');
+		
+		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
+		
+		if ($api_info) {
+			$api_data = array(
+				'username' => $api_info['username'],
+				'password' => $api_info['password']
+			);
+			
+			$response = $this->api(HTTPS_CATALOG . 'index.php?route=api/login', '', $api_data);
+			
+			if (isset($response['error'])) {
+				$json['error'] = $response['error'];
+			}
+		}
+		
+		if (isset($response['cookie'])) {
+			$json = $this->api(HTTPS_CATALOG . 'index.php?route=api/order/history&order_id=' . $this->request->get['order_id'], $response['cookie'], $this->request->post);
+		}
+		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));		
 	}

@@ -28,6 +28,8 @@ class Pagination {
 		$num_links = $this->num_links;
 		$num_pages = ceil($total / $limit);
 
+		$this->url = str_replace('%7Bpage%7D', '{page}', $this->url);
+
 		$output = '<ul class="pagination">';
 
 		if ($page > 1) {

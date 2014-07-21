@@ -1,5 +1,5 @@
 <h2><?php echo $text_payment_info; ?></h2>
-<div class="alert alert-success" id="firstdata_transaction_msg" style="display:none;"></div>
+<div class="alert alert-success" id="firstdata_transaction_msg" style="display: none;"></div>
 <table class="table table-striped table-bordered">
   <tr>
     <td><?php echo $text_order_ref; ?></td>

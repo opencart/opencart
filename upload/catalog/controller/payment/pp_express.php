@@ -1118,7 +1118,7 @@ class ControllerPaymentPPExpress extends Controller {
 						break;
 				}
 
-				$this->model_checkout_order->confirm($order_id, $order_status_id);
+				$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
 
 				//add order to paypal table
 				$paypal_order_data = array(
@@ -1128,6 +1128,7 @@ class ControllerPaymentPPExpress extends Controller {
 					'authorization_id' => $result['PAYMENTINFO_0_TRANSACTIONID'],
 					'total'            => $result['PAYMENTINFO_0_AMT']
 				);
+				
 				$paypal_order_id = $this->model_payment_pp_express->addOrder($paypal_order_data);
 
 				//add transaction to paypal transaction table
@@ -1145,6 +1146,7 @@ class ControllerPaymentPPExpress extends Controller {
 					'amount'                => $result['PAYMENTINFO_0_AMT'],
 					'debug_data'            => json_encode($result)
 				);
+				
 				$this->model_payment_pp_express->addTransaction($paypal_transaction_data);
 
 				$recurring_products = $this->cart->getRecurringProducts();
@@ -1378,7 +1380,7 @@ class ControllerPaymentPPExpress extends Controller {
 					break;
 			}
 
-			$this->model_checkout_order->confirm($order_id, $order_status_id);
+			$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
 
 			//add order to paypal table
 			$paypal_order_data = array(

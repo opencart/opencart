@@ -212,9 +212,9 @@ class ModelCheckoutOrder extends Model {
 		$order_info = $this->getOrder($order_id);
 		
 		if ($order_info) {
+			/*
 			
-			if () {
-			
+			if (!$safe) { 
 				// Fraud Detection
 				if ($this->config->get('config_fraud_detection')) {
 					$this->load->model('checkout/fraud');
@@ -249,41 +249,15 @@ class ModelCheckoutOrder extends Model {
 					$order_status_id = $this->config->get('config_order_status_id');
 				}
 			}
-			
+			*/
 			
 			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
 
-			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '1', comment = '" . $this->db->escape(($comment && $notify) ? $comment : '') . "', date_added = NOW()");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '1', comment = '" . $this->db->escape($comment) . "', date_added = NOW()");
 			
-			// If Original order status ID has not been set and this is the first time
-			if (!$order_info['order_status_id'] && $order_status_id > 0) {
-
-
-
-
-				
-			}			
-			
-			
-			// If past order status is not complete but new status is complete then commence completing the order
-			if (!in_array($order_info['order_status_id'], $this->config->get('config_complete_status')) && in_array($order_status_id, $this->config->get('config_complete_status'))) {
-				
-							
-				// Order Totals
-				$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");
-	
-				foreach ($order_total_query->rows as $order_total) {
-					$this->load->model('total/' . $order_total['code']);
-	
-					if (method_exists($this->{'model_total_' . $order_total['code']}, 'confirm')) {
-						$this->{'model_total_' . $order_total['code']}->confirm($order_info, $order_total);
-					}
-				}			
-			
-			
-			
-				$download_status = false;
-	
+			// If current order status is not processing or complete but new status is processing or complete then commence completing the order
+			if (!in_array($order_info['order_status_id'], array_merge($this->config->get('config_process_status'), $this->config->get('config_complete_status'))) || in_array($order_status_id, array_merge($this->config->get('config_process_status'), $this->config->get('config_complete_status')))) {
+				// Stock subtracktion
 				$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
 	
 				foreach ($order_product_query->rows as $order_product) {
@@ -294,23 +268,36 @@ class ModelCheckoutOrder extends Model {
 					foreach ($order_option_query->rows as $option) {
 						$this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_option_value_id = '" . (int)$option['product_option_value_id'] . "' AND subtract = '1'");
 					}
+				}				
+				
+				// Redeem coupon, vouchers and reward points
+				$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");
 	
-					// Check if there are any linked downloads
-					$product_download_query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "product_to_download` WHERE product_id = '" . (int)$order_product['product_id'] . "'");
+				foreach ($order_total_query->rows as $order_total) {
+					$this->load->model('total/' . $order_total['code']);
 	
-					if ($product_download_query->row['total']) {
-						$download_status = true;
+					if (method_exists($this->{'model_total_' . $order_total['code']}, 'confirm')) {
+						$this->{'model_total_' . $order_total['code']}->confirm($order_info, $order_total);
 					}
 				}
+			}
 			
+			// If old order status is the processing or complete status but new status is not then commence restock, and remove coupon, voucher and reward history	
+			if (in_array($order_info['order_status_id'], array_merge($this->config->get('config_process_status'), $this->config->get('config_complete_status'))) && !in_array($order_status_id, array_merge($this->config->get('config_process_status'), $this->config->get('config_complete_status')))) {
+				// Restock
+				$product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+		
+				foreach($product_query->rows as $product) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "product` SET quantity = (quantity + " . (int)$product['quantity'] . ") WHERE product_id = '" . (int)$product['product_id'] . "' AND subtract = '1'");
+		
+					$option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$product['order_product_id'] . "'");
+		
+					foreach ($option_query->rows as $option) {
+						$this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity + " . (int)$product['quantity'] . ") WHERE product_option_value_id = '" . (int)$option['product_option_value_id'] . "' AND subtract = '1'");
+					}
+				}			
 			
-						
-			
-			// If old order status is complete but new status is not then commence restock, and remove coupon, voucher and reward history	
-			} elseif (in_array($order_info['order_status_id'], $this->config->get('config_complete_status_id')) && !in_array($order_status_id, $this->config->get('config_complete_status_id'))) {
-			
-			
-				// Remove coupon, vouchers reward points history
+				// Remove coupon, vouchers and reward points history
 				$this->load->model('account/order');
 		
 				$order_totals = $this->model_account_order->getOrderTotals($order_id);
@@ -322,28 +309,18 @@ class ModelCheckoutOrder extends Model {
 						$this->{'model_total_' . $order_total['code']}->unconfirm($order_id);
 					}
 				}
-			
-				// Delete any vouchers created by this order
-				$this->db->query("UPDATE `" . DB_PREFIX . "voucher` SET order_id = '0' WHERE order_id = '" . (int)$order_id . "'");
-		
-
-			
-			
-			
-			// else just send an email out	
-			} else {
-				
-				
-				
-				
-				
 			}
-			
-			
-			
-
-		}
 		
+		
+		
+		
+		
+			// Delete any vouchers created by this order
+			$this->db->query("UPDATE `" . DB_PREFIX . "voucher` SET order_id = '0' WHERE order_id = '" . (int)$order_id . "'");
+
+			// If Original order status ID has not been set and this is the first time
+			if (!$order_info['order_status_id'] && $order_status_id > 0) {
+
 		
 		if ($order_info && !$order_info['order_status_id']) {
 
@@ -743,9 +720,9 @@ class ModelCheckoutOrder extends Model {
 			}
 
 			$this->event->trigger('order_history');
-		}
-	}
-	
+		} else {
+			
+			
 		/*
 			if ($notify) {
 				$language = new Language($order_info['language_directory']);
@@ -786,5 +763,6 @@ class ModelCheckoutOrder extends Model {
 			}
 
 		*/
+		}
 	}
 }

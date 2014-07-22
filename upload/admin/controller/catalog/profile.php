@@ -49,18 +49,6 @@ class ControllerCatalogProfile extends Controller {
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
 
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('catalog/profile', 'token=' . $this->session->data['token'], 'SSL'),
-		);
-
 		if (!isset($this->request->get['profile_id'])) {
 			$data['action'] = $this->url->link('catalog/profile/insert', 'token=' . $this->session->data['token'], 'SSL');
 		} else {
@@ -302,18 +290,6 @@ class ControllerCatalogProfile extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('catalog/profile', 'token=' . $this->session->data['token'], 'SSL'),
-		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
 		$data['button_insert'] = $this->language->get('button_insert');

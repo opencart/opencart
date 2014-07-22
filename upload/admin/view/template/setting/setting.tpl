@@ -642,7 +642,13 @@
           <fieldset>
             <legend><?php echo $text_checkout; ?></legend>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $entry_api; ?></label>
+              <label class="col-sm-2 control-label" for="input-invoice-prefix"><?php echo $entry_invoice_prefix; ?></label>
+              <div class="col-sm-10">
+                <input type="text" name="config_invoice_prefix" value="<?php echo $config_invoice_prefix; ?>" placeholder="<?php echo $entry_invoice_prefix; ?>" id="input-invoice-prefix" class="form-control" />
+                <span class="help-block"><?php echo $help_invoice_prefix; ?></span></div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-api"><?php echo $entry_api; ?></label>
               <div class="col-sm-10">
                 <select name="config_api_id" id="input-api" class="form-control">
                   <option value="0"><?php echo $text_none; ?></option>
@@ -718,12 +724,6 @@
                 <span class="help-block"><?php echo $help_checkout; ?></span></div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-invoice-prefix"><?php echo $entry_invoice_prefix; ?></label>
-              <div class="col-sm-10">
-                <input type="text" name="config_invoice_prefix" value="<?php echo $config_invoice_prefix; ?>" placeholder="<?php echo $entry_invoice_prefix; ?>" id="input-invoice-prefix" class="form-control" />
-                <span class="help-block"><?php echo $help_invoice_prefix; ?></span> </div>
-            </div>
-            <div class="form-group">
               <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
               <div class="col-sm-10">
                 <select name="config_order_status_id" id="input-order-status" class="form-control">
@@ -740,15 +740,21 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-complete-status"><?php echo $entry_complete_status; ?></label>
               <div class="col-sm-10">
-                <select name="config_complete_status_id" id="input-complete-status" class="form-control">
+                <div class="well well-sm" style="height: 150px; overflow: auto;">
                   <?php foreach ($order_statuses as $order_status) { ?>
-                  <?php if ($order_status['order_status_id'] == $config_complete_status_id) { ?>
-                  <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                  <div class="checkbox">
+                    <label>
+                      <?php if (in_array($order_status['order_status_id'], $config_complete_status)) { ?>
+                      <input type="checkbox" name="config_complete_status[]" value="<?php echo $order_status['order_status_id']; ?>" checked="checked" />
+                      <?php echo $order_status['name']; ?>
+                      <?php } else { ?>
+                      <input type="checkbox" name="config_complete_status[]" value="<?php echo $order_status['order_status_id']; ?>" />
+                      <?php echo $order_status['name']; ?>
+                      <?php } ?>
+                    </label>
+                  </div>
                   <?php } ?>
-                  <?php } ?>
-                </select>
+                </div>
                 <span class="help-block"><?php echo $help_complete_status; ?></span> </div>
             </div>
             <div class="form-group">
@@ -845,20 +851,6 @@
                   <?php } ?>
                 </label>
                 <span class="help-block"><?php echo $help_stock_checkout; ?></span> </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-stock-status"><?php echo $entry_stock_status; ?></label>
-              <div class="col-sm-10">
-                <select name="config_stock_status_id" id="input-stock-status" class="form-control">
-                  <?php foreach ($stock_statuses as $stock_status) { ?>
-                  <?php if ($stock_status['stock_status_id'] == $config_stock_status_id) { ?>
-                  <option value="<?php echo $stock_status['stock_status_id']; ?>" selected="selected"><?php echo $stock_status['name']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $stock_status['stock_status_id']; ?>"><?php echo $stock_status['name']; ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select>
-                <span class="help-block"><?php echo $help_stock_status; ?></span> </div>
             </div>
           </fieldset>
           <fieldset>

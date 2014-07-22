@@ -85,18 +85,17 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_customer_price'] = $this->language->get('entry_customer_price');
 		$data['entry_account'] = $this->language->get('entry_account');
 		$data['entry_account_mail'] = $this->language->get('entry_account_mail');
+		$data['entry_invoice_prefix'] = $this->language->get('entry_invoice_prefix');
 		$data['entry_api'] = $this->language->get('entry_api');
 		$data['entry_cart_weight'] = $this->language->get('entry_cart_weight');
 		$data['entry_checkout_guest'] = $this->language->get('entry_checkout_guest');
 		$data['entry_checkout'] = $this->language->get('entry_checkout');
-		$data['entry_invoice_prefix'] = $this->language->get('entry_invoice_prefix');
 		$data['entry_order_status'] = $this->language->get('entry_order_status');
 		$data['entry_complete_status'] = $this->language->get('entry_complete_status');
 		$data['entry_order_mail'] = $this->language->get('entry_order_mail');
 		$data['entry_stock_display'] = $this->language->get('entry_stock_display');
 		$data['entry_stock_warning'] = $this->language->get('entry_stock_warning');
 		$data['entry_stock_checkout'] = $this->language->get('entry_stock_checkout');
-		$data['entry_stock_status'] = $this->language->get('entry_stock_status');
 		$data['entry_affiliate_approval'] = $this->language->get('entry_affiliate_approval');
 		$data['entry_affiliate_auto'] = $this->language->get('entry_affiliate_auto');
 		$data['entry_affiliate_commission'] = $this->language->get('entry_affiliate_commission');
@@ -186,7 +185,6 @@ class ControllerSettingSetting extends Controller {
 		$data['help_stock_display'] = $this->language->get('help_stock_display');
 		$data['help_stock_warning'] = $this->language->get('help_stock_warning');
 		$data['help_stock_checkout'] = $this->language->get('help_stock_checkout');
-		$data['help_stock_status'] = $this->language->get('help_stock_status');
 		$data['help_affiliate_approval'] = $this->language->get('help_affiliate_approval');
 		$data['help_affiliate_auto'] = $this->language->get('help_affiliate_auto');
 		$data['help_affiliate_commission'] = $this->language->get('help_affiliate_commission');
@@ -794,10 +792,12 @@ class ControllerSettingSetting extends Controller {
 			$data['config_order_status_id'] = $this->config->get('config_order_status_id');
 		}
 
-		if (isset($this->request->post['config_complete_status_id'])) {
-			$data['config_complete_status_id'] = $this->request->post['config_complete_status_id'];
+		if (isset($this->request->post['config_complete_status'])) {
+			$data['config_complete_status'] = $this->request->post['config_complete_status'];
+		} elseif ($this->config->get('config_complete_status')) {
+			$data['config_complete_status'] = $this->config->get('config_complete_status');
 		} else {
-			$data['config_complete_status_id'] = $this->config->get('config_complete_status_id');
+			$data['config_complete_status'] = array();
 		}
 
 		$this->load->model('localisation/order_status');
@@ -827,16 +827,6 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_stock_checkout'] = $this->config->get('config_stock_checkout');
 		}
-
-		if (isset($this->request->post['config_stock_status_id'])) {
-			$data['config_stock_status_id'] = $this->request->post['config_stock_status_id'];
-		} else {
-			$data['config_stock_status_id'] = $this->config->get('config_stock_status_id');
-		}
-
-		$this->load->model('localisation/stock_status');
-
-		$data['stock_statuses'] = $this->model_localisation_stock_status->getStockStatuses();
 
 		if (isset($this->request->post['config_affiliate_auto'])) {
 			$data['config_affiliate_approval'] = $this->request->post['config_affiliate_approval'];

@@ -622,7 +622,6 @@ class ControllerSaleOrder extends Controller {
 				}
 			}			
 			
-			
 			$data['order_status_id'] = $order_info['order_status_id'];
 			$data['comment'] = $order_info['comment'];
 			$data['affiliate'] = $order_info['affiliate'];

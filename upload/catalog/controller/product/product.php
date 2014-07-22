@@ -711,7 +711,7 @@ class ControllerProductProduct extends Controller {
 			// Allowed file extension types
 			$allowed = array();
 
-			$extension_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_extension_allowed'));
+			$extension_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_ext_allowed'));
 
 			$filetypes = explode("\n", $extension_allowed);
 

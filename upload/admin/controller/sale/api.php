@@ -56,65 +56,7 @@ class ControllerSaleApi extends Controller {
 		
 		if (isset($response['cookie'])) {
 			$cookie = $response['cookie'];
-			
-			// Customer
-			$customer_data = array(
-				'customer_id'       => $this->request->post['customer_id'],
-				'customer_group_id' => $this->request->post['customer_group_id'], 
-				'firstname'         => $this->request->post['firstname'],
-				'lastname'          => $this->request->post['lastname'],
-				'email'             => $this->request->post['email'],
-				'telephone'         => $this->request->post['telephone'],
-				'fax'               => $this->request->post['fax'],
-				'custom_field'      => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : array(),
-			);
-			
-			$response = $this->api($url . 'index.php?route=api/customer', $cookie, $customer_data);
-			
-			if (isset($response['error'])) {
-				$json['error']['customer'] = $response['error'];
-			}		
-					
-			// Payment Address
-			$payment_address = array(
-				'firstname'    => $this->request->post['payment_firstname'],
-				'lastname'     => $this->request->post['payment_lastname'],
-				'company'      => $this->request->post['payment_company'],
-				'address_1'    => $this->request->post['payment_address_1'],
-				'address_2'    => $this->request->post['payment_address_2'],
-				'postcode'     => $this->request->post['payment_postcode'],
-				'city'         => $this->request->post['payment_city'],
-				'zone_id'      => $this->request->post['payment_zone_id'],
-				'country_id'   => $this->request->post['payment_country_id'],
-				'custom_field' => isset($this->request->post['payment_custom_field']) ? $this->request->post['payment_custom_field'] : array()
-			);
-					
-			$response = $this->api($url . 'index.php?route=api/payment/address', $cookie, $payment_address);
-					
-			if (isset($response['error'])) {
-				$json['error']['payment'] = $response['error'];
-			}
-			
-			// Shipping Address
-			$shipping_address = array(
-				'firstname'    => $this->request->post['shipping_firstname'],
-				'lastname'     => $this->request->post['shipping_lastname'],
-				'company'      => $this->request->post['shipping_company'],
-				'address_1'    => $this->request->post['shipping_address_1'],
-				'address_2'    => $this->request->post['shipping_address_2'],
-				'postcode'     => $this->request->post['shipping_postcode'],
-				'city'         => $this->request->post['shipping_city'],
-				'zone_id'      => $this->request->post['shipping_zone_id'],
-				'country_id'   => $this->request->post['shipping_country_id'],
-				'custom_field' => isset($this->request->post['shipping_custom_field']) ? $this->request->post['shipping_custom_field'] : array()
-			);		
-			
-			$response = $this->api($url . 'index.php?route=api/shipping/address', $cookie, $shipping_address);
-			
-			if (isset($response['error'])) {
-				$json['error']['shipping'] = $response['error'];
-			}		
-			
+
 			// Products
 			if (isset($this->request->post['order_product'])) {
 				foreach ($this->request->post['order_product'] as $order_product) {
@@ -199,6 +141,64 @@ class ControllerSaleApi extends Controller {
 					$json['error']['vouchers'] = $response['error'];
 				}			
 			}
+						
+			// Customer
+			$customer_data = array(
+				'customer_id'       => $this->request->post['customer_id'],
+				'customer_group_id' => $this->request->post['customer_group_id'], 
+				'firstname'         => $this->request->post['firstname'],
+				'lastname'          => $this->request->post['lastname'],
+				'email'             => $this->request->post['email'],
+				'telephone'         => $this->request->post['telephone'],
+				'fax'               => $this->request->post['fax'],
+				'custom_field'      => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : array(),
+			);
+			
+			$response = $this->api($url . 'index.php?route=api/customer', $cookie, $customer_data);
+			
+			if (isset($response['error'])) {
+				$json['error']['customer'] = $response['error'];
+			}		
+					
+			// Payment Address
+			$payment_address = array(
+				'firstname'    => $this->request->post['payment_firstname'],
+				'lastname'     => $this->request->post['payment_lastname'],
+				'company'      => $this->request->post['payment_company'],
+				'address_1'    => $this->request->post['payment_address_1'],
+				'address_2'    => $this->request->post['payment_address_2'],
+				'postcode'     => $this->request->post['payment_postcode'],
+				'city'         => $this->request->post['payment_city'],
+				'zone_id'      => $this->request->post['payment_zone_id'],
+				'country_id'   => $this->request->post['payment_country_id'],
+				'custom_field' => isset($this->request->post['payment_custom_field']) ? $this->request->post['payment_custom_field'] : array()
+			);
+					
+			$response = $this->api($url . 'index.php?route=api/payment/address', $cookie, $payment_address);
+					
+			if (isset($response['error'])) {
+				$json['error']['payment'] = $response['error'];
+			}
+			
+			// Shipping Address
+			$shipping_address = array(
+				'firstname'    => $this->request->post['shipping_firstname'],
+				'lastname'     => $this->request->post['shipping_lastname'],
+				'company'      => $this->request->post['shipping_company'],
+				'address_1'    => $this->request->post['shipping_address_1'],
+				'address_2'    => $this->request->post['shipping_address_2'],
+				'postcode'     => $this->request->post['shipping_postcode'],
+				'city'         => $this->request->post['shipping_city'],
+				'zone_id'      => $this->request->post['shipping_zone_id'],
+				'country_id'   => $this->request->post['shipping_country_id'],
+				'custom_field' => isset($this->request->post['shipping_custom_field']) ? $this->request->post['shipping_custom_field'] : array()
+			);		
+			
+			$response = $this->api($url . 'index.php?route=api/shipping/address', $cookie, $shipping_address);
+			
+			if (isset($response['error'])) {
+				$json['error']['shipping'] = $response['error'];
+			}		
 			
 			// Coupon
 			if ($this->request->post['coupon']) {

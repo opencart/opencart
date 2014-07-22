@@ -23,16 +23,18 @@ class ControllerPaymentCheque extends Controller {
 	}
 
 	public function confirm() {
-		$this->load->language('payment/cheque');
-
-		$this->load->model('checkout/order');
-
-		$comment  = $this->language->get('text_payable') . "\n";
-		$comment .= $this->config->get('cheque_payable') . "\n\n";
-		$comment .= $this->language->get('text_address') . "\n";
-		$comment .= $this->config->get('config_address') . "\n\n";
-		$comment .= $this->language->get('text_payment') . "\n";
-
-		$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('cheque_order_status_id'), $comment, true);
+		if ($this->session->data['payment_method'] == 'cheque') {
+			$this->load->language('payment/cheque');
+	
+			$this->load->model('checkout/order');
+	
+			$comment  = $this->language->get('text_payable') . "\n";
+			$comment .= $this->config->get('cheque_payable') . "\n\n";
+			$comment .= $this->language->get('text_address') . "\n";
+			$comment .= $this->config->get('config_address') . "\n\n";
+			$comment .= $this->language->get('text_payment') . "\n";
+	
+			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('cheque_order_status_id'), $comment, true);
+		}
 	}
 }

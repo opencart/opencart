@@ -33,7 +33,21 @@ class ControllerFeedGoogleBase extends Controller {
 						$output .= '<g:image_link></g:image_link>';
 					}
 
-					$output .= '<g:mpn>' . $product['model'] . '</g:mpn>';
+					$output .= '<g:model_number>' . $product['model'] . '</g:model_number>';
+
+					if ($product['mpn']) {
+						$output .= '<g:mpn>' . $product['mpn'] . '</g:mpn>' ;
+					} else {
+						$output .= '<g:identifier_exists>false</g:identifier_exists>';
+					}
+
+					if ($product['upc']) {
+						$output .= '<g:upc>' . $product['upc'] . '</g:upc>';
+					}
+
+					if ($product['ean']) {
+						$output .= '<g:ean>' . $product['ean'] . '</g:ean>';
+					}
 
 					$currencies = array(
 						'USD',
@@ -80,7 +94,6 @@ class ControllerFeedGoogleBase extends Controller {
 					}
 
 					$output .= '<g:quantity>' . $product['quantity'] . '</g:quantity>';
-					$output .= '<g:upc>' . $product['upc'] . '</g:upc>';
 					$output .= '<g:weight>' . $this->weight->format($product['weight'], $product['weight_class_id']) . '</g:weight>';
 					$output .= '<g:availability>' . ($product['quantity'] ? 'in stock' : 'out of stock') . '</g:availability>';
 					$output .= '</item>';
@@ -90,7 +103,7 @@ class ControllerFeedGoogleBase extends Controller {
 			$output .= '</channel>';
 			$output .= '</rss>';
 
-			$this->response->setContentType('Content-Type: application/rss+xml');
+			$this->response->addHeader('Content-Type: application/rss+xml');
 			$this->response->setOutput($output);
 		}
 	}

@@ -917,6 +917,7 @@ class ControllerSaleOrder extends Controller {
 			$data['entry_comment'] = $this->language->get('entry_comment');
 
 			$data['button_invoice'] = $this->language->get('button_invoice');
+			$data['button_shipping'] = $this->language->get('button_shipping');
 			$data['button_cancel'] = $this->language->get('button_cancel');
 			$data['button_generate'] = $this->language->get('button_generate');
 			$data['button_reward_add'] = $this->language->get('button_reward_add');
@@ -984,6 +985,7 @@ class ControllerSaleOrder extends Controller {
 				'href' => $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL')
 			);
 
+			$data['shipping'] = $this->url->link('sale/order/shipping', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], 'SSL');
 			$data['invoice'] = $this->url->link('sale/order/invoice', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], 'SSL');
 			$data['cancel'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
@@ -1930,6 +1932,7 @@ class ControllerSaleOrder extends Controller {
 		$data['lang'] = $this->language->get('code');
 
 		$data['text_shipping'] = $this->language->get('text_shipping');
+		$data['text_picklist'] = $this->language->get('text_picklist');
 
 		$data['text_order_detail'] = $this->language->get('text_order_detail');
 		$data['text_order_id'] = $this->language->get('text_order_id');
@@ -1954,6 +1957,7 @@ class ControllerSaleOrder extends Controller {
 		$data['column_location'] = $this->language->get('column_location');
 		$data['column_reference'] = $this->language->get('column_reference');
 		$data['column_product'] = $this->language->get('column_product');
+		$data['column_weight'] = $this->language->get('column_weight');
 		$data['column_model'] = $this->language->get('column_model');
 		$data['column_quantity'] = $this->language->get('column_quantity');
 		$data['column_comment'] = $this->language->get('column_comment');
@@ -2076,7 +2080,8 @@ class ControllerSaleOrder extends Controller {
 						'ean'      => $product_info['ean'],
 						'jan'      => $product_info['jan'],
 						'isbn'     => $product_info['isbn'],
-						'mpn'      => $product_info['mpn']
+						'mpn'      => $product_info['mpn'],
+						'weight'   => $this->weight->format($product_info['weight'], $this->config->get('config_weight_class_id'), $this->language->get('decimal_point'), $this->language->get('thousand_point'))
 					);
 				}
 

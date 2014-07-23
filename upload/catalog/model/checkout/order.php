@@ -213,7 +213,6 @@ class ModelCheckoutOrder extends Model {
 		
 		if ($order_info) {
 			/*
-			
 			if (!$safe) { 
 				// Fraud Detection
 				if ($this->config->get('config_fraud_detection')) {
@@ -280,6 +279,13 @@ class ModelCheckoutOrder extends Model {
 						$this->{'model_total_' . $order_total['code']}->confirm($order_info, $order_total);
 					}
 				}
+				
+				// Add commission if sale is linked to affiliate referral.
+				if ($order_info['affiliate_id'] && $this->config->get('config_affiliate_auto')) {
+					$this->load->model('affiliate/affiliate');
+
+					$this->model_affiliate_affiliate->addTransaction($order_info['affiliate_id'], $order_info['commission'], $order_id);
+				}				
 			}
 			
 			// If old order status is the processing or complete status but new status is not then commence restock, and remove coupon, voucher and reward history	
@@ -309,17 +315,23 @@ class ModelCheckoutOrder extends Model {
 						$this->{'model_total_' . $order_total['code']}->unconfirm($order_id);
 					}
 				}
+				
+				// Remove commission if sale is linked to affiliate referral.
+				if ($order_info['affiliate_id']) {
+					$this->load->model('affiliate/affiliate');
+
+					$this->model_affiliate_affiliate->deleteTransaction($order_id);
+				}				
 			}
 		
-		
-		
+			$this->cache->delete('product');
 		
 		
 			// Delete any vouchers created by this order
 			$this->db->query("UPDATE `" . DB_PREFIX . "voucher` SET order_id = '0' WHERE order_id = '" . (int)$order_id . "'");
 
-			// If Original order status ID has not been set and this is the first time
-			if (!$order_info['order_status_id'] && $order_status_id > 0) {
+		// If Original order status ID has not been set and this is the first time
+		if (!$order_info['order_status_id'] && $order_status_id > 0) {
 
 		
 		if ($order_info && !$order_info['order_status_id']) {
@@ -330,14 +342,6 @@ class ModelCheckoutOrder extends Model {
 			$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
 
 			foreach ($order_product_query->rows as $order_product) {
-				$this->db->query("UPDATE " . DB_PREFIX . "product SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_id = '" . (int)$order_product['product_id'] . "' AND subtract = '1'");
-
-				$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$order_product['order_product_id'] . "'");
-
-				foreach ($order_option_query->rows as $option) {
-					$this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_option_value_id = '" . (int)$option['product_option_value_id'] . "' AND subtract = '1'");
-				}
-
 				// Check if there are any linked downloads
 				$product_download_query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "product_to_download` WHERE product_id = '" . (int)$order_product['product_id'] . "'");
 
@@ -346,7 +350,20 @@ class ModelCheckoutOrder extends Model {
 				}
 			}
 
-			$this->cache->delete('product');
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 			// Gift Voucher
 			$this->load->model('checkout/voucher');
@@ -359,18 +376,15 @@ class ModelCheckoutOrder extends Model {
 				$this->db->query("UPDATE " . DB_PREFIX . "order_voucher SET voucher_id = '" . (int)$voucher_id . "' WHERE order_voucher_id = '" . (int)$order_voucher['order_voucher_id'] . "'");
 			}
 
+
+
 			// If order status hits complete
 			if ($this->config->get('config_complete_status_id') == $order_status_id) {
 				// Send out any gift voucher mails
 				$this->model_checkout_voucher->confirm($order_id);
-
-				// Add commission if sale is linked to affiliate referral.
-				if ($order_info['affiliate_id'] && $this->config->get('config_affiliate_auto')) {
-					$this->load->model('affiliate/affiliate');
-
-					$this->model_affiliate_affiliate->addTransaction($order_info['affiliate_id'], $order_info['commission'], $order_id);
-				}
 			}
+
+
 
 
 

@@ -1,7 +1,5 @@
 <?php
 class ControllerSaleOrder extends Controller {
-	private $error = array();
-	
 	public function index() {
 		$this->load->language('sale/order');
 
@@ -12,6 +10,14 @@ class ControllerSaleOrder extends Controller {
 		$this->getList();
 	}
 
+	protected function validate() {
+		if (!$this->user->hasPermission('modify', 'sale/order')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		return !$this->error;
+	}
+	
 	public function insert() {
 		$this->load->language('sale/order');
 
@@ -36,12 +42,6 @@ class ControllerSaleOrder extends Controller {
 		$this->load->language('sale/order');
 
 		if ($this->validateDelete()) {
-
-
-
-
-
-
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -624,8 +624,8 @@ class ControllerSaleOrder extends Controller {
 			
 			$data['order_status_id'] = $order_info['order_status_id'];
 			$data['comment'] = $order_info['comment'];
-			$data['affiliate'] = $order_info['affiliate'];
 			$data['affiliate_id'] = $order_info['affiliate_id'];
+			$data['affiliate'] = $order_info['affiliate_firstname'] . ' ' . $order_info['affiliate_lastname'];
 		} else {
 			$data['order_id'] = 0;
 			$data['store_id'] = '';
@@ -717,14 +717,6 @@ class ControllerSaleOrder extends Controller {
 
 		$this->response->setOutput($this->load->view('sale/order_form.tpl', $data));
   	}
-
-	protected function validateDelete() {
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		return !$this->error;
-	}
 
 	public function country() {
 		$json = array();

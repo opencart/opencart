@@ -252,7 +252,7 @@ class ModelCheckoutOrder extends Model {
 			
 			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
 
-			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '1', comment = '" . $this->db->escape($comment) . "', date_added = NOW()");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($comment) . "', date_added = NOW()");
 			
 			// If current order status is not processing or complete but new status is processing or complete then commence completing the order
 			if (!in_array($order_info['order_status_id'], array_merge($this->config->get('config_process_status'), $this->config->get('config_complete_status'))) || in_array($order_status_id, array_merge($this->config->get('config_process_status'), $this->config->get('config_complete_status')))) {
@@ -330,26 +330,15 @@ class ModelCheckoutOrder extends Model {
 			// Delete any vouchers created by this order
 			$this->db->query("UPDATE `" . DB_PREFIX . "voucher` SET order_id = '0' WHERE order_id = '" . (int)$order_id . "'");
 
-		// If Original order status ID has not been set and this is the first time
-		if (!$order_info['order_status_id'] && $order_status_id > 0) {
+			// If Original order status ID has not been set and this is the first time
+			if (!$order_info['order_status_id'] && $order_status_id > 0) {
+	
+			
+			if ($order_info && !$order_info['order_status_id']) {
+	
+	
 
-		
-		if ($order_info && !$order_info['order_status_id']) {
-
-
-			$download_status = false;
-
-			$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
-
-			foreach ($order_product_query->rows as $order_product) {
-				// Check if there are any linked downloads
-				$product_download_query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "product_to_download` WHERE product_id = '" . (int)$order_product['product_id'] . "'");
-
-				if ($product_download_query->row['total']) {
-					$download_status = true;
-				}
-			}
-
+	
 			
 
 
@@ -386,7 +375,18 @@ class ModelCheckoutOrder extends Model {
 
 
 
-
+				$download_status = false;
+	
+				$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+	
+				foreach ($order_product_query->rows as $order_product) {
+					// Check if there are any linked downloads
+					$product_download_query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "product_to_download` WHERE product_id = '" . (int)$order_product['product_id'] . "'");
+	
+					if ($product_download_query->row['total']) {
+						$download_status = true;
+					}
+				}
 
 			// Send out order confirmation mail
 			$language = new Language($order_info['language_directory']);
@@ -773,10 +773,9 @@ class ModelCheckoutOrder extends Model {
 				$mail->setSender($order_info['store_name']);
 				$mail->setSubject($subject);
 				$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
-				$mail->send();
+				$mail->send();	*/
 			}
 
-		*/
 		}
 	}
 }

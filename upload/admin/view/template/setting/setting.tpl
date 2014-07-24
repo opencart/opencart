@@ -775,7 +775,7 @@
                   </div>
                   <?php } ?>
                 </div>
-                <span class="help-block"><?php echo $help_process_status; ?></span> </div>
+                <span class="help-block"><?php echo $help_complete_status; ?></span> </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_order_mail; ?></label>

@@ -59,9 +59,11 @@ class ModelSaleOrder extends Model {
 			$affiliate_info = $this->model_marketing_affiliate->getAffiliate($affiliate_id);
 
 			if ($affiliate_info) {
-				$affiliate = $affiliate_info['firstname'] . ' ' . $affiliate_info['lastname'];
+				$affiliate_firstname = $affiliate_info['firstname'];
+				$affiliate_lastname = $affiliate_info['lastname'];
 			} else {
-				$affiliate = '';
+				$affiliate_firstname = '';
+				$affiliate_lastname = '';
 			}
 
 			$this->load->model('localisation/language');
@@ -135,7 +137,8 @@ class ModelSaleOrder extends Model {
 				'reward'                  => $reward,
 				'order_status_id'         => $order_query->row['order_status_id'],
 				'affiliate_id'            => $order_query->row['affiliate_id'],
-				'affiliate'               => $affiliate,
+				'affiliate_firstname'     => $affiliate_firstname,
+				'affiliate_lastname'      => $affiliate_lastname,
 				'commission'              => $order_query->row['commission'],
 				'language_id'             => $order_query->row['language_id'],
 				'language_code'           => $language_code,
@@ -152,7 +155,7 @@ class ModelSaleOrder extends Model {
 				'date_modified'           => $order_query->row['date_modified']
 			);
 		} else {
-			return false;
+			return;
 		}
 	}
 

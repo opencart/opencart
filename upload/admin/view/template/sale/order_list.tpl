@@ -35,15 +35,15 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label class="control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
-            <select name="filter_order_status_id" id="input-order-status" class="form-control">
+            <select name="filter_order_status" id="input-order-status" class="form-control">
               <option value="*"></option>
-              <?php if ($filter_order_status_id == '0') { ?>
+              <?php if ($filter_order_status == '0') { ?>
               <option value="0" selected="selected"><?php echo $text_missing; ?></option>
               <?php } else { ?>
               <option value="0"><?php echo $text_missing; ?></option>
               <?php } ?>
               <?php foreach ($order_statuses as $order_status) { ?>
-              <?php if ($order_status['order_status_id'] == $filter_order_status_id) { ?>
+              <?php if ($order_status['order_status_id'] == $filter_order_status) { ?>
               <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
               <?php } else { ?>
               <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
@@ -165,10 +165,10 @@ $('#button-filter').on('click', function() {
 		url += '&filter_customer=' + encodeURIComponent(filter_customer);
 	}
 	
-	var filter_order_status_id = $('select[name=\'filter_order_status_id\']').val();
+	var filter_order_status = $('select[name=\'filter_order_status\']').val();
 	
-	if (filter_order_status_id != '*') {
-		url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
+	if (filter_order_status != '*') {
+		url += '&filter_order_status=' + encodeURIComponent(filter_order_status);
 	}	
 
 	var filter_total = $('input[name=\'filter_total\']').val();

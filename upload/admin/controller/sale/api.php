@@ -1,19 +1,35 @@
 <?php
 class ControllerSaleApi extends Controller {	
 	public function insert() {
-		$response = $curl->post($url . 'index.php?route=api/order/add', $cookie);
-					
-		if (isset($response['error'])) {
-			$json['error']['warning'] = $response['error'];
+		if (!$json['error']) {
+			$response = $curl->post($url . 'index.php?route=api/order/add', $cookie);
+						
+			if (isset($response['error'])) {
+				$json['error']['warning'] = $response['error'];
+			}
+			
+			$response = $curl->post($url . 'index.php?route=api/order/history', $cookie, array('order_status_id' => $this->request->post['order_status_id']));
+						
+			if (isset($response['error'])) {
+				$json['error']['warning'] = $response['error'];
+			}
 		}
 	}
 	
 	public function update() {
-		$response = $curl->post($url . 'index.php?route=api/order/update&order_id=' . $this->request->get['order_id'], $cookie);
-					
-		if (isset($response['error'])) {
-			$json['error']['warning'] = $response['error'];
-		}		
+		if (!$json['error']) {		
+			$response = $curl->post($url . 'index.php?route=api/order/update&order_id=' . $this->request->get['order_id'], $cookie);
+						
+			if (isset($response['error'])) {
+				$json['error']['warning'] = $response['error'];
+			}
+			
+			$response = $curl->post($url . 'index.php?route=api/order/history', $cookie, array('order_status_id' => $this->request->post['order_status_id']));
+						
+			if (isset($response['error'])) {
+				$json['error']['warning'] = $response['error'];
+			}
+		}
 	}
 	
 	public function delete() {
@@ -21,7 +37,13 @@ class ControllerSaleApi extends Controller {
 					
 		if (isset($response['error'])) {
 			$json['error']['warning'] = $response['error'];
-		}		
+		}
+		
+		$response = $curl->post($url . 'index.php?route=api/order/history', $cookie, array('order_status_id' => $this->request->post['order_status_id']));
+					
+		if (isset($response['error'])) {
+			$json['error']['warning'] = $response['error'];
+		}			
 	}
 	
 	public function refresh() {
@@ -277,21 +299,6 @@ class ControllerSaleApi extends Controller {
 			if (isset($response['total'])) {
 				$json['total'] = $response['total'];
 			}
-			
-		
-			// Order
-			/*
-			if (!$json['error']) {
-
-								
-				$response = $curl->post($url . 'index.php?route=api/order/history', $cookie, array('order_status_id' => $this->request->post['order_status_id']));
-							
-				if (isset($response['error'])) {
-					$json['error']['warning'] = $response['error'];
-				}							
-			}			
-			*/
-							
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

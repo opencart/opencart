@@ -212,28 +212,30 @@ class ModelCheckoutOrder extends Model {
 		$order_info = $this->getOrder($order_id);
 		
 		if ($order_info) {
-			
 			// Fraud Detection
 			$this->load->model('account/customer');
 			
-			
-			/*
-			if (!$safe) { 
+			$customer_info = $this->model_account_customer->getCustomer($order_info['customer_id']);
 				
-				if ($this->config->get('config_fraud_detection')) {
-					$this->load->model('checkout/fraud');
-	
-					$risk_score = $this->model_checkout_fraud->getFraudScore($order_info);
-	
-					if ($risk_score > $this->config->get('config_fraud_score')) {
-						$order_status_id = $this->config->get('config_fraud_status_id');
-					}
+			if ($customer_info && $customer_info['safe']) {
+				$safe = true;	
+			} else {
+				$safe = false;
+			}
+				
+			if ($this->config->get('config_fraud_detection')) {
+				$this->load->model('checkout/fraud');
+
+				$risk_score = $this->model_checkout_fraud->getFraudScore($order_info);
+
+				if (!$safe && $risk_score > $this->config->get('config_fraud_score')) {
+					$order_status_id = $this->config->get('config_fraud_status_id');
 				}
-	
-				// Ban IP
+			}
+
+			// Ban IP
+			if (!$safe) {
 				$status = false;
-	
-				
 	
 				if ($order_info['customer_id']) {
 					$results = $this->model_account_customer->getIps($order_info['customer_id']);
@@ -253,7 +255,6 @@ class ModelCheckoutOrder extends Model {
 					$order_status_id = $this->config->get('config_order_status_id');
 				}
 			}
-			*/
 			
 			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
 
@@ -330,7 +331,8 @@ class ModelCheckoutOrder extends Model {
 			}
 		
 			$this->cache->delete('product');
-		
+			
+			/*
 			// If order status in the complete range create any vouchers that where in the order
 			if (in_array($order_info['order_status_id'], $this->config->get('config_complete_status'))) {
 				// Gift Voucher
@@ -365,6 +367,8 @@ class ModelCheckoutOrder extends Model {
 					
 					
 			}
+			
+			*/
 		}
 		
 		$this->event->trigger('order_history');

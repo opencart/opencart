@@ -6,7 +6,7 @@ class ControllerApiCoupon extends Controller {
 		$json = array();
 		
 		if (!isset($this->session->data['api_id'])) {
-			$json['error']['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		} else {
 			$this->load->model('checkout/coupon');
 			

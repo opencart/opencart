@@ -255,7 +255,7 @@ class ControllerSaleApi extends Controller {
 			if (isset($response['error'])) {
 				$json['error']['shipping_method'] = $response['error'];
 			} else {
-				$json['shipping_methods'] = $response['shipping_methods'];
+				$json['shipping_method'] = $response['shipping_method'];
 			}
 			
 			// Shipping Method
@@ -271,7 +271,7 @@ class ControllerSaleApi extends Controller {
 			if (isset($response['error'])) {
 				$json['error']['payment_method'] = $response['error'];
 			} else {
-				$json['payment_methods'] = $response['payment_methods'];
+				$json['payment_method'] = $response['payment_method'];
 			}
 			
 			// Payment Method

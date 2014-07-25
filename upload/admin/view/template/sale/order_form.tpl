@@ -1469,6 +1469,8 @@ $('#button-reward-remove').on('click', function() {
 var success = function(json) {
 	$('#content').prepend(json);
 	
+	json = eval(json);
+	
 	$('.alert, .text-danger').remove();
 	
 	// Check for errors
@@ -1655,6 +1657,7 @@ var success = function(json) {
 			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['reward'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 		}	
 	} else {
+		/*
 		$('input[name=\'product\']').val('');
 		$('input[name=\'product_id\']').val('');
 		$('#option').html('');	
@@ -1665,9 +1668,10 @@ var success = function(json) {
 		$('input[name=\'to_name\']').val('');
 		$('input[name=\'to_email\']').val('');	
 		$('textarea[name=\'message\']').val('');	
-		$('input[name=\'amount\']').val('<?php echo addslashes($voucher_min); ?>');								
+		$('input[name=\'amount\']').val('<?php echo addslashes($voucher_min); ?>');	
+		*/
 	}
-
+	
 	if (json['success']) {
 		$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 	}
@@ -1727,7 +1731,7 @@ var success = function(json) {
 
 		$('#product').html(html);
 	}
-				
+					
 	// Vouchers
 	if (json['voucher']) {
 		var voucher_row = 0;
@@ -1891,37 +1895,7 @@ $('#button-refresh').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>',
 		type: 'post',
-		data: $('
-		#tab-customer input[type=\'text\'], 
-		#tab-customer input[type=\'hidden\'], 
-		#tab-customer input[type=\'radio\']:checked, 
-		#tab-customer input[type=\'checkbox\']:checked, 
-		#tab-customer select, 
-		#tab-customer textarea,
-		
-		#tab-payment input[type=\'text\'], 
-		#tab-payment input[type=\'hidden\'], 
-		#tab-payment input[type=\'radio\']:checked, 
-		#tab-payment input[type=\'checkbox\']:checked, 
-		#tab-payment select, 
-		#tab-payment textarea,		
-		
-		#tab-shipping input[type=\'text\'], 
-		#tab-shipping input[type=\'hidden\'], 
-		#tab-shipping input[type=\'radio\']:checked, 
-		#tab-shipping input[type=\'checkbox\']:checked, 
-		#tab-shipping select, 
-		#tab-shipping textarea,	
-
-
-		#tab-total input[type=\'text\'], 
-		#tab-total input[type=\'hidden\'], 
-		#tab-total input[type=\'radio\']:checked, 
-		#tab-total input[type=\'checkbox\']:checked, 
-		#tab-total select, 
-		#tab-total textarea,	
-						
-		'),
+		data: $('#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'], #tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea, #tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea, #tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked,	#tab-shipping select, #tab-shipping textarea,	#product input, #product select, #product textarea,	#voucher input, #voucher select, #voucher textarea,	#tab-total input[type=\'text\'], #tab-total input[type=\'hidden\'], #tab-total input[type=\'radio\']:checked, #tab-total input[type=\'checkbox\']:checked, #tab-total select, #tab-total textarea'),
 		dataType: 'html',
 		beforeSend: function() {
 			$('#button-refresh i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
@@ -1940,44 +1914,14 @@ $('#button-refresh').on('click', function() {
 
 $('#button-save').on('click', function() {
 	$.ajax({
-		<?php if ($order_id) { ?>
-		var url = 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>';
+		<?php if (!$order_id) { ?>
+		url: 'index.php?route=sale/api/insert&token=<?php echo $token; ?>',
 		<?php } else { ?>
-		var url = 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>';
-		<?php } ?>,
+		url: 'index.php?route=sale/api/update&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		<?php } ?>
 		type: 'post',
-		data: $('
-		#tab-customer input[type=\'text\'], 
-		#tab-customer input[type=\'hidden\'], 
-		#tab-customer input[type=\'radio\']:checked, 
-		#tab-customer input[type=\'checkbox\']:checked, 
-		#tab-customer select, 
-		#tab-customer textarea,
-		
-		#tab-payment input[type=\'text\'], 
-		#tab-payment input[type=\'hidden\'], 
-		#tab-payment input[type=\'radio\']:checked, 
-		#tab-payment input[type=\'checkbox\']:checked, 
-		#tab-payment select, 
-		#tab-payment textarea,		
-		
-		#tab-shipping input[type=\'text\'], 
-		#tab-shipping input[type=\'hidden\'], 
-		#tab-shipping input[type=\'radio\']:checked, 
-		#tab-shipping input[type=\'checkbox\']:checked, 
-		#tab-shipping select, 
-		#tab-shipping textarea,	
-
-
-		#tab-total input[type=\'text\'], 
-		#tab-total input[type=\'hidden\'], 
-		#tab-total input[type=\'radio\']:checked, 
-		#tab-total input[type=\'checkbox\']:checked, 
-		#tab-total select, 
-		#tab-total textarea,	
-						
-		'),
-		dataType: 'html',
+		data: $('#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'], #tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea, #tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea, #tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked,	#tab-shipping select, #tab-shipping textarea,	#product input, #product select, #product textarea,	#voucher input, #voucher select, #voucher textarea,	#tab-total input[type=\'text\'], #tab-total input[type=\'hidden\'], #tab-total input[type=\'radio\']:checked, #tab-total input[type=\'checkbox\']:checked, #tab-total select, #tab-total textarea'),
+		dataType: 'json',
 		beforeSend: function() {
 			$('#button-save i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 			$('#button-save').prop('disabled', true);
@@ -1997,37 +1941,7 @@ $('#button-product').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>',
 		type: 'post',
-		data: $('
-		#tab-customer input[type=\'text\'], 
-		#tab-customer input[type=\'hidden\'], 
-		#tab-customer input[type=\'radio\']:checked, 
-		#tab-customer input[type=\'checkbox\']:checked, 
-		#tab-customer select, 
-		#tab-customer textarea,
-		
-		#tab-payment input[type=\'text\'], 
-		#tab-payment input[type=\'hidden\'], 
-		#tab-payment input[type=\'radio\']:checked, 
-		#tab-payment input[type=\'checkbox\']:checked, 
-		#tab-payment select, 
-		#tab-payment textarea,		
-		
-		#tab-shipping input[type=\'text\'], 
-		#tab-shipping input[type=\'hidden\'], 
-		#tab-shipping input[type=\'radio\']:checked, 
-		#tab-shipping input[type=\'checkbox\']:checked, 
-		#tab-shipping select, 
-		#tab-shipping textarea,	
-
-
-		#tab-total input[type=\'text\'], 
-		#tab-total input[type=\'hidden\'], 
-		#tab-total input[type=\'radio\']:checked, 
-		#tab-total input[type=\'checkbox\']:checked, 
-		#tab-total select, 
-		#tab-total textarea,	
-						
-		'),
+		data: $('#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'],	#tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea, #tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea,		#tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked, #tab-shipping select, #tab-shipping textarea,	#tab-product input[type=\'text\'], #tab-product input[type=\'hidden\'], #tab-product input[type=\'radio\']:checked, #tab-product input[type=\'checkbox\']:checked, #tab-product select, #tab-product textarea,	#voucher input, #voucher select, #voucher textarea, #tab-total input[type=\'text\'], #tab-total input[type=\'hidden\'], #tab-total input[type=\'radio\']:checked, #tab-total input[type=\'checkbox\']:checked, #tab-total select, #tab-total textarea'),
 		dataType: 'html',
 		beforeSend: function() {
 			$('#button-product i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
@@ -2048,38 +1962,8 @@ $('#button-voucher').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>',
 		type: 'post',
-		data: $('
-		#tab-customer input[type=\'text\'], 
-		#tab-customer input[type=\'hidden\'], 
-		#tab-customer input[type=\'radio\']:checked, 
-		#tab-customer input[type=\'checkbox\']:checked, 
-		#tab-customer select, 
-		#tab-customer textarea,
-		
-		#tab-payment input[type=\'text\'], 
-		#tab-payment input[type=\'hidden\'], 
-		#tab-payment input[type=\'radio\']:checked, 
-		#tab-payment input[type=\'checkbox\']:checked, 
-		#tab-payment select, 
-		#tab-payment textarea,		
-		
-		#tab-shipping input[type=\'text\'], 
-		#tab-shipping input[type=\'hidden\'], 
-		#tab-shipping input[type=\'radio\']:checked, 
-		#tab-shipping input[type=\'checkbox\']:checked, 
-		#tab-shipping select, 
-		#tab-shipping textarea,	
-
-
-		#tab-total input[type=\'text\'], 
-		#tab-total input[type=\'hidden\'], 
-		#tab-total input[type=\'radio\']:checked, 
-		#tab-total input[type=\'checkbox\']:checked, 
-		#tab-total select, 
-		#tab-total textarea,	
-						
-		'),
-		dataType: 'html',
+		data: $('#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'], #tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea,#tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea, #tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked, #tab-shipping select, #tab-shipping textarea,	#product input, #product select, #product textarea, #tab-voucher input[type=\'text\'], #tab-voucher input[type=\'hidden\'], #tab-voucher input[type=\'radio\']:checked, #tab-voucher input[type=\'checkbox\']:checked, #tab-voucher select, #tab-voucher textarea,	#tab-total input[type=\'text\'], #tab-total input[type=\'hidden\'], #tab-total input[type=\'radio\']:checked, #tab-total input[type=\'checkbox\']:checked, #tab-total select, #tab-total textarea'),
+		dataType: 'json',
 		beforeSend: function() {
 			$('#button-voucher i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 			$('#button-voucher').prop('disabled', true);

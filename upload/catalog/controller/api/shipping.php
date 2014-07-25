@@ -137,7 +137,7 @@ class ControllerApiShipping extends Controller {
 		$json = array();		
 		
 		if (!isset($this->session->data['api_id'])) {
-			$json['error']['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		} else {			
 			if ($this->cart->hasShipping()) {
 				// Shipping Address
@@ -180,9 +180,9 @@ class ControllerApiShipping extends Controller {
 		$json = array();
 		
 		if (!isset($this->session->data['api_id'])) {
-			$json['error']['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		} else {
-			$json['shipping_methods'] = array();
+			$json['shipping_method'] = array();
 			
 			if ($this->cart->hasShipping()) {
 				// Shipping Address
@@ -202,7 +202,7 @@ class ControllerApiShipping extends Controller {
 							$quote = $this->{'model_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']); 
 				
 							if ($quote) {
-								$json['shipping_methods'][$result['code']] = array( 
+								$json['shipping_method'][$result['code']] = array( 
 									'title'      => $quote['title'],
 									'quote'      => $quote['quote'], 
 									'sort_order' => $quote['sort_order'],
@@ -214,14 +214,14 @@ class ControllerApiShipping extends Controller {
 			
 					$sort_order = array();
 				  
-					foreach ($json['shipping_methods'] as $key => $value) {
+					foreach ($json['shipping_method'] as $key => $value) {
 						$sort_order[$key] = $value['sort_order'];
 					}
 			
-					array_multisort($sort_order, SORT_ASC, $json['shipping_methods']);
+					array_multisort($sort_order, SORT_ASC, $json['shipping_method']);
 		
-					if ($json['shipping_methods']) {
-						$this->session->data['shipping_methods'] = $json['shipping_methods'];
+					if ($json['shipping_method']) {
+						$this->session->data['shipping_methods'] = $json['shipping_method'];
 					} else {
 						$json['error'] = $this->language->get('error_no_shipping');
 					}

@@ -168,7 +168,7 @@ class ControllerApiPayment extends Controller {
 		$json = array();
 		
 		if (!isset($this->session->data['api_id'])) {
-			$json['error']['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		} else {		
 			// Payment Address
 			if (!isset($this->session->data['payment_address'])) {
@@ -201,7 +201,7 @@ class ControllerApiPayment extends Controller {
 					}
 				}
 				
-				$json['payment_methods'] = array();
+				$json['payment_method'] = array();
 				
 				$results = $this->model_setting_extension->getExtensions('payment');
 	
@@ -217,11 +217,11 @@ class ControllerApiPayment extends Controller {
 							if ($recurring > 0) {
 								if (method_exists($this->{'model_payment_' . $result['code']}, 'recurringPayments')) {
 									if ($this->{'model_payment_' . $result['code']}->recurringPayments() == true) {
-										$json['payment_methods'][$result['code']] = $method;
+										$json['payment_method'][$result['code']] = $method;
 									}
 								}
 							} else {
-								$json['payment_methods'][$result['code']] = $method;
+								$json['payment_method'][$result['code']] = $method;
 							}
 						}
 					}
@@ -229,14 +229,14 @@ class ControllerApiPayment extends Controller {
 	
 				$sort_order = array(); 
 			  
-				foreach ($json['payment_methods'] as $key => $value) {
+				foreach ($json['payment_method'] as $key => $value) {
 					$sort_order[$key] = $value['sort_order'];
 				}
 		
-				array_multisort($sort_order, SORT_ASC, $json['payment_methods']);			
+				array_multisort($sort_order, SORT_ASC, $json['payment_method']);			
 				
-				if ($json['payment_methods']) {
-					$this->session->data['payment_methods'] = $json['payment_methods'];
+				if ($json['payment_method']) {
+					$this->session->data['payment_methods'] = $json['payment_method'];
 				} else {
 					$json['error'] = $this->language->get('error_no_payment');
 				}			

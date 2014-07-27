@@ -130,7 +130,7 @@
           <ul class="list-group">
             <?php if ($activities) { ?>
             <?php foreach ($activities as $activity) { ?>
-            <li class="list-group-item"> <?php echo $activity['comment']; ?><br />
+            <li class="list-group-item"><?php echo $activity['comment']; ?><br />
               <small class="text-muted"><i class="fa fa-clock-o"></i> <?php echo $activity['date_added']; ?></small></li>
             <?php } ?>
             <?php } else { ?>

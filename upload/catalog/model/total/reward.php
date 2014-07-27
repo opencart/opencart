@@ -68,7 +68,7 @@ class ModelTotalReward extends Model {
 		}
 	}
 
-	public function clear($order_id) {
+	public function unconfirm($order_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_reward WHERE order_id = '" . (int)$order_id . "' AND points < 0");
 	}
 }

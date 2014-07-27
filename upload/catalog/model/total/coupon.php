@@ -111,7 +111,7 @@ class ModelTotalCoupon extends Model {
 		}
 	}
 
-	public function clear($order_id) {
+	public function unconfirm($order_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "coupon_history` WHERE order_id = '" . (int)$order_id . "'");
 	}
 }

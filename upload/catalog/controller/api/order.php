@@ -71,12 +71,7 @@ class ControllerApiOrder extends Controller {
 				$order_data['invoice_prefix'] = $this->config->get('config_invoice_prefix');
 				$order_data['store_id'] = $this->config->get('config_store_id');
 				$order_data['store_name'] = $this->config->get('config_name');
-	
-				if ($order_data['store_id']) {
-					$order_data['store_url'] = $this->config->get('config_url');
-				} else {
-					$order_data['store_url'] = HTTP_SERVER;
-				}
+				$order_data['store_url'] = $this->config->get('config_url');
 							
 				// Customer Details
 				$order_data['customer_id'] = $this->session->data['customer']['customer_id'];
@@ -299,9 +294,9 @@ class ControllerApiOrder extends Controller {
 				}
 			}
 	
-			//$this->load->model('checkout/order');
+			$this->load->model('checkout/order');
 	
-			//$json['order_id'] = $this->model_checkout_order->addOrder($order_data);
+			$json['order_id'] = $this->model_checkout_order->addOrder($order_data);
 			
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -381,12 +376,7 @@ class ControllerApiOrder extends Controller {
 				$order_data['invoice_prefix'] = $this->config->get('config_invoice_prefix');
 				$order_data['store_id'] = $this->config->get('config_store_id');
 				$order_data['store_name'] = $this->config->get('config_name');
-	
-				if ($order_data['store_id']) {
-					$order_data['store_url'] = $this->config->get('config_url');
-				} else {
-					$order_data['store_url'] = HTTP_SERVER;
-				}
+				$order_data['store_url'] = $this->config->get('config_url');
 							
 				// Customer Details
 				$order_data['customer_id'] = $this->session->data['customer']['customer_id'];
@@ -555,10 +545,30 @@ class ControllerApiOrder extends Controller {
 				
 				$order_data['comment'] = $this->session->data['comment'];
 				$order_data['total'] = $total;
+
+				if (isset($this->request->post['affiliate_id'])) {
+					$subtotal = $this->cart->getSubTotal();
+	
+					// Affiliate
+					$this->load->model('affiliate/affiliate');
+	
+					$affiliate_info = $this->model_affiliate_affiliate->getAffiliate($affiliate_info['affiliate_id']);
+	
+					if ($affiliate_info) {
+						$order_data['affiliate_id'] = $affiliate_info['affiliate_id'];
+						$order_data['commission'] = ($subtotal / 100) * $affiliate_info['commission'];
+					} else {
+						$order_data['affiliate_id'] = 0;
+						$order_data['commission'] = 0;
+					}
+				} else {
+					$order_data['affiliate_id'] = 0;
+					$order_data['commission'] = 0;
+				}
 				
 				$this->load->model('checkout/order');
 		
-				$json['order_id'] = $this->model_checkout_order->editOrder($order_data);
+				$this->model_checkout_order->editOrder($order_data);
 			}
 		}
 		
@@ -574,18 +584,23 @@ class ControllerApiOrder extends Controller {
 		if (!isset($this->session->data['api_id'])) {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		} else {
-			// Add keys for missing post vars
-			$keys = array(
-				'order_id'
-			);
-			
-					
-			
 			$this->load->model('checkout/order');
 			
-			$this->model_checkout_order->deleteOrder($this->request->post['order_id']);
+			if (isset($this->request->get['order_id'])) {
+				$order_id = $this->request->get['order_id'];
+			} else {
+				$order_id = 0;
+			}
 			
-			$json['success'] = $this->language->get('text_success');
+			$order_info = $this->model_checkout_order>getOrder($order_id);
+			
+			if ($order_info) {
+				$this->model_checkout_order->deleteOrder($order_id);
+				
+				$json['success'] = $this->language->get('text_success');
+			} else {
+				$json['error'] = $this->language->get('error_not_found');	
+			}
 		}
 		
 		$this->response->setOutput(json_encode($json));	
@@ -615,9 +630,21 @@ class ControllerApiOrder extends Controller {
 			
 			$this->load->model('checkout/order');
 			
-			//$this->model_checkout_order->addOrderHistory($this->request->get['order_id'], $this->request->post['order_status_id'], $this->request->post['comment'], $this->request->post['notify']);
-		
-			$json['success'] = $this->language->get('text_success');
+			if (isset($this->request->get['order_id'])) {
+				$order_id = $this->request->get['order_id'];
+			} else {
+				$order_id = 0;
+			}
+			
+			$order_info = $this->model_checkout_order>getOrder($order_id);
+			
+			if ($order_info) {			
+				$this->model_checkout_order->addOrderHistory($order_id, $this->request->post['order_status_id'], $this->request->post['comment'], $this->request->post['notify']);
+			
+				$json['success'] = $this->language->get('text_success');
+			} else {
+				$json['error'] = $this->language->get('error_not_found');	
+			}		
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');

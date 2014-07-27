@@ -35,7 +35,7 @@ class ModelTotalCredit extends Model {
 		}
 	}
 	
-	public function clear($order_id) {
+	public function unconfirm($order_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_transaction WHERE order_id = '" . (int)$order_id . "'");
 	}	
 }

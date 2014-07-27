@@ -135,6 +135,10 @@ class ModelAffiliateAffiliate extends Model {
 		}
 	}
 
+	public function deleteTransaction($order_id) {
+		$this->db->query("DELETE FROM " . DB_PREFIX . "affiliate_transaction WHERE order_id = '" . (int)$order_id . "'");
+	}
+	
 	public function getTransactionTotal($affiliate_id) {
 		$query = $this->db->query("SELECT SUM(amount) AS total FROM " . DB_PREFIX . "affiliate_transaction WHERE affiliate_id = '" . (int)$affiliate_id . "'");
 

@@ -617,7 +617,8 @@ class ControllerSaleCustomer extends Controller {
 		$data['entry_description'] = $this->language->get('entry_description');
 		$data['entry_amount'] = $this->language->get('entry_amount');
 		$data['entry_points'] = $this->language->get('entry_points');
-
+		
+		$data['help_safe'] = $this->language->get('help_safe');
 		$data['help_points'] = $this->language->get('help_points');
 
 		$data['button_save'] = $this->language->get('button_save');
@@ -833,7 +834,15 @@ class ControllerSaleCustomer extends Controller {
 		} else {
 			$data['status'] = 1;
 		}
-
+		
+		if (isset($this->request->post['safe'])) {
+			$data['safe'] = $this->request->post['safe'];
+		} elseif (!empty($customer_info)) {
+			$data['safe'] = $customer_info['safe'];
+		} else {
+			$data['safe'] = 0;
+		}
+		
 		if (isset($this->request->post['password'])) {
 			$data['password'] = $this->request->post['password'];
 		} else {

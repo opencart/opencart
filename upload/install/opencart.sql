@@ -1389,7 +1389,7 @@ CREATE TABLE `oc_event` (
   `event` varchar(255) NOT NULL,
   `handlers` text NOT NULL,
   PRIMARY KEY (`event_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 --
 -- Dumping data for table `oc_event`

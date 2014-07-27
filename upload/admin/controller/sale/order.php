@@ -796,6 +796,7 @@ class ControllerSaleOrder extends Controller {
 			$data['text_country'] = $this->language->get('text_country');
 			$data['text_shipping_method'] = $this->language->get('text_shipping_method');
 			$data['text_payment_method'] = $this->language->get('text_payment_method');
+			$data['text_history'] = $this->language->get('text_history');
 			$data['text_country_match'] = $this->language->get('text_country_match');
 			$data['text_country_code'] = $this->language->get('text_country_code');
 			$data['text_high_risk_country'] = $this->language->get('text_high_risk_country');

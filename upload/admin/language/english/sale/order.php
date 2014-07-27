@@ -115,6 +115,7 @@ $_['text_queries_remaining']                  = 'Queries Remaining:';
 $_['text_maxmind_id']                         = 'Maxmind ID:';
 $_['text_error']                              = 'Error:';
 $_['text_picklist']                           = 'Dispatch note';
+$_['text_history']                            = 'Add Order History';
 
 // Column
 $_['column_order_id']                         = 'Order ID';

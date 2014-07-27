@@ -181,52 +181,56 @@ class ControllerApiShipping extends Controller {
 		
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');
-		} else {
-			$json['shipping_method'] = array();
+		} elseif ($this->cart->hasShipping()) {
+			if (!isset($this->session->data['shipping_address'])) {
+				$json['error'] = $this->language->get('error_address');
+			}			
 			
-			if ($this->cart->hasShipping()) {
-				// Shipping Address
-				if (!isset($this->session->data['shipping_address'])) {
-					$json['error'] = $this->language->get('error_address');
-				}			
+			if (!$json) {
+				// Shipping Methods
+				$method_data = array();
 				
-				if (!$json) {
-					$this->load->model('setting/extension');
-					
-					$results = $this->model_setting_extension->getExtensions('shipping');
-					
-					foreach ($results as $result) {
-						if ($this->config->get($result['code'] . '_status')) {
-							$this->load->model('shipping/' . $result['code']);
-							
-							$quote = $this->{'model_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']); 
+				$this->load->model('setting/extension');
 				
-							if ($quote) {
-								$json['shipping_method'][$result['code']] = array( 
-									'title'      => $quote['title'],
-									'quote'      => $quote['quote'], 
-									'sort_order' => $quote['sort_order'],
-									'error'      => $quote['error']
-								);
-							}
+				$results = $this->model_setting_extension->getExtensions('shipping');
+				
+				foreach ($results as $result) {
+					if ($this->config->get($result['code'] . '_status')) {
+						$this->load->model('shipping/' . $result['code']);
+						
+						$quote = $this->{'model_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']); 
+			
+						if ($quote) {
+							$method_data[$result['code']] = array( 
+								'title'      => $quote['title'],
+								'quote'      => $quote['quote'], 
+								'sort_order' => $quote['sort_order'],
+								'error'      => $quote['error']
+							);
 						}
 					}
-			
-					$sort_order = array();
-				  
-					foreach ($json['shipping_method'] as $key => $value) {
-						$sort_order[$key] = $value['sort_order'];
-					}
-			
-					array_multisort($sort_order, SORT_ASC, $json['shipping_method']);
+				}
 		
-					if ($json['shipping_method']) {
-						$this->session->data['shipping_methods'] = $json['shipping_method'];
-					} else {
-						$json['error'] = $this->language->get('error_no_shipping');
-					}
+				$sort_order = array();
+			  
+				foreach ($method_data as $key => $value) {
+					$sort_order[$key] = $value['sort_order'];
+				}
+		
+				array_multisort($sort_order, SORT_ASC, $method_data);
+	
+				if ($method_data) {
+					$this->session->data['shipping_methods'] = $method_data;
+				} else {
+					$json['error'] = $this->language->get('error_no_shipping');
 				}
 			}
+		}
+		
+		if (isset($this->session->data['shipping_methods'])) {
+			$json['shipping_methods'] = $this->session->data['shipping_methods'];
+		} else {
+			$json['shipping_methods'] = array();
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');

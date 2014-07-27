@@ -1469,7 +1469,7 @@ $('#button-reward-remove').on('click', function() {
 var success = function(json) {
 	$('#content').prepend(json);
 	
-	json = eval(json);
+	eval(json);
 	
 	$('.alert, .text-danger').remove();
 	
@@ -1835,18 +1835,18 @@ var success = function(json) {
 	}
 	
 	// Shipping Methods
-	if (json['shipping_method']) {
+	if (json['shipping_methods']) {
 		html = '<option value=""><?php echo $text_select; ?></option>';
 
-		for (i in json['shipping_method']) {
-			html += '<optgroup label="' + json['shipping_method'][i]['title'] + '">';
+		for (i in json['shipping_methods']) {
+			html += '<optgroup label="' + json['shipping_methods'][i]['title'] + '">';
 		
-			if (!json['shipping_method'][i]['error']) {
-				for (j in json['shipping_method'][i]['quote']) {
-					if (json['shipping_method'][i]['quote'][j]['code'] == $('input[name=\'shipping_code\']').val()) {
-						html += '<option value="' + json['shipping_method'][i]['quote'][j]['code'] + '" selected="selected">' + json['shipping_method'][i]['quote'][j]['title'] + '</option>';
+			if (!json['shipping_methods'][i]['error']) {
+				for (j in json['shipping_methods'][i]['quote']) {
+					if (json['shipping_methods'][i]['quote'][j]['code'] == $('input[name=\'shipping_code\']').val()) {
+						html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected="selected">' + json['shipping_methods'][i]['quote'][j]['title'] + '</option>';
 					} else {
-						html += '<option value="' + json['shipping_method'][i]['quote'][j]['code'] + '">' + json['shipping_method'][i]['quote'][j]['title'] + '</option>';
+						html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + '</option>';
 					}
 				}		
 			} else {
@@ -1868,14 +1868,14 @@ var success = function(json) {
 	}
 				
 	// Payment Methods
-	if (json['payment_method']) {
+	if (json['payment_methods']) {
 		html = '<option value=""><?php echo $text_select; ?></option>';
 		
-		for (i in json['payment_method']) {
-			if (json['payment_method'][i]['code'] == $('input[name=\'payment_code\']').val()) {
-				html += '<option value="' + json['payment_method'][i]['code'] + '" selected="selected">' + json['payment_method'][i]['title'] + '</option>';
+		for (i in json['payment_methods']) {
+			if (json['payment_methods'][i]['code'] == $('input[name=\'payment_code\']').val()) {
+				html += '<option value="' + json['payment_methods'][i]['code'] + '" selected="selected">' + json['payment_methods'][i]['title'] + '</option>';
 			} else {
-				html += '<option value="' + json['payment_method'][i]['code'] + '">' + json['payment_method'][i]['title'] + '</option>';
+				html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
 			}		
 		}
 
@@ -1893,7 +1893,11 @@ var success = function(json) {
 
 $('#button-refresh').on('click', function() {
 	$.ajax({
+		<?php if (!$order_id) { ?>
 		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>',
+		<?php } else { ?>
+		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		<?php } ?>		
 		type: 'post',
 		data: $('#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'], #tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea, #tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea, #tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked,	#tab-shipping select, #tab-shipping textarea,	#product input, #product select, #product textarea,	#voucher input, #voucher select, #voucher textarea,	#tab-total input[type=\'text\'], #tab-total input[type=\'hidden\'], #tab-total input[type=\'radio\']:checked, #tab-total input[type=\'checkbox\']:checked, #tab-total select, #tab-total textarea'),
 		dataType: 'html',
@@ -1939,7 +1943,11 @@ $('#button-save').on('click', function() {
 
 $('#button-product').on('click', function() {
 	$.ajax({
+		<?php if (!$order_id) { ?>
 		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>',
+		<?php } else { ?>
+		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		<?php } ?>		
 		type: 'post',
 		data: $('#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'],	#tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea, #tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea,		#tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked, #tab-shipping select, #tab-shipping textarea,	#tab-product input[type=\'text\'], #tab-product input[type=\'hidden\'], #tab-product input[type=\'radio\']:checked, #tab-product input[type=\'checkbox\']:checked, #tab-product select, #tab-product textarea,	#voucher input, #voucher select, #voucher textarea, #tab-total input[type=\'text\'], #tab-total input[type=\'hidden\'], #tab-total input[type=\'radio\']:checked, #tab-total input[type=\'checkbox\']:checked, #tab-total select, #tab-total textarea'),
 		dataType: 'html',
@@ -1960,7 +1968,11 @@ $('#button-product').on('click', function() {
 
 $('#button-voucher').on('click', function() {
 	$.ajax({
+		<?php if (!$order_id) { ?>
 		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>',
+		<?php } else { ?>
+		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		<?php } ?>		
 		type: 'post',
 		data: $('#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'], #tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea,#tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea, #tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked, #tab-shipping select, #tab-shipping textarea,	#product input, #product select, #product textarea, #tab-voucher input[type=\'text\'], #tab-voucher input[type=\'hidden\'], #tab-voucher input[type=\'radio\']:checked, #tab-voucher input[type=\'checkbox\']:checked, #tab-voucher select, #tab-voucher textarea,	#tab-total input[type=\'text\'], #tab-total input[type=\'hidden\'], #tab-total input[type=\'radio\']:checked, #tab-total input[type=\'checkbox\']:checked, #tab-total select, #tab-total textarea'),
 		dataType: 'json',

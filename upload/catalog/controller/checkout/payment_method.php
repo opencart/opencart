@@ -36,7 +36,7 @@ class ControllerCheckoutPaymentMethod extends Controller {
 
 			$results = $this->model_setting_extension->getExtensions('payment');
 
-			$cart_has_recurring = $this->cart->hasRecurringProducts();
+			$recurring = $this->cart->hasRecurringProducts();
 
 			foreach ($results as $result) {
 				if ($this->config->get($result['code'] . '_status')) {
@@ -45,7 +45,7 @@ class ControllerCheckoutPaymentMethod extends Controller {
 					$method = $this->{'model_payment_' . $result['code']}->getMethod($this->session->data['payment_address'], $total);
 
 					if ($method) {
-						if ($cart_has_recurring > 0) {
+						if ($recurring) {
 							if (method_exists($this->{'model_payment_' . $result['code']}, 'recurringPayments')) {
 								if ($this->{'model_payment_' . $result['code']}->recurringPayments() == true) {
 									$method_data[$result['code']] = $method;

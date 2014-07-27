@@ -1,14 +1,16 @@
 <?php
 class ControllerSaleApi extends Controller {	
 	public function insert() {
+		
+		
 		if (!$json['error']) {
-			$response = $curl->post($url . 'index.php?route=api/order/add', $cookie);
+			$response = $this->api($url . 'index.php?route=api/order/add', $cookie);
 						
 			if (isset($response['error'])) {
 				$json['error']['warning'] = $response['error'];
 			}
 			
-			$response = $curl->post($url . 'index.php?route=api/order/history', $cookie, array('order_status_id' => $this->request->post['order_status_id']));
+			$response = $this->api($url . 'index.php?route=api/order/history', $cookie, array('order_status_id' => $this->request->post['order_status_id']));
 						
 			if (isset($response['error'])) {
 				$json['error']['warning'] = $response['error'];
@@ -17,14 +19,17 @@ class ControllerSaleApi extends Controller {
 	}
 	
 	public function update() {
+		
+		
+		
 		if (!$json['error']) {		
-			$response = $curl->post($url . 'index.php?route=api/order/update&order_id=' . $this->request->get['order_id'], $cookie);
+			$response = $this->api($url . 'index.php?route=api/order/update&order_id=' . $this->request->get['order_id'], $cookie);
 						
 			if (isset($response['error'])) {
 				$json['error']['warning'] = $response['error'];
 			}
 			
-			$response = $curl->post($url . 'index.php?route=api/order/history', $cookie, array('order_status_id' => $this->request->post['order_status_id']));
+			$response = $this->api($url . 'index.php?route=api/order/history', $cookie, array('order_status_id' => $this->request->post['order_status_id']));
 						
 			if (isset($response['error'])) {
 				$json['error']['warning'] = $response['error'];
@@ -33,13 +38,15 @@ class ControllerSaleApi extends Controller {
 	}
 	
 	public function delete() {
-		$response = $curl->post($url . 'index.php?route=api/order/delete&order_id=' . $this->request->get['order_id'], $cookie);
+		
+		
+		$response = $this->api($url . 'index.php?route=api/order/delete&order_id=' . $this->request->get['order_id'], $cookie);
 					
 		if (isset($response['error'])) {
 			$json['error']['warning'] = $response['error'];
 		}
 		
-		$response = $curl->post($url . 'index.php?route=api/order/history', $cookie, array('order_status_id' => $this->request->post['order_status_id']));
+		$response = $this->api($url . 'index.php?route=api/order/history', $cookie, array('order_status_id' => $this->request->post['order_status_id']));
 					
 		if (isset($response['error'])) {
 			$json['error']['warning'] = $response['error'];
@@ -255,7 +262,7 @@ class ControllerSaleApi extends Controller {
 			if (isset($response['error'])) {
 				$json['error']['shipping_method'] = $response['error'];
 			} else {
-				$json['shipping_method'] = $response['shipping_method'];
+				$json['shipping_methods'] = $response['shipping_methods'];
 			}
 			
 			// Shipping Method
@@ -271,7 +278,7 @@ class ControllerSaleApi extends Controller {
 			if (isset($response['error'])) {
 				$json['error']['payment_method'] = $response['error'];
 			} else {
-				$json['payment_method'] = $response['payment_method'];
+				$json['payment_methods'] = $response['payment_methods'];
 			}
 			
 			// Payment Method
@@ -366,6 +373,9 @@ class ControllerSaleApi extends Controller {
 		}
 		
 		curl_close($curl);
+		
+		echo $url . '<br>';
+		echo $response . '<br>';
 		
 		return json_decode($response, true);
 	}

@@ -788,19 +788,19 @@ class ControllerSaleApi extends Controller {
 			$response = $this->api($url . 'index.php?route=api/cart/products', $cookie);
 			
 			if (isset($response['product'])) {
-				$json['product'] = $response['product'];
+				$json['products'] = $response['product'];
 			}
 			
 			// Vouchers
 			if (isset($response['voucher'])) {
-				$json['voucher'] = $response['voucher'];
+				$json['vouches'] = $response['voucher'];
 			}
 					
 			// Totals
 			$response = $this->api($url . 'index.php?route=api/cart/totals', $cookie);
 			
 			if (isset($response['total'])) {
-				$json['total'] = $response['total'];
+				$json['totals'] = $response['total'];
 			}
 		}
 

@@ -225,14 +225,10 @@ class ControllerApiShipping extends Controller {
 					$json['error'] = $this->language->get('error_no_shipping');
 				}
 			}
-		}
-		
-		if (isset($this->session->data['shipping_methods'])) {
-			$json['shipping_methods'] = $this->session->data['shipping_methods'];
 		} else {
 			$json['shipping_methods'] = array();
 		}
-		
+				
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));		
 	}

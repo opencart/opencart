@@ -138,8 +138,8 @@ class ControllerApiPayment extends Controller {
 		$this->load->language('api/payment');
 
 		// Delete past shipping methods and method just in case there is an error
-		unset($this->session->data['shipping_methods']);
-		unset($this->session->data['shipping_method']);
+		unset($this->session->data['payment_methods']);
+		unset($this->session->data['payment_method']);
 		
 		$json = array();
 		
@@ -157,6 +157,8 @@ class ControllerApiPayment extends Controller {
 				
 				// Payment Methods
 				$json['payment_methods'] = array();
+				
+				$this->load->model('setting/extension');
 				
 				$results = $this->model_setting_extension->getExtensions('payment');
 	

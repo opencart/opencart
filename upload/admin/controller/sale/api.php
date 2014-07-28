@@ -777,6 +777,9 @@ class ControllerSaleApi extends Controller {
 			return array('error' => curl_error($curl) . '(' . curl_errno($curl) . ')');
 		}
 		
+		//echo $url . '<br>';
+		//echo $response . '<br>';
+		
 		curl_close($curl);
 		
 		return json_decode($response, true);

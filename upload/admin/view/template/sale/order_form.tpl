@@ -1575,7 +1575,7 @@ var success = function(json) {
 			}
 
 			if (json['error']['product']['warning']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['warning'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}	
 								
 			if (json['error']['product']['stock']) {
@@ -1676,13 +1676,13 @@ var success = function(json) {
 		location = json['redirect'];	
 	}
 	
-	if (json['product']) {
+	if (json['products']) {
 		var product_row = 0;
 
 		html = '';
 		
-		for (i = 0; i < json['product'].length; i++) {
-			product = json['product'][i];
+		for (i = 0; i < json['products'].length; i++) {
+			product = json['products'][i];
 			
 			html += '<tr id="product-row' + product_row + '">';
 			html += '  <td class="text-left">' + product['name'] + '<br /><input type="hidden" name="order_product[' + product_row + '][product_id]" value="' + product['product_id'] + '" />';
@@ -1729,13 +1729,13 @@ var success = function(json) {
 	}
 					
 	// Vouchers
-	if (json['voucher']) {
+	if (json['vouchers']) {
 		var voucher_row = 0;
 		
 		 html = '';
 		 
-		 for (i in json['voucher']) {
-			voucher = json['voucher'][i];
+		 for (i in json['vouchers']) {
+			voucher = json['vouchers'][i];
 			 
 			html += '<tr id="voucher-row' + voucher_row + '">';
 			html += '  <td class="text-left">' + voucher['description'];
@@ -1767,12 +1767,12 @@ var success = function(json) {
 	}
 				
 	// Totals
-	if (json['product'] || json['voucher'] || json['total']) {
+	if (json['products'] || json['vouchers'] || json['totals']) {
 		html = '';
 		
-		if (json['product']) {
-			for (i = 0; i < json['product'].length; i++) {
-				product = json['product'][i];
+		if (json['products']) {
+			for (i = 0; i < json['products'].length; i++) {
+				product = json['products'][i];
 				
 				html += '<tr>';
 				html += '  <td class="text-left">' + product['name'] + '<br />';
@@ -1794,9 +1794,9 @@ var success = function(json) {
 			}				
 		}
 		
-		if (json['voucher']) {
-			for (i in json['voucher']) {
-				voucher = json['voucher'][i];
+		if (json['vouchers']) {
+			for (i in json['vouchers']) {
+				voucher = json['vouchers'][i];
 				 
 				html += '<tr>';
 				html += '  <td class="text-left">' + voucher['description'] + '</td>';

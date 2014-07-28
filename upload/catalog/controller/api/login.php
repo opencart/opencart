@@ -3,8 +3,8 @@ class ControllerApiLogin extends Controller {
 	public function index() {
 		$this->load->language('api/login');
 
-		// Delete old login id and session so not to cause any issues if there is an error
-		$this->session->destroy();
+		// Delete old login so not to cause any issues if there is an error
+		unset($this->session->data['api_id']);
 
 		$keys = array(
 			'username',

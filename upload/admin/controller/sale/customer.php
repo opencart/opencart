@@ -604,6 +604,7 @@ class ControllerSaleCustomer extends Controller {
 		$data['entry_password'] = $this->language->get('entry_password');
 		$data['entry_confirm'] = $this->language->get('entry_confirm');
 		$data['entry_newsletter'] = $this->language->get('entry_newsletter');
+		$data['entry_safe'] = $this->language->get('entry_safe');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_company'] = $this->language->get('entry_company');
 		$data['entry_address_1'] = $this->language->get('entry_address_1');

@@ -3,6 +3,9 @@ class ControllerApiVoucher extends Controller {
 	public function index() {
 		$this->load->language('api/voucher');
 		
+		// Delete past voucher in case there is an error
+		unset($this->session->data['voucher']);
+		
 		$json = array();
 		
 		if (!isset($this->session->data['api_id'])) {

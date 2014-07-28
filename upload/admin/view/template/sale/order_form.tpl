@@ -1467,10 +1467,6 @@ $('#button-reward-remove').on('click', function() {
 //--></script> 
 <script type="text/javascript"><!--
 var success = function(json) {
-	$('#content').prepend(json);
-	
-	eval(json);
-	
 	$('.alert, .text-danger').remove();
 	
 	// Check for errors
@@ -1900,7 +1896,7 @@ $('#button-refresh').on('click', function() {
 		<?php } ?>		
 		type: 'post',
 		data: $('#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'], #tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea, #tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea, #tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked,	#tab-shipping select, #tab-shipping textarea,	#product input, #product select, #product textarea,	#voucher input, #voucher select, #voucher textarea,	#tab-total input[type=\'text\'], #tab-total input[type=\'hidden\'], #tab-total input[type=\'radio\']:checked, #tab-total input[type=\'checkbox\']:checked, #tab-total select, #tab-total textarea'),
-		dataType: 'html',
+		dataType: 'json',
 		beforeSend: function() {
 			$('#button-refresh i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 			$('#button-refresh').prop('disabled', true);

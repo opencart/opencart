@@ -2,7 +2,10 @@
 class ControllerApiReward extends Controller {
 	public function index() {
 		$this->load->language('api/reward');
-
+		
+		// Delete past reward in case there is an error
+		unset($this->session->data['reward']);
+		
 		$json = array();
 		
 		if (!isset($this->session->data['api_id'])) {

@@ -3,6 +3,11 @@ class ControllerApiShipping extends Controller {
 	public function address() {
 		$this->load->language('api/shipping');
 		
+		// Delete old shipping address, shipping methods and method so not to cause any issues if there is an error
+		unset($this->session->data['shipping_address']);
+		unset($this->session->data['shipping_methods']);
+		unset($this->session->data['shipping_method']);
+				
 		$json = array();
 		
 		if ($this->cart->hasShipping()) {
@@ -131,52 +136,13 @@ class ControllerApiShipping extends Controller {
 		$this->response->setOutput(json_encode($json));		
 	}
 	
-	public function method() {
-		$this->load->language('api/shipping');
-		
-		$json = array();		
-		
-		if (!isset($this->session->data['api_id'])) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {			
-			if ($this->cart->hasShipping()) {
-				// Shipping Address
-				if (!isset($this->session->data['shipping_address'])) {
-					$json['error'] = $this->language->get('error_address');
-				}
-			
-				// Shipping Method
-				if (empty($this->session->data['shipping_methods'])) {
-					$json['error'] = $this->language->get('error_no_shipping');	
-				} elseif (!isset($this->request->post['shipping_method'])) {
-					$json['error'] = $this->language->get('error_method');
-				} else {
-					$shipping = explode('.', $this->request->post['shipping_method']);
-		
-					if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
-						$json['error'] = $this->language->get('error_shipping_method');
-					}
-				}
-				
-				if (!$json) {
-					$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
-					
-					$json['success'] = $this->language->get('text_method');
-				}			
-			} else {
-				unset($this->session->data['shipping_address']);
-				unset($this->session->data['shipping_method']);
-				unset($this->session->data['shipping_methods']);
-			}
-		}
-		
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));		
-	}	
-	
 	public function methods() {
 		$this->load->language('api/shipping');
-		
+
+		// Delete past shipping methods and method just in case there is an error
+		unset($this->session->data['shipping_methods']);
+		unset($this->session->data['shipping_method']);
+				
 		$json = array();
 		
 		if (!isset($this->session->data['api_id'])) {
@@ -232,4 +198,50 @@ class ControllerApiShipping extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));		
 	}
+	
+	public function method() {
+		$this->load->language('api/shipping');
+		
+		// Delete old shipping method so not to cause any issues if there is an error
+		unset($this->session->data['shipping_method']);
+		
+		$json = array();		
+		
+		if (!isset($this->session->data['api_id'])) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {			
+			if ($this->cart->hasShipping()) {
+				// Shipping Address
+				if (!isset($this->session->data['shipping_address'])) {
+					$json['error'] = $this->language->get('error_address');
+				}
+			
+				// Shipping Method
+				if (empty($this->session->data['shipping_methods'])) {
+					$json['error'] = $this->language->get('error_no_shipping');	
+				} elseif (!isset($this->request->post['shipping_method'])) {
+					$json['error'] = $this->language->get('error_method');
+				} else {
+					$shipping = explode('.', $this->request->post['shipping_method']);
+		
+					if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
+						$json['error'] = $this->language->get('error_shipping_method');
+					}
+				}
+				
+				if (!$json) {
+					$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
+					
+					$json['success'] = $this->language->get('text_method');
+				}			
+			} else {
+				unset($this->session->data['shipping_address']);
+				unset($this->session->data['shipping_method']);
+				unset($this->session->data['shipping_methods']);
+			}
+		}
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
+	}		
 }	

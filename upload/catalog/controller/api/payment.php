@@ -3,6 +3,11 @@ class ControllerApiPayment extends Controller {
 	public function address() {
 		$this->load->language('api/payment');
 		
+		// Delete old payment address, payment methods and method so not to cause any issues if there is an error
+		unset($this->session->data['payment_address']);
+		unset($this->session->data['payment_methods']);
+		unset($this->session->data['payment_method']);
+		
 		$json = array();
 		
 		if (!isset($this->session->data['api_id'])) {
@@ -127,43 +132,14 @@ class ControllerApiPayment extends Controller {
 		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));			
-	}
-	
-	public function method() {
-		$this->load->language('api/payment');
-		
-		$json = array();
-		
-		if (!isset($this->session->data['api_id'])) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {				
-			// Payment Address
-			if (!isset($this->session->data['payment_address'])) {
-				$json['error'] = $this->language->get('error_address');
-			}
-			
-			// Payment Method
-			if (empty($this->session->data['payment_methods'])) {
-				$json['error'] = $this->language->get('error_no_payment');	
-			} elseif (!isset($this->request->post['payment_method'])) {
-				$json['error'] = $this->language->get('error_method');
-			} elseif (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
-				$json['error'] = $this->language->get('error_method');
-			}
-					
-			if (!$json) {
-				$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->post['payment_method']];
-			
-				$json['success'] = $this->language->get('text_method');
-			}
-		}
-		
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));		
-	}		
+	}	
 	
 	public function methods() {
 		$this->load->language('api/payment');
+
+		// Delete past shipping methods and method just in case there is an error
+		unset($this->session->data['shipping_methods']);
+		unset($this->session->data['shipping_method']);
 		
 		$json = array();
 		
@@ -177,29 +153,7 @@ class ControllerApiPayment extends Controller {
 			
 			if (!$json) {
 				// Totals
-				$total_data = array();					
-				$total = 0;
-				$taxes = $this->cart->getTaxes();
-				
-				$this->load->model('setting/extension');
-				
-				$sort_order = array(); 
-				
-				$results = $this->model_setting_extension->getExtensions('total');
-				
-				foreach ($results as $key => $value) {
-					$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
-				}
-				
-				array_multisort($sort_order, SORT_ASC, $results);
-				
-				foreach ($results as $result) {
-					if ($this->config->get($result['code'] . '_status')) {
-						$this->load->model('total/' . $result['code']);
-			
-						$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
-					}
-				}
+				$total = $this->cart->getSubTotal();
 				
 				// Payment Methods
 				$json['payment_methods'] = array();
@@ -245,4 +199,40 @@ class ControllerApiPayment extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));			
 	}
+	
+	public function method() {
+		$this->load->language('api/payment');
+		
+		// Delete old payment method so not to cause any issues if there is an error
+		unset($this->session->data['payment_method']);
+				
+		$json = array();
+		
+		if (!isset($this->session->data['api_id'])) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {				
+			// Payment Address
+			if (!isset($this->session->data['payment_address'])) {
+				$json['error'] = $this->language->get('error_address');
+			}
+			
+			// Payment Method
+			if (empty($this->session->data['payment_methods'])) {
+				$json['error'] = $this->language->get('error_no_payment');	
+			} elseif (!isset($this->request->post['payment_method'])) {
+				$json['error'] = $this->language->get('error_method');
+			} elseif (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
+				$json['error'] = $this->language->get('error_method');
+			}
+					
+			if (!$json) {
+				$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->post['payment_method']];
+			
+				$json['success'] = $this->language->get('text_method');
+			}
+		}
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
+	}	
 }

@@ -4,7 +4,7 @@ class ControllerApiLogin extends Controller {
 		$this->load->language('api/login');
 
 		// Delete old login id and session so not to cause any issues if there is an error
-		$this->session->destory();
+		$this->session->destroy();
 
 		$keys = array(
 			'username',

@@ -3,6 +3,9 @@ class ControllerApiCustomer extends Controller {
 	public function index() {
 		$this->load->language('api/customer');
 		
+		// Delete past customer in case there is an error
+		unset($this->session->data['customer']);
+				
 		$json = array();
 		
 		if (!isset($this->session->data['api_id'])) {

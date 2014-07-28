@@ -58,33 +58,6 @@ class ControllerSaleApi extends Controller {
 					}
 				}
 			}
-	
-			// Add to cart
-			if (isset($this->request->post['product_id'])) {
-				if (isset($this->request->post['quantity'])) {
-					$quantity = $this->request->post['quantity'];
-				} else {
-					$quantity = 1;
-				}
-							
-				if (isset($this->request->post['option'])) {
-					$option = $this->request->post['option'];
-				} else {
-					$option = array();
-				}
-				
-				$product_data = array(
-					'product_id' => $this->request->post['product_id'],
-					'option'     => $option,
-					'quantity'   => $quantity
-				);
-				
-				$response = $this->api($url . 'index.php?route=api/cart/add', $cookie, $product_data);
-						
-				if (isset($response['error'])) {
-					$json['error']['product'] = $response['error'];
-				}
-			}		
 			
 			// Vouchers
 			if (isset($this->request->post['order_voucher'])) {
@@ -99,25 +72,6 @@ class ControllerSaleApi extends Controller {
 				}
 			}
 			
-			// Add to cart
-			if (isset($this->request->post['to_name']) || isset($this->request->post['to_email']) || isset($this->request->post['from_name']) || isset($this->request->post['from_email'])) {
-				$voucher_data = array(
-					'from_name'        => $this->request->post['from_name'],
-					'from_email'       => $this->request->post['from_email'],
-					'to_name'          => $this->request->post['to_name'],
-					'to_email'         => $this->request->post['to_email'],
-					'voucher_theme_id' => $this->request->post['voucher_theme_id'],
-					'message'          => $this->request->post['message'],
-					'amount'           => $this->request->post['amount']
-				);
-				
-				$response = $this->api($url . 'index.php?route=api/voucher/add', $cookie, $voucher_data);
-				
-				if (isset($response['error'])) {
-					$json['error']['vouchers'] = $response['error'];
-				}			
-			}
-						
 			// Customer
 			$customer_data = array(
 				'customer_id'       => $this->request->post['customer_id'],
@@ -309,34 +263,7 @@ class ControllerSaleApi extends Controller {
 					}
 				}
 			}
-	
-			// Add to cart
-			if (isset($this->request->post['product_id'])) {
-				if (isset($this->request->post['quantity'])) {
-					$quantity = $this->request->post['quantity'];
-				} else {
-					$quantity = 1;
-				}
-							
-				if (isset($this->request->post['option'])) {
-					$option = $this->request->post['option'];
-				} else {
-					$option = array();
-				}
 				
-				$product_data = array(
-					'product_id' => $this->request->post['product_id'],
-					'option'     => $option,
-					'quantity'   => $quantity
-				);
-				
-				$response = $this->api($url . 'index.php?route=api/cart/add', $cookie, $product_data);
-						
-				if (isset($response['error'])) {
-					$json['error']['product'] = $response['error'];
-				}
-			}		
-			
 			// Vouchers
 			if (isset($this->request->post['order_voucher'])) {
 				foreach ($this->request->post['order_voucher'] as $order_voucher) {
@@ -350,25 +277,6 @@ class ControllerSaleApi extends Controller {
 				}
 			}
 			
-			// Add to cart
-			if (isset($this->request->post['to_name']) || isset($this->request->post['to_email']) || isset($this->request->post['from_name']) || isset($this->request->post['from_email'])) {
-				$voucher_data = array(
-					'from_name'        => $this->request->post['from_name'],
-					'from_email'       => $this->request->post['from_email'],
-					'to_name'          => $this->request->post['to_name'],
-					'to_email'         => $this->request->post['to_email'],
-					'voucher_theme_id' => $this->request->post['voucher_theme_id'],
-					'message'          => $this->request->post['message'],
-					'amount'           => $this->request->post['amount']
-				);
-				
-				$response = $this->api($url . 'index.php?route=api/voucher/add', $cookie, $voucher_data);
-				
-				if (isset($response['error'])) {
-					$json['error']['vouchers'] = $response['error'];
-				}			
-			}
-						
 			// Customer
 			$customer_data = array(
 				'customer_id'       => $this->request->post['customer_id'],
@@ -535,17 +443,18 @@ class ControllerSaleApi extends Controller {
 		if (isset($response['cookie'])) {
 			$cookie = $response['cookie'];
 			
+			// Sert the order history to a voided status to add the product stock, rewards, coupons and vouchers
+			$response = $this->api($url . 'index.php?route=api/order/history', $cookie, array('order_status_id' => $this->request->post['order_status_id']));
+						
+			if (isset($response['error'])) {
+				$json['error']['warning'] = $response['error'];
+			}				
+			
 			$response = $this->api($url . 'index.php?route=api/order/delete&order_id=' . $this->request->get['order_id'], $cookie);
 						
 			if (isset($response['error'])) {
 				$json['error']['warning'] = $response['error'];
 			}
-			
-			$response = $this->api($url . 'index.php?route=api/order/history', $cookie, array('order_status_id' => $this->request->post['order_status_id']));
-						
-			if (isset($response['error'])) {
-				$json['error']['warning'] = $response['error'];
-			}	
 		}
 	}
 	
@@ -869,9 +778,6 @@ class ControllerSaleApi extends Controller {
 		}
 		
 		curl_close($curl);
-		
-		echo $url . '<br>';
-		echo $response . '<br>';
 		
 		return json_decode($response, true);
 	}

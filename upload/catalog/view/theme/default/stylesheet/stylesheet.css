@@ -679,3 +679,6 @@ h2.price {
 .slides li img {
 	text-align: center;
 }
+.flex-direction-nav a:before {
+	line-height: 40px;
+}

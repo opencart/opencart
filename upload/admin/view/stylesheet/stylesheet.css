@@ -252,3 +252,12 @@ label.control-label {
 	vertical-align: middle;
 	display: inline-block;
 }
+
+ul.alerts-dropdown > li > a {
+	position: relative;
+}
+
+ul.alerts-dropdown > li > a span {
+	right: 30px;
+	position: absolute;
+}

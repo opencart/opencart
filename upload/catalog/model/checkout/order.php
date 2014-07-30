@@ -321,7 +321,7 @@ class ModelCheckoutOrder extends Model {
 				foreach ($order_totals as $order_total) {
 					$this->load->model('total/' . $order_total['code']);
 		
-					if (method_exists($this->{'model_total_' . $order_total['code']}, 'clear')) {
+					if (method_exists($this->{'model_total_' . $order_total['code']}, 'unconfirm')) {
 						$this->{'model_total_' . $order_total['code']}->unconfirm($order_id);
 					}
 				}

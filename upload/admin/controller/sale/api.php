@@ -1,6 +1,8 @@
 <?php
 class ControllerSaleApi extends Controller {	
 	public function insert() {
+		$this->load->language('sale/order');
+		
 		$json = array();
 		
 		$this->load->model('setting/store');
@@ -203,9 +205,18 @@ class ControllerSaleApi extends Controller {
 				}
 			}
 		}
+		
+		if (!$json['error']) {
+			$this->session->data['success'] = $this->language->get('text_success');
+		}		
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
 	}
 	
 	public function update() {
+		$this->load->language('sale/order');
+		
 		$json = array();
 		
 		$this->load->model('setting/store');
@@ -408,9 +419,14 @@ class ControllerSaleApi extends Controller {
 				}
 			}
 		}
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
 	}
 	
 	public function delete() {
+		$this->load->language('sale/order');
+		
 		$json = array();
 		
 		$this->load->model('setting/store');
@@ -456,6 +472,9 @@ class ControllerSaleApi extends Controller {
 				$json['error']['warning'] = $response['error'];
 			}
 		}
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
 	}
 	
 	public function refresh() {
@@ -696,21 +715,25 @@ class ControllerSaleApi extends Controller {
 			// Products
 			$response = $this->api($url . 'index.php?route=api/cart/products', $cookie);
 			
-			if (isset($response['product'])) {
-				$json['products'] = $response['product'];
+			if (isset($response['products'])) {
+				$json['products'] = $response['products'];
 			}
 			
 			// Vouchers
-			if (isset($response['voucher'])) {
-				$json['vouches'] = $response['voucher'];
+			if (isset($response['vouchers'])) {
+				$json['vouches'] = $response['vouchers'];
 			}
 					
 			// Totals
 			$response = $this->api($url . 'index.php?route=api/cart/totals', $cookie);
 			
-			if (isset($response['total'])) {
-				$json['totals'] = $response['total'];
+			if (isset($response['totals'])) {
+				$json['totals'] = $response['totals'];
 			}
+			
+			if (!isset($json['error'])) {
+				$json['success'] = $this->language->get('text_refresh');	
+			}			
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

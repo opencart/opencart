@@ -119,7 +119,7 @@ class ControllerApiCart extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		} else {		
 			// Products
-			$json['product'] = array();
+			$json['products'] = array();
 			
 			$products = $this->cart->getProducts();
 			
@@ -148,7 +148,7 @@ class ControllerApiCart extends Controller {
 					);
 				}
 								
-				$json['product'][] = array(
+				$json['products'][] = array(
 					'product_id' => $product['product_id'],
 					'name'       => $product['name'],
 					'model'      => $product['model'], 
@@ -167,7 +167,7 @@ class ControllerApiCart extends Controller {
 			
 			if (!empty($this->session->data['vouchers'])) {
 				foreach ($this->session->data['vouchers'] as $key => $voucher) {
-					$json['voucher'][] = array(
+					$json['vouchers'][] = array(
 						'code'             => $voucher['code'],
 						'description'      => $voucher['description'],
 						'code'             => $voucher['code'],
@@ -226,10 +226,10 @@ class ControllerApiCart extends Controller {
 	
 			array_multisort($sort_order, SORT_ASC, $total_data);
 	
-			$json['total'] = array();
+			$json['totals'] = array();
 	
 			foreach ($total_data as $total) {
-				$json['total'][] = array(
+				$json['totals'][] = array(
 					'title' => $total['title'],
 					'text'  => $this->currency->format($total['value'])
 				);

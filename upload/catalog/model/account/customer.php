@@ -126,7 +126,7 @@ class ModelAccountCustomer extends Model {
 
 		return $query->rows;
 	}
-
+	
 	public function isBanIp($ip) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_ban_ip` WHERE ip = '" . $this->db->escape($ip) . "'");
 

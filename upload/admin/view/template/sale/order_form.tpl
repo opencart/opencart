@@ -3,8 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="button" id="button-save" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-check-circle"></i></button>
         <button type="button" id="button-refresh" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn btn-warning"><i class="fa fa-refresh"></i></button>
+        <button type="button" id="button-save" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-check-circle"></i></button>
+        <button type="button" id="button-delete" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
       <h1><i class="fa fa-pencil-square"></i> <?php echo $heading_title; ?></h1>
     </div>
@@ -171,7 +172,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <button type="button" id="button-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+              <button type="button" id="button-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default upload"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
               <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
             </div>
           </div>
@@ -374,7 +375,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <button type="button" id="button-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+              <button type="button" id="button-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default upload"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
               <input type="hidden" name="payment_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
             </div>
           </div>
@@ -577,7 +578,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <button type="button" id="button-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+              <button type="button" id="button-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default upload"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
               <input type="hidden" name="shipping_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
             </div>
           </div>
@@ -844,12 +845,16 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-shipping"><?php echo $entry_shipping; ?></label>
               <div class="col-sm-10">
-                <select name="shipping" id="input-shipping" class="form-control">
-                  <option value=""><?php echo $text_select; ?></option>
-                  <?php if ($shipping_code) { ?>
-                  <option value="<?php echo $shipping_code; ?>" selected="selected"><?php echo $shipping_method; ?></option>
-                  <?php } ?>
-                </select>
+                <div class="input-group">
+                  <select name="shipping" id="input-shipping" class="form-control">
+                    <option value=""><?php echo $text_select; ?></option>
+                    <?php if ($shipping_code) { ?>
+                    <option value="<?php echo $shipping_code; ?>" selected="selected"><?php echo $shipping_method; ?></option>
+                    <?php } ?>
+                  </select>
+                  <span class="input-group-btn">
+                  <button type="button" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn  btn-warning"><i class="fa fa-refresh"></i></button>
+                  </span> </div>
                 <input type="hidden" name="shipping_method" value="<?php echo $shipping_method; ?>" />
                 <input type="hidden" name="shipping_code" value="<?php echo $shipping_code; ?>" />
               </div>
@@ -857,12 +862,16 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-payment"><?php echo $entry_payment; ?></label>
               <div class="col-sm-10">
-                <select name="payment" id="input-payment" class="form-control">
-                  <option value=""><?php echo $text_select; ?></option>
-                  <?php if ($payment_code) { ?>
-                  <option value="<?php echo $payment_code; ?>" selected="selected"><?php echo $payment_method; ?></option>
-                  <?php } ?>
-                </select>
+                <div class="input-group">
+                  <select name="payment" id="input-payment" class="form-control">
+                    <option value=""><?php echo $text_select; ?></option>
+                    <?php if ($payment_code) { ?>
+                    <option value="<?php echo $payment_code; ?>" selected="selected"><?php echo $payment_method; ?></option>
+                    <?php } ?>
+                  </select>
+                  <span class="input-group-btn">
+                  <button type="button" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn  btn-warning"><i class="fa fa-refresh"></i></button>
+                  </span> </div>
                 <input type="hidden" name="payment_method" value="<?php echo $payment_method; ?>" />
                 <input type="hidden" name="payment_code" value="<?php echo $payment_code; ?>" />
               </div>
@@ -870,19 +879,31 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-coupon"><?php echo $entry_coupon; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="coupon" value="<?php echo $coupon; ?>" id="input-coupon" class="form-control" />
+                <div class="input-group">
+                  <input type="text" name="coupon" value="<?php echo $coupon; ?>" id="input-coupon" class="form-control" />
+                  <span class="input-group-btn">
+                  <button type="button" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn  btn-warning"><i class="fa fa-refresh"></i></button>
+                  </span> </div>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-voucher"><?php echo $entry_voucher; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="voucher" value="<?php echo $voucher; ?>" id="input-voucher" class="form-control" />
+                <div class="input-group">
+                  <input type="text" name="voucher" value="<?php echo $voucher; ?>" id="input-voucher" class="form-control" />
+                  <span class="input-group-btn">
+                  <button type="button" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn  btn-warning"><i class="fa fa-refresh"></i></button>
+                  </span> </div>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-reward"><?php echo $entry_reward; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="reward" value="<?php echo $reward; ?>" id="input-reward" class="form-control" />
+                <div class="input-group">
+                  <input type="text" name="reward" value="<?php echo $reward; ?>" id="input-reward" class="form-control" />
+                  <span class="input-group-btn">
+                  <button type="button" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn  btn-warning"><i class="fa fa-refresh"></i></button>
+                  </span> </div>
               </div>
             </div>
             <div class="form-group">
@@ -1060,9 +1081,17 @@ $('select[name=\'payment_country_id\']').on('change', function() {
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'payment_country_id\']').after(' <i class="fa fa-spinner fa-spin"></i>');
+			$('#button-refresh').prop('disabled', true);
+			$('#button-save').prop('disabled', true);	
+			$('#button-product').prop('disabled', true);
+			$('#button-voucher').prop('disabled', true);		
 		},
 		complete: function() {
 			$('.fa-spinner').remove();
+			$('#button-refresh').prop('disabled', false);	
+			$('#button-save').prop('disabled', false);	
+			$('#button-product').prop('disabled', false);
+			$('#button-voucher').prop('disabled', false);						
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
@@ -1137,9 +1166,17 @@ $('select[name=\'shipping_country_id\']').on('change', function() {
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'shipping_country_id\']').after(' <i class="fa fa-spinner fa-spin"></i>');
+			$('#button-refresh').prop('disabled', true);
+			$('#button-save').prop('disabled', true);	
+			$('#button-product').prop('disabled', true);
+			$('#button-voucher').prop('disabled', true);			
 		},
 		complete: function() {
 			$('.fa-spinner').remove();
+			$('#button-refresh').prop('disabled', false);	
+			$('#button-save').prop('disabled', false);	
+			$('#button-product').prop('disabled', false);
+			$('#button-voucher').prop('disabled', false);				
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
@@ -1370,7 +1407,7 @@ $('input[name=\'product\']').autocomplete({
 	}	
 })
 
-$('#option').delegate('button[id^=\'button-upload\']', 'click', function() {
+$('#content').delegate('.upload', 'click', function() {
 	var node = this;
 	
 	$('#form-upload').remove();
@@ -1391,7 +1428,6 @@ $('#option').delegate('button[id^=\'button-upload\']', 'click', function() {
 			beforeSend: function() {
 				$(node).find('i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 				$(node).prop('disabled', true);
-				
 			},
 			complete: function() {
 				$(node).find('i').replaceWith('<i class="fa fa-upload"></i>');
@@ -1399,13 +1435,13 @@ $('#option').delegate('button[id^=\'button-upload\']', 'click', function() {
 			},		
 			success: function(json) {
 				if (json['error']) {
-					$(node).parent().find('input[name^=\'option\']').after('<div class="text-danger">' + json['error'] + '</div>');
+					$(node).parent().find('input[type=\'hidden\']').after('<div class="text-danger">' + json['error'] + '</div>');
 				}
 							
 				if (json['success']) {
 					alert(json['success']);
 					
-					$(node).parent().find('input[name^=\'option\']').attr('value', json['code']);
+					$(node).parent().find('input[type=\'hidden\']').attr('value', json['code']);
 				}
 			},			
 			error: function(xhr, ajaxOptions, thrownError) {
@@ -1435,477 +1471,540 @@ $('select[name=\'shipping\']').on('change', function() {
 	
 	$('input[name=\'shipping_code\']').attr('value', this.value);
 });
-
-$('#button-reward-remove').on('click', function() {
-	$.ajax({
-		url: 'index.php?route=sale/customer/reward/removerewardhistory&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-reward-remove i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
-			$('#button-reward-remove').prop('disabled', true);				
-		},
-		complete: function() {
-			$('#button-reward-remove i').replaceWith('<i class="fa fa-times-circle"></i>');
-			$('#button-reward-remove').prop('disabled', false);
-		},		
-		success: function(json) {
-			$('.alert').remove();
-			
-			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
-			}
-			
-			if (json['success']) {
-                $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});	
-});
 //--></script> 
 <script type="text/javascript"><!--
-$('#button-product, #button-voucher, #button-refresh').on('click', function() {	
-	$.ajax({
-		
-		<?php if ($order_id) { ?>
-		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
-		<?php } else { ?>
-		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>',
-		<?php } ?>
-		
-		type: 'post',
-		data: $('#content input[type=\'text\'], #content input[type=\'hidden\'], #content input[type=\'radio\']:checked, #content input[type=\'checkbox\']:checked, #content select, #content textarea'),
-		dataType: 'html',
-		beforeSend: function() {
-			$('#button-product i, #button-voucher i, #button-refresh i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
-			$('#button-product, #button-voucher, #button-refresh').prop('disabled', true);
-		},	
-		complete: function() {
-			$('#button-product i, #button-voucher i, #button-refresh i').replaceWith('<i class="fa fa-plus-circle"></i>');
-			$('#button-product, #button-voucher, #button-refresh').prop('disabled', false);
-		},		
-		success: function(json) {
-			$('#content').prepend(json);
-			
-			$('.alert, .text-danger').remove();
-			
-			// Check for errors
-			if (json['error']) {
-				if (json['error']['warning']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}
-							
-				// Order Details
-				if (json['error']['customer']) {
-					if (json['error']['customer']['firstname']) {
-						$('input[name=\'firstname\']').after('<div class="text-danger">' + json['error']['customer']['firstname'] + '</div');
-					}					
-					
-					if (json['error']['customer']['lastname']) {
-						$('input[name=\'lastname\']').after('<div class="text-danger">' + json['error']['customer']['lastname'] + '</div');
-					}	
-					
-					if (json['error']['customer']['email']) {
-						$('input[name=\'email\']').after('<div class="text-danger">' + json['error']['customer']['email'] + '</div');
-					}
-					
-					if (json['error']['customer']['telephone']) {
-						$('input[name=\'telephone\']').after('<div class="text-danger">' + json['error']['customer']['telephone'] + '</div');
-					}
-					
-					if (json['error']['customer']['custom_field']) {	
-						for (i in json['error']['customer']['custom_field']) {
-							$('#input-custom-field' + i).after('<div class="text-danger">' + json['error']['customer']['custom_field'][i] + '</div>');
-						}
-					}					
-				}	
-			
-				// Payment Address
-				if (json['error']['payment']) {
-					if (json['error']['payment']['firstname']) {
-						$('input[name=\'payment_firstname\']').after('<div class="text-danger">' + json['error']['payment']['firstname'] + '</div');
-					}					
-					
-					if (json['error']['payment']['lastname']) {
-						$('input[name=\'payment_lastname\']').after('<div class="text-danger">' + json['error']['payment']['lastname'] + '</div');
-					}	
-					
-					if (json['error']['payment']['address_1']) {
-						$('input[name=\'payment_address_1\']').after('<div class="text-danger">' + json['error']['payment']['address_1'] + '</div');
-					}
-					
-					if (json['error']['payment']['city']) {
-						$('input[name=\'payment_city\']').after('<div class="text-danger">' + json['error']['payment']['city'] + '</div');
-					}
-					
-					if (json['error']['payment']['country']) {
-						$('select[name=\'payment_country_id\']').after('<div class="text-danger">' + json['error']['payment']['country'] + '</div');
-					}	
-					
-					if (json['error']['payment']['zone']) {
-						$('select[name=\'payment_zone_id\']').after('<div class="text-danger">' + json['error']['payment']['zone'] + '</div');
-					}	
-					
-					if (json['error']['payment']['custom_field']) {	
-						for (i in json['error']['payment']['custom_field']) {
-							$('#input-payment-custom-field' + i).after('<div class="text-danger">' + json['error']['payment']['custom_field'][i] + '</div>');
-						}
-					}					
-				}
-			
-				// Shipping	Address
-				if (json['error']['shipping']) {		
-					if (json['error']['shipping']['firstname']) {
-						$('input[name=\'shipping_firstname\']').after('<div class="text-danger">' + json['error']['shipping']['firstname'] + '</div');
-					}					
-					
-					if (json['error']['shipping']['lastname']) {
-						$('input[name=\'shipping_lastname\']').after('<div class="text-danger">' + json['error']['shipping']['lastname'] + '</div');
-					}	
-					
-					if (json['error']['shipping']['address_1']) {
-						$('input[name=\'shipping_address_1\']').after('<div class="text-danger">' + json['error']['shipping']['address_1'] + '</div');
-					}
-					
-					if (json['error']['shipping']['city']) {
-						$('input[name=\'shipping_city\']').after('<div class="text-danger">' + json['error']['shipping']['city'] + '</div');
-					}
-					
-					if (json['error']['shipping']['country']) {
-						$('select[name=\'shipping_country_id\']').after('<div class="text-danger">' + json['error']['shipping']['country'] + '</div');
-					}	
-					
-					if (json['error']['shipping']['zone']) {
-						$('select[name=\'shipping_zone_id\']').after('<div class="text-danger">' + json['error']['shipping']['zone'] + '</div');
-					}	
-					
-					if (json['error']['shipping']['custom_field']) {	
-						for (i in json['error']['shipping']['custom_field']) {
-							$('#input-shipping-custom-field' + i).after('<div class="text-danger">' + json['error']['shipping']['custom_field'][i] + '</div>');
-						}
-					}					
-				}
-				
-				// Products
-				if (json['error']['product']) {
-					if (json['error']['product']['option']) {	
-						for (i in json['error']['product']['option']) {
-							$('#input-option' + i).after('<div class="text-danger">' + json['error']['product']['option'][i] + '</div>');
-						}
-					}
-
-					if (json['error']['product']['warning']) {
-						$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['warning'] + '</div>');
-					}	
-										
-					if (json['error']['product']['stock']) {
-						$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['stock'] + '</div>');
-					}	
-					
-					if (json['error']['product']['store']) {
-						$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['store'] + '</div>');
-					}	
-																
-					if (json['error']['product']['minimum']) {	
-						for (i in json['error']['product']['minimum']) {
-							$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['minimum'][i] + '</div>');
-						}						
-					}
-				} else {
-					$('input[name=\'product\']').val('');
-					$('input[name=\'product_id\']').val('');
-					$('#option').html('');			
-					$('input[name=\'quantity\']').val('1');		
-				}
-				
-				// Voucher
-				if (json['error']['vouchers']) {
-					if (json['error']['vouchers']['from_name']) {
-						$('input[name=\'from_name\']').after('<div class="text-danger">' + json['error']['vouchers']['from_name'] + '</div');
-					}	
-					
-					if (json['error']['vouchers']['from_email']) {
-						$('input[name=\'from_email\']').after('<div class="text-danger">' + json['error']['vouchers']['from_email'] + '</div>');
-					}	
-								
-					if (json['error']['vouchers']['to_name']) {
-						$('input[name=\'to_name\']').after('<div class="text-danger">' + json['error']['vouchers']['to_name'] + '</div>');
-					}	
-					
-					if (json['error']['vouchers']['to_email']) {
-						$('input[name=\'to_email\']').after('<div class="text-danger">' + json['error']['vouchers']['to_email'] + '</div>');
-					}	
-					
-					if (json['error']['vouchers']['amount']) {
-						$('input[name=\'amount\']').after('<div class="text-danger">' + json['error']['vouchers']['amount'] + '</div>');
-					}	
-				} else {
-					$('input[name=\'from_name\']').attr('value', '');	
-					$('input[name=\'from_email\']').attr('value', '');	
-					$('input[name=\'to_name\']').attr('value', '');
-					$('input[name=\'to_email\']').attr('value', '');	
-					$('textarea[name=\'message\']').attr('value', '');	
-					$('input[name=\'amount\']').attr('value', '<?php echo addslashes($voucher_min); ?>');
-				}
-				
-				// Shipping Method	
-				if (json['error']['shipping_method']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['shipping_method'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}	
-				
-				// Payment Method
-				if (json['error']['payment_method']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['payment_method'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}	
-															
-				// Coupon
-				if (json['error']['coupon']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['coupon'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}
-				
-				// Voucher
-				if (json['error']['voucher']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['voucher'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}
-				
-				// Reward Points		
-				if (json['error']['reward']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['reward'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}	
-			} else {
-				$('input[name=\'product\']').val('');
-				$('input[name=\'product_id\']').val('');
-				$('#option').html('');	
-				$('input[name=\'quantity\']').val('1');	
-				
-				$('input[name=\'from_name\']').val('');	
-				$('input[name=\'from_email\']').val('');	
-				$('input[name=\'to_name\']').val('');
-				$('input[name=\'to_email\']').val('');	
-				$('textarea[name=\'message\']').val('');	
-				$('input[name=\'amount\']').val('<?php echo addslashes($voucher_min); ?>');								
-			}
-
-			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
-			
-			if (json['product']) {
-				var product_row = 0;
+var success = function(json) {
+	$('.alert, .text-danger').remove();
 	
-				html = '';
-				
-				for (i = 0; i < json['product'].length; i++) {
-					product = json['product'][i];
+	// Check for errors
+	if (json['error'] && json['error']['warning']) {
+		$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+	}
 					
-					html += '<tr id="product-row' + product_row + '">';
-					html += '  <td class="text-left">' + product['name'] + '<br /><input type="hidden" name="order_product[' + product_row + '][product_id]" value="' + product['product_id'] + '" />';
+	// Order Details
+	if (json['error'] && json['error']['customer']) {
+		if (json['error']['customer']['firstname']) {
+			$('input[name=\'firstname\']').after('<div class="text-danger">' + json['error']['customer']['firstname'] + '</div');
+		}					
+		
+		if (json['error']['customer']['lastname']) {
+			$('input[name=\'lastname\']').after('<div class="text-danger">' + json['error']['customer']['lastname'] + '</div');
+		}	
+		
+		if (json['error']['customer']['email']) {
+			$('input[name=\'email\']').after('<div class="text-danger">' + json['error']['customer']['email'] + '</div');
+		}
+		
+		if (json['error']['customer']['telephone']) {
+			$('input[name=\'telephone\']').after('<div class="text-danger">' + json['error']['customer']['telephone'] + '</div');
+		}
+		
+		if (json['error']['customer']['custom_field']) {	
+			for (i in json['error']['customer']['custom_field']) {
+				$('#input-custom-field' + i).after('<div class="text-danger">' + json['error']['customer']['custom_field'][i] + '</div>');
+			}
+		}					
+	}	
+	
+	// Payment Address
+	if (json['error'] && json['error']['payment']) {
+		if (json['error']['payment']['firstname']) {
+			$('input[name=\'payment_firstname\']').after('<div class="text-danger">' + json['error']['payment']['firstname'] + '</div');
+		}					
+		
+		if (json['error']['payment']['lastname']) {
+			$('input[name=\'payment_lastname\']').after('<div class="text-danger">' + json['error']['payment']['lastname'] + '</div');
+		}	
+		
+		if (json['error']['payment']['address_1']) {
+			$('input[name=\'payment_address_1\']').after('<div class="text-danger">' + json['error']['payment']['address_1'] + '</div');
+		}
+		
+		if (json['error']['payment']['city']) {
+			$('input[name=\'payment_city\']').after('<div class="text-danger">' + json['error']['payment']['city'] + '</div');
+		}
+		
+		if (json['error']['payment']['country']) {
+			$('select[name=\'payment_country_id\']').after('<div class="text-danger">' + json['error']['payment']['country'] + '</div');
+		}	
+		
+		if (json['error']['payment']['zone']) {
+			$('select[name=\'payment_zone_id\']').after('<div class="text-danger">' + json['error']['payment']['zone'] + '</div');
+		}	
+		
+		if (json['error']['payment']['custom_field']) {	
+			for (i in json['error']['payment']['custom_field']) {
+				$('#input-payment-custom-field' + i).after('<div class="text-danger">' + json['error']['payment']['custom_field'][i] + '</div>');
+			}
+		}					
+	}
+	
+	// Shipping	Address
+	if (json['error'] && json['error']['shipping']) {		
+		if (json['error']['shipping']['firstname']) {
+			$('input[name=\'shipping_firstname\']').after('<div class="text-danger">' + json['error']['shipping']['firstname'] + '</div');
+		}					
+		
+		if (json['error']['shipping']['lastname']) {
+			$('input[name=\'shipping_lastname\']').after('<div class="text-danger">' + json['error']['shipping']['lastname'] + '</div');
+		}	
+		
+		if (json['error']['shipping']['address_1']) {
+			$('input[name=\'shipping_address_1\']').after('<div class="text-danger">' + json['error']['shipping']['address_1'] + '</div');
+		}
+		
+		if (json['error']['shipping']['city']) {
+			$('input[name=\'shipping_city\']').after('<div class="text-danger">' + json['error']['shipping']['city'] + '</div');
+		}
+		
+		if (json['error']['shipping']['country']) {
+			$('select[name=\'shipping_country_id\']').after('<div class="text-danger">' + json['error']['shipping']['country'] + '</div');
+		}	
+		
+		if (json['error']['shipping']['zone']) {
+			$('select[name=\'shipping_zone_id\']').after('<div class="text-danger">' + json['error']['shipping']['zone'] + '</div');
+		}	
+		
+		if (json['error']['shipping']['custom_field']) {	
+			for (i in json['error']['shipping']['custom_field']) {
+				$('#input-shipping-custom-field' + i).after('<div class="text-danger">' + json['error']['shipping']['custom_field'][i] + '</div>');
+			}
+		}					
+	}
+	
+	// Products
+	if (json['error'] && json['error']['product']) {
+		if (json['error']['product']['warning']) {
+			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+		}				
+		
+		if (json['error']['product']['option']) {	
+			for (i in json['error']['product']['option']) {
+				$('#input-option' + i).after('<div class="text-danger">' + json['error']['product']['option'][i] + '</div>');
+			}
+		}
+							
+		if (json['error']['product']['stock']) {
+			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['stock'] + '</div>');
+		}	
+		
+		if (json['error']['product']['store']) {
+			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['store'] + '</div>');
+		}	
+													
+		if (json['error']['product']['minimum']) {	
+			for (i in json['error']['product']['minimum']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['minimum'][i] + '</div>');
+			}						
+		}
+	} else {
+		$('input[name=\'product\']').val('');
+		$('input[name=\'product_id\']').val('');
+		$('#option').html('');			
+		$('input[name=\'quantity\']').val('1');		
+
+		if (json['products']) {		
+			var product_row = 0;
+	
+			html = '';
+			
+			for (i = 0; i < json['products'].length; i++) {
+				product = json['products'][i];
+				
+				html += '<tr id="product-row' + product_row + '">';
+				html += '  <td class="text-left">' + product['name'] + '<br /><input type="hidden" name="order_product[' + product_row + '][product_id]" value="' + product['product_id'] + '" />';
+				
+				if (product['option']) {
+					for (j = 0; j < product['option'].length; j++) {
+						option = product['option'][j];
+						
+						html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
+						
+						if (option['type'] == 'select' || option['type'] == 'radio' || option['type'] == 'image') {
+							html += '<input type="hidden" name="order_product[' + product_row + '][order_option][' + option['product_option_id'] + ']" value="' + option['product_option_value_id'] + '" />';
+						}
+						
+						if (option['type'] == 'checkbox') {
+							html += '<input type="hidden" name="order_product[' + product_row + '][order_option][' + option['product_option_id'] + '][]" value="' + option['product_option_value_id'] + '" />';
+						}
+						
+						if (option['type'] == 'text' || option['type'] == 'textarea' || option['type'] == 'file' || option['type'] == 'date' || option['type'] == 'datetime' || option['type'] == 'time') {
+							html += '<input type="hidden" name="order_product[' + product_row + '][order_option][' + option['product_option_id'] + ']" value="' + option['value'] + '" />';
+						}
+					}
+				}
+				
+				html += '  </td>';
+				
+				html += '  <td class="text-left">' + product['model'] + '</td>';
+				html += '  <td class="text-right">' + product['quantity'] + '<input type="hidden" name="order_product[' + product_row + '][quantity]" value="' + product['quantity'] + '" /></td>';
+				html += '  <td class="text-right">' + product['price'] + '</td>';
+				html += '  <td class="text-right">' + product['total'] + '</td>';
+				html += '  <td class="text-center" style="width: 3px;"><button type="button" onclick="$(\'#product-row' + product_row + '\').remove(); $(\'#button-refresh\').trigger(\'click\');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+				html += '</tr>';
+				
+				product_row++;			
+			}
+			
+			$('#product').html(html);
+		} else {				
+			html  = '<tr>';
+			html += '  <td colspan="6" class="text-center"><?php echo $text_no_results; ?></td>';
+			html += '</tr>';	
+	
+			$('#product').html(html);
+		}		
+	}
+		
+	// Voucher
+	if (json['error'] && json['error']['vouchers']) {
+		if (json['error']['vouchers']['from_name']) {
+			$('input[name=\'from_name\']').after('<div class="text-danger">' + json['error']['vouchers']['from_name'] + '</div');
+		}	
+		
+		if (json['error']['vouchers']['from_email']) {
+			$('input[name=\'from_email\']').after('<div class="text-danger">' + json['error']['vouchers']['from_email'] + '</div>');
+		}	
+					
+		if (json['error']['vouchers']['to_name']) {
+			$('input[name=\'to_name\']').after('<div class="text-danger">' + json['error']['vouchers']['to_name'] + '</div>');
+		}	
+		
+		if (json['error']['vouchers']['to_email']) {
+			$('input[name=\'to_email\']').after('<div class="text-danger">' + json['error']['vouchers']['to_email'] + '</div>');
+		}	
+		
+		if (json['error']['vouchers']['amount']) {
+			$('input[name=\'amount\']').after('<div class="text-danger">' + json['error']['vouchers']['amount'] + '</div>');
+		}	
+	} else {
+		$('input[name=\'from_name\']').attr('value', '');	
+		$('input[name=\'from_email\']').attr('value', '');	
+		$('input[name=\'to_name\']').attr('value', '');
+		$('input[name=\'to_email\']').attr('value', '');	
+		$('textarea[name=\'message\']').attr('value', '');	
+		$('input[name=\'amount\']').attr('value', '<?php echo addslashes($voucher_min); ?>');
+		
+		// Vouchers
+		if (json['vouchers']) {
+			var voucher_row = 0;
+			
+			 html = '';
+			 
+			 for (i in json['vouchers']) {
+				voucher = json['vouchers'][i];
+				 
+				html += '<tr id="voucher-row' + voucher_row + '">';
+				html += '  <td class="text-left">' + voucher['description'];
+				html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][from_name]" value="' + voucher['from_name'] + '" />';
+				html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][from_email]" value="' + voucher['from_email'] + '" />';
+				html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][to_name]" value="' + voucher['to_name'] + '" />';
+				html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][to_email]" value="' + voucher['to_email'] + '" />';
+				html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][voucher_theme_id]" value="' + voucher['voucher_theme_id'] + '" />';	
+				html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][message]" value="' + voucher['message'] + '" />';
+				html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][amount]" value="' + voucher['amount'] + '" />';
+				html += '  </td>';
+				html += '  <td class="text-left"></td>';
+				html += '  <td class="text-right">1</td>';
+				html += '  <td class="text-right">' + voucher['amount'] + '</td>';
+				html += '  <td class="text-right">' + voucher['amount'] + '</td>';
+				html += '  <td class="text-center" style="width: 3px;"><button type="button" onclick="$(\'#voucher-row' + voucher_row + '\').remove(); $(\'#button-refresh\').trigger(\'click\');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+				html += '</tr>';	
+			  
+				voucher_row++;
+			}
+			  
+			$('#voucher').html(html);				
+		} else {
+			html  = '<tr>';
+			html += '  <td colspan="6" class="text-center"><?php echo $text_no_results; ?></td>';
+			html += '</tr>';	
+	
+			$('#voucher').html(html);	
+		}		
+	}
+		
+	// If not errors that would effect the checkout proccess the check for more errors
+	if (json['error'] && !json['error']['customer'] && json['error']['payment'] && json['error']['shipping'] && !json['error']['product'] && !json['error']['vouchers']) {
+		// Shipping Method
+		if (json['error']['shipping_method']) {
+			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['shipping_method'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+		}	
+		
+		// Payment Method
+		if (json['error']['payment_method']) {
+			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['payment_method'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+		}	
+													
+		// Coupon
+		if (json['error']['coupon']) {
+			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['coupon'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+		}
+		
+		// Voucher
+		if (json['error']['voucher']) {
+			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['voucher'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+		}
+		
+		// Reward Points		
+		if (json['error']['reward']) {
+			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['reward'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+		}	
+	}	
+
+	if (json['success']) {
+		$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+	}
+	
+	if (json['redirect']) {
+		location = json['redirect'];	
+	}
+					
+	// Totals
+	if (!json['error'] || (!json['error']['customer'] && json['error']['payment'] && json['error']['shipping'] && !json['error']['product'] && !json['error']['vouchers'])) {
+		if (json['products'] || json['vouchers'] || json['totals']) {
+			html = '';
+			
+			if (json['products']) {
+				for (i = 0; i < json['products'].length; i++) {
+					product = json['products'][i];
+					
+					html += '<tr>';
+					html += '  <td class="text-left">' + product['name'] + '<br />';
 					
 					if (product['option']) {
 						for (j = 0; j < product['option'].length; j++) {
 							option = product['option'][j];
 							
 							html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
-							
-							if (option['type'] == 'select' || option['type'] == 'radio' || option['type'] == 'image') {
-								html += '<input type="hidden" name="order_product[' + product_row + '][order_option][' + option['product_option_id'] + ']" value="' + option['product_option_value_id'] + '" />';
-							}
-							
-							if (option['type'] == 'checkbox') {
-								html += '<input type="hidden" name="order_product[' + product_row + '][order_option][' + option['product_option_id'] + '][]" value="' + option['product_option_value_id'] + '" />';
-							}
-							
-							if (option['type'] == 'text' || option['type'] == 'textarea' || option['type'] == 'file' || option['type'] == 'date' || option['type'] == 'datetime' || option['type'] == 'time') {
-								html += '<input type="hidden" name="order_product[' + product_row + '][order_option][' + option['product_option_id'] + ']" value="' + option['value'] + '" />';
-							}
 						}
 					}
 					
 					html += '  </td>';
-					
 					html += '  <td class="text-left">' + product['model'] + '</td>';
-					html += '  <td class="text-right">' + product['quantity'] + '<input type="hidden" name="order_product[' + product_row + '][quantity]" value="' + product['quantity'] + '" /></td>';
+					html += '  <td class="text-right">' + product['quantity'] + '</td>';
 					html += '  <td class="text-right">' + product['price'] + '</td>';
 					html += '  <td class="text-right">' + product['total'] + '</td>';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" onclick="$(\'#product-row' + product_row + '\').remove(); $(\'#button-refresh\').trigger(\'click\');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 					html += '</tr>';
-					
-					product_row++;			
-				}
-				
-				$('#product').html(html);
-			} else {				
-				html  = '<tr>';
-				html += '  <td colspan="6" class="text-center"><?php echo $text_no_results; ?></td>';
-				html += '</tr>';	
-
-				$('#product').html(html);
+				}				
 			}
-						
-			// Vouchers
-			if (json['voucher']) {
-				var voucher_row = 0;
-				
-				 html = '';
-				 
-				 for (i in json['voucher']) {
-					voucher = json['voucher'][i];
+			
+			if (json['vouchers']) {
+				for (i in json['vouchers']) {
+					voucher = json['vouchers'][i];
 					 
-					html += '<tr id="voucher-row' + voucher_row + '">';
-					html += '  <td class="text-left">' + voucher['description'];
-					html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][from_name]" value="' + voucher['from_name'] + '" />';
-					html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][from_email]" value="' + voucher['from_email'] + '" />';
-					html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][to_name]" value="' + voucher['to_name'] + '" />';
-					html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][to_email]" value="' + voucher['to_email'] + '" />';
-					html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][voucher_theme_id]" value="' + voucher['voucher_theme_id'] + '" />';	
-					html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][message]" value="' + voucher['message'] + '" />';
-					html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][amount]" value="' + voucher['amount'] + '" />';
-					html += '  </td>';
+					html += '<tr>';
+					html += '  <td class="text-left">' + voucher['description'] + '</td>';
 					html += '  <td class="text-left"></td>';
 					html += '  <td class="text-right">1</td>';
 					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
 					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" onclick="$(\'#voucher-row' + voucher_row + '\').remove(); $(\'#button-refresh\').trigger(\'click\');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 					html += '</tr>';	
-				  
-					voucher_row++;
-				}
-				  
-				$('#voucher').html(html);				
-			} else {
-				html  = '<tr>';
-				html += '  <td colspan="6" class="text-center"><?php echo $text_no_results; ?></td>';
-				html += '</tr>';	
-
-				$('#voucher').html(html);	
-			}
-						
-			// Totals
-			if (json['product'] || json['voucher'] || json['total']) {
-				html = '';
-				
-				if (json['product']) {
-					for (i = 0; i < json['product'].length; i++) {
-						product = json['product'][i];
-						
-						html += '<tr>';
-						html += '  <td class="text-left">' + product['name'] + '<br />';
-						
-						if (product['option']) {
-							for (j = 0; j < product['option'].length; j++) {
-								option = product['option'][j];
-								
-								html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
-							}
-						}
-						
-						html += '  </td>';
-						html += '  <td class="text-left">' + product['model'] + '</td>';
-						html += '  <td class="text-right">' + product['quantity'] + '</td>';
-						html += '  <td class="text-right">' + product['price'] + '</td>';
-						html += '  <td class="text-right">' + product['total'] + '</td>';
-						html += '</tr>';
-					}				
-				}
-				
-				if (json['voucher']) {
-					for (i in json['voucher']) {
-						voucher = json['voucher'][i];
-						 
-						html += '<tr>';
-						html += '  <td class="text-left">' + voucher['description'] + '</td>';
-						html += '  <td class="text-left"></td>';
-						html += '  <td class="text-right">1</td>';
-						html += '  <td class="text-right">' + voucher['amount'] + '</td>';
-						html += '  <td class="text-right">' + voucher['amount'] + '</td>';
-						html += '</tr>';	
-					}	
-				}
-				
-				var total_row = 0;
-				
-				for (i in json['total']) {
-					total = json['total'][i];
-					
-					html += '<tr id="total-row' + total_row + '">';
-					html += '  <td class="text-right" colspan="4">' + total['title'] + ':</td>';
-					html += '  <td class="text-right">' + total['text'] + '</td>';
-					html += '</tr>';
-					
-					total_row++;
-				}
-				
-				$('#total').html(html);
-			} else {
-				html  = '<tr>';
-				html += '  <td colspan="5" class="text-center"><?php echo $text_no_results; ?></td>';
-				html += '</tr>';	
-
-				$('#total').html(html);					
+				}	
 			}
 			
-			// Shipping Methods
-			if (json['shipping_method']) {
-				html = '<option value=""><?php echo $text_select; ?></option>';
-
-				for (i in json['shipping_method']) {
-					html += '<optgroup label="' + json['shipping_method'][i]['title'] + '">';
+			var total_row = 0;
+			
+			for (i in json['totals']) {
+				total = json['totals'][i];
 				
-					if (!json['shipping_method'][i]['error']) {
-						for (j in json['shipping_method'][i]['quote']) {
-							if (json['shipping_method'][i]['quote'][j]['code'] == $('input[name=\'shipping_code\']').val()) {
-								html += '<option value="' + json['shipping_method'][i]['quote'][j]['code'] + '" selected="selected">' + json['shipping_method'][i]['quote'][j]['title'] + '</option>';
-							} else {
-								html += '<option value="' + json['shipping_method'][i]['quote'][j]['code'] + '">' + json['shipping_method'][i]['quote'][j]['title'] + '</option>';
-							}
-						}		
-					} else {
-						html += '<option value="" style="color: #F00;" disabled="disabled">' + json['shipping_method'][i]['error'] + '</option>';
-					}
-					
-					html += '</optgroup>';
-				}
-		
-				$('select[name=\'shipping\']').html(html);	
+				html += '<tr id="total-row' + total_row + '">';
+				html += '  <td class="text-right" colspan="4">' + total['title'] + ':</td>';
+				html += '  <td class="text-right">' + total['text'] + '</td>';
+				html += '</tr>';
 				
-				if ($('select[name=\'shipping\']').val()) {
-					$('input[name=\'shipping_method\']').attr('value', $('select[name=\'shipping\'] option:selected').text());
-				} else {
-					$('input[name=\'shipping_method\']').attr('value', '');
-				}
-				
-				$('input[name=\'shipping_code\']').attr('value', $('select[name=\'shipping\']').val());	
+				total_row++;
 			}
-						
-			// Payment Methods
-			if (json['payment_method']) {
-				html = '<option value=""><?php echo $text_select; ?></option>';
-				
-				for (i in json['payment_method']) {
-					if (json['payment_method'][i]['code'] == $('input[name=\'payment_code\']').val()) {
-						html += '<option value="' + json['payment_method'][i]['code'] + '" selected="selected">' + json['payment_method'][i]['title'] + '</option>';
-					} else {
-						html += '<option value="' + json['payment_method'][i]['code'] + '">' + json['payment_method'][i]['title'] + '</option>';
-					}		
-				}
+			
+			$('#total').html(html);
+		} else {
+			html  = '<tr>';
+			html += '  <td colspan="5" class="text-center"><?php echo $text_no_results; ?></td>';
+			html += '</tr>';	
+	
+			$('#total').html(html);					
+		}
 		
-				$('select[name=\'payment\']').html(html);
-				
-				if ($('select[name=\'payment\']').val()) {
-					$('input[name=\'payment_method\']').attr('value', $('select[name=\'payment\'] option:selected').text());
+		// Shipping Methods
+		if (json['shipping_methods']) {
+			html = '<option value=""><?php echo $text_select; ?></option>';
+	
+			for (i in json['shipping_methods']) {
+				html += '<optgroup label="' + json['shipping_methods'][i]['title'] + '">';
+			
+				if (!json['shipping_methods'][i]['error']) {
+					for (j in json['shipping_methods'][i]['quote']) {
+						if (json['shipping_methods'][i]['quote'][j]['code'] == $('input[name=\'shipping_code\']').val()) {
+							html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected="selected">' + json['shipping_methods'][i]['quote'][j]['title'] + '</option>';
+						} else {
+							html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + '</option>';
+						}
+					}		
 				} else {
-					$('input[name=\'payment_method\']').attr('value', '');
+					html += '<option value="" style="color: #F00;" disabled="disabled">' + json['shipping_method'][i]['error'] + '</option>';
 				}
 				
-				$('input[name=\'payment_code\']').attr('value', $('select[name=\'payment\']').val());
-			}	
-		},
+				html += '</optgroup>';
+			}
+	
+			$('select[name=\'shipping\']').html(html);	
+			
+			if ($('select[name=\'shipping\']').val()) {
+				$('input[name=\'shipping_method\']').attr('value', $('select[name=\'shipping\'] option:selected').text());
+			} else {
+				$('input[name=\'shipping_method\']').attr('value', '');
+			}
+			
+			$('input[name=\'shipping_code\']').attr('value', $('select[name=\'shipping\']').val());	
+		}
+					
+		// Payment Methods
+		if (json['payment_methods']) {
+			html = '<option value=""><?php echo $text_select; ?></option>';
+			
+			for (i in json['payment_methods']) {
+				if (json['payment_methods'][i]['code'] == $('input[name=\'payment_code\']').val()) {
+					html += '<option value="' + json['payment_methods'][i]['code'] + '" selected="selected">' + json['payment_methods'][i]['title'] + '</option>';
+				} else {
+					html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
+				}		
+			}
+	
+			$('select[name=\'payment\']').html(html);
+			
+			if ($('select[name=\'payment\']').val()) {
+				$('input[name=\'payment_method\']').attr('value', $('select[name=\'payment\'] option:selected').text());
+			} else {
+				$('input[name=\'payment_method\']').attr('value', '');
+			}
+			
+			$('input[name=\'payment_code\']').attr('value', $('select[name=\'payment\']').val());
+		}
+	}
+}
+
+$('#button-refresh').on('click', function() {
+	$.ajax({
+		<?php if (!$order_id) { ?>
+		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>',
+		<?php } else { ?>
+		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		<?php } ?>		
+		type: 'post',
+		data: $('#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'], #tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea, #tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea, #tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked,	#tab-shipping select, #tab-shipping textarea,	#product input, #product select, #product textarea,	#voucher input, #voucher select, #voucher textarea,	#tab-total input[type=\'text\'], #tab-total input[type=\'hidden\'], #tab-total input[type=\'radio\']:checked, #tab-total input[type=\'checkbox\']:checked, #tab-total select, #tab-total textarea'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-refresh i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-refresh').prop('disabled', true);
+			$('#button-save').prop('disabled', true);	
+			$('#button-product').prop('disabled', true);
+			$('#button-voucher').prop('disabled', true);			
+		},	
+		complete: function() {
+			$('#button-refresh i').replaceWith('<i class="fa fa-refresh"></i>');
+			$('#button-refresh').prop('disabled', false);
+			$('#button-save').prop('disabled', false);	
+			$('#button-product').prop('disabled', false);
+			$('#button-voucher').prop('disabled', false);			
+		},		
+		success: success,
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
-	});	
+	});		
+});
+
+$('#button-save').on('click', function() {
+	$.ajax({
+		<?php if (!$order_id) { ?>
+		url: 'index.php?route=sale/api/insert&token=<?php echo $token; ?>',
+		<?php } else { ?>
+		url: 'index.php?route=sale/api/update&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		<?php } ?>
+		type: 'post',
+		data: $('#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'], #tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea, #tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea, #tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked,	#tab-shipping select, #tab-shipping textarea,	#product input, #product select, #product textarea,	#voucher input, #voucher select, #voucher textarea,	#tab-total input[type=\'text\'], #tab-total input[type=\'hidden\'], #tab-total input[type=\'radio\']:checked, #tab-total input[type=\'checkbox\']:checked, #tab-total select, #tab-total textarea'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-save i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-refresh').prop('disabled', true);
+			$('#button-save').prop('disabled', true);	
+			$('#button-product').prop('disabled', true);
+			$('#button-voucher').prop('disabled', true);
+		},	
+		complete: function() {
+			$('#button-save i').replaceWith('<i class="fa fa-check-circle"></i>');
+			$('#button-refresh').prop('disabled', false);
+			$('#button-save').prop('disabled', false);	
+			$('#button-product').prop('disabled', false);
+			$('#button-voucher').prop('disabled', false);
+		},		
+		success: success,
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});		
+});
+
+$('#button-product').on('click', function() {
+	$.ajax({
+		<?php if (!$order_id) { ?>
+		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>',
+		<?php } else { ?>
+		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		<?php } ?>		
+		type: 'post',
+		data: $('#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'],	#tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea, #tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea,		#tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked, #tab-shipping select, #tab-shipping textarea,	#tab-product input[type=\'text\'], #tab-product input[type=\'hidden\'], #tab-product input[type=\'radio\']:checked, #tab-product input[type=\'checkbox\']:checked, #tab-product select, #tab-product textarea,	#voucher input, #voucher select, #voucher textarea, #tab-total input[type=\'text\'], #tab-total input[type=\'hidden\'], #tab-total input[type=\'radio\']:checked, #tab-total input[type=\'checkbox\']:checked, #tab-total select, #tab-total textarea'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-product i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-refresh').prop('disabled', true);
+			$('#button-save').prop('disabled', true);	
+			$('#button-product').prop('disabled', true);
+			$('#button-voucher').prop('disabled', true);
+		},	
+		complete: function() {
+			$('#button-product i').replaceWith('<i class="fa fa-check-circle"></i>');
+			$('#button-refresh').prop('disabled', false);
+			$('#button-save').prop('disabled', false);	
+			$('#button-product').prop('disabled', false);
+			$('#button-voucher').prop('disabled', false);
+		},		
+		success: success,
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});		
+});
+
+$('#button-voucher').on('click', function() {
+	$.ajax({
+		<?php if (!$order_id) { ?>
+		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>',
+		<?php } else { ?>
+		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		<?php } ?>		
+		type: 'post',
+		data: $('#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'], #tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea,#tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea, #tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked, #tab-shipping select, #tab-shipping textarea,	#product input, #product select, #product textarea, #tab-voucher input[type=\'text\'], #tab-voucher input[type=\'hidden\'], #tab-voucher input[type=\'radio\']:checked, #tab-voucher input[type=\'checkbox\']:checked, #tab-voucher select, #tab-voucher textarea,	#tab-total input[type=\'text\'], #tab-total input[type=\'hidden\'], #tab-total input[type=\'radio\']:checked, #tab-total input[type=\'checkbox\']:checked, #tab-total select, #tab-total textarea'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-voucher i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-refresh').prop('disabled', true);
+			$('#button-save').prop('disabled', true);	
+			$('#button-product').prop('disabled', true);
+			$('#button-voucher').prop('disabled', true);
+		},	
+		complete: function() {
+			$('#button-voucher i').replaceWith('<i class="fa fa-check-circle"></i>');
+			$('#button-refresh').prop('disabled', false);
+			$('#button-save').prop('disabled', false);	
+			$('#button-product').prop('disabled', false);
+			$('#button-voucher').prop('disabled', false);
+		},		
+		success: success,
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});		
 });
 //--></script> 
 <?php echo $footer; ?>

@@ -33,6 +33,7 @@ $_['entry_telephone']       = 'Telephone';
 $_['entry_fax']             = 'Fax';
 $_['entry_newsletter']      = 'Newsletter';
 $_['entry_status']          = 'Status';
+$_['entry_safe']            = 'Safe';
 $_['entry_password']        = 'Password';
 $_['entry_confirm']         = 'Confirm';
 $_['entry_company']         = 'Company';
@@ -53,6 +54,7 @@ $_['entry_ip']              = 'IP';
 $_['entry_date_added']      = 'Date Added';
 
 // Help
+$_['help_safe']             = 'Set to true to avoid this customer from being caught by the anti-fraud system';
 $_['help_points']           = 'Use minus to remove points';
 
 // Error

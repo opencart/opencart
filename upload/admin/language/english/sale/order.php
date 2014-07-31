@@ -4,6 +4,7 @@ $_['heading_title']                           = 'Orders';
 
 // Text
 $_['text_success']                            = 'Success: You have modified orders!';
+$_['text_refresh']                            = 'Success: You have refreshed the order totals!';
 $_['text_order_detail']                       = 'Order Details';
 $_['text_order_id']                           = 'Order ID:';
 $_['text_invoice_no']                         = 'Invoice No.:';
@@ -115,6 +116,7 @@ $_['text_queries_remaining']                  = 'Queries Remaining:';
 $_['text_maxmind_id']                         = 'Maxmind ID:';
 $_['text_error']                              = 'Error:';
 $_['text_picklist']                           = 'Dispatch note';
+$_['text_history']                            = 'Add Order History';
 
 // Column
 $_['column_order_id']                         = 'Order ID';

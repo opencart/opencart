@@ -80,6 +80,10 @@ class ControllerPaymentPPExpress extends Controller {
 			'CHANNELTYPE'        => 'Merchant'
 		);
 		
+		if (isset($this->session->data['pp_login']['seamless']['access_token']) && (isset($this->session->data['pp_login']['seamless']['customer_id']) && $this->session->data['pp_login']['seamless']['customer_id'] == $this->customer->getId()) && $this->config->get('pp_login_seamless')) { 
+			$data['IDENTITYACCESSTOKEN'] = $this->session->data['pp_login']['seamless']['access_token']; 
+		}
+		
 		$data = array_merge($data, $this->model_payment_pp_express->paymentRequestInfo());
 
 		$result = $this->model_payment_pp_express->call($data);
@@ -1282,6 +1286,10 @@ class ControllerPaymentPPExpress extends Controller {
 			'CHANNELTYPE'        => 'Merchant',
 			'ALLOWNOTE'          => $this->config->get('pp_express_allow_note')
 		);
+		
+		if (isset($this->session->data['pp_login']['seamless']['access_token']) && (isset($this->session->data['pp_login']['seamless']['customer_id']) && $this->session->data['pp_login']['seamless']['customer_id'] == $this->customer->getId()) && $this->config->get('pp_login_seamless')) { 
+			$data['IDENTITYACCESSTOKEN'] = $this->session->data['pp_login']['seamless']['access_token']; 
+		}
 
 		$data = array_merge($data, $this->model_payment_pp_express->paymentRequestInfo());
 

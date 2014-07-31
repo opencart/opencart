@@ -3,6 +3,9 @@ class ControllerApiLogin extends Controller {
 	public function index() {
 		$this->load->language('api/login');
 
+		// Delete old login so not to cause any issues if there is an error
+		unset($this->session->data['api_id']);
+
 		$keys = array(
 			'username',
 			'password'
@@ -23,7 +26,7 @@ class ControllerApiLogin extends Controller {
 		if ($api_info) {
 			$this->session->data['api_id'] = $api_info['api_id'];
 			
-			$json['cookie'] = session_id();
+			$json['cookie'] = $this->session->getId();
 			
 			$json['success'] = $this->language->get('text_success');			
 		} else {

@@ -126,10 +126,10 @@ class ControllerExtensionModule extends Controller {
 
 				$data['extensions'][] = array(
 					'name'      => $this->language->get('heading_title'),
-					'edit'      => $this->url->link('module/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL'),
 					'install'   => $this->url->link('extension/module/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
 					'uninstall' => $this->url->link('extension/module/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
-					'installed' => in_array($extension, $extensions)
+					'installed' => in_array($extension, $extensions),
+					'edit'      => $this->url->link('module/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL')
 				);
 			}
 		}

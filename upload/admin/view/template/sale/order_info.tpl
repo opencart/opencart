@@ -315,37 +315,40 @@
       <div class="tab-pane " id="tab-history">
         <div id="history"></div>
         <br />
-        <form class="form-horizontal">
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
-            <div class="col-sm-10">
-              <select name="order_status_id" id="input-order-status" class="form-control">
-                <?php foreach ($order_statuses as $order_statuses) { ?>
-                <?php if ($order_statuses['order_status_id'] == $order_status_id) { ?>
-                <option value="<?php echo $order_statuses['order_status_id']; ?>" selected="selected"><?php echo $order_statuses['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $order_statuses['order_status_id']; ?>"><?php echo $order_statuses['name']; ?></option>
-                <?php } ?>
-                <?php } ?>
-              </select>
+        <fieldset>
+          <legend><?php echo $text_history; ?></legend>
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
+              <div class="col-sm-10">
+                <select name="order_status_id" id="input-order-status" class="form-control">
+                  <?php foreach ($order_statuses as $order_statuses) { ?>
+                  <?php if ($order_statuses['order_status_id'] == $order_status_id) { ?>
+                  <option value="<?php echo $order_statuses['order_status_id']; ?>" selected="selected"><?php echo $order_statuses['name']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $order_statuses['order_status_id']; ?>"><?php echo $order_statuses['name']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select>
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-notify"><?php echo $entry_notify; ?></label>
-            <div class="col-sm-10">
-              <input type="checkbox" name="notify" value="1" id="input-notify" />
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-notify"><?php echo $entry_notify; ?></label>
+              <div class="col-sm-10">
+                <input type="checkbox" name="notify" value="1" id="input-notify" />
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
-            <div class="col-sm-10">
-              <textarea name="comment" rows="8" id="input-comment" class="form-control"></textarea>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
+              <div class="col-sm-10">
+                <textarea name="comment" rows="8" id="input-comment" class="form-control"></textarea>
+              </div>
             </div>
+          </form>
+          <div class="text-right">
+            <button id="button-history" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_history_add; ?></button>
           </div>
-        </form>
-        <div class="text-right">
-          <button id="button-history" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_history_add; ?></button>
-        </div>
+        </fieldset>
       </div>
       <?php if ($maxmind_id) { ?>
       <div class="tab-pane" id="tab-fraud">

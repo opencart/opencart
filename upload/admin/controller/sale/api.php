@@ -208,6 +208,8 @@ class ControllerSaleApi extends Controller {
 		
 		if (!$json['error']) {
 			$this->session->data['success'] = $this->language->get('text_success');
+			
+			$json['redirect'] = $this->url->link('sale/order');
 		}		
 		
 		$this->response->addHeader('Content-Type: application/json');

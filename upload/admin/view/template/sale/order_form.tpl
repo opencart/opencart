@@ -5,6 +5,7 @@
       <div class="pull-right">
         <button type="button" id="button-refresh" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn btn-warning"><i class="fa fa-refresh"></i></button>
         <button type="button" id="button-save" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-check-circle"></i></button>
+        <button type="button" id="button-delete" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
       <h1><i class="fa fa-pencil-square"></i> <?php echo $heading_title; ?></h1>
     </div>
@@ -844,12 +845,16 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-shipping"><?php echo $entry_shipping; ?></label>
               <div class="col-sm-10">
-                <select name="shipping" id="input-shipping" class="form-control">
-                  <option value=""><?php echo $text_select; ?></option>
-                  <?php if ($shipping_code) { ?>
-                  <option value="<?php echo $shipping_code; ?>" selected="selected"><?php echo $shipping_method; ?></option>
-                  <?php } ?>
-                </select>
+                <div class="input-group">
+                  <select name="shipping" id="input-shipping" class="form-control">
+                    <option value=""><?php echo $text_select; ?></option>
+                    <?php if ($shipping_code) { ?>
+                    <option value="<?php echo $shipping_code; ?>" selected="selected"><?php echo $shipping_method; ?></option>
+                    <?php } ?>
+                  </select>
+                  <span class="input-group-btn">
+                  <button type="button" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn  btn-warning"><i class="fa fa-refresh"></i></button>
+                  </span> </div>
                 <input type="hidden" name="shipping_method" value="<?php echo $shipping_method; ?>" />
                 <input type="hidden" name="shipping_code" value="<?php echo $shipping_code; ?>" />
               </div>
@@ -857,12 +862,16 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-payment"><?php echo $entry_payment; ?></label>
               <div class="col-sm-10">
-                <select name="payment" id="input-payment" class="form-control">
-                  <option value=""><?php echo $text_select; ?></option>
-                  <?php if ($payment_code) { ?>
-                  <option value="<?php echo $payment_code; ?>" selected="selected"><?php echo $payment_method; ?></option>
-                  <?php } ?>
-                </select>
+                <div class="input-group">
+                  <select name="payment" id="input-payment" class="form-control">
+                    <option value=""><?php echo $text_select; ?></option>
+                    <?php if ($payment_code) { ?>
+                    <option value="<?php echo $payment_code; ?>" selected="selected"><?php echo $payment_method; ?></option>
+                    <?php } ?>
+                  </select>
+                  <span class="input-group-btn">
+                  <button type="button" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn  btn-warning"><i class="fa fa-refresh"></i></button>
+                  </span> </div>
                 <input type="hidden" name="payment_method" value="<?php echo $payment_method; ?>" />
                 <input type="hidden" name="payment_code" value="<?php echo $payment_code; ?>" />
               </div>
@@ -870,19 +879,31 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-coupon"><?php echo $entry_coupon; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="coupon" value="<?php echo $coupon; ?>" id="input-coupon" class="form-control" />
+                <div class="input-group">
+                  <input type="text" name="coupon" value="<?php echo $coupon; ?>" id="input-coupon" class="form-control" />
+                  <span class="input-group-btn">
+                  <button type="button" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn  btn-warning"><i class="fa fa-refresh"></i></button>
+                  </span> </div>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-voucher"><?php echo $entry_voucher; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="voucher" value="<?php echo $voucher; ?>" id="input-voucher" class="form-control" />
+                <div class="input-group">
+                  <input type="text" name="voucher" value="<?php echo $voucher; ?>" id="input-voucher" class="form-control" />
+                  <span class="input-group-btn">
+                  <button type="button" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn  btn-warning"><i class="fa fa-refresh"></i></button>
+                  </span> </div>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-reward"><?php echo $entry_reward; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="reward" value="<?php echo $reward; ?>" id="input-reward" class="form-control" />
+                <div class="input-group">
+                  <input type="text" name="reward" value="<?php echo $reward; ?>" id="input-reward" class="form-control" />
+                  <span class="input-group-btn">
+                  <button type="button" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn  btn-warning"><i class="fa fa-refresh"></i></button>
+                  </span> </div>
               </div>
             </div>
             <div class="form-group">
@@ -1453,7 +1474,6 @@ $('select[name=\'shipping\']').on('change', function() {
 //--></script> 
 <script type="text/javascript"><!--
 var success = function(json) {
-	//alert(json);
 	$('.alert, .text-danger').remove();
 	
 	// Check for errors
@@ -1704,7 +1724,7 @@ var success = function(json) {
 		}		
 	}
 		
-	// If not erros that woudl effect the checkout proccess the check for more errors
+	// If not errors that would effect the checkout proccess the check for more errors
 	if (json['error'] && !json['error']['customer'] && json['error']['payment'] && json['error']['shipping'] && !json['error']['product'] && !json['error']['vouchers']) {
 		// Shipping Method
 		if (json['error']['shipping_method']) {
@@ -1741,124 +1761,126 @@ var success = function(json) {
 	}
 					
 	// Totals
-	if (json['products'] || json['vouchers'] || json['totals']) {
-		html = '';
-		
-		if (json['products']) {
-			for (i = 0; i < json['products'].length; i++) {
-				product = json['products'][i];
-				
-				html += '<tr>';
-				html += '  <td class="text-left">' + product['name'] + '<br />';
-				
-				if (product['option']) {
-					for (j = 0; j < product['option'].length; j++) {
-						option = product['option'][j];
-						
-						html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
-					}
-				}
-				
-				html += '  </td>';
-				html += '  <td class="text-left">' + product['model'] + '</td>';
-				html += '  <td class="text-right">' + product['quantity'] + '</td>';
-				html += '  <td class="text-right">' + product['price'] + '</td>';
-				html += '  <td class="text-right">' + product['total'] + '</td>';
-				html += '</tr>';
-			}				
-		}
-		
-		if (json['vouchers']) {
-			for (i in json['vouchers']) {
-				voucher = json['vouchers'][i];
-				 
-				html += '<tr>';
-				html += '  <td class="text-left">' + voucher['description'] + '</td>';
-				html += '  <td class="text-left"></td>';
-				html += '  <td class="text-right">1</td>';
-				html += '  <td class="text-right">' + voucher['amount'] + '</td>';
-				html += '  <td class="text-right">' + voucher['amount'] + '</td>';
-				html += '</tr>';	
-			}	
-		}
-		
-		var total_row = 0;
-		
-		for (i in json['totals']) {
-			total = json['totals'][i];
+	if (!json['error'] || (!json['error']['customer'] && json['error']['payment'] && json['error']['shipping'] && !json['error']['product'] && !json['error']['vouchers'])) {
+		if (json['products'] || json['vouchers'] || json['totals']) {
+			html = '';
 			
-			html += '<tr id="total-row' + total_row + '">';
-			html += '  <td class="text-right" colspan="4">' + total['title'] + ':</td>';
-			html += '  <td class="text-right">' + total['text'] + '</td>';
-			html += '</tr>';
-			
-			total_row++;
-		}
-		
-		$('#total').html(html);
-	} else {
-		html  = '<tr>';
-		html += '  <td colspan="5" class="text-center"><?php echo $text_no_results; ?></td>';
-		html += '</tr>';	
-
-		$('#total').html(html);					
-	}
-	
-	// Shipping Methods
-	if (json['shipping_methods']) {
-		html = '<option value=""><?php echo $text_select; ?></option>';
-
-		for (i in json['shipping_methods']) {
-			html += '<optgroup label="' + json['shipping_methods'][i]['title'] + '">';
-		
-			if (!json['shipping_methods'][i]['error']) {
-				for (j in json['shipping_methods'][i]['quote']) {
-					if (json['shipping_methods'][i]['quote'][j]['code'] == $('input[name=\'shipping_code\']').val()) {
-						html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected="selected">' + json['shipping_methods'][i]['quote'][j]['title'] + '</option>';
-					} else {
-						html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + '</option>';
+			if (json['products']) {
+				for (i = 0; i < json['products'].length; i++) {
+					product = json['products'][i];
+					
+					html += '<tr>';
+					html += '  <td class="text-left">' + product['name'] + '<br />';
+					
+					if (product['option']) {
+						for (j = 0; j < product['option'].length; j++) {
+							option = product['option'][j];
+							
+							html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
+						}
 					}
-				}		
-			} else {
-				html += '<option value="" style="color: #F00;" disabled="disabled">' + json['shipping_method'][i]['error'] + '</option>';
+					
+					html += '  </td>';
+					html += '  <td class="text-left">' + product['model'] + '</td>';
+					html += '  <td class="text-right">' + product['quantity'] + '</td>';
+					html += '  <td class="text-right">' + product['price'] + '</td>';
+					html += '  <td class="text-right">' + product['total'] + '</td>';
+					html += '</tr>';
+				}				
 			}
 			
-			html += '</optgroup>';
-		}
-
-		$('select[name=\'shipping\']').html(html);	
-		
-		if ($('select[name=\'shipping\']').val()) {
-			$('input[name=\'shipping_method\']').attr('value', $('select[name=\'shipping\'] option:selected').text());
-		} else {
-			$('input[name=\'shipping_method\']').attr('value', '');
-		}
-		
-		$('input[name=\'shipping_code\']').attr('value', $('select[name=\'shipping\']').val());	
-	}
+			if (json['vouchers']) {
+				for (i in json['vouchers']) {
+					voucher = json['vouchers'][i];
+					 
+					html += '<tr>';
+					html += '  <td class="text-left">' + voucher['description'] + '</td>';
+					html += '  <td class="text-left"></td>';
+					html += '  <td class="text-right">1</td>';
+					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
+					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
+					html += '</tr>';	
+				}	
+			}
+			
+			var total_row = 0;
+			
+			for (i in json['totals']) {
+				total = json['totals'][i];
 				
-	// Payment Methods
-	if (json['payment_methods']) {
-		html = '<option value=""><?php echo $text_select; ?></option>';
-		
-		for (i in json['payment_methods']) {
-			if (json['payment_methods'][i]['code'] == $('input[name=\'payment_code\']').val()) {
-				html += '<option value="' + json['payment_methods'][i]['code'] + '" selected="selected">' + json['payment_methods'][i]['title'] + '</option>';
-			} else {
-				html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
-			}		
-		}
-
-		$('select[name=\'payment\']').html(html);
-		
-		if ($('select[name=\'payment\']').val()) {
-			$('input[name=\'payment_method\']').attr('value', $('select[name=\'payment\'] option:selected').text());
+				html += '<tr id="total-row' + total_row + '">';
+				html += '  <td class="text-right" colspan="4">' + total['title'] + ':</td>';
+				html += '  <td class="text-right">' + total['text'] + '</td>';
+				html += '</tr>';
+				
+				total_row++;
+			}
+			
+			$('#total').html(html);
 		} else {
-			$('input[name=\'payment_method\']').attr('value', '');
+			html  = '<tr>';
+			html += '  <td colspan="5" class="text-center"><?php echo $text_no_results; ?></td>';
+			html += '</tr>';	
+	
+			$('#total').html(html);					
 		}
 		
-		$('input[name=\'payment_code\']').attr('value', $('select[name=\'payment\']').val());
-	}	
+		// Shipping Methods
+		if (json['shipping_methods']) {
+			html = '<option value=""><?php echo $text_select; ?></option>';
+	
+			for (i in json['shipping_methods']) {
+				html += '<optgroup label="' + json['shipping_methods'][i]['title'] + '">';
+			
+				if (!json['shipping_methods'][i]['error']) {
+					for (j in json['shipping_methods'][i]['quote']) {
+						if (json['shipping_methods'][i]['quote'][j]['code'] == $('input[name=\'shipping_code\']').val()) {
+							html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected="selected">' + json['shipping_methods'][i]['quote'][j]['title'] + '</option>';
+						} else {
+							html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + '</option>';
+						}
+					}		
+				} else {
+					html += '<option value="" style="color: #F00;" disabled="disabled">' + json['shipping_method'][i]['error'] + '</option>';
+				}
+				
+				html += '</optgroup>';
+			}
+	
+			$('select[name=\'shipping\']').html(html);	
+			
+			if ($('select[name=\'shipping\']').val()) {
+				$('input[name=\'shipping_method\']').attr('value', $('select[name=\'shipping\'] option:selected').text());
+			} else {
+				$('input[name=\'shipping_method\']').attr('value', '');
+			}
+			
+			$('input[name=\'shipping_code\']').attr('value', $('select[name=\'shipping\']').val());	
+		}
+					
+		// Payment Methods
+		if (json['payment_methods']) {
+			html = '<option value=""><?php echo $text_select; ?></option>';
+			
+			for (i in json['payment_methods']) {
+				if (json['payment_methods'][i]['code'] == $('input[name=\'payment_code\']').val()) {
+					html += '<option value="' + json['payment_methods'][i]['code'] + '" selected="selected">' + json['payment_methods'][i]['title'] + '</option>';
+				} else {
+					html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
+				}		
+			}
+	
+			$('select[name=\'payment\']').html(html);
+			
+			if ($('select[name=\'payment\']').val()) {
+				$('input[name=\'payment_method\']').attr('value', $('select[name=\'payment\'] option:selected').text());
+			} else {
+				$('input[name=\'payment_method\']').attr('value', '');
+			}
+			
+			$('input[name=\'payment_code\']').attr('value', $('select[name=\'payment\']').val());
+		}
+	}
 }
 
 $('#button-refresh').on('click', function() {

@@ -42,7 +42,6 @@ class ControllerSaleOrder extends Controller {
 		$this->load->language('sale/order');
 
 		if ($this->validateDelete()) {
-
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
@@ -398,6 +397,7 @@ class ControllerSaleOrder extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
 		$data['text_default'] = $this->language->get('text_default');
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
@@ -449,9 +449,10 @@ class ControllerSaleOrder extends Controller {
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
+		$data['button_delete'] = $this->language->get('button_delete');
+		$data['button_refresh'] = $this->language->get('button_refresh');
 		$data['button_product_add'] = $this->language->get('button_product_add');
 		$data['button_voucher_add'] = $this->language->get('button_voucher_add');
-		$data['button_refresh'] = $this->language->get('button_refresh');
 		$data['button_upload'] = $this->language->get('button_upload');
 		$data['button_remove'] = $this->language->get('button_remove');
 

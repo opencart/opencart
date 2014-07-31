@@ -220,4 +220,30 @@ $('.date').datetimepicker({
 	pickTime: false
 });
 //--></script> 
+<script type="text/javascript"><!--
+$('#button-delete').on('click', function() {
+	$.ajax({
+		<?php if (!$order_id) { ?>
+		url: 'index.php?route=sale/api/delete&token=<?php echo $token; ?>',
+		<?php } else { ?>
+		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		<?php } ?>		
+		type: 'post',
+		data: $('#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'], #tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea,#tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea, #tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked, #tab-shipping select, #tab-shipping textarea,	#product input, #product select, #product textarea, #tab-voucher input[type=\'text\'], #tab-voucher input[type=\'hidden\'], #tab-voucher input[type=\'radio\']:checked, #tab-voucher input[type=\'checkbox\']:checked, #tab-voucher select, #tab-voucher textarea,	#tab-total input[type=\'text\'], #tab-total input[type=\'hidden\'], #tab-total input[type=\'radio\']:checked, #tab-total input[type=\'checkbox\']:checked, #tab-total select, #tab-total textarea'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-voucher i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-refresh').prop('disabled', true);
+		},	
+		complete: function() {
+			$('#button-voucher i').replaceWith('<i class="fa fa-check-circle"></i>');
+			$('#button-refresh').prop('disabled', false);
+		},		
+		success: success,
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});		
+});
+//--></script>
 <?php echo $footer; ?>

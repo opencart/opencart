@@ -1,7 +1,5 @@
 <?php
 class ControllerSaleOrder extends Controller {
-	private $error = array();
-	
 	public function index() {
 		$this->load->language('sale/order');
 
@@ -12,6 +10,14 @@ class ControllerSaleOrder extends Controller {
 		$this->getList();
 	}
 
+	protected function validate() {
+		if (!$this->user->hasPermission('modify', 'sale/order')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		return !$this->error;
+	}
+	
 	public function insert() {
 		$this->load->language('sale/order');
 
@@ -36,13 +42,6 @@ class ControllerSaleOrder extends Controller {
 		$this->load->language('sale/order');
 
 		if ($this->validateDelete()) {
-
-
-
-
-
-
-
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
@@ -55,8 +54,8 @@ class ControllerSaleOrder extends Controller {
 				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 			}
 
-			if (isset($this->request->get['filter_order_status_id'])) {
-				$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
+			if (isset($this->request->get['filter_order_status'])) {
+				$url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
 			}
 
 			if (isset($this->request->get['filter_total'])) {
@@ -102,10 +101,10 @@ class ControllerSaleOrder extends Controller {
 			$filter_customer = null;
 		}
 
-		if (isset($this->request->get['filter_order_status_id'])) {
-			$filter_order_status_id = $this->request->get['filter_order_status_id'];
+		if (isset($this->request->get['filter_order_status'])) {
+			$filter_order_status = $this->request->get['filter_order_status'];
 		} else {
-			$filter_order_status_id = null;
+			$filter_order_status = null;
 		}
 
 		if (isset($this->request->get['filter_total'])) {
@@ -154,8 +153,8 @@ class ControllerSaleOrder extends Controller {
 			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
 
-		if (isset($this->request->get['filter_order_status_id'])) {
-			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
+		if (isset($this->request->get['filter_order_status'])) {
+			$url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
 		}
 
 		if (isset($this->request->get['filter_total'])) {
@@ -202,16 +201,16 @@ class ControllerSaleOrder extends Controller {
 		$data['orders'] = array();
 
 		$filter_data = array(
-			'filter_order_id'        => $filter_order_id,
-			'filter_customer'	     => $filter_customer,
-			'filter_order_status_id' => $filter_order_status_id,
-			'filter_total'           => $filter_total,
-			'filter_date_added'      => $filter_date_added,
-			'filter_date_modified'   => $filter_date_modified,
-			'sort'                   => $sort,
-			'order'                  => $order,
-			'start'                  => ($page - 1) * $this->config->get('config_limit_admin'),
-			'limit'                  => $this->config->get('config_limit_admin')
+			'filter_order_id'      => $filter_order_id,
+			'filter_customer'	   => $filter_customer,
+			'filter_order_status'  => $filter_order_status,
+			'filter_total'         => $filter_total,
+			'filter_date_added'    => $filter_date_added,
+			'filter_date_modified' => $filter_date_modified,
+			'sort'                 => $sort,
+			'order'                => $order,
+			'start'                => ($page - 1) * $this->config->get('config_limit_admin'),
+			'limit'                => $this->config->get('config_limit_admin')
 		);
 
 		$order_total = $this->model_sale_order->getTotalOrders($filter_data);
@@ -294,8 +293,8 @@ class ControllerSaleOrder extends Controller {
 			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
 
-		if (isset($this->request->get['filter_order_status_id'])) {
-			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
+		if (isset($this->request->get['filter_order_status'])) {
+			$url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
 		}
 
 		if (isset($this->request->get['filter_total'])) {
@@ -337,8 +336,8 @@ class ControllerSaleOrder extends Controller {
 			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
 
-		if (isset($this->request->get['filter_order_status_id'])) {
-			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
+		if (isset($this->request->get['filter_order_status'])) {
+			$url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
 		}
 
 		if (isset($this->request->get['filter_total'])) {
@@ -373,7 +372,7 @@ class ControllerSaleOrder extends Controller {
 
 		$data['filter_order_id'] = $filter_order_id;
 		$data['filter_customer'] = $filter_customer;
-		$data['filter_order_status_id'] = $filter_order_status_id;
+		$data['filter_order_status'] = $filter_order_status;
 		$data['filter_total'] = $filter_total;
 		$data['filter_date_added'] = $filter_date_added;
 		$data['filter_date_modified'] = $filter_date_modified;
@@ -398,6 +397,7 @@ class ControllerSaleOrder extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
 		$data['text_default'] = $this->language->get('text_default');
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
@@ -449,9 +449,10 @@ class ControllerSaleOrder extends Controller {
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
+		$data['button_delete'] = $this->language->get('button_delete');
+		$data['button_refresh'] = $this->language->get('button_refresh');
 		$data['button_product_add'] = $this->language->get('button_product_add');
 		$data['button_voucher_add'] = $this->language->get('button_voucher_add');
-		$data['button_refresh'] = $this->language->get('button_refresh');
 		$data['button_upload'] = $this->language->get('button_upload');
 		$data['button_remove'] = $this->language->get('button_remove');
 
@@ -473,8 +474,8 @@ class ControllerSaleOrder extends Controller {
 			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 		}
 
-		if (isset($this->request->get['filter_order_status_id'])) {
-			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
+		if (isset($this->request->get['filter_order_status'])) {
+			$url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
 		}
 
 		if (isset($this->request->get['filter_total'])) {
@@ -622,11 +623,10 @@ class ControllerSaleOrder extends Controller {
 				}
 			}			
 			
-			
 			$data['order_status_id'] = $order_info['order_status_id'];
 			$data['comment'] = $order_info['comment'];
-			$data['affiliate'] = $order_info['affiliate'];
 			$data['affiliate_id'] = $order_info['affiliate_id'];
+			$data['affiliate'] = $order_info['affiliate_firstname'] . ' ' . $order_info['affiliate_lastname'];
 		} else {
 			$data['order_id'] = 0;
 			$data['store_id'] = '';
@@ -675,8 +675,8 @@ class ControllerSaleOrder extends Controller {
 			$data['order_status_id'] = '';
 			
 			$data['comment'] = '';
-			$data['affiliate'] = '';
 			$data['affiliate_id'] = '';
+			$data['affiliate'] = '';
 			
 			$data['coupon'] = '';
 			$data['voucher'] = '';
@@ -718,14 +718,6 @@ class ControllerSaleOrder extends Controller {
 
 		$this->response->setOutput($this->load->view('sale/order_form.tpl', $data));
   	}
-
-	protected function validateDelete() {
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		return !$this->error;
-	}
 
 	public function country() {
 		$json = array();
@@ -805,6 +797,7 @@ class ControllerSaleOrder extends Controller {
 			$data['text_country'] = $this->language->get('text_country');
 			$data['text_shipping_method'] = $this->language->get('text_shipping_method');
 			$data['text_payment_method'] = $this->language->get('text_payment_method');
+			$data['text_history'] = $this->language->get('text_history');
 			$data['text_country_match'] = $this->language->get('text_country_match');
 			$data['text_country_code'] = $this->language->get('text_country_code');
 			$data['text_high_risk_country'] = $this->language->get('text_high_risk_country');
@@ -946,8 +939,8 @@ class ControllerSaleOrder extends Controller {
 				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
 			}
 
-			if (isset($this->request->get['filter_order_status_id'])) {
-				$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
+			if (isset($this->request->get['filter_order_status'])) {
+				$url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
 			}
 
 			if (isset($this->request->get['filter_total'])) {
@@ -1627,7 +1620,7 @@ class ControllerSaleOrder extends Controller {
 				// Allowed file extension types
 				$allowed = array();
 
-				$extension_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_extension_allowed'));
+				$extension_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_ext_allowed'));
 
 				$filetypes = explode("\n", $extension_allowed);
 
@@ -1722,6 +1715,8 @@ class ControllerSaleOrder extends Controller {
 		$data['column_price'] = $this->language->get('column_price');
 		$data['column_total'] = $this->language->get('column_total');
 		$data['column_comment'] = $this->language->get('column_comment');
+
+		$data['error_no_selection'] = $this->language->get('error_no_selection');
 
 		$this->load->model('sale/order');
 
@@ -1933,6 +1928,7 @@ class ControllerSaleOrder extends Controller {
 		$data['lang'] = $this->language->get('code');
 
 		$data['text_shipping'] = $this->language->get('text_shipping');
+		$data['text_picklist'] = $this->language->get('text_picklist');
 
 		$data['text_order_detail'] = $this->language->get('text_order_detail');
 		$data['text_order_id'] = $this->language->get('text_order_id');
@@ -1961,6 +1957,8 @@ class ControllerSaleOrder extends Controller {
 		$data['column_model'] = $this->language->get('column_model');
 		$data['column_quantity'] = $this->language->get('column_quantity');
 		$data['column_comment'] = $this->language->get('column_comment');
+
+		$data['error_no_selection'] = $this->language->get('error_no_selection');
 
 		$this->load->model('sale/order');
 

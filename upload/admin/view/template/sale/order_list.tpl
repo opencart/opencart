@@ -35,15 +35,15 @@
         <div class="col-sm-4">
           <div class="form-group">
             <label class="control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
-            <select name="filter_order_status_id" id="input-order-status" class="form-control">
+            <select name="filter_order_status" id="input-order-status" class="form-control">
               <option value="*"></option>
-              <?php if ($filter_order_status_id == '0') { ?>
+              <?php if ($filter_order_status == '0') { ?>
               <option value="0" selected="selected"><?php echo $text_missing; ?></option>
               <?php } else { ?>
               <option value="0"><?php echo $text_missing; ?></option>
               <?php } ?>
               <?php foreach ($order_statuses as $order_status) { ?>
-              <?php if ($order_status['order_status_id'] == $filter_order_status_id) { ?>
+              <?php if ($order_status['order_status_id'] == $filter_order_status) { ?>
               <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
               <?php } else { ?>
               <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
@@ -165,10 +165,10 @@ $('#button-filter').on('click', function() {
 		url += '&filter_customer=' + encodeURIComponent(filter_customer);
 	}
 	
-	var filter_order_status_id = $('select[name=\'filter_order_status_id\']').val();
+	var filter_order_status = $('select[name=\'filter_order_status\']').val();
 	
-	if (filter_order_status_id != '*') {
-		url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
+	if (filter_order_status != '*') {
+		url += '&filter_order_status=' + encodeURIComponent(filter_order_status);
 	}	
 
 	var filter_total = $('input[name=\'filter_total\']').val();
@@ -220,4 +220,30 @@ $('.date').datetimepicker({
 	pickTime: false
 });
 //--></script> 
+<script type="text/javascript"><!--
+$('#button-delete').on('click', function() {
+	$.ajax({
+		<?php if (!$order_id) { ?>
+		url: 'index.php?route=sale/api/delete&token=<?php echo $token; ?>',
+		<?php } else { ?>
+		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		<?php } ?>		
+		type: 'post',
+		data: $('#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'], #tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea,#tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea, #tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked, #tab-shipping select, #tab-shipping textarea,	#product input, #product select, #product textarea, #tab-voucher input[type=\'text\'], #tab-voucher input[type=\'hidden\'], #tab-voucher input[type=\'radio\']:checked, #tab-voucher input[type=\'checkbox\']:checked, #tab-voucher select, #tab-voucher textarea,	#tab-total input[type=\'text\'], #tab-total input[type=\'hidden\'], #tab-total input[type=\'radio\']:checked, #tab-total input[type=\'checkbox\']:checked, #tab-total select, #tab-total textarea'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-voucher i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-refresh').prop('disabled', true);
+		},	
+		complete: function() {
+			$('#button-voucher i').replaceWith('<i class="fa fa-check-circle"></i>');
+			$('#button-refresh').prop('disabled', false);
+		},		
+		success: success,
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});		
+});
+//--></script>
 <?php echo $footer; ?>

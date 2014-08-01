@@ -682,10 +682,4 @@ class ModelCatalogProduct extends Model {
 
 		return $query->row['total'];
 	}
-
-	public function getTotalProductsOutOfStock() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product WHERE status <= 0");
-
-		return $query->row['total'];
-	}
 }

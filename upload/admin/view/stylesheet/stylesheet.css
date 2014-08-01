@@ -1,7 +1,17 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,greek-ext,vietnamese);
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:400,500,700,400italic,500italic,700italic&subset=latin,cyrillic-ext,greek-ext,greek,cyrillic);
+
 html, body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
+ 	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: subpixel-antialiased !important; 
+	-webkit-backface-visibility: hidden; 
+	-moz-backface-visibility: hidden; 
+	-ms-backface-visibility: hidden;	
+	font-family: 'Open Sans', sans-serif;
+	font-size: 12px;
 }
 h1, h2, h3, h4, h5, h6, p {
 	margin-top: 0;
@@ -11,6 +21,9 @@ h1, h2, h3, h4, h5, h6, p {
 }
 .page-header h1 {
 	font-size: 24px;
+	font-family: 'Ubuntu', sans-serif;
+	color: #888;
+	font-weight: 500;
 }
 /* fix for bootstrap hidden and visible */
 span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
@@ -143,7 +156,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	border-bottom: 1px solid #3F3F3F;
 	text-decoration: none;
 	display: block;
-	padding: 11px 10px 10px 10px;
+	padding: 10px 10px 9px 10px;
 	cursor: pointer;
 }
 #menu li ul {
@@ -238,4 +251,13 @@ label.control-label {
 	padding-top: 20px;
 	vertical-align: middle;
 	display: inline-block;
+}
+
+ul.alerts-dropdown > li > a {
+	position: relative;
+}
+
+ul.alerts-dropdown > li > a span {
+	right: 30px;
+	position: absolute;
 }

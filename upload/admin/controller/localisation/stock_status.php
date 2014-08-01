@@ -174,7 +174,7 @@ class ControllerLocalisationStockStatus extends Controller {
 		foreach ($results as $result) {
 			$data['stock_statuses'][] = array(
 				'stock_status_id' => $result['stock_status_id'],
-				'name'            => $result['name'] . (($result['stock_status_id'] == $this->config->get('config_stock_status_id')) ? $this->language->get('text_default') : null),
+				'name'            => $result['name'],
 				'edit'            => $this->url->link('localisation/stock_status/update', 'token=' . $this->session->data['token'] . '&stock_status_id=' . $result['stock_status_id'] . $url, 'SSL')
 			);
 		}
@@ -352,10 +352,6 @@ class ControllerLocalisationStockStatus extends Controller {
 		$this->load->model('catalog/product');
 
 		foreach ($this->request->post['selected'] as $stock_status_id) {
-			if ($this->config->get('config_stock_status_id') == $stock_status_id) {
-				$this->error['warning'] = $this->language->get('error_default');
-			}
-
 			$product_total = $this->model_catalog_product->getTotalProductsByStockStatusId($stock_status_id);
 
 			if ($product_total) {

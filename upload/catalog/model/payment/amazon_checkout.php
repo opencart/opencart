@@ -9,7 +9,6 @@ class ModelPaymentAmazonCheckout extends Model {
 	}
 
 	public function isAmazonOrder($order_id) {
-
 		if ($this->config->get('amazon_checkout_status')) {
 			$status = $this->db->query("SELECT COUNT(*) AS `count` FROM " . DB_PREFIX . "order_amazon WHERE order_id =  " . (int)$order_id)->row['count'] == 1;
 		} else {

@@ -32,18 +32,6 @@ class ControllerCommonReset extends Controller {
 				$this->response->redirect($this->url->link('common/login', '', 'SSL'));
 			}
 
-			$data['breadcrumbs'] = array();
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/dashboard')
-			);
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_reset'),
-				'href' => $this->url->link('common/reset', '', 'SSL')
-			);
-
 			$data['heading_title'] = $this->language->get('heading_title');
 
 			$data['text_password'] = $this->language->get('text_password');

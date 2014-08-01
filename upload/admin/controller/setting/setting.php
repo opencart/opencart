@@ -1292,11 +1292,11 @@ class ControllerSettingSetting extends Controller {
 			$this->error['voucher_max'] = $this->language->get('error_voucher_max');
 		}
 
-		if (!$this->request->post['config_process_status']) {
+		if (!isset($this->request->post['config_process_status'])) {
 			$this->error['process_status'] = $this->language->get('error_process_status');
 		}
 
-		if (!$this->request->post['config_complete_status']) {
+		if (!isset($this->request->post['config_complete_status'])) {
 			$this->error['complete_status'] = $this->language->get('error_complete_status');
 		}
 

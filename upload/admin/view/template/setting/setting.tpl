@@ -755,7 +755,11 @@
                   </div>
                   <?php } ?>
                 </div>
-                <span class="help-block"><?php echo $help_process_status; ?></span></div>
+                <span class="help-block"><?php echo $help_process_status; ?></span>
+                <?php if ($error_process_status) { ?>
+                  <div class="text-danger"><?php echo $error_process_status; ?></div>
+                <?php } ?>
+              </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-complete-status"><?php echo $entry_complete_status; ?></label>
@@ -775,7 +779,11 @@
                   </div>
                   <?php } ?>
                 </div>
-                <span class="help-block"><?php echo $help_complete_status; ?></span> </div>
+                <span class="help-block"><?php echo $help_complete_status; ?></span>
+                <?php if ($error_complete_status) { ?>
+                  <div class="text-danger"><?php echo $error_complete_status; ?></div>
+                <?php } ?>
+              </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_order_mail; ?></label>

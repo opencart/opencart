@@ -1433,24 +1433,6 @@ CREATE TABLE `oc_filter_group_description` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_event`
---
-
-CREATE TABLE IF NOT EXISTS `oc_event` (
-  `event_id` int(11) NOT NULL AUTO_INCREMENT,
-  `store_id` int(11) NOT NULL DEFAULT '0',
-  `event` varchar(64) NOT NULL,
-  `handlers` text NOT NULL,
-  PRIMARY KEY (`event_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `oc_event`
---
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `oc_filter`
 --
 

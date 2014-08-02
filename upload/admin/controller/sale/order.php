@@ -1714,6 +1714,8 @@ class ControllerSaleOrder extends Controller {
 		$data['column_total'] = $this->language->get('column_total');
 		$data['column_comment'] = $this->language->get('column_comment');
 
+		$data['error_no_selection'] = $this->language->get('error_no_selection');
+
 		$this->load->model('sale/order');
 
 		$this->load->model('setting/setting');
@@ -1953,6 +1955,8 @@ class ControllerSaleOrder extends Controller {
 		$data['column_model'] = $this->language->get('column_model');
 		$data['column_quantity'] = $this->language->get('column_quantity');
 		$data['column_comment'] = $this->language->get('column_comment');
+
+		$data['error_no_selection'] = $this->language->get('error_no_selection');
 
 		$this->load->model('sale/order');
 

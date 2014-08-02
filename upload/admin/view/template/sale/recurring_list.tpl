@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <h1><i class="fa fa-list"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="fa fa-bars"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">
@@ -59,13 +59,13 @@
       </div>
       <div class="row">
         <div class="col-sm-12">
-          <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $text_filter ?></button>
+          <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter ?></button>
         </div>
       </div>
     </div>
     <form action="" method="post" enctype="multipart/form-data" id="form">
       <div class="table-responsive">
-        <table class="table table-striped table-bordered table-hover">
+        <table class="table table-striped table-hover">
           <thead>
             <tr>
               <td width="10" class="text-left"><?php if ($sort == 'or.order_recurring_id') { ?>
@@ -106,12 +106,12 @@
             <?php foreach ($profiles as $profile) { ?>
             <tr>
               <td class="text-left"><?php echo $profile['order_recurring_id'] ?></td>
-              <td class="text-center"><a href="<?php echo $profile['order_link']; ?>" data-toggle="tooltip" title="<?php echo $text_view; ?> <?php echo $profile['order_id'] ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+              <td class="text-left"><a href="<?php echo $profile['order_link']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?> <?php echo $profile['order_id'] ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
               <td class="text-left"><?php echo $profile['profile_reference'] ?></td>
               <td class="text-left"><?php echo $profile['customer'] ?></td>
               <td class="text-left"><?php echo $profile['date_created'] ?></td>
               <td class="text-left"><?php echo $profile['status'] ?></td>
-              <td class="text-right"><a href="<?php echo $profile['view']; ?>" data-toggle="tooltip" title="<?php echo $text_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+              <td class="text-right"><a href="<?php echo $profile['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
             </tr>
             <?php } ?>
             <?php } else { ?>

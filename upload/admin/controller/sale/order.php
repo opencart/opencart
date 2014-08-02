@@ -395,7 +395,6 @@ class ControllerSaleOrder extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
 		$data['text_default'] = $this->language->get('text_default');
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
@@ -447,8 +446,7 @@ class ControllerSaleOrder extends Controller {
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_delete'] = $this->language->get('button_delete');
-		$data['button_refresh'] = $this->language->get('button_refresh');
+		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_product_add'] = $this->language->get('button_product_add');
 		$data['button_voucher_add'] = $this->language->get('button_voucher_add');
 		$data['button_upload'] = $this->language->get('button_upload');
@@ -457,6 +455,8 @@ class ControllerSaleOrder extends Controller {
 		$data['tab_order'] = $this->language->get('tab_order');
 		$data['tab_customer'] = $this->language->get('tab_customer');
 		$data['tab_payment'] = $this->language->get('tab_payment');
+		$data['tab_payment_add'] = $this->language->get('tab_payment_add');
+		$data['tab_voucher_add'] = $this->language->get('tab_voucher_add');
 		$data['tab_shipping'] = $this->language->get('tab_shipping');
 		$data['tab_product'] = $this->language->get('tab_product');
 		$data['tab_voucher'] = $this->language->get('tab_voucher');
@@ -630,7 +630,7 @@ class ControllerSaleOrder extends Controller {
 			$data['store_id'] = '';
 			$data['customer'] = '';
 			$data['customer_id'] = '';
-			$data['customer_group_id'] = '';
+			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
 			$data['firstname'] = '';
 			$data['lastname'] = '';
 			$data['email'] = '';

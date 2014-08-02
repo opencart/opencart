@@ -3,6 +3,11 @@
 $_['heading_title']                           = 'Orders';
 
 // Text
+$_['text_order_customer']                     = '1. Customer Details';
+$_['text_order_customer']                     = '2. Products!';
+$_['text_order_customer']                            = 'Success: You have modified orders!';
+$_['text_order_customer']                            = 'Success: You have modified orders!';
+
 $_['text_success']                            = 'Success: You have modified orders!';
 $_['text_refresh']                            = 'Success: You have refreshed the order totals!';
 $_['text_order_detail']                       = 'Order Details';

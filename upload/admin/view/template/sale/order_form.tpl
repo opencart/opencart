@@ -5,20 +5,18 @@
       <div class="pull-right">
         <button type="button" id="button-refresh" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn btn-warning"><i class="fa fa-refresh"></i></button>
         <button type="button" id="button-save" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-check-circle"></i></button>
-        <button type="button" id="button-delete" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
       <h1><i class="fa fa-pencil-square"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">
     <form class="form-horizontal">
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab-customer" data-toggle="tab"><?php echo $tab_customer; ?></a></li>
-        <li><a href="#tab-payment" data-toggle="tab"><?php echo $tab_payment; ?></a></li>
-        <li><a href="#tab-shipping" data-toggle="tab"><?php echo $tab_shipping; ?></a></li>
-        <li><a href="#tab-product" data-toggle="tab"><?php echo $tab_product; ?></a></li>
-        <li><a href="#tab-voucher" data-toggle="tab"><?php echo $tab_voucher; ?></a></li>
-        <li><a href="#tab-total" data-toggle="tab"><?php echo $tab_total; ?></a></li>
+      <ul class="nav nav-pills nav-justified">
+        <li class="active"><a href="#tab-customer" data-toggle="tab">1. <?php echo $tab_customer; ?></a></li>
+        <li><a href="#tab-cart" data-toggle="tab">2. <?php echo $tab_product; ?></a></li>
+        <li><a href="#tab-payment" data-toggle="tab">3. <?php echo $tab_payment; ?></a></li>
+        <li><a href="#tab-shipping" data-toggle="tab">4. <?php echo $tab_shipping; ?></a></li>
+        <li><a href="#tab-total" data-toggle="tab">5. <?php echo $tab_total; ?></a></li>
       </ul>
       <div class="tab-content">
         <div class="tab-pane active" id="tab-customer">
@@ -172,7 +170,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <button type="button" id="button-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default upload"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+              <button type="button" id="button-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default button-upload"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
               <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
             </div>
           </div>
@@ -215,6 +213,199 @@
           <?php } ?>
           <?php } ?>
           <?php } ?>
+        </div>
+        <div class="tab-pane" id="tab-cart">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <td class="text-left"><?php echo $column_product; ?></td>
+                  <td class="text-left"><?php echo $column_model; ?></td>
+                  <td class="text-right"><?php echo $column_quantity; ?></td>
+                  <td class="text-right"><?php echo $column_price; ?></td>
+                  <td class="text-right"><?php echo $column_total; ?></td>
+                  <td></td>
+                </tr>
+              </thead>
+              <?php $product_row = 0; ?>
+              <?php $option_row = 0; ?>
+              <tbody id="product">
+                <?php if ($order_products) { ?>
+                <?php foreach ($order_products as $order_product) { ?>
+                <tr id="product-row<?php echo $product_row; ?>">
+                  <td class="text-left"><?php echo $order_product['name']; ?><br />
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][product_id]" value="<?php echo $order_product['product_id']; ?>" />
+                    <?php foreach ($order_product['option'] as $option) { ?>
+                    - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
+                    <?php if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'image') { ?>
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['product_option_value_id']; ?>" />
+                    <?php } ?>
+                    <?php if ($option['type'] == 'checkbox') { ?>
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option['product_option_id']; ?>][]" value="<?php echo $option['product_option_value_id']; ?>" />
+                    <?php } ?>
+                    <?php if ($option['type'] == 'text' || $option['type'] == 'textarea' || $option['type'] == 'file' || $option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') { ?>
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" />
+                    <?php } ?>
+                    <?php $option_row++; ?>
+                    <?php } ?></td>
+                  <td class="text-left"><?php echo $order_product['model']; ?></td>
+                  <td class="text-right"><?php echo $order_product['quantity']; ?>
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][quantity]" value="<?php echo $order_product['quantity']; ?>" /></td>
+                  <td class="text-right"><?php echo $order_product['price']; ?></td>
+                  <td class="text-right"><?php echo $order_product['total']; ?></td>
+                  <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#product-row<?php echo $product_row; ?>').remove(); $('#button-refresh').trigger('click');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                </tr>
+                <?php $product_row++; ?>
+                <?php } ?>
+                <?php } else { ?>
+                <tr>
+                  <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
+                </tr>
+                <?php } ?>
+              </tbody>
+            </table>
+          </div>
+          <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#collapse-product">Add a Product</a> </h4>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse">
+                <div class="panel-body"> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS. </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#collapse-product">Add a Product</a> </h4>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse">
+                <div class="panel-body"> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS. </div>
+              </div>
+            </div>
+          </div>
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab-product" data-toggle="tab"><?php echo $tab_product; ?></a></li>
+            <li><a href="#tab-voucher" data-toggle="tab"><?php echo $tab_voucher; ?></a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab-product">
+              <fieldset>
+                <legend><?php echo $text_product; ?></legend>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-product"><?php echo $entry_product; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="product" value="" id="input-product" class="form-control" />
+                    <input type="hidden" name="product_id" value="" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-quantity"><?php echo $entry_quantity; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="quantity" value="1" id="input-quantity" class="form-control" />
+                  </div>
+                </div>
+                <div id="option"></div>
+              </fieldset>
+              <div class="text-right">
+                <button type="button" id="button-product" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_product_add; ?></button>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-voucher">
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <td></td>
+                      <td class="text-left"><?php echo $column_product; ?></td>
+                      <td class="text-left"><?php echo $column_model; ?></td>
+                      <td class="text-right"><?php echo $column_quantity; ?></td>
+                      <td class="text-right"><?php echo $column_price; ?></td>
+                      <td class="text-right"><?php echo $column_total; ?></td>
+                    </tr>
+                  </thead>
+                  <tbody id="voucher">
+                    <?php $voucher_row = 0; ?>
+                    <?php if ($order_vouchers) { ?>
+                    <?php foreach ($order_vouchers as $order_voucher) { ?>
+                    <tr id="voucher-row<?php echo $voucher_row; ?>">
+                      <td class="text-left"><?php echo $order_voucher['description']; ?>
+                        <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][from_name]" value="<?php echo $order_voucher['from_name']; ?>" />
+                        <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][from_email]" value="<?php echo $order_voucher['from_email']; ?>" />
+                        <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][to_name]" value="<?php echo $order_voucher['to_name']; ?>" />
+                        <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][to_email]" value="<?php echo $order_voucher['to_email']; ?>" />
+                        <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][voucher_theme_id]" value="<?php echo $order_voucher['voucher_theme_id']; ?>" />
+                        <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][message]" value="<?php echo $order_voucher['message']; ?>" />
+                        <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][amount]" value="<?php echo $order_voucher['amount']; ?>" /></td>
+                      <td class="text-left"></td>
+                      <td class="text-right">1</td>
+                      <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
+                      <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
+                      <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#voucher-row<?php echo $voucher_row; ?>').remove(); $('#button-refresh').trigger('click');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                    </tr>
+                    <?php $voucher_row++; ?>
+                    <?php } ?>
+                    <?php } else { ?>
+                    <tr>
+                      <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
+                    </tr>
+                    <?php } ?>
+                  </tbody>
+                </table>
+              </div>
+              <fieldset>
+                <legend><?php echo $text_voucher; ?></legend>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-to-name"><?php echo $entry_to_name; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="to_name" value="" id="input-to-name" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-to-email"><?php echo $entry_to_email; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="to_email" value="" id="input-to-email" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-from-name"><?php echo $entry_from_name; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="from_name" value="" id="input-from-name" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-from-email"><?php echo $entry_from_email; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="from_email" value="" id="input-from-email" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-theme"><?php echo $entry_theme; ?></label>
+                  <div class="col-sm-10">
+                    <select name="voucher_theme_id" id="input-theme" class="form-control">
+                      <?php foreach ($voucher_themes as $voucher_theme) { ?>
+                      <option value="<?php echo $voucher_theme['voucher_theme_id']; ?>"><?php echo $voucher_theme['name']; ?></option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-message"><?php echo $entry_message; ?></label>
+                  <div class="col-sm-10">
+                    <textarea name="message" rows="5" id="input-message" class="form-control"></textarea>
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-amount"><?php echo $entry_amount; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="amount" value="<?php echo $voucher_min; ?>" id="input-amount" class="form-control" />
+                  </div>
+                </div>
+              </fieldset>
+              <div class="text-right">
+                <button type="button" id="button-voucher" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_voucher_add; ?></button>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="tab-pane" id="tab-payment">
           <div class="form-group">
@@ -375,7 +566,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <button type="button" id="button-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default upload"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+              <button type="button" id="button-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default button-upload"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
               <input type="hidden" name="payment_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
             </div>
           </div>
@@ -578,7 +769,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <button type="button" id="button-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default upload"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+              <button type="button" id="button-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default button-upload"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
               <input type="hidden" name="shipping_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
             </div>
           </div>
@@ -621,173 +812,6 @@
           <?php } ?>
           <?php } ?>
           <?php } ?>
-        </div>
-        <div class="tab-pane" id="tab-product">
-          <div class="table-responsive">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <td class="text-left"><?php echo $column_product; ?></td>
-                  <td class="text-left"><?php echo $column_model; ?></td>
-                  <td class="text-right"><?php echo $column_quantity; ?></td>
-                  <td class="text-right"><?php echo $column_price; ?></td>
-                  <td class="text-right"><?php echo $column_total; ?></td>
-                  <td></td>
-                </tr>
-              </thead>
-              <?php $product_row = 0; ?>
-              <?php $option_row = 0; ?>
-              <tbody id="product">
-                <?php if ($order_products) { ?>
-                <?php foreach ($order_products as $order_product) { ?>
-                <tr id="product-row<?php echo $product_row; ?>">
-                  <td class="text-left"><?php echo $order_product['name']; ?><br />
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][product_id]" value="<?php echo $order_product['product_id']; ?>" />
-                    <?php foreach ($order_product['option'] as $option) { ?>
-                    - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
-                    <?php if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'image') { ?>
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['product_option_value_id']; ?>" />
-                    <?php } ?>
-                    <?php if ($option['type'] == 'checkbox') { ?>
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option['product_option_id']; ?>][]" value="<?php echo $option['product_option_value_id']; ?>" />
-                    <?php } ?>
-                    <?php if ($option['type'] == 'text' || $option['type'] == 'textarea' || $option['type'] == 'file' || $option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') { ?>
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" />
-                    <?php } ?>
-                    <?php $option_row++; ?>
-                    <?php } ?></td>
-                  <td class="text-left"><?php echo $order_product['model']; ?></td>
-                  <td class="text-right"><?php echo $order_product['quantity']; ?>
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][quantity]" value="<?php echo $order_product['quantity']; ?>" /></td>
-                  <td class="text-right"><?php echo $order_product['price']; ?></td>
-                  <td class="text-right"><?php echo $order_product['total']; ?></td>
-                  <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#product-row<?php echo $product_row; ?>').remove(); $('#button-refresh').trigger('click');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
-                </tr>
-                <?php $product_row++; ?>
-                <?php } ?>
-                <?php } else { ?>
-                <tr>
-                  <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
-                </tr>
-                <?php } ?>
-              </tbody>
-            </table>
-          </div>
-          <fieldset>
-            <legend><?php echo $text_product; ?></legend>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-product"><?php echo $entry_product; ?></label>
-              <div class="col-sm-10">
-                <input type="text" name="product" value="" id="input-product" class="form-control" />
-                <input type="hidden" name="product_id" value="" />
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-quantity"><?php echo $entry_quantity; ?></label>
-              <div class="col-sm-10">
-                <input type="text" name="quantity" value="1" id="input-quantity" class="form-control" />
-              </div>
-            </div>
-            <div id="option"></div>
-          </fieldset>
-          <div class="text-right">
-            <button type="button" id="button-product" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_product_add; ?></button>
-          </div>
-        </div>
-        <div class="tab-pane" id="tab-voucher">
-          <div class="table-responsive">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <td></td>
-                  <td class="text-left"><?php echo $column_product; ?></td>
-                  <td class="text-left"><?php echo $column_model; ?></td>
-                  <td class="text-right"><?php echo $column_quantity; ?></td>
-                  <td class="text-right"><?php echo $column_price; ?></td>
-                  <td class="text-right"><?php echo $column_total; ?></td>
-                </tr>
-              </thead>
-              <tbody id="voucher">
-                <?php $voucher_row = 0; ?>
-                <?php if ($order_vouchers) { ?>
-                <?php foreach ($order_vouchers as $order_voucher) { ?>
-                <tr id="voucher-row<?php echo $voucher_row; ?>">
-                  <td class="text-left"><?php echo $order_voucher['description']; ?>
-                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][from_name]" value="<?php echo $order_voucher['from_name']; ?>" />
-                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][from_email]" value="<?php echo $order_voucher['from_email']; ?>" />
-                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][to_name]" value="<?php echo $order_voucher['to_name']; ?>" />
-                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][to_email]" value="<?php echo $order_voucher['to_email']; ?>" />
-                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][voucher_theme_id]" value="<?php echo $order_voucher['voucher_theme_id']; ?>" />
-                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][message]" value="<?php echo $order_voucher['message']; ?>" />
-                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][amount]" value="<?php echo $order_voucher['amount']; ?>" /></td>
-                  <td class="text-left"></td>
-                  <td class="text-right">1</td>
-                  <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
-                  <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
-                  <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#voucher-row<?php echo $voucher_row; ?>').remove(); $('#button-refresh').trigger('click');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
-                </tr>
-                <?php $voucher_row++; ?>
-                <?php } ?>
-                <?php } else { ?>
-                <tr>
-                  <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
-                </tr>
-                <?php } ?>
-              </tbody>
-            </table>
-          </div>
-          <fieldset>
-            <legend><?php echo $text_voucher; ?></legend>
-            <div class="form-group required">
-              <label class="col-sm-2 control-label" for="input-to-name"><?php echo $entry_to_name; ?></label>
-              <div class="col-sm-10">
-                <input type="text" name="to_name" value="" id="input-to-name" class="form-control" />
-              </div>
-            </div>
-            <div class="form-group required">
-              <label class="col-sm-2 control-label" for="input-to-email"><?php echo $entry_to_email; ?></label>
-              <div class="col-sm-10">
-                <input type="text" name="to_email" value="" id="input-to-email" class="form-control" />
-              </div>
-            </div>
-            <div class="form-group required">
-              <label class="col-sm-2 control-label" for="input-from-name"><?php echo $entry_from_name; ?></label>
-              <div class="col-sm-10">
-                <input type="text" name="from_name" value="" id="input-from-name" class="form-control" />
-              </div>
-            </div>
-            <div class="form-group required">
-              <label class="col-sm-2 control-label" for="input-from-email"><?php echo $entry_from_email; ?></label>
-              <div class="col-sm-10">
-                <input type="text" name="from_email" value="" id="input-from-email" class="form-control" />
-              </div>
-            </div>
-            <div class="form-group required">
-              <label class="col-sm-2 control-label" for="input-theme"><?php echo $entry_theme; ?></label>
-              <div class="col-sm-10">
-                <select name="voucher_theme_id" id="input-theme" class="form-control">
-                  <?php foreach ($voucher_themes as $voucher_theme) { ?>
-                  <option value="<?php echo $voucher_theme['voucher_theme_id']; ?>"><?php echo $voucher_theme['name']; ?></option>
-                  <?php } ?>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-message"><?php echo $entry_message; ?></label>
-              <div class="col-sm-10">
-                <textarea name="message" rows="5" id="input-message" class="form-control"></textarea>
-              </div>
-            </div>
-            <div class="form-group required">
-              <label class="col-sm-2 control-label" for="input-amount"><?php echo $entry_amount; ?></label>
-              <div class="col-sm-10">
-                <input type="text" name="amount" value="<?php echo $voucher_min; ?>" id="input-amount" class="form-control" />
-              </div>
-            </div>
-          </fieldset>
-          <div class="text-right">
-            <button type="button" id="button-voucher" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_voucher_add; ?></button>
-          </div>
         </div>
         <div class="tab-pane" id="tab-total">
           <div class="table-responsive">
@@ -845,65 +869,41 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-shipping"><?php echo $entry_shipping; ?></label>
               <div class="col-sm-10">
-                <div class="input-group">
-                  <select name="shipping" id="input-shipping" class="form-control">
-                    <option value=""><?php echo $text_select; ?></option>
-                    <?php if ($shipping_code) { ?>
-                    <option value="<?php echo $shipping_code; ?>" selected="selected"><?php echo $shipping_method; ?></option>
-                    <?php } ?>
-                  </select>
-                  <span class="input-group-btn">
-                  <button type="button" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn  btn-warning"><i class="fa fa-refresh"></i></button>
-                  </span> </div>
-                <input type="hidden" name="shipping_method" value="<?php echo $shipping_method; ?>" />
-                <input type="hidden" name="shipping_code" value="<?php echo $shipping_code; ?>" />
+                <select name="shipping" id="input-shipping-method" class="form-control">
+                  <option value="shipping_method"><?php echo $text_select; ?></option>
+                  <?php if ($shipping_code) { ?>
+                  <option value="<?php echo $shipping_code; ?>" selected="selected"><?php echo $shipping_method; ?></option>
+                  <?php } ?>
+                </select>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-payment"><?php echo $entry_payment; ?></label>
               <div class="col-sm-10">
-                <div class="input-group">
-                  <select name="payment" id="input-payment" class="form-control">
-                    <option value=""><?php echo $text_select; ?></option>
-                    <?php if ($payment_code) { ?>
-                    <option value="<?php echo $payment_code; ?>" selected="selected"><?php echo $payment_method; ?></option>
-                    <?php } ?>
-                  </select>
-                  <span class="input-group-btn">
-                  <button type="button" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn  btn-warning"><i class="fa fa-refresh"></i></button>
-                  </span> </div>
-                <input type="hidden" name="payment_method" value="<?php echo $payment_method; ?>" />
-                <input type="hidden" name="payment_code" value="<?php echo $payment_code; ?>" />
+                <select name="payment_code" id="input-payment" class="form-control">
+                  <option value=""><?php echo $text_select; ?></option>
+                  <?php if ($payment_code) { ?>
+                  <option value="<?php echo $payment_code; ?>" selected="selected"><?php echo $payment_method; ?></option>
+                  <?php } ?>
+                </select>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-coupon"><?php echo $entry_coupon; ?></label>
               <div class="col-sm-10">
-                <div class="input-group">
-                  <input type="text" name="coupon" value="<?php echo $coupon; ?>" id="input-coupon" class="form-control" />
-                  <span class="input-group-btn">
-                  <button type="button" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn  btn-warning"><i class="fa fa-refresh"></i></button>
-                  </span> </div>
+                <input type="text" name="coupon" value="<?php echo $coupon; ?>" id="input-coupon" class="form-control" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-voucher"><?php echo $entry_voucher; ?></label>
               <div class="col-sm-10">
-                <div class="input-group">
-                  <input type="text" name="voucher" value="<?php echo $voucher; ?>" id="input-voucher" class="form-control" />
-                  <span class="input-group-btn">
-                  <button type="button" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn  btn-warning"><i class="fa fa-refresh"></i></button>
-                  </span> </div>
+                <input type="text" name="voucher" value="<?php echo $voucher; ?>" id="input-voucher" class="form-control" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-reward"><?php echo $entry_reward; ?></label>
               <div class="col-sm-10">
-                <div class="input-group">
-                  <input type="text" name="reward" value="<?php echo $reward; ?>" id="input-reward" class="form-control" />
-                  <span class="input-group-btn">
-                  <button type="button" data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn  btn-warning"><i class="fa fa-refresh"></i></button>
-                  </span> </div>
+                <input type="text" name="reward" value="<?php echo $reward; ?>" id="input-reward" class="form-control" />
               </div>
             </div>
             <div class="form-group">
@@ -1357,7 +1357,7 @@ $('input[name=\'product\']').autocomplete({
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 control-label">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-10">';
-					html += '    <button type="button" id="button-upload' + option['product_option_id'] + '" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>';
+					html += '    <button type="button" id="button-upload' + option['product_option_id'] + '" class="btn btn-default button-upload"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>';
 					html += '    <input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" id="input-option' + option['product_option_id'] + '" />';
 					html += '  </div>';
 					html += '</div>';
@@ -1407,7 +1407,7 @@ $('input[name=\'product\']').autocomplete({
 	}	
 })
 
-$('#content').delegate('.upload', 'click', function() {
+$('#content').delegate('.button-upload', 'click', function() {
 	var node = this;
 	
 	$('#form-upload').remove();

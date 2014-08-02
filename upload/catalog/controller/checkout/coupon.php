@@ -1,8 +1,8 @@
 <?php
-class ControllerModuleCoupon extends Controller {
+class ControllerCheckoutCoupon extends Controller {
 	public function index() {
 		if ($this->config->get('coupon_status')) {
-			$this->load->language('module/coupon');
+			$this->load->language('checkout/coupon');
 
 			$data['heading_title'] = $this->language->get('heading_title');
 
@@ -24,16 +24,16 @@ class ControllerModuleCoupon extends Controller {
 				$data['redirect'] = $this->url->link('checkout/cart');
 			}
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/coupon.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/module/coupon.tpl', $data);
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/coupon.tpl')) {
+				return $this->load->view($this->config->get('config_template') . '/template/checkout/coupon.tpl', $data);
 			} else {
-				return $this->load->view('default/template/module/coupon.tpl', $data);
+				return $this->load->view('default/template/checkout/coupon.tpl', $data);
 			}
 		}
 	}
 
 	public function coupon() {
-		$this->load->language('module/coupon');
+		$this->load->language('checkout/coupon');
 
 		$json = array();
 

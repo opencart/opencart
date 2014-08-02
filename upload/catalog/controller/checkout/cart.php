@@ -236,10 +236,10 @@ class ControllerCheckoutCart extends Controller {
 
 			$data['checkout_buttons'] = array();
 
-			$data['coupon'] = $this->load->controller('module/coupon');
-			$data['voucher'] = $this->load->controller('module/voucher');
-			$data['reward'] = $this->load->controller('module/reward');
-			$data['shipping'] = $this->load->controller('module/shipping');
+			$data['coupon'] = $this->load->controller('checkout/coupon');
+			$data['voucher'] = $this->load->controller('checkout/voucher');
+			$data['reward'] = $this->load->controller('checkout/reward');
+			$data['shipping'] = $this->load->controller('checkout/shipping');
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');

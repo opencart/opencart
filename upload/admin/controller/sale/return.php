@@ -874,6 +874,10 @@ class ControllerSaleReturn extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
+		if (empty($this->request->post['order_id'])) {
+			$this->error['order_id'] = $this->language->get('error_order_id');
+		}
+
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
 			$this->error['firstname'] = $this->language->get('error_firstname');
 		}

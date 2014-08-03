@@ -142,8 +142,8 @@
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-top"><?php echo $entry_top; ?></label>
-            <div class="col-sm-10">
-              <label class="checkbox">
+            <div class="col-sm-10 checkbox">
+              <label class="inline">
                 <?php if ($top) { ?>
                 <input type="checkbox" name="top" value="1" checked="checked" id="input-top" />
                 <?php } else { ?>
@@ -225,24 +225,24 @@
     </form>
   </div>
 </div>
-<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
+<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
 CKEDITOR.replace('input-description<?php echo $language['language_id']; ?>');
 <?php } ?>
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('input[name=\'path\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-			dataType: 'json',			
+			dataType: 'json',
 			success: function(json) {
 				json.unshift({
 					'category_id': 0,
 					'name': '<?php echo $text_none; ?>'
 				});
-				
+
 				response($.map(json, function(item) {
 					return {
 						label: item['name'],
@@ -255,15 +255,15 @@ $('input[name=\'path\']').autocomplete({
 	'select': function(item) {
 		$('input[name=\'path\']').val(item['label']);
 		$('input[name=\'parent_id\']').val(item['value']);
-	}	
+	}
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('input[name=\'filter\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/filter/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-			dataType: 'json',			
+			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
@@ -276,18 +276,18 @@ $('input[name=\'filter\']').autocomplete({
 	},
 	'select': function(item) {
 		$('input[name=\'filter\']').val('');
-		
+
 		$('#category-filter' + item['value']).remove();
-		
+
 		$('#category-filter').append('<div id="category-filter' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="category_filter[]" value="' + item['value'] + '" /></div>');
-	}	
+	}
 });
 
 $('#category-filter').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#language a:first').tab('show');
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

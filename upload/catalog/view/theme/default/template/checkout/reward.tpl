@@ -13,10 +13,10 @@
       <script type="text/javascript"><!--
 $('#button-reward').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=module/reward/reward',
+		url: 'index.php?route=checkout/reward/reward',
 		type: 'post',
 		data: 'reward=' + encodeURIComponent($('input[name=\'reward\']').val()),
-		dataType: 'json',    
+		dataType: 'json',
 		beforeSend: function() {
 			$('#button-reward').button('loading');
 		},
@@ -24,13 +24,13 @@ $('#button-reward').on('click', function() {
 			$('#button-reward').button('reset');
 		},
 		success: function(json) {
-			$('.alert').remove();   
+			$('.alert').remove();
 
 			if (json['error']) {
 				$('.breadcrumb').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-		
-				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
-			}  
+
+				$('html, body').animate({ scrollTop: 0 }, 'slow');
+			}
 
 			if (json['redirect']) {
 				location = json['redirect'];
@@ -38,7 +38,7 @@ $('#button-reward').on('click', function() {
 		}
 	});
 });
-//--></script> 
+//--></script>
     </div>
   </div>
 </div>

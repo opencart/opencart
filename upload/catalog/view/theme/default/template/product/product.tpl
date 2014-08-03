@@ -104,7 +104,10 @@
                   <div class="col-sm-12">
                     <label class="control-label" for="input-captcha"><?php echo $entry_captcha; ?></label>
                     <input type="text" name="captcha" value="" id="input-captcha" class="form-control" />
-                    <img src="index.php?route=tool/captcha" alt="" id="captcha" /></div>
+                  </div>
+                </div>
+                <div class="well">
+                  <img src="index.php?route=tool/captcha" alt="" id="captcha" />
                 </div>
                 <div class="buttons">
                   <div class="pull-right">

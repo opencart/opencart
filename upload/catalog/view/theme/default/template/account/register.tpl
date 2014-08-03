@@ -82,6 +82,9 @@
             <label class="col-sm-2 control-label" for="input-fax"><?php echo $entry_fax; ?></label>
             <div class="col-sm-10">
               <input type="text" name="fax" value="<?php echo $fax; ?>" placeholder="<?php echo $entry_fax; ?>" id="input-fax" class="form-control" />
+              <?php if ($error_fax) { ?>
+              <div class="text-danger"><?php echo $error_fax; ?></div>
+              <?php } ?>
             </div>
           </div>
         </fieldset>
@@ -383,30 +386,30 @@ $('select[name=\'country_id\']').on('change', function() {
 		},
 		complete: function() {
 			$('.fa-spinner').remove();
-		},			
+		},
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
 				$('input[name=\'postcode\']').parent().parent().addClass('required');
 			} else {
 				$('input[name=\'postcode\']').parent().parent().removeClass('required');
 			}
-			
+
 			html = '<option value=""><?php echo $text_select; ?></option>';
-			
+
 			if (json['zone']) {
 				for (i = 0; i < json['zone'].length; i++) {
         			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-	    			
+
 					if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
 	      				html += ' selected="selected"';
 	    			}
-	
+
 	    			html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
 				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
 			}
-			
+
 			$('select[name=\'zone_id\']').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -416,29 +419,29 @@ $('select[name=\'country_id\']').on('change', function() {
 });
 
 $('select[name=\'country_id\']').trigger('change');
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('input[name=\'customer_group_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=account/register/custom_field&customer_group_id=' + this.value,
-		dataType: 'json',	
+		dataType: 'json',
 		success: function(json) {
 			$('.custom-field').hide();
 			$('.custom-field').removeClass('required');
-			
+
 			for (i = 0; i < json.length; i++) {
 				custom_field = json[i];
-				
+
 				$('#custom-field' + custom_field['custom_field_id']).show();
-				
+
 				if (custom_field['required']) {
 					$('#custom-field' + custom_field['custom_field_id']).addClass('required');
 				}
 			}
-			
+
 			$('.custom-field').each(function(element) {
 				sort_order = $(element).after(html);
-				
+
 				$(this).appendTo('.form-group:eq(' + sort_order + ')');
 			});
 		},
@@ -449,13 +452,13 @@ $('input[name=\'customer_group_id\']').on('change', function() {
 });
 
 $('input[name=\'customer_group_id\']:checked').trigger('change');
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('button[id^=\'button-custom-field\']').on('click', function() {
 	var node = this;
-	
+
 	$('#form-upload').remove();
-	
+
 	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
 
 	$('#form-upload input[name=\'file\']').trigger('click');
@@ -463,38 +466,38 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 	$('#form-upload input[name=\'file\']').on('change', function() {
 		$.ajax({
 			url: 'index.php?route=account/account/upload',
-			type: 'post',		
+			type: 'post',
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
 			cache: false,
 			contentType: false,
-			processData: false,		
+			processData: false,
 			beforeSend: function() {
 				$(node).find('i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 				$(node).prop('disabled', true);
 			},
 			complete: function() {
 				$(node).find('i').replaceWith('<i class="fa fa-upload"></i>');
-				$(node).prop('disabled', false);			
-			},		
+				$(node).prop('disabled', false);
+			},
 			success: function(json) {
 				if (json['error']) {
 					$(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
 				}
-							
+
 				if (json['success']) {
 					alert(json['success']);
-					
+
 					$(node).parent().find('input').attr('value', json['file']);
 				}
-			},			
+			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
 	});
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false
@@ -508,5 +511,5 @@ $('.datetime').datetimepicker({
 	pickDate: true,
 	pickTime: true
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

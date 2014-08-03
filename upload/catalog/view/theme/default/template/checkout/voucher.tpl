@@ -38,7 +38,7 @@ $('#button-voucher').on('click', function() {
     }
   });
 });
-//--></script> 
+//--></script>
     </div>
   </div>
 </div>

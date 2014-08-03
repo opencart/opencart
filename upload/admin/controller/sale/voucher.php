@@ -607,7 +607,7 @@ class ControllerSaleVoucher extends Controller {
 
 				$json['success'] = $this->language->get('text_sent');
 			} else {
-				$json['error'] = $this->language->get('text_no_results');
+				$json['error'] = $this->language->get('error_selection');
 			}
 		}
 

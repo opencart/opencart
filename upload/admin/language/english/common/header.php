@@ -20,7 +20,4 @@ $_['text_help']            = 'Help';
 $_['text_homepage']        = 'Homepage';
 $_['text_support']         = 'Support Forum';
 $_['text_documentation']   = 'Documentation';
-$_['text_logged']          = 'You are logged in as %s.';
-$_['text_profile']         = 'Profile';
-$_['text_setting']         = 'Settings';
 $_['text_logout']          = 'Logout';

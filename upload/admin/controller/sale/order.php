@@ -9,14 +9,6 @@ class ControllerSaleOrder extends Controller {
 
 		$this->getList();
 	}
-
-	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		return !$this->error;
-	}
 	
 	public function insert() {
 		$this->load->language('sale/order');
@@ -431,10 +423,10 @@ class ControllerSaleOrder extends Controller {
 		$data['entry_theme'] = $this->language->get('entry_theme');
 		$data['entry_message'] = $this->language->get('entry_message');
 		$data['entry_amount'] = $this->language->get('entry_amount');
-		$data['entry_shipping'] = $this->language->get('entry_shipping');
-		$data['entry_payment'] = $this->language->get('entry_payment');
-		$data['entry_voucher'] = $this->language->get('entry_voucher');
+		$data['entry_shipping_method'] = $this->language->get('entry_shipping_method');
+		$data['entry_payment_method'] = $this->language->get('entry_payment_method');
 		$data['entry_coupon'] = $this->language->get('entry_coupon');
+		$data['entry_voucher'] = $this->language->get('entry_voucher');
 		$data['entry_reward'] = $this->language->get('entry_reward');
 		$data['entry_order_status'] = $this->language->get('entry_order_status');
 
@@ -1550,7 +1542,7 @@ class ControllerSaleOrder extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-
+	
 	public function history() {
 		$this->load->language('sale/order');
 
@@ -2105,7 +2097,54 @@ class ControllerSaleOrder extends Controller {
 		$this->response->setOutput($this->load->view('sale/order_shipping.tpl', $data));
 	}
 	
-	function api($url, $cookie = '', $data = array()) {
+	public function addHistory() {
+		$json = array();
+		
+		$this->load->model('user/api');
+		
+		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
+		
+		if ($api_info) {
+			$api_data = array(
+				'username' => $api_info['username'],
+				'password' => $api_info['password']
+			);
+			
+			$response = $this->api(HTTPS_CATALOG . 'index.php?route=api/login', '', $api_data);
+			
+			if (isset($response['error'])) {
+				$json['error'] = $response['error'];
+			}
+		}
+		
+		if (isset($response['cookie'])) {
+			$json = $this->api(HTTPS_CATALOG . 'index.php?route=api/order/history&order_id=' . $this->request->get['order_id'], $response['cookie'], $this->request->post);
+		}
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
+	}
+		
+	public function api() {
+		
+		
+		if (isset($this->request->get['api'])) {
+			switch ($this->request->get['api']) {
+				case 'customer':
+					break;
+				case 'product':
+					break;	
+				case 'voucher':
+					break;
+				case 'payment_address':
+					break;
+				case 'shipping_address':
+					break;							
+				case 'shipping_address':
+					break;				
+			}
+		}
+		
 		$curl = curl_init();
 		
 		// Set SSL if required
@@ -2122,13 +2161,13 @@ class ControllerSaleOrder extends Controller {
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_URL, $url);
 		
-		if ($data) {
+		if ($this->request->post) {
 			curl_setopt($curl, CURLOPT_POST, true);
-			curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+			curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($this->request->post));
 		}
 		
-		if ($cookie) {
-			curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $cookie . ';');
+		if ($this->request->get['cookie']) {
+			curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->request->get['cookie'] . ';');
 		}
 		
 		$response = curl_exec($curl);
@@ -2142,4 +2181,12 @@ class ControllerSaleOrder extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+	
+	protected function validate() {
+		if (!$this->user->hasPermission('modify', 'sale/order')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		return !$this->error;
+	}	
 }

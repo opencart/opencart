@@ -8,7 +8,7 @@
   </div>
   <div class="container-fluid">
     <form class="form-horizontal">
-      <ul class="nav nav-tabs nav-justified">
+      <ul id="tab-stage" class="nav nav-tabs nav-justified">
         <li class="active"><a href="#tab-customer" data-toggle="tab">1. <?php echo $tab_customer; ?></a></li>
         <li><a href="#tab-cart" data-toggle="tab">2. <?php echo $tab_product; ?></a></li>
         <li><a href="#tab-payment" data-toggle="tab">3. <?php echo $tab_payment; ?></a></li>
@@ -210,7 +210,7 @@
           <?php } ?>
           <?php } ?>
           <div class="text-right">
-            <button type="button" id="button-customer" class="btn btn-primary"><i class="fa fa-check-circle"></i> <?php echo $button_continue; ?></button>
+            <button type="button" id="button-customer" class="btn btn-primary"><i class="fa fa-arrow-right"></i> <?php echo $button_continue; ?></button>
           </div>
         </div>
         <div class="tab-pane" id="tab-cart">
@@ -376,10 +376,10 @@
           <br />
           <div class="row">
             <div class="col-sm-6 text-left">
-              <button type="button" id="button-back" class="btn btn-primary"><i class="fa fa-check-circle"></i> <?php echo $button_back; ?></button>
+              <button type="button" id="button-back" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
             </div>
             <div class="col-sm-6 text-right">
-              <button type="button" id="button-customer" class="btn btn-primary"><i class="fa fa-check-circle"></i> <?php echo $button_continue; ?></button>
+              <button type="button" id="button-customer" class="btn btn-primary"><i class="fa fa-arrow-right"></i> <?php echo $button_continue; ?></button>
             </div>
           </div>
         </div>
@@ -398,49 +398,49 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-payment-firstname"><?php echo $entry_firstname; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="payment_firstname" value="<?php echo $payment_firstname; ?>" id="input-payment-firstname" class="form-control" />
+              <input type="text" name="firstname" value="<?php echo $payment_firstname; ?>" id="input-payment-firstname" class="form-control" />
             </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-payment-lastname"><?php echo $entry_lastname; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="payment_lastname" value="<?php echo $payment_lastname; ?>" id="input-payment-lastname" class="form-control" />
+              <input type="text" name="lastname" value="<?php echo $payment_lastname; ?>" id="input-payment-lastname" class="form-control" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-payment-company"><?php echo $entry_company; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="payment_company" value="<?php echo $payment_company; ?>" id="input-payment-company" class="form-control" />
+              <input type="text" name="company" value="<?php echo $payment_company; ?>" id="input-payment-company" class="form-control" />
             </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-payment-address-1"><?php echo $entry_address_1; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="payment_address_1" value="<?php echo $payment_address_1; ?>" id="input-payment-address-1" class="form-control" />
+              <input type="text" name="address_1" value="<?php echo $payment_address_1; ?>" id="input-payment-address-1" class="form-control" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-payment-address-2"><?php echo $entry_address_2; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="payment_address_2" value="<?php echo $payment_address_2; ?>" id="input-payment-address-2" class="form-control" />
+              <input type="text" name="address_2" value="<?php echo $payment_address_2; ?>" id="input-payment-address-2" class="form-control" />
             </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-payment-city"><?php echo $entry_city; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="payment_city" value="<?php echo $payment_city; ?>" id="input-payment-city" class="form-control" />
+              <input type="text" name="city" value="<?php echo $payment_city; ?>" id="input-payment-city" class="form-control" />
             </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-payment-postcode"><?php echo $entry_postcode; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="payment_postcode" value="<?php echo $payment_postcode; ?>" id="input-payment-postcode" class="form-control" />
+              <input type="text" name="postcode" value="<?php echo $payment_postcode; ?>" id="input-payment-postcode" class="form-control" />
             </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-payment-country"><?php echo $entry_country; ?></label>
             <div class="col-sm-10">
-              <select name="payment_country_id" id="input-payment-country" class="form-control">
+              <select name="country_id" id="input-payment-country" class="form-control">
                 <option value=""><?php echo $text_select; ?></option>
                 <?php foreach ($countries as $country) { ?>
                 <?php if ($country['country_id'] == $payment_country_id) { ?>
@@ -455,7 +455,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-payment-zone"><?php echo $entry_zone; ?></label>
             <div class="col-sm-10">
-              <select name="payment_zone_id" id="input-payment-zone" class="form-control">
+              <select name="zone_id" id="input-payment-zone" class="form-control">
               </select>
             </div>
           </div>
@@ -465,7 +465,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <select name="payment_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">
+              <select name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">
                 <option value=""><?php echo $text_select; ?></option>
                 <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                 <?php if (isset($payment_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $payment_custom_field[$custom_field['custom_field_id']]) { ?>
@@ -487,11 +487,11 @@
                 <div class="radio">
                   <?php if (isset($payment_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $payment_custom_field[$custom_field['custom_field_id']]) { ?>
                   <label>
-                    <input type="radio" name="payment_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
+                    <input type="radio" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
                     <?php echo $custom_field_value['name']; ?></label>
                   <?php } else { ?>
                   <label>
-                    <input type="radio" name="payment_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
+                    <input type="radio" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
                     <?php echo $custom_field_value['name']; ?></label>
                   <?php } ?>
                 </div>
@@ -509,11 +509,11 @@
                 <div class="checkbox">
                   <?php if (isset($payment_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $payment_custom_field[$custom_field['custom_field_id']])) { ?>
                   <label>
-                    <input type="checkbox" name="payment_custom_field[<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
+                    <input type="checkbox" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
                     <?php echo $custom_field_value['name']; ?></label>
                   <?php } else { ?>
                   <label>
-                    <input type="checkbox" name="payment_custom_field[<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
+                    <input type="checkbox" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
                     <?php echo $custom_field_value['name']; ?></label>
                   <?php } ?>
                 </div>
@@ -526,7 +526,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="payment_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+              <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
             </div>
           </div>
           <?php } ?>
@@ -534,7 +534,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <textarea name="payment_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" rows="5" placeholder="<?php echo $custom_field['name']; ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control"><?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></textarea>
+              <textarea name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" rows="5" placeholder="<?php echo $custom_field['name']; ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control"><?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></textarea>
             </div>
           </div>
           <?php } ?>
@@ -543,7 +543,7 @@
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
               <button type="button" id="button-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default button-upload"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
-              <input type="hidden" name="payment_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
+              <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
             </div>
           </div>
           <?php } ?>
@@ -552,7 +552,7 @@
             <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
               <div class="input-group date">
-                <input type="text" name="payment_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                 <span class="input-group-btn">
                 <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                 </span></div>
@@ -564,7 +564,7 @@
             <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
               <div class="input-group time">
-                <input type="text" name="payment_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="HH:mm" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="HH:mm" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                 <span class="input-group-btn">
                 <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                 </span></div>
@@ -576,7 +576,7 @@
             <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
               <div class="input-group datetime">
-                <input type="text" name="payment_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD HH:mm" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD HH:mm" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                 <span class="input-group-btn">
                 <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                 </span></div>
@@ -587,10 +587,10 @@
           <?php } ?>
           <div class="row">
             <div class="col-sm-6 text-left">
-              <button type="button" id="button-back" class="btn btn-primary"><i class="fa fa-check-circle"></i> <?php echo $button_back; ?></button>
+              <button type="button" id="button-back" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
             </div>
             <div class="col-sm-6 text-right">
-              <button type="button" id="button-payment" class="btn btn-primary"><i class="fa fa-check-circle"></i> <?php echo $button_continue; ?></button>
+              <button type="button" id="button-payment-address" class="btn btn-primary"><i class="fa fa-arrow-right"></i> <?php echo $button_continue; ?></button>
             </div>
           </div>
         </div>
@@ -609,49 +609,49 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-shipping-firstname"><?php echo $entry_firstname; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="shipping_firstname" value="<?php echo $shipping_firstname; ?>" id="input-shipping-firstname" class="form-control" />
+              <input type="text" name="firstname" value="<?php echo $shipping_firstname; ?>" id="input-shipping-firstname" class="form-control" />
             </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-shipping-lastname"><?php echo $entry_lastname; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="shipping_lastname" value="<?php echo $shipping_lastname; ?>" id="input-shipping-lastname" class="form-control" />
+              <input type="text" name="lastname" value="<?php echo $shipping_lastname; ?>" id="input-shipping-lastname" class="form-control" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-shipping-company"><?php echo $entry_company; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="shipping_company" value="<?php echo $shipping_company; ?>" id="input-shipping-company" class="form-control" />
+              <input type="text" name="company" value="<?php echo $shipping_company; ?>" id="input-shipping-company" class="form-control" />
             </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-shipping-address-1"><?php echo $entry_address_1; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="shipping_address_1" value="<?php echo $shipping_address_1; ?>" id="input-shipping-address-1" class="form-control" />
+              <input type="text" name="address_1" value="<?php echo $shipping_address_1; ?>" id="input-shipping-address-1" class="form-control" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-shipping-address-2"><?php echo $entry_address_2; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="shipping_address_2" value="<?php echo $shipping_address_2; ?>" id="input-shipping-address-2" class="form-control" />
+              <input type="text" name="address_2" value="<?php echo $shipping_address_2; ?>" id="input-shipping-address-2" class="form-control" />
             </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-shipping-city"><?php echo $entry_city; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="shipping_city" value="<?php echo $shipping_city; ?>" id="input-shipping-city" class="form-control" />
+              <input type="text" name="city" value="<?php echo $shipping_city; ?>" id="input-shipping-city" class="form-control" />
             </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-shipping-postcode"><?php echo $entry_postcode; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="shipping_postcode" value="<?php echo $shipping_postcode; ?>" id="input-shipping-postcode" class="form-control" />
+              <input type="text" name="postcode" value="<?php echo $shipping_postcode; ?>" id="input-shipping-postcode" class="form-control" />
             </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-shipping-country"><?php echo $entry_country; ?></label>
             <div class="col-sm-10">
-              <select name="shipping_country_id" id="input-shipping-country" class="form-control">
+              <select name="country_id" id="input-shipping-country" class="form-control">
                 <option value=""><?php echo $text_select; ?></option>
                 <?php foreach ($countries as $country) { ?>
                 <?php if ($country['country_id'] == $shipping_country_id) { ?>
@@ -666,7 +666,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-shipping-zone"><?php echo $entry_zone; ?></label>
             <div class="col-sm-10">
-              <select name="shipping_zone_id" id="input-shipping-zone" class="form-control">
+              <select name="zone_id" id="input-shipping-zone" class="form-control">
               </select>
             </div>
           </div>
@@ -676,7 +676,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <select name="shipping_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">
+              <select name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">
                 <option value=""><?php echo $text_select; ?></option>
                 <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                 <?php if (isset($ashipping_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $shipping_custom_field[$custom_field['custom_field_id']]) { ?>
@@ -698,11 +698,11 @@
                 <div class="radio">
                   <?php if (isset($shipping_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $shipping_custom_field[$custom_field['custom_field_id']]) { ?>
                   <label>
-                    <input type="radio" name="shipping_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
+                    <input type="radio" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
                     <?php echo $custom_field_value['name']; ?></label>
                   <?php } else { ?>
                   <label>
-                    <input type="radio" name="shipping_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
+                    <input type="radio" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
                     <?php echo $custom_field_value['name']; ?></label>
                   <?php } ?>
                 </div>
@@ -720,11 +720,11 @@
                 <div class="checkbox">
                   <?php if (isset($shipping_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $shipping_custom_field[$custom_field['custom_field_id']])) { ?>
                   <label>
-                    <input type="checkbox" name="shipping_custom_field[<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
+                    <input type="checkbox" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
                     <?php echo $custom_field_value['name']; ?></label>
                   <?php } else { ?>
                   <label>
-                    <input type="checkbox" name="shipping_custom_field[<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
+                    <input type="checkbox" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
                     <?php echo $custom_field_value['name']; ?></label>
                   <?php } ?>
                 </div>
@@ -737,7 +737,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="shipping_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+              <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
             </div>
           </div>
           <?php } ?>
@@ -745,7 +745,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <textarea name="shipping_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" rows="5" placeholder="<?php echo $custom_field['name']; ?>" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control"><?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></textarea>
+              <textarea name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" rows="5" placeholder="<?php echo $custom_field['name']; ?>" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control"><?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></textarea>
             </div>
           </div>
           <?php } ?>
@@ -754,7 +754,7 @@
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
               <button type="button" id="button-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default button-upload"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
-              <input type="hidden" name="shipping_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
+              <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
             </div>
           </div>
           <?php } ?>
@@ -763,7 +763,7 @@
             <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
               <div class="input-group date">
-                <input type="text" name="shipping_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                 <span class="input-group-btn">
                 <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                 </span></div>
@@ -775,7 +775,7 @@
             <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
               <div class="input-group time">
-                <input type="text" name="shipping_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="HH:mm" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="HH:mm" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                 <span class="input-group-btn">
                 <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                 </span></div>
@@ -787,7 +787,7 @@
             <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
               <div class="input-group datetime">
-                <input type="text" name="shipping_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD HH:mm" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD HH:mm" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                 <span class="input-group-btn">
                 <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                 </span></div>
@@ -798,10 +798,10 @@
           <?php } ?>
           <div class="row">
             <div class="col-sm-6 text-left">
-              <button type="button" id="button-back" class="btn btn-primary"><i class="fa fa-check-circle"></i> <?php echo $button_back; ?></button>
+              <button type="button" id="button-back" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
             </div>
             <div class="col-sm-6 text-right">
-              <button type="button" id="button-shipping" class="btn btn-primary"><i class="fa fa-check-circle"></i> <?php echo $button_continue; ?></button>
+              <button type="button" id="button-shipping-address" class="btn btn-primary"><i class="fa fa-arrow-right"></i> <?php echo $button_continue; ?></button>
             </div>
           </div>
         </div>
@@ -859,7 +859,7 @@
           <fieldset>
             <legend><?php echo $text_order; ?></legend>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-shipping"><?php echo $entry_shipping; ?></label>
+              <label class="col-sm-2 control-label" for="input-shipping-method"><?php echo $entry_shipping_method; ?></label>
               <div class="col-sm-10">
                 <div class="input-group">
                   <select name="shipping" id="input-shipping-method" class="form-control">
@@ -869,23 +869,23 @@
                     <?php } ?>
                   </select>
                   <span class="input-group-btn">
-                  <button class="btn btn-default" type="button"><i class="fa fa-check-circle"></i></button>
-                  </span> </div>
+                  <button type="button" id="button-shipping-method" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                  </span></div>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-payment"><?php echo $entry_payment; ?></label>
+              <label class="col-sm-2 control-label" for="input-payment-method"><?php echo $entry_payment_method; ?></label>
               <div class="col-sm-10">
                 <div class="input-group">
-                  <select name="payment_code" id="input-payment" class="form-control">
+                  <select name="payment_method" id="input-payment-method" class="form-control">
                     <option value=""><?php echo $text_select; ?></option>
                     <?php if ($payment_code) { ?>
                     <option value="<?php echo $payment_code; ?>" selected="selected"><?php echo $payment_method; ?></option>
                     <?php } ?>
                   </select>
                   <span class="input-group-btn">
-                  <button class="btn btn-default" type="button"><i class="fa fa-check-circle"></i></button>
-                  </span> </div>
+                  <button type="button" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                  </span></div>
               </div>
             </div>
             <div class="form-group">
@@ -894,8 +894,8 @@
                 <div class="input-group">
                   <input type="text" name="coupon" value="<?php echo $coupon; ?>" id="input-coupon" class="form-control" />
                   <span class="input-group-btn">
-                  <button class="btn btn-default" type="button"><i class="fa fa-check-circle"></i></button>
-                  </span> </div>
+                  <button type="button" id="button-coupon" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                  </span></div>
               </div>
             </div>
             <div class="form-group">
@@ -904,8 +904,8 @@
                 <div class="input-group">
                   <input type="text" name="voucher" value="<?php echo $voucher; ?>" id="input-voucher" class="form-control" />
                   <span class="input-group-btn">
-                  <button class="btn btn-default" type="button"><i class="fa fa-check-circle"></i></button>
-                  </span> </div>
+                  <button type="button" id="button-voucher" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                  </span></div>
               </div>
             </div>
             <div class="form-group">
@@ -914,8 +914,8 @@
                 <div class="input-group">
                   <input type="text" name="reward" value="<?php echo $reward; ?>" id="input-reward" class="form-control" />
                   <span class="input-group-btn">
-                  <button class="btn btn-default" type="button"><i class="fa fa-check-circle"></i></button>
-                  </span> </div>
+                  <button type="button" id="button-reward" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                  </span></div>
               </div>
             </div>
             <div class="form-group">
@@ -948,7 +948,7 @@
           </fieldset>
           <div class="row">
             <div class="col-sm-6 text-left">
-              <button type="button" id="button-back" class="btn btn-primary"><i class="fa fa-check-circle"></i> <?php echo $button_back; ?></button>
+              <button type="button" id="button-back" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
             </div>
             <div class="col-sm-6 text-right">
               <button type="button" id="button-save" class="btn btn-primary"><i class="fa fa-check-circle"></i> <?php echo $button_save; ?></button>
@@ -1012,21 +1012,22 @@ $('input[name=\'customer\']').autocomplete({
 			dataType: 'json',			
 			success: function(json) {
 				json.unshift({
-					//category: 'Default',
-					label: '<?php echo $text_none; ?>',
-					value: 0,
+					customer_id: '0',
 					customer_group_id: '<?php echo $customer_group_id; ?>',						
+					name: '<?php echo $text_none; ?>',
+					customer_group: '',
 					firstname: '',
 					lastname: '',
 					email: '',
 					telephone: '',
 					fax: '',
-					address: []					
+					custom_field: [],
+					address: []			
 				});				
 				
 				response($.map(json, function(item) {
 					return {
-						//category: item['customer_group'],
+						category: item['customer_group'],
 						label: item['name'],
 						value: item['customer_id'],
 						customer_group_id: item['customer_group_id'],						
@@ -1035,6 +1036,7 @@ $('input[name=\'customer\']').autocomplete({
 						email: item['email'],
 						telephone: item['telephone'],
 						fax: item['fax'],
+						custom_field: item['custom_field'],
 						address: item['address']
 					}
 				}));
@@ -1042,6 +1044,14 @@ $('input[name=\'customer\']').autocomplete({
 		});
 	},
 	'select': function(item) {
+		$('select[name=\'customer_group_id\']').prop('disabled', false);
+		$('select[name=\'customer_group_id\']').prop('value', item['customer_group_id']);
+		$('select[name=\'customer_group_id\']').trigger('change');
+			
+		if (item['value']) {	
+			$('select[name=\'customer_group_id\']').prop('disabled', true); 		
+		}		
+		
 		$('input[name=\'customer\']').val(item['label']);
 		$('input[name=\'customer_id\']').val(item['value']);
 		$('input[name=\'firstname\']').attr('value', item['firstname']);
@@ -1059,12 +1069,8 @@ $('input[name=\'customer\']').autocomplete({
 		$('select[name=\'shipping_address\']').html(html);
 		$('select[name=\'payment_address\']').html(html);
 		
-		$('select[name=\'customer_group_id\']').prop('disabled', false);
-		$('select[name=\'customer_group_id\']').prop('value', item['customer_group_id']);
-		$('select[name=\'customer_group_id\']').trigger('change');
-			
-		if (item['value']) {	
-			$('select[name=\'customer_group_id\']').prop('disabled', true); 		
+		for (i in custom_field) {
+			alert(custom_field[i]);
 		}
 	}
 });
@@ -1098,7 +1104,7 @@ $('select[name=\'customer_group_id\']').trigger('change');
 
 $('#button-customer').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/customer/address&token=<?php echo $token; ?>',
+		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=customer',
 		type: 'post',
 		data: $('#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'], #tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea'),
 		dataType: 'json',
@@ -1348,194 +1354,140 @@ $('input[name=\'product\']').autocomplete({
 	}	
 });
 
-$('#button-product').on('click', function() {
-	$.ajax({
-		url: 'index.php?route=sale/customer/address&token=<?php echo $token; ?>',
-		type: 'post',
-		data: $('#tab-product input[type=\'text\'], #tab-product input[type=\'hidden\'], #tab-product input[type=\'radio\']:checked, #tab-product input[type=\'checkbox\']:checked, #tab-product select, #tab-product textarea'),
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-product-add i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
-			$('#button-product-add').prop('disabled', true);
-		},
-		complete: function() {
-			$('#button-product-add i').replaceWith('<i class="fa fa-plus-circle"></i>');
-			$('#button-product-add').prop('disabled', false);
-		},
-		success: function(json) {
-			$('.alert, .text-danger').remove();
+var success = function(json) {
+	$('.alert, .text-danger').remove();
 
-			// Check for errors
-			if (json['error']) {
-				if (json['error']['warning']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}
-								
-				if (json['error']['option']) {	
-					for (i in json['error']['option']) {
-						$('#input-option' + i).after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
-					}
-				}
-									
-				if (json['error']['stock']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['stock'] + '</div>');
-				}	
-				
-				if (json['error']['product']['store']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['store'] + '</div>');
-				}	
-															
-				if (json['error']['minimum']) {	
-					for (i in json['error']['minimum']) {
-						$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['minimum'][i] + '</div>');
-					}						
-				}
-			} else {
-				$('input[name=\'product\']').val('');
-				$('input[name=\'product_id\']').val('');
-				$('#option').html('');			
-				$('input[name=\'quantity\']').val('1');
-
-				// Now fill the 
-				$.ajax({
-					url: 'index.php?route=sale/customer/address&token=<?php echo $token; ?>',
-					type: 'post',
-					data: $('#tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea'),
-					dataType: 'json',
-					beforeSend: function() {
-						$('#button-payment i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
-						$('#button-payment').prop('disabled', true);
-					},
-					complete: function() {
-						$('#button-payment i').replaceWith('<i class="fa fa-plus-circle"></i>');
-						$('#button-payment').prop('disabled', false);
-					},
-					success: function(json) {
-						
-						
-						
-						
-						
-						if (json['products']) {		
-							var product_row = 0;
-					
-							html = '';
+	// Check for errors
+	if (json['error']) {
+		if (json['error']['warning']) {
+			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+		}
+		
+		// Product				
+		if (json['error']['option']) {	
+			for (i in json['error']['option']) {
+				$('#input-option' + i).after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+			}
+		}
 							
-							for (i = 0; i < json['products'].length; i++) {
-								product = json['products'][i];
+		if (json['error']['stock']) {
+			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['stock'] + '</div>');
+		}	
+		
+		if (json['error']['product']['store']) {
+			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['store'] + '</div>');
+		}	
+													
+		if (json['error']['minimum']) {	
+			for (i in json['error']['minimum']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['minimum'][i] + '</div>');
+			}						
+		}
+		
+		// Voucher								
+		if (json['error']['from_name']) {
+			$('input[name=\'from_name\']').after('<div class="text-danger">' + json['error']['from_name'] + '</div');
+		}	
+		
+		if (json['error']['from_email']) {
+			$('input[name=\'from_email\']').after('<div class="text-danger">' + json['error']['from_email'] + '</div>');
+		}	
+					
+		if (json['error']['to_name']) {
+			$('input[name=\'to_name\']').after('<div class="text-danger">' + json['error']['to_name'] + '</div>');
+		}	
+		
+		if (json['error']['to_email']) {
+			$('input[name=\'to_email\']').after('<div class="text-danger">' + json['error']['to_email'] + '</div>');
+		}	
+		
+		if (json['error']['amount']) {
+			$('input[name=\'amount\']').after('<div class="text-danger">' + json['error']['amount'] + '</div>');
+		}	
+
+		
+	} else {
+		// Product
+		$('input[name=\'product\']').val('');
+		$('input[name=\'product_id\']').val('');
+		$('#option').html('');			
+		$('input[name=\'quantity\']').val('1');
+		
+		// Voucher
+		$('input[name=\'from_name\']').attr('value', '');	
+		$('input[name=\'from_email\']').attr('value', '');	
+		$('input[name=\'to_name\']').attr('value', '');
+		$('input[name=\'to_email\']').attr('value', '');	
+		$('textarea[name=\'message\']').attr('value', '');	
+		$('input[name=\'amount\']').attr('value', '<?php echo addslashes($voucher_min); ?>');
+		
+		/*
+		// Now fill the 
+		$.ajax({
+			url: 'index.php?route=sale/customer/address&token=<?php echo $token; ?>',
+			type: 'post',
+			data: $('#tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea'),
+			dataType: 'json',
+			beforeSend: function() {
+				$('#button-payment i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+				$('#button-payment').prop('disabled', true);
+			},
+			complete: function() {
+				$('#button-payment i').replaceWith('<i class="fa fa-plus-circle"></i>');
+				$('#button-payment').prop('disabled', false);
+			},
+			success: function(json) {
+				
+				
+				
+				
+				
+				if (json['products']) {		
+					var product_row = 0;
+			
+					html = '';
+					
+					for (i = 0; i < json['products'].length; i++) {
+						product = json['products'][i];
+						
+						html += '<tr id="product-row' + product_row + '">';
+						html += '  <td class="text-left">' + product['name'] + '<br /><input type="hidden" name="order_product[' + product_row + '][product_id]" value="' + product['product_id'] + '" />';
+						
+						if (product['option']) {
+							for (j = 0; j < product['option'].length; j++) {
+								option = product['option'][j];
 								
-								html += '<tr id="product-row' + product_row + '">';
-								html += '  <td class="text-left">' + product['name'] + '<br /><input type="hidden" name="order_product[' + product_row + '][product_id]" value="' + product['product_id'] + '" />';
+								html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
 								
-								if (product['option']) {
-									for (j = 0; j < product['option'].length; j++) {
-										option = product['option'][j];
-										
-										html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
-										
-										if (option['type'] == 'select' || option['type'] == 'radio' || option['type'] == 'image') {
-											html += '<input type="hidden" name="order_product[' + product_row + '][order_option][' + option['product_option_id'] + ']" value="' + option['product_option_value_id'] + '" />';
-										}
-										
-										if (option['type'] == 'checkbox') {
-											html += '<input type="hidden" name="order_product[' + product_row + '][order_option][' + option['product_option_id'] + '][]" value="' + option['product_option_value_id'] + '" />';
-										}
-										
-										if (option['type'] == 'text' || option['type'] == 'textarea' || option['type'] == 'file' || option['type'] == 'date' || option['type'] == 'datetime' || option['type'] == 'time') {
-											html += '<input type="hidden" name="order_product[' + product_row + '][order_option][' + option['product_option_id'] + ']" value="' + option['value'] + '" />';
-										}
-									}
+								if (option['type'] == 'select' || option['type'] == 'radio' || option['type'] == 'image') {
+									html += '<input type="hidden" name="order_product[' + product_row + '][order_option][' + option['product_option_id'] + ']" value="' + option['product_option_value_id'] + '" />';
 								}
 								
-								html += '  </td>';
+								if (option['type'] == 'checkbox') {
+									html += '<input type="hidden" name="order_product[' + product_row + '][order_option][' + option['product_option_id'] + '][]" value="' + option['product_option_value_id'] + '" />';
+								}
 								
-								html += '  <td class="text-left">' + product['model'] + '</td>';
-								html += '  <td class="text-right">' + product['quantity'] + '<input type="hidden" name="order_product[' + product_row + '][quantity]" value="' + product['quantity'] + '" /></td>';
-								html += '  <td class="text-right">' + product['price'] + '</td>';
-								html += '  <td class="text-right">' + product['total'] + '</td>';
-								html += '  <td class="text-center" style="width: 3px;"><button type="button" onclick="$(\'#product-row' + product_row + '\').remove(); $(\'#button-refresh\').trigger(\'click\');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
-								html += '</tr>';
-								
-								product_row++;			
+								if (option['type'] == 'text' || option['type'] == 'textarea' || option['type'] == 'file' || option['type'] == 'date' || option['type'] == 'datetime' || option['type'] == 'time') {
+									html += '<input type="hidden" name="order_product[' + product_row + '][order_option][' + option['product_option_id'] + ']" value="' + option['value'] + '" />';
+								}
 							}
-							
-							$('#product').html(html);
-						} else {				
-							html  = '<tr>';
-							html += '  <td colspan="6" class="text-center"><?php echo $text_no_results; ?></td>';
-							html += '</tr>';	
-					
-							$('#product').html(html);
-						}						
-					},
-					error: function(xhr, ajaxOptions, thrownError) {
-						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+						}
+						
+						html += '  </td>';
+						
+						html += '  <td class="text-left">' + product['model'] + '</td>';
+						html += '  <td class="text-right">' + product['quantity'] + '<input type="hidden" name="order_product[' + product_row + '][quantity]" value="' + product['quantity'] + '" /></td>';
+						html += '  <td class="text-right">' + product['price'] + '</td>';
+						html += '  <td class="text-right">' + product['total'] + '</td>';
+						html += '  <td class="text-center" style="width: 3px;"><button type="button" onclick="$(\'#product-row' + product_row + '\').remove(); $(\'#button-refresh\').trigger(\'click\');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+						html += '</tr>';
+						
+						product_row++;			
 					}
-				});
-				
-				if (json['success']) {
-					$('#tab-payment').attr('disabled');
-				}	
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});				
-});
-
-// Voucher
-$('#button-voucher').on('click', function() {
-	$.ajax({
-		url: 'index.php?route=sale/customer/address&token=<?php echo $token; ?>',
-		type: 'post',
-		data: $('#tab-voucher input[type=\'text\'], #tab-voucher input[type=\'hidden\'], #tab-voucher input[type=\'radio\']:checked, #tab-voucher input[type=\'checkbox\']:checked, #tab-voucher select, #tab-voucher textarea'),
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-voucher i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
-			$('#button-voucher').prop('disabled', true);
-		},
-		complete: function() {
-			$('#button-voucher i').replaceWith('<i class="fa fa-plus-circle"></i>');
-			$('#button-voucher').prop('disabled', false);
-		},
-		success: function(json) {
-			$('.alert, .text-danger').remove();
-
-			// Check for errors
-			if (json['error']) {
-				if (json['error']['warning']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}
-								
-				if (json['error']['from_name']) {
-					$('input[name=\'from_name\']').after('<div class="text-danger">' + json['error']['from_name'] + '</div');
-				}	
-				
-				if (json['error']['from_email']) {
-					$('input[name=\'from_email\']').after('<div class="text-danger">' + json['error']['from_email'] + '</div>');
-				}	
-							
-				if (json['error']['to_name']) {
-					$('input[name=\'to_name\']').after('<div class="text-danger">' + json['error']['to_name'] + '</div>');
-				}	
-				
-				if (json['error']['to_email']) {
-					$('input[name=\'to_email\']').after('<div class="text-danger">' + json['error']['to_email'] + '</div>');
-				}	
-				
-				if (json['error']['amount']) {
-					$('input[name=\'amount\']').after('<div class="text-danger">' + json['error']['amount'] + '</div>');
-				}	
-			} else {
-				$('input[name=\'from_name\']').attr('value', '');	
-				$('input[name=\'from_email\']').attr('value', '');	
-				$('input[name=\'to_name\']').attr('value', '');
-				$('input[name=\'to_email\']').attr('value', '');	
-				$('textarea[name=\'message\']').attr('value', '');	
-				$('input[name=\'amount\']').attr('value', '<?php echo addslashes($voucher_min); ?>');
-		
-				// Vouchers
+					
+					$('#product').html(html);
+				} 
+						
 				if (json['vouchers']) {
 					var voucher_row = 0;
 					
@@ -1565,31 +1517,67 @@ $('#button-voucher').on('click', function() {
 					}
 					  
 					$('#voucher').html(html);				
-				} else {
+				}
+				
+				if (!json['products'] && !json['vouchers']) {				
 					html  = '<tr>';
 					html += '  <td colspan="6" class="text-center"><?php echo $text_no_results; ?></td>';
 					html += '</tr>';	
 			
-					$('#voucher').html(html);	
-				}		
-			}
-			
-			
-			
-			if (json['success']) {
-				$('#tab-payment').attr('disabled');
-			}
+					$('#product').html(html);
+				}
+				
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		});	
+		*/
+	}
+}
+
+$('#button-product').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=product',
+		type: 'post',
+		data: $('#tab-product input[type=\'text\'], #tab-product input[type=\'hidden\'], #tab-product input[type=\'radio\']:checked, #tab-product input[type=\'checkbox\']:checked, #tab-product select, #tab-product textarea'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-product-add i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-product-add').prop('disabled', true);
 		},
+		complete: function() {
+			$('#button-product-add i').replaceWith('<i class="fa fa-plus-circle"></i>');
+			$('#button-product-add').prop('disabled', false);
+		},
+		success: success,
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});				
 });
 
+// Voucher
+$('#button-voucher').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=voucher',
+		type: 'post',
+		data: $('#tab-voucher input[type=\'text\'], #tab-voucher input[type=\'hidden\'], #tab-voucher input[type=\'radio\']:checked, #tab-voucher input[type=\'checkbox\']:checked, #tab-voucher select, #tab-voucher textarea'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-voucher i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-voucher').prop('disabled', true);
+		},
+		complete: function() {
+			$('#button-voucher i').replaceWith('<i class="fa fa-plus-circle"></i>');
+			$('#button-voucher').prop('disabled', false);
+		},
+		success: success,
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});				
+});
 
-
-
-// Payment
+// Payment Address
 $('select[name=\'payment_address\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=sale/customer/address&token=<?php echo $token; ?>&address_id=' + this.value,
@@ -1602,18 +1590,18 @@ $('select[name=\'payment_address\']').on('change', function() {
 		},		
 		success: function(json) {
 			if (json != '') {	
-				$('input[name=\'payment_firstname\']').attr('value', json['firstname']);
-				$('input[name=\'payment_lastname\']').attr('value', json['lastname']);
-				$('input[name=\'payment_company\']').attr('value', json['company']);
-				$('input[name=\'payment_address_1\']').attr('value', json['address_1']);
-				$('input[name=\'payment_address_2\']').attr('value', json['address_2']);
-				$('input[name=\'payment_city\']').attr('value', json['city']);
-				$('input[name=\'payment_postcode\']').attr('value', json['postcode']);
-				$('select[name=\'payment_country_id\']').prop('value', json['country_id']);
+				$('#tab-payment input[name=\'firstname\']').attr('value', json['firstname']);
+				$('#tab-payment input[name=\'lastname\']').attr('value', json['lastname']);
+				$('#tab-payment input[name=\'company\']').attr('value', json['company']);
+				$('#tab-payment input[name=\'address_1\']').attr('value', json['address_1']);
+				$('#tab-payment input[name=\'address_2\']').attr('value', json['address_2']);
+				$('#tab-payment input[name=\'city\']').attr('value', json['city']);
+				$('#tab-payment input[name=\'postcode\']').attr('value', json['postcode']);
+				$('#tab-payment select[name=\'country_id\']').prop('value', json['country_id']);
 				
 				payment_zone_id = json['zone_id'];
 				
-				$('select[name=\'payment_country_id\']').trigger('change');
+				$('#tab-payment select[name=\'country_id\']').trigger('change');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -1624,21 +1612,21 @@ $('select[name=\'payment_address\']').on('change', function() {
 
 var payment_zone_id = '<?php echo $payment_zone_id; ?>';
 
-$('select[name=\'payment_country_id\']').on('change', function() {
+$('#tab-payment select[name=\'country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'payment_country_id\']').after(' <i class="fa fa-spinner fa-spin"></i>');
+			$('#tab-payment select[name=\'country_id\']').after(' <i class="fa fa-spinner fa-spin"></i>');
 		},
 		complete: function() {
 			$('.fa-spinner').remove();
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
-				$('input[name=\'payment_postcode\']').parent().parent().addClass('required');
+				$('#tab-payment input[name=\'postcode\']').parent().parent().addClass('required');
 			} else {
-				$('input[name=\'payment_postcode\']').parent().parent().removeClass('required');
+				$('#tab-payment input[name=\'postcode\']').parent().parent().removeClass('required');
 			}
 			
 			html = '<option value=""><?php echo $text_select; ?></option>';
@@ -1657,7 +1645,7 @@ $('select[name=\'payment_country_id\']').on('change', function() {
 				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
 			}
 			
-			$('select[name=\'payment_zone_id\']').html(html);
+			$('#tab-payment select[name=\'zone_id\']').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -1665,22 +1653,21 @@ $('select[name=\'payment_country_id\']').on('change', function() {
 	});
 });
 
-$('select[name=\'payment_country_id\']').trigger('change');
+$('#tab-payment select[name=\'country_id\']').trigger('change');
 
-$('#button-payment').on('click', function() {
+$('#button-payment-address').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/customer/address&token=<?php echo $token; ?>',
+		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=payment_address',
 		type: 'post',
 		data: $('#tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea'),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-payment i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
-			$('#button-payment').prop('disabled', true);
-			
+			$('#button-payment-address i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-payment-address').prop('disabled', true);
 		},
 		complete: function() {
-			$('#button-payment i').replaceWith('<i class="fa fa-check-circle"></i>');
-			$('#button-payment').prop('disabled', false);
+			$('#button-payment-address i').replaceWith('<i class="fa fa-check-circle"></i>');
+			$('#button-payment-address').prop('disabled', false);
 		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();
@@ -1692,27 +1679,27 @@ $('#button-payment').on('click', function() {
 				}
 								
 				if (json['error']['firstname']) {
-					$('input[name=\'payment_firstname\']').after('<div class="text-danger">' + json['error']['firstname'] + '</div');
+					$('#tab-payment input[name=\'firstname\']').after('<div class="text-danger">' + json['error']['firstname'] + '</div');
 				}					
 				
 				if (json['error']['lastname']) {
-					$('input[name=\'payment_lastname\']').after('<div class="text-danger">' + json['error']['lastname'] + '</div');
+					$('#tab-payment input[name=\'lastname\']').after('<div class="text-danger">' + json['error']['lastname'] + '</div');
 				}	
 				
 				if (json['error']['address_1']) {
-					$('input[name=\'payment_address_1\']').after('<div class="text-danger">' + json['error']['address_1'] + '</div');
+					$('#tab-payment input[name=\'address_1\']').after('<div class="text-danger">' + json['error']['address_1'] + '</div');
 				}
 				
 				if (json['error']['city']) {
-					$('input[name=\'payment_city\']').after('<div class="text-danger">' + json['error']['city'] + '</div');
+					$('#tab-payment input[name=\'city\']').after('<div class="text-danger">' + json['error']['city'] + '</div');
 				}
 				
 				if (json['error']['country']) {
-					$('select[name=\'payment_country_id\']').after('<div class="text-danger">' + json['error']['country'] + '</div');
+					$('#tab-payment select[name=\'country_id\']').after('<div class="text-danger">' + json['error']['country'] + '</div');
 				}	
 				
 				if (json['error']['zone']) {
-					$('select[name=\'payment_zone_id\']').after('<div class="text-danger">' + json['error']['zone'] + '</div');
+					$('#tab-payment select[name=\'zone_id\']').after('<div class="text-danger">' + json['error']['zone'] + '</div');
 				}	
 				
 				if (json['error']['custom_field']) {	
@@ -1720,10 +1707,37 @@ $('#button-payment').on('click', function() {
 						$('#input-payment-custom-field' + i).after('<div class="text-danger">' + json['error']['custom_field'][i] + '</div>');
 					}
 				}
-			}
+			} else {
+				
+				
+				
+				// Payment Methods
+				if (json['payment_methods']) {
+					html = '<option value=""><?php echo $text_select; ?></option>';
+					
+					for (i in json['payment_methods']) {
+						if (json['payment_methods'][i]['code'] == $('input[name=\'payment_code\']').val()) {
+							html += '<option value="' + json['payment_methods'][i]['code'] + '" selected="selected">' + json['payment_methods'][i]['title'] + '</option>';
+						} else {
+							html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
+						}		
+					}
 			
-			if (json['success']) {
-				$('#tab-payment').attr('disabled');
+					$('select[name=\'payment\']').html(html);
+					
+					if ($('select[name=\'payment\']').val()) {
+						$('input[name=\'payment_method\']').attr('value', $('select[name=\'payment\'] option:selected').text());
+					} else {
+						$('input[name=\'payment_method\']').attr('value', '');
+					}
+					
+					$('input[name=\'payment_code\']').attr('value', $('select[name=\'payment\']').val());
+				}
+
+						
+				if (json['success']) {
+					$('#tab-payment').attr('disabled');
+				}						
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -1732,7 +1746,75 @@ $('#button-payment').on('click', function() {
 	});				
 });
 
-// Shipping
+/*					
+// Totals
+if (!json['error'] || (!json['error']['customer'] && json['error']['payment'] && json['error']['shipping'] && !json['error']['product'] && !json['error']['vouchers'])) {
+	if (json['products'] || json['vouchers'] || json['totals']) {
+		html = '';
+		
+		if (json['products']) {
+			for (i = 0; i < json['products'].length; i++) {
+				product = json['products'][i];
+				
+				html += '<tr>';
+				html += '  <td class="text-left">' + product['name'] + '<br />';
+				
+				if (product['option']) {
+					for (j = 0; j < product['option'].length; j++) {
+						option = product['option'][j];
+						
+						html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
+					}
+				}
+				
+				html += '  </td>';
+				html += '  <td class="text-left">' + product['model'] + '</td>';
+				html += '  <td class="text-right">' + product['quantity'] + '</td>';
+				html += '  <td class="text-right">' + product['price'] + '</td>';
+				html += '  <td class="text-right">' + product['total'] + '</td>';
+				html += '</tr>';
+			}				
+		}
+		
+		if (json['vouchers']) {
+			for (i in json['vouchers']) {
+				voucher = json['vouchers'][i];
+				 
+				html += '<tr>';
+				html += '  <td class="text-left">' + voucher['description'] + '</td>';
+				html += '  <td class="text-left"></td>';
+				html += '  <td class="text-right">1</td>';
+				html += '  <td class="text-right">' + voucher['amount'] + '</td>';
+				html += '  <td class="text-right">' + voucher['amount'] + '</td>';
+				html += '</tr>';	
+			}	
+		}
+		
+		var total_row = 0;
+		
+		for (i in json['totals']) {
+			total = json['totals'][i];
+			
+			html += '<tr id="total-row' + total_row + '">';
+			html += '  <td class="text-right" colspan="4">' + total['title'] + ':</td>';
+			html += '  <td class="text-right">' + total['text'] + '</td>';
+			html += '</tr>';
+			
+			total_row++;
+		}
+		
+		$('#total').html(html);
+	} else {
+		html  = '<tr>';
+		html += '  <td colspan="5" class="text-center"><?php echo $text_no_results; ?></td>';
+		html += '</tr>';	
+
+		$('#total').html(html);					
+	}
+*/
+
+
+// Shipping Address
 $('select[name=\'shipping_address\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=sale/customer/address&token=<?php echo $token; ?>&address_id=' + this.value,
@@ -1745,18 +1827,18 @@ $('select[name=\'shipping_address\']').on('change', function() {
 		},		
 		success: function(json) {
 			if (json != '') {	
-				$('input[name=\'shipping_firstname\']').attr('value', json['firstname']);
-				$('input[name=\'shipping_lastname\']').attr('value', json['lastname']);
-				$('input[name=\'shipping_company\']').attr('value', json['company']);
-				$('input[name=\'shipping_address_1\']').attr('value', json['address_1']);
-				$('input[name=\'shipping_address_2\']').attr('value', json['address_2']);
-				$('input[name=\'shipping_city\']').attr('value', json['city']);
-				$('input[name=\'shipping_postcode\']').attr('value', json['postcode']);
-				$('select[name=\'shipping_country_id\']').prop('value', json['country_id']);
+				$('#tab-shipping input[name=\'firstname\']').attr('value', json['firstname']);
+				$('#tab-shipping input[name=\'lastname\']').attr('value', json['lastname']);
+				$('#tab-shipping input[name=\'company\']').attr('value', json['company']);
+				$('#tab-shipping input[name=\'address_1\']').attr('value', json['address_1']);
+				$('#tab-shipping input[name=\'address_2\']').attr('value', json['address_2']);
+				$('#tab-shipping input[name=\'city\']').attr('value', json['city']);
+				$('#tab-shipping input[name=\'postcode\']').attr('value', json['postcode']);
+				$('#tab-shipping select[name=\'country_id\']').prop('value', json['country_id']);
 				
 				shipping_zone_id = json['zone_id'];
-				
-				$('select[name=\'shipping_country_id\']').trigger('change');
+			
+				$('#tab-shipping select[name=\'country_id\']').trigger('change');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -1767,21 +1849,21 @@ $('select[name=\'shipping_address\']').on('change', function() {
 
 var shipping_zone_id = '<?php echo $shipping_zone_id; ?>';
 
-$('select[name=\'shipping_country_id\']').on('change', function() {
+$('#tab-shipping select[name=\'country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'shipping_country_id\']').after(' <i class="fa fa-spinner fa-spin"></i>');
+			$('#tab-shipping select[name=\'country_id\']').after(' <i class="fa fa-spinner fa-spin"></i>');
 		},
 		complete: function() {
 			$('.fa-spinner').remove();
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
-				$('input[name=\'shipping_postcode\']').parent().parent().addClass('required');
+				$('#tab-shipping input[name=\'postcode\']').parent().parent().addClass('required');
 			} else {
-				$('input[name=\'shipping_postcode\']').parent().parent().removeClass('required');
+				$('#tab-shipping input[name=\'postcode\']').parent().parent().removeClass('required');
 			}
 			
 			html = '<option value=""><?php echo $text_select; ?></option>';
@@ -1800,7 +1882,7 @@ $('select[name=\'shipping_country_id\']').on('change', function() {
 				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
 			}
 			
-			$('select[name=\'shipping_zone_id\']').html(html);
+			$('#tab-shipping select[name=\'zone_id\']').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -1808,22 +1890,21 @@ $('select[name=\'shipping_country_id\']').on('change', function() {
 	});
 });
 
-$('select[name=\'shipping_country_id\']').trigger('change');
+$('#tab-shipping select[name=\'country_id\']').trigger('change');
 
-$('#button-shipping').on('click', function() {
+$('#button-shipping-address').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/customer/address&token=<?php echo $token; ?>',
+		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=shipping_address',
 		type: 'post',
 		data: $('#tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked, #tab-shipping select, #tab-shipping textarea'),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-shipping i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
-			$('#button-shipping').prop('disabled', true);
-			
+			$('#button-shipping-address i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-shipping-address').prop('disabled', true);
 		},
 		complete: function() {
-			$('#button-shipping i').replaceWith('<i class="fa fa-check-circle"></i>');
-			$('#button-shipping').prop('disabled', false);
+			$('#button-shipping-address i').replaceWith('<i class="fa fa-check-circle"></i>');
+			$('#button-shipping-address').prop('disabled', false);
 		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();
@@ -1835,27 +1916,27 @@ $('#button-shipping').on('click', function() {
 				}
 								
 				if (json['error']['firstname']) {
-					$('input[name=\'shipping_firstname\']').after('<div class="text-danger">' + json['error']['firstname'] + '</div');
+					$('#tab-shipping input[name=\'firstname\']').after('<div class="text-danger">' + json['error']['firstname'] + '</div');
 				}					
 				
 				if (json['error']['lastname']) {
-					$('input[name=\'shipping_lastname\']').after('<div class="text-danger">' + json['error']['lastname'] + '</div');
+					$('#tab-shipping input[name=\'lastname\']').after('<div class="text-danger">' + json['error']['lastname'] + '</div');
 				}	
 				
 				if (json['error']['address_1']) {
-					$('input[name=\'shipping_address_1\']').after('<div class="text-danger">' + json['error']['address_1'] + '</div');
+					$('#tab-shipping input[name=\'address_1\']').after('<div class="text-danger">' + json['error']['address_1'] + '</div');
 				}
 				
 				if (json['error']['city']) {
-					$('input[name=\'shipping_city\']').after('<div class="text-danger">' + json['error']['city'] + '</div');
+					$('#tab-shipping input[name=\'city\']').after('<div class="text-danger">' + json['error']['city'] + '</div');
 				}
 				
 				if (json['error']['country']) {
-					$('select[name=\'shipping_country_id\']').after('<div class="text-danger">' + json['error']['country'] + '</div');
+					$('#tab-shipping select[name=\'country_id\']').after('<div class="text-danger">' + json['error']['country'] + '</div');
 				}	
 				
 				if (json['error']['zone']) {
-					$('select[name=\'shipping_zone_id\']').after('<div class="text-danger">' + json['error']['zone'] + '</div');
+					$('#tab-shipping select[name=\'zone_id\']').after('<div class="text-danger">' + json['error']['zone'] + '</div');
 				}	
 				
 				if (json['error']['custom_field']) {	
@@ -1863,10 +1944,39 @@ $('#button-shipping').on('click', function() {
 						$('#input-shipping-custom-field' + i).after('<div class="text-danger">' + json['error']['custom_field'][i] + '</div>');
 					}
 				}
-			}
+			} else {
+				// Shipping Methods
+				if (json['shipping_methods']) {
+					html = '<option value=""><?php echo $text_select; ?></option>';
 			
-			if (json['success']) {
-				$('#tab-payment').attr('disabled');
+					for (i in json['shipping_methods']) {
+						html += '<optgroup label="' + json['shipping_methods'][i]['title'] + '">';
+					
+						if (!json['shipping_methods'][i]['error']) {
+							for (j in json['shipping_methods'][i]['quote']) {
+								if (json['shipping_methods'][i]['quote'][j]['code'] == $('input[name=\'shipping_code\']').val()) {
+									html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected="selected">' + json['shipping_methods'][i]['quote'][j]['title'] + '</option>';
+								} else {
+									html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + '</option>';
+								}
+							}		
+						} else {
+							html += '<option value="" style="color: #F00;" disabled="disabled">' + json['shipping_method'][i]['error'] + '</option>';
+						}
+						
+						html += '</optgroup>';
+					}
+			
+					$('select[name=\'shipping\']').html(html);	
+					
+					if ($('select[name=\'shipping\']').val()) {
+						$('input[name=\'shipping_method\']').attr('value', $('select[name=\'shipping\'] option:selected').text());
+					} else {
+						$('input[name=\'shipping_method\']').attr('value', '');
+					}
+					
+					$('input[name=\'shipping_code\']').attr('value', $('select[name=\'shipping\']').val());	
+				}
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -1875,9 +1985,167 @@ $('#button-shipping').on('click', function() {
 	});				
 });
 
+// Shipping Method
+$('#button-shipping-method').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=shipping_method',
+		type: 'post',
+		data: $('select[name=\'shipping_method\'] option:selected'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-shipping-method i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-shipping-method').prop('disabled', true);	
+		},	
+		complete: function() {
+			$('#button-shipping-method i').replaceWith('<i class="fa fa-check-circle"></i>');
+			$('#button-shipping-method').prop('disabled', false);
+		},		
+		success: function(json) {
+			$('.alert, .text-danger').remove();
+			
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+			
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});		
+});
 
+// Payment Method
+$('#button-payment-method').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=payment_method',
+		type: 'post',
+		data: $('select[name=\'payment_method\'] option:selected'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-payment-method i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-payment-method').prop('disabled', true);	
+		},	
+		complete: function() {
+			$('#button-payment-method i').replaceWith('<i class="fa fa-check-circle"></i>');
+			$('#button-payment-method').prop('disabled', false);
+		},		
+		success: function(json) {
+			$('.alert, .text-danger').remove();
+			
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+			
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});		
+});
 
+// Coupon
+$('#button-coupon').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=coupon',
+		type: 'post',
+		data: $('input[name=\'coupon\']'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-coupon i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-coupon').prop('disabled', true);	
+		},	
+		complete: function() {
+			$('#button-coupon i').replaceWith('<i class="fa fa-check-circle"></i>');
+			$('#button-coupon').prop('disabled', false);
+		},		
+		success: function(json) {
+			$('.alert, .text-danger').remove();
+			
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+			
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});		
+});
 
+// Voucher
+$('#button-voucher').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=voucher',
+		type: 'post',
+		data: $('input[name=\'voucher\']'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-voucher i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-voucher').prop('disabled', true);	
+		},	
+		complete: function() {
+			$('#button-voucher i').replaceWith('<i class="fa fa-check-circle"></i>');
+			$('#button-voucher').prop('disabled', false);
+		},		
+		success: function(json) {
+			$('.alert, .text-danger').remove();
+			
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+			
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});		
+});
+
+// Reward
+$('#button-reward').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=reward',
+		type: 'post',
+		data: $('input[name=\'reward\']'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-reward i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-reward').prop('disabled', true);	
+		},	
+		complete: function() {
+			$('#button-reward i').replaceWith('<i class="fa fa-check-circle"></i>');
+			$('#button-reward').prop('disabled', false);
+		},		
+		success: function(json) {
+			$('.alert, .text-danger').remove();
+			
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+			
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});		
+});
+
+// Affiliate
 $('input[name=\'affiliate\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
@@ -1885,8 +2153,8 @@ $('input[name=\'affiliate\']').autocomplete({
 			dataType: 'json',			
 			success: function(json) {
 				json.unshift({
-					'affiliate_id': 0,
-					'name': '<?php echo $text_none; ?>'
+					affiliate_id: 0,
+					name: '<?php echo $text_none; ?>'
 				});
 								
 				response($.map(json, function(item) {
@@ -1903,247 +2171,17 @@ $('input[name=\'affiliate\']').autocomplete({
 		$('input[name=\'affiliate_id\']').val(item['value']);		
 	}	
 });
-//--></script> 
-<script type="text/javascript"><!--
-var success = function(json) {
-	$('.alert, .text-danger').remove();
-			
-	// Voucher
-	if (json['error'] && json['error']['vouchers']) {
-		if (json['error']['vouchers']['from_name']) {
-			$('input[name=\'from_name\']').after('<div class="text-danger">' + json['error']['vouchers']['from_name'] + '</div');
-		}	
-		
-		if (json['error']['vouchers']['from_email']) {
-			$('input[name=\'from_email\']').after('<div class="text-danger">' + json['error']['vouchers']['from_email'] + '</div>');
-		}	
-					
-		if (json['error']['vouchers']['to_name']) {
-			$('input[name=\'to_name\']').after('<div class="text-danger">' + json['error']['vouchers']['to_name'] + '</div>');
-		}	
-		
-		if (json['error']['vouchers']['to_email']) {
-			$('input[name=\'to_email\']').after('<div class="text-danger">' + json['error']['vouchers']['to_email'] + '</div>');
-		}	
-		
-		if (json['error']['vouchers']['amount']) {
-			$('input[name=\'amount\']').after('<div class="text-danger">' + json['error']['vouchers']['amount'] + '</div>');
-		}	
-	} else {
-		$('input[name=\'from_name\']').attr('value', '');	
-		$('input[name=\'from_email\']').attr('value', '');	
-		$('input[name=\'to_name\']').attr('value', '');
-		$('input[name=\'to_email\']').attr('value', '');	
-		$('textarea[name=\'message\']').attr('value', '');	
-		$('input[name=\'amount\']').attr('value', '<?php echo addslashes($voucher_min); ?>');
-		
-		// Vouchers
-		if (json['vouchers']) {
-			var voucher_row = 0;
-			
-			 html = '';
-			 
-			 for (i in json['vouchers']) {
-				voucher = json['vouchers'][i];
-				 
-				html += '<tr id="voucher-row' + voucher_row + '">';
-				html += '  <td class="text-left">' + voucher['description'];
-				html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][from_name]" value="' + voucher['from_name'] + '" />';
-				html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][from_email]" value="' + voucher['from_email'] + '" />';
-				html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][to_name]" value="' + voucher['to_name'] + '" />';
-				html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][to_email]" value="' + voucher['to_email'] + '" />';
-				html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][voucher_theme_id]" value="' + voucher['voucher_theme_id'] + '" />';	
-				html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][message]" value="' + voucher['message'] + '" />';
-				html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][amount]" value="' + voucher['amount'] + '" />';
-				html += '  </td>';
-				html += '  <td class="text-left"></td>';
-				html += '  <td class="text-right">1</td>';
-				html += '  <td class="text-right">' + voucher['amount'] + '</td>';
-				html += '  <td class="text-right">' + voucher['amount'] + '</td>';
-				html += '  <td class="text-center" style="width: 3px;"><button type="button" onclick="$(\'#voucher-row' + voucher_row + '\').remove(); $(\'#button-refresh\').trigger(\'click\');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
-				html += '</tr>';	
-			  
-				voucher_row++;
-			}
-			  
-			$('#voucher').html(html);				
-		} else {
-			html  = '<tr>';
-			html += '  <td colspan="6" class="text-center"><?php echo $text_no_results; ?></td>';
-			html += '</tr>';	
-	
-			$('#voucher').html(html);	
-		}		
-	}
-		
-	// If not errors that would effect the checkout proccess the check for more errors
-	if (json['error'] && !json['error']['customer'] && json['error']['payment'] && json['error']['shipping'] && !json['error']['product'] && !json['error']['vouchers']) {
-		// Shipping Method
-		if (json['error']['shipping_method']) {
-			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['shipping_method'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-		}	
-		
-		// Payment Method
-		if (json['error']['payment_method']) {
-			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['payment_method'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-		}	
-													
-		// Coupon
-		if (json['error']['coupon']) {
-			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['coupon'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-		}
-		
-		// Voucher
-		if (json['error']['voucher']) {
-			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['voucher'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-		}
-		
-		// Reward Points		
-		if (json['error']['reward']) {
-			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['reward'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-		}	
-	}	
 
-	if (json['success']) {
-		$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-	}
-	
-	if (json['redirect']) {
-		location = json['redirect'];	
-	}
-					
-	// Totals
-	if (!json['error'] || (!json['error']['customer'] && json['error']['payment'] && json['error']['shipping'] && !json['error']['product'] && !json['error']['vouchers'])) {
-		if (json['products'] || json['vouchers'] || json['totals']) {
-			html = '';
-			
-			if (json['products']) {
-				for (i = 0; i < json['products'].length; i++) {
-					product = json['products'][i];
-					
-					html += '<tr>';
-					html += '  <td class="text-left">' + product['name'] + '<br />';
-					
-					if (product['option']) {
-						for (j = 0; j < product['option'].length; j++) {
-							option = product['option'][j];
-							
-							html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
-						}
-					}
-					
-					html += '  </td>';
-					html += '  <td class="text-left">' + product['model'] + '</td>';
-					html += '  <td class="text-right">' + product['quantity'] + '</td>';
-					html += '  <td class="text-right">' + product['price'] + '</td>';
-					html += '  <td class="text-right">' + product['total'] + '</td>';
-					html += '</tr>';
-				}				
-			}
-			
-			if (json['vouchers']) {
-				for (i in json['vouchers']) {
-					voucher = json['vouchers'][i];
-					 
-					html += '<tr>';
-					html += '  <td class="text-left">' + voucher['description'] + '</td>';
-					html += '  <td class="text-left"></td>';
-					html += '  <td class="text-right">1</td>';
-					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
-					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
-					html += '</tr>';	
-				}	
-			}
-			
-			var total_row = 0;
-			
-			for (i in json['totals']) {
-				total = json['totals'][i];
-				
-				html += '<tr id="total-row' + total_row + '">';
-				html += '  <td class="text-right" colspan="4">' + total['title'] + ':</td>';
-				html += '  <td class="text-right">' + total['text'] + '</td>';
-				html += '</tr>';
-				
-				total_row++;
-			}
-			
-			$('#total').html(html);
-		} else {
-			html  = '<tr>';
-			html += '  <td colspan="5" class="text-center"><?php echo $text_no_results; ?></td>';
-			html += '</tr>';	
-	
-			$('#total').html(html);					
-		}
-		
-		// Shipping Methods
-		if (json['shipping_methods']) {
-			html = '<option value=""><?php echo $text_select; ?></option>';
-	
-			for (i in json['shipping_methods']) {
-				html += '<optgroup label="' + json['shipping_methods'][i]['title'] + '">';
-			
-				if (!json['shipping_methods'][i]['error']) {
-					for (j in json['shipping_methods'][i]['quote']) {
-						if (json['shipping_methods'][i]['quote'][j]['code'] == $('input[name=\'shipping_code\']').val()) {
-							html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected="selected">' + json['shipping_methods'][i]['quote'][j]['title'] + '</option>';
-						} else {
-							html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + '</option>';
-						}
-					}		
-				} else {
-					html += '<option value="" style="color: #F00;" disabled="disabled">' + json['shipping_method'][i]['error'] + '</option>';
-				}
-				
-				html += '</optgroup>';
-			}
-	
-			$('select[name=\'shipping\']').html(html);	
-			
-			if ($('select[name=\'shipping\']').val()) {
-				$('input[name=\'shipping_method\']').attr('value', $('select[name=\'shipping\'] option:selected').text());
-			} else {
-				$('input[name=\'shipping_method\']').attr('value', '');
-			}
-			
-			$('input[name=\'shipping_code\']').attr('value', $('select[name=\'shipping\']').val());	
-		}
-					
-		// Payment Methods
-		if (json['payment_methods']) {
-			html = '<option value=""><?php echo $text_select; ?></option>';
-			
-			for (i in json['payment_methods']) {
-				if (json['payment_methods'][i]['code'] == $('input[name=\'payment_code\']').val()) {
-					html += '<option value="' + json['payment_methods'][i]['code'] + '" selected="selected">' + json['payment_methods'][i]['title'] + '</option>';
-				} else {
-					html += '<option value="' + json['payment_methods'][i]['code'] + '">' + json['payment_methods'][i]['title'] + '</option>';
-				}		
-			}
-	
-			$('select[name=\'payment\']').html(html);
-			
-			if ($('select[name=\'payment\']').val()) {
-				$('input[name=\'payment_method\']').attr('value', $('select[name=\'payment\'] option:selected').text());
-			} else {
-				$('input[name=\'payment_method\']').attr('value', '');
-			}
-			
-			$('input[name=\'payment_code\']').attr('value', $('select[name=\'payment\']').val());
-		}
-	}
-}
-
+// Checkout
 $('#button-save').on('click', function() {
 	$.ajax({
 		<?php if (!$order_id) { ?>
-		url: 'index.php?route=sale/api/insert&token=<?php echo $token; ?>',
+		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=order_add',
 		<?php } else { ?>
-		url: 'index.php?route=sale/api/update&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		url: 'index.php?route=sale/api/api&token=<?php echo $token; ?>&api=order_update&order_id=<?php echo $order_id; ?>',
 		<?php } ?>
 		type: 'post',
-		data: $('#tab-total input[type=\'text\'], #tab-total input[type=\'hidden\'], #tab-total input[type=\'radio\']:checked, #tab-total input[type=\'checkbox\']:checked, #tab-total select, #tab-total textarea'),
+		data: $('select[name=\'order_status_id\'] option:selected, textarea[name=\'comment\'], input[name=\'affiliate_id\']'),
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-save i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
@@ -2153,7 +2191,17 @@ $('#button-save').on('click', function() {
 			$('#button-save i').replaceWith('<i class="fa fa-check-circle"></i>');
 			$('#button-save').prop('disabled', false);	
 		},		
-		success: success,
+		success: function(json) {
+			$('.alert, .text-danger').remove();
+			
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+			
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}

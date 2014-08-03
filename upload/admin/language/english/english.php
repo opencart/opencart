@@ -90,12 +90,6 @@ $_['button_uninstall']              = 'Uninstall';
 $_['button_link']                   = 'Link';
 $_['button_add_profile']            = 'Add Profile';
 
-$_['button_coupon']         = 'Apply Coupon';
-$_['button_shipping']       = 'Apply Shipping';
-$_['button_payment']       = 'Apply Payment';
-$_['button_voucher']        = 'Apply Voucher';
-$_['button_reward']         = 'Apply Points';
-
 // Tab
 $_['tab_address']                   = 'Address';
 $_['tab_admin']                     = 'Admin';

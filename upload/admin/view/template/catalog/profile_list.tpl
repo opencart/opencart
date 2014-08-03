@@ -26,8 +26,16 @@
           <thead>
             <tr>
               <td class="text-center" width="1"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-              <td class="text-left"><?php echo $column_name ?></td>
-              <td class="text-left"><?php echo $column_sort_order ?></td>
+              <td class="text-left"><?php if ($sort == 'pd.name') { ?>
+                <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
+                <?php } ?></td>
+              <td class="text-right"><?php if ($sort == 'p.sort_order') { ?>
+                <a href="<?php echo $sort_sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_sort_order; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_sort_order; ?>"><?php echo $column_sort_order; ?></a>
+                <?php } ?></td>
               <td class="text-right"><?php echo $column_action ?></td>
             </tr>
           </thead>
@@ -41,7 +49,7 @@
                 <input type="checkbox" name="selected[]" value="<?php echo $profile['profile_id']; ?>" />
                 <?php } ?></td>
               <td class="text-left"><?php echo $profile['name'] ?></td>
-              <td class="text-left"><?php echo $profile['sort_order'] ?></td>
+              <td class="text-right"><?php echo $profile['sort_order'] ?></td>
               <td class="text-right"><a href="<?php echo $profile['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
             </tr>
             <?php } ?>

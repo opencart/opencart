@@ -73,21 +73,22 @@
                 <div id="review"></div>
                 <h2><?php echo $text_write; ?></h2>
                 <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
-                  <div class="col-sm-10">
+                  <div class="col-sm-12">
+                    <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
                     <input type="text" name="name" value="" id="input-name" class="form-control" />
                   </div>
                 </div>
                 <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-review"><?php echo $entry_review; ?></label>
-                  <div class="col-sm-10">
+                  <div class="col-sm-12">
+                    <label class="control-label" for="input-review"><?php echo $entry_review; ?></label>
                     <textarea name="text" rows="5" id="input-review" class="form-control"></textarea>
                     <div class="help-block"><?php echo $text_note; ?></div>
                   </div>
                 </div>
                 <div class="form-group required">
-                  <label class="col-sm-2 control-label"><?php echo $entry_rating; ?></label>
-                  <div class="col-sm-10"><?php echo $entry_bad; ?>&nbsp;
+                  <div class="col-sm-12">
+                    <label class="control-label"><?php echo $entry_rating; ?></label>&nbsp;&nbsp;&nbsp;
+                    <?php echo $entry_bad; ?>&nbsp;
                     <input type="radio" name="rating" value="1" />
                     &nbsp;
                     <input type="radio" name="rating" value="2" />
@@ -100,8 +101,8 @@
                     &nbsp;<?php echo $entry_good; ?></div>
                 </div>
                 <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-captcha"><?php echo $entry_captcha; ?></label>
-                  <div class="col-sm-10">
+                  <div class="col-sm-12">
+                    <label class="control-label" for="input-captcha"><?php echo $entry_captcha; ?></label>
                     <input type="text" name="captcha" value="" id="input-captcha" class="form-control" />
                     <img src="index.php?route=tool/captcha" alt="" id="captcha" /></div>
                 </div>

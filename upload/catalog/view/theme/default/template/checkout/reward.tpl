@@ -13,7 +13,7 @@
       <script type="text/javascript"><!--
 $('#button-reward').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=module/reward/reward',
+		url: 'index.php?route=checkout/reward/reward',
 		type: 'post',
 		data: 'reward=' + encodeURIComponent($('input[name=\'reward\']').val()),
 		dataType: 'json',    

@@ -114,7 +114,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-bottom"><?php echo $entry_bottom; ?></label>
             <div class="col-sm-10 checkbox">
-              <label class="inline">
+              <label>
                 <?php if ($bottom) { ?>
                 <input type="checkbox" name="bottom" value="1" checked="checked" id="input-bottom" />
                 <?php } else { ?>

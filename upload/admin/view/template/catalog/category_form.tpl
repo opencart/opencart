@@ -143,7 +143,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-top"><?php echo $entry_top; ?></label>
             <div class="col-sm-10 checkbox">
-              <label class="inline">
+              <label>
                 <?php if ($top) { ?>
                 <input type="checkbox" name="top" value="1" checked="checked" id="input-top" />
                 <?php } else { ?>

@@ -600,14 +600,18 @@ class ControllerSaleVoucher extends Controller {
 				$vouchers[] = $this->request->post['voucher_id'];
 			}
 
-			foreach ($vouchers as $voucher_id) {
-				$this->model_sale_voucher->sendVoucher($voucher_id);
-			}
+			if ($vouchers) {
+				foreach ($vouchers as $voucher_id) {
+					$this->model_sale_voucher->sendVoucher($voucher_id);
+				}
 
-			$json['success'] = $this->language->get('text_sent');
+				$json['success'] = $this->language->get('text_sent');
+			} else {
+				$json['error'] = $this->language->get('text_no_results');
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-  	}
+	}
 }

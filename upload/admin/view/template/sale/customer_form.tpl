@@ -250,7 +250,7 @@
                   <?php } ?>
                   <?php } ?>
                   <?php } ?>
-                  <div class="form-group">
+                  <div class="form-group required">
                     <label class="col-sm-2 control-label" for="input-password"><?php echo $entry_password; ?></label>
                     <div class="col-sm-10">
                       <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" class="form-control" autocomplete="off" />
@@ -259,7 +259,7 @@
                       <?php  } ?>
                     </div>
                   </div>
-                  <div class="form-group">
+                  <div class="form-group required">
                     <label class="col-sm-2 control-label" for="input-confirm"><?php echo $entry_confirm; ?></label>
                     <div class="col-sm-10">
                       <input type="password" name="confirm" value="<?php echo $confirm; ?>" placeholder="<?php echo $entry_confirm; ?>" autocomplete="off" id="input-confirm" class="form-control" />

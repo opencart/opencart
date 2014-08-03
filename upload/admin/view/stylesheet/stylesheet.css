@@ -6,10 +6,10 @@ html, body {
 	margin: 0;
 	padding: 0;
  	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: subpixel-antialiased !important; 
-	-webkit-backface-visibility: hidden; 
-	-moz-backface-visibility: hidden; 
-	-ms-backface-visibility: hidden;	
+	-webkit-font-smoothing: subpixel-antialiased !important;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	-ms-backface-visibility: hidden;
 	font-family: 'Open Sans', sans-serif;
 	font-size: 12px;
 }
@@ -17,7 +17,7 @@ h1, h2, h3, h4, h5, h6, p {
 	margin-top: 0;
 }
 .page-header {
-	margin-top: 20px; 
+	margin-top: 20px;
 }
 .page-header h1 {
 	font-size: 24px;
@@ -55,6 +55,10 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #header .navbar-header {
 	width: 235px;
 	border-right: 1px solid #EEEEEE;
+	min-height: 44px;
+}
+#header .navbar-brand {
+	padding: 10px 20px 4px 35px;
 }
 
 /* Mobile */
@@ -120,7 +124,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	width: 235px;
 }
 #content {
-	padding-bottom: 40px;	
+	padding-bottom: 40px;
 }
 
 /* Menu Active */

@@ -677,6 +677,12 @@ class ModelCatalogProduct extends Model {
 		return $query->row['total'];
 	}
 
+	public function getTotalProductsByProfileId($profile_id) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product_profile WHERE profile_id = '" . (int)$profile_id . "'");
+
+		return $query->row['total'];
+	}
+
 	public function getTotalProductsByLayoutId($layout_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product_to_layout WHERE layout_id = '" . (int)$layout_id . "'");
 

@@ -17,24 +17,24 @@ $(document).ready(function() {
 		$('#language').submit();
 	});
 
-    /* Search */
-    $('#search input[name=\'search\']').parent().find('button').on('click', function() {
-        url = $('base').attr('href') + 'index.php?route=product/search';
+	/* Search */
+	$('#search input[name=\'search\']').parent().find('button').on('click', function() {
+		url = $('base').attr('href') + 'index.php?route=product/search';
 
 		var value = $('header input[name=\'search\']').val();
 
-        if (value) {
-            url += '&search=' + encodeURIComponent(value);
-        }
+		if (value) {
+			url += '&search=' + encodeURIComponent(value);
+		}
 
-        location = url;
-    });
+		location = url;
+	});
 
-    $('#search input[name=\'search\']').on('keydown', function(e) {
-        if (e.keyCode == 13) {
-            $('header input[name=\'search\']').parent().find('button').trigger('click');
-        }
-    });
+	$('#search input[name=\'search\']').on('keydown', function(e) {
+		if (e.keyCode == 13) {
+			$('header input[name=\'search\']').parent().find('button').trigger('click');
+		}
+	});
 
 	// Menu
 	$('#menu .dropdown-menu').each(function() {
@@ -97,27 +97,27 @@ $(document).ready(function() {
 });
 
 function getURLVar(key) {
-    var value = [];
+	var value = [];
 
-    var query = String(document.location).split('?');
+	var query = String(document.location).split('?');
 
-    if (query[1]) {
-        var part = query[1].split('&');
+	if (query[1]) {
+		var part = query[1].split('&');
 
-        for (i = 0; i < part.length; i++) {
-            var data = part[i].split('=');
+		for (i = 0; i < part.length; i++) {
+			var data = part[i].split('=');
 
-            if (data[0] && data[1]) {
-                value[data[0]] = data[1];
-            }
-        }
+			if (data[0] && data[1]) {
+				value[data[0]] = data[1];
+			}
+		}
 
-        if (value[key]) {
-            return value[key];
-        } else {
-            return '';
-        }
-    }
+		if (value[key]) {
+			return value[key];
+		} else {
+			return '';
+		}
+	}
 }
 
 // Cart add remove functions
@@ -238,16 +238,16 @@ var wishlist = {
 				$('.alert').remove();
 
 				if (json['success']) {
-                    $('#content').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
-                if (json['info']) {
-                    $('#content').parent().before('<div class="alert alert-info"><i class="fa fa-info-circle"></i> ' + json['info'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-                }
+				if (json['info']) {
+					$('#content').parent().before('<div class="alert alert-info"><i class="fa fa-info-circle"></i> ' + json['info'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
 
-                $('#wishlist-total').html(json['total']);
+				$('#wishlist-total').html(json['total']);
 
-                $('html, body').animate({ scrollTop: 0 }, 'slow');
+				$('html, body').animate({ scrollTop: 0 }, 'slow');
 			}
 		});
 	},
@@ -289,11 +289,11 @@ $(document).delegate('.agree', 'click', function(e) {
 
 	var element = this;
 
-    $.ajax({
-        url: $(element).attr('href'),
-        type: 'get',
-        dataType: 'html',
-        success: function(data) {
+	$.ajax({
+		url: $(element).attr('href'),
+		type: 'get',
+		dataType: 'html',
+		success: function(data) {
 			html  = '<div id="modal-agree" class="modal">';
 			html += '  <div class="modal-dialog">';
 			html += '    <div class="modal-content">';
@@ -309,8 +309,8 @@ $(document).delegate('.agree', 'click', function(e) {
 			$('body').append(html);
 
 			$('#modal-agree').modal('show');
-        }
-    });
+		}
+	});
 });
 
 /* Autocomplete */

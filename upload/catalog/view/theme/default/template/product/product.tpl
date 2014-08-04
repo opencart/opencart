@@ -435,7 +435,6 @@ $('select[name="profile_id"], input[name="quantity"]').change(function(){
 //--></script>
 <script type="text/javascript"><!--
 $('#button-cart').on('click', function() {
-<<<<<<< HEAD
 	$.ajax({
 		url: 'index.php?route=checkout/cart/add',
 		type: 'post',
@@ -451,6 +450,10 @@ $('#button-cart').on('click', function() {
 			$('.alert, .text-danger').remove();
 			
 			if (json['error']) {
+				if (json['error']['quantity']) {
+					$('#input-quantity').after('<div class="text-danger">' + json['error']['quantity'] + '</div>');
+				}
+			  
 				if (json['error']['option']) {
 					for (i in json['error']['option']) {
 						$('#input-option' + i).after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
@@ -473,49 +476,6 @@ $('#button-cart').on('click', function() {
 			}
 		}
 	});
-=======
-    $.ajax({
-        url: 'index.php?route=checkout/cart/add',
-        type: 'post',
-        data: $('#product input[type=\'text\'], #product input[type=\'hidden\'], #product input[type=\'radio\']:checked, #product input[type=\'checkbox\']:checked, #product select, #product textarea'),
-        dataType: 'json',
-        beforeSend: function() {
-          $('#button-cart').button('loading');
-        },
-        complete: function() {
-          $('#button-cart').button('reset');
-        },
-        success: function(json) {
-            $('.alert, .text-danger').remove();
-
-            if (json['error']) {
-              if (json['error']['quantity']) {
-                $('#input-quantity').after('<div class="text-danger">' + json['error']['quantity'] + '</div>');
-              }
-
-              if (json['error']['option']) {
-                for (i in json['error']['option']) {
-                  $('#input-option' + i).after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
-                }
-              }
-
-              if (json['error']['profile']) {
-                $('select[name=\'profile_id\']').after('<div class="text-danger">' + json['error']['profile'] + '</div>');
-              }
-            }
-
-            if (json['success']) {
-              $('.breadcrumb').after('<div class="alert alert-success">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-
-              $('#cart-total').html(json['total']);
-
-              $('html, body').animate({ scrollTop: 0 }, 'slow');
-
-              $('#cart > ul').load('index.php?route=common/cart/info ul li');
-            }
-        }
-    });
->>>>>>> 883b36e12eac23da50eac38f51ab5663f2ca028c
 });
 //--></script>
 <script type="text/javascript"><!--
@@ -533,7 +493,6 @@ $('.time').datetimepicker({
 });
 
 $('button[id^=\'button-upload\']').on('click', function() {
-<<<<<<< HEAD
 	var node = this;
 	
 	$('#form-upload').remove();
@@ -560,6 +519,8 @@ $('button[id^=\'button-upload\']').on('click', function() {
 				$(node).prop('disabled', false);
 			},
 			success: function(json) {
+				$('.text-danger').remove();
+				
 				if (json['error']) {
 					$(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
 				}
@@ -575,51 +536,6 @@ $('button[id^=\'button-upload\']').on('click', function() {
 			}
 		});
 	});
-=======
-  var node = this;
-
-  $('#form-upload').remove();
-
-  $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
-
-  $('#form-upload input[name=\'file\']').trigger('click');
-
-  $('#form-upload input[name=\'file\']').on('change', function() {
-    $.ajax({
-      url: 'index.php?route=product/product/upload',
-      type: 'post',
-      dataType: 'json',
-      data: new FormData($(this).parent()[0]),
-      cache: false,
-      contentType: false,
-      processData: false,
-      beforeSend: function() {
-        $(node).find('i').replaceWith('<i class="fa fa-cog fa-spin"></i>');
-        $(node).prop('disabled', true);
-      },
-      complete: function() {
-        $(node).find('i').replaceWith('<i class="fa fa-upload"></i>');
-        $(node).prop('disabled', false);
-      },
-      success: function(json) {
-        $('.text-danger').remove();
-
-        if (json['error']) {
-          $(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
-        }
-
-        if (json['success']) {
-          alert(json['success']);
-
-          $(node).parent().find('input').attr('value', json['code']);
-        }
-      },
-      error: function(xhr, ajaxOptions, thrownError) {
-        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-      }
-    });
-  });
->>>>>>> 883b36e12eac23da50eac38f51ab5663f2ca028c
 });
 //--></script>
 <script type="text/javascript"><!--

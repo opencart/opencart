@@ -10,7 +10,7 @@
 <?php if ($keywords) { ?>
 <meta name="keywords" content="<?php echo $keywords; ?>" />
 <?php } ?>
-<script type="text/javascript" src="view/javascript/jquery/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/jquery-2.1.1.min.js"></script>
 <link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />
 <link href="view/javascript/bootstrap/css/todc-bootstrap.min.css" rel="stylesheet">
 <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.js"></script>
@@ -75,5 +75,5 @@
       <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?> <i class="fa fa-sign-out fa-lg"></i></a></li>
     </ul>
     <?php } ?>
-  
+
 </header>

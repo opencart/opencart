@@ -64,8 +64,8 @@
     </div>
   </div>
   <?php foreach ($custom_fields as $custom_field) { ?>
-  
-  
+
+
   <?php if ($custom_field['type'] == 'select') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -83,8 +83,8 @@
     </div>
   </div>
   <?php } ?>
-  
-  
+
+
   <?php if ($custom_field['type'] == 'radio') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
@@ -107,8 +107,8 @@
     </div>
   </div>
   <?php } ?>
-  
-  
+
+
   <?php if ($custom_field['type'] == 'checkbox') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
@@ -131,8 +131,8 @@
     </div>
   </div>
   <?php } ?>
-  
-  
+
+
   <?php if ($custom_field['type'] == 'text') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -141,8 +141,8 @@
     </div>
   </div>
   <?php } ?>
-  
-  
+
+
   <?php if ($custom_field['type'] == 'textarea') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -151,8 +151,8 @@
     </div>
   </div>
   <?php } ?>
-  
-  
+
+
   <?php if ($custom_field['type'] == 'file') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
@@ -162,8 +162,8 @@
     </div>
   </div>
   <?php } ?>
-  
-  
+
+
   <?php if ($custom_field['type'] == 'date') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -176,8 +176,8 @@
     </div>
   </div>
   <?php } ?>
-  
-  
+
+
   <?php if ($custom_field['type'] == 'time') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -190,8 +190,8 @@
     </div>
   </div>
   <?php } ?>
-  
-  
+
+
   <?php if ($custom_field['type'] == 'datetime') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -204,8 +204,8 @@
     </div>
   </div>
   <?php } ?>
-  
-  
+
+
   <?php } ?>
   <div class="buttons">
     <div class="pull-right">
@@ -222,31 +222,33 @@ $('#collapse-shipping-address select[name=\'country_id\']').on('change', functio
 			$('#collapse-shipping-address select[name=\'country_id\']').after(' <i class="fa fa-cog fa-spin"></i>');
 		},
 		complete: function() {
-			$('.fa-spinner').remove();
-		},			
+			$('.fa-spin').remove();
+		},
 		success: function(json) {
+      $('.fa-spin').remove();
+
 			if (json['postcode_required'] == '1') {
 				$('#collapse-shipping-address input[name=\'postcode\']').parent().parent().addClass('required');
 			} else {
 				$('#collapse-shipping-address input[name=\'postcode\']').parent().parent().removeClass('required');
 			}
-			
+
 			html = '<option value=""><?php echo $text_select; ?></option>';
-			
+
 			if (json['zone']) {
 				for (i = 0; i < json['zone'].length; i++) {
-        			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-	    			
+          html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+
 					if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
-	      				html += ' selected="selected"';
-	    			}
-	
-	    			html += '>' + json['zone'][i]['name'] + '</option>';
+            html += ' selected="selected"';
+          }
+
+          html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
 				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
 			}
-			
+
 			$('#collapse-shipping-address select[name=\'zone_id\']').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -256,13 +258,13 @@ $('#collapse-shipping-address select[name=\'country_id\']').on('change', functio
 });
 
 $('#collapse-shipping-address select[name=\'country_id\']').trigger('change');
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on('click', function() {
 	var node = this;
-	
+
 	$('#form-upload').remove();
-	
+
 	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
 
 	$('#form-upload input[name=\'file\']').trigger('click');
@@ -270,38 +272,38 @@ $('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on(
 	$('#form-upload input[name=\'file\']').on('change', function() {
 		$.ajax({
 			url: 'index.php?route=checkout/checkout/upload',
-			type: 'post',		
+			type: 'post',
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
 			cache: false,
 			contentType: false,
-			processData: false,		
+			processData: false,
 			beforeSend: function() {
 				$(node).find('i').replaceWith('<i class="fa fa-cog fa-spin"></i>');
 				$(node).prop('disabled', true);
 			},
 			complete: function() {
 				$(node).find('i').replaceWith('<i class="fa fa-upload"></i>');
-				$(node).prop('disabled', false);			
-			},		
+				$(node).prop('disabled', false);
+			},
 			success: function(json) {
 				if (json['error']) {
 					$(node).parent().find('input[name^=\'custom_field\']').after('<div class="text-danger">' + json['error'] + '</div>');
 				}
-							
+
 				if (json['success']) {
 					alert(json['success']);
-					
+
 					$(node).parent().find('input[name^=\'custom_field\']').attr('value', json['file']);
 				}
-			},			
+			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
 	});
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false
@@ -315,4 +317,4 @@ $('.datetime').datetimepicker({
 	pickDate: true,
 	pickTime: true
 });
-//--></script> 
+//--></script>

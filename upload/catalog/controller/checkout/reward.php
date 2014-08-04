@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleReward extends Controller {
+class ControllerCheckoutReward extends Controller {
 	public function index() {
 		$points = $this->customer->getRewardPoints();
 
@@ -12,7 +12,7 @@ class ControllerModuleReward extends Controller {
 		}
 
 		if ($points && $points_total && $this->config->get('reward_status')) {
-			$this->load->language('module/reward');
+			$this->load->language('checkout/reward');
 
 			$data['heading_title'] = sprintf($this->language->get('heading_title'), $points);
 
@@ -28,16 +28,16 @@ class ControllerModuleReward extends Controller {
 				$data['reward'] = '';
 			}
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/reward.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/module/reward.tpl', $data);
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/reward.tpl')) {
+				return $this->load->view($this->config->get('config_template') . '/template/checkout/reward.tpl', $data);
 			} else {
-				return $this->load->view('default/template/module/reward.tpl', $data);
+				return $this->load->view('default/template/checkout/reward.tpl', $data);
 			}
 		}
 	}
 
 	public function reward() {
-		$this->load->language('module/reward');
+		$this->load->language('checkout/reward');
 
 		$json = array();
 

@@ -1,4 +1,11 @@
 <nav id="column-left">
+  <div>
+    <?php if ($image) { ?>
+    <a class="dropdown-toggle" data-toggle="dropdown"><img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" title="<?php echo $username; ?>" /></a>
+    <?php } else { ?>
+    <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user fa-lg"></i></a>
+    <?php } ?>
+  </div>
   <ul id="menu">
     <li id="dashboard"><a href="<?php echo $home; ?>"><i class="fa fa-home fa-fw"></i> <?php echo $text_dashboard; ?></a></li>
     <li id="catalog"><a class="parent"><i class="fa fa-tags fa-fw"></i> <?php echo $text_catalog; ?></a>

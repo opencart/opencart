@@ -119,6 +119,12 @@ class ControllerAccountRegister extends Controller {
 			$data['error_telephone'] = '';
 		}
 
+		if (isset($this->error['fax'])) {
+			$data['error_fax'] = $this->error['fax'];
+		} else {
+			$data['error_fax'] = '';
+		}
+
 		if (isset($this->error['address_1'])) {
 			$data['error_address_1'] = $this->error['address_1'];
 		} else {
@@ -351,8 +357,12 @@ class ControllerAccountRegister extends Controller {
 			$this->error['warning'] = $this->language->get('error_exists');
 		}
 
-		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+		if (!is_numeric($this->request->post['telephone']) || (utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
 			$this->error['telephone'] = $this->language->get('error_telephone');
+		}
+
+		if (!is_numeric($this->request->post['fax']) && !empty($this->request->post['fax'])) {
+			$this->error['fax'] = $this->language->get('error_fax');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['address_1'])) < 3) || (utf8_strlen(trim($this->request->post['address_1'])) > 128)) {

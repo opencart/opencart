@@ -238,7 +238,12 @@ class ControllerApiOrder extends Controller {
 	
 				array_multisort($sort_order, SORT_ASC, $order_total['totals']);
 				
-				$order_data['comment'] = $this->session->data['comment'];
+				if (isset($this->request->post['comment'])) {
+					$order_data['comment'] = $this->request->post['comment'];
+				} else {
+					$order_data['comment'] = '';
+				}
+				
 				$order_data['total'] = $total;
 	
 				if (isset($this->request->post['affiliate_id'])) {
@@ -297,6 +302,8 @@ class ControllerApiOrder extends Controller {
 			$this->load->model('checkout/order');
 	
 			$json['order_id'] = $this->model_checkout_order->addOrder($order_data);
+			
+			$this->model_checkout_order->addHistory($order_data);
 			
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -554,7 +561,12 @@ class ControllerApiOrder extends Controller {
 		
 					array_multisort($sort_order, SORT_ASC, $order_total['totals']);
 					
-					$order_data['comment'] = $this->session->data['comment'];
+					if (isset($this->request->post['comment'])) {
+						$order_data['comment'] = $this->request->post['comment'];
+					} else {
+						$order_data['comment'] = '';
+					}
+				
 					$order_data['total'] = $total;
 	
 					if (isset($this->request->post['affiliate_id'])) {

@@ -113,8 +113,8 @@
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-bottom"><?php echo $entry_bottom; ?></label>
-            <div class="col-sm-10">
-              <label class="checkbox inline">
+            <div class="col-sm-10 checkbox">
+              <label>
                 <?php if ($bottom) { ?>
                 <input type="checkbox" name="bottom" value="1" checked="checked" id="input-bottom" />
                 <?php } else { ?>
@@ -190,13 +190,13 @@
     </form>
   </div>
 </div>
-<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
+<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
 CKEDITOR.replace('input-description<?php echo $language['language_id']; ?>');
 <?php } ?>
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#language a:first').tab('show');
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

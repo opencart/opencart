@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="<?php echo $return; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $text_return; ?></a></div>
+      <div class="pull-right"><a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1><i class="fa fa-info-circle"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>

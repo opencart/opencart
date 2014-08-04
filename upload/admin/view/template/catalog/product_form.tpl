@@ -927,8 +927,8 @@ $('input[name=\'manufacturer\']').autocomplete({
 			dataType: 'json',			
 			success: function(json) {
 				json.unshift({
-					'manufacturer_id': 0,
-					'name': '<?php echo $text_none; ?>'
+					manufacturer_id: 0,
+					name: '<?php echo $text_none; ?>'
 				});
 				
 				response($.map(json, function(item) {

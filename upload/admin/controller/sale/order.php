@@ -9,14 +9,6 @@ class ControllerSaleOrder extends Controller {
 
 		$this->getList();
 	}
-
-	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		return !$this->error;
-	}
 	
 	public function insert() {
 		$this->load->language('sale/order');
@@ -196,7 +188,6 @@ class ControllerSaleOrder extends Controller {
 		$data['invoice'] = $this->url->link('sale/order/invoice', 'token=' . $this->session->data['token'], 'SSL');
 		$data['shipping'] = $this->url->link('sale/order/shipping', 'token=' . $this->session->data['token'], 'SSL');
 		$data['insert'] = $this->url->link('sale/order/insert', 'token=' . $this->session->data['token'], 'SSL');
-		$data['delete'] = $this->url->link('sale/order/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['orders'] = array();
 
@@ -226,8 +217,7 @@ class ControllerSaleOrder extends Controller {
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
 				'view'          => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL'),
-				'edit'          => $this->url->link('sale/order/update', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL'),
-				'delete'        => $this->url->link('sale/order/delete', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL')
+				'edit'          => $this->url->link('sale/order/update', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL')
 			);
 		}
 
@@ -397,7 +387,6 @@ class ControllerSaleOrder extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_confirm'] = $this->language->get('text_confirm');
 		$data['text_default'] = $this->language->get('text_default');
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
@@ -434,10 +423,10 @@ class ControllerSaleOrder extends Controller {
 		$data['entry_theme'] = $this->language->get('entry_theme');
 		$data['entry_message'] = $this->language->get('entry_message');
 		$data['entry_amount'] = $this->language->get('entry_amount');
-		$data['entry_shipping'] = $this->language->get('entry_shipping');
-		$data['entry_payment'] = $this->language->get('entry_payment');
-		$data['entry_voucher'] = $this->language->get('entry_voucher');
+		$data['entry_shipping_method'] = $this->language->get('entry_shipping_method');
+		$data['entry_payment_method'] = $this->language->get('entry_payment_method');
 		$data['entry_coupon'] = $this->language->get('entry_coupon');
+		$data['entry_voucher'] = $this->language->get('entry_voucher');
 		$data['entry_reward'] = $this->language->get('entry_reward');
 		$data['entry_order_status'] = $this->language->get('entry_order_status');
 
@@ -449,8 +438,8 @@ class ControllerSaleOrder extends Controller {
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_delete'] = $this->language->get('button_delete');
-		$data['button_refresh'] = $this->language->get('button_refresh');
+		$data['button_continue'] = $this->language->get('button_continue');
+		$data['button_back'] = $this->language->get('button_back');
 		$data['button_product_add'] = $this->language->get('button_product_add');
 		$data['button_voucher_add'] = $this->language->get('button_voucher_add');
 		$data['button_upload'] = $this->language->get('button_upload');
@@ -459,6 +448,8 @@ class ControllerSaleOrder extends Controller {
 		$data['tab_order'] = $this->language->get('tab_order');
 		$data['tab_customer'] = $this->language->get('tab_customer');
 		$data['tab_payment'] = $this->language->get('tab_payment');
+		$data['tab_payment_add'] = $this->language->get('tab_payment_add');
+		$data['tab_voucher_add'] = $this->language->get('tab_voucher_add');
 		$data['tab_shipping'] = $this->language->get('tab_shipping');
 		$data['tab_product'] = $this->language->get('tab_product');
 		$data['tab_voucher'] = $this->language->get('tab_voucher');
@@ -632,7 +623,7 @@ class ControllerSaleOrder extends Controller {
 			$data['store_id'] = '';
 			$data['customer'] = '';
 			$data['customer_id'] = '';
-			$data['customer_group_id'] = '';
+			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
 			$data['firstname'] = '';
 			$data['lastname'] = '';
 			$data['email'] = '';
@@ -1551,7 +1542,7 @@ class ControllerSaleOrder extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-
+	
 	public function history() {
 		$this->load->language('sale/order');
 
@@ -1715,6 +1706,8 @@ class ControllerSaleOrder extends Controller {
 		$data['column_price'] = $this->language->get('column_price');
 		$data['column_total'] = $this->language->get('column_total');
 		$data['column_comment'] = $this->language->get('column_comment');
+
+		$data['error_no_selection'] = $this->language->get('error_no_selection');
 
 		$this->load->model('sale/order');
 
@@ -1956,6 +1949,8 @@ class ControllerSaleOrder extends Controller {
 		$data['column_quantity'] = $this->language->get('column_quantity');
 		$data['column_comment'] = $this->language->get('column_comment');
 
+		$data['error_no_selection'] = $this->language->get('error_no_selection');
+
 		$this->load->model('sale/order');
 
 		$this->load->model('catalog/product');
@@ -2101,4 +2096,97 @@ class ControllerSaleOrder extends Controller {
 
 		$this->response->setOutput($this->load->view('sale/order_shipping.tpl', $data));
 	}
+	
+	public function addHistory() {
+		$json = array();
+		
+		$this->load->model('user/api');
+		
+		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
+		
+		if ($api_info) {
+			$api_data = array(
+				'username' => $api_info['username'],
+				'password' => $api_info['password']
+			);
+			
+			$response = $this->api(HTTPS_CATALOG . 'index.php?route=api/login', '', $api_data);
+			
+			if (isset($response['error'])) {
+				$json['error'] = $response['error'];
+			}
+		}
+		
+		if (isset($response['cookie'])) {
+			$json = $this->api(HTTPS_CATALOG . 'index.php?route=api/order/history&order_id=' . $this->request->get['order_id'], $response['cookie'], $this->request->post);
+		}
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));		
+	}
+		
+	public function api() {
+		
+		
+		if (isset($this->request->get['api'])) {
+			switch ($this->request->get['api']) {
+				case 'customer':
+					break;
+				case 'product':
+					break;	
+				case 'voucher':
+					break;
+				case 'payment_address':
+					break;
+				case 'shipping_address':
+					break;							
+				case 'shipping_address':
+					break;				
+			}
+		}
+		
+		$curl = curl_init();
+		
+		// Set SSL if required
+		if (substr($url, 0, 5) == 'https') {
+			curl_setopt($curl, CURLOPT_PORT, 443);
+		}
+		
+		curl_setopt($curl, CURLOPT_HEADER, false);
+		curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+		curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); 
+		curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_URL, $url);
+		
+		if ($this->request->post) {
+			curl_setopt($curl, CURLOPT_POST, true);
+			curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($this->request->post));
+		}
+		
+		if ($this->request->get['cookie']) {
+			curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->request->get['cookie'] . ';');
+		}
+		
+		$response = curl_exec($curl);
+
+		if (!$response) {
+			$response = json_encode(array('error' => curl_error($curl) . '(' . curl_errno($curl) . ')'));
+		}
+				
+		curl_close($curl);
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+	
+	protected function validate() {
+		if (!$this->user->hasPermission('modify', 'sale/order')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		return !$this->error;
+	}	
 }

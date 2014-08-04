@@ -164,8 +164,6 @@ class ControllerSaleApi extends Controller {
 				
 			if (isset($response['error'])) {
 				$json['error']['shipping_method'] = $response['error'];
-			} else {
-				$json['shipping_methods'] = $response['shipping_methods'];
 			}
 			
 			// Shipping Method
@@ -180,8 +178,6 @@ class ControllerSaleApi extends Controller {
 			
 			if (isset($response['error'])) {
 				$json['error']['payment_method'] = $response['error'];
-			} else {
-				$json['payment_methods'] = $response['payment_methods'];
 			}
 			
 			// Payment Method
@@ -198,7 +194,7 @@ class ControllerSaleApi extends Controller {
 					$json['error']['warning'] = $response['error'];
 				}
 				
-				$response = $this->api($url . 'index.php?route=api/order/history', $cookie, array('order_status_id' => $this->request->post['order_status_id']));
+				$response = $this->api($url . 'index.php?route=api/order/history&order_id=' . $this->request->get['order_id'], $cookie, array('order_status_id' => $this->request->post['order_status_id']));
 							
 				if (isset($response['error'])) {
 					$json['error']['warning'] = $response['error'];
@@ -208,8 +204,6 @@ class ControllerSaleApi extends Controller {
 		
 		if (!$json['error']) {
 			$this->session->data['success'] = $this->language->get('text_success');
-			
-			$json['redirect'] = $this->url->link('sale/order');
 		}		
 		
 		$this->response->addHeader('Content-Type: application/json');
@@ -380,8 +374,6 @@ class ControllerSaleApi extends Controller {
 				
 			if (isset($response['error'])) {
 				$json['error']['shipping_method'] = $response['error'];
-			} else {
-				$json['shipping_methods'] = $response['shipping_methods'];
 			}
 			
 			// Shipping Method
@@ -396,8 +388,6 @@ class ControllerSaleApi extends Controller {
 			
 			if (isset($response['error'])) {
 				$json['error']['payment_method'] = $response['error'];
-			} else {
-				$json['payment_methods'] = $response['payment_methods'];
 			}
 			
 			// Payment Method
@@ -407,14 +397,14 @@ class ControllerSaleApi extends Controller {
 				$json['error']['payment_method'] = $response['error'];
 			}	
 			
-			if (!$json['error']) {		
+			if (!isset($json['error'])) {		
 				$response = $this->api($url . 'index.php?route=api/order/update&order_id=' . $this->request->get['order_id'], $cookie);
 							
 				if (isset($response['error'])) {
 					$json['error']['warning'] = $response['error'];
 				}
 				
-				$response = $this->api($url . 'index.php?route=api/order/history', $cookie, array('order_status_id' => $this->request->post['order_status_id']));
+				$response = $this->api($url . 'index.php?route=api/order/history&order_id=' . $this->request->get['order_id'], $cookie, array('order_status_id' => $this->request->post['order_status_id']));
 							
 				if (isset($response['error'])) {
 					$json['error']['warning'] = $response['error'];
@@ -422,6 +412,10 @@ class ControllerSaleApi extends Controller {
 			}
 		}
 		
+		if (!isset($json['error'])) {
+			$json['success'] = $this->language->get('text_success');	
+		}
+					
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));		
 	}
@@ -475,11 +469,17 @@ class ControllerSaleApi extends Controller {
 			}
 		}
 		
+		if (!isset($json['error'])) {
+			$json['success'] = $this->language->get('text_success');	
+		}		
+		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));		
 	}
 	
 	public function refresh() {
+		$this->load->language('sale/order');
+		
 		$json = array();
 		
 		$this->load->model('setting/store');
@@ -731,13 +731,13 @@ class ControllerSaleApi extends Controller {
 			
 			if (isset($response['totals'])) {
 				$json['totals'] = $response['totals'];
-			}
-			
-			if (!isset($json['error'])) {
-				$json['success'] = $this->language->get('text_refresh');	
-			}			
+			}		
 		}
 
+		if (!isset($json['error'])) {
+			$json['success'] = $this->language->get('text_refresh');	
+		}
+		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));		
 	}
@@ -801,10 +801,7 @@ class ControllerSaleApi extends Controller {
 		if (!$response) {
 			return array('error' => curl_error($curl) . '(' . curl_errno($curl) . ')');
 		}
-		
-		//echo $url . '<br>';
-		//echo $response . '<br>';
-		
+				
 		curl_close($curl);
 		
 		return json_decode($response, true);

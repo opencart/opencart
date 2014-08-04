@@ -154,8 +154,8 @@ class ControllerSaleRecurring extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_filter'] = $this->language->get('text_filter');
-		$data['text_view'] = $this->language->get('text_view');
+		$data['button_filter'] = $this->language->get('button_filter');
+		$data['button_view'] = $this->language->get('button_view');
 
 		$data['entry_order_id'] = $this->language->get('entry_order_id');
 		$data['entry_order_recurring'] = $this->language->get('entry_order_recurring');
@@ -395,9 +395,8 @@ class ControllerSaleRecurring extends Controller {
 			$data['entry_profile'] = $this->language->get('entry_profile');
 			$data['entry_payment_type'] = $this->language->get('entry_payment_type');
 			$data['text_transactions'] = $this->language->get('text_transactions');
-			$data['text_cancel'] = $this->language->get('text_cancel');
-			$data['text_return'] = $this->language->get('text_return');
 			$data['text_cancel_confirm'] = $this->language->get('text_cancel_confirm');
+			$data['button_cancel'] = $this->language->get('button_cancel');
 
 			$data['order_recurring_id'] = $order_recurring['order_recurring_id'];
 			$data['product'] = $order_recurring['product_name'];

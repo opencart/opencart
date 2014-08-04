@@ -79,6 +79,16 @@ class ControllerReportProductViewed extends Controller {
 
 		$data['reset'] = $this->url->link('report/product_viewed/reset', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
+		if (isset($this->session->data['error'])) {
+			$data['error_warning'] = $this->session->data['error'];
+
+			unset($this->session->data['error']);
+		} elseif (isset($this->error['warning'])) {
+			$data['error_warning'] = $this->error['warning'];
+		} else {
+			$data['error_warning'] = '';
+		}
+
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
 
@@ -107,11 +117,15 @@ class ControllerReportProductViewed extends Controller {
 	public function reset() {
 		$this->load->language('report/product_viewed');
 
-		$this->load->model('report/product');
+		if (!$this->user->hasPermission('modify', 'report/product_viewed')) {
+			$this->session->data['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('report/product');
 
-		$this->model_report_product->reset();
+			$this->model_report_product->reset();
 
-		$this->session->data['success'] = $this->language->get('text_success');
+			$this->session->data['success'] = $this->language->get('text_success');
+		}
 
 		$this->response->redirect($this->url->link('report/product_viewed', 'token=' . $this->session->data['token'], 'SSL'));
 	}

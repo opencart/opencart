@@ -302,6 +302,18 @@ class ControllerSettingSetting extends Controller {
 			$data['error_voucher_max'] = '';
 		}
 
+		if (isset($this->error['process_status'])) {
+			$data['error_process_status'] = $this->error['process_status'];
+		} else {
+			$data['error_process_status'] = '';
+		}
+
+		if (isset($this->error['complete_status'])) {
+			$data['error_complete_status'] = $this->error['complete_status'];
+		} else {
+			$data['error_complete_status'] = '';
+		}
+
 		if (isset($this->error['ftp_hostname'])) {
 			$data['error_ftp_hostname'] = $this->error['ftp_hostname'];
 		} else {
@@ -793,7 +805,7 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_order_status_id'] = $this->config->get('config_order_status_id');
 		}
-		
+
 		if (isset($this->request->post['config_process_status'])) {
 			$data['config_process_status'] = $this->request->post['config_process_status'];
 		} elseif ($this->config->get('config_process_status')) {
@@ -1278,6 +1290,14 @@ class ControllerSettingSetting extends Controller {
 
 		if (!$this->request->post['config_voucher_max']) {
 			$this->error['voucher_max'] = $this->language->get('error_voucher_max');
+		}
+
+		if (!isset($this->request->post['config_process_status'])) {
+			$this->error['process_status'] = $this->language->get('error_process_status');
+		}
+
+		if (!isset($this->request->post['config_complete_status'])) {
+			$this->error['complete_status'] = $this->language->get('error_complete_status');
 		}
 
 		if (!$this->request->post['config_image_category_width'] || !$this->request->post['config_image_category_height']) {

@@ -98,8 +98,27 @@ class ControllerCommonMenu extends Controller {
 
 			$data['home'] = $this->url->link('common/dashboard', '', 'SSL');
 		} else {
-			$data['logged'] = true;
+			$data['logged'] = sprintf($this->language->get('text_logged'), $this->user->getUserName());
 
+			$this->load->model('user/user');
+	
+			$this->load->model('tool/image');
+	
+			$user_info = $this->model_user_user->getUser($this->user->getId());
+	
+			if ($user_info) {
+				$data['username'] = $user_info['firstname'] . ' ' . $user_info['lastname'];
+	
+				if (is_file(DIR_IMAGE . $user_info['image'])) {
+					$data['image'] = $this->model_tool_image->resize($user_info['image'], 24, 24);
+				} else {
+					$data['image'] = '';
+				}
+			} else {
+				$data['username'] = '';
+				$data['image'] = '';
+			}
+		
 			$data['home'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL');
 			$data['affiliate'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'], 'SSL');
 			$data['api'] = $this->url->link('user/api', 'token=' . $this->session->data['token'], 'SSL');

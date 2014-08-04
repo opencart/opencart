@@ -39,8 +39,6 @@ class ControllerCommonHeader extends Controller {
 		$data['text_documentation'] = $this->language->get('text_documentation');
 		$data['text_support'] = $this->language->get('text_support');
 		$data['text_logged'] = sprintf($this->language->get('text_logged'), $this->user->getUserName());
-		$data['text_profile'] = $this->language->get('text_profile');
-		$data['text_setting'] = $this->language->get('text_setting');
 		$data['text_logout'] = $this->language->get('text_logout');
 
 		if (!isset($this->request->get['token']) || !isset($this->session->data['token']) && ($this->request->get['token'] != $this->session->data['token'])) {
@@ -48,11 +46,9 @@ class ControllerCommonHeader extends Controller {
 
 			$data['home'] = $this->url->link('common/dashboard', '', 'SSL');
 		} else {
-			$data['logged'] = sprintf($this->language->get('text_logged'), $this->user->getUserName());
-
+			$data['logged'] = true;
+			
 			$data['home'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL');
-			$data['profile'] = $this->url->link('user/user/update', 'token=' . $this->session->data['token'] . '&user_id=' . $this->user->getId(), 'SSL');
-			$data['setting'] = $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL');
 			$data['logout'] = $this->url->link('common/logout', 'token=' . $this->session->data['token'], 'SSL');
 
 			// Orders
@@ -135,25 +131,6 @@ class ControllerCommonHeader extends Controller {
 					'href' => $result['url']
 				);
 			}
-		}
-
-		$this->load->model('user/user');
-
-		$this->load->model('tool/image');
-
-		$user_info = $this->model_user_user->getUser($this->user->getId());
-
-		if ($user_info) {
-			$data['username'] = $user_info['firstname'] . ' ' . $user_info['lastname'];
-
-			if (is_file(DIR_IMAGE . $user_info['image'])) {
-				$data['image'] = $this->model_tool_image->resize($user_info['image'], 24, 24);
-			} else {
-				$data['image'] = '';
-			}
-		} else {
-			$data['username'] = '';
-			$data['image'] = '';
 		}
 
 		return $this->load->view('common/header.tpl', $data);

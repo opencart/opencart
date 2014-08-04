@@ -1,8 +1,8 @@
 <?php
-class ControllerModuleShipping extends Controller {
+class ControllerCheckoutShipping extends Controller {
 	public function index() {
 		if ($this->config->get('shipping_status') && $this->config->get('shipping_estimator') && $this->cart->hasShipping()) {
-			$this->load->language('module/shipping');
+			$this->load->language('checkout/shipping');
 
 			$data['heading_title'] = $this->language->get('heading_title');
 
@@ -48,16 +48,16 @@ class ControllerModuleShipping extends Controller {
 				$data['shipping_method'] = '';
 			}
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/shipping.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/module/shipping.tpl', $data);
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/shipping.tpl')) {
+				return $this->load->view($this->config->get('config_template') . '/template/checkout/shipping.tpl', $data);
 			} else {
-				return $this->load->view('default/template/module/shipping.tpl', $data);
+				return $this->load->view('default/template/checkout/shipping.tpl', $data);
 			}
 		}
 	}
 
 	public function quote() {
-		$this->load->language('module/shipping');
+		$this->load->language('checkout/shipping');
 
 		$json = array();
 
@@ -175,7 +175,7 @@ class ControllerModuleShipping extends Controller {
 	}
 
 	public function shipping() {
-		$this->load->language('module/shipping');
+		$this->load->language('checkout/shipping');
 
 		$json = array();
 

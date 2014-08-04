@@ -624,7 +624,6 @@ class ControllerProductProduct extends Controller {
 		$json = array();
 
 		if ($product_info && $profile_info) {
-
 			if (!$json) {
 				$frequencies = array(
 					'day'        => $this->language->get('text_day'),
@@ -671,7 +670,7 @@ class ControllerProductProduct extends Controller {
 				$json['error'] = $this->language->get('error_text');
 			}
 
-			if (empty($this->request->post['rating'])) {
+			if (empty($this->request->post['rating']) || $this->request->post['rating'] < 0 || $this->request->post['rating'] > 5) {
 				$json['error'] = $this->language->get('error_rating');
 			}
 

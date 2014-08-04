@@ -95,6 +95,12 @@ div.required .control-label:before {
 #top .btn-link:hover, #top-links a:hover {
 	color: #444;
 }
+#top-links .dropdown-menu a {
+	text-shadow: none;
+}
+#top-links .dropdown-menu a:hover {
+	color: #FFF;
+}
 #top .btn-link strong {
 	font-size: 14px;
 }
@@ -508,7 +514,7 @@ footer h5 {
 }
 .product-thumb .image img {
 	margin-left: auto;
-	margin-right: auto;	
+	margin-right: auto;
 }
 .product-grid .product-thumb .image {
 	float: none;
@@ -533,7 +539,7 @@ footer h5 {
 .product-grid .product-thumb .caption {
 	min-height: 210px;
 	padding: 0 10px;
-}	
+}
 }
 @media (max-width: 767px) {
 .product-list .product-thumb .caption {
@@ -623,7 +629,7 @@ h2.price {
 	width: 33.33%;
 }
 }
-@media (max-width: 767px) {	
+@media (max-width: 767px) {
 .product-thumb .button-group button, .product-thumb .button-group button + button {
 	width: 33.33%;
 }

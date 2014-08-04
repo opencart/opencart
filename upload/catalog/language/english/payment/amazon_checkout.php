@@ -15,7 +15,7 @@ $_['text_enter_coupon']         = 'Enter your coupon code here. If you don\'t ha
 $_['text_coupon']               = 'Coupon';
 $_['text_tax_other']            = 'Taxes / Other handling fees';
 $_['text_payment_failed']       = 'Your payment has failed. Please contact the shop administrator for assistance or use a different payment option.';
-$_['text_success_title']        = 'Your Order Has Been Processed!';
+$_['text_success_title']        = 'Your order has been placed!';
 $_['text_payment_success']      = 'Your order was successfully placed. Order details are below';
 
 //Errors

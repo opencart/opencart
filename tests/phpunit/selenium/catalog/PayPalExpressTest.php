@@ -163,11 +163,11 @@ class CatalogPayPalExpressTest extends OpenCartSeleniumTest {
 		
 		$this->byCssSelector('.pull-right .btn-primary')->click();
 		
-		$this->waitToLoad("Your Order Has Been Processed!");
+		$this->waitToLoad("Your order has been placed!");
 		
 		$element = $this->byCssSelector('#content h1');
 		
-		$this->assertEquals('Your Order Has Been Processed!', $element->text());
+		$this->assertEquals('Your order has been placed!', $element->text());
 	}
 	
 }

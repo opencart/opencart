@@ -165,7 +165,7 @@ $('select[name=\'country_id\']').on('change', function() {
 		url: 'index.php?route=checkout/shipping/country&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after(' <i class="fa fa-spinner fa-spin"></i>');
+			$('select[name=\'country_id\']').after(' <i class="fa fa-cog fa-spin"></i>');
 		},
 		complete: function() {
 			$('.fa-spinner').remove();

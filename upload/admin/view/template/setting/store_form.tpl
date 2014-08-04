@@ -5,7 +5,7 @@
       <div class="pull-right">
         <button type="submit" form="form-store" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-check-circle"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
-      <h1><i class="fa fa-pencil-square"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">
@@ -760,7 +760,7 @@ $('select[name=\'config_template\']').on('change', function() {
 		url: 'index.php?route=setting/setting/template&token=<?php echo $token; ?>&template=' + encodeURIComponent(this.value),
 		dataType: 'html',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after(' <i class="fa fa-spinner fa-spin"></i>');
+			$('select[name=\'country_id\']').after(' <i class="fa fa-cog fa-spin"></i>');
 		},		
 		complete: function() {
 			$('.fa-spinner').remove();
@@ -782,7 +782,7 @@ $('select[name=\'config_country_id\']').on('change', function() {
 		url: 'index.php?route=setting/store/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'config_country_id\']').after(' <i class="fa fa-spinner fa-spin"></i>');
+			$('select[name=\'config_country_id\']').after(' <i class="fa fa-cog fa-spin"></i>');
 		},		
 		complete: function() {
 			$('.fa-spinner').remove();

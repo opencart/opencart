@@ -33,7 +33,7 @@
   <div class="modules">
     <div class="row" id="modules-loading">
       <div class="col-sm-12">
-        <h2 class="text-center"><i class="fa fa-spinner fa-spin"></i> <?php echo $text_loading; ?></h2>
+        <h2 class="text-center"><i class="fa fa-cog fa-spin"></i> <?php echo $text_loading; ?></h2>
       </div>
     </div>
     <div class="row" id="modules" style="display:none;"></div>

@@ -33,7 +33,6 @@
 <body>
 <div id="container">
 <header id="header" class="navbar navbar-static-top">
-  <div class="container-fluid">
     <div class="navbar-header">
       <?php if ($logged) { ?>
       <a type="button" id="button-menu" class="pull-left"><span class="fa fa-bars"></span></a>
@@ -76,5 +75,5 @@
       <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?> <i class="fa fa-sign-out fa-lg"></i></a></li>
     </ul>
     <?php } ?>
-  </div>
+  
 </header>

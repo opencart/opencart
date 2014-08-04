@@ -40,7 +40,6 @@ class ControllerCommonMenu extends Controller {
 		$data['text_layout'] = $this->language->get('text_layout');
 		$data['text_localisation'] = $this->language->get('text_localisation');
 		$data['text_location'] = $this->language->get('text_location');
-		$data['text_maintenance'] = $this->language->get('text_maintenance');
 		$data['text_marketing'] = $this->language->get('text_marketing');
 		$data['text_modification'] = $this->language->get('text_modification');
 		$data['text_manufacturer'] = $this->language->get('text_manufacturer');
@@ -79,6 +78,7 @@ class ControllerCommonMenu extends Controller {
 		$data['text_tax'] = $this->language->get('text_tax');
 		$data['text_tax_class'] = $this->language->get('text_tax_class');
 		$data['text_tax_rate'] = $this->language->get('text_tax_rate');
+		$data['text_tools'] = $this->language->get('text_tools');
 		$data['text_total'] = $this->language->get('text_total');
 		$data['text_upload'] = $this->language->get('text_upload');
 		$data['text_tracking'] = $this->language->get('text_tracking');

@@ -228,7 +228,7 @@ $('#button-delete').on('click', function() {
 		data: $(''),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-voucher i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-voucher i').replaceWith('<i class="fa fa-cog fa-spin"></i>');
 			$('#button-refresh').prop('disabled', true);
 		},	
 		complete: function() {

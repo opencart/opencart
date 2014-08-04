@@ -111,7 +111,7 @@ $(document).delegate('.img-edit', 'click', function(e) {
 			url: 'index.php?route=common/filemanager&token=' + getURLVar('token') + '&target=' + $(element).parent().find('input').attr('id') + '&thumb=' + $(element).attr('id'),
 			dataType: 'html',	
 			beforeSend: function() {
-				$('#button-image i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+				$('#button-image i').replaceWith('<i class="fa fa-cog fa-spin"></i>');
 				$('#button-image').prop('disabled', true);
 			},
 			complete: function() {

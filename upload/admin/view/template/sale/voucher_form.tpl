@@ -8,7 +8,7 @@
         <?php } ?>
         <button type="submit" form="form-voucher" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-check-circle"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
-      <h1><i class="fa fa-pencil-square"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">
@@ -134,7 +134,7 @@ $('#button-send').on('click', function() {
 		dataType: 'json',
 		data: 'voucher_id=<?php echo $voucher_id; ?>',
 		beforeSend: function() {
-			$('#button-send i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-send i').replaceWith('<i class="fa fa-cog fa-spin"></i>');
 			$('#button-send').prop('disabled', true);
 		},	
 		complete: function() {

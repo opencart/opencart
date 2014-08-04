@@ -36,44 +36,6 @@ class ControllerSaleOrder extends Controller {
 		if ($this->validateDelete()) {
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$url = '';
-
-			if (isset($this->request->get['filter_order_id'])) {
-				$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
-			}
-
-			if (isset($this->request->get['filter_customer'])) {
-				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_order_status'])) {
-				$url .= '&filter_order_status=' . $this->request->get['filter_order_status'];
-			}
-
-			if (isset($this->request->get['filter_total'])) {
-				$url .= '&filter_total=' . $this->request->get['filter_total'];
-			}
-
-			if (isset($this->request->get['filter_date_added'])) {
-				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-			}
-
-			if (isset($this->request->get['filter_date_modified'])) {
-				$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
 			$this->response->redirect($this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
@@ -2096,97 +2058,150 @@ class ControllerSaleOrder extends Controller {
 
 		$this->response->setOutput($this->load->view('sale/order_shipping.tpl', $data));
 	}
-	
-	public function addHistory() {
-		$json = array();
 		
-		$this->load->model('user/api');
+	public function login() {
 		
-		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
-		
-		if ($api_info) {
-			$api_data = array(
-				'username' => $api_info['username'],
-				'password' => $api_info['password']
-			);
-			
-			$response = $this->api(HTTPS_CATALOG . 'index.php?route=api/login', '', $api_data);
-			
-			if (isset($response['error'])) {
-				$json['error'] = $response['error'];
-			}
-		}
-		
-		if (isset($response['cookie'])) {
-			$json = $this->api(HTTPS_CATALOG . 'index.php?route=api/order/history&order_id=' . $this->request->get['order_id'], $response['cookie'], $this->request->post);
-		}
-		
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));		
 	}
 		
 	public function api() {
+		$json = array();
 		
+		if (!$this->user->hasPermission('modify', 'sale/order')) {
+			$json['error'] = $this->language->get('error_permission');
+		}		
+		
+		// Store
+		if (isset($this->request->get['store_id'])) {
+			$store_id = $this->request->post['store_id'];
+		} else {
+			$store_id = 0;
+		}
+			
+		$this->load->model('setting/store');
+		
+		$store_info = $this->model_setting_store->getStore($store_id);
+		
+		if ($store_info) {
+			$url = $store_info['url'];
+		} else {
+			$url = HTTP_CATALOG;
+		}
 		
 		if (isset($this->request->get['api'])) {
 			switch ($this->request->get['api']) {
-				case 'customer':
-					break;
-				case 'product':
-					break;	
-				case 'voucher':
-					break;
-				case 'payment_address':
-					break;
-				case 'shipping_address':
-					break;							
-				case 'shipping_address':
+				case 'login':
+					$this->load->model('user/api');
+					
+					$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
+					
+					if ($api_info) {
+						$this->request->post['username'] = $api_info['username'];
+						$this->request->post['password'] = $api_info['password'];
+					}
+					
+					$url .= 'index.php?route=api/login';					
 					break;				
+				case 'customer':
+					$url = 'index.php?route=api/customer';
+					break;
+				case 'cart_add':
+					$url .= 'index.php?route=api/cart/add';
+					break;	
+				case 'cart_remove':
+					$url .= 'index.php?route=api/cart/remove';
+					break;						
+				case 'voucher_add':
+					$url .= 'index.php?route=api/voucher/add';
+					break;
+				case 'voucher_remove':
+					$url .= 'index.php?route=api/voucher/remove';
+					break;						
+				case 'payment_address':
+					$url .= 'index.php?route=api/payment/address';
+					break;
+				case 'payment_methods':
+					$url .= 'index.php?route=api/payment/methods';
+					break;	
+				case 'payment_method':
+					$url .= 'index.php?route=api/payment/method';
+					break;					
+				case 'shipping_address':
+					$url .= 'index.php?route=api/shipping/address';
+					break;
+				case 'shipping_methods':
+					$url .= 'index.php?route=api/shipping/methods';
+					break;
+				case 'shipping_method':
+					$url .= 'index.php?route=api/shipping/method';
+					break;
+				case 'coupon':
+					$url .= 'index.php?route=api/coupon';
+					break;
+				case 'voucher':
+					$url .= 'index.php?route=api/voucher';
+					break;	
+				case 'reward':
+					$url .= 'index.php?route=api/reward';
+					break;															
+				case 'products':
+					$url .= 'index.php?route=api/cart/products';
+					break;
+				case 'totals':
+					$url .= 'index.php?route=api/cart/totals';
+					break;
+				case 'order_add':
+					$url .= 'index.php?route=api/order/add';
+					break;	
+				case 'order_update':
+					$url .= 'index.php?route=api/order/edit';
+					break;	
+				case 'order_delete':
+					$url .= 'index.php?route=api/order/delete';
+					break;										
+				case 'history':
+					$url .= 'index.php?route=api/order/history';
+					break;								
 			}
 		}
 		
-		$curl = curl_init();
-		
-		// Set SSL if required
-		if (substr($url, 0, 5) == 'https') {
-			curl_setopt($curl, CURLOPT_PORT, 443);
+		if (!$json) {
+			$curl = curl_init();
+			
+			// Set SSL if required
+			if (substr($url, 0, 5) == 'https') {
+				curl_setopt($curl, CURLOPT_PORT, 443);
+			}
+			
+			curl_setopt($curl, CURLOPT_HEADER, false);
+			curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+			curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
+			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); 
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($curl, CURLOPT_URL, $url);
+			
+			if ($this->request->post) {
+				curl_setopt($curl, CURLOPT_POST, true);
+				curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($this->request->post));
+			}
+			
+			if (isset($this->request->get['cookie'])) {
+				curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->request->get['cookie'] . ';');
+			}
+			
+			$response = curl_exec($curl);
+	
+			if (!$response) {
+				$response = json_encode(array('error' => curl_error($curl) . '(' . curl_errno($curl) . ')'));
+			} else {
+				$json = $response;	
+			}
+					
+			curl_close($curl);
 		}
-		
-		curl_setopt($curl, CURLOPT_HEADER, false);
-		curl_setopt($curl, CURLINFO_HEADER_OUT, true);
-		curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); 
-		curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_URL, $url);
-		
-		if ($this->request->post) {
-			curl_setopt($curl, CURLOPT_POST, true);
-			curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($this->request->post));
-		}
-		
-		if ($this->request->get['cookie']) {
-			curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->request->get['cookie'] . ';');
-		}
-		
-		$response = curl_exec($curl);
-
-		if (!$response) {
-			$response = json_encode(array('error' => curl_error($curl) . '(' . curl_errno($curl) . ')'));
-		}
-				
-		curl_close($curl);
 		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-	
-	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		return !$this->error;
-	}	
 }

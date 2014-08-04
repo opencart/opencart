@@ -515,6 +515,8 @@ $('button[id^=\'button-upload\']').on('click', function() {
         $(node).prop('disabled', false);
       },
       success: function(json) {
+        $('.text-danger').remove();
+
         if (json['error']) {
           $(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
         }

@@ -21,13 +21,13 @@ h1, h2, h3, h4, h5, h6, p {
 }
 .page-header h1 {
 	font-family: 'Montserrat', sans-serif;
-	font-weight: 600;
+	font-weight: 100;
 	font-size: 24px;
-	color: #aaa;
-}
+	color: #888;
+}/*
 .page-header h1 i {
 	color: #444;
-}
+}*/
 /* fix for bootstrap hidden and visible */
 span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: inline;

@@ -475,12 +475,6 @@ class ControllerSaleOrder extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 
-		if ($this->request->server['HTTPS']) {
-			$data['store_url'] = HTTPS_CATALOG;
-		} else {
-			$data['store_url'] = HTTP_CATALOG;
-		}
-
 		if (!empty($order_info)) {
 			$data['order_id'] = $this->request->get['order_id'];
 			$data['store_id'] = $order_info['store_id'];
@@ -2058,112 +2052,25 @@ class ControllerSaleOrder extends Controller {
 
 		$this->response->setOutput($this->load->view('sale/order_shipping.tpl', $data));
 	}
-		
-	public function login() {
-		
-	}
-		
+			
 	public function api() {
+		print_r($this->request->post);
+		
+		/*
 		$json = array();
 		
 		if (!$this->user->hasPermission('modify', 'sale/order')) {
 			$json['error'] = $this->language->get('error_permission');
 		}		
 		
-		// Store
-		if (isset($this->request->get['store_id'])) {
-			$store_id = $this->request->post['store_id'];
-		} else {
-			$store_id = 0;
-		}
+		if (!isset($this->session->data['cookie'])) {
+			$json['error'] = $this->language->get('error_login');
+		}	
 			
-		$this->load->model('setting/store');
-		
-		$store_info = $this->model_setting_store->getStore($store_id);
-		
-		if ($store_info) {
-			$url = $store_info['url'];
-		} else {
-			$url = HTTP_CATALOG;
+		if (!isset($this->request->get['api'])) {
+			$json['error'] = $this->language->get('error_api');
 		}
-		
-		if (isset($this->request->get['api'])) {
-			switch ($this->request->get['api']) {
-				case 'login':
-					$this->load->model('user/api');
-					
-					$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
-					
-					if ($api_info) {
-						$this->request->post['username'] = $api_info['username'];
-						$this->request->post['password'] = $api_info['password'];
-					}
-					
-					$url .= 'index.php?route=api/login';					
-					break;				
-				case 'customer':
-					$url = 'index.php?route=api/customer';
-					break;
-				case 'cart_add':
-					$url .= 'index.php?route=api/cart/add';
-					break;	
-				case 'cart_remove':
-					$url .= 'index.php?route=api/cart/remove';
-					break;						
-				case 'voucher_add':
-					$url .= 'index.php?route=api/voucher/add';
-					break;
-				case 'voucher_remove':
-					$url .= 'index.php?route=api/voucher/remove';
-					break;						
-				case 'payment_address':
-					$url .= 'index.php?route=api/payment/address';
-					break;
-				case 'payment_methods':
-					$url .= 'index.php?route=api/payment/methods';
-					break;	
-				case 'payment_method':
-					$url .= 'index.php?route=api/payment/method';
-					break;					
-				case 'shipping_address':
-					$url .= 'index.php?route=api/shipping/address';
-					break;
-				case 'shipping_methods':
-					$url .= 'index.php?route=api/shipping/methods';
-					break;
-				case 'shipping_method':
-					$url .= 'index.php?route=api/shipping/method';
-					break;
-				case 'coupon':
-					$url .= 'index.php?route=api/coupon';
-					break;
-				case 'voucher':
-					$url .= 'index.php?route=api/voucher';
-					break;	
-				case 'reward':
-					$url .= 'index.php?route=api/reward';
-					break;															
-				case 'products':
-					$url .= 'index.php?route=api/cart/products';
-					break;
-				case 'totals':
-					$url .= 'index.php?route=api/cart/totals';
-					break;
-				case 'order_add':
-					$url .= 'index.php?route=api/order/add';
-					break;	
-				case 'order_update':
-					$url .= 'index.php?route=api/order/edit';
-					break;	
-				case 'order_delete':
-					$url .= 'index.php?route=api/order/delete';
-					break;										
-				case 'history':
-					$url .= 'index.php?route=api/order/history';
-					break;								
-			}
-		}
-		
+						
 		if (!$json) {
 			$curl = curl_init();
 			
@@ -2203,5 +2110,6 @@ class ControllerSaleOrder extends Controller {
 		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+		*/
 	}
 }

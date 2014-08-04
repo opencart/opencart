@@ -851,7 +851,7 @@ function country(element, index, zone_id) {
 				$('select[name=\'address[' + index + '][country_id]\']').after(' <i class="fa fa-cog fa-spin"></i>');
 			},
 			complete: function() {
-				$('.fa-spinner').remove();
+				$('.fa-spin').remove();
 			},			
 			success: function(json) {
 				if (json['postcode_required'] == '1') {

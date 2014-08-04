@@ -1601,7 +1601,7 @@ $('select[name=\'config_template\']').on('change', function() {
 			$('select[name=\'country_id\']').after(' <i class="fa fa-cog fa-spin"></i>');
 		},
 		complete: function() {
-			$('.fa-spinner').remove();
+			$('.fa-spin').remove();
 		},
 		success: function(html) {
 			$('#template').attr('src', html);
@@ -1623,7 +1623,7 @@ $('select[name=\'config_country_id\']').on('change', function() {
 			$('select[name=\'config_country_id\']').after(' <i class="fa fa-cog fa-spin"></i>');
 		},
 		complete: function() {
-			$('.fa-spinner').remove();
+			$('.fa-spin').remove();
 		},
 		success: function(json) {
 			html = '<option value=""><?php echo $text_select; ?></option>';

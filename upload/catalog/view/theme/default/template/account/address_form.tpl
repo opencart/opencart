@@ -293,7 +293,7 @@ $('select[name=\'country_id\']').on('change', function() {
 			$('select[name=\'country_id\']').after(' <i class="fa fa-cog fa-spin"></i>');
 		},
 		complete: function() {
-			$('.fa-spinner').remove();
+			$('.fa-spin').remove();
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {

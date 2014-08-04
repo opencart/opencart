@@ -300,6 +300,10 @@ class ControllerCheckoutCart extends Controller {
 				$quantity = 1;
 			}
 
+			if (empty($this->request->post['quantity']) || $this->request->post['quantity'] <= 0) {
+				$json['error']['quantity'] = $this->language->get('error_quantity');
+			}
+
 			if (isset($this->request->post['option'])) {
 				$option = array_filter($this->request->post['option']);
 			} else {

@@ -168,9 +168,11 @@ $('select[name=\'country_id\']').on('change', function() {
 			$('select[name=\'country_id\']').after(' <i class="fa fa-cog fa-spin"></i>');
 		},
 		complete: function() {
-			$('.fa-spinner').remove();
+			$('.fa-spin').remove();
 		},
 		success: function(json) {
+      $('.fa-spin').remove();
+
 			if (json['postcode_required'] == '1') {
 				$('input[name=\'postcode\']').parent().parent().addClass('required');
 			} else {
@@ -185,9 +187,9 @@ $('select[name=\'country_id\']').on('change', function() {
 
 					if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
 						html += ' selected="selected"';
-			  		}
+					}
 
-			  		html += '>' + json['zone'][i]['name'] + '</option>';
+					html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
 				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
@@ -196,7 +198,7 @@ $('select[name=\'country_id\']').on('change', function() {
 			$('select[name=\'zone_id\']').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
-		   alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 });

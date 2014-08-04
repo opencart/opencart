@@ -47,7 +47,9 @@ class ControllerCheckoutVoucher extends Controller {
 
 		$voucher_info = $this->model_checkout_voucher->getVoucher($voucher);
 
-		if ($voucher_info) {
+		if (empty($this->request->post['voucher'])) {
+			$json['error'] = $this->language->get('error_empty');
+		} elseif ($voucher_info) {
 			$this->session->data['voucher'] = $this->request->post['voucher'];
 
 			$this->session->data['success'] = $this->language->get('text_success');

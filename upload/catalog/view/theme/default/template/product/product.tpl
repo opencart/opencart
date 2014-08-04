@@ -450,6 +450,10 @@ $('#button-cart').on('click', function() {
             $('.alert, .text-danger').remove();
 
             if (json['error']) {
+              if (json['error']['quantity']) {
+                $('#input-quantity').after('<div class="text-danger">' + json['error']['quantity'] + '</div>');
+              }
+
               if (json['error']['option']) {
                 for (i in json['error']['option']) {
                   $('#input-option' + i).after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
@@ -515,6 +519,8 @@ $('button[id^=\'button-upload\']').on('click', function() {
         $(node).prop('disabled', false);
       },
       success: function(json) {
+        $('.text-danger').remove();
+
         if (json['error']) {
           $(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
         }

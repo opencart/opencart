@@ -281,21 +281,27 @@ $('select[name=\'country_id\']').on('change', function() {
 		},
 		complete: function() {
 			$('.fa-spin').remove();
+<<<<<<< HEAD
 		},			
+=======
+		},
+>>>>>>> 883b36e12eac23da50eac38f51ab5663f2ca028c
 		success: function(json) {
+      $('.fa-spin').remove();
+
 			if (json['postcode_required'] == '1') {
 				$('input[name=\'postcode\']').parent().parent().addClass('required');
 			} else {
 				$('input[name=\'postcode\']').parent().parent().removeClass('required');
 			}
-			
+
 			html = '<option value=""><?php echo $text_select; ?></option>';
-			
+
 			if (json['zone']) {
 				for (i = 0; i < json['zone'].length; i++) {
 					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 
-                 	if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
+          if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
 						html += ' selected="selected"';
 					}
 
@@ -314,14 +320,14 @@ $('select[name=\'country_id\']').on('change', function() {
 });
 
 $('select[name=\'country_id\']').trigger('change');
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('input[name=\'payment\']').on('change', function() {
 	$('.payment').hide();
-	
+
 	$('#payment-' + this.value).show();
 });
 
 $('input[name=\'payment\']:checked').trigger('change');
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

@@ -85,7 +85,7 @@
       </div>
     </fieldset>
     <?php foreach ($custom_fields as $custom_field) { ?>
-    
+
     <?php if ($custom_field['type'] == 'select') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -100,8 +100,8 @@
         <?php } ?>
       </select>
     </div>
-    <?php } ?>    
-    
+    <?php } ?>
+
     <?php if ($custom_field['type'] == 'radio') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label"><?php echo $custom_field['name']; ?></label>
@@ -122,7 +122,7 @@
       </div>
     </div>
     <?php } ?>
-    
+
     <?php if ($custom_field['type'] == 'checkbox') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label"><?php echo $custom_field['name']; ?></label>
@@ -143,29 +143,29 @@
       </div>
     </div>
     <?php } ?>
-    
+
     <?php if ($custom_field['type'] == 'text') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
       <input type="text" name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($guest_custom_field[$custom_field['custom_field_id']]) ? $guest_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
     </div>
     <?php } ?>
-    
+
     <?php if ($custom_field['type'] == 'textarea') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
       <textarea name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>]" rows="5" placeholder="<?php echo $custom_field['name']; ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control"><?php echo (isset($guest_custom_field[$custom_field['custom_field_id']]) ? $guest_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></textarea>
     </div>
     <?php } ?>
-    
+
     <?php if ($custom_field['type'] == 'file') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label"><?php echo $custom_field['name']; ?></label>
       <button type="button" id="button-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
       <input type="hidden" name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($guest_custom_field[$custom_field['custom_field_id']]) ? $guest_custom_field[$custom_field['custom_field_id']] : ''); ?>" />
     </div>
-    <?php } ?>    
-    
+    <?php } ?>
+
     <?php if ($custom_field['type'] == 'date') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -176,7 +176,7 @@
         </span></div>
     </div>
     <?php } ?>
-    
+
     <?php if ($custom_field['type'] == 'time') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -187,7 +187,7 @@
         </span></div>
     </div>
     <?php } ?>
-    
+
     <?php if ($custom_field['type'] == 'datetime') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -198,7 +198,7 @@
         </span></div>
     </div>
     <?php } ?>
-    
+
     <?php } ?>
   </div>
 </div>
@@ -222,16 +222,16 @@
 $('#collapse-payment-address input[name=\'customer_group_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=checkout/checkout/custom_field&customer_group_id=' + this.value,
-		dataType: 'json',	
+		dataType: 'json',
 		success: function(json) {
 			$('#collapse-payment-address .custom-field').hide();
 			$('#collapse-payment-address .custom-field').removeClass('required');
-			
+
 			for (i = 0; i < json.length; i++) {
 				custom_field = json[i];
-				
+
 				$('#payment-custom-field' + custom_field['custom_field_id']).show();
-				
+
 				if (custom_field['required']) {
 					$('#payment-custom-field' + custom_field['custom_field_id']).addClass('required');
 				} else {
@@ -246,57 +246,67 @@ $('#collapse-payment-address input[name=\'customer_group_id\']').on('change', fu
 });
 
 $('#collapse-payment-address input[name=\'customer_group_id\']:checked').trigger('change');
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#collapse-payment-address select[name=\'country_id\']').on('change', function() {
-    $.ajax({
-        url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
-        dataType: 'json',
-        beforeSend: function() {
+  $.ajax({
+    url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
+    dataType: 'json',
+    beforeSend: function() {
 			$('#collapse-payment-address select[name=\'country_id\']').after(' <i class="fa fa-cog fa-spin"></i>');
+<<<<<<< HEAD
         },
         complete: function() {
             $('.fa-spin').remove();
         },          
         success: function(json) {
+=======
+    },
+    complete: function() {
+      $('.fa-spin').remove();
+    },
+    success: function(json) {
+      $('.fa-spin').remove();
+
+>>>>>>> 883b36e12eac23da50eac38f51ab5663f2ca028c
 			if (json['postcode_required'] == '1') {
 				$('#collapse-payment-address input[name=\'postcode\']').parent().parent().addClass('required');
 			} else {
 				$('#collapse-payment-address input[name=\'postcode\']').parent().parent().removeClass('required');
 			}
-            
-            html = '<option value=""><?php echo $text_select; ?></option>';
-            
-            if (json['zone']) {
-                for (i = 0; i < json['zone'].length; i++) {
-                    html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-                    
-                    if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
-                        html += ' selected="selected"';
-                    }
-    
-                    html += '>' + json['zone'][i]['name'] + '</option>';
-                }
-            } else {
-                html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
-            }
-            
-            $('#collapse-payment-address select[name=\'zone_id\']').html(html);
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+
+      html = '<option value=""><?php echo $text_select; ?></option>';
+
+      if (json['zone']) {
+        for (i = 0; i < json['zone'].length; i++) {
+          html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+
+          if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
+            html += ' selected="selected"';
+          }
+
+          html += '>' + json['zone'][i]['name'] + '</option>';
         }
-    });
+      } else {
+        html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
+      }
+
+      $('#collapse-payment-address select[name=\'zone_id\']').html(html);
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+      alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+    }
+  });
 });
 
 $('#collapse-payment-address select[name=\'country_id\']').trigger('change');
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('click', function() {
 	var node = this;
-	
+
 	$('#form-upload').remove();
-	
+
 	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
 
 	$('#form-upload input[name=\'file\']').trigger('click');
@@ -304,38 +314,38 @@ $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('c
 	$('#form-upload input[name=\'file\']').on('change', function() {
 		$.ajax({
 			url: 'index.php?route=checkout/checkout/upload',
-			type: 'post',		
+			type: 'post',
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
 			cache: false,
 			contentType: false,
-			processData: false,		
+			processData: false,
 			beforeSend: function() {
 				$(node).find('i').replaceWith('<i class="fa fa-cog fa-spin"></i>');
 				$(node).prop('disabled', true);
 			},
 			complete: function() {
 				$(node).find('i').replaceWith('<i class="fa fa-upload"></i>');
-				$(node).prop('disabled', false);			
-			},		
+				$(node).prop('disabled', false);
+			},
 			success: function(json) {
 				if (json['error']) {
 					$(node).parent().find('input[name^=\'custom_field\']').after('<div class="text-danger">' + json['error'] + '</div>');
 				}
-							
+
 				if (json['success']) {
 					alert(json['success']);
-					
+
 					$(node).parent().find('input[name^=\'custom_field\']').attr('value', json['file']);
 				}
-			},			
+			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
 	});
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false

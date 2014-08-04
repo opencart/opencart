@@ -761,11 +761,17 @@ $('select[name=\'config_template\']').on('change', function() {
 		dataType: 'html',
 		beforeSend: function() {
 			$('select[name=\'country_id\']').after(' <i class="fa fa-cog fa-spin"></i>');
-		},		
+		},
 		complete: function() {
 			$('.fa-spin').remove();
+<<<<<<< HEAD
 		},			
+=======
+		},
+>>>>>>> 883b36e12eac23da50eac38f51ab5663f2ca028c
 		success: function(html) {
+      $('.fa-spin').remove();
+
 			$('#template').attr('src', html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -775,7 +781,7 @@ $('select[name=\'config_template\']').on('change', function() {
 });
 
 $('select[name=\'config_template\']').trigger('change');
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('select[name=\'config_country_id\']').on('change', function() {
 	$.ajax({
@@ -783,27 +789,33 @@ $('select[name=\'config_country_id\']').on('change', function() {
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'config_country_id\']').after(' <i class="fa fa-cog fa-spin"></i>');
-		},		
+		},
 		complete: function() {
 			$('.fa-spin').remove();
+<<<<<<< HEAD
 		},			
+=======
+		},
+>>>>>>> 883b36e12eac23da50eac38f51ab5663f2ca028c
 		success: function(json) {
+      $('.fa-spin').remove();
+
 			html = '<option value=""><?php echo $text_select; ?></option>';
-			
+
 			if (json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
-        			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-	    			
+          html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+
 					if (json['zone'][i]['zone_id'] == '<?php echo $config_zone_id; ?>') {
-	      				html += ' selected="selected"';
-	    			}
-	
-	    			html += '>' + json['zone'][i]['name'] + '</option>';
+            html += ' selected="selected"';
+          }
+
+          html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
 				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
 			}
-			
+
 			$('select[name=\'config_zone_id\']').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -813,5 +825,5 @@ $('select[name=\'config_country_id\']').on('change', function() {
 });
 
 $('select[name=\'config_country_id\']').trigger('change');
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

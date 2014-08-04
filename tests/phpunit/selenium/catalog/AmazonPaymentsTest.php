@@ -168,7 +168,7 @@ class CatalogAmazonPaymentsTest extends OpenCartSeleniumTest {
 		
 		$element = $this->byCssSelector('h2');
 		
-		$this->assertEquals('Your Order Has Been Processed!', $element->text());
+		$this->assertEquals('Your order has been placed!', $element->text());
 		
 	}
 }

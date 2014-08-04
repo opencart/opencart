@@ -7045,7 +7045,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (3337, 215, 'CKR', 'Çankırı', 1),
 (3338, 215, 'COR', 'Çorum', 1),
 (3339, 215, 'DEN', 'Denizli', 1),
-(3340, 215, 'DIY', 'Diyarbakir', 1),
+(3340, 215, 'DIY', 'Diyarbakır', 1),
 (3341, 215, 'DUZ', 'Düzce', 1),
 (3342, 215, 'EDI', 'Edirne', 1),
 (3343, 215, 'ELA', 'Elazığ', 1),

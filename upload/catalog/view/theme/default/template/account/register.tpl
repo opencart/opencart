@@ -379,7 +379,6 @@
 
 <script type="text/javascript"><!--
 $('select[name=\'country_id\']').on('change', function() {
-<<<<<<< HEAD
 	$.ajax({
 		url: 'index.php?route=account/account/country&country_id=' + this.value,
 		dataType: 'json',
@@ -390,25 +389,6 @@ $('select[name=\'country_id\']').on('change', function() {
 			$('.fa-spin').remove();
 		},
 		success: function(json) {
-			if (json['postcode_required'] == '1') {
-				$('input[name=\'postcode\']').parent().parent().addClass('required');
-			} else {
-				$('input[name=\'postcode\']').parent().parent().removeClass('required');
-			}
-=======
-  $.ajax({
-    url: 'index.php?route=account/account/country&country_id=' + this.value,
-    dataType: 'json',
-    beforeSend: function() {
-      $('select[name=\'country_id\']').after(' <i class="fa fa-cog fa-spin"></i>');
-    },
-    complete: function() {
-      $('.fa-spin').remove();
-    },
-    success: function(json) {
-      $('.fa-spin').remove();
->>>>>>> 883b36e12eac23da50eac38f51ab5663f2ca028c
-
       if (json['postcode_required'] == '1') {
         $('input[name=\'postcode\']').parent().parent().addClass('required');
       } else {

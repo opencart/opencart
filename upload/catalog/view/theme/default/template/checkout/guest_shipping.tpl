@@ -223,11 +223,7 @@ $('#collapse-shipping-address select[name=\'country_id\']').on('change', functio
 		},
 		complete: function() {
 			$('.fa-spin').remove();
-<<<<<<< HEAD
-		},			
-=======
 		},
->>>>>>> 883b36e12eac23da50eac38f51ab5663f2ca028c
 		success: function(json) {
       $('.fa-spin').remove();
 

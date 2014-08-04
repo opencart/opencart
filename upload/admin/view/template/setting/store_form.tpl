@@ -764,11 +764,7 @@ $('select[name=\'config_template\']').on('change', function() {
 		},
 		complete: function() {
 			$('.fa-spin').remove();
-<<<<<<< HEAD
-		},			
-=======
 		},
->>>>>>> 883b36e12eac23da50eac38f51ab5663f2ca028c
 		success: function(html) {
       $('.fa-spin').remove();
 
@@ -792,11 +788,7 @@ $('select[name=\'config_country_id\']').on('change', function() {
 		},
 		complete: function() {
 			$('.fa-spin').remove();
-<<<<<<< HEAD
-		},			
-=======
 		},
->>>>>>> 883b36e12eac23da50eac38f51ab5663f2ca028c
 		success: function(json) {
       $('.fa-spin').remove();
 

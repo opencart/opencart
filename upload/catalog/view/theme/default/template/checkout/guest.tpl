@@ -254,21 +254,11 @@ $('#collapse-payment-address select[name=\'country_id\']').on('change', function
     dataType: 'json',
     beforeSend: function() {
 			$('#collapse-payment-address select[name=\'country_id\']').after(' <i class="fa fa-cog fa-spin"></i>');
-<<<<<<< HEAD
-        },
-        complete: function() {
-            $('.fa-spin').remove();
-        },          
-        success: function(json) {
-=======
     },
     complete: function() {
       $('.fa-spin').remove();
     },
     success: function(json) {
-      $('.fa-spin').remove();
-
->>>>>>> 883b36e12eac23da50eac38f51ab5663f2ca028c
 			if (json['postcode_required'] == '1') {
 				$('#collapse-payment-address input[name=\'postcode\']').parent().parent().addClass('required');
 			} else {

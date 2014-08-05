@@ -32,6 +32,7 @@ define('DIR_DATABASE', DIR_SYSTEM . 'database/');
 define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
 define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');
 define('DIR_CONFIG', DIR_SYSTEM . 'config/');
+define('DIR_MODIFICATION', DIR_SYSTEM . 'modification/');
 
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
@@ -129,7 +130,7 @@ function valid($options) {
 function install($options) {
 	$check = check_requirements();
 	if ($check[0]) {
-		setup_mysql($options);
+		setup_db($options);
 		write_config_files($options);
 		dir_permissions();
 	} else {
@@ -177,7 +178,7 @@ function check_requirements() {
 }
 
 
-function setup_mysql($dbdata) {
+function setup_db($dbdata) {
 	global $loader, $registry;
 	$loader->model('install');
 	$model = $registry->get('model_install');

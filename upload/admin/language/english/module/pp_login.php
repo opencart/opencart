@@ -34,7 +34,7 @@ $_['help_customer_group']   = 'For new customers, which Customer Group should th
 $_['help_seamless']         = 'Allows auto-login when customers choose PayPal Express Checkout. To use this, the option must be enabled in your Log in With PayPal account. You must also use the same account as the one used in Express Checkout.';
 $_['help_locale']           = 'This is the PayPal locale setting for your stores %s language';
 $_['help_debug_logging']    = 'Enabling this will allow data to be added to your error log to help debug any problems.';
-$_['help_return_url']       = 'This needs to be added in the PayPal App configuration under App redirect URLs.';
+$_['help_return_url']       = 'This needs to be added in the PayPal app configuration under app redirect URLs.';
 
 //Error
 $_['error_permission']      = 'Warning: You do not have permission to modify module Log In with PayPal!';

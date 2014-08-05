@@ -896,7 +896,9 @@ $('#history').delegate('.pagination a', 'click', function(e) {
 
 $('#history').load('index.php?route=sale/customer/history&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
 
-$('#button-history').on('click', function() {
+$('#button-history').on('click', function(e) {
+  e.preventDefault();
+
 	$.ajax({
 		url: 'index.php?route=sale/customer/history&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>',
 		type: 'post',
@@ -929,8 +931,10 @@ $('#transaction').delegate('.pagination a', 'click', function(e) {
 
 $('#transaction').load('index.php?route=sale/customer/transaction&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
 
-$('#button-transaction').on('click', function() {
-	$.ajax({
+$('#button-transaction').on('click', function(e) {
+  e.preventDefault();
+
+  $.ajax({
 		url: 'index.php?route=sale/customer/transaction&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>',
 		type: 'post',
 		dataType: 'html',
@@ -963,7 +967,9 @@ $('#reward').delegate('.pagination a', 'click', function(e) {
 
 $('#reward').load('index.php?route=sale/customer/reward&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
 
-$('#button-reward').on('click', function() {	
+$('#button-reward').on('click', function(e) {
+  e.preventDefault();
+
 	$.ajax({
 		url: 'index.php?route=sale/customer/reward&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>',
 		type: 'post',

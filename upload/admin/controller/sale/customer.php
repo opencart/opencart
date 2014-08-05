@@ -888,11 +888,11 @@ class ControllerSaleCustomer extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
+		if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
 			$this->error['firstname'] = $this->language->get('error_firstname');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+		if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
 			$this->error['lastname'] = $this->language->get('error_lastname');
 		}
 
@@ -1002,6 +1002,18 @@ class ControllerSaleCustomer extends Controller {
 		return !$this->error;
 	}
 
+	protected function validateHistory() {
+		if (!$this->user->hasPermission('modify', 'sale/customer')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		if (!isset($this->request->post['comment']) || utf8_strlen($this->request->post['comment']) < 1) {
+			$this->error['warning'] = $this->language->get('error_comment');
+		}
+
+		return !$this->error;
+	}
+
 	public function login() {
 		$json = array();
 
@@ -1069,7 +1081,7 @@ class ControllerSaleCustomer extends Controller {
 
 		$this->load->model('sale/customer');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->user->hasPermission('modify', 'sale/customer')) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateHistory()) {
 			$this->model_sale_customer->addHistory($this->request->get['customer_id'], $this->request->post['comment']);
 
 			$data['success'] = $this->language->get('text_success');
@@ -1077,8 +1089,8 @@ class ControllerSaleCustomer extends Controller {
 			$data['success'] = '';
 		}
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && !$this->user->hasPermission('modify', 'sale/customer')) {
-			$data['error_warning'] = $this->language->get('error_permission');
+		if (isset($this->error['warning'])) {
+			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
 		}

@@ -448,30 +448,30 @@ $('#button-cart').on('click', function() {
 		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();
-			
+
 			if (json['error']) {
 				if (json['error']['quantity']) {
 					$('#input-quantity').after('<div class="text-danger">' + json['error']['quantity'] + '</div>');
 				}
-			  
+
 				if (json['error']['option']) {
 					for (i in json['error']['option']) {
 						$('#input-option' + i).after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
 					}
 				}
-				
+
 				if (json['error']['profile']) {
 					$('select[name=\'profile_id\']').after('<div class="text-danger">' + json['error']['profile'] + '</div>');
 				}
 			}
-			
+
 			if (json['success']) {
 				$('.breadcrumb').after('<div class="alert alert-success">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				
+
 				$('#cart-total').html(json['total']);
-				
+
 				$('html, body').animate({ scrollTop: 0 }, 'slow');
-				
+
 				$('#cart > ul').load('index.php?route=common/cart/info ul li');
 			}
 		}
@@ -494,13 +494,13 @@ $('.time').datetimepicker({
 
 $('button[id^=\'button-upload\']').on('click', function() {
 	var node = this;
-	
+
 	$('#form-upload').remove();
-	
+
 	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
-	
+
 	$('#form-upload input[name=\'file\']').trigger('click');
-	
+
 	$('#form-upload input[name=\'file\']').on('change', function() {
 		$.ajax({
 			url: 'index.php?route=product/product/upload',
@@ -520,14 +520,14 @@ $('button[id^=\'button-upload\']').on('click', function() {
 			},
 			success: function(json) {
 				$('.text-danger').remove();
-				
+
 				if (json['error']) {
 					$(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
 				}
-				
+
 				if (json['success']) {
 					alert(json['success']);
-					
+
 					$(node).parent().find('input').attr('value', json['code']);
 				}
 			},
@@ -562,19 +562,19 @@ $('#button-review').on('click', function() {
 		},
 		complete: function() {
 			$('#button-review').button('reset');
-			$('#captcha').attr('src', 'index.php?route=tool/captcha');
+			$('#captcha').attr('src', 'index.php?route=tool/captcha#'+new Date().getTime());
 			$('input[name=\'captcha\']').val('');
 		},
 		success: function(json) {
 			$('.alert-success, .alert-danger').remove();
-			
+
 			if (json['error']) {
 				$('#review').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
-			
+
 			if (json['success']) {
 				$('#review').after('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
-				
+
 				$('input[name=\'name\']').val('');
 				$('textarea[name=\'text\']').val('');
 				$('input[name=\'rating\']:checked').prop('checked', false);

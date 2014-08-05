@@ -219,7 +219,7 @@ $('#collapse-shipping-address select[name=\'country_id\']').on('change', functio
 		url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('#collapse-shipping-address select[name=\'country_id\']').after(' <i class="fa fa-cog fa-spin"></i>');
+			$('#collapse-shipping-address select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
 		},
 		complete: function() {
 			$('.fa-spin').remove();
@@ -279,7 +279,7 @@ $('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on(
 			contentType: false,
 			processData: false,
 			beforeSend: function() {
-				$(node).find('i').replaceWith('<i class="fa fa-cog fa-spin"></i>');
+				$(node).find('i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 				$(node).prop('disabled', true);
 			},
 			complete: function() {

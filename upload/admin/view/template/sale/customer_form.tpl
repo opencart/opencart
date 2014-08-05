@@ -848,7 +848,7 @@ function country(element, index, zone_id) {
 			url: 'index.php?route=sale/customer/country&token=<?php echo $token; ?>&country_id=' + element.value,
 			dataType: 'json',
 			beforeSend: function() {
-				$('select[name=\'address[' + index + '][country_id]\']').after(' <i class="fa fa-cog fa-spin"></i>');
+				$('select[name=\'address[' + index + '][country_id]\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
 			},
 			complete: function() {
 				$('.fa-spin').remove();
@@ -905,7 +905,7 @@ $('#button-history').on('click', function(e) {
 		dataType: 'html',
 		data: 'comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
 		beforeSend: function() {
-			$('#button-history i').replaceWith('<i class="fa fa-cog fa-spin"></i>');
+			$('#button-history i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 			$('#button-history').prop('disabled', true);
 		},
 		complete: function() {
@@ -940,7 +940,7 @@ $('#button-transaction').on('click', function(e) {
 		dataType: 'html',
 		data: 'description=' + encodeURIComponent($('#tab-transaction input[name=\'description\']').val()) + '&amount=' + encodeURIComponent($('#tab-transaction input[name=\'amount\']').val()),
 		beforeSend: function() {
-			$('#button-transaction i').replaceWith('<i class="fa fa-cog fa-spin"></i>');
+			$('#button-transaction i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 			$('#button-transaction').prop('disabled', true);
 		},
 		complete: function() {
@@ -976,7 +976,7 @@ $('#button-reward').on('click', function(e) {
 		dataType: 'html',
 		data: 'description=' + encodeURIComponent($('#tab-reward input[name=\'description\']').val()) + '&points=' + encodeURIComponent($('#tab-reward input[name=\'points\']').val()),
 		beforeSend: function() {
-			$('#button-reward i').replaceWith('<i class="fa fa-cog fa-spin"></i>');
+			$('#button-reward i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 			$('#button-reward').prop('disabled', true);
 		},
 		complete: function() {
@@ -1011,7 +1011,7 @@ $('body').delegate('.button-ban-add', 'click', function() {
 		dataType: 'json',
 		data: 'ip=' + encodeURIComponent(this.value),
 		beforeSend: function() {
-			$(element).find('i').replaceWith('<i class="fa fa-cog fa-spin"></i>');
+			$(element).find('i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 		},
 		complete: function() {
 			$(element).find('i').replaceWith('<i class="fa fa-plus-circle"></i>');
@@ -1043,7 +1043,7 @@ $('body').delegate('.button-ban-remove', 'click', function() {
 		dataType: 'json',
 		data: 'ip=' + encodeURIComponent(this.value),
 		beforeSend: function() {
-			$(element).find('i').replaceWith('<i class="fa fa-cog fa-spin"></i>');
+			$(element).find('i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 		},	
 		complete: function() {
 			$(element).find('i').replaceWith('<i class="fa fa-plus-circle"></i>');

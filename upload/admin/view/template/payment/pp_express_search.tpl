@@ -137,7 +137,7 @@
       </form>
     </div>
     <div id="search_box" style="display:none;">
-      <div id="searching"><i class="fa fa-cog fa-spin fa-lg"></i> <?php echo $text_searching; ?></div>
+      <div id="searching"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i> <?php echo $text_searching; ?></div>
       <div style="display:none;" id="error" class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $attention; ?>
         <button type="button" class="close" data-dismiss="alert">&times;</button>
       </div>

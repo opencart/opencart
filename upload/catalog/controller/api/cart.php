@@ -155,6 +155,7 @@ class ControllerApiCart extends Controller {
 					'option'     => $option_data,
 					'quantity'   => $product['quantity'],
 					'stock'      => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
+					'shipping'   => $product['shipping'],	
 					'price'      => $product['price'],	
 					'total'      => $product['total'],	
 					'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),

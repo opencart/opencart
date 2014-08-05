@@ -760,7 +760,7 @@ $('select[name=\'config_template\']').on('change', function() {
 		url: 'index.php?route=setting/setting/template&token=<?php echo $token; ?>&template=' + encodeURIComponent(this.value),
 		dataType: 'html',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after(' <i class="fa fa-cog fa-spin"></i>');
+			$('select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
 		},
 		complete: function() {
 			$('.fa-spin').remove();
@@ -784,7 +784,7 @@ $('select[name=\'config_country_id\']').on('change', function() {
 		url: 'index.php?route=setting/store/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'config_country_id\']').after(' <i class="fa fa-cog fa-spin"></i>');
+			$('select[name=\'config_country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
 		},
 		complete: function() {
 			$('.fa-spin').remove();

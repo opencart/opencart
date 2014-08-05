@@ -35,7 +35,7 @@ function refund() {
     url: 'index.php?route=payment/pp_payflow_iframe/dorefund&token=<?php echo $token; ?>',
 
     beforeSend: function () {
-      $('#button-refund').after('<span class="btn btn-primary loading"><i class="fa fa-cog fa-spin fa-lg"></i></span>');
+      $('#button-refund').after('<span class="btn btn-primary loading"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>');
       $('#button-refund').hide();
     },
 

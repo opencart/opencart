@@ -562,7 +562,7 @@ $('#button-review').on('click', function() {
 		},
 		complete: function() {
 			$('#button-review').button('reset');
-			$('#captcha').attr('src', 'index.php?route=tool/captcha');
+			$('#captcha').attr('src', 'index.php?route=tool/captcha#'+new Date().getTime());
 			$('input[name=\'captcha\']').val('');
 		},
 		success: function(json) {

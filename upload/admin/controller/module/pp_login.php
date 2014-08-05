@@ -30,6 +30,7 @@ class ControllerModulePPLogin extends Controller {
 		$data['text_blue_button'] = $this->language->get('text_blue_button');
         $data['text_yes'] = $this->language->get('text_yes');
         $data['text_no'] = $this->language->get('text_no');
+		$data['text_return_url'] = $this->language->get('text_return_url');
 
         $data['entry_client_id'] = $this->language->get('entry_client_id');
         $data['entry_secret'] = $this->language->get('entry_secret');
@@ -48,6 +49,7 @@ class ControllerModulePPLogin extends Controller {
 		$data['help_customer_group'] = $this->language->get('help_customer_group');
 		$data['help_seamless'] = $this->language->get('help_seamless');
 		$data['help_debug_logging'] = $this->language->get('help_debug_logging');
+		$data['help_return_url'] = $this->language->get('help_return_url');
         
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -200,6 +202,8 @@ class ControllerModulePPLogin extends Controller {
 		);
 		
 		$data['pp_login_locale_saved'] = $this->config->get('pp_login_locale');
+		
+		$data['pp_login_return_url'] = HTTPS_CATALOG . 'index.php?route=module/pp_login/login';
 				
 		$this->load->model('design/layout');
 		

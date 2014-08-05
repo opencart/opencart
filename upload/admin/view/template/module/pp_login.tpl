@@ -115,6 +115,13 @@
 		  </select><span class="help-block"><?php echo $language['help_locale']; ?></span></div>
 	  </div>
 	  <?php } ?>
+      <div class="form-group">
+        <label class="col-sm-2 control-label"><?php echo $text_return_url; ?></label>
+        <div class="col-sm-10">
+          <input type="text" readonly="readonly" id="return-url" value="<?php echo $pp_login_return_url; ?>" class="form-control" />
+		  <span class="help-block"><?php echo $help_return_url; ?></span>
+        </div>
+      </div>
 	  <div class="form-group">
 		<label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
 		<div class="col-sm-10">

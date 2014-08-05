@@ -36,11 +36,9 @@ class ControllerReportProductViewed extends Controller {
 			'limit' => $this->config->get('config_limit_admin')
 		);
 
-		$product_viewed_total = $this->model_report_product->getTotalProductsViewed($filter_data);
-
-		$product_viewed_total = $this->model_report_product->getTotalProductViews();
-
 		$data['products'] = array();
+
+		$product_viewed_total = $this->model_report_product->getTotalProductsViewed();
 
 		$results = $this->model_report_product->getProductsViewed($filter_data);
 
@@ -104,8 +102,9 @@ class ControllerReportProductViewed extends Controller {
 		$pagination->url = $this->url->link('report/product_viewed', 'token=' . $this->session->data['token'] . '&page={page}', 'SSL');
 
 		$data['pagination'] = $pagination->render();
+		$limit = $this->config->get('config_limit_admin');
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($product_viewed_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($product_viewed_total - $this->config->get('config_limit_admin'))) ? $product_viewed_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $product_viewed_total, ceil($product_viewed_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($pagination->total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($pagination->total - $limit)) ? $pagination->total : ((($page - 1) * $limit) + $limit), $pagination->total, ceil($pagination->total / $limit));
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');

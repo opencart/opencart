@@ -760,72 +760,7 @@ class ControllerProductProduct extends Controller {
 				$allowed[] = trim($filetype);
 			}
 							
-			$mime_type = false;
-			$file = $this->request->files['file'];
-			
-			// We'll need this to validate the MIME info string (e.g. text/plain; charset=us-ascii)
-			$regexp = '/^([a-z\-]+\/[a-z0-9\-\.\+]+)(;\s.+)?$/';
-
-			// Fileinfo extension - most reliable method
-			if (function_exists('finfo_file')) {
-				$finfo = finfo_open(FILEINFO_MIME);
-				
-				// It is possible that a false value is returned, if there is no magic MIME database file found on the system
-				if (is_resource($finfo)) {
-					$mime = @finfo_file($finfo, $file['tmp_name']);
-					finfo_close($finfo);
-
-					if (is_string($mime) && preg_match($regexp, $mime, $matches)) {
-						$mime_type = $matches[1];
-					}
-				}
-			} elseif (DIRECTORY_SEPARATOR !== '\\') {
-				// Attempt to get the mime type using built in system commands, as long as we're not on a Windows system
-				
-				$cmd = 'file --brief --mime ' . escapeshellarg($file['tmp_name']) . ' 2>&1';
-
-				if (function_exists('exec')) {
-				
-					$mime = @exec($cmd, $mime, $return_status);
-					if ($return_status === 0 && is_string($mime) && preg_match($regexp, $mime, $matches)) {
-						$mime_type = $matches[1];
-					}
-				} elseif ( (bool) @ini_get('safe_mode') === false && function_exists('shell_exec')) {
-					$mime = @shell_exec($cmd);
-					
-					if (strlen($mime) > 0) {
-						$mime = explode("\n", trim($mime));
-						if (preg_match($regexp, $mime[(count($mime) - 1)], $matches)) {
-							$mime_type = $matches[1];
-						}
-					}
-				} elseif (function_exists('popen')) {
-					$proc = @popen($cmd, 'r');
-					
-					if (is_resource($proc)) {
-						$mime = @fread($proc, 512);
-						@pclose($proc);
-						
-						if ($mime !== false) {
-							$mime = explode("\n", trim($mime));
-							
-							if (preg_match($regexp, $mime[(count($mime) - 1)], $matches)) {
-								$mime_type = $matches[1];
-							}
-						}
-					}
-				}
-				
-			} elseif (function_exists('mime_content_type')) {
-				// Fall back to the deprecated mime_content_type(), if available (still better than $_FILES[$field]['type'])
-				$mime_type = @mime_content_type($file['tmp_name']);
-				
-			} else {
-				// If all other methods have failed, we fall back to the value of $_FILES[$field]['type'] which is easily spoofed on the client side
-				$mime_type = $file['type'];
-			}
-
-			if (!in_array($mime_type, $allowed)) {
+			if (!in_array($this->request->files['file']['type'], $allowed)) {
 				$json['error'] = $this->language->get('error_filetype');
 			}
 			

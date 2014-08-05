@@ -24,7 +24,7 @@
         <?php if ($realex_order['void_status'] == 0) { ?>
           <input type="text" width="10" id="capture_amount" value="<?php echo $realex_order['total']; ?>"/>
           <a class="button btn btn-primary" id="btn_capture"><?php echo $btn_capture; ?></a>
-          <span class="btn btn-primary" id="img_loading_capture" style="display:none;"><i class="fa fa-cog fa-spin fa-lg"></i></span>
+          <span class="btn btn-primary" id="img_loading_capture" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
         <?php } ?>
       <?php } ?>
     </td>
@@ -37,7 +37,7 @@
       <?php } else { ?>
       <span class="void_text"><?php echo $text_no; ?></span>&nbsp;&nbsp;
       <a class="button btn btn-primary" id="btn_void"><?php echo $btn_void; ?></a>
-      <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-cog fa-spin fa-lg"></i></span>
+      <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
       <?php } ?>
     </td>
   </tr>
@@ -52,7 +52,7 @@
         <?php if ($realex_order['total_captured'] > 0 && $realex_order['void_status'] == 0) { ?>
           <input type="text" width="10" id="rebate_amount" />
           <a class="button btn btn-primary" id="btn_rebate"><?php echo $btn_rebate; ?></a>
-          <span class="btn btn-primary" id="img_loading_rebate" style="display:none;"><i class="fa fa-cog fa-spin fa-lg"></i></span>
+          <span class="btn btn-primary" id="img_loading_rebate" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
         <?php } ?>
       <?php } ?>
     </td>

@@ -23,7 +23,7 @@
 
         <?php if ($firstdata_order['void_status'] == 0) { ?>
           <a class="button btn btn-primary" id="btn_capture"><?php echo $btn_capture; ?></a>
-          <span class="btn btn-primary" id="img_loading_capture" style="display:none;"><i class="fa fa-cog fa-spin fa-lg"></i></span>
+          <span class="btn btn-primary" id="img_loading_capture" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
         <?php } ?>
       <?php } ?>
     </td>
@@ -37,7 +37,7 @@
       <span class="void_text"><?php echo $text_no; ?></span>&nbsp;&nbsp;
         <?php if ($firstdata_order['capture_status'] == 0 ) { ?>
           <a class="button btn btn-primary" id="btn_void"><?php echo $btn_void; ?></a>
-          <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-cog fa-spin fa-lg"></i></span>
+          <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
         <?php } ?>
       <?php } ?>
     </td>
@@ -51,7 +51,7 @@
         <span class="refund_text"><?php echo $text_no; ?></span>&nbsp;&nbsp;
 
         <a class="button btn btn-primary" id="btn_refund" <?php if ($firstdata_order['capture_status'] == 0 || $firstdata_order['void_status'] == 1) { echo 'style="display:none;"'; } ?>><?php echo $btn_refund; ?></a>
-        <span class="btn btn-primary" id="img_loading_refund" style="display:none;"><i class="fa fa-cog fa-spin fa-lg"></i></span>
+        <span class="btn btn-primary" id="img_loading_refund" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
       <?php } ?>
     </td>
   </tr>

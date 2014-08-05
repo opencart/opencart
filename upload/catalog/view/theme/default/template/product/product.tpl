@@ -511,7 +511,7 @@ $('button[id^=\'button-upload\']').on('click', function() {
 			contentType: false,
 			processData: false,
 			beforeSend: function() {
-				$(node).find('i').replaceWith('<i class="fa fa-cog fa-spin"></i>');
+				$(node).find('i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 				$(node).prop('disabled', true);
 			},
 			complete: function() {

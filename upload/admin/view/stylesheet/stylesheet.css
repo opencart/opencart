@@ -1,5 +1,4 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,greek-ext,vietnamese);
-@import url(http://fonts.googleapis.com/css?family=Montserrat:400,700);
 
 html, body {
 	height: 100%;
@@ -20,11 +19,15 @@ h1, h2, h3, h4, h5, h6, p {
 	margin-top: 20px;
 }
 .page-header h1 {
-	font-family: 'Montserrat', sans-serif;
-	font-weight: 100;
-	font-size: 24px;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 500;
+	font-size: 30px;
 	color: #888;
-}/*
+}
+a {
+	color: #1e91cf;
+}
+/*
 .page-header h1 i {
 	color: #444;
 }*/
@@ -43,6 +46,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	background: #FFFFFF;
 	border-bottom: 1px solid #E4E4E4;
 	margin-bottom: 0;
+	box-shadow: 3px 0px rgba(0, 0, 0, 0.1);
 }
 #header .nav > li {
 	float: left;

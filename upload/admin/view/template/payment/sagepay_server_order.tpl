@@ -21,7 +21,7 @@
       <span class="release_text"><?php echo $text_no; ?></span>&nbsp;&nbsp;
       <?php if ($sagepay_server_order['void_status'] == 0) { ?>
       <input type="text" width="10" id="release_amount" value="<?php echo $sagepay_server_order['total']; ?>"/>
-      <a class="button btn btn-primary" id="btn_release"><?php echo $btn_release; ?></a> <span class="btn btn-primary" id="img_loading_release" style="display:none;"><i class="fa fa-cog fa-spin fa-lg"></i></span>
+      <a class="button btn btn-primary" id="btn_release"><?php echo $btn_release; ?></a> <span class="btn btn-primary" id="img_loading_release" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
       <?php } ?>
       <?php } ?></td>
   </tr>
@@ -30,7 +30,7 @@
     <td id="void_status"><?php if ($sagepay_server_order['void_status'] == 1) { ?>
       <span class="void_text"><?php echo $text_yes; ?></span>
       <?php } elseif ($sagepay_server_order['void_status'] == 0 && $sagepay_server_order['release_status'] != 1 && $sagepay_server_order['rebate_status'] != 1) { ?>
-      <span class="void_text"><?php echo $text_no; ?></span>&nbsp;&nbsp; <a class="button btn btn-primary" id="btn_void"><?php echo $btn_void; ?></a> <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-cog fa-spin fa-lg"></i></span>
+      <span class="void_text"><?php echo $text_no; ?></span>&nbsp;&nbsp; <a class="button btn btn-primary" id="btn_void"><?php echo $btn_void; ?></a> <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
       <?php } else { ?>
       <span class="void_text"><?php echo $text_no; ?></span>
       <?php } ?></td>
@@ -43,7 +43,7 @@
       <span class="rebate_text"><?php echo $text_no; ?></span>&nbsp;&nbsp;
       <?php if ($sagepay_server_order['total_released'] > 0 && $sagepay_server_order['void_status'] == 0) { ?>
       <input type="text" width="10" id="rebate_amount" />
-      <a class="button btn btn-primary" id="btn_rebate"><?php echo $btn_rebate; ?></a> <span class="btn btn-primary" id="img_loading_rebate" style="display:none;"><i class="fa fa-cog fa-spin fa-lg"></i></span>
+      <a class="button btn btn-primary" id="btn_rebate"><?php echo $btn_rebate; ?></a> <span class="btn btn-primary" id="img_loading_rebate" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
       <?php } ?>
       <?php } ?></td>
   </tr>

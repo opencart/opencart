@@ -665,7 +665,7 @@ $(document).delegate('#button-invoice', 'click', function() {
 		url: 'index.php?route=sale/order/createinvoiceno&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-invoice i').replaceWith('<i class="fa fa-cog fa-spin"></i>');
+			$('#button-invoice i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 			$('#button-invoice').prop('disabled', true);			
 		},
 		complete: function() {
@@ -695,7 +695,7 @@ $(document).delegate('#button-reward-add', 'click', function() {
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-reward-add i').replaceWith('<i class="fa fa-cog fa-spin"></i>');
+			$('#button-reward-add i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 			$('#button-reward-add').prop('disabled', true);				
 		},
 		complete: function() {
@@ -727,7 +727,7 @@ $(document).delegate('#button-reward-remove', 'click', function() {
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-reward-remove i').replaceWith('<i class="fa fa-cog fa-spin"></i>');
+			$('#button-reward-remove i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 			$('#button-reward-remove').prop('disabled', true);		
 		},
 		complete: function() {
@@ -759,7 +759,7 @@ $(document).delegate('#button-commission-add', 'click', function() {
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-commission-add i').replaceWith('<i class="fa fa-cog fa-spin"></i>');
+			$('#button-commission-add i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 			$('#button-commission-add').prop('disabled', true);					
 		},
 		complete: function() {
@@ -791,7 +791,7 @@ $(document).delegate('#button-commission-remove', 'click', function() {
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-commission-remove i').replaceWith('<i class="fa fa-cog fa-spin"></i>');
+			$('#button-commission-remove i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 			$('#button-commission-remove').prop('disabled', true);					
 		},
 		complete: function() {
@@ -832,7 +832,7 @@ $('#button-history').on('click', function() {
 		dataType: 'json',
 		data: 'order_status_id=' + encodeURIComponent($('select[name=\'order_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&append=' + ($('input[name=\'append\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
 		beforeSend: function() {
-			$('#button-history i').replaceWith('<i class="fa fa-cog fa-spin"></i>');
+			$('#button-history i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 			$('#button-history').prop('disabled', true);				
 		},
 		complete: function() {

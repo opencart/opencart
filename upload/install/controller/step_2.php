@@ -108,7 +108,7 @@ class ControllerStep2 extends Controller {
 		}
 
 		if (!array_filter(array('mysqli', 'pdo', 'pgsql'), 'extension_loaded')) {
-			$this->error['warning'] = 'Warning: A database extension needs to be loaded in th php.ini for OpenCart to work!';
+			$this->error['warning'] = 'Warning: A database extension needs to be loaded in the php.ini for OpenCart to work!';
   		}
 
 		if (!extension_loaded('gd')) {

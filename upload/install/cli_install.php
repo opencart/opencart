@@ -153,8 +153,8 @@ function check_requirements() {
 		$error = 'Warning: OpenCart will not work with session.auto_start enabled!';
 	}
 
-	if (!extension_loaded('mysql')) {
-		$error = 'Warning: MySQL extension needs to be loaded for OpenCart to work!';
+	if (!extension_loaded('mysqli')) {
+		$error = 'Warning: MySQLi extension needs to be loaded for OpenCart to work!';
 	}
 
 	if (!extension_loaded('gd')) {

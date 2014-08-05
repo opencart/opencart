@@ -8,7 +8,7 @@
       <?php } ?>
     </div>
     <div><?php echo $username; ?><br />
-    <small><?php echo $usergroup; ?></small></div>
+    <small><?php echo $user_group; ?></small></div>
   </div>
   <ul id="menu">
     <li id="dashboard"><a href="<?php echo $home; ?>"><i class="fa fa-home fa-fw"></i> <?php echo $text_dashboard; ?></a></li>

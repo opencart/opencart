@@ -162,19 +162,19 @@ class ModelSaleOrder extends Model {
 	public function getOrders($data = array()) {
 		$sql = "SELECT o.order_id, CONCAT(o.firstname, ' ', o.lastname) AS customer, (SELECT os.name FROM " . DB_PREFIX . "order_status os WHERE os.order_status_id = o.order_status_id AND os.language_id = '" . (int)$this->config->get('config_language_id') . "') AS status, o.total, o.currency_code, o.currency_value, o.date_added, o.date_modified FROM `" . DB_PREFIX . "order` o";
 
-		if (!empty($data['filter_order_status'])) {
+		if (isset($data['filter_order_status'])) {
 			$implode = array();
-			
+
 			$order_statuses = explode(',', $data['filter_order_status']);
-	
+
 			foreach ($order_statuses as $order_status_id) {
 				$implode[] = "o.order_status_id = '" . (int)$order_status_id . "'";
 			}
-			
+
 			if ($implode) {
 				$sql .= " WHERE (" . implode(" OR ", $implode) . ")";
 			} else {
-				
+
 			}
 		} else {
 			$sql .= " WHERE o.order_status_id > '0'";
@@ -279,16 +279,16 @@ class ModelSaleOrder extends Model {
 
 		if (!empty($data['filter_order_status'])) {
 			$implode = array();
-			
+
 			$order_statuses = explode(',', $data['filter_order_status']);
-	
+
 			foreach ($order_statuses as $order_status_id) {
 				$implode[] = "order_status_id = '" . (int)$order_status_id . "'";
 			}
-			
+
 			if ($implode) {
 				$sql .= " WHERE (" . implode(" OR ", $implode) . ")";
-			}			
+			}
 		} else {
 			$sql .= " WHERE order_status_id > '0'";
 		}
@@ -329,43 +329,43 @@ class ModelSaleOrder extends Model {
 
 		return $query->row['total'];
 	}
-	
+
 	public function getTotalOrdersByProcessStatus() {
 		$implode = array();
-		
+
 		$order_statuses = $this->config->get('config_process_status');
 
 		foreach ($order_statuses as $order_status_id) {
 			$implode[] = "order_status_id = '" . (int)$order_status_id . "'";
 		}
-		
-		if ($implode) {		
+
+		if ($implode) {
 			$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE " . implode(" OR ", $implode) . "");
-	
+
 			return $query->row['total'];
 		} else {
-			return 0;	
+			return 0;
 		}
 	}
-	
+
 	public function getTotalOrdersByCompleteStatus() {
 		$implode = array();
-		
+
 		$order_statuses = $this->config->get('config_complete_status');
 
 		foreach ($order_statuses as $order_status_id) {
 			$implode[] = "order_status_id = '" . (int)$order_status_id . "'";
 		}
-		
-		if ($implode) {		
+
+		if ($implode) {
 			$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE " . implode(" OR ", $implode) . "");
 
 			return $query->row['total'];
 		} else {
-			return 0;	
+			return 0;
 		}
 	}
-		
+
 	public function getTotalOrdersByLanguageId($language_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE language_id = '" . (int)$language_id . "' AND order_status_id > '0'");
 

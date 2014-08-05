@@ -1070,9 +1070,13 @@ class ControllerSaleCustomer extends Controller {
 		$this->load->model('sale/customer');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->user->hasPermission('modify', 'sale/customer')) {
-			$this->model_sale_customer->addHistory($this->request->get['customer_id'], $this->request->post['comment']);
+			if (empty($this->request->post['comment'])) {
+				$data['error_warning'] = $this->language->get('error_comment');
+			} else {
+				$this->model_sale_customer->addHistory($this->request->get['customer_id'], $this->request->post['comment']);
 
-			$data['success'] = $this->language->get('text_success');
+				$data['success'] = $this->language->get('text_success');
+			}
 		} else {
 			$data['success'] = '';
 		}

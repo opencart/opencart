@@ -1,6 +1,8 @@
 <?php
 class ModelCatalogReview extends Model {
 	public function addReview($product_id, $data) {
+		$this->event->trigger('pre_review_add');
+
 		$this->db->query("INSERT INTO " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['name']) . "', customer_id = '" . (int)$this->customer->getId() . "', product_id = '" . (int)$product_id . "', text = '" . $this->db->escape($data['text']) . "', rating = '" . (int)$data['rating'] . "', date_added = NOW()");
 
 		if ($this->config->get('config_review_mail')) {

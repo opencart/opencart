@@ -25,7 +25,7 @@ $_['text_pagination']               = 'Showing %d to %d of %d (%d Pages)';
 $_['text_no_results']               = 'No results!';
 $_['text_confirm']                  = 'Are you sure?';
 $_['text_home']                     = '<i class="fa fa-home fa-lg"></i>';
-$_['text_confirm']			        = 'Delete/Uninstall cannot be undone! Are you sure you want to do this?';
+$_['text_confirm']                  = 'Delete/Uninstall cannot be undone! Are you sure you want to do this?';
 
 // Button
 $_['button_insert']                 = 'Add New';
@@ -126,7 +126,7 @@ $_['tab_sale']                      = 'Sales';
 $_['tab_marketing']                 = 'Marketing';
 $_['tab_online']                    = 'People Online';
 $_['tab_activity']                  = 'Recent Activity';
-$_['tab_trial']                  	= 'Trial Period';
+$_['tab_trial']                     = 'Trial Period';
 
 // Error
 $_['error_exception']               = 'Error Code(%s): %s in %s on line %s';

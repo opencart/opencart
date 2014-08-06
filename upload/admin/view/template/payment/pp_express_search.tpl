@@ -138,9 +138,7 @@
     </div>
     <div id="search_box" style="display:none;">
       <div id="searching"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i> <?php echo $text_searching; ?></div>
-      <div style="display:none;" id="error" class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $attention; ?>
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>
+      <div style="display:none;" id="error" class="alert alert-danger"></div>
       <table id="search_results" style="display:none;" class="table table-striped table-bordered" >
       </table>
     </div>
@@ -164,7 +162,7 @@ function doSearch() {
     success: function (data) {
       if (data.error == true) {
         $('#searching').hide();
-        $('#error').text(data.error_msg).fadeIn();
+        $('#error').html('<i class="fa fa-exclamation-circle"></i> ' + data.error_msg).fadeIn();
       } else {
         if (data.result != '') {
           html += '<thead><tr>';
@@ -211,7 +209,7 @@ function doSearch() {
           $('#search_results').append(html).fadeIn();
         } else {
           $('#searching').hide();
-          $('#error').text('<?php echo $text_no_results; ?>').fadeIn();
+          $('#error').html('<i class="fa fa-exclamation-circle"></i> <?php echo $text_no_results; ?>').fadeIn();
         }
       }
     }

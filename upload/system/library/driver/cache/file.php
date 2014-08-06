@@ -41,6 +41,8 @@ class CacheFile {
 	}
 
 	public function set($key, $value) {
+		$this->delete($key);
+
 		$file = DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.' . (time() + $this->expire);
 		
 		$handle = fopen($file, 'w');

@@ -309,7 +309,7 @@ class ModelCatalogCategory extends Model {
 	}
 
 	public function getTotalCategories() {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "category");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "category");
 
 		return $query->row['total'];
 	}

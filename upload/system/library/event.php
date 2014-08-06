@@ -34,33 +34,29 @@ class Event {
 	}
 
 	public function unregister($event, $handler) {
-		if (!array_key_exists($event, $this->data)) {
+		if (array_key_exists($event, $this->data) && in_array($handler, $this->data[$event])) {
+			$key = array_search($handler, $this->data[$event]);
+			unset($this->data[$event][$key]);
 			return true;
 		}
 
-		if (in_array($handler, $this->data[$event])) {
-			$key = array_search($handler, $this->data[$event]);
-			unset($this->data[$event][$key]);
-		}
-
-		return true;
+		return false;
 	}
 
 	public function trigger($event, $data = array()) {
-		if (!array_key_exists($event, $this->events)) {
-			return true;
-		}
+		if (array_key_exists($event, $this->events)) {
+			foreach ($this->events[$event] as $handler) {
+				$parts = explode('/', $handler);
 
-		foreach ($this->events[$event] as $handler) {
-			$parts = explode('/', $handler);
+				$event = $this->load->event($parts[0] . '/' . $parts[1]);
 
-			$event = $this->load->event($parts[0] . '/' . $parts[1]);
-
-			if (is_callable(array($event, $parts[2]))) {
-				$event->{$parts[2]}($data);
+				if (is_callable(array($event, $parts[2]))) {
+					$event->{$parts[2]}($data);
+					return true;
+				}
 			}
 		}
 
-		return true;
+		return false;
 	}
 }

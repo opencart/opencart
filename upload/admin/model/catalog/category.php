@@ -1,6 +1,8 @@
 <?php
 class ModelCatalogCategory extends Model {
 	public function addCategory($data) {
+		$this->event->trigger('pre_admin_add_category');
+
 		$this->db->query("INSERT INTO " . DB_PREFIX . "category SET parent_id = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW(), date_added = NOW()");
 
 		$category_id = $this->db->getLastId();
@@ -59,6 +61,8 @@ class ModelCatalogCategory extends Model {
 	}
 
 	public function editCategory($category_id, $data) {
+		$this->event->trigger('pre_admin_edit_category');
+
 		$this->db->query("UPDATE " . DB_PREFIX . "category SET parent_id = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE category_id = '" . (int)$category_id . "'");
 
 		if (isset($data['image'])) {
@@ -160,6 +164,8 @@ class ModelCatalogCategory extends Model {
 	}
 
 	public function deleteCategory($category_id) {
+		$this->event->trigger('pre_admin_delete_category', array('category_id' => $category_id));
+
 		$this->db->query("DELETE FROM " . DB_PREFIX . "category_path WHERE category_id = '" . (int)$category_id . "'");
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category_path WHERE path_id = '" . (int)$category_id . "'");
@@ -178,7 +184,7 @@ class ModelCatalogCategory extends Model {
 
 		$this->cache->delete('category');
 
-		$this->event->trigger('admin_delete_category');
+		$this->event->trigger('admin_delete_category', array('category_id' => $category_id));
 	}
 
 	public function repairCategories($parent_id = 0) {

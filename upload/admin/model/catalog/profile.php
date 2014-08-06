@@ -1,6 +1,8 @@
 <?php
 class ModelCatalogProfile extends Model {
 	public function addProfile($data) {
+		$this->event->trigger('pre_admin_add_profile');
+
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "profile` SET `sort_order` = " . (int)$data['sort_order'] . ", `status` = " . (int)$data['status'] . ", `price` = " . (double)$data['price'] . ", `frequency` = '" . $this->db->escape($data['frequency']) . "', `duration` = " . (int)$data['duration'] . ", `cycle` = " . (int)$data['cycle'] . ", `trial_status` = " . (int)$data['trial_status'] . ", `trial_price` = " . (double)$data['trial_price'] . ", `trial_frequency` = '" . $this->db->escape($data['trial_frequency']) . "', `trial_duration` = " . (int)$data['trial_duration'] . ", `trial_cycle` = " . (int)$data['trial_cycle']);
 
 		$profile_id = $this->db->getLastId();
@@ -15,6 +17,8 @@ class ModelCatalogProfile extends Model {
 	}
 
 	public function editProfile($profile_id, $data) {
+		$this->event->trigger('pre_admin_edit_profile');
+
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "profile_description` WHERE profile_id = " . (int)$profile_id);
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "profile` SET `sort_order` = " . (int)$data['sort_order'] . ", `status` = " . (int)$data['status'] . ", `price` = " . (double)$data['price'] . ", `frequency` = '" . $this->db->escape($data['frequency']) . "', `duration` = " . (int)$data['duration'] . ", `cycle` = " . (int)$data['cycle'] . ", `trial_status` = " . (int)$data['trial_status'] . ", `trial_price` = " . (double)$data['trial_price'] . ", `trial_frequency` = '" . $this->db->escape($data['trial_frequency']) . "', `trial_duration` = " . (int)$data['trial_duration'] . ", `trial_cycle` = " . (int)$data['trial_cycle'] . " WHERE profile_id = " . (int)$profile_id);
@@ -38,13 +42,15 @@ class ModelCatalogProfile extends Model {
 	}
 
 	public function deleteProfile($profile_id) {
+		$this->event->trigger('pre_admin_delete_profile', array('profile_id' => $profile_id));
+
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "profile` WHERE profile_id = " . (int)$profile_id);
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "profile_description` WHERE profile_id = " . (int)$profile_id);
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_profile` WHERE profile_id = " . (int)$profile_id);
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `profile_id` = 0 WHERE `profile_id` = " . (int)$profile_id);
 
-		$this->event->trigger('admin_delete_profile');
+		$this->event->trigger('admin_delete_profile', array('profile_id' => $profile_id));
 	}
 
 	public function getProfile($profile_id) {

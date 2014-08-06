@@ -116,7 +116,7 @@ class ControllerApiCart extends Controller {
 		$json = array();
 		
 		if (!isset($this->session->data['api_id'])) {
-			$json['error'] = $this->language->get('error_permission');
+			$json['error']['warning'] = $this->language->get('error_permission');
 		} else {		
 			// Products
 			$json['products'] = array();
@@ -133,7 +133,7 @@ class ControllerApiCart extends Controller {
 				}	
 								
 				if ($product['minimum'] > $product_total) {
-					$json['error']['product']['minimum'][] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
+					$json['error']['minimum'][] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
 				}	
 								
 				$option_data = array();
@@ -156,9 +156,8 @@ class ControllerApiCart extends Controller {
 					'quantity'   => $product['quantity'],
 					'stock'      => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
 					'shipping'   => $product['shipping'],	
-					'price'      => $product['price'],	
-					'total'      => $product['total'],	
-					'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
+					'price'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'))),	
+					'total'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity']),	
 					'reward'     => $product['reward']				
 				);
 			}
@@ -171,14 +170,13 @@ class ControllerApiCart extends Controller {
 					$json['vouchers'][] = array(
 						'code'             => $voucher['code'],
 						'description'      => $voucher['description'],
-						'code'             => $voucher['code'],
 						'from_name'        => $voucher['from_name'],
 						'from_email'       => $voucher['from_email'],
 						'to_name'          => $voucher['to_name'],
 						'to_email'         => $voucher['to_email'],
 						'voucher_theme_id' => $voucher['voucher_theme_id'], 
 						'message'          => $voucher['message'],
-						'amount'           => $voucher['amount']    
+						'amount'           => $this->currency->format($voucher['amount'])   
 					);
 				}
 			}

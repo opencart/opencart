@@ -5,7 +5,7 @@
       <div class="pull-right">
         <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-upload').submit() : false;"><i class="fa fa-trash-o"></i></button>
       </div>
-      <h1><i class="fa fa-bars"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="fa fa-upload"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">

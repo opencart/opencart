@@ -1978,11 +1978,46 @@ class ControllerSaleOrder extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}		
 		
+		// Create a cookie if one does not exist
 		if (!isset($this->session->data['cookie'])) {
-			$json['error'] = $this->language->get('error_login');
+			$this->load->model('user/api');
+		
+			$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
+		
+			if ($api_info) {
+				$url = HTTPS_CATALOG . 'index.php?route=api/login';
+				
+				$curl = curl_init();
+				
+				// Set SSL if required
+				if (substr($url, 0, 5) == 'https') {
+					curl_setopt($curl, CURLOPT_PORT, 443);
+				}
+				
+				curl_setopt($curl, CURLOPT_HEADER, false);
+				curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+				curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
+				curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); 
+				curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
+				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($curl, CURLOPT_URL, $url);
+				curl_setopt($curl, CURLOPT_POST, true);
+				curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($api_info));
+				
+				$response = curl_exec($curl);
+		
+				if (!$response) {
+					$response = json_encode(array('error' => curl_error($curl) . '(' . curl_errno($curl) . ')'));
+				} else {
+					$json = $response;	
+				}			
+			}
 		}	
 			
-		if (!isset($this->request->get['api'])) {
+		if (isset($this->request->get['api'])) {
+			$url = 'index.php?route=' . $this->request->get['api'];
+		} else {
 			$json['error'] = $this->language->get('error_api');
 		}
 						
@@ -2008,9 +2043,7 @@ class ControllerSaleOrder extends Controller {
 				curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($this->request->post));
 			}
 			
-			if (isset($this->request->get['cookie'])) {
-				curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->request->get['cookie'] . ';');
-			}
+			curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->session->data['cookie'] . ';');
 			
 			$response = curl_exec($curl);
 	

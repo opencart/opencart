@@ -294,13 +294,7 @@ class ControllerCheckoutCart extends Controller {
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
 		if ($product_info) {
-			if (isset($this->request->post['quantity'])) {
-				$quantity = $this->request->post['quantity'];
-			} else {
-				$quantity = 1;
-			}
-
-			if (empty($this->request->post['quantity']) || $this->request->post['quantity'] <= 0 || is_float($this->request->post['quantity'])) {
+			if (!isset($this->request->post['quantity']) || empty($this->request->post['quantity']) || $this->request->post['quantity'] < 1) {
 				$json['error']['quantity'] = $this->language->get('error_quantity');
 			}
 
@@ -339,7 +333,7 @@ class ControllerCheckoutCart extends Controller {
 			}
 
 			if (!$json) {
-				$this->cart->add($this->request->post['product_id'], $quantity, $option, $profile_id);
+				$this->cart->add($this->request->post['product_id'], $this->request->post['quantity'], $option, $profile_id);
 
 				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('checkout/cart'));
 

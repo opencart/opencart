@@ -13,9 +13,7 @@ class ModelToolEvent extends Model {
 
 		$handler = $handler['type'] . '/' . $handler['code'] . '/' . $handler['method'];
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "event WHERE store_id = '" . (int)$store_id . "' AND event = '" . $this->db->escape($event) . "'");
-
-		$handlers = !empty($query->row['handlers']) ? unserialize($query->row['handlers']) : array();
+		$handlers = $this->getHandlers($event, $store_id);
 		$handlers[] = $handler;
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "event WHERE store_id = '" . (int)$store_id . "' AND event = '" . $this->db->escape($event) . "'");
@@ -32,9 +30,7 @@ class ModelToolEvent extends Model {
 
 		$handler = $handler['type'] . '/' . $handler['code'] . '/' . $handler['method'];
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "event WHERE store_id = '" . (int)$store_id . "' AND event = '" . $this->db->escape($event) . "'");
-
-		$handlers = !empty($query->row['handlers']) ? unserialize($query->row['handlers']) : array();
+		$handlers = $this->getHandlers($event, $store_id);
 		if (!in_array($handler, $handlers)) {
 			return true;
 		}

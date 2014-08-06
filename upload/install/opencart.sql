@@ -1829,7 +1829,7 @@ CREATE TABLE `oc_manufacturer_description` (
   `meta_title` varchar(255) NOT NULL,
   `meta_description` varchar(255) NOT NULL,
   `meta_keyword` varchar(255) NOT NULL,
-  PRIMARY KEY (`manufacturer_id`,`language_id`),
+  PRIMARY KEY (`manufacturer_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
@@ -1837,12 +1837,12 @@ CREATE TABLE `oc_manufacturer_description` (
 --
 
 INSERT INTO `oc_manufacturer_description` (`manufacturer_id`, `language_id`, `description`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
-(5, 1, 'catalog/demo/htc_logo.jpg', '&lt;p&gt;\r\n HTC Corporation, formerly High-Tech Computer Corporation, is a Taiwanese manufacturer of smartphones and tablets headquartered in New Taipei City, Taiwan. &lt;/p&gt;\r\n', '', ''),
-(6, 1, 'catalog/demo/palm_logo.jpg', '&lt;p&gt;\r\n Palm, Inc., was an American smartphone manufacturer headquartered in Sunnyvale, California&lt;/p&gt;\r\n', '', ''),
-(7, 1, 'catalog/demo/hp_logo.jpg', '&lt;p&gt;\r\n Hewlett-Packard Company or HP is an American multinational information technology corporation headquartered in Palo Alto, California&lt;/p&gt;\r\n', '', ''),
-(8, 1, 'catalog/demo/apple_logo.jpg', '&lt;p&gt;\r\n Apple are leaders in beautiful hardware design&lt;/p&gt;\r\n', '', ''),
-(9, 1, 'catalog/demo/canon_logo.jpg', '&lt;p&gt;\r\n Canon is a world leader in imaging products and solutions for the digital home and office. &lt;/p&gt;\r\n', '', ''),
-(10, 1, 'catalog/demo/sony_logo.jpg', '&lt;p&gt;\r\n Sony Corporation, commonly referred to as Sony, is a Japanese multinational conglomerate corporation headquartered in Kōnan Minato, Tokyo, Japan&lt;/p&gt;\r\n', '', '');
+(5, 1, '&lt;p&gt;\r\n HTC Corporation, formerly High-Tech Computer Corporation, is a Taiwanese manufacturer of smartphones and tablets headquartered in New Taipei City, Taiwan. &lt;/p&gt;\r\n', '', ''),
+(6, 1, '&lt;p&gt;\r\n Palm, Inc., was an American smartphone manufacturer headquartered in Sunnyvale, California&lt;/p&gt;\r\n', '', ''),
+(7, 1, '&lt;p&gt;\r\n Hewlett-Packard Company or HP is an American multinational information technology corporation headquartered in Palo Alto, California&lt;/p&gt;\r\n', '', ''),
+(8, 1, '&lt;p&gt;\r\n Apple are leaders in beautiful hardware design&lt;/p&gt;\r\n', '', ''),
+(9, 1, '&lt;p&gt;\r\n Canon is a world leader in imaging products and solutions for the digital home and office. &lt;/p&gt;\r\n', '', ''),
+(10, 1, '&lt;p&gt;\r\n Sony Corporation, commonly referred to as Sony, is a Japanese multinational conglomerate corporation headquartered in Kōnan Minato, Tokyo, Japan&lt;/p&gt;\r\n', '', '');
 
 -- --------------------------------------------------------
 

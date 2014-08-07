@@ -40,7 +40,7 @@
       </div>
     </div>
     <div class="table-responsive">
-      <table class="table table-bordered">
+      <table class="table table-striped table-hover">
         <thead>
           <tr>
             <td class="text-left"><?php echo $column_comment; ?></td>
@@ -74,36 +74,36 @@
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
 	url = 'index.php?route=report/affiliate_activity&token=<?php echo $token; ?>';
-	
+
 	var filter_affiliate = $('input[name=\'filter_affiliate\']').val();
-	
+
 	if (filter_affiliate) {
 		url += '&filter_affiliate=' + encodeURIComponent(filter_affiliate);
 	}
 	var filter_ip = $('input[name=\'filter_ip\']').val();
-	
+
 	if (filter_ip) {
 		url += '&filter_ip=' + encodeURIComponent(filter_ip);
 	}
-	
+
 	var filter_date_start = $('input[name=\'filter_date_start\']').val();
-	
+
 	if (filter_date_start) {
 		url += '&filter_date_start=' + encodeURIComponent(filter_date_start);
 	}
 
 	var filter_date_end = $('input[name=\'filter_date_end\']').val();
-	
+
 	if (filter_date_end) {
 		url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
 	}
 
 	location = url;
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

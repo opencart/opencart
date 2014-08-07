@@ -7,6 +7,8 @@ class ControllerAccountLogin extends Controller {
 
 		// Login override for admin users
 		if (!empty($this->request->get['token'])) {
+			$this->event->trigger('pre_customer_login');
+
 			$this->customer->logout();
 			$this->cart->clear();
 

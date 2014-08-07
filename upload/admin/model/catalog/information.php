@@ -1,6 +1,8 @@
 <?php
 class ModelCatalogInformation extends Model {
 	public function addInformation($data) {
+		$this->event->trigger('pre_admin_add_information');
+
 		$this->db->query("INSERT INTO " . DB_PREFIX . "information SET sort_order = '" . (int)$data['sort_order'] . "', bottom = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', status = '" . (int)$data['status'] . "'");
 
 		$information_id = $this->db->getLastId();
@@ -35,6 +37,8 @@ class ModelCatalogInformation extends Model {
 	}
 
 	public function editInformation($information_id, $data) {
+		$this->event->trigger('pre_admin_edit_information');
+
 		$this->db->query("UPDATE " . DB_PREFIX . "information SET sort_order = '" . (int)$data['sort_order'] . "', bottom = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', status = '" . (int)$data['status'] . "' WHERE information_id = '" . (int)$information_id . "'");
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information_description WHERE information_id = '" . (int)$information_id . "'");
@@ -73,6 +77,8 @@ class ModelCatalogInformation extends Model {
 	}
 
 	public function deleteInformation($information_id) {
+		$this->event->trigger('pre_admin_delete_information', array('information_id' => $information_id));
+
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information WHERE information_id = '" . (int)$information_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information_description WHERE information_id = '" . (int)$information_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information_to_store WHERE information_id = '" . (int)$information_id . "'");
@@ -81,7 +87,7 @@ class ModelCatalogInformation extends Model {
 
 		$this->cache->delete('information');
 
-		$this->event->trigger('admin_delete_information');
+		$this->event->trigger('admin_delete_information', array('information_id' => $information_id));
 	}
 
 	public function getInformation($information_id) {

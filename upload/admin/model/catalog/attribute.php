@@ -1,6 +1,8 @@
 <?php
 class ModelCatalogAttribute extends Model {
 	public function addAttribute($data) {
+		$this->event->trigger('pre_admin_add_attribute');
+
 		$this->db->query("INSERT INTO " . DB_PREFIX . "attribute SET attribute_group_id = '" . (int)$data['attribute_group_id'] . "', sort_order = '" . (int)$data['sort_order'] . "'");
 
 		$attribute_id = $this->db->getLastId();
@@ -15,6 +17,8 @@ class ModelCatalogAttribute extends Model {
 	}
 
 	public function editAttribute($attribute_id, $data) {
+		$this->event->trigger('pre_admin_edit_attribute');
+
 		$this->db->query("UPDATE " . DB_PREFIX . "attribute SET attribute_group_id = '" . (int)$data['attribute_group_id'] . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE attribute_id = '" . (int)$attribute_id . "'");
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "attribute_description WHERE attribute_id = '" . (int)$attribute_id . "'");
@@ -27,10 +31,12 @@ class ModelCatalogAttribute extends Model {
 	}
 
 	public function deleteAttribute($attribute_id) {
+		$this->event->trigger('pre_admin_delete_attribute', array('attribute_id' => $attribute_id));
+
 		$this->db->query("DELETE FROM " . DB_PREFIX . "attribute WHERE attribute_id = '" . (int)$attribute_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "attribute_description WHERE attribute_id = '" . (int)$attribute_id . "'");
 
-		$this->event->trigger('admin_delete_attribute');
+		$this->event->trigger('admin_delete_attribute', array('attribute_id' => $attribute_id));
 	}
 
 	public function getAttribute($attribute_id) {

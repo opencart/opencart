@@ -1,6 +1,8 @@
 <?php
 class ModelCatalogOption extends Model {
 	public function addOption($data) {
+		$this->event->trigger('pre_admin_add_option');
+
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "option` SET type = '" . $this->db->escape($data['type']) . "', sort_order = '" . (int)$data['sort_order'] . "'");
 
 		$option_id = $this->db->getLastId();
@@ -27,6 +29,8 @@ class ModelCatalogOption extends Model {
 	}
 
 	public function editOption($option_id, $data) {
+		$this->event->trigger('pre_admin_edit_option');
+
 		$this->db->query("UPDATE `" . DB_PREFIX . "option` SET type = '" . $this->db->escape($data['type']) . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE option_id = '" . (int)$option_id . "'");
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "option_description WHERE option_id = '" . (int)$option_id . "'");
@@ -59,12 +63,14 @@ class ModelCatalogOption extends Model {
 	}
 
 	public function deleteOption($option_id) {
+		$this->event->trigger('pre_admin_delete_option', array('option_id' => $option_id));
+
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "option` WHERE option_id = '" . (int)$option_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "option_description WHERE option_id = '" . (int)$option_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "option_value WHERE option_id = '" . (int)$option_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "option_value_description WHERE option_id = '" . (int)$option_id . "'");
 
-		$this->event->trigger('admin_delete_option');
+		$this->event->trigger('admin_delete_option', array('option_id' => $option_id));
 	}
 
 	public function getOption($option_id) {

@@ -110,7 +110,7 @@
               <td class="text-center"><?php if ($product['image']) { ?>
                 <img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" class="img-thumbnail" />
                 <?php } else { ?>
-                <span class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></span>
+                <span class="img-thumbnail list"><i class="fa fa-camera fa-2x"></i></span>
                 <?php } ?></td>
               <td class="text-left"><?php echo $product['name']; ?></td>
               <td class="text-left"><?php echo $product['model']; ?></td>
@@ -149,46 +149,46 @@
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
 	var url = 'index.php?route=catalog/product&token=<?php echo $token; ?>';
-	
+
 	var filter_name = $('input[name=\'filter_name\']').val();
-	
+
 	if (filter_name) {
 		url += '&filter_name=' + encodeURIComponent(filter_name);
 	}
-	
+
 	var filter_model = $('input[name=\'filter_model\']').val();
-	
+
 	if (filter_model) {
 		url += '&filter_model=' + encodeURIComponent(filter_model);
 	}
-	
+
 	var filter_price = $('input[name=\'filter_price\']').val();
-	
+
 	if (filter_price) {
 		url += '&filter_price=' + encodeURIComponent(filter_price);
 	}
-	
+
 	var filter_quantity = $('input[name=\'filter_quantity\']').val();
-	
+
 	if (filter_quantity) {
 		url += '&filter_quantity=' + encodeURIComponent(filter_quantity);
 	}
-	
+
 	var filter_status = $('select[name=\'filter_status\']').val();
-	
+
 	if (filter_status != '*') {
 		url += '&filter_status=' + encodeURIComponent(filter_status);
-	}	
+	}
 
 	location = url;
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('input[name=\'filter_name\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-			dataType: 'json',			
+			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
@@ -201,14 +201,14 @@ $('input[name=\'filter_name\']').autocomplete({
 	},
 	'select': function(item) {
 		$('input[name=\'filter_name\']').val(item['label']);
-	}	
+	}
 });
 
 $('input[name=\'filter_model\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_model=' +  encodeURIComponent(request),
-			dataType: 'json',			
+			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
@@ -221,7 +221,7 @@ $('input[name=\'filter_model\']').autocomplete({
 	},
 	'select': function(item) {
 		$('input[name=\'filter_model\']').val(item['label']);
-	}	
+	}
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

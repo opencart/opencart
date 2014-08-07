@@ -12,7 +12,7 @@ class ControllerLocalisationCurrency extends Controller {
 		$this->getList();
 	}
 
-	public function insert() {
+	public function add() {
 		$this->load->language('localisation/currency');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -44,7 +44,7 @@ class ControllerLocalisationCurrency extends Controller {
 		$this->getForm();
 	}
 
-	public function update() {
+	public function edit() {
 		$this->load->language('localisation/currency');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -143,7 +143,7 @@ class ControllerLocalisationCurrency extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['insert'] = $this->url->link('localisation/currency/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['insert'] = $this->url->link('localisation/currency/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('localisation/currency/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['currencies'] = array();
@@ -166,7 +166,7 @@ class ControllerLocalisationCurrency extends Controller {
 				'code'          => $result['code'],
 				'value'         => $result['value'],
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
-				'edit'          => $this->url->link('localisation/currency/update', 'token=' . $this->session->data['token'] . '&currency_id=' . $result['currency_id'] . $url, 'SSL')
+				'edit'          => $this->url->link('localisation/currency/edit', 'token=' . $this->session->data['token'] . '&currency_id=' . $result['currency_id'] . $url, 'SSL')
 			);
 		}
 
@@ -319,9 +319,9 @@ class ControllerLocalisationCurrency extends Controller {
 		);
 
 		if (!isset($this->request->get['currency_id'])) {
-			$data['action'] = $this->url->link('localisation/currency/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('localisation/currency/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$data['action'] = $this->url->link('localisation/currency/update', 'token=' . $this->session->data['token'] . '&currency_id=' . $this->request->get['currency_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('localisation/currency/edit', 'token=' . $this->session->data['token'] . '&currency_id=' . $this->request->get['currency_id'] . $url, 'SSL');
 		}
 
 		$data['cancel'] = $this->url->link('localisation/currency', 'token=' . $this->session->data['token'] . $url, 'SSL');

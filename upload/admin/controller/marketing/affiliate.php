@@ -12,7 +12,7 @@ class ControllerMarketingAffiliate extends Controller {
 		$this->getList();
 	}
 
-	public function insert() {
+	public function add() {
 		$this->load->language('marketing/affiliate');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -64,7 +64,7 @@ class ControllerMarketingAffiliate extends Controller {
 		$this->getForm();
 	}
 
-	public function update() {
+	public function edit() {
 		$this->load->language('marketing/affiliate');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -318,7 +318,7 @@ class ControllerMarketingAffiliate extends Controller {
 		);
 
 		$data['approve'] = $this->url->link('marketing/affiliate/approve', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$data['insert'] = $this->url->link('marketing/affiliate/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['insert'] = $this->url->link('marketing/affiliate/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('marketing/affiliate/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['affiliates'] = array();
@@ -347,7 +347,7 @@ class ControllerMarketingAffiliate extends Controller {
 				'balance'      => $this->currency->format($result['balance'], $this->config->get('config_currency')),
 				'status'       => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added'   => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'         => $this->url->link('marketing/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, 'SSL'),
+				'edit'         => $this->url->link('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, 'SSL'),
 				'approve'      => $this->url->link('marketing/affiliate/approve', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, 'SSL'),
 				'approved'     => $result['approved']
 			);
@@ -675,9 +675,9 @@ class ControllerMarketingAffiliate extends Controller {
 		);
 
 		if (!isset($this->request->get['affiliate_id'])) {
-			$data['action'] = $this->url->link('marketing/affiliate/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('marketing/affiliate/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$data['action'] = $this->url->link('marketing/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $this->request->get['affiliate_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $this->request->get['affiliate_id'] . $url, 'SSL');
 		}
 
 		$data['cancel'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . $url, 'SSL');

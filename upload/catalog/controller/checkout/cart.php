@@ -62,7 +62,7 @@ class ControllerCheckoutCart extends Controller {
 				$data['success'] = '';
 			}
 
-			$data['action'] = $this->url->link('checkout/cart/update');
+			$data['action'] = $this->url->link('checkout/cart/edit');
 
 			if ($this->config->get('config_cart_weight')) {
 				$data['weight'] = $this->weight->format($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->language->get('decimal_point'), $this->language->get('thousand_point'));
@@ -294,13 +294,7 @@ class ControllerCheckoutCart extends Controller {
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
 		if ($product_info) {
-			if (isset($this->request->post['quantity'])) {
-				$quantity = $this->request->post['quantity'];
-			} else {
-				$quantity = 1;
-			}
-
-			if (empty($this->request->post['quantity']) || $this->request->post['quantity'] <= 0) {
+			if (!isset($this->request->post['quantity']) || empty($this->request->post['quantity']) || $this->request->post['quantity'] < 1) {
 				$json['error']['quantity'] = $this->language->get('error_quantity');
 			}
 
@@ -339,7 +333,7 @@ class ControllerCheckoutCart extends Controller {
 			}
 
 			if (!$json) {
-				$this->cart->add($this->request->post['product_id'], $quantity, $option, $profile_id);
+				$this->cart->add($this->request->post['product_id'], $this->request->post['quantity'], $option, $profile_id);
 
 				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('checkout/cart'));
 
@@ -394,7 +388,7 @@ class ControllerCheckoutCart extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function update() {
+	public function edit() {
 		$this->load->language('checkout/cart');
 
 		$json = array();

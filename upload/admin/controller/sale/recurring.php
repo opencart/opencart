@@ -417,13 +417,13 @@ class ControllerSaleRecurring extends Controller {
 			$data['options'] = array();
 
 			if ($order['customer_id']) {
-				$data['customer_href'] = $this->url->link('sale/customer/update', 'token=' . $this->session->data['token'] . '&customer_id=' . $order['customer_id'], 'SSL');
+				$data['customer_href'] = $this->url->link('sale/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . $order['customer_id'], 'SSL');
 			} else {
 				$data['customer_href'] = '';
 			}
 
 			if ($order_recurring['profile_id'] != '0') {
-				$data['profile'] = $this->url->link('catalog/profile/update', 'token=' . $this->session->data['token'] . '&profile_id=' . $order_recurring['profile_id'], 'SSL');
+				$data['profile'] = $this->url->link('catalog/profile/edit', 'token=' . $this->session->data['token'] . '&profile_id=' . $order_recurring['profile_id'], 'SSL');
 			} else {
 				$data['profile'] = '';
 			}

@@ -23,7 +23,7 @@ class ControllerPaymentCheque extends Controller {
 	}
 
 	public function confirm() {
-		if ($this->session->data['payment_method'] == 'cheque') {
+		if ($this->session->data['payment_method']['code'] == 'cheque') {
 			$this->load->language('payment/cheque');
 	
 			$this->load->model('checkout/order');

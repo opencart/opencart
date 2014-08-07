@@ -1,9 +1,9 @@
 $(document).ready(function() {
 	// Currency
-	$('#currency a').on('click', function(e) {
+	$('#currency .currency-select').on('click', function(e) {
 		e.preventDefault();
 
-		$('#currency input[name=\'code\']').attr('value', $(this).attr('href'));
+		$('#currency input[name=\'code\']').attr('value', $(this).attr('name'));
 
 		$('#currency').submit();
 	});
@@ -154,7 +154,7 @@ var cart = {
 	},
 	'update': function(key, quantity) {
 		$.ajax({
-			url: 'index.php?route=checkout/cart/update',
+			url: 'index.php?route=checkout/cart/edit',
 			type: 'post',
 			data: 'key=' + key + '&quantity=' + (typeof(quantity) != 'undefined' ? quantity : 1),
 			dataType: 'json',

@@ -12,7 +12,7 @@ class ControllerSaleCustomerGroup extends Controller {
 		$this->getList();
 	}
 
-	public function insert() {
+	public function add() {
 		$this->load->language('sale/customer_group');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -44,7 +44,7 @@ class ControllerSaleCustomerGroup extends Controller {
 		$this->getForm();
 	}
 
-	public function update() {
+	public function edit() {
 		$this->load->language('sale/customer_group');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -155,7 +155,7 @@ class ControllerSaleCustomerGroup extends Controller {
 			'href' => $this->url->link('sale/customer_group', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$data['insert'] = $this->url->link('sale/customer_group/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['insert'] = $this->url->link('sale/customer_group/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('sale/customer_group/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['customer_groups'] = array();
@@ -176,7 +176,7 @@ class ControllerSaleCustomerGroup extends Controller {
 				'customer_group_id' => $result['customer_group_id'],
 				'name'              => $result['name'] . (($result['customer_group_id'] == $this->config->get('config_customer_group_id')) ? $this->language->get('text_default') : null),
 				'sort_order'        => $result['sort_order'],
-				'edit'              => $this->url->link('sale/customer_group/update', 'token=' . $this->session->data['token'] . '&customer_group_id=' . $result['customer_group_id'] . $url, 'SSL')
+				'edit'              => $this->url->link('sale/customer_group/edit', 'token=' . $this->session->data['token'] . '&customer_group_id=' . $result['customer_group_id'] . $url, 'SSL')
 			);
 		}
 
@@ -313,9 +313,9 @@ class ControllerSaleCustomerGroup extends Controller {
 		);
 
 		if (!isset($this->request->get['customer_group_id'])) {
-			$data['action'] = $this->url->link('sale/customer_group/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('sale/customer_group/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$data['action'] = $this->url->link('sale/customer_group/update', 'token=' . $this->session->data['token'] . '&customer_group_id=' . $this->request->get['customer_group_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('sale/customer_group/edit', 'token=' . $this->session->data['token'] . '&customer_group_id=' . $this->request->get['customer_group_id'] . $url, 'SSL');
 		}
 
 		$data['cancel'] = $this->url->link('sale/customer_group', 'token=' . $this->session->data['token'] . $url, 'SSL');

@@ -29,6 +29,8 @@ class ModelToolBackup extends Model {
 	}
 
 	public function backup($tables) {
+		$this->event->trigger('pre_admin_backup', $tables);
+
 		$output = '';
 
 		foreach ($tables as $table) {

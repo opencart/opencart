@@ -72,7 +72,7 @@ class ControllerReportAffiliate extends Controller {
 				'commission' => $this->currency->format($result['commission'], $this->config->get('config_currency')),
 				'orders'     => $result['orders'],
 				'total'      => $this->currency->format($result['total'], $this->config->get('config_currency')),
-				'edit'       => $this->url->link('marketing/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, 'SSL')
+				'edit'       => $this->url->link('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, 'SSL')
 			);
 		}
 

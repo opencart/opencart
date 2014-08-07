@@ -12,7 +12,7 @@ class ControllerLocalisationGeoZone extends Controller {
 		$this->getList();
 	}
 
-	public function insert() {
+	public function add() {
 		$this->load->language('localisation/geo_zone');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -44,7 +44,7 @@ class ControllerLocalisationGeoZone extends Controller {
 		$this->getForm();
 	}
 
-	public function update() {
+	public function edit() {
 		$this->load->language('localisation/geo_zone');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -155,7 +155,7 @@ class ControllerLocalisationGeoZone extends Controller {
 			'href' => $this->url->link('localisation/geo_zone', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$data['insert'] = $this->url->link('localisation/geo_zone/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['insert'] = $this->url->link('localisation/geo_zone/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('localisation/geo_zone/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['geo_zones'] = array();
@@ -176,7 +176,7 @@ class ControllerLocalisationGeoZone extends Controller {
 				'geo_zone_id' => $result['geo_zone_id'],
 				'name'        => $result['name'],
 				'description' => $result['description'],
-				'edit'        => $this->url->link('localisation/geo_zone/update', 'token=' . $this->session->data['token'] . '&geo_zone_id=' . $result['geo_zone_id'] . $url, 'SSL')
+				'edit'        => $this->url->link('localisation/geo_zone/edit', 'token=' . $this->session->data['token'] . '&geo_zone_id=' . $result['geo_zone_id'] . $url, 'SSL')
 			);
 		}
 
@@ -316,9 +316,9 @@ class ControllerLocalisationGeoZone extends Controller {
 		);
 
 		if (!isset($this->request->get['geo_zone_id'])) {
-			$data['action'] = $this->url->link('localisation/geo_zone/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('localisation/geo_zone/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$data['action'] = $this->url->link('localisation/geo_zone/update', 'token=' . $this->session->data['token'] . '&geo_zone_id=' . $this->request->get['geo_zone_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('localisation/geo_zone/edit', 'token=' . $this->session->data['token'] . '&geo_zone_id=' . $this->request->get['geo_zone_id'] . $url, 'SSL');
 		}
 
 		$data['cancel'] = $this->url->link('localisation/geo_zone', 'token=' . $this->session->data['token'] . $url, 'SSL');

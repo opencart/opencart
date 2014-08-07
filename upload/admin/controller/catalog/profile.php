@@ -12,7 +12,7 @@ class ControllerCatalogProfile extends Controller {
 		$this->getList();
 	}
 
-	public function insert() {
+	public function add() {
 		$this->load->language('catalog/profile');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -44,7 +44,7 @@ class ControllerCatalogProfile extends Controller {
 		$this->getForm();
 	}
 
-	public function update() {
+	public function edit() {
 		$this->load->language('catalog/profile');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -177,7 +177,7 @@ class ControllerCatalogProfile extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['insert'] = $this->url->link('catalog/profile/insert', 'token=' . $this->session->data['token']. $url, 'SSL');
+		$data['insert'] = $this->url->link('catalog/profile/add', 'token=' . $this->session->data['token']. $url, 'SSL');
 		$data['copy'] = $this->url->link('catalog/profile/copy', 'token=' . $this->session->data['token']. $url, 'SSL');
 		$data['delete'] = $this->url->link('catalog/profile/delete', 'token=' . $this->session->data['token']. $url, 'SSL');
 
@@ -200,7 +200,7 @@ class ControllerCatalogProfile extends Controller {
 				'profile_id' => $result['profile_id'],
 				'name'       => $result['name'],
 				'sort_order' => $result['sort_order'],
-				'edit'       => $this->url->link('catalog/profile/update', 'token=' . $this->session->data['token'] . '&profile_id=' . $result['profile_id'] . $url, 'SSL')
+				'edit'       => $this->url->link('catalog/profile/edit', 'token=' . $this->session->data['token'] . '&profile_id=' . $result['profile_id'] . $url, 'SSL')
 			);
 		}
 
@@ -285,9 +285,9 @@ class ControllerCatalogProfile extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		if (!isset($this->request->get['profile_id'])) {
-			$data['action'] = $this->url->link('catalog/profile/insert', 'token=' . $this->session->data['token'], 'SSL');
+			$data['action'] = $this->url->link('catalog/profile/add', 'token=' . $this->session->data['token'], 'SSL');
 		} else {
-			$data['action'] = $this->url->link('catalog/profile/update', 'token=' . $this->session->data['token'] . '&profile_id=' . $this->request->get['profile_id'], 'SSL');
+			$data['action'] = $this->url->link('catalog/profile/edit', 'token=' . $this->session->data['token'] . '&profile_id=' . $this->request->get['profile_id'], 'SSL');
 		}
 
 		$data['cancel'] = $this->url->link('catalog/profile', 'token=' . $this->session->data['token'], 'SSL');

@@ -106,8 +106,10 @@
                     <input type="text" name="captcha" value="" id="input-captcha" class="form-control" />
                   </div>
                 </div>
-                <div class="well">
-                  <img src="index.php?route=tool/captcha" alt="" id="captcha" />
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <img src="index.php?route=tool/captcha" alt="" id="captcha" />
+                  </div>
                 </div>
                 <div class="buttons">
                   <div class="pull-right">

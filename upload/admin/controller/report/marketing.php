@@ -80,7 +80,7 @@ class ControllerReportMarketing extends Controller {
 
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('marketing/marketing/update', 'token=' . $this->session->data['token'] . '&marketing_id=' . $result['marketing_id'] . $url, 'SSL')
+				'href' => $this->url->link('marketing/marketing/edit', 'token=' . $this->session->data['token'] . '&marketing_id=' . $result['marketing_id'] . $url, 'SSL')
 			);
 
 			$data['marketings'][] = array(

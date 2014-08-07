@@ -12,7 +12,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 		$this->getList();
 	}
 
-	public function insert() {
+	public function add() {
 		$this->load->language('localisation/order_status');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -44,7 +44,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 		$this->getForm();
 	}
 
-	public function update() {
+	public function edit() {
 		$this->load->language('localisation/order_status');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -155,7 +155,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 			'href' => $this->url->link('localisation/order_status', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$data['insert'] = $this->url->link('localisation/order_status/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['insert'] = $this->url->link('localisation/order_status/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('localisation/order_status/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['order_statuses'] = array();
@@ -175,7 +175,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 			$data['order_statuses'][] = array(
 				'order_status_id' => $result['order_status_id'],
 				'name'            => $result['name'] . (($result['order_status_id'] == $this->config->get('config_order_status_id')) ? $this->language->get('text_default') : null),
-				'edit'            => $this->url->link('localisation/order_status/update', 'token=' . $this->session->data['token'] . '&order_status_id=' . $result['order_status_id'] . $url, 'SSL')
+				'edit'            => $this->url->link('localisation/order_status/edit', 'token=' . $this->session->data['token'] . '&order_status_id=' . $result['order_status_id'] . $url, 'SSL')
 			);
 		}
 
@@ -302,9 +302,9 @@ class ControllerLocalisationOrderStatus extends Controller {
 		);
 
 		if (!isset($this->request->get['order_status_id'])) {
-			$data['action'] = $this->url->link('localisation/order_status/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('localisation/order_status/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$data['action'] = $this->url->link('localisation/order_status/update', 'token=' . $this->session->data['token'] . '&order_status_id=' . $this->request->get['order_status_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('localisation/order_status/edit', 'token=' . $this->session->data['token'] . '&order_status_id=' . $this->request->get['order_status_id'] . $url, 'SSL');
 		}
 
 		$data['cancel'] = $this->url->link('localisation/order_status', 'token=' . $this->session->data['token'] . $url, 'SSL');

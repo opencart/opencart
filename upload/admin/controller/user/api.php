@@ -12,7 +12,7 @@ class ControllerUserApi extends Controller {
 		$this->getList();
 	}
 
-	public function insert() {
+	public function add() {
 		$this->load->language('user/api');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -44,7 +44,7 @@ class ControllerUserApi extends Controller {
 		$this->getForm();
 	}
 
-	public function update() {
+	public function edit() {
 		$this->load->language('user/api');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -155,7 +155,7 @@ class ControllerUserApi extends Controller {
 			'href' => $this->url->link('user/api', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$data['insert'] = $this->url->link('user/api/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['insert'] = $this->url->link('user/api/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('user/api/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['apis'] = array();
@@ -177,7 +177,7 @@ class ControllerUserApi extends Controller {
 				'username'   => $result['username'],
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'       => $this->url->link('user/api/update', 'token=' . $this->session->data['token'] . '&api_id=' . $result['api_id'] . $url, 'SSL')
+				'edit'       => $this->url->link('user/api/edit', 'token=' . $this->session->data['token'] . '&api_id=' . $result['api_id'] . $url, 'SSL')
 			);
 		}
 
@@ -321,9 +321,9 @@ class ControllerUserApi extends Controller {
 		);
 
 		if (!isset($this->request->get['api_id'])) {
-			$data['action'] = $this->url->link('user/api/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('user/api/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$data['action'] = $this->url->link('user/api/update', 'token=' . $this->session->data['token'] . '&api_id=' . $this->request->get['api_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('user/api/edit', 'token=' . $this->session->data['token'] . '&api_id=' . $this->request->get['api_id'] . $url, 'SSL');
 		}
 
 		$data['cancel'] = $this->url->link('user/api', 'token=' . $this->session->data['token'] . $url, 'SSL');

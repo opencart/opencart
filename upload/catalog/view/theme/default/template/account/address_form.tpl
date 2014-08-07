@@ -41,7 +41,7 @@
               <input type="text" name="company" value="<?php echo $company; ?>" placeholder="<?php echo $entry_company; ?>" id="input-company" class="form-control" />
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-address-1"><?php echo $entry_address_1; ?></label>
             <div class="col-sm-10">
               <input type="text" name="address_1" value="<?php echo $address_1; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1" class="form-control" />

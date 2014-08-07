@@ -46,7 +46,7 @@ class Event {
 		return true;
 	}
 
-	public function trigger($event, $data = array()) {
+	public function trigger($event, &$data = array()) {
 		if (!array_key_exists($event, $this->events)) {
 			return true;
 		}

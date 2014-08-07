@@ -35,7 +35,7 @@
 <header id="header" class="navbar navbar-static-top">
     <div class="navbar-header">
       <?php if ($logged) { ?>
-      <a type="button" id="button-menu" class="pull-left"><span class="fa fa-bars"></span></a>
+      <a type="button" id="button-menu" class="pull-left"><span class="fa fa-dedent"></span></a>
       <?php } ?>
       <a href="<?php echo $home; ?>" class="navbar-brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a></div>
     <?php if ($logged) { ?>

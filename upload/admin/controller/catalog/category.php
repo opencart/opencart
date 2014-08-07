@@ -12,7 +12,7 @@ class ControllerCatalogCategory extends Controller {
 		$this->getList();
 	}
 
-	public function insert() {
+	public function add() {
 		$this->load->language('catalog/category');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -25,7 +25,7 @@ class ControllerCatalogCategory extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
-			
+
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -33,7 +33,7 @@ class ControllerCatalogCategory extends Controller {
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
 			}
-			
+
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
@@ -45,7 +45,7 @@ class ControllerCatalogCategory extends Controller {
 		$this->getForm();
 	}
 
-	public function update() {
+	public function edit() {
 		$this->load->language('catalog/category');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -58,7 +58,7 @@ class ControllerCatalogCategory extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
-			
+
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -66,7 +66,7 @@ class ControllerCatalogCategory extends Controller {
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
 			}
-			
+
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
@@ -92,7 +92,7 @@ class ControllerCatalogCategory extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
-			
+
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -100,7 +100,7 @@ class ControllerCatalogCategory extends Controller {
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
 			}
-			
+
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
@@ -149,7 +149,7 @@ class ControllerCatalogCategory extends Controller {
 		}
 
 		$url = '';
-			
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -157,12 +157,12 @@ class ControllerCatalogCategory extends Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
-			
+
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['insert'] = $this->url->link('catalog/category/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['insert'] = $this->url->link('catalog/category/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('catalog/category/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['repair'] = $this->url->link('catalog/category/repair', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
@@ -170,7 +170,7 @@ class ControllerCatalogCategory extends Controller {
 
 		$filter_data = array(
 			'sort'  => $sort,
-			'order' => $order,		
+			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
 			'limit' => $this->config->get('config_limit_admin')
 		);
@@ -184,7 +184,7 @@ class ControllerCatalogCategory extends Controller {
 				'category_id' => $result['category_id'],
 				'name'        => $result['name'],
 				'sort_order'  => $result['sort_order'],
-				'edit'        => $this->url->link('catalog/category/update', 'token=' . $this->session->data['token'] . '&category_id=' . $result['category_id'] . $url, 'SSL'),
+				'edit'        => $this->url->link('catalog/category/edit', 'token=' . $this->session->data['token'] . '&category_id=' . $result['category_id'] . $url, 'SSL'),
 				'delete'      => $this->url->link('catalog/category/delete', 'token=' . $this->session->data['token'] . '&category_id=' . $result['category_id'] . $url, 'SSL')
 			);
 		}
@@ -222,9 +222,9 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['selected'] = array();
 		}
-		
+
 		$url = '';
-		
+
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
 		} else {
@@ -237,7 +237,7 @@ class ControllerCatalogCategory extends Controller {
 
 		$data['sort_name'] = $this->url->link('catalog/category', 'token=' . $this->session->data['token'] . '&sort=name' . $url, 'SSL');
 		$data['sort_sort_order'] = $this->url->link('catalog/category', 'token=' . $this->session->data['token'] . '&sort=sort_order' . $url, 'SSL');
-		
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -247,7 +247,7 @@ class ControllerCatalogCategory extends Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
-		
+
 		$pagination = new Pagination();
 		$pagination->total = $category_total;
 		$pagination->page = $page;
@@ -256,11 +256,11 @@ class ControllerCatalogCategory extends Controller {
 
 		$data['pagination'] = $pagination->render();
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($category_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($category_total - $this->config->get('config_limit_admin'))) ? $category_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $category_total, $category_total, ceil($category_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($category_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($category_total - $this->config->get('config_limit_admin'))) ? $category_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $category_total, ceil($category_total / $this->config->get('config_limit_admin')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -321,7 +321,7 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['error_meta_title'] = array();
 		}
-		
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -335,11 +335,11 @@ class ControllerCatalogCategory extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-		
+
 		if (!isset($this->request->get['category_id'])) {
-			$data['action'] = $this->url->link('catalog/category/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('catalog/category/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$data['action'] = $this->url->link('catalog/category/update', 'token=' . $this->session->data['token'] . '&category_id=' . $this->request->get['category_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('catalog/category/edit', 'token=' . $this->session->data['token'] . '&category_id=' . $this->request->get['category_id'] . $url, 'SSL');
 		}
 
 		$data['cancel'] = $this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url, 'SSL');

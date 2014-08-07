@@ -110,9 +110,9 @@ class ControllerCommonDashboard extends Controller {
 			);
 
 			$replace = array(
-				$this->url->link('sale/customer/update', 'token=' . $this->session->data['token'] . '&customer_id=', 'SSL'),
+				$this->url->link('sale/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=', 'SSL'),
 				$this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=', 'SSL'),
-				$this->url->link('marketing/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=', 'SSL')
+				$this->url->link('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=', 'SSL')
 			);
 
 			$data['activities'][] = array(

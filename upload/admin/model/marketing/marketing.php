@@ -7,7 +7,7 @@ class ModelMarketingMarketing extends Model {
 
 		$marketing_id = $this->db->getLastId();
 
-		$this->event->trigger('admin_add_marketing', array('marketing_id' => $marketing_id));
+		$this->event->trigger('admin_add_marketing', $marketing_id);
 
 		return $marketing_id;
 	}
@@ -21,11 +21,11 @@ class ModelMarketingMarketing extends Model {
 	}
 
 	public function deleteMarketing($marketing_id) {
-		$this->event->trigger('pre_admin_delete_marketing', array('marketing_id' => $marketing_id));
+		$this->event->trigger('pre_admin_delete_marketing', $marketing_id);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "marketing WHERE marketing_id = '" . (int)$marketing_id . "'");
 
-		$this->event->trigger('admin_delete_marketing', array('marketing_id' => $marketing_id));
+		$this->event->trigger('admin_delete_marketing', $marketing_id);
 	}
 
 	public function getMarketing($marketing_id) {

@@ -11,7 +11,7 @@ class ModelCatalogProfile extends Model {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "profile_description` (`profile_id`, `language_id`, `name`) VALUES (" . (int)$profile_id . ", " . (int)$language_id. ", '" . $this->db->escape($profile_description['name']) . "')");
 		}
 
-		$this->event->trigger('admin_add_profile', array('profile_id' => $profile_id));
+		$this->event->trigger('admin_add_profile', $profile_id);
 
 		return $profile_id;
 	}
@@ -42,7 +42,7 @@ class ModelCatalogProfile extends Model {
 	}
 
 	public function deleteProfile($profile_id) {
-		$this->event->trigger('pre_admin_delete_profile', array('profile_id' => $profile_id));
+		$this->event->trigger('pre_admin_delete_profile', $profile_id);
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "profile` WHERE profile_id = " . (int)$profile_id);
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "profile_description` WHERE profile_id = " . (int)$profile_id);
@@ -50,7 +50,7 @@ class ModelCatalogProfile extends Model {
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `profile_id` = 0 WHERE `profile_id` = " . (int)$profile_id);
 
-		$this->event->trigger('admin_delete_profile', array('profile_id' => $profile_id));
+		$this->event->trigger('admin_delete_profile', $profile_id);
 	}
 
 	public function getProfile($profile_id) {

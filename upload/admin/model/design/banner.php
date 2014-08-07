@@ -19,7 +19,7 @@ class ModelDesignBanner extends Model {
 			}
 		}
 
-		$this->event->trigger('admin_add_banner', array('banner_id' => $banner_id));
+		$this->event->trigger('admin_add_banner', $banner_id);
 
 		return $banner_id;
 	}
@@ -48,13 +48,13 @@ class ModelDesignBanner extends Model {
 	}
 
 	public function deleteBanner($banner_id) {
-		$this->event->trigger('pre_admin_delete_banner', array('banner_id' => $banner_id));
+		$this->event->trigger('pre_admin_delete_banner', $banner_id);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "banner WHERE banner_id = '" . (int)$banner_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "banner_image WHERE banner_id = '" . (int)$banner_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "banner_image_description WHERE banner_id = '" . (int)$banner_id . "'");
 
-		$this->event->trigger('admin_delete_banner', array('banner_id' => $banner_id));
+		$this->event->trigger('admin_delete_banner', $banner_id);
 	}
 
 	public function getBanner($banner_id) {

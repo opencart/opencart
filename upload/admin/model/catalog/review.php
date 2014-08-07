@@ -9,7 +9,7 @@ class ModelCatalogReview extends Model {
 
 		$this->cache->delete('product');
 
-		$this->event->trigger('admin_add_review', array('review_id' => $review_id));
+		$this->event->trigger('admin_add_review', $review_id);
 
 		return $review_id;
 	}
@@ -25,13 +25,13 @@ class ModelCatalogReview extends Model {
 	}
 
 	public function deleteReview($review_id) {
-		$this->event->trigger('pre_admin_delete_review', array('review_id' => $review_id));
+		$this->event->trigger('pre_admin_delete_review', $review_id);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "review WHERE review_id = '" . (int)$review_id . "'");
 
 		$this->cache->delete('product');
 
-		$this->event->trigger('admin_delete_review', array('review_id' => $review_id));
+		$this->event->trigger('admin_delete_review', $review_id);
 	}
 
 	public function getReview($review_id) {

@@ -11,7 +11,7 @@ class ModelAccountAddress extends Model {
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$this->customer->getId() . "'");
 		}
 
-		$this->event->trigger('customer_add_address', array('address_id' => $address_id));
+		$this->event->trigger('customer_add_address', $address_id);
 
 		return $address_id;
 	}

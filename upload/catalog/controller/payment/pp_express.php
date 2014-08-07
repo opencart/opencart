@@ -1564,7 +1564,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$request = 'cmd=_notify-validate';
 
 		foreach ($_POST as $key => $value) {
-			$request .= '&' . $key . '=' . urlencode(stripslashes($value));
+			$request .= '&' . $key . '=' . urlencode(html_entity_decode($value, ENT_QUOTES, 'UTF-8'));
 		}
 
 		if ($this->config->get('pp_express_test') == 1) {

@@ -61,7 +61,7 @@ class ControllerApiCart extends Controller {
 		$this->response->setOutput(json_encode($json));		
 	}	
 		
-	public function update() {
+	public function edit() {
 		$this->load->language('api/cart');
 
 		$json = array();

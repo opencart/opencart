@@ -10,7 +10,7 @@ class ControllerSaleOrder extends Controller {
 		$this->getList();
 	}
 	
-	public function insert() {
+	public function add() {
 		$this->load->language('sale/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -20,7 +20,7 @@ class ControllerSaleOrder extends Controller {
     	$this->getForm();
   	}
 
-	public function update() {
+	public function edit() {
 		$this->load->language('sale/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -149,7 +149,7 @@ class ControllerSaleOrder extends Controller {
 
 		$data['invoice'] = $this->url->link('sale/order/invoice', 'token=' . $this->session->data['token'], 'SSL');
 		$data['shipping'] = $this->url->link('sale/order/shipping', 'token=' . $this->session->data['token'], 'SSL');
-		$data['insert'] = $this->url->link('sale/order/insert', 'token=' . $this->session->data['token'], 'SSL');
+		$data['insert'] = $this->url->link('sale/order/add', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['orders'] = array();
 
@@ -179,7 +179,7 @@ class ControllerSaleOrder extends Controller {
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
 				'view'          => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL'),
-				'edit'          => $this->url->link('sale/order/update', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL')
+				'edit'          => $this->url->link('sale/order/edit', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL')
 			);
 		}
 
@@ -474,7 +474,52 @@ class ControllerSaleOrder extends Controller {
 		}
 
 		$data['token'] = $this->session->data['token'];
-
+		
+		// Unset any past sessions this page created for the api to work.
+		unset($this->session->data['cookie']);
+		
+		if ($this->user->hasPermission('modify', 'sale/order')) {
+			$this->load->model('user/api');
+		
+			$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
+		
+			if ($api_info) {
+				$curl = curl_init();
+				
+				// Set SSL if required
+				if (substr(HTTPS_CATALOG, 0, 5) == 'https') {
+					curl_setopt($curl, CURLOPT_PORT, 443);
+				}
+				
+				curl_setopt($curl, CURLOPT_HEADER, false);
+				curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+				curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
+				curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); 
+				curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
+				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($curl, CURLOPT_URL, HTTPS_CATALOG . 'index.php?route=api/login');
+				curl_setopt($curl, CURLOPT_POST, true);
+				curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($api_info));
+				
+				$response = curl_exec($curl);
+		
+				if (!$response) {
+					$data['error_warning'] = curl_error($curl) . ' (' . curl_errno($curl) . ')';
+				} else {
+					$json = json_decode($response, true);
+				}			
+			}
+		}
+		
+		if (isset($json['cookie'])) {
+			$this->session->data['cookie'] = $json['cookie'];	
+		}
+		
+		if (!$this->user->hasPermission('modify', 'sale/order')) {
+			$data['error_warning'] = $this->language->get('error_permission');
+		}	
+				
 		if (!empty($order_info)) {
 			$data['order_id'] = $this->request->get['order_id'];
 			$data['store_id'] = $order_info['store_id'];
@@ -530,11 +575,11 @@ class ControllerSaleOrder extends Controller {
 					'model'      => $order_product['model'],
 					'option'     => $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $order_product['order_product_id']),
 					'quantity'   => $order_product['quantity'],
-					'price'      => $order_product['price'],
-					'total'      => $order_product['total']
+					'price'      => $this->currency->format($order_product['price'] + ($this->config->get('config_tax') ? $order_product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+					'total'      => $this->currency->format($order_product['total'] + ($this->config->get('config_tax') ? ($order_product['tax'] * $order_product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
 				);
 			}
-			
+		
 			$data['order_vouchers'] = $this->model_sale_order->getOrderVouchers($this->request->get['order_id']);
 
 			$data['coupon'] = '';
@@ -859,6 +904,7 @@ class ControllerSaleOrder extends Controller {
 
 			$data['button_invoice'] = $this->language->get('button_invoice');
 			$data['button_shipping'] = $this->language->get('button_shipping');
+			$data['button_edit'] = $this->language->get('button_edit');
 			$data['button_cancel'] = $this->language->get('button_cancel');
 			$data['button_generate'] = $this->language->get('button_generate');
 			$data['button_reward_add'] = $this->language->get('button_reward_add');
@@ -928,6 +974,7 @@ class ControllerSaleOrder extends Controller {
 
 			$data['shipping'] = $this->url->link('sale/order/shipping', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], 'SSL');
 			$data['invoice'] = $this->url->link('sale/order/invoice', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], 'SSL');
+			$data['edit'] = $this->url->link('sale/order/edit', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], 'SSL');
 			$data['cancel'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 			$data['order_id'] = $this->request->get['order_id'];
@@ -944,7 +991,7 @@ class ControllerSaleOrder extends Controller {
 			$data['lastname'] = $order_info['lastname'];
 
 			if ($order_info['customer_id']) {
-				$data['customer'] = $this->url->link('sale/customer/update', 'token=' . $this->session->data['token'] . '&customer_id=' . $order_info['customer_id'], 'SSL');
+				$data['customer'] = $this->url->link('sale/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . $order_info['customer_id'], 'SSL');
 			} else {
 				$data['customer'] = '';
 			}
@@ -977,7 +1024,7 @@ class ControllerSaleOrder extends Controller {
 			$data['affiliate_lastname'] = $order_info['affiliate_lastname'];
 
 			if ($order_info['affiliate_id']) {
-				$data['affiliate'] = $this->url->link('marketing/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $order_info['affiliate_id'], 'SSL');
+				$data['affiliate'] = $this->url->link('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $order_info['affiliate_id'], 'SSL');
 			} else {
 				$data['affiliate'] = '';
 			}
@@ -1066,7 +1113,7 @@ class ControllerSaleOrder extends Controller {
 					'quantity'		   => $product['quantity'],
 					'price'    		   => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
 					'total'    		   => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
-					'href'     		   => $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $product['product_id'], 'SSL')
+					'href'     		   => $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product['product_id'], 'SSL')
 				);
 			}
 
@@ -1078,7 +1125,7 @@ class ControllerSaleOrder extends Controller {
 				$data['vouchers'][] = array(
 					'description' => $voucher['description'],
 					'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']),
-					'href'        => $this->url->link('sale/voucher/update', 'token=' . $this->session->data['token'] . '&voucher_id=' . $voucher['voucher_id'], 'SSL')
+					'href'        => $this->url->link('sale/voucher/edit', 'token=' . $this->session->data['token'] . '&voucher_id=' . $voucher['voucher_id'], 'SSL')
 				);
 			}
 
@@ -1973,55 +2020,25 @@ class ControllerSaleOrder extends Controller {
 			
 	public function api() {
 		$json = array();
-		
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
-			$json['error'] = $this->language->get('error_permission');
-		}		
-		
-		// Create a cookie if one does not exist
-		if (!isset($this->session->data['cookie'])) {
-			$this->load->model('user/api');
-		
-			$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
-		
-			if ($api_info) {
-				$url = HTTPS_CATALOG . 'index.php?route=api/login';
-				
-				$curl = curl_init();
-				
-				// Set SSL if required
-				if (substr($url, 0, 5) == 'https') {
-					curl_setopt($curl, CURLOPT_PORT, 443);
-				}
-				
-				curl_setopt($curl, CURLOPT_HEADER, false);
-				curl_setopt($curl, CURLINFO_HEADER_OUT, true);
-				curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-				curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); 
-				curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
-				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-				curl_setopt($curl, CURLOPT_URL, $url);
-				curl_setopt($curl, CURLOPT_POST, true);
-				curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($api_info));
-				
-				$response = curl_exec($curl);
-		
-				if (!$response) {
-					$response = json_encode(array('error' => curl_error($curl) . '(' . curl_errno($curl) . ')'));
-				} else {
-					$json = $response;	
-				}			
-			}
-		}	
-			
-		if (isset($this->request->get['api'])) {
-			$url = 'index.php?route=' . $this->request->get['api'];
+
+		// Store
+		if (isset($this->request->get['store_id'])) {
+			$store_id = $this->request->get['store_id'];
 		} else {
-			$json['error'] = $this->language->get('error_api');
+			$store_id = 0;
+		}
+			
+		$this->load->model('setting/store');
+		
+		$store_info = $this->model_setting_store->getStore($store_id);
+		
+		if ($store_info) {
+			$url = $store_info['url'];
+		} else {
+			$url = HTTP_CATALOG;
 		}
 						
-		if (!$json) {
+		if (isset($this->request->get['api'])) {
 			$curl = curl_init();
 			
 			// Set SSL if required
@@ -2036,14 +2053,16 @@ class ControllerSaleOrder extends Controller {
 			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); 
 			curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($curl, CURLOPT_URL, $url);
+			curl_setopt($curl, CURLOPT_URL, $url . 'index.php?route=' . $this->request->get['api']);
 			
 			if ($this->request->post) {
 				curl_setopt($curl, CURLOPT_POST, true);
 				curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($this->request->post));
 			}
 			
-			curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->session->data['cookie'] . ';');
+			if (isset($this->session->data['cookie'])) {
+				curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->session->data['cookie'] . ';');
+			}
 			
 			$response = curl_exec($curl);
 	

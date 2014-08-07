@@ -46,6 +46,7 @@ $_['button_return']         = 'Return';
 $_['button_shopping']       = 'Continue Shopping';
 $_['button_search']         = 'Search';
 $_['button_shipping']       = 'Apply Shipping';
+$_['button_submit']         = 'Submit';
 $_['button_guest']          = 'Guest Checkout';
 $_['button_view']           = 'View';
 $_['button_voucher']        = 'Apply Voucher';

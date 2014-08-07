@@ -39,7 +39,7 @@ class CatalogAccountTest extends OpenCartSeleniumTest {
 	
 	public function testAddAddress() {
 		$this->doRegistration();
-		$this->url("index.php?route=account/address/insert");
+		$this->url("index.php?route=account/address/add");
 		
 		$this->clickOnElement('input-firstname');
 		$this->keys('Firstname');
@@ -76,7 +76,7 @@ class CatalogAccountTest extends OpenCartSeleniumTest {
 		$this->byCssSelector('table.table-hover tr:last-child td:last-child .btn-info')->click();
 		
 		$this->waitUntil(function() {
-			if (strpos($this->url(), 'account/address/update') !== False) {
+			if (strpos($this->url(), 'account/address/edit') !== False) {
 				return true;
 			}
 		}, 3000);

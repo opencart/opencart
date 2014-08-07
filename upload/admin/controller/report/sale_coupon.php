@@ -70,7 +70,7 @@ class ControllerReportSaleCoupon extends Controller {
 				'code'   => $result['code'],
 				'orders' => $result['orders'],
 				'total'  => $this->currency->format($result['total'], $this->config->get('config_currency')),
-				'edit'   => $this->url->link('marketing/coupon/update', 'token=' . $this->session->data['token'] . '&coupon_id=' . $result['coupon_id'] . $url, 'SSL')
+				'edit'   => $this->url->link('marketing/coupon/edit', 'token=' . $this->session->data['token'] . '&coupon_id=' . $result['coupon_id'] . $url, 'SSL')
 			);
 		}
 

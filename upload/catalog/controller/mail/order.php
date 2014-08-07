@@ -443,4 +443,3 @@ class ControllerMailOrder extends Controller {
 		$mail->send();
 	}
 }
-?>

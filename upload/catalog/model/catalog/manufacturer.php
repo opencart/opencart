@@ -59,7 +59,6 @@ class ModelCatalogManufacturer extends Model {
 
 	public function getManufacturerLayoutId($manufacturer_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "manufacturer_to_layout WHERE manufacturer_id = '" . (int)$manufacturer_id . "' AND store_id = '" . (int)$this->config->get('config_store_id') . "'");
-
 		return ($query->num_rows ? $query->row['layout_id'] : 0);
 	}
 }

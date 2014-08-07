@@ -21,10 +21,10 @@ class ControllerCommonContentBottom extends Controller {
 			$layout_id = $this->model_catalog_category->getCategoryLayoutId(end($path));
 		}
 
-		if ($route == 'product/manufacturer' && isset($this->request->get['path'])) {
-			$path = explode('_', (string)$this->request->get['path']);
+		if ($route == 'product/manufacturer/info' && isset($this->request->get['manufacturer_id'])) {
+			$manufacturer_id = explode('_', (string)$this->request->get['manufacturer_id']);
 
-			$layout_id = $this->model_catalog_manufacturer->getManufacturerLayoutId(end($path));
+			$layout_id = $this->model_catalog_manufacturer->getManufacturerLayoutId(end($manufacturer_id));
 		}
 
 		if ($route == 'product/product' && isset($this->request->get['product_id'])) {

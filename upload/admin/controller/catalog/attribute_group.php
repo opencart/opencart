@@ -12,7 +12,7 @@ class ControllerCatalogAttributeGroup extends Controller {
 		$this->getList();
 	}
 
-	public function insert() {
+	public function add() {
 		$this->load->language('catalog/attribute_group');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -44,7 +44,7 @@ class ControllerCatalogAttributeGroup extends Controller {
 		$this->getForm();
 	}
 
-	public function update() {
+	public function edit() {
 		$this->load->language('catalog/attribute_group');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -143,7 +143,7 @@ class ControllerCatalogAttributeGroup extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['insert'] = $this->url->link('catalog/attribute_group/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['insert'] = $this->url->link('catalog/attribute_group/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('catalog/attribute_group/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['attribute_groups'] = array();
@@ -164,7 +164,7 @@ class ControllerCatalogAttributeGroup extends Controller {
 				'attribute_group_id' => $result['attribute_group_id'],
 				'name'               => $result['name'],
 				'sort_order'         => $result['sort_order'],
-				'edit'               => $this->url->link('catalog/attribute_group/update', 'token=' . $this->session->data['token'] . '&attribute_group_id=' . $result['attribute_group_id'] . $url, 'SSL')
+				'edit'               => $this->url->link('catalog/attribute_group/edit', 'token=' . $this->session->data['token'] . '&attribute_group_id=' . $result['attribute_group_id'] . $url, 'SSL')
 			);
 		}
 
@@ -282,9 +282,9 @@ class ControllerCatalogAttributeGroup extends Controller {
 		}
 
 		if (!isset($this->request->get['attribute_group_id'])) {
-			$data['action'] = $this->url->link('catalog/attribute_group/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('catalog/attribute_group/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$data['action'] = $this->url->link('catalog/attribute_group/update', 'token=' . $this->session->data['token'] . '&attribute_group_id=' . $this->request->get['attribute_group_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('catalog/attribute_group/edit', 'token=' . $this->session->data['token'] . '&attribute_group_id=' . $this->request->get['attribute_group_id'] . $url, 'SSL');
 		}
 
 		$data['cancel'] = $this->url->link('catalog/attribute_group', 'token=' . $this->session->data['token'] . $url, 'SSL');

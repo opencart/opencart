@@ -12,7 +12,7 @@ class ControllerSettingStore extends Controller {
 		$this->getList();
 	}
 
-	public function insert() {
+	public function add() {
 		$this->load->language('setting/store');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -34,7 +34,7 @@ class ControllerSettingStore extends Controller {
 		$this->getForm();
 	}
 
-	public function update() {
+	public function edit() {
 		$this->load->language('setting/store');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -99,7 +99,7 @@ class ControllerSettingStore extends Controller {
 			'href' => $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
-		$data['insert'] = $this->url->link('setting/store/insert', 'token=' . $this->session->data['token'], 'SSL');
+		$data['insert'] = $this->url->link('setting/store/add', 'token=' . $this->session->data['token'], 'SSL');
 		$data['delete'] = $this->url->link('setting/store/delete', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['stores'] = array();
@@ -120,7 +120,7 @@ class ControllerSettingStore extends Controller {
 				'store_id' => $result['store_id'],
 				'name'     => $result['name'],
 				'url'      => $result['url'],
-				'edit'     => $this->url->link('setting/store/update', 'token=' . $this->session->data['token'] . '&store_id=' . $result['store_id'], 'SSL')
+				'edit'     => $this->url->link('setting/store/edit', 'token=' . $this->session->data['token'] . '&store_id=' . $result['store_id'], 'SSL')
 			);
 		}
 
@@ -413,9 +413,9 @@ class ControllerSettingStore extends Controller {
 		}
 
 		if (!isset($this->request->get['store_id'])) {
-			$data['action'] = $this->url->link('setting/store/insert', 'token=' . $this->session->data['token'], 'SSL');
+			$data['action'] = $this->url->link('setting/store/add', 'token=' . $this->session->data['token'], 'SSL');
 		} else {
-			$data['action'] = $this->url->link('setting/store/update', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], 'SSL');
+			$data['action'] = $this->url->link('setting/store/edit', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], 'SSL');
 		}
 
 		$data['cancel'] = $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL');

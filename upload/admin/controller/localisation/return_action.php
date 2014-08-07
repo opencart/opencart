@@ -12,7 +12,7 @@ class ControllerLocalisationReturnAction extends Controller {
 		$this->getList();
 	}
 
-	public function insert() {
+	public function add() {
 		$this->load->language('localisation/return_action');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -44,7 +44,7 @@ class ControllerLocalisationReturnAction extends Controller {
 		$this->getForm();
 	}
 
-	public function update() {
+	public function edit() {
 		$this->load->language('localisation/return_action');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -155,7 +155,7 @@ class ControllerLocalisationReturnAction extends Controller {
 			'href' => $this->url->link('localisation/return_action', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$data['insert'] = $this->url->link('localisation/return_action/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['insert'] = $this->url->link('localisation/return_action/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('localisation/return_action/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['return_actions'] = array();
@@ -175,7 +175,7 @@ class ControllerLocalisationReturnAction extends Controller {
 			$data['return_actions'][] = array(
 				'return_action_id' => $result['return_action_id'],
 				'name'             => $result['name'],
-				'edit'             => $this->url->link('localisation/return_action/update', 'token=' . $this->session->data['token'] . '&return_action_id=' . $result['return_action_id'] . $url, 'SSL')
+				'edit'             => $this->url->link('localisation/return_action/edit', 'token=' . $this->session->data['token'] . '&return_action_id=' . $result['return_action_id'] . $url, 'SSL')
 			);
 		}
 
@@ -302,9 +302,9 @@ class ControllerLocalisationReturnAction extends Controller {
 		);
 
 		if (!isset($this->request->get['return_action_id'])) {
-			$data['action'] = $this->url->link('localisation/return_action/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('localisation/return_action/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$data['action'] = $this->url->link('localisation/return_action/update', 'token=' . $this->session->data['token'] . '&return_action_id=' . $this->request->get['return_action_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('localisation/return_action/edit', 'token=' . $this->session->data['token'] . '&return_action_id=' . $this->request->get['return_action_id'] . $url, 'SSL');
 		}
 
 		$data['cancel'] = $this->url->link('localisation/return_action', 'token=' . $this->session->data['token'] . $url, 'SSL');

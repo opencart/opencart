@@ -90,7 +90,7 @@ class ControllerReportAffiliateActivity extends Controller {
 			$comment = vsprintf($this->language->get('text_' . $result['key']), unserialize($result['data']));
 
 			$data['activities'][] = array(
-				'comment'    => str_replace('affiliate_id=', $this->url->link('marketing/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=', 'SSL'), $comment),
+				'comment'    => str_replace('affiliate_id=', $this->url->link('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=', 'SSL'), $comment),
 				'ip'         => $result['ip'],
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
 			);

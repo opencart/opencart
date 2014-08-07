@@ -18,7 +18,7 @@ class ControllerAccountAddress extends Controller {
 		$this->getList();
 	}
 
-	public function insert() {
+	public function add() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/address', '', 'SSL');
 
@@ -56,7 +56,7 @@ class ControllerAccountAddress extends Controller {
 		$this->getForm();
 	}
 
-	public function update() {
+	public function edit() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/address', '', 'SSL');
 
@@ -238,12 +238,12 @@ class ControllerAccountAddress extends Controller {
 			$data['addresses'][] = array(
 				'address_id' => $result['address_id'],
 				'address'    => str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format)))),
-				'update'     => $this->url->link('account/address/update', 'address_id=' . $result['address_id'], 'SSL'),
+				'update'     => $this->url->link('account/address/edit', 'address_id=' . $result['address_id'], 'SSL'),
 				'delete'     => $this->url->link('account/address/delete', 'address_id=' . $result['address_id'], 'SSL')
 			);
 		}
 
-		$data['insert'] = $this->url->link('account/address/insert', '', 'SSL');
+		$data['insert'] = $this->url->link('account/address/add', '', 'SSL');
 		$data['back'] = $this->url->link('account/account', '', 'SSL');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -281,12 +281,12 @@ class ControllerAccountAddress extends Controller {
 		if (!isset($this->request->get['address_id'])) {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_edit_address'),
-				'href' => $this->url->link('account/address/insert', '', 'SSL')
+				'href' => $this->url->link('account/address/add', '', 'SSL')
 			);
 		} else {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_edit_address'),
-				'href' => $this->url->link('account/address/update', 'address_id=' . $this->request->get['address_id'], 'SSL')
+				'href' => $this->url->link('account/address/edit', 'address_id=' . $this->request->get['address_id'], 'SSL')
 			);
 		}
 
@@ -356,9 +356,9 @@ class ControllerAccountAddress extends Controller {
 		}
 
 		if (!isset($this->request->get['address_id'])) {
-			$data['action'] = $this->url->link('account/address/insert', '', 'SSL');
+			$data['action'] = $this->url->link('account/address/add', '', 'SSL');
 		} else {
-			$data['action'] = $this->url->link('account/address/update', 'address_id=' . $this->request->get['address_id'], 'SSL');
+			$data['action'] = $this->url->link('account/address/edit', 'address_id=' . $this->request->get['address_id'], 'SSL');
 		}
 
 		if (isset($this->request->get['address_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {

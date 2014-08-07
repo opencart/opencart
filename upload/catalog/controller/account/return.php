@@ -273,7 +273,7 @@ class ControllerAccountReturn extends Controller {
 		}
 	}
 
-	public function insert() {
+	public function add() {
 		$this->load->language('account/return');
 
 		$this->load->model('account/return');
@@ -325,7 +325,7 @@ class ControllerAccountReturn extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/return/insert', '', 'SSL')
+			'href' => $this->url->link('account/return/add', '', 'SSL')
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -413,7 +413,7 @@ class ControllerAccountReturn extends Controller {
 			$data['error_captcha'] = '';
 		}
 
-		$data['action'] = $this->url->link('account/return/insert', '', 'SSL');
+		$data['action'] = $this->url->link('account/return/add', '', 'SSL');
 
 		$this->load->model('account/order');
 

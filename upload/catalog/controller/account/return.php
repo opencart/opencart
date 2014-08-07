@@ -350,7 +350,7 @@ class ControllerAccountReturn extends Controller {
 		$data['entry_fault_detail'] = $this->language->get('entry_fault_detail');
 		$data['entry_captcha'] = $this->language->get('entry_captcha');
 
-		$data['button_continue'] = $this->language->get('button_continue');
+		$data['button_submit'] = $this->language->get('button_submit');
 		$data['button_back'] = $this->language->get('button_back');
 
 		if (isset($this->error['warning'])) {

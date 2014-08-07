@@ -1,7 +1,7 @@
 <?php
 class ModelMarketingMarketing extends Model {
 	public function addMarketing($data) {
-		$this->event->trigger('pre_admin_add_marketing');
+		$this->event->trigger('pre_admin_add_marketing', $data);
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "marketing SET name = '" . $this->db->escape($data['name']) . "', description = '" . $this->db->escape($data['description']) . "', code = '" . $this->db->escape($data['code']) . "', date_added = NOW()");
 
@@ -13,7 +13,7 @@ class ModelMarketingMarketing extends Model {
 	}
 
 	public function editMarketing($marketing_id, $data) {
-		$this->event->trigger('pre_admin_edit_marketing');
+		$this->event->trigger('pre_admin_edit_marketing', $data);
 
 		$this->db->query("UPDATE " . DB_PREFIX . "marketing SET name = '" . $this->db->escape($data['name']) . "', description = '" . $this->db->escape($data['description']) . "', code = '" . $this->db->escape($data['code']) . "' WHERE marketing_id = '" . (int)$marketing_id . "'");
 

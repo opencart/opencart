@@ -1,7 +1,7 @@
 <?php
 class ModelCatalogAttributeGroup extends Model {
 	public function addAttributeGroup($data) {
-		$this->event->trigger('pre_admin_add_attribute_group');
+		$this->event->trigger('pre_admin_add_attribute_group', $data);
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_group SET sort_order = '" . (int)$data['sort_order'] . "'");
 
@@ -17,7 +17,7 @@ class ModelCatalogAttributeGroup extends Model {
 	}
 
 	public function editAttributeGroup($attribute_group_id, $data) {
-		$this->event->trigger('pre_admin_edit_attribute_group');
+		$this->event->trigger('pre_admin_edit_attribute_group', $data);
 
 		$this->db->query("UPDATE " . DB_PREFIX . "attribute_group SET sort_order = '" . (int)$data['sort_order'] . "' WHERE attribute_group_id = '" . (int)$attribute_group_id . "'");
 

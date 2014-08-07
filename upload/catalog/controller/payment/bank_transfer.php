@@ -21,7 +21,7 @@ class ControllerPaymentBankTransfer extends Controller {
 	}
 
 	public function confirm() {
-		if ($this->session->data['payment_method'] == 'bank_transfer') {
+		if ($this->session->data['payment_method']['code'] == 'bank_transfer') {
 			$this->load->language('payment/bank_transfer');
 	
 			$this->load->model('checkout/order');

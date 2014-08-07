@@ -17,7 +17,7 @@ class ModelCatalogAttribute extends Model {
 	}
 
 	public function editAttribute($attribute_id, $data) {
-		$this->event->trigger('pre_admin_edit_attribute');
+		$this->event->trigger('pre_admin_edit_attribute', $data);
 
 		$this->db->query("UPDATE " . DB_PREFIX . "attribute SET attribute_group_id = '" . (int)$data['attribute_group_id'] . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE attribute_id = '" . (int)$attribute_id . "'");
 

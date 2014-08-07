@@ -1,7 +1,7 @@
 <?php
 class ModelCatalogDownload extends Model {
 	public function addDownload($data) {
-		$this->event->trigger('pre_admin_add_download');
+		$this->event->trigger('pre_admin_add_download', $data);
 
       	$this->db->query("INSERT INTO " . DB_PREFIX . "download SET filename = '" . $this->db->escape($data['filename']) . "', mask = '" . $this->db->escape($data['mask']) . "', date_added = NOW()");
 
@@ -17,7 +17,7 @@ class ModelCatalogDownload extends Model {
 	}
 
 	public function editDownload($download_id, $data) {
-		$this->event->trigger('pre_admin_edit_download');
+		$this->event->trigger('pre_admin_edit_download', $data);
 
         $this->db->query("UPDATE " . DB_PREFIX . "download SET filename = '" . $this->db->escape($data['filename']) . "', mask = '" . $this->db->escape($data['mask']) . "' WHERE download_id = '" . (int)$download_id . "'");
 

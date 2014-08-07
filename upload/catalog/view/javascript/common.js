@@ -1,9 +1,9 @@
 $(document).ready(function() {
 	// Currency
-	$('#currency a').on('click', function(e) {
+	$('#currency .currency-select').on('click', function(e) {
 		e.preventDefault();
 
-		$('#currency input[name=\'code\']').attr('value', $(this).attr('href'));
+		$('#currency input[name=\'code\']').attr('value', $(this).attr('name'));
 
 		$('#currency').submit();
 	});

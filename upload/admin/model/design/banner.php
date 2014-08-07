@@ -1,7 +1,7 @@
 <?php
 class ModelDesignBanner extends Model {
 	public function addBanner($data) {
-		$this->event->trigger('pre_admin_add_banner');
+		$this->event->trigger('pre_admin_add_banner', $data);
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "banner SET name = '" . $this->db->escape($data['name']) . "', status = '" . (int)$data['status'] . "'");
 
@@ -25,7 +25,7 @@ class ModelDesignBanner extends Model {
 	}
 
 	public function editBanner($banner_id, $data) {
-		$this->event->trigger('pre_admin_edit_banner');
+		$this->event->trigger('pre_admin_edit_banner', $data);
 
 		$this->db->query("UPDATE " . DB_PREFIX . "banner SET name = '" . $this->db->escape($data['name']) . "', status = '" . (int)$data['status'] . "' WHERE banner_id = '" . (int)$banner_id . "'");
 

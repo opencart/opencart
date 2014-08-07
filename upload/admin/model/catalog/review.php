@@ -1,7 +1,7 @@
 <?php
 class ModelCatalogReview extends Model {
 	public function addReview($data) {
-		$this->event->trigger('pre_admin_add_review');
+		$this->event->trigger('pre_admin_add_review', $data);
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['author']) . "', product_id = '" . (int)$data['product_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
 
@@ -15,7 +15,7 @@ class ModelCatalogReview extends Model {
 	}
 
 	public function editReview($review_id, $data) {
-		$this->event->trigger('pre_admin_edit_review');
+		$this->event->trigger('pre_admin_edit_review', $data);
 
 		$this->db->query("UPDATE " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['author']) . "', product_id = '" . (int)$data['product_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE review_id = '" . (int)$review_id . "'");
 

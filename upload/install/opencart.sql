@@ -1676,13 +1676,14 @@ INSERT INTO `oc_layout` (`layout_id`, `name`) VALUES
 (2, 'Product'),
 (3, 'Category'),
 (4, 'Default'),
-(5, 'Manufacturer'),
+(5, 'Manufacturer List'),
 (6, 'Account'),
 (7, 'Checkout'),
 (8, 'Contact'),
 (9, 'Sitemap'),
 (10, 'Affiliate'),
-(11, 'Information');
+(11, 'Information'),
+(12, 'Manufacturer Info');
 
 -- --------------------------------------------------------
 
@@ -1711,6 +1712,7 @@ INSERT INTO `oc_layout_route` (`layout_route_id`, `layout_id`, `store_id`, `rout
 (20, 2, 0, 'product/product'),
 (24, 11, 0, 'information/information'),
 (22, 5, 0, 'product/manufacturer'),
+(33, 12, 0, 'product/manufacturer/info'),
 (23, 7, 0, 'checkout/%'),
 (31, 8, 0, 'information/contact'),
 (32, 9, 0, 'information/sitemap');

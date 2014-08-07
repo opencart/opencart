@@ -3,6 +3,7 @@ class ControllerCommonColumnRight extends Controller {
 	public function index() {
 		$this->load->model('design/layout');
 		$this->load->model('catalog/category');
+		$this->load->model('catalog/manufacturer');
 		$this->load->model('catalog/product');
 		$this->load->model('catalog/information');
 
@@ -18,6 +19,12 @@ class ControllerCommonColumnRight extends Controller {
 			$path = explode('_', (string)$this->request->get['path']);
 
 			$layout_id = $this->model_catalog_category->getCategoryLayoutId(end($path));
+		}
+
+		if ($route == 'product/manufacturer' && isset($this->request->get['path'])) {
+			$path = explode('_', (string)$this->request->get['path']);
+
+			$layout_id = $this->model_catalog_manufacturer->getManufacturerLayoutId(end($path));
 		}
 
 		if ($route == 'product/product' && isset($this->request->get['product_id'])) {

@@ -3,6 +3,7 @@ class Mail {
 	protected $to;
 	protected $from;
 	protected $sender;
+	protected $replyto;
 	protected $subject;
 	protected $text;
 	protected $html;
@@ -33,6 +34,10 @@ class Mail {
 
 	public function setSender($sender) {
 		$this->sender = html_entity_decode($sender, ENT_QUOTES, 'UTF-8');
+	}
+
+	public function setReplyTo($reply_to) {
+		$this->replyto = html_entity_decode($reply_to, ENT_QUOTES, 'UTF-8');
 	}
 
 	public function setSubject($subject) {
@@ -77,6 +82,10 @@ class Mail {
 			exit();
 		}
 
+		if (!$this->replyto) {
+			$this->setReplyTo($this->sender);
+		}
+
 		if (is_array($this->to)) {
 			$to = implode(',', $this->to);
 		} else {
@@ -94,7 +103,7 @@ class Mail {
 
 		$header .= 'Date: ' . date('D, d M Y H:i:s O') . $this->newline;
 		$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . $this->newline;
-		$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . $this->newline;
+		$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->replyto) . '?=' . ' <' . $this->from . '>' . $this->newline;
 		$header .= 'Return-Path: ' . $this->from . $this->newline;
 		$header .= 'X-Mailer: PHP/' . phpversion() . $this->newline;
 		$header .= 'Content-Type: multipart/related; boundary="' . $boundary . '"' . $this->newline . $this->newline;

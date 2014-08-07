@@ -98,19 +98,20 @@ class ControllerCommonMenu extends Controller {
 
 			$data['home'] = $this->url->link('common/dashboard', '', 'SSL');
 		} else {
-			$data['logged'] = sprintf($this->language->get('text_logged'), $this->user->getUserName());
 
 			$this->load->model('user/user');
 	
 			$this->load->model('tool/image');
 	
 			$user_info = $this->model_user_user->getUser($this->user->getId());
-	
+			
 			if ($user_info) {
 				$data['username'] = $user_info['firstname'] . ' ' . $user_info['lastname'];
+				
+				$data['usergroup'] = $user_info['user_group'];
 	
 				if (is_file(DIR_IMAGE . $user_info['image'])) {
-					$data['image'] = $this->model_tool_image->resize($user_info['image'], 24, 24);
+					$data['image'] = $this->model_tool_image->resize($user_info['image'], 30, 30);
 				} else {
 					$data['image'] = '';
 				}

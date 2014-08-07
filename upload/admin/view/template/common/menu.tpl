@@ -1,5 +1,5 @@
 <nav id="column-left">
-  <div>
+  <div class="user-info">
     <div class="pull-left">
       <?php if ($image) { ?>
       <a class="dropdown-toggle" data-toggle="dropdown"><img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" title="<?php echo $username; ?>" /></a>
@@ -7,8 +7,11 @@
       <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user fa-lg"></i></a>
       <?php } ?>
     </div>
-    <div><?php echo $username; ?><br />
-    <small><?php echo $user_group; ?></small></div>
+    <div class="pull-left">
+		<b> <?php echo $username; ?></b><br />
+		<small> <?php echo $usergroup; ?></small>
+	</div>
+	<div class="clearfix"></div>
   </div>
   <ul id="menu">
     <li id="dashboard"><a href="<?php echo $home; ?>"><i class="fa fa-home fa-fw"></i> <?php echo $text_dashboard; ?></a></li>

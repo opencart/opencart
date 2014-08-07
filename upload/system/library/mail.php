@@ -18,8 +18,12 @@ class Mail {
 	public $parameter = '';
 
 	public function __construct($config = array()) {
-		foreach ($config as $key => $value) {
-			$this->$key = $value;
+		if (is_array($config)){
+			foreach ($config as $key => $value) {
+				$this->$key = $value;
+			}
+		}else{
+			return false;
 		}
 	}
 

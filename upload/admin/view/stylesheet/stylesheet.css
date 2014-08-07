@@ -246,6 +246,11 @@ label.control-label {
 	vertical-align: middle;
 	display: inline-block;
 }
+.img-thumbnail.list i {
+	width: 40px;
+	height: 40px;
+	padding-top: 10px;
+}
 
 ul.alerts-dropdown > li > a {
 	position: relative;

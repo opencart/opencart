@@ -474,7 +474,48 @@ class ControllerSaleOrder extends Controller {
 		}
 
 		$data['token'] = $this->session->data['token'];
-
+		
+		// Create a cookie for each time this page is loaded
+		unset($this->session->data['cookie']);
+		
+		$this->load->model('user/api');
+	
+		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
+	
+		if ($api_info) {
+			$curl = curl_init();
+			
+			// Set SSL if required
+			if (substr(HTTPS_CATALOG, 0, 5) == 'https') {
+				curl_setopt($curl, CURLOPT_PORT, 443);
+			}
+			
+			curl_setopt($curl, CURLOPT_HEADER, false);
+			curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+			curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
+			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); 
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($curl, CURLOPT_URL, HTTPS_CATALOG . 'index.php?route=api/login');
+			curl_setopt($curl, CURLOPT_POST, true);
+			curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($api_info));
+			
+			$response = curl_exec($curl);
+	
+			if (!$response) {
+				$response['error'] = curl_error($curl) . ' (' . curl_errno($curl) . ')';
+			} else {
+				$json = json_decode($response, true);
+			}			
+		} else {
+			$json['error'] = $this->language->get('error_login');
+		}
+		
+		if (isset($this->session->data['cookie'])) {
+			$this->session->data['cookie'] = $response['cookie'];	
+		}
+		
 		if (!empty($order_info)) {
 			$data['order_id'] = $this->request->get['order_id'];
 			$data['store_id'] = $order_info['store_id'];
@@ -530,11 +571,11 @@ class ControllerSaleOrder extends Controller {
 					'model'      => $order_product['model'],
 					'option'     => $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $order_product['order_product_id']),
 					'quantity'   => $order_product['quantity'],
-					'price'      => $order_product['price'],
-					'total'      => $order_product['total']
+					'price'      => $this->currency->format($order_product['price'] + ($this->config->get('config_tax') ? $order_product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+					'total'      => $this->currency->format($order_product['total'] + ($this->config->get('config_tax') ? ($order_product['tax'] * $order_product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
 				);
 			}
-			
+		
 			$data['order_vouchers'] = $this->model_sale_order->getOrderVouchers($this->request->get['order_id']);
 
 			$data['coupon'] = '';
@@ -859,6 +900,7 @@ class ControllerSaleOrder extends Controller {
 
 			$data['button_invoice'] = $this->language->get('button_invoice');
 			$data['button_shipping'] = $this->language->get('button_shipping');
+			$data['button_edit'] = $this->language->get('button_edit');
 			$data['button_cancel'] = $this->language->get('button_cancel');
 			$data['button_generate'] = $this->language->get('button_generate');
 			$data['button_reward_add'] = $this->language->get('button_reward_add');
@@ -928,6 +970,7 @@ class ControllerSaleOrder extends Controller {
 
 			$data['shipping'] = $this->url->link('sale/order/shipping', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], 'SSL');
 			$data['invoice'] = $this->url->link('sale/order/invoice', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], 'SSL');
+			$data['edit'] = $this->url->link('sale/order/update', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], 'SSL');
 			$data['cancel'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 			$data['order_id'] = $this->request->get['order_id'];
@@ -1977,44 +2020,11 @@ class ControllerSaleOrder extends Controller {
 		if (!$this->user->hasPermission('modify', 'sale/order')) {
 			$json['error'] = $this->language->get('error_permission');
 		}		
-		
-		// Create a cookie if one does not exist
-		if (!isset($this->session->data['cookie'])) {
-			$this->load->model('user/api');
-		
-			$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
-		
-			if ($api_info) {
-				$url = HTTPS_CATALOG . 'index.php?route=api/login';
-				
-				$curl = curl_init();
-				
-				// Set SSL if required
-				if (substr($url, 0, 5) == 'https') {
-					curl_setopt($curl, CURLOPT_PORT, 443);
-				}
-				
-				curl_setopt($curl, CURLOPT_HEADER, false);
-				curl_setopt($curl, CURLINFO_HEADER_OUT, true);
-				curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-				curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); 
-				curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
-				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-				curl_setopt($curl, CURLOPT_URL, $url);
-				curl_setopt($curl, CURLOPT_POST, true);
-				curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($api_info));
-				
-				$response = curl_exec($curl);
-		
-				if (!$response) {
-					$response = json_encode(array('error' => curl_error($curl) . '(' . curl_errno($curl) . ')'));
-				} else {
-					$json = $response;	
-				}			
-			}
-		}	
+
+		//if (isset('')) {
 			
+		//}
+		
 		if (isset($this->request->get['api'])) {
 			$url = 'index.php?route=' . $this->request->get['api'];
 		} else {

@@ -1,5 +1,5 @@
 <nav id="column-left">
-  <div>
+  <div id="user">
     <div class="pull-left">
       <?php if ($image) { ?>
       <a class="dropdown-toggle" data-toggle="dropdown"><img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" title="<?php echo $username; ?>" /></a>

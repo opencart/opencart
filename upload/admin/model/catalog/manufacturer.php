@@ -181,7 +181,7 @@ class ModelCatalogManufacturer extends Model {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "manufacturer_to_layout WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
 
 		foreach ($query->rows as $result) {
-			$manufacturer_layout_data[$result['store_id']] = $result['layout_id'];
+			$manufacturer_layout_data[$result['store_id']]['layout_id'] = $result['layout_id'];
 		}
 
 		return $manufacturer_layout_data;

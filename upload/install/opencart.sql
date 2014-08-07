@@ -3145,7 +3145,7 @@ CREATE TABLE `oc_review` (
 -- Table structure for table `oc_setting`
 --
 
-CREATE TABLE IF NOT EXISTS `oc2_setting` (
+CREATE TABLE IF NOT EXISTS `oc_setting` (
   `setting_id` int(11) NOT NULL AUTO_INCREMENT,
   `store_id` int(11) NOT NULL DEFAULT '0',
   `group` varchar(32) NOT NULL,
@@ -3156,10 +3156,10 @@ CREATE TABLE IF NOT EXISTS `oc2_setting` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=140 ;
 
 --
--- Dumping data for table `oc2_setting`
+-- Dumping data for table `oc_setting`
 --
 
-INSERT INTO `oc2_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `serialized`) VALUES
+INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `serialized`) VALUES
 (1, 0, 'shipping', 'shipping_sort_order', '3', 0),
 (2, 0, 'sub_total', 'sub_total_sort_order', '1', 0),
 (3, 0, 'sub_total', 'sub_total_status', '1', 0),

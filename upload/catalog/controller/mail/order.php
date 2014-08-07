@@ -51,6 +51,7 @@ class ControllerMailOrder extends Controller {
 			$data['text_email'] = $language->get('text_new_email');
 			$data['text_telephone'] = $language->get('text_new_telephone');
 			$data['text_ip'] = $language->get('text_new_ip');
+			$data['text_order_status'] = $language->get('text_new_order_status');
 			$data['text_payment_address'] = $language->get('text_new_payment_address');
 			$data['text_shipping_address'] = $language->get('text_new_shipping_address');
 			$data['text_product'] = $language->get('text_new_product');
@@ -79,6 +80,7 @@ class ControllerMailOrder extends Controller {
 			$data['email'] = $order_info['email'];
 			$data['telephone'] = $order_info['telephone'];
 			$data['ip'] = $order_info['ip'];
+			$data['order_status'] = $order_status;
 
 			if ($comment && $notify) {
 				$data['comment'] = nl2br($comment);
@@ -302,7 +304,36 @@ class ControllerMailOrder extends Controller {
 			// Admin Alert Mail
 			if ($this->config->get('config_order_mail')) {
 				$subject = sprintf($language->get('text_new_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'), $order_id);
-
+				
+				// HTML Mail	
+				$data['text_greeting'] = $language->get('text_new_received');
+				if ($comment) {
+					if ($order_info['comment']) {
+						$data['comment'] = nl2br($comment) . '<br/><br/>' . $order_info['comment'];
+					} else {
+						$data['comment'] = nl2br($comment);
+					}
+				} else {
+					if ($order_info['comment']) {
+						$data['comment'] = $order_info['comment'];
+					} else {
+						$data['comment'] = '';
+					}
+				}
+				$data['text_download'] = '';
+				
+				$data['text_footer'] = '';
+				
+				$data['text_link'] = '';
+				$data['link'] = '';
+				$data['download'] = '';
+				
+				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mail/order.tpl')) {
+					$html = $this->load->view($this->config->get('config_template') . '/template/mail/order.tpl', $data);
+				} else {
+					$html = $this->load->view('default/template/mail/order.tpl', $data);
+				}
+						
 				// Text
 				$text  = $language->get('text_new_received') . "\n\n";
 				$text .= $language->get('text_new_order_id') . ' ' . $order_id . "\n";
@@ -350,6 +381,7 @@ class ControllerMailOrder extends Controller {
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender($order_info['store_name']);
 				$mail->setSubject($subject);
+				$mail->setHtml($html);
 				$mail->setText(html_entity_decode($text, ENT_QUOTES, 'UTF-8'));
 				$mail->send();
 

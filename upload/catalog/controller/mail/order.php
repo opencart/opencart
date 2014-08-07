@@ -347,8 +347,8 @@ class ControllerMailOrder extends Controller {
 
 				$mail = new Mail($this->config->get('config_mail'));
 				$mail->setTo($this->config->get('config_email'));
-				$mail->setFrom($this->config->get('config_email'));
-				$mail->setSender($order_info['store_name']);
+				$mail->setFrom($order_info['email']);
+				$mail->setSender($order_info['firstname'] . ' ' . $order_info['lastname']);
 				$mail->setSubject($subject);
 				$mail->setText(html_entity_decode($text, ENT_QUOTES, 'UTF-8'));
 				$mail->send();

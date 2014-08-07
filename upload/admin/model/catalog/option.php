@@ -1,7 +1,7 @@
 <?php
 class ModelCatalogOption extends Model {
 	public function addOption($data) {
-		$this->event->trigger('pre_admin_add_option');
+		$this->event->trigger('pre_admin_add_option', $data);
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "option` SET type = '" . $this->db->escape($data['type']) . "', sort_order = '" . (int)$data['sort_order'] . "'");
 
@@ -29,7 +29,7 @@ class ModelCatalogOption extends Model {
 	}
 
 	public function editOption($option_id, $data) {
-		$this->event->trigger('pre_admin_edit_option');
+		$this->event->trigger('pre_admin_edit_option', $data);
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "option` SET type = '" . $this->db->escape($data['type']) . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE option_id = '" . (int)$option_id . "'");
 

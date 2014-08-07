@@ -1,7 +1,7 @@
 <?php
 class ModelCatalogProfile extends Model {
 	public function addProfile($data) {
-		$this->event->trigger('pre_admin_add_profile');
+		$this->event->trigger('pre_admin_add_profile', $data);
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "profile` SET `sort_order` = " . (int)$data['sort_order'] . ", `status` = " . (int)$data['status'] . ", `price` = " . (double)$data['price'] . ", `frequency` = '" . $this->db->escape($data['frequency']) . "', `duration` = " . (int)$data['duration'] . ", `cycle` = " . (int)$data['cycle'] . ", `trial_status` = " . (int)$data['trial_status'] . ", `trial_price` = " . (double)$data['trial_price'] . ", `trial_frequency` = '" . $this->db->escape($data['trial_frequency']) . "', `trial_duration` = " . (int)$data['trial_duration'] . ", `trial_cycle` = " . (int)$data['trial_cycle']);
 
@@ -17,7 +17,7 @@ class ModelCatalogProfile extends Model {
 	}
 
 	public function editProfile($profile_id, $data) {
-		$this->event->trigger('pre_admin_edit_profile');
+		$this->event->trigger('pre_admin_edit_profile', $data);
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "profile_description` WHERE profile_id = " . (int)$profile_id);
 

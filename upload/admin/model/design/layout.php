@@ -1,7 +1,7 @@
 <?php
 class ModelDesignLayout extends Model {
 	public function addLayout($data) {
-		$this->event->trigger('pre_admin_add_layout');
+		$this->event->trigger('pre_admin_add_layout', $data);
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "layout SET name = '" . $this->db->escape($data['name']) . "'");
 
@@ -19,7 +19,7 @@ class ModelDesignLayout extends Model {
 	}
 
 	public function editLayout($layout_id, $data) {
-		$this->event->trigger('pre_admin_edit_layout');
+		$this->event->trigger('pre_admin_edit_layout', $data);
 
 		$this->db->query("UPDATE " . DB_PREFIX . "layout SET name = '" . $this->db->escape($data['name']) . "' WHERE layout_id = '" . (int)$layout_id . "'");
 

@@ -1,7 +1,7 @@
 <?php
 class ModelCatalogManufacturer extends Model {
 	public function addManufacturer($data) {
-		$this->event->trigger('pre_admin_add_manufacturer');
+		$this->event->trigger('pre_admin_add_manufacturer', $data);
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "manufacturer SET name = '" . $this->db->escape($data['name']) . "', sort_order = '" . (int)$data['sort_order'] . "'");
 
@@ -29,7 +29,7 @@ class ModelCatalogManufacturer extends Model {
 	}
 
 	public function editManufacturer($manufacturer_id, $data) {
-		$this->event->trigger('pre_admin_edit_manufacturer');
+		$this->event->trigger('pre_admin_edit_manufacturer', $data);
 
 		$this->db->query("UPDATE " . DB_PREFIX . "manufacturer SET name = '" . $this->db->escape($data['name']) . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
 

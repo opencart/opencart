@@ -122,7 +122,7 @@ class ModelCatalogProduct extends Model {
 
 		$this->cache->delete('product');
 
-		$this->event->trigger('admin_add_product', array('product_id' => $product_id));
+		$this->event->trigger('admin_add_product', $product_id);
 
 		return $product_id;
 	}
@@ -316,7 +316,7 @@ class ModelCatalogProduct extends Model {
 	}
 
 	public function deleteProduct($product_id) {
-		$this->event->trigger('pre_admin_delete_product', array('product_id' => $product_id));
+		$this->event->trigger('pre_admin_delete_product', $product_id);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_attribute WHERE product_id = '" . (int)$product_id . "'");
@@ -340,7 +340,7 @@ class ModelCatalogProduct extends Model {
 
 		$this->cache->delete('product');
 
-		$this->event->trigger('admin_delete_product', array('product_id' => $product_id));
+		$this->event->trigger('admin_delete_product', $product_id);
 	}
 
 	public function getProduct($product_id) {

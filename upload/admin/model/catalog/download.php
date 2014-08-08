@@ -11,7 +11,7 @@ class ModelCatalogDownload extends Model {
         	$this->db->query("INSERT INTO " . DB_PREFIX . "download_description SET download_id = '" . (int)$download_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
       	}
 
-		$this->event->trigger('admin_add_download', array('download_id' => $download_id));
+		$this->event->trigger('admin_add_download', $download_id);
 
 		return $download_id;
 	}
@@ -31,12 +31,12 @@ class ModelCatalogDownload extends Model {
 	}
 
 	public function deleteDownload($download_id) {
-		$this->event->trigger('pre_admin_delete_download', array('download_id' => $download_id));
+		$this->event->trigger('pre_admin_delete_download', $download_id);
 
       	$this->db->query("DELETE FROM " . DB_PREFIX . "download WHERE download_id = '" . (int)$download_id . "'");
 	  	$this->db->query("DELETE FROM " . DB_PREFIX . "download_description WHERE download_id = '" . (int)$download_id . "'");
 
-		$this->event->trigger('admin_delete_download', array('download_id' => $download_id));
+		$this->event->trigger('admin_delete_download', $download_id);
 	}
 
 	public function getDownload($download_id) {

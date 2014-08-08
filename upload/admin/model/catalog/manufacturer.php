@@ -23,7 +23,7 @@ class ModelCatalogManufacturer extends Model {
 
 		$this->cache->delete('manufacturer');
 
-		$this->event->trigger('admin_add_manufacturer', array('manufacturer_id' => $manufacturer_id));
+		$this->event->trigger('admin_add_manufacturer', $manufacturer_id);
 
 		return $manufacturer_id;
 	}
@@ -57,7 +57,7 @@ class ModelCatalogManufacturer extends Model {
 	}
 
 	public function deleteManufacturer($manufacturer_id) {
-		$this->event->trigger('pre_admin_delete_manufacturer', array('manufacturer_id' => $manufacturer_id));
+		$this->event->trigger('pre_admin_delete_manufacturer', $manufacturer_id);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "manufacturer WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "manufacturer_to_store WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
@@ -65,7 +65,7 @@ class ModelCatalogManufacturer extends Model {
 
 		$this->cache->delete('manufacturer');
 
-		$this->event->trigger('admin_delete_manufacturer', array('manufacturer_id' => $manufacturer_id));
+		$this->event->trigger('admin_delete_manufacturer', $manufacturer_id);
 	}
 
 	public function getManufacturer($manufacturer_id) {

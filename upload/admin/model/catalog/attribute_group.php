@@ -11,7 +11,7 @@ class ModelCatalogAttributeGroup extends Model {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_group_description SET attribute_group_id = '" . (int)$attribute_group_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
 		}
 
-		$this->event->trigger('admin_add_attribute_group', array('attribute_group_id' => $attribute_group_id));
+		$this->event->trigger('admin_add_attribute_group', $attribute_group_id);
 
 		return $attribute_group_id;
 	}
@@ -31,12 +31,12 @@ class ModelCatalogAttributeGroup extends Model {
 	}
 
 	public function deleteAttributeGroup($attribute_group_id) {
-		$this->event->trigger('pre_admin_delete_attribute_group', array('attribute_group_id' => $attribute_group_id));
+		$this->event->trigger('pre_admin_delete_attribute_group', $attribute_group_id);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "attribute_group WHERE attribute_group_id = '" . (int)$attribute_group_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "attribute_group_description WHERE attribute_group_id = '" . (int)$attribute_group_id . "'");
 
-		$this->event->trigger('admin_delete_attribute_group', array('attribute_group_id' => $attribute_group_id));
+		$this->event->trigger('admin_delete_attribute_group', $attribute_group_id);
 	}
 
 	public function getAttributeGroup($attribute_group_id) {

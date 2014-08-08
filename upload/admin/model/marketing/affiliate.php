@@ -7,7 +7,7 @@ class ModelMarketingAffiliate extends Model {
 
 		$affiliate_id = $this->db->getLastId();
 
-		$this->event->trigger('admin_add_affiliate', array('affiliate_id' => $affiliate_id));
+		$this->event->trigger('admin_add_affiliate', $affiliate_id);
 
 		return $affiliate_id;
 	}
@@ -25,13 +25,13 @@ class ModelMarketingAffiliate extends Model {
 	}
 
 	public function deleteAffiliate($affiliate_id) {
-		$this->event->trigger('pre_admin_delete_affiliate', array('affiliate_id' => $affiliate_id));
+		$this->event->trigger('pre_admin_delete_affiliate', $affiliate_id);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "affiliate WHERE affiliate_id = '" . (int)$affiliate_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "affiliate_activity WHERE affiliate_id = '" . (int)$affiliate_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "affiliate_transaction WHERE affiliate_id = '" . (int)$affiliate_id . "'");
 
-		$this->event->trigger('admin_delete_affiliate', array('affiliate_id' => $affiliate_id));
+		$this->event->trigger('admin_delete_affiliate', $affiliate_id);
 	}
 
 	public function getAffiliate($affiliate_id) {
@@ -228,18 +228,18 @@ class ModelMarketingAffiliate extends Model {
 			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
 			$mail->send();
 
-			$this->event->trigger('admin_add_affiliate_transaction', array('affiliate_transaction_id' => $affiliate_transaction_id));
+			$this->event->trigger('admin_add_affiliate_transaction', $affiliate_transaction_id);
 
 			return $affiliate_transaction_id;
 		}
 	}
 
 	public function deleteTransaction($order_id) {
-		$this->event->trigger('pre_admin_delete_affiliate_transaction', array('order_id' => $order_id));
+		$this->event->trigger('pre_admin_delete_affiliate_transaction', $order_id);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "affiliate_transaction WHERE order_id = '" . (int)$order_id . "'");
 
-		$this->event->trigger('admin_delete_affiliate_transaction', array('order_id' => $order_id));
+		$this->event->trigger('admin_delete_affiliate_transaction', $order_id);
 	}
 
 	public function getTransactions($affiliate_id, $start = 0, $limit = 10) {

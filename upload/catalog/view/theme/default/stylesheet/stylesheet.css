@@ -97,7 +97,7 @@ div.required .control-label:before {
 	background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
 	background-repeat: repeat-x;
 }
-#top .btn-link, #top-links a {
+#top .btn-link, #top-links li, #top-links a {
 	color: #888;
 	text-shadow: 0 1px 0 #FFF;
 	text-decoration: none;

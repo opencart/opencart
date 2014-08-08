@@ -28,7 +28,7 @@ class ModelCheckoutOrder extends Model {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "order_total SET order_id = '" . (int)$order_id . "', code = '" . $this->db->escape($total['code']) . "', title = '" . $this->db->escape($total['title']) . "', `value` = '" . (float)$total['value'] . "', sort_order = '" . (int)$total['sort_order'] . "'");
 		}
 
-		$this->event->trigger('order_add', array('order_id' => $order_id));
+		$this->event->trigger('order_add', $order_id);
 		
 		return $order_id;
 	}
@@ -72,7 +72,7 @@ class ModelCheckoutOrder extends Model {
 	}
 
 	public function deleteOrder($order_id) {
-		$this->event->trigger('pre_order_delete');
+		$this->event->trigger('pre_order_delete', $order_id);
 
 		$this->addOrderHistory();
 		
@@ -86,7 +86,7 @@ class ModelCheckoutOrder extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "affiliate_transaction` WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE `or`, ort FROM `" . DB_PREFIX . "order_recurring` `or`, `" . DB_PREFIX . "order_recurring_transaction` `ort` WHERE order_id = '" . (int)$order_id . "' AND ort.order_recurring_id = `or`.order_recurring_id");
 
-		$this->event->trigger('order_delete');
+		$this->event->trigger('order_delete', $order_id);
 	}
 
 	public function getOrder($order_id) {

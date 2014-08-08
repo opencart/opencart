@@ -194,7 +194,7 @@ class ControllerApiPayment extends Controller {
 					$this->session->data['payment_methods'] = $json['payment_methods'];
 				} else {
 					$json['error'] = $this->language->get('error_no_payment');
-				}			
+				}
 			}
 		}	
 		

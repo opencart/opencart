@@ -51,8 +51,8 @@ $_['button_download']               = 'Download';
 $_['button_repair']                 = 'Repair';
 $_['button_upload']                 = 'Upload';
 $_['button_submit']                 = 'Submit';
-$_['button_invoice']                = 'Print Invoice';
-$_['button_shipping']               = 'Print Shipping List';
+$_['button_invoice_print']          = 'Print Invoice';
+$_['button_shipping_print']         = 'Print Shipping List';
 $_['button_address_add']            = 'Add Address';
 $_['button_attribute_add']          = 'Add Attribute';
 $_['button_banner_add']             = 'Add Banner';
@@ -89,6 +89,11 @@ $_['button_install']                = 'Install';
 $_['button_uninstall']              = 'Uninstall';
 $_['button_link']                   = 'Link';
 $_['button_add_profile']            = 'Add Profile';
+$_['button_shipping']               = 'Apply Shipping Method';
+$_['button_payment']                = 'Apply Payment Method';
+$_['button_coupon']                 = 'Apply Coupon';
+$_['button_voucher']                = 'Apply Voucher';
+$_['button_reward']                 = 'Apply Points';
 
 // Tab
 $_['tab_address']                   = 'Address';

@@ -258,3 +258,17 @@ ul.alerts-dropdown > li > a span {
 	right: 30px;
 	position: absolute;
 }
+
+.btn:hover {
+    cursor: pointer;
+}
+
+.alert {
+    position: relative;
+}
+
+.alert .close {
+    top: 6px;
+    right: 6px;
+    position: absolute;
+}

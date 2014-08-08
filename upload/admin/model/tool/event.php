@@ -13,9 +13,7 @@ class ModelToolEvent extends Model {
 
 		$handler = $handler['type'] . '/' . $handler['code'] . '/' . $handler['method'];
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "event WHERE store_id = '" . (int)$store_id . "' AND event = '" . $this->db->escape($event) . "'");
-
-		$handlers = !empty($query->row['handlers']) ? unserialize($query->row['handlers']) : array();
+		$handlers = $this->getHandlers($event, $store_id);
 		$handlers[] = $handler;
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "event WHERE store_id = '" . (int)$store_id . "' AND event = '" . $this->db->escape($event) . "'");
@@ -32,19 +30,20 @@ class ModelToolEvent extends Model {
 
 		$handler = $handler['type'] . '/' . $handler['code'] . '/' . $handler['method'];
 
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "event WHERE store_id = '" . (int)$store_id . "' AND event = '" . $this->db->escape($event) . "'");
+		$handlers = $this->getHandlers($event, $store_id);
+		$key = array_search($handler, $handlers);
 
-		$handlers = !empty($query->row['handlers']) ? unserialize($query->row['handlers']) : array();
-		if (!in_array($handler, $handlers)) {
+		if ($key === false) {
 			return true;
 		}
 
-		$key = array_search($handler, $handlers);
 		unset($handlers[$key]);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "event WHERE store_id = '" . (int)$store_id . "' AND event = '" . $this->db->escape($event) . "'");
 
-		$this->db->query("INSERT INTO " . DB_PREFIX . "event SET store_id = '" . (int)$store_id . "', event = '" . $this->db->escape($event) . "', handlers = '" . $this->db->escape(serialize($handlers)) . "'");
+		if (!empty($handlers)) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "event SET store_id = '" . (int)$store_id . "', event = '" . $this->db->escape($event) . "', handlers = '" . $this->db->escape(serialize($handlers)) . "'");
+		}
 
 		return true;
 	}

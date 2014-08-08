@@ -77,12 +77,10 @@ $('#button-upload').on('click', function() {
 			cache: false,
 			contentType: false,
 			processData: false,	
-
 			beforeSend: function() {
-				$('#button-upload').after('<span style="margin-left: 5px;" class="btn btn-primary loading"><i class="fa fa-cog fa-spin fa-lg"></i></span>');
+				$('#button-upload').after('<span style="margin-left: 5px;" class="btn btn-primary loading"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>');
 				$('#button-upload').attr('disabled', true);
 			},
-
 			success: function(json) {
 				$('#button-upload').attr('disabled', false);
 

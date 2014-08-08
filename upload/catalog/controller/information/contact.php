@@ -75,7 +75,7 @@ class ControllerInformationContact extends Controller {
 			$data['error_captcha'] = '';
 		}
 
-		$data['button_continue'] = $this->language->get('button_continue');
+		$data['button_submit'] = $this->language->get('button_submit');
 
 		$data['action'] = $this->url->link('information/contact');
 

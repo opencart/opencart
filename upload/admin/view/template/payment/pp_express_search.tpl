@@ -2,8 +2,8 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a onclick="editSearch();" id="btn_edit" class="btn btn-primary" style="display:none;"><?php echo $btn_edit_search; ?></a> <a onclick="doSearch();" id="btn_search" class="btn btn-primary"><?php echo $btn_search; ?></a> </div>
-      <h1><i class="fa fa-search"></i> <?php echo $heading_title; ?></h1>
+      <div class="pull-right"><a onclick="editSearch();" id="btn_edit" data-toggle="tooltip" style="display:none;" title="<?php echo $btn_edit_search; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a onclick="doSearch();" id="btn_search" data-toggle="tooltip" title="<?php echo $btn_search; ?>" class="btn btn-info"><i class="fa fa-search"></i></a></div>      
+	  <h1><i class="fa fa-search"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">
@@ -13,13 +13,21 @@
         <div class="form-group">
           <label class="col-sm-2 control-label"><?php echo $entry_date_start; ?></label>
           <div class="col-sm-10">
-            <input type="text" name="date_start" value="<?php echo $date_start; ?>" placeholder="<?php echo $text_format; ?>: yy-mm-dd" class="form-control" />
+            <div class="input-group date">
+            <input type="text" name="date_start" value="<?php echo $date_start; ?>" placeholder="<?php echo $text_format; ?>: yy-mm-dd" data-format="YYYY-MM-DD" class="form-control" />
+            <span class="input-group-btn">
+            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+            </span></div>
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label"><?php echo $entry_date_end; ?></label>
           <div class="col-sm-10">
-            <input type="text" name="date_end" value="<?php echo $date_end; ?>" placeholder="<?php echo $text_format; ?>: yy-mm-dd" class="form-control" />
+            <div class="input-group date">
+            <input type="text" name="date_end" value="<?php echo $date_end; ?>" placeholder="<?php echo $text_format; ?>: yy-mm-dd" data-format="YYYY-MM-DD" class="form-control" />
+            <span class="input-group-btn">
+            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+            </span></div>
           </div>
         </div>
         <h3><?php echo $entry_transaction; ?></h3>
@@ -137,10 +145,8 @@
       </form>
     </div>
     <div id="search_box" style="display:none;">
-      <div id="searching"><i class="fa fa-cog fa-spin fa-lg"></i> <?php echo $text_searching; ?></div>
-      <div style="display:none;" id="error" class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $attention; ?>
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>
+      <div id="searching"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i> <?php echo $text_searching; ?></div>
+      <div style="display:none;" id="error" class="alert alert-danger"></div>
       <table id="search_results" style="display:none;" class="table table-striped table-bordered" >
       </table>
     </div>
@@ -164,7 +170,7 @@ function doSearch() {
     success: function (data) {
       if (data.error == true) {
         $('#searching').hide();
-        $('#error').text(data.error_msg).fadeIn();
+        $('#error').html('<i class="fa fa-exclamation-circle"></i> ' + data.error_msg).fadeIn();
       } else {
         if (data.result != '') {
           html += '<thead><tr>';
@@ -211,7 +217,7 @@ function doSearch() {
           $('#search_results').append(html).fadeIn();
         } else {
           $('#searching').hide();
-          $('#error').text('<?php echo $text_no_results; ?>').fadeIn();
+          $('#error').html('<i class="fa fa-exclamation-circle"></i> <?php echo $text_no_results; ?>').fadeIn();
         }
       }
     }
@@ -227,5 +233,19 @@ function editSearch() {
   $('#search_results').empty().hide();
   $('#error').empty().hide();
 }
-//--></script> 
+//--></script>
+<script type="text/javascript"><!--
+$('.date').datetimepicker({
+	pickTime: false
+});
+
+$('.time').datetimepicker({
+	pickDate: false
+});
+
+$('.datetime').datetimepicker({
+	pickDate: true,
+	pickTime: true
+});
+//--></script>
 <?php echo $footer; ?>

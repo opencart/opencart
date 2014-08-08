@@ -1,8 +1,8 @@
 <?php
-class ControllerModuleVoucher extends Controller {
+class ControllerCheckoutVoucher extends Controller {
 	public function index() {
 		if ($this->config->get('voucher_status')) {
-			$this->load->language('module/voucher');
+			$this->load->language('checkout/voucher');
 
 			$data['heading_title'] = $this->language->get('heading_title');
 
@@ -24,16 +24,16 @@ class ControllerModuleVoucher extends Controller {
 				$data['redirect'] = $this->url->link('checkout/cart');
 			}
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/voucher.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/module/voucher.tpl', $data);
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/voucher.tpl')) {
+				return $this->load->view($this->config->get('config_template') . '/template/checkout/voucher.tpl', $data);
 			} else {
-				return $this->load->view('default/template/module/voucher.tpl', $data);
+				return $this->load->view('default/template/checkout/voucher.tpl', $data);
 			}
 		}
 	}
 
 	public function voucher() {
-		$this->load->language('module/voucher');
+		$this->load->language('checkout/voucher');
 
 		$json = array();
 
@@ -47,7 +47,9 @@ class ControllerModuleVoucher extends Controller {
 
 		$voucher_info = $this->model_checkout_voucher->getVoucher($voucher);
 
-		if ($voucher_info) {
+		if (empty($this->request->post['voucher'])) {
+			$json['error'] = $this->language->get('error_empty');
+		} elseif ($voucher_info) {
 			$this->session->data['voucher'] = $this->request->post['voucher'];
 
 			$this->session->data['success'] = $this->language->get('text_success');

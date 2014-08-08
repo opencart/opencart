@@ -1,6 +1,8 @@
 <?php
 class ModelDesignLayout extends Model {
 	public function addLayout($data) {
+		$this->event->trigger('pre_admin_add_layout', $data);
+
 		$this->db->query("INSERT INTO " . DB_PREFIX . "layout SET name = '" . $this->db->escape($data['name']) . "'");
 
 		$layout_id = $this->db->getLastId();
@@ -11,12 +13,14 @@ class ModelDesignLayout extends Model {
 			}
 		}
 
-		$this->event->trigger('admin_add_layout', array('layout_id' => $layout_id));
+		$this->event->trigger('admin_add_layout', $layout_id);
 
 		return $layout_id;
 	}
 
 	public function editLayout($layout_id, $data) {
+		$this->event->trigger('pre_admin_edit_layout', $data);
+
 		$this->db->query("UPDATE " . DB_PREFIX . "layout SET name = '" . $this->db->escape($data['name']) . "' WHERE layout_id = '" . (int)$layout_id . "'");
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "layout_route WHERE layout_id = '" . (int)$layout_id . "'");
@@ -31,13 +35,15 @@ class ModelDesignLayout extends Model {
 	}
 
 	public function deleteLayout($layout_id) {
+		$this->event->trigger('pre_admin_delete_layout', $layout_id);
+
 		$this->db->query("DELETE FROM " . DB_PREFIX . "layout WHERE layout_id = '" . (int)$layout_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "layout_route WHERE layout_id = '" . (int)$layout_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "category_to_layout WHERE layout_id = '" . (int)$layout_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_layout WHERE layout_id = '" . (int)$layout_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information_to_layout WHERE layout_id = '" . (int)$layout_id . "'");
 
-		$this->event->trigger('admin_delete_layout');
+		$this->event->trigger('admin_delete_layout', $layout_id);
 	}
 
 	public function getLayout($layout_id) {

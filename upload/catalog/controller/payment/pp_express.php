@@ -1632,7 +1632,7 @@ class ControllerPaymentPPExpress extends Controller {
 					}
 					//parent transaction exists
 
-					//insert new related transaction
+					//add new related transaction
 					$transaction = array(
 						'paypal_order_id'       => $parent_transaction['paypal_order_id'],
 						'transaction_id'        => $this->request->post['txn_id'],

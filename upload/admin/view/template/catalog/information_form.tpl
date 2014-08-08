@@ -5,7 +5,7 @@
       <div class="pull-right">
         <button type="submit" form="form-information" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-check-circle"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
-      <h1><i class="fa fa-pencil-square"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">
@@ -113,8 +113,8 @@
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-bottom"><?php echo $entry_bottom; ?></label>
-            <div class="col-sm-10">
-              <label class="checkbox inline">
+            <div class="col-sm-10 checkbox">
+              <label>
                 <?php if ($bottom) { ?>
                 <input type="checkbox" name="bottom" value="1" checked="checked" id="input-bottom" />
                 <?php } else { ?>
@@ -159,7 +159,7 @@
                   <td class="text-left"><select name="information_layout[0][layout_id]" class="form-control">
                       <option value=""></option>
                       <?php foreach ($layouts as $layout) { ?>
-                      <?php if (isset($information_layout[0]) && $information_layout[0] == $layout['layout_id']) { ?>
+                      <?php if (isset($information_layout[0]) && $information_layout[0]['layout_id'] == $layout['layout_id']) { ?>
                       <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
                       <?php } else { ?>
                       <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
@@ -173,7 +173,7 @@
                   <td class="text-left"><select name="information_layout[<?php echo $store['store_id']; ?>][layout_id]" class="form-control">
                       <option value=""></option>
                       <?php foreach ($layouts as $layout) { ?>
-                      <?php if (isset($information_layout[$store['store_id']]) && $information_layout[$store['store_id']] == $layout['layout_id']) { ?>
+                      <?php if (isset($information_layout[$store['store_id']]) && $information_layout[$store['store_id']]['layout_id'] == $layout['layout_id']) { ?>
                       <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
                       <?php } else { ?>
                       <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
@@ -190,13 +190,13 @@
     </form>
   </div>
 </div>
-<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
+<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
 CKEDITOR.replace('input-description<?php echo $language['language_id']; ?>');
 <?php } ?>
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#language a:first').tab('show');
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

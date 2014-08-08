@@ -25,7 +25,7 @@ $_['text_pagination']               = 'Showing %d to %d of %d (%d Pages)';
 $_['text_no_results']               = 'No results!';
 $_['text_confirm']                  = 'Are you sure?';
 $_['text_home']                     = '<i class="fa fa-home fa-lg"></i>';
-$_['text_confirm']			        = 'Delete/Uninstall cannot be undone! Are you sure you want to do this?';
+$_['text_confirm']                  = 'Delete/Uninstall cannot be undone! Are you sure you want to do this?';
 
 // Button
 $_['button_insert']                 = 'Add New';
@@ -51,8 +51,8 @@ $_['button_download']               = 'Download';
 $_['button_repair']                 = 'Repair';
 $_['button_upload']                 = 'Upload';
 $_['button_submit']                 = 'Submit';
-$_['button_invoice']                = 'Print Invoice';
-$_['button_shipping']               = 'Print Shipping List';
+$_['button_invoice_print']          = 'Print Invoice';
+$_['button_shipping_print']         = 'Print Shipping List';
 $_['button_address_add']            = 'Add Address';
 $_['button_attribute_add']          = 'Add Attribute';
 $_['button_banner_add']             = 'Add Banner';
@@ -89,6 +89,11 @@ $_['button_install']                = 'Install';
 $_['button_uninstall']              = 'Uninstall';
 $_['button_link']                   = 'Link';
 $_['button_add_profile']            = 'Add Profile';
+$_['button_shipping']               = 'Apply Shipping Method';
+$_['button_payment']                = 'Apply Payment Method';
+$_['button_coupon']                 = 'Apply Coupon';
+$_['button_voucher']                = 'Apply Voucher';
+$_['button_reward']                 = 'Apply Points';
 
 // Tab
 $_['tab_address']                   = 'Address';
@@ -126,8 +131,7 @@ $_['tab_sale']                      = 'Sales';
 $_['tab_marketing']                 = 'Marketing';
 $_['tab_online']                    = 'People Online';
 $_['tab_activity']                  = 'Recent Activity';
-$_['tab_trial']                  	= 'Trial Period';
-$_['tab_openbay']                  	= 'Marketplaces';
+$_['tab_trial']                     = 'Trial Period';
 
 // Error
 $_['error_exception']               = 'Error Code(%s): %s in %s on line %s';

@@ -70,7 +70,7 @@ $('#button-upload').on('click', function() {
 			contentType: false,
 			processData: false,		
 			beforeSend: function() {
-				$('#button-upload i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+				$('#button-upload i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 				$('#button-upload').prop('disabled', true);
 			},
 			complete: function() {
@@ -155,7 +155,7 @@ $('#button-clear').bind('click', function() {
 		url: 'index.php?route=extension/installer/clear&token=<?php echo $token; ?>',	
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-clear i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-clear i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 			$('#button-clear').prop('disabled', true);
 		},	
 		complete: function() {

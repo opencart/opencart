@@ -5,7 +5,7 @@
       <div class="pull-right">
         <button type="submit" form="form-product" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-check-circle"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
-      <h1><i class="fa fa-pencil-square"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">
@@ -881,7 +881,7 @@
                   <td class="text-left"><select name="product_layout[0][layout_id]" class="form-control">
                       <option value=""></option>
                       <?php foreach ($layouts as $layout) { ?>
-                      <?php if (isset($product_layout[0]) && $product_layout[0] == $layout['layout_id']) { ?>
+                      <?php if (isset($product_layout[0]) && $product_layout[0]['layout_id'] == $layout['layout_id']) { ?>
                       <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
                       <?php } else { ?>
                       <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
@@ -895,7 +895,7 @@
                   <td class="text-left"><select name="product_layout[<?php echo $store['store_id']; ?>][layout_id]" class="form-control">
                       <option value=""></option>
                       <?php foreach ($layouts as $layout) { ?>
-                      <?php if (isset($product_layout[$store['store_id']]) && $product_layout[$store['store_id']] == $layout['layout_id']) { ?>
+                      <?php if (isset($product_layout[$store['store_id']]) && $product_layout[$store['store_id']]['layout_id'] == $layout['layout_id']) { ?>
                       <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
                       <?php } else { ?>
                       <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
@@ -927,8 +927,8 @@ $('input[name=\'manufacturer\']').autocomplete({
 			dataType: 'json',			
 			success: function(json) {
 				json.unshift({
-					'manufacturer_id': 0,
-					'name': '<?php echo $text_none; ?>'
+					manufacturer_id: 0,
+					name: '<?php echo $text_none; ?>'
 				});
 				
 				response($.map(json, function(item) {

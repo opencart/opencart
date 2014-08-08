@@ -194,7 +194,7 @@ function send(url) {
 		data: $('select, input, textarea'),		
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-send i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-send i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 			$('#button-send').prop('disabled', true);
 		},
 		complete: function() {

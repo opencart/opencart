@@ -5,7 +5,7 @@
       <div class="pull-right">
         <button type="submit" form="form-filter" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-check-circle"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
-      <h1><i class="fa fa-pencil-square"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">
@@ -22,8 +22,8 @@
           <div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
             <input type="text" name="filter_group_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($filter_group_description[$language['language_id']]) ? $filter_group_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_group; ?>" class="form-control" />
           </div>
-          <?php if (isset($error_name[$language['language_id']])) { ?>
-          <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
+          <?php if (isset($error_group[$language['language_id']])) { ?>
+          <div class="text-danger"><?php echo $error_group[$language['language_id']]; ?></div>
           <?php } ?>
           <?php } ?>
         </div>

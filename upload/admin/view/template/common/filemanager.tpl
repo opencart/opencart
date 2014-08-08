@@ -128,7 +128,7 @@ $('#button-upload').on('click', function() {
 			contentType: false,
 			processData: false,		
 			beforeSend: function() {
-				$('#button-upload i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+				$('#button-upload i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 				$('#button-upload').prop('disabled', true);
 			},
 			complete: function() {
@@ -176,7 +176,7 @@ $('#button-folder').on('shown.bs.popover', function() {
 			dataType: 'json',
 			data: 'folder=' + encodeURIComponent($('input[name=\'folder\']').val()),
 			beforeSend: function() {
-				$('#button-create i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+				$('#button-create i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 				$('#button-create').prop('disabled', true);
 			},
 			complete: function() {
@@ -209,7 +209,7 @@ $('#modal-image #button-delete').on('click', function(e) {
 			dataType: 'json',
 			data: $('input[name^=\'path\']:checked'),
 			beforeSend: function() {
-				$('#button-delete i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+				$('#button-delete i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 				$('#button-delete').prop('disabled', true);
 			},	
 			complete: function() {

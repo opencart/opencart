@@ -1,4 +1,15 @@
 <nav id="column-left">
+  <div id="user">
+    <div class="pull-left">
+      <?php if ($image) { ?>
+      <a class="dropdown-toggle" data-toggle="dropdown"><img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" title="<?php echo $username; ?>" /></a>
+      <?php } else { ?>
+      <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user fa-lg"></i></a>
+      <?php } ?>
+    </div>
+    <div><?php echo $username; ?><br />
+    <small><?php echo $user_group; ?></small></div>
+  </div>
   <ul id="menu">
     <li id="dashboard"><a href="<?php echo $home; ?>"><i class="fa fa-home fa-fw"></i> <?php echo $text_dashboard; ?></a></li>
     <li id="catalog"><a class="parent"><i class="fa fa-tags fa-fw"></i> <?php echo $text_catalog; ?></a>
@@ -148,13 +159,13 @@
             <li><a href="<?php echo $weight_class; ?>"><?php echo $text_weight_class; ?></a></li>
           </ul>
         </li>
-        <li><a class="parent"><?php echo $text_maintenance; ?></a>
-          <ul>
-            <li><a href="<?php echo $error_log; ?>"><?php echo $text_error_log; ?></a></li>
-            <li><a href="<?php echo $upload; ?>"><?php echo $text_upload; ?></a></li>
-            <li><a href="<?php echo $backup; ?>"><?php echo $text_backup; ?></a></li>
-          </ul>
-        </li>
+      </ul>
+    </li>
+    <li id="tools"><a class="parent"><i class="fa fa-wrench fa-fw"></i> <?php echo $text_tools; ?></a>
+      <ul>
+        <li><a href="<?php echo $upload; ?>"><?php echo $text_upload; ?></a></li>
+        <li><a href="<?php echo $backup; ?>"><?php echo $text_backup; ?></a></li>
+        <li><a href="<?php echo $error_log; ?>"><?php echo $text_error_log; ?></a></li>
       </ul>
     </li>
     <li id="reports"><a class="parent"><i class="fa fa-bar-chart-o fa-fw"></i> <?php echo $text_reports; ?></a>

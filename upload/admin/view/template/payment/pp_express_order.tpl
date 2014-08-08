@@ -8,7 +8,7 @@
     <td><?php echo $text_amount_auth; ?></td>
     <td><?php echo $paypal_order['total']; ?>
       <?php if ($paypal_order['capture_status'] != 'Complete') { ?>
-      &nbsp;&nbsp; <a onclick="doVoid();" class="button paypal_capture btn btn-primary" id="btn_void"><?php echo $btn_void; ?></a> <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-cog fa-spin fa-lg"></i></span>
+      &nbsp;&nbsp; <a onclick="doVoid();" class="button paypal_capture btn btn-primary" id="btn_void"><?php echo $btn_void; ?></a> <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
       <?php } ?></td>
   </tr>
   <tr>
@@ -27,7 +27,7 @@
         <?php echo $text_complete_capture; ?></p>
       <p>
         <input type="text" size="10" id="paypal_capture_amount" value="<?php echo $paypal_order['remaining']; ?>"/>
-        <a class="btn btn-primary" onclick="capture();" id="btn_capture"><?php echo $btn_capture; ?></a> <span class="btn btn-primary" id="img_loading_capture" style="display:none;"><i class="fa fa-cog fa-spin fa-lg"></i></span> </p></td>
+        <a class="btn btn-primary" onclick="capture();" id="btn_capture"><?php echo $btn_capture; ?></a> <span class="btn btn-primary" id="img_loading_capture" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span> </p></td>
   </tr>
   <?php } ?>
   <tr>
@@ -205,7 +205,7 @@
             
             beforeSend: function() {
                 $(element).hide();
-                $(element).after('<span class="btn btn-primary loading"><i class="fa fa-cog fa-spin fa-lg"></i></span>');
+                $(element).after('<span class="btn btn-primary loading"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>');
             },
                     
             success: function(data) {

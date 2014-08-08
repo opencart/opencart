@@ -5,7 +5,7 @@
       <div class="pull-right">
         <button type="submit" form="form-setting" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-check-circle"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
-      <h1><i class="fa fa-pencil-square"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">
@@ -755,7 +755,11 @@
                   </div>
                   <?php } ?>
                 </div>
-                <span class="help-block"><?php echo $help_process_status; ?></span></div>
+                <span class="help-block"><?php echo $help_process_status; ?></span>
+                <?php if ($error_process_status) { ?>
+                  <div class="text-danger"><?php echo $error_process_status; ?></div>
+                <?php } ?>
+              </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-complete-status"><?php echo $entry_complete_status; ?></label>
@@ -775,7 +779,11 @@
                   </div>
                   <?php } ?>
                 </div>
-                <span class="help-block"><?php echo $help_complete_status; ?></span> </div>
+                <span class="help-block"><?php echo $help_complete_status; ?></span>
+                <?php if ($error_complete_status) { ?>
+                  <div class="text-danger"><?php echo $error_complete_status; ?></div>
+                <?php } ?>
+              </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_order_mail; ?></label>
@@ -1590,12 +1598,14 @@ $('select[name=\'config_template\']').on('change', function() {
 		url: 'index.php?route=setting/setting/template&token=<?php echo $token; ?>&template=' + encodeURIComponent(this.value),
 		dataType: 'html',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after(' <i class="fa fa-spinner fa-spin"></i>');
+			$('select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
 		},
 		complete: function() {
-			$('.fa-spinner').remove();
+			$('.fa-spin').remove();
 		},
 		success: function(html) {
+      $('.fa-spin').remove();
+
 			$('#template').attr('src', html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -1605,30 +1615,32 @@ $('select[name=\'config_template\']').on('change', function() {
 });
 
 $('select[name=\'config_template\']').trigger('change');
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('select[name=\'config_country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=setting/setting/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'config_country_id\']').after(' <i class="fa fa-spinner fa-spin"></i>');
+			$('select[name=\'config_country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
 		},
 		complete: function() {
-			$('.fa-spinner').remove();
+			$('.fa-spin').remove();
 		},
 		success: function(json) {
+      $('.fa-spin').remove();
+
 			html = '<option value=""><?php echo $text_select; ?></option>';
 
 			if (json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
-        			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+          html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 
 					if (json['zone'][i]['zone_id'] == '<?php echo $config_zone_id; ?>') {
-	      				html += ' selected="selected"';
-	    			}
+            html += ' selected="selected"';
+          }
 
-	    			html += '>' + json['zone'][i]['name'] + '</option>';
+          html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
 				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
@@ -1643,5 +1655,5 @@ $('select[name=\'config_country_id\']').on('change', function() {
 });
 
 $('select[name=\'config_country_id\']').trigger('change');
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

@@ -5,7 +5,7 @@
       <div class="pull-right">
         <button type="submit" form="form-return" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-check-circle"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
-      <h1><i class="fa fa-pencil-square"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">
@@ -207,9 +207,9 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
+            <label class="col-sm-2 control-label" for="input-history-comment"><?php echo $entry_comment; ?></label>
             <div class="col-sm-10">
-              <textarea name="comment" rows="8" id="input-comment" class="form-control"></textarea>
+              <textarea name="history_comment" rows="8" id="input-history-comment" class="form-control"></textarea>
             </div>
           </div>
           <div class="text-right">
@@ -284,14 +284,16 @@ $('#history').delegate('.pagination a', 'click', function(e) {
 
 $('#history').load('index.php?route=sale/return/history&token=<?php echo $token; ?>&return_id=<?php echo $return_id; ?>');
 
-$('#button-history').on('click', function() {
+$('#button-history').on('click', function(e) {
+  e.preventDefault();
+
 	$.ajax({
 		url: 'index.php?route=sale/return/history&token=<?php echo $token; ?>&return_id=<?php echo $return_id; ?>',
 		type: 'post',
 		dataType: 'html',
-		data: 'return_status_id=' + encodeURIComponent($('select[name=\'return_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
+		data: 'return_status_id=' + encodeURIComponent($('select[name=\'return_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'history_comment\']').val()),
 		beforeSend: function() {
-			$('#button-history i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-history i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 			$('#button-history').prop('disabled', true);
 		},
 		complete: function() {
@@ -303,7 +305,7 @@ $('#button-history').on('click', function() {
 			
 			$('#history').html(html);
 			
-			$('textarea[name=\'comment\']').val(''); 
+			$('textarea[name=\'history_comment\']').val('');
 		}
 	});
 });

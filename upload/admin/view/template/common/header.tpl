@@ -10,7 +10,7 @@
 <?php if ($keywords) { ?>
 <meta name="keywords" content="<?php echo $keywords; ?>" />
 <?php } ?>
-<script type="text/javascript" src="view/javascript/jquery/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/jquery-2.1.1.min.js"></script>
 <link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />
 <link href="view/javascript/bootstrap/css/todc-bootstrap.min.css" rel="stylesheet">
 <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.js"></script>
@@ -33,10 +33,9 @@
 <body>
 <div id="container">
 <header id="header" class="navbar navbar-static-top">
-  <div class="container-fluid">
     <div class="navbar-header">
       <?php if ($logged) { ?>
-      <a type="button" id="button-menu" class="pull-left"><span class="fa fa-bars"></span></a>
+      <a type="button" id="button-menu" class="pull-left"><span class="fa fa-dedent"></span></a>
       <?php } ?>
       <a href="<?php echo $home; ?>" class="navbar-brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a></div>
     <?php if ($logged) { ?>
@@ -60,33 +59,21 @@
           <li><a href="<?php echo $affiliate_approval; ?>"><?php echo $text_approval; ?> <span class="label label-danger pull-right"><?php echo $affiliate_total; ?></span></a></li>
         </ul>
       </li>
-      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog fa-lg"></i></a>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-life-ring fa-lg"></i></a>
         <ul class="dropdown-menu dropdown-menu-right">
           <li class="dropdown-header"><?php echo $text_store; ?> <i class="fa fa-shopping-cart"></i></li>
           <?php foreach ($stores as $store) { ?>
           <li><a href="<?php echo $store['href']; ?>" target="_blank"><?php echo $store['name']; ?></a></li>
           <?php } ?>
           <li class="divider"></li>
-          <li class="dropdown-header"><?php echo $text_help; ?> <i class="fa fa-question-circle"></i></li>
+          <li class="dropdown-header"><?php echo $text_help; ?> <i class="fa fa-life-ring"></i></li>
           <li><a href="http://www.opencart.com" target="_blank"><?php echo $text_homepage; ?></a></li>
           <li><a href="http://docs.opencart.com" target="_blank"><?php echo $text_documentation; ?></a></li>
           <li><a href="http://forum.opencart.com" target="_blank"><?php echo $text_support; ?></a></li>
         </ul>
       </li>
-      <li class="dropdown">
-        <?php if ($image) { ?>
-        <a class="dropdown-toggle" data-toggle="dropdown"><img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" title="<?php echo $username; ?>" /></a>
-        <?php } else { ?>
-        <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user fa-lg"></i></a>
-        <?php } ?>
-        <ul class="dropdown-menu dropdown-menu-right">
-          <li class="dropdown-header"><?php echo $text_logged; ?></li>
-          <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
-          <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
-          <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
-        </ul>
-      </li>
+      <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?> <i class="fa fa-sign-out fa-lg"></i></a></li>
     </ul>
     <?php } ?>
-  </div>
+
 </header>

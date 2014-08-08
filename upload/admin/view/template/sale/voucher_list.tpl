@@ -107,7 +107,7 @@ $('#button-send').on('click', function() {
 		dataType: 'json',
 		data: $('input[name^=\'selected\']'),
 		beforeSend: function() {
-			$('#button-send i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-send i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 			$('#button-send').prop('disabled', true);
 		},	
 		complete: function() {

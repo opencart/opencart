@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right"><a href="<?php echo $insert; ?>" data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></a>
-        <button type="submit" form="form-order" formaction="<?php echo $shipping; ?>" formtarget="_blank" data-toggle="tooltip" title="<?php echo $button_shipping; ?>" class="btn btn-info"><i class="fa fa-truck"></i></button>
-        <button type="submit" form="form-order" formaction="<?php echo $invoice; ?>" formtarget="_blank" data-toggle="tooltip" title="<?php echo $button_invoice; ?>" class="btn btn-info"><i class="fa fa-print"></i></button>
+        <button type="submit" form="form-order" formaction="<?php echo $shipping; ?>" formtarget="_blank" data-toggle="tooltip" title="<?php echo $button_shipping_print; ?>" class="btn btn-info"><i class="fa fa-truck"></i></button>
+        <button type="submit" form="form-order" formaction="<?php echo $invoice; ?>" formtarget="_blank" data-toggle="tooltip" title="<?php echo $button_invoice_print; ?>" class="btn btn-info"><i class="fa fa-print"></i></button>
       </div>
       <h1><i class="fa fa-bars"></i> <?php echo $heading_title; ?></h1>
     </div>
@@ -131,7 +131,7 @@
               <td class="text-right"><?php echo $order['total']; ?></td>
               <td class="text-left"><?php echo $order['date_added']; ?></td>
               <td class="text-left"><?php echo $order['date_modified']; ?></td>
-              <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a> <a href="<?php echo $order['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a href="<?php echo $order['delete']; ?>" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? location = '' : false;"><i class="fa fa-trash-o"></i></a></td>
+              <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a> <a href="<?php echo $order['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a href="" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? location = '' : false;"><i class="fa fa-trash-o"></i></a></td>
             </tr>
             <?php } ?>
             <?php } else { ?>
@@ -223,16 +223,12 @@ $('.date').datetimepicker({
 <script type="text/javascript"><!--
 $('#button-delete').on('click', function() {
 	$.ajax({
-		<?php if (!$order_id) { ?>
 		url: 'index.php?route=sale/api/delete&token=<?php echo $token; ?>',
-		<?php } else { ?>
-		url: 'index.php?route=sale/api/refresh&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
-		<?php } ?>		
 		type: 'post',
-		data: $('#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'], #tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea,#tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea, #tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked, #tab-shipping select, #tab-shipping textarea,	#product input, #product select, #product textarea, #tab-voucher input[type=\'text\'], #tab-voucher input[type=\'hidden\'], #tab-voucher input[type=\'radio\']:checked, #tab-voucher input[type=\'checkbox\']:checked, #tab-voucher select, #tab-voucher textarea,	#tab-total input[type=\'text\'], #tab-total input[type=\'hidden\'], #tab-total input[type=\'radio\']:checked, #tab-total input[type=\'checkbox\']:checked, #tab-total select, #tab-total textarea'),
+		data: $(''),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-voucher i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-voucher i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 			$('#button-refresh').prop('disabled', true);
 		},	
 		complete: function() {

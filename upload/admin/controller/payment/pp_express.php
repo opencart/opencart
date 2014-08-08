@@ -698,7 +698,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 						$this->model_payment_pp_express->addTransaction($transaction);
 
-						//update transaction to refunded status
+						//edit transaction to refunded status
 						if ($result['TOTALREFUNDEDAMOUNT'] == $this->request->post['amount_original']) {
 							$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order_transaction` SET `payment_status` = 'Refunded' WHERE `transaction_id` = '" . $this->db->escape($this->request->post['transaction_id']) . "' LIMIT 1");
 						} else {

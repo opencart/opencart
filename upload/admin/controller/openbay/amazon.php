@@ -1,5 +1,25 @@
 <?php
 class ControllerOpenbayAmazon extends Controller {
+	public function install() {
+		$this->load->model('openbay/amazon');
+		$this->load->model('setting/setting');
+		$this->load->model('setting/extension');
+		$this->load->model('tool/event');
+
+		$this->model_openbay_amazon->install();
+	}
+
+	public function uninstall() {
+		$this->load->model('openbay/amazon');
+		$this->load->model('setting/setting');
+		$this->load->model('setting/extension');
+		$this->load->model('tool/event');
+
+		$this->model_openbay_amazon->uninstall();
+		$this->model_setting_extension->uninstall('openbay', $this->request->get['extension']);
+		$this->model_setting_setting->deleteSetting($this->request->get['extension']);
+	}
+
 	public function index() {
 		$this->response->redirect($this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL'));
 		return;
@@ -471,24 +491,6 @@ class ControllerOpenbayAmazon extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/amazon_saved_listings.tpl', $data));
-	}
-
-	public function install() {
-		$this->load->model('openbay/amazon');
-		$this->load->model('setting/setting');
-		$this->load->model('setting/extension');
-
-		$this->model_openbay_amazon->install();
-	}
-
-	public function uninstall() {
-		$this->load->model('openbay/amazon');
-		$this->load->model('setting/setting');
-		$this->load->model('setting/extension');
-
-		$this->model_openbay_amazon->uninstall();
-		$this->model_setting_extension->uninstall('openbay', $this->request->get['extension']);
-		$this->model_setting_setting->deleteSetting($this->request->get['extension']);
 	}
 
 	protected function validate() {

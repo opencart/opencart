@@ -347,7 +347,7 @@ final class Etsy {
 		}
 	}
 
-	public function orderNew($order_id) {
+	public function addOrder($order_id) {
 		if(!$this->orderFind($order_id)) {
 			$query = $this->db->query("SELECT `p`.`quantity`, `p`.`product_id`, `el`.`etsy_item_id` FROM `" . DB_PREFIX . "order_product` `op` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `op`.`product_id` = `p`.`product_id` LEFT JOIN `" . DB_PREFIX . "etsy_listing` `el` ON `op`.`product_id` = `p`.`product_id` WHERE `op`.`order_id` = '" . (int)$order_id . "' AND `el`.`status` = 1");
 

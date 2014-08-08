@@ -248,26 +248,6 @@ final class Openbay {
 		}
 	}
 
-	public function orderNew($order_id) {
-		/**
-		 * Once and order has been imported from external marketplace and
-		 * and order_id has been created, this method should be called.
-		 */
-
-		foreach ($this->installed_markets as $market) {
-			if ($this->config->get($market.'_status') == 1) {
-				$this->{$market}->orderNew($order_id);
-			}
-		}
-
-		/**
-		 * If a 3rd party module needs to be notified about a new order
-		 * so it can update the stock then they should add a method to their
-		 * application here with the order id so they can get the info about it.
-		 * i.e. $this->mylibraryfile->newOrderMethod($order_id);
-		 */
-	}
-
 	public function orderDelete($order_id) {
 		/**
 		 * Called when an order is deleted in the admin

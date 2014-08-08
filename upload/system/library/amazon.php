@@ -18,7 +18,7 @@ class Amazon {
 		return $this->registry->get($name);
 	}
 
-	public function orderNew($order_id) {
+	public function addOrder($order_id) {
 		if ($this->config->get('amazon_status') != 1) {
 			return;
 		}
@@ -30,7 +30,7 @@ class Amazon {
 
 			$this->load->library('log');
 			$logger = new Log('amazon_stocks.log');
-			$logger->write('orderNew() called with order id: ' . $order_id);
+			$logger->write('addOrder() called with order id: ' . $order_id);
 
 			//Stock levels update
 			if ($this->openbay->addonLoad('openstock')) {
@@ -59,7 +59,7 @@ class Amazon {
 				}
 				$this->putStockUpdateBulk($ordered_product_ids);
 			}
-			$logger->write('orderNew() exiting');
+			$logger->write('addOrder() exiting');
 		}
 	}
 

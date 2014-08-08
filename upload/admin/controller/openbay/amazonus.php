@@ -1,5 +1,25 @@
 <?php
 class ControllerOpenbayAmazonus extends Controller {
+	public function install() {
+		$this->load->model('openbay/amazonus');
+		$this->load->model('setting/setting');
+		$this->load->model('setting/extension');
+		$this->load->model('tool/event');
+
+		$this->model_openbay_amazonus->install();
+	}
+
+	public function uninstall() {
+		$this->load->model('openbay/amazonus');
+		$this->load->model('setting/setting');
+		$this->load->model('setting/extension');
+		$this->load->model('tool/event');
+
+		$this->model_openbay_amazonus->uninstall();
+		$this->model_setting_extension->uninstall('openbay', $this->request->get['extension']);
+		$this->model_setting_setting->deleteSetting($this->request->get['extension']);
+	}
+
 	public function stockUpdates() {
 		$data = $this->load->language('openbay/amazonus_stockupdates');
 
@@ -468,24 +488,6 @@ class ControllerOpenbayAmazonus extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/amazonus_saved_listings.tpl', $data));
-	}
-
-	public function install() {
-		$this->load->model('openbay/amazonus');
-		$this->load->model('setting/setting');
-		$this->load->model('setting/extension');
-
-		$this->model_openbay_amazonus->install();
-	}
-
-	public function uninstall() {
-		$this->load->model('openbay/amazonus');
-		$this->load->model('setting/setting');
-		$this->load->model('setting/extension');
-
-		$this->model_openbay_amazonus->uninstall();
-		$this->model_setting_extension->uninstall('openbay', $this->request->get['extension']);
-		$this->model_setting_setting->deleteSetting($this->request->get['extension']);
 	}
 
 	protected function validate() {

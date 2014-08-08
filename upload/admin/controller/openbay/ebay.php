@@ -5,6 +5,7 @@ class ControllerOpenbayEbay extends Controller {
 		$this->load->model('openbay/ebay');
 		$this->load->model('setting/setting');
 		$this->load->model('setting/extension');
+		$this->load->model('tool/event');
 
 		$this->model_openbay_ebay->install();
 	}
@@ -13,6 +14,7 @@ class ControllerOpenbayEbay extends Controller {
 		$this->load->model('openbay/ebay');
 		$this->load->model('setting/setting');
 		$this->load->model('setting/extension');
+		$this->load->model('tool/event');
 
 		$this->model_openbay_ebay->uninstall();
 		$this->model_setting_extension->uninstall('openbay', $this->request->get['extension']);

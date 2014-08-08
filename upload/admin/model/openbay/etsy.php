@@ -44,9 +44,22 @@ class ModelOpenbayEtsy extends Model{
 				  PRIMARY KEY (`order_id`)
 				) ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
 
+		// register the event triggers
+		$this->model_tool_event->setHandler('order_add', array(
+				'type' => 'openbay',
+				'code' => 'etsy',
+				'method' => 'addOrder')
+		);
+
 	}
 
 	public function uninstall(){
+		// remove the event triggers
+		$this->model_tool_event->removeHandler('add_order', array(
+				'type' => 'openbay',
+				'code' => 'etsy',
+				'method' => 'addOrder')
+		);
 
 	}
 

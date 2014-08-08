@@ -19,7 +19,7 @@ class Amazonus {
 		return $this->registry->get($name);
 	}
 
-	public function orderNew($order_id) {
+	public function addOrder($order_id) {
 		if ($this->config->get('amazonus_status') != 1) {
 			return;
 		}
@@ -31,7 +31,7 @@ class Amazonus {
 
 			$this->load->library('log');
 			$logger = new Log('amazonus_stocks.log');
-			$logger->write('orderNew() called with order id: ' . $order_id);
+			$logger->write('addOrder() called with order id: ' . $order_id);
 
 			//Stock levels update
 			if ($this->openbay->addonLoad('openstock') == true) {
@@ -60,7 +60,7 @@ class Amazonus {
 				}
 				$this->putStockUpdateBulk($ordered_product_ids);
 			}
-			$logger->write('orderNew() exiting');
+			$logger->write('addOrder() exiting');
 		}
 	}
 

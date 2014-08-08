@@ -1,5 +1,115 @@
 <?php
 class ModelOpenbayAmazonus extends Model {
+	public function install(){
+		$this->db->query("
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazonus_order` (
+			  `order_id` int(11) NOT NULL ,
+			  `amazonus_order_id` char(19) NOT NULL ,
+			  `courier_id` varchar(255) NOT NULL ,
+			  `courier_other` tinyint(1) NOT NULL,
+			  `tracking_no` varchar(255) NOT NULL ,
+			  PRIMARY KEY (`order_id`, `amazonus_order_id`)
+		) DEFAULT COLLATE=utf8_general_ci;");
+
+		$this->db->query("
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazonus_order_product` (
+				`order_product_id` int(11) NOT NULL ,
+				`amazonus_order_item_id` varchar(255) NOT NULL,
+				PRIMARY KEY(`order_product_id`, `amazonus_order_item_id`)
+		);");
+
+		$this->db->query("
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazonus_product_unshipped` (
+				`order_id` int(11) NOT NULL,
+				`product_id` int(11) NOT NULL,
+				`quantity` int(11) NOT NULL DEFAULT '0',
+				PRIMARY KEY (`order_id`,`product_id`)
+			) DEFAULT COLLATE=utf8_general_ci;;");
+
+		$this->db->query("
+		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazonus_product` (
+		  `version` int(11) NOT NULL DEFAULT 2,
+		  `product_id`  int(11) NOT NULL ,
+		  `category`  varchar(255) NOT NULL ,
+		  `sku`  varchar(255) NOT NULL ,
+		  `insertion_id` varchar(255) NOT NULL ,
+		  `data`  text NOT NULL ,
+		  `status` enum('saved','uploaded','ok','error') NOT NULL ,
+		  `price`  decimal(15,4) NOT NULL COMMENT 'Price on Amazonus' ,
+		  `var` char(100) NOT NULL DEFAULT '',
+		  `marketplaces` text NOT NULL ,
+		  `messages` text NOT NULL,
+		  PRIMARY KEY (`product_id`, `var`)
+		);");
+
+		$this->db->query("
+		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazonus_product_error` (
+		  `error_id` int(11) NOT NULL AUTO_INCREMENT,
+		  `sku` varchar(255) NOT NULL ,
+		  `insertion_id` varchar(255) NOT NULL ,
+		  `error_code` int(11) NOT NULL ,
+		  `message` text NOT NULL ,
+		  PRIMARY KEY (`error_id`)
+		);");
+
+		$this->db->query("
+		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazonus_product_link` (
+		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		  `amazonus_sku` varchar(255) NOT NULL,
+		  `var` char(100) NOT NULL DEFAULT '',
+		  `product_id` int(11) NOT NULL,
+		  PRIMARY KEY (`id`)
+		) DEFAULT COLLATE=utf8_general_ci;");
+
+		$this->db->query("
+		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazonus_product_search` (
+			`product_id` int(11) NOT NULL,
+			`status` enum('searching','finished') NOT NULL,
+			`matches` int(11) DEFAULT NULL,
+			`data` text,
+			PRIMARY KEY (`product_id`)
+		) DEFAULT COLLATE=utf8_general_ci;");
+
+		$this->db->query("
+			CREATE TABLE IF NOT EXISTS`" . DB_PREFIX . "amazonus_listing_report` (
+				`sku` varchar(255) NOT NULL,
+				`quantity` int(10) unsigned NOT NULL,
+				`asin` varchar(255) NOT NULL,
+				`price` decimal(10,4) NOT NULL,
+				PRIMARY KEY (`sku`)
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
+
+		// register the event triggers
+		$this->model_tool_event->setHandler('order_add', array(
+				'type' => 'openbay',
+				'code' => 'amazonus',
+				'method' => 'addOrder')
+		);
+	}
+
+	public function uninstall(){
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_order`");
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_order_product`");
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_product2`");
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_product`");
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_product_link`");
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_product_unshipped`");
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_product_error`");
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_process`");
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_product_search`");
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_listing_report`");
+
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `group` = 'openbay_amazonus'");
+
+		// remove the event triggers
+		$this->model_tool_event->removeHandler('add_order', array(
+				'type' => 'openbay',
+				'code' => 'amazonus',
+				'method' => 'addOrder')
+		);
+	}
+
 	public function scheduleOrders($data) {
 		$log = new Log('amazonus.log');
 
@@ -634,105 +744,9 @@ class ModelOpenbayAmazonus extends Model {
 		return $products;
 	}
 
-	public function install(){
-		$this->db->query("
-			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazonus_order` (
-			  `order_id` int(11) NOT NULL ,
-			  `amazonus_order_id` char(19) NOT NULL ,
-			  `courier_id` varchar(255) NOT NULL ,
-			  `courier_other` tinyint(1) NOT NULL,
-			  `tracking_no` varchar(255) NOT NULL ,
-			  PRIMARY KEY (`order_id`, `amazonus_order_id`)
-		) DEFAULT COLLATE=utf8_general_ci;");
-
-		$this->db->query("
-			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazonus_order_product` (
-				`order_product_id` int(11) NOT NULL ,
-				`amazonus_order_item_id` varchar(255) NOT NULL,
-				PRIMARY KEY(`order_product_id`, `amazonus_order_item_id`)
-		);");
-
-		$this->db->query("
-			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazonus_product_unshipped` (
-				`order_id` int(11) NOT NULL,
-				`product_id` int(11) NOT NULL,
-				`quantity` int(11) NOT NULL DEFAULT '0',
-				PRIMARY KEY (`order_id`,`product_id`)
-			) DEFAULT COLLATE=utf8_general_ci;;");
-
-		$this->db->query("
-		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazonus_product` (
-		  `version` int(11) NOT NULL DEFAULT 2,
-		  `product_id`  int(11) NOT NULL ,
-		  `category`  varchar(255) NOT NULL ,
-		  `sku`  varchar(255) NOT NULL ,
-		  `insertion_id` varchar(255) NOT NULL ,
-		  `data`  text NOT NULL ,
-		  `status` enum('saved','uploaded','ok','error') NOT NULL ,
-		  `price`  decimal(15,4) NOT NULL COMMENT 'Price on Amazonus' ,
-		  `var` char(100) NOT NULL DEFAULT '',
-		  `marketplaces` text NOT NULL ,
-		  `messages` text NOT NULL,
-		  PRIMARY KEY (`product_id`, `var`)
-		);");
-
-		$this->db->query("
-		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazonus_product_error` (
-		  `error_id` int(11) NOT NULL AUTO_INCREMENT,
-		  `sku` varchar(255) NOT NULL ,
-		  `insertion_id` varchar(255) NOT NULL ,
-		  `error_code` int(11) NOT NULL ,
-		  `message` text NOT NULL ,
-		  PRIMARY KEY (`error_id`)
-		);");
-
-		$this->db->query("
-		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazonus_product_link` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-		  `amazonus_sku` varchar(255) NOT NULL,
-		  `var` char(100) NOT NULL DEFAULT '',
-		  `product_id` int(11) NOT NULL,
-		  PRIMARY KEY (`id`)
-		) DEFAULT COLLATE=utf8_general_ci;");
-
-		$this->db->query("
-		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazonus_product_search` (
-			`product_id` int(11) NOT NULL,
-			`status` enum('searching','finished') NOT NULL,
-			`matches` int(11) DEFAULT NULL,
-			`data` text,
-			PRIMARY KEY (`product_id`)
-		) DEFAULT COLLATE=utf8_general_ci;");
-
-		$this->db->query("
-			CREATE TABLE IF NOT EXISTS`" . DB_PREFIX . "amazonus_listing_report` (
-				`sku` varchar(255) NOT NULL,
-				`quantity` int(10) unsigned NOT NULL,
-				`asin` varchar(255) NOT NULL,
-				`price` decimal(10,4) NOT NULL,
-				PRIMARY KEY (`sku`)
-			) DEFAULT COLLATE=utf8_general_ci;
-		");
-	}
-
 	public function deleteListingReports() {
 		$this->db->query("
 			DELETE FROM " . DB_PREFIX . "amazonus_listing_report
 		");
-	}
-
-	public function uninstall(){
-		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_order`");
-		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_order_product`");
-		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_product2`");
-		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_product`");
-		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_product_link`");
-		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_product_unshipped`");
-		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_product_error`");
-		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_process`");
-		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_product_search`");
-		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_listing_report`");
-
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `group` = 'openbay_amazonus'");
 	}
 }

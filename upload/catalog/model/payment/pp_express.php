@@ -24,7 +24,7 @@ class ModelPaymentPPExpress extends Model {
 			'USER' => $this->config->get('pp_express_username'),
 			'PWD' => $this->config->get('pp_express_password'),
 			'SIGNATURE' => $this->config->get('pp_express_signature'),
-			'VERSION' => '65.2',
+			'VERSION' => '109.0',
 			'BUTTONSOURCE' => 'OpenCart_2.0_EC',
 		);
 

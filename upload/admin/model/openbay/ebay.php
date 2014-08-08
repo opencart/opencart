@@ -215,16 +215,6 @@ class ModelOpenbayEbay extends Model{
 				'code' => 'ebay',
 				'method' => 'addOrder')
 		);
-		$this->model_tool_event->setHandler('admin_delete_product', array(
-				'type' => 'openbay',
-				'code' => 'ebay',
-				'method' => 'deleteProduct')
-		);
-		$this->model_tool_event->setHandler('admin_edit_product', array(
-				'type' => 'openbay',
-				'code' => 'ebay',
-				'method' => 'editProduct')
-		);
 	}
 
 	public function uninstall(){
@@ -244,16 +234,6 @@ class ModelOpenbayEbay extends Model{
 				'type' => 'openbay',
 				'code' => 'ebay',
 				'method' => 'addOrder')
-		);
-		$this->model_tool_event->removeHandler('admin_delete_product', array(
-				'type' => 'openbay',
-				'code' => 'ebay',
-				'method' => 'deleteProduct')
-		);
-		$this->model_tool_event->removeHandler('admin_edit_product', array(
-				'type' => 'openbay',
-				'code' => 'ebay',
-				'method' => 'editProduct')
 		);
 	}
 

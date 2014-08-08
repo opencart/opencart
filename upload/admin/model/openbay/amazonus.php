@@ -86,16 +86,6 @@ class ModelOpenbayAmazonus extends Model {
 				'code' => 'amazonus',
 				'method' => 'addOrder')
 		);
-		$this->model_tool_event->setHandler('admin_delete_product', array(
-				'type' => 'openbay',
-				'code' => 'amazonus',
-				'method' => 'deleteProduct')
-		);
-		$this->model_tool_event->setHandler('admin_edit_product', array(
-				'type' => 'openbay',
-				'code' => 'amazonus',
-				'method' => 'editProduct')
-		);
 	}
 
 	public function uninstall(){
@@ -117,16 +107,6 @@ class ModelOpenbayAmazonus extends Model {
 				'type' => 'openbay',
 				'code' => 'amazonus',
 				'method' => 'addOrder')
-		);
-		$this->model_tool_event->removeHandler('admin_delete_product', array(
-				'type' => 'openbay',
-				'code' => 'amazonus',
-				'method' => 'deleteProduct')
-		);
-		$this->model_tool_event->removeHandler('admin_edit_product', array(
-				'type' => 'openbay',
-				'code' => 'amazonus',
-				'method' => 'editProduct')
 		);
 	}
 

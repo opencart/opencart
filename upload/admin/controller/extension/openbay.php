@@ -2,6 +2,69 @@
 class ControllerExtensionOpenbay extends Controller {
 	private $error = array();
 
+	public function install() {
+		$this->load->language('extension/openbay');
+
+		$this->load->model('setting/extension');
+
+		if (!$this->user->hasPermission('modify', 'extension/openbay')) {
+			$this->session->data['error'] = $this->language->get('text_error_permission');
+
+			$this->response->redirect($this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'));
+		} else {
+			$this->model_setting_extension->install('openbay', $this->request->get['extension']);
+
+			$this->session->data['success'] = $this->language->get('text_install_success');
+
+			$this->load->model('user/user_group');
+
+			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'openbay/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'openbay/' . $this->request->get['extension']);
+
+			require_once(DIR_APPLICATION . 'controller/openbay/' . $this->request->get['extension'] . '.php');
+
+			$class = 'ControllerOpenbay' . str_replace('_', '', $this->request->get['extension']);
+			$class = new $class($this->registry);
+
+			if (method_exists($class, 'install')) {
+				$class->install();
+			}
+
+			$this->response->redirect($this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'));
+		}
+	}
+
+	public function uninstall() {
+		$this->load->language('extension/openbay');
+
+		$this->load->model('setting/extension');
+
+		if (!$this->user->hasPermission('modify', 'extension/openbay')) {
+			$this->session->data['error'] = $this->language->get('text_error_permission');
+
+			$this->response->redirect($this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'));
+		} else {
+			$this->session->data['success'] = $this->language->get('text_uninstall_success');
+
+			require_once(DIR_APPLICATION . 'controller/openbay/' . $this->request->get['extension'] . ' . php');
+
+			$this->load->model('setting/extension');
+			$this->load->model('setting/setting');
+
+			$this->model_setting_extension->uninstall('openbay', $this->request->get['extension']);
+			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
+
+			$class = 'ControllerOpenbay' . str_replace('_', '', $this->request->get['extension']);
+			$class = new $class($this->registry);
+
+			if (method_exists($class, 'uninstall')) {
+				$class->uninstall();
+			}
+
+			$this->response->redirect($this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'));
+		}
+	}
+
 	public function index() {
 		$this->load->model('openbay/openbay');
 		$this->load->model('setting/extension');
@@ -85,69 +148,6 @@ class ControllerExtensionOpenbay extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('extension/openbay.tpl', $data));
-	}
-
-	public function install() {
-		$this->load->language('extension/openbay');
-
-		$this->load->model('setting/extension');
-
-		if (!$this->user->hasPermission('modify', 'extension/openbay')) {
-			$this->session->data['error'] = $this->language->get('text_error_permission');
-
-			$this->response->redirect($this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'));
-		} else {
-			$this->model_setting_extension->install('openbay', $this->request->get['extension']);
-
-			$this->session->data['success'] = $this->language->get('text_install_success');
-
-			$this->load->model('user/user_group');
-
-			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'openbay/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'openbay/' . $this->request->get['extension']);
-
-			require_once(DIR_APPLICATION . 'controller/openbay/' . $this->request->get['extension'] . '.php');
-
-			$class = 'ControllerOpenbay' . str_replace('_', '', $this->request->get['extension']);
-			$class = new $class($this->registry);
-
-			if (method_exists($class, 'install')) {
-				$class->install();
-			}
-
-			$this->response->redirect($this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'));
-		}
-	}
-
-	public function uninstall() {
-		$this->load->language('extension/openbay');
-
-		$this->load->model('setting/extension');
-
-		if (!$this->user->hasPermission('modify', 'extension/openbay')) {
-			$this->session->data['error'] = $this->language->get('text_error_permission');
-
-			$this->response->redirect($this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'));
-		} else {
-			$this->session->data['success'] = $this->language->get('text_uninstall_success');
-
-			require_once(DIR_APPLICATION . 'controller/openbay/' . $this->request->get['extension'] . ' . php');
-
-			$this->load->model('setting/extension');
-			$this->load->model('setting/setting');
-
-			$this->model_setting_extension->uninstall('openbay', $this->request->get['extension']);
-			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
-
-			$class = 'ControllerOpenbay' . str_replace('_', '', $this->request->get['extension']);
-			$class = new $class($this->registry);
-
-			if (method_exists($class, 'uninstall')) {
-				$class->uninstall();
-			}
-
-			$this->response->redirect($this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'));
-		}
 	}
 
 	public function manage() {

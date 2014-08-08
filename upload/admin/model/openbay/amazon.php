@@ -81,21 +81,11 @@ class ModelOpenbayAmazon extends Model {
 				PRIMARY KEY (`marketplace`,`sku`)
 			) DEFAULT COLLATE=utf8_general_ci;");
 
-		// register the event triggers
-		$this->model_tool_event->setHandler('order_add', array(
+		// add the event triggers
+		$this->model_tool_event->setHandler('add_order', array(
 				'type' => 'openbay',
 				'code' => 'amazon',
 				'method' => 'addOrder')
-		);
-		$this->model_tool_event->setHandler('admin_delete_product', array(
-				'type' => 'openbay',
-				'code' => 'amazon',
-				'method' => 'deleteProduct')
-		);
-		$this->model_tool_event->setHandler('admin_edit_product', array(
-				'type' => 'openbay',
-				'code' => 'amazon',
-				'method' => 'editProduct')
 		);
 	}
 
@@ -119,16 +109,6 @@ class ModelOpenbayAmazon extends Model {
 				'type' => 'openbay',
 				'code' => 'amazon',
 				'method' => 'addOrder')
-		);
-		$this->model_tool_event->removeHandler('admin_delete_product', array(
-				'type' => 'openbay',
-				'code' => 'amazon',
-				'method' => 'deleteProduct')
-		);
-		$this->model_tool_event->removeHandler('admin_edit_product', array(
-				'type' => 'openbay',
-				'code' => 'amazon',
-				'method' => 'editProduct')
 		);
 	}
 

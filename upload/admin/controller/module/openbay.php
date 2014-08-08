@@ -51,17 +51,43 @@ class ControllerModuleOpenbay extends Controller {
 
 	public function install() {
 		$this->load->model('setting/setting');
+		$this->load->model('tool/event');
 
 		$settings = $this->model_setting_setting->getSetting('openbaymanager');
 		$settings['openbaymanager_show_menu'] = 1;
 		$this->model_setting_setting->editSetting('openbaymanager', $settings);
+
+		// register the event triggers
+		$this->model_tool_event->setHandler('admin_delete_product', array(
+				'type' => 'openbay',
+				'code' => 'openbay',
+				'method' => 'deleteProduct')
+		);
+		$this->model_tool_event->setHandler('admin_edit_product', array(
+				'type' => 'openbay',
+				'code' => 'openbay',
+				'method' => 'editProduct')
+		);
 	}
 
 	public function uninstall() {
 		$this->load->model('setting/setting');
+		$this->load->model('tool/event');
 
 		$settings = $this->model_setting_setting->getSetting('openbaymanager');
 		$settings['openbaymanager_show_menu'] = 0;
 		$this->model_setting_setting->editSetting('openbaymanager', $settings);
+
+		// register the event triggers
+		$this->model_tool_event->removeHandler('admin_delete_product', array(
+				'type' => 'openbay',
+				'code' => 'openbay',
+				'method' => 'deleteProduct')
+		);
+		$this->model_tool_event->removeHandler('admin_edit_product', array(
+				'type' => 'openbay',
+				'code' => 'openbay',
+				'method' => 'editProduct')
+		);
 	}
 }

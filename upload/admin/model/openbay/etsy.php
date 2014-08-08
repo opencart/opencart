@@ -50,16 +50,6 @@ class ModelOpenbayEtsy extends Model{
 				'code' => 'etsy',
 				'method' => 'addOrder')
 		);
-		$this->model_tool_event->setHandler('admin_delete_product', array(
-				'type' => 'openbay',
-				'code' => 'etsy',
-				'method' => 'deleteProduct')
-		);
-		$this->model_tool_event->setHandler('admin_edit_product', array(
-				'type' => 'openbay',
-				'code' => 'etsy',
-				'method' => 'editProduct')
-		);
 	}
 
 	public function uninstall(){
@@ -68,16 +58,6 @@ class ModelOpenbayEtsy extends Model{
 				'type' => 'openbay',
 				'code' => 'etsy',
 				'method' => 'addOrder')
-		);
-		$this->model_tool_event->removeHandler('admin_delete_product', array(
-				'type' => 'openbay',
-				'code' => 'etsy',
-				'method' => 'deleteProduct')
-		);
-		$this->model_tool_event->removeHandler('admin_edit_product', array(
-				'type' => 'openbay',
-				'code' => 'etsy',
-				'method' => 'editProduct')
 		);
 	}
 

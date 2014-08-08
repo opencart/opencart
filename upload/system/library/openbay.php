@@ -236,18 +236,6 @@ final class Openbay {
 		}
 	}
 
-	public function deleteProduct($product_id) {
-		/**
-		 * Called when a product is deleted in the admin
-		 * Used to delete any data the marketplace module holds
-		 */
-		foreach ($this->installed_markets as $market) {
-			if ($this->config->get($market.'_status') == 1) {
-				$this->{$market}->deleteProduct($product_id);
-			}
-		}
-	}
-
 	public function orderDelete($order_id) {
 		/**
 		 * Called when an order is deleted in the admin

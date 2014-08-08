@@ -92,6 +92,11 @@ class ModelOpenbayAmazon extends Model {
 				'code' => 'amazon',
 				'method' => 'deleteProduct')
 		);
+		$this->model_tool_event->setHandler('admin_edit_product', array(
+				'type' => 'openbay',
+				'code' => 'amazon',
+				'method' => 'editProduct')
+		);
 	}
 
 	public function uninstall() {
@@ -119,6 +124,11 @@ class ModelOpenbayAmazon extends Model {
 				'type' => 'openbay',
 				'code' => 'amazon',
 				'method' => 'deleteProduct')
+		);
+		$this->model_tool_event->removeHandler('admin_edit_product', array(
+				'type' => 'openbay',
+				'code' => 'amazon',
+				'method' => 'editProduct')
 		);
 	}
 

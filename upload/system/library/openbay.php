@@ -27,19 +27,6 @@ final class Openbay {
 		return $this->registry->get($name);
 	}
 
-	public function productUpdateListen($product_id, $data) {
-		/**
-		 * This call is performed after the product has been updated.
-		 * The $data variable holds all of the $_POST data
-		 */
-
-		foreach ($this->installed_markets as $market) {
-			if ($this->config->get($market.'_status') == 1) {
-				$this->{$market}->productUpdateListen($product_id, $data);
-			}
-		}
-	}
-
 	public function putStockUpdateBulk($product_id_array, $end_inactive = false) {
 		/**
 		 * putStockUpdateBulk

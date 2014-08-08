@@ -23,7 +23,7 @@ class ModelCatalogFilter extends Model {
 			}
 		}
 
-		$this->event->trigger('admin_add_filter', array('filter_id' => $filter_id));
+		$this->event->trigger('admin_add_filter', $filter_id);
 
 		return $filter_id;
 	}
@@ -62,14 +62,14 @@ class ModelCatalogFilter extends Model {
 	}
 
 	public function deleteFilter($filter_group_id) {
-		$this->event->trigger('pre_admin_delete_filter', array('filter_id' => $filter_id));
+		$this->event->trigger('pre_admin_delete_filter', $filter_group_id);
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_group` WHERE filter_group_id = '" . (int)$filter_group_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_group_description` WHERE filter_group_id = '" . (int)$filter_group_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter` WHERE filter_group_id = '" . (int)$filter_group_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "filter_description` WHERE filter_group_id = '" . (int)$filter_group_id . "'");
 
-		$this->event->trigger('admin_delete_filter', array('filter_id' => $filter_id));
+		$this->event->trigger('admin_delete_filter', $filter_group_id);
 	}
 
 	public function getFilterGroup($filter_group_id) {

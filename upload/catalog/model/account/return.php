@@ -7,7 +7,7 @@ class ModelAccountReturn extends Model {
 
 		$return_id = $this->db->getLastId();
 
-		$this->event->trigger('return_add', array('return_id' => $return_id));
+		$this->event->trigger('return_add', $return_id);
 
 		return $return_id;
 	}

@@ -11,7 +11,7 @@ class ModelCatalogAttribute extends Model {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_description SET attribute_id = '" . (int)$attribute_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
 		}
 
-		$this->event->trigger('admin_add_attribute', array('attribute_id' => $attribute_id));
+		$this->event->trigger('admin_add_attribute', $attribute_id);
 
 		return $attribute_id;
 	}
@@ -31,12 +31,12 @@ class ModelCatalogAttribute extends Model {
 	}
 
 	public function deleteAttribute($attribute_id) {
-		$this->event->trigger('pre_admin_delete_attribute', array('attribute_id' => $attribute_id));
+		$this->event->trigger('pre_admin_delete_attribute', $attribute_id);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "attribute WHERE attribute_id = '" . (int)$attribute_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "attribute_description WHERE attribute_id = '" . (int)$attribute_id . "'");
 
-		$this->event->trigger('admin_delete_attribute', array('attribute_id' => $attribute_id));
+		$this->event->trigger('admin_delete_attribute', $attribute_id);
 	}
 
 	public function getAttribute($attribute_id) {

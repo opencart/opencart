@@ -55,7 +55,7 @@ class ModelCatalogCategory extends Model {
 
 		$this->cache->delete('category');
 
-		$this->event->trigger('admin_add_category', array('category_id' => $category_id));
+		$this->event->trigger('admin_add_category', $category_id);
 
 		return $category_id;
 	}
@@ -164,7 +164,7 @@ class ModelCatalogCategory extends Model {
 	}
 
 	public function deleteCategory($category_id) {
-		$this->event->trigger('pre_admin_delete_category', array('category_id' => $category_id));
+		$this->event->trigger('pre_admin_delete_category', $category_id);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "category_path WHERE category_id = '" . (int)$category_id . "'");
 
@@ -184,7 +184,7 @@ class ModelCatalogCategory extends Model {
 
 		$this->cache->delete('category');
 
-		$this->event->trigger('admin_delete_category', array('category_id' => $category_id));
+		$this->event->trigger('admin_delete_category', $category_id);
 	}
 
 	public function repairCategories($parent_id = 0) {

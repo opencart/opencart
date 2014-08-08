@@ -16,7 +16,7 @@ class ModelSettingStore extends Model {
 
 		$this->cache->delete('store');
 
-		$this->event->trigger('admin_add_store', array('store_id' => $store_id));
+		$this->event->trigger('admin_add_store', $store_id);
 
 		return $store_id;
 	}
@@ -32,14 +32,14 @@ class ModelSettingStore extends Model {
 	}
 
 	public function deleteStore($store_id) {
-		$this->event->trigger('pre_admin_delete_store', array('store_id' => $store_id));
+		$this->event->trigger('pre_admin_delete_store', $store_id);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "store WHERE store_id = '" . (int)$store_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "layout_route WHERE store_id = '" . (int)$store_id . "'");
 
 		$this->cache->delete('store');
 
-		$this->event->trigger('admin_delete_store', array('store_id' => $store_id));
+		$this->event->trigger('admin_delete_store', $store_id);
 	}
 
 	public function getStore($store_id) {

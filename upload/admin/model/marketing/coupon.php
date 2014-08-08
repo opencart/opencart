@@ -19,7 +19,7 @@ class ModelMarketingCoupon extends Model {
 			}
 		}
 
-		$this->event->trigger('admin_add_coupon', array('coupon_id' => $coupon_id));
+		$this->event->trigger('admin_add_coupon', $coupon_id);
 
 		return $coupon_id;
 	}
@@ -49,14 +49,14 @@ class ModelMarketingCoupon extends Model {
 	}
 
 	public function deleteCoupon($coupon_id) {
-		$this->event->trigger('pre_admin_delete_coupon', array('coupon_id' => $coupon_id));
+		$this->event->trigger('pre_admin_delete_coupon', $coupon_id);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon WHERE coupon_id = '" . (int)$coupon_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_product WHERE coupon_id = '" . (int)$coupon_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_category WHERE coupon_id = '" . (int)$coupon_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_history WHERE coupon_id = '" . (int)$coupon_id . "'");
 
-		$this->event->trigger('admin_delete_coupon', array('coupon_id' => $coupon_id));
+		$this->event->trigger('admin_delete_coupon', $coupon_id);
 	}
 
 	public function getCoupon($coupon_id) {

@@ -31,16 +31,19 @@ class ModelToolEvent extends Model {
 		$handler = $handler['type'] . '/' . $handler['code'] . '/' . $handler['method'];
 
 		$handlers = $this->getHandlers($event, $store_id);
-		if (!in_array($handler, $handlers)) {
+		$key = array_search($handler, $handlers);
+
+		if ($key === false) {
 			return true;
 		}
 
-		$key = array_search($handler, $handlers);
 		unset($handlers[$key]);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "event WHERE store_id = '" . (int)$store_id . "' AND event = '" . $this->db->escape($event) . "'");
 
-		$this->db->query("INSERT INTO " . DB_PREFIX . "event SET store_id = '" . (int)$store_id . "', event = '" . $this->db->escape($event) . "', handlers = '" . $this->db->escape(serialize($handlers)) . "'");
+		if (!empty($handlers)) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "event SET store_id = '" . (int)$store_id . "', event = '" . $this->db->escape($event) . "', handlers = '" . $this->db->escape(serialize($handlers)) . "'");
+		}
 
 		return true;
 	}

@@ -205,8 +205,8 @@ class ControllerSaleOrder extends Controller {
 		$data['entry_date_added'] = $this->language->get('entry_date_added');
 		$data['entry_date_modified'] = $this->language->get('entry_date_modified');
 
-		$data['button_invoice'] = $this->language->get('button_invoice');
-		$data['button_shipping'] = $this->language->get('button_shipping');
+		$data['button_invoice_print'] = $this->language->get('button_invoice_print');
+		$data['button_shipping_print'] = $this->language->get('button_shipping_print');
 		$data['button_insert'] = $this->language->get('button_insert');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
@@ -404,14 +404,19 @@ class ControllerSaleOrder extends Controller {
 		$data['button_back'] = $this->language->get('button_back');
 		$data['button_product_add'] = $this->language->get('button_product_add');
 		$data['button_voucher_add'] = $this->language->get('button_voucher_add');
+		
+		$data['button_payment'] = $this->language->get('button_payment');
+		$data['button_shipping'] = $this->language->get('button_shipping');
+		$data['button_coupon'] = $this->language->get('button_coupon');
+		$data['button_voucher'] = $this->language->get('button_voucher');
+		$data['button_reward'] = $this->language->get('button_reward');
+		
 		$data['button_upload'] = $this->language->get('button_upload');
 		$data['button_remove'] = $this->language->get('button_remove');
 
 		$data['tab_order'] = $this->language->get('tab_order');
 		$data['tab_customer'] = $this->language->get('tab_customer');
 		$data['tab_payment'] = $this->language->get('tab_payment');
-		$data['tab_payment_add'] = $this->language->get('tab_payment_add');
-		$data['tab_voucher_add'] = $this->language->get('tab_voucher_add');
 		$data['tab_shipping'] = $this->language->get('tab_shipping');
 		$data['tab_product'] = $this->language->get('tab_product');
 		$data['tab_voucher'] = $this->language->get('tab_voucher');
@@ -902,8 +907,8 @@ class ControllerSaleOrder extends Controller {
 			$data['entry_notify'] = $this->language->get('entry_notify');
 			$data['entry_comment'] = $this->language->get('entry_comment');
 
-			$data['button_invoice'] = $this->language->get('button_invoice');
-			$data['button_shipping'] = $this->language->get('button_shipping');
+			$data['button_invoice_print'] = $this->language->get('button_invoice_print');
+			$data['button_shipping_print'] = $this->language->get('button_shipping_print');
 			$data['button_edit'] = $this->language->get('button_edit');
 			$data['button_cancel'] = $this->language->get('button_cancel');
 			$data['button_generate'] = $this->language->get('button_generate');
@@ -2033,9 +2038,9 @@ class ControllerSaleOrder extends Controller {
 		$store_info = $this->model_setting_store->getStore($store_id);
 		
 		if ($store_info) {
-			$url = $store_info['url'];
+			$url = $store_info['ssl'];
 		} else {
-			$url = HTTP_CATALOG;
+			$url = HTTPS_CATALOG;
 		}
 						
 		if (isset($this->request->get['api'])) {
@@ -2064,18 +2069,14 @@ class ControllerSaleOrder extends Controller {
 				curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->session->data['cookie'] . ';');
 			}
 			
-			$response = curl_exec($curl);
+			$json = curl_exec($curl);
+
+			$response = json_encode(array('error' => curl_error($curl) . '(' . curl_errno($curl) . ')'));
 	
-			if (!$response) {
-				$response = json_encode(array('error' => curl_error($curl) . '(' . curl_errno($curl) . ')'));
-			} else {
-				$json = $response;	
-			}
-					
 			curl_close($curl);
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->setOutput($json);
 	}
 }

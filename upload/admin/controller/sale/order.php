@@ -555,7 +555,7 @@ class ControllerSaleOrder extends Controller {
 			$data['payment_custom_field'] = $order_info['payment_custom_field'];
 			$data['payment_method'] = $order_info['payment_method'];
 			$data['payment_code'] = $order_info['payment_code'];
-			
+								
 			$data['shipping_firstname'] = $order_info['shipping_firstname'];			
 			$data['shipping_lastname'] = $order_info['shipping_lastname'];
 			$data['shipping_company'] = $order_info['shipping_company'];
@@ -576,12 +576,8 @@ class ControllerSaleOrder extends Controller {
 			foreach ($order_products as $order_product) {
 				$data['order_products'][] = array(
 					'product_id' => $order_product['product_id'],
-					'name'       => $order_product['name'],
-					'model'      => $order_product['model'],
 					'option'     => $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $order_product['order_product_id']),
-					'quantity'   => $order_product['quantity'],
-					'price'      => $this->currency->format($order_product['price'] + ($this->config->get('config_tax') ? $order_product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
-					'total'      => $this->currency->format($order_product['total'] + ($this->config->get('config_tax') ? ($order_product['tax'] * $order_product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value'])
+					'quantity'   => $order_product['quantity']
 				);
 			}
 		
@@ -596,11 +592,6 @@ class ControllerSaleOrder extends Controller {
 			$order_totals = $this->model_sale_order->getOrderTotals($this->request->get['order_id']);
 	
 			foreach ($order_totals as $order_total) {
-				$data['order_totals'][] = array(
-					'title' => $order_total['title'],
-					'value' => $this->currency->format($order_total['value'], $order_info['currency_code'], $order_info['currency_value']),
-				);
-	
 				// If coupon, voucher or reward points
 				$start = strpos($order_total['title'], '(') + 1;
 				$end = strrpos($order_total['title'], ')');
@@ -635,7 +626,7 @@ class ControllerSaleOrder extends Controller {
 			$data['email'] = '';
 			$data['telephone'] = '';
 			$data['fax'] = '';
-			$data['account_custom_field'] = array();
+			$data['customer_custom_field'] = array();
 			
 			$data['addresses'] = array();
 			
@@ -648,7 +639,7 @@ class ControllerSaleOrder extends Controller {
 			$data['payment_postcode'] = '';
 			$data['payment_country_id'] = '';
 			$data['payment_zone_id'] = '';
-			$data['payment_custom_field'] = '';
+			$data['payment_custom_field'] = array();
 			$data['payment_method'] = '';
 			$data['payment_code'] = '';
 
@@ -661,7 +652,7 @@ class ControllerSaleOrder extends Controller {
 			$data['shipping_postcode'] = '';
 			$data['shipping_country_id'] = '';
 			$data['shipping_zone_id'] = '';
-			$data['shipping_custom_field'] = '';
+			$data['shipping_custom_field'] = array();
 			$data['shipping_method'] = '';
 			$data['shipping_code'] = '';
 			
@@ -695,6 +686,16 @@ class ControllerSaleOrder extends Controller {
 
 		$data['custom_fields'] = $this->model_sale_custom_field->getCustomFields();
 
+		$data['custom_field_values'] = array();
+
+		foreach ($data['product_options'] as $product_option) {
+			if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') {
+				if (!isset($data['option_values'][$product_option['option_id']])) {
+					$data['custom_field_values'][$product_option['option_id']] = $this->model_catalog_option->getOptionValues($product_option['option_id']);
+				}
+			}
+		}
+		
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
@@ -2043,7 +2044,7 @@ class ControllerSaleOrder extends Controller {
 			$url = HTTPS_CATALOG;
 		}
 						
-		if (isset($this->request->get['api'])) {
+		if (isset($this->session->data['cookie']) && isset($this->request->get['api'])) {
 			$curl = curl_init();
 			
 			// Set SSL if required
@@ -2065,9 +2066,7 @@ class ControllerSaleOrder extends Controller {
 				curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($this->request->post));
 			}
 			
-			if (isset($this->session->data['cookie'])) {
-				curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->session->data['cookie'] . ';');
-			}
+			curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->session->data['cookie'] . ';');
 			
 			$json = curl_exec($curl);
 

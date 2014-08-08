@@ -191,6 +191,9 @@ $registry->set('customer', $customer);
 // Customer Group
 if ($customer->isLogged()) {
 	$config->set('config_customer_group_id', $customer->getGroupId());
+} elseif (isset($session->data['customer'])) {
+	// For API calls
+	$config->set('config_customer_group_id', $session->data['customer']['customer_group_id']);
 } elseif (isset($session->data['guest'])) {
 	$config->set('config_customer_group_id', $session->data['guest']['customer_group_id']);
 }

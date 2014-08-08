@@ -1385,6 +1385,7 @@ class ControllerSaleCustomer extends Controller {
 					'email'             => $result['email'],
 					'telephone'         => $result['telephone'],
 					'fax'               => $result['fax'],
+					'custom_field'      => unserialize($result['custom_field']),
 					'address'           => $this->model_sale_customer->getAddresses($result['customer_id'])
 				);
 			}

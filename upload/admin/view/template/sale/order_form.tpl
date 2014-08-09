@@ -109,7 +109,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <div>
+              <div id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>">
                 <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                 <div class="radio">
                   <?php if (isset($account_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $account_custom_field[$custom_field['custom_field_id']]) { ?>
@@ -131,7 +131,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <div>
+              <div id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>">
                 <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                 <div class="checkbox">
                   <?php if (isset($account_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $account_custom_field[$custom_field['custom_field_id']])) { ?>
@@ -471,7 +471,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <div>
+              <div id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>">
                 <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                 <div class="radio">
                   <?php if (isset($payment_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $payment_custom_field[$custom_field['custom_field_id']]) { ?>
@@ -493,7 +493,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <div>
+              <div id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>">
                 <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                 <div class="checkbox">
                   <?php if (isset($payment_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $payment_custom_field[$custom_field['custom_field_id']])) { ?>
@@ -682,7 +682,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <div>
+              <div id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>">
                 <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                 <div class="radio">
                   <?php if (isset($shipping_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $shipping_custom_field[$custom_field['custom_field_id']]) { ?>
@@ -704,7 +704,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <div>
+              <div id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>">
                 <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                 <div class="checkbox">
                   <?php if (isset($shipping_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $shipping_custom_field[$custom_field['custom_field_id']])) { ?>
@@ -1049,19 +1049,24 @@ $('input[name=\'customer\']').autocomplete({
 		$('#tab-customer input[name=\'telephone\']').attr('value', item['telephone']);
 		$('#tab-customer input[name=\'fax\']').attr('value', item['fax']);
 		
-		$('select[name=\'customer_group_id\']').trigger('change');
+		// Reset all custom fields
+		$('#tab-customer select[name^=\'custom_field\'] option').prop('selected', false);
+		$('#tab-customer textarea[name^=\'custom_field\']').val('');
+		$('#tab-customer input[name^=\'custom_field\'][type=\'text\']').val('');
+		$('#tab-customer input[name^=\'custom_field\'][type=\'hidden\']').val('');
+		$('#tab-customer input[name^=\'custom_field\'][type=\'radio\']').prop('checked', false);	
+		$('#tab-customer input[name^=\'custom_field\'][type=\'checkbox\']').prop('checked', false);	
 				
 		for (i in item.custom_field) {
-			var element = $('input[name=\'custom_field\'][' + i + ']').val(item.custom_field[i]).val(item.custom_field[i]);
-			
-			alert($(element).attr('type'));
-			//type="checkbox"
-			//if (element.type == 'checkbox') {
-				
-			//}
-			$('select[name=\'custom_field\'][' + i + ']').val(item.custom_field[i]);
-			$('#tab-customer input[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);			
+			$('#tab-customer select[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
+			$('#tab-customer textarea[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
+			$('#tab-customer input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(item.custom_field[i]);
+			$('#tab-customer input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(item.custom_field[i]);
+			$('#tab-customer input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + item.custom_field[i] + '\']').prop('checked', true);	
+			$('#tab-customer input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + item.custom_field[i] + '\']').prop('checked', true);		
 		}
+		
+		$('select[name=\'customer_group_id\']').trigger('change');
 		
 		html = '<option value="0"><?php echo $text_none; ?></option>'; 
 			
@@ -1740,7 +1745,15 @@ $('select[name=\'payment_address\']').on('change', function() {
 			$('.fa-spin').remove();
 		},		
 		success: function(json) {
-			if (json != '') {	
+			// Reset all custom fields
+			$('#tab-payment select option').prop('selected', false);
+			$('#tab-payment textarea').val('');
+			$('#tab-payment input[type=\'text\']').val('');
+			$('#tab-payment input[type=\'hidden\']').val('');
+			$('#tab-payment input[type=\'radio\']').prop('checked', false);	
+			$('#tab-payment input[type=\'checkbox\']').prop('checked', false);				
+			
+			if (json != '') {
 				$('#tab-payment input[name=\'firstname\']').attr('value', json['firstname']);
 				$('#tab-payment input[name=\'lastname\']').attr('value', json['lastname']);
 				$('#tab-payment input[name=\'company\']').attr('value', json['company']);
@@ -1752,10 +1765,17 @@ $('select[name=\'payment_address\']').on('change', function() {
 				
 				payment_zone_id = json['zone_id'];
 				
-				$('#tab-payment select[name=\'country_id\']').trigger('change');
-				
-				
+				for (i in json['custom_field']) {
+					$('#tab-payment select[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
+					$('#tab-payment textarea[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
+					$('#tab-payment input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(item.custom_field[i]);
+					$('#tab-payment input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(item.custom_field[i]);
+					$('#tab-payment input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + item.custom_field[i] + '\']').prop('checked', true);	
+					$('#tab-payment input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + item.custom_field[i] + '\']').prop('checked', true);		
+				}				
 			}
+			
+			$('#tab-payment select[name=\'country_id\']').trigger('change');
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -1927,6 +1947,14 @@ $('select[name=\'shipping_address\']').on('change', function() {
 			$('.fa-spin').remove();
 		},		
 		success: function(json) {
+			// Reset all custom fields
+			$('#tab-shipping select option').prop('selected', false);
+			$('#tab-shipping textarea').val('');
+			$('#tab-shipping input[type=\'text\']').val('');
+			$('#tab-shipping input[type=\'hidden\']').val('');
+			$('#tab-shipping input[type=\'radio\']').prop('checked', false);	
+			$('#tab-shipping input[type=\'checkbox\']').prop('checked', false);
+						
 			if (json != '') {	
 				$('#tab-shipping input[name=\'firstname\']').attr('value', json['firstname']);
 				$('#tab-shipping input[name=\'lastname\']').attr('value', json['lastname']);
@@ -1938,9 +1966,18 @@ $('select[name=\'shipping_address\']').on('change', function() {
 				$('#tab-shipping select[name=\'country_id\']').prop('value', json['country_id']);
 				
 				shipping_zone_id = json['zone_id'];
-			
-				$('#tab-shipping select[name=\'country_id\']').trigger('change');
+				
+				for (i in json['custom_field']) {
+					$('#tab-shipping select[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
+					$('#tab-shipping textarea[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
+					$('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(item.custom_field[i]);
+					$('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(item.custom_field[i]);
+					$('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + item.custom_field[i] + '\']').prop('checked', true);	
+					$('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + item.custom_field[i] + '\']').prop('checked', true);		
+				}						
 			}
+			
+			$('#tab-shipping select[name=\'country_id\']').trigger('change');
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

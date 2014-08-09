@@ -1040,22 +1040,19 @@ $('input[name=\'customer\']').autocomplete({
 		});
 	},
 	'select': function(item) {
+		// Reset all custom fields
+		$('#tab-customer input[type=\'text\'], #tab-customer input[type=\'text\'], #tab-customer textarea').not('#tab-customer input[name=\'customer\'], #tab-customer input[name=\'customer_id\']').val('');
+		$('#tab-customer select option').removeAttr('selected');
+		$('#tab-customer input[type=\'checkbox\'], #tab-customer input[type=\'radio\']').removeAttr('checked');
+		
 		$('#tab-customer input[name=\'customer\']').val(item['label']);
 		$('#tab-customer input[name=\'customer_id\']').val(item['value']);
-		$('#tab-customer select[name=\'customer_group_id\']').prop('value', item['customer_group_id']);
-		$('#tab-customer input[name=\'firstname\']').attr('value', item['firstname']);
-		$('#tab-customer input[name=\'lastname\']').attr('value', item['lastname']);
-		$('#tab-customer input[name=\'email\']').attr('value', item['email']);
-		$('#tab-customer input[name=\'telephone\']').attr('value', item['telephone']);
-		$('#tab-customer input[name=\'fax\']').attr('value', item['fax']);
-		
-		// Reset all custom fields
-		$('#tab-customer select[name^=\'custom_field\'] option').prop('selected', false);
-		$('#tab-customer textarea[name^=\'custom_field\']').val('');
-		$('#tab-customer input[name^=\'custom_field\'][type=\'text\']').val('');
-		$('#tab-customer input[name^=\'custom_field\'][type=\'hidden\']').val('');
-		$('#tab-customer input[name^=\'custom_field\'][type=\'radio\']').prop('checked', false);	
-		$('#tab-customer input[name^=\'custom_field\'][type=\'checkbox\']').prop('checked', false);	
+		$('#tab-customer select[name=\'customer_group_id\']').val(item['customer_group_id']);
+		$('#tab-customer input[name=\'firstname\']').val(item['firstname']);
+		$('#tab-customer input[name=\'lastname\']').val(item['lastname']);
+		$('#tab-customer input[name=\'email\']').val(item['email']);
+		$('#tab-customer input[name=\'telephone\']').val(item['telephone']);
+		$('#tab-customer input[name=\'fax\']').val(item['fax']);		
 				
 		for (i in item.custom_field) {
 			$('#tab-customer select[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
@@ -1063,9 +1060,14 @@ $('input[name=\'customer\']').autocomplete({
 			$('#tab-customer input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(item.custom_field[i]);
 			$('#tab-customer input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(item.custom_field[i]);
 			$('#tab-customer input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + item.custom_field[i] + '\']').prop('checked', true);	
-			$('#tab-customer input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + item.custom_field[i] + '\']').prop('checked', true);		
+			
+			if (item.custom_field[i] instanceof Array) {
+				for (j = 0; j < item.custom_field[i].length; j++) {
+					$('#tab-customer input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + item.custom_field[i][j] + '\']').prop('checked', true);
+				}
+			}
 		}
-		
+	
 		$('select[name=\'customer_group_id\']').trigger('change');
 		
 		html = '<option value="0"><?php echo $text_none; ?></option>'; 
@@ -1074,8 +1076,11 @@ $('input[name=\'customer\']').autocomplete({
 			html += '<option value="' + item['address'][i]['address_id'] + '">' + item['address'][i]['firstname'] + ' ' + item['address'][i]['lastname'] + ', ' + item['address'][i]['address_1'] + ', ' + item['address'][i]['city'] + ', ' + item['address'][i]['country'] + '</option>';
 		}
 		
-		$('select[name=\'shipping_address\']').html(html);
 		$('select[name=\'payment_address\']').html(html);
+		$('select[name=\'shipping_address\']').html(html);
+		
+		$('select[name=\'payment_address\']').trigger('change');
+		$('select[name=\'shipping_address\']').trigger('change');
 	}
 });
 		
@@ -1731,7 +1736,6 @@ $('#button-cart').on('click', function() {
 	$('a[href=\'#tab-payment\']').parent().addClass('active');
 	$('#tab-payment').addClass('active');
 });
-
 				
 // Payment Address
 $('select[name=\'payment_address\']').on('change', function() {
@@ -1745,35 +1749,36 @@ $('select[name=\'payment_address\']').on('change', function() {
 			$('.fa-spin').remove();
 		},		
 		success: function(json) {
-			// Reset all custom fields
-			$('#tab-payment select option').prop('selected', false);
-			$('#tab-payment textarea').val('');
-			$('#tab-payment input[type=\'text\']').val('');
-			$('#tab-payment input[type=\'hidden\']').val('');
-			$('#tab-payment input[type=\'radio\']').prop('checked', false);	
-			$('#tab-payment input[type=\'checkbox\']').prop('checked', false);				
+			// Reset all fields
+			$('#tab-payment input[type=\'text\'], #tab-payment input[type=\'text\'], #tab-payment textarea').val('');
+			$('#tab-payment select option').not('#tab-payment select[name=\'payment_address\']').removeAttr('selected');
+			$('#tab-payment input[type=\'checkbox\'], #tab-payment input[type=\'radio\']').removeAttr('checked');
+					
+			$('#tab-payment input[name=\'firstname\']').val(json['firstname']);
+			$('#tab-payment input[name=\'lastname\']').val(json['lastname']);
+			$('#tab-payment input[name=\'company\']').val(json['company']);
+			$('#tab-payment input[name=\'address_1\']').val(json['address_1']);
+			$('#tab-payment input[name=\'address_2\']').val(json['address_2']);
+			$('#tab-payment input[name=\'city\']').val(json['city']);
+			$('#tab-payment input[name=\'postcode\']').val(json['postcode']);
+			$('#tab-payment select[name=\'country_id\']').val(json['country_id']);
 			
-			if (json != '') {
-				$('#tab-payment input[name=\'firstname\']').attr('value', json['firstname']);
-				$('#tab-payment input[name=\'lastname\']').attr('value', json['lastname']);
-				$('#tab-payment input[name=\'company\']').attr('value', json['company']);
-				$('#tab-payment input[name=\'address_1\']').attr('value', json['address_1']);
-				$('#tab-payment input[name=\'address_2\']').attr('value', json['address_2']);
-				$('#tab-payment input[name=\'city\']').attr('value', json['city']);
-				$('#tab-payment input[name=\'postcode\']').attr('value', json['postcode']);
-				$('#tab-payment select[name=\'country_id\']').prop('value', json['country_id']);
+			payment_zone_id = json['zone_id'];
+			
+			for (i in json['custom_field']) {
+				$('#tab-payment select[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
+				$('#tab-payment textarea[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
+				$('#tab-payment input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(json['custom_field'][i]);
+				$('#tab-payment input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(json['custom_field'][i]);
+				$('#tab-payment input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);	
+				$('#tab-payment input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
 				
-				payment_zone_id = json['zone_id'];
-				
-				for (i in json['custom_field']) {
-					$('#tab-payment select[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
-					$('#tab-payment textarea[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
-					$('#tab-payment input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(item.custom_field[i]);
-					$('#tab-payment input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(item.custom_field[i]);
-					$('#tab-payment input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + item.custom_field[i] + '\']').prop('checked', true);	
-					$('#tab-payment input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + item.custom_field[i] + '\']').prop('checked', true);		
-				}				
-			}
+				if (json['custom_field'][i] instanceof Array) {
+					for (j = 0; j < json['custom_field'][i].length; j++) {
+						$('#tab-payment input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i][j] + '\']').prop('checked', true);
+					}
+				}						
+			}				
 			
 			$('#tab-payment select[name=\'country_id\']').trigger('change');
 		},
@@ -1947,35 +1952,36 @@ $('select[name=\'shipping_address\']').on('change', function() {
 			$('.fa-spin').remove();
 		},		
 		success: function(json) {
-			// Reset all custom fields
-			$('#tab-shipping select option').prop('selected', false);
-			$('#tab-shipping textarea').val('');
-			$('#tab-shipping input[type=\'text\']').val('');
-			$('#tab-shipping input[type=\'hidden\']').val('');
-			$('#tab-shipping input[type=\'radio\']').prop('checked', false);	
-			$('#tab-shipping input[type=\'checkbox\']').prop('checked', false);
-						
-			if (json != '') {	
-				$('#tab-shipping input[name=\'firstname\']').attr('value', json['firstname']);
-				$('#tab-shipping input[name=\'lastname\']').attr('value', json['lastname']);
-				$('#tab-shipping input[name=\'company\']').attr('value', json['company']);
-				$('#tab-shipping input[name=\'address_1\']').attr('value', json['address_1']);
-				$('#tab-shipping input[name=\'address_2\']').attr('value', json['address_2']);
-				$('#tab-shipping input[name=\'city\']').attr('value', json['city']);
-				$('#tab-shipping input[name=\'postcode\']').attr('value', json['postcode']);
-				$('#tab-shipping select[name=\'country_id\']').prop('value', json['country_id']);
+			// Reset all fields
+			$('#tab-shipping input[type=\'text\'], #tab-shipping input[type=\'text\'], #tab-shipping textarea').val('');
+			$('#tab-shipping select option').not('#tab-shipping select[name=\'shipping_address\']').removeAttr('selected');
+			$('#tab-shipping input[type=\'checkbox\'], #tab-shipping input[type=\'radio\']').removeAttr('checked');
+					
+			$('#tab-shipping input[name=\'firstname\']').val(json['firstname']);
+			$('#tab-shipping input[name=\'lastname\']').val(json['lastname']);
+			$('#tab-shipping input[name=\'company\']').val(json['company']);
+			$('#tab-shipping input[name=\'address_1\']').val(json['address_1']);
+			$('#tab-shipping input[name=\'address_2\']').val(json['address_2']);
+			$('#tab-shipping input[name=\'city\']').val(json['city']);
+			$('#tab-shipping input[name=\'postcode\']').val(json['postcode']);
+			$('#tab-shipping select[name=\'country_id\']').val(json['country_id']);
+			
+			shipping_zone_id = json['zone_id'];
+			
+			for (i in json['custom_field']) {
+				$('#tab-shipping select[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
+				$('#tab-shipping textarea[name=\'custom_field[' + i + ']\']').val(json['custom_field'][i]);
+				$('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(json['custom_field'][i]);
+				$('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(json['custom_field'][i]);
+				$('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);	
+				$('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i] + '\']').prop('checked', true);
 				
-				shipping_zone_id = json['zone_id'];
-				
-				for (i in json['custom_field']) {
-					$('#tab-shipping select[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
-					$('#tab-shipping textarea[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
-					$('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(item.custom_field[i]);
-					$('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(item.custom_field[i]);
-					$('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + item.custom_field[i] + '\']').prop('checked', true);	
-					$('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + item.custom_field[i] + '\']').prop('checked', true);		
+				if (json['custom_field'][i] instanceof Array) {
+					for (j = 0; j < json['custom_field'][i].length; j++) {
+						$('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + json['custom_field'][i][j] + '\']').prop('checked', true);
+					}
 				}						
-			}
+			}	
 			
 			$('#tab-shipping select[name=\'country_id\']').trigger('change');
 		},

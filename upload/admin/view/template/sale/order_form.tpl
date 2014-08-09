@@ -45,7 +45,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-customer-group"><?php echo $entry_customer_group; ?></label>
             <div class="col-sm-10">
-              <select name="customer_group_id" id="input-customer-group" <?php echo ($customer_id ? 'disabled="disabled"' : ''); ?> class="form-control">
+              <select name="customer_group_id" id="input-customer-group" class="form-control">
                 <?php foreach ($customer_groups as $customer_group) { ?>
                 <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
                 <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
@@ -109,7 +109,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <div>
+              <div id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>">
                 <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                 <div class="radio">
                   <?php if (isset($account_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $account_custom_field[$custom_field['custom_field_id']]) { ?>
@@ -131,7 +131,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <div>
+              <div id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>">
                 <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                 <div class="checkbox">
                   <?php if (isset($account_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $account_custom_field[$custom_field['custom_field_id']])) { ?>
@@ -233,11 +233,9 @@
                 <?php $product_row = 0; ?>
                 <?php foreach ($order_products as $order_product) { ?>
                 <tr id="product-row<?php echo $product_row; ?>">
-                  <td class="text-left"><?php echo $order_product['name']; ?><br />
-                    <input type="hidden" name="product_id" value="<?php echo $order_product['product_id']; ?>" />
+                  <td class="text-left"><input type="hidden" name="product_id" value="<?php echo $order_product['product_id']; ?>" />
                     <input type="hidden" name="quantity" value="<?php echo $order_product['quantity']; ?>" />
                     <?php foreach ($order_product['option'] as $option) { ?>
-                    - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
                     <?php if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'image') { ?>
                     <input type="hidden" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['product_option_value_id']; ?>" />
                     <?php } ?>
@@ -248,10 +246,10 @@
                     <input type="hidden" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" />
                     <?php } ?>
                     <?php } ?></td>
-                  <td class="text-left"><?php echo $order_product['model']; ?></td>
-                  <td class="text-right"><?php echo $order_product['quantity']; ?></td>
-                  <td class="text-right"><?php echo $order_product['price']; ?></td>
-                  <td class="text-right"><?php echo $order_product['total']; ?></td>
+                  <td class="text-left"></td>
+                  <td class="text-right"></td>
+                  <td class="text-right"></td>
+                  <td class="text-right"></td>
                   <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#product-row<?php echo $product_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                 </tr>
                 <?php $product_row++; ?>
@@ -259,8 +257,7 @@
                 <?php $voucher_row = 0; ?>
                 <?php foreach ($order_vouchers as $order_voucher) { ?>
                 <tr id="voucher-row<?php echo $voucher_row; ?>">
-                  <td class="text-left"><?php echo $order_voucher['description']; ?>
-                    <input type="hidden" name="from_name" value="<?php echo $order_voucher['from_name']; ?>" />
+                  <td class="text-left"><input type="hidden" name="from_name" value="<?php echo $order_voucher['from_name']; ?>" />
                     <input type="hidden" name="from_email" value="<?php echo $order_voucher['from_email']; ?>" />
                     <input type="hidden" name="to_name" value="<?php echo $order_voucher['to_name']; ?>" />
                     <input type="hidden" name="to_email" value="<?php echo $order_voucher['to_email']; ?>" />
@@ -268,9 +265,9 @@
                     <input type="hidden" name="message" value="<?php echo $order_voucher['message']; ?>" />
                     <input type="hidden" name="amount" value="<?php echo $order_voucher['amount']; ?>" /></td>
                   <td class="text-left"></td>
-                  <td class="text-right">1</td>
-                  <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
-                  <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
+                  <td class="text-right"></td>
+                  <td class="text-right"></td>
+                  <td class="text-right"></td>
                   <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#voucher-row<?php echo $voucher_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                 </tr>
                 <?php $voucher_row++; ?>
@@ -474,7 +471,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <div>
+              <div id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>">
                 <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                 <div class="radio">
                   <?php if (isset($payment_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $payment_custom_field[$custom_field['custom_field_id']]) { ?>
@@ -496,7 +493,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <div>
+              <div id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>">
                 <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                 <div class="checkbox">
                   <?php if (isset($payment_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $payment_custom_field[$custom_field['custom_field_id']])) { ?>
@@ -685,7 +682,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <div>
+              <div id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>">
                 <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                 <div class="radio">
                   <?php if (isset($shipping_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $shipping_custom_field[$custom_field['custom_field_id']]) { ?>
@@ -707,7 +704,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <div>
+              <div id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>">
                 <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                 <div class="checkbox">
                   <?php if (isset($shipping_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $shipping_custom_field[$custom_field['custom_field_id']])) { ?>
@@ -810,41 +807,9 @@
                 </tr>
               </thead>
               <tbody id="total">
-                <?php $total_row = 0; ?>
-                <?php if ($order_products || $order_vouchers || $order_totals) { ?>
-                <?php foreach ($order_products as $order_product) { ?>
-                <tr>
-                  <td class="text-left"><?php echo $order_product['name']; ?><br />
-                    <?php foreach ($order_product['option'] as $option) { ?>
-                    - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
-                    <?php } ?></td>
-                  <td class="text-left"><?php echo $order_product['model']; ?></td>
-                  <td class="text-right"><?php echo $order_product['quantity']; ?></td>
-                  <td class="text-right"><?php echo $order_product['price']; ?></td>
-                  <td class="text-right"><?php echo $order_product['total']; ?></td>
-                </tr>
-                <?php } ?>
-                <?php foreach ($order_vouchers as $order_voucher) { ?>
-                <tr>
-                  <td class="text-left"><?php echo $order_voucher['description']; ?></td>
-                  <td class="text-left"></td>
-                  <td class="text-right">1</td>
-                  <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
-                  <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
-                </tr>
-                <?php } ?>
-                <?php foreach ($order_totals as $order_total) { ?>
-                <tr id="total-row<?php echo $total_row; ?>">
-                  <td class="text-right" colspan="4"><?php echo $order_total['title']; ?>:</td>
-                  <td class="text-right"><?php echo $order_total['value']; ?></td>
-                </tr>
-                <?php $total_row++; ?>
-                <?php } ?>
-                <?php } else { ?>
                 <tr>
                   <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
                 </tr>
-                <?php } ?>
               </tbody>
             </table>
           </div>
@@ -965,7 +930,7 @@ $('#tab-cart tbody tr').each(function(index, element) {
 		data: $(element).find('input'),
 		dataType: 'json',
 		success: function(json) {
-			$('.alert, .text-danger').remove();
+			//$('.alert, .text-danger').remove();
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -981,7 +946,7 @@ $('#tab-cart tbody tr').each(function(index, element) {
 		data: $(element).find('input'),
 		dataType: 'json',
 		success: function(json) {
-			$('.alert, .text-danger').remove();
+			//$('.alert, .text-danger').remove();
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -1075,13 +1040,33 @@ $('input[name=\'customer\']').autocomplete({
 		});
 	},
 	'select': function(item) {
-		$('input[name=\'customer\']').val(item['label']);
-		$('input[name=\'customer_id\']').val(item['value']);
-		$('input[name=\'firstname\']').attr('value', item['firstname']);
-		$('input[name=\'lastname\']').attr('value', item['lastname']);
-		$('input[name=\'email\']').attr('value', item['email']);
-		$('input[name=\'telephone\']').attr('value', item['telephone']);
-		$('input[name=\'fax\']').attr('value', item['fax']);
+		$('#tab-customer input[name=\'customer\']').val(item['label']);
+		$('#tab-customer input[name=\'customer_id\']').val(item['value']);
+		$('#tab-customer select[name=\'customer_group_id\']').prop('value', item['customer_group_id']);
+		$('#tab-customer input[name=\'firstname\']').attr('value', item['firstname']);
+		$('#tab-customer input[name=\'lastname\']').attr('value', item['lastname']);
+		$('#tab-customer input[name=\'email\']').attr('value', item['email']);
+		$('#tab-customer input[name=\'telephone\']').attr('value', item['telephone']);
+		$('#tab-customer input[name=\'fax\']').attr('value', item['fax']);
+		
+		// Reset all custom fields
+		$('#tab-customer select[name^=\'custom_field\'] option').prop('selected', false);
+		$('#tab-customer textarea[name^=\'custom_field\']').val('');
+		$('#tab-customer input[name^=\'custom_field\'][type=\'text\']').val('');
+		$('#tab-customer input[name^=\'custom_field\'][type=\'hidden\']').val('');
+		$('#tab-customer input[name^=\'custom_field\'][type=\'radio\']').prop('checked', false);	
+		$('#tab-customer input[name^=\'custom_field\'][type=\'checkbox\']').prop('checked', false);	
+				
+		for (i in item.custom_field) {
+			$('#tab-customer select[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
+			$('#tab-customer textarea[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
+			$('#tab-customer input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(item.custom_field[i]);
+			$('#tab-customer input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(item.custom_field[i]);
+			$('#tab-customer input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + item.custom_field[i] + '\']').prop('checked', true);	
+			$('#tab-customer input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + item.custom_field[i] + '\']').prop('checked', true);		
+		}
+		
+		$('select[name=\'customer_group_id\']').trigger('change');
 		
 		html = '<option value="0"><?php echo $text_none; ?></option>'; 
 			
@@ -1091,18 +1076,6 @@ $('input[name=\'customer\']').autocomplete({
 		
 		$('select[name=\'shipping_address\']').html(html);
 		$('select[name=\'payment_address\']').html(html);
-		
-		$('select[name=\'customer_group_id\']').prop('disabled', false);
-		$('select[name=\'customer_group_id\']').prop('value', item['customer_group_id']);
-		$('select[name=\'customer_group_id\']').trigger('change');
-			
-		if (item['value']) {	
-			$('select[name=\'customer_group_id\']').prop('disabled', true); 		
-		}	
-				
-		for (i in custom_field) {
-			alert(custom_field[i]);
-		}
 	}
 });
 		
@@ -1772,7 +1745,15 @@ $('select[name=\'payment_address\']').on('change', function() {
 			$('.fa-spin').remove();
 		},		
 		success: function(json) {
-			if (json != '') {	
+			// Reset all custom fields
+			$('#tab-payment select option').prop('selected', false);
+			$('#tab-payment textarea').val('');
+			$('#tab-payment input[type=\'text\']').val('');
+			$('#tab-payment input[type=\'hidden\']').val('');
+			$('#tab-payment input[type=\'radio\']').prop('checked', false);	
+			$('#tab-payment input[type=\'checkbox\']').prop('checked', false);				
+			
+			if (json != '') {
 				$('#tab-payment input[name=\'firstname\']').attr('value', json['firstname']);
 				$('#tab-payment input[name=\'lastname\']').attr('value', json['lastname']);
 				$('#tab-payment input[name=\'company\']').attr('value', json['company']);
@@ -1784,8 +1765,17 @@ $('select[name=\'payment_address\']').on('change', function() {
 				
 				payment_zone_id = json['zone_id'];
 				
-				$('#tab-payment select[name=\'country_id\']').trigger('change');
+				for (i in json['custom_field']) {
+					$('#tab-payment select[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
+					$('#tab-payment textarea[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
+					$('#tab-payment input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(item.custom_field[i]);
+					$('#tab-payment input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(item.custom_field[i]);
+					$('#tab-payment input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + item.custom_field[i] + '\']').prop('checked', true);	
+					$('#tab-payment input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + item.custom_field[i] + '\']').prop('checked', true);		
+				}				
 			}
+			
+			$('#tab-payment select[name=\'country_id\']').trigger('change');
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -1957,6 +1947,14 @@ $('select[name=\'shipping_address\']').on('change', function() {
 			$('.fa-spin').remove();
 		},		
 		success: function(json) {
+			// Reset all custom fields
+			$('#tab-shipping select option').prop('selected', false);
+			$('#tab-shipping textarea').val('');
+			$('#tab-shipping input[type=\'text\']').val('');
+			$('#tab-shipping input[type=\'hidden\']').val('');
+			$('#tab-shipping input[type=\'radio\']').prop('checked', false);	
+			$('#tab-shipping input[type=\'checkbox\']').prop('checked', false);
+						
 			if (json != '') {	
 				$('#tab-shipping input[name=\'firstname\']').attr('value', json['firstname']);
 				$('#tab-shipping input[name=\'lastname\']').attr('value', json['lastname']);
@@ -1968,9 +1966,18 @@ $('select[name=\'shipping_address\']').on('change', function() {
 				$('#tab-shipping select[name=\'country_id\']').prop('value', json['country_id']);
 				
 				shipping_zone_id = json['zone_id'];
-			
-				$('#tab-shipping select[name=\'country_id\']').trigger('change');
+				
+				for (i in json['custom_field']) {
+					$('#tab-shipping select[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
+					$('#tab-shipping textarea[name=\'custom_field[' + i + ']\']').val(item.custom_field[i]);
+					$('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'text\']').val(item.custom_field[i]);
+					$('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'hidden\']').val(item.custom_field[i]);
+					$('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'radio\'][value=\'' + item.custom_field[i] + '\']').prop('checked', true);	
+					$('#tab-shipping input[name^=\'custom_field[' + i + ']\'][type=\'checkbox\'][value=\'' + item.custom_field[i] + '\']').prop('checked', true);		
+				}						
 			}
+			
+			$('#tab-shipping select[name=\'country_id\']').trigger('change');
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

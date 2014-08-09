@@ -684,16 +684,19 @@ class ControllerSaleOrder extends Controller {
 		// Custom Fields
 		$this->load->model('sale/custom_field');
 
-		$data['custom_fields'] = $this->model_sale_custom_field->getCustomFields();
-
-		$data['custom_field_values'] = array();
-
-		foreach ($data['product_options'] as $product_option) {
-			if ($product_option['type'] == 'select' || $product_option['type'] == 'radio' || $product_option['type'] == 'checkbox' || $product_option['type'] == 'image') {
-				if (!isset($data['option_values'][$product_option['option_id']])) {
-					$data['custom_field_values'][$product_option['option_id']] = $this->model_catalog_option->getOptionValues($product_option['option_id']);
-				}
-			}
+		$data['custom_fields'] = array();
+		
+		$custom_fields = $this->model_sale_custom_field->getCustomFields();
+		
+		foreach ($custom_fields as $custom_field) {
+			$data['custom_fields'][] = array(
+				'custom_field_id'    => $custom_field['custom_field_id'],
+				'custom_field_value' => $this->model_sale_custom_field->getCustomFieldValues($custom_field['custom_field_id']),
+				'name'               => $custom_field['name'],
+				'value'              => $custom_field['value'],
+				'type'               => $custom_field['type'],
+				'location'           => $custom_field['location']
+			);
 		}
 		
 		$this->load->model('localisation/order_status');

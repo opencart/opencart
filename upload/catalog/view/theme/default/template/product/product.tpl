@@ -452,10 +452,6 @@ $('#button-cart').on('click', function() {
 			$('.alert, .text-danger').remove();
 			
 			if (json['error']) {
-				if (json['error']['quantity']) {
-					$('#input-quantity').after('<div class="text-danger">' + json['error']['quantity'] + '</div>');
-				}
-			  
 				if (json['error']['option']) {
 					for (i in json['error']['option']) {
 						$('#input-option' + i).after('<div class="text-danger">' + json['error']['option'][i] + '</div>');

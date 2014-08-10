@@ -149,6 +149,7 @@ class ControllerApiCart extends Controller {
 				}
 								
 				$json['products'][] = array(
+					'key'        => $product['key'],
 					'product_id' => $product['product_id'],
 					'name'       => $product['name'],
 					'model'      => $product['model'], 

@@ -284,7 +284,7 @@ class ControllerCheckoutCart extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['product_id'])) {
-			$product_id = $this->request->post['product_id'];
+			$product_id = (int)$this->request->post['product_id'];
 		} else {
 			$product_id = 0;
 		}
@@ -294,8 +294,10 @@ class ControllerCheckoutCart extends Controller {
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
 		if ($product_info) {
-			if (!isset($this->request->post['quantity']) || empty($this->request->post['quantity']) || $this->request->post['quantity'] < 1) {
-				$json['error']['quantity'] = $this->language->get('error_quantity');
+			if (isset($this->request->post['quantity'])) {
+				$quantity = (int)$this->request->post['quantity'];
+			} else {
+				$quantity = 1;
 			}
 
 			if (isset($this->request->post['option'])) {
@@ -421,7 +423,7 @@ class ControllerCheckoutCart extends Controller {
 		if (isset($this->request->post['key'])) {
 			$this->cart->remove($this->request->post['key']);
 
-			unset($this->session->data['vouchers']);
+			unset($this->session->data['vouchers'][$this->request->post['key']]);
 
 			$this->session->data['success'] = $this->language->get('text_remove');
 

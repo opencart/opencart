@@ -11,12 +11,12 @@
       <div id="progress-bar" class="progress-bar progress-bar-success" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">0%</div>
     </div>
     <form class="form-horizontal">
-      <ul class="nav nav-tabs nav-justified">
-        <li class="active"><a href="#tab-customer">1. <?php echo $tab_customer; ?></a></li>
-        <li class="disabled"><a href="#tab-cart">2. <?php echo $tab_product; ?></a></li>
-        <li class="disabled"><a href="#tab-payment">3. <?php echo $tab_payment; ?></a></li>
-        <li class="disabled"><a href="#tab-shipping">4. <?php echo $tab_shipping; ?></a></li>
-        <li class="disabled"><a href="#tab-total">5. <?php echo $tab_total; ?></a></li>
+      <ul id="order" class="nav nav-tabs nav-justified">
+        <li class="active"><a href="#tab-customer" data-toggle="tab">1. <?php echo $tab_customer; ?></a></li>
+        <li class="disabled"><a href="#tab-cart" data-toggle="tab">2. <?php echo $tab_product; ?></a></li>
+        <li class="disabled"><a href="#tab-payment" data-toggle="tab">3. <?php echo $tab_payment; ?></a></li>
+        <li class="disabled"><a href="#tab-shipping" data-toggle="tab">4. <?php echo $tab_shipping; ?></a></li>
+        <li class="disabled"><a href="#tab-total" data-toggle="tab">5. <?php echo $tab_total; ?></a></li>
       </ul>
       <div class="tab-content">
         <div class="tab-pane active" id="tab-customer">
@@ -321,7 +321,7 @@
           <br />
           <div class="row">
             <div class="col-sm-6 text-left">
-              <button type="button" id="button-back" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
+              <button type="button" onclick="$('a[href=\'#tab-customer\']').tab('show');" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
             </div>
             <div class="col-sm-6 text-right">
               <button type="button" id="button-cart" class="btn btn-primary"><i class="fa fa-arrow-right"></i> <?php echo $button_continue; ?></button>
@@ -532,7 +532,7 @@
           <?php } ?>
           <div class="row">
             <div class="col-sm-6 text-left">
-              <button type="button" id="button-back" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
+              <button type="button" onclick="$('a[href=\'#tab-product\']').tab('show');" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
             </div>
             <div class="col-sm-6 text-right">
               <button type="button" id="button-payment-address" class="btn btn-primary"><i class="fa fa-arrow-right"></i> <?php echo $button_continue; ?></button>
@@ -743,7 +743,7 @@
           <?php } ?>
           <div class="row">
             <div class="col-sm-6 text-left">
-              <button type="button" id="button-back" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
+              <button type="button" onclick="$('a[href=\'#tab-payment\']').tab('show');" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
             </div>
             <div class="col-sm-6 text-right">
               <button type="button" id="button-shipping-address" class="btn btn-primary"><i class="fa fa-arrow-right"></i> <?php echo $button_continue; ?></button>
@@ -862,7 +862,7 @@
           </fieldset>
           <div class="row">
             <div class="col-sm-6 text-left">
-              <button type="button" id="button-back" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
+              <button type="button" onclick="$('select[name=\'shipping_method\']').prop('disabled') ? $('a[href=\'#tab-shipping\']').tab('show') : $('a[href=\'#tab-payment\']').tab('show');" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
             </div>
             <div class="col-sm-6 text-right">
               <button type="button" id="button-refresh" class="btn btn-warning"><i class="fa fa-refresh"></i></button> <button type="button" id="button-save" class="btn btn-primary"><i class="fa fa-check-circle"></i> <?php echo $button_save; ?></button>
@@ -875,8 +875,8 @@
 </div>
 <script type="text/javascript"><!--
 // Disable the tabs
-$('.nav-tabs a').on('click', function (e) {
-	e.preventDefault();
+$('#order a[data-toggle=\'tab\']').on('click', function(e) {
+	return false;
 });
 
 // Add all products to the cart using the api
@@ -1240,13 +1240,7 @@ $('#button-customer').on('click', function() {
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
 				
-				$('a[href=\'#tab-customer\']').parent().removeClass('active');
-				$('a[href=\'#tab-customer\']').parent().addClass('disabled');
-				$('#tab-customer').removeClass('active');
-				
-				$('a[href=\'#tab-cart\']').parent().removeClass('disabled');
-				$('a[href=\'#tab-cart\']').parent().addClass('active');
-				$('#tab-cart').addClass('active');		
+				$('a[href=\'#tab-cart\']').tab('show');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -1586,13 +1580,7 @@ $('#button-voucher-add').on('click', function() {
 });
 
 $('#button-cart').on('click', function() {
-	$('a[href=\'#tab-cart\']').parent().removeClass('active');
-	$('a[href=\'#tab-cart\']').parent().addClass('disabled');
-	$('#tab-cart').removeClass('active');
-	
-	$('a[href=\'#tab-payment\']').parent().removeClass('disabled');
-	$('a[href=\'#tab-payment\']').parent().addClass('active');
-	$('#tab-payment').addClass('active');
+	$('a[href=\'#tab-payment\']').tab('show');
 });
 				
 // Payment Address
@@ -1782,20 +1770,12 @@ $('#button-payment-address').on('click', function() {
 				
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
-				
-				$('a[href=\'#tab-payment\']').parent().removeClass('active');
-				$('a[href=\'#tab-payment\']').parent().addClass('disabled');
-				$('#tab-payment').removeClass('active');
-				
+								
 				// If shipping required got to shipping tab else total tabs
-				if (!$('select[name=\'shipping_method\']').prop('disabled')) {
-					$('a[href=\'#tab-shipping\']').parent().removeClass('disabled');
-					$('a[href=\'#tab-shipping\']').parent().addClass('active');
-					$('#tab-shipping').addClass('active');				
+				if ($('select[name=\'shipping_method\']').prop('disabled')) {
+					$('a[href=\'#tab-total\']').tab('show');		
 				} else {
-					$('a[href=\'#tab-total\']').parent().removeClass('disabled');
-					$('a[href=\'#tab-total\']').parent().addClass('active');
-					$('#tab-total').addClass('active');					
+					$('a[href=\'#tab-shipping\']').tab('show');							
 				}
 			}
 		},
@@ -2003,14 +1983,8 @@ $('#button-shipping-address').on('click', function() {
 				
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
-				
-				$('a[href=\'#tab-shipping\']').parent().removeClass('active');
-				$('a[href=\'#tab-shipping\']').parent().addClass('disabled');
-				$('#tab-shipping').removeClass('active');
-				
-				$('a[href=\'#tab-total\']').parent().removeClass('disabled');
-				$('a[href=\'#tab-total\']').parent().addClass('active');
-				$('#tab-total').addClass('active');								
+								
+				$('a[href=\'#tab-total\']').tab('show');							
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

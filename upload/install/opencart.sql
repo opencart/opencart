@@ -3145,7 +3145,7 @@ CREATE TABLE `oc_review` (
 -- Table structure for table `oc_setting`
 --
 DROP TABLE IF EXISTS `oc_setting`;
-CREATE TABLE IF NOT EXISTS `oc_setting` (
+CREATE TABLE `oc_setting` (
   `setting_id` int(11) NOT NULL AUTO_INCREMENT,
   `store_id` int(11) NOT NULL DEFAULT '0',
   `group` varchar(32) NOT NULL,

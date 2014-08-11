@@ -90,7 +90,9 @@ class ControllerApiCart extends Controller {
 			// Remove
 			if (isset($this->request->post['key'])) {
 				$this->cart->remove($this->request->post['key']);
-	
+				
+				unset($this->session->data['vouchers'][$this->request->post['key']]);
+				
 				$json['success'] = $this->language->get('text_success');
 	
 				unset($this->session->data['shipping_method']);

@@ -735,7 +735,7 @@ class ControllerSaleOrder extends Controller {
 			$data['order_vouchers'] = array();
 			$data['order_totals'] = array();
 
-			$data['order_status_id'] = '';
+			$data['order_status_id'] = $this->config->get('config_order_status_id');
 			
 			$data['comment'] = '';
 			$data['affiliate_id'] = '';

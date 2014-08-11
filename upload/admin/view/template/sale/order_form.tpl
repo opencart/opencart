@@ -927,7 +927,7 @@ $('#button-refresh').on('click', function() {
 					html += '  <td class="text-right">' + product['quantity'] + '</td>';
 					html += '  <td class="text-right">' + product['price'] + '</td>';
 					html += '  <td class="text-right">' + product['total'] + '</td>';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" id="" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+					html += '  <td class="text-center" style="width: 3px;"><button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger button-remove"><i class="fa fa-minus-circle"></i></button></td>';
 					html += '</tr>';
 					
 					if (product['shipping'] != 0) {
@@ -957,7 +957,7 @@ $('#button-refresh').on('click', function() {
 					html += '  <td class="text-right">1</td>';
 					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
 					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" onclick="$(\'#voucher-row' + i + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+					html += '  <td class="text-center" style="width: 3px;"><button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger button-remove"><i class="fa fa-minus-circle"></i></button></td>';
 					html += '</tr>';	
 				}
 			}
@@ -1492,23 +1492,21 @@ $('#button-product-add').on('click', function() {
 	});				
 });
 
-$('#tab-cart').delegate('#button-product-remove', 'click', function() {
+$('#tab-cart').delegate('.button-remove', 'click', function() {
 	var node = this;
-	
-	alert('hi');
 	
 	$.ajax({
 		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/remove&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
-		data: 'key=' + $(node).parent().parent().find('input[name=\'key\']').remove(),
+		data: 'key=' + $(node).parent().parent().find('input[name=\'key\']').val(),
 		dataType: 'json',
 		beforeSend: function() {
 			$(node).find('i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-			$(node).find('i').prop('disabled', true);
+			$(node).prop('disabled', true);
 		},
 		complete: function() {
 			$(node).find('i').replaceWith('<i class="fa fa-minus-circle"></i>');
-			$(node).find('i').prop('disabled', false);
+			$(node).prop('disabled', false);
 		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();
@@ -1577,39 +1575,6 @@ $('#button-voucher-add').on('click', function() {
 				$('textarea[name=\'message\']').attr('value', '');	
 				$('input[name=\'amount\']').attr('value', '<?php echo addslashes($voucher_min); ?>');
 				
-				// Refresh products, vouchers and totals
-				$('#button-refresh').trigger('click');
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});				
-});
-
-$('#tab-cart').delegate('#button-voucher-remove', 'click', function() {
-	var node = this;
-	
-	$.ajax({
-		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/voucher/remove&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-		type: 'post',
-		data: 'key=' + $(node).parent().parent().find('input[name=\'key\']').remove(),
-		dataType: 'json',
-		beforeSend: function() {
-			$(node).find('i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-			$(node).find('i').prop('disabled', true);
-		},
-		complete: function() {
-			$(node).find('i').replaceWith('<i class="fa fa-minus-circle"></i>');
-			$(node).find('i').prop('disabled', false);
-		},
-		success: function(json) {
-			$('.alert, .text-danger').remove();
-		
-			// Check for errors
-			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			} else {
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
 			}

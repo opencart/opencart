@@ -513,12 +513,12 @@ class ControllerSaleOrder extends Controller {
 					$data['error_warning'] = curl_error($curl) . ' (' . curl_errno($curl) . ')';
 				} else {
 					$json = json_decode($response, true);
-				}			
+				}
+				
+				if (isset($json['cookie'])) {
+					$this->session->data['cookie'] = $json['cookie'];	
+				}				
 			}
-		}
-		
-		if (isset($json['cookie'])) {
-			$this->session->data['cookie'] = $json['cookie'];	
 		}
 		
 		if (!$this->user->hasPermission('modify', 'sale/order')) {
@@ -537,7 +537,7 @@ class ControllerSaleOrder extends Controller {
 			$data['email'] = $order_info['email'];
 			$data['telephone'] = $order_info['telephone'];
 			$data['fax'] = $order_info['fax'];
-			$data['account_custom_field'] = unserialize($order_info['custom_field']);
+			$data['account_custom_field'] = $order_info['custom_field'];
 			
 			$this->load->model('sale/customer');
 			
@@ -576,13 +576,17 @@ class ControllerSaleOrder extends Controller {
 			foreach ($order_products as $order_product) {
 				$data['order_products'][] = array(
 					'product_id' => $order_product['product_id'],
+					'name'       => $order_product['name'],
+					'model'      => $order_product['model'],
 					'option'     => $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $order_product['order_product_id']),
-					'quantity'   => $order_product['quantity']
+					'quantity'   => $order_product['quantity'],
+					'price'      => $order_product['price'],
+					'total'      => $order_product['total']
 				);
 			}
-		
+			
 			$data['order_vouchers'] = $this->model_sale_order->getOrderVouchers($this->request->get['order_id']);
-
+			
 			$data['coupon'] = '';
 			$data['voucher'] = '';
 			$data['reward'] = '';	

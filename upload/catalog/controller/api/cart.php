@@ -181,18 +181,7 @@ class ControllerApiCart extends Controller {
 					);
 				}
 			}
-		}
-		
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));		
-	}
-	
-	function totals() {
-		$json = array();		
-		
-		if (!isset($this->session->data['api_id'])) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {
+			
 			// Totals
 			$this->load->model('setting/extension');
 	

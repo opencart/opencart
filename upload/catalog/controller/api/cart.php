@@ -48,12 +48,7 @@ class ControllerApiCart extends Controller {
 					}
 				} else {
 					$json['error']['store'] = $this->language->get('error_store');
-				}
-				
-				// Stock
-				if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
-					$json['error']['stock'] = $this->language->get('error_stock');
-				}				
+				}			
 			}
 		}
 		
@@ -117,7 +112,12 @@ class ControllerApiCart extends Controller {
 		
 		if (!isset($this->session->data['api_id'])) {
 			$json['error']['warning'] = $this->language->get('error_permission');
-		} else {		
+		} else {
+			// Stock
+			if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
+				$json['error']['stock'] = $this->language->get('error_stock');
+			}			
+					
 			// Products
 			$json['products'] = array();
 			
@@ -181,7 +181,7 @@ class ControllerApiCart extends Controller {
 					);
 				}
 			}
-			
+				
 			// Totals
 			$this->load->model('setting/extension');
 	

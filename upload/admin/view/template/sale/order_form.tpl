@@ -12,11 +12,11 @@
     </div>
     <form class="form-horizontal">
       <ul class="nav nav-tabs nav-justified">
-        <li class="active"><a href="#tab-customer" data-toggle="tab">1. <?php echo $tab_customer; ?></a></li>
-        <li class="disabled"><a href="#tab-cart" data-toggle="tab">2. <?php echo $tab_product; ?></a></li>
-        <li class="disabled"><a href="#tab-payment" data-toggle="tab">3. <?php echo $tab_payment; ?></a></li>
-        <li class="disabled"><a href="#tab-shipping" data-toggle="tab">4. <?php echo $tab_shipping; ?></a></li>
-        <li class="disabled"><a href="#tab-total" data-toggle="tab">5. <?php echo $tab_total; ?></a></li>
+        <li class="active"><a href="#tab-customer">1. <?php echo $tab_customer; ?></a></li>
+        <li class="disabled"><a href="#tab-cart">2. <?php echo $tab_product; ?></a></li>
+        <li class="disabled"><a href="#tab-payment">3. <?php echo $tab_payment; ?></a></li>
+        <li class="disabled"><a href="#tab-shipping">4. <?php echo $tab_shipping; ?></a></li>
+        <li class="disabled"><a href="#tab-total">5. <?php echo $tab_total; ?></a></li>
       </ul>
       <div class="tab-content">
         <div class="tab-pane active" id="tab-customer">
@@ -1787,9 +1787,16 @@ $('#button-payment-address').on('click', function() {
 				$('a[href=\'#tab-payment\']').parent().addClass('disabled');
 				$('#tab-payment').removeClass('active');
 				
-				$('a[href=\'#tab-shipping\']').parent().removeClass('disabled');
-				$('a[href=\'#tab-shipping\']').parent().addClass('active');
-				$('#tab-shipping').addClass('active');				
+				// If shipping required got to shipping tab else total tabs
+				if (!$('select[name=\'shipping_method\']').prop('disabled')) {
+					$('a[href=\'#tab-shipping\']').parent().removeClass('disabled');
+					$('a[href=\'#tab-shipping\']').parent().addClass('active');
+					$('#tab-shipping').addClass('active');				
+				} else {
+					$('a[href=\'#tab-total\']').parent().removeClass('disabled');
+					$('a[href=\'#tab-total\']').parent().addClass('active');
+					$('#tab-total').addClass('active');					
+				}
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

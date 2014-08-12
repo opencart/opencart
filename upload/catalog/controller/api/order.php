@@ -305,7 +305,14 @@ class ControllerApiOrder extends Controller {
 	
 			$json['order_id'] = $this->model_checkout_order->addOrder($order_data);
 			
-			//$this->model_checkout_order->addHistory($order_data);
+			// Set the order history 
+			if (isset($this->request->post['order_status_id'])) {
+				$order_status_id = $this->request->post['order_status_id'];
+			} else {
+				$order_status_id = $this->config->get('config_order_status_id');
+			}
+			
+			$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
 			
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -595,7 +602,14 @@ class ControllerApiOrder extends Controller {
 					
 					$this->model_checkout_order->editOrder($order_id, $order_data);
 					
-					//$this->model_checkout_order->addHistory($order_data);
+					// Set the order history
+					if (isset($this->request->post['order_status_id'])) {
+						$order_status_id = $this->request->post['order_status_id'];
+					} else {
+						$order_status_id = $this->config->get('config_order_status_id');
+					}					
+					
+					$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
 					
 					$json['success'] = $this->language->get('text_success');
 				}

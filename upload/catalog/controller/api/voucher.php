@@ -102,21 +102,4 @@ class ControllerApiVoucher extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));		
 	}
-	
-	public function remove() {
-		$this->load->language('api/voucher');
-
-		$json = array();
-		
-		if (!isset($this->session->data['api_id'])) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {			
-			unset($this->session->data['vouchers'][$this->request->post['key']]);
-			
-			$json['success'] = $this->language->get('text_cart');
-		}
-		
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));		
-	}
 }

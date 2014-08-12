@@ -28,6 +28,15 @@ $(document).ready(function() {
 		$("form[id*='form-']").submit();
 	});
 
+	// Highlight any found errors
+	$('.text-danger').each(function() {
+		var element = $(this).parent().parent();
+		
+		if (element.hasClass('form-group')) {
+			element.addClass('has-error');
+		}
+	});
+
 	// Set last page opened on the menu
 	$('#menu a[href]').on('click', function() {
 		sessionStorage.setItem('menu', $(this).attr('href'));

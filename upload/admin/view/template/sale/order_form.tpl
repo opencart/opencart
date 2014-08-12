@@ -7,11 +7,8 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div class="progress">
-      <div id="progress-bar" class="progress-bar progress-bar-success" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">0%</div>
-    </div>
     <form class="form-horizontal">
-      <ul class="nav nav-tabs nav-justified">
+      <ul id="order" class="nav nav-tabs nav-justified">
         <li class="active"><a href="#tab-customer" data-toggle="tab">1. <?php echo $tab_customer; ?></a></li>
         <li class="disabled"><a href="#tab-cart" data-toggle="tab">2. <?php echo $tab_product; ?></a></li>
         <li class="disabled"><a href="#tab-payment" data-toggle="tab">3. <?php echo $tab_payment; ?></a></li>
@@ -230,51 +227,9 @@
                 </tr>
               </thead>
               <tbody id="cart">
-                <?php foreach ($order_products as $order_product) { ?>
-                <tr>
-                  <td class="text-left"><?php echo $order_product['name']; ?><br /><input type="hidden" name="product_id" value="<?php echo $order_product['product_id']; ?>" />
-                    <input type="hidden" name="quantity" value="<?php echo $order_product['quantity']; ?>" />
-                    <?php foreach ($order_product['option'] as $option) { ?>
-                    - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
-                    <?php if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'image') { ?>
-                    <input type="hidden" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['product_option_value_id']; ?>" />
-                    <?php } ?>
-                    <?php if ($option['type'] == 'checkbox') { ?>
-                    <input type="hidden" name="option[<?php echo $option['product_option_id']; ?>][]" value="<?php echo $option['product_option_value_id']; ?>" />
-                    <?php } ?>
-                    <?php if ($option['type'] == 'text' || $option['type'] == 'textarea' || $option['type'] == 'file' || $option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') { ?>
-                    <input type="hidden" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" />
-                    <?php } ?>
-                    <?php } ?></td>
-                  <td class="text-left"><?php echo $order_product['model']; ?></td>
-                  <td class="text-right"><?php echo $order_product['quantity']; ?></td>
-                  <td class="text-right"><?php echo $order_product['price']; ?></td>
-                  <td class="text-right"><?php echo $order_product['total']; ?></td>
-                  <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#product-row').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
-                </tr>
-                <?php } ?>
-                <?php foreach ($order_vouchers as $order_voucher) { ?>
-                <tr>
-                  <td class="text-left"><input type="hidden" name="from_name" value="<?php echo $order_voucher['from_name']; ?>" />
-                    <input type="hidden" name="from_email" value="<?php echo $order_voucher['from_email']; ?>" />
-                    <input type="hidden" name="to_name" value="<?php echo $order_voucher['to_name']; ?>" />
-                    <input type="hidden" name="to_email" value="<?php echo $order_voucher['to_email']; ?>" />
-                    <input type="hidden" name="voucher_theme_id" value="<?php echo $order_voucher['voucher_theme_id']; ?>" />
-                    <input type="hidden" name="message" value="<?php echo $order_voucher['message']; ?>" />
-                    <input type="hidden" name="amount" value="<?php echo $order_voucher['amount']; ?>" /></td>
-                  <td class="text-left"></td>
-                  <td class="text-right"></td>
-                  <td class="text-right"></td>
-                  <td class="text-right"></td>
-                  <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#voucher-row').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
-                </tr>
-                <?php $voucher_row++; ?>
-                <?php } ?>
-                <?php if (!$order_products && !$order_vouchers) { ?>
                 <tr>
                   <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
                 </tr>
-                <?php } ?>
               </tbody>
             </table>
           </div>
@@ -363,7 +318,7 @@
           <br />
           <div class="row">
             <div class="col-sm-6 text-left">
-              <button type="button" id="button-back" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
+              <button type="button" onclick="$('a[href=\'#tab-customer\']').tab('show');" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
             </div>
             <div class="col-sm-6 text-right">
               <button type="button" id="button-cart" class="btn btn-primary"><i class="fa fa-arrow-right"></i> <?php echo $button_continue; ?></button>
@@ -574,7 +529,7 @@
           <?php } ?>
           <div class="row">
             <div class="col-sm-6 text-left">
-              <button type="button" id="button-back" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
+              <button type="button" onclick="$('a[href=\'#tab-cart\']').tab('show');" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
             </div>
             <div class="col-sm-6 text-right">
               <button type="button" id="button-payment-address" class="btn btn-primary"><i class="fa fa-arrow-right"></i> <?php echo $button_continue; ?></button>
@@ -785,7 +740,7 @@
           <?php } ?>
           <div class="row">
             <div class="col-sm-6 text-left">
-              <button type="button" id="button-back" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
+              <button type="button" onclick="$('a[href=\'#tab-payment\']').tab('show');" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
             </div>
             <div class="col-sm-6 text-right">
               <button type="button" id="button-shipping-address" class="btn btn-primary"><i class="fa fa-arrow-right"></i> <?php echo $button_continue; ?></button>
@@ -904,7 +859,7 @@
           </fieldset>
           <div class="row">
             <div class="col-sm-6 text-left">
-              <button type="button" id="button-back" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
+              <button type="button" onclick="$('select[name=\'shipping_method\']').prop('disabled') ? $('a[href=\'#tab-payment\']').tab('show') : $('a[href=\'#tab-shipping\']').tab('show');" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
             </div>
             <div class="col-sm-6 text-right">
               <button type="button" id="button-refresh" class="btn btn-warning"><i class="fa fa-refresh"></i></button> <button type="button" id="button-save" class="btn btn-primary"><i class="fa fa-check-circle"></i> <?php echo $button_save; ?></button>
@@ -917,40 +872,165 @@
 </div>
 <script type="text/javascript"><!--
 // Disable the tabs
-$('.nav-tabs a').on('click', function (e) {
-	e.preventDefault();
+$('#order a[data-toggle=\'tab\']').on('click', function(e) {
+	return false;
 });
 
 // Add all products to the cart using the api
-$('#tab-cart tbody tr').each(function(index, element) {
+$('#button-refresh').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/add&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-		type: 'post',
-		data: $(element).find('input'),
+		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/products&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		dataType: 'json',
 		success: function(json) {
-			//$('.alert, .text-danger').remove();
-		},
+			$('.alert, .text-danger').remove();
+			
+			// Check for errors
+			if (json['error']) {
+				if (json['error']['warning']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+									
+				if (json['error']['stock']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['stock'] + '</div>');
+				}
+								
+				if (json['error']['minimum']) {
+					for (i in json['error']['minimum']) {
+						$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['minimum'][i] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					}
+				}
+			}				
+			
+			var shipping = false;
+			
+			html = '';
+			
+			if (json['products']) {
+				for (i = 0; i < json['products'].length; i++) {
+					product = json['products'][i];
+					
+					html += '<tr>';
+					html += '  <td class="text-left">' + product['name'] + ' ' + (!product['stock'] ? '<span class="text-danger">***</span>' : '') + '<br />';
+					
+					if (product['option']) {
+						for (j = 0; j < product['option'].length; j++) {
+							html += '  - <small>' + product['option'][j]['name'] + ': ' + product['option'][j]['value'] + '</small><br />';
+						}
+					}
+					
+					html += '  <input type="hidden" name="key" value="' + product['key'] + '" /></td>';
+					
+					html += '  <td class="text-left">' + product['model'] + '</td>';
+					html += '  <td class="text-right">' + product['quantity'] + '</td>';
+					html += '  <td class="text-right">' + product['price'] + '</td>';
+					html += '  <td class="text-right">' + product['total'] + '</td>';
+					html += '  <td class="text-center" style="width: 3px;"><button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+					html += '</tr>';
+					
+					if (product['shipping'] != 0) {
+						shipping = true;
+					}
+				}
+			} 
+			
+			if (!shipping) {
+				$('select[name=\'shipping_method\'] option').removeAttr('selected');
+				$('select[name=\'shipping_method\']').prop('disabled', true);
+				$('#button-shipping-method').prop('disabled', true);
+			} else {
+				$('select[name=\'shipping_method\']').prop('disabled', false);
+				$('#button-shipping-method').prop('disabled', false);				
+			}
+					
+			if (json['vouchers']) {
+				 for (i in json['vouchers']) {
+					voucher = json['vouchers'][i];
+					 
+					html += '<tr>';
+					html += '  <td class="text-left">' + voucher['description'];
+
+					html += '  <input type="hidden" name="key" value="' + voucher['code'] + '" /></td>';
+					html += '  <td class="text-left"></td>';
+					html += '  <td class="text-right">1</td>';
+					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
+					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
+					html += '  <td class="text-center" style="width: 3px;"><button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+					html += '</tr>';	
+				}
+			}
+			
+			if (json['products'] == '' && json['vouchers'] == '') {				
+				html += '<tr>';
+				html += '  <td colspan="6" class="text-center"><?php echo $text_no_results; ?></td>';
+				html += '</tr>';	
+			}
+
+			$('#cart').html(html);
+
+			// Totals
+			html = '';
+			
+			if (json['products']) {
+				for (i = 0; i < json['products'].length; i++) {
+					product = json['products'][i];
+					
+					html += '<tr>';
+					html += '  <td class="text-left">' + product['name'] + ' ' + (!product['stock'] ? '<span class="text-danger">***</span>' : '') + '<br />';
+					
+					if (product['option']) {
+						for (j = 0; j < product['option'].length; j++) {
+							option = product['option'][j];
+							
+							html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
+						}
+					}
+					
+					html += '  </td>';
+					html += '  <td class="text-left">' + product['model'] + '</td>';
+					html += '  <td class="text-right">' + product['quantity'] + '</td>';
+					html += '  <td class="text-right">' + product['price'] + '</td>';
+					html += '  <td class="text-right">' + product['total'] + '</td>';
+					html += '</tr>';
+				}				
+			}
+			
+			if (json['vouchers']) {
+				for (i in json['vouchers']) {
+					voucher = json['vouchers'][i];
+					 
+					html += '<tr>';
+					html += '  <td class="text-left">' + voucher['description'] + '</td>';
+					html += '  <td class="text-left"></td>';
+					html += '  <td class="text-right">1</td>';
+					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
+					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
+					html += '</tr>';	
+				}	
+			}
+			
+			if (json['totals']) {
+				for (i in json['totals']) {
+					total = json['totals'][i];
+					
+					html += '<tr>';
+					html += '  <td class="text-right" colspan="4">' + total['title'] + ':</td>';
+					html += '  <td class="text-right">' + total['text'] + '</td>';
+					html += '</tr>';
+				}
+			}
+			
+			if (!json['totals'] && !json['products'] && !json['vouchers']) {				
+				html += '<tr>';
+				html += '  <td colspan="5" class="text-center"><?php echo $text_no_results; ?></td>';
+				html += '</tr>';	
+			}
+						
+			$('#total').html(html);			
+		},	
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
-	});	
-});	
-				
-// Add all vouchers to the cart using the api
-$('#tab-cart tbody tr').each(function(index, element) {
-	$.ajax({
-		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/voucher/add&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-		type: 'post',
-		data: $(element).find('input'),
-		dataType: 'json',
-		success: function(json) {
-			//$('.alert, .text-danger').remove();
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});	
+	});
 });
 
 $('#content').delegate('.button-upload', 'click', function() {
@@ -1126,7 +1206,8 @@ $('#button-customer').on('click', function() {
 		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();
-
+			$('.form-group').removeClass('has-error');
+			
 			if (json['error']) {
 				if (json['error']['warning']) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
@@ -1152,18 +1233,21 @@ $('#button-customer').on('click', function() {
 					for (i in json['error']['custom_field']) {
 						$('#input-custom-field' + i).after('<div class="text-danger">' + json['error']['custom_field'][i] + '</div>');
 					}
-				}					
+				}	
+				
+				// Highlight any found errors
+				$('.text-danger').each(function() {
+					var element = $(this).parent().parent();
+					
+					if (element.hasClass('form-group')) {
+						element.addClass('has-error');
+					}
+				});								
 			} else {
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
 				
-				$('a[href=\'#tab-customer\']').parent().removeClass('active');
-				$('a[href=\'#tab-customer\']').parent().addClass('disabled');
-				$('#tab-customer').removeClass('active');
-				
-				$('a[href=\'#tab-cart\']').parent().removeClass('disabled');
-				$('a[href=\'#tab-cart\']').parent().addClass('active');
-				$('#tab-cart').addClass('active');		
+				$('a[href=\'#tab-cart\']').tab('show');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -1367,156 +1451,6 @@ $('input[name=\'product\']').autocomplete({
 	}	
 });
 
-$('#button-refresh').on('click', function() {
-	$.ajax({
-		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/products&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-		dataType: 'json',
-		success: function(json) {
-			var shipping = false;
-			
-			// Check for errors
-			if (json['error']) {
-				if (json['error']['warning']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}
-				
-				if (json['error']['minimum']) {
-					for (i in json['error']['minimum']) {
-						$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['minimum'][i] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-					}
-				}
-			}				
-			
-			html = '';
-			
-			if (json['products']) {
-				for (i = 0; i < json['products'].length; i++) {
-					product = json['products'][i];
-					
-					html += '<tr>';
-					html += '  <td class="text-left">' + product['name'] + ' ' + (!product['stock'] ? '<span class="text-danger">***</span>' : '') + '<br />';
-					
-					if (product['option']) {
-						for (j = 0; j < product['option'].length; j++) {
-							html += '  - <small>' + product['option'][j]['name'] + ': ' + product['option'][j]['value'] + '</small><br />';
-						}
-					}
-					
-					html += '  <input type="hidden" name="key" value="' + product['key'] + '" /></td>';
-					
-					html += '  <td class="text-left">' + product['model'] + '</td>';
-					html += '  <td class="text-right">' + product['quantity'] + '</td>';
-					html += '  <td class="text-right">' + product['price'] + '</td>';
-					html += '  <td class="text-right">' + product['total'] + '</td>';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" onclick="$(\'#product-row' + i + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
-					html += '</tr>';
-					
-					if (product['shipping'] != 0) {
-						shipping = true;
-					}
-				}
-			} 
-			
-			if (!shipping) {
-				$('select[name=\'shipping_method\'] option').removeAttr('selected');
-				$('select[name=\'shipping_method\']').prop('disabled', true);
-				$('#button-shipping-method').prop('disabled', true);
-			} else {
-				$('select[name=\'shipping_method\']').prop('disabled', false);
-				$('#button-shipping-method').prop('disabled', false);				
-			}
-					
-			if (json['vouchers']) {
-				 for (i in json['vouchers']) {
-					voucher = json['vouchers'][i];
-					 
-					html += '<tr>';
-					html += '  <td class="text-left">' + voucher['description'];
-
-					html += '  <input type="hidden" name="key" value="' + voucher['code'] + '" /></td>';
-					html += '  <td class="text-left"></td>';
-					html += '  <td class="text-right">1</td>';
-					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
-					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" onclick="$(\'#voucher-row' + i + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
-					html += '</tr>';	
-				}
-			}
-			
-			if (json['products'] == '' && json['vouchers'] == '') {				
-				html += '<tr>';
-				html += '  <td colspan="6" class="text-center"><?php echo $text_no_results; ?></td>';
-				html += '</tr>';	
-			}
-
-			$('#cart').html(html);
-
-			// Totals
-			html = '';
-			
-			if (json['products']) {
-				for (i = 0; i < json['products'].length; i++) {
-					product = json['products'][i];
-					
-					html += '<tr>';
-					html += '  <td class="text-left">' + product['name'] + ' ' + (!product['stock'] ? '<span class="text-danger">***</span>' : '') + '<br />';
-					
-					if (product['option']) {
-						for (j = 0; j < product['option'].length; j++) {
-							option = product['option'][j];
-							
-							html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
-						}
-					}
-					
-					html += '  </td>';
-					html += '  <td class="text-left">' + product['model'] + '</td>';
-					html += '  <td class="text-right">' + product['quantity'] + '</td>';
-					html += '  <td class="text-right">' + product['price'] + '</td>';
-					html += '  <td class="text-right">' + product['total'] + '</td>';
-					html += '</tr>';
-				}				
-			}
-			
-			if (json['vouchers']) {
-				for (i in json['vouchers']) {
-					voucher = json['vouchers'][i];
-					 
-					html += '<tr>';
-					html += '  <td class="text-left">' + voucher['description'] + '</td>';
-					html += '  <td class="text-left"></td>';
-					html += '  <td class="text-right">1</td>';
-					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
-					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
-					html += '</tr>';	
-				}	
-			}
-			
-			if (json['totals']) {
-				for (i in json['totals']) {
-					total = json['totals'][i];
-					
-					html += '<tr>';
-					html += '  <td class="text-right" colspan="4">' + total['title'] + ':</td>';
-					html += '  <td class="text-right">' + total['text'] + '</td>';
-					html += '</tr>';
-				}
-			}
-			
-			if (!json['totals'] && !json['products'] && !json['vouchers']) {				
-				html += '<tr>';
-				html += '  <td colspan="5" class="text-center"><?php echo $text_no_results; ?></td>';
-				html += '</tr>';	
-			}
-						
-			$('#total').html(html);			
-		},	
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
-
 $('#button-product-add').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/add&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
@@ -1533,6 +1467,7 @@ $('#button-product-add').on('click', function() {
 		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 		
 			if (json['error']) {
 				if (json['error']['warning']) {
@@ -1544,20 +1479,19 @@ $('#button-product-add').on('click', function() {
 						$('#input-option' + i).after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
 					}
 				}
-									
-				if (json['error']['stock']) {
-					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['stock'] + '</div>');
-				}
 				
-				if (json['error']['product']['store']) {
+				if (json['error']['store']) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['store'] + '</div>');
-				}	
-															
-				if (json['error']['minimum']) {	
-					for (i in json['error']['minimum']) {
-						$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['minimum'][i] + '</div>');
-					}						
 				}
+
+				// Highlight any found errors
+				$('.text-danger').each(function() {
+					var element = $(this).parent().parent();
+					
+					if (element.hasClass('form-group')) {
+						element.addClass('has-error');
+					}
+				});					
 			} else {
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -1569,21 +1503,21 @@ $('#button-product-add').on('click', function() {
 	});				
 });
 
-$('#button-product-remove').on('click', function() {
+$('#tab-cart').delegate('.btn-danger', 'click', function() {
 	var node = this;
 	
 	$.ajax({
 		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/remove&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
-		data: $('#tab-product input[type=\'text\'], #tab-product input[type=\'hidden\'], #tab-product input[type=\'radio\']:checked, #tab-product input[type=\'checkbox\']:checked, #tab-product select, #tab-product textarea'),
+		data: 'key=' + $(node).parent().parent().find('input[name=\'key\']').val(),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-product-remove i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-			$('#button-product-remove').prop('disabled', true);
+			$(node).find('i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+			$(node).prop('disabled', true);
 		},
 		complete: function() {
-			$('#button-product-remove i').replaceWith('<i class="fa fa-minus-circle"></i>');
-			$('#button-product-remove').prop('disabled', false);
+			$(node).find('i').replaceWith('<i class="fa fa-minus-circle"></i>');
+			$(node).prop('disabled', false);
 		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();
@@ -1619,6 +1553,7 @@ $('#button-voucher-add').on('click', function() {
 		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 		
 			if (json['error']) {
 				if (json['error']['warning']) {
@@ -1643,7 +1578,16 @@ $('#button-voucher-add').on('click', function() {
 				
 				if (json['error']['amount']) {
 					$('input[name=\'amount\']').after('<div class="text-danger">' + json['error']['amount'] + '</div>');
-				}	
+				}
+
+				// Highlight any found errors
+				$('.text-danger').each(function() {
+					var element = $(this).parent().parent();
+					
+					if (element.hasClass('form-group')) {
+						element.addClass('has-error');
+					}
+				});					
 			} else {
 				$('input[name=\'from_name\']').attr('value', '');	
 				$('input[name=\'from_email\']').attr('value', '');	
@@ -1652,37 +1596,15 @@ $('#button-voucher-add').on('click', function() {
 				$('textarea[name=\'message\']').attr('value', '');	
 				$('input[name=\'amount\']').attr('value', '<?php echo addslashes($voucher_min); ?>');
 				
-				// Refresh products, vouchers and totals
-				$('#button-refresh').trigger('click');
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});				
-});
-
-$('#button-voucher-remove').on('click', function() {
-	$.ajax({
-		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/remove&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-		type: 'post',
-		data: $('#tab-product input[type=\'text\'], #tab-product input[type=\'hidden\'], #tab-product input[type=\'radio\']:checked, #tab-product input[type=\'checkbox\']:checked, #tab-product select, #tab-product textarea'),
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-voucher-remove i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-			$('#button-voucher-remove').prop('disabled', true);
-		},
-		complete: function() {
-			$('#button-voucher-remove i').replaceWith('<i class="fa fa-minus-circle"></i>');
-			$('#button-voucher-remove').prop('disabled', false);
-		},
-		success: function(json) {
-			$('.alert, .text-danger').remove();
-		
-			// Check for errors
-			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			} else {
+				// Highlight any found errors
+				$('.text-danger').each(function() {
+					var element = $(this).parent().parent();
+					
+					if (element.hasClass('form-group')) {
+						element.addClass('has-error');
+					}
+				});
+					
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
 			}
@@ -1694,13 +1616,7 @@ $('#button-voucher-remove').on('click', function() {
 });
 
 $('#button-cart').on('click', function() {
-	$('a[href=\'#tab-cart\']').parent().removeClass('active');
-	$('a[href=\'#tab-cart\']').parent().addClass('disabled');
-	$('#tab-cart').removeClass('active');
-	
-	$('a[href=\'#tab-payment\']').parent().removeClass('disabled');
-	$('a[href=\'#tab-payment\']').parent().addClass('active');
-	$('#tab-payment').addClass('active');
+	$('a[href=\'#tab-payment\']').tab('show');
 });
 				
 // Payment Address
@@ -1815,6 +1731,7 @@ $('#button-payment-address').on('click', function() {
 		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 
 			// Check for errors
 			if (json['error']) {
@@ -1851,6 +1768,15 @@ $('#button-payment-address').on('click', function() {
 						$('#input-payment-custom-field' + i).after('<div class="text-danger">' + json['error']['custom_field'][i] + '</div>');
 					}
 				}
+				
+				// Highlight any found errors
+				$('.text-danger').each(function() {
+					var element = $(this).parent().parent();
+					
+					if (element.hasClass('form-group')) {
+						element.addClass('has-error');
+					}
+				});				
 			} else {
 				// Payment Methods
 				$.ajax({
@@ -1890,14 +1816,13 @@ $('#button-payment-address').on('click', function() {
 				
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
-				
-				$('a[href=\'#tab-payment\']').parent().removeClass('active');
-				$('a[href=\'#tab-payment\']').parent().addClass('disabled');
-				$('#tab-payment').removeClass('active');
-				
-				$('a[href=\'#tab-shipping\']').parent().removeClass('disabled');
-				$('a[href=\'#tab-shipping\']').parent().addClass('active');
-				$('#tab-shipping').addClass('active');				
+								
+				// If shipping required got to shipping tab else total tabs
+				if ($('select[name=\'shipping_method\']').prop('disabled')) {
+					$('a[href=\'#tab-total\']').tab('show');		
+				} else {
+					$('a[href=\'#tab-shipping\']').tab('show');							
+				}
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -2018,6 +1943,7 @@ $('#button-shipping-address').on('click', function() {
 		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 
 			// Check for errors
 			if (json['error']) {
@@ -2054,6 +1980,15 @@ $('#button-shipping-address').on('click', function() {
 						$('#input-shipping-custom-field' + i).after('<div class="text-danger">' + json['error']['custom_field'][i] + '</div>');
 					}
 				}
+				
+				// Highlight any found errors
+				$('.text-danger').each(function() {
+					var element = $(this).parent().parent();
+					
+					if (element.hasClass('form-group')) {
+						element.addClass('has-error');
+					}
+				});				
 			} else {
 				// Shipping Methods
 				$.ajax({
@@ -2104,14 +2039,8 @@ $('#button-shipping-address').on('click', function() {
 				
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
-				
-				$('a[href=\'#tab-shipping\']').parent().removeClass('active');
-				$('a[href=\'#tab-shipping\']').parent().addClass('disabled');
-				$('#tab-shipping').removeClass('active');
-				
-				$('a[href=\'#tab-total\']').parent().removeClass('disabled');
-				$('a[href=\'#tab-total\']').parent().addClass('active');
-				$('#tab-total').addClass('active');								
+								
+				$('a[href=\'#tab-total\']').tab('show');							
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -2137,9 +2066,13 @@ $('#button-shipping-method').on('click', function() {
 		},		
 		success: function(json) {
 			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 			
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			
+				// Highlight any found errors
+				$('select[name=\'shipping_method\']').parent().parent().parent().addClass('has-error');			
 			}
 			
 			if (json['success']) {
@@ -2172,9 +2105,13 @@ $('#button-payment-method').on('click', function() {
 		},		
 		success: function(json) {
 			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 			
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			
+				// Highlight any found errors
+				$('select[name=\'payment_method\']').parent().parent().parent().addClass('has-error');				
 			}
 			
 			if (json['success']) {
@@ -2207,9 +2144,13 @@ $('#button-coupon').on('click', function() {
 		},		
 		success: function(json) {
 			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 			
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			
+				// Highlight any found errors
+				$('input[name=\'coupon\']').parent().parent().parent().addClass('has-error');				
 			}
 			
 			if (json['success']) {
@@ -2242,9 +2183,13 @@ $('#button-voucher').on('click', function() {
 		},		
 		success: function(json) {
 			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 			
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+				// Highlight any found errors
+				$('input[name=\'voucher\']').parent().parent().parent().addClass('has-error');			
 			}
 			
 			if (json['success']) {
@@ -2277,9 +2222,13 @@ $('#button-reward').on('click', function() {
 		},		
 		success: function(json) {
 			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 			
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+				// Highlight any found errors
+				$('input[name=\'reward\']').parent().parent().parent().addClass('has-error');
 			}
 			
 			if (json['success']) {

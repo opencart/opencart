@@ -410,7 +410,6 @@ class ControllerSaleOrder extends Controller {
 		$data['button_coupon'] = $this->language->get('button_coupon');
 		$data['button_voucher'] = $this->language->get('button_voucher');
 		$data['button_reward'] = $this->language->get('button_reward');
-		
 		$data['button_upload'] = $this->language->get('button_upload');
 		$data['button_remove'] = $this->language->get('button_remove');
 
@@ -569,24 +568,95 @@ class ControllerSaleOrder extends Controller {
 			$data['shipping_method'] = $order_info['shipping_method'];
 			$data['shipping_code'] = $order_info['shipping_code'];
 			
-			$data['order_products'] = array();
+			// Add products to the API
+			if ($this->session->data['cookie']) {
+				$products = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
+		
+				foreach ($products as $product) {
+					$option_data = array();
+					
+					$options = $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $product['order_product_id']);
+					
+					foreach ($options as $option) {
+						if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'image') {
+							$option_data[$option['product_option_id']] = $option['product_option_value_id'];
+						}
+						
+						if ($option['type'] == 'checkbox') {
+							$option_data[$option['product_option_id']][] = $option['product_option_value_id'];
+						}	
+												
+						if ($option['type'] == 'text' || $option['type'] == 'textarea' || $option['type'] == 'file' || $option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') {
+							$option_data[$option['product_option_id']] = $option['value'];
+						}
+					}
+					
+					$product_data = array(
+						'product_id' => $product['product_id'],
+						'option'     => $option_data,
+						'quantity'   => $product['quantity'],
+						'override'   => true
+					);					
+					
+					$curl = curl_init();
+					
+					// Set SSL if required
+					if (substr(HTTPS_CATALOG, 0, 5) == 'https') {
+						curl_setopt($curl, CURLOPT_PORT, 443);
+					}
+					
+					curl_setopt($curl, CURLOPT_HEADER, false);
+					curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+					curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
+					curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+					curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); 
+					curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
+					curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+					curl_setopt($curl, CURLOPT_URL, HTTPS_CATALOG . 'index.php?route=api/cart/add');
+					curl_setopt($curl, CURLOPT_POST, true);
+					curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($product_data));
+					curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->session->data['cookie'] . ';');
+					
+					$response = curl_exec($curl);
 			
-			$order_products = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
-	
-			foreach ($order_products as $order_product) {
-				$data['order_products'][] = array(
-					'product_id' => $order_product['product_id'],
-					'name'       => $order_product['name'],
-					'model'      => $order_product['model'],
-					'option'     => $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $order_product['order_product_id']),
-					'quantity'   => $order_product['quantity'],
-					'price'      => $order_product['price'],
-					'total'      => $order_product['total']
-				);
+					if (!$response) {
+						$data['error_warning'] = curl_error($curl) . ' (' . curl_errno($curl) . ')';
+					}
+				}
 			}
 			
-			$data['order_vouchers'] = $this->model_sale_order->getOrderVouchers($this->request->get['order_id']);
+			// Add vouchers to the API
+			if ($this->session->data['cookie']) {
+				$vouchers = $this->model_sale_order->getOrderVouchers($this->request->get['order_id']);
+				
+				foreach ($vouchers as $voucher) {
+					$curl = curl_init();
+					
+					// Set SSL if required
+					if (substr(HTTPS_CATALOG, 0, 5) == 'https') {
+						curl_setopt($curl, CURLOPT_PORT, 443);
+					}
+					
+					curl_setopt($curl, CURLOPT_HEADER, false);
+					curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+					curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
+					curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+					curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); 
+					curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
+					curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+					curl_setopt($curl, CURLOPT_URL, HTTPS_CATALOG . 'index.php?route=api/voucher/add');
+					curl_setopt($curl, CURLOPT_POST, true);
+					curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($voucher));
+					curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->session->data['cookie'] . ';');
+					
+					$response = curl_exec($curl);
 			
+					if (!$response) {
+						$data['error_warning'] = curl_error($curl) . ' (' . curl_errno($curl) . ')';
+					}					
+				}
+			}
+
 			$data['coupon'] = '';
 			$data['voucher'] = '';
 			$data['reward'] = '';	
@@ -664,7 +734,7 @@ class ControllerSaleOrder extends Controller {
 			$data['order_vouchers'] = array();
 			$data['order_totals'] = array();
 
-			$data['order_status_id'] = '';
+			$data['order_status_id'] = $this->config->get('config_order_status_id');
 			
 			$data['comment'] = '';
 			$data['affiliate_id'] = '';

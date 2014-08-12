@@ -200,8 +200,16 @@ class ControllerSaleCustomer extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('sale/customer');
+		
+		$customers = array();
 
-		if (isset($this->request->get['customer_id']) && $this->validateApprove()) {
+		if (isset($this->request->post['selected'])) {
+			$customers = $this->request->post['selected'];
+		} elseif (isset($this->request->get['customer_id'])) {
+			$customers[] = $this->request->get['customer_id'];
+		}
+		
+		if ($customers && $this->validateApprove()) {
 			$this->model_sale_customer->approve($this->request->get['customer_id']);
 
 			$this->session->data['success'] = $this->language->get('text_success');

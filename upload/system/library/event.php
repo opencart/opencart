@@ -40,6 +40,7 @@ class Event {
 
 		if (in_array($handler, $this->data[$event])) {
 			$key = array_search($handler, $this->data[$event]);
+			
 			unset($this->data[$event][$key]);
 		}
 

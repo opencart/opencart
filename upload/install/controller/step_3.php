@@ -2,7 +2,7 @@
 class ControllerStep3 extends Controller {
 	private $error = array();
 
-	public function index() {		
+	public function index() {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->load->model('install');
 
@@ -79,7 +79,7 @@ class ControllerStep3 extends Controller {
 
 			$this->response->redirect($this->url->link('step_4'));
 		}
-		
+
 		$this->document->setTitle($this->language->get('heading_step_3'));
 
 		$data['heading_step_3'] = $this->language->get('heading_step_3');
@@ -88,8 +88,8 @@ class ControllerStep3 extends Controller {
 		$data['text_license'] = $this->language->get('text_license');
 		$data['text_installation'] = $this->language->get('text_installation');
 		$data['text_configuration'] = $this->language->get('text_configuration');
-		$data['text_finished'] = $this->language->get('text_finished');	
-		$data['text_db_connection'] = $this->language->get('text_db_connection');	
+		$data['text_finished'] = $this->language->get('text_finished');
+		$data['text_db_connection'] = $this->language->get('text_db_connection');
 		$data['text_db_administration'] = $this->language->get('text_db_administration');
 		$data['text_mysqli'] = $this->language->get('text_mysqli');
 		$data['text_mpdo'] = $this->language->get('text_mpdo');
@@ -104,7 +104,7 @@ class ControllerStep3 extends Controller {
 		$data['entry_username'] = $this->language->get('entry_username');
 		$data['entry_password'] = $this->language->get('entry_password');
 		$data['entry_email'] = $this->language->get('entry_email');
-		
+
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_back'] = $this->language->get('button_back');
 
@@ -148,13 +148,13 @@ class ControllerStep3 extends Controller {
 			$data['error_password'] = $this->error['password'];
 		} else {
 			$data['error_password'] = '';
-		}		
+		}
 
 		if (isset($this->error['email'])) {
 			$data['error_email'] = $this->error['email'];
 		} else {
 			$data['error_email'] = '';
-		}	
+		}
 
 		$data['action'] = $this->url->link('step_3');
 
@@ -222,7 +222,7 @@ class ControllerStep3 extends Controller {
 		$data['footer'] = $this->load->controller('footer');
 		$data['header'] = $this->load->controller('header');
 
-		$this->response->setOutput($this->load->view('step_3.tpl', $data));		
+		$this->response->setOutput($this->load->view('step_3.tpl', $data));
 	}
 
 	private function validate() {
@@ -260,7 +260,7 @@ class ControllerStep3 extends Controller {
 			$this->error['password'] = $this->language->get('error_password');
 		}
 
-		if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email'])) {
+		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 
@@ -270,7 +270,7 @@ class ControllerStep3 extends Controller {
 
 		if (!is_writable(DIR_OPENCART . 'admin/config.php')) {
 			$this->error['warning'] = $this->language->get('error_config') . DIR_OPENCART . 'admin/config.php!';
-		}	
+		}
 
 		return !$this->error;
 	}

@@ -240,7 +240,7 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 
 	$('#form-upload input[name=\'file\']').on('change', function() {
 		$.ajax({
-			url: 'index.php?route=account/account/upload',
+			url: 'index.php?route=tool/upload',
 			type: 'post',		
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
@@ -256,6 +256,8 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 				$(node).prop('disabled', false);			
 			},		
 			success: function(json) {
+				$('.text-danger').remove();
+				
 				if (json['error']) {
 					$(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
 				}

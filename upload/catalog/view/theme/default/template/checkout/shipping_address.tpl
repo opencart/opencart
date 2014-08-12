@@ -274,7 +274,7 @@ $('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on(
 
 	$('#form-upload input[name=\'file\']').on('change', function() {
 		$.ajax({
-			url: 'index.php?route=checkout/checkout/upload',
+			url: 'index.php?route=tool/upload',
 			type: 'post',
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
@@ -290,6 +290,8 @@ $('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on(
 				$(node).prop('disabled', false);
 			},
 			success: function(json) {
+				$('.text-danger').remove();
+				
 				if (json['error']) {
 					$(node).parent().find('input[name^=\'custom_field\']').after('<div class="text-danger">' + json['error'] + '</div>');
 				}

@@ -18,7 +18,6 @@ $_['text_login']                              = 'Please <a href="%s">login</a> o
 $_['text_no_reviews']                         = 'There are no reviews for this product.';
 $_['text_note']                               = '<span class="text-danger">Note:</span> HTML is not translated!';
 $_['text_success']                            = 'Thank you for your review. It has been submitted to the webmaster for approval.';
-$_['text_upload']                             = 'Your file was successfully uploaded!';
 $_['text_related']                            = 'Related Products';
 $_['text_tags']                               = 'Tags:';
 $_['text_error']                              = 'Product not found!';
@@ -51,6 +50,3 @@ $_['error_name']                              = 'Warning: Review Name must be be
 $_['error_text']                              = 'Warning: Review Text must be between 25 and 1000 characters!';
 $_['error_rating']                            = 'Warning: Please select a review rating!';
 $_['error_captcha']                           = 'Warning: Verification code does not match the image!';
-$_['error_upload']                            = 'Upload required!';
-$_['error_filename']                          = 'Filename must be between 3 and 64 characters!';
-$_['error_filetype']                          = 'Invalid file type!';

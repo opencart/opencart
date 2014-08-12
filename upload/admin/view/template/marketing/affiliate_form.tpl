@@ -228,18 +228,24 @@
             </div>
           </div>
           <div id="payment-cheque" class="payment">
-            <div class="form-group">
+            <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-cheque"><?php echo $entry_cheque; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="cheque" value="<?php echo $cheque; ?>" placeholder="<?php echo $entry_cheque; ?>" id="input-cheque" class="form-control" />
+				<?php if ($error_cheque) { ?>
+				<div class="text-danger"><?php echo $error_cheque; ?></div>
+				<?php } ?>
               </div>
             </div>
           </div>
           <div id="payment-paypal" class="payment">
-            <div class="form-group">
+            <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-paypal"><?php echo $entry_paypal; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="paypal" value="<?php echo $paypal; ?>" placeholder="<?php echo $entry_paypal; ?>" id="input-paypal" class="form-control" />
+				<?php if ($error_paypal) { ?>
+				<div class="text-danger"><?php echo $error_paypal; ?></div>
+				<?php } ?>
               </div>
             </div>
           </div>
@@ -266,12 +272,18 @@
               <label class="col-sm-2 control-label" for="input-bank-account-name"><?php echo $entry_bank_account_name; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="bank_account_name" value="<?php echo $bank_account_name; ?>" placeholder="<?php echo $entry_bank_account_name; ?>" id="input-bank-account-name" class="form-control" />
+				<?php if ($error_bank_account_name) { ?>
+				<div class="text-danger"><?php echo $error_bank_account_name; ?></div>
+				<?php } ?>
               </div>
             </div>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-bank-account-number"><?php echo $entry_bank_account_number; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="bank_account_number" value="<?php echo $bank_account_number; ?>" placeholder="<?php echo $entry_bank_account_number; ?>" id="input-bank-account-number" class="form-control" />
+				<?php if ($error_bank_account_number) { ?>
+				<div class="text-danger"><?php echo $error_bank_account_number; ?></div>
+				<?php } ?>
               </div>
             </div>
           </div>

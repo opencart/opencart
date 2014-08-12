@@ -7,9 +7,6 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div class="progress">
-      <div id="progress-bar" class="progress-bar progress-bar-success" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">0%</div>
-    </div>
     <form class="form-horizontal">
       <ul id="order" class="nav nav-tabs nav-justified">
         <li class="active"><a href="#tab-customer" data-toggle="tab">1. <?php echo $tab_customer; ?></a></li>
@@ -927,7 +924,7 @@ $('#button-refresh').on('click', function() {
 					html += '  <td class="text-right">' + product['quantity'] + '</td>';
 					html += '  <td class="text-right">' + product['price'] + '</td>';
 					html += '  <td class="text-right">' + product['total'] + '</td>';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger button-remove"><i class="fa fa-minus-circle"></i></button></td>';
+					html += '  <td class="text-center" style="width: 3px;"><button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 					html += '</tr>';
 					
 					if (product['shipping'] != 0) {
@@ -957,7 +954,7 @@ $('#button-refresh').on('click', function() {
 					html += '  <td class="text-right">1</td>';
 					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
 					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger button-remove"><i class="fa fa-minus-circle"></i></button></td>';
+					html += '  <td class="text-center" style="width: 3px;"><button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 					html += '</tr>';	
 				}
 			}
@@ -1209,7 +1206,8 @@ $('#button-customer').on('click', function() {
 		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();
-
+			$('.form-group').removeClass('has-error');
+			
 			if (json['error']) {
 				if (json['error']['warning']) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
@@ -1235,7 +1233,16 @@ $('#button-customer').on('click', function() {
 					for (i in json['error']['custom_field']) {
 						$('#input-custom-field' + i).after('<div class="text-danger">' + json['error']['custom_field'][i] + '</div>');
 					}
-				}					
+				}	
+				
+				// Highlight any found errors
+				$('.text-danger').each(function() {
+					var element = $(this).parent().parent();
+					
+					if (element.hasClass('form-group')) {
+						element.addClass('has-error');
+					}
+				});								
 			} else {
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -1460,6 +1467,7 @@ $('#button-product-add').on('click', function() {
 		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 		
 			if (json['error']) {
 				if (json['error']['warning']) {
@@ -1474,7 +1482,16 @@ $('#button-product-add').on('click', function() {
 				
 				if (json['error']['store']) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['store'] + '</div>');
-				}	
+				}
+
+				// Highlight any found errors
+				$('.text-danger').each(function() {
+					var element = $(this).parent().parent();
+					
+					if (element.hasClass('form-group')) {
+						element.addClass('has-error');
+					}
+				});					
 			} else {
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -1486,7 +1503,7 @@ $('#button-product-add').on('click', function() {
 	});				
 });
 
-$('#tab-cart').delegate('.button-remove', 'click', function() {
+$('#tab-cart').delegate('.btn-danger', 'click', function() {
 	var node = this;
 	
 	$.ajax({
@@ -1536,6 +1553,7 @@ $('#button-voucher-add').on('click', function() {
 		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 		
 			if (json['error']) {
 				if (json['error']['warning']) {
@@ -1560,7 +1578,16 @@ $('#button-voucher-add').on('click', function() {
 				
 				if (json['error']['amount']) {
 					$('input[name=\'amount\']').after('<div class="text-danger">' + json['error']['amount'] + '</div>');
-				}	
+				}
+
+				// Highlight any found errors
+				$('.text-danger').each(function() {
+					var element = $(this).parent().parent();
+					
+					if (element.hasClass('form-group')) {
+						element.addClass('has-error');
+					}
+				});					
 			} else {
 				$('input[name=\'from_name\']').attr('value', '');	
 				$('input[name=\'from_email\']').attr('value', '');	
@@ -1569,6 +1596,15 @@ $('#button-voucher-add').on('click', function() {
 				$('textarea[name=\'message\']').attr('value', '');	
 				$('input[name=\'amount\']').attr('value', '<?php echo addslashes($voucher_min); ?>');
 				
+				// Highlight any found errors
+				$('.text-danger').each(function() {
+					var element = $(this).parent().parent();
+					
+					if (element.hasClass('form-group')) {
+						element.addClass('has-error');
+					}
+				});
+					
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
 			}
@@ -1695,6 +1731,7 @@ $('#button-payment-address').on('click', function() {
 		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 
 			// Check for errors
 			if (json['error']) {
@@ -1731,6 +1768,15 @@ $('#button-payment-address').on('click', function() {
 						$('#input-payment-custom-field' + i).after('<div class="text-danger">' + json['error']['custom_field'][i] + '</div>');
 					}
 				}
+				
+				// Highlight any found errors
+				$('.text-danger').each(function() {
+					var element = $(this).parent().parent();
+					
+					if (element.hasClass('form-group')) {
+						element.addClass('has-error');
+					}
+				});				
 			} else {
 				// Payment Methods
 				$.ajax({
@@ -1897,6 +1943,7 @@ $('#button-shipping-address').on('click', function() {
 		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 
 			// Check for errors
 			if (json['error']) {
@@ -1933,6 +1980,15 @@ $('#button-shipping-address').on('click', function() {
 						$('#input-shipping-custom-field' + i).after('<div class="text-danger">' + json['error']['custom_field'][i] + '</div>');
 					}
 				}
+				
+				// Highlight any found errors
+				$('.text-danger').each(function() {
+					var element = $(this).parent().parent();
+					
+					if (element.hasClass('form-group')) {
+						element.addClass('has-error');
+					}
+				});				
 			} else {
 				// Shipping Methods
 				$.ajax({
@@ -2010,9 +2066,13 @@ $('#button-shipping-method').on('click', function() {
 		},		
 		success: function(json) {
 			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 			
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			
+				// Highlight any found errors
+				$('select[name=\'shipping_method\']').parent().parent().parent().addClass('has-error');			
 			}
 			
 			if (json['success']) {
@@ -2045,9 +2105,13 @@ $('#button-payment-method').on('click', function() {
 		},		
 		success: function(json) {
 			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 			
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			
+				// Highlight any found errors
+				$('select[name=\'payment_method\']').parent().parent().parent().addClass('has-error');				
 			}
 			
 			if (json['success']) {
@@ -2080,9 +2144,13 @@ $('#button-coupon').on('click', function() {
 		},		
 		success: function(json) {
 			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 			
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			
+				// Highlight any found errors
+				$('input[name=\'coupon\']').parent().parent().parent().addClass('has-error');				
 			}
 			
 			if (json['success']) {
@@ -2115,9 +2183,13 @@ $('#button-voucher').on('click', function() {
 		},		
 		success: function(json) {
 			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 			
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+				// Highlight any found errors
+				$('input[name=\'voucher\']').parent().parent().parent().addClass('has-error');			
 			}
 			
 			if (json['success']) {
@@ -2150,9 +2222,13 @@ $('#button-reward').on('click', function() {
 		},		
 		success: function(json) {
 			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 			
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+				// Highlight any found errors
+				$('input[name=\'reward\']').parent().parent().parent().addClass('has-error');
 			}
 			
 			if (json['success']) {

@@ -96,7 +96,7 @@ class ControllerExtensionModification extends Controller {
 				$dom->loadXml($xml);
 
 				$files = $dom->getElementsByTagName('modification')->item(0)->getElementsByTagName('file');
-
+				
 				foreach ($files as $file) {
 					$path = '';
 
@@ -114,35 +114,37 @@ class ControllerExtensionModification extends Controller {
 					}
 
 					if ($path) {
-						$files = glob($path, GLOB_BRACE);
+						$files_matched = glob($path, GLOB_BRACE);
 						
 						$operations = $file->getElementsByTagName('operation');
 
-						if ($files) {
-							foreach ($files as $file) {
+						if ($files_matched) {
+							foreach ($files_matched as $file_matched) {
+
 								// Get the key to be used for the modification cache filename.
-								if (substr($file, 0, strlen(DIR_CATALOG)) == DIR_CATALOG) {
-									$key = 'catalog_' . str_replace('/', '_', substr($file, strlen(DIR_CATALOG)));
+								if (substr($file_matched, 0, strlen(DIR_CATALOG)) == DIR_CATALOG) {
+									$key = 'catalog_' . str_replace('/', '_', substr($file_matched, strlen(DIR_CATALOG)));
 								}
 
-								if (substr($file, 0, strlen(DIR_APPLICATION)) == DIR_APPLICATION) {
-									$key = 'admin_' . str_replace('/', '_', substr($file, strlen(DIR_APPLICATION)));
+								if (substr($file_matched, 0, strlen(DIR_APPLICATION)) == DIR_APPLICATION) {
+									$key = 'admin_' . str_replace('/', '_', substr($file_matched, strlen(DIR_APPLICATION)));
 								}
 
-								if (substr($file, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {
-									$key = 'system_' . str_replace('/', '_', substr($file, strlen(DIR_SYSTEM)));
+								if (substr($file_matched, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {
+									$key = 'system_' . str_replace('/', '_', substr($file_matched, strlen(DIR_SYSTEM)));
 								}
 
 								if (!isset($modification[$key])) {
-									$modification[$key] = file_get_contents($file);
+									$modification[$key] = file_get_contents($file_matched);
 								}
-	
+								
 								foreach ($operations as $operation) {
 									// Search and replace
 									if ($operation->getElementsByTagName('search')->item(0)->getAttribute('regex') != 'true') {
 										$search = $operation->getElementsByTagName('search')->item(0)->textContent;
 										$trim = $operation->getElementsByTagName('search')->item(0)->getAttribute('trim');
 										$offset = $operation->getElementsByTagName('search')->item(0)->getAttribute('offset');
+										$index = $operation->getElementsByTagName('search')->item(0)->getAttribute('index');
 										$limit = $operation->getElementsByTagName('search')->item(0)->getAttribute('limit');
 										$add = $operation->getElementsByTagName('add')->item(0)->textContent;
 										$position = $operation->getElementsByTagName('add')->item(0)->getAttribute('position');
@@ -151,47 +153,96 @@ class ControllerExtensionModification extends Controller {
 										if (!$trim || $trim == 'true') {
 											$search = trim($search);
 										}
-	
-										switch ($position) {
-											default:
-											case 'replace':
-												$replace = $add;
-												break;
-											case 'before':
-												$replace = $add . $search;
-												break;
-											case 'after':
-												$replace = $search . $add;
-												break;
-										}
-	
-										$i = 0;
-										$pos = -1;
-										$match = array();
-										
-										// Create an array of all the start postions of all the matched code 
-										while (($pos = strpos($modification[$key], $search, $pos + 1)) !== false) {
-											$match[$i++] = $pos;
-										}
 										
 										// Offset
 										if (!$offset) {
 											$offset = 0;
 										}
-																				
-										// Limit
-										if (!$limit) {
-											$limit = count($match);
-										} else {
-											$limit = $offset + $limit;
-										}	
-																							
-										// Only replace the occurance of the string that is equal to the between the offset and limit
-										for ($i = $offset; $i < $limit; $i++) {
-											if (isset($match[$i])) {
-												$modification[$key] = substr_replace($modification[$key], $replace, $match[$i], strlen($search));
-											}
+										
+										if ($index) {
+											$index = explode(',', $index);
 										}
+										
+										switch ($position) {
+											case 'replace':
+												$pos_found = 0;
+												$matches_found = 0;
+												$replaced = 0;
+												
+												while (($pos_found = strpos($modification[$key], $search, $pos_found)) != False && (!$limit || $replaced < $limit)) {
+													$matches_found++;
+													
+													if (!$index || (is_array($index) && in_array($matches_found, $index))) {
+														$modification[$key] = substr($modification[$key], 0, $pos_found) . $add . substr($modification[$key], $pos_found + strlen($search));
+														$replaced++;
+													}
+													
+													$pos_found += strlen($add);
+												}
+												break;
+											case 'before':
+												$line_offset = -1 -$offset;
+
+												$add_lines = explode("\n", $add);
+
+												$lines = explode("\n", $modification[$key]);
+												$final_lines = explode("\n", $modification[$key]);
+												
+												$found = 0;
+												$replaced = 0;
+												
+												for ($i = 0; $i < count($lines)  && (!$limit || $replaced < $limit); $i++) {
+													if (strpos($lines[$i], $search) !== False) {
+														$found++;
+														
+														if (!$index || (is_array($index) && in_array($found, $index))) {
+															if ($i + $line_offset <= 0) {
+																$final_lines = array_merge($add_lines, $final_lines);
+															} else {																	
+																$final_lines = array_merge(array_slice($final_lines, 0, $i + $replaced * count($add_lines) + $line_offset), $add_lines, array_slice($lines, $i + $line_offset));
+															}
+															
+															$replaced++;
+														}
+													}
+												}
+
+												$modification[$key] = implode("\n", $final_lines);
+												break;
+
+											case 'after':
+												$line_offset = 1 + $offset;
+
+												$add_lines = explode("\n", $add);
+
+												$lines = explode("\n", $modification[$key]);
+												$final_lines = explode("\n", $modification[$key]);
+												
+												$found = 0;
+												$replaced = 0;
+												
+												for ($i = 0; $i < count($lines)  && (!$limit || $replaced < $limit); $i++) {
+													if (strpos($lines[$i], $search) !== False) {
+														$found++;
+														
+														if (!$index || (is_array($index) && in_array($found, $index))) {
+															if ($i + $line_offset >= count($final_lines)) {
+																$final_lines = array_merge($final_lines, $add_lines);
+															} else {				
+																$part1 = array_slice($final_lines, 0, $i + $replaced * count($add_lines) + $line_offset);
+																$part2 = $add_lines;
+																$part3 = array_slice($lines, $i + $line_offset);
+																$final_lines = array_merge(array_slice($final_lines, 0, $i + $replaced * count($add_lines) + $line_offset), $add_lines, array_slice($lines, $i + $line_offset));
+															}
+															
+															$replaced++;
+														}
+													}
+												}
+												
+												$modification[$key] = implode("\n", $final_lines);
+												break;
+										}										
 									} else {
 										$search = $operation->getElementsByTagName('search')->item(0)->textContent;
 										$replace = $operation->getElementsByTagName('add')->item(0)->textContent;									

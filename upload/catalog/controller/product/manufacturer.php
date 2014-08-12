@@ -119,7 +119,9 @@ class ControllerProductManufacturer extends Controller {
 		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($manufacturer_id);
 
 		if ($manufacturer_info) {
-			$this->document->setTitle($manufacturer_info['name']);
+			$this->document->setTitle(!empty($manufacturer_info['meta_title']) ? $manufacturer_info['meta_title'] : $manufacturer_info['name']);
+			$this->document->setDescription($manufacturer_info['meta_description']);
+			$this->document->setKeywords($manufacturer_info['meta_keyword']);
 			$this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id']), 'canonical');
 
 			$url = '';
@@ -165,6 +167,7 @@ class ControllerProductManufacturer extends Controller {
 			$data['button_list'] = $this->language->get('button_list');
 			$data['button_grid'] = $this->language->get('button_grid');
 
+			$data['description'] = html_entity_decode($manufacturer_info['description'], ENT_QUOTES, 'UTF-8');
 			$data['compare'] = $this->url->link('product/compare');
 
 			$data['products'] = array();

@@ -1676,13 +1676,14 @@ INSERT INTO `oc_layout` (`layout_id`, `name`) VALUES
 (2, 'Product'),
 (3, 'Category'),
 (4, 'Default'),
-(5, 'Manufacturer'),
+(5, 'Manufacturer List'),
 (6, 'Account'),
 (7, 'Checkout'),
 (8, 'Contact'),
 (9, 'Sitemap'),
 (10, 'Affiliate'),
-(11, 'Information');
+(11, 'Information'),
+(12, 'Manufacturer Info');
 
 -- --------------------------------------------------------
 
@@ -1711,6 +1712,7 @@ INSERT INTO `oc_layout_route` (`layout_route_id`, `layout_id`, `store_id`, `rout
 (20, 2, 0, 'product/product'),
 (24, 11, 0, 'information/information'),
 (22, 5, 0, 'product/manufacturer'),
+(33, 12, 0, 'product/manufacturer/info'),
 (23, 7, 0, 'checkout/%'),
 (31, 8, 0, 'information/contact'),
 (32, 9, 0, 'information/sitemap');
@@ -1812,6 +1814,55 @@ INSERT INTO `oc_manufacturer` (`manufacturer_id`, `name`, `image`, `sort_order`)
 (8, 'Apple', 'catalog/demo/apple_logo.jpg', 0),
 (9, 'Canon', 'catalog/demo/canon_logo.jpg', 0),
 (10, 'Sony', 'catalog/demo/sony_logo.jpg', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_manufacturer_description`
+--
+
+-- --------------------------------------------------------
+
+DROP TABLE IF EXISTS `oc_manufacturer_description`;
+CREATE TABLE `oc_manufacturer_description` (
+  `manufacturer_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `description` text NOT NULL,
+  `meta_title` varchar(255) NOT NULL,
+  `meta_description` varchar(255) NOT NULL,
+  `meta_keyword` varchar(255) NOT NULL,
+  PRIMARY KEY (`manufacturer_id`,`language_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `oc_manufacturer_description`
+--
+
+INSERT INTO `oc_manufacturer_description` (`manufacturer_id`, `language_id`, `description`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
+(5, 1, '&lt;p&gt;\r\n HTC Corporation, formerly High-Tech Computer Corporation, is a Taiwanese manufacturer of smartphones and tablets headquartered in New Taipei City, Taiwan. &lt;/p&gt;\r\n', '', '', ''),
+(6, 1, '&lt;p&gt;\r\n Palm, Inc., was an American smartphone manufacturer headquartered in Sunnyvale, California&lt;/p&gt;\r\n', '', '', ''),
+(7, 1, '&lt;p&gt;\r\n Hewlett-Packard Company or HP is an American multinational information technology corporation headquartered in Palo Alto, California&lt;/p&gt;\r\n', '', '', ''),
+(8, 1, '&lt;p&gt;\r\n Apple are leaders in beautiful hardware design&lt;/p&gt;\r\n', '', '', ''),
+(9, 1, '&lt;p&gt;\r\n Canon is a world leader in imaging products and solutions for the digital home and office. &lt;/p&gt;\r\n', '', '', ''),
+(10, 1, '&lt;p&gt;\r\n Sony Corporation, commonly referred to as Sony, is a Japanese multinational conglomerate corporation headquartered in Kōnan Minato, Tokyo, Japan&lt;/p&gt;\r\n', '', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_category_to_layout`
+--
+
+DROP TABLE IF EXISTS `oc_manufacturer_to_layout`;
+CREATE TABLE `oc_manufacturer_to_layout` (
+  `manufacturer_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `layout_id` int(11) NOT NULL,
+  PRIMARY KEY (`manufacturer_id`,`store_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `oc_category_to_layout`
+--
 
 -- --------------------------------------------------------
 

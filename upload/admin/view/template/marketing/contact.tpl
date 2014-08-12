@@ -84,9 +84,10 @@
     </form>
   </div>
 </div>
-<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
 <script type="text/javascript"><!--
-CKEDITOR.replace('input-message');
+$('#input-message').summernote({
+	height: 300
+});
 //--></script> 
 <script type="text/javascript"><!--	
 $('select[name=\'to\']').on('change', function() {

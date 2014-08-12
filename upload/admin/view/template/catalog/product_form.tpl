@@ -912,10 +912,16 @@
     </form>
   </div>
 </div>
-<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
-CKEDITOR.replace('input-description<?php echo $language['language_id']; ?>');
+$('#input-description<?php echo $language['language_id']; ?>').summernote({
+	height: 300,
+	showImageDialog: function(files, editor, $editable) {
+		alert('hi');
+		return false;
+	}
+}).tplDialogs.tplImageDialog = function () {alert('hi');
+};
 <?php } ?>
 //--></script> 
 <script type="text/javascript"><!--

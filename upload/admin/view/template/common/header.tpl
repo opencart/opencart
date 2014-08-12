@@ -12,9 +12,10 @@
 <?php } ?>
 <script type="text/javascript" src="view/javascript/jquery/jquery-2.1.1.min.js"></script>
 <link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />
-<link href="view/javascript/bootstrap/css/todc-bootstrap.min.css" rel="stylesheet">
 <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.js"></script>
 <link href="view/javascript/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+<link href="view/javascript/summernote/summernote.css" type="text/css" rel="stylesheet" />
+<script src="view/javascript/summernote/summernote.min.js" type="text/javascript"></script>
 <script src="view/javascript/jquery/datetimepicker/moment.min.js" type="text/javascript"></script>
 <script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 <link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />

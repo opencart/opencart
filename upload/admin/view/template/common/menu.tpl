@@ -1,14 +1,14 @@
 <nav id="column-left">
   <div id="user">
-    <div class="pull-left">
+    <div class="username">
       <?php if ($image) { ?>
-      <a class="dropdown-toggle" data-toggle="dropdown"><img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" title="<?php echo $username; ?>" /></a>
+      <a class="dropdown-toggle pull-left" data-toggle="dropdown"><img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" title="<?php echo $username; ?>" /></a>
       <?php } else { ?>
-      <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user fa-lg"></i></a>
+      <a class="dropdown-toggle pull-left" data-toggle="dropdown"><i class="fa fa-user fa-2x"></i></a>
       <?php } ?>
+      <?php echo $username; ?><br />
+      <small><?php echo $user_group_name; ?></small>
     </div>
-    <div><?php echo $username; ?><br />
-    <small><?php echo $user_group; ?></small></div>
   </div>
   <ul id="menu">
     <li id="dashboard"><a href="<?php echo $home; ?>"><i class="fa fa-home fa-fw"></i> <?php echo $text_dashboard; ?></a></li>

@@ -32,7 +32,7 @@ These instructions are for a manual installation using FTP, cPanel or other web 
 		chmod 0755 or 0777 admin/config.php
 
 		If 0755 does not work try 0777.
-
+sdfgsdfgsdefsag
 4. Make sure you have installed a MySQL Database which has a user assigned to it
 	DO NOT USE YOUR ROOT USERNAME AND ROOT PASSWORD
 

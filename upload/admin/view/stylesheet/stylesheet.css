@@ -340,3 +340,14 @@ label.control-label {
 }
 
 
+/* user info */
+#column-left #user {
+    color: #fff;
+    padding: 5px;
+}
+#column-left #user .username > a {
+    padding: 5px 10px 5px 5px;
+}
+#column-left #user small {
+    color: #aaa;
+}

@@ -105,9 +105,15 @@ class ControllerCommonMenu extends Controller {
 			$this->load->model('tool/image');
 	
 			$user_info = $this->model_user_user->getUser($this->user->getId());
-	
+
 			if ($user_info) {
 				$data['username'] = $user_info['firstname'] . ' ' . $user_info['lastname'];
+                
+                $this->load->model('user/user_group');
+                
+                $user_group_info = $this->model_user_user_group->getUserGroup($user_info['user_group_id']);
+
+                $data['user_group_name'] = $user_group_info['name'];
 	
 				if (is_file(DIR_IMAGE . $user_info['image'])) {
 					$data['image'] = $this->model_tool_image->resize($user_info['image'], 24, 24);

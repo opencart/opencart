@@ -124,12 +124,13 @@
     </form>
   </div>
 </div>
-<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 <script type="text/javascript"><!--
 <?php $module_row = 1; ?>
 <?php foreach ($modules as $module) { ?>
 <?php foreach ($languages as $language) { ?>
-CKEDITOR.replace('input-description<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>');
+$('#input-description<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>').summernote({
+	height: 300
+});
 <?php } ?>
 <?php $module_row++; ?>
 <?php } ?>
@@ -150,10 +151,10 @@ function addModule() {
 
 	<?php foreach ($languages as $language) { ?>
 	html += '    <div class="tab-pane" id="tab-module' + module_row + '-language<?php echo $language['language_id']; ?>">';
-  html += '      <div class="form-group">';
-  html += '        <label class="col-sm-2 control-label" for="input-heading' + module_row + '-language<?php echo $language['language_id']; ?>"><?php echo $entry_heading; ?></label>';
-  html += '        <div class="col-sm-10"><input type="text" name="html_content_module[' + module_row + '][heading][<?php echo $language['language_id']; ?>]" placeholder="<?php echo $entry_heading; ?>" id="input-heading' + module_row + '-language<?php echo $language['language_id']; ?>" value="" class="form-control"/></div>';
-  html += '      </div>';
+	html += '      <div class="form-group">';
+	html += '        <label class="col-sm-2 control-label" for="input-heading' + module_row + '-language<?php echo $language['language_id']; ?>"><?php echo $entry_heading; ?></label>';
+	html += '        <div class="col-sm-10"><input type="text" name="html_content_module[' + module_row + '][heading][<?php echo $language['language_id']; ?>]" placeholder="<?php echo $entry_heading; ?>" id="input-heading' + module_row + '-language<?php echo $language['language_id']; ?>" value="" class="form-control"/></div>';
+	html += '      </div>';
 	html += '      <div class="form-group">';
 	html += '        <label class="col-sm-2 control-label" for="input-description' + module_row + '-language<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>';
 	html += '        <div class="col-sm-10"><textarea name="html_content_module[' + module_row + '][description][<?php echo $language['language_id']; ?>]" placeholder="<?php echo $entry_description; ?>" id="input-description' + module_row + '-language<?php echo $language['language_id']; ?>"></textarea></div>';
@@ -197,7 +198,9 @@ function addModule() {
 	$('.tab-content:first-child').prepend(html);
 
 	<?php foreach ($languages as $language) { ?>
-	CKEDITOR.replace('input-description' + module_row + '-language<?php echo $language['language_id']; ?>');
+	$('#input-description' + module_row + '-language<?php echo $language['language_id']; ?>').summernote({
+		height: 300
+	});
 	<?php } ?>
 
 	$('#module-add').before('<li><a href="#tab-module' + module_row + '" data-toggle="tab"><i class="fa fa-minus-circle" onclick="$(\'a[href=\\\'#tab-module' + module_row + '\\\']\').parent().remove(); $(\'#tab-module' + module_row + '\').remove(); $(\'#module a:first\').tab(\'show\');"></i> <?php echo $tab_module; ?> ' + module_row + '</a></li>');

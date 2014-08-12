@@ -416,23 +416,23 @@
     <?php echo $column_right; ?></div>
 </div>
 <script type="text/javascript"><!--
-$('select[name="profile_id"], input[name="quantity"]').change(function(){
-  $.ajax({
-    url: 'index.php?route=product/product/getRecurringDescription',
-    type: 'post',
-    data: $('input[name=\'product_id\'], input[name=\'quantity\'], select[name=\'profile_id\']'),
-    dataType: 'json',
-    beforeSend: function() {
-      $('#profile-description').html('');
-    },
-    success: function(json) {
-      $('.alert, .text-danger').remove();
-
-      if (json['success']) {
-        $('#profile-description').html(json['success']);
-      }
-    }
-  });
+$('select[name=\'profile_id\'], input[name="quantity"]').change(function(){
+	$.ajax({
+		url: 'index.php?route=product/product/getRecurringDescription',
+		type: 'post',
+		data: $('input[name=\'product_id\'], input[name=\'quantity\'], select[name=\'profile_id\']'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#profile-description').html('');
+		},
+		success: function(json) {
+			$('.alert, .text-danger').remove();
+			
+			if (json['success']) {
+				$('#profile-description').html(json['success']);
+			}
+		}
+	});
 });
 //--></script>
 <script type="text/javascript"><!--
@@ -450,17 +450,27 @@ $('#button-cart').on('click', function() {
 		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();
-			
+			$('.form-group').removeClass('has-error');
+
 			if (json['error']) {
 				if (json['error']['option']) {
 					for (i in json['error']['option']) {
-						$('#input-option' + i).after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+						var element = $('#input-option' + i.replace('_', '-'));
+						
+						if (element.parent().hasClass('input-group')) {
+							element.parent().after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+						} else {
+							element.after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+						}
 					}
 				}
 				
 				if (json['error']['profile']) {
 					$('select[name=\'profile_id\']').after('<div class="text-danger">' + json['error']['profile'] + '</div>');
 				}
+				
+				// Highlight any found errors
+				$('.text-danger').parentsUntil('.form-group').addClass('has-error');
 			}
 			
 			if (json['success']) {

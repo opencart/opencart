@@ -103,6 +103,7 @@
             </div>
           </div>
           <?php foreach ($custom_fields as $custom_field) { ?>
+          <?php if ($custom_field['location'] == 'address') { ?>
           <?php if ($custom_field['type'] == 'select') { ?>
           <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
             <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -251,6 +252,7 @@
               <?php } ?>
             </div>
           </div>
+          <?php } ?>
           <?php } ?>
           <?php } ?>
           <div class="form-group">

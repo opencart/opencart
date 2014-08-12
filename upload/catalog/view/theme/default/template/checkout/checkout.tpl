@@ -237,7 +237,7 @@ $(document).delegate('#button-register', 'click', function() {
 				}
 				
 				// Highlight any found errors
-				$('.text-danger').parentsUntil('.form-group').addClass('has-error');					
+				$('.text-danger').parent().addClass('has-error');					
             } else {
                 <?php if ($shipping_required) { ?>              
                 var shipping_address = $('#payment-address input[name=\'shipping_address\']:checked').prop('value');
@@ -368,7 +368,7 @@ $(document).delegate('#button-payment-address', 'click', function() {
 				}
 								
 				// Highlight any found errors
-				$('.text-danger').parentsUntil('.form-group').addClass('has-error');			
+				$('.text-danger').parent().parent().addClass('has-error');				
             } else {
                 <?php if ($shipping_required) { ?>
                 $.ajax({
@@ -460,7 +460,7 @@ $(document).delegate('#button-shipping-address', 'click', function() {
 				}
 								
 				// Highlight any found errors
-				$('.text-danger').parentsUntil('.form-group').addClass('has-error');			
+				$('.text-danger').parent().parent().addClass('has-error');				
             } else {
                 $.ajax({
                     url: 'index.php?route=checkout/shipping_method',
@@ -543,7 +543,7 @@ $(document).delegate('#button-guest', 'click', function() {
 				}
 								
 				// Highlight any found errors
-				$('.text-danger').parentsUntil('.form-group').addClass('has-error');				
+				$('.text-danger').parent().addClass('has-error');					
             } else {
                 <?php if ($shipping_required) { ?>  
                 var shipping_address = $('#collapse-payment-address input[name=\'shipping_address\']:checked').prop('value');
@@ -660,7 +660,7 @@ $(document).delegate('#button-guest-shipping', 'click', function() {
 				}
 				
 				// Highlight any found errors
-				$('.text-danger').parentsUntil('.form-group').addClass('has-error');			
+				$('.text-danger').parent().addClass('has-error');				
             } else {
                 $.ajax({
                     url: 'index.php?route=checkout/shipping_method',

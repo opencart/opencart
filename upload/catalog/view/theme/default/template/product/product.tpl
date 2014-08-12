@@ -470,7 +470,7 @@ $('#button-cart').on('click', function() {
 				}
 				
 				// Highlight any found errors
-				$('.text-danger').parentsUntil('.form-group').addClass('has-error');
+				$('.text-danger').parent().addClass('has-error');
 			}
 			
 			if (json['success']) {

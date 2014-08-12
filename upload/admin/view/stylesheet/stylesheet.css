@@ -1,6 +1,4 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,greek-ext,vietnamese);
-@import url(http://fonts.googleapis.com/css?family=Roboto+Slab:400,300,100,700);
-
 html, body {
 	height: 100%;
 	margin: 0;
@@ -15,14 +13,18 @@ h1, h2, h3, h4, h5, h6, p {
 	margin-top: 20px;
 }
 .page-header h1 {
-	font-family: 'Roboto Slab', serif;
+	font-family: 'Open Sans', sans-serif;
 	font-weight: 300;
 	font-size: 25px;
-	color: #0085B2;
+	color: #555555;
 }
 a, a:hover {
 	color: #1e91cf;
 }
+.form-control {
+	font-size: 12px;
+}
+
 /* fix for bootstrap hidden and visible */
 span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: inline;
@@ -34,11 +36,12 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	overflow: hidden;
 }
 #header {
-	min-height: 45px;
+	min-height: 0px;
 	background: #FFFFFF;
 	border-bottom: 1px solid #E4E4E4;
 	margin-bottom: 0;
-	box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.05);
+	/*box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.05);*/
+	margin: 0;
 }
 #header .nav > li {
 	float: left;
@@ -52,7 +55,8 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #header .navbar-header {
 	width: 235px;
-	min-height: 44px;
+	min-height: 0px;
+	padding: 0;
 }
 /* Mobile */
 @media (max-width: 767px) {
@@ -78,7 +82,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #header .nav > li > a > i {
 	font-size: 18px;
 }
-
 #header .nav > li > a > .label {
 	text-shadow: none;
 	padding: 1px 4px;
@@ -124,7 +127,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	margin-left: 235px;
 }
 }
-
 /* Mobile */
 @media (max-width: 767px) {
 #column-left.active + #content {
@@ -132,12 +134,9 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	left: 235px;
 }
 }
-
-
 #column-left > div {
 	border-bottom: 1px solid #131E26;
 }
-
 #menu, #menu ul, #menu li {
 	padding: 0;
 	margin: 0;
@@ -202,7 +201,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	text-align: center;
 	color: #000000;
 }
-
 .nav-tabs, .nav-pills {
 	margin-bottom: 15px;
 }
@@ -211,11 +209,12 @@ div.required .control-label:before, td.required:before {
 	color: #F00;
 	font-weight: bold;
 }
-
+.alert {
+	padding: 10px 15px;
+}
 label.control-label {
 	font-weight: normal;
 }
-
 .table thead > tr > td, .table tbody > tr > td {
 	vertical-align: middle;
 }
@@ -232,6 +231,96 @@ label.control-label {
 .pagination {
 	margin: 0;
 }
+
+/* Buttons */
+.btn {
+	border-radius: 2px;
+	box-shadow: none;
+	font-size: 12px;
+	box-shadow: none;	
+	padding: 7.5px 12px;
+}
+.btn, .btn:active {
+		
+}
+.btn-xs {
+	font-size: 10px;
+	line-height: 11px;
+	padding: 4px 7px;
+}
+.btn-sm {
+	font-size: 12px;
+	line-height: 15px;
+	padding: 4px 9px;
+}
+.btn-lg {
+	font-size: 15px;
+	line-height: 19px;
+	padding: 9px 18px;
+}
+.btn:hover {
+	cursor: pointer;
+}
+.btn-default {
+	color: #555;
+	border-color: #ddd;
+	background: #f4f4f4;
+	border-bottom-color: #cecece;
+	background-image: linear-gradient(to bottom, #f4f4f4 0, #eaeaea 100%);
+	background-repeat: repeat-x;
+}
+.btn-primary {
+	border-color: #1a7ab9;
+	border-bottom-color: #16689e;
+	background: #1d89cf;
+	background-image: linear-gradient(to bottom, #1e8cd3 0, #1a7ab9 100%);
+	background-repeat: repeat-x;	
+}
+.btn-info {
+	border-color: #46b8da;
+	border-bottom-color: #2caed5;
+	background: #5bc0de;
+	background-image: linear-gradient(to bottom, #5fc2df 0, #46b8da 100%);
+	background-repeat: repeat-x;
+}
+.btn-success {
+	border-color: #4cb64c;
+	border-bottom-color: #42a142;
+	background: #5ebd5e;
+	background-image: linear-gradient(to bottom, #62be62 0, #4cb64c 100%);
+	background-repeat: repeat-x;
+}
+.btn-warning, .btn-warning:focus {
+	border-color: #f19a1f;
+	border-bottom-color: #e38b0e;
+	background: #f4b04f;
+	background-image: linear-gradient(to bottom, #f4b254 0, #f3a537 100%);
+	background-repeat: repeat-x;
+}
+.btn-danger, .btn-danger:focus {
+	border-color: #e3503e;
+	border-bottom-color: #df3823;
+	background: #e66454;
+	background-image: linear-gradient(to bottom, #e76858 0, #e3503e 100%);
+	background-repeat: repeat-x;
+}
+
+
+
+.well {
+	border-radius: 0px;
+	box-shadow: none;
+}
+
+
+
+
+
+
+
+
+
+
 
 .img-thumbnail i {
 	color: #FFFFFF;
@@ -250,25 +339,4 @@ label.control-label {
 	padding-top: 10px;
 }
 
-ul.alerts-dropdown > li > a {
-	position: relative;
-}
 
-ul.alerts-dropdown > li > a span {
-	right: 30px;
-	position: absolute;
-}
-
-.btn:hover {
-    cursor: pointer;
-}
-
-.alert {
-    position: relative;
-}
-
-.alert .close {
-    top: 6px;
-    right: 6px;
-    position: absolute;
-}

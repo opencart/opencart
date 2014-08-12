@@ -1224,7 +1224,7 @@ $('#button-customer').on('click', function() {
 				}				
 				
 				// Highlight any found errors
-				$('.text-danger').parentsUntil('.form-group').addClass('has-error');
+				$('.text-danger').parentsUntil('.form-group').parent().addClass('has-error');
 			} else {
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -1473,7 +1473,7 @@ $('#button-product-add').on('click', function() {
 				}
 
 				// Highlight any found errors
-				$('.text-danger').parentsUntil('.form-group').addClass('has-error');				
+				$('.text-danger').parentsUntil('.form-group').parent().addClass('has-error');				
 			} else {
 				$('#option').html('');
 				
@@ -1522,7 +1522,7 @@ $('#button-voucher-add').on('click', function() {
 				}	
 
 				// Highlight any found errors
-				$('.text-danger').parentsUntil('.form-group').addClass('has-error');					
+				$('.text-danger').parentsUntil('.form-group').parent().addClass('has-error');					
 			} else {
 				$('input[name=\'from_name\']').attr('value', '');	
 				$('input[name=\'from_email\']').attr('value', '');	
@@ -1540,7 +1540,6 @@ $('#button-voucher-add').on('click', function() {
 		}
 	});				
 });
-
 
 $('#tab-cart').delegate('.btn-danger', 'click', function() {
 	var node = this;
@@ -1710,7 +1709,7 @@ $('#button-payment-address').on('click', function() {
 				}	
 								
 				// Highlight any found errors
-				$('.text-danger').parentsUntil('.form-group').addClass('has-error');				
+				$('.text-danger').parentsUntil('.form-group').parent().addClass('has-error');				
 			} else {
 				// Payment Methods
 				$.ajax({
@@ -1896,7 +1895,7 @@ $('#button-shipping-address').on('click', function() {
 				}
 				
 				// Highlight any found errors
-				$('.text-danger').parentsUntil('.form-group').addClass('has-error');					
+				$('.text-danger').parentsUntil('.form-group').parent().addClass('has-error');					
 			} else {
 				// Shipping Methods
 				$.ajax({

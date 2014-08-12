@@ -272,3 +272,15 @@ ul.alerts-dropdown > li > a span {
     right: 6px;
     position: absolute;
 }
+
+.list-group-item > a {
+	display: inline-block !important;
+	padding: 2px 0 5px 0px !important;
+	margin: 0 0 10px 0px !important;
+	color: #222 !important;
+}
+
+.panel > .list-group {
+	padding: 8px;
+}
+

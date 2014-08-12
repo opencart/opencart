@@ -191,6 +191,11 @@ div.required .control-label:before {
 	min-height: 15px;
 	background-color: transparent;
 }
+@media (max-width: 991px) {
+	#menu .nav > li > a {
+		padding: 10px 8px 10px 10px;
+	}
+}
 #menu .nav > li > a:hover, #menu .nav > li.open > a {
 	background-color: rgba(0, 0, 0, 0.1);
 }
@@ -264,6 +269,7 @@ div.required .control-label:before {
 @media (max-width: 767px) {
 	#menu {
 		border-radius: 4px;
+		min-width: 160px;
 	}
 	#menu div.dropdown-inner > ul.list-unstyled {
 		display: block;
@@ -289,6 +295,25 @@ div.required .control-label:before {
 		border: none;
 		border-radius: 0;
 		color: #fff;
+	}
+	#menu .btn-navbar {
+		padding: 2px 15px;
+	}	
+
+	#menu #category {
+		padding-left: 10px;
+	}
+
+	#top .container {
+		padding: 0 0px;
+	}
+
+}
+
+@media (max-width: 254px) {
+	.pull-right {
+		float: left !important;
+		margin-top: 5px;
 	}
 }
 /* content */
@@ -530,10 +555,10 @@ footer h5 {
 	float: none;
 }
 @media (min-width: 767px) {
-.product-list .product-thumb .image {
-	float: left;
-	padding: 15px;
-}
+	.product-list .product-thumb .image {
+		float: left;
+		padding: 15px;
+	}
 }
 .product-thumb h4 {
 	font-weight: bold;
@@ -546,20 +571,20 @@ footer h5 {
 	margin-left: 230px;
 }
 @media (max-width: 1200px) {
-.product-grid .product-thumb .caption {
-	min-height: 210px;
-	padding: 0 10px;
-}
+	.product-grid .product-thumb .caption {
+		min-height: 210px;
+		padding: 0 10px;
+	}
 }
 @media (max-width: 767px) {
-.product-list .product-thumb .caption {
-	min-height: 0;
-	margin-left: 0;
-	padding: 0 10px;
-}
-.product-grid .product-thumb .caption {
-	min-height: 0;
-}
+	.product-list .product-thumb .caption {
+		min-height: 0;
+		margin-left: 0;
+		padding: 0 10px;
+	}
+	.product-grid .product-thumb .caption {
+		min-height: 0;
+	}
 }
 
 .product-thumb .rating {
@@ -608,9 +633,9 @@ h2.price {
 }
 
 @media (max-width: 768px) {
-.product-list .product-thumb .button-group {
-	border-left: none;
-}
+	.product-list .product-thumb .button-group {
+		border-left: none;
+	}
 }
 .product-thumb .button-group button {
 	width: 60%;
@@ -635,14 +660,14 @@ h2.price {
 	cursor: pointer;
 }
 @media (max-width: 1200px) {
-.product-thumb .button-group button, .product-thumb .button-group button + button {
-	width: 33.33%;
-}
+	.product-thumb .button-group button, .product-thumb .button-group button + button {
+		width: 33.33%;
+	}
 }
 @media (max-width: 767px) {
-.product-thumb .button-group button, .product-thumb .button-group button + button {
-	width: 33.33%;
-}
+	.product-thumb .button-group button, .product-thumb .button-group button + button {
+		width: 33.33%;
+	}
 }
 
 
@@ -677,9 +702,6 @@ h2.price {
 	float: left;
 	margin-left: 20px;
 }
-
-
-
 
 .flexslider .slides img {
 	width: inherit;

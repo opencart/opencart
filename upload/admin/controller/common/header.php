@@ -47,7 +47,7 @@ class ControllerCommonHeader extends Controller {
 			$data['home'] = $this->url->link('common/dashboard', '', 'SSL');
 		} else {
 			$data['logged'] = true;
-			
+
 			$data['home'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL');
 			$data['logout'] = $this->url->link('common/logout', 'token=' . $this->session->data['token'], 'SSL');
 
@@ -109,7 +109,7 @@ class ControllerCommonHeader extends Controller {
 			$affiliate_total = $this->model_marketing_affiliate->getTotalAffiliates(array('filter_approved' => false));
 
 			$data['affiliate_total'] = $affiliate_total;
-			$data['affiliate_approval'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . '&filter_approved=1', 'SSL');
+			$data['affiliate_approval'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . '&filter_approved=0', 'SSL');
 
 			$data['alerts'] = $customer_total + $product_total + $review_total + $return_total + $affiliate_total;
 

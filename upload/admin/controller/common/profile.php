@@ -10,7 +10,9 @@ class ControllerCommonProfile extends Controller {
 		$user_info = $this->model_user_user->getUser($this->user->getId());
 
 		if ($user_info) {
-			$data['username'] = $user_info['username'];
+			$data['firstname'] = $user_info['firstname'];
+			$data['lastname'] = $user_info['lastname'];
+			
 			$data['user_group'] = $user_info['user_group'] ;
 
 			if (is_file(DIR_IMAGE . $user_info['image'])) {

@@ -1,4 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,greek-ext,vietnamese);
+@import url(http://fonts.googleapis.com/css?family=Handlee);
 html, body {
 	height: 100%;
 	margin: 0;
@@ -48,7 +49,9 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	margin-bottom: 0;
 	/*box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.05);*/
 	margin: 0;
+	padding: 0;
 }
+
 #header .nav > li {
 	float: left;
 }
@@ -74,10 +77,10 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #header #button-menu + .navbar-brand {
 	padding: 10px 15px 4px 20px;
+	height: auto;	
 }
 #header .nav > li > a {
 	padding: 3px 15px 3px 15px;
-	margin: 0;
 	line-height: 38px;
 	cursor: pointer;
 	color: #363F44;
@@ -107,13 +110,27 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #button-menu:hover {
 	background: #EEEEEE;
 }
+
+
 #profile {
-	padding: 8px;
+	padding: 10px;
 	overflow: auto;
+	color: #666;
 }
 #profile img {
 	border-radius: 50%;
 }
+#profile div + div {
+	margin-left: 68px;
+}
+#profile h4 {
+	font-family: 'Handlee', cursive;
+	font-size: 15px;
+	color: #FFF;
+	margin-top: 12px;
+	margin-bottom: 0;
+}
+
 
 #column-left {
 	width: 0px;

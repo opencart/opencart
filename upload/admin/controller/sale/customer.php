@@ -600,6 +600,7 @@ class ControllerSaleCustomer extends Controller {
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
+		$data['text_loading'] = $this->language->get('text_loading');
 		$data['text_add_ban_ip'] = $this->language->get('text_add_ban_ip');
 		$data['text_remove_ban_ip'] = $this->language->get('text_remove_ban_ip');
 
@@ -637,6 +638,7 @@ class ControllerSaleCustomer extends Controller {
 		$data['button_transaction_add'] = $this->language->get('button_transaction_add');
 		$data['button_reward_add'] = $this->language->get('button_reward_add');
 		$data['button_remove'] = $this->language->get('button_remove');
+		$data['button_upload'] = $this->language->get('button_upload');
 
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_address'] = $this->language->get('tab_address');

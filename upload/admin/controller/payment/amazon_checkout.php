@@ -3,15 +3,17 @@ class ControllerPaymentAmazonCheckout extends Controller {
 	private $errors = array();
 
 	public function index() {
-		$this->load->model('setting/setting');
-		$this->load->model('localisation/geo_zone');
-		$this->load->model('localisation/order_status');
-		$this->load->model('payment/amazon_checkout');
 		$this->load->language('payment/amazon_checkout');
+		
+		$this->document->setTitle($this->language->get('heading_title'));
+		
+		$this->load->model('setting/setting');
+		
+		$this->load->model('payment/amazon_checkout');
+		
 		$this->load->library('cba');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-
 			$this->request->post['amazon_checkout_access_key'] = $this->request->post['amazon_checkout_access_key'];
 			$this->request->post['amazon_checkout_access_secret'] = $this->request->post['amazon_checkout_access_secret'];
 			$this->request->post['amazon_checkout_merchant_id'] = $this->request->post['amazon_checkout_merchant_id'];
@@ -24,19 +26,85 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$access_key = $this->request->post['amazon_checkout_access_key'];
-			$access_secret = $this->request->post['amazon_checkout_access_secret'];
-			$merchant_id = $this->request->post['amazon_checkout_merchant_id'];
-			$marketplace = $this->request->post['amazon_checkout_marketplace'];
-			$mode = $this->request->post['amazon_checkout_mode'];
-
-			$cba = new CBA($merchant_id, $access_key, $access_secret, $marketplace);
-			$cba->setMode($mode);
-
+			$cba = new CBA($this->request->post['amazon_checkout_merchant_id'], $this->request->post['amazon_checkout_access_key'], $this->request->post['amazon_checkout_access_secret'], $this->request->post['amazon_checkout_marketplace']);
+			$cba->setMode($this->request->post['amazon_checkout_mode']);
 			$cba->scheduleReports();
 
 			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
 		}
+		
+		$data['heading_title'] = $this->language->get('heading_title');
+		
+		$data['text_cron_job_token'] = $this->language->get('text_cron_job_token');
+		$data['text_cron_job_url'] = $this->language->get('text_cron_job_url');
+		$data['text_amazon_join'] = $this->language->get('text_amazon_join');
+		$data['text_home'] = $this->language->get('text_home');
+		$data['text_access_key'] = $this->language->get('text_access_key');
+		$data['text_access_secret'] = $this->language->get('text_access_secret');
+		$data['text_merchant_id'] = $this->language->get('text_merchant_id');
+		$data['text_marketplace'] = $this->language->get('text_marketplace');
+		$data['text_germany'] = $this->language->get('text_germany');
+		$data['text_uk'] = $this->language->get('text_uk');
+		$data['text_checkout_mode'] = $this->language->get('text_checkout_mode');
+		$data['text_geo_zone'] = $this->language->get('text_geo_zone');
+		$data['text_status'] = $this->language->get('text_status');
+		$data['text_live'] = $this->language->get('text_live');
+		$data['text_sandbox'] = $this->language->get('text_sandbox');
+		$data['text_sort_order'] = $this->language->get('text_sort_order');
+		$data['text_minimum_total'] = $this->language->get('text_minimum_total');
+		$data['text_all_geo_zones'] = $this->language->get('text_all_geo_zones');
+		$data['text_status_enabled'] = $this->language->get('text_status_enabled');
+		$data['text_status_disabled'] = $this->language->get('text_status_disabled');
+		$data['text_default_order_status'] = $this->language->get('text_default_order_status');
+		$data['text_ready_order_status'] = $this->language->get('text_ready_order_status');
+		$data['text_canceled_order_status'] = $this->language->get('text_canceled_order_status');
+		$data['text_shipped_order_status'] = $this->language->get('text_shipped_order_status');
+		$data['text_last_cron_job_run'] = $this->language->get('text_last_cron_job_run');
+		$data['text_ip'] = $this->language->get('text_ip');
+		$data['text_help_ip'] = $this->language->get('text_help_ip');
+		$data['text_allowed_ips'] = $this->language->get('text_allowed_ips');
+		$data['text_upload_success'] = $this->language->get('text_upload_success');
+		$data['text_add'] = $this->language->get('text_add');
+		$data['text_loading'] = $this->language->get('text_loading');
+		$data['text_button_settings'] = $this->language->get('text_button_settings');
+		$data['text_colour'] = $this->language->get('text_colour');
+		$data['text_orange'] = $this->language->get('text_orange');
+		$data['text_tan'] = $this->language->get('text_tan');
+		$data['text_white'] = $this->language->get('text_white');
+		$data['text_light'] = $this->language->get('text_light');
+		$data['text_dark'] = $this->language->get('text_dark');
+		$data['text_size'] = $this->language->get('text_size');
+		$data['text_medium'] = $this->language->get('text_medium');
+		$data['text_large'] = $this->language->get('text_large');
+		$data['text_x_large'] = $this->language->get('text_x_large');
+		$data['text_background'] = $this->language->get('text_background');
+		
+		$data['help_allowed_ips'] = $this->language->get('help_allowed_ips');
+		$data['help_cron_job_url'] = $this->language->get('help_cron_job_url');
+		$data['help_cron_job_token'] = $this->language->get('help_cron_job_token');
+		
+		$data['button_cancel'] = $this->language->get('button_cancel');
+		$data['button_save'] = $this->language->get('button_save');
+		$data['button_upload'] = $this->language->get('button_upload');
+		
+		$data['errors'] = $this->errors;
+
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_payment'),
+			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('payment/amazon_checkout', 'token=' . $this->session->data['token'], 'SSL')
+		);
 
 		if (isset($this->request->post['amazon_checkout_status'])) {
 			$data['amazon_checkout_status'] = $this->request->post['amazon_checkout_status'];
@@ -184,86 +252,18 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 		$data['cron_job_url'] = HTTPS_CATALOG . 'index.php?route=payment/amazon_checkout/cron&token=' . $data['amazon_checkout_cron_job_token'];
 
-		$data['text_cron_job_token'] = $this->language->get('text_cron_job_token');
-		$data['help_cron_job_token'] = $this->language->get('help_cron_job_token');
-		$data['text_cron_job_url'] = $this->language->get('text_cron_job_url');
-		$data['text_amazon_join'] = $this->language->get('text_amazon_join');
-		$data['text_home'] = $this->language->get('text_home');
-		$data['heading_title'] = $this->language->get('heading_title');
-		
-		$data['text_access_key'] = $this->language->get('text_access_key');
-		$data['text_access_secret'] = $this->language->get('text_access_secret');
-		$data['text_merchant_id'] = $this->language->get('text_merchant_id');
-		$data['text_marketplace'] = $this->language->get('text_marketplace');
-		$data['text_germany'] = $this->language->get('text_germany');
-		$data['text_uk'] = $this->language->get('text_uk');
-		$data['text_checkout_mode'] = $this->language->get('text_checkout_mode');
-		$data['text_geo_zone'] = $this->language->get('text_geo_zone');
-		$data['text_status'] = $this->language->get('text_status');
-		$data['text_live'] = $this->language->get('text_live');
-		$data['text_sandbox'] = $this->language->get('text_sandbox');
-		$data['text_sort_order'] = $this->language->get('text_sort_order');
-		$data['text_minimum_total'] = $this->language->get('text_minimum_total');
-		$data['text_all_geo_zones'] = $this->language->get('text_all_geo_zones');
-		$data['text_status_enabled'] = $this->language->get('text_status_enabled');
-		$data['text_status_disabled'] = $this->language->get('text_status_disabled');
-		$data['text_default_order_status'] = $this->language->get('text_default_order_status');
-		$data['text_ready_order_status'] = $this->language->get('text_ready_order_status');
-		$data['text_canceled_order_status'] = $this->language->get('text_canceled_order_status');
-		$data['text_shipped_order_status'] = $this->language->get('text_shipped_order_status');
-		$data['text_last_cron_job_run'] = $this->language->get('text_last_cron_job_run');
-		$data['text_ip'] = $this->language->get('text_ip');
-		$data['text_help_ip'] = $this->language->get('text_help_ip');
-		$data['text_allowed_ips'] = $this->language->get('text_allowed_ips');
-		$data['text_upload_success'] = $this->language->get('text_upload_success');
-		$data['text_add'] = $this->language->get('text_add');
-		$data['text_loading'] = $this->language->get('text_loading');
-
-		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_upload'] = $this->language->get('button_upload');
-
-		$data['text_button_settings'] = $this->language->get('text_button_settings');
-		$data['text_colour'] = $this->language->get('text_colour');
-		$data['text_orange'] = $this->language->get('text_orange');
-		$data['text_tan'] = $this->language->get('text_tan');
-		$data['text_white'] = $this->language->get('text_white');
-		$data['text_light'] = $this->language->get('text_light');
-		$data['text_dark'] = $this->language->get('text_dark');
-		$data['text_size'] = $this->language->get('text_size');
-		$data['text_medium'] = $this->language->get('text_medium');
-		$data['text_large'] = $this->language->get('text_large');
-		$data['text_x_large'] = $this->language->get('text_x_large');
-		$data['text_background'] = $this->language->get('text_background');
-
-		$data['help_allowed_ips'] = $this->language->get('help_allowed_ips');
-		$data['help_cron_job_url'] = $this->language->get('help_cron_job_url');
-
 		$data['last_cron_job_run'] = $this->config->get('amazon_checkout_last_cron_job_run');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/amazon_checkout', 'token=' . $this->session->data['token'], 'SSL')
-		);
+		
+		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+		
+		$this->load->model('localisation/order_status');
+		
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-
-		$data['errors'] = $this->errors;
+		
+		$data['action'] = $this->url->link('payment/amazon_checkout', 'token=' . $this->session->data['token'], 'SSL');
+		
 		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token']);
 
 		$data['button_colours'] = array(
@@ -345,10 +345,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 	public function addSubmission() {
 		$this->load->model('payment/amazon_checkout');
 
-		$order_id = $this->request->get['order_id'];
-		$feed_submission_id = $this->request->get['submission_id'];
-
-		$this->model_payment_amazon_checkout->addReportSubmission($order_id, $feed_submission_id);
+		$this->model_payment_amazon_checkout->addReportSubmission($this->request->get['order_id'], $this->request->get['submission_id']);
 	}
 
 	public function orderAction() {
@@ -357,17 +354,16 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$this->load->language('sale/order');
 		$this->load->language('payment/amazon_checkout');
 
-		$order_id = $this->request->get['order_id'];
-		$amazon_order_info = $this->model_payment_amazon_checkout->getOrder($order_id);
+		$amazon_order_info = $this->model_payment_amazon_checkout->getOrder($this->request->get['order_id']);
 
 		if ($amazon_order_info) {
-			$order_products = $this->model_sale_order->getOrderProducts($order_id);
-			$order_info = $this->model_sale_order->getOrder($order_id);
+			$order_products = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
+			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
 
 			$data['products'] = array();
 
 			foreach ($order_products as $product) {
-				$product_options = $this->model_sale_order->getOrderOptions($order_id, $product['order_product_id']);
+				$product_options = $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $product['order_product_id']);
 
 				$order_item_code = '';
 
@@ -389,7 +385,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 				);
 			}
 
-			$data['report_submissions'] = $this->model_payment_amazon_checkout->getReportSubmissions($order_id);
+			$data['report_submissions'] = $this->model_payment_amazon_checkout->getReportSubmissions($this->request->get['order_id']);
 
 			$data['text_amazon_details'] = $this->language->get('text_amazon_details');
 			$data['text_amazon_order_id'] = $this->language->get('text_amazon_order_id');
@@ -413,7 +409,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 			$data['amazon_order_id'] = $amazon_order_info['amazon_order_id'];
 
 			$data['token'] = $this->session->data['token'];
-			$data['order_id'] = $order_id;
+			$data['order_id'] = $this->request->get['order_id'];
 
 			return $this->load->view('payment/amazon_checkout_order.tpl', $data);
 		}

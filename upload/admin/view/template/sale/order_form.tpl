@@ -9,7 +9,7 @@
   <div class="container-fluid">
     <form class="form-horizontal">
       <ul id="order" class="nav nav-tabs nav-justified">
-        <li class="active"><a href="#tab-customer" data-toggle="tab">1. <?php echo $tab_customer; ?></a></li>
+        <li class="disabled active"><a href="#tab-customer" data-toggle="tab">1. <?php echo $tab_customer; ?></a></li>
         <li class="disabled"><a href="#tab-cart" data-toggle="tab">2. <?php echo $tab_product; ?></a></li>
         <li class="disabled"><a href="#tab-payment" data-toggle="tab">3. <?php echo $tab_payment; ?></a></li>
         <li class="disabled"><a href="#tab-shipping" data-toggle="tab">4. <?php echo $tab_shipping; ?></a></li>
@@ -875,7 +875,7 @@
 $('#order a[data-toggle=\'tab\']').on('click', function(e) {
 	return false;
 });
-
+			
 // Add all products to the cart using the api
 $('#button-refresh').on('click', function() {
 	$.ajax({
@@ -1033,52 +1033,6 @@ $('#button-refresh').on('click', function() {
 	});
 });
 
-$('#content').delegate('.button-upload', 'click', function() {
-	var node = this;
-	
-	$('#form-upload').remove();
-	
-	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
-
-	$('#form-upload input[name=\'file\']').trigger('click');
-
-	$('#form-upload input[name=\'file\']').on('change', function() {
-		$.ajax({
-			url: 'index.php?route=tool/upload/upload&token=<?php echo $token; ?>',
-			type: 'post',		
-			dataType: 'json',
-			data: new FormData($(this).parent()[0]),
-			cache: false,
-			contentType: false,
-			processData: false,		
-			beforeSend: function() {
-				$(node).find('i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-				$(node).prop('disabled', true);
-			},
-			complete: function() {
-				$(node).find('i').replaceWith('<i class="fa fa-upload"></i>');
-				$(node).prop('disabled', false);
-			},		
-			success: function(json) {
-				if (json['error']) {
-					$(node).parent().find('input[type=\'hidden\']').after('<div class="text-danger">' + json['error'] + '</div>');
-				}
-							
-				if (json['success']) {
-					alert(json['success']);
-				}
-				
-				if (json['code']) {
-					$(node).parent().find('input[type=\'hidden\']').attr('value', json['code']);
-				}
-			},			
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	});
-});
-
 // Customer
 $('input[name=\'customer\']').autocomplete({
 	'source': function(request, response) {
@@ -1213,36 +1167,18 @@ $('#button-customer').on('click', function() {
 					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}				
 				
-				if (json['error']['firstname']) {
-					$('input[name=\'firstname\']').after('<div class="text-danger">' + json['error']['firstname'] + '</div');
-				}					
-				
-				if (json['error']['lastname']) {
-					$('input[name=\'lastname\']').after('<div class="text-danger">' + json['error']['lastname'] + '</div');
-				}	
-				
-				if (json['error']['email']) {
-					$('input[name=\'email\']').after('<div class="text-danger">' + json['error']['email'] + '</div');
-				}
-				
-				if (json['error']['telephone']) {
-					$('input[name=\'telephone\']').after('<div class="text-danger">' + json['error']['telephone'] + '</div');
-				}
-				
-				if (json['error']['custom_field']) {	
-					for (i in json['error']['custom_field']) {
-						$('#input-custom-field' + i).after('<div class="text-danger">' + json['error']['custom_field'][i] + '</div>');
+				for (i in json['error']) {
+					var element = $('#input-' + i.replace('_', '-'));
+					
+					if (element.parent().hasClass('input-group')) {
+                   		$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+					} else {
+						$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
 					}
-				}	
+				}				
 				
 				// Highlight any found errors
-				$('.text-danger').each(function() {
-					var element = $(this).parent().parent();
-					
-					if (element.hasClass('form-group')) {
-						element.addClass('has-error');
-					}
-				});								
+				$('.text-danger').parentsUntil('.form-group').parent().addClass('has-error');
 			} else {
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -1476,7 +1412,13 @@ $('#button-product-add').on('click', function() {
 				
 				if (json['error']['option']) {	
 					for (i in json['error']['option']) {
-						$('#input-option' + i).after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+						var element = $('#input-option' + i.replace('_', '-'));
+						
+						if (element.parent().hasClass('input-group')) {
+							$(element).parent().after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+						} else {
+							$(element).after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+						}
 					}
 				}
 				
@@ -1485,46 +1427,7 @@ $('#button-product-add').on('click', function() {
 				}
 
 				// Highlight any found errors
-				$('.text-danger').each(function() {
-					var element = $(this).parent().parent();
-					
-					if (element.hasClass('form-group')) {
-						element.addClass('has-error');
-					}
-				});					
-			} else {
-				// Refresh products, vouchers and totals
-				$('#button-refresh').trigger('click');
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});				
-});
-
-$('#tab-cart').delegate('.btn-danger', 'click', function() {
-	var node = this;
-	
-	$.ajax({
-		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/remove&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-		type: 'post',
-		data: 'key=' + $(node).parent().parent().find('input[name=\'key\']').val(),
-		dataType: 'json',
-		beforeSend: function() {
-			$(node).find('i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-			$(node).prop('disabled', true);
-		},
-		complete: function() {
-			$(node).find('i').replaceWith('<i class="fa fa-minus-circle"></i>');
-			$(node).prop('disabled', false);
-		},
-		success: function(json) {
-			$('.alert, .text-danger').remove();
-		
-			// Check for errors
-			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('.text-danger').parentsUntil('.form-group').parent().addClass('has-error');				
 			} else {
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -1559,35 +1462,19 @@ $('#button-voucher-add').on('click', function() {
 				if (json['error']['warning']) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
-				
-				if (json['error']['from_name']) {
-					$('input[name=\'from_name\']').after('<div class="text-danger">' + json['error']['from_name'] + '</div');
+
+				for (i in json['error']) {
+					var element = $('#input-' + i.replace('_', '-'));
+					
+					if (element.parent().hasClass('input-group')) {
+						$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+					} else {
+						$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+					}
 				}	
-				
-				if (json['error']['from_email']) {
-					$('input[name=\'from_email\']').after('<div class="text-danger">' + json['error']['from_email'] + '</div>');
-				}	
-							
-				if (json['error']['to_name']) {
-					$('input[name=\'to_name\']').after('<div class="text-danger">' + json['error']['to_name'] + '</div>');
-				}	
-				
-				if (json['error']['to_email']) {
-					$('input[name=\'to_email\']').after('<div class="text-danger">' + json['error']['to_email'] + '</div>');
-				}	
-				
-				if (json['error']['amount']) {
-					$('input[name=\'amount\']').after('<div class="text-danger">' + json['error']['amount'] + '</div>');
-				}
 
 				// Highlight any found errors
-				$('.text-danger').each(function() {
-					var element = $(this).parent().parent();
-					
-					if (element.hasClass('form-group')) {
-						element.addClass('has-error');
-					}
-				});					
+				$('.text-danger').parentsUntil('.form-group').parent().addClass('has-error');					
 			} else {
 				$('input[name=\'from_name\']').attr('value', '');	
 				$('input[name=\'from_email\']').attr('value', '');	
@@ -1595,16 +1482,40 @@ $('#button-voucher-add').on('click', function() {
 				$('input[name=\'to_email\']').attr('value', '');	
 				$('textarea[name=\'message\']').attr('value', '');	
 				$('input[name=\'amount\']').attr('value', '<?php echo addslashes($voucher_min); ?>');
-				
-				// Highlight any found errors
-				$('.text-danger').each(function() {
-					var element = $(this).parent().parent();
 					
-					if (element.hasClass('form-group')) {
-						element.addClass('has-error');
-					}
-				});
-					
+				// Refresh products, vouchers and totals
+				$('#button-refresh').trigger('click');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});				
+});
+
+$('#tab-cart').delegate('.btn-danger', 'click', function() {
+	var node = this;
+	
+	$.ajax({
+		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/remove&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+		type: 'post',
+		data: 'key=' + $(node).parent().parent().find('input[name=\'key\']').val(),
+		dataType: 'json',
+		beforeSend: function() {
+			$(node).find('i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+			$(node).prop('disabled', true);
+		},
+		complete: function() {
+			$(node).find('i').replaceWith('<i class="fa fa-minus-circle"></i>');
+			$(node).prop('disabled', false);
+		},
+		success: function(json) {
+			$('.alert, .text-danger').remove();
+		
+			// Check for errors
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			} else {
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
 			}
@@ -1738,45 +1649,19 @@ $('#button-payment-address').on('click', function() {
 				if (json['error']['warning']) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
-								
-				if (json['error']['firstname']) {
-					$('#tab-payment input[name=\'firstname\']').after('<div class="text-danger">' + json['error']['firstname'] + '</div');
-				}					
-				
-				if (json['error']['lastname']) {
-					$('#tab-payment input[name=\'lastname\']').after('<div class="text-danger">' + json['error']['lastname'] + '</div');
-				}	
-				
-				if (json['error']['address_1']) {
-					$('#tab-payment input[name=\'address_1\']').after('<div class="text-danger">' + json['error']['address_1'] + '</div');
-				}
-				
-				if (json['error']['city']) {
-					$('#tab-payment input[name=\'city\']').after('<div class="text-danger">' + json['error']['city'] + '</div');
-				}
-				
-				if (json['error']['country']) {
-					$('#tab-payment select[name=\'country_id\']').after('<div class="text-danger">' + json['error']['country'] + '</div');
-				}	
-				
-				if (json['error']['zone']) {
-					$('#tab-payment select[name=\'zone_id\']').after('<div class="text-danger">' + json['error']['zone'] + '</div');
-				}	
-				
-				if (json['error']['custom_field']) {	
-					for (i in json['error']['custom_field']) {
-						$('#input-payment-custom-field' + i).after('<div class="text-danger">' + json['error']['custom_field'][i] + '</div>');
-					}
-				}
-				
-				// Highlight any found errors
-				$('.text-danger').each(function() {
-					var element = $(this).parent().parent();
+
+				for (i in json['error']) {
+					var element = $('#input-payment-' + i.replace('_', '-'));
 					
-					if (element.hasClass('form-group')) {
-						element.addClass('has-error');
+					if ($(element).parent().hasClass('input-group')) {
+						$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+					} else {
+						$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
 					}
-				});				
+				}	
+								
+				// Highlight any found errors
+				$('.text-danger').parentsUntil('.form-group').parent().addClass('has-error');				
 			} else {
 				// Payment Methods
 				$.ajax({
@@ -1950,45 +1835,19 @@ $('#button-shipping-address').on('click', function() {
 				if (json['error']['warning']) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
-								
-				if (json['error']['firstname']) {
-					$('#tab-shipping input[name=\'firstname\']').after('<div class="text-danger">' + json['error']['firstname'] + '</div');
-				}					
-				
-				if (json['error']['lastname']) {
-					$('#tab-shipping input[name=\'lastname\']').after('<div class="text-danger">' + json['error']['lastname'] + '</div');
-				}	
-				
-				if (json['error']['address_1']) {
-					$('#tab-shipping input[name=\'address_1\']').after('<div class="text-danger">' + json['error']['address_1'] + '</div');
-				}
-				
-				if (json['error']['city']) {
-					$('#tab-shipping input[name=\'city\']').after('<div class="text-danger">' + json['error']['city'] + '</div');
-				}
-				
-				if (json['error']['country']) {
-					$('#tab-shipping select[name=\'country_id\']').after('<div class="text-danger">' + json['error']['country'] + '</div');
-				}	
-				
-				if (json['error']['zone']) {
-					$('#tab-shipping select[name=\'zone_id\']').after('<div class="text-danger">' + json['error']['zone'] + '</div');
-				}	
-				
-				if (json['error']['custom_field']) {	
-					for (i in json['error']['custom_field']) {
-						$('#input-shipping-custom-field' + i).after('<div class="text-danger">' + json['error']['custom_field'][i] + '</div>');
+
+				for (i in json['error']) {
+					var element = $('#input-shipping-' + i.replace('_', '-'));
+					
+					if ($(element).parent().hasClass('input-group')) {
+						$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+					} else {
+						$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
 					}
 				}
 				
 				// Highlight any found errors
-				$('.text-danger').each(function() {
-					var element = $(this).parent().parent();
-					
-					if (element.hasClass('form-group')) {
-						element.addClass('has-error');
-					}
-				});				
+				$('.text-danger').parentsUntil('.form-group').parent().addClass('has-error');					
 			} else {
 				// Shipping Methods
 				$.ajax({
@@ -2314,5 +2173,67 @@ $('#button-save').on('click', function() {
 		}
 	});		
 });
+
+
+$('#content').delegate('.button-upload', 'click', function() {
+	var node = this;
+	
+	$('#form-upload').remove();
+	
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+
+	$('#form-upload input[name=\'file\']').trigger('click');
+
+	$('#form-upload input[name=\'file\']').on('change', function() {
+		$.ajax({
+			url: 'index.php?route=tool/upload/upload&token=<?php echo $token; ?>',
+			type: 'post',		
+			dataType: 'json',
+			data: new FormData($(this).parent()[0]),
+			cache: false,
+			contentType: false,
+			processData: false,		
+			beforeSend: function() {
+				$(node).find('i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+				$(node).prop('disabled', true);
+			},
+			complete: function() {
+				$(node).find('i').replaceWith('<i class="fa fa-upload"></i>');
+				$(node).prop('disabled', false);
+			},		
+			success: function(json) {
+				$('.text-danger').remove();
+				
+				if (json['error']) {
+					$(node).parent().find('input[type=\'hidden\']').after('<div class="text-danger">' + json['error'] + '</div>');
+				}
+							
+				if (json['success']) {
+					alert(json['success']);
+				}
+				
+				if (json['code']) {
+					$(node).parent().find('input[type=\'hidden\']').attr('value', json['code']);
+				}
+			},			
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	});
+});
+
+$('.date').datetimepicker({
+	pickTime: false
+});
+
+$('.datetime').datetimepicker({
+	pickDate: true,
+	pickTime: true
+});
+
+$('.time').datetimepicker({
+	pickDate: false
+});	
 //--></script> 
 <?php echo $footer; ?>

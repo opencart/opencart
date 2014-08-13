@@ -573,6 +573,30 @@ class ControllerMarketingAffiliate extends Controller {
 		} else {
 			$data['error_email'] = '';
 		}
+		
+		if (isset($this->error['cheque'])) {
+			$data['error_cheque'] = $this->error['cheque'];
+		} else {
+			$data['error_cheque'] = '';
+		}
+		
+		if (isset($this->error['paypal'])) {
+			$data['error_paypal'] = $this->error['paypal'];
+		} else {
+			$data['error_paypal'] = '';
+		}
+		
+		if (isset($this->error['bank_account_name'])) {
+			$data['error_bank_account_name'] = $this->error['bank_account_name'];
+		} else {
+			$data['error_bank_account_name'] = '';
+		}
+		
+		if (isset($this->error['bank_account_number'])) {
+			$data['error_bank_account_number'] = $this->error['bank_account_number'];
+		} else {
+			$data['error_bank_account_number'] = '';
+		}
 
 		if (isset($this->error['telephone'])) {
 			$data['error_telephone'] = $this->error['telephone'];
@@ -932,6 +956,24 @@ class ControllerMarketingAffiliate extends Controller {
 
 		if ((utf8_strlen($this->request->post['email']) > 96) || (!filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL))) {
 			$this->error['email'] = $this->language->get('error_email');
+		}
+		
+		if ($this->request->post['payment'] == 'cheque') {
+			if ($this->request->post['cheque'] == '') {
+				$this->error['cheque'] = $this->language->get('error_cheque');
+			}
+		} elseif ($this->request->post['payment'] == 'paypal') {
+			if ((utf8_strlen($this->request->post['paypal']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['paypal'])) {
+				$this->error['paypal'] = $this->language->get('error_paypal');
+			}
+		} elseif ($this->request->post['payment'] == 'bank') {
+			if ($this->request->post['bank_account_name'] == '') {
+				$this->error['bank_account_name'] = $this->language->get('error_bank_account_name');
+			}
+			
+			if ($this->request->post['bank_account_number'] == '') {
+				$this->error['bank_account_number'] = $this->language->get('error_bank_account_number');
+			}
 		}
 
 		$affiliate_info = $this->model_marketing_affiliate->getAffiliateByEmail($this->request->post['email']);

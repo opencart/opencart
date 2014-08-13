@@ -505,7 +505,7 @@ class ControllerSettingSetting extends Controller {
 		$this->load->model('tool/image');
 
 		if (isset($this->request->post['config_image']) && is_file(DIR_IMAGE . $this->request->post['config_image'])) {
-			$data['thumb'] = $this->request->post['config_image'];
+			$data['thumb'] = $this->model_tool_image->resize($this->request->post['config_image'], 100, 100);
 		} elseif ($this->config->get('config_image') && is_file(DIR_IMAGE . $this->config->get('config_image'))) {
 			$data['thumb'] = $this->model_tool_image->resize($this->config->get('config_image'), 100, 100);
 		} else {

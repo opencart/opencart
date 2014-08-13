@@ -103,6 +103,7 @@
             </div>
           </div>
           <?php foreach ($custom_fields as $custom_field) { ?>
+          <?php if ($custom_field['location'] == 'address') { ?>
           <?php if ($custom_field['type'] == 'select') { ?>
           <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
             <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -253,6 +254,7 @@
           </div>
           <?php } ?>
           <?php } ?>
+          <?php } ?>
           <div class="form-group">
             <label class="col-sm-2 control-label"><?php echo $entry_default; ?></label>
             <div class="col-sm-10">
@@ -342,7 +344,7 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 
 	$('#form-upload input[name=\'file\']').on('change', function() {
 		$.ajax({
-			url: 'index.php?route=account/account/upload',
+			url: 'index.php?route=tool/upload',
 			type: 'post',
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
@@ -358,6 +360,8 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 				$(node).prop('disabled', false);
 			},
 			success: function(json) {
+				$('.text-danger').remove();
+				
 				if (json['error']) {
 					$(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
 				}

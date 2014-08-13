@@ -127,16 +127,22 @@
           <div class="panel-heading">
             <h1 class="panel-title"><i class="fa fa-calendar-o fa-lg"></i> <?php echo $text_activity; ?></h1>
           </div>
-          <ul class="list-group">
-            <?php if ($activities) { ?>
-            <?php foreach ($activities as $activity) { ?>
-            <li class="list-group-item"><?php echo $activity['comment']; ?><br />
-              <small class="text-muted"><i class="fa fa-clock-o"></i> <?php echo $activity['date_added']; ?></small></li>
-            <?php } ?>
-            <?php } else { ?>
-            <li class="list-group-item text-center"><?php echo $text_no_results; ?></li>
-            <?php } ?>
-          </ul>
+          <div class="panel-body">
+            <ul class="list-group">
+              <?php if ($activities) { ?>
+              <?php foreach ($activities as $activity) { ?>
+              <li class="list-group-item">
+                <div class="activity">
+                  <?php echo $activity['comment']; ?><br />
+                  <small class="text-muted"><i class="fa fa-clock-o"></i> <?php echo $activity['date_added']; ?></small>
+                </div>
+              </li>
+              <?php } ?>
+              <?php } else { ?>
+              <li class="list-group-item text-center"><?php echo $text_no_results; ?></li>
+              <?php } ?>
+            </ul>
+          </div>
         </div>
       </div>
       <div class="col-sm-8">

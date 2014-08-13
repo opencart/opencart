@@ -14,7 +14,7 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <form action="" method="post" enctype="multipart/form-data" id="form-amazon-checkout" class="form-horizontal">
+    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-amazon-checkout" class="form-horizontal">
       <div class="form-group">
         <div class="col-sm-10"> <?php echo $text_amazon_join; ?> </div>
       </div>

@@ -166,7 +166,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <button type="button" id="button-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default button-upload"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+              <button type="button" id="button-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
               <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
             </div>
           </div>
@@ -484,7 +484,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <button type="button" id="button-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default button-upload"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+              <button type="button" id="button-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
               <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
             </div>
           </div>
@@ -695,7 +695,7 @@
           <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <button type="button" id="button-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default button-upload"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+              <button type="button" id="button-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
               <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
             </div>
           </div>
@@ -1335,7 +1335,7 @@ $('input[name=\'product\']').autocomplete({
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 control-label">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-10">';
-					html += '    <button type="button" id="button-upload' + option['product_option_id'] + '" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default button-upload"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>';
+					html += '    <button type="button" id="button-upload' + option['product_option_id'] + '" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>';
 					html += '    <input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" id="input-option' + option['product_option_id'] + '" />';
 					html += '  </div>';
 					html += '</div>';
@@ -2150,7 +2150,7 @@ $('#button-save').on('click', function() {
 	});		
 });
 
-$('#content').delegate('.button-upload', 'click', function() {
+$('#content').delegate('button[id^=\'button-custom-field\'], button[id^=\'button-upload\'], button[id^=\'button-payment-custom-field\'], button[id^=\'button-shipping-custom-field\']', 'click', function() {
 	var node = this;
 	
 	$('#form-upload').remove();

@@ -24,6 +24,12 @@ a, a:hover {
 .form-control {
 	font-size: 12px;
 }
+.dropdown-menu li {
+	font-size: 12px;
+}
+.datepicker {
+	font-size: 12px;
+}
 
 /* fix for bootstrap hidden and visible */
 span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
@@ -101,6 +107,14 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #button-menu:hover {
 	background: #EEEEEE;
 }
+#profile {
+	padding: 8px;
+	overflow: auto;
+}
+#profile img {
+	border-radius: 50%;
+}
+
 #column-left {
 	width: 0px;
 	height: 100%;
@@ -201,6 +215,8 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	text-align: center;
 	color: #000000;
 }
+
+
 .nav-tabs, .nav-pills {
 	margin-bottom: 15px;
 }
@@ -231,17 +247,15 @@ label.control-label {
 .pagination {
 	margin: 0;
 }
-
 /* Buttons */
 .btn {
 	border-radius: 2px;
 	box-shadow: none;
 	font-size: 12px;
-	box-shadow: none;	
-	padding: 7.5px 12px;
+	box-shadow: none;
+	padding: 7.5px 13px;
 }
 .btn, .btn:active {
-		
 }
 .btn-xs {
 	font-size: 10px;
@@ -274,7 +288,7 @@ label.control-label {
 	border-bottom-color: #16689e;
 	background: #1d89cf;
 	background-image: linear-gradient(to bottom, #1e8cd3 0, #1a7ab9 100%);
-	background-repeat: repeat-x;	
+	background-repeat: repeat-x;
 }
 .btn-info {
 	border-color: #46b8da;
@@ -304,24 +318,10 @@ label.control-label {
 	background-image: linear-gradient(to bottom, #e76858 0, #e3503e 100%);
 	background-repeat: repeat-x;
 }
-
-
-
 .well {
 	border-radius: 0px;
 	box-shadow: none;
 }
-
-
-
-
-
-
-
-
-
-
-
 .img-thumbnail i {
 	color: #FFFFFF;
 	background-color: #EEEEEE;
@@ -338,5 +338,3 @@ label.control-label {
 	height: 40px;
 	padding-top: 10px;
 }
-
-

@@ -187,10 +187,10 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$data['text_cron_job_token'] = $this->language->get('text_cron_job_token');
 		$data['help_cron_job_token'] = $this->language->get('help_cron_job_token');
 		$data['text_cron_job_url'] = $this->language->get('text_cron_job_url');
-		$data['help_cron_job_url'] = $this->language->get('help_cron_job_url');
 		$data['text_amazon_join'] = $this->language->get('text_amazon_join');
 		$data['text_home'] = $this->language->get('text_home');
 		$data['heading_title'] = $this->language->get('heading_title');
+		
 		$data['text_access_key'] = $this->language->get('text_access_key');
 		$data['text_access_secret'] = $this->language->get('text_access_secret');
 		$data['text_merchant_id'] = $this->language->get('text_merchant_id');
@@ -217,9 +217,11 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$data['text_allowed_ips'] = $this->language->get('text_allowed_ips');
 		$data['text_upload_success'] = $this->language->get('text_upload_success');
 		$data['text_add'] = $this->language->get('text_add');
+		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_save'] = $this->language->get('button_save');
+		$data['button_upload'] = $this->language->get('button_upload');
 
 		$data['text_button_settings'] = $this->language->get('text_button_settings');
 		$data['text_colour'] = $this->language->get('text_colour');
@@ -235,6 +237,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$data['text_background'] = $this->language->get('text_background');
 
 		$data['help_allowed_ips'] = $this->language->get('help_allowed_ips');
+		$data['help_cron_job_url'] = $this->language->get('help_cron_job_url');
 
 		$data['last_cron_job_run'] = $this->config->get('amazon_checkout_last_cron_job_run');
 

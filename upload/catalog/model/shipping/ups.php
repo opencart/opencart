@@ -275,13 +275,15 @@ class ModelShippingUps extends Model {
 				$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('ups_weight_class_id')) . ')';
 			}
 
-			$method_data = array(
-				'code'       => 'ups',
-				'title'      => $title,
-				'quote'      => $quote_data,
-				'sort_order' => $this->config->get('ups_sort_order'),
-				'error'      => $error
-			);
+			if ($quote_data || $error) {
+				$method_data = array(
+					'code'       => 'ups',
+					'title'      => $title,
+					'quote'      => $quote_data,
+					'sort_order' => $this->config->get('ups_sort_order'),
+					'error'      => $error
+				);
+			}
 		}
 
 		return $method_data;

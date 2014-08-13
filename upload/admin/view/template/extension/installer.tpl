@@ -15,7 +15,7 @@
       <div class="form-group">
         <label class="col-sm-2 control-label" for="button-upload"><?php echo $entry_upload; ?> </label>
         <div class="col-sm-10">
-          <button type="button" id="button-upload" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+          <button type="button" id="button-upload" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
           <?php if ($error_warning) { ?>
           <button type="button" id="button-clear" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
           <?php } else { ?>
@@ -70,13 +70,11 @@ $('#button-upload').on('click', function() {
 			contentType: false,
 			processData: false,		
 			beforeSend: function() {
-				$('#button-upload i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-				$('#button-upload').prop('disabled', true);
+				$('#button-upload').button('loading');
 			},
 			complete: function() {
-				$('#button-upload i').replaceWith('<i class="fa fa-upload"></i>');
-				$('#button-upload').prop('disabled', false);
-			},		
+				$('#button-upload').button('reset');
+			},
 			success: function(json) {
 				if (json['error']) {
 					$('#progress-bar').addClass('progress-bar-danger');				

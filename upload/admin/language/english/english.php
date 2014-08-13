@@ -22,6 +22,7 @@ $_['text_all_zones']                = 'All Zones';
 $_['text_default']                  = ' <b>(Default)</b>';
 $_['text_close']                    = 'Close';
 $_['text_pagination']               = 'Showing %d to %d of %d (%d Pages)';
+$_['text_loading']                  = 'Loading...';
 $_['text_no_results']               = 'No results!';
 $_['text_confirm']                  = 'Are you sure?';
 $_['text_home']                     = '<i class="fa fa-home fa-lg"></i>';

@@ -2150,7 +2150,7 @@ $('#button-save').on('click', function() {
 	});		
 });
 
-$('#content').delegate('button[id^=\'button-custom-field\'], button[id^=\'button-upload\'], button[id^=\'button-payment-custom-field\'], button[id^=\'button-shipping-custom-field\']', 'click', function() {
+$('#content').delegate('button[id^=\'button-upload\'], button[id^=\'button-custom-field\'], button[id^=\'button-payment-custom-field\'], button[id^=\'button-shipping-custom-field\']', 'click', function() {
 	var node = this;
 	
 	$('#form-upload').remove();

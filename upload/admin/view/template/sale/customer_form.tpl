@@ -195,7 +195,7 @@
                   <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
                     <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
                     <div class="col-sm-10">
-                      <button type="button" id="button-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default button-upload"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+                      <button type="button" id="button-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
                       <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
                       <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
                       <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
@@ -495,7 +495,7 @@
                   <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
                     <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
                     <div class="col-sm-10">
-                      <button type="button" id="button-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default button-upload"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+                      <button type="button" id="button-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
                       <input type="hidden" name="address[<?php echo $address_row; ?>][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : ''); ?>" />
                       <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
                       <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
@@ -785,7 +785,7 @@ function addAddress() {
 	html += '	  <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">';
 	html += '		<label class="col-sm-2 control-label"><?php echo addslashes($custom_field['name']); ?></label>';
 	html += '		<div class="col-sm-10">';
-	html += '		  <button type="button" id="button-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default button-upload"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>';
+	html += '		  <button type="button" id="button-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>';
 	html += '		  <input type="hidden" name="address[' + address_row + '][<?php echo $custom_field['custom_field_id']; ?>]" value="" id="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>" />';
 	html += '		</div>';
 	html += '	  </div>';
@@ -1064,7 +1064,7 @@ $('body').delegate('.button-ban-remove', 'click', function() {
 	});
 });
 
-$('#content').delegate('.button-upload', 'click', function() {
+$('#content').delegate('button[id^=\'button-custom-field\'], button[id^=\'button-address\']', 'click', function() {
 	var node = this;
 	
 	$('#form-upload').remove();

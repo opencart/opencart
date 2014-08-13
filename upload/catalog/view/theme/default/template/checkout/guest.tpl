@@ -154,8 +154,8 @@
     <?php } ?>
     <?php if ($custom_field['type'] == 'file') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
-      <label class="control-label"><?php echo $custom_field['name']; ?></label>
-      <button type="button" id="button-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+      <label class="control-label"><?php echo $custom_field['name']; ?></label><br />
+      <button type="button" id="button-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
       <input type="hidden" name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($guest_custom_field[$custom_field['custom_field_id']]) ? $guest_custom_field[$custom_field['custom_field_id']] : ''); ?>" />
     </div>
     <?php } ?>

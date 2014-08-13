@@ -11,13 +11,13 @@ h1, h2, h3, h4, h5, h6, p {
 	margin-top: 0;
 }
 .page-header {
-	margin-top: 20px;
+	margin-top: 15px;
 }
 .page-header h1 {
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 600;
 	font-size: 24px;
-	color: #555555;
+	color: #666666;
 }
 a, a:hover {
 	color: #1e91cf;
@@ -178,6 +178,10 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: block;
 	padding: 10px 10px 9px 10px;
 	cursor: pointer;
+}
+#menu li i {
+	font-size: 14px;
+	margin-right: 5px;
 }
 #menu li ul {
 	background-color: #131E26;

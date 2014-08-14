@@ -54,7 +54,7 @@ class ModelPaymentFirstdata extends Model {
 			$amount = 0.00;
 		}
 
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "firstdata_order_transaction` SET `firstdata_order_id` = '" . (int)$fd_order_id . "', `created` = now(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . (double)$amount . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "firstdata_order_transaction` SET `firstdata_order_id` = '" . (int)$fd_order_id . "', `created` = now(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . (float)$amount . "'");
 	}
 
 	public function addHistory($order_id, $order_status_id, $comment) {

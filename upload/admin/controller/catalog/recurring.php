@@ -148,7 +148,7 @@ class ControllerCatalogRecurring extends Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
-			$sort = 'pd.name';
+			$sort = 'rd.name';
 		}
 
 		if (isset($this->request->get['order'])) {
@@ -190,12 +190,11 @@ class ControllerCatalogRecurring extends Controller {
 			'limit' => $this->config->get('config_limit_admin')
 		);
 
-		$recurring_total = $this->model_catalog_recurring->getTotalProfiles($filter_data);
+		$recurring_total = $this->model_catalog_recurring->getTotalRecurrings($filter_data);
 
-		$results = $this->model_catalog_recurring->getProfiles($filter_data);
+		$results = $this->model_catalog_recurring->getRecurrings($filter_data);
 
 		foreach ($results as $result) {
-
 			$data['recurrings'][] = array(
 				'recurring_id' => $result['recurring_id'],
 				'name'         => $result['name'],
@@ -288,7 +287,9 @@ class ControllerCatalogRecurring extends Controller {
 		
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_recurring_help'] = $this->language->get('text_recurring_help');
+		$data['text_profile'] = $this->language->get('text_profile');
+		$data['text_trial'] = $this->language->get('text_trial');
+		$data['text_recurring'] = $this->language->get('text_recurring');
 
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_price'] = $this->language->get('entry_price');
@@ -303,13 +304,8 @@ class ControllerCatalogRecurring extends Controller {
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
-		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_save'] = $this->language->get('button_save');
-		$data['button_remove'] = $this->language->get('button_remove');
-
-		$data['tab_general'] = $this->language->get('tab_general');
-		$data['tab_recurring'] = $this->language->get('tab_recurring');
-		$data['tab_trial'] = $this->language->get('tab_trial');
+		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -358,7 +354,7 @@ class ControllerCatalogRecurring extends Controller {
 		if (isset($this->request->post['recurring_description'])) {
 			$data['recurring_description'] = $this->request->post['recurring_description'];
 		} elseif (!empty($recurring_info)) {
-			$data['recurring_description'] = $this->model_catalog_recurring->getProfileDescription($recurring_info['recurring_id']);
+			$data['recurring_description'] = $this->model_catalog_recurring->getRecurringDescription($recurring_info['recurring_id']);
 		} else {
 			$data['recurring_description'] = array();
 		}
@@ -371,7 +367,32 @@ class ControllerCatalogRecurring extends Controller {
 			$data['price'] = 0;
 		}
 		
-		$data['frequencies'] = $this->model_catalog_recurring->getFrequencies();
+		$data['frequencies'] = array();
+		
+		$data['frequencies'][] = array(
+			'text'  => $this->language->get('text_day'),
+			'value' => 'day'
+		);
+
+		$data['frequencies'][] = array(
+			'text'  => $this->language->get('text_week'),
+			'value' => 'week'
+		);
+		
+		$data['frequencies'][] = array(
+			'text'  => $this->language->get('text_semi_month'),
+			'value' => 'semi_month'
+		);
+		
+		$data['frequencies'][] = array(
+			'text'  => $this->language->get('text_month'),
+			'value' => 'month'
+		);
+		
+		$data['frequencies'][] = array(
+			'text'  => $this->language->get('text_year'),
+			'value' => 'year'
+		);
 		
 		if (isset($this->request->post['frequency'])) {
 			$data['frequency'] = $this->request->post['frequency'];
@@ -397,12 +418,12 @@ class ControllerCatalogRecurring extends Controller {
 			$data['cycle'] = 1;
 		}
 
-		if (isset($this->request->post['trial_status'])) {
-			$data['trial_status'] = $this->request->post['trial_status'];
+		if (isset($this->request->post['status'])) {
+			$data['status'] = $this->request->post['status'];
 		} elseif (!empty($recurring_info)) {
-			$data['trial_status'] = $recurring_info['trial_status'];
+			$data['status'] = $recurring_info['status'];
 		} else {
-			$data['trial_status'] = 0;
+			$data['status'] = 0;
 		}
 
 		if (isset($this->request->post['trial_price'])) {
@@ -436,13 +457,12 @@ class ControllerCatalogRecurring extends Controller {
 		} else {
 			$data['trial_cycle'] = '1';
 		}
-
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
+		if (isset($this->request->post['trial_status'])) {
+			$data['trial_status'] = $this->request->post['trial_status'];
 		} elseif (!empty($recurring_info)) {
-			$data['status'] = $recurring_info['status'];
+			$data['trial_status'] = $recurring_info['trial_status'];
 		} else {
-			$data['status'] = 0;
+			$data['trial_status'] = 0;
 		}
 				
 		if (isset($this->request->post['sort_order'])) {
@@ -452,10 +472,6 @@ class ControllerCatalogRecurring extends Controller {
 		} else {
 			$data['sort_order'] = 0;
 		}
-
-		$this->load->model('design/layout');
-
-		$data['layouts'] = $this->model_design_layout->getLayouts();
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');

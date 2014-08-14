@@ -63,7 +63,7 @@ class ModelPaymentPPExpress extends Model {
 		$base = 'ABCDEFGHKLMNOPQRSTWXYZabcdefghjkmnpqrstwxyz123456789';
 		$max = strlen($base)-1;
 		$activate_code = '';
-		mt_srand((double)microtime()*1000000);
+		mt_srand((float)microtime()*1000000);
 
 		while (strlen($activate_code)<$len+1) {
 			$activate_code .= $base{mt_rand(0, $max)};
@@ -118,7 +118,7 @@ class ModelPaymentPPExpress extends Model {
 			`modified` = NOW(),
 			`capture_status` = '".$this->db->escape($order_data['capture_status'])."',
 			`currency_code` = '".$this->db->escape($order_data['currency_code'])."',
-			`total` = '".(double)$order_data['total']."',
+			`total` = '".(float)$order_data['total']."',
 			`authorization_id` = '".$this->db->escape($order_data['authorization_id'])."'");
 
 		return $this->db->getLastId();
@@ -141,7 +141,7 @@ class ModelPaymentPPExpress extends Model {
 			`payment_status` = '".$this->db->escape($transaction_data['payment_status'])."',
 			`pending_reason` = '".$this->db->escape($transaction_data['pending_reason'])."',
 			`transaction_entity` = '".$this->db->escape($transaction_data['transaction_entity'])."',
-			`amount` = '".(double)$transaction_data['amount']."',
+			`amount` = '".(float)$transaction_data['amount']."',
 			`debug_data` = '".$this->db->escape($transaction_data['debug_data'])."'");
 	}
 

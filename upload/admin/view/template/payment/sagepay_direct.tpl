@@ -153,8 +153,8 @@
           <span class="help-block"><?php echo $help_cron_job_token; ?></span> </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" ><?php echo $entry_cron_job_url; ?></label>
-        <div class="col-sm-10"> <span id="cron-job-url"><?php echo $sagepay_direct_cron_job_url ?></span> <span class="help-block"><?php echo $help_cron_job_url; ?></span> </div>
+        <label class="col-sm-2 control-label" ><span data-toggle="tooltip" title="<?php echo $help_cron_job_url; ?>"><?php echo $entry_cron_job_url; ?></span></label>
+        <div class="col-sm-10"><span id="cron-job-url"><?php echo $sagepay_direct_cron_job_url ?></span></div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" ><?php echo $entry_last_cron_job_run; ?></label>

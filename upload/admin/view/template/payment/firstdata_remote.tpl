@@ -50,13 +50,13 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-certificate-path"><?php echo $entry_certificate_path; ?></label>
+            <label class="col-sm-2 control-label" for="input-certificate-path"><span data-toggle="tooltip" title="<?php echo $text_help_certificate; ?>"><?php echo $entry_certificate_path; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="firstdata_remote_certificate" value="<?php echo $firstdata_remote_certificate; ?>" placeholder="<?php echo $entry_certificate_path; ?>" id="input-certificate-path" class="form-control"/>
               <?php if ($error_certificate) { ?>
               <div class="text-danger"><?php echo $error_certificate; ?></div>
               <?php } ?>
-              <span class="help-block"><?php echo $text_help_certificate; ?></span> </div>
+            </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-key-path"><?php echo $entry_certificate_key_path; ?></label>
@@ -101,7 +101,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-debug"><?php echo $entry_debug; ?></label>
+            <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="<?php echo $text_help_debug; ?>"><?php echo $entry_debug; ?></span></label>
             <div class="col-sm-10">
               <select name="firstdata_remote_debug" id="input-debug" class="form-control">
                 <?php if ($firstdata_remote_debug) { ?>
@@ -112,7 +112,7 @@
                 <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                 <?php } ?>
               </select>
-              <span class="help-block"><?php echo $text_help_debug; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
@@ -129,10 +129,10 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-total"><?php echo $entry_total; ?></label>
+            <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $text_help_total; ?>"><?php echo $entry_total; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="firstdata_remote_total" value="<?php echo $firstdata_remote_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control"/>
-              <span class="help-block"><?php echo $text_help_total; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
@@ -215,13 +215,13 @@
         </div>
         <div class="tab-pane" id="tab-payment">
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-auto-settle"><?php echo $entry_auto_settle; ?></label>
+            <label class="col-sm-2 control-label" for="input-auto-settle"><span data-toggle="tooltip" title="<?php echo $text_help_settle; ?>"><?php echo $entry_auto_settle; ?></span></label>
             <div class="col-sm-10">
               <select name="firstdata_remote_auto_settle" id="input-auto-settle" class="form-control">
                 <option value="0"<?php echo ($firstdata_remote_auto_settle == 0 ? ' selected' : ''); ?>><?php echo $text_settle_delayed; ?></option>
                 <option value="1"<?php echo ($firstdata_remote_auto_settle == 1 ? ' selected' : ''); ?>><?php echo $text_settle_auto; ?></option>
               </select>
-              <span class="help-block"><?php echo $text_help_settle; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-card-store"><?php echo $entry_enable_card_store; ?></label>

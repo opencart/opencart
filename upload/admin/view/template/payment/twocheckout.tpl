@@ -25,10 +25,9 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-secret"><?php echo $entry_secret; ?></label>
+        <label class="col-sm-2 control-label" for="input-secret"><span data-toggle="tooltip" title="<?php echo $help_secret; ?>"><?php echo $entry_secret; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="twocheckout_secret" value="<?php echo $twocheckout_secret; ?>" placeholder="<?php echo $entry_secret; ?>" id="input-secret" class="form-control" />
-          <span class="help-block"><?php echo $help_secret; ?></span>
           <?php if ($error_secret) { ?>
           <div class="text-danger"><?php echo $error_secret; ?></div>
           <?php } ?>
@@ -81,10 +80,10 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-total"><?php echo $entry_total; ?> </label>
+        <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="twocheckout_total" value="<?php echo $twocheckout_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
-          <span class="help-block"><?php echo $help_total; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>

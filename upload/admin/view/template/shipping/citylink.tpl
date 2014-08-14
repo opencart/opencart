@@ -16,10 +16,10 @@
     <?php } ?>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-citylink" class="form-horizontal">
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-rate"><?php echo $entry_rate; ?></label>
+        <label class="col-sm-2 control-label" for="input-rate"><span data-toggle="tooltip" title="<?php echo $help_rate; ?>"><?php echo $entry_rate; ?></span></label>
         <div class="col-sm-10">
           <textarea name="citylink_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-rate" class="form-control"><?php echo $citylink_rate; ?></textarea>
-          <span class="help-block"><?php echo $help_rate; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-tax-class"><?php echo $entry_tax_class; ?></label>

@@ -16,19 +16,19 @@
     <?php } ?>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-parcelforce-48" class="form-horizontal">
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-rate"><?php echo $entry_rate; ?></label>
+        <label class="col-sm-2 control-label" for="input-rate"><span data-toggle="tooltip" title="<?php echo $help_rate; ?>"><?php echo $entry_rate; ?></span></label>
         <div class="col-sm-10">
-          <textarea name="parcelforce_48_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-rate" class="form-control"><?php echo $parcelforce_48_rate; ?></textarea>
-          <span class="help-block"><?php echo $help_rate; ?></span> </div>
+          <textarea name="parcelforce_48_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-rate" class="form-control"><?php echo $parcelforce_48_rate; ?></span></textarea>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-insurance"><?php echo $entry_insurance; ?></label>
         <div class="col-sm-10">
-          <textarea name="parcelforce_48_insurance" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-insurance" class="form-control"><?php echo $parcelforce_48_insurance; ?></textarea>
-          <span class="help-block"><?php echo $help_insurance; ?></span> </div>
+          <textarea name="parcelforce_48_insurance" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-insurance" class="form-control"><span data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><?php echo $parcelforce_48_insurance; ?></span></textarea>
+        </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label"><?php echo $entry_display_weight; ?></label>
+        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_display_weight; ?>"><?php echo $entry_display_weight; ?></span></label>
         <div class="col-sm-10">
           <label class="radio-inline">
             <?php if ($parcelforce_48_display_weight) { ?>
@@ -48,10 +48,10 @@
             <?php echo $text_no; ?>
             <?php } ?>
           </label>
-          <span class="help-block"><?php echo $help_display_weight; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-display-insurance"><?php echo $entry_display_insurance; ?></label>
+        <label class="col-sm-2 control-label" for="input-display-insurance"><span data-toggle="tooltip" title="<?php echo $help_display_insurance; ?>"><?php echo $entry_display_insurance; ?></span></label>
         <div class="col-sm-10">
           <label class="radio-inline" id="input-display-insurance">
             <?php if ($parcelforce_48_display_insurance) { ?>
@@ -71,10 +71,10 @@
             <?php echo $text_no; ?>
             <?php } ?>
           </label>
-          <span class="help-block"><?php echo $help_display_insurance; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label"><?php echo $entry_display_time; ?></label>
+        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_display_time; ?>"><?php echo $entry_display_time; ?></span></label>
         <div class="col-sm-10">
           <label class="radio-inline">
             <?php if ($parcelforce_48_display_time) { ?>
@@ -94,7 +94,7 @@
             <?php echo $text_no; ?>
             <?php } ?>
           </label>
-          <span class="help-block"><?php echo $help_display_time; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-tax-class"><?php echo $entry_tax_class; ?></label>

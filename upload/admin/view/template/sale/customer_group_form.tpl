@@ -39,7 +39,7 @@
       </div>
       <?php } ?>
       <div class="form-group">
-        <label class="col-sm-2 control-label"><?php echo $entry_approval; ?></label>
+        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_approval; ?>"><?php echo $entry_approval; ?></span></label>
         <div class="col-sm-10">
           <label class="radio-inline">
             <?php if ($approval) { ?>
@@ -59,7 +59,7 @@
             <?php echo $text_no; ?>
             <?php } ?>
           </label>
-          <span class="help-block"><?php echo $help_approval; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>

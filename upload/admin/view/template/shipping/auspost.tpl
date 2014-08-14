@@ -53,7 +53,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-display-time"><?php echo $entry_display_time; ?></label>
+        <label class="col-sm-2 control-label" for="input-display-time"><span data-toggle="tooltip" title="<?php echo $help_display_time; ?>"><?php echo $entry_display_time; ?></span></label>
         <div class="col-sm-10">
           <select name="auspost_display_time" id="input-display-time" class="form-control">
             <?php if ($auspost_display_time) { ?>
@@ -64,10 +64,10 @@
             <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
             <?php } ?>
           </select>
-          <span class="help-block"><?php echo $help_display_time; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-weight-class"><?php echo $entry_weight_class; ?></label>
+        <label class="col-sm-2 control-label" for="input-weight-class"><span data-toggle="tooltip" title="<?php echo $help_weight_class; ?>"><?php echo $entry_weight_class; ?></span></label>
         <div class="col-sm-10">
           <select name="auspost_weight_class_id" id="input-weight-class" class="form-control">
             <?php foreach ($weight_classes as $weight_class) { ?>
@@ -78,7 +78,7 @@
             <?php } ?>
             <?php } ?>
           </select>
-          <span class="help-block"><?php echo $help_weight_class; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-tax-class"><?php echo $entry_tax_class; ?></label>

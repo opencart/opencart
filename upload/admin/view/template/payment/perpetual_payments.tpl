@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label"><?php echo $entry_test; ?></label>
+        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_test; ?>"><?php echo $entry_test; ?></span></label>
         <div class="col-sm-10">
           <label class="radio-inline">
             <?php if ($perpetual_payments_test) { ?>
@@ -54,7 +54,7 @@
             <?php echo $text_no; ?>
             <?php } ?>
           </label>
-          <span class="help-block"><?php echo $help_test; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-total"><?php echo $entry_total; ?></label>

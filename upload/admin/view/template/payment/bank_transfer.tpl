@@ -29,10 +29,10 @@
       </div>
       <?php } ?>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-total"><?php echo $entry_total; ?></label>
+        <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="bank_transfer_total" value="<?php echo $bank_transfer_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
-          <span class="help-block"><?php echo $help_total; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>

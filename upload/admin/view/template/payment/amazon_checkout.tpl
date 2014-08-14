@@ -14,10 +14,8 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
+    <div class="alert alert-info"><?php echo $text_amazon_join; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-amazon-checkout" class="form-horizontal">
-      <div class="form-group">
-        <div class="col-sm-10"> <?php echo $text_amazon_join; ?> </div>
-      </div>
       <div class="form-group required">
         <label class="col-sm-2 control-label" for="amazon_checkout_merchant_id"><?php echo $text_merchant_id; ?></label>
         <div class="col-sm-10">
@@ -175,10 +173,10 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="amazon_checkout_cron_job_token"><?php echo $text_cron_job_token; ?></label>
+        <label class="col-sm-2 control-label" for="amazon_checkout_cron_job_token"><span data-toggle="tooltip" title="<?php echo $help_cron_job_token; ?>"><?php echo $text_cron_job_token; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="amazon_checkout_cron_job_token" value="<?php echo $amazon_checkout_cron_job_token; ?>" id="amazon_checkout_cron_job_token" class="form-control" />
-          <span class="help-block"><?php echo $help_cron_job_token; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label"><?php echo $text_cron_job_url; ?></label>
@@ -193,11 +191,10 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label"><?php echo $text_allowed_ips; ?></label>
+        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $text_help_ip; ?>"><?php echo $text_allowed_ips; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="allowed-ip" placeholder="<?php echo $text_ip; ?>" />
           <button type="button" id="add-ip" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $text_add; ?></button>
-          <span class="help-block"><?php echo $text_help_ip; ?></span>
           <div id="allowed-ips" class="well well-sm" style="height: 150px; overflow: auto;">
             <?php $count = 0; ?>
             <?php foreach ($amazon_checkout_allowed_ips as $ip) { ?>

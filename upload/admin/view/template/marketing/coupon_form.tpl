@@ -33,17 +33,16 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-code"><?php echo $entry_code; ?> </label>
+            <label class="col-sm-2 control-label" for="input-code"><span data-toggle="tooltip" title="<?php echo $help_code; ?>"><?php echo $entry_code; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control" />
-              <span class="help-block"><?php echo $help_code; ?></span>
               <?php if ($error_code) { ?>
               <div class="text-danger"><?php echo $error_code; ?></div>
               <?php } ?>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-type"><?php echo $entry_type; ?></label>
+            <label class="col-sm-2 control-label" for="input-type"><span data-toggle="tooltip" title="<?php echo $help_type; ?>"><?php echo $entry_type; ?></span></label>
             <div class="col-sm-10">
               <select name="type" id="input-type" class="form-control">
                 <?php if ($type == 'P') { ?>
@@ -57,7 +56,7 @@
                 <option value="F"><?php echo $text_amount; ?></option>
                 <?php } ?>
               </select>
-              <span class="help-block"><?php echo $help_type; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-discount"><?php echo $entry_discount; ?></label>
@@ -66,13 +65,13 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-total"><?php echo $entry_total; ?></label>
+            <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="total" value="<?php echo $total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
-              <span class="help-block"><?php echo $help_total; ?></span></div>
+            </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label"><?php echo $entry_logged; ?></label>
+            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_logged; ?>"><?php echo $entry_logged; ?></span></label>
             <div class="col-sm-10">
               <label class="radio-inline">
                 <?php if ($logged) { ?>
@@ -92,7 +91,7 @@
                 <?php echo $text_no; ?>
                 <?php } ?>
               </label>
-              <span class="help-block"><?php echo $help_logged; ?></span></div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label"><?php echo $entry_shipping; ?></label>
@@ -118,10 +117,9 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-product"><?php echo $entry_product; ?></label>
+            <label class="col-sm-2 control-label" for="input-product"><span data-toggle="tooltip" title="<?php echo $help_product; ?>"><?php echo $entry_product; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" class="form-control" />
-              <span class="help-block"><?php echo $help_product; ?></span>
               <div id="coupon-product" class="well well-sm" style="height: 150px; overflow: auto;">
                 <?php foreach ($coupon_product as $coupon_product) { ?>
                 <div id="coupon-product<?php echo $coupon_product['product_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $coupon_product['name']; ?>
@@ -132,10 +130,9 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-category"><?php echo $entry_category; ?></label>
+            <label class="col-sm-2 control-label" for="input-category"><span data-toggle="tooltip" title="<?php echo $help_category; ?>"><?php echo $entry_category; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" class="form-control" />
-              <span class="help-block"><?php echo $help_category; ?></span> <br />
               <div id="coupon-category" class="well well-sm" style="height: 150px; overflow: auto;">
                 <?php foreach ($coupon_category as $coupon_category) { ?>
                 <div id="coupon-category<?php echo $coupon_category['category_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $coupon_category['name']; ?>
@@ -166,16 +163,16 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-uses-total"><?php echo $entry_uses_total; ?> </label>
+            <label class="col-sm-2 control-label" for="input-uses-total"><span data-toggle="tooltip" title="<?php echo $help_uses_total; ?>"><?php echo $entry_uses_total; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="uses_total" value="<?php echo $uses_total; ?>" placeholder="<?php echo $entry_uses_total; ?>" id="input-uses-total" class="form-control" />
-              <span class="help-block"><?php echo $help_uses_total; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-uses-customer"><?php echo $entry_uses_customer; ?> </label>
+            <label class="col-sm-2 control-label" for="input-uses-customer"><span data-toggle="tooltip" title="<?php echo $help_uses_customer; ?>"><?php echo $entry_uses_customer; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="uses_customer" value="<?php echo $uses_customer; ?>" placeholder="<?php echo $entry_uses_customer; ?>" id="input-uses-customer" class="form-control" />
-              <span class="help-block"><?php echo $help_uses_customer; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>

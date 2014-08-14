@@ -63,7 +63,8 @@
             </div>
           </div>
         </div>
-        <div class="tab-pane" id="tab-profile"> <span class="help-block"><?php echo $text_recurring_help ?></span>
+        <div class="tab-pane" id="tab-profile">
+          <div class="alert alert-info"><?php echo $text_recurring_help ?></div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-price"><?php echo $entry_price; ?></label>
             <div class="col-sm-10">

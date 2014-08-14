@@ -34,10 +34,10 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-geocode"><?php echo $entry_geocode; ?></label>
+        <label class="col-sm-2 control-label" for="input-geocode"><span data-toggle="tooltip" data-container="#content" title="<?php echo $help_geocode; ?>"><?php echo $entry_geocode; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="geocode" value="<?php echo $geocode; ?>" placeholder="<?php echo $entry_geocode; ?>" id="input-geocode" class="form-control" />
-          <span class="help-block"><?php echo $help_geocode; ?></span></div>
+        </div>
       </div>
       <div class="form-group required">
         <label class="col-sm-2 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
@@ -66,16 +66,16 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-open"><?php echo $entry_open; ?></label>
+        <label class="col-sm-2 control-label" for="input-open"><span data-toggle="tooltip" data-container="#content" title="<?php echo $help_open; ?>"><?php echo $entry_open; ?></span></label>
         <div class="col-sm-10">
           <textarea name="open" rows="5" placeholder="<?php echo $entry_open; ?>" id="input-open" class="form-control"><?php echo $open; ?></textarea>
-          <span class="help-block"><?php echo $help_open; ?></span></div>
+        </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
+        <label class="col-sm-2 control-label" for="input-comment"><span data-toggle="tooltip" data-container="#content" title="<?php echo $help_comment; ?>"><?php echo $entry_comment; ?></span></label>
         <div class="col-sm-10">
           <textarea name="comment" rows="5" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="form-control"><?php echo $comment; ?></textarea>
-          <span class="help-block"><?php echo $help_comment; ?></span></div>
+        </div>
       </div>
     </form>
   </div>

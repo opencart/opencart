@@ -2,7 +2,6 @@
 class ControllerModulePPLogin extends Controller {
 	public function index() {
 		if ($this->config->get('pp_login_status') && !$this->customer->isLogged()) {
-			$data = array();
 			$data['pp_login_client_id'] = $this->config->get('pp_login_client_id');
 			$data['pp_login_return_url'] = $this->url->link('module/pp_login/login', '', 'SSL');
 			
@@ -18,15 +17,15 @@ class ControllerModulePPLogin extends Controller {
 				$data['pp_login_button_colour'] = '';
 			}
 			
-			$pp_login_locale_saved = $this->config->get('pp_login_locale');
+			$pp_login_locale = $this->config->get('pp_login_locale');
 			
 			$this->load->model('localisation/language');
 
 			$languages = $this->model_localisation_language->getLanguages();
 			
 			foreach ($languages as $language) {
-				if ($language['status'] && ($language['code'] == $this->session->data['language']) && isset($pp_login_locale_saved[$language['language_id']])) {
-					$data['pp_login_locale'] = $pp_login_locale_saved[$language['language_id']];
+				if ($language['status'] && ($language['code'] == $this->session->data['language']) && isset($pp_login_locale[$language['language_id']])) {
+					$data['pp_login_locale'] = $pp_login_locale[$language['language_id']];
 				}
 			}
 			

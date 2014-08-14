@@ -104,40 +104,6 @@
           </select>
         </div>
       </div>
-      <!--						<div class="form-group">
-                            <label class="col-sm-2 control-label" for="input-card-amex"><?php echo $entry_card_amex; ?></label>
-                            <div class="col-sm-10">
-                                <select name="bluepay_hosted_form_card_type" id="input-card-amex" class="form-control">
-									<?php if ($bluepay_hosted_form_card_type == '1') { ?>
-										<option value="AMEX" selected="selected"><?php echo $text_AMEX; ?></option>
-									<?php } else { ?>
-										<option value="AMEX"><?php echo $text_AMEX; ?></option>
-									<?php } ?>
-									<?php if ($bluepay_hosted_form_card_type == '0') { ?>
-										<option value="DISCOVER" selected="selected"><?php echo $text_DISCOVER; ?></option>
-									<?php } else { ?>
-										<option value="DISCOVER"><?php echo $text_DISCOVER; ?></option>
-									<?php } ?>
-                                </select>
-                            </div>
-                        </div>
-						<div class="form-group">
-                            <label class="col-sm-2 control-label" for="input-card-type"><?php echo $entry_card_type; ?></label>
-                            <div class="col-sm-10">
-                                <select name="bluepay_hosted_form_card_type" id="input-card-type" class="form-control">
-									<?php if ($bluepay_hosted_form_card_type == 'AMEX') { ?>
-										<option value="AMEX" selected="selected"><?php echo $text_AMEX; ?></option>
-									<?php } else { ?>
-										<option value="AMEX"><?php echo $text_AMEX; ?></option>
-									<?php } ?>
-									<?php if ($bluepay_hosted_form_card_type == 'DISCOVER') { ?>
-										<option value="DISCOVER" selected="selected"><?php echo $text_DISCOVER; ?></option>
-									<?php } else { ?>
-										<option value="DISCOVER"><?php echo $text_DISCOVER; ?></option>
-									<?php } ?>
-                                </select>
-                            </div>
-                        </div>-->
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
         <div class="col-sm-10">

@@ -87,7 +87,8 @@ class CatalogModelAccountCustomerTest extends OpenCartTest {
 		
 		$this->assertNotEmpty($customer);
 	}
-	
+
+	/*
 	public function testGetCustomers() {
 		$data = array(
 			'filter_name' => '',
@@ -104,6 +105,7 @@ class CatalogModelAccountCustomerTest extends OpenCartTest {
 		
 		$this->assertCount(1, $customers);
 	}
+	*/
 	
 	public function testGetTotalCustomersByEmail() {
 		$count = $this->model_account_customer->getTotalCustomersByEmail('customer@localhost');

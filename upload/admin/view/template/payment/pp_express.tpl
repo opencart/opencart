@@ -92,8 +92,12 @@
             <label class="col-sm-2 control-label" for="input-currency"><span data-toggle="tooltip" title="<?php echo $entry_currency_help; ?>"><?php echo $entry_currency; ?></span></label>
             <div class="col-sm-10">
               <select name="pp_express_currency" id="input-currency" class="form-control">
-                <?php foreach($currency_codes as $code){ ?>
-                <option <?php if($code == $pp_express_currency){ echo 'selected'; } ?>><?php echo $code; ?></option>
+                <?php foreach ($currency_codes as $code) { ?>
+                  <?php if ($code == $pp_express_currency) { ?>
+                    <option value="<?php echo $code; ?>" selected="selected"><?php echo $code; ?></option>
+                  <?php } else { ?>
+                    <option value="<?php echo $code; ?>"><?php echo $code; ?></option>
+                  <?php } ?>
                 <?php } ?>
               </select>
             </div>

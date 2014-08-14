@@ -472,14 +472,12 @@ class ControllerUserUser extends Controller {
 			$this->error['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if ($this->request->post['password'] || (!isset($this->request->get['user_id']))) {
-			if ((utf8_strlen($this->request->post['password']) < 4) || (utf8_strlen($this->request->post['password']) > 20)) {
-				$this->error['password'] = $this->language->get('error_password');
-			}
+		if ((utf8_strlen($this->request->post['password']) < 4) || (utf8_strlen($this->request->post['password']) > 20)) {
+			$this->error['password'] = $this->language->get('error_password');
+		}
 
-			if ($this->request->post['password'] != $this->request->post['confirm']) {
-				$this->error['confirm'] = $this->language->get('error_confirm');
-			}
+		if ($this->request->post['password'] != $this->request->post['confirm']) {
+			$this->error['confirm'] = $this->language->get('error_confirm');
 		}
 
 		return !$this->error;

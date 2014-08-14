@@ -31,20 +31,19 @@
       <div class="tab-content">
         <div class="tab-pane active" id="tab-general">
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-url"><?php echo $entry_url; ?></label>
+            <label class="col-sm-2 control-label" for="input-url"><span data-toggle="tooltip" data-html="true" title="<?php echo htmlspecialchars($help_url); ?>"><?php echo $entry_url; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="config_url" value="<?php echo $config_url; ?>" placeholder="<?php echo $entry_url; ?>" id="input-url" class="form-control" />
-              <span class="help-block"><?php echo $help_url; ?></span>
               <?php if ($error_url) { ?>
               <div class="text-danger"><?php echo $error_url; ?></div>
               <?php } ?>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-ssl"><?php echo $entry_ssl; ?></label>
+            <label class="col-sm-2 control-label" for="input-ssl"><span data-toggle="tooltip" data-html="true" title="<?php echo $help_ssl; ?>"><?php echo $entry_ssl; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="config_ssl" value="<?php echo $config_ssl; ?>" placeholder="<?php echo $entry_ssl; ?>" id="input-ssl" class="form-control" />
-              <span class="help-block"><?php echo $help_ssl; ?></span> </div>
+            </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
@@ -74,10 +73,10 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-geocode"><?php echo $entry_geocode; ?></label>
+            <label class="col-sm-2 control-label" for="input-geocode"><span data-toggle="tooltip" title="<?php echo $help_geocode; ?>"><?php echo $entry_geocode; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="config_geocode" value="<?php echo $config_geocode; ?>" placeholder="<?php echo $entry_geocode; ?>" id="input-geocode" class="form-control" />
-              <span class="help-block"><?php echo $help_geocode; ?></span></div>
+            </div>
           </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
@@ -115,10 +114,10 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-open"><?php echo $entry_open; ?></label>
+            <label class="col-sm-2 control-label" for="input-open"><span data-toggle="tooltip" title="<?php echo $help_open; ?>"><?php echo $entry_open; ?></span></label>
             <div class="col-sm-10">
               <textarea name="open" rows="5" placeholder="<?php echo $entry_open; ?>" id="input-open" class="form-control"><?php echo $open; ?></textarea>
-              <span class="help-block"><?php echo $help_open; ?></span></div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-comment"><?php echo $entry_comment; ?></label>

@@ -31,7 +31,6 @@ a, a:hover {
 .datepicker {
 	font-size: 12px;
 }
-
 /* fix for bootstrap hidden and visible */
 span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: inline;
@@ -133,7 +132,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #column-left {
 	width: 0px;
 	height: 100%;
-	background-color: #1C2B36;
+	background-color: #333333;
 	position: absolute;
 	top: 0px;
 	padding-top: 50px;
@@ -172,8 +171,8 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	list-style: none;
 }
 #menu li a {
-	color: #7CA1BB;
-	border-bottom: 1px solid #2F2F2F;
+	color: #999999;
+	border-bottom: 1px solid #383838;
 	text-decoration: none;
 	display: block;
 	padding: 10px 10px 9px 10px;
@@ -243,6 +242,13 @@ div.required .control-label:before, td.required:before {
 	content: '* ';
 	color: #F00;
 	font-weight: bold;
+}
+
+.control-label span:after {
+	font-family: FontAwesome;
+	color: #1E91CF;
+	content: "\f059";
+	margin-left: 4px;
 }
 .alert {
 	padding: 10px 15px;

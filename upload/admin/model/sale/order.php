@@ -335,14 +335,18 @@ class ModelSaleOrder extends Model {
 
 		$order_statuses = $this->config->get('config_process_status');
 
-		foreach ($order_statuses as $order_status_id) {
-			$implode[] = "order_status_id = '" . (int)$order_status_id . "'";
-		}
+		if ($order_statuses) {
+			foreach ($order_statuses as $order_status_id) {
+				$implode[] = "order_status_id = '" . (int)$order_status_id . "'";
+			}
 
-		if ($implode) {
-			$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE " . implode(" OR ", $implode) . "");
+			if ($implode) {
+				$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE " . implode(" OR ", $implode) . "");
 
-			return $query->row['total'];
+				return $query->row['total'];
+			} else {
+				return 0;
+			}
 		} else {
 			return 0;
 		}
@@ -353,14 +357,18 @@ class ModelSaleOrder extends Model {
 
 		$order_statuses = $this->config->get('config_complete_status');
 
-		foreach ($order_statuses as $order_status_id) {
-			$implode[] = "order_status_id = '" . (int)$order_status_id . "'";
-		}
+		if ($order_statuses) {
+			foreach ($order_statuses as $order_status_id) {
+				$implode[] = "order_status_id = '" . (int)$order_status_id . "'";
+			}
 
-		if ($implode) {
-			$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE " . implode(" OR ", $implode) . "");
+			if ($implode) {
+				$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE " . implode(" OR ", $implode) . "");
 
-			return $query->row['total'];
+				return $query->row['total'];
+			} else {
+				return 0;
+			}
 		} else {
 			return 0;
 		}

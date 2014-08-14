@@ -3,7 +3,7 @@ class ControllerCommonMenu extends Controller {
 	public function index() {
 		if (isset($this->request->get['token']) && isset($this->session->data['token']) && ($this->request->get['token'] == $this->session->data['token'])) {
 			$this->load->language('common/menu');
-							
+
 			$data['text_affiliate'] = $this->language->get('text_affiliate');
 			$data['text_affiliate_activity'] = $this->language->get('text_affiliate_activity');
 			$data['text_api'] = $this->language->get('text_api');
@@ -92,7 +92,7 @@ class ControllerCommonMenu extends Controller {
 			$data['text_length_class'] = $this->language->get('text_length_class');
 			$data['text_zone'] = $this->language->get('text_zone');
 			$data['text_recurring'] = $this->language->get('text_recurring');
-			$data['text_recurring_payment'] = $this->language->get('text_recurring_payment');
+			$data['text_recurring_order'] = $this->language->get('text_recurring_order');
 
 			$data['home'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL');
 			$data['affiliate'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'], 'SSL');
@@ -169,7 +169,7 @@ class ControllerCommonMenu extends Controller {
 			$data['recurring_payment'] = $this->url->link('sale/recurring', 'token=' . $this->session->data['token'], 'SSL');
 
 			$data['profile'] = $this->load->controller('common/profile');
-		
+
 			return $this->load->view('common/menu.tpl', $data);
 		}
 	}

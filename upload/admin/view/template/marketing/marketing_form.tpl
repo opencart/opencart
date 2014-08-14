@@ -31,32 +31,31 @@
         </div>
       </div>
       <div class="form-group required">
-        <label class="col-sm-2 control-label" for="input-code"><?php echo $entry_code; ?></label>
+        <label class="col-sm-2 control-label" for="input-code"><span data-toggle="tooltip" title="<?php echo $help_code; ?>"><?php echo $entry_code; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control" />
-          <span class="help-block"><?php echo $help_code; ?></span>
           <?php if ($error_code) { ?>
           <div class="text-danger"><?php echo $error_code; ?></div>
           <?php } ?>
         </div>
       </div>
-      <div class="form-group required">
-        <label class="col-sm-2 control-label" for="input-example"><?php echo $entry_example; ?></label>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="input-example"><span data-toggle="tooltip" title="<?php echo $help_example; ?>"><?php echo $entry_example; ?></span></label>
         <div class="col-sm-10">
           <input type="text" placeholder="<?php echo $entry_example; ?>" id="input-example1" class="form-control" />
           <br />
           <input type="text" placeholder="<?php echo $entry_example; ?>" id="input-example2" class="form-control" />
-          <span class="help-block"><?php echo $help_example; ?></span></div>
+        </div>
       </div>
     </form>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#input-code').on('keydown', function() {
+$('#input-code').on('keyup', function() {
 	$('#input-example1').val('<?php echo $store; ?>?tracking=' + $('#input-code').val());
 	$('#input-example2').val('<?php echo $store; ?>index.php?route=common/home&tracking=' + $('#input-code').val());
 });
 
-$('#input-code').trigger('keydown');
+$('#input-code').trigger('keyup');
 //--></script> 
 <?php echo $footer; ?>

@@ -42,10 +42,10 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-value"><?php echo $entry_value; ?></label>
+        <label class="col-sm-2 control-label" for="input-value"><span data-toggle="tooltip" title="<?php echo $help_value; ?>"><?php echo $entry_value; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="value" value="<?php echo $value; ?>" placeholder="<?php echo $entry_value; ?>" id="input-value" class="form-control" />
-          <span class="help-block"><?php echo $help_value; ?></span></div>
+        </div>
       </div>
     </form>
   </div>

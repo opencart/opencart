@@ -25,10 +25,9 @@
         </div>
       </div>
       <div class="form-group required">
-        <label class="col-sm-2 control-label" for="input-code"><?php echo $entry_code; ?></label>
+        <label class="col-sm-2 control-label" for="input-code"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="<?php echo htmlspecialchars($help_code); ?>"><?php echo $entry_code; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control" />
-          <span class="help-block"><?php echo $help_code; ?></span>
           <?php if ($error_code) { ?>
           <div class="text-danger"><?php echo $error_code; ?></div>
           <?php } ?>
@@ -53,10 +52,10 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-value"><?php echo $entry_value; ?></label>
+        <label class="col-sm-2 control-label" for="input-value"><span data-toggle="tooltip" title="<?php echo $help_value; ?>"><?php echo $entry_value; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="value" value="<?php echo $value; ?>" placeholder="<?php echo $entry_value; ?>" id="input-value" class="form-control" />
-          <span class="help-block"><?php echo $help_value; ?></span></div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>

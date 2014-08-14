@@ -194,11 +194,11 @@ class ControllerExtensionModification extends Controller {
 										}
 										
 										
-										if () {
-											$log->write('Found: %s on line');
+									//	if () {
+									//		$log->write('Found: %s on line');
 											
-											$log->write('Replaced: %s ');	
-										}
+									//		$log->write('Replaced: %s ');	
+									//	}
 									} else {
 										$search = $operation->getElementsByTagName('search')->item(0)->textContent;
 										$replace = $operation->getElementsByTagName('add')->item(0)->textContent;									

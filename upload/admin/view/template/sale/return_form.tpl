@@ -213,7 +213,7 @@
             </div>
           </div>
           <div class="text-right">
-            <button id="button-history" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_history_add; ?></button>
+            <button id="button-history" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_history_add; ?></button>
           </div>
         </fieldset>
       </div>
@@ -293,12 +293,10 @@ $('#button-history').on('click', function(e) {
 		dataType: 'html',
 		data: 'return_status_id=' + encodeURIComponent($('select[name=\'return_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'history_comment\']').val()),
 		beforeSend: function() {
-			$('#button-history i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-			$('#button-history').prop('disabled', true);
+			$('#button-history').button('loading');	
 		},
 		complete: function() {
-			$('#button-history i').replaceWith('<i class="fa fa-plus-circle"></i>');
-			$('#button-history').prop('disabled', false);
+			$('#button-history').button('reset');	
 		},
 		success: function(html) {
 			$('.alert').remove();

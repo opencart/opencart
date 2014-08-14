@@ -36,7 +36,15 @@ $(document).ready(function() {
 			element.addClass('has-error');
 		}
 	});
+	
+	// Tooltips on hover
+	$('[data-toggle=\'tooltip\']').tooltip();
 
+	// Makes tooltips work on ajax generated content
+	$(document).ajaxStop(function() {
+		$('[data-toggle=\'tooltip\']').tooltip();
+	});
+	
 	// Set last page opened on the menu
 	$('#menu a[href]').on('click', function() {
 		sessionStorage.setItem('menu', $(this).attr('href'));
@@ -90,14 +98,6 @@ $(document).ready(function() {
 			$(this).parent('li').toggleClass('open').children('ul').collapse('toggle');
 			$(this).parent('li').siblings().removeClass('open').children('ul.in').collapse('hide');
 		}
-	});
-
-	// Tooltips on hover
-	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
-
-	// Makes tooltips work on ajax generated content
-	$(document).ajaxStop(function() {
-		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 	});
 });
 

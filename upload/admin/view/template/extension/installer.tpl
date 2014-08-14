@@ -12,8 +12,8 @@
     </div>
     <?php } ?>
     <form class="form-horizontal">
-      <div class="form-group">
-        <label class="col-sm-2 control-label" for="button-upload"><?php echo $entry_upload; ?> </label>
+      <div class="form-group required">
+        <label class="col-sm-2 control-label" for="button-upload"><span data-toggle="tooltip" title="<?php echo $help_upload; ?>"><?php echo $entry_upload; ?></span></label>
         <div class="col-sm-10">
           <button type="button" id="button-upload" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
           <?php if ($error_warning) { ?>
@@ -21,7 +21,7 @@
           <?php } else { ?>
           <button type="button" id="button-clear" disabled="disabled" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
           <?php } ?>
-          <span class="help-block"><?php echo $help_upload; ?></span></div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label"><?php echo $entry_progress; ?></label>

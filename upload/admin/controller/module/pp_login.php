@@ -30,7 +30,6 @@ class ControllerModulePPLogin extends Controller {
 		$data['text_blue_button'] = $this->language->get('text_blue_button');
         $data['text_yes'] = $this->language->get('text_yes');
         $data['text_no'] = $this->language->get('text_no');
-		$data['text_return_url'] = $this->language->get('text_return_url');
 
         $data['entry_client_id'] = $this->language->get('entry_client_id');
         $data['entry_secret'] = $this->language->get('entry_secret');
@@ -39,16 +38,19 @@ class ControllerModulePPLogin extends Controller {
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$data['entry_button'] = $this->language->get('entry_button');
 		$data['entry_seamless'] = $this->language->get('entry_seamless');
-        $data['entry_status'] = $this->language->get('entry_status');
+		$data['entry_locale'] = $this->language->get('entry_locale');
+        $data['entry_return_url'] = $this->language->get('entry_return_url');
+		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_layout'] = $this->language->get('entry_layout');
 		$data['entry_position'] = $this->language->get('entry_position');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-        
+		
         $data['help_sandbox'] = $this->language->get('help_sandbox');
 		$data['help_customer_group'] = $this->language->get('help_customer_group');
 		$data['help_seamless'] = $this->language->get('help_seamless');
 		$data['help_debug_logging'] = $this->language->get('help_debug_logging');
+		$data['help_locale'] = $this->language->get('help_locale');
 		$data['help_return_url'] = $this->language->get('help_return_url');
         
 		$data['button_save'] = $this->language->get('button_save');
@@ -95,7 +97,9 @@ class ControllerModulePPLogin extends Controller {
 		);
 
 		$data['action'] = $this->url->link('module/pp_login', 'token=' . $this->session->data['token'], 'SSL');
+		
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
+		
 		$data['token'] = $this->session->data['token'];
 
 		if (isset($this->request->post['pp_login_client_id'])) {
@@ -145,13 +149,160 @@ class ControllerModulePPLogin extends Controller {
 		} else {
 			$data['pp_login_seamless'] = $this->config->get('pp_login_seamless');
 		}
-        
+		
+		$this->load->model('localisation/language');
+		
+		$data['languages'] = $this->model_localisation_language->getLanguages();
+		
+		$data['locales'] = array();
+		
+		$data['locales'][] = array(
+			'value' => 'en-gb',
+			'text' => 'English (Great Britain)'
+		);
+		
+		$data['locales'][] = array(
+			'value' => 'zh-cn',
+			'text' => 'Chinese (People\'s Republic of China)'
+		);
+		
+		$data['locales'][] = array(	
+			'value' => 'zh-hk',
+			'text' => 'Chinese (Hong Kong)',
+		);
+		
+		$data['locales'][] = array(	
+			'value' => 'zh-tw',
+			'text' => 'Chinese (Taiwan)'
+		);
+		
+		$data['locales'][] = array(	
+			'value' => 'zh-xc',
+			'text' => 'Chinese (US)'
+			);
+			
+		$data['locales'][] = array(	
+			'value' => 'da-dk',
+			'text' => 'Danish'
+		);
+		
+		$data['locales'][] = array(	
+			'value' => 'nl-nl',
+			'text' => 'Dutch'
+		);
+		
+		$data['locales'][] = array(	
+			'value' => 'en-au',
+			'text' => 'English (Australia)'
+		);
+		
+		$data['locales'][] = array(	
+			'value' => 'en-us',
+			'text' => 'English (US)',);
+		
+		$data['locales'][] = array(	
+			'value' => 'fr-fr',
+			'text' => 'French'
+		);
+		
+		$data['locales'][] = array(	
+			'value' => 'fr-ca',
+			'text' => 'French (Canada)'
+		);
+		
+		$data['locales'][] = array(	
+			'value' => 'fr-xc',
+			'text' => 'French (international)'
+		);
+		
+		$data['locales'][] = array(	
+			'value' => 'de-de',
+			'text' => 'German'
+		);
+		
+		$data['locales'][] = array(	
+			'value' => 'he-il',
+			'text' => 'Hebrew (Israel)'
+		);
+		
+		$data['locales'][] = array(	
+			'value' => 'id-id',
+			'text' => 'Indonesian'
+		);
+		
+		$data['locales'][] = array(	
+			'value' => 'it-il',
+			'text' => 'Italian'
+		);
+		
+		$data['locales'][] = array(	
+			'value' => 'ja-jp' ,
+			'text' => 'Japanese'
+		);
+		
+		$data['locales'][] = array(	
+			'value' => 'no-no',
+			'text' => 'Norwegian'
+		);
+		
+		$data['locales'][] = array(	
+			'value' => 'pl-pl', 
+			'text' => 'Polish');
+		
+		$data['locales'][] = array(	
+			'value' => 'pt-pt',
+			'text' => 'Portuguese'
+		);
+		
+		$data['locales'][] = array(	
+			'value' => 'pt-br', 
+			'text' => 'Portuguese (Brazil)'
+		);
+		
+		$data['locales'][] = array(	
+			'value' => 'ru-ru', 
+			'text' => 'Russian'
+		);
+		
+		$data['locales'][] = array(	
+			'value' => 'es-es', 
+			'text' => 'Spanish'
+		);
+		
+		$data['locales'][] = array(	
+			'value' => 'es-xc',
+			'text' => 'Spanish (Mexico)'
+		);
+		
+		$data['locales'][] = array(	
+			'value' => 'sv-se',
+			'text' => 'Swedish'
+		);
+		
+		$data['locales'][] = array(	
+			'value' => 'th-th',
+			'text' => 'Thai'
+		);
+		
+		$data['locales'][] = array(	
+			'value' => 'tr-tr',
+			'text' => 'Turkish'
+		);
+		
+		if (isset($this->request->post['pp_login_locale'])) {
+			$data['pp_login_locale'] = $this->request->post['pp_login_locale'];
+		} else {
+			$data['pp_login_locale'] = $this->config->get('pp_login_locale');
+		}
+		
+		$data['pp_login_return_url'] = HTTPS_CATALOG . 'index.php?route=module/pp_login/login';
+	
 		if (isset($this->request->post['pp_login_status'])) {
 			$data['pp_login_status'] = $this->request->post['pp_login_status'];
 		} else {
 			$data['pp_login_status'] = $this->config->get('pp_login_status');
 		}
-        
+	        
 		$data['modules'] = array();
 		
 		if (isset($this->request->post['pp_login_module'])) {
@@ -159,52 +310,7 @@ class ControllerModulePPLogin extends Controller {
 		} elseif ($this->config->get('pp_login_module')) { 
 			$data['modules'] = $this->config->get('pp_login_module');
 		}
-		
-		$this->load->model('localisation/language');
-		
-		$languages = $this->model_localisation_language->getLanguages();
-		
-		$data['languages'] = array();
-		foreach ($languages as $language_code => $language) {
-			$data['languages'][$language_code] = $language;
-			$data['languages'][$language_code]['entry_locale'] = sprintf($this->language->get('entry_locale'), $language['name']);
-			$data['languages'][$language_code]['help_locale'] = sprintf($this->language->get('help_locale'), $language['name']);
-		}
-		
-		$data['pp_login_locale_all'] = array(
-			'en-gb' => 'English (Great Britain)',
-			'zh-cn' => 'Chinese (People\'s Republic of China)',
-			'zh-hk' => 'Chinese (Hong Kong)',
-			'zh-tw' => 'Chinese (Taiwan)',
-			'zh-xc' => 'Chinese (US)',
-			'da-dk' => 'Danish',
-			'nl-nl' => 'Dutch',
-			'en-au' => 'English (Australia)',
-			'en-us' => 'English (US)',
-			'fr-fr' => 'French',
-			'fr-ca' => 'French (Canada)',
-			'fr-xc' => 'French (international)',
-			'de-de' => 'German',
-			'he-il' => 'Hebrew (Israel)',
-			'id-id' => 'Indonesian',
-			'it-il' => 'Italian',
-			'ja-jp' => 'Japanese',
-			'no-no' => 'Norwegian',
-			'pl-pl' => 'Polish',
-			'pt-pt' => 'Portuguese',
-			'pt-br' => 'Portuguese (Brazil)',
-			'ru-ru' => 'Russian',
-			'es-es' => 'Spanish',
-			'es-xc' => 'Spanish (Mexico)',
-			'sv-se' => 'Swedish',
-			'th-th' => 'Thai',
-			'tr-tr' => 'Turkish'
-		);
-		
-		$data['pp_login_locale_saved'] = $this->config->get('pp_login_locale');
-		
-		$data['pp_login_return_url'] = HTTPS_CATALOG . 'index.php?route=module/pp_login/login';
-				
+						
 		$this->load->model('design/layout');
 		
 		$data['layouts'] = $this->model_design_layout->getLayouts();

@@ -140,10 +140,9 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-code"><?php echo $entry_code; ?></label>
+            <label class="col-sm-2 control-label" for="input-code"><span data-toggle="tooltip" title="<?php echo $help_code; ?>"><?php echo $entry_code; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control" />
-              <span class="help-block"><?php echo $help_code; ?></span>
               <?php if ($error_code) { ?>
               <div class="text-danger"><?php echo $error_code; ?></div>
               <?php } ?>
@@ -184,10 +183,10 @@
         </div>
         <div class="tab-pane" id="tab-payment">
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-commission"><?php echo $entry_commission; ?></label>
+            <label class="col-sm-2 control-label" for="input-commission"><span data-toggle="tooltip" title="<?php echo $help_commission; ?>"><?php echo $entry_commission; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="commission" value="<?php echo $commission; ?>" placeholder="<?php echo $entry_commission; ?>" id="input-commission" class="form-control" />
-              <span class="help-block"><?php echo $help_commission; ?></span></div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-tax"><?php echo $entry_tax; ?></label>
@@ -305,7 +304,7 @@
             </div>
           </div>
           <div class="text-right">
-            <button id="button-transaction" data-toggle="tooltip" title="<?php echo $button_transaction_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button>
+            <button type="button" id="button-transaction" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_transaction_add; ?></button>
           </div>
         </div>
         <?php } ?>
@@ -384,16 +383,14 @@ $('#button-transaction').on('click', function() {
 		dataType: 'html',
 		data: 'description=' + encodeURIComponent($('#tab-transaction input[name=\'description\']').val()) + '&amount=' + encodeURIComponent($('#tab-transaction input[name=\'amount\']').val()),
 		beforeSend: function() {
-			$('.alert').remove();
-
-			$('#button-transaction i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-			$('#button-transaction').prop('disabled', true);
+			$('#button-transaction').button('loading');
 		},
 		complete: function() {
-			$('#button-transaction i').replaceWith('<i class="fa fa-plus-circle"></i>');
-			$('#button-transaction').prop('disabled', false);
+			$('#button-transaction').button('reset');
 		},
 		success: function(html) {
+			$('.alert').remove();
+			
 			$('#transaction').html(html);
 
 			$('#tab-transaction input[name=\'amount\']').val('');

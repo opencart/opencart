@@ -924,7 +924,8 @@ class ControllerSaleOrder extends Controller {
 			$data['text_queries_remaining'] = $this->language->get('text_queries_remaining');
 			$data['text_maxmind_id'] = $this->language->get('text_maxmind_id');
 			$data['text_error'] = $this->language->get('text_error');
-
+			$data['text_loading'] = $this->language->get('text_loading');
+			
 			$data['help_country_match'] = $this->language->get('help_country_match');
 			$data['help_country_code'] = $this->language->get('help_country_code');
 			$data['help_high_risk_country'] = $this->language->get('help_high_risk_country');

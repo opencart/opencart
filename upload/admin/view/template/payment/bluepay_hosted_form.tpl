@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-bluepay-hosted-form" class="btn btn-success"><i class="fa fa-check-circle"></i> <?php echo $button_save; ?></button>
+        <button type="submit" form="form-bluepay-hosted-form" class="btn btn-primary"><i class="fa fa-check-circle"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i> <?php echo $button_cancel; ?></a></div>
       <h1><i class="fa fa-credit-card"></i> <?php echo $heading_title; ?></h1>
     </div>
@@ -60,7 +60,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-transaction"><?php echo $entry_transaction; ?></label>
+        <label class="col-sm-2 control-label" for="input-transaction"><span data-toggle="tooltip" title="<?php echo $help_transaction; ?>"><?php echo $entry_transaction; ?></span></label>
         <div class="col-sm-10">
           <select name="bluepay_hosted_form_transaction" id="input-transaction" class="form-control">
             <?php if ($bluepay_hosted_form_transaction == 'SALE') { ?>
@@ -74,7 +74,7 @@
             <option value="AUTH"><?php echo $text_authenticate; ?></option>
             <?php } ?>
           </select>
-          <span class="help-block"><?php echo $help_transaction; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-amex"><?php echo $entry_card_amex; ?></label>
@@ -139,10 +139,10 @@
                             </div>
                         </div>-->
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-total"><?php echo $entry_total; ?> </label>
+        <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="bluepay_hosted_form_total" value="<?php echo $bluepay_hosted_form_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
-          <span class="help-block"><?php echo $help_total; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
@@ -174,7 +174,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-debug"><?php echo $entry_debug; ?></label>
+        <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="<?php echo $help_debug; ?>"><?php echo $entry_debug; ?></span></label>
         <div class="col-sm-10">
           <select name="bluepay_hosted_form_debug" id="input-debug" class="form-control">
             <?php if ($bluepay_hosted_form_debug) { ?>
@@ -185,7 +185,7 @@
             <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
             <?php } ?>
           </select>
-          <span class="help-block"><?php echo $help_debug; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>

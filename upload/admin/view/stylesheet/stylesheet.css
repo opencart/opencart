@@ -1,4 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,greek-ext,vietnamese);
+@import url(http://fonts.googleapis.com/css?family=Handlee);
 html, body {
 	height: 100%;
 	margin: 0;
@@ -10,13 +11,13 @@ h1, h2, h3, h4, h5, h6, p {
 	margin-top: 0;
 }
 .page-header {
-	margin-top: 20px;
+	margin-top: 15px;
 }
 .page-header h1 {
 	font-family: 'Open Sans', sans-serif;
-	font-weight: 300;
-	font-size: 25px;
-	color: #555555;
+	font-weight: 600;
+	font-size: 24px;
+	color: #666666;
 }
 a, a:hover {
 	color: #1e91cf;
@@ -30,7 +31,6 @@ a, a:hover {
 .datepicker {
 	font-size: 12px;
 }
-
 /* fix for bootstrap hidden and visible */
 span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: inline;
@@ -46,18 +46,20 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	background: #FFFFFF;
 	border-bottom: 1px solid #E4E4E4;
 	margin-bottom: 0;
-	/*box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.05);*/
+	box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.03);
 	margin: 0;
+	padding: 0;
 }
+
 #header .nav > li {
 	float: left;
 }
 #header .nav > li li {
 	min-width: 200px;
 }
-#header .container-fluid {
-	padding-left: 0px;
-	padding-right: 0px;
+.container-fluid {
+	padding-left: 20px;
+	padding-right: 20px;
 }
 #header .navbar-header {
 	width: 235px;
@@ -74,13 +76,13 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #header #button-menu + .navbar-brand {
 	padding: 10px 15px 4px 20px;
+	height: auto;	
 }
 #header .nav > li > a {
 	padding: 3px 15px 3px 15px;
-	margin: 0;
 	line-height: 38px;
 	cursor: pointer;
-	color: #363F44;
+	color: #6D6D6D;
 }
 #header .nav > li.open > a, #header .nav > li.active > a, #header .nav > li > a:hover {
 	background: #EEEEEE;
@@ -102,23 +104,36 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	float: left;
 	display: inline-block;
 	cursor: pointer;
-	color: #363F44;
+	color: #6D6D6D;
 }
 #button-menu:hover {
 	background: #EEEEEE;
 }
+
+
 #profile {
-	padding: 8px;
+	padding: 10px 15px 10px 15px;
 	overflow: auto;
+	color: #666;
 }
 #profile img {
 	border-radius: 50%;
+}
+#profile div + div {
+	margin-left: 25px;
+}
+#profile h4 {
+	font-family: 'Handlee', cursive;
+	font-size: 15px;
+	color: #FFF;
+	margin-top: 12px;
+	margin-bottom: 0;
 }
 
 #column-left {
 	width: 0px;
 	height: 100%;
-	background-color: #1C2B36;
+	background-color: #323232;
 	position: absolute;
 	top: 0px;
 	padding-top: 50px;
@@ -157,12 +172,16 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	list-style: none;
 }
 #menu li a {
-	color: #7CA1BB;
-	border-bottom: 1px solid #2F2F2F;
+	color: #999999;
+	border-bottom: 1px solid #383838;
 	text-decoration: none;
 	display: block;
 	padding: 10px 10px 9px 10px;
 	cursor: pointer;
+}
+#menu li i {
+	font-size: 14px;
+	margin-right: 5px;
 }
 #menu li ul {
 	background-color: #131E26;
@@ -220,10 +239,18 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 .nav-tabs, .nav-pills {
 	margin-bottom: 15px;
 }
-div.required .control-label:before, td.required:before {
+
+div.required .control-label:not(span):before, td.required:before {
 	content: '* ';
 	color: #F00;
 	font-weight: bold;
+}
+
+.control-label span:after {
+	font-family: FontAwesome;
+	color: #1E91CF;
+	content: "\f059";
+	margin-left: 4px;
 }
 .alert {
 	padding: 10px 15px;
@@ -322,6 +349,12 @@ label.control-label {
 	border-radius: 0px;
 	box-shadow: none;
 }
+
+/* Tiles */
+
+
+
+
 .img-thumbnail i {
 	color: #FFFFFF;
 	background-color: #EEEEEE;

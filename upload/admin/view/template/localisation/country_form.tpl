@@ -37,10 +37,10 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-address-format"><?php echo $entry_address_format; ?> </label>
+        <label class="col-sm-2 control-label" for="input-address-format"><span data-toggle="tooltip" data-html="true" title="<?php echo htmlspecialchars($help_address_format); ?>"><?php echo $entry_address_format; ?></span></label>
         <div class="col-sm-10">
           <textarea name="address_format" rows="5" placeholder="<?php echo $entry_address_format; ?>" id="input-address-format" class="form-control"><?php echo $address_format; ?></textarea>
-          <span class="help-block"><?php echo $help_address_format; ?></span></div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label"><?php echo $entry_postcode_required; ?></label>

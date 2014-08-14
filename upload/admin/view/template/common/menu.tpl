@@ -1,12 +1,11 @@
-<nav id="column-left">
-  <?php echo $profile; ?>
+<nav id="column-left"> <?php echo $profile; ?>
   <ul id="menu">
     <li id="dashboard"><a href="<?php echo $home; ?>"><i class="fa fa-home fa-fw"></i> <?php echo $text_dashboard; ?></a></li>
     <li id="catalog"><a class="parent"><i class="fa fa-tags fa-fw"></i> <?php echo $text_catalog; ?></a>
       <ul>
         <li><a href="<?php echo $category; ?>"><?php echo $text_category; ?></a></li>
         <li><a href="<?php echo $product; ?>"><?php echo $text_product; ?></a></li>
-        <li><a href="<?php echo $product_profile; ?>"><?php echo $text_product_profile; ?></a></li>
+        <li><a href="<?php echo $recurring; ?>"><?php echo $text_recurring; ?></a></li>
         <li><a href="<?php echo $filter; ?>"><?php echo $text_filter; ?></a></li>
         <li><a class="parent"><?php echo $text_attribute; ?></a>
           <ul>
@@ -51,19 +50,19 @@
             <li><a href="<?php echo $voucher_theme; ?>"><?php echo $text_voucher_theme; ?></a></li>
           </ul>
         </li>
-        <li><a class="parent"><?php echo $text_marketing; ?></a>
-          <ul>
-            <li><a href="<?php echo $marketing; ?>"><?php echo $text_marketing; ?></a></li>
-            <li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li>
-            <li><a href="<?php echo $coupon; ?>"><?php echo $text_coupon; ?></a></li>
-            <li><a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a></li>
-          </ul>
-        </li>
         <li><a class="parent"><?php echo $text_paypal ?></a>
           <ul>
             <li><a href="<?php echo $paypal_search ?>"><?php echo $text_paypal_search ?></a></li>
           </ul>
         </li>
+      </ul>
+    </li>
+    <li><a class="parent"><?php echo $text_marketing; ?></a>
+      <ul>
+        <li><a href="<?php echo $marketing; ?>"><?php echo $text_marketing; ?></a></li>
+        <li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li>
+        <li><a href="<?php echo $coupon; ?>"><?php echo $text_coupon; ?></a></li>
+        <li><a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a></li>
       </ul>
     </li>
     <li id="system"><a class="parent"><i class="fa fa-cog fa-fw"></i> <?php echo $text_system; ?></a>

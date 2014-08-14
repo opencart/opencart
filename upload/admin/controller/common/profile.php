@@ -12,6 +12,7 @@ class ControllerCommonProfile extends Controller {
 		if ($user_info) {
 			$data['firstname'] = $user_info['firstname'];
 			$data['lastname'] = $user_info['lastname'];
+			$data['username'] = $user_info['username'];
 			
 			$data['user_group'] = $user_info['user_group'] ;
 

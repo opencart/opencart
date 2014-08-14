@@ -612,10 +612,10 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-points"><?php echo $entry_points; ?></label>
+            <label class="col-sm-2 control-label" for="input-points"><span data-toggle="tooltip" title="<?php echo $help_points; ?>"><?php echo $entry_points; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="points" value="" placeholder="<?php echo $entry_points; ?>" id="input-points" class="form-control" />
-              <span class="help-block"><?php echo $help_points; ?></span> </div>
+            </div>
           </div>
           <div class="text-right">
             <button type="button" id="button-reward" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_reward_add; ?></button>

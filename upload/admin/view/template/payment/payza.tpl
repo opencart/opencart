@@ -34,10 +34,10 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-callback"><?php echo $entry_callback; ?></label>
+        <label class="col-sm-2 control-label" for="input-callback"><span data-toggle="tooltip" title="<?php echo $help_callback; ?>"><?php echo $entry_callback; ?></span></label>
         <div class="col-sm-10">
           <textarea rows="5" readonly="readonly" id="input-callback" class="form-control"><?php echo $callback; ?></textarea>
-          <span class="help-block"><?php echo $help_callback; ?></span></div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-total"><?php echo $entry_total; ?></label>

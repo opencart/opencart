@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right"><a href="<?php echo $insert; ?>" data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></a>
-        <button type="submit" form="form-profile-list" formaction="<?php echo $copy; ?>" data-toggle="tooltip" title="<?php echo $button_copy; ?>" class="btn btn-default"><i class="fa fa-copy"></i></button>
-        <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-profile-list').submit() : false;"><i class="fa fa-trash-o"></i></button>
+        <button type="submit" form="form-recurring-list" formaction="<?php echo $copy; ?>" data-toggle="tooltip" title="<?php echo $button_copy; ?>" class="btn btn-default"><i class="fa fa-copy"></i></button>
+        <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-recurring').submit() : false;"><i class="fa fa-trash-o"></i></button>
       </div>
       <h1><i class="fa fa-list"></i> <?php echo $heading_title; ?></h1>
     </div>
@@ -20,7 +20,7 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-profile-list">
+    <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-recurring">
       <div class="table-responsive">
         <table class="table table-striped table-hover">
           <thead>
@@ -40,17 +40,17 @@
             </tr>
           </thead>
           <tbody>
-            <?php if ($profiles) { ?>
-            <?php foreach ($profiles as $profile) { ?>
+            <?php if ($recurrings) { ?>
+            <?php foreach ($recurrings as $recurring) { ?>
             <tr>
-              <td class="text-center"><?php if (in_array($profile['profile_id'], $selected)) { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $profile['profile_id']; ?>" checked="checked" />
+              <td class="text-center"><?php if (in_array($recurring['recurring_id'], $selected)) { ?>
+                <input type="checkbox" name="selected[]" value="<?php echo $recurring['recurring_id']; ?>" checked="checked" />
                 <?php } else { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $profile['profile_id']; ?>" />
+                <input type="checkbox" name="selected[]" value="<?php echo $recurring['recurring_id']; ?>" />
                 <?php } ?></td>
-              <td class="text-left"><?php echo $profile['name'] ?></td>
-              <td class="text-right"><?php echo $profile['sort_order'] ?></td>
-              <td class="text-right"><a href="<?php echo $profile['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+              <td class="text-left"><?php echo $recurring['name'] ?></td>
+              <td class="text-right"><?php echo $recurring['sort_order'] ?></td>
+              <td class="text-right"><a href="<?php echo $recurring['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
             </tr>
             <?php } ?>
             <?php } else { ?>

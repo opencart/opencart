@@ -89,7 +89,6 @@ $_['button_view']                   = 'View';
 $_['button_install']                = 'Install';
 $_['button_uninstall']              = 'Uninstall';
 $_['button_link']                   = 'Link';
-$_['button_add_profile']            = 'Add Profile';
 $_['button_shipping']               = 'Apply Shipping Method';
 $_['button_payment']                = 'Apply Payment Method';
 $_['button_coupon']                 = 'Apply Coupon';
@@ -113,7 +112,6 @@ $_['tab_links']                     = 'Links';
 $_['tab_log']                       = 'Log';
 $_['tab_image']                     = 'Image';
 $_['tab_option']                    = 'Option';
-$_['tab_profile']                   = 'Profile';
 $_['tab_server']                    = 'Server';
 $_['tab_store']                     = 'Store';
 $_['tab_special']                   = 'Special';
@@ -132,7 +130,6 @@ $_['tab_sale']                      = 'Sales';
 $_['tab_marketing']                 = 'Marketing';
 $_['tab_online']                    = 'People Online';
 $_['tab_activity']                  = 'Recent Activity';
-$_['tab_trial']                     = 'Trial Period';
 
 // Error
 $_['error_exception']               = 'Error Code(%s): %s in %s on line %s';

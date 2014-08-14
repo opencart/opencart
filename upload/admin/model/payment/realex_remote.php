@@ -236,7 +236,7 @@ class ModelPaymentRealexRemote extends Model {
 	}
 
 	public function addTransaction($realex_remote_order_id, $type, $total) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "realex_remote_order_transaction` SET `realex_remote_order_id` = '".(int)$realex_remote_order_id."', `created` = now(), `type` = '".$this->db->escape($type)."', `amount` = '".(double)$total."'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "realex_remote_order_transaction` SET `realex_remote_order_id` = '".(int)$realex_remote_order_id."', `created` = now(), `type` = '".$this->db->escape($type)."', `amount` = '".(float)$total."'");
 	}
 
 	public function logger($message) {
@@ -249,7 +249,7 @@ class ModelPaymentRealexRemote extends Model {
 	public function getTotalCaptured($realex_order_id) {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "realex_remote_order_transaction` WHERE `realex_remote_order_id` = '".(int)$realex_order_id."' AND (`type` = 'payment' OR `type` = 'rebate')");
 
-		return (double)$query->row['total'];
+		return (float)$query->row['total'];
 	}
 
 	public function getTotalRebated($realex_order_id) {

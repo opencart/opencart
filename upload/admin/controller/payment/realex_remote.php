@@ -393,9 +393,9 @@ class ControllerPaymentRealexRemote extends Controller {
 
 				$json['data'] = array();
 				$json['data']['created'] = date("Y-m-d H:i:s");
-				$json['data']['amount'] = (double)$this->request->post['amount'];
+				$json['data']['amount'] = (float)$this->request->post['amount'];
 				$json['data']['capture_status'] = $capture_status;
-				$json['data']['total'] = (double)$total_captured;
+				$json['data']['total'] = (float)$total_captured;
 				$json['data']['total_formatted'] = $this->currency->format($total_captured, $realex_order['currency_code'], 1, true);
 				$json['error'] = false;
 			} else {
@@ -452,8 +452,8 @@ class ControllerPaymentRealexRemote extends Controller {
 				$json['data'] = array();
 				$json['data']['created'] = date("Y-m-d H:i:s");
 				$json['data']['amount'] = $this->request->post['amount'] * -1;
-				$json['data']['total_captured'] = (double)$total_captured;
-				$json['data']['total_rebated'] = (double)$total_rebated;
+				$json['data']['total_captured'] = (float)$total_captured;
+				$json['data']['total_rebated'] = (float)$total_rebated;
 				$json['data']['rebate_status'] = $rebate_status;
 				$json['error'] = false;
 			} else {

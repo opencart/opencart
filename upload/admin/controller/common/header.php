@@ -55,12 +55,26 @@ class ControllerCommonHeader extends Controller {
 			$this->load->model('sale/order');
 
 			// Processing Orders
-			$data['order_status_total'] = $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $this->config->get('config_process_status'))));
-			$data['order_status'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&filter_order_status=' . implode(',', $this->config->get('config_process_status')), 'SSL');
+			$total_process_orders = $this->model_sale_order->getTotalOrdersByProcessStatus();
+
+			if ($total_process_orders > 0) {
+				$data['order_status_total'] = $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $this->config->get('config_process_status'))));
+				$data['order_status'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&filter_order_status=' . implode(',', $this->config->get('config_process_status')), 'SSL');
+			} else {
+				$data['order_status_total'] = false;
+				$data['order_status'] = false;
+			}
 
 			// Complete Orders
-			$data['complete_status_total'] = $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $this->config->get('config_complete_status'))));
-			$data['complete_status'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&filter_order_status=' . implode(',', $this->config->get('config_complete_status')), 'SSL');
+			$total_complete_orders = $this->model_sale_order->getTotalOrdersByCompleteStatus();
+
+			if ($total_complete_orders > 0) {
+				$data['complete_status_total'] = $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $this->config->get('config_complete_status'))));
+				$data['complete_status'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&filter_order_status=' . implode(',', $this->config->get('config_complete_status')), 'SSL');
+			} else {
+				$data['order_status_total'] = false;
+				$data['order_status'] = false;
+			}
 
 			// Returns
 			$this->load->model('sale/return');

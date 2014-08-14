@@ -129,10 +129,11 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	margin-top: 12px;
 	margin-bottom: 0;
 }
+
 #column-left {
 	width: 0px;
 	height: 100%;
-	background-color: #333333;
+	background-color: #323232;
 	position: absolute;
 	top: 0px;
 	padding-top: 50px;
@@ -238,7 +239,8 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 .nav-tabs, .nav-pills {
 	margin-bottom: 15px;
 }
-div.required .control-label:before, td.required:before {
+
+div.required .control-label:not(span):before, td.required:before {
 	content: '* ';
 	color: #F00;
 	font-weight: bold;

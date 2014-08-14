@@ -83,17 +83,17 @@ $_['entry_related']          = 'Related Products';
 $_['entry_tag']          	 = 'Product Tags';
 $_['entry_reward']           = 'Reward Points';
 $_['entry_layout']           = 'Layout Override';
-$_['entry_profile']          = 'Profile:';
-$_['entry_recurring']        = 'Recurring billing:';
-$_['entry_recurring_price']  = 'Recurring price:';
-$_['entry_recurring_freq']   = 'Recurring frequency:';
-$_['entry_recurring_cycle']  = 'Recurring cycles:<span class="help">How often it\'s billed, must be 1 or more</span>';
-$_['entry_recurring_length'] = 'Recurring length:<span class="help">0 = until cancelled</span>';
-$_['entry_trial']            = 'Trial period:';
-$_['entry_trial_price']      = 'Trial recurring price:';
-$_['entry_trial_freq']       = 'Trial recurring frequency:';
-$_['entry_trial_cycle']      = 'Trial recurring cycles:<span class="help">How often it\'s billed, must be 1 or more</span>';
-$_['entry_trial_length']     = 'Trial recurring length:';
+$_['entry_profile']          = 'Profile';
+$_['entry_recurring']        = 'Recurring billing';
+$_['entry_recurring_price']  = 'Recurring price';
+$_['entry_recurring_freq']   = 'Recurring frequency';
+$_['entry_recurring_cycle']  = 'Recurring cycles<span class="help">How often it\'s billed, must be 1 or more</span>';
+$_['entry_recurring_length'] = 'Recurring length<span class="help">0 = until cancelled</span>';
+$_['entry_trial']            = 'Trial period';
+$_['entry_trial_price']      = 'Trial recurring price';
+$_['entry_trial_freq']       = 'Trial recurring frequency';
+$_['entry_trial_cycle']      = 'Trial recurring cycles<span class="help">How often it\'s billed, must be 1 or more</span>';
+$_['entry_trial_length']     = 'Trial recurring length';
 
 // Help
 $_['help_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the keyword is globally unique.';

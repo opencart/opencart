@@ -28,17 +28,15 @@ class ControllerPaymentFirstdata extends Controller {
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
 		$data['text_all_zones'] = $this->language->get('text_all_zones');
-		$data['text_help_total'] = $this->language->get('text_help_total');
-		$data['text_help_debug'] = $this->language->get('text_help_debug');
+
 		$data['text_card_type'] = $this->language->get('text_card_type');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_notification_url'] = $this->language->get('text_notification_url');
-		$data['text_help_notification'] = $this->language->get('text_help_notification');
 		$data['text_merchant_id'] = $this->language->get('text_merchant_id');
 		$data['text_secret'] = $this->language->get('text_secret');
 		$data['text_settle_delayed'] = $this->language->get('text_settle_delayed');
 		$data['text_settle_auto'] = $this->language->get('text_settle_auto');
-		$data['text_help_settle'] = $this->language->get('text_help_settle');
+		
 
 		$data['entry_merchant_id'] = $this->language->get('entry_merchant_id');
 		$data['entry_secret'] = $this->language->get('entry_secret');
@@ -60,7 +58,12 @@ class ControllerPaymentFirstdata extends Controller {
 		$data['entry_status_decline_stolen'] = $this->language->get('entry_status_decline_stolen');
 		$data['entry_status_decline_bank'] = $this->language->get('entry_status_decline_bank');
 		$data['entry_status_void'] = $this->language->get('entry_status_void');
-
+		
+		$data['help_total'] = $this->language->get('help_total');
+		$data['help_debug'] = $this->language->get('help_debug');
+		$data['help_notification'] = $this->language->get('help_notification');
+		$data['help_settle'] = $this->language->get('help_settle');
+		
 		$data['tab_account'] = $this->language->get('tab_account');
 		$data['tab_order_status'] = $this->language->get('tab_order_status');
 		$data['tab_payment'] = $this->language->get('tab_payment');

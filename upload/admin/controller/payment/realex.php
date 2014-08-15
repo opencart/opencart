@@ -28,15 +28,9 @@ class ControllerPaymentRealex extends Controller {
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
 		$data['text_all_zones'] = $this->language->get('text_all_zones');
-		$data['text_help_total'] = $this->language->get('text_help_total');
-		$data['text_help_card_select'] = $this->language->get('text_help_card_select');
-		$data['text_help_debug'] = $this->language->get('text_help_debug');
-		$data['text_help_dcc_settle'] = $this->language->get('text_help_dcc_settle');
 		$data['text_card_type'] = $this->language->get('text_card_type');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_use_default'] = $this->language->get('text_use_default');
-		$data['text_notification_url'] = $this->language->get('text_notification_url');
-		$data['text_help_notification'] = $this->language->get('text_help_notification');
 		$data['text_merchant_id'] = $this->language->get('text_merchant_id');
 		$data['text_subaccount'] = $this->language->get('text_subaccount');
 		$data['text_secret'] = $this->language->get('text_secret');
@@ -74,7 +68,14 @@ class ControllerPaymentRealex extends Controller {
 		$data['entry_status_decline_bank'] = $this->language->get('entry_status_decline_bank');
 		$data['entry_status_void'] = $this->language->get('entry_status_void');
 		$data['entry_status_rebate'] = $this->language->get('entry_status_rebate');
-
+		
+		$data['help_total'] = $this->language->get('help_total');
+		$data['help_card_select'] = $this->language->get('help_card_select');
+		$data['help_debug'] = $this->language->get('help_debug');
+		$data['help_dcc_settle'] = $this->language->get('help_dcc_settle');
+		$data['notification_url'] = $this->language->get('notification_url');
+		$data['help_notification'] = $this->language->get('help_notification');
+		
 		$data['tab_account'] = $this->language->get('tab_account');
 		$data['tab_sub_account'] = $this->language->get('tab_sub_account');
 		$data['tab_order_status'] = $this->language->get('tab_order_status');

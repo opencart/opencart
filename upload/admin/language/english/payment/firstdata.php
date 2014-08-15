@@ -17,10 +17,6 @@ $_['text_live'] = 'Live';
 $_['text_demo'] = 'Demo';
 $_['text_yes'] = 'Yes';
 $_['text_no'] = 'No';
-$_['text_help_total'] = 'The checkout total the order must reach before this payment method becomes active';
-$_['text_help_notification'] = 'You need to supply this URL to First Data to get payment notifications';
-$_['text_help_debug'] = 'Enabling debug will write sensitive data to a log file. You should always disable unless instructed otherwise';
-$_['text_help_settle'] = 'If you use pre-auth you must complete a post-auth action within 3-5 days otherwise your transaction will be dropped';
 $_['text_enabled'] = 'Enabled';
 $_['text_merchant_id'] = 'Store ID';
 $_['text_secret'] = 'Shared secret';
@@ -29,8 +25,8 @@ $_['text_capture_ok_order'] = 'Capture was successful, order status updated to s
 $_['text_void_ok'] = 'Void was successful, order status updated to voided';
 $_['text_settle_auto'] = 'Sale';
 $_['text_settle_delayed'] = 'Pre auth';
-$_['success_void'] = 'Transaction has been voided';
-$_['success_capture'] = 'Transaction has been captured';
+$_['text_success_void'] = 'Transaction has been voided';
+$_['text_success_capture'] = 'Transaction has been captured';
 
 // Entry
 $_['entry_merchant_id'] = 'Store ID';
@@ -51,6 +47,12 @@ $_['entry_status_success_unsettled'] = 'Success - not settled';
 $_['entry_status_decline'] = 'Decline';
 $_['entry_status_void'] = 'Voided';
 $_['entry_enable_card_store'] = 'Enable card storage tokens';
+
+// Help
+$_['help_total'] = 'The checkout total the order must reach before this payment method becomes active';
+$_['help_notification'] = 'You need to supply this URL to First Data to get payment notifications';
+$_['help_debug'] = 'Enabling debug will write sensitive data to a log file. You should always disable unless instructed otherwise';
+$_['help_settle'] = 'If you use pre-auth you must complete a post-auth action within 3-5 days otherwise your transaction will be dropped';
 
 // Error
 $_['error_merchant_id'] = 'Store ID is required';

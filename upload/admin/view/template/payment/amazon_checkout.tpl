@@ -191,7 +191,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $text_help_ip; ?>"><?php echo $text_allowed_ips; ?></span></label>
+        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_ip; ?>"><?php echo $text_allowed_ips; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="allowed-ip" placeholder="<?php echo $text_ip; ?>" />
           <button type="button" id="add-ip" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $text_add; ?></button>

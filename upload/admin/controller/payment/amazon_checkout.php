@@ -61,7 +61,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$data['text_shipped_order_status'] = $this->language->get('text_shipped_order_status');
 		$data['text_last_cron_job_run'] = $this->language->get('text_last_cron_job_run');
 		$data['text_ip'] = $this->language->get('text_ip');
-		$data['text_help_ip'] = $this->language->get('text_help_ip');
+		
 		$data['text_allowed_ips'] = $this->language->get('text_allowed_ips');
 		$data['text_upload_success'] = $this->language->get('text_upload_success');
 		$data['text_add'] = $this->language->get('text_add');
@@ -79,6 +79,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$data['text_x_large'] = $this->language->get('text_x_large');
 		$data['text_background'] = $this->language->get('text_background');
 		
+		$data['help_ip'] = $this->language->get('help_ip');
 		$data['help_allowed_ips'] = $this->language->get('help_allowed_ips');
 		$data['help_cron_job_url'] = $this->language->get('help_cron_job_url');
 		$data['help_cron_job_token'] = $this->language->get('help_cron_job_token');

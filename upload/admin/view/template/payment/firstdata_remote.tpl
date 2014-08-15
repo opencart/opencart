@@ -50,7 +50,7 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-certificate-path"><span data-toggle="tooltip" title="<?php echo $text_help_certificate; ?>"><?php echo $entry_certificate_path; ?></span></label>
+            <label class="col-sm-2 control-label" for="input-certificate-path"><span data-toggle="tooltip" title="<?php echo $help_certificate; ?>"><?php echo $entry_certificate_path; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="firstdata_remote_certificate" value="<?php echo $firstdata_remote_certificate; ?>" placeholder="<?php echo $entry_certificate_path; ?>" id="input-certificate-path" class="form-control"/>
               <?php if ($error_certificate) { ?>
@@ -85,6 +85,29 @@
               <?php } ?>
             </div>
           </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="<?php echo $help_debug; ?>"><?php echo $entry_debug; ?></span></label>
+            <div class="col-sm-10">
+              <select name="firstdata_remote_debug" id="input-debug" class="form-control">
+                <?php if ($firstdata_remote_debug) { ?>
+                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                <option value="0"><?php echo $text_disabled; ?></option>
+                <?php } else { ?>
+                <option value="1"><?php echo $text_enabled; ?></option>
+                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
+            <div class="col-sm-10">
+              <input type="text" name="firstdata_remote_total" value="<?php echo $firstdata_remote_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control"/>
+            </div>
+          </div>
+                    
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
             <div class="col-sm-10">
@@ -100,20 +123,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="<?php echo $text_help_debug; ?>"><?php echo $entry_debug; ?></span></label>
-            <div class="col-sm-10">
-              <select name="firstdata_remote_debug" id="input-debug" class="form-control">
-                <?php if ($firstdata_remote_debug) { ?>
-                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                <option value="0"><?php echo $text_disabled; ?></option>
-                <?php } else { ?>
-                <option value="1"><?php echo $text_enabled; ?></option>
-                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                <?php } ?>
-              </select>
-            </div>
-          </div>
+                    
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
             <div class="col-sm-10">
@@ -128,12 +138,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $text_help_total; ?>"><?php echo $entry_total; ?></span></label>
-            <div class="col-sm-10">
-              <input type="text" name="firstdata_remote_total" value="<?php echo $firstdata_remote_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control"/>
-            </div>
-          </div>
+
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
             <div class="col-sm-10">
@@ -215,11 +220,17 @@
         </div>
         <div class="tab-pane" id="tab-payment">
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-auto-settle"><span data-toggle="tooltip" title="<?php echo $text_help_settle; ?>"><?php echo $entry_auto_settle; ?></span></label>
+            <label class="col-sm-2 control-label" for="input-auto-settle"><span data-toggle="tooltip" title="<?php echo $help_settle; ?>"><?php echo $entry_auto_settle; ?></span></label>
             <div class="col-sm-10">
               <select name="firstdata_remote_auto_settle" id="input-auto-settle" class="form-control">
-                <option value="0"<?php echo ($firstdata_remote_auto_settle == 0 ? ' selected' : ''); ?>><?php echo $text_settle_delayed; ?></option>
-                <option value="1"<?php echo ($firstdata_remote_auto_settle == 1 ? ' selected' : ''); ?>><?php echo $text_settle_auto; ?></option>
+                <?php if (!$firstdata_remote_auto_settle) { ?>
+                <option value="0"><?php echo $text_settle_delayed; ?></option>
+                <option value="1" selected="selected"><?php echo $text_settle_auto; ?></option>
+                <?php } ?>
+                <?php if ($firstdata_remote_auto_settle) { ?>
+                <option value="0" selected="selected"><?php echo $text_settle_delayed; ?></option>
+                <option value="1"><?php echo $text_settle_auto; ?></option>
+                <?php } ?>
               </select>
             </div>
           </div>
@@ -240,26 +251,19 @@
           <div class="form-group">
             <label class="col-sm-2 control-label"><?php echo $entry_cards_accepted; ?></label>
             <div class="col-sm-10">
-              <p>
-                <input type="hidden" name="firstdata_remote_cards_accepted[mastercard]" value="0" />
-                <input type="checkbox" name="firstdata_remote_cards_accepted[mastercard]" value="1" <?php echo (isset($firstdata_remote_cards_accepted['mastercard']) && $firstdata_remote_cards_accepted['mastercard'] == 1 ? 'checked="checked"' : '') ?>/>
-                - <?php echo $entry_cards_master; ?> </p>
-              <p>
-                <input type="hidden" name="firstdata_remote_cards_accepted[visa]" value="0" />
-                <input type="checkbox" name="firstdata_remote_cards_accepted[visa]" value="1" <?php echo (isset($firstdata_remote_cards_accepted['visa']) && $firstdata_remote_cards_accepted['visa'] == 1 ? 'checked="checked"' : '') ?>/>
-                - <?php echo $entry_cards_visa; ?> </p>
-              <p>
-                <input type="hidden" name="firstdata_remote_cards_accepted[diners]" value="0" />
-                <input type="checkbox" name="firstdata_remote_cards_accepted[diners]" value="1" <?php echo (isset($firstdata_remote_cards_accepted['diners']) && $firstdata_remote_cards_accepted['diners'] == 1 ? 'checked="checked"' : '') ?>/>
-                - <?php echo $entry_cards_diners; ?> </p>
-              <p>
-                <input type="hidden" name="firstdata_remote_cards_accepted[amex]" value="0" />
-                <input type="checkbox" name="firstdata_remote_cards_accepted[amex]" value="1" <?php echo (isset($firstdata_remote_cards_accepted['amex']) && $firstdata_remote_cards_accepted['amex'] == 1 ? 'checked="checked"' : '') ?>/>
-                - <?php echo $entry_cards_amex; ?> </p>
-              <p>
-                <input type="hidden" name="firstdata_remote_cards_accepted[maestro]" value="0" />
-                <input type="checkbox" name="firstdata_remote_cards_accepted[maestro]" value="1" <?php echo (isset($firstdata_remote_cards_accepted['maestro']) && $firstdata_remote_cards_accepted['maestro'] == 1 ? 'checked="checked"' : '') ?>/>
-                - <?php echo $entry_cards_maestro; ?> </p>
+              <?php foreach ($cards as $card) { ?>
+              <div class="checkbox">
+                <label>
+                  <?php if (in_array($card['value'], $firstdata_remote_cards_accepted)) { ?>
+                  <input type="checkbox" name="firstdata_remote_cards_accepted[]" value="<?php echo $card['value']; ?>" checked="checked" />
+                  <?php echo $card['text']; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="firstdata_remote_cards_accepted[]" value="<?php echo $card['value']; ?>" />
+                  <?php echo $card['text']; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <?php } ?>
             </div>
           </div>
         </div>
@@ -267,7 +271,4 @@
     </form>
   </div>
 </div>
-<script type="text/javascript"><!--
-$('#tabs a:first').tab('show');
-//--></script> 
 <?php echo $footer; ?>

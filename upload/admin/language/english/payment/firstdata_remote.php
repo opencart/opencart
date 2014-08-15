@@ -1,7 +1,6 @@
 <?php
 // Heading
-$_['heading_title']= 'First Data EMEA Web Service API';
-$_['text_firstdata_remote'] = '<img src="view/image/payment/firstdata.png" alt="First Data" title="First Data" style="border: 1px solid #EEEEEE;" />';
+$_['heading_title']         = 'First Data EMEA Web Service API';
 
 // Config tabs
 $_['tab_account'] = 'API info';
@@ -9,28 +8,28 @@ $_['tab_order_status'] = 'Order status';
 $_['tab_payment'] = 'Payment settings';
 
 // Text
-$_['text_payment'] = 'Payment';
+$_['text_firstdata_remote'] = '<img src="view/image/payment/firstdata.png" alt="First Data" title="First Data" style="border: 1px solid #EEEEEE;" />';
+$_['text_payment']          = 'Payment';
 $_['text_success'] = 'Success: You have modified First Data account details!';
 $_['text_yes'] = 'Yes';
 $_['text_no'] = 'No';
-$_['text_help_total'] = 'The checkout total the order must reach before this payment method becomes active';
-$_['text_help_certificate'] = 'Certificates and private keys should be stored outside of your public web folders';
-$_['text_help_card_select'] = 'Ask the user to choose thier card type before they are redirected';
-$_['text_help_notification'] = 'You need to supply this URL to First Data to get payment notifications';
-$_['text_help_debug'] = 'Enabling debug will write sensitive data to a log file. You should always disable unless instructed otherwise .';
-$_['text_help_settle'] = 'If you use pre-auth you must complete a post-auth action within 3-5 days otherwise your transaction will be dropped';
 $_['text_card_type'] = 'Card type';
 $_['text_enabled'] = 'Enabled';
 $_['text_merchant_id'] = 'Store ID';
 $_['text_subaccount'] = 'Subaccount';
 $_['text_user_id'] = 'User ID';
-$_['text_capture_ok'] = 'Capture was successful';
+$_['text_capture_ok']       = 'Capture was successful';
 $_['text_capture_ok_order'] = 'Capture was successful, order status updated to success - settled';
-$_['text_refund_ok'] = 'Refund was successful';
-$_['text_refund_ok_order'] = 'Refund was successful, order status updated to refunded';
-$_['text_void_ok'] = 'Void was successful, order status updated to voided';
+$_['text_refund_ok']        = 'Refund was successful';
+$_['text_refund_ok_order']  = 'Refund was successful, order status updated to refunded';
+$_['text_void_ok']          = 'Void was successful, order status updated to voided';
 $_['text_settle_auto'] = 'Sale';
 $_['text_settle_delayed'] = 'Pre auth';
+$_['text_mastercard'] = 'Mastercard';
+$_['text_visa'] = 'Visa';
+$_['text_diners'] = 'Diners';
+$_['text_amex'] = 'American Express';
+$_['text_maestro'] = 'Maestro';
 
 // Entry
 $_['entry_certificate_path'] = 'Certificate path';
@@ -53,11 +52,14 @@ $_['entry_status_void'] = 'Voided';
 $_['entry_status_refund'] = 'Refunded';
 $_['entry_enable_card_store'] = 'Enable card storage tokens';
 $_['entry_cards_accepted'] = 'Card types accepted';
-$_['entry_cards_master'] = 'Mastercard';
-$_['entry_cards_visa'] = 'Visa';
-$_['entry_cards_diners'] = 'Diners';
-$_['entry_cards_amex'] = 'American Express';
-$_['entry_cards_maestro'] = 'Maestro';
+
+// Help
+$_['help_total'] = 'The checkout total the order must reach before this payment method becomes active';
+$_['help_certificate'] = 'Certificates and private keys should be stored outside of your public web folders';
+$_['help_card_select'] = 'Ask the user to choose thier card type before they are redirected';
+$_['help_notification'] = 'You need to supply this URL to First Data to get payment notifications';
+$_['help_debug'] = 'Enabling debug will write sensitive data to a log file. You should always disable unless instructed otherwise .';
+$_['help_settle'] = 'If you use pre-auth you must complete a post-auth action within 3-5 days otherwise your transaction will be dropped';
 
 // Error
 $_['error_merchant_id'] = 'Store ID is required';

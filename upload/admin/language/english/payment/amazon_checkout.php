@@ -1,15 +1,9 @@
 <?php
-//Payment page links
-$_['text_amazon_checkout']          = '<a onclick="window.open(\'http://go.amazonservices.com/UKCBASPOpenCart.html\');"><img src="view/image/payment/amazon.png" alt="Amazon Payments" title="Amazon Payments" style="border: 1px solid #EEEEEE;" /></a>';
-$_['text_amazon_join']              = '<a href="http://go.amazonservices.com/UKCBASPOpenCart.html" target="_blank" title="Click here to join Amazon Payments"><u>Click here to create your Amazon Payments account</u></a>';
-
 //Headings
 $_['heading_title']                 = 'Amazon Payments';
-$_['text_payment']                  = 'Payment';
 
 //Text
 $_['text_cron_job_url']             = 'Cron Job\'s URL';
-$_['help_cron_job_url']             = 'Set a cron job to call this URL';
 $_['text_cron_job_token']           = 'Secret Token';
 $_['help_cron_job_token']           = 'Make this long and hard to guess';
 $_['text_access_key']               = 'Access Key';
@@ -34,26 +28,9 @@ $_['text_canceled_order_status']    = 'Canceled order status';
 $_['text_shipped_order_status']     = 'Shipped order status';
 $_['text_last_cron_job_run']        = 'Last cron job\'s run time';
 $_['text_ip']                       = 'IP Address';
-$_['text_help_ip']                  = 'e.g. 203.0.113.0 <br />Leave empty to allow all IPs.';
 $_['text_allowed_ips']              = 'IPs allowed';
 $_['text_add']                      = 'Add';
 $_['text_upload_success']           = 'File was uploaded successfully';
-$_['help_adjustment']               = 'Bold fields and at least one "-adj" field are required.';
-$_['help_allowed_ips']              = 'Leave empty if you want everyone to see the checkout button';
-
-// Buttons
-$_['button_cancel']                 = 'Cancel';
-$_['button_save']                   = 'Save';
-
-// Errors
-$_['error_permissions']             = 'You do not have permissions to modify this module';
-$_['error_empty_access_secret']     = 'Secret Key is required';
-$_['error_empty_access_key']        = 'Access Key is required';
-$_['error_empty_merchant_id']       = 'Merchant ID is required';
-$_['error_curreny']                 = 'Your shop must have %s currency installed and enabled';
-$_['error_upload']                  = 'Upload failed';
-
-// Checkout button settings
 $_['text_button_settings']          = 'Checkout button settings';
 $_['text_colour']                   = 'Colour';
 $_['text_orange']                   = 'Orange';
@@ -67,19 +44,42 @@ $_['text_large']                    = 'Large';
 $_['text_x_large']                  = 'Extra large';
 $_['text_background']               = 'Background';
 $_['text_download']                 = '<a href="%s" target="_blank"><u>Download</u></a> template file from Amazon Seller Central.';
-
-// Messages
-$_['text_success']                  = 'Amazon Payments module has been updated';
-
-// Order Info
 $_['text_amazon_details']           = 'Amazon Details';
 $_['text_amazon_order_id']          = 'Amazon Order ID';
 $_['text_upload']                   = 'Upload';
 $_['text_upload_template']          = 'Upload the filled in template by clicking on the button below. Make sure it is saved as a tab-delimited file.';
 $_['tab_order_adjustment']          = 'Order Adjustment';
+$_['text_amazon_checkout']          = '<a onclick="window.open(\'http://go.amazonservices.com/UKCBASPOpenCart.html\');"><img src="view/image/payment/amazon.png" alt="Amazon Payments" title="Amazon Payments" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_amazon_join']              = '<a href="http://go.amazonservices.com/UKCBASPOpenCart.html" target="_blank" title="Click here to join Amazon Payments"><u>Click here to create your Amazon Payments account</u></a>';
 
-//Table columns
+
+// Columns
 $_['column_submission_id']          = 'Submission ID';
 $_['column_status']                 = 'Status';
 $_['column_text']                   = 'Response';
 $_['column_amazon_order_item_code'] = 'Amazon Order Product Code';
+
+
+// Help
+$_['help_cron_job_url']             = 'Set a cron job to call this URL';
+$_['help_adjustment']               = 'Bold fields and at least one "-adj" field are required.';
+$_['help_allowed_ips']              = 'Leave empty if you want everyone to see the checkout button';
+$_['help_ip']                       = 'e.g. 203.0.113.0 <br />Leave empty to allow all IPs.';
+
+//Payment page links
+
+// Checkout button settings
+
+// Messages
+$_['text_success']                  = 'Amazon Payments module has been updated';
+
+// Order Info
+
+
+// Errors
+$_['error_permissions']             = 'You do not have permissions to modify this module';
+$_['error_empty_access_secret']     = 'Secret Key is required';
+$_['error_empty_access_key']        = 'Access Key is required';
+$_['error_empty_merchant_id']       = 'Merchant ID is required';
+$_['error_curreny']                 = 'Your shop must have %s currency installed and enabled';
+$_['error_upload']                  = 'Upload failed';

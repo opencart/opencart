@@ -1,5 +1,6 @@
 <?php
 // Heading
+$_['text_paymate']       = '<img src="view/image/payment/paymate.png" alt="Paymate" title="Paymate" style="border: 1px solid #EEEEEE;" />';
 $_['heading_title']      = 'Paymate';
 
 // Text

@@ -99,7 +99,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $text_help_total; ?>"><?php echo $entry_total; ?></span></label>
+            <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="firstdata_total" value="<?php echo $firstdata_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control"/>
             </div>
@@ -171,7 +171,7 @@
         </div>
         <div class="tab-pane" id="tab-payment">
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-auto-settle"><span data-toggle="tooltip" title="<?php echo $text_help_settle; ?>"><?php echo $entry_auto_settle; ?></span></label>
+            <label class="col-sm-2 control-label" for="input-auto-settle"><span data-toggle="tooltip" title="<?php echo $help_settle; ?>"><?php echo $entry_auto_settle; ?></span></label>
             <div class="col-sm-10">
               <select name="firstdata_auto_settle" id="input-auto-settle" class="form-control">
                 <option value="0"
@@ -216,7 +216,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-sort-order"><span data-toggle="tooltip" title="<?php echo $text_help_notification; ?>"><?php echo $text_notification_url; ?></span></label>
+            <label class="col-sm-2 control-label" for="input-sort-order"><span data-toggle="tooltip" title="<?php echo $help_notification; ?>"><?php echo $text_notification_url; ?></span></label>
             <div class="col-sm-10">
               <div class="input-group"> <span class="input-group-addon"><i class="fa fa-link"></i></span>
                 <input type="text" value="<?php echo $notify_url; ?>" class="form-control"/>

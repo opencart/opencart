@@ -83,8 +83,6 @@ $_['text_view']   		     = 'View details';
 $_['text_maxmind_success']   = 'MaxMind fraud service has been installed';
 $_['text_maxmind_top']   	 = 'If you don\'t have a license key you can';
 $_['text_maxmind_link']   	 = 'sign up here';
-$_['text_maxmind_risk_help'] = 'The higher the score the more likely the order is fraudulent. Set a score between 0 - 100.';
-$_['text_maxmind_fraud_help'] = 'Orders over your set score will be assigned this order status and will not be allowed to reach the complete status automatically.';
 $_['text_ebay_about']	 	 = 'eBay is a multi-billion dollar market place that allows business or private sellers to auction and retail goods online. Available to sellers worldwide.';
 $_['text_amazon_about']	 	 = 'Amazon Marketplace a fixed-price online marketplace allowing sellers to offer new and used items alongside Amazon\'s regular retail service.';
 
@@ -101,6 +99,10 @@ $_['entry_email']            = 'E-Mail';
 $_['entry_licence_key']      = 'License Key';
 $_['entry_risk']      		 = 'Risk score';
 $_['entry_fraud_status']     = 'Fraud Order Status';
+
+// Help
+$_['help_maxmind_risk']      = 'The higher the score the more likely the order is fraudulent. Set a score between 0 - 100.';
+$_['help_maxmind_fraud']     = 'Orders over your set score will be assigned this order status and will not be allowed to reach the complete status automatically.';
 
 // Error
 $_['error_key'] 			 = 'Maxmind licence key required';

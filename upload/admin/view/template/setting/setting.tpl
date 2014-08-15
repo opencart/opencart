@@ -1274,7 +1274,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-smtp-hostname"><span data-toggle="tooltip" title="<?php echo $help_smtp_hostname; ?>"><?php echo $entry_smtp_hostname; ?></span></label>
+            <label class="col-sm-2 control-label" for="input-smtp-hostname"><span data-toggle="tooltip" title="<?php echo $help_mail_smtp_hostname; ?>"><?php echo $entry_smtp_hostname; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="config_mail[smtp_hostname]" value="<?php echo $config_smtp_hostname; ?>" placeholder="<?php echo $entry_smtp_hostname; ?>" id="input-smtp-hostname" class="form-control" />
             </div>
@@ -1312,7 +1312,7 @@
         </div>
         <div class="tab-pane" id="tab-fraud">
           <div class="form-group">
-            <label class="col-sm-2 control-label"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="<?php echo  htmlspecialchars($help_fraud_detection); ?>"><?php echo$entry_fraud_detection; ?></span></label>
+            <label class="col-sm-2 control-label"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="<?php echo htmlspecialchars($help_fraud_detection); ?>"><?php echo $entry_fraud_detection; ?></span></label>
             <div class="col-sm-10">
               <label class="radio-inline">
                 <?php if ($config_fraud_detection) { ?>

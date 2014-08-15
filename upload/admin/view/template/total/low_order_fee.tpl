@@ -16,10 +16,10 @@
     <?php } ?>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-low-order-fee" class="form-horizontal">
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-total"><?php echo $entry_total; ?></label>
+        <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="low_order_fee_total" value="<?php echo $low_order_fee_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
-          <span class="help-block"><?php echo $help_total; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-fee"><?php echo $entry_fee; ?></label>

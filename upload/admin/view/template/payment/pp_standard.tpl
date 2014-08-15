@@ -31,7 +31,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-live-demo"><?php echo $entry_test; ?></label>
+            <label class="col-sm-2 control-label" for="input-live-demo"><span data-toggle="tooltip" title="<?php echo $help_test; ?>"><?php echo $entry_test; ?></span></label>
             <div class="col-sm-10">
               <select name="pp_standard_test" id="input-live-demo" class="form-control">
                 <?php if ($pp_standard_test) { ?>
@@ -42,10 +42,10 @@
                 <option value="0" selected="selected"><?php echo $text_no; ?></option>
                 <?php } ?>
               </select>
-              <span class="help-block"><?php echo $entry_test_help; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-debug"><?php echo $entry_debug; ?></label>
+            <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="<?php echo $help_debug; ?>"><?php echo $entry_debug; ?></span></label>
             <div class="col-sm-10">
               <select name="pp_standard_debug" id="input-debug" class="form-control">
                 <?php if ($pp_standard_debug) { ?>
@@ -56,7 +56,7 @@
                 <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                 <?php } ?>
               </select>
-              <span class="help-block"><?php echo $entry_debug_help; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-transaction"><?php echo $entry_transaction; ?></label>
@@ -76,10 +76,10 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-total"><?php echo $entry_total; ?></label>
+            <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="pp_standard_total" value="<?php echo $pp_standard_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control"/>
-              <span class="help-block"><?php echo $entry_total_help; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>

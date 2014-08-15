@@ -47,7 +47,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-transaction"><?php echo $entry_transaction; ?></label>
+        <label class="col-sm-2 control-label" for="input-transaction"><span data-toggle="tooltip" title="<?php echo $help_transaction; ?>"><?php echo $entry_transaction; ?></span></label>
         <div class="col-sm-10">
           <select name="sagepay_direct_transaction" id="input-transaction" class="form-control">
             <?php if ($sagepay_direct_transaction == 'PAYMENT') { ?>
@@ -61,13 +61,13 @@
             <option value="DEFERRED"><?php echo $text_defered; ?></option>
             <?php } ?>
           </select>
-          <span class="help-block"><?php echo $help_transaction; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-total"><?php echo $entry_total; ?> </label>
+        <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="sagepay_direct_total" value="<?php echo $sagepay_direct_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
-          <span class="help-block"><?php echo $help_total; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-card"><?php echo $entry_card; ?></label>
@@ -113,7 +113,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-debug"><?php echo $entry_debug; ?></label>
+        <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="<?php echo $help_debug; ?>"><?php echo $entry_debug; ?></span></label>
         <div class="col-sm-10">
           <select name="sagepay_direct_debug" id="input-debug" class="form-control">
             <?php if ($sagepay_direct_debug) { ?>
@@ -124,7 +124,7 @@
             <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
             <?php } ?>
           </select>
-          <span class="help-block"><?php echo $help_debug; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
@@ -147,19 +147,25 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="sagepay_direct_cron_job_token"><?php echo $entry_cron_job_token; ?></label>
+        <label class="col-sm-2 control-label" for="sagepay-direct-cron-job-token"><span data-toggle="tooltip" title="<?php echo $help_cron_job_token; ?>"><?php echo $entry_cron_job_token; ?></span></label>
         <div class="col-sm-10">
-          <input type="text" name="sagepay_direct_cron_job_token" value="<?php echo $sagepay_direct_cron_job_token; ?>" placeholder="<?php echo $entry_cron_job_token; ?>" id="sagepay_direct_cron_job_token" class="form-control" />
-          <span class="help-block"><?php echo $help_cron_job_token; ?></span> </div>
+          <div class="input-group">
+            <input type="text" name="sagepay_direct_cron_job_token" value="<?php echo $sagepay_direct_cron_job_token; ?>" placeholder="<?php echo $entry_cron_job_token; ?>" id="sagepay-direct-cron-job-token" class="form-control" />
+          </div>
+        </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" ><span data-toggle="tooltip" title="<?php echo $help_cron_job_url; ?>"><?php echo $entry_cron_job_url; ?></span></label>
-        <div class="col-sm-10"><span id="cron-job-url"><?php echo $sagepay_direct_cron_job_url ?></span></div>
+        <label class="col-sm-2 control-label" for="cron-job-url"><span data-toggle="tooltip" title="<?php echo $help_cron_job_url; ?>"><?php echo $entry_cron_job_url; ?></span></label>
+        <div class="col-sm-10">
+          <input type="text" name="sagepay_direct_sort_order" value="<?php echo $sagepay_direct_cron_job_url ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
+        </div>
       </div>
+      <?php if ($sagepay_direct_last_cron_job_run) { ?>
       <div class="form-group">
-        <label class="col-sm-2 control-label" ><?php echo $entry_last_cron_job_run; ?></label>
-        <div class="col-sm-10"> <span><?php echo $sagepay_direct_last_cron_job_run ?></span> </div>
+        <label class="col-sm-2 control-label"><?php echo $entry_last_cron_job_run; ?></label>
+        <div class="col-sm-10"><?php echo $sagepay_direct_last_cron_job_run; ?></div>
       </div>
+      <?php } ?>
     </form>
   </div>
 </div>

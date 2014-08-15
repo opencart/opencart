@@ -64,7 +64,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-debug"><?php echo $entry_debug; ?></label>
+            <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="<?php echo $help_debug; ?>"><?php echo $entry_debug; ?></span></label>
             <div class="col-sm-10">
               <select name="realex_remote_debug" id="input-debug" class="form-control">
                 <?php if ($realex_remote_debug) { ?>
@@ -75,7 +75,7 @@
                 <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                 <?php } ?>
               </select>
-              <span class="help-block"><?php echo $text_help_debug; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
@@ -92,7 +92,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-card"><?php echo $entry_card_data_status; ?></label>
+            <label class="col-sm-2 control-label" for="input-card"><span data-toggle="tooltip" title="<?php echo $help_card_data_status; ?>"><?php echo $entry_card_data_status; ?></span></label>
             <div class="col-sm-10">
               <select name="realex_remote_card_data_status" id="input-card" class="form-control">
                 <?php if ($realex_remote_card_data_status) { ?>
@@ -103,13 +103,13 @@
                 <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                 <?php } ?>
               </select>
-              <span class="help-block"><?php echo $text_help_card_data_status; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-total"><?php echo $entry_total; ?></label>
+            <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="realex_remote_total" value="<?php echo $realex_remote_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
-              <span class="help-block"><?php echo $text_help_total; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
@@ -324,7 +324,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-liability"><?php echo $entry_liability_shift; ?></label>
+            <label class="col-sm-2 control-label" for="input-liability"><span data-toggle="tooltip" title="<?php echo $help_liability_shift; ?>"><?php echo $entry_liability_shift; ?></span></label>
             <div class="col-sm-10">
               <select name="realex_remote_liability" id="input-liability" class="form-control">
                 <?php if ($realex_remote_liability) { ?>
@@ -335,7 +335,7 @@
                 <option value="0" selected="selected"><?php echo $text_no; ?></option>
                 <?php } ?>
               </select>
-              <span class="help-block"><?php echo $text_help_liability; ?></span> </div>
+            </div>
           </div>
         </div>
       </div>

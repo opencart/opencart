@@ -1,16 +1,9 @@
 <?php
 //Headings
-$_['heading_title'] = 'PayPal Payflow Pro iFrame';
+$_['heading_title']  = 'PayPal Payflow Pro iFrame';
 $_['heading_refund'] = 'Refund';
 
-//Table columns
-$_['column_transaction_id'] = 'Transaction ID';
-$_['column_transaction_type'] = 'Transaction Type';
-$_['column_amount'] = 'Amount';
-$_['column_time'] = 'Time';
-$_['column_actions'] = 'Actions';
-
-//Text
+// Text
 $_['text_payment'] = 'Payment';
 $_['text_success'] = 'Success: You have modified PayPal Payflow Pro iFrame account details!';
 $_['text_pp_payflow_iframe'] = '<a target="_BLANK" href="https://www.paypal.com/uk/mrb/pal=V4T754QB63XXL"><img src="view/image/payment/paypal.png" alt="PayPal Website Payment Pro" title="PayPal Website Payment Pro iFrame" style="border: 1px solid #EEEEEE;" /></a>';
@@ -30,30 +23,21 @@ $_['text_redirect'] = 'Redirect';
 $_['text_iframe'] = 'Iframe';
 $_['help_checkout_method'] = "Please use Redirect method if do not have SSL installed or if you do not have Pay with PayPal option disabled on your hosted payment page.";
 
-//Buttons
-$_['button_refund'] = 'Refund';
-$_['button_void'] = 'Void';
-$_['button_capture'] = 'Capture';
+// Columns
+$_['column_transaction_id'] = 'Transaction ID';
+$_['column_transaction_type'] = 'Transaction Type';
+$_['column_amount'] = 'Amount';
+$_['column_time'] = 'Time';
+$_['column_actions'] = 'Actions';
 
-//Tabs
-$_['tab_settings'] = 'Settings';
-$_['tab_order_status'] = 'Order Status';
-$_['tab_checkout_customisation'] = 'Checkout Customisation';
-
-//Form entry
+// Entry
 $_['entry_vendor'] = 'Vendor';
-$_['entry_vendor_help'] = 'Your merchant login ID that you created when you registered for the Website Payments Pro account';
 $_['entry_user'] = 'User';
-$_['entry_user_help'] = 'If you set up one or more additional users on the account, this value is the ID of the user authorised to process transactions. If, however, you have not set up additional users on the account, USER has the same value as VENDOR';
 $_['entry_password'] = 'Password';
-$_['entry_password_help']= 'The 6 to 32 character password that you defined while registering for the account';
 $_['entry_partner'] = 'Partner';
-$_['entry_partner_help'] = 'The ID provided to you by the authorised PayPal Reseller who registered you for the Payflow SDK. If you purchased your account directly from PayPal, use the PayPal Pro instead';
 $_['entry_test'] = 'Test Mode';
-$_['entry_test_help'] = 'Use the live or testing (sandbox) gateway server to process transactions?';
 $_['entry_transaction'] = 'Transaction Method';
 $_['entry_total'] = 'Total';
-$_['entry_total_help'] = 'The checkout total the order must reach before this payment method becomes active';
 $_['entry_order_status'] = 'Order Status';
 $_['entry_geo_zone'] = 'Geo Zone';
 $_['entry_status'] = 'Status';
@@ -65,7 +49,6 @@ $_['entry_message'] = 'Message';
 $_['entry_ipn_url'] = 'IPN URL';
 $_['entry_checkout_method'] = 'Checkout Method';
 $_['entry_debug'] = 'Debug mode';
-$_['entry_debug_help'] = "Logs additional information";
 $_['entry_transaction_reference'] = 'Transaction Reference';
 $_['entry_transaction_amount'] = 'Transaction Amount';
 $_['entry_refund_amount'] = 'Refund Amount';
@@ -89,7 +72,16 @@ $_['entry_error_url'] = 'Error URL:';
 $_['entry_return_url'] = 'Return URL:';
 $_['entry_post_url'] = 'Silent POST URL:';
 
-//Errors
+// Help
+$_['help_vendor'] = 'Your merchant login ID that you created when you registered for the Website Payments Pro account';
+$_['help_user'] = 'If you set up one or more additional users on the account, this value is the ID of the user authorised to process transactions. If, however, you have not set up additional users on the account, USER has the same value as VENDOR';
+$_['help_password']= 'The 6 to 32 character password that you defined while registering for the account';
+$_['help_partner'] = 'The ID provided to you by the authorised PayPal Reseller who registered you for the Payflow SDK. If you purchased your account directly from PayPal, use the PayPal Pro instead';
+$_['help_test'] = 'Use the live or testing (sandbox) gateway server to process transactions?';
+$_['help_total'] = 'The checkout total the order must reach before this payment method becomes active';
+$_['help_debug'] = "Logs additional information";
+
+// Errors
 $_['error_permission'] = 'Warning: You do not have permission to modify payment PayPal Website Payment Pro iFrame (UK)!';
 $_['error_vendor'] = 'Vendor Required!';
 $_['error_user'] = 'User Required!';
@@ -99,3 +91,13 @@ $_['error_missing_data'] = 'Missing data';
 $_['error_missing_order'] = 'Could not find the order';
 $_['error_general'] = 'There was an error';
 $_['error_capture_amt'] = 'Enter an amount to capture';
+
+// Tabs
+$_['tab_settings'] = 'Settings';
+$_['tab_order_status'] = 'Order Status';
+$_['tab_checkout_customisation'] = 'Checkout Customisation';
+
+// Buttons
+$_['button_refund'] = 'Refund';
+$_['button_void'] = 'Void';
+$_['button_capture'] = 'Capture';

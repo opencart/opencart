@@ -16,44 +16,43 @@
     <?php } ?>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-pp-payflow-iframe" class="form-horizontal">
       <div class="form-group required">
-        <label class="col-sm-2 control-label" for="entry-vender"><?php echo $entry_vendor; ?></label>
+        <label class="col-sm-2 control-label" for="entry-vender"><span data-toggle="tooltip" title="<?php echo $help_vendor; ?>"><?php echo $entry_vendor; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="pp_payflow_iframe_vendor" value="<?php echo $pp_payflow_iframe_vendor; ?>" placeholder="<?php echo $entry_vendor; ?>" id="entry-vender" class="form-control"/>
-          <span class="help-block"><?php echo $entry_vendor_help; ?></span>
           <?php if (isset($error['vendor'])) { ?>
           <div class="text-danger"><?php echo $error['vendor']; ?></div>
           <?php } ?>
         </div>
       </div>
       <div class="form-group required">
-        <label class="col-sm-2 control-label" for="entry-user"><?php echo $entry_user; ?></label>
+        <label class="col-sm-2 control-label" for="entry-user"><span data-toggle="tooltip" title="<?php echo $help_user; ?>"><?php echo $entry_user; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="pp_payflow_iframe_user" value="<?php echo $pp_payflow_iframe_user; ?>" placeholder="<?php echo $entry_user; ?>" id="entry-user" class="form-control"/>
           <?php if (isset($error['user'])) { ?>
           <div class="text-danger"><?php echo $error['user']; ?></div>
           <?php } ?>
-          <span class="help-block"><?php echo $entry_user_help; ?></span> </div>
+        </div>
       </div>
       <div class="form-group required">
-        <label class="col-sm-2 control-label" for="entry-password"><?php echo $entry_password; ?></label>
+        <label class="col-sm-2 control-label" for="entry-password"><span data-toggle="tooltip" title="<?php echo $help_password; ?>"><?php echo $entry_password; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="pp_payflow_iframe_password" value="<?php echo $pp_payflow_iframe_password; ?>" placeholder="<?php echo $entry_password; ?>" id="entry-password" class="form-control"/>
           <?php if (isset($error['password'])) { ?>
           <div class="text-danger"><?php echo $error['password']; ?></div>
           <?php } ?>
-          <span class="help-block"><?php echo $entry_password_help; ?></span> </div>
+        </div>
       </div>
       <div class="form-group required">
-        <label class="col-sm-2 control-label" for="entry-partner"><?php echo $entry_partner; ?></label>
+        <label class="col-sm-2 control-label" for="entry-partner"><span data-toggle="tooltip" title="<?php echo $help_partner; ?>"><?php echo $entry_partner; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="pp_payflow_iframe_partner" value="<?php echo $pp_payflow_iframe_partner; ?>" placeholder="<?php echo $entry_partner; ?>" id="entry-partner" class="form-control"/>
           <?php if (isset($error['partner'])) { ?>
           <div class="text-danger"><?php echo $error['partner']; ?></div>
           <?php } ?>
-          <span class="help-block"><?php echo $entry_partner_help; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-live-demo"><?php echo $entry_test; ?></label>
+        <label class="col-sm-2 control-label" for="input-live-demo"><span data-toggle="tooltip" title="<?php echo $help_test; ?>"><?php echo $entry_test; ?></span></label>
         <div class="col-sm-10">
           <select name="pp_payflow_iframe_test" id="input-live-demo" class="form-control">
             <?php if ($pp_payflow_iframe_test) { ?>
@@ -64,7 +63,7 @@
             <option value="0" selected="selected"><?php echo $text_no; ?></option>
             <?php } ?>
           </select>
-          <span class="help-block"><?php echo $entry_test_help; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-transaction"><?php echo $entry_transaction; ?></label>
@@ -81,7 +80,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-debug"><?php echo $entry_debug; ?></label>
+        <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="<?php echo $help_debug; ?>"><?php echo $entry_debug; ?></span></label>
         <div class="col-sm-10">
           <select name="pp_payflow_iframe_debug" id="input-debug" class="form-control">
             <?php if ($pp_payflow_iframe_debug) { ?>
@@ -92,10 +91,10 @@
             <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
             <?php } ?>
           </select>
-          <span class="help-block"><?php echo $entry_debug_help; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-checkout-method"><?php echo $entry_checkout_method; ?></label>
+        <label class="col-sm-2 control-label" for="input-checkout-method"><span data-toggle="tooltip" title="<?php echo $help_checkout_method; ?>"><?php echo $entry_checkout_method; ?></span></label>
         <div class="col-sm-10">
           <select name="pp_payflow_iframe_checkout_method" id="input-checkout-method" class="form-control">
             <?php if ($pp_payflow_iframe_checkout_method == 'iframe') { ?>
@@ -106,7 +105,7 @@
             <option value="redirect" selected="selected"><?php echo $text_redirect ?></option>
             <?php } ?>
           </select>
-          <span class="help-block"><?php echo $help_checkout_method; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
@@ -123,10 +122,10 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-total"><?php echo $entry_total; ?></label>
+        <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="pp_payflow_iframe_total" value="<?php echo $pp_payflow_iframe_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
-          <span class="help-block"><?php echo $entry_total_help; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>

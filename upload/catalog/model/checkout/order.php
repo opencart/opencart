@@ -343,6 +343,11 @@ class ModelCheckoutOrder extends Model {
 			$this->cache->delete('product');
 			
 			/*
+			If order status is 0 then becomes proccessing or complete send main html email
+			If order status is already processing or complete and new order status is process or complete send update text email
+			If order status is already processing or complete and new order status is not process or complete send update text email
+			If order status is already processing or complete and new order status 0 then dont send any mail
+			
 			// If order status in the complete range create any vouchers that where in the order
 			if (in_array($order_info['order_status_id'], $this->config->get('config_complete_status'))) {
 				// Gift Voucher

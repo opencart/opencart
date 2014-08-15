@@ -37,23 +37,6 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="amazon-checkout-status"><?php echo $text_status; ?></label>
-        <div class="col-sm-10">
-          <select name="amazon_checkout_status" id="amazon-checkout-status" class="form-control">
-            <?php if ($amazon_checkout_status == 1) { ?>
-            <option value="1" selected="selected"><?php echo $text_status_enabled; ?></option>
-            <?php } else { ?>
-            <option value="1"><?php echo $text_status_enabled; ?></option>
-            <?php } ?>
-            <?php if ($amazon_checkout_status == 0) { ?>
-            <option value="0" selected="selected"><?php echo $text_status_disabled; ?></option>
-            <?php } else { ?>
-            <option value="0"><?php echo $text_status_disabled; ?></option>
-            <?php } ?>
-          </select>
-        </div>
-      </div>
-      <div class="form-group">
         <label class="col-sm-2 control-label" for="amazon-checkout-mode"><?php echo $text_checkout_mode; ?></label>
         <div class="col-sm-10">
           <select name="amazon_checkout_mode" id="amazon-checkout-mode" class="form-control">
@@ -87,31 +70,13 @@
           </select>
         </div>
       </div>
+
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="amazon-checkout-geo-zone"><?php echo $text_geo_zone; ?></label>
+        <label class="col-sm-2 control-label" for="amazon-checkout-pending-status"><?php echo $text_pending_status; ?></label>
         <div class="col-sm-10">
-          <select name="amazon_checkout_geo_zone" id="amazon-checkout-geo-zone" class="form-control">
-            <?php if ($amazon_checkout_geo_zone == 0) { ?>
-            <option value="0" selected="selected"><?php echo $text_all_geo_zones; ?></option>
-            <?php } else { ?>
-            <option value="0"><?php echo $text_all_geo_zones; ?></option>
-            <?php } ?>
-            <?php foreach ($geo_zones as $geo_zone) { ?>
-            <?php if ($amazon_checkout_geo_zone == $geo_zone['geo_zone_id']) { ?>
-            <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
-            <?php } else { ?>
-            <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
-            <?php } ?>
-            <?php } ?>
-          </select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label" for="amazon-checkout-order-default-status"><?php echo $text_default_order_status; ?></label>
-        <div class="col-sm-10">
-          <select name="amazon_checkout_order_default_status" id="amazon-checkout-order-default-status" class="form-control">
+          <select name="amazon_checkout_pending_status" id="amazon-checkout-pendingt-status" class="form-control">
             <?php foreach($order_statuses as $order_status) { ?>
-            <?php if ($order_status['order_status_id'] == $amazon_checkout_order_default_status) { ?>
+            <?php if ($order_status['order_status_id'] == $amazon_checkout_pending_status) { ?>
             <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
             <?php } else { ?>
             <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
@@ -135,9 +100,9 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="amazon-checkout-order-shipped-status"><?php echo $text_shipped_order_status; ?></label>
+        <label class="col-sm-2 control-label" for="amazon-checkout-shipped-status"><?php echo $text_shipped_status; ?></label>
         <div class="col-sm-10">
-          <select name="amazon_checkout_order_shipped_status" id="amazon-checkout-order-shipped-status" class="form-control">
+          <select name="amazon_checkout_order_shipped_status" id="amazon-checkout-shipped-status" class="form-control">
             <?php foreach($order_statuses as $order_status) { ?>
             <?php if ($order_status['order_status_id'] == $amazon_checkout_order_shipped_status) { ?>
             <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
@@ -149,9 +114,9 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="amazon-checkout-order-canceled-status"><?php echo $text_canceled_order_status; ?></label>
+        <label class="col-sm-2 control-label" for="amazon-checkout-canceled-status"><?php echo $text_canceled_status; ?></label>
         <div class="col-sm-10">
-          <select name="amazon_checkout_order_canceled_status" id="amazon-checkout-order-canceled-status" class="form-control">
+          <select name="amazon_checkout_order_canceled_status" id="amazon-checkout-canceled-status" class="form-control">
             <?php foreach($order_statuses as $order_status) { ?>
             <?php if ($order_status['order_status_id'] == $amazon_checkout_order_canceled_status) { ?>
             <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
@@ -160,18 +125,6 @@
             <?php } ?>
             <?php } ?>
           </select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label" for="amazon-checkout-minimum-total"><?php echo $text_minimum_total; ?></label>
-        <div class="col-sm-10">
-          <input type="text" name="amazon_checkout_minimum_total" value="<?php echo $amazon_checkout_minimum_total; ?>" placeholder="<?php echo $text_minimum_total; ?>" id="amazon-checkout-minimum-total" class="form-control" />
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label" for="amazon-checkout-sort-order"><?php echo $text_sort_order; ?></label>
-        <div class="col-sm-10">
-          <input type="text" name="amazon_checkout_sort_order" value="<?php echo $amazon_checkout_sort_order; ?>" placeholder="<?php echo $text_sort_order; ?>" id="amazon-checkout-sort-order" class="form-control" />
         </div>
       </div>
       <div class="form-group">
@@ -197,26 +150,65 @@
       <div class="form-group">
         <label class="col-sm-2 control-label"><span data-toggle="tooltip" data-html="true" title="<?php echo htmlspecialchars($help_ip); ?>"><?php echo $text_allowed_ips; ?></span></label>
         <div class="col-sm-10">
-          
           <div class="input-group">
-            <input type="text" name="allowed_ip" value="" placeholder="<?php echo $text_ip; ?>" class="form-control" />
+            <input type="text" id="amazon-ip" value="" placeholder="<?php echo $text_ip; ?>" class="form-control" />
             <span class="input-group-btn">
             <button type="button" id="button-ip-add" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_ip_add; ?></button>
-            </span>
-          </div>
-          
-          
-          <div id="amazon-ip" class="well well-sm" style="height: 150px; overflow: auto;">
-            
-
-            <?php foreach ($amazon_checkout_allowed_ips as $ip) { ?>
-            
-            
+            </span> </div>
+          <div id="amazon-ip-allowed" class="well well-sm" style="height: 150px; overflow: auto;">
+            <?php foreach ($amazon_checkout_ip_allowed as $ip) { ?>
             <div><i class="fa fa-minus-circle"></i> <?php echo $ip; ?>
               <input type="hidden" name="amazon_checkout_allowed_ips[]" value="<?php echo $ip; ?>" />
             </div>
-            
             <?php } ?>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="amazon-checkout-minimum-total"><?php echo $text_minimum_total; ?></label>
+          <div class="col-sm-10">
+            <input type="text" name="amazon_checkout_minimum_total" value="<?php echo $amazon_checkout_minimum_total; ?>" placeholder="<?php echo $text_minimum_total; ?>" id="amazon-checkout-minimum-total" class="form-control" />
+          </div>
+        </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="amazon-checkout-geo-zone"><?php echo $text_geo_zone; ?></label>
+        <div class="col-sm-10">
+          <select name="amazon_checkout_geo_zone" id="amazon-checkout-geo-zone" class="form-control">
+            <?php if ($amazon_checkout_geo_zone == 0) { ?>
+            <option value="0" selected="selected"><?php echo $text_all_geo_zones; ?></option>
+            <?php } else { ?>
+            <option value="0"><?php echo $text_all_geo_zones; ?></option>
+            <?php } ?>
+            <?php foreach ($geo_zones as $geo_zone) { ?>
+            <?php if ($amazon_checkout_geo_zone == $geo_zone['geo_zone_id']) { ?>
+            <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
+            <?php } else { ?>
+            <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+            <?php } ?>
+            <?php } ?>
+          </select>
+        </div>
+      </div>        
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="amazon-checkout-sort-order"><?php echo $text_sort_order; ?></label>
+          <div class="col-sm-10">
+            <input type="text" name="amazon_checkout_sort_order" value="<?php echo $amazon_checkout_sort_order; ?>" placeholder="<?php echo $text_sort_order; ?>" id="amazon-checkout-sort-order" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="amazon-checkout-status"><?php echo $text_status; ?></label>
+          <div class="col-sm-10">
+            <select name="amazon_checkout_status" id="amazon-checkout-status" class="form-control">
+              <?php if ($amazon_checkout_status == 1) { ?>
+              <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+              <?php } else { ?>
+              <option value="1"><?php echo $text_enabled; ?></option>
+              <?php } ?>
+              <?php if ($amazon_checkout_status == 0) { ?>
+              <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+              <?php } else { ?>
+              <option value="0"><?php echo $text_disabled; ?></option>
+              <?php } ?>
+            </select>
           </div>
         </div>
       </div>
@@ -269,8 +261,6 @@
 <script type="text/javascript"><!--
 $('#button-ip-add').on('click', function(){
     var ip = $.trim($('input[name=\'allowed-ip\']').val());
-   
-    $('input[name="allowed-ip"]').val('');
     
     if (ip != '') {
         var html = '';
@@ -281,13 +271,15 @@ $('#button-ip-add').on('click', function(){
 
         $('#allowed-ips').append(html);
     }
+	
+	$('input[name="allowed-ip"]').val('');
 });
 
 $('#amazon-ip').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 
-$('input[name=\'amazon_checkout_cron_job_token\']').keyup(function(){
+$('input[name=\'amazon_checkout_cron_job_token\']').on('click', function() {
     $('#cron-job-url').val('<?php echo HTTPS_CATALOG; ?>index.php?route=payment/amazon_checkout/cron&token=' + $(this).val());
 });
 //--></script> 

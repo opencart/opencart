@@ -47,7 +47,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-transaction"><?php echo $entry_transaction; ?></label>
+        <label class="col-sm-2 control-label" for="input-transaction"><span data-toggle="tooltip" title="<?php echo $help_transaction; ?>"><?php echo $entry_transaction; ?></span></label>
         <div class="col-sm-10">
           <select name="sagepay_server_transaction" id="input-transaction" class="form-control">
             <?php if ($sagepay_server_transaction == 'PAYMENT') { ?>
@@ -61,7 +61,7 @@
             <option value="DEFERRED"><?php echo $text_defered; ?></option>
             <?php } ?>
           </select>
-          <span class="help-block"><?php echo $help_transaction; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>

@@ -27,7 +27,9 @@ class ControllerPaymentAmazonCheckout extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$cba = new CBA($this->request->post['amazon_checkout_merchant_id'], $this->request->post['amazon_checkout_access_key'], $this->request->post['amazon_checkout_access_secret'], $this->request->post['amazon_checkout_marketplace']);
+			
 			$cba->setMode($this->request->post['amazon_checkout_mode']);
+			
 			$cba->scheduleReports();
 
 			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
@@ -62,9 +64,9 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$data['text_last_cron_job_run'] = $this->language->get('text_last_cron_job_run');
 		$data['text_ip'] = $this->language->get('text_ip');
 		
+		
 		$data['text_allowed_ips'] = $this->language->get('text_allowed_ips');
 		$data['text_upload_success'] = $this->language->get('text_upload_success');
-		$data['text_add'] = $this->language->get('text_add');
 		$data['text_loading'] = $this->language->get('text_loading');
 		$data['text_button_settings'] = $this->language->get('text_button_settings');
 		$data['text_colour'] = $this->language->get('text_colour');
@@ -86,7 +88,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_save'] = $this->language->get('button_save');
-		$data['button_upload'] = $this->language->get('button_upload');
+		$data['button_ip_add'] = $this->language->get('button_ip_add');
 		
 		$data['errors'] = $this->errors;
 
@@ -293,13 +295,16 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 	public function install() {
 		$this->load->model('payment/amazon_checkout');
+		
 		$this->load->model('setting/setting');
+		
 		$this->model_payment_amazon_checkout->install();
 		$this->model_setting_setting->editSetting('amazon_checkout', $this->settings);
 	}
 
 	public function uninstall() {
 		$this->load->model('payment/amazon_checkout');
+		
 		$this->model_payment_amazon_checkout->uninstall();
 	}
 

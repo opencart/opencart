@@ -87,8 +87,8 @@
                 </div>
                 <div class="form-group required">
                   <div class="col-sm-12">
-                    <label class="control-label"><?php echo $entry_rating; ?></label>&nbsp;&nbsp;&nbsp;
-                    <?php echo $entry_bad; ?>&nbsp;
+                    <label class="control-label"><?php echo $entry_rating; ?></label>
+                    &nbsp;&nbsp;&nbsp; <?php echo $entry_bad; ?>&nbsp;
                     <input type="radio" name="rating" value="1" />
                     &nbsp;
                     <input type="radio" name="rating" value="2" />
@@ -107,9 +107,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <div class="col-sm-12">
-                    <img src="index.php?route=tool/captcha" alt="" id="captcha" />
-                  </div>
+                  <div class="col-sm-12"> <img src="index.php?route=tool/captcha" alt="" id="captcha" /> </div>
                 </div>
                 <div class="buttons">
                   <div class="pull-right">
@@ -335,8 +333,8 @@
             <hr>
             <!-- AddThis Button BEGIN -->
             <div class="addthis_toolbox addthis_default_style"><a class="addthis_button_facebook_like" fb:like:layout="button_count"></a> <a class="addthis_button_tweet"></a> <a class="addthis_button_pinterest_pinit"></a> <a class="addthis_counter addthis_pill_style"></a></div>
-            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-515eeaf54693130e"></script>
-            <!-- AddThis Button END -->
+            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-515eeaf54693130e"></script> 
+            <!-- AddThis Button END --> 
           </div>
           <?php } ?>
         </div>
@@ -434,7 +432,7 @@ $('select[name=\'profile_id\'], input[name="quantity"]').change(function(){
 		}
 	});
 });
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('#button-cart').on('click', function() {
 	$.ajax({
@@ -485,7 +483,7 @@ $('#button-cart').on('click', function() {
 		}
 	});
 });
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false
@@ -543,7 +541,7 @@ $('button[id^=\'button-upload\']').on('click', function() {
 		});
 	});
 });
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('#review').delegate('.pagination a', 'click', function(e) {
   e.preventDefault();
@@ -599,5 +597,5 @@ $(document).ready(function() {
 		}
 	});
 });
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

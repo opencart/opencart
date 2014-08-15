@@ -51,7 +51,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $text_ipn_help; ?>"><?php echo $text_ipn; ?></span></label>
+            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_ipn; ?>"><?php echo $text_ipn; ?></span></label>
             <div class="col-sm-10">
               <div class="input-group"> <span class="input-group-addon"><i class="fa fa-link"></i></span>
                 <input type="text" value="<?php echo $text_ipn_url; ?>" class="form-control" />
@@ -89,7 +89,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-currency"><span data-toggle="tooltip" title="<?php echo $entry_currency_help; ?>"><?php echo $entry_currency; ?></span></label>
+            <label class="col-sm-2 control-label" for="input-currency"><span data-toggle="tooltip" title="<?php echo $help_currency; ?>"><?php echo $entry_currency; ?></span></label>
             <div class="col-sm-10">
               <select name="pp_express_currency" id="input-currency" class="form-control">
                 <?php foreach ($currency_codes as $code) { ?>

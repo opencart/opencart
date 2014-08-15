@@ -6,7 +6,7 @@ class ControllerMaxmind extends Controller {
 		$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$db->query("REPLACE INTO `" . DB_PREFIX . "setting` SET `config_fraud_status_id` = '1', `config_fraud_score` = '".(int)$this->request->post['config_fraud_score']."', `config_fraud_key` = '".$db->escape($this->request->post['config_fraud_score'])."', `config_fraud_detection` = '".(int)$this->request->post['config_fraud_detection']."' WHERE `store_id` = '0' AND `group` = 'config'");
+			$db->query("REPLACE INTO `" . DB_PREFIX . "setting` SET `config_fraud_status_id` = '1', `config_fraud_score` = '" . (int)$this->request->post['config_fraud_score'] . "', `config_fraud_key` = '" . $db->escape($this->request->post['config_fraud_score']) . "', `config_fraud_detection` = '" . (int)$this->request->post['config_fraud_detection'] . "' WHERE `store_id` = '0' AND `group` = 'config'");
 
 			$this->session->data['success'] = $this->language->get('text_maxmind_success');
 
@@ -16,17 +16,22 @@ class ControllerMaxmind extends Controller {
 
 			$data['heading_maxmind'] = $this->language->get('heading_maxmind');
 			$data['heading_maxmind_small'] = $this->language->get('heading_maxmind_small');
+			
 			$data['text_maxmind_top'] = $this->language->get('text_maxmind_top');
 			$data['text_maxmind_link'] = $this->language->get('text_maxmind_link');
-			$data['text_maxmind_risk_help'] = $this->language->get('text_maxmind_risk_help');
-			$data['text_maxmind_fraud_help'] = $this->language->get('text_maxmind_fraud_help');
+			
 			$data['entry_licence_key'] = $this->language->get('entry_licence_key');
 			$data['entry_risk'] = $this->language->get('entry_risk');
 			$data['entry_fraud_status'] = $this->language->get('entry_fraud_status');
+			
+			$data['help_maxmind_risk'] = $this->language->get('help_maxmind_risk');
+			$data['help_maxmind_fraud'] = $this->language->get('help_maxmind_fraud');
 
 			$data['button_continue'] = $this->language->get('button_continue');
 			$data['button_back'] = $this->language->get('button_back');
 
+			$data['action'] = $this->url->link('maxmind');
+			
 			if (isset($this->request->post['config_fraud_detection'])) {
 				$data['config_fraud_detection'] = $this->request->post['config_fraud_detection'];
 			} else {
@@ -66,7 +71,7 @@ class ControllerMaxmind extends Controller {
 			}
 
 			$data['back'] = $this->url->link('step_4');
-			$data['action'] = $this->url->link('maxmind');
+			
 
 			$data['footer'] = $this->load->controller('footer');
 			$data['header'] = $this->load->controller('header');

@@ -2,7 +2,7 @@
 <ruleset name="PHP_CodeSniffer">
   <description>The coding standards for PHP_CodeSniffer.</description>
   
-  <rule ref="/tests/phpcs/OpenCart/"/>
+  <rule ref="${basedir}/tests/phpcs/OpenCart/"/>
   
   <rule ref="Zend.Files.ClosingTag">
     <severity>1</severity>

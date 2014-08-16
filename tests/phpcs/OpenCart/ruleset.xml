@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="PHP_CodeSniffer">
-  <description>The coding standards for PHP_CodeSniffer.</description>
-  
+<ruleset name="OpenCart">
+ <description>OpenCart code sniffer standards that are not part of default test packages.</description>  
   <rule ref="Zend.Files.ClosingTag">
     <severity>1</severity>
     <type>warning</type>

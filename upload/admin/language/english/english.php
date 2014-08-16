@@ -82,6 +82,7 @@ $_['button_commission_add']         = 'Add Commission';
 $_['button_commission_remove']      = 'Remove Commission';
 $_['button_credit_add']             = 'Add Credit';
 $_['button_credit_remove']          = 'Remove Credit';
+$_['button_ip_add']                 = 'Add IP';
 $_['button_parent']                 = 'Parent';
 $_['button_folder']                 = 'New Folder';
 $_['button_search']                 = 'Search';

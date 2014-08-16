@@ -3,9 +3,11 @@ class ControllerPaymentRealex extends Controller {
 	public function index() {
 		$this->load->language('payment/realex');
 
-		$data['button_confirm'] = $this->language->get('button_confirm');
 		$data['entry_cc_type'] = $this->language->get('entry_cc_type');
-		$data['text_select_card'] = $this->language->get('text_select_card');
+		
+		$data['help_select_card'] = $this->language->get('help_select_card');
+
+		$data['button_confirm'] = $this->language->get('button_confirm');
 
 		$this->load->model('checkout/order');
 

@@ -49,7 +49,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-live-demo"><?php echo $entry_test; ?></label>
+            <label class="col-sm-2 control-label" for="input-live-demo"><span data-toggle="tooltip" title="<?php echo $help_test; ?>"><?php echo $entry_test; ?></span></label>
             <div class="col-sm-10">
               <select name="pp_pro_iframe_test" id="input-live-demo" class="form-control">
                 <?php if ($pp_pro_iframe_test) { ?>
@@ -60,10 +60,10 @@
                 <option value="0" selected="selected"><?php echo $text_no; ?></option>
                 <?php } ?>
               </select>
-              <span class="help-block"><?php echo $entry_test_help; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-debug"><?php echo $entry_debug; ?></label>
+            <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="<?php echo $help_debug; ?>"><?php echo $entry_debug; ?></span></label>
             <div class="col-sm-10">
               <select name="pp_pro_iframe_debug" id="input-debug" class="form-control">
                 <?php if ($pp_pro_iframe_debug) { ?>
@@ -74,7 +74,7 @@
                 <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                 <?php } ?>
               </select>
-              <span class="help-block"><?php echo $help_debug ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-trans-method"><?php echo $entry_transaction_method; ?></label>
@@ -91,7 +91,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-checkout-method"><?php echo $entry_checkout_method ?></label>
+            <label class="col-sm-2 control-label" for="input-checkout-method"><span data-toggle="tooltip" title="<?php echo $help_checkout_method; ?>"><?php echo $entry_checkout_method ?></span></label>
             <div class="col-sm-10">
               <select name="pp_pro_iframe_checkout_method" id="input-checkout-method" class="form-control">
                 <?php if ($pp_pro_iframe_checkout_method == 'iframe') { ?>
@@ -102,21 +102,21 @@
                 <option value="redirect" selected="selected"><?php echo $text_redirect ?></option>
                 <?php } ?>
               </select>
-              <span class="help-block"><?php echo $help_checkout_method ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label"><?php echo $entry_ipn_url; ?></label>
             <div class="col-sm-10">
-              <div class="input-group"> <span class="input-group-addon"><i class="fa fa-link"></i></span>
+              <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
                 <input type="text" value="<?php echo $ipn_url ?>" class="form-control" />
               </div>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-total"><?php echo $entry_total; ?></label>
+            <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="pp_pro_iframe_total" value="<?php echo $pp_pro_iframe_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
-              <span class="help-block"><?php echo $entry_total_help; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>

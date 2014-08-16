@@ -1,29 +1,28 @@
 <?php
 class ControllerMailOrder extends Controller {
 	public function index() {
+		// Check for any downloadable products
+		$download_status = false;
 
-			// Check for any downloadable products
-			$download_status = false;
+		$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
 
-			$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+		foreach ($order_product_query->rows as $order_product) {
+			// Check if there are any linked downloads
+			$product_download_query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "product_to_download` WHERE product_id = '" . (int)$order_product['product_id'] . "'");
 
-			foreach ($order_product_query->rows as $order_product) {
-				// Check if there are any linked downloads
-				$product_download_query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "product_to_download` WHERE product_id = '" . (int)$order_product['product_id'] . "'");
-
-				if ($product_download_query->row['total']) {
-					$download_status = true;
-				}
+			if ($product_download_query->row['total']) {
+				$download_status = true;
 			}
+		}
 
-			// Load the language for any mails that might be required to be sent out
-			$language = new Language($order_info['language_directory']);
-			$language->load($order_info['language_filename']);
-			$language->load('mail/order');
-			
-			// Send out order confirmation mail
-			if (!$order_info['order_status_id'] && $order_status_id > 0) {
-			
+		// Load the language for any mails that might be required to be sent out
+		$language = new Language($order_info['language_directory']);
+		$language->load($order_info['language_filename']);
+		$language->load('mail/order');
+
+		// Send out order confirmation mail
+		if (!$order_info['order_status_id'] && $order_status_id > 0) {
+
 			$order_status_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "' AND language_id = '" . (int)$order_info['language_id'] . "'");
 
 			if ($order_status_query->num_rows) {
@@ -221,7 +220,7 @@ class ControllerMailOrder extends Controller {
 
 			// Can not send confirmation emails for CBA orders as email is unknown
 			$this->load->model('payment/amazon_checkout');
-			
+
 			if (!$this->model_payment_amazon_checkout->isAmazonOrder($order_info['order_id'])) {
 				// Text Mail
 				$text  = sprintf($language->get('text_new_greeting'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8')) . "\n\n";
@@ -304,8 +303,8 @@ class ControllerMailOrder extends Controller {
 			// Admin Alert Mail
 			if ($this->config->get('config_order_mail')) {
 				$subject = sprintf($language->get('text_new_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'), $order_id);
-				
-				// HTML Mail	
+
+				// HTML Mail
 				$data['text_greeting'] = $language->get('text_new_received');
 				if ($comment) {
 					if ($order_info['comment']) {
@@ -321,19 +320,19 @@ class ControllerMailOrder extends Controller {
 					}
 				}
 				$data['text_download'] = '';
-				
+
 				$data['text_footer'] = '';
-				
+
 				$data['text_link'] = '';
 				$data['link'] = '';
 				$data['download'] = '';
-				
+
 				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mail/order.tpl')) {
 					$html = $this->load->view($this->config->get('config_template') . '/template/mail/order.tpl', $data);
 				} else {
 					$html = $this->load->view('default/template/mail/order.tpl', $data);
 				}
-						
+
 				// Text
 				$text  = $language->get('text_new_received') . "\n\n";
 				$text .= $language->get('text_new_order_id') . ' ' . $order_id . "\n";
@@ -397,12 +396,7 @@ class ControllerMailOrder extends Controller {
 					}
 				}
 			}
-			
-
-
-
-		
-
+		}
 	}
 	
 	function notify() {

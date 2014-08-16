@@ -290,7 +290,7 @@
         </div>
         <div class="tab-pane" id="tab-payment">
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-auto-settle"><span data-toggle="tooltip" title="<?php echo $help_help_dcc_settle; ?>"><?php echo $entry_auto_settle; ?></span></label>
+            <label class="col-sm-2 control-label" for="input-auto-settle"><span data-toggle="tooltip" title="<?php echo $help_dcc_settle; ?>"><?php echo $entry_auto_settle; ?></span></label>
             <div class="col-sm-10">
               <select name="realex_auto_settle" id="input-auto-settle" class="form-control">
                 <option value="0"<?php echo ($realex_auto_settle == 0 ? ' selected' : ''); ?>><?php echo $text_settle_delayed; ?></option>

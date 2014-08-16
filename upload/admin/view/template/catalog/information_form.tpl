@@ -106,22 +106,24 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-keyword"><?php echo $entry_keyword; ?></label>
+            <label class="col-sm-2 control-label" for="input-keyword"><span data-toggle="tooltip" title="<?php echo $help_keyword; ?>"><?php echo $entry_keyword; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" class="form-control" />
-              <span class="help-block"><?php echo $help_keyword; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-bottom"><?php echo $entry_bottom; ?></label>
-            <div class="col-sm-10 checkbox">
-              <label>
-                <?php if ($bottom) { ?>
-                <input type="checkbox" name="bottom" value="1" checked="checked" id="input-bottom" />
-                <?php } else { ?>
-                <input type="checkbox" name="bottom" value="1" id="input-bottom" />
-                <?php } ?>
-              </label>
-              <span class="help-block"><?php echo $help_bottom; ?></span></div>
+            <label class="col-sm-2 control-label" for="input-bottom"><span data-toggle="tooltip" title="<?php echo $help_bottom; ?>"><?php echo $entry_bottom; ?></span></label>
+            <div class="col-sm-10">
+              <div class="checkbox">
+                <label>
+                  <?php if ($bottom) { ?>
+                  <input type="checkbox" name="bottom" value="1" checked="checked" id="input-bottom" />
+                  <?php } else { ?>
+                  <input type="checkbox" name="bottom" value="1" id="input-bottom" />
+                  <?php } ?>&nbsp;
+                </label>
+              </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
@@ -190,13 +192,14 @@
     </form>
   </div>
 </div>
-<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
-CKEDITOR.replace('input-description<?php echo $language['language_id']; ?>');
+$('#input-description<?php echo $language['language_id']; ?>').summernote({
+	height: 300
+});
 <?php } ?>
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('#language a:first').tab('show');
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

@@ -578,26 +578,6 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_layout'] = $this->language->get('entry_layout');
 		$data['entry_profile'] = $this->language->get('entry_profile');
 
-		$data['text_recurring_help'] = $this->language->get('text_recurring_help');
-		$data['text_recurring_title'] = $this->language->get('text_recurring_title');
-		$data['text_recurring_trial'] = $this->language->get('text_recurring_trial');
-		$data['entry_recurring'] = $this->language->get('entry_recurring');
-		$data['entry_recurring_price'] = $this->language->get('entry_recurring_price');
-		$data['entry_recurring_freq'] = $this->language->get('entry_recurring_freq');
-		$data['entry_recurring_cycle'] = $this->language->get('entry_recurring_cycle');
-		$data['entry_recurring_length'] = $this->language->get('entry_recurring_length');
-		$data['entry_trial'] = $this->language->get('entry_trial');
-		$data['entry_trial_price'] = $this->language->get('entry_trial_price');
-		$data['entry_trial_freq'] = $this->language->get('entry_trial_freq');
-		$data['entry_trial_length'] = $this->language->get('entry_trial_length');
-		$data['entry_trial_cycle'] = $this->language->get('entry_trial_cycle');
-
-		$data['text_length_day'] = $this->language->get('text_length_day');
-		$data['text_length_week'] = $this->language->get('text_length_week');
-		$data['text_length_month'] = $this->language->get('text_length_month');
-		$data['text_length_month_semi'] = $this->language->get('text_length_month_semi');
-		$data['text_length_year'] = $this->language->get('text_length_year');
-
 		$data['help_keyword'] = $this->language->get('help_keyword');
 		$data['help_sku'] = $this->language->get('help_sku');
 		$data['help_upc'] = $this->language->get('help_upc');

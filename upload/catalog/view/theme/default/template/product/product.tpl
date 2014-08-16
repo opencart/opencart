@@ -87,8 +87,8 @@
                 </div>
                 <div class="form-group required">
                   <div class="col-sm-12">
-                    <label class="control-label"><?php echo $entry_rating; ?></label>&nbsp;&nbsp;&nbsp;
-                    <?php echo $entry_bad; ?>&nbsp;
+                    <label class="control-label"><?php echo $entry_rating; ?></label>
+                    &nbsp;&nbsp;&nbsp; <?php echo $entry_bad; ?>&nbsp;
                     <input type="radio" name="rating" value="1" />
                     &nbsp;
                     <input type="radio" name="rating" value="2" />
@@ -107,9 +107,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <div class="col-sm-12">
-                    <img src="index.php?route=tool/captcha" alt="" id="captcha" />
-                  </div>
+                  <div class="col-sm-12"> <img src="index.php?route=tool/captcha" alt="" id="captcha" /> </div>
                 </div>
                 <div class="buttons">
                   <div class="pull-right">
@@ -261,7 +259,7 @@
             <?php if ($option['type'] == 'file') { ?>
             <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
               <label class="control-label"><?php echo $option['name']; ?></label>
-              <button type="button" id="button-upload<?php echo $option['product_option_id']; ?>" class="btn btn-default btn-block"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+              <button type="button" id="button-upload<?php echo $option['product_option_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default btn-block"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
               <input type="hidden" name="option[<?php echo $option['product_option_id']; ?>]" value="" id="input-option<?php echo $option['product_option_id']; ?>" />
             </div>
             <?php } ?>
@@ -335,8 +333,8 @@
             <hr>
             <!-- AddThis Button BEGIN -->
             <div class="addthis_toolbox addthis_default_style"><a class="addthis_button_facebook_like" fb:like:layout="button_count"></a> <a class="addthis_button_tweet"></a> <a class="addthis_button_pinterest_pinit"></a> <a class="addthis_counter addthis_pill_style"></a></div>
-            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-515eeaf54693130e"></script>
-            <!-- AddThis Button END -->
+            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-515eeaf54693130e"></script> 
+            <!-- AddThis Button END --> 
           </div>
           <?php } ?>
         </div>
@@ -416,25 +414,25 @@
     <?php echo $column_right; ?></div>
 </div>
 <script type="text/javascript"><!--
-$('select[name="profile_id"], input[name="quantity"]').change(function(){
-  $.ajax({
-    url: 'index.php?route=product/product/getRecurringDescription',
-    type: 'post',
-    data: $('input[name=\'product_id\'], input[name=\'quantity\'], select[name=\'profile_id\']'),
-    dataType: 'json',
-    beforeSend: function() {
-      $('#profile-description').html('');
-    },
-    success: function(json) {
-      $('.alert, .text-danger').remove();
-
-      if (json['success']) {
-        $('#profile-description').html(json['success']);
-      }
-    }
-  });
+$('select[name=\'profile_id\'], input[name="quantity"]').change(function(){
+	$.ajax({
+		url: 'index.php?route=product/product/getRecurringDescription',
+		type: 'post',
+		data: $('input[name=\'product_id\'], input[name=\'quantity\'], select[name=\'profile_id\']'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#profile-description').html('');
+		},
+		success: function(json) {
+			$('.alert, .text-danger').remove();
+			
+			if (json['success']) {
+				$('#profile-description').html(json['success']);
+			}
+		}
+	});
 });
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('#button-cart').on('click', function() {
 	$.ajax({
@@ -450,21 +448,27 @@ $('#button-cart').on('click', function() {
 		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();
-			
+			$('.form-group').removeClass('has-error');
+
 			if (json['error']) {
-				if (json['error']['quantity']) {
-					$('#input-quantity').after('<div class="text-danger">' + json['error']['quantity'] + '</div>');
-				}
-			  
 				if (json['error']['option']) {
 					for (i in json['error']['option']) {
-						$('#input-option' + i).after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+						var element = $('#input-option' + i.replace('_', '-'));
+						
+						if (element.parent().hasClass('input-group')) {
+							element.parent().after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+						} else {
+							element.after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+						}
 					}
 				}
 				
 				if (json['error']['profile']) {
 					$('select[name=\'profile_id\']').after('<div class="text-danger">' + json['error']['profile'] + '</div>');
 				}
+				
+				// Highlight any found errors
+				$('.text-danger').parent().addClass('has-error');
 			}
 			
 			if (json['success']) {
@@ -479,7 +483,7 @@ $('#button-cart').on('click', function() {
 		}
 	});
 });
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false
@@ -505,7 +509,7 @@ $('button[id^=\'button-upload\']').on('click', function() {
 	
 	$('#form-upload input[name=\'file\']').on('change', function() {
 		$.ajax({
-			url: 'index.php?route=product/product/upload',
+			url: 'index.php?route=tool/upload',
 			type: 'post',
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
@@ -513,12 +517,10 @@ $('button[id^=\'button-upload\']').on('click', function() {
 			contentType: false,
 			processData: false,
 			beforeSend: function() {
-				$(node).find('i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-				$(node).prop('disabled', true);
+				$(node).button('loading');
 			},
 			complete: function() {
-				$(node).find('i').replaceWith('<i class="fa fa-upload"></i>');
-				$(node).prop('disabled', false);
+				$(node).button('reset');
 			},
 			success: function(json) {
 				$('.text-danger').remove();
@@ -539,7 +541,7 @@ $('button[id^=\'button-upload\']').on('click', function() {
 		});
 	});
 });
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('#review').delegate('.pagination a', 'click', function(e) {
   e.preventDefault();
@@ -595,5 +597,5 @@ $(document).ready(function() {
 		}
 	});
 });
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

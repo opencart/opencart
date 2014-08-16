@@ -25,10 +25,9 @@
         </div>
       </div>
       <div class="form-group required">
-        <label class="col-sm-2 control-label" for="input-password"><?php echo $entry_password; ?></label>
+        <label class="col-sm-2 control-label" for="input-password"><span data-toggle="tooltip" title="<?php echo $help_password; ?>"><?php echo $entry_password; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="paymate_password" value="<?php echo $paymate_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" class="form-control" />
-          <span class="help-block"><?php echo $help_password; ?></span>
           <?php if ($error_password) { ?>
           <div class="text-danger"><?php echo $error_password; ?></div>
           <?php } ?>
@@ -58,10 +57,10 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-total"><?php echo $entry_total; ?></label>
+        <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="paymate_total" value="<?php echo $paymate_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
-          <span class="help-block"><?php echo $help_total; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>

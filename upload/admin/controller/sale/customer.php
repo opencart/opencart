@@ -200,8 +200,16 @@ class ControllerSaleCustomer extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('sale/customer');
+		
+		$customers = array();
 
-		if (isset($this->request->get['customer_id']) && $this->validateApprove()) {
+		if (isset($this->request->post['selected'])) {
+			$customers = $this->request->post['selected'];
+		} elseif (isset($this->request->get['customer_id'])) {
+			$customers[] = $this->request->get['customer_id'];
+		}
+		
+		if ($customers && $this->validateApprove()) {
 			$this->model_sale_customer->approve($this->request->get['customer_id']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -592,6 +600,7 @@ class ControllerSaleCustomer extends Controller {
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
+		$data['text_loading'] = $this->language->get('text_loading');
 		$data['text_add_ban_ip'] = $this->language->get('text_add_ban_ip');
 		$data['text_remove_ban_ip'] = $this->language->get('text_remove_ban_ip');
 
@@ -629,6 +638,7 @@ class ControllerSaleCustomer extends Controller {
 		$data['button_transaction_add'] = $this->language->get('button_transaction_add');
 		$data['button_reward_add'] = $this->language->get('button_reward_add');
 		$data['button_remove'] = $this->language->get('button_remove');
+		$data['button_upload'] = $this->language->get('button_upload');
 
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_address'] = $this->language->get('tab_address');
@@ -810,8 +820,21 @@ class ControllerSaleCustomer extends Controller {
 		// Custom Fields
 		$this->load->model('sale/custom_field');
 
-		$data['custom_fields'] = $this->model_sale_custom_field->getCustomFields();
-
+		$data['custom_fields'] = array();
+		
+		$custom_fields = $this->model_sale_custom_field->getCustomFields();
+		
+		foreach ($custom_fields as $custom_field) {
+			$data['custom_fields'][] = array(
+				'custom_field_id'    => $custom_field['custom_field_id'],
+				'custom_field_value' => $this->model_sale_custom_field->getCustomFieldValues($custom_field['custom_field_id']),
+				'name'               => $custom_field['name'],
+				'value'              => $custom_field['value'],
+				'type'               => $custom_field['type'],
+				'location'           => $custom_field['location']
+			);
+		}
+		
 		if (isset($this->request->post['custom_field'])) {
 			$data['account_custom_field'] = $this->request->post['custom_field'];
 		} elseif (!empty($customer_info)) {
@@ -1385,6 +1408,7 @@ class ControllerSaleCustomer extends Controller {
 					'email'             => $result['email'],
 					'telephone'         => $result['telephone'],
 					'fax'               => $result['fax'],
+					'custom_field'      => unserialize($result['custom_field']),
 					'address'           => $this->model_sale_customer->getAddresses($result['customer_id'])
 				);
 			}

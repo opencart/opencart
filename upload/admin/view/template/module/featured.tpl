@@ -16,10 +16,9 @@
     <?php } ?>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-featured" class="form-horizontal">
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-product"><?php echo $entry_product; ?></label>
+        <label class="col-sm-2 control-label" for="input-product"><span data-toggle="tooltip" title="<?php echo $help_product; ?>"><?php echo $entry_product; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" class="form-control" />
-          <span class="help-block"><?php echo $help_product; ?></span>
           <div id="featured-product" class="well well-sm" style="height: 150px; overflow: auto;">
             <?php foreach ($products as $product) { ?>
             <div id="featured-product<?php echo $product['product_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product['name']; ?>

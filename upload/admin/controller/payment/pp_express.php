@@ -37,6 +37,8 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['text_sale'] = $this->language->get('text_sale');
 		$data['text_clear'] = $this->language->get('text_clear');
 		$data['text_browse'] = $this->language->get('text_browse');
+		$data['text_ipn'] = $this->language->get('text_ipn');
+		$data['text_ipn_url'] = HTTPS_CATALOG.'index.php?route=payment/pp_express/ipn';
 
 		$data['entry_username'] = $this->language->get('entry_username');
 		$data['entry_password'] = $this->language->get('entry_password');
@@ -45,7 +47,6 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['entry_debug'] = $this->language->get('entry_debug');
 		$data['entry_method'] = $this->language->get('entry_method');
 		$data['entry_total'] = $this->language->get('entry_total');
-		$data['entry_total_help'] = $this->language->get('entry_total_help');
 		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
@@ -61,32 +62,27 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['entry_reversed_status'] = $this->language->get('entry_reversed_status');
 		$data['entry_voided_status'] = $this->language->get('entry_voided_status');
 		$data['entry_currency'] = $this->language->get('entry_currency');
-		$data['entry_currency_help'] = $this->language->get('entry_currency_help');
+		
 		$data['entry_profile_cancellation'] = $this->language->get('entry_profile_cancellation');
-
+		$data['entry_display_checkout'] = $this->language->get('entry_display_checkout');
+		$data['entry_allow_notes'] = $this->language->get('entry_allow_notes');
+		$data['entry_logo'] = $this->language->get('entry_logo');
+		
+		$data['entry_border_colour'] = $this->language->get('entry_border_colour');
+		$data['entry_header_colour'] = $this->language->get('entry_header_colour');
+		$data['entry_page_colour'] = $this->language->get('entry_page_colour');
+		
+		$data['help_total'] = $this->language->get('help_total');
+		$data['help_encryption'] = $this->language->get('help_encryption');
+		$data['help_ipn'] = $this->language->get('help_ipn');
+		$data['help_currency'] = $this->language->get('help_currency');
+		$data['help_logo'] = $this->language->get('help_logo');
+		$data['help_colour'] = $this->language->get('help_colour');
+		
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_order_status'] = $this->language->get('tab_order_status');
 		$data['tab_api_details'] = $this->language->get('tab_api_details');
 		$data['tab_customise'] = $this->language->get('tab_customise');
-
-		$data['entry_display_checkout'] = $this->language->get('entry_display_checkout');
-		$data['entry_allow_notes'] = $this->language->get('entry_allow_notes');
-		$data['entry_logo'] = $this->language->get('entry_logo');
-		$data['entry_logo_help'] = $this->language->get('entry_logo_help');
-		$data['entry_border_colour'] = $this->language->get('entry_border_colour');
-		$data['entry_header_colour'] = $this->language->get('entry_header_colour');
-		$data['entry_page_colour'] = $this->language->get('entry_page_colour');
-		$data['entry_colour_help'] = $this->language->get('entry_colour_help');
-
-		$data['help_encryption'] = $this->language->get('help_encryption');
-
-		$data['button_save'] = $this->language->get('button_save');
-		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_search'] = $this->language->get('button_search');
-
-		$data['text_ipn'] = $this->language->get('text_ipn');
-		$data['text_ipn_help'] = $this->language->get('text_ipn_help');
-		$data['text_ipn_url'] = HTTPS_CATALOG.'index.php?route=payment/pp_express/ipn';
 
 		$data['breadcrumbs'] = array();
 

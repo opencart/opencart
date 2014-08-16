@@ -9,12 +9,12 @@
   <thead>
     <tr>
       <td class="text-left"><?php echo $column_product; ?></td>
-        <td class="text-left"><?php echo $column_model; ?></td>
-        <td class="text-left"><?php echo $column_amazon_order_item_code; ?></td>
-        <td class="text-right"><?php echo $column_quantity; ?></td>
-        <td class="text-right"><?php echo $column_price; ?></td>
-        <td class="text-right"><?php echo $column_total; ?></td>
-	</tr>
+      <td class="text-left"><?php echo $column_model; ?></td>
+      <td class="text-left"><?php echo $column_amazon_order_item_code; ?></td>
+      <td class="text-right"><?php echo $column_quantity; ?></td>
+      <td class="text-right"><?php echo $column_price; ?></td>
+      <td class="text-right"><?php echo $column_total; ?></td>
+    </tr>
   </thead>
   <tbody>
     <?php foreach ($products as $product) { ?>
@@ -27,8 +27,7 @@
         <?php } else { ?>
         &nbsp;<small> - <?php echo $option['name']; ?>: <a href="<?php echo $option['href']; ?>"><?php echo $option['value']; ?></a></small>
         <?php } ?>
-        <?php } ?>
-	  </td>
+        <?php } ?></td>
       <td class="text-left"><?php echo $product['model']; ?></td>
       <td class="text-left"><?php echo $product['amazon_order_item_code']; ?></td>
       <td class="text-right"><?php echo $product['quantity']; ?></td>
@@ -41,7 +40,9 @@
 <p><?php echo $help_adjustment; ?></p>
 <p><?php echo $text_download; ?></p>
 <p><?php echo $text_upload_template; ?></p>
-<p><button type="button" id="button-upload" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $text_upload; ?></button></p>
+<p>
+  <button type="button" id="button-upload" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $text_upload; ?></button>
+</p>
 <table class="table table-bordered">
   <thead>
     <tr>
@@ -57,7 +58,7 @@
       <td class="text-left"><?php echo $report_submission['status'] ?></td>
       <td class="text-left"><?php echo $report_submission['text'] ?></td>
     </tr>
-	<?php } ?>
+    <?php } ?>
   </tbody>
 </table>
 <script type="text/javascript"><!--
@@ -78,8 +79,10 @@ $('#button-upload').on('click', function() {
 			contentType: false,
 			processData: false,	
 			beforeSend: function() {
-				$('#button-upload').after('<span style="margin-left: 5px;" class="btn btn-primary loading"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>');
-				$('#button-upload').attr('disabled', true);
+				$('#button-upload').button('loading');
+			},
+			complete: function() {
+				$('#button-upload').button('reset');
 			},
 			success: function(json) {
 				$('#button-upload').attr('disabled', false);

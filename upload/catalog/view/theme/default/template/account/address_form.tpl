@@ -103,6 +103,7 @@
             </div>
           </div>
           <?php foreach ($custom_fields as $custom_field) { ?>
+          <?php if ($custom_field['location'] == 'address') { ?>
           <?php if ($custom_field['type'] == 'select') { ?>
           <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
             <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -199,7 +200,7 @@
           <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
             <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
             <div class="col-sm-10">
-              <button type="button" id="button-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+              <button type="button" id="button-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
               <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($address_custom_field[$custom_field['custom_field_id']]) ? $address_custom_field[$custom_field['custom_field_id']] : ''); ?>" />
               <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
               <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
@@ -251,6 +252,7 @@
               <?php } ?>
             </div>
           </div>
+          <?php } ?>
           <?php } ?>
           <?php } ?>
           <div class="form-group">
@@ -342,7 +344,7 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 
 	$('#form-upload input[name=\'file\']').on('change', function() {
 		$.ajax({
-			url: 'index.php?route=account/account/upload',
+			url: 'index.php?route=tool/upload',
 			type: 'post',
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
@@ -350,14 +352,14 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 			contentType: false,
 			processData: false,
 			beforeSend: function() {
-				$(node).find('i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-				$(node).prop('disabled', true);
+				$(node).button('loading');
 			},
 			complete: function() {
-				$(node).find('i').replaceWith('<i class="fa fa-upload"></i>');
-				$(node).prop('disabled', false);
+				$(node).button('reset');
 			},
 			success: function(json) {
+				$('.text-danger').remove();
+				
 				if (json['error']) {
 					$(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
 				}

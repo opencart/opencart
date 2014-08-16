@@ -29,24 +29,23 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-filename"><?php echo $entry_filename; ?></label>
+        <label class="col-sm-2 control-label" for="input-filename"><span data-toggle="tooltip" title="<?php echo $help_filename; ?>"><?php echo $entry_filename; ?></span></label>
         <div class="col-sm-10">
           <div class="input-group">
             <input type="text" name="filename" value="<?php echo $filename; ?>" placeholder="<?php echo $entry_filename; ?>" id="input-filename" class="form-control" />
             <span class="input-group-btn">
-            <button type="button" id="button-upload" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
-            </span></div>
-          <span class="help-block"><?php echo $help_filename; ?></span>
+            <button type="button" id="button-upload" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+            </span>
+          </div>
           <?php if ($error_filename) { ?>
           <div class="text-danger"><?php echo $error_filename; ?></div>
           <?php } ?>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-mask"><?php echo $entry_mask; ?></label>
+        <label class="col-sm-2 control-label" for="input-mask"><span data-toggle="tooltip" title="<?php echo $help_mask; ?>"><?php echo $entry_mask; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="mask" value="<?php echo $mask; ?>" placeholder="<?php echo $entry_mask; ?>" id="input-mask" class="form-control" />
-          <span class="help-block"><?php echo $help_mask; ?></span>
           <?php if ($error_mask) { ?>
           <div class="text-danger"><?php echo $error_mask; ?></div>
           <?php } ?>
@@ -73,13 +72,11 @@ $('#button-upload').on('click', function() {
 			contentType: false,
 			processData: false,		
 			beforeSend: function() {
-				$('#button-upload i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-				$('#button-upload').prop('disabled', true);
-			},	
+				$('#button-upload').button('loading');
+			},
 			complete: function() {
-				$('#button-upload i').replaceWith('<i class="fa fa-upload"></i>');
-				$('#button-upload').prop('disabled', false);
-			},		
+				$('#button-upload').button('reset');
+			},	
 			success: function(json) {
 				if (json['error']) {
 					alert(json['error']);

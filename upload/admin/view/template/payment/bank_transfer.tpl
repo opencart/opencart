@@ -22,17 +22,17 @@
           <div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
             <textarea name="bank_transfer_bank<?php echo $language['language_id']; ?>" cols="80" rows="10" placeholder="<?php echo $entry_bank; ?>" id="input-bank<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset(${'bank_transfer_bank' . $language['language_id']}) ? ${'bank_transfer_bank' . $language['language_id']} : ''; ?></textarea>
           </div>
-          <?php if (isset(${'error_bank' . $language['language_id']})) { ?>
+          <?php if (${'error_bank' . $language['language_id']}) { ?>
           <div class="text-danger"><?php echo ${'error_bank' . $language['language_id']}; ?></div>
           <?php } ?>
         </div>
       </div>
       <?php } ?>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-total"><?php echo $entry_total; ?></label>
+        <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="bank_transfer_total" value="<?php echo $bank_transfer_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
-          <span class="help-block"><?php echo $help_total; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>

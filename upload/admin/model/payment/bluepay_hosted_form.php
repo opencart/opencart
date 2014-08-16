@@ -184,19 +184,19 @@ class ModelPaymentBluePayHostedForm extends Model {
 	public function addTransaction($bluepay_hosted_form_order_id, $type, $total) {
 		$this->logger('$type:\r\n' . print_r($type, 1));
 		$this->logger('$total:\r\n' . print_r($total, 1));
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "bluepay_hosted_form_order_transaction` SET `bluepay_hosted_form_order_id` = '" . (int)$bluepay_hosted_form_order_id . "', `created` = now(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . (double)$total . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "bluepay_hosted_form_order_transaction` SET `bluepay_hosted_form_order_id` = '" . (int)$bluepay_hosted_form_order_id . "', `created` = now(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . (float)$total . "'");
 	}
 
 	public function getTotalReleased($bluepay_hosted_form_order_id) {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "bluepay_hosted_form_order_transaction` WHERE `bluepay_hosted_form_order_id` = '" . (int)$bluepay_hosted_form_order_id . "' AND (`type` = 'sale' OR `type` = 'rebate' OR `type` = 'auth')");
 
-		return (double)$query->row['total'];
+		return (float)$query->row['total'];
 	}
 
 	public function getTotalRebated($bluepay_hosted_form_order_id) {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "bluepay_hosted_form_order_transaction` WHERE `bluepay_hosted_form_order_id` = '" . (int)$bluepay_hosted_form_order_id . "' AND 'rebate'");
 
-		return (double)$query->row['total'];
+		return (float)$query->row['total'];
 	}
 
 	public function sendCurl($url, $post_data) {

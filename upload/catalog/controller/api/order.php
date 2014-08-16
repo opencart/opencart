@@ -6,33 +6,33 @@ class ControllerApiOrder extends Controller {
 		$json = array();
 		
 		if (!isset($this->session->data['api_id'])) {
-			$json['error']['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		} else {		
 			// Customer
 			if (!isset($this->session->data['customer'])) {
-				$json['error']['warning'] = $this->language->get('error_customer');
+				$json['error'] = $this->language->get('error_customer');
 			}	
 					
 			// Payment Address
 			if (!isset($this->session->data['payment_address'])) {
-				$json['error']['warning'] = $this->language->get('error_payment_address');
+				$json['error'] = $this->language->get('error_payment_address');
 			}	
 			
 			// Payment Method
 			if (!isset($this->session->data['payment_method'])) {
-				$json['error']['warning'] = $this->language->get('error_payment_method');			
+				$json['error'] = $this->language->get('error_payment_method');			
 			}
 	
 			// Shipping
 			if ($this->cart->hasShipping()) {
 				// Shipping Address
 				if (!isset($this->session->data['shipping_address'])) {
-					$json['error']['warning'] = $this->language->get('error_shipping_address');
+					$json['error'] = $this->language->get('error_shipping_address');
 				}
 			
 				// Shipping Method
 				if (!isset($this->request->post['shipping_method'])) {
-					$json['error']['warning'] = $this->language->get('error_shipping_method');
+					$json['error'] = $this->language->get('error_shipping_method');
 				}
 			} else {
 				unset($this->session->data['shipping_address']);
@@ -42,7 +42,7 @@ class ControllerApiOrder extends Controller {
 							
 			// Cart
 			if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-				$json['error']['warning'] = $this->language->get('error_stock');
+				$json['error'] = $this->language->get('error_stock');
 			}
 			
 			// Validate minimum quantity requirements.
@@ -58,7 +58,7 @@ class ControllerApiOrder extends Controller {
 				}
 	
 				if ($product['minimum'] > $product_total) {
-					$json['error']['warning'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
+					$json['error'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
 	
 					break;
 				}
@@ -208,6 +208,8 @@ class ControllerApiOrder extends Controller {
 				}
 	
 				// Order Totals
+				$this->load->model('setting/extension');
+				
 				$order_data['totals'] = array();					
 				$total = 0;
 				$taxes = $this->cart->getTaxes();
@@ -232,11 +234,11 @@ class ControllerApiOrder extends Controller {
 	
 				$sort_order = array();
 	
-				foreach ($order_total['totals'] as $key => $value) {
+				foreach ($order_data['totals'] as $key => $value) {
 					$sort_order[$key] = $value['sort_order'];
 				}
 	
-				array_multisort($sort_order, SORT_ASC, $order_total['totals']);
+				array_multisort($sort_order, SORT_ASC, $order_data['totals']);
 				
 				if (isset($this->request->post['comment'])) {
 					$order_data['comment'] = $this->request->post['comment'];
@@ -252,7 +254,7 @@ class ControllerApiOrder extends Controller {
 					// Affiliate
 					$this->load->model('affiliate/affiliate');
 	
-					$affiliate_info = $this->model_affiliate_affiliate->getAffiliate($affiliate_info['affiliate_id']);
+					$affiliate_info = $this->model_affiliate_affiliate->getAffiliate($this->request->post['affiliate_id']);
 	
 					if ($affiliate_info) {
 						$order_data['affiliate_id'] = $affiliate_info['affiliate_id'];
@@ -303,7 +305,14 @@ class ControllerApiOrder extends Controller {
 	
 			$json['order_id'] = $this->model_checkout_order->addOrder($order_data);
 			
-			$this->model_checkout_order->addHistory($order_data);
+			// Set the order history 
+			if (isset($this->request->post['order_status_id'])) {
+				$order_status_id = $this->request->post['order_status_id'];
+			} else {
+				$order_status_id = $this->config->get('config_order_status_id');
+			}
+			
+			$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
 			
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -318,44 +327,44 @@ class ControllerApiOrder extends Controller {
 		$json = array();
 		
 		if (!isset($this->session->data['api_id'])) {
-			$json['error']['warning'] = $this->language->get('error_permission');
+			$json['error'] = $this->language->get('error_permission');
 		} else {
 			$this->load->model('checkout/order');
 			
-			if (isset($this->request->get['order_id'])) {
-				$order_id = $this->request->get['order_id'];
+			if (isset($this->request->post['order_id'])) {
+				$order_id = $this->request->post['order_id'];
 			} else {
 				$order_id = 0;
 			}
 			
 			$order_info = $this->model_checkout_order->getOrder($order_id);
 			
-			if ($order_info) {			
+			if ($order_info) {		
 				// Customer
 				if (!isset($this->session->data['customer'])) {
-					$json['error']['warning'] = $this->language->get('error_customer');
+					$json['error'] = $this->language->get('error_customer');
 				}	
 						
 				// Payment Address
 				if (!isset($this->session->data['payment_address'])) {
-					$json['error']['warning'] = $this->language->get('error_payment_address');
+					$json['error'] = $this->language->get('error_payment_address');
 				}	
 				
 				// Payment Method
 				if (!isset($this->session->data['payment_method'])) {
-					$json['error']['warning'] = $this->language->get('error_payment_method');			
+					$json['error'] = $this->language->get('error_payment_method');			
 				}
 		
 				// Shipping
 				if ($this->cart->hasShipping()) {
 					// Shipping Address
 					if (!isset($this->session->data['shipping_address'])) {
-						$json['error']['warning'] = $this->language->get('error_shipping_address');
+						$json['error'] = $this->language->get('error_shipping_address');
 					}
 				
 					// Shipping Method
 					if (!isset($this->request->post['shipping_method'])) {
-						$json['error']['warning'] = $this->language->get('error_shipping_method');
+						$json['error'] = $this->language->get('error_shipping_method');
 					}
 				} else {
 					unset($this->session->data['shipping_address']);
@@ -365,7 +374,7 @@ class ControllerApiOrder extends Controller {
 								
 				// Cart
 				if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-					$json['error']['warning'] = $this->language->get('error_stock');
+					$json['error'] = $this->language->get('error_stock');
 				}
 		
 				// Validate minimum quantity requirements.
@@ -381,7 +390,7 @@ class ControllerApiOrder extends Controller {
 					}
 		
 					if ($product['minimum'] > $product_total) {
-						$json['error']['warning'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
+						$json['error'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
 		
 						break;
 					}
@@ -531,6 +540,8 @@ class ControllerApiOrder extends Controller {
 					}
 		
 					// Order Totals
+					$this->load->model('setting/extension');
+					
 					$order_data['totals'] = array();					
 					$total = 0;
 					$taxes = $this->cart->getTaxes();
@@ -550,16 +561,16 @@ class ControllerApiOrder extends Controller {
 							$this->load->model('total/' . $result['code']);
 		
 							$this->{'model_total_' . $result['code']}->getTotal($order_data['totals'], $total, $taxes);
-						}	
+						}
 					}			
 		
 					$sort_order = array();
 		
-					foreach ($order_total['totals'] as $key => $value) {
+					foreach ($order_data['totals'] as $key => $value) {
 						$sort_order[$key] = $value['sort_order'];
 					}
 		
-					array_multisort($sort_order, SORT_ASC, $order_total['totals']);
+					array_multisort($sort_order, SORT_ASC, $order_data['totals']);
 					
 					if (isset($this->request->post['comment'])) {
 						$order_data['comment'] = $this->request->post['comment'];
@@ -575,7 +586,7 @@ class ControllerApiOrder extends Controller {
 						// Affiliate
 						$this->load->model('affiliate/affiliate');
 		
-						$affiliate_info = $this->model_affiliate_affiliate->getAffiliate($affiliate_info['affiliate_id']);
+						$affiliate_info = $this->model_affiliate_affiliate->getAffiliate($this->request->post['affiliate_id']);
 		
 						if ($affiliate_info) {
 							$order_data['affiliate_id'] = $affiliate_info['affiliate_id'];
@@ -589,12 +600,21 @@ class ControllerApiOrder extends Controller {
 						$order_data['commission'] = 0;
 					}
 					
-					$this->model_checkout_order->editOrder($order_data);
+					$this->model_checkout_order->editOrder($order_id, $order_data);
+					
+					// Set the order history
+					if (isset($this->request->post['order_status_id'])) {
+						$order_status_id = $this->request->post['order_status_id'];
+					} else {
+						$order_status_id = $this->config->get('config_order_status_id');
+					}					
+					
+					$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
 					
 					$json['success'] = $this->language->get('text_success');
 				}
 			} else {
-				$json['error']['warning'] = $this->language->get('error_not_found');	
+				$json['error'] = $this->language->get('error_not_found');	
 			}
 		}
 		

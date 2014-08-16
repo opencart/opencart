@@ -184,12 +184,17 @@ $(document).delegate('#button-login', 'click', function() {
         },              
         success: function(json) {
             $('.alert, .text-danger').remove();
-            
+            $('.form-group').removeClass('has-error');
+			
             if (json['redirect']) {
                 location = json['redirect'];
             } else if (json['error']) {
                 $('#collapse-checkout-option .panel-body').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-           }
+           
+				// Highlight any found errors
+				$('input[name=\'email\']').parent().addClass('has-error');	
+				$('input[name=\'password\']').parent().addClass('has-error');	   
+		   }
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -212,7 +217,8 @@ $(document).delegate('#button-register', 'click', function() {
         },          
         success: function(json) {
             $('.alert, .text-danger').remove();
-                        
+            $('.form-group').removeClass('has-error');
+			            
             if (json['redirect']) {
                 location = json['redirect'];                
             } else if (json['error']) {
@@ -221,12 +227,17 @@ $(document).delegate('#button-register', 'click', function() {
                 }
                 
 				for (i in json['error']) {
-					if ($('#input-payment-' + i.replace('_', '-')).parent().hasClass('input-group')) {
-                   		$('#input-payment-' + i.replace('_', '-')).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+					var element = $('#input-payment-' + i.replace('_', '-'));
+					
+					if ($(element).parent().hasClass('input-group')) {
+						$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
 					} else {
-						$('#input-payment-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error'][i] + '</div>');
+						$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
 					}
 				}
+				
+				// Highlight any found errors
+				$('.text-danger').parent().addClass('has-error');					
             } else {
                 <?php if ($shipping_required) { ?>              
                 var shipping_address = $('#payment-address input[name=\'shipping_address\']:checked').prop('value');
@@ -345,14 +356,19 @@ $(document).delegate('#button-payment-address', 'click', function() {
                 if (json['error']['warning']) {
                     $('#collapse-payment-address .panel-body').prepend('<div class="alert alert-warning">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
-                                
+                				
 				for (i in json['error']) {
- 					if ($('#input-payment-' + i.replace('_', '-')).parent().hasClass('input-group')) {
-                   		$('#input-payment-' + i.replace('_', '-')).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+					var element = $('#input-payment-' + i.replace('_', '-'));
+					
+					if ($(element).parent().hasClass('input-group')) {
+						$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
 					} else {
-						$('#input-payment-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error'][i] + '</div>');
-					}					
+						$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+					}
 				}
+								
+				// Highlight any found errors
+				$('.text-danger').parent().parent().addClass('has-error');				
             } else {
                 <?php if ($shipping_required) { ?>
                 $.ajax({
@@ -432,14 +448,19 @@ $(document).delegate('#button-shipping-address', 'click', function() {
                 if (json['error']['warning']) {
                     $('#collapse-shipping-address .panel-body').prepend('<div class="alert alert-warning">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
-  				
+  								
 				for (i in json['error']) {
-					if ($('#input-shipping-' + i.replace('_', '-')).parent().hasClass('input-group')) {
-                   		$('#input-shipping-' + i.replace('_', '-')).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+					var element = $('#input-shipping-' + i.replace('_', '-'));
+					
+					if ($(element).parent().hasClass('input-group')) {
+						$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
 					} else {
-						$('#input-shipping-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error'][i] + '</div>');
-					}					
+						$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+					}
 				}
+								
+				// Highlight any found errors
+				$('.text-danger').parent().parent().addClass('has-error');				
             } else {
                 $.ajax({
                     url: 'index.php?route=checkout/shipping_method',
@@ -512,12 +533,17 @@ $(document).delegate('#button-guest', 'click', function() {
                 }
                                 
 				for (i in json['error']) {
-					if ($('#input-payment-' + i.replace('_', '-')).parent().hasClass('input-group')) {
-                   		$('#input-payment-' + i.replace('_', '-')).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+					var element = $('#input-payment-' + i.replace('_', '-'));
+					
+					if ($(element).parent().hasClass('input-group')) {
+						$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
 					} else {
-						$('#input-payment-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error'][i] + '</div>');
-					}					
+						$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+					}
 				}
+								
+				// Highlight any found errors
+				$('.text-danger').parent().addClass('has-error');					
             } else {
                 <?php if ($shipping_required) { ?>  
                 var shipping_address = $('#collapse-payment-address input[name=\'shipping_address\']:checked').prop('value');
@@ -622,14 +648,19 @@ $(document).delegate('#button-guest-shipping', 'click', function() {
                 if (json['error']['warning']) {
                     $('#collapse-shipping-address .panel-body').prepend('<div class="alert alert-warning">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
-                                
+
 				for (i in json['error']) {
-					if ($('#input-shipping-' + i.replace('_', '-')).parent().hasClass('input-group')) {
-                   		$('#input-shipping-' + i.replace('_', '-')).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
+					var element = $('#input-shipping-' + i.replace('_', '-'));
+					
+					if ($(element).parent().hasClass('input-group')) {
+						$(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
 					} else {
-						$('#input-shipping-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error'][i] + '</div>');
-					}					
+						$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
+					}
 				}
+				
+				// Highlight any found errors
+				$('.text-danger').parent().addClass('has-error');				
             } else {
                 $.ajax({
                     url: 'index.php?route=checkout/shipping_method',

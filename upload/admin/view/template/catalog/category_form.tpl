@@ -79,10 +79,9 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-filter"><?php echo $entry_filter; ?></label>
+            <label class="col-sm-2 control-label" for="input-filter"><span data-toggle="tooltip" title="<?php echo $help_filter; ?>"><?php echo $entry_filter; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" class="form-control" />
-              <span class="help-block"><?php echo $help_filter; ?></span>
               <div id="category-filter" class="well well-sm" style="height: 150px; overflow: auto;">
                 <?php foreach ($category_filters as $category_filter) { ?>
                 <div id="category-filter<?php echo $category_filter['filter_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $category_filter['name']; ?>
@@ -124,10 +123,10 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-keyword"><?php echo $entry_keyword; ?></label>
+            <label class="col-sm-2 control-label" for="input-keyword"><span data-toggle="tooltip" title="<?php echo $help_keyword; ?>"><?php echo $entry_keyword; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" class="form-control" />
-              <span class="help-block"><?php echo $help_keyword; ?></span></div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label"><?php echo $entry_image; ?></label>
@@ -141,22 +140,24 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-top"><?php echo $entry_top; ?></label>
-            <div class="col-sm-10 checkbox">
-              <label>
-                <?php if ($top) { ?>
-                <input type="checkbox" name="top" value="1" checked="checked" id="input-top" />
-                <?php } else { ?>
-                <input type="checkbox" name="top" value="1" id="input-top" />
-                <?php } ?>
-              </label>
-              <span class="help-block"><?php echo $help_top; ?></span></div>
+            <label class="col-sm-2 control-label" for="input-top"><span data-toggle="tooltip" title="<?php echo $help_top; ?>"><?php echo $entry_top; ?></span></label>
+            <div class="col-sm-10">
+              <div class="checkbox">
+                <label>
+                  <?php if ($top) { ?>
+                  <input type="checkbox" name="top" value="1" checked="checked" id="input-top" />
+                  <?php } else { ?>
+                  <input type="checkbox" name="top" value="1" id="input-top" />
+                  <?php } ?>&nbsp;
+                </label>
+              </div>
+            </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-column"><?php echo $entry_column; ?></label>
+            <label class="col-sm-2 control-label" for="input-column"><span data-toggle="tooltip" title="<?php echo $help_column; ?>"><?php echo $entry_column; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="column" value="<?php echo $column; ?>" placeholder="<?php echo $entry_column; ?>" id="input-column" class="form-control" />
-              <span class="help-block"><?php echo $help_column; ?></span></div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
@@ -225,12 +226,13 @@
     </form>
   </div>
 </div>
-<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
-CKEDITOR.replace('input-description<?php echo $language['language_id']; ?>');
+$('#input-description<?php echo $language['language_id']; ?>').summernote({
+	height: 300
+});
 <?php } ?>
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('input[name=\'path\']').autocomplete({
 	'source': function(request, response) {
@@ -257,7 +259,7 @@ $('input[name=\'path\']').autocomplete({
 		$('input[name=\'parent_id\']').val(item['value']);
 	}
 });
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('input[name=\'filter\']').autocomplete({
 	'source': function(request, response) {
@@ -286,8 +288,8 @@ $('input[name=\'filter\']').autocomplete({
 $('#category-filter').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('#language a:first').tab('show');
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

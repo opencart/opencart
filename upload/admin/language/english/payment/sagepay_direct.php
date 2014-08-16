@@ -29,8 +29,8 @@ $_['entry_status'] = 'Status';
 $_['entry_sort_order'] = 'Sort Order';
 $_['entry_debug'] = 'Debug logging';
 $_['entry_card'] = 'Store Cards';
-$_['entry_cron_job_token'] = "Secret Token";
-$_['entry_cron_job_url'] = "Cron Job's URL:";
+$_['entry_cron_job_token'] = 'Secret Token';
+$_['entry_cron_job_url'] = 'Cron Job\'s URL';
 $_['entry_last_cron_job_run'] = "Last cron job's run time:";
 
 // Help

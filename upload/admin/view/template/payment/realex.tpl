@@ -79,7 +79,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-debug"><?php echo $entry_debug; ?></label>
+            <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="<?php echo $help_debug; ?>"><?php echo $entry_debug; ?></span></label>
             <div class="col-sm-10">
               <select name="realex_debug" id="input-debug" class="form-control">
                 <?php if ($realex_debug) { ?>
@@ -90,7 +90,7 @@
                 <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                 <?php } ?>
               </select>
-              <span class="help-block"><?php echo $text_help_debug; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
@@ -107,10 +107,10 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-total"><?php echo $entry_total; ?></label>
+            <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="realex_total" value="<?php echo $realex_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
-              <span class="help-block"><?php echo $text_help_total; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
@@ -290,17 +290,17 @@
         </div>
         <div class="tab-pane" id="tab-payment">
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-auto-settle"><?php echo $entry_auto_settle; ?></label>
+            <label class="col-sm-2 control-label" for="input-auto-settle"><span data-toggle="tooltip" title="<?php echo $help_dcc_settle; ?>"><?php echo $entry_auto_settle; ?></span></label>
             <div class="col-sm-10">
               <select name="realex_auto_settle" id="input-auto-settle" class="form-control">
                 <option value="0"<?php echo ($realex_auto_settle == 0 ? ' selected' : ''); ?>><?php echo $text_settle_delayed; ?></option>
                 <option value="1"<?php echo ($realex_auto_settle == 1 ? ' selected' : ''); ?>><?php echo $text_settle_auto; ?></option>
                 <option value="2"<?php echo ($realex_auto_settle == 2 ? ' selected' : ''); ?>><?php echo $text_settle_multi; ?></option>
               </select>
-              <span class="help-block"><?php echo $text_help_dcc_settle; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-card-select"><?php echo $entry_card_select; ?></label>
+            <label class="col-sm-2 control-label" for="input-card-select"><span data-toggle="tooltip" title="<?php echo $help_card_select; ?>"><?php echo $entry_card_select; ?></span></label>
             <div class="col-sm-10">
               <select name="realex_card_select" id="input-card-select" class="form-control">
                 <?php if ($realex_card_select) { ?>
@@ -311,7 +311,7 @@
                 <option value="0" selected="selected"><?php echo $text_no; ?></option>
                 <?php } ?>
               </select>
-              <span class="help-block"><?php echo $text_help_card_select; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-tss-check"><?php echo $entry_tss_check; ?></label>
@@ -348,12 +348,12 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $text_notification_url; ?></label>
+            <label class="col-sm-2 control-label" for="input-sort-order"><span data-toggle="tooltip" title="<?php echo $help_notification; ?>"><?php echo $text_notification_url; ?></span></label>
             <div class="col-sm-10">
-              <div class="input-group"> <span class="input-group-addon"><i class="fa fa-link"></i></span>
+              <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
                 <input type="text" value="<?php echo $notify_url; ?>" class="form-control" />
               </div>
-              <span class="help-block"><?php echo $text_help_notification; ?></span> </div>
+            </div>
           </div>
         </div>
       </div>

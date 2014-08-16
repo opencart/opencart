@@ -16,37 +16,34 @@
     <?php } ?>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-ups" class="form-horizontal">
       <div class="form-group required">
-        <label class="col-sm-2 control-label" for="input-key"><?php echo $entry_key; ?></label>
+        <label class="col-sm-2 control-label" for="input-key"><span data-toggle="tooltip" title="<?php echo $help_key; ?>"><?php echo $entry_key; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="ups_key" value="<?php echo $ups_key; ?>" placeholder="<?php echo $entry_key; ?>" id="input-key" class="form-control" />
-          <span class="help-block"><?php echo $help_key; ?></span>
           <?php if ($error_key) { ?>
           <div class="text-danger"><?php echo $error_key; ?></div>
           <?php } ?>
         </div>
       </div>
       <div class="form-group required">
-        <label class="col-sm-2 control-label" for="input-username"><?php echo $entry_username; ?></label>
+        <label class="col-sm-2 control-label" for="input-username"><span data-toggle="tooltip" title="<?php echo $help_username; ?>"><?php echo $entry_username; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="ups_username" value="<?php echo $ups_username; ?>" placeholder="<?php echo $entry_username; ?>" id="input-username" class="form-control" />
-          <span class="help-block"><?php echo $help_username; ?></span>
           <?php if ($error_username) { ?>
           <div class="text-danger"><?php echo $error_username; ?></div>
           <?php } ?>
         </div>
       </div>
       <div class="form-group required">
-        <label class="col-sm-2 control-label" for="input-password"><?php echo $entry_password; ?></label>
+        <label class="col-sm-2 control-label" for="input-password"><span data-toggle="tooltip" title="<?php echo $help_password; ?>"><?php echo $entry_password; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="ups_password" value="<?php echo $ups_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" class="form-control" />
-          <span class="help-block"><?php echo $help_password; ?></span>
           <?php if ($error_password) { ?>
           <div class="text-danger"><?php echo $error_password; ?></div>
           <?php } ?>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-pickup"><?php echo $entry_pickup; ?></label>
+        <label class="col-sm-2 control-label" for="input-pickup"><span data-toggle="tooltip" title="<?php echo $help_pickup; ?>"><?php echo $entry_pickup; ?></span></label>
         <div class="col-sm-10">
           <select name="ups_pickup" id="input-pickup" class="form-control">
             <?php foreach ($pickups as $pickup) { ?>
@@ -57,10 +54,10 @@
             <?php } ?>
             <?php } ?>
           </select>
-          <span class="help-block"><?php echo $help_pickup; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-packaging"><?php echo $entry_packaging; ?></label>
+        <label class="col-sm-2 control-label" for="input-packaging"><span data-toggle="tooltip" title="<?php echo $help_packaging; ?>"><?php echo $entry_packaging; ?></span></label>
         <div class="col-sm-10">
           <select name="ups_packaging" id="input-packaging" class="form-control">
             <?php foreach ($packages as $package) { ?>
@@ -71,10 +68,10 @@
             <?php } ?>
             <?php } ?>
           </select>
-          <span class="help-block"><?php echo $help_packaging; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-classification"><?php echo $entry_classification; ?></label>
+        <label class="col-sm-2 control-label" for="input-classification"><span data-toggle="tooltip" title="<?php echo $help_classification; ?>"><?php echo $entry_classification; ?></span></label>
         <div class="col-sm-10">
           <select name="ups_classification" id="input-classification" class="form-control">
             <?php foreach ($classifications as $classification) { ?>
@@ -85,10 +82,10 @@
             <?php } ?>
             <?php } ?>
           </select>
-          <span class="help-block"><?php echo $help_classification; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-origin"><?php echo $entry_origin; ?></label>
+        <label class="col-sm-2 control-label" for="input-origin"><span data-toggle="tooltip" title="<?php echo $help_origin; ?>"><?php echo $entry_origin; ?></span></label>
         <div class="col-sm-10">
           <select name="ups_origin" id="input-origin" class="form-control">
             <?php foreach ($origins as $origin) { ?>
@@ -99,46 +96,43 @@
             <?php } ?>
             <?php } ?>
           </select>
-          <span class="help-block"><?php echo $help_origin; ?></span> </div>
+        </div>
       </div>
       <div class="form-group required">
-        <label class="col-sm-2 control-label" for="input-city"><?php echo $entry_city; ?></label>
+        <label class="col-sm-2 control-label" for="input-city"><span data-toggle="tooltip" title="<?php echo $help_city; ?>"><?php echo $entry_city; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="ups_city" value="<?php echo $ups_city; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city" class="form-control" />
-          <span class="help-block"><?php echo $help_city; ?></span>
           <?php if ($error_city) { ?>
           <div class="text-danger"><?php echo $error_city; ?></div>
           <?php } ?>
         </div>
       </div>
       <div class="form-group required">
-        <label class="col-sm-2 control-label" for="input-state"><?php echo $entry_state; ?></label>
+        <label class="col-sm-2 control-label" for="input-state"><span data-toggle="tooltip" title="<?php echo $help_state; ?>"><?php echo $entry_state; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="ups_state" value="<?php echo $ups_state; ?>" placeholder="<?php echo $entry_state; ?>" id="input-state" class="form-control" maxlength="2" />
-          <span class="help-block"><?php echo $help_state; ?></span>
           <?php if ($error_state) { ?>
           <div class="text-danger"><?php echo $error_state; ?></div>
           <?php } ?>
         </div>
       </div>
       <div class="form-group required">
-        <label class="col-sm-2 control-label" for="input-country"><?php echo $entry_country; ?></label>
+        <label class="col-sm-2 control-label" for="input-country"><span data-toggle="tooltip" title="<?php echo $help_country; ?>"><?php echo $entry_country; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="ups_country" value="<?php echo $ups_country; ?>" placeholder="<?php echo $entry_country; ?>" id="input-country" class="form-control" maxlength="2" />
-          <span class="help-block"><?php echo $help_country; ?></span>
           <?php if ($error_country) { ?>
           <div class="text-danger"><?php echo $error_country; ?></div>
           <?php } ?>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-postcode"><?php echo $entry_postcode; ?></label>
+        <label class="col-sm-2 control-label" for="input-postcode"><span data-toggle="tooltip" title="<?php echo $help_postcode; ?>"><?php echo $entry_postcode; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="ups_postcode" value="<?php echo $ups_postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" class="form-control" />
-          <span class="help-block"><?php echo $help_postcode; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label"><?php echo $entry_test; ?></label>
+        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_test; ?>"><?php echo $entry_test; ?></span></label>
         <div class="col-sm-10">
           <label class="radio-inline">
             <?php if ($ups_test) { ?>
@@ -158,10 +152,10 @@
             <?php echo $text_no; ?>
             <?php } ?>
           </label>
-          <span class="help-block"><?php echo $help_test; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-quote-type"><?php echo $entry_quote_type; ?></label>
+        <label class="col-sm-2 control-label" for="input-quote-type"><span data-toggle="tooltip" title="<?php echo $help_quote_type; ?>"><?php echo $entry_quote_type; ?></span></label>
         <div class="col-sm-10">
           <select name="ups_quote_type" id="input-quote-type" class="form-control">
             <?php foreach ($quote_types as $quote_type) { ?>
@@ -172,10 +166,10 @@
             <?php } ?>
             <?php } ?>
           </select>
-          <span class="help-block"><?php echo $help_quote_type; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label"><?php echo $entry_service; ?></label>
+        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_service; ?>"><?php echo $entry_service; ?></span></label>
         <div class="col-sm-10">
           <div id="service" class="well well-sm" style="height: 150px; overflow: auto;">
             <div id="US">
@@ -730,10 +724,11 @@
               </div>
             </div>
           </div>
-          <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a> <span class="help-block"><?php echo $help_service; ?></span></div>
+          <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a> 
+        </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label"><?php echo $entry_insurance; ?></label>
+        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><?php echo $entry_insurance; ?></span></label>
         <div class="col-sm-10">
           <label class="radio-inline">
             <?php if ($ups_insurance) { ?>
@@ -753,7 +748,7 @@
             <?php echo $text_no; ?>
             <?php } ?>
           </label>
-          <span class="help-block"><?php echo $help_insurance; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label"><?php echo $entry_display_weight; ?></label>
@@ -779,7 +774,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-weight-class"><?php echo $entry_weight_class; ?></label>
+        <label class="col-sm-2 control-label" for="input-weight-class"><span data-toggle="tooltip" title="<?php echo $help_weight_class; ?>"><?php echo $entry_weight_class; ?></span></label>
         <div class="col-sm-10">
           <select name="ups_weight_class_id" id="input-weight-class" class="form-control">
             <?php foreach ($weight_classes as $weight_class) { ?>
@@ -790,10 +785,10 @@
             <?php } ?>
             <?php } ?>
           </select>
-          <span class="help-block"><?php echo $help_weight_class; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-length-class"><?php echo $entry_length_class; ?></label>
+        <label class="col-sm-2 control-label" for="input-length-class"><span data-toggle="tooltip" title="<?php echo $help_length_class; ?>"><?php echo $entry_length_class; ?></span></label>
         <div class="col-sm-10">
           <select name="ups_length_class_id" id="input-length-class" class="form-control">
             <?php foreach ($length_classes as $length_class) { ?>
@@ -804,10 +799,10 @@
             <?php } ?>
             <?php } ?>
           </select>
-          <span class="help-block"><?php echo $help_length_class; ?></span> </div>
+        </div>
       </div>
       <div class="form-group required">
-        <label class="col-sm-2 control-label" for="input-length"><?php echo $entry_dimension; ?></label>
+        <label class="col-sm-2 control-label" for="input-length"><span data-toggle="tooltip" title="<?php echo $help_dimension; ?>"><?php echo $entry_dimension; ?></span></label>
         <div class="col-sm-10">
           <div class="row">
             <div class="col-sm-4">
@@ -820,7 +815,6 @@
               <input type="text" name="ups_height" value="<?php echo $ups_height; ?>" placeholder="<?php echo $entry_height; ?>" id="input-height" class="form-control" />
             </div>
           </div>
-          <span class="help-block"><?php echo $help_dimension; ?></span>
           <?php if ($error_dimension) { ?>
           <div class="text-danger"><?php echo $error_dimension; ?></div>
           <?php } ?>
@@ -877,7 +871,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-debug"><?php echo $entry_debug; ?></label>
+        <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="<?php echo $help_debug; ?>"><?php echo $entry_debug; ?></span></label>
         <div class="col-sm-10">
           <select name="ups_debug" id="input-debug" class="form-control">
             <?php if ($ups_debug) { ?>
@@ -888,7 +882,7 @@
             <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
             <?php } ?>
           </select>
-          <span class="help-block"><?php echo $help_debug; ?></span> </div>
+        </div>
       </div>
     </form>
   </div>

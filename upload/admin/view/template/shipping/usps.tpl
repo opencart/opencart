@@ -508,7 +508,7 @@
         </div>
       </div>
       <div class="form-group required">
-        <label class="col-sm-2 control-label" for="input-length"><?php echo $entry_dimension; ?> </label>
+        <label class="col-sm-2 control-label" for="input-length"><span data-toggle="tooltip" title="<?php echo $help_dimension; ?>"><?php echo $entry_dimension; ?></span></label>
         <div class="col-sm-10">
           <div class="row">
             <div class="col-sm-4">
@@ -521,14 +521,13 @@
               <input type="text" name="usps_height" value="<?php echo $usps_height; ?>" placeholder="<?php echo $entry_height; ?>" id="input-height" class="form-control" />
             </div>
           </div>
-          <span class="help-block"><?php echo $help_dimension; ?></span>
           <?php if ($error_dimension) { ?>
           <div class="text-danger"><?php echo $error_dimension; ?></div>
           <?php } ?>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label"><?php echo $entry_display_time; ?></label>
+        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_display_time; ?>"><?php echo $entry_display_time; ?></span></label>
         <div class="col-sm-10">
           <label class="radio-inline">
             <?php if ($usps_display_time) { ?>
@@ -548,10 +547,10 @@
             <?php echo $text_no; ?>
             <?php } ?>
           </label>
-          <span class="help-block"><?php echo $help_display_time; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label"><?php echo $entry_display_weight; ?></label>
+        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_display_weight; ?>"><?php echo $entry_display_weight; ?></span></label>
         <div class="col-sm-10">
           <label class="radio-inline">
             <?php if ($usps_display_weight) { ?>
@@ -571,10 +570,10 @@
             <?php echo $text_no; ?>
             <?php } ?>
           </label>
-          <span class="help-block"><?php echo $help_display_weight; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-weight-class"><?php echo $entry_weight_class; ?></label>
+        <label class="col-sm-2 control-label" for="input-weight-class"><span data-toggle="tooltip" title="<?php echo $help_weight_class; ?>"><?php echo $entry_weight_class; ?></span></label>
         <div class="col-sm-10">
           <select name="usps_weight_class_id" id="input-weight-class" class="form-control">
             <?php foreach ($weight_classes as $weight_class) { ?>
@@ -585,7 +584,7 @@
             <?php } ?>
             <?php } ?>
           </select>
-          <span class="help-block"><?php echo $help_weight_class; ?></span> </div>
+        </div>
       </div>
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-tax-class"><?php echo $entry_tax; ?></label>
@@ -638,7 +637,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-debug"><?php echo $entry_debug; ?></label>
+        <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="<?php echo $help_debug; ?>"><?php echo $entry_debug; ?></span></label>
         <div class="col-sm-10">
           <select name="usps_debug" id="input-debug" class="form-control">
             <?php if ($usps_debug) { ?>
@@ -649,7 +648,7 @@
             <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
             <?php } ?>
           </select>
-          <span class="help-block"><?php echo $help_debug; ?></span> </div>
+        </div>
       </div>
     </form>
   </div>

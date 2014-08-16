@@ -67,11 +67,11 @@ class ControllerApiPayment extends Controller {
 			// Custom field validation
 			$this->load->model('account/custom_field');
 	
-			$custom_fields = $this->model_account_custom_field->getCustomFields(array('filter_customer_group_id' => $this->config->get('config_customer_group_id')));
+			$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
 	
 			foreach ($custom_fields as $custom_field) {
 				if (($custom_field['location'] == 'address') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
-					$json['error']['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 				}
 			}
 			

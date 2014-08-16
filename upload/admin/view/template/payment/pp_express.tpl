@@ -51,12 +51,12 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label"><?php echo $text_ipn; ?></label>
+            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_ipn; ?>"><?php echo $text_ipn; ?></span></label>
             <div class="col-sm-10">
               <div class="input-group"> <span class="input-group-addon"><i class="fa fa-link"></i></span>
                 <input type="text" value="<?php echo $text_ipn_url; ?>" class="form-control" />
               </div>
-              <span class="help-block"><?php echo $text_ipn_help; ?></span></div>
+            </div>
           </div>
         </div>
         <div class="tab-pane" id="tab-general">
@@ -89,14 +89,18 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-currency"><?php echo $entry_currency; ?></label>
+            <label class="col-sm-2 control-label" for="input-currency"><span data-toggle="tooltip" title="<?php echo $help_currency; ?>"><?php echo $entry_currency; ?></span></label>
             <div class="col-sm-10">
               <select name="pp_express_currency" id="input-currency" class="form-control">
-                <?php foreach($currency_codes as $code){ ?>
-                <option <?php if($code == $pp_express_currency){ echo 'selected'; } ?>><?php echo $code; ?></option>
+                <?php foreach ($currency_codes as $code) { ?>
+                  <?php if ($code == $pp_express_currency) { ?>
+                    <option value="<?php echo $code; ?>" selected="selected"><?php echo $code; ?></option>
+                  <?php } else { ?>
+                    <option value="<?php echo $code; ?>"><?php echo $code; ?></option>
+                  <?php } ?>
                 <?php } ?>
               </select>
-              <span class="help-block"><?php echo $entry_currency_help; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-profile-cancel"><?php echo $entry_profile_cancellation; ?></label>
@@ -122,10 +126,10 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-total"><?php echo $entry_total; ?></label>
+            <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="pp_express_total" value="<?php echo $pp_express_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
-              <span class="help-block"><?php echo $entry_total_help; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
@@ -321,13 +325,13 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-page-color"><?php echo $entry_page_colour; ?></label>
+            <label class="col-sm-2 control-label" for="input-page-color"><span data-toggle="tooltip" title="<?php echo $help_colour; ?>"><?php echo $entry_page_colour; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="pp_express_page_colour" value="<?php echo $pp_express_page_colour; ?>" placeholder="<?php echo $entry_page_colour; ?>" id="input-page-color" class="form-control" />
-              <span class="help-block"><?php echo $entry_colour_help; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_logo; ?></label>
+            <label class="col-sm-2 control-label" for="input-image"><span data-toggle="tooltip" title="<?php echo $help_logo; ?>"><?php echo $entry_logo; ?></span></label>
             <div class="col-sm-10">
               <?php if ($thumb) { ?>
               <a href="" id="thumb-image" class="img-thumbnail img-edit"><img src="<?php echo $thumb; ?>" alt="" title="" /></a>
@@ -335,7 +339,7 @@
               <a href="" id="thumb-image" class="img-thumbnail img-edit"><i class="fa fa-camera fa-5x"></i></a>
               <?php } ?>
               <input type="hidden" name="pp_express_logo" value="<?php echo $pp_express_logo; ?>" id="input-image" />
-              <span class="help-block"><?php echo $entry_logo_help; ?></span> </div>
+            </div>
           </div>
         </div>
       </div>

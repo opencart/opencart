@@ -183,7 +183,7 @@ class ModelPaymentFirstdata extends Model {
 	}
 
 	public function addTransaction($firstdata_order_id, $type, $total) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "firstdata_order_transaction` SET `firstdata_order_id` = '" . (int)$firstdata_order_id . "', `created` = now(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . (double)$total . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "firstdata_order_transaction` SET `firstdata_order_id` = '" . (int)$firstdata_order_id . "', `created` = now(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . (float)$total . "'");
 	}
 
 	public function logger($message) {
@@ -196,7 +196,7 @@ class ModelPaymentFirstdata extends Model {
 	public function getTotalCaptured($firstdata_order_id) {
 		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "firstdata_order_transaction` WHERE `firstdata_order_id` = '" . (int)$firstdata_order_id . "' AND (`type` = 'payment' OR `type` = 'refund')");
 
-		return (double)$query->row['total'];
+		return (float)$query->row['total'];
 	}
 
 	public function mapCurrency($code) {

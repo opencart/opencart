@@ -46,26 +46,23 @@
         </div>
       </div>
       <div class="form-group to" id="to-customer">
-        <label class="col-sm-2 control-label" for="input-customer"><?php echo $entry_customer; ?></label>
+        <label class="col-sm-2 control-label" for="input-customer"><span data-toggle="tooltip" title="<?php echo $help_customer; ?>"><?php echo $entry_customer; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="customers" value="" placeholder="<?php echo $entry_customer; ?>" id="input-customer" class="form-control" />
-          <span class="help-block"><?php echo $help_customer; ?></span>
           <div id="customer" class="well well-sm" style="height: 150px; overflow: auto;"></div>
         </div>
       </div>
       <div class="form-group to" id="to-affiliate">
-        <label class="col-sm-2 control-label" for="input-affiliate"><?php echo $entry_affiliate; ?></label>
+        <label class="col-sm-2 control-label" for="input-affiliate"><span data-toggle="tooltip" title="<?php echo $help_affiliate; ?>"><?php echo $entry_affiliate; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="affiliates" value="" placeholder="<?php echo $entry_affiliate; ?>" id="input-affiliate" class="form-control" />
-          <span class="help-block"><?php echo $help_affiliate; ?></span>
           <div id="affiliate" class="well well-sm" style="height: 150px; overflow: auto;"></div>
         </div>
       </div>
       <div class="form-group to" id="to-product">
-        <label class="col-sm-2 control-label" for="input-product"><?php echo $entry_product; ?></label>
+        <label class="col-sm-2 control-label" for="input-product"><span data-toggle="tooltip" title="<?php echo $help_product; ?>"><?php echo $entry_product; ?></span></label>
         <div class="col-sm-10">
           <input type="text" name="products" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" class="form-control" />
-          <span class="help-block"><?php echo $help_product; ?></span>
           <div id="product" class="well well-sm" style="height: 150px; overflow: auto;"></div>
         </div>
       </div>
@@ -84,9 +81,10 @@
     </form>
   </div>
 </div>
-<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
 <script type="text/javascript"><!--
-CKEDITOR.replace('input-message');
+$('#input-message').summernote({
+	height: 300
+});
 //--></script> 
 <script type="text/javascript"><!--	
 $('select[name=\'to\']').on('change', function() {

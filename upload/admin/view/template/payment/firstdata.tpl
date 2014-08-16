@@ -71,7 +71,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-debug"><?php echo $entry_debug; ?></label>
+            <label class="col-sm-2 control-label" for="input-debug"><span data-toggle="tooltip" title="<?php echo $help_debug; ?>"><?php echo $entry_debug; ?></span></label>
             <div class="col-sm-10">
               <select name="firstdata_debug" id="input-debug" class="form-control">
                 <?php if ($firstdata_debug) { ?>
@@ -82,7 +82,7 @@
                 <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                 <?php } ?>
               </select>
-              <span class="help-block"><?php echo $text_help_debug; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
@@ -99,10 +99,10 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-total"><?php echo $entry_total; ?></label>
+            <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="firstdata_total" value="<?php echo $firstdata_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control"/>
-              <span class="help-block"><?php echo $text_help_total; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
@@ -171,7 +171,7 @@
         </div>
         <div class="tab-pane" id="tab-payment">
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-auto-settle"><?php echo $entry_auto_settle; ?></label>
+            <label class="col-sm-2 control-label" for="input-auto-settle"><span data-toggle="tooltip" title="<?php echo $help_settle; ?>"><?php echo $entry_auto_settle; ?></span></label>
             <div class="col-sm-10">
               <select name="firstdata_auto_settle" id="input-auto-settle" class="form-control">
                 <option value="0"
@@ -179,7 +179,7 @@
                 <option value="1"
                 <?php echo ($firstdata_auto_settle == 1 ? ' selected' : ''); ?>><?php echo $text_settle_auto; ?></option>
               </select>
-              <span class="help-block"><?php echo $text_help_settle; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-card-store"><?php echo $entry_enable_card_store; ?></label>
@@ -216,12 +216,12 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $text_notification_url; ?></label>
+            <label class="col-sm-2 control-label" for="input-sort-order"><span data-toggle="tooltip" title="<?php echo $help_notification; ?>"><?php echo $text_notification_url; ?></span></label>
             <div class="col-sm-10">
               <div class="input-group"> <span class="input-group-addon"><i class="fa fa-link"></i></span>
                 <input type="text" value="<?php echo $notify_url; ?>" class="form-control"/>
               </div>
-              <span class="help-block"><?php echo $text_help_notification; ?></span> </div>
+            </div>
           </div>
         </div>
       </div>

@@ -192,6 +192,13 @@ class ControllerExtensionModification extends Controller {
 												$modification[$key] = substr_replace($modification[$key], $replace, $match[$i], strlen($search));
 											}
 										}
+										
+										
+									//	if () {
+									//		$log->write('Found: %s on line');
+											
+									//		$log->write('Replaced: %s ');	
+									//	}
 									} else {
 										$search = $operation->getElementsByTagName('search')->item(0)->textContent;
 										$replace = $operation->getElementsByTagName('add')->item(0)->textContent;									

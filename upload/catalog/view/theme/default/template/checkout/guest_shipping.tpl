@@ -64,8 +64,7 @@
     </div>
   </div>
   <?php foreach ($custom_fields as $custom_field) { ?>
-
-
+  <?php if ($custom_field['location'] == 'address') { ?>
   <?php if ($custom_field['type'] == 'select') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -83,8 +82,6 @@
     </div>
   </div>
   <?php } ?>
-
-
   <?php if ($custom_field['type'] == 'radio') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
@@ -107,8 +104,6 @@
     </div>
   </div>
   <?php } ?>
-
-
   <?php if ($custom_field['type'] == 'checkbox') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
@@ -131,8 +126,6 @@
     </div>
   </div>
   <?php } ?>
-
-
   <?php if ($custom_field['type'] == 'text') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -141,8 +134,6 @@
     </div>
   </div>
   <?php } ?>
-
-
   <?php if ($custom_field['type'] == 'textarea') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -151,19 +142,15 @@
     </div>
   </div>
   <?php } ?>
-
-
   <?php if ($custom_field['type'] == 'file') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
     <div class="col-sm-10">
-      <button type="button" id="button-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+      <button type="button" id="button-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
       <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($address_custom_field[$custom_field['custom_field_id']]) ? $address_custom_field[$custom_field['custom_field_id']] : ''); ?>" />
     </div>
   </div>
   <?php } ?>
-
-
   <?php if ($custom_field['type'] == 'date') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -176,8 +163,6 @@
     </div>
   </div>
   <?php } ?>
-
-
   <?php if ($custom_field['type'] == 'time') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -190,8 +175,6 @@
     </div>
   </div>
   <?php } ?>
-
-
   <?php if ($custom_field['type'] == 'datetime') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -204,8 +187,7 @@
     </div>
   </div>
   <?php } ?>
-
-
+  <?php } ?>
   <?php } ?>
   <div class="buttons">
     <div class="pull-right">
@@ -258,7 +240,7 @@ $('#collapse-shipping-address select[name=\'country_id\']').on('change', functio
 });
 
 $('#collapse-shipping-address select[name=\'country_id\']').trigger('change');
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on('click', function() {
 	var node = this;
@@ -271,7 +253,7 @@ $('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on(
 
 	$('#form-upload input[name=\'file\']').on('change', function() {
 		$.ajax({
-			url: 'index.php?route=checkout/checkout/upload',
+			url: 'index.php?route=tool/upload',
 			type: 'post',
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
@@ -279,14 +261,14 @@ $('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on(
 			contentType: false,
 			processData: false,
 			beforeSend: function() {
-				$(node).find('i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-				$(node).prop('disabled', true);
+				$(node).button('loading');
 			},
 			complete: function() {
-				$(node).find('i').replaceWith('<i class="fa fa-upload"></i>');
-				$(node).prop('disabled', false);
+				$(node).button('reset');
 			},
 			success: function(json) {
+				$('.text-danger').remove();
+				
 				if (json['error']) {
 					$(node).parent().find('input[name^=\'custom_field\']').after('<div class="text-danger">' + json['error'] + '</div>');
 				}
@@ -303,7 +285,7 @@ $('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on(
 		});
 	});
 });
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false
@@ -317,4 +299,4 @@ $('.datetime').datetimepicker({
 	pickDate: true,
 	pickTime: true
 });
-//--></script>
+//--></script> 

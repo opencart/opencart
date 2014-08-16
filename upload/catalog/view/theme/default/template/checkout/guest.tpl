@@ -85,7 +85,6 @@
       </div>
     </fieldset>
     <?php foreach ($custom_fields as $custom_field) { ?>
-
     <?php if ($custom_field['type'] == 'select') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -101,7 +100,6 @@
       </select>
     </div>
     <?php } ?>
-
     <?php if ($custom_field['type'] == 'radio') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label"><?php echo $custom_field['name']; ?></label>
@@ -122,7 +120,6 @@
       </div>
     </div>
     <?php } ?>
-
     <?php if ($custom_field['type'] == 'checkbox') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label"><?php echo $custom_field['name']; ?></label>
@@ -143,29 +140,25 @@
       </div>
     </div>
     <?php } ?>
-
     <?php if ($custom_field['type'] == 'text') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
       <input type="text" name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($guest_custom_field[$custom_field['custom_field_id']]) ? $guest_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
     </div>
     <?php } ?>
-
     <?php if ($custom_field['type'] == 'textarea') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
       <textarea name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>]" rows="5" placeholder="<?php echo $custom_field['name']; ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control"><?php echo (isset($guest_custom_field[$custom_field['custom_field_id']]) ? $guest_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></textarea>
     </div>
     <?php } ?>
-
     <?php if ($custom_field['type'] == 'file') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
-      <label class="control-label"><?php echo $custom_field['name']; ?></label>
-      <button type="button" id="button-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+      <label class="control-label"><?php echo $custom_field['name']; ?></label><br />
+      <button type="button" id="button-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
       <input type="hidden" name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($guest_custom_field[$custom_field['custom_field_id']]) ? $guest_custom_field[$custom_field['custom_field_id']] : ''); ?>" />
     </div>
     <?php } ?>
-
     <?php if ($custom_field['type'] == 'date') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -176,7 +169,6 @@
         </span></div>
     </div>
     <?php } ?>
-
     <?php if ($custom_field['type'] == 'time') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -187,7 +179,6 @@
         </span></div>
     </div>
     <?php } ?>
-
     <?php if ($custom_field['type'] == 'datetime') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -198,7 +189,6 @@
         </span></div>
     </div>
     <?php } ?>
-
     <?php } ?>
   </div>
 </div>
@@ -246,7 +236,7 @@ $('#collapse-payment-address input[name=\'customer_group_id\']').on('change', fu
 });
 
 $('#collapse-payment-address input[name=\'customer_group_id\']:checked').trigger('change');
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('#collapse-payment-address select[name=\'country_id\']').on('change', function() {
   $.ajax({
@@ -290,7 +280,7 @@ $('#collapse-payment-address select[name=\'country_id\']').on('change', function
 });
 
 $('#collapse-payment-address select[name=\'country_id\']').trigger('change');
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('click', function() {
 	var node = this;
@@ -303,7 +293,7 @@ $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('c
 
 	$('#form-upload input[name=\'file\']').on('change', function() {
 		$.ajax({
-			url: 'index.php?route=checkout/checkout/upload',
+			url: 'index.php?route=tool/upload',
 			type: 'post',
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
@@ -311,14 +301,14 @@ $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('c
 			contentType: false,
 			processData: false,
 			beforeSend: function() {
-				$(node).find('i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-				$(node).prop('disabled', true);
+				$(node).button('loading');
 			},
 			complete: function() {
-				$(node).find('i').replaceWith('<i class="fa fa-upload"></i>');
-				$(node).prop('disabled', false);
+				$(node).button('reset');
 			},
 			success: function(json) {
+				$('.text-danger').remove();
+				
 				if (json['error']) {
 					$(node).parent().find('input[name^=\'custom_field\']').after('<div class="text-danger">' + json['error'] + '</div>');
 				}
@@ -335,7 +325,7 @@ $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('c
 		});
 	});
 });
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false

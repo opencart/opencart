@@ -16,9 +16,9 @@
         <td class="text-right"><a href="<?php echo $ip['filter_ip']; ?>" target="_blank"><?php echo $ip['total']; ?></a></td>
         <td class="text-left"><?php echo $ip['date_added']; ?></td>
         <td class="text-right"><?php if ($ip['ban_ip']) { ?>
-          <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-danger btn-xs button-ban-remove"><i class="fa fa-minus-circle"></i> <?php echo $text_remove_ban_ip; ?></button>
+          <button type="button" value="<?php echo $ip['ip']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger btn-xs button-ban-remove"><i class="fa fa-minus-circle"></i> <?php echo $text_remove_ban_ip; ?></button>
           <?php } else { ?>
-          <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-success btn-xs button-ban-add"><i class="fa fa-plus-circle"></i> <?php echo $text_add_ban_ip; ?></button>
+          <button type="button" value="<?php echo $ip['ip']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-success btn-xs button-ban-add"><i class="fa fa-plus-circle"></i> <?php echo $text_add_ban_ip; ?></button>
           <?php } ?></td>
       </tr>
       <?php } ?>

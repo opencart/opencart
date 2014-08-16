@@ -43,8 +43,8 @@
         <td><?php echo $status; ?></td>
       </tr>
       <tr>
-        <td><?php echo $entry_date_created; ?></td>
-        <td><?php echo $date_created; ?></td>
+        <td><?php echo $entry_date_added; ?></td>
+        <td><?php echo $date_added; ?></td>
       </tr>
       <tr>
         <td><?php echo $entry_payment_reference; ?></td>
@@ -80,7 +80,7 @@
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
-          <td class="text-left"><?php echo $entry_date_created; ?></td>
+          <td class="text-left"><?php echo $entry_date_added; ?></td>
           <td class="text-left"><?php echo $entry_amount; ?></td>
           <td class="text-left"><?php echo $entry_type; ?></td>
         </tr>
@@ -88,7 +88,7 @@
       <tbody>
         <?php foreach ($transactions as $transaction) { ?>
         <tr>
-          <td class="text-left"><?php echo $transaction['created']; ?></td>
+          <td class="text-left"><?php echo $transaction['date_added']; ?></td>
           <td class="text-left"><?php echo $transaction['amount']; ?></td>
           <td class="text-left"><?php echo $transaction['type']; ?></td>
         </tr>

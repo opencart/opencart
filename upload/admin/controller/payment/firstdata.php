@@ -318,7 +318,7 @@ class ControllerPaymentFirstdata extends Controller {
 				$data['text_no'] = $this->language->get('text_no');
 				$data['text_column_amount'] = $this->language->get('text_column_amount');
 				$data['text_column_type'] = $this->language->get('text_column_type');
-				$data['text_column_created'] = $this->language->get('text_column_created');
+				$data['text_column_date_added'] = $this->language->get('text_column_date_added');
 				$data['btn_capture'] = $this->language->get('btn_capture');
 				$data['btn_void'] = $this->language->get('btn_void');
 				$data['text_confirm_void'] = $this->language->get('text_confirm_void');

@@ -37,7 +37,7 @@ class ControllerAccountRecurring extends Controller {
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		$data['column_created'] = $this->language->get('column_created');
+		$data['column_date_added'] = $this->language->get('column_date_added');
 		$data['column_status'] = $this->language->get('column_status');
 		$data['column_product'] = $this->language->get('column_product');
 		$data['column_action'] = $this->language->get('column_action');
@@ -66,7 +66,7 @@ class ControllerAccountRecurring extends Controller {
 					'id'                    => $result['order_recurring_id'],
 					'name'                  => $result['product_name'],
 					'status'                => $result['status'],
-					'created'               => date($this->language->get('date_format_short'), strtotime($result['created'])),
+					'date_added'               => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 					'href'                  => $this->url->link('account/recurring/info', 'recurring_id='.$result['order_recurring_id'], 'SSL'),
 				);
 			}
@@ -148,7 +148,7 @@ class ControllerAccountRecurring extends Controller {
 		);
 
 		$data['transaction_types'] = array(
-			0 => $this->language->get('text_transaction_created'),
+			0 => $this->language->get('text_transaction_date_added'),
 			1 => $this->language->get('text_transaction_payment'),
 			2 => $this->language->get('text_transaction_outstanding_payment'),
 			3 => $this->language->get('text_transaction_skipped'),
@@ -163,7 +163,7 @@ class ControllerAccountRecurring extends Controller {
 		if ($profile) {
 			$profile['transactions'] = $this->model_account_recurring->getProfileTransactions($this->request->get['recurring_id']);
 
-			$profile['created'] = date($this->language->get('date_format_short'), strtotime($profile['created']));
+			$profile['date_added'] = date($this->language->get('date_format_short'), strtotime($profile['date_added']));
 			$profile['product_link'] = $this->url->link('product/product', 'product_id='.$profile['product_id'], 'SSL');
 			$profile['order_link'] = $this->url->link('account/order/info', 'order_id='.$profile['order_id'], 'SSL');
 
@@ -199,7 +199,7 @@ class ControllerAccountRecurring extends Controller {
 
 			$data['heading_title'] = $this->language->get('text_recurring');
 
-			$data['column_created'] = $this->language->get('column_created');
+			$data['column_date_added'] = $this->language->get('column_date_added');
 			$data['column_type'] = $this->language->get('column_type');
 			$data['column_amount'] = $this->language->get('column_amount');
 

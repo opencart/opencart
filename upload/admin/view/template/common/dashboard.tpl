@@ -16,11 +16,25 @@
     </div>
     <div class="row">
       <div class="col-sm-3">
+      
+      <div class="tile tile-red">
+      <div class="tile-heading">fdsfdfds</div>
+      <div class="tile-body">fdgg</div>
+      </div>
+      
         <div class="panel panel-default">
           <div class="panel-body">
+          
+          
+          
+          
             <div class="row">
               <div class="col-xs-3"><span class="text-muted"><i class="fa fa-shopping-cart fa-3x"></i></span></div>
               <div class="col-xs-9">
+              
+              
+              
+              
                 <?php if ($order_percentage > 0) { ?>
                 <span class="label label-success pull-right">+<?php echo $order_percentage; ?>%</span>
                 <?php } else { ?>

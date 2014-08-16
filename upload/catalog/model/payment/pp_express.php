@@ -114,7 +114,7 @@ class ModelPaymentPPExpress extends Model {
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "paypal_order` SET
 			`order_id` = '".(int)$order_data['order_id']."',
-			`created` = NOW(),
+			`date_added` = NOW(),
 			`modified` = NOW(),
 			`capture_status` = '".$this->db->escape($order_data['capture_status'])."',
 			`currency_code` = '".$this->db->escape($order_data['currency_code'])."',
@@ -133,7 +133,7 @@ class ModelPaymentPPExpress extends Model {
 			`paypal_order_id` = '" . (int)$transaction_data['paypal_order_id']."',
 			`transaction_id` = '" . $this->db->escape($transaction_data['transaction_id'])."',
 			`parent_transaction_id` = '" . $this->db->escape($transaction_data['parent_transaction_id'])."',
-			`created` = NOW(),
+			`date_added` = NOW(),
 			`note` = '".$this->db->escape($transaction_data['note'])."',
 			`msgsubid` = '".$this->db->escape($transaction_data['msgsubid'])."',
 			`receipt_id` = '".$this->db->escape($transaction_data['receipt_id'])."',

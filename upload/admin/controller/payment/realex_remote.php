@@ -294,7 +294,7 @@ class ControllerPaymentRealexRemote extends Controller {
 				$data['text_no'] = $this->language->get('text_no');
 				$data['text_column_amount'] = $this->language->get('text_column_amount');
 				$data['text_column_type'] = $this->language->get('text_column_type');
-				$data['text_column_created'] = $this->language->get('text_column_created');
+				$data['text_column_date_added'] = $this->language->get('text_column_date_added');
 				$data['btn_capture'] = $this->language->get('btn_capture');
 				$data['btn_rebate'] = $this->language->get('btn_rebate');
 				$data['btn_void'] = $this->language->get('btn_void');
@@ -339,7 +339,7 @@ class ControllerPaymentRealexRemote extends Controller {
 				$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $history);
 
 				$json['data'] = array();
-				$json['data']['created'] = date("Y-m-d H:i:s");
+				$json['data']['date_added'] = date("Y-m-d H:i:s");
 				$json['error'] = false;
 			} else {
 				$json['error'] = true;
@@ -392,7 +392,7 @@ class ControllerPaymentRealexRemote extends Controller {
 				$this->model_payment_realex_remote->updateForRebate($realex_order['realex_remote_order_id'], $capture_response->pasref, $capture_response->orderid);
 
 				$json['data'] = array();
-				$json['data']['created'] = date("Y-m-d H:i:s");
+				$json['data']['date_added'] = date("Y-m-d H:i:s");
 				$json['data']['amount'] = (float)$this->request->post['amount'];
 				$json['data']['capture_status'] = $capture_status;
 				$json['data']['total'] = (float)$total_captured;
@@ -450,7 +450,7 @@ class ControllerPaymentRealexRemote extends Controller {
 				}
 
 				$json['data'] = array();
-				$json['data']['created'] = date("Y-m-d H:i:s");
+				$json['data']['date_added'] = date("Y-m-d H:i:s");
 				$json['data']['amount'] = $this->request->post['amount'] * -1;
 				$json['data']['total_captured'] = (float)$total_captured;
 				$json['data']['total_rebated'] = (float)$total_rebated;

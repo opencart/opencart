@@ -117,8 +117,8 @@ class ControllerSaleOrder extends Controller {
 
 		if (isset($this->request->get['filter_date_added'])) {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-		}
-
+		}		
+		
 		if (isset($this->request->get['filter_date_modified'])) {
 			$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
 		}
@@ -480,7 +480,7 @@ class ControllerSaleOrder extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 		
-		// Unset any past sessions this page created for the api to work.
+		// Unset any past sessions this page date_added for the api to work.
 		unset($this->session->data['cookie']);
 		
 		if ($this->user->hasPermission('modify', 'sale/order')) {

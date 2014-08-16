@@ -9,7 +9,7 @@ class ModelPaymentRealexRemote extends Model {
 			  `order_ref_previous` CHAR(50) NOT NULL,
 			  `pasref` VARCHAR(50) NOT NULL,
 			  `pasref_previous` VARCHAR(50) NOT NULL,
-			  `created` DATETIME NOT NULL,
+			  `date_added` DATETIME NOT NULL,
 			  `modified` DATETIME NOT NULL,
 			  `capture_status` INT(1) DEFAULT NULL,
 			  `void_status` INT(1) DEFAULT NULL,
@@ -26,7 +26,7 @@ class ModelPaymentRealexRemote extends Model {
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "realex_remote_order_transaction` (
 			  `realex_remote_order_transaction_id` INT(11) NOT NULL AUTO_INCREMENT,
 			  `realex_remote_order_id` INT(11) NOT NULL,
-			  `created` DATETIME NOT NULL,
+			  `date_added` DATETIME NOT NULL,
 			  `type` ENUM('auth', 'payment', 'rebate', 'void') DEFAULT NULL,
 			  `amount` DECIMAL( 10, 2 ) NOT NULL,
 			  PRIMARY KEY (`realex_remote_order_transaction_id`)
@@ -236,7 +236,7 @@ class ModelPaymentRealexRemote extends Model {
 	}
 
 	public function addTransaction($realex_remote_order_id, $type, $total) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "realex_remote_order_transaction` SET `realex_remote_order_id` = '".(int)$realex_remote_order_id."', `created` = now(), `type` = '".$this->db->escape($type)."', `amount` = '".(float)$total."'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "realex_remote_order_transaction` SET `realex_remote_order_id` = '".(int)$realex_remote_order_id."', `date_added` = now(), `type` = '".$this->db->escape($type)."', `amount` = '".(float)$total."'");
 	}
 
 	public function logger($message) {

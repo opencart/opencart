@@ -27,7 +27,7 @@
         <tr>
           <td class="text-left" style="width: 50%;">
             <p><b><?php echo $text_recurring_id; ?></b> #<?php echo $profile['order_recurring_id']; ?></p>
-            <p><b><?php echo $text_date_added; ?></b> <?php echo $profile['created']; ?></p>
+            <p><b><?php echo $text_date_added; ?></b> <?php echo $profile['date_added']; ?></p>
             <p><b><?php echo $text_status; ?></b> <?php echo $status_types[$profile['status']]; ?></p>
             <p><b><?php echo $text_payment_method; ?></b> <?php echo $profile['payment_method']; ?></p>
           </td>
@@ -59,7 +59,7 @@
       <table class="table table-bordered table-hover">
         <thead>
         <tr>
-          <td class="text-left"><?php echo $column_created; ?></td>
+          <td class="text-left"><?php echo $column_date_added; ?></td>
           <td class="text-center"><?php echo $column_type; ?></td>
           <td class="text-right"><?php echo $column_amount; ?></td>
         </tr>
@@ -67,7 +67,7 @@
         <tbody>
         <?php if (!empty($profile['transactions'])) { ?><?php foreach ($profile['transactions'] as $transaction) { ?>
         <tr>
-          <td class="text-left"><?php echo $transaction['created']; ?></td>
+          <td class="text-left"><?php echo $transaction['date_added']; ?></td>
           <td class="text-center"><?php echo $transaction_types[$transaction['type']]; ?></td>
           <td class="text-right"><?php echo $transaction['amount']; ?></td>
         </tr>

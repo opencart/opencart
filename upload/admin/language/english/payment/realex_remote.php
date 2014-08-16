@@ -50,7 +50,7 @@ $_['text_confirm_rebate'] = 'Are you sure you want to rebate the payment?';
 // Column
 $_['text_column_amount'] = 'Amount';
 $_['text_column_type'] = 'Type';
-$_['text_column_created'] = 'Created';
+$_['text_column_date_added'] = 'Created';
 
 // Entry
 $_['entry_merchant_id'] = 'Merchant ID';

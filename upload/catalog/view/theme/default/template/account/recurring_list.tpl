@@ -21,7 +21,7 @@
           <thead>
             <tr>
               <td class="text-left"><?php echo $column_profile_id; ?></td>
-              <td class="text-left"><?php echo $column_created; ?></td>
+              <td class="text-left"><?php echo $column_date_added; ?></td>
               <td class="text-left"><?php echo $column_status; ?></td>
               <td class="text-left"><?php echo $column_product; ?></td>
               <td class="text-right"><?php echo $column_action; ?></td>
@@ -31,7 +31,7 @@
             <?php foreach ($profiles as $profile) { ?>
               <tr>
                 <td class="text-left">#<?php echo $profile['id']; ?></td>
-                <td class="text-left"><?php echo $profile['created']; ?></td>
+                <td class="text-left"><?php echo $profile['date_added']; ?></td>
                 <td class="text-left"><?php echo $status_types[$profile['status']]; ?></td>
                 <td class="text-left"><?php echo $profile['name']; ?></td>
                 <td class="text-right"><a href="<?php echo $profile['href']; ?>"><img src="catalog/view/theme/default/image/info.png" alt="<?php echo $button_view; ?>" title="<?php echo $button_view; ?>" /></a></td>

@@ -13,7 +13,7 @@ $_['text_transactions'] = 'Transactions';
 $_['button_return'] = 'Return';
 $_['text_empty_transactions'] = 'No transactions for this profile';
 
-$_['column_created'] = 'Created';
+$_['column_date_added'] = 'Created';
 $_['column_type'] = 'Type';
 $_['column_amount'] = 'Amount';
 $_['column_status'] = 'Status';
@@ -36,7 +36,7 @@ $_['text_status_suspended'] = 'Suspended';
 $_['text_status_expired'] = 'Expired';
 $_['text_status_pending'] = 'Pending';
 
-$_['text_transaction_created'] = 'Created';
+$_['text_transaction_date_added'] = 'Created';
 $_['text_transaction_payment'] = 'Payment';
 $_['text_transaction_outstanding_payment'] = 'Outstanding payment';
 $_['text_transaction_skipped'] = 'Payment skipped';

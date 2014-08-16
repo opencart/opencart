@@ -576,7 +576,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$data['entry_reward'] = $this->language->get('entry_reward');
 		$data['entry_layout'] = $this->language->get('entry_layout');
-		$data['entry_profile'] = $this->language->get('entry_profile');
+		$data['entry_recurring'] = $this->language->get('entry_recurring');
 
 		$data['help_keyword'] = $this->language->get('help_keyword');
 		$data['help_sku'] = $this->language->get('help_sku');
@@ -604,13 +604,13 @@ class ControllerCatalogProduct extends Controller {
 		$data['button_special_add'] = $this->language->get('button_special_add');
 		$data['button_image_add'] = $this->language->get('button_image_add');
 		$data['button_remove'] = $this->language->get('button_remove');
-		$data['button_add_profile'] = $this->language->get('button_add_profile');
+		$data['button_add_recurring'] = $this->language->get('button_add_recurring');
 
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_data'] = $this->language->get('tab_data');
 		$data['tab_attribute'] = $this->language->get('tab_attribute');
 		$data['tab_option'] = $this->language->get('tab_option');
-		$data['tab_profile'] = $this->language->get('tab_profile');
+		$data['tab_recurring'] = $this->language->get('tab_recurring');
 		$data['tab_discount'] = $this->language->get('tab_discount');
 		$data['tab_special'] = $this->language->get('tab_special');
 		$data['tab_image'] = $this->language->get('tab_image');
@@ -808,16 +808,16 @@ class ControllerCatalogProduct extends Controller {
 			$data['price'] = '';
 		}
 
-		$this->load->model('catalog/profile');
+		$this->load->model('catalog/recurring');
 
-		$data['profiles'] = $this->model_catalog_profile->getProfiles();
+		$data['recurrings'] = $this->model_catalog_recurring->getRecurrings();
 
-		if (isset($this->request->post['product_profiles'])) {
-			$data['product_profiles'] = $this->request->post['product_profiles'];
+		if (isset($this->request->post['product_recurrings'])) {
+			$data['product_recurrings'] = $this->request->post['product_recurrings'];
 		} elseif (!empty($product_info)) {
-			$data['product_profiles'] = $this->model_catalog_product->getProfiles($product_info['product_id']);
+			$data['product_recurrings'] = $this->model_catalog_product->getRecurrings($product_info['product_id']);
 		} else {
-			$data['product_profiles'] = array();
+			$data['product_recurrings'] = array();
 		}
 
 		$this->load->model('localisation/tax_class');

@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<ruleset name="OpenCart">
+ <description>OpenCart code sniffer standards that are not part of default test packages.</description>
+</ruleset>

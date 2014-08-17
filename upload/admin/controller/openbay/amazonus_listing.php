@@ -549,11 +549,11 @@ class ControllerOpenbayAmazonusListing extends Controller{
 				'error' => $error,
 			);
 		} else {
-			$bestPrice = $this->model_openbay_amazonus_listing->getBestPrice($this->request->post['asin'], $this->request->post['condition']);
+			$best_price = $this->model_openbay_amazonus_listing->getBestPrice($this->request->post['asin'], $this->request->post['condition']);
 
-			if ($bestPrice) {
+			if ($best_price) {
 				$response = array(
-					'data' => $bestPrice,
+					'data' => $best_price,
 					'error' => '',
 				);
 			} else {

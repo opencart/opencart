@@ -143,38 +143,38 @@ class ModelOpenbayAmazon extends Model {
 		return false;
 	}
 
-	public function saveProduct($product_id, $dataArray) {
-		if(isset($dataArray['fields']['item-price'])) {
-			$price = $dataArray['fields']['item-price'];
-		} else if(isset($dataArray['fields']['price'])) {
-			$price = $dataArray['fields']['price'];
-		} else if(isset($dataArray['fields']['StandardPrice'])) {
-			$price = $dataArray['fields']['StandardPrice'];
+	public function saveProduct($product_id, $data_array) {
+		if(isset($data_array['fields']['item-price'])) {
+			$price = $data_array['fields']['item-price'];
+		} else if(isset($data_array['fields']['price'])) {
+			$price = $data_array['fields']['price'];
+		} else if(isset($data_array['fields']['StandardPrice'])) {
+			$price = $data_array['fields']['StandardPrice'];
 		}   else {
 			$price = 0;
 		}
 
-		$category = (isset($dataArray['category'])) ? $dataArray['category'] : "";
-		$sku = (isset($dataArray['fields']['sku'])) ? $dataArray['fields']['sku'] : "";
-		if(isset($dataArray['fields']['sku'])) {
-			$sku = $dataArray['fields']['sku'];
-		} else if(isset($dataArray['fields']['SKU'])) {
-			$sku = $dataArray['fields']['SKU'];
+		$category = (isset($data_array['category'])) ? $data_array['category'] : "";
+		$sku = (isset($data_array['fields']['sku'])) ? $data_array['fields']['sku'] : "";
+		if(isset($data_array['fields']['sku'])) {
+			$sku = $data_array['fields']['sku'];
+		} else if(isset($data_array['fields']['SKU'])) {
+			$sku = $data_array['fields']['SKU'];
 		}
 
-		$var = isset($dataArray['optionVar']) ? $dataArray['optionVar'] : '';
+		$var = isset($data_array['optionVar']) ? $data_array['optionVar'] : '';
 
-		$marketplaces = isset($dataArray['marketplace_ids']) ? serialize($dataArray['marketplace_ids']) : serialize(array());
+		$marketplaces = isset($data_array['marketplace_ids']) ? serialize($data_array['marketplace_ids']) : serialize(array());
 
-		foreach($dataArray['fields'] as $key => $field) {
+		foreach($data_array['fields'] as $key => $field) {
 			if($field['accepted']['type'] == 'image') {
 				if(!empty($field['value'])) {
-					$dataArray['fields'][$key]['value'] = HTTPS_CATALOG . 'image/' . $field['value'];
+					$data_array['fields'][$key]['value'] = HTTPS_CATALOG . 'image/' . $field['value'];
 				}
 			}
 		}
 
-		$dataEncoded = json_encode(array('fields' => $dataArray['fields']));
+		$dataEncoded = json_encode(array('fields' => $data_array['fields']));
 
 		$this->db->query("
 			REPLACE INTO `" . DB_PREFIX . "amazon_product`

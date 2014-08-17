@@ -239,10 +239,6 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$settings = $this->model_setting_setting->getSetting('openbay_amazonus');
 
-		if (isset($settings['openbay_amazonus_orders_marketplace_ids'])) {
-			$settings['openbay_amazonus_orders_marketplace_ids'] = $this->is_serialized($settings['openbay_amazonus_orders_marketplace_ids']) ? (array)unserialize($settings['openbay_amazonus_orders_marketplace_ids']) : $settings['openbay_amazonus_orders_marketplace_ids'];
-		}
-
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 
 			if (!isset($this->request->post['openbay_amazonus_orders_marketplace_ids'])) {
@@ -320,16 +316,16 @@ class ControllerOpenbayAmazonus extends Controller {
 		$data['carriers'] = $this->openbay->amazonus->getCarriers();
 		$data['openbay_amazonus_default_carrier'] = isset($settings['openbay_amazonus_default_carrier']) ? $settings['openbay_amazonus_default_carrier'] : '';
 
-		$unshippedStatusId = isset($settings['openbay_amazonus_order_status_unshipped']) ? $settings['openbay_amazonus_order_status_unshipped'] : '';
-		$partiallyShippedStatusId = isset($settings['openbay_amazonus_order_status_partially_shipped']) ? $settings['openbay_amazonus_order_status_partially_shipped'] : '';
-		$shippedStatusId = isset($settings['openbay_amazonus_order_status_shipped']) ? $settings['openbay_amazonus_order_status_shipped'] : '';
-		$canceledStatusId = isset($settings['openbay_amazonus_order_status_canceled']) ? $settings['openbay_amazonus_order_status_canceled'] : '';
+		$unshipped_status_id = isset($settings['openbay_amazonus_order_status_unshipped']) ? $settings['openbay_amazonus_order_status_unshipped'] : '';
+		$partially_shipped_status_id = isset($settings['openbay_amazonus_order_status_partially_shipped']) ? $settings['openbay_amazonus_order_status_partially_shipped'] : '';
+		$shipped_status_id = isset($settings['openbay_amazonus_order_status_shipped']) ? $settings['openbay_amazonus_order_status_shipped'] : '';
+		$canceled_status_id = isset($settings['openbay_amazonus_order_status_canceled']) ? $settings['openbay_amazonus_order_status_canceled'] : '';
 
 		$amazonusOrderStatuses = array(
-			'unshipped' => array('name' => $this->language->get('text_unshipped'), 'order_status_id' => $unshippedStatusId),
-			'partially_shipped' => array('name' => $this->language->get('text_partially_shipped'), 'order_status_id' => $partiallyShippedStatusId),
-			'shipped' => array('name' => $this->language->get('text_shipped'), 'order_status_id' => $shippedStatusId),
-			'canceled' => array('name' => $this->language->get('text_canceled'), 'order_status_id' => $canceledStatusId),
+			'unshipped' => array('name' => $this->language->get('text_unshipped'), 'order_status_id' => $unshipped_status_id),
+			'partially_shipped' => array('name' => $this->language->get('text_partially_shipped'), 'order_status_id' => $partially_shipped_status_id),
+			'shipped' => array('name' => $this->language->get('text_shipped'), 'order_status_id' => $shipped_status_id),
+			'canceled' => array('name' => $this->language->get('text_canceled'), 'order_status_id' => $canceled_status_id),
 		);
 
 		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
@@ -343,13 +339,13 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$data['openbay_amazonus_notify_admin'] = isset($settings['openbay_amazonus_notify_admin']) ? $settings['openbay_amazonus_notify_admin'] : '';
 
-		$pingInfo = simplexml_load_string($this->openbay->amazonus->callWithResponse('ping/info'));
+		$ping_info = simplexml_load_string($this->openbay->amazonus->callWithResponse('ping/info'));
 
 		$api_status = false;
 		$api_auth = false;
-		if($pingInfo) {
-			$api_status = ((string)$pingInfo->Api_status == 'ok') ? true : false;
-			$api_auth = ((string)$pingInfo->Auth == 'true') ? true : false;
+		if($ping_info) {
+			$api_status = ((string)$ping_info->Api_status == 'ok') ? true : false;
+			$api_auth = ((string)$ping_info->Auth == 'true') ? true : false;
 		}
 
 		$data['API_status'] = $api_status;
@@ -360,37 +356,6 @@ class ControllerOpenbayAmazonus extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/amazonus_settings.tpl', $data));
-	}
-
-	private function is_serialized( $data ) {
-		// if it isn't a string, it isn't serialized
-		if (!is_string($data)) {
-			return false;
-		}
-		$data = trim($data);
-		if ('N;' == $data) {
-			return true;
-		}
-		if (!preg_match('/^([adObis]):/', $data, $badions)) {
-			return false;
-		}
-		switch ($badions[1]) {
-			case 'a' :
-			case 'O' :
-			case 's' :
-				if (preg_match("/^{$badions[1]}:[0-9]+:.*[;}]\$/s", $data)) {
-					return true;
-				}
-				break;
-			case 'b' :
-			case 'i' :
-			case 'd' :
-				if (preg_match("/^{$badions[1]}:[0-9.E-]+;\$/", $data)) {
-					return true;
-				}
-				break;
-		}
-		return false;
 	}
 
 	public function itemLinks() {
@@ -754,11 +719,11 @@ class ControllerOpenbayAmazonus extends Controller {
 			'text'      => $this->language->get('text_bulk_listing'),
 		);
 
-		$pingInfo = simplexml_load_string($this->openbay->amazonus->callWithResponse('ping/info'));
+		$ping_info = simplexml_load_string($this->openbay->amazonus->callWithResponse('ping/info'));
 
 		$bulk_listing_status = false;
-		if ($pingInfo) {
-			$bulk_listing_status = ((string)$pingInfo->BulkListing == 'true') ? true : false;
+		if ($ping_info) {
+			$bulk_listing_status = ((string)$ping_info->BulkListing == 'true') ? true : false;
 		}
 
 		$data['bulk_listing_status'] = $bulk_listing_status;
@@ -889,11 +854,11 @@ class ControllerOpenbayAmazonus extends Controller {
 			'text'      => $this->language->get('text_bulk_linking'),
 		);
 
-		$pingInfo = simplexml_load_string($this->openbay->amazonus->callWithResponse('ping/info'));
+		$ping_info = simplexml_load_string($this->openbay->amazonus->callWithResponse('ping/info'));
 
 		$bulk_linking_status = false;
-		if ($pingInfo) {
-			$bulk_linking_status = ((string)$pingInfo->BulkLinking == 'true') ? true : false;
+		if ($ping_info) {
+			$bulk_linking_status = ((string)$ping_info->BulkLinking == 'true') ? true : false;
 		}
 
 		$data['bulk_linking_status'] = $bulk_linking_status;

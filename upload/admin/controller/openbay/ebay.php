@@ -1133,9 +1133,9 @@ class ControllerOpenbayEbay extends Controller {
 				}
 
 				foreach($product_info['options'] as $option) {
-					$option['base64']   = base64_encode(serialize($option['opts']));
-					$optionReserve      = $this->openbay->ebay->getReserve($this->request->get['product_id'], $item_id, $option['var']);
-					if($optionReserve == false) {
+					$option['base64'] = base64_encode(serialize($option['opts']));
+					$option_reserve = $this->openbay->ebay->getReserve($this->request->get['product_id'], $item_id, $option['var']);
+					if($option_reserve == false) {
 						$option['reserve'] = 0;
 					}else{
 						$option['reserve']  = $this->openbay->ebay->getReserve($this->request->get['product_id'], $item_id, $option['var']);
@@ -1616,17 +1616,17 @@ class ControllerOpenbayEbay extends Controller {
 					}
 
 					if (!empty($data['img_tpl'])) {
-						$tmpGalArray = array();
-						$tmpThumbArray = array();
+						$tmp_gallery_array = array();
+						$tmp_thumbnail_array = array();
 						$this->load->model('tool/image');
 
 						foreach ($data['img_tpl'] as $k => $v) {
-							$tmpGalArray[$k] = $this->model_tool_image->resize($v, $data['gallery_width'], $data['gallery_height']);
-							$tmpThumbArray[$k] = $this->model_tool_image->resize($v, $data['thumb_width'], $data['thumb_height']);
+							$tmp_gallery_array[$k] = $this->model_tool_image->resize($v, $data['gallery_width'], $data['gallery_height']);
+							$tmp_thumbnail_array[$k] = $this->model_tool_image->resize($v, $data['thumb_width'], $data['thumb_height']);
 						}
 
-						$data['img_tpl'] = $tmpGalArray;
-						$data['img_tpl_thumb'] = $tmpThumbArray;
+						$data['img_tpl'] = $tmp_gallery_array;
+						$data['img_tpl_thumb'] = $tmp_thumbnail_array;
 					}
 
 					$query = $this->db->query("SELECT DISTINCT *, pd.name AS name, p.image, m.name AS manufacturer, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, p.sort_order FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id) WHERE p.product_id = '" . (int)$data['product_id'] . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
@@ -1775,38 +1775,38 @@ class ControllerOpenbayEbay extends Controller {
 				}
 
 				if(isset($profile_template['data']['ebay_img_template']) && $profile_template['data']['ebay_img_template'] == 1) {
-					$tmpGalArray = array();
-					$tmpThumbArray = array();
+					$tmp_gallery_array = array();
+					$tmp_thumbnail_array = array();
 
 					//if the user has not set the exclude default image, add it to the array for theme images.
-					$keyOffset = 0;
+					$key_offset = 0;
 					if(!isset($profile_template['data']['default_img_exclude']) || $profile_template['data']['default_img_exclude'] != 1) {
-						$tmpGalArray[0] = $this->model_tool_image->resize($product_info['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height']);
-						$tmpThumbArray[0] = $this->model_tool_image->resize($product_info['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height']);
-						$keyOffset = 1;
+						$tmp_gallery_array[0] = $this->model_tool_image->resize($product_info['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height']);
+						$tmp_thumbnail_array[0] = $this->model_tool_image->resize($product_info['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height']);
+						$key_offset = 1;
 					}
 
 					//loop through the product images and add them.
 					foreach ($product_images as $k => $v) {
-						$tmpGalArray[$k+$keyOffset] = $this->model_tool_image->resize($v['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height']);
-						$tmpThumbArray[$k+$keyOffset] = $this->model_tool_image->resize($v['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height']);
+						$tmp_gallery_array[$k+$key_offset] = $this->model_tool_image->resize($v['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height']);
+						$tmp_thumbnail_array[$k+$key_offset] = $this->model_tool_image->resize($v['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height']);
 					}
 
-					$data['img_tpl']        = $tmpGalArray;
-					$data['img_tpl_thumb']  = $tmpThumbArray;
+					$data['img_tpl']        = $tmp_gallery_array;
+					$data['img_tpl_thumb']  = $tmp_thumbnail_array;
 				}
 
 				$data = array_merge($data, $profile_shipping['data']);
 
-				$verifyResponse = $this->model_openbay_ebay->ebayVerifyAddItem($data, 'no');
+				$verify_response = $this->model_openbay_ebay->ebayVerifyAddItem($data, 'no');
 
 				$json = array(
-					'errors'    => $verifyResponse['data']['Errors'],
-					'fees'      => $verifyResponse['data']['Fees'],
-					'itemid'    => (string)$verifyResponse['data']['ItemID'],
-					'preview'   => (string)$verifyResponse['data']['link'],
+					'errors'    => $verify_response['data']['Errors'],
+					'fees'      => $verify_response['data']['Fees'],
+					'itemid'    => (string)$verify_response['data']['ItemID'],
+					'preview'   => (string)$verify_response['data']['link'],
 					'i'         => $this->request->get['i'],
-					'ack'       => (string)$verifyResponse['data']['Ack'],
+					'ack'       => (string)$verify_response['data']['Ack'],
 				);
 
 				$this->response->addHeader('Content-Type: application/json');
@@ -1833,17 +1833,17 @@ class ControllerOpenbayEbay extends Controller {
 			}
 
 			if (!empty($data['img_tpl'])) {
-				$tmpGalArray = array();
-				$tmpThumbArray = array();
+				$tmp_gallery_array = array();
+				$tmp_thumbnail_array = array();
 				$this->load->model('tool/image');
 
 				foreach ($data['img_tpl'] as $k => $v) {
-					$tmpGalArray[$k] = $this->model_tool_image->resize($v, $data['gallery_width'], $data['gallery_height']);
-					$tmpThumbArray[$k] = $this->model_tool_image->resize($v, $data['thumb_width'], $data['thumb_height']);
+					$tmp_gallery_array[$k] = $this->model_tool_image->resize($v, $data['gallery_width'], $data['gallery_height']);
+					$tmp_thumbnail_array[$k] = $this->model_tool_image->resize($v, $data['thumb_width'], $data['thumb_height']);
 				}
 
-				$data['img_tpl'] = $tmpGalArray;
-				$data['img_tpl_thumb'] = $tmpThumbArray;
+				$data['img_tpl'] = $tmp_gallery_array;
+				$data['img_tpl_thumb'] = $tmp_thumbnail_array;
 			}
 
 			$query = $this->db->query("SELECT DISTINCT *, pd.name AS name, p.image, m.name AS manufacturer, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, p.sort_order FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id) WHERE p.product_id = '" . (int)$data['product_id'] . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
@@ -1986,38 +1986,38 @@ class ControllerOpenbayEbay extends Controller {
 				}
 
 				if(isset($profile_template['data']['ebay_img_template']) && $profile_template['data']['ebay_img_template'] == 1) {
-					$tmpGalArray = array();
-					$tmpThumbArray = array();
+					$tmp_gallery_array = array();
+					$tmp_thumbnail_array = array();
 
 					//if the user has not set the exclude default image, add it to the array for theme images.
-					$keyOffset = 0;
+					$key_offset = 0;
 					if(!isset($profile_template['data']['default_img_exclude']) || $profile_template['data']['default_img_exclude'] != 1) {
-						$tmpGalArray[0] = $this->model_tool_image->resize($product_info['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height']);
-						$tmpThumbArray[0] = $this->model_tool_image->resize($product_info['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height']);
-						$keyOffset = 1;
+						$tmp_gallery_array[0] = $this->model_tool_image->resize($product_info['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height']);
+						$tmp_thumbnail_array[0] = $this->model_tool_image->resize($product_info['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height']);
+						$key_offset = 1;
 					}
 
 					//loop through the product images and add them.
 					foreach ($product_images as $k => $v) {
-						$tmpGalArray[$k+$keyOffset] = $this->model_tool_image->resize($v['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height']);
-						$tmpThumbArray[$k+$keyOffset] = $this->model_tool_image->resize($v['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height']);
+						$tmp_gallery_array[$k+$key_offset] = $this->model_tool_image->resize($v['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height']);
+						$tmp_thumbnail_array[$k+$key_offset] = $this->model_tool_image->resize($v['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height']);
 					}
 
-					$data['img_tpl']        = $tmpGalArray;
-					$data['img_tpl_thumb']  = $tmpThumbArray;
+					$data['img_tpl']        = $tmp_gallery_array;
+					$data['img_tpl_thumb']  = $tmp_thumbnail_array;
 				}
 
 				$data = array_merge($data, $profile_shipping['data']);
 
-				$verifyResponse = $this->model_openbay_ebay->ebayAddItem($data, 'no');
+				$verify_response = $this->model_openbay_ebay->ebayAddItem($data, 'no');
 
 				$json = array(
-					'errors'    => $verifyResponse['data']['Errors'],
-					'fees'      => $verifyResponse['data']['Fees'],
-					'itemid'    => (string)$verifyResponse['data']['ItemID'],
-					'preview'   => (string)$verifyResponse['data']['link'],
+					'errors'    => $verify_response['data']['Errors'],
+					'fees'      => $verify_response['data']['Fees'],
+					'itemid'    => (string)$verify_response['data']['ItemID'],
+					'preview'   => (string)$verify_response['data']['link'],
 					'i'         => $this->request->get['i'],
-					'ack'       => (string)$verifyResponse['data']['Ack'],
+					'ack'       => (string)$verify_response['data']['Ack'],
 				);
 
 				$this->response->addHeader('Content-Type: application/json');

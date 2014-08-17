@@ -73,17 +73,17 @@ class ModelOpenbayAmazonListing extends Model {
 			'marketplace' => $marketplace,
 		);
 
-		$bestPrice = '';
+		$best_price = '';
 
 		$result = json_decode($this->openbay->amazon->callWithResponse('productv3/getPrice', $search_params), 1);
 
 		if (isset($result['Price']['Amount']) && $result['Price']['Currency'] && $this->currency->has($result['Price']['Currency'])) {
-			$bestPrice['amount'] = number_format($this->currency->convert($result['Price']['Amount'], $result['Price']['Currency'], $this->config->get('config_currency')), 2);
-			$bestPrice['shipping'] = number_format($this->currency->convert($result['Price']['Shipping'], $result['Price']['Currency'], $this->config->get('config_currency')), 2);
-			$bestPrice['currency'] = $result['Price']['Currency'];
+			$best_price['amount'] = number_format($this->currency->convert($result['Price']['Amount'], $result['Price']['Currency'], $this->config->get('config_currency')), 2);
+			$best_price['shipping'] = number_format($this->currency->convert($result['Price']['Shipping'], $result['Price']['Currency'], $this->config->get('config_currency')), 2);
+			$best_price['currency'] = $result['Price']['Currency'];
 		}
 
-		return $bestPrice;
+		return $best_price;
 	}
 
 	public function simpleListing($data) {
@@ -172,7 +172,7 @@ class ModelOpenbayAmazonListing extends Model {
 		$this->load->model('catalog/product');
 		$request = array();
 
-		$marketplaceMapping = array(
+		$marketplace_mapping = array(
 			'uk' => 'A1F83G8C2ARO7P',
 			'de' => 'A1PA6795UKMFR9',
 			'fr' => 'A13V1IB3VIYZZH',

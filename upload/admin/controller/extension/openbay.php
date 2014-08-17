@@ -1506,9 +1506,9 @@ class ControllerExtensionOpenbay extends Controller {
 			if ($this->config->get('ebay_status') == '1') {
 				$this->load->model('openbay/ebay');
 
-				$activeList = $this->model_openbay_ebay->getLiveListingArray();
+				$active_list = $this->model_openbay_ebay->getLiveListingArray();
 
-				if(!array_key_exists($result['product_id'], $activeList)) {
+				if(!array_key_exists($result['product_id'], $active_list)) {
 					$markets[] = array(
 						'name'      => 'eBay',
 						'text'      => $this->language->get('text_openbay_new'),

@@ -112,17 +112,17 @@ class ControllerOpenbayAmazonProduct extends Controller {
 		$data['errors'] = array();
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$dataArray = $this->request->post;
+			$data_array = $this->request->post;
 
-			$this->model_openbay_amazon->saveProduct($product_id, $dataArray);
+			$this->model_openbay_amazon->saveProduct($product_id, $data_array);
 
-			if($dataArray['upload_after'] === 'true') {
-				$uploadResult = $this->uploadSaved();
-				if($uploadResult['status'] == 'ok') {
+			if($data_array['upload_after'] === 'true') {
+				$upload_result = $this->uploadSaved();
+				if($upload_result['status'] == 'ok') {
 					$this->session->data['success'] = $this->language->get('uploaded_alert_text');
 					$this->response->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 				} else {
-					$data['errors'][] = Array('message' => $uploadResult['error_message']);
+					$data['errors'][] = Array('message' => $upload_result['error_message']);
 				}
 			} else {
 				$this->session->data['success'] = $this->language->get('saved_localy_text');
@@ -137,11 +137,11 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			$data['success'] = '';
 		}
 
-		$savedListingData = $this->model_openbay_amazon->getProduct($product_id, $variation);
-		if(empty($savedListingData)) {
-			$listingSaved = false;
+		$saved_listing_data = $this->model_openbay_amazon->getProduct($product_id, $variation);
+		if(empty($saved_listing_data)) {
+			$listing_saved = false;
 		} else {
-			$listingSaved = true;
+			$listing_saved = true;
 		}
 
 		$errors = $this->model_openbay_amazon->getProductErrors($product_id);
@@ -160,8 +160,8 @@ class ControllerOpenbayAmazonProduct extends Controller {
 		$data['listing_sku'] = $product_info['sku'];
 		$data['listing_url'] = $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL');
 
-		if($listingSaved) {
-			$data['edit_product_category'] = $savedListingData['category'];
+		if($listing_saved) {
+			$data['edit_product_category'] = $saved_listing_data['category'];
 		} else {
 			$data['edit_product_category'] = '';
 		}
@@ -172,15 +172,15 @@ class ControllerOpenbayAmazonProduct extends Controller {
 
 		foreach($amazon_templates as $template) {
 			$template = (array)$template;
-			$categoryData = array(
+			$category_data = array(
 				'friendly_name' => $template['friendly_name'],
 				'name' => $template['name'],
 				'template' => $template['xml']
 			);
-			$data['amazon_categories'][] = $categoryData;
+			$data['amazon_categories'][] = $category_data;
 		}
 
-		if($listingSaved) {
+		if($listing_saved) {
 			$data['template_parser_url'] = $this->url->link('openbay/amazon_product/parseTemplateAjax&edit_id=' . $product_id, 'token=' . $this->session->data['token'], 'SSL');
 		} else {
 			$data['template_parser_url'] = $this->url->link('openbay/amazon_product/parseTemplateAjax&product_id=' . $product_id, 'token=' . $this->session->data['token'], 'SSL');
@@ -208,7 +208,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			array('name' => $this->language->get('uk_text'), 'id' => 'A1F83G8C2ARO7P', 'code' => 'uk'),
 		);
 
-		$marketplaceMapping = array(
+		$marketplace_mapping = array(
 			'uk' => 'A1F83G8C2ARO7P',
 			'de' => 'A1PA6795UKMFR9',
 			'fr' => 'A13V1IB3VIYZZH',
@@ -217,12 +217,12 @@ class ControllerOpenbayAmazonProduct extends Controller {
 		);
 
 		if($this->config->get('openbay_amazon_default_listing_marketplace')) {
-			$data['default_marketplaces'] = array($marketplaceMapping[$this->config->get('openbay_amazon_default_listing_marketplace')]);
+			$data['default_marketplaces'] = array($marketplace_mapping[$this->config->get('openbay_amazon_default_listing_marketplace')]);
 		} else {
 			$data['default_marketplaces'] = array();
 		}
 
-		$data['saved_marketplaces'] = isset($savedListingData['marketplaces']) ? (array)unserialize($savedListingData['marketplaces']) : false;
+		$data['saved_marketplaces'] = isset($saved_listing_data['marketplaces']) ? (array)unserialize($saved_listing_data['marketplaces']) : false;
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');

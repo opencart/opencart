@@ -103,10 +103,10 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-profile-cancel"><?php echo $entry_profile_cancellation; ?></label>
+            <label class="col-sm-2 control-label" for="input-recurring-cancel"><?php echo $entry_recurring_cancellation; ?></label>
             <div class="col-sm-10">
-              <select name="pp_express_profile_cancel_status" id="input-profile-cancel" class="form-control">
-                <?php if ($pp_express_profile_cancel_status) { ?>
+              <select name="pp_express_recurring_cancel_status" id="input-recurring-cancel" class="form-control">
+                <?php if ($pp_express_recurring_cancel_status) { ?>
                 <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                 <option value="0"><?php echo $text_disabled; ?></option>
                 <?php } else { ?>

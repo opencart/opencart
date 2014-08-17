@@ -1,5 +1,5 @@
 <div id="profile">
-  <div class="pull-left">
+  <div>
     <?php if ($image) { ?>
     <a class="dropdown-toggle" data-toggle="dropdown"><img src="<?php echo $image; ?>" alt="<?php echo $firstname; ?> <?php echo $lastname; ?>" title="<?php echo $username; ?>" /></a>
     <?php } else { ?>

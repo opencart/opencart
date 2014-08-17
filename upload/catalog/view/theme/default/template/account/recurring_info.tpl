@@ -26,15 +26,15 @@
         <tbody>
         <tr>
           <td class="text-left" style="width: 50%;">
-            <p><b><?php echo $text_recurring_id; ?></b> #<?php echo $profile['order_recurring_id']; ?></p>
-            <p><b><?php echo $text_date_added; ?></b> <?php echo $profile['date_added']; ?></p>
-            <p><b><?php echo $text_status; ?></b> <?php echo $status_types[$profile['status']]; ?></p>
-            <p><b><?php echo $text_payment_method; ?></b> <?php echo $profile['payment_method']; ?></p>
+            <p><b><?php echo $text_recurring_id; ?></b> #<?php echo $recurring['order_recurring_id']; ?></p>
+            <p><b><?php echo $text_date_added; ?></b> <?php echo $recurring['date_added']; ?></p>
+            <p><b><?php echo $text_status; ?></b> <?php echo $status_types[$recurring['status']]; ?></p>
+            <p><b><?php echo $text_payment_method; ?></b> <?php echo $recurring['payment_method']; ?></p>
           </td>
           <td class="left" style="width: 50%; vertical-align: top;">
-            <p><b><?php echo $text_product; ?></b><a href="<?php echo $profile['product_link']; ?>"><?php echo $profile['product_name']; ?></a></p>
-            <p><b><?php echo $text_quantity; ?></b> <?php echo $profile['product_quantity']; ?></p>
-            <p><b><?php echo $text_order; ?></b><a href="<?php echo $profile['order_link']; ?>">#<?php echo $profile['order_id']; ?></a></p>
+            <p><b><?php echo $text_product; ?></b><a href="<?php echo $recurring['product_link']; ?>"><?php echo $recurring['product_name']; ?></a></p>
+            <p><b><?php echo $text_quantity; ?></b> <?php echo $recurring['product_quantity']; ?></p>
+            <p><b><?php echo $text_order; ?></b><a href="<?php echo $recurring['order_link']; ?>">#<?php echo $recurring['order_id']; ?></a></p>
           </td>
         </tr>
         </tbody>
@@ -49,9 +49,9 @@
         <tbody>
         <tr>
           <td class="text-left" style="width: 50%;">
-            <p style="margin:5px;"><?php echo $profile['profile_description']; ?></p></td>
+            <p style="margin:5px;"><?php echo $recurring['recurring_description']; ?></p></td>
           <td class="text-left" style="width: 50%;">
-            <p style="margin:5px;"><?php echo $profile['profile_reference']; ?></p></td>
+            <p style="margin:5px;"><?php echo $recurring['recurring_reference']; ?></p></td>
         </tr>
         </tbody>
       </table>
@@ -65,7 +65,7 @@
         </tr>
         </thead>
         <tbody>
-        <?php if (!empty($profile['transactions'])) { ?><?php foreach ($profile['transactions'] as $transaction) { ?>
+        <?php if (!empty($recurring['transactions'])) { ?><?php foreach ($recurring['transactions'] as $transaction) { ?>
         <tr>
           <td class="text-left"><?php echo $transaction['date_added']; ?></td>
           <td class="text-center"><?php echo $transaction_types[$transaction['type']]; ?></td>

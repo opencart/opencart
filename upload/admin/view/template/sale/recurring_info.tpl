@@ -48,23 +48,23 @@
       </tr>
       <tr>
         <td><?php echo $entry_payment_reference; ?></td>
-        <td><?php echo $profile_reference; ?></td>
+        <td><?php echo $reference; ?></td>
       </tr>
       <tr>
         <td><?php echo $entry_payment_type; ?></td>
         <td><?php echo $payment_method; ?></td>
       </tr>
       <tr>
-        <td><?php echo $entry_profile; ?></td>
-        <td><?php if ($profile) { ?>
-          <a href="<?php echo $profile; ?>"><?php echo $profile_name; ?></a>
+        <td><?php echo $entry_recurring; ?></td>
+        <td><?php if ($recurring) { ?>
+          <a href="<?php echo $recurring; ?>"><?php echo $recurring_name; ?></a>
           <?php } else { ?>
-          <?php echo $profile_name; ?>
+          <?php echo $recurring_name; ?>
           <?php } ?></td>
       </tr>
       <tr>
-        <td><?php echo $entry_profile_description; ?></td>
-        <td><?php echo $profile_description; ?></td>
+        <td><?php echo $entry_recurring_description; ?></td>
+        <td><?php echo $recurring_description; ?></td>
       </tr>
       <tr>
         <td><?php echo $entry_product; ?></td>

@@ -355,7 +355,7 @@ class ModelPaymentPPExpress extends Model {
 	public function recurringPayments() {
 		/*
 		 * Used by the checkout to state the module
-		 * supports recurring profiles.
+		 * supports recurring recurrings.
 		 */
 		return true;
 	}

@@ -1,5 +1,4 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,greek-ext,vietnamese);
-@import url(http://fonts.googleapis.com/css?family=Handlee);
 html, body {
 	height: 100%;
 	margin: 0;
@@ -50,7 +49,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	margin: 0;
 	padding: 0;
 }
-
 #header .nav > li {
 	float: left;
 }
@@ -115,25 +113,31 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	padding: 10px 15px 10px 15px;
 	overflow: auto;
 	color: #666;
+	border-bottom: 1px solid #131E26;	
+}
+#profile div {
+	float: left;
+}
+#profile div + div {
+	margin-left: 15px;
 }
 #profile img {
 	border-radius: 50%;
 }
-#profile div + div {
-	margin-left: 25px;
-}
 #profile h4 {
-	font-family: 'Handlee', cursive;
-	font-size: 15px;
+	margin-top: 9px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 18px;
+	font-weight: 100;
+	text-shadow: 1px 1px 0px #000000;
 	color: #FFF;
-	margin-top: 12px;
 	margin-bottom: 0;
 }
 
 #column-left {
 	width: 0px;
 	height: 100%;
-	background-color: #2E3942;
+	background-color: #1D2933;
 	position: absolute;
 	top: 0px;
 	padding-top: 50px;
@@ -163,17 +167,14 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	left: 235px;
 }
 }
-#column-left > div {
-	border-bottom: 1px solid #131E26;
-}
 #menu, #menu ul, #menu li {
 	padding: 0;
 	margin: 0;
 	list-style: none;
 }
 #menu li a {
-	color: #A6B1C0;
-	border-bottom: 1px solid #3A404A;
+	color: #638399;
+	border-bottom: 1px solid #172028;
 	text-decoration: none;
 	display: block;
 	padding: 10px 10px 9px 10px;
@@ -273,6 +274,9 @@ label.control-label {
 	font-family: FontAwesome;
 	font-size: 14px;
 }
+.table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
+	background-color: #F9F9F9;
+}
 .pagination {
 	margin: 0;
 }
@@ -313,18 +317,22 @@ label.control-label {
 	background-repeat: repeat-x;
 }
 .btn-primary {
-	border-color: #1a7ab9;
+	border-color: #2A89AA;
 	border-bottom-color: #16689e;
-	background: #1d89cf;
+	background: #32A4CB;
+	/*
 	background-image: linear-gradient(to bottom, #1e8cd3 0, #1a7ab9 100%);
 	background-repeat: repeat-x;
+	*/
 }
 .btn-info {
-	border-color: #46b8da;
+	border-color: #2CAED5;
 	border-bottom-color: #2caed5;
-	background: #5bc0de;
+	background: #4EBBDB;
+	/*
 	background-image: linear-gradient(to bottom, #5fc2df 0, #46b8da 100%);
 	background-repeat: repeat-x;
+	*/
 }
 .btn-success {
 	border-color: #4cb64c;

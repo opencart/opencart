@@ -41,7 +41,7 @@ class ControllerAccountRecurring extends Controller {
 		$data['column_status'] = $this->language->get('column_status');
 		$data['column_product'] = $this->language->get('column_product');
 		$data['column_action'] = $this->language->get('column_action');
-		$data['column_profile_id'] = $this->language->get('column_profile_id');
+		$data['column_recurring_id'] = $this->language->get('column_recurring_id');
 		$data['text_empty'] = $this->language->get('text_empty');
 		$data['button_view'] = $this->language->get('button_view');
 		$data['button_continue'] = $this->language->get('button_continue');
@@ -58,11 +58,11 @@ class ControllerAccountRecurring extends Controller {
 
 		$results = $this->model_account_recurring->getAllProfiles(($page - 1) * 10, 10);
 
-		$data['profiles'] = array();
+		$data['recurrings'] = array();
 
 		if ($results) {
 			foreach ($results as $result) {
-				$data['profiles'][] = array(
+				$data['recurrings'][] = array(
 					'id'                    => $result['order_recurring_id'],
 					'name'                  => $result['product_name'],
 					'status'                => $result['status'],
@@ -136,7 +136,7 @@ class ControllerAccountRecurring extends Controller {
 			$data['success'] = '';
 		}
 
-		$profile = $this->model_account_recurring->getProfile($this->request->get['recurring_id']);
+		$recurring = $this->model_account_recurring->getProfile($this->request->get['recurring_id']);
 
 		$data['status_types'] = array(
 			1 => $this->language->get('text_status_inactive'),
@@ -160,12 +160,12 @@ class ControllerAccountRecurring extends Controller {
 			9 => $this->language->get('text_transaction_expired'),
 		);
 
-		if ($profile) {
-			$profile['transactions'] = $this->model_account_recurring->getProfileTransactions($this->request->get['recurring_id']);
+		if ($recurring) {
+			$recurring['transactions'] = $this->model_account_recurring->getProfileTransactions($this->request->get['recurring_id']);
 
-			$profile['date_added'] = date($this->language->get('date_format_short'), strtotime($profile['date_added']));
-			$profile['product_link'] = $this->url->link('product/product', 'product_id='.$profile['product_id'], 'SSL');
-			$profile['order_link'] = $this->url->link('account/order/info', 'order_id='.$profile['order_id'], 'SSL');
+			$recurring['date_added'] = date($this->language->get('date_format_short'), strtotime($recurring['date_added']));
+			$recurring['product_link'] = $this->url->link('product/product', 'product_id='.$recurring['product_id'], 'SSL');
+			$recurring['order_link'] = $this->url->link('account/order/info', 'order_id='.$recurring['order_id'], 'SSL');
 
 			$this->document->setTitle($this->language->get('text_recurring'));
 
@@ -216,9 +216,9 @@ class ControllerAccountRecurring extends Controller {
 			$data['text_transactions'] = $this->language->get('text_transactions');
 			$data['text_recurring_description'] = $this->language->get('text_recurring_description');
 
-			$data['profile'] = $profile;
+			$data['recurring'] = $recurring;
 
-			$data['buttons'] = $this->load->controller('payment/' . $profile['payment_code'].'/recurringButtons');
+			$data['buttons'] = $this->load->controller('payment/' . $recurring['payment_code'].'/recurringButtons');
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');

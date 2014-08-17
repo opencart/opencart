@@ -1132,7 +1132,7 @@ class ControllerPaymentPPExpress extends Controller {
 	}
 
 	public function recurringCancel() {
-		//cancel an active profile
+		//cancel an active recurring
 
 		$this->load->model('sale/recurring');
 		$this->load->model('payment/pp_express');

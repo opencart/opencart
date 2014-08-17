@@ -18,7 +18,7 @@
             <?php } ?>
             <?php if ($product['recurring']) { ?>
             <br />
-            - <small><?php echo $text_profile; ?> <?php echo $product['recurring']; ?></small>
+            - <small><?php echo $text_recurring; ?> <?php echo $product['recurring']; ?></small>
             <?php } ?></td>
           <td class="text-right">x <?php echo $product['quantity']; ?></td>
           <td class="text-right"><?php echo $product['total']; ?></td>

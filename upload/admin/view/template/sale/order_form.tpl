@@ -2113,13 +2113,13 @@ $('#button-save').on('click', function() {
 	if (order_id == 0) {
 		var url = 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/order/add&store_id=' + $('select[name=\'store_id\'] option:selected').val();
 	} else {
-		var url = 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/order/edit&store_id=' + $('select[name=\'store_id\'] option:selected').val();
+		var url = 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/order/edit&store_id=' + $('select[name=\'store_id\'] option:selected').val() + '&order_id=' + order_id;
 	}
 	
 	$.ajax({
 		url: url,
 		type: 'post',
-		data: $('#tab-total input[name=\'order_id\'], #tab-total select[name=\'order_status_id\'], #tab-total select, #tab-total textarea[name=\'comment\'], #tab-total input[name=\'affiliate_id\']'),
+		data: $('#tab-total select[name=\'order_status_id\'], #tab-total select, #tab-total textarea[name=\'comment\'], #tab-total input[name=\'affiliate_id\']'),
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-save').button('loading');	

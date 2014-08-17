@@ -818,7 +818,7 @@ $('#history').load('index.php?route=sale/order/history&token=<?php echo $token; 
 
 $('#button-history').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/api/history&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/order/history&order_id=<?php echo $order_id; ?>',
 		type: 'post',
 		dataType: 'json',
 		data: 'order_status_id=' + encodeURIComponent($('select[name=\'order_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&append=' + ($('input[name=\'append\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),

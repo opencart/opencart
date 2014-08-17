@@ -1226,6 +1226,48 @@ class ControllerSaleOrder extends Controller {
 			$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 			$data['order_status_id'] = $order_info['order_status_id'];
+			
+			// Unset any past sessions this page date_added for the api to work.
+			unset($this->session->data['cookie']);
+			
+			// Set up the API session 
+			if ($this->user->hasPermission('modify', 'sale/order')) {
+				$this->load->model('user/api');
+			
+				$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
+			
+				if ($api_info) {
+					$curl = curl_init();
+					
+					// Set SSL if required
+					if (substr(HTTPS_CATALOG, 0, 5) == 'https') {
+						curl_setopt($curl, CURLOPT_PORT, 443);
+					}
+					
+					curl_setopt($curl, CURLOPT_HEADER, false);
+					curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+					curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
+					curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+					curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); 
+					curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
+					curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+					curl_setopt($curl, CURLOPT_URL, HTTPS_CATALOG . 'index.php?route=api/login');
+					curl_setopt($curl, CURLOPT_POST, true);
+					curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($api_info));
+					
+					$response = curl_exec($curl);
+			
+					if (!$response) {
+						$data['error_warning'] = curl_error($curl) . ' (' . curl_errno($curl) . ')';
+					} else {
+						$json = json_decode($response, true);
+					}
+					
+					if (isset($json['cookie'])) {
+						$this->session->data['cookie'] = $json['cookie'];	
+					}				
+				}
+			}
 
 			// Fraud
 			$this->load->model('sale/fraud');
@@ -2124,6 +2166,15 @@ class ControllerSaleOrder extends Controller {
 		}
 						
 		if (isset($this->session->data['cookie']) && isset($this->request->get['api'])) {
+			// Include any URL perameters
+			$url_data = array();
+			
+			foreach ($this->request->get as $key => $value) {
+				if ($key != 'route' && $key != 'token' && $key != 'store_id') {
+					$url_data[$key] = $value;
+				}
+			}			
+			
 			$curl = curl_init();
 			
 			// Set SSL if required
@@ -2138,7 +2189,7 @@ class ControllerSaleOrder extends Controller {
 			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); 
 			curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($curl, CURLOPT_URL, $url . 'index.php?route=' . $this->request->get['api']);
+			curl_setopt($curl, CURLOPT_URL, $url . 'index.php?route=' . $this->request->get['api'] . ($url_data ? '&' . http_build_query($url_data) : ''));
 			
 			if ($this->request->post) {
 				curl_setopt($curl, CURLOPT_POST, true);

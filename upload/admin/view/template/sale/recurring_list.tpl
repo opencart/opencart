@@ -78,7 +78,7 @@
                 <?php } else { ?>
                 <a href="<?php echo $sort_order; ?>"><?php echo $entry_order_id; ?></a>
                 <?php }  ?></td>
-              <td class="text-left"><?php if ($sort == 'or.profile_reference') { ?>
+              <td class="text-left"><?php if ($sort == 'or.recurring_reference') { ?>
                 <a href="<?php echo $sort_payment_reference; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_payment_reference; ?></a>
                 <?php } else { ?>
                 <a href="<?php echo $sort_payment_reference; ?>"><?php echo $entry_payment_reference; ?></a>
@@ -102,16 +102,16 @@
             </tr>
           </thead>
           <tbody>
-            <?php if ($profiles) { ?>
-            <?php foreach ($profiles as $profile) { ?>
+            <?php if ($recurrings) { ?>
+            <?php foreach ($recurrings as $recurring) { ?>
             <tr>
-              <td class="text-left"><?php echo $profile['order_recurring_id'] ?></td>
-              <td class="text-left"><a href="<?php echo $profile['order_link']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?> <?php echo $profile['order_id'] ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
-              <td class="text-left"><?php echo $profile['profile_reference'] ?></td>
-              <td class="text-left"><?php echo $profile['customer'] ?></td>
-              <td class="text-left"><?php echo $profile['date_added'] ?></td>
-              <td class="text-left"><?php echo $profile['status'] ?></td>
-              <td class="text-right"><a href="<?php echo $profile['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+              <td class="text-left"><?php echo $recurring['order_recurring_id'] ?></td>
+              <td class="text-left"><a href="<?php echo $recurring['order_link']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?> <?php echo $recurring['order_id'] ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+              <td class="text-left"><?php echo $recurring['recurring_reference'] ?></td>
+              <td class="text-left"><?php echo $recurring['customer'] ?></td>
+              <td class="text-left"><?php echo $recurring['date_added'] ?></td>
+              <td class="text-left"><?php echo $recurring['status'] ?></td>
+              <td class="text-right"><a href="<?php echo $recurring['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
             </tr>
             <?php } ?>
             <?php } else { ?>

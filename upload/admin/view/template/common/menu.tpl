@@ -57,7 +57,7 @@
         </li>
       </ul>
     </li>
-    <li><a class="parent"><?php echo $text_marketing; ?></a>
+    <li><a class="parent"><i class="fa fa-share-alt fa-fw"></i> <?php echo $text_marketing; ?></a>
       <ul>
         <li><a href="<?php echo $marketing; ?>"><?php echo $text_marketing; ?></a></li>
         <li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li>

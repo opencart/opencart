@@ -71,8 +71,6 @@ class ModelCheckoutOrder extends Model {
 
 	public function deleteOrder($order_id) {
 		$this->event->trigger('pre_order_delete', $order_id);
-
-		$this->addOrderHistory();
 		
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order` WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_product` WHERE order_id = '" . (int)$order_id . "'");

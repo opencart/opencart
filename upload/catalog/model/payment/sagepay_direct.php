@@ -181,9 +181,9 @@ class ModelPaymentSagePayDirect extends Model {
 		if ($response_data['Status'] == 'OK') {
 			$this->updateRecurringOrder($order_recurring_id, date_format($next_payment, 'Y-m-d H:i:s'));
 
-			$this->addProfileTransaction($order_recurring_id, $response_data, 1);
+			$this->addRecurringTransaction($order_recurring_id, $response_data, 1);
 		} else {
-			$this->addProfileTransaction($order_recurring_id, $response_data, 4);
+			$this->addRecurringTransaction($order_recurring_id, $response_data, 4);
 		}
 	}
 
@@ -297,12 +297,12 @@ class ModelPaymentSagePayDirect extends Model {
 			$cron_data[] = $response_data;
 
 			if ($response_data['RepeatResponseData_' . $i++]['Status'] == 'OK') {
-				$this->addProfileTransaction($recurring['order_recurring_id'], $response_data, 1);
+				$this->addRecurringTransaction($recurring['order_recurring_id'], $response_data, 1);
 				$next_payment = $this->calculateSchedule($frequency, $next_payment, $cycle);
 				$next_payment = date_format($next_payment, 'Y-m-d H:i:s');
 				$this->updateRecurringOrder($recurring['order_recurring_id'], $next_payment);
 			} else {
-				$this->addProfileTransaction($recurring['order_recurring_id'], $response_data, 4);
+				$this->addRecurringTransaction($recurring['order_recurring_id'], $response_data, 4);
 			}
 		}
 		$log = new Log('sagepay_direct_recurring_orders.log');
@@ -361,7 +361,7 @@ class ModelPaymentSagePayDirect extends Model {
 		return $qry->row;
 	}
 
-	private function addProfileTransaction($order_recurring_id, $response_data, $type) {
+	private function addRecurringTransaction($order_recurring_id, $response_data, $type) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$order_recurring_id . "', `date_added` = NOW(), `amount` = '" . (float)$response_data['Amount'] . "', `type` = '" . (int)$type . "', `reference` = '" . $this->db->escape($response_data['VendorTxCode']) . "'");
 	}
 

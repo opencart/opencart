@@ -172,9 +172,9 @@ class ModelPaymentSagePayServer extends Model {
 		if ($response_data['Status'] == 'OK') {
 			$this->updateRecurringOrder($item['order_recurring_id'], date_format($next_payment, 'Y-m-d H:i:s'));
 
-			$this->addProfileTransaction($item['order_recurring_id'], $response_data, 1);
+			$this->addRecurringTransaction($item['order_recurring_id'], $response_data, 1);
 		} else {
-			$this->addProfileTransaction($item['order_recurring_id'], $response_data, 4);
+			$this->addRecurringTransaction($item['order_recurring_id'], $response_data, 4);
 		}
 	}
 
@@ -288,12 +288,12 @@ class ModelPaymentSagePayServer extends Model {
 			$cron_data[] = $response_data;
 
 			if ($response_data['RepeatResponseData_' . $i++]['Status'] == 'OK') {
-				$this->addProfileTransaction($recurring['order_recurring_id'], $response_data, 1);
+				$this->addRecurringTransaction($recurring['order_recurring_id'], $response_data, 1);
 				$next_payment = $this->calculateSchedule($frequency, $next_payment, $cycle);
 				$next_payment = date_format($next_payment, 'Y-m-d H:i:s');
 				$this->updateRecurringOrder($recurring['order_recurring_id'], $next_payment);
 			} else {
-				$this->addProfileTransaction($recurring['order_recurring_id'], $response_data, 4);
+				$this->addRecurringTransaction($recurring['order_recurring_id'], $response_data, 4);
 			}
 		}
 		$log = new Log('sagepay_server_recurring_orders.log');
@@ -305,9 +305,9 @@ class ModelPaymentSagePayServer extends Model {
 		if ($frequency == 'semi_month') {
 			$day = date_format($next_payment, 'd');
 			$value = 15 - $day;
-			$isEven = false;
+			$is_even = false;
 			if ($cycle % 2 == 0) {
-				$isEven = true;
+				$is_even = true;
 			}
 
 			$odd = ($cycle + 1) / 2;
@@ -320,13 +320,13 @@ class ModelPaymentSagePayServer extends Model {
 				$day = 16;
 			}
 
-			if ($day <= 15 && $isEven) {
+			if ($day <= 15 && $is_even) {
 				$next_payment->modify('+' . $value . ' day');
 				$next_payment->modify('+' . $minus_even . ' month');
 			} elseif ($day <= 15) {
 				$next_payment->modify('first day of this month');
 				$next_payment->modify('+' . $odd . ' month');
-			} elseif ($day > 15 && $isEven) {
+			} elseif ($day > 15 && $is_even) {
 				$next_payment->modify('first day of this month');
 				$next_payment->modify('+' . $plus_even . ' month');
 			} elseif ($day > 15) {
@@ -352,7 +352,7 @@ class ModelPaymentSagePayServer extends Model {
 		return $qry->row;
 	}
 
-	private function addProfileTransaction($order_recurring_id, $response_data, $type) {
+	private function addRecurringTransaction($order_recurring_id, $response_data, $type) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$order_recurring_id . "', `date_added` = NOW(), `amount` = '" . (float)$response_data['Amount'] . "', `type` = '" . (int)$type . "', `reference` = '" . $this->db->escape($response_data['VendorTxCode']) . "'");
 	}
 

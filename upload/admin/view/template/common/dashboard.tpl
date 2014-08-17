@@ -11,20 +11,17 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <div class="alert alert-info"><i class="fa fa-thumbs-o-up"></i> <?php echo $text_welcome; ?>
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
     <div class="row">
       <div class="col-sm-3">
         <div class="tile tile-red">
-          <div class="tile-heading"><?php echo $text_new_order; ?></div>
-          <div class="tile-body"><i class="fa fa-shopping-cart fa-4x"></i>
+          <div class="tile-body">
+            <span class="pull-right"><i class="fa fa-shopping-cart fa-4x"></i></span>
             <?php if ($order_percentage > 0) { ?>
             <span class="label label-success pull-right">+<?php echo $order_percentage; ?>%</span>
             <?php } else { ?>
             <span class="label label-danger pull-right"><?php echo $order_percentage; ?>%</span>
             <?php } ?>
-            <h3 class="text-success"><?php echo $order_total; ?></h3>
+            <h3><?php echo $text_new_order; ?> <?php echo $order_total; ?></h3>
           </div>
         </div>
       </div>

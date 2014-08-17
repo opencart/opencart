@@ -604,7 +604,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['button_special_add'] = $this->language->get('button_special_add');
 		$data['button_image_add'] = $this->language->get('button_image_add');
 		$data['button_remove'] = $this->language->get('button_remove');
-		$data['button_add_recurring'] = $this->language->get('button_add_recurring');
+		$data['button_recurring_add'] = $this->language->get('button_recurring_add');
 
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_data'] = $this->language->get('tab_data');

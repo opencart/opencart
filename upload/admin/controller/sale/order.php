@@ -29,19 +29,122 @@ class ControllerSaleOrder extends Controller {
 
     	$this->getForm();
   	}
-
-  	public function delete() {
+	
+	public function delete() {
 		$this->load->language('sale/order');
 
-		if ($this->validateDelete()) {
-			$this->session->data['success'] = $this->language->get('text_success');
+		$json = array();
 
-			$this->response->redirect($this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+
+
+
+		$data['token'] = $this->session->data['token'];
+		
+		// Unset any past sessions this page date_added for the api to work.
+		unset($this->session->data['cookie']);
+		
+		if ($this->user->hasPermission('modify', 'sale/order')) {
+			$this->load->model('user/api');
+		
+			$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
+		
+			if ($api_info) {
+				$curl = curl_init();
+				
+				// Set SSL if required
+				if (substr(HTTPS_CATALOG, 0, 5) == 'https') {
+					curl_setopt($curl, CURLOPT_PORT, 443);
+				}
+				
+				curl_setopt($curl, CURLOPT_HEADER, false);
+				curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+				curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
+				curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); 
+				curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
+				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($curl, CURLOPT_URL, HTTPS_CATALOG . 'index.php?route=api/login');
+				curl_setopt($curl, CURLOPT_POST, true);
+				curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($api_info));
+				
+				$response = curl_exec($curl);
+		
+				if (!$response) {
+					$data['error_warning'] = curl_error($curl) . ' (' . curl_errno($curl) . ')';
+				} else {
+					$json = json_decode($response, true);
+				}
+				
+				if (isset($json['cookie'])) {
+					$this->session->data['cookie'] = $json['cookie'];	
+				}				
+			}
 		}
+		
+		
+		// Store
+		if (isset($this->request->get['store_id'])) {
+			$store_id = $this->request->get['store_id'];
+		} else {
+			$store_id = 0;
+		}
+			
+		$this->load->model('setting/store');
+		
+		$store_info = $this->model_setting_store->getStore($store_id);
+		
+		if ($store_info) {
+			$url = $store_info['ssl'];
+		} else {
+			$url = HTTPS_CATALOG;
+		}
+						
+		if (isset($this->session->data['cookie']) && isset($this->request->get['api'])) {
+			// Include any URL perameters
+			$url_data = array();
+			
+			foreach ($this->request->get as $key => $value) {
+				if ($key != 'route' && $key != 'token' && $key != 'store_id') {
+					$url_data[$key] = $value;
+				}
+			}			
+			
+			$curl = curl_init();
+			
+			// Set SSL if required
+			if (substr($url, 0, 5) == 'https') {
+				curl_setopt($curl, CURLOPT_PORT, 443);
+			}
+			
+			curl_setopt($curl, CURLOPT_HEADER, false);
+			curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+			curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
+			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); 
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($curl, CURLOPT_URL, $url . 'index.php?route=' . $this->request->get['api'] . ($url_data ? '&' . http_build_query($url_data) : ''));
+			
+			if ($this->request->post) {
+				curl_setopt($curl, CURLOPT_POST, true);
+				curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($this->request->post));
+			}
+			
+			curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->session->data['cookie'] . ';');
+			
+			$json = curl_exec($curl);
 
-		$this->getList();
-	}
-
+			$response = json_encode(array('error' => curl_error($curl) . '(' . curl_errno($curl) . ')'));
+	
+			curl_close($curl);
+		}
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput($json);
+		
+    	$this->getForm();
+  	}
+	
 	protected function getList() {
 		if (isset($this->request->get['filter_order_id'])) {
 			$filter_order_id = $this->request->get['filter_order_id'];
@@ -204,7 +307,9 @@ class ControllerSaleOrder extends Controller {
 		$data['entry_total'] = $this->language->get('entry_total');
 		$data['entry_date_added'] = $this->language->get('entry_date_added');
 		$data['entry_date_modified'] = $this->language->get('entry_date_modified');
-
+		
+		$data['error_selected'] = $this->language->get('error_selected');
+		
 		$data['button_invoice_print'] = $this->language->get('button_invoice_print');
 		$data['button_shipping_print'] = $this->language->get('button_shipping_print');
 		$data['button_insert'] = $this->language->get('button_insert');
@@ -1755,8 +1860,6 @@ class ControllerSaleOrder extends Controller {
 		$data['column_total'] = $this->language->get('column_total');
 		$data['column_comment'] = $this->language->get('column_comment');
 
-		$data['error_no_selection'] = $this->language->get('error_no_selection');
-
 		$this->load->model('sale/order');
 
 		$this->load->model('setting/setting');
@@ -1968,7 +2071,6 @@ class ControllerSaleOrder extends Controller {
 
 		$data['text_shipping'] = $this->language->get('text_shipping');
 		$data['text_picklist'] = $this->language->get('text_picklist');
-
 		$data['text_order_detail'] = $this->language->get('text_order_detail');
 		$data['text_order_id'] = $this->language->get('text_order_id');
 		$data['text_invoice_no'] = $this->language->get('text_invoice_no');
@@ -1996,8 +2098,6 @@ class ControllerSaleOrder extends Controller {
 		$data['column_model'] = $this->language->get('column_model');
 		$data['column_quantity'] = $this->language->get('column_quantity');
 		$data['column_comment'] = $this->language->get('column_comment');
-
-		$data['error_no_selection'] = $this->language->get('error_no_selection');
 
 		$this->load->model('sale/order');
 

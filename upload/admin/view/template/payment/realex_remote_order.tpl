@@ -141,7 +141,7 @@
               $('#capture_amount').val(0.00);
             }
 
-            <?php if($auto_settle == 2) { ?>
+            <?php if ($auto_settle == 2) { ?>
               $('#capture_amount').show();
             <?php } ?>
 

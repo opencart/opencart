@@ -104,7 +104,7 @@ function searchExtensions() {
     url: 'index.php?route=step_4/extensions',
     type: 'post',
     dataType: 'json',
-    beforeSend: function(){
+    beforeSend: function() {
       $('#modules-loading').show();
       $('#modules').empty().hide();
     },
@@ -123,10 +123,10 @@ function searchExtensions() {
       $('#modules').fadeIn();
       $('#modules-loading').hide();
     },
-    failure: function(){
+    failure: function() {
       $('#modules-loading').hide();
     },
-    error: function(){
+    error: function() {
       $('#modules-loading').hide();
     }
   });
@@ -139,7 +139,7 @@ function searchLanguages() {
     type: 'post',
     data: {'language' : '<?php echo $language; ?>' },
     dataType: 'json',
-    beforeSend: function(){
+    beforeSend: function() {
       $('#module-language').empty().hide();
     },
     success: function(json) {
@@ -155,8 +155,8 @@ function searchLanguages() {
         $('#module-language').html(html).fadeIn();
       }
     },
-    failure: function(){ },
-    error: function(){ }
+    failure: function() { },
+    error: function() { }
   });
 }
 $( document ).ready(function() {

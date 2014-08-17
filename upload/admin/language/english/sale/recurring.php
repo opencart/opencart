@@ -35,14 +35,14 @@ $_['entry_status'] 								= 'Status';
 $_['entry_type'] 								= 'Type';
 $_['entry_action'] 								= 'Action';
 $_['entry_email'] 								= 'Email';
-$_['entry_profile_description'] 				= 'Profile\'s description';
+$_['entry_recurring_description'] 	        	= 'Recurring Profile\'s description';
 $_['entry_product'] 							= 'Product';
 $_['entry_quantity'] 							= 'Quantity';
 $_['entry_amount'] 								= 'Amount';
-$_['entry_profile'] 							= 'Profile';
+$_['entry_recurring'] 							= 'Recurring Profile';
 $_['entry_payment_type'] 						= 'Payment method';
 
 // Error / Success
 $_['error_not_cancelled'] 						= 'Error: %s';
-$_['error_not_found'] 							= 'Could not cancel profile';
+$_['error_not_found'] 							= 'Could not cancel recurring profile';
 $_['success_cancelled'] 						= 'Recurring payment has been cancelled';

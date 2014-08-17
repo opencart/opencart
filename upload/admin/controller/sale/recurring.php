@@ -130,20 +130,20 @@ class ControllerSaleRecurring extends Controller {
 			'limit'                     => $this->config->get('config_admin_limit'),
 		);
 
-		$profiles_total = $this->model_sale_recurring->getTotalProfiles($filter_data);
+		$recurrings_total = $this->model_sale_recurring->getTotalRecurrings($filter_data);
 
-		$results = $this->model_sale_recurring->getProfiles($filter_data);
+		$results = $this->model_sale_recurring->getRecurrings($filter_data);
 
-		$data['profiles'] = array();
+		$data['recurrings'] = array();
 
 		foreach ($results as $result) {
 			$date_added = date($this->language->get('date_format_short'), strtotime($result['date_added']));
 
-			$data['profiles'][] = array(
+			$data['recurrings'][] = array(
 				'order_recurring_id' => $result['order_recurring_id'],
 				'order_id'           => $result['order_id'],
 				'order_link'         => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'], 'SSL'),
-				'profile_reference'  => $result['profile_reference'],
+				'reference'          => $result['reference'],
 				'customer'           => $result['customer'],
 				'status'             => $result['status'],
 				'date_added'         => $date_added,
@@ -220,7 +220,7 @@ class ControllerSaleRecurring extends Controller {
 
 		$data['sort_order_recurring'] = $this->url->link('sale/recurring', 'token=' . $this->session->data['token'] . '&sort=or.order_recurring_id' . $url, 'SSL');
 		$data['sort_order'] = $this->url->link('sale/recurring', 'token=' . $this->session->data['token'] . '&sort=or.order_id' . $url, 'SSL');
-		$data['sort_payment_reference'] = $this->url->link('sale/recurring', 'token=' . $this->session->data['token'] . '&sort=or.profile_reference' . $url, 'SSL');
+		$data['sort_payment_reference'] = $this->url->link('sale/recurring', 'token=' . $this->session->data['token'] . '&sort=or.reference' . $url, 'SSL');
 		$data['sort_customer'] = $this->url->link('sale/recurring', 'token=' . $this->session->data['token'] . '&sort=customer' . $url, 'SSL');
 		$data['sort_status'] = $this->url->link('sale/recurring', 'token=' . $this->session->data['token'] . '&sort=or.status' . $url, 'SSL');
 		$data['sort_date_added'] = $this->url->link('sale/recurring', 'token=' . $this->session->data['token'] . '&sort=or.date_added' . $url, 'SSL');
@@ -260,7 +260,7 @@ class ControllerSaleRecurring extends Controller {
 		}
 		
 		$pagination = new Pagination();
-		$pagination->total = $profiles_total;
+		$pagination->total = $recurrings_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
@@ -268,7 +268,7 @@ class ControllerSaleRecurring extends Controller {
 
 		$data['pagination'] = $pagination->render();
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($profiles_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($profiles_total - $this->config->get('config_limit_admin'))) ? $profiles_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $profiles_total, ceil($profiles_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($recurrings_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($recurrings_total - $this->config->get('config_limit_admin'))) ? $recurrings_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $recurrings_total, ceil($recurrings_total / $this->config->get('config_limit_admin')));
 
 		$data['filter_order_recurring_id'] = $filter_order_recurring_id;
 		$data['filter_order_id'] = $filter_order_id;
@@ -387,12 +387,12 @@ class ControllerSaleRecurring extends Controller {
 			$data['entry_status'] = $this->language->get('entry_status');
 			$data['entry_type'] = $this->language->get('entry_type');
 			$data['entry_email'] = $this->language->get('entry_email');
-			$data['entry_profile_description'] = $this->language->get('entry_profile_description');
+			$data['entry_recurring_description'] = $this->language->get('entry_recurring_description');
 			$data['entry_product'] = $this->language->get('entry_product');
 			$data['entry_quantity'] = $this->language->get('entry_quantity');
 			$data['entry_amount'] = $this->language->get('entry_amount');
 			$data['entry_cancel_payment'] = $this->language->get('entry_cancel_payment');
-			$data['entry_profile'] = $this->language->get('entry_profile');
+			$data['entry_recurring'] = $this->language->get('entry_recurring');
 			$data['entry_payment_type'] = $this->language->get('entry_payment_type');
 			$data['entry_date_added'] = $this->language->get('entry_date_added');
 			
@@ -402,9 +402,9 @@ class ControllerSaleRecurring extends Controller {
 			$data['product'] = $order_recurring['product_name'];
 			$data['quantity'] = $order_recurring['product_quantity'];
 			$data['status'] = $order_recurring['status'];
-			$data['profile_reference'] = $order_recurring['profile_reference'];
-			$data['profile_description'] = $order_recurring['profile_description'];
-			$data['profile_name'] = $order_recurring['profile_name'];
+			$data['reference'] = $order_recurring['reference'];
+			$data['recurring_description'] = $order_recurring['recurring_description'];
+			$data['recurring_name'] = $order_recurring['recurring_name'];
 
 			$data['order_id'] = $order['order_id'];
 			$data['order_href'] = $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $order['order_id'], 'SSL');
@@ -422,10 +422,10 @@ class ControllerSaleRecurring extends Controller {
 				$data['customer_href'] = '';
 			}
 
-			if ($order_recurring['profile_id'] != '0') {
-				$data['profile'] = $this->url->link('catalog/profile/edit', 'token=' . $this->session->data['token'] . '&profile_id=' . $order_recurring['profile_id'], 'SSL');
+			if ($order_recurring['recurring_id'] != '0') {
+				$data['recurring'] = $this->url->link('catalog/recurring/edit', 'token=' . $this->session->data['token'] . '&recurring_id=' . $order_recurring['recurring_id'], 'SSL');
 			} else {
-				$data['profile'] = '';
+				$data['recurring'] = '';
 			}
 
 			$data['transactions'] = array();

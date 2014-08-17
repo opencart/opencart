@@ -453,8 +453,8 @@ class ControllerProductProduct extends Controller {
 				}
 			}
 
-			$data['text_payment_profile'] = $this->language->get('text_payment_profile');
-			$data['profiles'] = $this->model_catalog_product->getProfiles($this->request->get['product_id']);
+			$data['text_payment_recurring'] = $this->language->get('text_payment_recurring');
+			$data['recurrings'] = $this->model_catalog_product->getProfiles($this->request->get['product_id']);
 
 			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
 
@@ -606,10 +606,10 @@ class ControllerProductProduct extends Controller {
 			$product_id = 0;
 		}
 
-		if (isset($this->request->post['profile_id'])) {
-			$profile_id = $this->request->post['profile_id'];
+		if (isset($this->request->post['recurring_id'])) {
+			$recurring_id = $this->request->post['recurring_id'];
 		} else {
-			$profile_id = 0;
+			$recurring_id = 0;
 		}
 
 		if (isset($this->request->post['quantity'])) {
@@ -619,11 +619,11 @@ class ControllerProductProduct extends Controller {
 		}
 
 		$product_info = $this->model_catalog_product->getProduct($product_id);
-		$profile_info = $this->model_catalog_product->getProfile($product_id, $profile_id);
+		$recurring_info = $this->model_catalog_product->getProfile($product_id, $recurring_id);
 
 		$json = array();
 
-		if ($product_info && $profile_info) {
+		if ($product_info && $recurring_info) {
 			if (!$json) {
 				$frequencies = array(
 					'day'        => $this->language->get('text_day'),
@@ -633,19 +633,19 @@ class ControllerProductProduct extends Controller {
 					'year'       => $this->language->get('text_year'),
 				);
 
-				if ($profile_info['trial_status'] == 1) {
-					$price = $this->currency->format($this->tax->calculate($profile_info['trial_price'] * $quantity, $product_info['tax_class_id'], $this->config->get('config_tax')));
-					$trial_text = sprintf($this->language->get('text_trial_description'), $price, $profile_info['trial_cycle'], $frequencies[$profile_info['trial_frequency']], $profile_info['trial_duration']) . ' ';
+				if ($recurring_info['trial_status'] == 1) {
+					$price = $this->currency->format($this->tax->calculate($recurring_info['trial_price'] * $quantity, $product_info['tax_class_id'], $this->config->get('config_tax')));
+					$trial_text = sprintf($this->language->get('text_trial_description'), $price, $recurring_info['trial_cycle'], $frequencies[$recurring_info['trial_frequency']], $recurring_info['trial_duration']) . ' ';
 				} else {
 					$trial_text = '';
 				}
 
-				$price = $this->currency->format($this->tax->calculate($profile_info['price'] * $quantity, $product_info['tax_class_id'], $this->config->get('config_tax')));
+				$price = $this->currency->format($this->tax->calculate($recurring_info['price'] * $quantity, $product_info['tax_class_id'], $this->config->get('config_tax')));
 
-				if ($profile_info['duration']) {
-					$text = $trial_text . sprintf($this->language->get('text_payment_description'), $price, $profile_info['cycle'], $frequencies[$profile_info['frequency']], $profile_info['duration']);
+				if ($recurring_info['duration']) {
+					$text = $trial_text . sprintf($this->language->get('text_payment_description'), $price, $recurring_info['cycle'], $frequencies[$recurring_info['frequency']], $recurring_info['duration']);
 				} else {
-					$text = $trial_text . sprintf($this->language->get('text_payment_until_canceled_description'), $price, $profile_info['cycle'], $frequencies[$profile_info['frequency']], $profile_info['duration']);
+					$text = $trial_text . sprintf($this->language->get('text_payment_until_canceled_description'), $price, $recurring_info['cycle'], $frequencies[$recurring_info['frequency']], $recurring_info['duration']);
 				}
 
 				$json['success'] = $text;

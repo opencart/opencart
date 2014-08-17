@@ -2256,7 +2256,7 @@ DROP TABLE IF EXISTS `oc_order_recurring`;
 CREATE TABLE `oc_order_recurring` (
   `order_recurring_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
-  `created` datetime NOT NULL,
+  `date_added` datetime NOT NULL,
   `status` tinyint(4) NOT NULL,
   `product_id` int(11) NOT NULL,
   `product_name` varchar(255) NOT NULL,
@@ -2287,7 +2287,7 @@ DROP TABLE IF EXISTS `oc_order_recurring_transaction`;
 CREATE TABLE `oc_order_recurring_transaction` (
   `order_recurring_transaction_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_recurring_id` int(11) NOT NULL,
-  `created` datetime NOT NULL,
+  `date_added` datetime NOT NULL,
   `amount` decimal(10,4) NOT NULL,
   `type` varchar(255) NOT NULL,
   `reference` varchar(255) NOT NULL,

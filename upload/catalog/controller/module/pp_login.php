@@ -34,7 +34,7 @@ class ControllerModulePPLogin extends Controller {
 			}
 			
 			$scopes = array(
-				'profile',
+				'recurring',
 				'email',
 				'address',
 				'phone'
@@ -162,7 +162,7 @@ class ControllerModulePPLogin extends Controller {
 				
 				$customer_id = $this->model_account_customer->addCustomer($data);
 
-				$this->model_module_pp_login->log('Customer ID created: ' . $customer_id);
+				$this->model_module_pp_login->log('Customer ID date_added: ' . $customer_id);
 				
 				if ($this->validate($user->email)) {
 					unset($this->session->data['guest']);

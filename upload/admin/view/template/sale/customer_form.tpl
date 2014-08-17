@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-customer" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-check-circle"></i></button>
+        <button type="submit" form="form-customer" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
@@ -580,7 +580,7 @@
             </div>
           </div>
           <div class="text-right">
-            <button id="button-history" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_history_add; ?></button>
+            <button id="button-history" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_history_add; ?></button>
           </div>
         </div>
         <div class="tab-pane" id="tab-transaction">
@@ -599,7 +599,7 @@
             </div>
           </div>
           <div class="text-right">
-            <button type="button" id="button-transaction" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_transaction_add; ?></button>
+            <button type="button" id="button-transaction" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_transaction_add; ?></button>
           </div>
         </div>
         <div class="tab-pane" id="tab-reward">
@@ -618,7 +618,7 @@
             </div>
           </div>
           <div class="text-right">
-            <button type="button" id="button-reward" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_reward_add; ?></button>
+            <button type="button" id="button-reward" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_reward_add; ?></button>
           </div>
         </div>
         <?php } ?>
@@ -905,12 +905,10 @@ $('#button-history').on('click', function(e) {
 		dataType: 'html',
 		data: 'comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
 		beforeSend: function() {
-			$('#button-history i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-			$('#button-history').prop('disabled', true);
+			$('#button-history').button('loading');
 		},
 		complete: function() {
-			$('#button-history i').replaceWith('<i class="fa fa-plus-circle"></i>');
-			$('#button-history').prop('disabled', false);
+			$('#button-history').button('reset');
 		},
 		success: function(html) {
 			$('.alert').remove();
@@ -940,12 +938,10 @@ $('#button-transaction').on('click', function(e) {
 		dataType: 'html',
 		data: 'description=' + encodeURIComponent($('#tab-transaction input[name=\'description\']').val()) + '&amount=' + encodeURIComponent($('#tab-transaction input[name=\'amount\']').val()),
 		beforeSend: function() {
-			$('#button-transaction i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-			$('#button-transaction').prop('disabled', true);
+			$('#button-transaction').button('loading');
 		},
 		complete: function() {
-			$('#button-transaction i').replaceWith('<i class="fa fa-plus-circle"></i>');
-			$('#button-transaction').prop('disabled', false);
+			$('#button-transaction').button('reset');
 		},
 		success: function(html) {
 			$('.alert').remove();
@@ -976,12 +972,10 @@ $('#button-reward').on('click', function(e) {
 		dataType: 'html',
 		data: 'description=' + encodeURIComponent($('#tab-reward input[name=\'description\']').val()) + '&points=' + encodeURIComponent($('#tab-reward input[name=\'points\']').val()),
 		beforeSend: function() {
-			$('#button-reward i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-			$('#button-reward').prop('disabled', true);
+			$('#button-reward').button('loading');
 		},
 		complete: function() {
-			$('#button-reward i').replaceWith('<i class="fa fa-plus-circle"></i>');
-			$('#button-reward').prop('disabled', false);
+			$('#button-reward').button('reset');
 		},
 		success: function(html) {
 			$('.alert').remove();
@@ -1011,10 +1005,10 @@ $('body').delegate('.button-ban-add', 'click', function() {
 		dataType: 'json',
 		data: 'ip=' + encodeURIComponent(this.value),
 		beforeSend: function() {
-			$(element).find('i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+			$(element).button('loading');
 		},
 		complete: function() {
-			$(element).find('i').replaceWith('<i class="fa fa-plus-circle"></i>');
+			$(element).button('reset');
 		},
 		success: function(json) {
 			$('.alert').remove();
@@ -1043,10 +1037,10 @@ $('body').delegate('.button-ban-remove', 'click', function() {
 		dataType: 'json',
 		data: 'ip=' + encodeURIComponent(this.value),
 		beforeSend: function() {
-			$(element).find('i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+			$(element).button('loading');
 		},
 		complete: function() {
-			$(element).find('i').replaceWith('<i class="fa fa-plus-circle"></i>');
+			$(element).button('reset');
 		},
 		success: function(json) {
 			$('.alert').remove();

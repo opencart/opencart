@@ -341,7 +341,7 @@ class ControllerPaymentFirstdataRemote extends Controller {
 				$data['text_no'] = $this->language->get('text_no');
 				$data['text_column_amount'] = $this->language->get('text_column_amount');
 				$data['text_column_type'] = $this->language->get('text_column_type');
-				$data['text_column_created'] = $this->language->get('text_column_created');
+				$data['text_column_date_added'] = $this->language->get('text_column_date_added');
 				$data['text_confirm_void'] = $this->language->get('text_confirm_void');
 				$data['text_confirm_capture'] = $this->language->get('text_confirm_capture');
 				$data['text_confirm_refund'] = $this->language->get('text_confirm_refund');
@@ -389,7 +389,7 @@ class ControllerPaymentFirstdataRemote extends Controller {
 				$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $history);
 
 				$json['data'] = array();
-				$json['data']['created'] = date('Y-m-d H:i:s');
+				$json['data']['column_date_added'] = date('Y-m-d H:i:s');
 				$json['error'] = false;
 			} else {
 				$json['error'] = true;
@@ -435,7 +435,7 @@ class ControllerPaymentFirstdataRemote extends Controller {
 				$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $history);
 
 				$json['data'] = array();
-				$json['data']['created'] = date("Y-m-d H:i:s");
+				$json['data']['column_date_added'] = date("Y-m-d H:i:s");
 				$json['data']['amount'] = (float)$firstdata_order['total'];
 				$json['data']['capture_status'] = $capture_status;
 				$json['data']['total'] = (float)$total_captured;
@@ -494,7 +494,7 @@ class ControllerPaymentFirstdataRemote extends Controller {
 				}
 
 				$json['data'] = array();
-				$json['data']['created'] = date("Y-m-d H:i:s");
+				$json['data']['column_date_added'] = date("Y-m-d H:i:s");
 				$json['data']['amount'] = $firstdata_order['total'] * -1;
 				$json['data']['total_captured'] = (float)$total_captured;
 				$json['data']['total_refunded'] = (float)$total_refunded;

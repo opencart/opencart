@@ -17,6 +17,7 @@ class ControllerMarketingContact extends Controller {
 		$data['text_affiliate_all'] = $this->language->get('text_affiliate_all');
 		$data['text_affiliate'] = $this->language->get('text_affiliate');
 		$data['text_product'] = $this->language->get('text_product');
+		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['entry_store'] = $this->language->get('entry_store');
 		$data['entry_to'] = $this->language->get('entry_to');

@@ -10,7 +10,7 @@ $_['text_recurring_item']           = 'Recurring Item';
 $_['text_length']                   = ' for %s payments';
 
 // Buttons
-$_['button_cancel_profile'] 		= 'Cancel payments';
+$_['button_cancel_recurring'] 		= 'Cancel payments';
 
 // Standard checkout error page
 $_['error_heading_title']           = 'There was an error';

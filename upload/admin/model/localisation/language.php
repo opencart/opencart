@@ -189,10 +189,10 @@ class ModelLocalisationLanguage extends Model {
 		$this->cache->delete('weight_class');
 
 		// Profiles
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "profile_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "recurring_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
-		foreach ($query->rows as $profile) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "profile_description SET profile_id = '" . (int)$profile['profile_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($profile['name']));
+		foreach ($query->rows as $recurring) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "recurring_description SET recurring_id = '" . (int)$recurring['recurring_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($recurring['name']));
 		}
 	}
 
@@ -263,7 +263,7 @@ class ModelLocalisationLanguage extends Model {
 
 		$this->cache->delete('weight_class');
 
-		$this->db->query("DELETE FROM " . DB_PREFIX . "profile_description WHERE language_id = '" . (int)$language_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "recurring_description WHERE language_id = '" . (int)$language_id . "'");
 	}
 
 	public function getLanguage($language_id) {

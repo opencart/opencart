@@ -314,28 +314,28 @@ class ControllerCheckoutCart extends Controller {
 				}
 			}
 
-			if (isset($this->request->post['profile_id'])) {
-				$profile_id = $this->request->post['profile_id'];
+			if (isset($this->request->post['recurring_id'])) {
+				$recurring_id = $this->request->post['recurring_id'];
 			} else {
-				$profile_id = 0;
+				$recurring_id = 0;
 			}
 
-			$profiles = $this->model_catalog_product->getProfiles($product_info['product_id']);
+			$recurrings = $this->model_catalog_product->getProfiles($product_info['product_id']);
 
-			if ($profiles) {
-				$profile_ids = array();
+			if ($recurrings) {
+				$recurring_ids = array();
 
-				foreach ($profiles as $profile) {
-					$profile_ids[] = $profile['profile_id'];
+				foreach ($recurrings as $recurring) {
+					$recurring_ids[] = $recurring['recurring_id'];
 				}
 
-				if (!in_array($profile_id, $profile_ids)) {
-					$json['error']['profile'] = $this->language->get('error_profile_required');
+				if (!in_array($recurring_id, $recurring_ids)) {
+					$json['error']['recurring'] = $this->language->get('error_recurring_required');
 				}
 			}
 
 			if (!$json) {
-				$this->cart->add($this->request->post['product_id'], $this->request->post['quantity'], $option, $profile_id);
+				$this->cart->add($this->request->post['product_id'], $this->request->post['quantity'], $option, $recurring_id);
 
 				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('checkout/cart'));
 

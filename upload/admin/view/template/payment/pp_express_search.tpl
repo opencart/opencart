@@ -106,9 +106,9 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label"><?php echo $entry_profile_id; ?></label>
+          <label class="col-sm-2 control-label"><?php echo $entry_recurring_id; ?></label>
           <div class="col-sm-10">
-            <input type="text" name="profile_id" value="" placeholder="<?php echo $entry_profile_id; ?>" class="form-control" />
+            <input type="text" name="recurring_id" value="" placeholder="<?php echo $entry_recurring_id; ?>" class="form-control" />
           </div>
         </div>
         <h3><?php echo $text_buyer_info; ?></h3>

@@ -433,7 +433,6 @@ class ControllerSaleCustomer extends Controller {
 		$data['column_approved'] = $this->language->get('column_approved');
 		$data['column_ip'] = $this->language->get('column_ip');
 		$data['column_date_added'] = $this->language->get('column_date_added');
-
 		$data['column_action'] = $this->language->get('column_action');
 
 		$data['entry_name'] = $this->language->get('entry_name');
@@ -1285,6 +1284,7 @@ class ControllerSaleCustomer extends Controller {
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_add_ban_ip'] = $this->language->get('text_add_ban_ip');
 		$data['text_remove_ban_ip'] = $this->language->get('text_remove_ban_ip');
+		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['column_ip'] = $this->language->get('column_ip');
 		$data['column_total'] = $this->language->get('column_total');

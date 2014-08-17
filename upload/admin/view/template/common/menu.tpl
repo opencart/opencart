@@ -1,4 +1,4 @@
-<nav id="column-left"> <?php echo $profile; ?>
+<nav id="column-left"><?php echo $profile; ?>
   <ul id="menu">
     <li id="dashboard"><a href="<?php echo $home; ?>"><i class="fa fa-home fa-fw"></i> <?php echo $text_dashboard; ?></a></li>
     <li id="catalog"><a class="parent"><i class="fa fa-tags fa-fw"></i> <?php echo $text_catalog; ?></a>
@@ -97,7 +97,7 @@
         </li>
       </ul>
     </li>
-    <li><a class="parent"><?php echo $text_marketing; ?></a>
+    <li><a class="parent"><i class="fa fa-share-alt fa-fw"></i> <?php echo $text_marketing; ?></a>
       <ul>
         <li><a href="<?php echo $marketing; ?>"><?php echo $text_marketing; ?></a></li>
         <li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li>

@@ -16,74 +16,44 @@
     </div>
     <div class="row">
       <div class="col-sm-3">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <div class="row">
-              <div class="col-xs-3"><span class="text-muted"><i class="fa fa-shopping-cart fa-3x"></i></span></div>
-              <div class="col-xs-9">
-                <?php if ($order_percentage > 0) { ?>
-                <span class="label label-success pull-right">+<?php echo $order_percentage; ?>%</span>
-                <?php } else { ?>
-                <span class="label label-danger pull-right"><?php echo $order_percentage; ?>%</span>
-                <?php } ?>
-                <h3 class="text-success"><?php echo $order_total; ?></h3>
-                <?php echo $text_new_order; ?></div>
-            </div>
+        <div class="tile tile-red">
+          <div class="tile-heading"><?php echo $text_new_order; ?></div>
+          <div class="tile-body"><i class="fa fa-shopping-cart fa-4x"></i>
+            <?php if ($order_percentage > 0) { ?>
+            <span class="label label-success pull-right">+<?php echo $order_percentage; ?>%</span>
+            <?php } else { ?>
+            <span class="label label-danger pull-right"><?php echo $order_percentage; ?>%</span>
+            <?php } ?>
+            <h3 class="text-success"><?php echo $order_total; ?></h3>
           </div>
         </div>
       </div>
       <div class="col-sm-3">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <div class="row">
-              <div class="col-xs-3"><span class="text-muted"><i class="fa fa-user fa-3x"></i></span></div>
-              <div class="col-xs-9">
-                <?php if ($customer_percentage > 0) { ?>
-                <span class="label label-success pull-right">+<?php echo $customer_percentage; ?>%</span>
-                <?php } else { ?>
-                <span class="label label-danger pull-right"><?php echo $customer_percentage; ?>%</span>
-                <?php } ?>
-                <h3 class="text-success"><?php echo $customer_total; ?></h3>
-                <?php echo $text_new_customer; ?></div>
-            </div>
+        <div class="tile tile-yellow">
+          <div class="tile-heading"><?php echo $text_total_sale; ?></div>
+          <div class="tile-body">
+          <i class="fa fa-credit-card fa-3x"></i> <span class="label <?php echo $class; ?> pull-right"><?php echo $sale_percentage; ?>%</span>
+            <h3 class="pull-right"><?php echo $sale_total; ?></h3>
           </div>
         </div>
       </div>
       <div class="col-sm-3">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <div class="row">
-              <div class="col-xs-3"><span class="text-muted"><i class="fa fa-credit-card fa-3x"></i></span></div>
-              <div class="col-xs-9">
-                <?php if ($sale_percentage > 0) { ?>
-                <?php $class = 'label-success'; ?>
-                <?php } else { ?>
-                <?php $class = 'label-danger'; ?>
-                <?php } ?>
-                <span class="label <?php echo $class; ?> pull-right"><?php echo $sale_percentage; ?>%</span>
-                <h3 class="text-success"><?php echo $sale_total; ?></h3>
-                <?php echo $text_total_sale; ?></div>
-            </div>
+        <div class="tile tile-blue">
+          <div class="tile-heading"><?php echo $text_new_customer; ?> <?php echo $customer_total; ?></div>
+          <div class="tile-body"><i class="fa fa-user fa-3x"></i>
+            <?php if ($customer_percentage > 0) { ?>
+            <span class="label label-success pull-right">+<?php echo $customer_percentage; ?>%</span>
+            <?php } else { ?>
+            <span class="label label-danger pull-right"><?php echo $customer_percentage; ?>%</span>
+            <?php } ?>
           </div>
         </div>
       </div>
       <div class="col-sm-3">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <div class="row">
-              <div class="col-xs-3"><span class="text-muted"><i class="fa fa-eye fa-3x"></i></span></div>
-              <div class="col-xs-9">
-                <?php if ($online_total > 30) { ?>
-                <h3 class="text-success"><?php echo $online_total; ?></h3>
-                <?php } elseif ($online_total > 20) { ?>
-                <h3 class="text-info"><?php echo $online_total; ?></h3>
-                <?php } elseif ($online_total > 10) { ?>
-                <h3 class="text-text-warning"><?php echo $online_total; ?></h3>
-                <?php } else { ?>
-                <h3 class="text-danger"><?php echo $online_total; ?></h3>
-                <?php } ?>
-                <?php echo $text_online; ?></div>
-            </div>
+        <div class="tile tile-green">
+          <div class="tile-heading"><?php echo $text_online; ?></div>
+          <div class="tile-body"><i class="fa fa-eye fa-3x"></i>
+            <h3><?php echo $online_total; ?></h3>
           </div>
         </div>
       </div>

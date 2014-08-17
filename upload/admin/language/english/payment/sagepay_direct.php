@@ -55,7 +55,7 @@ $_['text_total_released'] = 'Total released';
 $_['text_transactions'] = 'Transactions';
 $_['text_column_amount'] = 'Amount';
 $_['text_column_type'] = 'Type';
-$_['text_column_created'] = 'Created';
+$_['text_column_date_added'] = 'Created';
 
 $_['text_confirm_void'] = 'Are you sure you want to void the payment?';
 $_['text_confirm_release'] = 'Are you sure you want to release the payment?';

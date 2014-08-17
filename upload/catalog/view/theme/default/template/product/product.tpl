@@ -295,17 +295,17 @@
             <?php } ?>
             <?php } ?>
             <?php } ?>
-            <?php if ($profiles) { ?>
+            <?php if ($recurrings) { ?>
             <hr>
-            <h3><?php echo $text_payment_profile ?></h3>
+            <h3><?php echo $text_payment_recurring ?></h3>
             <div class="form-group required">
-              <select name="profile_id" class="form-control">
+              <select name="recurring_id" class="form-control">
                 <option value=""><?php echo $text_select; ?></option>
-                <?php foreach ($profiles as $profile) { ?>
-                <option value="<?php echo $profile['profile_id'] ?>"><?php echo $profile['name'] ?></option>
+                <?php foreach ($recurrings as $recurring) { ?>
+                <option value="<?php echo $recurring['recurring_id'] ?>"><?php echo $recurring['name'] ?></option>
                 <?php } ?>
               </select>
-              <div class="help-block" id="profile-description"></div>
+              <div class="help-block" id="recurring-description"></div>
             </div>
             <?php } ?>
             <div class="form-group">
@@ -414,20 +414,20 @@
     <?php echo $column_right; ?></div>
 </div>
 <script type="text/javascript"><!--
-$('select[name=\'profile_id\'], input[name="quantity"]').change(function(){
+$('select[name=\'recurring_id\'], input[name="quantity"]').change(function(){
 	$.ajax({
 		url: 'index.php?route=product/product/getRecurringDescription',
 		type: 'post',
-		data: $('input[name=\'product_id\'], input[name=\'quantity\'], select[name=\'profile_id\']'),
+		data: $('input[name=\'product_id\'], input[name=\'quantity\'], select[name=\'recurring_id\']'),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#profile-description').html('');
+			$('#recurring-description').html('');
 		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();
 			
 			if (json['success']) {
-				$('#profile-description').html(json['success']);
+				$('#recurring-description').html(json['success']);
 			}
 		}
 	});
@@ -463,8 +463,8 @@ $('#button-cart').on('click', function() {
 					}
 				}
 				
-				if (json['error']['profile']) {
-					$('select[name=\'profile_id\']').after('<div class="text-danger">' + json['error']['profile'] + '</div>');
+				if (json['error']['recurring']) {
+					$('select[name=\'recurring_id\']').after('<div class="text-danger">' + json['error']['recurring'] + '</div>');
 				}
 				
 				// Highlight any found errors

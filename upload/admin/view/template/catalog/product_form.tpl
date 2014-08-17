@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-product" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-check-circle"></i></button>
+        <button type="submit" form="form-product" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
@@ -21,7 +21,7 @@
         <li><a href="#tab-links" data-toggle="tab"><?php echo $tab_links; ?></a></li>
         <li><a href="#tab-attribute" data-toggle="tab"><?php echo $tab_attribute; ?></a></li>
         <li><a href="#tab-option" data-toggle="tab"><?php echo $tab_option; ?></a></li>
-        <li><a href="#tab-profile" data-toggle="tab"><?php echo $tab_profile; ?></a></li>
+        <li><a href="#tab-recurring" data-toggle="tab"><?php echo $tab_recurring; ?></a></li>
         <li><a href="#tab-discount" data-toggle="tab"><?php echo $tab_discount; ?></a></li>
         <li><a href="#tab-special" data-toggle="tab"><?php echo $tab_special; ?></a></li>
         <li><a href="#tab-image" data-toggle="tab"><?php echo $tab_image; ?></a></li>
@@ -638,47 +638,47 @@
             </div>
           </div>
         </div>
-        <div class="tab-pane" id="tab-profile">
+        <div class="tab-pane" id="tab-recurring">
           <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover">
               <thead>
                 <tr>
-                  <td class="text-left"><?php echo $entry_profile; ?></td>
+                  <td class="text-left"><?php echo $entry_recurring; ?></td>
                   <td class="text-left"><?php echo $entry_customer_group; ?></td>
                   <td class="text-left"></td>
                 </tr>
               </thead>
               <tbody>
-                <?php $profile_count = 0; ?>
-                <?php foreach ($product_profiles as $product_profile) { ?>
-                <?php $profile_count++; ?>
-                <tr id="profile-row<?php echo $profile_count; ?>">
-                  <td class="text-left"><select name="product_profiles[<?php echo $profile_count; ?>][profile_id]" class="form-control">
-                      <?php foreach ($profiles as $profile) { ?>
-                      <?php if ($profile['profile_id'] == $product_profile['profile_id']) { ?>
-                      <option value="<?php echo $profile['profile_id']; ?>" selected="selected"><?php echo $profile['name']; ?></option>
+                <?php $recurring_count = 0; ?>
+                <?php foreach ($product_recurrings as $product_recurring) { ?>
+                <?php $recurring_count++; ?>
+                <tr id="recurring-row<?php echo $recurring_count; ?>">
+                  <td class="text-left"><select name="product_recurrings[<?php echo $recurring_count; ?>][recurring_id]" class="form-control">
+                      <?php foreach ($recurrings as $recurring) { ?>
+                      <?php if ($recurring['recurring_id'] == $product_recurring['recurring_id']) { ?>
+                      <option value="<?php echo $recurring['recurring_id']; ?>" selected="selected"><?php echo $recurring['name']; ?></option>
                       <?php } else { ?>
-                      <option value="<?php echo $profile['profile_id']; ?>"><?php echo $profile['name']; ?></option>
+                      <option value="<?php echo $recurring['recurring_id']; ?>"><?php echo $recurring['name']; ?></option>
                       <?php } ?>
                       <?php } ?>
                     </select></td>
-                  <td class="text-left"><select name="product_profiles[<?php echo $profile_count; ?>][customer_group_id]" class="form-control">
+                  <td class="text-left"><select name="product_recurrings[<?php echo $recurring_count; ?>][customer_group_id]" class="form-control">
                       <?php foreach ($customer_groups as $customer_group) { ?>
-                      <?php if ($customer_group['customer_group_id'] == $product_profile['customer_group_id']) { ?>
+                      <?php if ($customer_group['customer_group_id'] == $product_recurring['customer_group_id']) { ?>
                       <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
                       <?php } else { ?>
                       <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
                       <?php } ?>
                       <?php } ?>
                     </select></td>
-                  <td class="text-left"><button type="button" onclick="$('#profile-row<?php echo $profile_count; ?>').remove()" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                  <td class="text-left"><button type="button" onclick="$('#recurring-row<?php echo $recurring_count; ?>').remove()" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                 </tr>
                 <?php } ?>
               </tbody>
               <tfoot>
                 <tr>
                   <td colspan="2"></td>
-                  <td class="text-left"><button type="button" onclick="addProfile()" data-toggle="tooltip" title="<?php echo $button_add_profile; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                  <td class="text-left"><button type="button" onclick="addProfile()" data-toggle="tooltip" title="<?php echo $button_add_recurring; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                 </tr>
               </tfoot>
             </table>
@@ -1354,33 +1354,33 @@ function addImage() {
 }
 //--></script> 
 <script type="text/javascript"><!--
-var profile_count = <?php echo $profile_count; ?>;
+var recurring_count = <?php echo $recurring_count; ?>;
 
 function addProfile() {
-	profile_count++;
+	recurring_count++;
 	
 	html  = '';
-	html += '<tr id="profile-row' + profile_count + '">';
+	html += '<tr id="recurring-row' + recurring_count + '">';
 	html += '  <td class="left">';
-	html += '    <select name="product_profiles[' + profile_count + '][profile_id]" class="form-control">>';
-	<?php foreach ($profiles as $profile) { ?>
-	html += '      <option value="<?php echo $profile['profile_id']; ?>"><?php echo $profile['name']; ?></option>';
+	html += '    <select name="product_recurrings[' + recurring_count + '][recurring_id]" class="form-control">>';
+	<?php foreach ($recurrings as $recurring) { ?>
+	html += '      <option value="<?php echo $recurring['recurring_id']; ?>"><?php echo $recurring['name']; ?></option>';
 	<?php } ?>
 	html += '    </select>';
 	html += '  </td>';
 	html += '  <td class="left">';
-	html += '    <select name="product_profiles[' + profile_count + '][customer_group_id]" class="form-control">>';
+	html += '    <select name="product_recurrings[' + recurring_count + '][customer_group_id]" class="form-control">>';
 	<?php foreach ($customer_groups as $customer_group) { ?>
 	html += '      <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>';
 	<?php } ?>
 	html += '    <select>';
 	html += '  </td>';
 	html += '  <td class="left">';
-	html += '    <a onclick="$(\'#profile-row' + profile_count + '\').remove()" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>';
+	html += '    <a onclick="$(\'#recurring-row' + recurring_count + '\').remove()" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>';
 	html += '  </td>';
 	html += '</tr>';
 	
-	$('#tab-profile table tbody').append(html);
+	$('#tab-recurring table tbody').append(html);
 }
 //--></script> 
 <script type="text/javascript"><!--

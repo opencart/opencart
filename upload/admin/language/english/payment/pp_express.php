@@ -25,7 +25,7 @@ $_['entry_icon_sort_order']          = 'Icon Sort Order';
 $_['entry_debug']                    = 'Debug logging';
 $_['entry_total']                    = 'Total';
 $_['entry_currency']                 = 'Default currency';
-$_['entry_profile_cancellation']     = 'Allow customers to cancel profiles';
+$_['entry_recurring_cancellation']   = 'Allow customers to cancel recurring payments';
 
 // Order Status
 $_['entry_canceled_reversal_status'] = 'Canceled Reversal Status';

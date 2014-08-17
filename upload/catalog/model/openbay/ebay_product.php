@@ -34,23 +34,23 @@ class ModelOpenbayEbayProduct extends Model {
 
 		$categories     = array();
 		$data['data']   = unserialize(gzuncompress(stripslashes(base64_decode(strtr($data['data'], '-_,', '+/=')))));
-		$newData        = base64_decode($data['data']);
+		$new_data        = base64_decode($data['data']);
 		$options		= json_decode($data['options'], 1);
 
 		unset($data['data']);
 
 		$this->openbay->ebay->log('Decoded data');
 
-		$newData1   = unserialize($newData);
-		unset($newData);
+		$new_data_1   = unserialize($new_data);
+		unset($new_data);
 
 		$this->openbay->ebay->log('Data unserialized');
 
 		if ($options['cat'] == 1 || !isset($options['cat'])) {
-			$itemCountLoop = 0;
-			foreach($newData1 as $item) {
-				$itemCountLoop++;
-				$this->openbay->ebay->log('Processing item: '.$itemCountLoop);
+			$item_count_loop = 0;
+			foreach($new_data_1 as $item) {
+				$item_count_loop++;
+				$this->openbay->ebay->log('Processing item: '.$item_count_loop);
 
 				$parts = explode(':', $item['CategoryName']);
 
@@ -97,7 +97,7 @@ class ModelOpenbayEbayProduct extends Model {
 			}
 
 
-			$catLink = array();
+			$cat_link = array();
 			foreach($categories as $key1=>$cat1) {
 				foreach($cat1 as $key2=>$cat2) {
 					//final cat, add to array as node
@@ -151,18 +151,18 @@ class ModelOpenbayEbayProduct extends Model {
 												$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id4) . "', `store_id` = '0'");
 											}
 
-											$catLink[$key1.':'.$key2.':'.$key3.':'.$key4.':'.$key5] = $id4;
+											$cat_link[$key1.':'.$key2.':'.$key3.':'.$key4.':'.$key5] = $id4;
 										}
 									}else{
-										$catLink[$key1.':'.$key2.':'.$key3.':'.$key4] = $id3;
+										$cat_link[$key1.':'.$key2.':'.$key3.':'.$key4] = $id3;
 									}
 								}
 							}else{
-								$catLink[$key1.':'.$key2.':'.$key3] = $id2;
+								$cat_link[$key1.':'.$key2.':'.$key3] = $id2;
 							}
 						}
 					}else{
-						$catLink[$key1.':'.$key2] = $id1;
+						$cat_link[$key1.':'.$key2] = $id1;
 					}
 				}
 			}
@@ -176,7 +176,7 @@ class ModelOpenbayEbayProduct extends Model {
 
 		$current = $this->openbay->ebay->getLiveListingArray();
 
-		foreach($newData1 as $item) {
+		foreach($new_data_1 as $item) {
 			if(!in_array($item['ItemID'], $current)) {
 				$this->openbay->ebay->log('New item being created: '.$item['ItemID']);
 
@@ -202,9 +202,9 @@ class ModelOpenbayEbayProduct extends Model {
 				$net_price      = $item['priceGross'] / (($tax / 100) + 1);
 
 				//openstock variant check
-				$osSql = '';
+				$openstock_sql = '';
 				if(!empty($item['variation']) && $openstock == true) {
-					$osSql = "`has_option` = '1',";
+					$openstock_sql = "`has_option` = '1',";
 				}
 
 				//package weight
@@ -258,7 +258,7 @@ class ModelOpenbayEbayProduct extends Model {
 						`subtract`              = '1',
 						`minimum`               = '1',
 						`status`                = '1',
-						" . $osSql . "
+						" . $openstock_sql . "
 						`date_available`        = 'now()',
 						`date_added`            = 'now()',
 						`date_modified`         = 'now()'
@@ -269,14 +269,14 @@ class ModelOpenbayEbayProduct extends Model {
 				$this->openbay->ebay->log('Product insert done');
 
 				//Insert product description
-				$originalDescription = $item['Description'];
+				$original_description = $item['Description'];
 
-				if(!empty($originalDescription)) {
-					if ( false !== ($item['Description'] = gzuncompress($originalDescription))) {
+				if(!empty($original_description)) {
+					if ( false !== ($item['Description'] = gzuncompress($original_description))) {
 						$item['Description'] = html_entity_decode($item['Description']);
 					}else{
 						$this->openbay->ebay->log('Description could not be decompressed, output below');
-						$this->openbay->ebay->log($originalDescription);
+						$this->openbay->ebay->log($original_description);
 						$item['Description'] = '';
 					}
 				}
@@ -301,10 +301,10 @@ class ModelOpenbayEbayProduct extends Model {
 
 					foreach($item['specs'] as $spec) {
 						//check if the attribute exists in the group, if not create
-						$attrId = $this->attributeExists($group_id, base64_decode($spec['name']));
+						$attribute_id = $this->attributeExists($group_id, base64_decode($spec['name']));
 
 						//insert the attribute value into the product attribute table
-						$this->attributeAdd($product_id, $attrId, base64_decode($spec['value']));
+						$this->attributeAdd($product_id, $attribute_id, base64_decode($spec['value']));
 					}
 				}
 
@@ -326,7 +326,7 @@ class ModelOpenbayEbayProduct extends Model {
 
 				//Insert product/category link
 				if ($options['cat'] == 1 || !isset($options['cat'])) {
-					$this->createCategoryLink($product_id, $catLink[$item['CategoryName']]);
+					$this->createCategoryLink($product_id, $cat_link[$item['CategoryName']]);
 				}
 
 				//images
@@ -618,12 +618,12 @@ class ModelOpenbayEbayProduct extends Model {
 		}
 	}
 
-	private function attributeAdd($product_id, $attrId, $name) {
+	private function attributeAdd($product_id, $attribute_id, $name) {
 		$this->openbay->ebay->log('Adding product attribute');
-		$sql = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_attribute` WHERE `product_id` = '" . (int)$product_id . "' AND `attribute_id` = '" . (int)$attrId . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$sql = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_attribute` WHERE `product_id` = '" . (int)$product_id . "' AND `attribute_id` = '" . (int)$attribute_id . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		if($sql->num_rows == 0) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "product_attribute` SET `product_id` = '" . (int)$product_id . "', `attribute_id` = '" . (int)$attrId . "', `text` = '" . $this->db->escape(htmlspecialchars($name, ENT_COMPAT)) . "', `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "product_attribute` SET `product_id` = '" . (int)$product_id . "', `attribute_id` = '" . (int)$attribute_id . "', `text` = '" . $this->db->escape(htmlspecialchars($name, ENT_COMPAT)) . "', `language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 		}
 	}
 

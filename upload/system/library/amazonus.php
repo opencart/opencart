@@ -249,15 +249,15 @@ class Amazonus {
 		}
 	}
 
-	public function callNoResponse($method, $data = array(), $isJson = true) {
-		if  ($isJson) {
-			$argString = json_encode($data);
+	public function callNoResponse($method, $data = array(), $is_json = true) {
+		if  ($is_json) {
+			$arg_string = json_encode($data);
 		} else {
-			$argString = $data;
+			$arg_string = $data;
 		}
 
 		$token = $this->pbkdf2($this->encPass, $this->encSalt, 1000, 32);
-		$crypt = $this->encrypt($argString, $token, true);
+		$crypt = $this->encrypt($arg_string, $token, true);
 
 		$defaults = array(
 			CURLOPT_POST => 1,
@@ -281,15 +281,15 @@ class Amazonus {
 		curl_close($ch);
 	}
 
-	public function callWithResponse($method, $data = array(), $isJson = true) {
-		if  ($isJson) {
-			$argString = json_encode($data);
+	public function callWithResponse($method, $data = array(), $is_json = true) {
+		if  ($is_json) {
+			$arg_string = json_encode($data);
 		} else {
-			$argString = $data;
+			$arg_string = $data;
 		}
 
 		$token = $this->pbkdf2($this->encPass, $this->encSalt, 1000, 32);
-		$crypt = $this->encrypt($argString, $token, true);
+		$crypt = $this->encrypt($arg_string, $token, true);
 
 		$defaults = array(
 			CURLOPT_POST            => 1,
@@ -448,13 +448,13 @@ class Amazonus {
 	public function osProducts($order_id){
 		$order_product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
 
-		$passArray = array();
+		$pass_array = array();
 		foreach ($order_product_query->rows as $order_product) {
 			$product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$order_product['product_id'] . "' LIMIT 1");
 
 			if (!empty($product_query->row)) {
 				if (isset($product_query->row['has_option']) && ($product_query->row['has_option'] == 1)) {
-					$pOption_query = $this->db->query("
+					$product_option_query = $this->db->query("
 						SELECT `oo`.`product_option_value_id`
 						FROM `" . DB_PREFIX . "order_option` `oo`
 							LEFT JOIN `" . DB_PREFIX . "product_option_value` `pov` ON (`pov`.`product_option_value_id` = `oo`.`product_option_value_id`)
@@ -465,10 +465,10 @@ class Amazonus {
 						ORDER BY `oo`.`order_option_id`
 						ASC");
 
-					if ($pOption_query->num_rows != 0) {
+					if ($product_option_query->num_rows != 0) {
 						$pOptions = array();
-						foreach ($pOption_query->rows as $pOptionRow) {
-							$pOptions[] = $pOptionRow['product_option_value_id'];
+						foreach ($product_option_query->rows as $p_option_row) {
+							$pOptions[] = $p_option_row['product_option_value_id'];
 						}
 
 						$var = implode(':', $pOptions);
@@ -476,15 +476,15 @@ class Amazonus {
 						if(empty($quantity_left_row)) {
 							$quantity_left_row['stock'] = 0;
 						}
-						$passArray[] = array('pid' => $order_product['product_id'], 'qty_left' => $quantity_left_row['stock'], 'var' => $var);
+						$pass_array[] = array('pid' => $order_product['product_id'], 'qty_left' => $quantity_left_row['stock'], 'var' => $var);
 					}
 				} else {
-					$passArray[] = array('pid' => $order_product['product_id'], 'qty_left' => $product_query->row['quantity'], 'var' => '');
+					$pass_array[] = array('pid' => $order_product['product_id'], 'qty_left' => $product_query->row['quantity'], 'var' => '');
 				}
 			}
 		}
 
-		return $passArray;
+		return $pass_array;
 	}
 
 	public function validate(){

@@ -3,9 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-order" formaction="<?php echo $shipping; ?>" formtarget="_blank" onclick="return false;" data-toggle="tooltip" title="<?php echo $button_shipping_print; ?>" class="btn btn-info"><i class="fa fa-truck"></i></button>
+        <button type="submit" form="form-order" formaction="<?php echo $shipping; ?>" formtarget="_blank" data-toggle="tooltip" title="<?php echo $button_shipping_print; ?>" class="btn btn-info"><i class="fa fa-truck"></i></button>
         <button type="submit" form="form-order" formaction="<?php echo $invoice; ?>" formtarget="_blank" data-toggle="tooltip" title="<?php echo $button_invoice_print; ?>" class="btn btn-info"><i class="fa fa-print"></i></button>
-      <a href="<?php echo $insert; ?>" data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn btn-primary"><i class="fa fa-plus"></i></a></div>
+        <a href="<?php echo $insert; ?>" data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn btn-primary"><i class="fa fa-plus"></i></a></div>
       <h1><i class="fa fa-bars"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
@@ -77,7 +77,7 @@
         </div>
       </div>
     </div>
-    <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-order">
+      <form method="post" enctype="multipart/form-data" id="form-order">
       <div class="table-responsive">
         <table class="table table-striped table-hover">
           <thead>
@@ -131,7 +131,8 @@
               <td class="text-right"><?php echo $order['total']; ?></td>
               <td class="text-left"><?php echo $order['date_added']; ?></td>
               <td class="text-left"><?php echo $order['date_modified']; ?></td>
-              <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a> <a href="<?php echo $order['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a href="" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? location = '' : false;"><i class="fa fa-trash-o"></i></a></td>
+              <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a> <a href="<?php echo $order['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                <button type="button" value="<?php echo $order['order_id']; ?>" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger"><i class="fa fa-trash-o"></i></button></td>
             </tr>
             <?php } ?>
             <?php } else { ?>
@@ -213,6 +214,40 @@ $('input[name=\'filter_customer\']').autocomplete({
 	}	
 });
 //--></script> 
+<script type="text/javascript"><!--
+$('#form-order').on('submit', function() {
+	if (!$('input[name^=\'selected\']:checked').length) {
+		alert('<?php echo $error_selected; ?>');
+		
+		return false;
+	}
+});
+
+$('#form-order button').on('click', function() {
+	var node = this;
+	
+	if (confirm('<?php echo $text_confirm; ?>')) {
+		$.ajax({
+			url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/order/delete&order_id=' + this.value,
+			dataType: 'html',
+			beforeSend: function() {
+				$(node).find('i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+				$(node).find('i').prop('disabled', true);
+			},	
+			complete: function() {
+				$(node).find('i').replaceWith('<i class="fa fa-trash-o"></i>');
+				$(node).find('i').prop('disabled', false);
+			},		
+			success: function(json) {
+				alert(json);
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}
+});
+//--></script>
 <script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 <link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
 <script type="text/javascript"><!--
@@ -220,26 +255,4 @@ $('.date').datetimepicker({
 	pickTime: false
 });
 //--></script> 
-<script type="text/javascript"><!--
-$('#button-delete').on('click', function() {
-	$.ajax({
-		url: 'index.php?route=sale/api/delete&token=<?php echo $token; ?>',
-		type: 'post',
-		data: $(''),
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-voucher i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-			$('#button-refresh').prop('disabled', true);
-		},	
-		complete: function() {
-			$('#button-voucher i').replaceWith('<i class="fa fa-check-circle"></i>');
-			$('#button-refresh').prop('disabled', false);
-		},		
-		success: success,
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});		
-});
-//--></script>
 <?php echo $footer; ?>

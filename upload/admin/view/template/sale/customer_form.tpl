@@ -964,7 +964,7 @@ $('#reward').delegate('.pagination a', 'click', function(e) {
 $('#reward').load('index.php?route=sale/customer/reward&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
 
 $('#button-reward').on('click', function(e) {
-  e.preventDefault();
+	e.preventDefault();
 
 	$.ajax({
 		url: 'index.php?route=sale/customer/reward&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>',

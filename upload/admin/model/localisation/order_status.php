@@ -37,7 +37,7 @@ class ModelLocalisationOrderStatus extends Model {
 	}
 
 	public function getOrderStatuses($data = array()) {
-      	if ($data) {
+		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "order_status WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 			$sql .= " ORDER BY name";
@@ -91,7 +91,7 @@ class ModelLocalisationOrderStatus extends Model {
 	}
 
 	public function getTotalOrderStatuses() {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "order_status WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "order_status WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row['total'];
 	}

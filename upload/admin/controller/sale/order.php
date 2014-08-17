@@ -17,8 +17,8 @@ class ControllerSaleOrder extends Controller {
 
 		$this->load->model('sale/order');
 
-    	$this->getForm();
-  	}
+		$this->getForm();
+	}
 
 	public function edit() {
 		$this->load->language('sale/order');
@@ -27,8 +27,8 @@ class ControllerSaleOrder extends Controller {
 
 		$this->load->model('sale/order');
 
-    	$this->getForm();
-  	}
+		$this->getForm();
+	}
 
 	public function delete() {
 		$this->load->language('sale/order');
@@ -142,8 +142,8 @@ class ControllerSaleOrder extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput($json);
 
-    	$this->getForm();
-  	}
+		$this->getForm();
+	}
 
 	protected function getList() {
 		if (isset($this->request->get['filter_order_id'])) {
@@ -898,7 +898,7 @@ class ControllerSaleOrder extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('sale/order_form.tpl', $data));
-  	}
+	}
 
 	public function country() {
 		$json = array();

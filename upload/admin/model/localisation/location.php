@@ -56,7 +56,7 @@ class ModelLocalisationLocation extends Model {
 	}
 
 	public function getTotalLocations() {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "location");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "location");
 
 		return $query->row['total'];
 	}

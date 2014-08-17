@@ -79,11 +79,11 @@ class ControllerPaymentPPExpress extends Controller {
 			'PAYFLOWCOLOR'       => $this->config->get('pp_express_page_colour'),
 			'CHANNELTYPE'        => 'Merchant'
 		);
-		
-		if (isset($this->session->data['pp_login']['seamless']['access_token']) && (isset($this->session->data['pp_login']['seamless']['customer_id']) && $this->session->data['pp_login']['seamless']['customer_id'] == $this->customer->getId()) && $this->config->get('pp_login_seamless')) { 
-			$data['IDENTITYACCESSTOKEN'] = $this->session->data['pp_login']['seamless']['access_token']; 
+
+		if (isset($this->session->data['pp_login']['seamless']['access_token']) && (isset($this->session->data['pp_login']['seamless']['customer_id']) && $this->session->data['pp_login']['seamless']['customer_id'] == $this->customer->getId()) && $this->config->get('pp_login_seamless')) {
+			$data['IDENTITYACCESSTOKEN'] = $this->session->data['pp_login']['seamless']['access_token'];
 		}
-		
+
 		$data = array_merge($data, $this->model_payment_pp_express->paymentRequestInfo());
 
 		$result = $this->model_payment_pp_express->call($data);
@@ -385,7 +385,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$this->document->setTitle($this->language->get('express_text_title'));
 
 		$data['heading_title'] = $this->language->get('express_text_title');
-		
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -1132,7 +1132,7 @@ class ControllerPaymentPPExpress extends Controller {
 					'authorization_id' => $result['PAYMENTINFO_0_TRANSACTIONID'],
 					'total'            => $result['PAYMENTINFO_0_AMT']
 				);
-				
+
 				$paypal_order_id = $this->model_payment_pp_express->addOrder($paypal_order_data);
 
 				//add transaction to paypal transaction table
@@ -1150,7 +1150,7 @@ class ControllerPaymentPPExpress extends Controller {
 					'amount'                => $result['PAYMENTINFO_0_AMT'],
 					'debug_data'            => json_encode($result)
 				);
-				
+
 				$this->model_payment_pp_express->addTransaction($paypal_transaction_data);
 
 				$recurring_products = $this->cart->getRecurringProducts();
@@ -1286,9 +1286,9 @@ class ControllerPaymentPPExpress extends Controller {
 			'CHANNELTYPE'        => 'Merchant',
 			'ALLOWNOTE'          => $this->config->get('pp_express_allow_note')
 		);
-		
-		if (isset($this->session->data['pp_login']['seamless']['access_token']) && (isset($this->session->data['pp_login']['seamless']['customer_id']) && $this->session->data['pp_login']['seamless']['customer_id'] == $this->customer->getId()) && $this->config->get('pp_login_seamless')) { 
-			$data['IDENTITYACCESSTOKEN'] = $this->session->data['pp_login']['seamless']['access_token']; 
+
+		if (isset($this->session->data['pp_login']['seamless']['access_token']) && (isset($this->session->data['pp_login']['seamless']['customer_id']) && $this->session->data['pp_login']['seamless']['customer_id'] == $this->customer->getId()) && $this->config->get('pp_login_seamless')) {
+			$data['IDENTITYACCESSTOKEN'] = $this->session->data['pp_login']['seamless']['access_token'];
 		}
 
 		$data = array_merge($data, $this->model_payment_pp_express->paymentRequestInfo());

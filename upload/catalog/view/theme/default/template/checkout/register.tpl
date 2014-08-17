@@ -226,7 +226,7 @@
 <script type="text/javascript"><!--
 $('#collapse-payment-address input[name=\'customer_group_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=checkout/checkout/custom_field&customer_group_id=' + this.value,
+		url: 'index.php?route=checkout/checkout/customfield&customer_group_id=' + this.value,
 		dataType: 'json',
 		success: function(json) {
 			$('#collapse-payment-address .custom-field').hide();

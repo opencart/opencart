@@ -5,7 +5,7 @@ class ModelPaymentPPExpress extends Model {
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "paypal_order` (
 			  `paypal_order_id` int(11) NOT NULL AUTO_INCREMENT,
 			  `order_id` int(11) NOT NULL,
-			  `created` DATETIME NOT NULL,
+			  `date_added` DATETIME NOT NULL,
 			  `modified` DATETIME NOT NULL,
 			  `capture_status` ENUM('Complete','NotComplete') DEFAULT NULL,
 			  `currency_code` CHAR(3) NOT NULL,
@@ -20,7 +20,7 @@ class ModelPaymentPPExpress extends Model {
 			  `paypal_order_id` int(11) NOT NULL,
 			  `transaction_id` CHAR(20) NOT NULL,
 			  `parent_transaction_id` CHAR(20) NOT NULL,
-			  `created` DATETIME NOT NULL,
+			  `date_added` DATETIME NOT NULL,
 			  `note` VARCHAR(255) NOT NULL,
 			  `msgsubid` CHAR(38) NOT NULL,
 			  `receipt_id` CHAR(20) NOT NULL,
@@ -82,7 +82,7 @@ class ModelPaymentPPExpress extends Model {
 	}
 
 	public function addTransaction($transaction_data, $request_data = array()) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "paypal_order_transaction` SET `paypal_order_id` = '" . (int)$transaction_data['paypal_order_id'] . "', `transaction_id` = '" . $this->db->escape($transaction_data['transaction_id']) . "', `parent_transaction_id` = '" . $this->db->escape($transaction_data['parent_transaction_id']) . "', `created` = NOW(), `note` = '" . $this->db->escape($transaction_data['note']) . "', `msgsubid` = '" . $this->db->escape($transaction_data['msgsubid']) . "', `receipt_id` = '" . $this->db->escape($transaction_data['receipt_id']) . "', `payment_type` = '" . $this->db->escape($transaction_data['payment_type']) . "', `payment_status` = '" . $this->db->escape($transaction_data['payment_status']) . "', `pending_reason` = '" . $this->db->escape($transaction_data['pending_reason']) . "', `transaction_entity` = '" . $this->db->escape($transaction_data['transaction_entity']) . "', `amount` = '" . (float)$transaction_data['amount'] . "', `debug_data` = '" . $this->db->escape($transaction_data['debug_data']) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "paypal_order_transaction` SET `paypal_order_id` = '" . (int)$transaction_data['paypal_order_id'] . "', `transaction_id` = '" . $this->db->escape($transaction_data['transaction_id']) . "', `parent_transaction_id` = '" . $this->db->escape($transaction_data['parent_transaction_id']) . "', `date_added` = NOW(), `note` = '" . $this->db->escape($transaction_data['note']) . "', `msgsubid` = '" . $this->db->escape($transaction_data['msgsubid']) . "', `receipt_id` = '" . $this->db->escape($transaction_data['receipt_id']) . "', `payment_type` = '" . $this->db->escape($transaction_data['payment_type']) . "', `payment_status` = '" . $this->db->escape($transaction_data['payment_status']) . "', `pending_reason` = '" . $this->db->escape($transaction_data['pending_reason']) . "', `transaction_entity` = '" . $this->db->escape($transaction_data['transaction_entity']) . "', `amount` = '" . (float)$transaction_data['amount'] . "', `debug_data` = '" . $this->db->escape($transaction_data['debug_data']) . "'");
 
 		$paypal_order_transaction_id = $this->db->getLastId();
 
@@ -120,7 +120,7 @@ class ModelPaymentPPExpress extends Model {
 			SET paypal_order_id = " . (int)$transaction['paypal_order_id'] . ",
 				transaction_id = '" . $this->db->escape($transaction['transaction_id']) . "',
 				parent_transaction_id = '" . $this->db->escape($transaction['parent_transaction_id']) . "',
-				created = '" . $this->db->escape($transaction['created']) . "',
+				date_added = '" . $this->db->escape($transaction['date_added']) . "',
 				note = '" . $this->db->escape($transaction['note']) . "',
 				msgsubid = '" . $this->db->escape($transaction['msgsubid']) . "',
 				receipt_id = '" . $this->db->escape($transaction['receipt_id']) . "',

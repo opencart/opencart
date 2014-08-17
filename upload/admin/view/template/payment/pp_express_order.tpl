@@ -40,7 +40,7 @@
             <td class="text-left"><strong><?php echo $column_type; ?></strong></td>
             <td class="text-left"><strong><?php echo $column_status; ?></strong></td>
             <td class="text-left"><strong><?php echo $column_pend_reason; ?></strong></td>
-            <td class="text-left"><strong><?php echo $column_created; ?></strong></td>
+            <td class="text-left"><strong><?php echo $column_date_added; ?></strong></td>
             <td class="text-left"><strong><?php echo $column_action; ?></strong></td>
           </tr>
         </thead>
@@ -52,7 +52,7 @@
             <td class="text-left"><?php echo $transaction['payment_type']; ?></td>
             <td class="text-left"><?php echo $transaction['payment_status']; ?></td>
             <td class="text-left"><?php echo $transaction['pending_reason']; ?></td>
-            <td class="text-left"><?php echo $transaction['created']; ?></td>
+            <td class="text-left"><?php echo $transaction['date_added']; ?></td>
             <td class="text-left"><?php if ($transaction['transaction_id']) { ?>
               <a href="<?php echo $view_link .'&transaction_id='.$transaction['transaction_id']; ?>"><?php echo $text_view; ?></a>
               <?php if ($transaction['payment_type'] == 'instant' && ($transaction['payment_status'] == 'Completed'|| $transaction['payment_status'] == 'Partially-Refunded')) { ?>
@@ -103,7 +103,7 @@
                             html += '<td class="text-left">'+data.data.payment_type+'</td>';
                             html += '<td class="text-left">'+data.data.payment_status+'</td>';
                             html += '<td class="text-left">'+data.data.pending_reason+'</td>';
-                            html += '<td class="text-left">'+data.data.created+'</td>';
+                            html += '<td class="text-left">'+data.data.date_added+'</td>';
                             html += '<td class="text-left">';
                                 html += '<a href="<?php echo $view_link; ?>&transaction_id='+data.data.transaction_id+'"><?php echo $text_view; ?></a>';
                                 html += '&nbsp;<a href="<?php echo $refund_link; ?>&transaction_id='+data.data.transaction_id+'"><?php echo $text_refund; ?></a>';
@@ -121,7 +121,7 @@
                                 html += '<td class="text-left">'+data.data.void.payment_type+'</td>';
                                 html += '<td class="text-left">'+data.data.void.payment_status+'</td>';
                                 html += '<td class="text-left">'+data.data.void.pending_reason+'</td>';
-                                html += '<td class="text-left">'+data.data.void.created+'</td>';
+                                html += '<td class="text-left">'+data.data.void.date_added+'</td>';
                                 html += '<td class="text-left"></td>';
                             html += '</tr>';
 
@@ -144,7 +144,7 @@
                             html += '<td class="text-left"></td>';
                             html += '<td class="text-left"></td>';
                             html += '<td class="text-left"></td>';
-                            html += '<td class="text-left">' + data.failed_transaction.created + '</td>';
+                            html += '<td class="text-left">' + data.failed_transaction.date_added + '</td>';
                             html += '<td class="text-left"><a onclick="resendTransaction(this); return false;" href="<?php echo $resend_link ?>&paypal_order_transaction_id=' + data.failed_transaction.paypal_order_transaction_id + '"><?php echo $text_resend ?></a></td>';
                             html += '/<tr>';
                             
@@ -179,7 +179,7 @@
                             html += '<td class="text-left"></td>';
                             html += '<td class="text-left">'+data.data.payment_status+'</td>';
                             html += '<td class="text-left"></td>';
-                            html += '<td class="text-left">'+data.data.created+'</td>';
+                            html += '<td class="text-left">'+data.data.date_added+'</td>';
                             html += '<td class="text-left"></td>';
                         html += '</tr>';
 

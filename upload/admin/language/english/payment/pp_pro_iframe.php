@@ -113,7 +113,7 @@ $_['column_amount'] = 'Amount';
 $_['column_type'] = 'Payment type';
 $_['column_status'] = 'Status';
 $_['column_pend_reason'] = 'Pending reason';
-$_['column_created'] = 'Created';
+$_['column_date_added'] = 'Created';
 $_['column_action'] = 'Action';
 
 // Entry

@@ -214,9 +214,9 @@ class ControllerCatalogRecurring extends Controller {
 		
 		$data['button_insert'] = $this->language->get('button_insert');
 		$data['button_copy'] = $this->language->get('button_copy');
-		$data['button_delete'] = $this->language->get('button_delete');
 		$data['button_edit'] = $this->language->get('button_edit');
-
+		$data['button_delete'] = $this->language->get('button_delete');
+		
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

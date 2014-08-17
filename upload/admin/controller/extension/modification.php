@@ -1,7 +1,7 @@
 <?php
 /**
  * Modifcation XML Documentation can be found here:
- * 
+ *
  * https://github.com/opencart/opencart/wiki/Modification-System
  */
 class ControllerExtensionModification extends Controller {
@@ -115,7 +115,7 @@ class ControllerExtensionModification extends Controller {
 
 					if ($path) {
 						$files = glob($path, GLOB_BRACE);
-						
+
 						$operations = $file->getElementsByTagName('operation');
 
 						if ($files) {
@@ -136,7 +136,7 @@ class ControllerExtensionModification extends Controller {
 								if (!isset($modification[$key])) {
 									$modification[$key] = file_get_contents($file);
 								}
-	
+
 								foreach ($operations as $operation) {
 									// Search and replace
 									if ($operation->getElementsByTagName('search')->item(0)->getAttribute('regex') != 'true') {
@@ -146,12 +146,12 @@ class ControllerExtensionModification extends Controller {
 										$limit = $operation->getElementsByTagName('search')->item(0)->getAttribute('limit');
 										$add = $operation->getElementsByTagName('add')->item(0)->textContent;
 										$position = $operation->getElementsByTagName('add')->item(0)->getAttribute('position');
-									
+
 										// Trim
 										if (!$trim || $trim == 'true') {
 											$search = trim($search);
 										}
-	
+
 										switch ($position) {
 											default:
 											case 'replace':
@@ -164,52 +164,52 @@ class ControllerExtensionModification extends Controller {
 												$replace = $search . $add;
 												break;
 										}
-	
+
 										$i = 0;
 										$pos = -1;
 										$match = array();
-										
-										// Create an array of all the start postions of all the matched code 
+
+										// Create an array of all the start postions of all the matched code
 										while (($pos = strpos($modification[$key], $search, $pos + 1)) !== false) {
 											$match[$i++] = $pos;
 										}
-										
+
 										// Offset
 										if (!$offset) {
 											$offset = 0;
 										}
-																				
+
 										// Limit
 										if (!$limit) {
 											$limit = count($match);
 										} else {
 											$limit = $offset + $limit;
-										}	
-																							
+										}
+
 										// Only replace the occurance of the string that is equal to the between the offset and limit
 										for ($i = $offset; $i < $limit; $i++) {
 											if (isset($match[$i])) {
 												$modification[$key] = substr_replace($modification[$key], $replace, $match[$i], strlen($search));
 											}
 										}
-										
-										
+
+
 									//	if () {
 									//		$log->write('Found: %s on line');
-											
-									//		$log->write('Replaced: %s ');	
+
+									//		$log->write('Replaced: %s ');
 									//	}
 									} else {
 										$search = $operation->getElementsByTagName('search')->item(0)->textContent;
-										$replace = $operation->getElementsByTagName('add')->item(0)->textContent;									
+										$replace = $operation->getElementsByTagName('add')->item(0)->textContent;
 										$limit = $operation->getElementsByTagName('search')->item(0)->getAttribute('limit');
-										
+
 										// Limit
 										if (!$limit) {
 											$limit = -1;
 										}
-										
-										$modification[$key] = preg_replace($search, $replace, $modification[$key], $limit);							
+
+										$modification[$key] = preg_replace($search, $replace, $modification[$key], $limit);
 									}
 								}
 							}
@@ -244,7 +244,7 @@ class ControllerExtensionModification extends Controller {
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-			
+
 			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 

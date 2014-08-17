@@ -23,20 +23,20 @@ class CacheFile {
 	public function get($key) {
 		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
 
-		if ($files) {			
+		if ($files) {
 			$handle = fopen($files[0], 'r');
-			
+
 			flock($handle, LOCK_SH);
-			
+
 			$data = fread($handle, filesize($files[0]));
-			
+
 			flock($handle, LOCK_UN);
-			
+
 			fclose($handle);
-			
+
 			return unserialize($data);
 		}
-		
+
 		return false;
 	}
 
@@ -44,17 +44,17 @@ class CacheFile {
 		$this->delete($key);
 
 		$file = DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.' . (time() + $this->expire);
-		
+
 		$handle = fopen($file, 'w');
-		
+
 		flock($handle, LOCK_EX);
-		
+
 		fwrite($handle, serialize($value));
-		
+
 		fflush($handle);
-		
+
 		flock($handle, LOCK_UN);
-		
+
 		fclose($handle);
 	}
 

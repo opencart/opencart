@@ -63,7 +63,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['entry_voided_status'] = $this->language->get('entry_voided_status');
 		$data['entry_currency'] = $this->language->get('entry_currency');
 		
-		$data['entry_profile_cancellation'] = $this->language->get('entry_profile_cancellation');
+		$data['entry_recurring_cancellation'] = $this->language->get('entry_recurring_cancellation');
 		$data['entry_display_checkout'] = $this->language->get('entry_display_checkout');
 		$data['entry_allow_notes'] = $this->language->get('entry_allow_notes');
 		$data['entry_logo'] = $this->language->get('entry_logo');
@@ -233,15 +233,15 @@ class ControllerPaymentPPExpress extends Controller {
 		}
 
 		if (isset($this->request->post['pp_express_page_colour'])) {
-			$data['pp_express_page_colour'] = str_replace('#', '', $this->request->post['pp_express_page_colour'] );
+			$data['pp_express_page_colour'] = str_replace('#', '', $this->request->post['pp_express_page_colour']);
 		} else {
 			$data['pp_express_page_colour'] = $this->config->get('pp_express_page_colour');
 		}
 
-		if (isset($this->request->post['pp_express_profile_cancel_status'])) {
-			$data['pp_express_profile_cancel_status'] = $this->request->post['pp_express_profile_cancel_status'];
+		if (isset($this->request->post['pp_express_recurring_cancel_status'])) {
+			$data['pp_express_recurring_cancel_status'] = $this->request->post['pp_express_recurring_cancel_status'];
 		} else {
-			$data['pp_express_profile_cancel_status'] = $this->config->get('pp_express_profile_cancel_status');
+			$data['pp_express_recurring_cancel_status'] = $this->config->get('pp_express_recurring_cancel_status');
 		}
 
 		$this->load->model('tool/image');
@@ -440,7 +440,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 				$json['failed_transaction']['paypal_order_transaction_id'] = $paypal_order_transaction_id;
 				$json['failed_transaction']['amount'] = $transaction['amount'];
-				$json['failed_transaction']['created'] = date("Y-m-d H:i:s");
+				$json['failed_transaction']['column_date_added'] = date("Y-m-d H:i:s");
 
 				$json['msg'] = $this->language->get('error_timeout');
 			} else if (isset($result['ACK']) && $result['ACK'] != 'Failure' && $result['ACK'] != 'FailureWithWarning') {
@@ -453,7 +453,7 @@ class ControllerPaymentPPExpress extends Controller {
 				$this->model_payment_pp_express->addTransaction($transaction);
 
 				unset($transaction['debug_data']);
-				$transaction['created'] = date("Y-m-d H:i:s");
+				$transaction['date_added'] = date("Y-m-d H:i:s");
 
 				$captured = number_format($this->model_payment_pp_express->totalCaptured($paypal_order['paypal_order_id']), 2);
 				$refunded = number_format($this->model_payment_pp_express->totalRefundedOrder($paypal_order['paypal_order_id']), 2);
@@ -488,7 +488,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 					$this->model_payment_pp_express->addTransaction($transaction['void']);
 					$this->model_payment_pp_express->updateOrder('Complete', $this->request->post['order_id']);
-					$transaction['void']['created'] = date("Y-m-d H:i:s");
+					$transaction['void']['date_added'] = date("Y-m-d H:i:s");
 					$transaction['status'] = 1;
 				}
 
@@ -543,7 +543,7 @@ class ControllerPaymentPPExpress extends Controller {
 				$this->model_payment_pp_express->updateOrder('Complete', $this->request->post['order_id']);
 
 				unset($transaction['debug_data']);
-				$transaction['created'] = date("Y-m-d H:i:s");
+				$transaction['date_added'] = date("Y-m-d H:i:s");
 
 				$json['data'] = $transaction;
 				$json['error'] = false;
@@ -758,7 +758,7 @@ class ControllerPaymentPPExpress extends Controller {
 				$data['column_type'] = $this->language->get('column_type');
 				$data['column_status'] = $this->language->get('column_status');
 				$data['column_pend_reason'] = $this->language->get('column_pend_reason');
-				$data['column_created'] = $this->language->get('column_created');
+				$data['column_date_added'] = $this->language->get('column_date_added');
 				$data['column_action'] = $this->language->get('column_action');
 
 				$data['paypal_order'] = $paypal_order;
@@ -814,7 +814,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['entry_invoice_no'] = $this->language->get('entry_invoice_no');
 		$data['entry_auction'] = $this->language->get('entry_auction');
 		$data['entry_amount'] = $this->language->get('entry_amount');
-		$data['entry_profile_id'] = $this->language->get('entry_profile_id');
+		$data['entry_recurring_id'] = $this->language->get('entry_recurring_id');
 		$data['text_buyer_info'] = $this->language->get('text_buyer_info');
 		$data['entry_salutation'] = $this->language->get('entry_salutation');
 		$data['text_name'] = $this->language->get('text_name');
@@ -952,8 +952,8 @@ class ControllerPaymentPPExpress extends Controller {
 				$call_data['CURRENCYCODE'] = $this->request->post['currency_code'];
 			}
 
-			if (!empty($this->request->post['profile_id'])) {
-				$call_data['PROFILEID'] = $this->request->post['profile_id'];
+			if (!empty($this->request->post['recurring_id'])) {
+				$call_data['PROFILEID'] = $this->request->post['recurring_id'];
 			}
 
 			if (!empty($this->request->post['name_salutation'])) {
@@ -1132,21 +1132,21 @@ class ControllerPaymentPPExpress extends Controller {
 	}
 
 	public function recurringCancel() {
-		//cancel an active profile
+		//cancel an active recurring
 
 		$this->load->model('sale/recurring');
 		$this->load->model('payment/pp_express');
 		$this->language->load('sale/recurring');
 
-		$profile = $this->model_sale_recurring->getProfile($this->request->get['order_recurring_id']);
+		$recurring = $this->model_sale_recurring->getRecurring($this->request->get['order_recurring_id']);
 
-		if ($profile && !empty($profile['profile_reference'])) {
+		if ($recurring && !empty($recurring['reference'])) {
 
-			$result = $this->model_payment_pp_express->recurringCancel($profile['profile_reference']);
+			$result = $this->model_payment_pp_express->recurringCancel($recurring['reference']);
 
 			if (isset($result['PROFILEID'])) {
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$profile['order_recurring_id'] . "', `created` = NOW(), `type` = '5'");
-				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 4 WHERE `order_recurring_id` = '" . (int)$profile['order_recurring_id'] . "' LIMIT 1");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$recurring['order_recurring_id'] . "', `date_added` = NOW(), `type` = '5'");
+				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 4 WHERE `order_recurring_id` = '" . (int)$recurring['order_recurring_id'] . "' LIMIT 1");
 
 				$this->session->data['success'] = $this->language->get('success_cancelled');
 			} else {
@@ -1162,13 +1162,13 @@ class ControllerPaymentPPExpress extends Controller {
 	public function recurringButtons() {
 		$this->load->model('sale/recurring');
 
-		$profile = $this->model_sale_recurring->getProfile($this->request->get['order_recurring_id']);
+		$recurring = $this->model_sale_recurring->getRecurring($this->request->get['order_recurring_id']);
 
 		$data['buttons'] = array();
 
-		if ($profile['status_id'] == 2 || $profile['status_id'] == 3) {
+		if ($recurring['status_id'] == 2 || $recurring['status_id'] == 3) {
 			$data['buttons'][] = array(
-				'text' => $this->language->get('button_cancel_profile'),
+				'text' => $this->language->get('button_cancel_recurring'),
 				'link' => $this->url->link('payment/pp_express/recurringCancel', 'order_recurring_id='.$this->request->get['order_recurring_id'].'&token='.$this->request->get['token'], 'SSL')
 			);
 		}

@@ -2,7 +2,7 @@
 class ControllerPaymentAmazonCheckout extends Controller {
 	public function address() {
 		if ($this->config->get('amazon_checkout_mode') == 'sandbox') {
-			if ($this->config->get('amazon_checkout_marketplace') == 'uk') {  
+			if ($this->config->get('amazon_checkout_marketplace') == 'uk') {
 				$amazon_payment_js = 'https://static-eu.payments-amazon.com/cba/js/gb/sandbox/PaymentWidgets.js';
 			} elseif ($this->config->get('amazon_checkout_marketplace') == 'de') {
 				$amazon_payment_js = 'https://static-eu.payments-amazon.com/cba/js/de/sandbox/PaymentWidgets.js';
@@ -72,7 +72,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 	public function paymentMethod() {
 		if ($this->config->get('amazon_checkout_mode') == 'sandbox') {
-			if ($this->config->get('amazon_checkout_marketplace') == 'uk') {  
+			if ($this->config->get('amazon_checkout_marketplace') == 'uk') {
 				$amazon_payment_js = 'https://static-eu.payments-amazon.com/cba/js/gb/sandbox/PaymentWidgets.js';
 			} elseif ($this->config->get('amazon_checkout_marketplace') == 'de') {
 				$amazon_payment_js = 'https://static-eu.payments-amazon.com/cba/js/de/sandbox/PaymentWidgets.js';
@@ -88,7 +88,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$this->document->addScript($amazon_payment_js);
 
 		$this->load->language('payment/amazon_checkout');
-		
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (isset($this->session->data['cba'])) {
@@ -136,7 +136,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$this->load->language('payment/amazon_checkout');
 
 		if ($this->config->get('amazon_checkout_mode') == 'sandbox') {
-			if ($this->config->get('amazon_checkout_marketplace') == 'uk') {  
+			if ($this->config->get('amazon_checkout_marketplace') == 'uk') {
 				$amazon_payment_js = 'https://static-eu.payments-amazon.com/cba/js/gb/sandbox/PaymentWidgets.js';
 			} elseif ($this->config->get('amazon_checkout_marketplace') == 'de') {
 				$amazon_payment_js = 'https://static-eu.payments-amazon.com/cba/js/de/sandbox/PaymentWidgets.js';
@@ -347,23 +347,23 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 		foreach ($this->cart->getProducts() as $product) {
 			$option_data = array();
-	
+
 			foreach ($product['option'] as $option) {
 				if ($option['type'] != 'file') {
-					$value = $option['value'];	
+					$value = $option['value'];
 				} else {
 					$value = $this->encryption->decrypt($option['value']);
-				}	
+				}
 
 				$option_data[] = array(
 					'product_option_id'       => $option['product_option_id'],
 					'product_option_value_id' => $option['product_option_value_id'],
 					'option_id'               => $option['option_id'],
-					'option_value_id'         => $option['option_value_id'],								   
+					'option_value_id'         => $option['option_value_id'],
 					'name'                    => $option['name'],
 					'value'                   => $value,
 					'type'                    => $option['type']
-				);					
+				);
 			}
 
 			$product_data[] = array(
@@ -378,7 +378,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 				'total'      => $product['total'],
 				'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
 				'reward'     => $product['reward']
-			); 
+			);
 		}
 
 		$order_data['products'] = $product_data;
@@ -390,9 +390,9 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 		if (isset($this->request->cookie['tracking'])) {
 			$order_data['tracking'] = $this->request->cookie['tracking'];
-			
+
 			$subtotal = $this->cart->getSubTotal();
-						
+
 			$this->load->model('affiliate/affiliate');
 
 			// Affiliate
@@ -405,14 +405,14 @@ class ControllerPaymentAmazonCheckout extends Controller {
 				$order_data['affiliate_id'] = 0;
 				$order_data['commission'] = 0;
 			}
-			
+
 			// Marketing
 			$this->load->model('checkout/marketing');
 
-			$marketing_info = $this->model_checkout_marketing->getMarketingByCode($this->request->cookie['tracking']);				
+			$marketing_info = $this->model_checkout_marketing->getMarketingByCode($this->request->cookie['tracking']);
 
 			if ($marketing_info) {
-				$order_data['marketing_id'] = $marketing_info['marketing_id']; 
+				$order_data['marketing_id'] = $marketing_info['marketing_id'];
 			} else {
 				$order_data['marketing_id'] = 0;
 			}
@@ -489,7 +489,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 				'total' => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'])
 			);
 		}
-		
+
 		$data['vouchers'] = array();
 
 		$data['totals'] = array();
@@ -498,7 +498,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 			$data['totals'][] = array(
 				'title' => $total['title'],
 				'text'  => $this->currency->format($total['value'])
-			);				
+			);
 		}
 
 		$data['back'] = $this->url->link('payment/amazon_checkout/payment_method', '', 'SSL');
@@ -520,7 +520,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 	public function processOrder() {
 		if ($this->config->get('amazon_checkout_mode') == 'sandbox') {
-			if ($this->config->get('amazon_checkout_marketplace') == 'uk') {  
+			if ($this->config->get('amazon_checkout_marketplace') == 'uk') {
 				$amazon_payment_js = 'https://static-eu.payments-amazon.com/cba/js/gb/sandbox/PaymentWidgets.js';
 			} elseif ($this->config->get('amazon_checkout_marketplace') == 'de') {
 				$amazon_payment_js = 'https://static-eu.payments-amazon.com/cba/js/de/sandbox/PaymentWidgets.js';
@@ -652,13 +652,13 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		}
 
 		$this->model_checkout_order->addOrderHistory($order['order_id'], $this->config->get('amazon_checkout_order_default_status'));
-		
+
 		$this->response->redirect($this->url->link('payment/amazon_checkout/success', 'amazon_order_id=' . $amazon_order_ids[0], 'SSL'));
 	}
 
 	public function success() {
 		if ($this->config->get('amazon_checkout_mode') == 'sandbox') {
-			if ($this->config->get('amazon_checkout_marketplace') == 'uk') {  
+			if ($this->config->get('amazon_checkout_marketplace') == 'uk') {
 				$amazon_payment_js = 'https://static-eu.payments-amazon.com/cba/js/gb/sandbox/PaymentWidgets.js';
 			} elseif ($this->config->get('amazon_checkout_marketplace') == 'de') {
 				$amazon_payment_js = 'https://static-eu.payments-amazon.com/cba/js/de/sandbox/PaymentWidgets.js';
@@ -672,16 +672,16 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		}
 
 		$this->document->addScript($amazon_payment_js);
-		
+
 		$this->load->language('payment/amazon_checkout');
-		
+
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$data['heading_title'] = $this->language->get('heading_title');
 		$data['heading_address'] = $this->language->get('heading_title');
 		$data['heading_payment'] = $this->language->get('heading_title');
 		$data['heading_confirm'] = $this->language->get('heading_title');
-		
+
 		$data['text_back'] = $this->language->get('text_back');
 		$data['text_cart'] = $this->language->get('text_cart');
 		$data['text_confirm'] = $this->language->get('text_confirm');
@@ -693,12 +693,12 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$data['text_payment_failed'] = $this->language->get('text_payment_failed');
 		$data['text_success_title'] = $this->language->get('text_success_title');
 		$data['text_payment_success'] = $this->language->get('text_payment_success');
-		
+
 		$data['error_payment_method'] = $this->language->get('error_payment_method');
 		$data['error_shipping'] = $this->language->get('error_shipping');
 		$data['error_shipping_address'] = $this->language->get('error_shipping_address');
 		$data['error_shipping_methods'] = $this->language->get('error_shipping_methods');
-		$data['error_no_shipping_methods'] = $this->language->get('error_no_shipping_methods');		
+		$data['error_no_shipping_methods'] = $this->language->get('error_no_shipping_methods');
 
 		$data['amazon_order_id'] = $this->request->get['amazon_order_id'];
 		$data['merchant_id'] = $this->config->get('amazon_checkout_merchant_id');

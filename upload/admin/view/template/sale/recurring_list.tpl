@@ -48,9 +48,9 @@
         </div>
         <div class="col-sm-4">
           <div class="form-group">
-            <label class="control-label" for="input-date-created"><?php echo $entry_date_created; ?></label>
+            <label class="control-label" for="input-date-date_added"><?php echo $entry_date_added; ?></label>
             <div class="input-group date">
-              <input type="text" name="filter_created" value="<?php echo $filter_created; ?>" placeholder="<?php echo $entry_date_created; ?>" data-format="YYYY-MM-DD" id="input-date-created" class="form-control" />
+              <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $entry_date_added; ?>" data-format="YYYY-MM-DD" id="input-date-date_added" class="form-control" />
               <span class="input-group-btn">
               <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
               </span></div>
@@ -78,7 +78,7 @@
                 <?php } else { ?>
                 <a href="<?php echo $sort_order; ?>"><?php echo $entry_order_id; ?></a>
                 <?php }  ?></td>
-              <td class="text-left"><?php if ($sort == 'or.profile_reference') { ?>
+              <td class="text-left"><?php if ($sort == 'or.recurring_reference') { ?>
                 <a href="<?php echo $sort_payment_reference; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_payment_reference; ?></a>
                 <?php } else { ?>
                 <a href="<?php echo $sort_payment_reference; ?>"><?php echo $entry_payment_reference; ?></a>
@@ -88,10 +88,10 @@
                 <?php } else { ?>
                 <a href="<?php echo $sort_customer; ?>"><?php echo $entry_customer ?></a>
                 <?php }  ?>
-              <td class="text-left"><?php if ($sort == 'or.created') { ?>
-                <a href="<?php echo $sort_created; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_date_created ?></a>
+              <td class="text-left"><?php if ($sort == 'or.date_added') { ?>
+                <a href="<?php echo $sort_date_added; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_date_added ?></a>
                 <?php } else { ?>
-                <a href="<?php echo $sort_created; ?>"><?php echo $entry_date_created ?></a>
+                <a href="<?php echo $sort_date_added; ?>"><?php echo $entry_date_added ?></a>
                 <?php }  ?></td>
               <td class="text-left"><?php if ($sort == 'or.status') { ?>
                 <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_status; ?></a>
@@ -102,16 +102,16 @@
             </tr>
           </thead>
           <tbody>
-            <?php if ($profiles) { ?>
-            <?php foreach ($profiles as $profile) { ?>
+            <?php if ($recurrings) { ?>
+            <?php foreach ($recurrings as $recurring) { ?>
             <tr>
-              <td class="text-left"><?php echo $profile['order_recurring_id'] ?></td>
-              <td class="text-left"><a href="<?php echo $profile['order_link']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?> <?php echo $profile['order_id'] ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
-              <td class="text-left"><?php echo $profile['profile_reference'] ?></td>
-              <td class="text-left"><?php echo $profile['customer'] ?></td>
-              <td class="text-left"><?php echo $profile['date_created'] ?></td>
-              <td class="text-left"><?php echo $profile['status'] ?></td>
-              <td class="text-right"><a href="<?php echo $profile['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+              <td class="text-left"><?php echo $recurring['order_recurring_id'] ?></td>
+              <td class="text-left"><a href="<?php echo $recurring['order_link']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?> <?php echo $recurring['order_id'] ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+              <td class="text-left"><?php echo $recurring['recurring_reference'] ?></td>
+              <td class="text-left"><?php echo $recurring['customer'] ?></td>
+              <td class="text-left"><?php echo $recurring['date_added'] ?></td>
+              <td class="text-left"><?php echo $recurring['status'] ?></td>
+              <td class="text-right"><a href="<?php echo $recurring['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
             </tr>
             <?php } ?>
             <?php } else { ?>
@@ -157,10 +157,10 @@ $('#button-filter').on('click', function() {
 		url += '&filter_customer=' + encodeURIComponent(filter_customer);
 	}
 	
-	var filter_created = $('input[name=\'filter_created\']').val();
+	var filter_date_added = $('input[name=\'filter_date_added\']').val();
 	
-	if (filter_created != '') {
-		url += '&filter_created=' + encodeURIComponent(filter_created);
+	if (filter_date_added != '') {
+		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
 	}
 	
 	var filter_status = $('select[name=\'filter_status\']').val();

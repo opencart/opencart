@@ -26,10 +26,10 @@ class ControllerPaymentSagepayServer extends Controller {
 		}
 
 		$data['cards'] = array();
-		
+
 		if ($this->customer->isLogged() && $data['sagepay_server_card']) {
 			$this->load->model('payment/sagepay_server');
-			
+
 			$data['cards'] = $this->model_payment_sagepay_server->getCards($this->customer->getId());
 		}
 
@@ -46,15 +46,15 @@ class ControllerPaymentSagepayServer extends Controller {
 
 		if ($this->config->get('sagepay_server_test') == 'live') {
 			$url = 'https://live.sagepay.com/gateway/service/vspserver-register.vsp';
-			
+
 			$payment_data['VPSProtocol'] = '3.00';
 		} elseif ($this->config->get('sagepay_server_test') == 'test') {
 			$url = 'https://test.sagepay.com/gateway/service/vspserver-register.vsp';
-			
+
 			$payment_data['VPSProtocol'] = '3.00';
 		} elseif ($this->config->get('sagepay_server_test') == 'sim') {
 			$url = 'https://test.sagepay.com/Simulator/VSPServerGateway.asp?Service=VendorRegisterTx';
-			
+
 			$payment_data['VPSProtocol'] = '2.23';
 		}
 
@@ -132,12 +132,12 @@ class ControllerPaymentSagepayServer extends Controller {
 		$payment_data['CustomerEMail'] = substr($order_info['email'], 0, 255);
 		$payment_data['Apply3DSecure'] = '0';
 		$payment_data['ClientIPAddress'] = $this->request->server['REMOTE_ADDR'];
-		
+
 		if (isset($this->request->post['CreateToken'])) {
 			$payment_data['CreateToken'] = $this->request->post['CreateToken'];
 			$payment_data['StoreToken'] = 1;
 		}
-		
+
 		if (isset($this->request->post['Token'])) {
 			$payment_data['Token'] = $this->request->post['Token'];
 			$payment_data['StoreToken'] = 1;
@@ -146,22 +146,22 @@ class ControllerPaymentSagepayServer extends Controller {
 		$response_data = $this->model_payment_sagepay_server->sendCurl($url, $payment_data);
 
 		$json = array();
-		
+
 		if ((substr($response_data['Status'], 0, 2) == "OK") || $response_data['Status'] == 'AUTHENTICATED' || $response_data['Status'] == 'REGISTERED') {
 			$json['redirect'] = $response_data['NextURL'];
 			$json['Status'] = $response_data['Status'];
 			$json['StatusDetail'] = $response_data['StatusDetail'];
-			
+
 			$response_data['order_id'] = $this->session->data['order_id'];
 			$response_data['VendorTxCode'] = $payment_data['VendorTxCode'];
-			
+
 			$order_info = array_merge($order_info, $response_data);
-			
+
 			$this->model_payment_sagepay_server->addOrder($order_info);
 
 			if ($this->config->get('sagepay_server_transaction') == 'PAYMENT') {
 				$recurring_products = $this->cart->getRecurringProducts();
-				
+
 				//loop through any products that are recurring items
 				foreach ($recurring_products as $item) {
 					$this->model_payment_sagepay_server->addRecurringPayment($item, $payment_data['VendorTxCode']);
@@ -179,136 +179,136 @@ class ControllerPaymentSagepayServer extends Controller {
 		$this->load->model('checkout/order');
 		$this->load->model('payment/sagepay_server');
 
-		$successPage = $this->url->link('payment/sagepay_server/success', '', 'SSL');
-		$errorPage = $this->url->link('payment/sagepay_server/failure', '', 'SSL');
-		$endLn = chr(13) . chr(10);
+		$success_page = $this->url->link('payment/sagepay_server/success', '', 'SSL');
+		$error_page = $this->url->link('payment/sagepay_server/failure', '', 'SSL');
+		$end_ln = chr(13) . chr(10);
 
 		if (isset($this->request->post['VendorTxCode'])) {
-			$VendorTxCode = $this->request->post['VendorTxCode'];
+			$vendor_tx_code = $this->request->post['VendorTxCode'];
 			$order_id_parts = explode('T', $this->request->post['VendorTxCode']);
 			$order_id = (int)$order_id_parts[0];
 		} else {
-			$VendorTxCode = '';
+			$vendor_tx_code = '';
 			$order_id = '';
 		}
-		
+
 		if (isset($this->request->post['Status'])) {
-			$strStatus = $this->request->post['Status'];
+			$str_status = $this->request->post['Status'];
 		} else {
-			$strStatus = '';
+			$str_status = '';
 		}
 
 		if (isset($this->request->post['VPSSignature'])) {
-			$strVPSSignature = $this->request->post['VPSSignature'];
+			$str_vps_signature = $this->request->post['VPSSignature'];
 		} else {
-			$strVPSSignature = '';
+			$str_vps_signature = '';
 		}
 		if (isset($this->request->post['StatusDetail'])) {
-			$strStatusDetail = $this->request->post['StatusDetail'];
+			$str_status_detail = $this->request->post['StatusDetail'];
 		} else {
-			$strStatusDetail = '';
+			$str_status_detail = '';
 		}
 
 		if (isset($this->request->post['VPSTxId'])) {
-			$strVPSTxId = $this->request->post['VPSTxId'];
+			$str_vps_tx_id = $this->request->post['VPSTxId'];
 		} else {
-			$strVPSTxId = '';
+			$str_vps_tx_id = '';
 		}
 
 		if (isset($this->request->post['TxAuthNo'])) {
-			$strTxAuthNo = $this->request->post['TxAuthNo'];
+			$str_tx_auth_no = $this->request->post['TxAuthNo'];
 		} else {
-			$strTxAuthNo = '';
+			$str_tx_auth_no = '';
 		}
 
 		if (isset($this->request->post['AVSCV2'])) {
-			$strAVSCV2 = $this->request->post['AVSCV2'];
+			$str_avs_cv2 = $this->request->post['AVSCV2'];
 		} else {
-			$strAVSCV2 = '';
+			$str_avs_cv2 = '';
 		}
 
 		if (isset($this->request->post['AddressResult'])) {
-			$strAddressResult = $this->request->post['AddressResult'];
+			$str_address_result = $this->request->post['AddressResult'];
 		} else {
-			$strAddressResult = '';
+			$str_address_result = '';
 		}
 
 		if (isset($this->request->post['PostCodeResult'])) {
-			$strPostCodeResult = $this->request->post['PostCodeResult'];
+			$str_postcode_result = $this->request->post['PostCodeResult'];
 		} else {
-			$strPostCodeResult = '';
+			$str_postcode_result = '';
 		}
 
 		if (isset($this->request->post['CV2Result'])) {
-			$strCV2Result = $this->request->post['CV2Result'];
+			$str_cv2_result = $this->request->post['CV2Result'];
 		} else {
-			$strCV2Result = '';
+			$str_cv2_result = '';
 		}
 
 		if (isset($this->request->post['GiftAid'])) {
-			$strGiftAid = $this->request->post['GiftAid'];
+			$str_gift_aid = $this->request->post['GiftAid'];
 		} else {
-			$strGiftAid = '';
+			$str_gift_aid = '';
 		}
 
 		if (isset($this->request->post['3DSecureStatus'])) {
-			$str3DSecureStatus = $this->request->post['3DSecureStatus'];
+			$str_3d_secure_status = $this->request->post['3DSecureStatus'];
 		} else {
-			$str3DSecureStatus = '';
+			$str_3d_secure_status = '';
 		}
 
 		if (isset($this->request->post['CAVV'])) {
-			$strCAVV = $this->request->post['CAVV'];
+			$str_cavv = $this->request->post['CAVV'];
 		} else {
-			$strCAVV = '';
+			$str_cavv = '';
 		}
 
 		if (isset($this->request->post['AddressStatus'])) {
-			$strAddressStatus = $this->request->post['AddressStatus'];
+			$str_address_status = $this->request->post['AddressStatus'];
 		} else {
-			$strAddressStatus = '';
+			$str_address_status = '';
 		}
 
 		if (isset($this->request->post['PayerStatus'])) {
-			$strPayerStatus = $this->request->post['PayerStatus'];
+			$str_payer_status = $this->request->post['PayerStatus'];
 		} else {
-			$strPayerStatus = '';
+			$str_payer_status = '';
 		}
 
 		if (isset($this->request->post['CardType'])) {
-			$strCardType = $this->request->post['CardType'];
+			$str_card_type = $this->request->post['CardType'];
 		} else {
-			$strCardType = '';
+			$str_card_type = '';
 		}
 
 		if (isset($this->request->post['Last4Digits'])) {
-			$strLast4Digits = $this->request->post['Last4Digits'];
+			$str_last_4_digits = $this->request->post['Last4Digits'];
 		} else {
-			$strLast4Digits = '';
+			$str_last_4_digits = '';
 		}
 
 		if (isset($this->request->post['ExpiryDate'])) {
-			$strExpiryDate = $this->request->post['ExpiryDate'];
+			$str_expiry_date = $this->request->post['ExpiryDate'];
 		} else {
-			$strExpiryDate = '';
+			$str_expiry_date = '';
 		}
 
 		if (isset($this->request->post['Token'])) {
-			$strToken = $this->request->post['Token'];
+			$str_token = $this->request->post['Token'];
 		} else {
-			$strToken = '';
+			$str_token = '';
 		}
 
 		if (isset($this->request->post['DeclineCode'])) {
-			$strDeclineCode = $this->request->post['DeclineCode'];
+			$str_decline_code = $this->request->post['DeclineCode'];
 		} else {
-			$strDeclineCode = '';
+			$str_decline_code = '';
 		}
 
 		if (isset($this->request->post['BankAuthCode'])) {
-			$strBankAuthCode = $this->request->post['BankAuthCode'];
+			$str_bank_auth_code = $this->request->post['BankAuthCode'];
 		} else {
-			$strBankAuthCode = '';
+			$str_bank_auth_code = '';
 		}
 
 		$order_info = $this->model_checkout_order->getOrder($order_id);
@@ -317,88 +317,88 @@ class ControllerPaymentSagepayServer extends Controller {
 
 		//Check if order we have saved in database maches with callback sagepay does
 		if (!isset($transaction_info['order_id']) || $transaction_info['order_id'] != $order_id) {
-			echo "Status=INVALID" . $endLn;
-			echo "StatusDetail= Order IDs could not be matched. Order might be tampered with." . $endLn;
-			echo "RedirectURL=" . $errorPage . $endLn;
-			
+			echo "Status=INVALID" . $end_ln;
+			echo "StatusDetail= Order IDs could not be matched. Order might be tampered with." . $end_ln;
+			echo "RedirectURL=" . $error_page . $end_ln;
+
 			$this->model_payment_sagepay_server->logger('StatusDetail= Order IDs could not be matched. Order might be tampered with.');
-			
+
 			return;
 		}
 
 		if (isset($transaction_info['SecurityKey'])) {
-			$strSecurityKey = $transaction_info['SecurityKey'];
+			$str_security_key = $transaction_info['SecurityKey'];
 		} else {
-			$strSecurityKey = '';
+			$str_security_key = '';
 		}
 
 		/** Now we rebuilt the POST message, including our security key, and use the MD5 Hash **
 		 * * component that is included to create our own signature to compare with **
 		 * * the contents of the VPSSignature field in the POST.  Check the Sage Pay Server protocol **
 		 * * if you need clarification on this process * */
-		$strMessage = $strVPSTxId . $VendorTxCode . $strStatus . $strTxAuthNo . $this->config->get('sagepay_server_vendor') . urldecode($strAVSCV2) . $strSecurityKey
-				. $strAddressResult . $strPostCodeResult . $strCV2Result . $strGiftAid . $str3DSecureStatus . $strCAVV
-				. $strAddressStatus . $strPayerStatus . $strCardType . $strLast4Digits . $strDeclineCode . $strExpiryDate . $strBankAuthCode;
+		$str_message = $str_vps_tx_id . $vendor_tx_code . $str_status . $str_tx_auth_no . $this->config->get('sagepay_server_vendor') . urldecode($str_avs_cv2) . $str_security_key
+				. $str_address_result . $str_postcode_result . $str_cv2_result . $str_gift_aid . $str_3d_secure_status . $str_cavv
+				. $str_address_status . $str_payer_status . $str_card_type . $str_last_4_digits . $str_decline_code . $str_expiry_date . $str_bank_auth_code;
 
-		$strMySignature = strtoupper(md5($strMessage));
+		$str_my_signature = strtoupper(md5($str_message));
 
 		/** We can now compare our MD5 Hash signature with that from Sage Pay Server * */
-		if ($strMySignature != $strVPSSignature) {
+		if ($str_my_signature != $str_vps_signature) {
 			$this->model_payment_sagepay_server->deleteOrder($order_id);
-			
-			echo "Status=INVALID" . $endLn;
-			echo "StatusDetail= Cannot match the MD5 Hash. Order might be tampered with." . $endLn;
-			echo "RedirectURL=" . $errorPage . $endLn;
-			
+
+			echo "Status=INVALID" . $end_ln;
+			echo "StatusDetail= Cannot match the MD5 Hash. Order might be tampered with." . $end_ln;
+			echo "RedirectURL=" . $error_page . $end_ln;
+
 			$this->model_payment_sagepay_server->logger('StatusDetail= Cannot match the MD5 Hash. Order might be tampered with.');
-			
+
 			return;
 		}
-		
-		if ($strStatus != "OK" || !$order_info) {
+
+		if ($str_status != "OK" || !$order_info) {
 			$this->model_payment_sagepay_server->deleteOrder($order_id);
-			
-			echo "Status=INVALID" . $endLn;
+
+			echo "Status=INVALID" . $end_ln;
 			echo "StatusDetail= Either status invalid or order info was not found.";
-			echo "RedirectURL=" . $errorPage . $endLn;
-			
+			echo "RedirectURL=" . $error_page . $end_ln;
+
 			$this->model_payment_sagepay_server->logger('StatusDetail= Either status invalid or order info was not found.');
-			
+
 			return;
 		}
-		
+
 		$comment = "Paid with Sagepay Server<br><br>";
 		$comment .= "<b>Transaction details</b><br>";
-		$comment .= "Status: " . $strStatus . "<br>";
-		$comment .= "AVS and CV2 checks: " . $strAVSCV2 . "<br>";
-		$comment .= "3D Secure checks: " . $str3DSecureStatus . "<br>";
-		$comment .= "Card type: " . $strCardType . "<br>";
-		
-		if ($strCardType == "PAYPAL") {
-			$comment .= "Paypal address status: " . $strAddressStatus . "<br>";
-			$comment .= "Paypal payer status: " . $strPayerStatus . "<br>";
+		$comment .= "Status: " . $str_status . "<br>";
+		$comment .= "AVS and CV2 checks: " . $str_avs_cv2 . "<br>";
+		$comment .= "3D Secure checks: " . $str_3d_secure_status . "<br>";
+		$comment .= "Card type: " . $str_card_type . "<br>";
+
+		if ($str_card_type == "PAYPAL") {
+			$comment .= "Paypal address status: " . $str_address_status . "<br>";
+			$comment .= "Paypal payer status: " . $str_payer_status . "<br>";
 		} else {
-			$comment .= "Last 4 digits: " . $strLast4Digits . "<br>";
-			
+			$comment .= "Last 4 digits: " . $str_last_4_digits . "<br>";
+
 			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('sagepay_server_order_status_id'), $comment);
-			
-			$this->model_payment_sagepay_server->updateOrder($order_info, $strVPSTxId, $strTxAuthNo);
-			
+
+			$this->model_payment_sagepay_server->updateOrder($order_info, $str_vps_tx_id, $str_tx_auth_no);
+
 			$this->model_payment_sagepay_server->addTransaction($transaction_info['sagepay_server_order_id'], $this->config->get('sagepay_server_transaction'), $order_info);
-			
-			if (!empty($strToken)) {
+
+			if (!empty($str_token)) {
 				$data = array();
 				$data['customer_id'] = $order_info['customer_id'];
-				$data['ExpiryDate'] = substr($strExpiryDate, -4, 2) . '/' . substr($strExpiryDate, 2);
-				$data['Token'] = $strToken;
-				$data['CardType'] = $strCardType;
-				$data['Last4Digits'] = $strLast4Digits;
-				
+				$data['ExpiryDate'] = substr($str_expiry_date, -4, 2) . '/' . substr($str_expiry_date, 2);
+				$data['Token'] = $str_token;
+				$data['CardType'] = $str_card_type;
+				$data['Last4Digits'] = $str_last_4_digits;
+
 				$this->model_payment_sagepay_server->addCard($data);
 			}
-			
-			echo "Status=OK" . $endLn;
-			echo "RedirectURL=" . $successPage . $endLn;
+
+			echo "Status=OK" . $end_ln;
+			echo "RedirectURL=" . $success_page . $end_ln;
 		}
 	}
 
@@ -412,7 +412,7 @@ class ControllerPaymentSagepayServer extends Controller {
 
 			if ($this->config->get('sagepay_server_transaction') == 'PAYMENT') {
 				$recurring_products = $this->model_payment_sagepay_server->getRecurringOrders($this->session->data['order_id']);
-				
+
 				//loop through any products that are recurring items
 				foreach ($recurring_products as $item) {
 					$this->model_payment_sagepay_server->updateRecurringPayment($item, $order_details);
@@ -444,5 +444,4 @@ class ControllerPaymentSagepayServer extends Controller {
 			$this->model_payment_sagepay_server->logger('Repeat Orders: ' . print_r($orders, 1));
 		}
 	}
-
 }

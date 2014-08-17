@@ -48,7 +48,7 @@
     <td><table class="table table-striped table-bordered" id="firstdata_transactions">
         <thead>
           <tr>
-            <td class="text-left"><strong><?php echo $text_column_created; ?></strong></td>
+            <td class="text-left"><strong><?php echo $text_column_date_added; ?></strong></td>
             <td class="text-left"><strong><?php echo $text_column_type; ?></strong></td>
             <td class="text-left"><strong><?php echo $text_column_amount; ?></strong></td>
           </tr>
@@ -56,7 +56,7 @@
         <tbody>
           <?php foreach($firstdata_order['transactions'] as $transaction) { ?>
           <tr>
-            <td class="text-left"><?php echo $transaction['created']; ?></td>
+            <td class="text-left"><?php echo $transaction['date_added']; ?></td>
             <td class="text-left"><?php echo $transaction['type']; ?></td>
             <td class="text-left"><?php echo $transaction['amount']; ?></td>
           </tr>
@@ -82,7 +82,7 @@ $('#button-void').bind('click', function () {
 				if (data['error'] == false) {
 					html = '';
 					html += '<tr>';
-					html += '<td class="text-left">'+data.data.created+'</td>';
+					html += '<td class="text-left">'+data.data.date_added+'</td>';
 					html += '<td class="text-left">void</td>';
 					html += '<td class="text-left">0.00</td>';
 					html += '</tr>';
@@ -126,7 +126,7 @@ $('#button-capture').bind('click', function () {
 		if (data.error == false) {
 		html = '';
 		html += '<tr>';
-		html += '<td class="text-left">'+data.data.created+'</td>';
+		html += '<td class="text-left">'+data.data.date_added+'</td>';
 		html += '<td class="text-left">payment</td>';
 		html += '<td class="text-left">'+data.data.amount+'</td>';
 		html += '</tr>';
@@ -173,7 +173,7 @@ $('#button-refund').bind('click', function () {
 		if (data.error == false) {
 		html = '';
 		html += '<tr>';
-		html += '<td class="text-left">'+data.data.created+'</td>';
+		html += '<td class="text-left">'+data.data.date_added+'</td>';
 		html += '<td class="text-left">refund</td>';
 		html += '<td class="text-left">'+data.data.amount+'</td>';
 		html += '</tr>';

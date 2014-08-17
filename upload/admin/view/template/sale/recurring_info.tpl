@@ -43,28 +43,28 @@
         <td><?php echo $status; ?></td>
       </tr>
       <tr>
-        <td><?php echo $entry_date_created; ?></td>
-        <td><?php echo $date_created; ?></td>
+        <td><?php echo $entry_date_added; ?></td>
+        <td><?php echo $date_added; ?></td>
       </tr>
       <tr>
         <td><?php echo $entry_payment_reference; ?></td>
-        <td><?php echo $profile_reference; ?></td>
+        <td><?php echo $reference; ?></td>
       </tr>
       <tr>
         <td><?php echo $entry_payment_type; ?></td>
         <td><?php echo $payment_method; ?></td>
       </tr>
       <tr>
-        <td><?php echo $entry_profile; ?></td>
-        <td><?php if ($profile) { ?>
-          <a href="<?php echo $profile; ?>"><?php echo $profile_name; ?></a>
+        <td><?php echo $entry_recurring; ?></td>
+        <td><?php if ($recurring) { ?>
+          <a href="<?php echo $recurring; ?>"><?php echo $recurring_name; ?></a>
           <?php } else { ?>
-          <?php echo $profile_name; ?>
+          <?php echo $recurring_name; ?>
           <?php } ?></td>
       </tr>
       <tr>
-        <td><?php echo $entry_profile_description; ?></td>
-        <td><?php echo $profile_description; ?></td>
+        <td><?php echo $entry_recurring_description; ?></td>
+        <td><?php echo $recurring_description; ?></td>
       </tr>
       <tr>
         <td><?php echo $entry_product; ?></td>
@@ -80,7 +80,7 @@
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
-          <td class="text-left"><?php echo $entry_date_created; ?></td>
+          <td class="text-left"><?php echo $entry_date_added; ?></td>
           <td class="text-left"><?php echo $entry_amount; ?></td>
           <td class="text-left"><?php echo $entry_type; ?></td>
         </tr>
@@ -88,7 +88,7 @@
       <tbody>
         <?php foreach ($transactions as $transaction) { ?>
         <tr>
-          <td class="text-left"><?php echo $transaction['created']; ?></td>
+          <td class="text-left"><?php echo $transaction['date_added']; ?></td>
           <td class="text-left"><?php echo $transaction['amount']; ?></td>
           <td class="text-left"><?php echo $transaction['type']; ?></td>
         </tr>

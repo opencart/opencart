@@ -42,7 +42,7 @@
     <td><table class="table table-striped table-bordered" id="firstdata_transactions">
         <thead>
           <tr>
-            <td class="text-left"><strong><?php echo $text_column_created; ?></strong></td>
+            <td class="text-left"><strong><?php echo $text_column_date_added; ?></strong></td>
             <td class="text-left"><strong><?php echo $text_column_type; ?></strong></td>
             <td class="text-left"><strong><?php echo $text_column_amount; ?></strong></td>
           </tr>
@@ -50,7 +50,7 @@
         <tbody>
           <?php foreach($firstdata_order['transactions'] as $transaction) { ?>
           <tr>
-            <td class="text-left"><?php echo $transaction['created']; ?></td>
+            <td class="text-left"><?php echo $transaction['date_added']; ?></td>
             <td class="text-left"><?php echo $transaction['type']; ?></td>
             <td class="text-left"><?php echo $transaction['amount']; ?></td>
           </tr>

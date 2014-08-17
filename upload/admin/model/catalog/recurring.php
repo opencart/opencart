@@ -39,7 +39,7 @@ class ModelCatalogRecurring extends Model {
 			$recurring_description['name'] .= ' - 2';
 		}
 
-		$this->addProfile($data);
+		$this->addRecurring($data);
 	}
 
 	public function deleteRecurring($recurring_id) {

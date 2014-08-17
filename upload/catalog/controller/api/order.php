@@ -331,8 +331,8 @@ class ControllerApiOrder extends Controller {
 		} else {
 			$this->load->model('checkout/order');
 			
-			if (isset($this->request->post['order_id'])) {
-				$order_id = $this->request->post['order_id'];
+			if (isset($this->request->get['order_id'])) {
+				$order_id = $this->request->get['order_id'];
 			} else {
 				$order_id = 0;
 			}

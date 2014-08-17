@@ -17,10 +17,10 @@ class ModelTotalVoucher extends Model {
 
 				$total_data[] = array(
 					'code'       => 'voucher',
-        			'title'      => sprintf($this->language->get('text_voucher'), $this->session->data['voucher']),
-        			'value'      => -$amount,
+					'title'      => sprintf($this->language->get('text_voucher'), $this->session->data['voucher']),
+					'value'      => -$amount,
 					'sort_order' => $this->config->get('voucher_sort_order')
-      			);
+				);
 
 				$total -= $amount;
 			}

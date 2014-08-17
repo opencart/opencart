@@ -6,8 +6,8 @@ class ModelTotalHandling extends Model {
 
 			$total_data[] = array(
 				'code'       => 'handling',
-        		'title'      => $this->language->get('text_handling'),
-        		'value'      => $this->config->get('handling_fee'),
+				'title'      => $this->language->get('text_handling'),
+				'value'      => $this->config->get('handling_fee'),
 				'sort_order' => $this->config->get('handling_sort_order')
 			);
 

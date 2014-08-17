@@ -143,17 +143,17 @@ class ControllerSaleCustomField extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-  		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL')
-   		);
+		);
 
 		$data['insert'] = $this->url->link('sale/custom_field/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('sale/custom_field/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -234,7 +234,7 @@ class ControllerSaleCustomField extends Controller {
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 
- 		if (isset($this->error['warning'])) {
+		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
@@ -336,19 +336,19 @@ class ControllerSaleCustomField extends Controller {
 		$data['button_custom_field_value_add'] = $this->language->get('button_custom_field_value_add');
 		$data['button_remove'] = $this->language->get('button_remove');
 
- 		if (isset($this->error['warning'])) {
+		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
 		}
 
- 		if (isset($this->error['name'])) {
+		if (isset($this->error['name'])) {
 			$data['error_name'] = $this->error['name'];
 		} else {
 			$data['error_name'] = array();
 		}
 
- 		if (isset($this->error['custom_field_value'])) {
+		if (isset($this->error['custom_field_value'])) {
 			$data['error_custom_field_value'] = $this->error['custom_field_value'];
 		} else {
 			$data['error_custom_field_value'] = array();
@@ -368,17 +368,17 @@ class ControllerSaleCustomField extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-  		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL')
-   		);
+		);
 
 		if (!isset($this->request->get['custom_field_id'])) {
 			$data['action'] = $this->url->link('sale/custom_field/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -389,8 +389,8 @@ class ControllerSaleCustomField extends Controller {
 		$data['cancel'] = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		if (isset($this->request->get['custom_field_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-      		$custom_field_info = $this->model_sale_custom_field->getCustomField($this->request->get['custom_field_id']);
-    	}
+			$custom_field_info = $this->model_sale_custom_field->getCustomField($this->request->get['custom_field_id']);
+		}
 
 		$data['token'] = $this->session->data['token'];
 

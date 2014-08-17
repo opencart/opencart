@@ -603,8 +603,8 @@ class ModelCatalogProduct extends Model {
 
 	public function getRecurrings($product_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_recurring` WHERE product_id = '" . (int)$product_id . "'");
-		
-		return $query->rows;		
+
+		return $query->rows;
 	}
 
 	public function getTotalProducts($data = array()) {

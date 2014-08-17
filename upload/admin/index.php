@@ -54,10 +54,10 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 	global $log, $config;
 
 	// error suppressed with @
-	if (error_reporting() === 0) { 
-		return false; 
-	} 
-	
+	if (error_reporting() === 0) {
+		return false;
+	}
+
 	switch ($errno) {
 		case E_NOTICE:
 		case E_USER_NOTICE:

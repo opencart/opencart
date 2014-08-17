@@ -37,7 +37,7 @@ class ModelLocalisationReturnStatus extends Model {
 	}
 
 	public function getReturnStatuses($data = array()) {
-      	if ($data) {
+		if ($data) {
 			$sql = "SELECT * FROM " . DB_PREFIX . "return_status WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 			$sql .= " ORDER BY name";
@@ -91,7 +91,7 @@ class ModelLocalisationReturnStatus extends Model {
 	}
 
 	public function getTotalReturnStatuses() {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "return_status WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "return_status WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row['total'];
 	}

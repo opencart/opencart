@@ -120,7 +120,7 @@ class ControllerCheckoutCheckout extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function custom_field() {
+	public function customfield() {
 		$json = array();
 
 		$this->load->model('account/custom_field');

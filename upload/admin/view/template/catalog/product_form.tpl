@@ -678,7 +678,7 @@
               <tfoot>
                 <tr>
                   <td colspan="2"></td>
-                  <td class="text-left"><button type="button" onclick="addProfile()" data-toggle="tooltip" title="<?php echo $button_add_recurring; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                  <td class="text-left"><button type="button" onclick="addRecurring()" data-toggle="tooltip" title="<?php echo $button_recurring_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                 </tr>
               </tfoot>
             </table>
@@ -1356,7 +1356,7 @@ function addImage() {
 <script type="text/javascript"><!--
 var recurring_count = <?php echo $recurring_count; ?>;
 
-function addProfile() {
+function addRecurring() {
 	recurring_count++;
 	
 	html  = '';

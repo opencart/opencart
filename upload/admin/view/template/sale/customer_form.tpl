@@ -632,7 +632,7 @@
 <script type="text/javascript"><!--
 $('select[name=\'customer_group_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=sale/customer/custom_field&token=<?php echo $token; ?>&customer_group_id=' + this.value,
+		url: 'index.php?route=sale/customer/customfield&token=<?php echo $token; ?>&customer_group_id=' + this.value,
 		dataType: 'json',
 		success: function(json) {
 			$('.custom-field').hide();

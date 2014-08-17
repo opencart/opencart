@@ -287,7 +287,7 @@ class ControllerCatalogRecurring extends Controller {
 		
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_recurring'] = $this->language->get('text_recurring');
+		$data['text_profile'] = $this->language->get('text_profile');
 		$data['text_trial'] = $this->language->get('text_trial');
 		$data['text_recurring'] = $this->language->get('text_recurring');
 

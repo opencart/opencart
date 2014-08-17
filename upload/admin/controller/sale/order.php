@@ -204,7 +204,9 @@ class ControllerSaleOrder extends Controller {
 		$data['entry_total'] = $this->language->get('entry_total');
 		$data['entry_date_added'] = $this->language->get('entry_date_added');
 		$data['entry_date_modified'] = $this->language->get('entry_date_modified');
-
+		
+		$data['error_selected'] = $this->language->get('error_selected');
+		
 		$data['button_invoice_print'] = $this->language->get('button_invoice_print');
 		$data['button_shipping_print'] = $this->language->get('button_shipping_print');
 		$data['button_insert'] = $this->language->get('button_insert');
@@ -1755,8 +1757,6 @@ class ControllerSaleOrder extends Controller {
 		$data['column_total'] = $this->language->get('column_total');
 		$data['column_comment'] = $this->language->get('column_comment');
 
-		$data['error_no_selection'] = $this->language->get('error_no_selection');
-
 		$this->load->model('sale/order');
 
 		$this->load->model('setting/setting');
@@ -1968,7 +1968,6 @@ class ControllerSaleOrder extends Controller {
 
 		$data['text_shipping'] = $this->language->get('text_shipping');
 		$data['text_picklist'] = $this->language->get('text_picklist');
-
 		$data['text_order_detail'] = $this->language->get('text_order_detail');
 		$data['text_order_id'] = $this->language->get('text_order_id');
 		$data['text_invoice_no'] = $this->language->get('text_invoice_no');
@@ -1996,8 +1995,6 @@ class ControllerSaleOrder extends Controller {
 		$data['column_model'] = $this->language->get('column_model');
 		$data['column_quantity'] = $this->language->get('column_quantity');
 		$data['column_comment'] = $this->language->get('column_comment');
-
-		$data['error_no_selection'] = $this->language->get('error_no_selection');
 
 		$this->load->model('sale/order');
 

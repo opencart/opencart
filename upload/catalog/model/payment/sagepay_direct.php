@@ -102,8 +102,8 @@ class ModelPaymentSagePayDirect extends Model {
 		return $this->db->getLastId();
 	}
 
-	public function deleteOrder($VendorTxCode) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "sagepay_direct_order` WHERE order_id = '" . $VendorTxCode . "'");
+	public function deleteOrder($vendor_tx_code) {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "sagepay_direct_order` WHERE order_id = '" . $vendor_tx_code . "'");
 	}
 
 	public function addTransaction($sagepay_direct_order_id, $type, $order_info) {
@@ -120,7 +120,7 @@ class ModelPaymentSagePayDirect extends Model {
 		}
 	}
 
-	public function recurringPayment($item, $VendorTxCode) {
+	public function recurringPayment($item, $vendor_tx_code) {
 
 		$this->load->model('checkout/recurring');
 		$this->load->model('payment/sagepay_direct');
@@ -143,7 +143,7 @@ class ModelPaymentSagePayDirect extends Model {
 
 		//create new recurring and set to pending status as no payment has been made yet.
 		$order_recurring_id = $this->model_checkout_recurring->create($item, $this->session->data['order_id'], $recurring_description);
-		$this->model_checkout_recurring->addReference($order_recurring_id, $VendorTxCode);
+		$this->model_checkout_recurring->addReference($order_recurring_id, $vendor_tx_code);
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
@@ -314,9 +314,9 @@ class ModelPaymentSagePayDirect extends Model {
 		if ($frequency == 'semi_month') {
 			$day = date_format($next_payment, 'd');
 			$value = 15 - $day;
-			$isEven = false;
+			$is_even = false;
 			if ($cycle % 2 == 0) {
-				$isEven = true;
+				$is_even = true;
 			}
 
 			$odd = ($cycle + 1) / 2;
@@ -329,13 +329,13 @@ class ModelPaymentSagePayDirect extends Model {
 				$day = 16;
 			}
 
-			if ($day <= 15 && $isEven) {
+			if ($day <= 15 && $is_even) {
 				$next_payment->modify('+' . $value . ' day');
 				$next_payment->modify('+' . $minus_even . ' month');
 			} elseif ($day <= 15) {
 				$next_payment->modify('first day of this month');
 				$next_payment->modify('+' . $odd . ' month');
-			} elseif ($day > 15 && $isEven) {
+			} elseif ($day > 15 && $is_even) {
 				$next_payment->modify('first day of this month');
 				$next_payment->modify('+' . $plus_even . ' month');
 			} elseif ($day > 15) {

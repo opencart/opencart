@@ -187,7 +187,7 @@
             <?php } ?>
           </select>
         </div>
-      </div>        
+      </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="amazon-checkout-sort-order"><?php echo $text_sort_order; ?></label>
           <div class="col-sm-10">
@@ -259,19 +259,19 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#button-ip-add').on('click', function(){
+$('#button-ip-add').on('click', function() {
     var ip = $.trim($('input[name=\'allowed-ip\']').val());
-    
+
     if (ip != '') {
         var html = '';
-        
+
 		html += '<div id="allowed-ip' + count++ + '"><i class="fa fa-minus-circle"></i> ' + ip;
         html += '  <input type="hidden" name="amazon_checkout_allowed_ips[]" value="' + ip + '" />';
         html += '</div>';
 
         $('#allowed-ips').append(html);
     }
-	
+
 	$('input[name="allowed-ip"]').val('');
 });
 
@@ -282,5 +282,5 @@ $('#amazon-ip').delegate('.fa-minus-circle', 'click', function() {
 $('input[name=\'amazon_checkout_cron_job_token\']').on('click', function() {
     $('#cron-job-url').val('<?php echo HTTPS_CATALOG; ?>index.php?route=payment/amazon_checkout/cron&token=' + $(this).val());
 });
-//--></script> 
-<?php echo $footer; ?> 
+//--></script>
+<?php echo $footer; ?>

@@ -305,9 +305,9 @@ class ModelPaymentSagePayServer extends Model {
 		if ($frequency == 'semi_month') {
 			$day = date_format($next_payment, 'd');
 			$value = 15 - $day;
-			$isEven = false;
+			$is_even = false;
 			if ($cycle % 2 == 0) {
-				$isEven = true;
+				$is_even = true;
 			}
 
 			$odd = ($cycle + 1) / 2;
@@ -320,13 +320,13 @@ class ModelPaymentSagePayServer extends Model {
 				$day = 16;
 			}
 
-			if ($day <= 15 && $isEven) {
+			if ($day <= 15 && $is_even) {
 				$next_payment->modify('+' . $value . ' day');
 				$next_payment->modify('+' . $minus_even . ' month');
 			} elseif ($day <= 15) {
 				$next_payment->modify('first day of this month');
 				$next_payment->modify('+' . $odd . ' month');
-			} elseif ($day > 15 && $isEven) {
+			} elseif ($day > 15 && $is_even) {
 				$next_payment->modify('first day of this month');
 				$next_payment->modify('+' . $plus_even . ' month');
 			} elseif ($day > 15) {

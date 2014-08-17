@@ -327,16 +327,16 @@ class ControllerPaymentSagepayServer extends Controller {
 		}
 
 		if (isset($transaction_info['SecurityKey'])) {
-			$strSecurityKey = $transaction_info['SecurityKey'];
+			$str_security_key = $transaction_info['SecurityKey'];
 		} else {
-			$strSecurityKey = '';
+			$str_security_key = '';
 		}
 
 		/** Now we rebuilt the POST message, including our security key, and use the MD5 Hash **
 		 * * component that is included to create our own signature to compare with **
 		 * * the contents of the VPSSignature field in the POST.  Check the Sage Pay Server protocol **
 		 * * if you need clarification on this process * */
-		$str_message = $str_vps_tx_id . $vendor_tx_code . $str_status . $str_tx_auth_no . $this->config->get('sagepay_server_vendor') . urldecode($str_avs_cv2) . $strSecurityKey
+		$str_message = $str_vps_tx_id . $vendor_tx_code . $str_status . $str_tx_auth_no . $this->config->get('sagepay_server_vendor') . urldecode($str_avs_cv2) . $str_security_key
 				. $str_address_result . $str_postcode_result . $str_cv2_result . $str_gift_aid . $str_3d_secure_status . $str_cavv
 				. $str_address_status . $str_payer_status . $str_card_type . $str_last_4_digits . $str_decline_code . $str_expiry_date . $str_bank_auth_code;
 

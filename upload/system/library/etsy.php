@@ -20,8 +20,8 @@ final class Etsy {
 
 	public function log($data, $write = true) {
 		if(function_exists('getmypid')) {
-			$pId = getmypid();
-			$data = $pId . ' - ' . $data;
+			$process_id = getmypid();
+			$data = $process_id . ' - ' . $data;
 		}
 
 		if($write == true) {
@@ -199,15 +199,15 @@ final class Etsy {
 		}
 	}
 
-	public function decryptArgs($crypt, $isBase64 = true) {
-		if ($isBase64) {
+	public function decryptArgs($crypt, $is_base_64 = true) {
+		if ($is_base_64) {
 			$crypt = base64_decode($crypt, true);
 			if (!$crypt) {
 				return false;
 			}
 		}
 
-		$token = $this->pbkdf2($this->encPass, $this->encSalt, 1000, 32);
+		$token = $this->pbkdf2($this->enc1, $this->enc2, 1000, 32);
 		$data = $this->decrypt($crypt, $token);
 
 		return $data;

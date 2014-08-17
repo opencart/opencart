@@ -509,23 +509,23 @@ class ModelOpenbayEbayProduct extends Model {
 	}
 
 	private function updateVariantListing($product_id, $item_id) {
-		$varData = array();
+		$variant_data = array();
 
 		$variants           = $this->model_openstock_openstock->getProductOptionStocks($product_id);
 		$groups             = $this->model_catalog_product->getProductOptions($product_id);
 
-		$varData['groups']  = array();
-		$varData['related'] = array();
+		$variant_data['groups']  = array();
+		$variant_data['related'] = array();
 
 		foreach($groups as $grp) {
 			$t_tmp = array();
 			foreach($grp['option_value'] as $grp_node) {
 				$t_tmp[$grp_node['option_value_id']] = $grp_node['name'];
 
-				$varData['related'][$grp_node['product_option_value_id']] = $grp['name'];
+				$variant_data['related'][$grp_node['product_option_value_id']] = $grp['name'];
 			}
 
-			$varData['groups'][] = array('name' => $grp['name'], 'child' => $t_tmp);
+			$variant_data['groups'][] = array('name' => $grp['name'], 'child' => $t_tmp);
 		}
 
 		$v = 0;
@@ -533,25 +533,25 @@ class ModelOpenbayEbayProduct extends Model {
 		foreach($variants as $option) {
 			if($v == 0) {
 				//create a php version of the option element array to use on server side
-				$varData['option_list'] = base64_encode(serialize($option['opts']));
+				$variant_data['option_list'] = base64_encode(serialize($option['opts']));
 			}
 
-			$varData['opt'][$v]['sku']     = $option['var'];
-			$varData['opt'][$v]['qty']     = $option['stock'];
-			$varData['opt'][$v]['price']   = number_format($option['price'], 2);
+			$variant_data['opt'][$v]['sku']     = $option['var'];
+			$variant_data['opt'][$v]['qty']     = $option['stock'];
+			$variant_data['opt'][$v]['price']   = number_format($option['price'], 2);
 
-			$varData['opt'][$v]['active']  = 0;
-			if($option['active'] == 1) {  $varData['opt'][$v]['active'] = 1; }
+			$variant_data['opt'][$v]['active']  = 0;
+			if($option['active'] == 1) {  $variant_data['opt'][$v]['active'] = 1; }
 
 			$v++;
 		}
 
-		$varData['groups']  = base64_encode(serialize($varData['groups']));
-		$varData['related'] = base64_encode(serialize($varData['related']));
-		$varData['id']      = $item_id;
+		$variant_data['groups']  = base64_encode(serialize($variant_data['groups']));
+		$variant_data['related'] = base64_encode(serialize($variant_data['related']));
+		$variant_data['id']      = $item_id;
 
 		//send to the api to process
-		$this->openbay->ebay->callNoResponse('item/reviseVariants', $varData);
+		$this->openbay->ebay->callNoResponse('item/reviseVariants', $variant_data);
 	}
 
 	private function attributeGroupExists($name) {

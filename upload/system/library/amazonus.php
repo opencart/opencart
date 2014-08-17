@@ -315,8 +315,8 @@ class Amazonus {
 		return $response;
 	}
 
-	public function decryptArgs($crypt, $isBase64 = true) {
-		if ($isBase64) {
+	public function decryptArgs($crypt, $is_base_64 = true) {
+		if ($is_base_64) {
 			$crypt = base64_decode($crypt, true);
 			if (!$crypt) {
 				return false;

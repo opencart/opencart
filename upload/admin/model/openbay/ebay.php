@@ -733,7 +733,7 @@ class ModelOpenbayEbay extends Model{
 		}else{
 			$this->openbay->ebay->log('editSave() - variant item');
 
-			$varData = array();
+			$variant_data = array();
 			$this->load->model('tool/image');
 			$this->load->model('catalog/product');
 			$this->load->model('openstock/openstock');
@@ -741,11 +741,11 @@ class ModelOpenbayEbay extends Model{
 			//get the options list for this product
 			$opts = $this->model_openstock_openstock->getProductOptionStocks($product_id);
 			reset($opts);
-			$varData['option_list'] = base64_encode(serialize($opts[key($opts)]['opts']));
+			$variant_data['option_list'] = base64_encode(serialize($opts[key($opts)]['opts']));
 
-			$varData['groups']      = $data['optGroupArray'];
-			$varData['related']     = $data['optGroupRelArray'];
-			$varData['id']          = $data['itemId'];
+			$variant_data['groups']      = $data['optGroupArray'];
+			$variant_data['related']     = $data['optGroupRelArray'];
+			$variant_data['id']          = $data['itemId'];
 
 			$stockFlag = false;
 
@@ -776,18 +776,18 @@ class ModelOpenbayEbay extends Model{
 					}
 				}
 
-				$varData['opt'][$k]['sku']     = $opt['sku'];
-				$varData['opt'][$k]['qty']     = $stock['quantity'];
-				$varData['opt'][$k]['price']   = number_format($opt['price'], 2);
-				$varData['opt'][$k]['active']  = $opt['active'];
+				$variant_data['opt'][$k]['sku']     = $opt['sku'];
+				$variant_data['opt'][$k]['qty']     = $stock['quantity'];
+				$variant_data['opt'][$k]['price']   = number_format($opt['price'], 2);
+				$variant_data['opt'][$k]['active']  = $opt['active'];
 			}
 
-			$this->openbay->ebay->log('editSave() - Debug - ' . serialize($varData));
+			$this->openbay->ebay->log('editSave() - Debug - ' . serialize($variant_data));
 
 			//send to the api to process
 			if($stockFlag == true){
 				$this->openbay->ebay->log('editSave() - Sending to API');
-				$response = $this->openbay->ebay->call('item/reviseVariants', $varData);
+				$response = $this->openbay->ebay->call('item/reviseVariants', $variant_data);
 				return $response;
 			}else{
 				$this->openbay->ebay->log('editSave() - Ending item');

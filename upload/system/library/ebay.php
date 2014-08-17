@@ -1,8 +1,8 @@
 <?php
 final class Ebay {
 	private $registry;
-	private $url    = 'https://uk.openbaypro.com/';
-	private $noLog  = array('notification/getPublicNotifications/', 'setup/getEbayCategories/', 'item/getItemAllList/', 'account/validate/', 'item/getItemListLimited/');
+	private $url = 'https://uk.openbaypro.com/';
+	private $no_log = array('notification/getPublicNotifications/', 'setup/getEbayCategories/', 'item/getItemAllList/', 'account/validate/', 'item/getItemListLimited/');
 
 	public function __construct($registry) {
 		$this->registry = $registry;
@@ -25,8 +25,8 @@ final class Ebay {
 	public function log($data, $write = true) {
 		if($this->logging == 1) {
 			if(function_exists('getmypid')) {
-				$pId = getmypid();
-				$data = $pId . ' - ' . $data;
+				$process_id = getmypid();
+				$data = $process_id . ' - ' . $data;
 			}
 
 			if($write == true) {
@@ -35,12 +35,12 @@ final class Ebay {
 		}
 	}
 
-	public function call($call, array $post = null, array $options = array(), $content_type = 'json', $statusOverride = false) {
-		if($this->config->get('ebay_status') == 1 || $statusOverride == true) {
+	public function call($call, array $post = null, array $options = array(), $content_type = 'json', $status_override = false) {
+		if($this->config->get('ebay_status') == 1 || $status_override == true) {
 			$this->lasterror    = '';
 			$this->lastmsg      = '';
 
-			if(!in_array($call, $this->noLog)) {
+			if(!in_array($call, $this->no_log)) {
 				$this->log('call(' . $call . ') - Data: ' .  json_encode($post));
 			}
 
@@ -82,7 +82,7 @@ final class Ebay {
 			}
 			curl_close($ch);
 
-			if(!in_array($call, $this->noLog)) {
+			if(!in_array($call, $this->no_log)) {
 				$this->log('call() - Result of : "' . $result . '"');
 			}
 
@@ -470,9 +470,9 @@ final class Ebay {
 		return $this->call('order/paymentStatus/', array('item' => $item, 'txn' => $txn, 'status' => $status));
 	}
 
-	private function getSaleRecord($saleId) {
-		$this->log('getSaleRecord() - Get ebay sale record ID: ' . $saleId);
-		return $this->call('order/getSmpRecord/', array('id' => $saleId));
+	private function getSaleRecord($sale_id) {
+		$this->log('getSaleRecord() - Get ebay sale record ID: ' . $sale_id);
+		return $this->call('order/getSmpRecord/', array('id' => $sale_id));
 	}
 
 	public function isEbayOrder($id) {
@@ -610,11 +610,11 @@ final class Ebay {
 				}
 			}else{
 				// Need to loop over current item check if other variants have stock
-				$variantStock = false;
+				$variant_stock = false;
 				foreach($listing['variation']['vars'] as $var) {
 					if(($var['sku'] != $sku) && ($var['qty'] > 0)) {
 						//other variations have stock
-						$variantStock = true;
+						$variant_stock = true;
 						$this->log('Another variation has stock (SKU: ' . $var['sku'] . ')');
 						break;
 					}
@@ -626,7 +626,7 @@ final class Ebay {
 					}
 				}
 
-				if($variantStock == true || $stock > 0) {
+				if($variant_stock == true || $stock > 0) {
 					$this->log('putStockUpdate() - Revising item with Item ID "' . $item_id . '" to stock level "' . $stock . '", sku "' . $sku . '"');
 					$this->call('item/reviseStock/', array('itemId' => $item_id, 'stock' => $stock, 'sku' => $sku));
 					return true;
@@ -652,7 +652,7 @@ final class Ebay {
 		}
 
 		// Get the active OpenCart items that were linked to eBay If they have stock now, relist them.
-		$endedData = $this->getEndedListingArray();
+		$ended_data = $this->getEndedListingArray();
 
 		/**
 		 * Get the active OpenCart items that are also linked
@@ -664,23 +664,23 @@ final class Ebay {
 		$ebay_listings = $this->getEbayActiveListings();
 		$live_data = $this->getLiveListingArray();
 
-		$linkedItems        = array();
-		$linkedEndedItems   = array();
+		$linked_items        = array();
+		$linked_ended_items   = array();
 
 		foreach($product_id_array as $product_id) {
 			if(array_key_exists((int)$product_id, $live_data)) {
 				//product has been passed and is linked to active item
-				$linkedItems[] = array('productId' => (int)$product_id, 'itemId' => $live_data[$product_id]);
-			}elseif(array_key_exists((int)$product_id, $endedData)) {
+				$linked_items[] = array('productId' => (int)$product_id, 'itemId' => $live_data[$product_id]);
+			}elseif(array_key_exists((int)$product_id, $ended_data)) {
 				//product has been passed and is not currently active
-				$linkedEndedItems[] = array('productId' => (int)$product_id, 'itemId' => $endedData[$product_id]);
+				$linked_ended_items[] = array('productId' => (int)$product_id, 'itemId' => $ended_data[$product_id]);
 			}else{
 				//product does not exist in live or ended links so has never been linked.
 			}
 		}
 
 		//loop through ended listings, if back in stock and not multi var - relist it
-		foreach($linkedEndedItems as $item) {
+		foreach($linked_ended_items as $item) {
 			if($openstock == true) {
 				$options = $this->model_openstock_openstock->getProductOptionStocks($item['productId']);
 			} else {
@@ -713,7 +713,7 @@ final class Ebay {
 		}
 
 		//loop through the active listings and update the store or end the item
-		foreach($linkedItems as $item) {
+		foreach($linked_items as $item) {
 			//get the stock level of the linked item
 			$local_stock = $this->getProductStockLevel($item['productId']);
 
@@ -803,24 +803,24 @@ final class Ebay {
 		if($item_id != false) {
 			//if so update stock or end item (based on qty)
 			if ($this->openbay->addonLoad('openstock') && (isset($data['has_option']) && $data['has_option'] == 1)) {
-				$varData = array();
+				$variant_data = array();
 				$this->load->model('tool/image');
 				$this->load->model('catalog/product');
 				$this->load->model('openstock/openstock');
 
 				$variants           = $this->model_openstock_openstock->getProductOptionStocks($product_id);
 				$groups             = $this->openbay->getProductOptions($product_id);
-				$varData['groups']  = array();
-				$varData['related'] = array();
+				$variant_data['groups']  = array();
+				$variant_data['related'] = array();
 
 				foreach($groups as $grp) {
 					$t_tmp = array();
 					foreach($grp['product_option_value'] as $grp_node) {
 						$t_tmp[$grp_node['option_value_id']] = $grp_node['name'];
 
-						$varData['related'][$grp_node['product_option_value_id']] = $grp['name'];
+						$variant_data['related'][$grp_node['product_option_value_id']] = $grp['name'];
 					}
-					$varData['groups'][] = array('name' => $grp['name'], 'child' => $t_tmp);
+					$variant_data['groups'][] = array('name' => $grp['name'], 'child' => $t_tmp);
 				}
 
 				$v = 0;
@@ -833,7 +833,7 @@ final class Ebay {
 
 					if($v == 0) {
 						//create a php version of the option element array to use on server side
-						$varData['option_list'] = base64_encode(serialize($option['opts']));
+						$variant_data['option_list'] = base64_encode(serialize($option['opts']));
 					}
 
 					// PRODUCT RESERVE LEVELS FOR VARIANT ITEMS (DOES NOT PASS THROUGH NORMAL SYSTEM)
@@ -847,21 +847,21 @@ final class Ebay {
 						}
 					}
 
-					$varData['opt'][$v]['sku']     = $option['var'];
-					$varData['opt'][$v]['qty']     = $option['stock'];
-					$varData['opt'][$v]['active']  = 0;
-					if($option['active'] == 1) {  $varData['opt'][$v]['active'] = 1; }
+					$variant_data['opt'][$v]['sku']     = $option['var'];
+					$variant_data['opt'][$v]['qty']     = $option['stock'];
+					$variant_data['opt'][$v]['active']  = 0;
+					if($option['active'] == 1) {  $variant_data['opt'][$v]['active'] = 1; }
 					$v++;
 				}
 
-				$varData['groups'] = base64_encode(serialize($varData['groups']));
-				$varData['related'] = base64_encode(serialize($varData['related']));
-				$varData['id'] = $item_id;
+				$variant_data['groups'] = base64_encode(serialize($variant_data['groups']));
+				$variant_data['related'] = base64_encode(serialize($variant_data['related']));
+				$variant_data['id'] = $item_id;
 
 				//send to the api to process
 				if($stock == true) {
 					$this->log('productUpdateListen() - Sending to API');
-					$response = $this->call('item/reviseStockVariants', $varData);
+					$response = $this->call('item/reviseStockVariants', $variant_data);
 					return $response;
 				} else {
 					$this->log('productUpdateListen() - Ending item');

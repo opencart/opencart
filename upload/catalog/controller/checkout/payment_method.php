@@ -4,7 +4,7 @@ class ControllerCheckoutPaymentMethod extends Controller {
 		$this->load->language('checkout/checkout');
 
 		if (isset($this->session->data['payment_address'])) {
-			// Selected payment methods should be from cart sub total not total! 
+			// Selected payment methods should be from cart sub total not total!
 			$total = $this->cart->getSubTotal();
 
 			// Payment Methods
@@ -153,7 +153,7 @@ class ControllerCheckoutPaymentMethod extends Controller {
 				$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
 			}
 		}
-			
+
 		if (!$json) {
 			$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->post['payment_method']];
 

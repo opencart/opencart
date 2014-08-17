@@ -74,8 +74,8 @@ class ModelPaymentSagePayServer extends Model {
 		}
 	}
 
-	public function updateOrder($order_info, $VPSTxId, $TxAuthNo) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "sagepay_server_order` SET `VPSTxId` = '" . $this->db->escape($VPSTxId) . "', `TxAuthNo` = '" . $this->db->escape($TxAuthNo) . "' WHERE `order_id` = '" . (int)$order_info['order_id'] . "'");
+	public function updateOrder($order_info, $vps_txn_id, $tx_auth_no) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "sagepay_server_order` SET `VPSTxId` = '" . $this->db->escape($vps_txn_id) . "', `TxAuthNo` = '" . $this->db->escape($tx_auth_no) . "' WHERE `order_id` = '" . (int)$order_info['order_id'] . "'");
 	}
 
 	public function deleteOrder($order_id) {
@@ -102,7 +102,7 @@ class ModelPaymentSagePayServer extends Model {
 		return $query->rows;
 	}
 
-	public function addRecurringPayment($item, $VendorTxCode) {
+	public function addRecurringPayment($item, $vendor_tx_code) {
 
 		$this->load->model('checkout/recurring');
 		$this->load->language('payment/sagepay_server');
@@ -124,7 +124,7 @@ class ModelPaymentSagePayServer extends Model {
 
 		//create new recurring and set to pending status as no payment has been made yet.
 		$recurring_id = $this->model_checkout_recurring->create($item, $this->session->data['order_id'], $recurring_description);
-		$this->model_checkout_recurring->addReference($recurring_id, $VendorTxCode);
+		$this->model_checkout_recurring->addReference($recurring_id, $vendor_tx_code);
 	}
 
 	public function updateRecurringPayment($item, $order_details) {
@@ -133,7 +133,7 @@ class ModelPaymentSagePayServer extends Model {
 
 		$order_info = $this->model_checkout_order->getOrder($order_details['order_id']);
 
-		//trial information	
+		//trial information
 		if ($item['trial'] == 1) {
 			$price = $this->currency->format($item['trial_price'], $this->currency->getCode(), false, false);
 		} else {
@@ -305,9 +305,9 @@ class ModelPaymentSagePayServer extends Model {
 		if ($frequency == 'semi_month') {
 			$day = date_format($next_payment, 'd');
 			$value = 15 - $day;
-			$isEven = false;
+			$is_even = false;
 			if ($cycle % 2 == 0) {
-				$isEven = true;
+				$is_even = true;
 			}
 
 			$odd = ($cycle + 1) / 2;
@@ -320,13 +320,13 @@ class ModelPaymentSagePayServer extends Model {
 				$day = 16;
 			}
 
-			if ($day <= 15 && $isEven) {
+			if ($day <= 15 && $is_even) {
 				$next_payment->modify('+' . $value . ' day');
 				$next_payment->modify('+' . $minus_even . ' month');
 			} elseif ($day <= 15) {
 				$next_payment->modify('first day of this month');
 				$next_payment->modify('+' . $odd . ' month');
-			} elseif ($day > 15 && $isEven) {
+			} elseif ($day > 15 && $is_even) {
 				$next_payment->modify('first day of this month');
 				$next_payment->modify('+' . $plus_even . ' month');
 			} elseif ($day > 15) {

@@ -75,7 +75,7 @@ class ControllerPaymentFirstdata extends Controller {
 		if ($this->config->get('firstdata_card_storage') == 1 && $this->customer->isLogged()) {
 			$data['card_storage'] = 1;
 			$data['stored_cards'] = $this->model_payment_firstdata->getStoredCards();
-			$data['new_hosted_id'] = sha1($this->customer->getId()  . '-' . date("Y-m-d-H-i-s").rand(10,500));
+			$data['new_hosted_id'] = sha1($this->customer->getId()  . '-' . date("Y-m-d-H-i-s").rand(10, 500));
 		} else {
 			$data['card_storage'] = 0;
 			$data['stored_cards'] = array();
@@ -90,9 +90,9 @@ class ControllerPaymentFirstdata extends Controller {
 
 	public function notify() {
 		$this->load->model('payment/firstdata');
-		
+
 		$this->load->model('checkout/order');
-		
+
 		$this->load->language('payment/firstdata');
 
 		$message = '';
@@ -106,9 +106,9 @@ class ControllerPaymentFirstdata extends Controller {
 
 			if ($local_hash == $this->request->post['notification_hash']) {
 				$order_id_parts = explode('T', $this->request->post['oid']);
-				
+
 				$order_id = (int)$order_id_parts[0];
-				
+
 				$order_info = $this->model_checkout_order->getOrder($order_id);
 
 				if ($this->request->post['txntype'] == 'preauth' || $this->request->post['txntype'] == 'sale') {
@@ -189,11 +189,11 @@ class ControllerPaymentFirstdata extends Controller {
 
 							if ($this->config->get('firstdata_auto_settle') == 1) {
 								$this->model_payment_firstdata->addTransaction($fd_order_id, 'payment', $order_info);
-								
+
 								$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('firstdata_order_status_success_settled_id'), $message, false);
 							} else {
 								$this->model_payment_firstdata->addTransaction($fd_order_id, 'auth');
-								
+
 								$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('firstdata_order_status_success_unsettled_id'), $message, false);
 							}
 						} else {
@@ -208,11 +208,11 @@ class ControllerPaymentFirstdata extends Controller {
 				if ($this->request->post['txntype'] == 'void') {
 					if ($this->request->post['status'] == 'DECLINED') {
 						$fd_order = $this->model_payment_firstdata->getOrder($order_id);
-						
+
 						$this->model_payment_firstdata->updateVoidStatus($order_id, 1);
-						
+
 						$this->model_payment_firstdata->addTransaction($fd_order['firstdata_order_id'], 'void');
-						
+
 						$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('firstdata_order_status_void_id'), $message, false);
 					}
 				}
@@ -220,11 +220,11 @@ class ControllerPaymentFirstdata extends Controller {
 				if ($this->request->post['txntype'] == 'postauth') {
 					if ($this->request->post['status'] == 'APPROVED') {
 						$fd_order = $this->model_payment_firstdata->getOrder($order_id);
-						
+
 						$this->model_payment_firstdata->updateCaptureStatus($order_id, 1);
-						
+
 						$this->model_payment_firstdata->addTransaction($fd_order['firstdata_order_id'], 'payment', $order_info);
-						
+
 						$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('firstdata_order_status_success_settled_id'), $message, false);
 					}
 				}

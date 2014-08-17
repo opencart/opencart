@@ -22,9 +22,9 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-insurance"><?php echo $entry_insurance; ?></label>
+        <label class="col-sm-2 control-label" for="input-insurance"><span data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><?php echo $entry_insurance; ?></span></label>
         <div class="col-sm-10">
-          <textarea name="parcelforce_48_insurance" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-insurance" class="form-control"><span data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><?php echo $parcelforce_48_insurance; ?></span></textarea>
+          <textarea name="parcelforce_48_insurance" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-insurance" class="form-control"><?php echo $parcelforce_48_insurance; ?></textarea>
         </div>
       </div>
       <div class="form-group">

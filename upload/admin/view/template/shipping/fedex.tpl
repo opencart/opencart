@@ -86,19 +86,21 @@
       <div class="form-group">
         <label class="col-sm-2 control-label"><?php echo $entry_service; ?></label>
         <div class="col-sm-10">
-          <?php foreach ($services as $service) { ?>
-          <div class="checkbox">
-            <label>
-              <?php if (in_array($service['value'], $fedex_service)) { ?>
-              <input type="checkbox" name="fedex_service[]" value="<?php echo $service['value']; ?>" checked="checked" />
-              <?php echo $service['text']; ?>
-              <?php } else { ?>
-              <input type="checkbox" name="fedex_service[]" value="<?php echo $service['value']; ?>" />
-              <?php echo $service['text']; ?>
-              <?php } ?>
-            </label>
+          <div class="well well-sm" style="height: 150px; overflow: auto;">
+            <?php foreach ($services as $service) { ?>
+            <div class="checkbox">
+              <label>
+                <?php if (in_array($service['value'], $fedex_service)) { ?>
+                <input type="checkbox" name="fedex_service[]" value="<?php echo $service['value']; ?>" checked="checked" />
+                <?php echo $service['text']; ?>
+                <?php } else { ?>
+                <input type="checkbox" name="fedex_service[]" value="<?php echo $service['value']; ?>" />
+                <?php echo $service['text']; ?>
+                <?php } ?>
+              </label>
+            </div>
+            <?php } ?>
           </div>
-          <?php } ?>
           <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a></div>
       </div>
       <div class="form-group">

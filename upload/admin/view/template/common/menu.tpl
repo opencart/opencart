@@ -1,4 +1,4 @@
-<nav id="column-left"> <?php echo $profile; ?>
+<nav id="column-left"><?php echo $profile; ?>
   <ul id="menu">
     <li id="dashboard"><a href="<?php echo $home; ?>"><i class="fa fa-home fa-fw"></i> <?php echo $text_dashboard; ?></a></li>
     <li id="catalog"><a class="parent"><i class="fa fa-tags fa-fw"></i> <?php echo $text_catalog; ?></a>

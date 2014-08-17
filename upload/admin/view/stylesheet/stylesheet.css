@@ -112,7 +112,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	overflow: auto;
 	color: #666;
 	border-bottom: 1px solid #26333C;
-	text-shadow: 1px 1px 0px #000000;		
 }
 #profile div {
 	float: left;
@@ -128,7 +127,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 16px;
 	font-weight: 400;
-
 	color: #FFF;
 	margin-bottom: 0;
 }
@@ -173,7 +171,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #menu li a {
 	color: #708EA3;
-	text-shadow: 1px 1px 0px #000000;
 	border-bottom: 1px solid #26333C;
 	text-decoration: none;
 	display: block;
@@ -256,7 +253,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
   border-color: #eee #eee #ddd;
 }
 .nav-tabs {
-	margin-bottom: 15px;
+	margin-bottom: 25px;
 }
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
@@ -318,7 +315,6 @@ label.control-label {
 /* Buttons */
 .btn {
 	border-radius: 2px;
-	box-shadow: none;
 	font-size: 12px;
 	box-shadow: none;
 	padding: 7.5px 13px;
@@ -345,50 +341,46 @@ label.control-label {
 }
 .btn-default {
 	color: #555;
-	border-color: #ddd;
 	background: #f4f4f4;
-	border-bottom-color: #cecece;
-	background-image: linear-gradient(to bottom, #f4f4f4 0, #eaeaea 100%);
+	background-image: linear-gradient(to bottom, #F5F5F5 0, #E8E8E8 100%);
 	background-repeat: repeat-x;
+	border-color: #DBDBDB;
+	border-bottom-color: #D0D0D0;
 }
-.btn-primary, .btn-primary:focus{
-	border-color: #16689E;
-	border-bottom-color: #16689e;
-	background: #1B80C2;
-	/*
-	background-image: linear-gradient(to bottom, #1e8cd3 0, #1a7ab9 100%);
+.btn-primary {
+	background: #4691D1;
+	background-image: linear-gradient(to bottom, #4F97D3 0, #428AC6 100%);
 	background-repeat: repeat-x;
-	*/
+	border-color: #3F82BC;
+	border-bottom-color: #3C7BB2;
 }
 .btn-info {
-	border-color: #2CAED5;
-	border-bottom-color: #2caed5;
-	background: #4EBBDB;
-	/*
-	background-image: linear-gradient(to bottom, #5fc2df 0, #46b8da 100%);
+	background: #60C4E2;
+	background-image: linear-gradient(to bottom, #68C7E3 0, #5BBAD6 100%);
 	background-repeat: repeat-x;
-	*/
+	border-color: #56B0CB;
+	border-bottom-color: #52A7C0;
 }
 .btn-success {
-	border-color: #4cb64c;
-	border-bottom-color: #42a142;
-	background: #5ebd5e;
-	background-image: linear-gradient(to bottom, #62be62 0, #4cb64c 100%);
+	background: #5DC25D;
+	background-image: linear-gradient(to bottom, #65C565 0, #58B858 100%);
 	background-repeat: repeat-x;
+	border-color: #54AE54;
+	border-bottom-color: #4FA54F;	
 }
-.btn-warning, .btn-warning:focus {
-	border-color: #f19a1f;
-	border-bottom-color: #e38b0e;
-	background: #f4b04f;
-	background-image: linear-gradient(to bottom, #f4b254 0, #f3a537 100%);
+.btn-warning {
+	background: #F2B155;
+	background-image: linear-gradient(to bottom, #F3B55E 0, #E6A851 100%);
 	background-repeat: repeat-x;
+	border-color: #D99F4C;
+	border-bottom-color: #CE9748;	
 }
-.btn-danger, .btn-danger:focus {
-	border-color: #e3503e;
-	border-bottom-color: #df3823;
-	background: #e66454;
-	background-image: linear-gradient(to bottom, #e76858 0, #e3503e 100%);
+.btn-danger {
+	background: #DE5854;
+	background-image: linear-gradient(to bottom, #E0615D 0, #D35450 100%);
 	background-repeat: repeat-x;
+	border-color: #C74F4B;
+	border-bottom-color: #BD4B47;	
 }
 .pagination {
   margin: 18px 0;
@@ -506,35 +498,44 @@ label.control-label {
 
 /* Tiles */
 .tile {
-	min-height: 200px;
+	min-height: 150px;
 	margin-bottom: 15px;
+	border-radius: 3px;
 }
 .tile-heading {
+	font-size: 15px;
+	font-weight: 600;
 	padding: 10px;
-	background-image: linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15));
 	color: #FFFFFF;
+	text-transform: uppercase;
+	background-image: linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15));
 }
 .tile-body {
 	padding: 15px;
 	color: #FFFFFF;
 }
-.tile-icon {
-	
+.tile i {
+	color: #000;
+	opacity: 0.10;
 }
 .tile-red {
-	background-color: #F56B6B;
+	background-color: #DE5854;
+	border: 1px solid #BD4B47;
 }
 
 .tile-blue {
-	
+	background-color: #4691D1;
+	border: 1px solid #3C7BB2;	
 }
 
 .tile-green {
-	
+	background-color: #5DC25D;
+	border: 1px solid #4FA54F;
 }
 
 .tile-yellow {
-	
+	background-color: #F2B155;
+	border: 1px solid #CE9748;
 }
 
 

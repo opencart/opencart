@@ -25,7 +25,7 @@
             <label class="col-sm-2 control-label" for="entry-email"><?php echo $entry_email; ?></label>
             <div class="col-sm-10">
               <input type="text" name="pp_standard_email" value="<?php echo $pp_standard_email; ?>" placeholder="<?php echo $entry_email; ?>" id="entry-email" class="form-control"/>
-              <?php if (isset($error_email)) { ?>
+              <?php if ($error_email) { ?>
               <div class="text-danger"><?php echo $error_email; ?></div>
               <?php } ?>
             </div>

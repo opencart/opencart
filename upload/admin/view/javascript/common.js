@@ -74,6 +74,8 @@ $(document).ready(function() {
 		if ($('#column-left').hasClass('active')) {
 			localStorage.setItem('column-left', '');
 
+			$('#button-menu i').replaceWith('<i class="fa fa-indent"></i>');
+
 			$('#column-left').removeClass('active');
 
 			$('#menu > li > ul').removeClass('in collapse');
@@ -81,6 +83,8 @@ $(document).ready(function() {
 		} else {
 			localStorage.setItem('column-left', 'active');
 
+			$('#button-menu i').replaceWith('<i class="fa fa-dedent"></i>');
+			
 			$('#column-left').addClass('active');
 
 			// Add the slide down to open menu items

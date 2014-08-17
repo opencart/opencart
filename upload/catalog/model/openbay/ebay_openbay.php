@@ -613,7 +613,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 		header('Pragma: public');
 		header('Expires: 0');
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header('Cache-Control: private',false);
+		header('Cache-Control: private', false);
 		header('Content-Type: application/force-download');
 		header('Content-Length: ' . filesize(DIR_LOGS . "ebaylog.log"));
 		header('Content-Disposition: attachment; filename="ebaylog.log"');
@@ -627,7 +627,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 		header('Pragma: public');
 		header('Expires: 0');
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header('Cache-Control: private',false);
+		header('Cache-Control: private', false);
 		header('Content-Type: application/force-download');
 		header('Content-Length: ' . filesize(DIR_LOGS . "update.log"));
 		header('Content-Disposition: attachment; filename="update.log"');

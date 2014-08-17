@@ -214,13 +214,17 @@ final class Etsy {
 	}
 
 	private function encrypt($msg, $k, $base64 = false) {
-		if (!$td = mcrypt_module_open('rijndael-256', '', 'ctr', ''))
+		$td = mcrypt_module_open('rijndael-256', '', 'ctr', '');
+
+		if (!$td) {
 			return false;
+		}
 
 		$iv = mcrypt_create_iv(32, MCRYPT_RAND);
 
-		if (mcrypt_generic_init($td, $k, $iv) !== 0)
+		if (mcrypt_generic_init($td, $k, $iv) !== 0) {
 			return false;
+		}
 
 		$msg = mcrypt_generic($td, $msg);
 		$msg = $iv . $msg;

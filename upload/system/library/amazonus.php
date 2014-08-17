@@ -71,10 +71,10 @@ class Amazonus {
 		if ($this->openbay->addonLoad('openstock') && (isset($data['has_option']) && $data['has_option'] == 1)) {
 			$logger->write('openStock found installed and product has options.');
 			$quantity_data = array();
-			foreach($data['product_option_stock'] as $optStock) {
-				$amazonusSkuRows = $this->getLinkedSkus($product_id, $optStock['var']);
+			foreach($data['product_option_stock'] as $opt_stock) {
+				$amazonusSkuRows = $this->getLinkedSkus($product_id, $opt_stock['var']);
 				foreach($amazonusSkuRows as $amazonusSkuRow) {
-					$quantity_data[$amazonusSkuRow['amazonus_sku']] = $optStock['stock'];
+					$quantity_data[$amazonusSkuRow['amazonus_sku']] = $opt_stock['stock'];
 				}
 			}
 			if(!empty($quantity_data)) {
@@ -188,9 +188,9 @@ class Amazonus {
 		$order_items_node = $request_node->addChild('OrderItems');
 
 		foreach ($amazonus_order_products as $product) {
-			$newOrderItem = $order_items_node->addChild('OrderItem');
-			$newOrderItem->addChild('ItemId', htmlspecialchars($product['amazonus_order_item_id']));
-			$newOrderItem->addChild('Quantity', (int)$product['quantity']);
+			$new_order_item = $order_items_node->addChild('OrderItem');
+			$new_order_item->addChild('ItemId', htmlspecialchars($product['amazonus_order_item_id']));
+			$new_order_item->addChild('Quantity', (int)$product['quantity']);
 		}
 
 		$doc = new DOMDocument('1.0');
@@ -472,11 +472,11 @@ class Amazonus {
 						}
 
 						$var = implode(':', $pOptions);
-						$qtyLeftRow = $this->db->query("SELECT `stock` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$order_product['product_id'] . "' AND `var` = '" . $this->db->escape($var) . "'")->row;
-						if(empty($qtyLeftRow)) {
-							$qtyLeftRow['stock'] = 0;
+						$quantity_left_row = $this->db->query("SELECT `stock` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$order_product['product_id'] . "' AND `var` = '" . $this->db->escape($var) . "'")->row;
+						if(empty($quantity_left_row)) {
+							$quantity_left_row['stock'] = 0;
 						}
-						$passArray[] = array('pid' => $order_product['product_id'], 'qty_left' => $qtyLeftRow['stock'], 'var' => $var);
+						$passArray[] = array('pid' => $order_product['product_id'], 'qty_left' => $quantity_left_row['stock'], 'var' => $var);
 					}
 				} else {
 					$passArray[] = array('pid' => $order_product['product_id'], 'qty_left' => $product_query->row['quantity'], 'var' => '');
@@ -568,8 +568,8 @@ class Amazonus {
 		}
 
 		$fields = array();
-		$fieldTypes = array('required', 'desired', 'optional');
-		foreach ($fieldTypes as $type) {
+		$field_types = array('required', 'desired', 'optional');
+		foreach ($field_types as $type) {
 			foreach ($simplexml->fields->$type->field as $field) {
 				$attributes = $field->attributes();
 				$fields[] = array(

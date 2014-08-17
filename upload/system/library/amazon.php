@@ -1,8 +1,8 @@
 <?php
 class Amazon {
 	private $token;
-	private $encPass;
-	private $encSalt;
+	private $encryption_password;
+	private $encryption_salt;
 	private $server = 'http://uk-amazon.openbaypro.com/';
 	private $registry;
 
@@ -10,8 +10,8 @@ class Amazon {
 		$this->registry = $registry;
 
 		$this->token   = $registry->get('config')->get('openbay_amazon_token');
-		$this->encPass = $registry->get('config')->get('openbay_amazon_enc_string1');
-		$this->encSalt = $registry->get('config')->get('openbay_amazon_enc_string2');
+		$this->encryption_password = $registry->get('config')->get('openbay_amazon_enc_string1');
+		$this->encryption_salt = $registry->get('config')->get('openbay_amazon_enc_string2');
 	}
 
 	public function __get($name) {
@@ -70,10 +70,10 @@ class Amazon {
 		if ($this->openbay->addonLoad('openstock') && (isset($data['has_option']) && $data['has_option'] == 1)) {
 			$logger->write('openStock found installed and product has options.');
 			$quantity_data = array();
-			foreach($data['product_option_stock'] as $optStock) {
-				$amazon_sku_rows = $this->getLinkedSkus($product_id, $optStock['var']);
+			foreach($data['product_option_stock'] as $opt_stock) {
+				$amazon_sku_rows = $this->getLinkedSkus($product_id, $opt_stock['var']);
 				foreach($amazon_sku_rows as $amazon_sku_row) {
-					$quantity_data[$amazon_sku_row['amazon_sku']] = $optStock['stock'];
+					$quantity_data[$amazon_sku_row['amazon_sku']] = $opt_stock['stock'];
 				}
 			}
 			if(!empty($quantity_data)) {
@@ -142,7 +142,7 @@ class Amazon {
 		$log->write('order/bulkUpdate response: ' . $response);
 	}
 
-	public function updateOrder($order_id, $order_status_string, $courier_id = '', $courierFromList = true, $tracking_no = '') {
+	public function updateOrder($order_id, $order_status_string, $courier_id = '', $courier_from_list = true, $tracking_no = '') {
 
 		if ($this->config->get('amazon_status') != 1) {
 			return;
@@ -167,7 +167,7 @@ class Amazon {
 
 
 		$this->load->model('openbay/amazon');
-		$amazon_orderProducts = $this->model_openbay_amazon->getAmazonOrderedProducts($order_id);
+		$amazon_order_products = $this->model_openbay_amazon->getAmazonOrderedProducts($order_id);
 
 
 		$request_node = new SimpleXMLElement('<Request/>');
@@ -176,7 +176,7 @@ class Amazon {
 		$request_node->addChild('Status', $order_status_string);
 
 		if(!empty($courier_id)) {
-			if($courierFromList) {
+			if($courier_from_list) {
 				$request_node->addChild('CourierId', $courier_id);
 			} else {
 				$request_node->addChild('CourierOther', $courier_id);
@@ -184,12 +184,12 @@ class Amazon {
 			$request_node->addChild('TrackingNo', $tracking_no);
 		}
 
-		$orderItemsNode = $request_node->addChild('OrderItems');
+		$order_items_node = $request_node->addChild('OrderItems');
 
-		foreach ($amazon_orderProducts as $product) {
-			$newOrderItem = $orderItemsNode->addChild('OrderItem');
-			$newOrderItem->addChild('ItemId', htmlspecialchars($product['amazon_order_item_id']));
-			$newOrderItem->addChild('Quantity', (int)$product['quantity']);
+		foreach ($amazon_order_products as $product) {
+			$new_order_item = $order_items_node->addChild('OrderItem');
+			$new_order_item->addChild('ItemId', htmlspecialchars($product['amazon_order_item_id']));
+			$new_order_item->addChild('Quantity', (int)$product['quantity']);
 		}
 
 		$doc = new DOMDocument('1.0');
@@ -197,7 +197,7 @@ class Amazon {
 		$doc->loadXML($request_node->asXML());
 		$doc->formatOutput = true;
 
-		$this->model_openbay_amazon->updateAmazonOrderTracking($order_id, $courier_id, $courierFromList, !empty($courier_id) ? $tracking_no : '');
+		$this->model_openbay_amazon->updateAmazonOrderTracking($order_id, $courier_id, $courier_from_list, !empty($courier_id) ? $tracking_no : '');
 		$log->write('Request: ' . $doc->saveXML());
 		$response = $this->callWithResponse('order/update2', $doc->saveXML(), false);
 		$log->write("Response for Order's status update: $response");
@@ -255,7 +255,7 @@ class Amazon {
 			$argString = $data;
 		}
 
-		$token = $this->pbkdf2($this->encPass, $this->encSalt, 1000, 32);
+		$token = $this->pbkdf2($this->encryption_password, $this->encryption_salt, 1000, 32);
 		$crypt = $this->encrypt($argString, $token, true);
 
 		$defaults = array(
@@ -287,7 +287,7 @@ class Amazon {
 			$argString = $data;
 		}
 
-		$token = $this->pbkdf2($this->encPass, $this->encSalt, 1000, 32);
+		$token = $this->pbkdf2($this->encryption_password, $this->encryption_salt, 1000, 32);
 		$crypt = $this->encrypt($argString, $token, true);
 
 		$defaults = array(
@@ -322,7 +322,7 @@ class Amazon {
 			}
 		}
 
-		$token = $this->pbkdf2($this->encPass, $this->encSalt, 1000, 32);
+		$token = $this->pbkdf2($this->encryption_password, $this->encryption_salt, 1000, 32);
 		$data = $this->decrypt($crypt, $token);
 
 		return $data;
@@ -471,13 +471,13 @@ class Amazon {
 						}
 
 						$var = implode(':', $pOptions);
-						$qtyLeftRow = $this->db->query("SELECT `stock` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$order_product['product_id'] . "' AND `var` = '" . $this->db->escape($var) . "'")->row;
+						$quantity_left_row = $this->db->query("SELECT `stock` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$order_product['product_id'] . "' AND `var` = '" . $this->db->escape($var) . "'")->row;
 
-						if(empty($qtyLeftRow)) {
-							$qtyLeftRow['stock'] = 0;
+						if(empty($quantity_left_row)) {
+							$quantity_left_row['stock'] = 0;
 						}
 
-						$passArray[] = array('pid' => $order_product['product_id'], 'qty_left' => $qtyLeftRow['stock'], 'var' => $var);
+						$passArray[] = array('pid' => $order_product['product_id'], 'qty_left' => $quantity_left_row['stock'], 'var' => $var);
 					}
 				} else {
 					$passArray[] = array('pid' => $order_product['product_id'], 'qty_left' => $product_query->row['quantity'], 'var' => '');
@@ -569,8 +569,8 @@ class Amazon {
 		}
 
 		$fields = array();
-		$fieldTypes = array('required', 'desired', 'optional');
-		foreach ($fieldTypes as $type) {
+		$field_types = array('required', 'desired', 'optional');
+		foreach ($field_types as $type) {
 			foreach ($simplexml->fields->$type->field as $field) {
 				$attributes = $field->attributes();
 				$fields[] = array(

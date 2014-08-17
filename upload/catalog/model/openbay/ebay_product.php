@@ -702,7 +702,7 @@ class ModelOpenbayEbayProduct extends Model {
 	}
 
 	private function addImage($orig, $new, $name, $product_id, $imgCount) {
-		$orig = str_replace(' ', '%20',$orig);
+		$orig = str_replace(' ', '%20', $orig);
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_image_import` SET `image_original` = '" . $this->db->escape($orig) . "', `image_new` = '" . $this->db->escape($new) . "', `name` = '" . $this->db->escape($name) . "', `product_id` = '" . (int)$product_id . "', `imgcount` = '" . (int)$imgCount . "'");
 	}

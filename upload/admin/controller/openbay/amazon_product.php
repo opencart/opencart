@@ -317,40 +317,40 @@ class ControllerOpenbayAmazonProduct extends Controller {
 
 		$logger->write('Uploading process started . ');
 
-		$savedProducts = $this->model_openbay_amazon->getSavedProductsData();
+		$saved_products = $this->model_openbay_amazon->getSavedProductsData();
 
-		if(empty($savedProducts)) {
+		if(empty($saved_products)) {
 			$logger->write('No saved listings found. Uploading canceled . ');
 			$result['status'] = 'error';
 			$result['error_message'] = 'No saved listings. Nothing to upload. Aborting . ';
 			return $result;
 		}
 
-		foreach($savedProducts as $savedProduct) {
-			$productDataDecoded = (array)json_decode($savedProduct['data']);
+		foreach($saved_products as $saved_product) {
+			$product_data_decoded = (array)json_decode($saved_product['data']);
 
 			$catalog = defined(HTTPS_CATALOG) ? HTTPS_CATALOG : HTTP_CATALOG;
 			$response_data = array("response_url" => $catalog . 'index.php?route=amazon/product/inbound');
-			$category_data = array('category' => (string)$savedProduct['category']);
-			$fields_data = array('fields' => (array)$productDataDecoded['fields']);
+			$category_data = array('category' => (string)$saved_product['category']);
+			$fields_data = array('fields' => (array)$product_data_decoded['fields']);
 
-			$mpArray = !empty($savedProduct['marketplaces']) ? (array)unserialize($savedProduct['marketplaces']) : array();
-			$marketplaces_data = array('marketplaces' => $mpArray);
+			$mp_array = !empty($saved_product['marketplaces']) ? (array)unserialize($saved_product['marketplaces']) : array();
+			$marketplaces_data = array('marketplaces' => $mp_array);
 
-			$productData = array_merge($category_data, $fields_data, $response_data, $marketplaces_data);
-			$insertion_response = $this->openbay->amazon->insertProduct($productData);
+			$product_data = array_merge($category_data, $fields_data, $response_data, $marketplaces_data);
+			$insertion_response = $this->openbay->amazon->insertProduct($product_data);
 
-			$logger->write("Uploading product with data:" . print_r($productData, true) . "
+			$logger->write("Uploading product with data:" . print_r($product_data, true) . "
 				Got response:" . print_r($insertion_response, true));
 
 			if(!isset($insertion_response['status']) || $insertion_response['status'] == 'error') {
 				$details = isset($insertion_response['info']) ? $insertion_response['info'] : 'Unknown';
-				$result['error_message'] = sprintf($this->language->get('upload_failed'), $savedProduct['sku'], $details);
+				$result['error_message'] = sprintf($this->language->get('upload_failed'), $saved_product['sku'], $details);
 				$result['status'] = 'error';
 				break;
 			}
 			$logger->write('Product upload success');
-			$this->model_openbay_amazon->setProductUploaded($savedProduct['product_id'], $insertion_response['insertion_id'], $savedProduct['var']);
+			$this->model_openbay_amazon->setProductUploaded($saved_product['product_id'], $insertion_response['insertion_id'], $saved_product['var']);
 		}
 
 		if(!isset($result['status'])) {

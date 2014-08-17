@@ -90,7 +90,7 @@ final class Ebay {
 				$encoding = mb_detect_encoding($result);
 
 				if($encoding == 'UTF-8') {
-					$result = preg_replace('/[^(\x20-\x7F)]*/','', $result);
+					$result = preg_replace('/[^(\x20-\x7F)]*/', '', $result);
 				}
 
 				$result             = json_decode($result, 1);
@@ -423,8 +423,8 @@ final class Ebay {
 		$encoding = mb_detect_encoding($data);
 
 		if($encoding == 'UTF-8') {
-			$data = preg_replace('/[^(\x20-\x7F)]*/', '',$data);
-			$data = preg_replace('#\\\\x[0-9a-fA-F]{2,2}#', '',$data);
+			$data = preg_replace('/[^(\x20-\x7F)]*/', '', $data);
+			$data = preg_replace('#\\\\x[0-9a-fA-F]{2,2}#', '', $data);
 		}
 
 		$data = json_decode($data);
@@ -703,7 +703,7 @@ final class Ebay {
 
 					if($this->config->get('ebay_relistitems') == 1) {
 						//relist item with new stock
-						$this->relistItem($item['itemId'], $item['productId'],(int)$local_stock['quantity']);
+						$this->relistItem($item['itemId'], $item['productId'], (int)$local_stock['quantity']);
 					}
 				}
 			}else{

@@ -511,11 +511,11 @@ class ModelOpenbayAmazon extends Model {
 		return $orderStatus;
 	}
 
-	public function updateAmazonOrderTracking($order_id, $courierId, $courierFromList, $trackingNo) {
+	public function updateAmazonOrderTracking($order_id, $courierId, $courier_from_list, $trackingNo) {
 		$this->db->query("
 			UPDATE `" . DB_PREFIX . "amazon_order`
 			SET `courier_id` = '" . $courierId . "',
-				`courier_other` = " . (int)!$courierFromList . ",
+				`courier_other` = " . (int)!$courier_from_list . ",
 				`tracking_no` = '" . $trackingNo . "'
 			WHERE `order_id` = " . (int)$order_id . "");
 	}

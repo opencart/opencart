@@ -16,7 +16,7 @@ class ControllerEbayOpenbay extends Controller {
 			$this->response->setOutput(json_encode(array('msg' => 'error 002')));
 		} else {
 			$token  = $this->openbay->ebay->pbkdf2($s1, $s2, 1000, 32);
-			$data   = $this->openbay->ebay->decrypt($encrypted['data'],$token, true);
+			$data   = $this->openbay->ebay->decrypt($encrypted['data'], $token, true);
 
 			if($secret == $data['secret'] && $active == 1) {
 				if($data['action'] == 'ItemUnsold') {
@@ -146,7 +146,7 @@ class ControllerEbayOpenbay extends Controller {
 			$settings['ebay_secret']  = $this->request->post['secret'];
 			$settings['ebay_string1'] = $this->request->post['s1'];
 			$settings['ebay_string2'] = $this->request->post['s2'];
-			$this->openbay->ebay->editSetting('ebay',$settings);
+			$this->openbay->ebay->editSetting('ebay', $settings);
 
 			$this->response->setOutput(json_encode(array('msg' => 'ok', 'reason' => 'Auto setup has been completed','version' => (int)$this->config->get('openbay_version'))));
 		}

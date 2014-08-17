@@ -1445,7 +1445,7 @@ class ControllerOpenbayEbay extends Controller {
 
 				$data['error_warning'] = array();
 
-				$activeList = $this->model_openbay_ebay->getLiveListingArray();
+				$active_list = $this->model_openbay_ebay->getLiveListingArray();
 
 				$products = array();
 
@@ -1456,7 +1456,7 @@ class ControllerOpenbayEbay extends Controller {
 				}
 
 				foreach ($this->request->post['selected'] as $product_id) {
-					if(!array_key_exists($product_id, $activeList)) {
+					if(!array_key_exists($product_id, $active_list)) {
 
 						$prod = $this->model_catalog_product->getProduct($product_id);
 

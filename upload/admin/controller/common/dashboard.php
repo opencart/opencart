@@ -42,18 +42,31 @@ class ControllerCommonDashboard extends Controller {
 		// Total Orders
 		$this->load->model('sale/order');
 
-		$data['order_total'] = $this->model_sale_order->getTotalOrders();
+		$order_total = $this->model_sale_order->getTotalOrders();
 
-		$today = $this->model_sale_order->getTotalOrders(array('filter_date_added' => date('Y-m-d', strtotime('-1 day'))));
+		if ($order_total > 0) {
+			$data['order_total'] = $order_total;
 
-		$yesterday = $this->model_sale_order->getTotalOrders(array('filter_date_added' => date('Y-m-d', strtotime('-2 day'))));
+			$today = $this->model_sale_order->getTotalOrders(array('filter_date_added' => date('Y-m-d', strtotime('-1 day'))));
 
-		$difference = $today - $yesterday;
+			$yesterday = $this->model_sale_order->getTotalOrders(array('filter_date_added' => date('Y-m-d', strtotime('-2 day'))));
 
-		if ($difference && $today) {
-			$data['order_percentage'] = round(($difference / $today) * 100);
+			$difference = $today - $yesterday;
+
+			if ($difference && $today) {
+				$data['order_percentage'] = round(($difference / $today) * 100);
+			} else {
+				$data['order_percentage'] = 0;
+			}
+
+			$data['class'] = 'label-success';
+
 		} else {
+			$data['order_total'] = '0.00';
+
 			$data['order_percentage'] = 0;
+
+			$data['class'] = 'label-danger';
 		}
 
 		// Customers

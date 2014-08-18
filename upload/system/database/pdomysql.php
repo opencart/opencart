@@ -2,7 +2,7 @@
 /**
  * Proxy PDO Class connecting to a mysql database.
  * @author	Richard Parnaby-King
- * @link		http://richard.parnaby-king.co.uk
+ * @link	http://richard.parnaby-king.co.uk
  */
 final class DBPDOMySQL extends PDO {
 	/**
@@ -27,8 +27,8 @@ final class DBPDOMySQL extends PDO {
 	 * @return	stdClass OpenCart result set
 	 */
 	public function query($sql) {
-    $stmt = $this->prepare($sql);
-    $stmt->execute();
+		$stmt = $this->prepare($sql);
+		$stmt->execute();
 		$this->_affectedCount = $stmt->rowCount();
 		$data = array();
 		while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {

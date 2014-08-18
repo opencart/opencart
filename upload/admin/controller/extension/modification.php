@@ -189,7 +189,7 @@ class ControllerExtensionModification extends Controller {
 										// Only replace the occurance of the string that is equal to the between the offset and limit
 										for ($i = $offset; $i < $limit; $i++) {
 											if (isset($match[$i])) {
-												$modification[$key] = substr_replace($modification[$key], $replace, $match[$i], strlen($search));
+												$modification[$key] = substr_replace($modification[$key], trim($replace), $match[$i], strlen($search));
 											}
 										}
 
@@ -209,7 +209,7 @@ class ControllerExtensionModification extends Controller {
 											$limit = -1;
 										}
 
-										$modification[$key] = preg_replace($search, $replace, $modification[$key], $limit);
+										$modification[$key] = preg_replace($search, trim($replace), $modification[$key], $limit);
 									}
 								}
 							}

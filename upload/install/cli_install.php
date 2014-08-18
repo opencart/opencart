@@ -17,7 +17,6 @@
 //                               --username admin \
 //                               --password admin \
 //                               --email youremail@example.com \
-//                               --agree_tnc yes \
 //                               --http_server http://localhost/opencart
 //
 
@@ -68,7 +67,6 @@ function usage() {
 								  '--username', 'admin',
 								  '--password', 'admin',
 								  '--email', 'youremail@example.com',
-								  '--agree_tnc', 'yes',
 								  '--http_server', 'http://localhost/opencart'));
 	echo 'php cli_install.php install ' . $options . "\n\n";
 }
@@ -81,7 +79,6 @@ function get_options($argv) {
 		'db_prefix' => 'oc_',
 		'db_driver' => 'mysqli',
 		'username' => 'admin',
-		'agree_tnc' => 'no',
 	);
 
 	$options = array();
@@ -107,7 +104,6 @@ function valid($options) {
 		'username',
 		'password',
 		'email',
-		'agree_tnc',
 		'http_server',
 	);
 	$missing = array();
@@ -116,13 +112,10 @@ function valid($options) {
 			$missing[] = $r;
 		}
 	}
-	if ($options['agree_tnc'] !== 'yes') {
-		$missing[] = 'agree_tnc (should be yes)';
-	}
 	if (!preg_match('#/$#', $options['http_server'])) {
 		$options['http_server'] = $options['http_server'].'/';
 	}
-	$valid = count($missing) === 0 && $options['agree_tnc'] === 'yes';
+	$valid = count($missing) === 0;
 	return array($valid, $missing);
 }
 

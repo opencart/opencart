@@ -36,7 +36,7 @@ class ModelPaymentRealex extends Model {
 			$settle_status = 0;
 		}
 
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "realex_order` SET `order_id` = '".(int)$order_info['order_id']."', `settle_type` = '".(int)$this->config->get('realex_auto_settle')."', `order_ref` = '".$this->db->escape($order_ref)."', `order_ref_previous` = '".$this->db->escape($order_ref)."', `date_added` = now(), `modified` = now(), `capture_status` = '".(int)$settle_status."', `currency_code` = '".$this->db->escape($order_info['currency_code'])."', `pasref` = '".$this->db->escape($pas_ref)."', `pasref_previous` = '".$this->db->escape($pas_ref)."', `authcode` = '".$this->db->escape($auth_code)."', `account` = '".$this->db->escape($account)."', `total` = '".$this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false)."'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "realex_order` SET `order_id` = '".(int)$order_info['order_id']."', `settle_type` = '".(int)$this->config->get('realex_auto_settle')."', `order_ref` = '".$this->db->escape($order_ref)."', `order_ref_previous` = '".$this->db->escape($order_ref)."', `date_added` = now(), `date_modified` = now(), `capture_status` = '".(int)$settle_status."', `currency_code` = '".$this->db->escape($order_info['currency_code'])."', `pasref` = '".$this->db->escape($pas_ref)."', `pasref_previous` = '".$this->db->escape($pas_ref)."', `authcode` = '".$this->db->escape($auth_code)."', `account` = '".$this->db->escape($account)."', `total` = '".$this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false)."'");
 
 		return $this->db->getLastId();
 	}

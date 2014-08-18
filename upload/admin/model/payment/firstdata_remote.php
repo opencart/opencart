@@ -7,7 +7,7 @@ class ModelPaymentFirstdataRemote extends Model {
 			  `order_id` INT(11) NOT NULL,
 			  `order_ref` CHAR(50) NOT NULL,
 			  `date_added` DATETIME NOT NULL,
-			  `modified` DATETIME NOT NULL,
+			  `date_modified` DATETIME NOT NULL,
 			  `tdate` VARCHAR(30) NOT NULL,
 			  `capture_status` INT(1) DEFAULT NULL,
 			  `void_status` INT(1) DEFAULT NULL,

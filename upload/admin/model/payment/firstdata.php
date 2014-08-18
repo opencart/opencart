@@ -10,7 +10,7 @@ class ModelPaymentFirstdata extends Model {
 			  `pasref` VARCHAR(50) NOT NULL,
 			  `pasref_previous` VARCHAR(50) NOT NULL,
 			  `date_added` DATETIME NOT NULL,
-			  `modified` DATETIME NOT NULL,
+			  `date_modified` DATETIME NOT NULL,
 			  `capture_status` INT(1) DEFAULT NULL,
 			  `void_status` INT(1) DEFAULT NULL,
 			  `currency_code` CHAR(3) NOT NULL,

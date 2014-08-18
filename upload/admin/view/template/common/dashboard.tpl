@@ -14,14 +14,15 @@
     <div class="row">
       <div class="col-sm-3">
         <div class="tile tile-red">
+          <div class="tile-heading"><?php echo $text_new_order; ?></div>
           <div class="tile-body">
-            <span class="pull-right"><i class="fa fa-shopping-cart fa-4x"></i></span>
+            <i class="fa fa-shopping-cart fa-3x"></i>
             <?php if ($order_percentage > 0) { ?>
             <span class="label label-success pull-right">+<?php echo $order_percentage; ?>%</span>
             <?php } else { ?>
             <span class="label label-danger pull-right"><?php echo $order_percentage; ?>%</span>
             <?php } ?>
-            <h3><?php echo $text_new_order; ?> <?php echo $order_total; ?></h3>
+            <h3 class="pull-right"> <?php echo $order_total; ?></h3>
           </div>
         </div>
       </div>
@@ -50,7 +51,7 @@
         <div class="tile tile-green">
           <div class="tile-heading"><?php echo $text_online; ?></div>
           <div class="tile-body"><i class="fa fa-eye fa-3x"></i>
-            <h3><?php echo $online_total; ?></h3>
+            <h3 class="pull-right"><?php echo $online_total; ?></h3>
           </div>
         </div>
       </div>

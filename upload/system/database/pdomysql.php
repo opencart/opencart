@@ -42,12 +42,12 @@ final class DBPDOMySQL extends PDO {
 	}
 
 	/**
-	 * Proxy to PDO:quote(). Return the escaped query string
+	 * Proxy to addslashes. Return the escaped query string
 	 * @param	string
 	 * @return	string
 	 */
 	public function escape($value) {
-		return $this->quote($value);
+		return addslashes($value);
 	}
 
 	/**

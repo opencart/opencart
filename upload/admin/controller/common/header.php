@@ -61,8 +61,8 @@ class ControllerCommonHeader extends Controller {
 				$data['order_status_total'] = $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $this->config->get('config_process_status'))));
 				$data['order_status'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&filter_order_status=' . implode(',', $this->config->get('config_process_status')), 'SSL');
 			} else {
-				$data['order_status_total'] = false;
-				$data['order_status'] = false;
+				$data['order_status_total'] = '0.00';
+				$data['order_status'] = 0;
 			}
 
 			// Complete Orders
@@ -72,8 +72,8 @@ class ControllerCommonHeader extends Controller {
 				$data['complete_status_total'] = $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $this->config->get('config_complete_status'))));
 				$data['complete_status'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&filter_order_status=' . implode(',', $this->config->get('config_complete_status')), 'SSL');
 			} else {
-				$data['order_status_total'] = false;
-				$data['order_status'] = false;
+				$data['complete_status_total'] = '0.00';
+				$data['complete_status'] = 0;
 			}
 
 			// Returns

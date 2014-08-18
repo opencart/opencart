@@ -25,19 +25,19 @@ class ModelAccountRecurring extends Model {
 		$result = $this->db->query("SELECT `or`.*,`o`.`payment_method`,`o`.`payment_code`,`o`.`currency_code` FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "order` `o` ON `or`.`order_id` = `o`.`order_id` WHERE `or`.`order_recurring_id` = '".(int)$id."' AND `o`.`customer_id` = '".(int)$this->customer->getId()."' LIMIT 1");
 
 		if($result->num_rows > 0) {
-			$profile = $result->row;
+			$recurring = $result->row;
 
-			return $profile;
+			return $recurring;
 		} else {
 			return false;
 		}
 	}
 
 	public function getProfileByRef($ref) {
-		$profile = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_recurring` WHERE `profile_reference` = '".$this->db->escape($ref)."' LIMIT 1");
+		$recurring = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_recurring` WHERE `recurring_reference` = '".$this->db->escape($ref)."' LIMIT 1");
 
-		if($profile->num_rows > 0) {
-			return $profile->row;
+		if($recurring->num_rows > 0) {
+			return $recurring->row;
 		} else {
 			return false;
 		}
@@ -45,7 +45,7 @@ class ModelAccountRecurring extends Model {
 
 	public function getProfileTransactions($id) {
 
-		$profile = $this->getProfile($id);
+		$recurring = $this->getProfile($id);
 
 		$results = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_recurring_transaction` WHERE `order_recurring_id` = '".(int)$id."'");
 
@@ -54,7 +54,7 @@ class ModelAccountRecurring extends Model {
 
 			foreach($results->rows as $transaction) {
 
-				$transaction['amount'] = $this->currency->format($transaction['amount'], $profile['currency_code'], 1);
+				$transaction['amount'] = $this->currency->format($transaction['amount'], $recurring['currency_code'], 1);
 
 				$transactions[] = $transaction;
 			}
@@ -77,13 +77,13 @@ class ModelAccountRecurring extends Model {
 		$result = $this->db->query("SELECT `or`.*,`o`.`payment_method`,`o`.`currency_id`,`o`.`currency_value` FROM `" . DB_PREFIX . "order_recurring` `or` LEFT JOIN `" . DB_PREFIX . "order` `o` ON `or`.`order_id` = `o`.`order_id` WHERE `o`.`customer_id` = '".(int)$this->customer->getId()."' ORDER BY `o`.`order_id` DESC LIMIT " . (int)$start . "," . (int)$limit);
 
 		if ($result->num_rows > 0) {
-			$profiles = array();
+			$recurrings = array();
 
-			foreach($result->rows as $profile) {
-				$profiles[] = $profile;
+			foreach($result->rows as $recurring) {
+				$recurrings[] = $recurring;
 			}
 
-			return $profiles;
+			return $recurrings;
 		} else {
 			return false;
 		}

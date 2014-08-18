@@ -2,7 +2,7 @@
 class ModelSaleRecurring extends Model {
 	public function getTotalProfiles($data) {
 		$sql = "
-			SELECT COUNT(*) AS `profile_count`
+			SELECT COUNT(*) AS `recurring_count`
 			FROM `" . DB_PREFIX . "order_recurring` `or`
 			JOIN `" . DB_PREFIX . "order` o USING(order_id)
 			WHERE 1 = 1";
@@ -16,15 +16,15 @@ class ModelSaleRecurring extends Model {
 		}
 
 		if (!empty($data['filter_payment_reference'])) {
-			$sql .= " AND or.profile_reference LIKE '" . $this->db->escape($data['filter_payment_reference']) . "%'";
+			$sql .= " AND or.recurring_reference LIKE '" . $this->db->escape($data['filter_payment_reference']) . "%'";
 		}
 
 		if (!empty($data['filter_customer'])) {
 			$sql .= " AND CONCAT(o.firstname, ' ', o.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "%'";
 		}
 
-		if (!empty($data['filter_created'])) {
-			$sql .= " AND DATE(or.created) = DATE('" . $this->db->escape($data['filter_created']) . "')";
+		if (!empty($data['filter_date_added'])) {
+			$sql .= " AND DATE(or.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
 		}
 
 		if (!empty($data['filter_status'])) {
@@ -33,12 +33,12 @@ class ModelSaleRecurring extends Model {
 
 		$result = $this->db->query($sql);
 
-		return $result->row['profile_count'];
+		return $result->row['recurring_count'];
 	}
 
 	public function getProfiles($data) {
 		$sql = "
-			SELECT `or`.order_recurring_id, `or`.order_id, `or`.`status`, `or`.`created`, `or`.profile_reference,
+			SELECT `or`.order_recurring_id, `or`.order_id, `or`.`status`, `or`.`date_added`, `or`.recurring_reference,
 			  CONCAT(`o`.`firstname`, ' ', `o`.`lastname`) AS `customer`
 			FROM `" . DB_PREFIX . "order_recurring` `or`
 			JOIN `" . DB_PREFIX . "order` `o` USING(`order_id`)
@@ -53,15 +53,15 @@ class ModelSaleRecurring extends Model {
 		}
 
 		if (!empty($data['filter_payment_reference'])) {
-			$sql .= " AND or.profile_reference LIKE '" . $this->db->escape($data['filter_payment_reference']) . "%'";
+			$sql .= " AND or.recurring_reference LIKE '" . $this->db->escape($data['filter_payment_reference']) . "%'";
 		}
 
 		if (!empty($data['filter_customer'])) {
 			$sql .= " AND CONCAT(o.firstname, ' ', o.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "%'";
 		}
 
-		if (!empty($data['filter_created'])) {
-			$sql .= " AND DATE(or.created) = DATE('" . $this->db->escape($data['filter_created']) . "')";
+		if (!empty($data['filter_date_added'])) {
+			$sql .= " AND DATE(or.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
 		}
 
 		if (!empty($data['filter_status'])) {
@@ -71,9 +71,9 @@ class ModelSaleRecurring extends Model {
 		$sort_data = array(
 			'or.order_recurring_id',
 			'or.order_id',
-			'or.profile_reference',
+			'or.recurring_reference',
 			'customer',
-			'or.created',
+			'or.date_added',
 			'or.status',
 		);
 
@@ -101,50 +101,50 @@ class ModelSaleRecurring extends Model {
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
-		$profiles = array();
+		$recurrings = array();
 
 		$results = $this->db->query($sql)->rows;
 
 		foreach ($results as $result) {
-			$profiles[] = array(
+			$recurrings[] = array(
 				'order_recurring_id' => $result['order_recurring_id'],
 				'order_id' => $result['order_id'],
 				'status' => $this->getStatus($result['status']),
-				'created' => $result['created'],
-				'profile_reference' => $result['profile_reference'],
+				'date_added' => $result['date_added'],
+				'recurring_reference' => $result['recurring_reference'],
 				'customer' => $result['customer'],
 			);
 		}
 
-		return $profiles;
+		return $recurrings;
 	}
 
 	public function getProfile($order_recurring_id) {
-		$profile = array();
+		$recurring = array();
 
 		$result = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_recurring WHERE order_recurring_id = " . (int)$order_recurring_id)->row;
 
 		if ($result) {
 
-			$profile = array(
+			$recurring = array(
 				'order_recurring_id' => $result['order_recurring_id'],
 				'order_id' => $result['order_id'],
 				'status' => $this->getStatus($result['status']),
 				'status_id' => $result['status'],
-				'profile_id' => $result['profile_id'],
-				'profile_name' => $result['profile_name'],
-				'profile_description' => $result['profile_description'],
-				'profile_reference' => $result['profile_reference'],
+				'recurring_id' => $result['recurring_id'],
+				'recurring_name' => $result['recurring_name'],
+				'recurring_description' => $result['recurring_description'],
+				'recurring_reference' => $result['recurring_reference'],
 				'product_name' => $result['product_name'],
 				'product_quantity' => $result['product_quantity'],
 			);
 		}
 
-		return $profile;
+		return $recurring;
 	}
 
 	public function getProfileTransactions($order_recurring_id) {
-		$results =  $this->db->query("SELECT amount, type, created FROM " . DB_PREFIX . "order_recurring_transaction WHERE order_recurring_id = " . (int)$order_recurring_id . " ORDER BY created DESC")->rows;
+		$results =  $this->db->query("SELECT amount, type, date_added FROM " . DB_PREFIX . "order_recurring_transaction WHERE order_recurring_id = " . (int)$order_recurring_id . " ORDER BY date_added DESC")->rows;
 
 		$transactions = array();
 
@@ -152,7 +152,7 @@ class ModelSaleRecurring extends Model {
 
 			switch ($result['type']) {
 				case 0:
-					$type = $this->language->get('text_transaction_created');
+					$type = $this->language->get('text_transaction_date_added');
 					break;
 
 				case 1:
@@ -197,7 +197,7 @@ class ModelSaleRecurring extends Model {
 			}
 
 			$transactions[] = array(
-				'created' => $result['created'],
+				'date_added' => $result['date_added'],
 				'amount' => $result['amount'],
 				'type' => $type,
 			);

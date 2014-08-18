@@ -3,14 +3,14 @@ class ControllerCatalogAttribute extends Controller {
 	private $error = array();
 
 	public function index() {
-		  $this->load->language('catalog/attribute');
+		$this->load->language('catalog/attribute');
 
-		  $this->document->setTitle($this->language->get('heading_title'));
+		$this->document->setTitle($this->language->get('heading_title'));
 
-		  $this->load->model('catalog/attribute');
+		$this->load->model('catalog/attribute');
 
-		  $this->getList();
-	  }
+		$this->getList();
+	}
 
 	public function add() {
 		$this->load->language('catalog/attribute');

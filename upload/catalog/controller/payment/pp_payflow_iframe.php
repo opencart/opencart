@@ -32,7 +32,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		$payment_country = $this->model_localisation_country->getCountry($order_info['payment_country_id']);
 		$payment_zone = $this->model_localisation_zone->getZone($order_info['payment_zone_id']);
 
-		$urlParams = array(
+		$url_params = array(
 			'TENDER'            => 'C',
 			'TRXTYPE'           => $transaction_type,
 			'AMT'               => $this->currency->format($order_info['total'], $order_info['currency_code'], false, false),
@@ -49,16 +49,16 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		);
 
 		if ($shipping_country) {
-			$urlParams['SHIPTOFIRSTNAME'] = $order_info['shipping_firstname'];
-			$urlParams['SHIPTOLASTNAME'] = $order_info['shipping_lastname'];
-			$urlParams['SHIPTOSTREET'] = trim($order_info['shipping_address_1'] . ' ' . $order_info['shipping_address_2']);
-			$urlParams['SHIPTOCITY'] = $order_info['shipping_city'];
-			$urlParams['SHIPTOSTATE'] = $shipping_zone['code'];
-			$urlParams['SHIPTOZIP'] = $order_info['shipping_postcode'];
-			$urlParams['SHIPTOCOUNTRY'] = $shipping_country['iso_code_2'];
+			$url_params['SHIPTOFIRSTNAME'] = $order_info['shipping_firstname'];
+			$url_params['SHIPTOLASTNAME'] = $order_info['shipping_lastname'];
+			$url_params['SHIPTOSTREET'] = trim($order_info['shipping_address_1'] . ' ' . $order_info['shipping_address_2']);
+			$url_params['SHIPTOCITY'] = $order_info['shipping_city'];
+			$url_params['SHIPTOSTATE'] = $shipping_zone['code'];
+			$url_params['SHIPTOZIP'] = $order_info['shipping_postcode'];
+			$url_params['SHIPTOCOUNTRY'] = $shipping_country['iso_code_2'];
 		}
 
-		$response_params = $this->model_payment_pp_payflow_iframe->call($urlParams);
+		$response_params = $this->model_payment_pp_payflow_iframe->call($url_params);
 
 		if (isset($response_params['SECURETOKEN'])) {
 			$secure_token = $response_params['SECURETOKEN'];
@@ -124,13 +124,13 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		if ($order_id) {
 			$order_info = $this->model_checkout_order->getOrder($order_id);
 
-			$urlParams = array(
+			$url_params = array(
 				'TENDER'  => 'C',
 				'TRXTYPE' => 'I',
 				'ORIGID'  => $this->request->post['PNREF'],
 			);
 
-			$response_params = $this->model_payment_pp_payflow_iframe->call($urlParams);
+			$response_params = $this->model_payment_pp_payflow_iframe->call($url_params);
 
 			if ($order_info['order_status_id'] == 0 && $response_params['RESULT'] == '0' && $this->request->post['RESULT'] == 0) {
 				$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('pp_payflow_iframe_order_status_id'));

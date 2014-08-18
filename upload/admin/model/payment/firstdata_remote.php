@@ -6,8 +6,8 @@ class ModelPaymentFirstdataRemote extends Model {
 			  `firstdata_remote_order_id` INT(11) NOT NULL AUTO_INCREMENT,
 			  `order_id` INT(11) NOT NULL,
 			  `order_ref` CHAR(50) NOT NULL,
-			  `created` DATETIME NOT NULL,
-			  `modified` DATETIME NOT NULL,
+			  `date_added` DATETIME NOT NULL,
+			  `date_modified` DATETIME NOT NULL,
 			  `tdate` VARCHAR(30) NOT NULL,
 			  `capture_status` INT(1) DEFAULT NULL,
 			  `void_status` INT(1) DEFAULT NULL,
@@ -22,7 +22,7 @@ class ModelPaymentFirstdataRemote extends Model {
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "firstdata_remote_order_transaction` (
 			  `firstdata_remote_order_transaction_id` INT(11) NOT NULL AUTO_INCREMENT,
 			  `firstdata_remote_order_id` INT(11) NOT NULL,
-			  `created` DATETIME NOT NULL,
+			  `date_added` DATETIME NOT NULL,
 			  `type` ENUM('auth', 'payment', 'refund', 'void') DEFAULT NULL,
 			  `amount` DECIMAL( 10, 2 ) NOT NULL,
 			  PRIMARY KEY (`firstdata_remote_order_transaction_id`)
@@ -32,7 +32,7 @@ class ModelPaymentFirstdataRemote extends Model {
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "firstdata_remote_card` (
 			  `firstdata_remote_card_id` INT(11) NOT NULL AUTO_INCREMENT,
 			  `customer_id` INT(11) NOT NULL,
-			  `created` DATETIME NOT NULL,
+			  `date_added` DATETIME NOT NULL,
 			  `digits` CHAR(4) NOT NULL,
 			  `expire_month` INT(2) NOT NULL,
 			  `expire_year` INT(2) NOT NULL,
@@ -234,7 +234,7 @@ class ModelPaymentFirstdataRemote extends Model {
 	}
 
 	public function addTransaction($firstdata_remote_order_id, $type, $total) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "firstdata_remote_order_transaction` SET `firstdata_remote_order_id` = '" . (int)$firstdata_remote_order_id . "', `created` = now(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . (float)$total . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "firstdata_remote_order_transaction` SET `firstdata_remote_order_id` = '" . (int)$firstdata_remote_order_id . "', `date_added` = now(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . (float)$total . "'");
 	}
 
 	public function logger($message) {

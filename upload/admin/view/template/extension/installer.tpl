@@ -17,9 +17,9 @@
         <div class="col-sm-10">
           <button type="button" id="button-upload" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
           <?php if ($error_warning) { ?>
-          <button type="button" id="button-clear" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
+          <button type="button" id="button-clear" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
           <?php } else { ?>
-          <button type="button" id="button-clear" disabled="disabled" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
+          <button type="button" id="button-clear" data-loading-text="<?php echo $text_loading; ?>" disabled="disabled" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
           <?php } ?>
         </div>
       </div>
@@ -153,11 +153,10 @@ $('#button-clear').bind('click', function() {
 		url: 'index.php?route=extension/installer/clear&token=<?php echo $token; ?>',	
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-clear i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-			$('#button-clear').prop('disabled', true);
+			$('#button-clear').button('loading');
 		},	
 		complete: function() {
-			$('#button-clear i').replaceWith('<i class="fa fa-eraser"></i>');
+			$('#button-clear').button('reset');
 		},		
 		success: function(json) {
 			$('.alert').remove();

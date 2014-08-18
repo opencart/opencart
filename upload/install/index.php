@@ -41,8 +41,8 @@ $registry->set('response', $response);
 
 // Language
 $language = new Language();
-$language->load('english');	
-$registry->set('language', $language); 
+$language->load('english');
+$registry->set('language', $language);
 
 // Document
 $document = new Document();

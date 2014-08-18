@@ -420,7 +420,7 @@ class ControllerAccountRegister extends Controller {
 		return !$this->error;
 	}
 
-	public function custom_field() {
+	public function customfield() {
 		$json = array();
 
 		$this->load->model('account/custom_field');

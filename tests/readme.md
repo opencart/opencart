@@ -6,6 +6,7 @@
 * [GIT](http://git-scm.com/)
 * [Composer](https://getcomposer.org/download/)
 * A bit of command line knowledge
+* Selenium (optional)
 
 ## Instructions
 * Install Git (most developers will already have this!)
@@ -19,6 +20,14 @@
 * run: vendor\bin\phpunit --bootstrap bootstrap.php opencart\admin to run tests in admin folder
 * run: vendor\bin\phpunit --bootstrap bootstrap.php opencart\catalog to run tests in catalog folder
 * run: vendor\bin\phpunit --bootstrap bootstrap.php opencart\system to run tests in system folder
+
+## Selenium instructions
+
+Running Acceptance (Functional) Tests with Selenium requires a standalone selenium server on your machine.
+The server can be downloaded from [here](http://code.google.com/p/selenium/downloads/list). Before starting your Selenium Tests
+you have to run the standalone server: `java -jar selenium-server-standalone-2.32.0.jar`. Writing Selenium Tests requires you to extend the OpenCartSeleniumTest class.
+
+* run: vendor\bin\phpunit --bootstrap bootstrap.php selenium\catalog to run tests in system folder
 
 ## Please READ!
 The tests are still under development, there is hundreds of them to do.

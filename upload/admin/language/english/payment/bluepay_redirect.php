@@ -2,8 +2,8 @@
 // Heading
 $_['heading_title']      = 'BluePay Redirect (Requires SSL)';
 
-// Text 
-$_['text_payment']       = 'Sale'; 
+// Text
+$_['text_payment']       = 'Sale';
 $_['text_success']       = 'Success: You have modified BluePay Redirect account details!';
 $_['text_bluepay_redirect']       = '<a href="http://www.bluepay.com/preferred-partner/opencart" target="_blank"><img src="view/image/payment/bluepay.jpg" alt="BluePay Redirect" title="BluePay Redirect" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_sim']           = 'Simulator';
@@ -52,7 +52,7 @@ $_['text_total_released'] = 'Total released';
 $_['text_transactions'] = 'Transactions';
 $_['text_column_amount'] = 'Amount';
 $_['text_column_type'] = 'Type';
-$_['text_column_created'] = 'Created';
+$_['text_column_date_added'] = 'Created';
 
 $_['text_confirm_void'] = 'Are you sure you want to void the payment?';
 $_['text_confirm_release'] = 'Are you sure you want to release the payment?';

@@ -421,7 +421,7 @@ $('select[name=\'country_id\']').trigger('change');
 <script type="text/javascript"><!--
 $('input[name=\'customer_group_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=account/register/custom_field&customer_group_id=' + this.value,
+		url: 'index.php?route=account/register/customfield&customer_group_id=' + this.value,
 		dataType: 'json',
 		success: function(json) {
 			$('.custom-field').hide();

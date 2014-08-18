@@ -81,4 +81,4 @@ $_['text_weight_class']                = 'Weight Classes';
 $_['text_length_class']                = 'Length Classes';
 $_['text_zone']                        = 'Zones';
 $_['text_recurring']                   = 'Recurring Profiles';
-$_['text_recurring_order']             = 'Recurring Subscriptions';
+$_['text_order_recurring']             = 'Recurring Orders';

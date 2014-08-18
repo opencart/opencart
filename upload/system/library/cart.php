@@ -34,10 +34,10 @@ class Cart {
 				}
 
 				// Profile
-				if (!empty($product['profile_id'])) {
-					$profile_id = $product['profile_id'];
+				if (!empty($product['recurring_id'])) {
+					$recurring_id = $product['recurring_id'];
 				} else {
-					$profile_id = 0;
+					$recurring_id = 0;
 				}
 
 				$product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE p.product_id = '" . (int)$product_id . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND p.date_available <= NOW() AND p.status = '1'");
@@ -219,21 +219,21 @@ class Cart {
 						$stock = false;
 					}
 
-					$profile_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "profile` `p` JOIN `" . DB_PREFIX . "product_profile` `pp` ON `pp`.`profile_id` = `p`.`profile_id` AND `pp`.`product_id` = " . (int)$product_query->row['product_id'] . " JOIN `" . DB_PREFIX . "profile_description` `pd` ON `pd`.`profile_id` = `p`.`profile_id` AND `pd`.`language_id` = " . (int)$this->config->get('config_language_id') . " WHERE `pp`.`profile_id` = " . (int)$profile_id . " AND `status` = 1 AND `pp`.`customer_group_id` = " . (int)$this->config->get('config_customer_group_id'));
+					$recurring_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "recurring` `p` JOIN `" . DB_PREFIX . "product_recurring` `pp` ON `pp`.`recurring_id` = `p`.`recurring_id` AND `pp`.`product_id` = " . (int)$product_query->row['product_id'] . " JOIN `" . DB_PREFIX . "recurring_description` `pd` ON `pd`.`recurring_id` = `p`.`recurring_id` AND `pd`.`language_id` = " . (int)$this->config->get('config_language_id') . " WHERE `pp`.`recurring_id` = " . (int)$recurring_id . " AND `status` = 1 AND `pp`.`customer_group_id` = " . (int)$this->config->get('config_customer_group_id'));
 
-					if ($profile_query->num_rows) {
+					if ($recurring_query->num_rows) {
 						$recurring = array(
-							'profile_id'      => $profile_id,
-							'name'            => $profile_query->row['name'],
-							'frequency'       => $profile_query->row['frequency'],
-							'price'           => $profile_query->row['price'],
-							'cycle'           => $profile_query->row['cycle'],
-							'duration'        => $profile_query->row['duration'],
-							'trial'           => $profile_query->row['trial_status'],
-							'trial_frequency' => $profile_query->row['trial_frequency'],
-							'trial_price'     => $profile_query->row['trial_price'],
-							'trial_cycle'     => $profile_query->row['trial_cycle'],
-							'trial_duration'  => $profile_query->row['trial_duration']
+							'recurring_id'      => $recurring_id,
+							'name'            => $recurring_query->row['name'],
+							'frequency'       => $recurring_query->row['frequency'],
+							'price'           => $recurring_query->row['price'],
+							'cycle'           => $recurring_query->row['cycle'],
+							'duration'        => $recurring_query->row['duration'],
+							'trial'           => $recurring_query->row['trial_status'],
+							'trial_frequency' => $recurring_query->row['trial_frequency'],
+							'trial_price'     => $recurring_query->row['trial_price'],
+							'trial_cycle'     => $recurring_query->row['trial_cycle'],
+							'trial_duration'  => $recurring_query->row['trial_duration']
 						);
 					} else {
 						$recurring = false;
@@ -286,7 +286,7 @@ class Cart {
 		return $recurring_products;
 	}
 
-	public function add($product_id, $qty = 1, $option = array(), $profile_id = 0) {
+	public function add($product_id, $qty = 1, $option = array(), $recurring_id = 0) {
 		$this->data = array();
 
 		$product['product_id'] = (int)$product_id;
@@ -295,8 +295,8 @@ class Cart {
 			$product['option'] = $option;
 		}
 
-		if ($profile_id) {
-			$product['profile_id'] = (int)$profile_id;
+		if ($recurring_id) {
+			$product['recurring_id'] = (int)$recurring_id;
 		}
 
 		$key = base64_encode(serialize($product));

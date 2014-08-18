@@ -918,13 +918,13 @@ $('#button-refresh').on('click', function() {
 						}
 					}
 					
-					html += '  <input type="hidden" name="key" value="' + product['key'] + '" /></td>';
+					html += '</td>';
 					
 					html += '  <td class="text-left">' + product['model'] + '</td>';
 					html += '  <td class="text-right">' + product['quantity'] + '</td>';
 					html += '  <td class="text-right">' + product['price'] + '</td>';
 					html += '  <td class="text-right">' + product['total'] + '</td>';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + product['key'] + '" data-toggle="tooltip" title="<?php echo $button_remove; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 					html += '</tr>';
 					
 					if (product['shipping'] != 0) {
@@ -947,14 +947,12 @@ $('#button-refresh').on('click', function() {
 					voucher = json['vouchers'][i];
 					 
 					html += '<tr>';
-					html += '  <td class="text-left">' + voucher['description'];
-
-					html += '  <input type="hidden" name="key" value="' + voucher['code'] + '" /></td>';
+					html += '  <td class="text-left">' + voucher['description'] + '</td>';
 					html += '  <td class="text-left"></td>';
 					html += '  <td class="text-right">1</td>';
 					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
 					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + voucher['code'] + '" data-toggle="tooltip" title="<?php echo $button_remove; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 					html += '</tr>';	
 				}
 			}
@@ -1120,7 +1118,7 @@ $('input[name=\'customer\']').autocomplete({
 // Custom Fields
 $('select[name=\'customer_group_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=sale/customer/custom_field&token=<?php echo $token; ?>&customer_group_id=' + this.value,
+		url: 'index.php?route=sale/customer/customfield&token=<?php echo $token; ?>&customer_group_id=' + this.value,
 		dataType: 'json',	
 		success: function(json) {
 			$('.custom-field').hide();
@@ -1493,7 +1491,7 @@ $('#tab-cart').delegate('.btn-danger', 'click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/remove&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
-		data: 'key=' + $(node).parent().parent().find('input[name=\'key\']').val(),
+		data: 'key=' + encodeURIComponent(this.value),
 		dataType: 'json',
 		beforeSend: function() {
 			$(node).button('loading');
@@ -2115,13 +2113,13 @@ $('#button-save').on('click', function() {
 	if (order_id == 0) {
 		var url = 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/order/add&store_id=' + $('select[name=\'store_id\'] option:selected').val();
 	} else {
-		var url = 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/order/edit&store_id=' + $('select[name=\'store_id\'] option:selected').val();
+		var url = 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/order/edit&store_id=' + $('select[name=\'store_id\'] option:selected').val() + '&order_id=' + order_id;
 	}
 	
 	$.ajax({
 		url: url,
 		type: 'post',
-		data: $('#tab-total input[name=\'order_id\'], #tab-total select[name=\'order_status_id\'], #tab-total select, #tab-total textarea[name=\'comment\'], #tab-total input[name=\'affiliate_id\']'),
+		data: $('#tab-total select[name=\'order_status_id\'], #tab-total select, #tab-total textarea[name=\'comment\'], #tab-total input[name=\'affiliate_id\']'),
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-save').button('loading');	

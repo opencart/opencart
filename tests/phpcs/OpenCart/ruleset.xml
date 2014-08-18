@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<ruleset name="OpenCart">
+    <description>OpenCart code sniffer standards that are not part of default test packages.</description>
+    <rule ref="Zend.Files.ClosingTag">
+        <severity>1</severity>
+        <type>warning</type>
+    </rule>
+
+    <rule ref="Squiz.ControlStructures.ControlSignature">
+        <severity>2</severity>
+        <type>warning</type>
+    </rule>
+
+    <rule ref="Generic.PHP.DeprecatedFunctions">
+        <severity>5</severity>
+        <type>error</type>
+    </rule>
+
+    <rule ref="Generic.PHP.DisallowShortOpenTag">
+        <severity>5</severity>
+        <type>error</type>
+    </rule>
+
+    <rule ref="Generic.PHP.LowerCaseConstant">
+        <severity>2</severity>
+        <type>warning</type>
+    </rule>
+
+    <rule ref="Generic.Formatting.NoSpaceAfterCast">
+        <severity>1</severity>
+        <type>warning</type>
+    </rule>
+
+    <rule ref="Generic.ControlStructures.InlineControlStructure"/>
+    <rule ref="Generic.Files.ByteOrderMark"/>
+    <rule ref="Generic.NamingConventions.CamelCapsFunctionName"/>
+    <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
+    <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
+    <rule ref="Generic.WhiteSpace.DisallowSpaceIndent">
+        <exclude-pattern>*.tpl</exclude-pattern>
+        <exclude-pattern>*.css</exclude-pattern>
+        <exclude-pattern>*.html</exclude-pattern>
+        <exclude-pattern>*.ini</exclude-pattern>
+        <exclude-pattern>*.txt</exclude-pattern>
+        <severity>1</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
+        <properties>
+            <property name="ignoreBlankLines" value="true"/>
+        </properties>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.StartFile">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EndFile">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Generic.PHP.CharacterBeforePHPOpeningTag"/>
+    <rule ref="Generic.Commenting.Todo.CommentFound">
+        <message>Please review this TODO comment: %s</message>
+        <severity>1</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.Commenting.Todo.Fixme">
+        <message>Please review this FIXME comment: %s</message>
+        <severity>5</severity>
+        <type>warning</type>
+    </rule>
+
+    <rule ref="Generic.Files.LineEndings">
+        <properties>
+            <property name="eolChar" value="\n"/>
+        </properties>
+    </rule>
+
+    <exclude-pattern>*/tests/*</exclude-pattern>
+    <!--
+      <rule ref="Generic.Functions.OpeningBraceAfterIf"/>
+      <rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie"/>
+      <rule ref="Generic.Files.OneClassPerFile"/>
+    -->
+</ruleset>

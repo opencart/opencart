@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-ppexpress" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-check-circle"></i></button>
+        <button type="submit" form="form-ppexpress" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> <a href="<?php echo $search; ?>" data-toggle="tooltip" title="<?php echo $button_search; ?>" class="btn btn-info"><i class="fa fa-search"></i></a></div>
       <h1><i class="fa fa-credit-card"></i> <?php echo $heading_title; ?></h1>
     </div>
@@ -103,10 +103,10 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-profile-cancel"><?php echo $entry_profile_cancellation; ?></label>
+            <label class="col-sm-2 control-label" for="input-recurring-cancel"><?php echo $entry_recurring_cancellation; ?></label>
             <div class="col-sm-10">
-              <select name="pp_express_profile_cancel_status" id="input-profile-cancel" class="form-control">
-                <?php if ($pp_express_profile_cancel_status) { ?>
+              <select name="pp_express_recurring_cancel_status" id="input-recurring-cancel" class="form-control">
+                <?php if ($pp_express_recurring_cancel_status) { ?>
                 <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                 <option value="0"><?php echo $text_disabled; ?></option>
                 <?php } else { ?>

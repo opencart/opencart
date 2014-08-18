@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a onclick="editSearch();" id="btn_edit" data-toggle="tooltip" style="display:none;" title="<?php echo $btn_edit_search; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a onclick="doSearch();" id="btn_search" data-toggle="tooltip" title="<?php echo $btn_search; ?>" class="btn btn-info"><i class="fa fa-search"></i></a></div>      
+      <div class="pull-right"><a onclick="editSearch();" id="btn_edit" data-toggle="tooltip" style="display:none;" title="<?php echo $btn_edit_search; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a onclick="doSearch();" id="btn_search" data-toggle="tooltip" title="<?php echo $btn_search; ?>" class="btn btn-info"><i class="fa fa-search"></i></a></div>
 	  <h1><i class="fa fa-search"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
@@ -99,16 +99,16 @@
             <input type="text" name="amount" value="" placeholder="<?php echo $entry_amount; ?>" class="form-control" />
             <br />
             <select name="currency_code" class="form-control">
-              <?php foreach($currency_codes as $code){ ?>
-              <option <?php if($code == $default_currency){ echo 'selected'; } ?>><?php echo $code; ?></option>
+              <?php foreach($currency_codes as $code) { ?>
+              <option <?php if ($code == $default_currency) { echo 'selected'; } ?>><?php echo $code; ?></option>
               <?php } ?>
             </select>
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label"><?php echo $entry_profile_id; ?></label>
+          <label class="col-sm-2 control-label"><?php echo $entry_recurring_id; ?></label>
           <div class="col-sm-10">
-            <input type="text" name="profile_id" value="" placeholder="<?php echo $entry_profile_id; ?>" class="form-control" />
+            <input type="text" name="recurring_id" value="" placeholder="<?php echo $entry_recurring_id; ?>" class="form-control" />
           </div>
         </div>
         <h3><?php echo $text_buyer_info; ?></h3>

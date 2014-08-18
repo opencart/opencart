@@ -11,8 +11,8 @@ class ModelPaymentSagepayDirect extends Model {
 			  `VendorTxCode` VARCHAR(50) NOT NULL,
 			  `SecurityKey` CHAR(50) NOT NULL,
 			  `TxAuthNo` INT(50),
-			  `created` DATETIME NOT NULL,
-			  `modified` DATETIME NOT NULL,
+			  `date_added` DATETIME NOT NULL,
+			  `date_modified` DATETIME NOT NULL,
 			  `release_status` INT(1) DEFAULT NULL,
 			  `void_status` INT(1) DEFAULT NULL,
 			  `settle_type` INT(1) DEFAULT NULL,
@@ -26,7 +26,7 @@ class ModelPaymentSagepayDirect extends Model {
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "sagepay_direct_order_transaction` (
 			  `sagepay_direct_order_transaction_id` INT(11) NOT NULL AUTO_INCREMENT,
 			  `sagepay_direct_order_id` INT(11) NOT NULL,
-			  `created` DATETIME NOT NULL,
+			  `date_added` DATETIME NOT NULL,
 			  `type` ENUM('auth', 'payment', 'rebate', 'void') DEFAULT NULL,
 			  `amount` DECIMAL( 10, 2 ) NOT NULL,
 			  PRIMARY KEY (`sagepay_direct_order_transaction_id`)
@@ -41,8 +41,8 @@ class ModelPaymentSagepayDirect extends Model {
 			  `VendorTxCode` VARCHAR(50) NOT NULL,
 			  `SecurityKey` CHAR(50) NOT NULL,
 			  `TxAuthNo` INT(50),
-			  `created` DATETIME NOT NULL,
-			  `modified` DATETIME NOT NULL,
+			  `date_added` DATETIME NOT NULL,
+			  `date_modified` DATETIME NOT NULL,
 			  `next_payment` DATETIME NOT NULL,
 			  `trial_end` datetime DEFAULT NULL,
 			  `subscription_end` datetime DEFAULT NULL,
@@ -212,7 +212,7 @@ class ModelPaymentSagepayDirect extends Model {
 	}
 
 	public function addTransaction($sagepay_direct_order_id, $type, $total) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "sagepay_direct_order_transaction` SET `sagepay_direct_order_id` = '" . (int)$sagepay_direct_order_id . "', `created` = now(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . (float)$total . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "sagepay_direct_order_transaction` SET `sagepay_direct_order_id` = '" . (int)$sagepay_direct_order_id . "', `date_added` = now(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . (float)$total . "'");
 	}
 
 	public function getTotalReleased($sagepay_direct_order_id) {

@@ -146,7 +146,7 @@ class ModelSaleCustomField extends Model {
 
 		return $custom_field_data;
 	}
-	
+
 	public function getCustomFieldValues($custom_field_id) {
 		$custom_field_value_data = array();
 
@@ -193,7 +193,7 @@ class ModelSaleCustomField extends Model {
 	}
 
 	public function getTotalCustomFields() {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "custom_field`");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "custom_field`");
 
 		return $query->row['total'];
 	}

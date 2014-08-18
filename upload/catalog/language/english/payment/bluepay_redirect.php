@@ -3,19 +3,18 @@
 $_['text_title']             = 'Credit Card / Debit Card (BluePay)';
 $_['text_credit_card']		 = 'Card Details';
 $_['text_description']		 = 'Items on %s Order No: %s';
-$_['text_card_type']		 = 'Card Type: '; 
-$_['text_card_name']		 = 'Card Name: '; 
-$_['text_card_digits']		 = 'Last Digits: '; 
-$_['text_card_expiry']		 = 'Expiry: '; 
+$_['text_card_type']		 = 'Card Type: ';
+$_['text_card_name']		 = 'Card Name: ';
+$_['text_card_digits']		 = 'Last Digits: ';
+$_['text_card_expiry']		 = 'Expiry: ';
 
 // Returned text
 $_['text_transaction_error'] = 'There was an error processing your transaction - ';
 
-
 // Entry
 $_['entry_card']        	= 'New or Existing Card: ';
 $_['entry_card_existing']	= 'Existing';
-$_['entry_card_new']		= 'New'; 
+$_['entry_card_new']		= 'New';
 $_['entry_card_save']		= 'Remember Card Details';
 $_['entry_cc_owner']		= 'Card Owner';
 $_['entry_cc_number']		= 'Card Number';

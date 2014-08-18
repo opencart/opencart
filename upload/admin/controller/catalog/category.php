@@ -201,7 +201,7 @@ class ControllerCatalogCategory extends Controller {
 		$data['button_insert'] = $this->language->get('button_insert');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
-		$data['button_repair'] = $this->language->get('button_repair');
+		$data['button_rebuild'] = $this->language->get('button_rebuild');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

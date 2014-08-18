@@ -453,7 +453,7 @@ class ControllerPaymentPPProIframe extends Controller {
 
 				$this->model_payment_pp_pro_iframe->addTransaction($transaction);
 
-				$transaction['created'] = date("Y-m-d H:i:s");
+				$transaction['date_added'] = date("Y-m-d H:i:s");
 
 				$json['data'] = $transaction;
 				$json['error'] = false;
@@ -650,7 +650,7 @@ class ControllerPaymentPPProIframe extends Controller {
 
 				$json['failed_transaction']['paypal_iframe_order_transaction_id'] = $paypal_iframe_order_transaction_id;
 				$json['failed_transaction']['amount'] = $transaction['amount'];
-				$json['failed_transaction']['created'] = date("Y-m-d H:i:s");
+				$json['failed_transaction']['date_added'] = date("Y-m-d H:i:s");
 
 				$json['msg'] = $this->language->get('error_timeout');
 			} else if (isset($result['ACK']) && $result['ACK'] != 'Failure' && $result['ACK'] != 'FailureWithWarning') {
@@ -663,7 +663,7 @@ class ControllerPaymentPPProIframe extends Controller {
 				$this->model_payment_pp_pro_iframe->addTransaction($transaction);
 
 				unset($transaction['debug_data']);
-				$transaction['created'] = date("Y-m-d H:i:s");
+				$transaction['date_added'] = date("Y-m-d H:i:s");
 
 				$captured = number_format($this->model_payment_pp_pro_iframe->totalCaptured($paypal_order['paypal_iframe_order_id']), 2);
 				$refunded = number_format($this->model_payment_pp_pro_iframe->totalRefundedOrder($paypal_order['paypal_iframe_order_id']), 2);
@@ -698,7 +698,7 @@ class ControllerPaymentPPProIframe extends Controller {
 
 					$this->model_payment_pp_pro_iframe->addTransaction($transaction['void']);
 					$this->model_payment_pp_pro_iframe->updateOrder('Complete', $this->request->post['order_id']);
-					$transaction['void']['created'] = date("Y-m-d H:i:s");
+					$transaction['void']['date_added'] = date("Y-m-d H:i:s");
 					$transaction['status'] = 1;
 				}
 
@@ -752,7 +752,7 @@ class ControllerPaymentPPProIframe extends Controller {
 				$this->model_payment_pp_pro_iframe->updateOrder('Complete', $this->request->post['order_id']);
 
 				unset($transaction['debug_data']);
-				$transaction['created'] = date("Y-m-d H:i:s");
+				$transaction['date_added'] = date("Y-m-d H:i:s");
 
 				$json['data'] = $transaction;
 				$json['error'] = false;
@@ -801,7 +801,7 @@ class ControllerPaymentPPProIframe extends Controller {
 			$data['column_type'] = $this->language->get('column_type');
 			$data['column_status'] = $this->language->get('column_status');
 			$data['column_pend_reason'] = $this->language->get('column_pend_reason');
-			$data['column_created'] = $this->language->get('column_created');
+			$data['column_date_added'] = $this->language->get('column_date_added');
 			$data['column_action'] = $this->language->get('column_action');
 
 			$data['paypal_order'] = $paypal_order;
@@ -836,7 +836,7 @@ class ControllerPaymentPPProIframe extends Controller {
 					'paypal_iframe_order_transaction_id' => $transaction['paypal_iframe_order_transaction_id'],
 					'transaction_id' => $transaction['transaction_id'],
 					'amount' => $transaction['amount'],
-					'created' => $transaction['created'],
+					'date_added' => $transaction['date_added'],
 					'payment_type' => $transaction['payment_type'],
 					'payment_status' => $transaction['payment_status'],
 					'pending_reason' => $transaction['pending_reason'],

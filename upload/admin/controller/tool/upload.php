@@ -319,7 +319,7 @@ class ControllerToolUpload extends Controller {
 			$this->response->setOutput($this->load->view('error/not_found.tpl', $data));
 		}
 	}
-	
+
 	public function upload() {
 		$this->load->language('sale/order');
 
@@ -400,5 +400,5 @@ class ControllerToolUpload extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}	
+	}
 }

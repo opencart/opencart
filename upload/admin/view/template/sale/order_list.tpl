@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" id="button-shipping" form="form-order" formaction="<?php echo $shipping; ?>" formtarget="_blank" data-toggle="tooltip" title="<?php echo $button_shipping_print; ?>" class="btn btn-info"><i class="fa fa-truck"></i></button>
-        <button type="submit" id="button-invoice" form="form-order" formaction="<?php echo $invoice; ?>" formtarget="_blank" data-toggle="tooltip" title="<?php echo $button_invoice_print; ?>" class="btn btn-info"><i class="fa fa-print"></i></button>
+        <button type="submit" id="button-shipping" form="form-order" formaction="<?php echo $shipping; ?>" data-toggle="tooltip" title="<?php echo $button_shipping_print; ?>" class="btn btn-info"><i class="fa fa-truck"></i></button>
+        <button type="submit" id="button-invoice" form="form-order" formaction="<?php echo $invoice; ?>" data-toggle="tooltip" title="<?php echo $button_invoice_print; ?>" class="btn btn-info"><i class="fa fa-print"></i></button>
         <a href="<?php echo $insert; ?>" data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn btn-primary"><i class="fa fa-plus"></i></a></div>
       <h1><i class="fa fa-bars"></i> <?php echo $heading_title; ?></h1>
     </div>
@@ -77,7 +77,7 @@
         </div>
       </div>
     </div>
-      <form method="post" enctype="multipart/form-data" id="form-order">
+    <form method="post" enctype="multipart/form-data" target="_blank" id="form-order">
       <div class="table-responsive">
         <table class="table table-striped table-hover">
           <thead>
@@ -124,7 +124,8 @@
                 <input type="checkbox" name="selected[]" value="<?php echo $order['order_id']; ?>" checked="checked" />
                 <?php } else { ?>
                 <input type="checkbox" name="selected[]" value="<?php echo $order['order_id']; ?>" />
-                <?php } ?></td>
+                <?php } ?>
+                <input type="hidden" name="shipping_code[]" value="<?php echo $order['shipping_code']; ?>" /></td>
               <td class="text-right"><?php echo $order['order_id']; ?></td>
               <td class="text-left"><?php echo $order['customer']; ?></td>
               <td class="text-left"><?php echo $order['status']; ?></td>
@@ -215,13 +216,25 @@ $('input[name=\'filter_customer\']').autocomplete({
 });
 //--></script> 
 <script type="text/javascript"><!--
-$('#button-shipping, #button-invoice').on('click', function() {
-	if (!$('input[name^=\'selected\']:checked').length) {
-		alert('<?php echo $error_selected; ?>');
-		
-		return false;
+$('input[name^=\'selected\']').on('change', function() {
+	$('#button-shipping, #button-invoice').prop('disabled', true);
+	
+	var selected = $('input[name^=\'selected\']:checked');
+	
+	if (selected.length) {
+		$('#button-invoice').prop('disabled', false);
+	}
+	
+	for (i = 0; i < selected.length; i++) {
+		if ($(selected[i]).parent().find('input[name^=\'shipping_code\']').val()) {
+			$('#button-shipping').prop('disabled', false);
+			
+			break;
+		}
 	}
 });
+
+$('input[name^=\'selected\']:first').trigger('change');
 
 $('#form-order button').on('click', function() {
 	var node = this;
@@ -247,7 +260,7 @@ $('#form-order button').on('click', function() {
 		});
 	}
 });
-//--></script>
+//--></script> 
 <script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 <link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
 <script type="text/javascript"><!--

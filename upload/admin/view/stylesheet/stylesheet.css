@@ -327,25 +327,25 @@ label.control-label {
 }
 .btn-default {
 	color: #555;
-	background: #F6F2F2;
-	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.1));
+	background: #F5F5F5;
+	background-image: linear-gradient(to bottom, #F6F6F6, #E9E9E9);
 	background-repeat: repeat-x;
-	border-color: #DDD9D9;
-	border-bottom-color: #D1CECE;
+	border-color: #DCDCDC;
+	border-bottom-color: #D0D0D0;
 }
 .btn-primary {
-	background: #4191D6;
-	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.1));
+	background: #4F89BC;
+	background-image: linear-gradient(to bottom, #588FBF, #4B82B2);
 	background-repeat: repeat-x;
-	border-color: #3A82C0;
-	border-bottom-color: #377BB6;
+	border-color: #477BA9;
+	border-bottom-color: #4375A0;
 }
 .btn-info {
-	background: #5CC6E5;
-	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.1));
+	background: #68B8D0;
+	background-image: linear-gradient(to bottom, #70BCD2, #63AFC5);
 	background-repeat: repeat-x;
-	border-color: #53B2CE;
-	border-bottom-color: #4EA8C3;
+	border-color: #5DA5BB;
+	border-bottom-color: #599DB1;
 }
 .btn-success {
 	background: #56C956;

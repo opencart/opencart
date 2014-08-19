@@ -32,14 +32,13 @@ class ModelOpenbayAmazonOrder extends Model {
 	}
 
 	public function decreaseProductQuantity($product_id, $delta, $var = '') {
-		if($product_id == 0) {
+		if ($product_id == 0) {
 			return;
 		}
-		if($var == '') {
-			$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `quantity` = GREATEST(`quantity` - '" . (int)$delta . "', 0) WHERE `product_id` = '" . (int)$product_id . "'");
+		if ($var == '') {
+			$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `quantity` = GREATEST(`quantity` - '" . (int)$delta . "', 0) WHERE `product_id` = '" . (int)$product_id . "' AND `subtract` = '1'");
 		} else {
-			//@TODO: do something about subtract column?
-			$this->db->query("UPDATE `" . DB_PREFIX . "product_option_relation` SET `stock` = GREATEST(`stock` - '" . (int)$delta . "', 0) WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($var) . "'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "product_option_relation` SET `stock` = GREATEST(`stock` - '" . (int)$delta . "', 0) WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($var) . "' AND `subtract` = '1'");
 		}
 	}
 

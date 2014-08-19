@@ -184,7 +184,7 @@ class ModelCatalogFilter extends Model {
 	}
 
 	public function getTotalFilterGroups() {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "filter_group`");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "filter_group`");
 
 		return $query->row['total'];
 	}

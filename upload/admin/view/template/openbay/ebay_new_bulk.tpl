@@ -326,7 +326,7 @@
           beforeSend: function() { addCount(); },
           success: function(data) {
 
-              if(data.data.price_modify !== false && typeof data.data.price_modify !== 'undefined') {
+              if (data.data.price_modify !== false && typeof data.data.price_modify !== 'undefined') {
                   modify_percent = 100 + parseFloat(data.data.price_modify);
                   modify_percent = parseFloat(modify_percent / 100);
                   price_modified = price_original * modify_percent;
@@ -369,7 +369,7 @@
 
       $('#loading-bar').css('width', current+'%');
 
-      if(count == 0) {
+      if (count == 0) {
           overlayHide();
       }
   }
@@ -407,15 +407,15 @@
           success: function(data) {
               var htmlInj = '';
 
-              if(data.error == false && data.data) {
+              if (data.error == false && data.data) {
                 var i = 1;
 
                 $.each(data.data, function(key,val) {
-                    if(val.percent != 0) {
+                    if (val.percent != 0) {
                       htmlInj += '<div class="row form-group">';
                         htmlInj += '<div class="col-sm-1 text-right">';
                           htmlInj += '<input type="radio" id="suggested_category_'+id+'" name="suggested_'+id+'" value="'+val.id+'" onchange="categorySuggestedChange('+val.id+','+id+')"';
-                          if(i == 1) {
+                          if (i == 1) {
                               htmlInj += ' checked="checked"';
                               categorySuggestedChange(val.id, id);
                           }
@@ -458,7 +458,7 @@
   function loadCategories(level, skip, id) {
       var parent = '';
 
-      if(level == 1) {
+      if (level == 1) {
           parent = ''
       } else {
           var prevLevel = level - 1;
@@ -480,22 +480,22 @@
               $('#imageLoading_'+id).show();
           },
           success: function(data) {
-              if(data.items != null) {
+              if (data.items != null) {
                   $('#catsSelect'+level+'_'+id).empty();
                   $('#catsSelect'+level+'_'+id).append('<option value="">-- SELECT --</option>');
                   $.each(data.cats, function(key, val) {
-                      if(val.CategoryID != parent) {
+                      if (val.CategoryID != parent) {
                           $('#catsSelect'+level+'_'+id).append('<option value="'+val.CategoryID+'">'+val.CategoryName+'</option>');
                       }
                   });
 
-                  if(skip != true) {
+                  if (skip != true) {
                       $('#finalCat_'+id).val('');
                   }
 
                   $('#catsSelect'+level+'_'+id).show();
               } else {
-                  if(data.error) {
+                  if (data.error) {
 
                   } else {
                       $('#finalCat_'+id).val($('#catsSelect'+prevLevel+'_'+id).val());
@@ -523,17 +523,17 @@
           dataType: 'json',
           beforeSend: function() { addCount(); },
           success: function(data) {
-              if(data.error == false) {
+              if (data.error == false) {
                   var htmlInj = '';
 
                   listingDuration(data.data.durations, id);
 
-                  if(data.data.conditions) {
+                  if (data.data.conditions) {
                       $.each(data.data.conditions, function(key, val) {
                           htmlInj += '<option value='+val.id+'>'+val.name+'</option>';
                       });
 
-                      if(htmlInj == '') {
+                      if (htmlInj == '') {
                           $('#conditionRow_'+id).empty();
                           $('#conditionContainer_'+id).hide();
                           $('#conditionLoading_'+id).hide();
@@ -566,14 +566,14 @@
           dataType: 'json',
           beforeSend: function() { addCount(); },
           success: function(data) {
-              if(data.error == false) {
+              if (data.error == false) {
                   $('#feature-data-'+id).empty();
 
                   var htmlInj = '';
                   var htmlInj2 = '';
                   var specificCount = 0;
 
-                  if(data.data.Recommendations.NameRecommendation) {
+                  if (data.data.Recommendations.NameRecommendation) {
                     htmlInj = '';
                     htmlInj += '<div class="panel panel-default">';
                       htmlInj += '<div class="panel-heading">';
@@ -588,7 +588,7 @@
                               htmlInj2 = '';
                               htmlInj += '<div class="row form-group">';
 
-                              if(("ValueRecommendation" in val) && (val.ValidationRules.MaxValues == 1)) {
+                              if (("ValueRecommendation" in val) && (val.ValidationRules.MaxValues == 1)) {
                                 htmlInj2 += '<option value="">-- <?php echo $text_select; ?> --</option>';
 
                                 //force an array in case of single element
@@ -598,7 +598,7 @@
                                     htmlInj2 += '<option value="'+option.Value+'">'+option.Value+'</option>';
                                 });
 
-                                if(val.ValidationRules.SelectionMode == 'FreeText') {
+                                if (val.ValidationRules.SelectionMode == 'FreeText') {
                                     htmlInj2 += '<option value="Other"><?php echo $text_other; ?></option>';
                                 }
 
@@ -613,7 +613,7 @@
                                     htmlInj += '</div>';
                                   htmlInj += '</div>';
                                 htmlInj += '</div>';
-                              }else if(("ValueRecommendation" in val) && (val.ValidationRules.MaxValues > 1)) {
+                              }else if (("ValueRecommendation" in val) && (val.ValidationRules.MaxValues > 1)) {
                                 htmlInj += '<label class="col-sm-2 control-label">'+val.Name+'</label>';
                                 htmlInj += '<div class="col-sm-10">';
                                   htmlInj += '<div class="row">';
@@ -662,7 +662,7 @@
 
   function toggleSpecOther(id) {
     var selectVal = $('#spec_sel_'+id).val();
-    if(selectVal == 'Other') {
+    if (selectVal == 'Other') {
       $('#spec_'+id+'_other').show();
     } else {
       $('#spec_'+id+'_other').hide();
@@ -675,7 +675,7 @@
     var html = '';
     $('#catalog-results-'+id).empty().hide();
 
-      if(qry == '') {
+      if (qry == '') {
         $('#catalog_search_'+id).before('<div class="alert alert-danger" id="catalog_search_'+id+'_error"><i class="fa fa-exclamation-circle"></i> <?php echo $text_search_text; ?></div>');
       } else {
         $.ajax({
@@ -749,7 +749,7 @@
     htmlInj        = '';
     $.each(data, function(key, val) {
         htmlInj += '<option value="'+val+'"';
-        if(val == listingDefault) { htmlInj += ' selected="selected"';}
+        if (val == listingDefault) { htmlInj += ' selected="selected"';}
         htmlInj += '>'+lang[val]+'</option>';
     });
 
@@ -796,20 +796,20 @@
               beforeSend: function() { addCount(); },
               success: function(data) {
                 var html = '';
-                if(data.ack != 'Failure') {
+                if (data.ack != 'Failure') {
                   var fee_total = '';
                   var currency = '';
 
                   $('#p_row_buttons_'+data.i).prepend('<a class="btn btn-primary button-preview" target="_BLANK" href="'+data.preview+'"><?php echo $text_preview; ?></a>');
 
-                  if(data.errors) {
+                  if (data.errors) {
                     $.each(data.errors, function(k,v) {
                       html += '<div class="alert alert-warning"><i class="fa fa-warning"></i> '+v+'</div>';
                     });
                   }
 
                   $.each(data.fees, function(key, val) {
-                    if(val.Fee != 0.0 && val.Name != 'ListingFee') {
+                    if (val.Fee != 0.0 && val.Name != 'ListingFee') {
                       fee_total = fee_total + parseFloat(val.Fee);
                     }
                     currency = val.Cur;
@@ -884,8 +884,8 @@
                 beforeSend: function() { addCount(); },
                 success: function(data) {
                   var html = '';
-                  if(data.ack != 'Failure') {
-                    if(data.errors) {
+                  if (data.ack != 'Failure') {
+                    if (data.errors) {
                       $.each(data.errors, function(k,v) {
                         html += '<div class="alert alert-warning"><i class="fa fa-warning"></i> '+v+'</div>';
                       });

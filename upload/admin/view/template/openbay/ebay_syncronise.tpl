@@ -17,7 +17,7 @@
       <h1 class="panel-title"><i class="fa fa-cog fa-lg fa-lg"></i> <?php echo $text_heading; ?></h1>
     </div>
     <div class="panel-body">
-      <?php if($validation == true) { ?>
+      <?php if ($validation == true) { ?>
         <p><?php echo $text_sync_desc; ?></p>
         <form id="form-ebay-sync" class="form-horizontal">
           <div class="form-group">
@@ -82,7 +82,7 @@
       success: function(json) {
         $('#load-settings').empty().removeClass('btn-primary').addClass('btn-success').html('<?php echo $text_complete; ?>');
 
-        if(json.error == false){
+        if (json.error == false){
             alert('<?php echo $text_ajax_setting_import; ?>');
         }else{
             alert('<?php echo $text_ajax_setting_import_e; ?>');
@@ -106,7 +106,7 @@
       success: function(json) {
         $('#sync-shop-cats').empty().removeClass('btn-primary').addClass('btn-success').html('<?php echo $text_complete; ?>');
 
-        if(json.error == 'false'){
+        if (json.error == 'false'){
           alert('<?php echo $text_ajax_cat_import; ?>');
         }else{
           alert(json.msg);

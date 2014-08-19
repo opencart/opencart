@@ -131,13 +131,13 @@ class ControllerOpenbayEbayProfile extends Controller {
 		$setting['countries']                     = $this->openbay->ebay->getSetting('countries');
 		$setting['shipping_types'] 				  = $this->openbay->ebay->getSetting('shipping_types');
 
-		if(empty($setting['dispatch_times']) || empty($setting['countries']) || empty($setting['returns'])){
+		if (empty($setting['dispatch_times']) || empty($setting['countries']) || empty($setting['returns'])){
 			$this->session->data['warning'] = $this->language->get('text_error_missing_settings');
 			$this->response->redirect($this->url->link('openbay/ebay/viewSync&token=' . $this->session->data['token'], 'SSL'));
 		}
 
-		if(is_array($setting['dispatch_times'])){ ksort($setting['dispatch_times']); }
-		if(is_array($setting['countries'])){ ksort($setting['countries']); }
+	if ((is_array($setting['dispatch_times'])){ ksort($setting['dispatch_times']); }
+if (f(is_array($setting['countries'])){ ksort($setting['countries']); }
 
 		$data['setting'] = $setting;
 

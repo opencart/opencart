@@ -4,7 +4,7 @@ class ModelOpenbayEtsyProduct extends Model{
 		return 0;
 	}
 
-	public function totalLinked(){
+	public function totalLinked() {
 		$sql = "SELECT COUNT(DISTINCT p.product_id) AS total
 				FROM `" . DB_PREFIX . "etsy_listing` `el`
 				LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`el`.`product_id` = `p`.`product_id`)
@@ -47,8 +47,8 @@ class ModelOpenbayEtsyProduct extends Model{
 		$qry = $this->db->query($sql);
 
 		$data = array();
-		if($qry->num_rows){
-			foreach($qry->rows as $row){
+		if ($qry->num_rows) {
+			foreach($qry->rows as $row) {
 				$data[] = array(
 					'etsy_listing_id'	=> $row['etsy_listing_id'],
 					'product_id'    	=> $row['product_id'],

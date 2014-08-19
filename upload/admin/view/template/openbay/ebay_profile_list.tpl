@@ -43,7 +43,7 @@
         <tbody>
         <?php if ($profiles) { ?><?php foreach ($profiles as $profile) { ?>
         <tr>
-          <td class="text-left"><?php if($profile['default'] == 1){ echo '<strong>['.$text_profile_default.'] </strong>'; } echo $profile['name'];?></td>
+          <td class="text-left"><?php if ($profile['default'] == 1){ echo '<strong>['.$text_profile_default.'] </strong>'; } echo $profile['name'];?></td>
           <td class="text-left"><?php echo $types[$profile['type']]['name']; ?></td>
           <td class="text-left"><?php echo $profile['description']; ?></td>
           <td class="text-right">

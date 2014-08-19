@@ -1,7 +1,7 @@
 <?php
 class ModelOpenbayEbayProfile extends Model{
 	public function add($data) {
-		if($data['default'] == 1) {
+		if ($data['default'] == 1) {
 			$this->clearDefault($data['type']);
 		}
 
@@ -11,7 +11,7 @@ class ModelOpenbayEbayProfile extends Model{
 	}
 
 	public function edit($id, $data) {
-		if($data['default'] == 1) {
+	if (($data['default'] == 1) {
 			$this->clearDefault($data['type']);
 		}
 
@@ -21,7 +21,7 @@ class ModelOpenbayEbayProfile extends Model{
 	public function delete($id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_profile` WHERE `ebay_profile_id` = '" . (int)$id . "' LIMIT 1");
 
-		if($this->db->countAffected() > 0) {
+if (f($this->db->countAffected() > 0) {
 			return true;
 		}else{
 			return false;
@@ -30,8 +30,7 @@ class ModelOpenbayEbayProfile extends Model{
 
 	public function get($id) {
 		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_profile` WHERE `ebay_profile_id` = '" . (int)$id . "' LIMIT 1");
-
-		if($qry->num_rows) {
+if (if($qry->num_rows) {
 			$row                = $qry->row;
 			$row['link_edit']   = HTTPS_SERVER . 'index.php?route=openbay/ebay_profile/edit&token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'];
 			$row['link_delete'] = HTTPS_SERVER . 'index.php?route=openbay/ebay_profile/delete&token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'];
@@ -44,14 +43,11 @@ class ModelOpenbayEbayProfile extends Model{
 	}
 
 	public function getAll($type = '') {
-		$type_sql = '';
-		if($type !== '') {
+		$type_sql = ''if (	if($type !== '') {
 			$type_sql = "WHERE `type` = '" . (int)$type . "'";
 		}
 
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_profile`" . $type_sql);
-
-		if($qry->num_rows) {
+		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_profile`" . $type_sql)if (		if($qry->num_rows) {
 			$profiles = array();
 			foreach ($qry->rows as $row) {
 				$row['link_edit']   = HTTPS_SERVER . 'index.php?route=openbay/ebay_profile/edit&token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'];

@@ -32,19 +32,19 @@
               <label class="col-sm-2 control-label"><?php echo $text_profile_default; ?></label>
               <div class="col-sm-10">
                 <input type="hidden" name="default" value="0" />
-                <input type="checkbox" name="default" value="1" <?php if($default == 1){ echo 'checked="checked"'; } ?> />
+                <input type="checkbox" name="default" value="1" <?php if ($default == 1){ echo 'checked="checked"'; } ?> />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="name"><?php echo $text_profile_name; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="name" value="<?php if(isset($name)){ echo $name; } ?>" placeholder="<?php echo $text_profile_name; ?>" id="name" class="form-control" />
+                <input type="text" name="name" value="<?php if (isset($name)){ echo $name; } ?>" placeholder="<?php echo $text_profile_name; ?>" id="name" class="form-control" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="description"><?php echo $text_profile_desc; ?></label>
               <div class="col-sm-10">
-                <textarea name="description" class="form-control" rows="3" id="description"><?php if(isset($description)){ echo $description; } ?></textarea>
+                <textarea name="description" class="form-control" rows="3" id="description"><?php if (isset($description)){ echo $description; } ?></textarea>
               </div>
             </div>
           </div>
@@ -52,10 +52,10 @@
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_general_private; ?></label>
               <div class="col-sm-10">
-                <?php if(!isset($data['private_listing'])){ $data['private_listing'] = '0'; } ?>
+                <?php if (!isset($data['private_listing'])){ $data['private_listing'] = '0'; } ?>
                 <select name="data[private_listing]" class="form-control">
-                  <option value="0" <?php if($data['private_listing'] == '0'){ echo'selected'; } ?>><?php echo $text_no; ?></option>
-                  <option value="1" <?php if($data['private_listing'] == '1'){ echo'selected'; } ?>><?php echo $text_yes; ?></option>
+                  <option value="0" <?php if ($data['private_listing'] == '0'){ echo'selected'; } ?>><?php echo $text_no; ?></option>
+                  <option value="1" <?php if ($data['private_listing'] == '1'){ echo'selected'; } ?>><?php echo $text_yes; ?></option>
                 </select>
               </div>
             </div>

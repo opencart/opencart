@@ -209,31 +209,31 @@
                 <label class="col-sm-2 control-label" for="ebay_time_offset"><?php echo $text_timezone_offset; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_time_offset" id="ebay_time_offset" class="form-control">
-                    <option value="-12"<?php if($ebay_time_offset == '-12'){ echo ' selected';} ?>>-12</option>
-                    <option value="-11"<?php if($ebay_time_offset == '-11'){ echo ' selected';} ?>>-11</option>
-                    <option value="-10"<?php if($ebay_time_offset == '-10'){ echo ' selected';} ?>>-10</option>
-                    <option value="-9"<?php if($ebay_time_offset == '-9'){ echo ' selected';} ?>>-9</option>
-                    <option value="-8"<?php if($ebay_time_offset == '-8'){ echo ' selected';} ?>>-8</option>
-                    <option value="-7"<?php if($ebay_time_offset == '-7'){ echo ' selected';} ?>>-7</option>
-                    <option value="-6"<?php if($ebay_time_offset == '-6'){ echo ' selected';} ?>>-6</option>
-                    <option value="-5"<?php if($ebay_time_offset == '-5'){ echo ' selected';} ?>>-5</option>
-                    <option value="-4"<?php if($ebay_time_offset == '-4'){ echo ' selected';} ?>>-4</option>
-                    <option value="-3"<?php if($ebay_time_offset == '-3'){ echo ' selected';} ?>>-3</option>
-                    <option value="-2"<?php if($ebay_time_offset == '-2'){ echo ' selected';} ?>>-2</option>
-                    <option value="-1"<?php if($ebay_time_offset == '-1'){ echo ' selected';} ?>>-1</option>
-                    <option value="0"<?php if($ebay_time_offset == '0'){ echo ' selected';} ?>>0</option>
-                    <option value="+1"<?php if($ebay_time_offset == '+1'){ echo ' selected';} ?>>+1</option>
-                    <option value="+2"<?php if($ebay_time_offset == '+2'){ echo ' selected';} ?>>+2</option>
-                    <option value="+3"<?php if($ebay_time_offset == '+3'){ echo ' selected';} ?>>+3</option>
-                    <option value="+4"<?php if($ebay_time_offset == '+4'){ echo ' selected';} ?>>+4</option>
-                    <option value="+5"<?php if($ebay_time_offset == '+5'){ echo ' selected';} ?>>+5</option>
-                    <option value="+6"<?php if($ebay_time_offset == '+6'){ echo ' selected';} ?>>+6</option>
-                    <option value="+7"<?php if($ebay_time_offset == '+7'){ echo ' selected';} ?>>+7</option>
-                    <option value="+8"<?php if($ebay_time_offset == '+8'){ echo ' selected';} ?>>+8</option>
-                    <option value="+9"<?php if($ebay_time_offset == '+9'){ echo ' selected';} ?>>+9</option>
-                    <option value="+10"<?php if($ebay_time_offset == '+10'){ echo ' selected';} ?>>+10</option>
-                    <option value="+11"<?php if($ebay_time_offset == '+11'){ echo ' selected';} ?>>+11</option>
-                    <option value="+12"<?php if($ebay_time_offset == '+12'){ echo ' selected';} ?>>+12</option>
+                    <option value="-12"<?php if ($ebay_time_offset == '-12'){ echo ' selected';} ?>>-12</option>
+                    <option value="-11"<?php if ($ebay_time_offset == '-11'){ echo ' selected';} ?>>-11</option>
+                    <option value="-10"<?php if ($ebay_time_offset == '-10'){ echo ' selected';} ?>>-10</option>
+                    <option value="-9"<?php if ($ebay_time_offset == '-9'){ echo ' selected';} ?>>-9</option>
+                    <option value="-8"<?php if ($ebay_time_offset == '-8'){ echo ' selected';} ?>>-8</option>
+                    <option value="-7"<?php if ($ebay_time_offset == '-7'){ echo ' selected';} ?>>-7</option>
+                    <option value="-6"<?php if ($ebay_time_offset == '-6'){ echo ' selected';} ?>>-6</option>
+                    <option value="-5"<?php if ($ebay_time_offset == '-5'){ echo ' selected';} ?>>-5</option>
+                    <option value="-4"<?php if ($ebay_time_offset == '-4'){ echo ' selected';} ?>>-4</option>
+                    <option value="-3"<?php if ($ebay_time_offset == '-3'){ echo ' selected';} ?>>-3</option>
+                    <option value="-2"<?php if ($ebay_time_offset == '-2'){ echo ' selected';} ?>>-2</option>
+                    <option value="-1"<?php if ($ebay_time_offset == '-1'){ echo ' selected';} ?>>-1</option>
+                    <option value="0"<?php if ($ebay_time_offset == '0'){ echo ' selected';} ?>>0</option>
+                    <option value="+1"<?php if ($ebay_time_offset == '+1'){ echo ' selected';} ?>>+1</option>
+                    <option value="+2"<?php if ($ebay_time_offset == '+2'){ echo ' selected';} ?>>+2</option>
+                    <option value="+3"<?php if ($ebay_time_offset == '+3'){ echo ' selected';} ?>>+3</option>
+                    <option value="+4"<?php if ($ebay_time_offset == '+4'){ echo ' selected';} ?>>+4</option>
+                    <option value="+5"<?php if ($ebay_time_offset == '+5'){ echo ' selected';} ?>>+5</option>
+                    <option value="+6"<?php if ($ebay_time_offset == '+6'){ echo ' selected';} ?>>+6</option>
+                    <option value="+7"<?php if ($ebay_time_offset == '+7'){ echo ' selected';} ?>>+7</option>
+                    <option value="+8"<?php if ($ebay_time_offset == '+8'){ echo ' selected';} ?>>+8</option>
+                    <option value="+9"<?php if ($ebay_time_offset == '+9'){ echo ' selected';} ?>>+9</option>
+                    <option value="+10"<?php if ($ebay_time_offset == '+10'){ echo ' selected';} ?>>+10</option>
+                    <option value="+11"<?php if ($ebay_time_offset == '+11'){ echo ' selected';} ?>>+11</option>
+                    <option value="+12"<?php if ($ebay_time_offset == '+12'){ echo ' selected';} ?>>+12</option>
                   </select>
                   <span class="help-block"><?php echo $text_timezone_offset_help; ?></span>
                 </div>
@@ -318,7 +318,7 @@
                 <label class="col-sm-2 control-label"><?php echo $text_import_pending; ?></label>
                 <div class="col-sm-10">
                   <input type="hidden" name="ebay_import_unpaid" value="0" />
-                  <input type="checkbox" name="ebay_import_unpaid" value="1" <?php if($ebay_import_unpaid == 1){ echo 'checked="checked"'; } ?> />
+                  <input type="checkbox" name="ebay_import_unpaid" value="1" <?php if ($ebay_import_unpaid == 1){ echo 'checked="checked"'; } ?> />
                 </div>
               </div>
               <div class="form-group">
@@ -625,7 +625,7 @@
     }
 
     function changeTaxHandler(){
-        if($('#ebay_tax_listing').val() == 1){
+        if ($('#ebay_tax_listing').val() == 1){
             $('#ebay_tax_listing_preset').hide();
         }else{
             $('#ebay_tax_listing_preset').show();

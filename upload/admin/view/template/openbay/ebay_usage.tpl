@@ -32,7 +32,7 @@
         success: function(json) {
             $('#load_usage_loading').hide();
             $('#usageTable').html(json.html).show();
-            if(json.lasterror){ alert(json.lastmsg); }
+            if (json.lasterror){ alert(json.lastmsg); }
         },
         failure: function(){
             $('#load_usage_loading').hide();

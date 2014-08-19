@@ -30,7 +30,7 @@
           </div>
         </div>
 
-        <?php if($validation == true){ ?>
+        <?php if ($validation == true){ ?>
           <div class="col-md-3 text-center">
             <div class="well">
               <a href="<?php echo $links_sync; ?>">

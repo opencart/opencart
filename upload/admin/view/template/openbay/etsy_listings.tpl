@@ -85,7 +85,7 @@
                 <td class="text-left"><?php echo $listing['listing']['listing_id']; ?></td>
                 <td class="text-left"><?php echo $listing['listing']['title']; ?></td>
                 <td class="text-center"><?php echo $listing['listing']['quantity']; ?></td>
-                <?php if(!empty($listing['link'])) { ?>
+                <?php if (!empty($listing['link'])) { ?>
                   <td class="text-center"><?php echo $listing['link']['quantity']; ?></td>
                   <td class="text-center"><i class="fa fa-check" style="color: green;"></i></td>
                   <td class="text-center">
@@ -169,7 +169,7 @@ $('#button-filter').on('click', function() {
 
   var keywords = $('input[name=\'keywords\']').val();
 
-  if(keywords != '') {
+  if (keywords != '') {
     url += '&keywords=' + encodeURIComponent(keywords);
   }
 

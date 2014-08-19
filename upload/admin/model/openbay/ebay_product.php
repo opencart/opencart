@@ -61,10 +61,10 @@ class ModelOpenbayEbayProduct extends Model {
 			WHERE `status` = '1'");
 
 		//loop over products and if count is more than 1, update all older entries to 0
-		foreach($sql->rows as $row){
+		foreach($sql->rows as $row) {
 			$sql2 = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_listing` WHERE `product_id` = '" . (int)$row['product_id'] . "' AND `status` = 1 ORDER BY `ebay_listing_id` DESC");
 
-			if($sql2->num_rows > 1){
+			if ($sql2->num_rows > 1) {
 				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_listing` SET `status` = 0  WHERE `product_id` = '" . (int)$row['product_id'] . "'");
 				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_listing` SET `status` = 1  WHERE `ebay_listing_id` = '" . (int)$sql2->row['ebay_listing_id'] . "'");
 			}
@@ -72,7 +72,7 @@ class ModelOpenbayEbayProduct extends Model {
 	}
 
 	public function searchEbayCatalog($search, $category_id, $page = 1) {
-		if(!isset($data['page'])){ $page = 1; }else{ $page = $data['page']; }
+	if ((!isset($data['page'])) { $page = 1; }else{ $page = $data['page']; }
 
 		$response = $this->openbay->ebay->call('listing/searchCatalog/', array('page' => (int)$page, 'categoryId' => $category_id, 'search' => $search));
 

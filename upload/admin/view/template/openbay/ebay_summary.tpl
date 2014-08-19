@@ -80,7 +80,7 @@
       success: function(json) {
           $('#load-usage').empty().html('<?php echo $text_load; ?>').removeAttr('disabled');
 
-          if(json.data.summary.QuantityLimitRemaining != ''){
+          if (json.data.summary.QuantityLimitRemaining != ''){
               var limitHtml = '';
 
               limitHtml += '<p><?php echo $text_ebay_limit_t1; ?> <span class="bold underline">'+json.data.summary.QuantityLimitRemaining+'</span> <?php echo $text_ebay_limit_t2; ?> <span class="underline bold">'+json.data.summary.AmountLimitRemaining+'</span></p>';
@@ -89,30 +89,30 @@
               $('#selling-limits').html(limitHtml).show();
           }
 
-          if(json.data.dsr_feedback.AverageRatingSummary){
+          if (json.data.dsr_feedback.AverageRatingSummary){
               $.each(json.data.dsr_feedback.AverageRatingSummary, function(key,val){
 
                 htmlInj = '';
 
                 $.each(val.AverageRatingDetails, function(key2,val2){
-                    if(val2.RatingDetail == 'ItemAsDescribed') {
+                    if (val2.RatingDetail == 'ItemAsDescribed') {
                         htmlInj += '<tr class="data-row"><td class="text-left"><?php echo $text_as_described; ?></td><td class="text-center">'+val2.Rating+'</td><td class="text-center">'+val2.RatingCount+'</td></tr>';
                     }
-                    if(val2.RatingDetail == 'Communication') {
+                    if (val2.RatingDetail == 'Communication') {
                         htmlInj += '<tr class="data-row"><td class="text-left"><?php echo $text_communication; ?></td><td class="text-center">'+val2.Rating+'</td><td class="text-center">'+val2.RatingCount+'</td></tr>';
                     }
-                    if(val2.RatingDetail == 'ShippingTime') {
+                    if (val2.RatingDetail == 'ShippingTime') {
                         htmlInj += '<tr class="data-row"><td class="text-left"><?php echo $text_shippingtime; ?></td><td class="text-center">'+val2.Rating+'</td><td class="text-center">'+val2.RatingCount+'</td></tr>';
                     }
-                    if(val2.RatingDetail == 'ShippingAndHandlingCharges') {
+                    if (val2.RatingDetail == 'ShippingAndHandlingCharges') {
                         htmlInj += '<tr class="data-row"><td class="text-left"><?php echo $text_shipping_charge; ?></td><td class="text-center">'+val2.Rating+'</td><td class="text-center">'+val2.RatingCount+'</td></tr>';
                     }
                 });
 
-                if(val.FeedbackSummaryPeriod == 'FiftyTwoWeeks') {
+                if (val.FeedbackSummaryPeriod == 'FiftyTwoWeeks') {
                     $('#dsr-table-52').append(htmlInj).show();
                 }
-                if(val.FeedbackSummaryPeriod == 'ThirtyDays') {
+                if (val.FeedbackSummaryPeriod == 'ThirtyDays') {
                     $('#dsr-table-30').append(htmlInj).show();
                 }
 
@@ -120,7 +120,7 @@
               });
           }
 
-          if(json.lasterror == true){
+          if (json.lasterror == true){
               alert(json.lastmsg);
           }
       },

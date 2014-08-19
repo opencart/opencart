@@ -24,13 +24,13 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="name"><?php echo $text_template_name; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="name" value="<?php if(isset($name)){ echo $name; } ?>" placeholder="<?php echo $text_template_name; ?>" id="name" class="form-control" />
+              <input type="text" name="name" value="<?php if (isset($name)){ echo $name; } ?>" placeholder="<?php echo $text_template_name; ?>" id="name" class="form-control" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="code"><?php echo $text_template_html; ?></label>
             <div class="col-sm-10">
-              <textarea name="html" cols="100" rows="100" placeholder="<?php echo $text_template_html; ?>" id="code" class="form-control"><?php if(isset($html)){ echo $html; } ?></textarea>
+              <textarea name="html" cols="100" rows="100" placeholder="<?php echo $text_template_html; ?>" id="code" class="form-control"><?php if (isset($html)){ echo $html; } ?></textarea>
             </div>
           </div>
       </form>

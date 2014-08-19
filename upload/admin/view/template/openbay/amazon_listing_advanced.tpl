@@ -38,8 +38,8 @@
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $listing_row_text; ?></label>
               <div class="col-sm-10"><p>
-                <a href="<?php echo $listing_url; ?>"><?php echo $listing_name; ?><?php if(!empty($options)) { echo " : "; } ?></a>
-                <?php if(!empty($options)) { ?>
+                <a href="<?php echo $listing_url; ?>"><?php echo $listing_name; ?><?php if (!empty($options)) { echo " : "; } ?></a>
+                <?php if (!empty($options)) { ?>
                   <select id="openstock_selector" name="optionVar" class="form-control">
                     <option></option>
                     <?php foreach($options as $option) { ?>
@@ -54,7 +54,7 @@
               <div class="col-sm-10" id="marketplaces">
                 <?php foreach ($marketplaces as $mp) { ?>
                   <label class="radio-inline">
-                    <?php if($saved_marketplaces === false) { ?>
+                    <?php if ($saved_marketplaces === false) { ?>
                     <input class="marketplace_ids" id="adv_marketplace_<?php echo $mp['code'] ?>" <?php if (in_array($mp['id'], $default_marketplaces)) { ?> checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="<?php echo $mp['id']; ?>">
                     <?php } else { ?>
                     <input class="marketplace_ids" id="adv_marketplace_<?php echo $mp['code'] ?>" <?php if (in_array($mp['id'], $saved_marketplaces)) { ?> checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="<?php echo $mp['id']; ?>">
@@ -112,7 +112,7 @@ $(document).ready(function(){
         redirectOption($('#openstock_selector').val(), 'advanced');
     });
 
-    <?php if(empty($amazon_categories)) { ?>
+    <?php if (empty($amazon_categories)) { ?>
         $("#advanced_table").html("");
         $(".content").prepend('<div id="warning" class="alert alert-danger"><?php echo $text_error_connecting; ?></div>');
         return;
@@ -124,7 +124,7 @@ $(document).ready(function(){
 
     $('#category_selector').change(function(){
         var xml = $('#category_selector').val();
-        if(xml == '') {
+        if (xml == '') {
             $('.fields_advanced').empty();
             $('.dynamic-tab').remove();
             $('.dynamic-page').remove();
@@ -142,7 +142,7 @@ function redirectOption(varOption, tabOption) {
     var searchLoc = insertParamToUrl(document.location.search, 'var', varOption);
     searchLoc = insertParamToUrl(searchLoc, 'tab', tabOption);
     searchLoc = searchLoc.substr(1);
-    if(document.location.search === searchLoc) {
+    if (document.location.search === searchLoc) {
         return false;
     } else {
         document.location.search = searchLoc;
@@ -161,7 +161,7 @@ function insertParamToUrl(searchLoc, key, value) {
         var i = kvp.length; var x; while (i--) {
             x = kvp[i].split('=');
             if (x[0] == key) {
-                if(x[1] == value) {
+                if (x[1] == value) {
                     return searchLoc;
                 }
                 x[1] = value;
@@ -184,7 +184,7 @@ function show_form(xml, formType) {
     var parserURL = '<?php echo html_entity_decode($template_parser_url) ?>';
     var reqUrl = parserURL + '&xml=' + xml;
 
-    if($('#openstock_selector').val() !== undefined) {
+    if ($('#openstock_selector').val() !== undefined) {
         reqUrl = reqUrl + '&var=' + $('#openstock_selector').val();
     }
 
@@ -201,8 +201,8 @@ function show_form(xml, formType) {
             $('.wait').remove();
         },
         success: function(data) {
-            if(data['status'] === 'error') {
-                if('info' in data) {
+            if (data['status'] === 'error') {
+                if ('info' in data) {
                     alert(data['info']);
                 } else {
                     alert('Unexpected error.');
@@ -229,7 +229,7 @@ function show_form(xml, formType) {
               var row  = '<div class="form-group';
 
 
-              if(fieldsArray[formType][i]['type'] == 'required') {
+              if (fieldsArray[formType][i]['type'] == 'required') {
                 row += ' required';
               }
 
@@ -244,22 +244,22 @@ function show_form(xml, formType) {
 
               row += '<div class="alert alert-danger" id="error_' + fieldsArray[formType][i]['name'] + '" style="display:none;"></div>'
 
-              if(fieldsArray[formType][i]['name'] == "Quantity") {
+              if (fieldsArray[formType][i]['name'] == "Quantity") {
                   row += getQuantityField(fieldsArray[formType][i]);
-              } else if(fieldsArray[formType][i]['accepted']['type'] == "integer") {
-                if(fieldsArray[formType][i]['name'] == 'RecommendedBrowseNode' || fieldsArray[formType][i]['name'] == 'RecommendedBrowseNode2'){
+              } else if (fieldsArray[formType][i]['accepted']['type'] == "integer") {
+                if (fieldsArray[formType][i]['name'] == 'RecommendedBrowseNode' || fieldsArray[formType][i]['name'] == 'RecommendedBrowseNode2'){
                   row += getBrowseNodeField(fieldsArray[formType][i]);
                 } else {
                   row += getIntegerField(fieldsArray[formType][i]);
                 }
               }
-              else if(fieldsArray[formType][i]['accepted']['type'] == "text_area") {
+              else if (fieldsArray[formType][i]['accepted']['type'] == "text_area") {
                   row += getTextAreaField(fieldsArray[formType][i]);
               }
-              else if(fieldsArray[formType][i]['accepted']['type'] == "select") {
+              else if (fieldsArray[formType][i]['accepted']['type'] == "select") {
                   row += getSelectField(fieldsArray[formType][i]);
               }
-              else if(fieldsArray[formType][i]['accepted']['type'] == "image") {
+              else if (fieldsArray[formType][i]['accepted']['type'] == "image") {
                   row += getImageField(fieldsArray[formType][i]);
               }
               else {
@@ -294,23 +294,23 @@ function update_form(element, formType) {
 
     $('.fields_' + formType + ' .child_row').each(function (i) {
         var index = $(this).attr('field_index');
-        if(fieldsArray[formType][index]['parent']['name'] == changedFieldName) {
+        if (fieldsArray[formType][index]['parent']['name'] == changedFieldName) {
             var showChild = false;
 
             //values is array?
-            if(fieldsArray[formType][index]['parent']['value'] instanceof Array) {
+            if (fieldsArray[formType][index]['parent']['value'] instanceof Array) {
                 for(i in fieldsArray[formType][index]['parent']['value']) {
-                    if(fieldsArray[formType][index]['parent']['value'][i] == changedFieldValue) {
+                    if (fieldsArray[formType][index]['parent']['value'][i] == changedFieldValue) {
                         showChild = true;
                     }
                 }
-            } else if(fieldsArray[formType][index]['parent']['value'] == changedFieldValue) {
+            } else if (fieldsArray[formType][index]['parent']['value'] == changedFieldValue) {
                 showChild = true;
-            } else if(fieldsArray[formType][index]['parent']['value'] == '*' && changedFieldValue != '') {
+            } else if (fieldsArray[formType][index]['parent']['value'] == '*' && changedFieldValue != '') {
                 showChild = true;
             }
 
-            if(showChild) {
+            if (showChild) {
                 $(this).attr('display', 'yes');
                 $(this).removeAttr('style');
             } else {
@@ -326,7 +326,7 @@ function getImageField(fieldData) {
   var output = "";
 
   output += '<a class="img-thumbnail img-edit" id="thumb-image-'+fieldData['name']+'">';
-    if(fieldData['thumb'] != "") {
+    if (fieldData['thumb'] != "") {
       output += '<img src="'+fieldData['thumb']+'" alt="" title="" />';
     } else {
       output += '<i class="fa fa-camera fa-5x"></i>';
@@ -395,10 +395,10 @@ function getTextAreaField(fieldData) {
     var output = "";
 
     output += '<textarea ';
-    if('min_length' in fieldData['accepted']) {
+    if ('min_length' in fieldData['accepted']) {
         output += 'min_length="'+ fieldData['accepted']['min_length'] + '" ';
     }
-    if('max_length' in fieldData['accepted']) {
+    if ('max_length' in fieldData['accepted']) {
         output += 'max_length="'+ fieldData['accepted']['max_length'] + '" ';
     }
     output += 'field_name="' + fieldData['name'] + '" ';
@@ -415,10 +415,10 @@ function getStringField(fieldData) {
 
     output += '<input type="text"';
     output += 'accepted="' + fieldData['accepted']['type'] + '" ';
-    if('min_length' in fieldData['accepted']) {
+    if ('min_length' in fieldData['accepted']) {
         output += 'min_length="'+ fieldData['accepted']['min_length'] + '" ';
     }
-    if('max_length' in fieldData['accepted']) {
+    if ('max_length' in fieldData['accepted']) {
         output += 'max_length="'+ fieldData['accepted']['max_length'] + '" ';
     }
     output += 'field_name="' + fieldData['name'] + '" ';
@@ -439,11 +439,11 @@ function getSelectField(fieldData) {
 
     output += '<option></option>';
 
-    if(fieldData['accepted']['option'].length != undefined) {
+    if (fieldData['accepted']['option'].length != undefined) {
         for(j in fieldData['accepted']['option']) {
             output += '<option ';
 
-            if(fieldData['value'].toLowerCase() == fieldData['accepted']['option'][j]['value'].toLowerCase()) {
+            if (fieldData['value'].toLowerCase() == fieldData['accepted']['option'][j]['value'].toLowerCase()) {
                 output += 'selected="selected" ';
             }
             output += 'value="' + fieldData['accepted']['option'][j]['value'] + '">';
@@ -454,7 +454,7 @@ function getSelectField(fieldData) {
     else {
         output += '<option ';
 
-        if(fieldData['value'].toLowerCase() == fieldData['accepted']['option']['value'].toLowerCase()) {
+        if (fieldData['value'].toLowerCase() == fieldData['accepted']['option']['value'].toLowerCase()) {
             output += 'selected="selected" ';
         }
         output += 'value="' + fieldData['accepted']['option']['value'] + '">';
@@ -472,17 +472,17 @@ function validate(formType) {
   var productId;
   var productIdRequired;
 
-  if($('#category_selector').val() == '') {
+  if ($('#category_selector').val() == '') {
     return false;
   }
 
   $('.marketplace_ids').each(function (i) {
-    if($(this).attr('checked') == 'checked') {
+    if ($(this).attr('checked') == 'checked') {
       mChecked++;
     }
   });
 
-  if(mChecked == 0) {
+  if (mChecked == 0) {
     $('#required_marketplaces').prepend('<div class="alert alert-danger" id="marketplace-alert"><?php echo $field_required_text ?></div>');
     warnings ++;
   } else {
@@ -490,7 +490,7 @@ function validate(formType) {
   }
 
     $('.fields_' + formType + ' :input').each(function (i) {
-        if($(this).parent().parent().attr('display') === "no") {
+        if ($(this).parent().parent().attr('display') === "no") {
             return;
         }
 
@@ -500,18 +500,18 @@ function validate(formType) {
         var min_length = $(this).attr('min_length');
         var max_length = $(this).attr('max_length');
 
-        if(field_name === 'Type') {
+        if (field_name === 'Type') {
             productIdType = field_value;
-        } else if(field_name === 'Value') {
+        } else if (field_name === 'Value') {
             productId = field_value;
-            if(field_type === 'required') {
+            if (field_type === 'required') {
                 productIdRequired = true;
             } else {
                 productIdRequired = false;
             }
         }
 
-        if(field_type == 'required' || field_value !== '') {
+        if (field_type == 'required' || field_value !== '') {
             if (field_value === '') {
               alert('1');
                 $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $field_required_text ?>').show();
@@ -530,10 +530,10 @@ function validate(formType) {
         }
     });
 
-    if(productIdRequired && productIdType !== 'ASIN' && !isValidProductId(productId)) {
+    if (productIdRequired && productIdType !== 'ASIN' && !isValidProductId(productId)) {
         $('.fields_' + formType + ' :input').each(function (i) {
             var field_name = $(this).attr('field_name');
-            if(field_name === 'Value') {
+            if (field_name === 'Value') {
                 $('.fields_' + formType + ' #error_' + field_name).text('Not valid product ID!');
                 warnings ++;
               alert('5');
@@ -542,11 +542,11 @@ function validate(formType) {
         });
     }
 
-    if($('.fields_' + formType + ' [name="category"]').val() == undefined) {
+    if ($('.fields_' + formType + ' [name="category"]').val() == undefined) {
         warnings ++;
     }
 
-    if(warnings > 0) {
+    if (warnings > 0) {
         return false;
     } else {
         return true;
@@ -554,7 +554,7 @@ function validate(formType) {
 }
 
 function validate_and_save(formType) {
-    if(validate(formType)) {
+    if (validate(formType)) {
         if (formType == 'advanced') {
             $("#product_form_advanced").submit();
         } else if (formType == 'quick') {
@@ -568,7 +568,7 @@ function validate_and_save(formType) {
 function save_and_upload() {
     $('#product_form_advanced input[name=upload_after]').val(true);
 
-    if(validate('advanced')) {
+    if (validate('advanced')) {
         $("#product_form_advanced").submit();
     } else {
         alert('<?php echo $not_saved_text; ?>');
@@ -582,7 +582,7 @@ function isValidProductId(value) {
     var calcChecksum = 0;
     barcode.split('').map(function(number, index ) {
         number = parseInt(number, 10);
-        if(value.length === 13) {
+        if (value.length === 13) {
             if (index % 2 === 0) {
                 calcSum += number;
             }
@@ -631,7 +631,7 @@ function loadBrowseNode(field) {
             $('#'+field+'_label').empty().hide();
         },
         success: function(data) {
-            if(data.node.error != true){
+            if (data.node.error != true){
                 html += '<div class="row">';
                   html += '<div class="input-group col-md-12">';
                     html += '<p><select class="form-control" id="root-node" onchange="nodeSelect(\'root-node\', \''+field+'\');">';
@@ -674,13 +674,13 @@ function nodeSelect(field, original_field) {
           $('#browse-node-content').empty().html('<a class="btn btn-primary" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i> </a>');
         },
         success: function(data) {
-          if(data.node.error != true){
+          if (data.node.error != true){
             html += '<div class="row">';
               html += '<div class="col-sm-12 text-left">';
                 html += '<h4>'+nodeStringSimple+'</h4>';
               html += '</div>';
             html += '</div>';
-            if(data.node.final == 0){
+            if (data.node.final == 0){
               html += '<div class="row">';
                 html += '<div class="input-group col-md-12">';
                   html += '<p><select class="form-control" id="'+field+'-'+node+'" onchange="nodeSelect(\''+field+'-'+node+'\', \''+original_field+'\');">';

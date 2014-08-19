@@ -911,13 +911,13 @@ class ControllerOpenbayEbay extends Controller {
 
 		$total_linked = $this->model_openbay_ebay->totalLinked();
 
-		if(isset($this->request->get['linked_item_page'])){
+		if (isset($this->request->get['linked_item_page'])){
 			$linked_item_page = (int)$this->request->get['linked_item_page'];
 		}else{
 			$linked_item_page = 1;
 		}
 
-		if(isset($this->request->get['linked_item_limit'])){
+		if (isset($this->request->get['linked_item_limit'])){
 			$linked_item_limit = (int)$this->request->get['linked_item_limit'];
 		}else{
 			$linked_item_limit = 100;
@@ -989,7 +989,7 @@ class ControllerOpenbayEbay extends Controller {
 		if (!empty($data)) {
 			$data['more_pages'] = 1;
 
-			if($data['next_page'] > $data['max_page']){
+			if ($data['next_page'] > $data['max_page']){
 				$data['more_pages'] = 0;
 			}
 
@@ -1008,7 +1008,7 @@ class ControllerOpenbayEbay extends Controller {
 		$this->load->model('openbay/ebay');
 
 		$json['data'] = '';
-		if(isset($this->request->post['item_id']) && !empty($this->request->post['item_id'])){
+		if (isset($this->request->post['item_id']) && !empty($this->request->post['item_id'])){
 			$data = $this->model_openbay_ebay->loadLinkedStatus($this->request->post['item_id']);
 
 			if (!empty($data)) {
@@ -1128,14 +1128,14 @@ class ControllerOpenbayEbay extends Controller {
 					$t[] = array('name' => $grp['name'], 'child' => $t_tmp);
 				}
 
-				if(!isset($listings['variations']['Variation'][1])) {
+				if (!isset($listings['variations']['Variation'][1])) {
 					$listings['variations']['Variation'] = array($listings['variations']['Variation']);
 				}
 
 				foreach($product_info['options'] as $option) {
 					$option['base64'] = base64_encode(serialize($option['opts']));
 					$option_reserve = $this->openbay->ebay->getReserve($this->request->get['product_id'], $item_id, $option['var']);
-					if($option_reserve == false) {
+					if ($option_reserve == false) {
 						$option['reserve'] = 0;
 					}else{
 						$option['reserve']  = $this->openbay->ebay->getReserve($this->request->get['product_id'], $item_id, $option['var']);
@@ -1147,7 +1147,7 @@ class ControllerOpenbayEbay extends Controller {
 
 						$sku = (isset($listing['SKU']) ? $listing['SKU'] : '');
 
-						if($sku != '' && $sku == $option['var']) {
+						if ($sku != '' && $sku == $option['var']) {
 							$listing['StartPrice'] = number_format($listing['StartPrice'], 2);
 							$listing['Quantity'] = $listing['Quantity'] - $listing['SellingStatus']['QuantitySold'];
 
@@ -1162,7 +1162,7 @@ class ControllerOpenbayEbay extends Controller {
 				//unset variants that dont appear on eBay
 				$notlive = array();
 				foreach($options as $k => $option) {
-					if(empty($option['ebay'])) {
+					if (empty($option['ebay'])) {
 						$notlive[] = $options[$k];
 						unset($options[$k]);
 					}
@@ -1186,7 +1186,7 @@ class ControllerOpenbayEbay extends Controller {
 
 			$data['product'] = $product_info;
 
-			if($reserve == false) { $reserve = 0; }
+			if ($reserve == false) { $reserve = 0; }
 
 			$data = array(
 				'listing'   => $listings,
@@ -1266,17 +1266,17 @@ class ControllerOpenbayEbay extends Controller {
 				$setting = array();
 
 				$setting['dispatch_times'] = $this->openbay->ebay->getSetting('dispatch_time_max');
-				if(is_array($setting['dispatch_times'])) { ksort($setting['dispatch_times']); }
+				if (is_array($setting['dispatch_times'])) { ksort($setting['dispatch_times']); }
 
 				$setting['countries'] = $this->openbay->ebay->getSetting('countries');
-				if(is_array($setting['countries'])) { ksort($setting['countries']); }
+				if (is_array($setting['countries'])) { ksort($setting['countries']); }
 
 				$setting['returns'] = $this->openbay->ebay->getSetting('returns');
 				$setting['package_type'] = $this->openbay->ebay->getSetting('package_type');
 				$setting['shipping_types'] = $this->openbay->ebay->getSetting('shipping_types');
 				$setting['measurement_types'] = $this->openbay->ebay->getSetting('measurement_types');
 
-				if(empty($setting['dispatch_times']) || empty($setting['countries']) || empty($setting['returns'])){
+				if (empty($setting['dispatch_times']) || empty($setting['countries']) || empty($setting['returns'])){
 					$this->session->data['warning'] = $this->language->get('text_error_missing_settings');
 					$this->response->redirect($this->url->link('openbay/ebay/viewSync&token=' . $this->session->data['token'], 'SSL'));
 				}
@@ -1390,7 +1390,7 @@ class ControllerOpenbayEbay extends Controller {
 					$data['error_warning'] = '';
 				}
 
-				if($product_info['quantity'] < 1 && (!isset($product_info['has_option']) || $product_info['has_option'] == 0)) {
+				if ($product_info['quantity'] < 1 && (!isset($product_info['has_option']) || $product_info['has_option'] == 0)) {
 					$data['error_warning'] = $this->language->get('text_error_no_stock');
 				}
 
@@ -1415,7 +1415,7 @@ class ControllerOpenbayEbay extends Controller {
 
 	public function createBulk() {
 		if ($this->checkConfig() == true) {
-			if(!empty($this->request->post['selected'])) {
+			if (!empty($this->request->post['selected'])) {
 				$data = $this->load->language('openbay/ebay_newbulk');
 
 				$this->load->model('catalog/product');
@@ -1456,14 +1456,14 @@ class ControllerOpenbayEbay extends Controller {
 				}
 
 				foreach ($this->request->post['selected'] as $product_id) {
-					if(!array_key_exists($product_id, $active_list)) {
+					if (!array_key_exists($product_id, $active_list)) {
 
 						$prod = $this->model_catalog_product->getProduct($product_id);
 
-						if($openstock == 1 && isset($prod['has_option']) && $prod['has_option'] == 1) {
+						if ($openstock == 1 && isset($prod['has_option']) && $prod['has_option'] == 1) {
 							$data['error_warning']['os'] = $this->language->get('text_error_variants');
 						}else{
-							if($prod['quantity'] > 0) {
+							if ($prod['quantity'] > 0) {
 								if ($prod['image'] && file_exists(DIR_IMAGE . $prod['image'])) {
 									$prod['image'] = $this->model_tool_image->resize($prod['image'], 80, 80);
 								} else {
@@ -1486,12 +1486,12 @@ class ControllerOpenbayEbay extends Controller {
 
 				$plan = $this->model_openbay_ebay->getMyPlan();
 
-				if($plan['plan']['listing_bulk'] == 1) {
-					if($data['count'] == 0) {
+				if ($plan['plan']['listing_bulk'] == 1) {
+					if ($data['count'] == 0) {
 						$data['error_fail'][] = $this->language->get('text_error_no_product');
 					}else{
-						if(($plan['plan']['listing_limit'] == 0) || (($plan['usage']['items'] + $data['count']) <= $plan['plan']['listing_limit'])) {
-							if($data['count'] > 5) {
+						if (($plan['plan']['listing_limit'] == 0) || (($plan['usage']['items'] + $data['count']) <= $plan['plan']['listing_limit'])) {
+							if ($data['count'] > 5) {
 								$data['error_warning']['count'] = sprintf($this->language->get('text_error_count'), $data['count']);
 							}
 
@@ -1499,14 +1499,14 @@ class ControllerOpenbayEbay extends Controller {
 							$setting = array();
 
 							$setting['dispatch_times'] = $this->openbay->ebay->getSetting('dispatch_time_max');
-							if(is_array($setting['dispatch_times'])) { ksort($setting['dispatch_times']); }
+							if (is_array($setting['dispatch_times'])) { ksort($setting['dispatch_times']); }
 
 							$setting['countries'] = $this->openbay->ebay->getSetting('countries');
-							if(is_array($setting['countries'])) { ksort($setting['countries']); }
+							if (is_array($setting['countries'])) { ksort($setting['countries']); }
 
 							$setting['returns'] = $this->openbay->ebay->getSetting('returns');
 
-							if(empty($setting['dispatch_times']) || empty($setting['countries']) || empty($setting['returns'])){
+							if (empty($setting['dispatch_times']) || empty($setting['countries']) || empty($setting['returns'])){
 								$this->session->data['warning'] = $this->language->get('text_error_missing_settings');
 								$this->response->redirect($this->url->link('openbay/ebay/viewSync&token=' . $this->session->data['token'], 'SSL'));
 							}
@@ -1517,7 +1517,7 @@ class ControllerOpenbayEbay extends Controller {
 							$product_info['profiles_generic'] = $this->model_openbay_ebay_profile->getAll(3);
 							//get default generic profile
 							$product_info['profiles_generic_def'] = $this->model_openbay_ebay_profile->getDefault(3);
-							if($product_info['profiles_generic_def'] === false) {
+							if ($product_info['profiles_generic_def'] === false) {
 								$data['error_fail'][] = $this->language->get('text_error_generic_profile');
 							}
 
@@ -1526,7 +1526,7 @@ class ControllerOpenbayEbay extends Controller {
 							//get default shipping profile
 							$product_info['profiles_shipping_def'] = $this->model_openbay_ebay_profile->getDefault(0);
 							//check it has a default profile
-							if($product_info['profiles_shipping_def'] === false) {
+							if ($product_info['profiles_shipping_def'] === false) {
 								$data['error_fail'][] = $this->language->get('text_error_ship_profile');
 							}
 
@@ -1535,7 +1535,7 @@ class ControllerOpenbayEbay extends Controller {
 							//get default returns profile
 							$product_info['profiles_returns_def'] = $this->model_openbay_ebay_profile->getDefault(1);
 							//check it has a default profile
-							if($product_info['profiles_returns_def'] === false) {
+							if ($product_info['profiles_returns_def'] === false) {
 								$data['error_fail'][] = $this->language->get('text_error_return_profile');
 							}
 
@@ -1544,7 +1544,7 @@ class ControllerOpenbayEbay extends Controller {
 							//get default returns profile
 							$product_info['profiles_theme_def'] = $this->model_openbay_ebay_profile->getDefault(2);
 							//check it has a default profile
-							if($product_info['profiles_theme_def'] === false) {
+							if ($product_info['profiles_theme_def'] === false) {
 								$data['error_fail'][] = $this->language->get('text_error_theme_profile');
 							}
 
@@ -1608,7 +1608,7 @@ class ControllerOpenbayEbay extends Controller {
 				if ($item_id == false) { // ensure that the sku is not already listed
 					$data = $this->request->post;
 
-					if($data['template'] != 'None') {
+					if ($data['template'] != 'None') {
 						$template = $this->model_openbay_ebay_template->get($data['template']);
 						$data['template_html'] = (isset($template['html']) ? base64_encode($template['html']) : '');
 					}else{
@@ -1633,7 +1633,7 @@ class ControllerOpenbayEbay extends Controller {
 
 					$data['product_info'] = $query->row;
 
-					if(!empty($data['product_info']['sku'])){
+					if (!empty($data['product_info']['sku'])){
 						$data['sku'] = $data['product_info']['sku'];
 					}
 
@@ -1689,7 +1689,7 @@ class ControllerOpenbayEbay extends Controller {
 				$data['feat']           	= $post['feat'];
 				$data['featother']          = $post['featother'];
 
-				if(!empty($product_info['sku'])){
+				if (!empty($product_info['sku'])){
 					$data['sku'] = $product_info['sku'];
 				}
 
@@ -1702,22 +1702,22 @@ class ControllerOpenbayEbay extends Controller {
 				$data['paypal_email']       = $this->config->get('ebay_payment_paypal_address');
 				$data['payment_instruction']= $this->config->get('ebay_payment_instruction');
 
-				if(isset($profile_return['data']['returns_accepted'])) {
+				if (isset($profile_return['data']['returns_accepted'])) {
 					$data['returns_accepted'] = $profile_return['data']['returns_accepted'];
 				}
-				if(isset($profile_return['data']['returns_policy'])) {
+				if (isset($profile_return['data']['returns_policy'])) {
 					$data['return_policy'] = $profile_return['data']['returns_policy'];
 				}
-				if(isset($profile_return['data']['returns_option'])) {
+				if (isset($profile_return['data']['returns_option'])) {
 					$data['returns_option'] = $profile_return['data']['returns_option'];
 				}
-				if(isset($profile_return['data']['returns_within'])) {
+				if (isset($profile_return['data']['returns_within'])) {
 					$data['returns_within'] = $profile_return['data']['returns_within'];
 				}
-				if(isset($profile_return['data']['returns_shipping'])) {
+				if (isset($profile_return['data']['returns_shipping'])) {
 					$data['returns_shipping'] = $profile_return['data']['returns_shipping'];
 				}
-				if(isset($profile_return['data']['returns_restocking_fee'])) {
+				if (isset($profile_return['data']['returns_restocking_fee'])) {
 					$data['returns_restocking_fee'] = $profile_return['data']['returns_restocking_fee'];
 				}
 
@@ -1725,13 +1725,13 @@ class ControllerOpenbayEbay extends Controller {
 				$data['postcode']           = $profile_shipping['data']['postcode'];
 				$data['dispatch_time']      = $profile_shipping['data']['dispatch_time'];
 
-				if(isset($profile_shipping['data']['country'])) {
+				if (isset($profile_shipping['data']['country'])) {
 					$data['country'] = $profile_shipping['data']['country'];
 				}
 
 				$data['get_it_fast']        = (isset($profile_shipping['data']['get_it_fast']) ? $profile_shipping['data']['get_it_fast'] : 0);
 
-				if(isset($profile_template['data']['ebay_template_id'])) {
+				if (isset($profile_template['data']['ebay_template_id'])) {
 					$template = $this->model_openbay_ebay_template->get($profile_template['data']['ebay_template_id']);
 					$data['template_html'] = (isset($template['html']) ? base64_encode($template['html']) : '');
 					$data['template'] = $profile_template['data']['ebay_template_id'];
@@ -1750,7 +1750,7 @@ class ControllerOpenbayEbay extends Controller {
 
 				$data['payments'] = array();
 				foreach($payments as $payment) {
-					if($payments_accepted[$payment['ebay_name']] == 1) {
+					if ($payments_accepted[$payment['ebay_name']] == 1) {
 						$data['payments'][$payment['ebay_name']] = 1;
 					}
 				}
@@ -1766,7 +1766,7 @@ class ControllerOpenbayEbay extends Controller {
 					$data['img'][] = $product_info['image'];
 				}
 
-				if(isset($profile_template['data']['ebay_img_ebay']) && $profile_template['data']['ebay_img_ebay'] == 1) {
+				if (isset($profile_template['data']['ebay_img_ebay']) && $profile_template['data']['ebay_img_ebay'] == 1) {
 					foreach ($product_images as $product_image) {
 						if ($product_image['image'] && file_exists(DIR_IMAGE . $product_image['image'])) {
 							$data['img'][] =  $product_image['image'];
@@ -1774,13 +1774,13 @@ class ControllerOpenbayEbay extends Controller {
 					}
 				}
 
-				if(isset($profile_template['data']['ebay_img_template']) && $profile_template['data']['ebay_img_template'] == 1) {
+				if (isset($profile_template['data']['ebay_img_template']) && $profile_template['data']['ebay_img_template'] == 1) {
 					$tmp_gallery_array = array();
 					$tmp_thumbnail_array = array();
 
 					//if the user has not set the exclude default image, add it to the array for theme images.
 					$key_offset = 0;
-					if(!isset($profile_template['data']['default_img_exclude']) || $profile_template['data']['default_img_exclude'] != 1) {
+					if (!isset($profile_template['data']['default_img_exclude']) || $profile_template['data']['default_img_exclude'] != 1) {
 						$tmp_gallery_array[0] = $this->model_tool_image->resize($product_info['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height']);
 						$tmp_thumbnail_array[0] = $this->model_tool_image->resize($product_info['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height']);
 						$key_offset = 1;
@@ -1825,7 +1825,7 @@ class ControllerOpenbayEbay extends Controller {
 		if ($this->checkConfig() == true && $this->request->server['REQUEST_METHOD'] == 'POST') {
 			$data = $this->request->post;
 
-			if($data['template'] != 'None') {
+			if ($data['template'] != 'None') {
 				$template = $this->model_openbay_ebay_template->get($data['template']);
 				$data['template_html'] = (isset($template['html']) ? base64_encode($template['html']) : '');
 			}else{
@@ -1850,7 +1850,7 @@ class ControllerOpenbayEbay extends Controller {
 
 			$data['product_info'] = $query->row;
 
-			if(!empty($data['product_info']['sku'])){
+			if (!empty($data['product_info']['sku'])){
 				$data['sku'] = $data['product_info']['sku'];
 			}
 
@@ -1900,7 +1900,7 @@ class ControllerOpenbayEbay extends Controller {
 				$data['feat']           	= $post['feat'];
 				$data['featother']          = $post['featother'];
 
-				if(!empty($product_info['sku'])){
+				if (!empty($product_info['sku'])){
 					$data['sku'] = $product_info['sku'];
 				}
 
@@ -1913,22 +1913,22 @@ class ControllerOpenbayEbay extends Controller {
 				$data['paypal_email']       = $this->config->get('ebay_payment_paypal_address');
 				$data['payment_instruction']= $this->config->get('ebay_payment_instruction');
 
-				if(isset($profile_return['data']['returns_accepted'])) {
+				if (isset($profile_return['data']['returns_accepted'])) {
 					$data['returns_accepted'] = $profile_return['data']['returns_accepted'];
 				}
-				if(isset($profile_return['data']['returns_policy'])) {
+				if (isset($profile_return['data']['returns_policy'])) {
 					$data['return_policy'] = $profile_return['data']['returns_policy'];
 				}
-				if(isset($profile_return['data']['returns_option'])) {
+				if (isset($profile_return['data']['returns_option'])) {
 					$data['returns_option'] = $profile_return['data']['returns_option'];
 				}
-				if(isset($profile_return['data']['returns_within'])) {
+				if (isset($profile_return['data']['returns_within'])) {
 					$data['returns_within'] = $profile_return['data']['returns_within'];
 				}
-				if(isset($profile_return['data']['returns_shipping'])) {
+				if (isset($profile_return['data']['returns_shipping'])) {
 					$data['returns_shipping'] = $profile_return['data']['returns_shipping'];
 				}
-				if(isset($profile_return['data']['returns_restocking_fee'])) {
+				if (isset($profile_return['data']['returns_restocking_fee'])) {
 					$data['returns_restocking_fee'] = $profile_return['data']['returns_restocking_fee'];
 				}
 
@@ -1936,13 +1936,13 @@ class ControllerOpenbayEbay extends Controller {
 				$data['postcode']           = $profile_shipping['data']['postcode'];
 				$data['dispatch_time']      = $profile_shipping['data']['dispatch_time'];
 
-				if(isset($profile_shipping['data']['country'])) {
+				if (isset($profile_shipping['data']['country'])) {
 					$data['country'] = $profile_shipping['data']['country'];
 				}
 
 				$data['get_it_fast']        = (isset($profile_shipping['data']['get_it_fast']) ? $profile_shipping['data']['get_it_fast'] : 0);
 
-				if(isset($profile_template['data']['ebay_template_id'])) {
+				if (isset($profile_template['data']['ebay_template_id'])) {
 					$template = $this->model_openbay_ebay_template->get($profile_template['data']['ebay_template_id']);
 					$data['template_html'] = (isset($template['html']) ? base64_encode($template['html']) : '');
 					$data['template'] = $profile_template['data']['ebay_template_id'];
@@ -1961,7 +1961,7 @@ class ControllerOpenbayEbay extends Controller {
 
 				$data['payments'] = array();
 				foreach($payments as $payment) {
-					if($payments_accepted[$payment['ebay_name']] == 1) {
+					if ($payments_accepted[$payment['ebay_name']] == 1) {
 						$data['payments'][$payment['ebay_name']] = 1;
 					}
 				}
@@ -1977,7 +1977,7 @@ class ControllerOpenbayEbay extends Controller {
 					$data['img'][] = $product_info['image'];
 				}
 
-				if(isset($profile_template['data']['ebay_img_ebay']) && $profile_template['data']['ebay_img_ebay'] == 1) {
+				if (isset($profile_template['data']['ebay_img_ebay']) && $profile_template['data']['ebay_img_ebay'] == 1) {
 					foreach ($product_images as $product_image) {
 						if ($product_image['image'] && file_exists(DIR_IMAGE . $product_image['image'])) {
 							$data['img'][] =  $product_image['image'];
@@ -1985,13 +1985,13 @@ class ControllerOpenbayEbay extends Controller {
 					}
 				}
 
-				if(isset($profile_template['data']['ebay_img_template']) && $profile_template['data']['ebay_img_template'] == 1) {
+				if (isset($profile_template['data']['ebay_img_template']) && $profile_template['data']['ebay_img_template'] == 1) {
 					$tmp_gallery_array = array();
 					$tmp_thumbnail_array = array();
 
 					//if the user has not set the exclude default image, add it to the array for theme images.
 					$key_offset = 0;
-					if(!isset($profile_template['data']['default_img_exclude']) || $profile_template['data']['default_img_exclude'] != 1) {
+					if (!isset($profile_template['data']['default_img_exclude']) || $profile_template['data']['default_img_exclude'] != 1) {
 						$tmp_gallery_array[0] = $this->model_tool_image->resize($product_info['image'], $profile_template['data']['ebay_gallery_width'], $profile_template['data']['ebay_gallery_height']);
 						$tmp_thumbnail_array[0] = $this->model_tool_image->resize($product_info['image'], $profile_template['data']['ebay_thumb_width'], $profile_template['data']['ebay_thumb_height']);
 						$key_offset = 1;

@@ -43,8 +43,8 @@
                 </td>
                 <td class="text-left"><?php echo $order['date_added']; ?></td>
                 <td class="text-left">
-                  <?php if($order['channel'] == 'eBay') { ?>
-                    <?php if($change_order_status_id == $ebay_status_shipped_id) { ?>
+                  <?php if ($order['channel'] == 'eBay') { ?>
+                    <?phpif (($change_order_status_id == $ebay_status_shipped_id) { ?>
                       <div class="form-group">
                         <label class="control-label"><?php echo $text_carrier; ?></label>
                         <select name="carrier[<?php echo $order['order_id']; ?>]" class="form-control">
@@ -60,9 +60,9 @@
                     <?php } ?>
                   <?php } ?>
 
-                  <?php if($order['channel'] == 'Amazon EU') { ?>
+                  <?phif (f($order['channel'] == 'Amazon EU') { ?>
                   <a href="openbay_orderlist_confirm.tpl"></a>
-                    <?php if($change_order_status_id == $openbay_amazon_order_status_shipped) { ?>
+                    <?pif (if($change_order_status_id == $openbay_amazon_order_status_shipped) { ?>
                       <div class="form-group">
                         <label class="control-label"><?php echo $text_carrier; ?></label>
                         <select name="carrier[<?php echo $order['order_id']; ?>]" class="form-control amazon_carrier" id="amazon_carrier_<?php echo $order['order_id']; ?>">
@@ -83,8 +83,8 @@
                     <?php } ?>
                   <?php } ?>
 
-                  <?php if($order['channel'] == 'Amazon US') { ?>
-                    <?php if($change_order_status_id == $openbay_amazonus_order_status_shipped) { ?>
+                  <?if ( if($order['channel'] == 'Amazon US') { ?>
+                    <if (p if($change_order_status_id == $openbay_amazonus_order_status_shipped) { ?>
                       <div class="form-group">
                         <label class="control-label"><?php echo $text_carrier; ?></label>
                         <select name="carrier[<?php echo $order['order_id']; ?>]" class="form-control amazonus_carrier" id="amazonus_carrier_<?php echo $order['order_id']; ?>">
@@ -125,7 +125,7 @@
     function notifyAll(){
         var valChecked = $('#notify_all').prop('checked');
 
-        if(valChecked == true){
+  if (   if(valChecked == true){
             $('.notify_checkbox').prop('checked', true);
         }else{
             $('.notify_checkbox').prop('checked', false);
@@ -139,36 +139,34 @@
         var errorAmazonusCarrier = false;
 
         $.each($('.amazon_carrier'), function(k,v){
-            if($(this).val() == 'other'){
+     if (    if($(this).val() == 'other'){
                 element_id = $(this).attr("id");
 
-                if($('#'+element_id+'_other').val() == ''){
+        if (     if($('#'+element_id+'_other').val() == ''){
                     error = true;
                     errorAmazonCarrier = true;
                     $('#'+element_id+'_other').css('border-color','#FF0000');
                 }
             }
         });
-        
+
         $.each($('.amazonus_carrier'), function(k,v){
-            if($(this).val() == 'other'){
+   if (      if($(this).val() == 'other'){
                 element_id = $(this).attr("id");
 
-                if($('#'+element_id+'_other').val() == ''){
+      if (       if($('#'+element_id+'_other').val() == ''){
                     error = true;
                     errorAmazonusCarrier = true;
                     $('#'+element_id+'_other').css('border-color','#FF0000');
                 }
             }
-        });
-
-        if(errorAmazonCarrier == true){
+        })if (        if(errorAmazonCarrier == true){
             alert('<?php echo $text_e_ajax_3; ?>');
         }
-        
+     if (
         if(errorAmazonusCarrier == true){
             alert('<?php echo $text_e_ajax_3; ?>');
-        }
+      if (
 
         if(error == false){
             $('#form').submit();

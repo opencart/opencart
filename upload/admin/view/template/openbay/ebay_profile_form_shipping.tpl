@@ -32,19 +32,19 @@
               <label class="col-sm-2 control-label"><?php echo $text_profile_default; ?></label>
               <div class="col-sm-10">
                 <input type="hidden" name="default" value="0" />
-                <input type="checkbox" name="default" value="1" <?php if($default == 1){ echo 'checked="checked"'; } ?> />
+                <input type="checkbox" name="default" value="1" <?php if ($default == 1){ echo 'checked="checked"'; } ?> />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="name"><?php echo $text_profile_name; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="name" value="<?php if(isset($name)){ echo $name; } ?>" placeholder="<?php echo $text_profile_name; ?>" id="name" class="form-control" />
+                <input type="text" name="name" value="<?php if (isset($name)){ echo $name; } ?>" placeholder="<?php echo $text_profile_name; ?>" id="name" class="form-control" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="description"><?php echo $text_profile_desc; ?></label>
               <div class="col-sm-10">
-                <textarea name="description" class="form-control" rows="3" id="description"><?php if(isset($description)){ echo $description; } ?></textarea>
+                <textarea name="description" class="form-control" rows="3" id="description"><?php if (isset($description)){ echo $description; } ?></textarea>
               </div>
             </div>
           </div>
@@ -52,13 +52,13 @@
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_shipping_postcode; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="data[postcode]" id="postcode" value="<?php if(isset($data['postcode'])){ echo $data['postcode']; } ?>" placeholder="<?php echo $text_shipping_postcode; ?>" class="form-control" />
+                <input type="text" name="data[postcode]" id="postcode" value="<?php if (isset($data['postcode'])){ echo $data['postcode']; } ?>" placeholder="<?php echo $text_shipping_postcode; ?>" class="form-control" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_shipping_location; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="data[location]" id="location" value="<?php if(isset($data['location'])){ echo $data['location']; } ?>" placeholder="<?php echo $text_shipping_location; ?>" class="form-control" />
+                <input type="text" name="data[location]" id="location" value="<?php if (isset($data['location'])){ echo $data['location']; } ?>" placeholder="<?php echo $text_shipping_location; ?>" class="form-control" />
               </div>
             </div>
             <div class="form-group">
@@ -86,14 +86,14 @@
               <label class="col-sm-2 control-label"><?php echo $text_shipping_getitfast; ?></label>
               <div class="col-sm-10">
                 <input type="hidden" name="data[get_it_fast]" value="0" />
-                <input type="checkbox" name="data[get_it_fast]" value="1" id="get_it_fast" <?php if(isset($data['get_it_fast']) && $data['get_it_fast'] == 1){ echo 'checked="checked"'; } ?> />
+                <input type="checkbox" name="data[get_it_fast]" value="1" id="get_it_fast" <?php if (isset($data['get_it_fast']) && $data['get_it_fast'] == 1){ echo 'checked="checked"'; } ?> />
               </div>
             </div>
             <?php if ($cod_surcharge == 1) { ?>
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_shipping_cod; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="data[cod_cost]" value="<?php if(isset($data['cod_cost'])){ echo $data['cod_cost']; } ?>" placeholder="<?php echo $text_shipping_cod; ?>" class="form-control" />
+                <input type="text" name="data[cod_cost]" value="<?php if (isset($data['cod_cost'])){ echo $data['cod_cost']; } ?>" placeholder="<?php echo $text_shipping_cod; ?>" class="form-control" />
               </div>
             </div>
             <?php } ?>
@@ -163,7 +163,7 @@
                 <label class="col-sm-2 control-label"><?php echo $text_shipping_in_desc; ?></label>
                 <div class="col-sm-10">
                   <input type="hidden" name="data[national][freight][in_description]" value="0" />
-                  <input type="checkbox" name="data[national][freight][in_description]" value="1" <?php if(isset($data['national']['freight']['in_description']) && $data['national']['freight']['in_description'] == 1){ echo 'checked="checked"'; } ?> />
+                  <input type="checkbox" name="data[national][freight][in_description]" value="1" <?php if (isset($data['national']['freight']['in_description']) && $data['national']['freight']['in_description'] == 1){ echo 'checked="checked"'; } ?> />
                 </div>
               </div>
             </div>

@@ -97,13 +97,13 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		if(isset($this->request->get['product_id'])) {
+		if (isset($this->request->get['product_id'])) {
 			$product_id = $this->request->get['product_id'];
 		} else {
 			die('No product id');
 		}
 
-		if(isset($this->request->get['var'])) {
+		if (isset($this->request->get['var'])) {
 			$variation = $this->request->get['var'];
 		} else {
 			$variation = '';
@@ -116,9 +116,9 @@ class ControllerOpenbayAmazonProduct extends Controller {
 
 			$this->model_openbay_amazon->saveProduct($product_id, $data_array);
 
-			if($data_array['upload_after'] === 'true') {
+			if ($data_array['upload_after'] === 'true') {
 				$upload_result = $this->uploadSaved();
-				if($upload_result['status'] == 'ok') {
+				if ($upload_result['status'] == 'ok') {
 					$this->session->data['success'] = $this->language->get('uploaded_alert_text');
 					$this->response->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 				} else {
@@ -130,7 +130,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			}
 		}
 
-		if(isset($this->session->data['success'])) {
+		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
 			unset($this->session->data['success']);
 		} else {
@@ -138,7 +138,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 		}
 
 		$saved_listing_data = $this->model_openbay_amazon->getProduct($product_id, $variation);
-		if(empty($saved_listing_data)) {
+		if (empty($saved_listing_data)) {
 			$listing_saved = false;
 		} else {
 			$listing_saved = true;
@@ -149,7 +149,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			$error['message'] =  'Error for SKU: "' . $error['sku'] . '" - ' . $this->formatUrlsInText($error['message']);
 			$data['errors'][] = $error;
 		}
-		if(!empty($errors)) {
+		if (!empty($errors)) {
 			$data['has_listing_errors'] = true;
 		} else {
 			$data['has_listing_errors'] = false;
@@ -160,7 +160,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 		$data['listing_sku'] = $product_info['sku'];
 		$data['listing_url'] = $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL');
 
-		if($listing_saved) {
+		if ($listing_saved) {
 			$data['edit_product_category'] = $saved_listing_data['category'];
 		} else {
 			$data['edit_product_category'] = '';
@@ -180,7 +180,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			$data['amazon_categories'][] = $category_data;
 		}
 
-		if($listing_saved) {
+		if ($listing_saved) {
 			$data['template_parser_url'] = $this->url->link('openbay/amazon_product/parseTemplateAjax&edit_id=' . $product_id, 'token=' . $this->session->data['token'], 'SSL');
 		} else {
 			$data['template_parser_url'] = $this->url->link('openbay/amazon_product/parseTemplateAjax&product_id=' . $product_id, 'token=' . $this->session->data['token'], 'SSL');
@@ -193,7 +193,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 		$data['token'] = $this->session->data['token'];
 		$data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
 
-		if($this->openbay->addonLoad('openstock')) {
+		if ($this->openbay->addonLoad('openstock')) {
 			$this->load->model('openstock/openstock');
 			$data['options'] = $this->model_openstock_openstock->getProductOptionStocks($product_id);
 		} else {
@@ -216,7 +216,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			'es' => 'A1RKKUPIHCS9HS',
 		);
 
-		if($this->config->get('openbay_amazon_default_listing_marketplace')) {
+		if ($this->config->get('openbay_amazon_default_listing_marketplace')) {
 			$data['default_marketplaces'] = array($marketplace_mapping[$this->config->get('openbay_amazon_default_listing_marketplace')]);
 		} else {
 			$data['default_marketplaces'] = array();
@@ -319,7 +319,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 
 		$saved_products = $this->model_openbay_amazon->getSavedProductsData();
 
-		if(empty($saved_products)) {
+		if (empty($saved_products)) {
 			$logger->write('No saved listings found. Uploading canceled . ');
 			$result['status'] = 'error';
 			$result['error_message'] = 'No saved listings. Nothing to upload. Aborting . ';
@@ -343,7 +343,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			$logger->write("Uploading product with data:" . print_r($product_data, true) . "
 				Got response:" . print_r($insertion_response, true));
 
-			if(!isset($insertion_response['status']) || $insertion_response['status'] == 'error') {
+			if (!isset($insertion_response['status']) || $insertion_response['status'] == 'error') {
 				$details = isset($insertion_response['info']) ? $insertion_response['info'] : 'Unknown';
 				$result['error_message'] = sprintf($this->language->get('upload_failed'), $saved_product['sku'], $details);
 				$result['status'] = 'error';
@@ -353,7 +353,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			$this->model_openbay_amazon->setProductUploaded($saved_product['product_id'], $insertion_response['insertion_id'], $saved_product['var']);
 		}
 
-		if(!isset($result['status'])) {
+		if (!isset($result['status'])) {
 			$result['status'] = 'ok';
 			$logger->write('Uploading process completed successfully . ');
 		} else {
@@ -369,7 +369,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 
 		$json = array();
 
-		if(isset($this->request->get['xml'])) {
+		if (isset($this->request->get['xml'])) {
 			$request = array('template' => $this->request->get['xml'], 'version' => 2);
 			$response = $this->openbay->amazon->callWithResponse("productv2/GetTemplateXml", $request);
 			if ($response) {
@@ -384,8 +384,8 @@ class ControllerOpenbayAmazonProduct extends Controller {
 					}
 
 					foreach($template['fields'] as $key => $field) {
-						if($field['accepted']['type'] == 'image') {
-							if(empty($field['value'])) {
+						if ($field['accepted']['type'] == 'image') {
+							if (empty($field['value'])) {
 								$template['fields'][$key]['thumb'] = '';
 							} else {
 								$img = str_replace(HTTPS_CATALOG . 'image/', '', $field['value']);
@@ -447,13 +447,13 @@ class ControllerOpenbayAmazonProduct extends Controller {
 
 		$this->load->model('localisation/weight_class');
 		$weightClass = $this->model_localisation_weight_class->getWeightClass($product_info['weight_class_id']);
-		if(!empty($weightClass)) {
+		if (!empty($weightClass)) {
 			$defaults['shippingweightunitofmeasure'] = $weightClass['unit'];
 		}
 
 		$this->load->model('catalog/manufacturer');
 		$manufacturer = $this->model_catalog_manufacturer->getManufacturer($product_info['manufacturer_id']);
-		if(!empty($manufacturer)) {
+		if (!empty($manufacturer)) {
 			$defaults['manufacturer'] = $manufacturer['name'];
 			$defaults['brand'] = $manufacturer['name'];
 		}
@@ -465,10 +465,10 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			$imageIndex ++;
 		}
 
-		if(!empty($product_info['upc'])) {
+		if (!empty($product_info['upc'])) {
 			$defaults['type'] = 'UPC';
 			$defaults['value'] = $product_info['upc'];
-		} else if(!empty($product_info['ean'])) {
+		} else if (!empty($product_info['ean'])) {
 			$defaults['type'] = 'EAN';
 			$defaults['value'] = $product_info['ean'];
 		}
@@ -478,32 +478,32 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			$defaults['searchterms' . $index] = trim($meta_keyword);
 		}
 
-		if($var !== '' && $this->openbay->addonLoad('openstock')) {
+		if ($var !== '' && $this->openbay->addonLoad('openstock')) {
 			$this->load->model('tool/image');
 			$this->load->model('openstock/openstock');
 			$option_stocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);
 
 			$option = null;
 			foreach ($option_stocks as $optionIterator) {
-				if($optionIterator['var'] === $var) {
+				if ($optionIterator['var'] === $var) {
 					$option = $optionIterator;
 					break;
 				}
 			}
 
-			if($option != null) {
+			if ($option != null) {
 				$defaults['sku'] = $option['sku'];
 				$defaults['quantity'] = $option['stock'];
 				$defaults['standardprice'] = number_format($option['price'] + $tax_added / 100 * $option['price'], 2, ' . ', '');
 				$defaults['shippingweight'] = number_format($option['weight'], 2, ' . ', '');
 
-				if(!empty($option['image'])) {
+				if (!empty($option['image'])) {
 					$defaults['mainimage'] = HTTPS_CATALOG . 'image/' . $option['image'];
 				}
 			}
 		}
 
-		if($defaults['shippingweight'] <= 0) {
+		if ($defaults['shippingweight'] <= 0) {
 			unset($defaults['shippingweight']);
 			unset($defaults['shippingweightunitofmeasure']);
 		}
@@ -514,7 +514,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 
 			$value_array = array('value' => '');
 
-			if(isset($defaults[strtolower($field['name'])])) {
+			if (isset($defaults[strtolower($field['name'])])) {
 				$value_array = array('value' => $defaults[strtolower($field['name'])]);
 			}
 
@@ -541,7 +541,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 		foreach($fields_array as $field) {
 			$value_array = array('value' => '');
 
-			if(isset($saved_fields[$field['name']])) {
+			if (isset($saved_fields[$field['name']])) {
 				$value_array = array('value' => $saved_fields[$field['name']]);
 			}
 
@@ -566,7 +566,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 		preg_match_all($reg_exUrl, $text, $matches);
 		$usedPatterns = array();
 		foreach($matches[0] as $pattern) {
-			if(!array_key_exists($pattern, $usedPatterns)) {
+			if (!array_key_exists($pattern, $usedPatterns)) {
 				$usedPatterns[$pattern]=true;
 				$text = str_replace($pattern, "<a target='_blank' href=" .$pattern .">" . $pattern . "</a>", $text);
 			}

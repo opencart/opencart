@@ -78,7 +78,7 @@ class ControllerOpenbayAmazonListing extends Controller {
 		if ($this->request->post) {
 			$result = $this->model_openbay_amazon_listing->simpleListing($this->request->post);
 
-			if($result['status'] === 1) {
+			if ($result['status'] === 1) {
 				$this->session->data['success'] = $this->language->get('text_product_sent');
 				$this->response->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 			} else {
@@ -90,13 +90,13 @@ class ControllerOpenbayAmazonListing extends Controller {
 		if (isset($this->request->get['product_id'])) {
 			$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
 
-			if(empty($product_info)) {
+			if (empty($product_info)) {
 				$this->response->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 			}
 
 			$listing_status = $this->model_openbay_amazon->getProductStatus($this->request->get['product_id']);
 
-			if($listing_status === 'processing' || $listing_status === 'ok') {
+			if ($listing_status === 'processing' || $listing_status === 'ok') {
 				$this->response->redirect($this->url->link('openbay/amazon_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'] . $url, 'SSL'));
 			} else if ($listing_status === 'error_advanced' || $listing_status === 'saved' || $listing_status === 'error_few') {
 				$this->response->redirect($this->url->link('openbay/amazon_product', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'] . $url, 'SSL'));
@@ -321,19 +321,19 @@ class ControllerOpenbayAmazonListing extends Controller {
 
 		$status = $this->model_openbay_amazon->getProductStatus($product_id);
 
-		if($status === false) {
+		if ($status === false) {
 			$this->response->redirect($this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'));
 			return;
 		}
 
 		$data['product_links'] = $this->model_openbay_amazon->getProductLinks($product_id);
 		$data['url_return']  = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		if($status == 'ok' || $status == 'linked') {
+		if ($status == 'ok' || $status == 'linked') {
 			$data['url_create_new']  = $this->url->link('openbay/amazon_listing/createNew', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL');
 			$data['url_delete_links']  = $this->url->link('openbay/amazon_listing/deleteLinks', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL');
 		}
 
-		if($status == 'saved') {
+		if ($status == 'saved') {
 			$data['has_saved_listings'] = true;
 		} else {
 			$data['has_saved_listings'] = false;

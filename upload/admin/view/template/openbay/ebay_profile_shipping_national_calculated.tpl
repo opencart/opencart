@@ -1,5 +1,5 @@
 <input type="hidden" value="<?php echo (int)$data['national']['calculated']['count']; ?>" id="calculated_count_national" />
-<?php if(isset($data['national']['calculated']['service_id'])) { ?>
+<?php if (isset($data['national']['calculated']['service_id'])) { ?>
 <?php foreach($data['national']['calculated']['service_id'] as $key => $service){ ?>
 <div class="well" id="national_calculated_<?php echo $key; ?>">
   <div class="row form-group">

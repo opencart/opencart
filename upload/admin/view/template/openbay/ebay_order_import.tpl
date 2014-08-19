@@ -13,7 +13,7 @@
       <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_heading; ?></h1>
     </div>
     <div class="panel-body">
-      <?php if($validation === true) { ?>
+      <?php if ($validation === true) { ?>
         <form id="form-ebay-import" class="form-horizontal">
           <p><?php echo $text_sync_pull_notice; ?></p>
           <div class="form-group">

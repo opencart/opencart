@@ -13,15 +13,15 @@
       <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_heading; ?></h1>
     </div>
     <div class="panel-body">
-      <?php if($validation === true) { ?>
-        <?php if($image_import > 0){ ?>
+      <?php if ($validation === true) { ?>
+        <?php if ($image_import > 0){ ?>
           <div class="alert alert-danger">
             <i class="fa fa-exclamation-circle"></i> <?php echo $image_import; ?> <?php echo $text_import_images_msg1; ?>
             <a href="<?php echo $image_import_link; ?>" target="_blank"><?php echo $text_import_images_msg2; ?></a> <?php echo $text_import_images_msg3; ?>
           </div>
         <?php } ?>
 
-        <?php if($maintenance == 1){ ?>
+        <?php if ($maintenance == 1){ ?>
           <div class="alert alert-danger">
             <i class="fa fa-exclamation-circle"></i> <?php echo $text_maintenance_fail; ?>
           </div>
@@ -79,9 +79,9 @@
       var import_description = $('#import_description:checked').val();
       var import_advanced = $('#import_advanced:checked').val();
       var import_categories = $('#import_categories:checked').val();
-      if(import_description == undefined){ import_description = 0; }else{ import_description = 1; }
-      if(import_advanced == undefined){ import_advanced = 0; }else{ import_advanced = 1; }
-      if(import_categories == undefined){ import_categories = 0; }else{ import_categories = 1; }
+      if (import_description == undefined){ import_description = 0; }else{ import_description = 1; }
+      if (import_advanced == undefined){ import_advanced = 0; }else{ import_advanced = 1; }
+      if (import_categories == undefined){ import_categories = 0; }else{ import_categories = 1; }
 
       $.ajax({
         url: 'index.php?route=openbay/ebay/importItems&token=<?php echo $token; ?>&desc='+import_description+'&note='+note_import+'&advanced='+import_advanced+'&categories='+import_categories,

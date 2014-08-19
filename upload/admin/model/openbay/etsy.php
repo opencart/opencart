@@ -1,6 +1,6 @@
 <?php
 class ModelOpenbayEtsy extends Model{
-	public function install(){
+	public function install() {
 		$settings                 = array();
 		$settings["etsy_token"]   = '';
 		$settings["etsy_secret"]  = '';
@@ -52,7 +52,7 @@ class ModelOpenbayEtsy extends Model{
 		);
 	}
 
-	public function uninstall(){
+	public function uninstall() {
 		// remove the event triggers
 		$this->model_tool_event->removeHandler('add_order', array(
 				'type' => 'openbay',

@@ -68,7 +68,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$simpleXmlObj = simplexml_load_string($xml);
 		$data['table_data'] = array();
 
-		if($simpleXmlObj !== false) {
+		if ($simpleXmlObj !== false) {
 			$table_data = array();
 
 			foreach($simpleXmlObj->update as $updateNode) {
@@ -343,7 +343,7 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$api_status = false;
 		$api_auth = false;
-		if($ping_info) {
+		if ($ping_info) {
 			$api_status = ((string)$ping_info->Api_status == 'ok') ? true : false;
 			$api_auth = ((string)$ping_info->Auth == 'true') ? true : false;
 		}
@@ -474,7 +474,7 @@ class ControllerOpenbayAmazonus extends Controller {
 			$this->load->model('tool/image');
 			$json = $this->model_openstock_openstock->getProductOptionStocks($this->request->get['product_id']);
 		}
-		if(empty($json)) {
+		if (empty($json)) {
 			$json = false;
 		}
 
@@ -483,7 +483,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function addItemLinkAjax() {
-		if(isset($this->request->get['product_id']) && isset($this->request->get['amazonus_sku'])) {
+		if (isset($this->request->get['product_id']) && isset($this->request->get['amazonus_sku'])) {
 			$amazonus_sku = $this->request->get['amazonus_sku'];
 			$product_id = $this->request->get['product_id'];
 			$var = isset($this->request->get['var']) ? $this->request->get['var'] : '';
@@ -499,19 +499,19 @@ class ControllerOpenbayAmazonus extends Controller {
 		$logger = new Log('amazonus_stocks.log');
 		$logger->write('addItemLink() called for product id: ' . $product_id . ', amazonus sku: ' . $amazonus_sku . ', var: ' . $var);
 
-		if($var != '' && $this->openbay->addonLoad('openstock')) {
+		if ($var != '' && $this->openbay->addonLoad('openstock')) {
 			$logger->write('Using openStock');
 			$this->load->model('tool/image');
 			$this->load->model('openstock/openstock');
 			$option_stocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);
 			$quantity_data = array();
 			foreach($option_stocks as $option_stock) {
-				if(isset($option_stock['var']) && $option_stock['var'] == $var) {
+				if (isset($option_stock['var']) && $option_stock['var'] == $var) {
 					$quantity_data[$amazonus_sku] = $option_stock['stock'];
 					break;
 				}
 			}
-			if(!empty($quantity_data)) {
+			if (!empty($quantity_data)) {
 				$logger->write('Updating quantities with data: ' . print_r($quantity_data, true));
 				$this->openbay->amazonus->updateQuantities($quantity_data);
 			} else {
@@ -527,7 +527,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function removeItemLinkAjax() {
-		if(isset($this->request->get['amazonus_sku'])) {
+		if (isset($this->request->get['amazonus_sku'])) {
 			$amazonus_sku = $this->request->get['amazonus_sku'];
 		} else {
 			$this->response->addHeader('Content-Type: application/json');
@@ -563,7 +563,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function deleteSavedAjax() {
-		if(!isset($this->request->get['product_id']) || !isset($this->request->get['var'])) {
+		if (!isset($this->request->get['product_id']) || !isset($this->request->get['var'])) {
 			return;
 		}
 
@@ -865,13 +865,13 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$total_linked = $this->model_openbay_amazonus->getTotalUnlinkedItemsFromReport();
 
-		if(isset($this->request->get['linked_item_page'])){
+		if (isset($this->request->get['linked_item_page'])){
 			$linked_item_page = (int)$this->request->get['linked_item_page'];
 		}else{
 			$linked_item_page = 1;
 		}
 
-		if(isset($this->request->get['linked_item_limit'])){
+		if (isset($this->request->get['linked_item_limit'])){
 			$linked_item_limit = (int)$this->request->get['linked_item_limit'];
 		}else{
 			$linked_item_limit = 25;

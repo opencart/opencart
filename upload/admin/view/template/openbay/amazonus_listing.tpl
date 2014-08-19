@@ -100,7 +100,7 @@
                                 <td>
                                     <select name="condition" id="condition" class="width200">
                                         <?php foreach ($conditions as $value => $title): ?>
-                                            <?php if($value == $default_condition): ?>
+                                            <?php if ($value == $default_condition): ?>
                                                 <option selected="selected" value="<?php echo $value; ?>"><?php echo $title; ?></option>
                                             <? else: ?>
                                                 <option value="<?php echo $value; ?>"><?php echo $title; ?></option>
@@ -174,7 +174,7 @@ function doSearch(){
             $('#chosen_product').hide();
         },
         success: function(data) {
-            if(data.error){
+            if (data.error){
                 $('#search_error').empty().html(data.error).show();
             } else {
                 var html = '';
@@ -199,7 +199,7 @@ function doSearch(){
                     count++;
                 });
 
-                if(count != 0){
+                if (count != 0){
                     $('#search_result_container tbody').html(html);
                     $('#search_result_container').css('opacity', 0).slideDown('slow').animate({ opacity: 1 },{ queue: false, duration: 'slow' });
                 } else {
@@ -240,7 +240,7 @@ function getProduct(asin){
 
             var html = '';
 
-            if(data.img != ''){
+            if (data.img != ''){
                 html += '<img style="float:left;" src="'+data.img+'" />';
             }
 
@@ -312,22 +312,22 @@ function listProduct(asin) {
 function validateQuickListing(){
     var error = false;
 
-    if($('#quantity').val() < 1){
+    if ($('#quantity').val() < 1){
         alert('<?php echo $error_stock; ?>');
         error = true;
     }
 
-    if($('#price').val() == '' || $('#price').val() == 0){
+    if ($('#price').val() == '' || $('#price').val() == 0){
         alert('<?php echo $error_price; ?>');
         error = true;
     }
 
-    if($('#sku').val() == '' || $('#sku').val() == 0){
+    if ($('#sku').val() == '' || $('#sku').val() == 0){
         alert('<?php echo $error_sku; ?>');
         error = true;
     }
 
-    if(error == false){
+    if (error == false){
         $('#chosen_product form').submit();
     }
 }

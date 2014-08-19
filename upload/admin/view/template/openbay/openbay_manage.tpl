@@ -116,7 +116,7 @@
               <div class="col-sm-10">
                 <select name="openbay_language" id="input-language" class="form-control">
                   <?php foreach($languages as $key => $language){ ?>
-                    <option value="<?php echo $key; ?>" <?php if($key == $openbay_language){ echo'selected="selected"'; } ?>><?php echo $language; ?></option>
+                    <option value="<?php echo $key; ?>" <?php if ($key == $openbay_language){ echo'selected="selected"'; } ?>><?php echo $language; ?></option>
                   <?php } ?>
                 </select>
               </div>
@@ -166,7 +166,7 @@
         success: function(json) {
             alert(json.msg);
 
-            if(json.connection == true){
+            if (json.connection == true){
               $('#ftp-test-row').hide();
                 $('#ftp-update-module').show();
                 $('#ftp-update-row').show();

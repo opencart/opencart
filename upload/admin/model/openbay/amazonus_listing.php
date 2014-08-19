@@ -13,9 +13,6 @@ class ModelOpenbayAmazonusListing extends Model {
 		$products = array();
 
 		foreach ($results['Products'] as $result) {
-
-			$price = '';
-
 			if ($result['price']['amount'] && $result['price']['currency']) {
 				$price = $result['price']['amount'] . ' ' . $result['price']['currency'];
 			} else {
@@ -107,7 +104,7 @@ class ModelOpenbayAmazonusListing extends Model {
 		return $response;
 	}
 
-	public function getBrowseNodes($request){
+	public function getBrowseNodes($request) {
 		return $this->openbay->amazonus->callWithResponse('productv3/getBrowseNodes', $request);
 	}
 

@@ -73,7 +73,7 @@
             htmlInj += '<td></td>';
           htmlInj += '</tr>';
 
-          if(json.sub_id){
+          if (json.sub_id){
             htmlInj += '<tr>';
             htmlInj += '<td colspan="4"><?php echo $text_ajax_acc_load_plan; ?>'+json.sub_id+'<?php echo $text_ajax_acc_load_plan2; ?></td>';
             htmlInj += '</tr>';
@@ -117,10 +117,10 @@
           htmlInj += '<td>'+val.title+'</td>';
           htmlInj += '<td>&pound;'+val.price+'</td>';
           htmlInj += '<td>'+val.description+'</td>';
-          if(val.myplan == 1){
+          if (val.myplan == 1){
             htmlInj += '<td><a class="btn btn-success" disabled="disabled"><i class="fa fa-check-circle-o fa-lg"></i> <?php echo $text_ajax_acc_load_text5; ?></a></td>';
           }else{
-            if(val.user_plan_id == 1) {
+            if (val.user_plan_id == 1) {
               htmlInj += '<td></td>';
             }else{
               htmlInj += '<td>';

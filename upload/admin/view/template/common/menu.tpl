@@ -36,7 +36,7 @@
             <li><a href="<?php echo $openbay_link_orders; ?>"><?php echo $text_openbay_orders; ?></a></li>
             <li><a href="<?php echo $openbay_link_items; ?>"><?php echo $text_openbay_items; ?></a></li>
 
-            <?php if($openbay_markets['ebay'] == 1){ ?>
+            <?php if ($openbay_markets['ebay'] == 1) { ?>
             <li><a class="parent"><?php echo $text_openbay_ebay; ?></a>
               <ul>
                 <li><a href="<?php echo $openbay_link_ebay; ?>"><?php echo $text_openbay_dashboard; ?></a></li>
@@ -47,7 +47,7 @@
             </li>
             <?php } ?>
 
-            <?php if($openbay_markets['amazon'] == 1){ ?>
+            <?php if ($openbay_markets['amazon'] == 1) { ?>
             <li><a class="parent"><?php echo $text_openbay_amazon; ?></a>
               <ul>
                 <li><a href="<?php echo $openbay_link_amazon; ?>"><?php echo $text_openbay_dashboard; ?></a></li>
@@ -57,7 +57,7 @@
             </li>
             <?php } ?>
 
-            <?php if($openbay_markets['amazonus'] == 1){ ?>
+            <?php if ($openbay_markets['amazonus'] == 1) { ?>
             <li><a class="parent"><?php echo $text_openbay_amazonus; ?></a>
               <ul>
                 <li><a href="<?php echo $openbay_link_amazonus; ?>"><?php echo $text_openbay_dashboard; ?></a></li>

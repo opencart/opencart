@@ -23,7 +23,7 @@
               <label class="control-label" for="marketplace_select"><?php echo $text_choose_marketplace; ?></label>
               <select name="marketplace_select" id="marketplace_select" class="form-control">
                 <?php foreach ($marketplaces as $marketplace) { ?>
-                <option value="<?php echo $marketplace['link']; ?>" <?php if($marketplace['code'] == $marketplace_code) { echo ' selected'; } ?>><?php echo $marketplace['name'] ?></option>
+                <option value="<?php echo $marketplace['link']; ?>" <?php if ($marketplace['code'] == $marketplace_code) { echo ' selected'; } ?>><?php echo $marketplace['name'] ?></option>
                 <?php } ?>
               </select>
             </div>

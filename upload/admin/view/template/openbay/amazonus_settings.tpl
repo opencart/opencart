@@ -59,9 +59,9 @@
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_api_status; ?></label>
               <div class="col-sm-10">
-                <?php if(!$API_status) { ?>
+                <?php if (!$API_status) { ?>
                 <h4><span class="label label-danger"><i class="fa fa-minus-square"></i> <?php echo $text_api_error; ?></span></h4>
-                <?php } else if(!$API_auth) { ?>
+                <?php } else if (!$API_auth) { ?>
                 <h4><span class="label label-danger"><i class="fa fa-minus-square"></i> <?php echo $text_api_auth_error; ?></span></h4>
                 <?php } else { ?>
                 <h4><span class="label label-success"><i class="fa fa-check-square-o"></i> <?php echo $text_api_ok; ?></span></h4>

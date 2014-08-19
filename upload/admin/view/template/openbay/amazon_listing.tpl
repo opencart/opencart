@@ -111,7 +111,7 @@
                   <div class="col-sm-10">
                     <select name="condition" id="condition" class="form-control">
                       <?php foreach ($conditions as $value => $title) { ?>
-                        <?php if($value == $default_condition) { ?>
+                        <?php if ($value == $default_condition) { ?>
                           <option selected="selected" value="<?php echo $value; ?>"><?php echo $title; ?></option>
                         <?php } else { ?>
                           <option value="<?php echo $value; ?>"><?php echo $title; ?></option>
@@ -227,7 +227,7 @@
         $('#search-submit').empty().html('<i class="fa fa-search"></i> <?php echo $button_search; ?>').removeAttr('disabled').show();
       },
       success: function(data) {
-          if(data.error){
+          if (data.error){
               $('#search-error').empty().html('<i class="fa fa-exclamation-circle"></i>' + data.error).show();
           } else {
               var html = '';
@@ -251,7 +251,7 @@
                   count++;
               });
 
-              if(count != 0){
+              if (count != 0){
                   $('#search-result-container tbody').html(html);
                   $('#search-result-container').css('opacity', 0).slideDown('slow').animate({ opacity: 1 },{ queue: false, duration: 'slow' });
               } else {
@@ -304,22 +304,22 @@
   $('#button-list').bind('click', function() {
     var error = false;
 
-    if($('#quantity').val() < 1){
+    if ($('#quantity').val() < 1){
         alert('<?php echo $error_stock; ?>');
         error = true;
     }
 
-    if($('#price').val() == '' || $('#price').val() == 0){
+    if ($('#price').val() == '' || $('#price').val() == 0){
         alert('<?php echo $error_price; ?>');
         error = true;
     }
 
-    if($('#sku').val() == '' || $('#sku').val() == 0){
+    if ($('#sku').val() == '' || $('#sku').val() == 0){
         alert('<?php echo $error_sku; ?>');
         error = true;
     }
 
-    if(error == false){
+    if (error == false){
         $('#chosen-product form').submit();
     }
 });

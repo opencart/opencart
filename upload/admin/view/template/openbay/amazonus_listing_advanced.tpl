@@ -5,11 +5,11 @@
         <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
         <?php } ?>
     </div>
-    <?php if(isset($success)) : ?>
+    <?php if (isset($success)) : ?>
         <div class="success"><?php echo $success; ?></div>
     <?php endif; ?>
 
-    <?php if(!empty($errors)) { ?>
+    <?php if (!empty($errors)) { ?>
     <div class="warning"><ul>
             <?php foreach($errors as $error) : ?>
             <li><?php echo $error['message']; ?></li>
@@ -22,7 +22,7 @@
         <div class="heading">
             <h1><?php echo $text_title; ?></h1>
             <div class="buttons">
-                <?php if($has_listing_errors) { ?>
+                <?php if ($has_listing_errors) { ?>
                 <a onclick="location='<?php echo $url_remove_errors; ?>'" class="button"><span>Remove error messages</span></a>
                 <?php } ?>
                 <a id="save_button" onclick="validate_and_save('advanced')" class="button"><span><?php echo $save_button_text; ?></span></a>
@@ -46,8 +46,8 @@
                         <tr>
                             <td style="width: 400px;"><?php echo $listing_row_text; ?></td>
                             <td>
-                                <a href="<?php echo $listing_url; ?>"><?php echo $listing_name; ?><?php if(!empty($options)) { echo " : "; } ?></a>
-                                <?php if(!empty($options)) { ?>
+                                <a href="<?php echo $listing_url; ?>"><?php echo $listing_name; ?><?php if (!empty($options)) { echo " : "; } ?></a>
+                                <?php if (!empty($options)) { ?>
                                 <select id="openstock_selector" name="optionVar">
                                     <option></option>
                                     <?php foreach($options as $option) { ?>
@@ -96,7 +96,7 @@ $(document).ready(function(){
         redirectOption($('#openstock_selector').attr('value'), 'advanced');
     });
 
-    <?php if(empty($amazonus_categories)) { ?>
+    <?php if (empty($amazonus_categories)) { ?>
         $("#advanced_table").html("");
         $(".content").prepend('<div id="warning" class="warning"><?php echo $text_error_connecting; ?></div>');
         return;
@@ -109,7 +109,7 @@ $(document).ready(function(){
     $('#category_selector').change(function(){
 
         var xml = $('#category_selector').attr('value');
-        if(xml == '') {
+        if (xml == '') {
             $('.fields_advanced').empty();
             $('#dynamic_tabs').empty();
             $('#dynamic_pages').empty()
@@ -127,7 +127,7 @@ function redirectOption(varOption, tabOption) {
     var searchLoc = insertParamToUrl(document.location.search, 'var', varOption);
     searchLoc = insertParamToUrl(searchLoc, 'tab', tabOption);
     searchLoc = searchLoc.substr(1);
-    if(document.location.search === searchLoc) {
+    if (document.location.search === searchLoc) {
         return false;
     } else {
         document.location.search = searchLoc;
@@ -146,7 +146,7 @@ function insertParamToUrl(searchLoc, key, value) {
         var i = kvp.length; var x; while (i--) {
             x = kvp[i].split('=');
             if (x[0] == key) {
-                if(x[1] == value) {
+                if (x[1] == value) {
                     return searchLoc;
                 }
                 x[1] = value;
@@ -171,7 +171,7 @@ function show_form(xml, formType) {
     var parserURL = '<?php echo html_entity_decode($template_parser_url) ?>';
     var reqUrl = parserURL + '&xml=' + xml;
 
-    if($('#openstock_selector').attr('value') !== undefined) {
+    if ($('#openstock_selector').attr('value') !== undefined) {
         reqUrl = reqUrl + '&var=' + $('#openstock_selector').attr('value');
     }
 
@@ -188,8 +188,8 @@ function show_form(xml, formType) {
             $('.wait').remove();
         },
         success: function(data) {
-            if(data['status'] === 'error') {
-                if('info' in data) {
+            if (data['status'] === 'error') {
+                if ('info' in data) {
                     alert(data['info']);
                 } else {
                     alert('Unexpected error.');
@@ -220,7 +220,7 @@ function show_form(xml, formType) {
                 }
 
                 row += '<td>';
-                if(fieldsArray[formType][i]['type'] == 'required') {
+                if (fieldsArray[formType][i]['type'] == 'required') {
                     row += '<span class="required">* </span>';
                 }
                 row += fieldsArray[formType][i]['title'];
@@ -229,18 +229,18 @@ function show_form(xml, formType) {
                 row += '<td>';
 
 
-                if(fieldsArray[formType][i]['name'] == "Quantity") {
+                if (fieldsArray[formType][i]['name'] == "Quantity") {
                     row += getQuantityField(fieldsArray[formType][i]);
-                } else if(fieldsArray[formType][i]['accepted']['type'] == "integer") {
+                } else if (fieldsArray[formType][i]['accepted']['type'] == "integer") {
                     row += getIntegerField(fieldsArray[formType][i]);
                 }
-                else if(fieldsArray[formType][i]['accepted']['type'] == "text_area") {
+                else if (fieldsArray[formType][i]['accepted']['type'] == "text_area") {
                     row += getTextAreaField(fieldsArray[formType][i]);
                 }
-                else if(fieldsArray[formType][i]['accepted']['type'] == "select") {
+                else if (fieldsArray[formType][i]['accepted']['type'] == "select") {
                     row += getSelectField(fieldsArray[formType][i]);
                 }
-                else if(fieldsArray[formType][i]['accepted']['type'] == "image") {
+                else if (fieldsArray[formType][i]['accepted']['type'] == "image") {
                     row += getImageField(fieldsArray[formType][i]);
                 }
                 else {
@@ -273,23 +273,23 @@ function update_form(element, formType) {
 
     $('.fields_' + formType + ' .child_row').each(function (i) {
         var index = $(this).attr('field_index');
-        if(fieldsArray[formType][index]['parent']['name'] == changedFieldName) {
+        if (fieldsArray[formType][index]['parent']['name'] == changedFieldName) {
             var showChild = false;
 
             //values is array?
-            if(fieldsArray[formType][index]['parent']['value'] instanceof Array) {
+            if (fieldsArray[formType][index]['parent']['value'] instanceof Array) {
                 for(i in fieldsArray[formType][index]['parent']['value']) {
-                    if(fieldsArray[formType][index]['parent']['value'][i] == changedFieldValue) {
+                    if (fieldsArray[formType][index]['parent']['value'][i] == changedFieldValue) {
                         showChild = true;
                     }
                 }
-            } else if(fieldsArray[formType][index]['parent']['value'] == changedFieldValue) {
+            } else if (fieldsArray[formType][index]['parent']['value'] == changedFieldValue) {
                 showChild = true;
-            } else if(fieldsArray[formType][index]['parent']['value'] == '*' && changedFieldValue != '') {
+            } else if (fieldsArray[formType][index]['parent']['value'] == '*' && changedFieldValue != '') {
                 showChild = true;
             }
 
-            if(showChild) {
+            if (showChild) {
                 $(this).attr('display', 'yes');
                 $(this).removeAttr('style');
             } else {
@@ -315,9 +315,9 @@ function getImageField(fieldData) {
 
     output += '<div class="image">';
     output += '<img height="100" alt="" id="thumb_' + fieldData['name'] + '" ';
-    if(fieldData['value'] === "") {
+    if (fieldData['value'] === "") {
         output += 'src="<?php echo $no_image; ?>"';
-    } else if(fieldData['thumb'] !== "") {
+    } else if (fieldData['thumb'] !== "") {
         output += 'src="' + fieldData['thumb'] + '"';
     } else {
         output += 'src="' + fieldData['value'] + '"';
@@ -364,7 +364,7 @@ function getIntegerField(fieldData) {
     output += 'field_name="' + fieldData['name'] + '" ';
     output += 'field_type="' + fieldData['type'] + '" ';
     output += 'name="fields[' + fieldData['name'] + ']" ';
-    if(fieldData['name'] == 'RecommendedBrowseNode' || fieldData['name'] == 'RecommendedBrowseNode2'){
+    if (fieldData['name'] == 'RecommendedBrowseNode' || fieldData['name'] == 'RecommendedBrowseNode2'){
         output += 'class="browseNode" ';
     }
     output += 'value="' + fieldData['value'] + '">';
@@ -378,10 +378,10 @@ function getTextAreaField(fieldData) {
     output += '<textarea ';
     output += 'rows="5" ';
     output += 'cols="60" ';
-    if('min_length' in fieldData['accepted']) {
+    if ('min_length' in fieldData['accepted']) {
         output += 'min_length="'+ fieldData['accepted']['min_length'] + '" ';
     }
-    if('max_length' in fieldData['accepted']) {
+    if ('max_length' in fieldData['accepted']) {
         output += 'max_length="'+ fieldData['accepted']['max_length'] + '" ';
     }
     output += 'field_name="' + fieldData['name'] + '" ';
@@ -398,10 +398,10 @@ function getStringField(fieldData) {
 
     output += '<input type="text"';
     output += 'accepted="' + fieldData['accepted']['type'] + '" ';
-    if('min_length' in fieldData['accepted']) {
+    if ('min_length' in fieldData['accepted']) {
         output += 'min_length="'+ fieldData['accepted']['min_length'] + '" ';
     }
-    if('max_length' in fieldData['accepted']) {
+    if ('max_length' in fieldData['accepted']) {
         output += 'max_length="'+ fieldData['accepted']['max_length'] + '" ';
     }
     output += 'field_name="' + fieldData['name'] + '" ';
@@ -422,11 +422,11 @@ function getSelectField(fieldData) {
 
     output += '<option></option>';
 
-    if(fieldData['accepted']['option'].length != undefined) {
+    if (fieldData['accepted']['option'].length != undefined) {
         for(j in fieldData['accepted']['option']) {
             output += '<option ';
 
-            if(fieldData['value'].toLowerCase() == fieldData['accepted']['option'][j]['value'].toLowerCase()) {
+            if (fieldData['value'].toLowerCase() == fieldData['accepted']['option'][j]['value'].toLowerCase()) {
                 output += 'selected="selected" ';
             }
             output += 'value="' + fieldData['accepted']['option'][j]['value'] + '">';
@@ -437,7 +437,7 @@ function getSelectField(fieldData) {
     else {
         output += '<option ';
 
-        if(fieldData['value'].toLowerCase() == fieldData['accepted']['option']['value'].toLowerCase()) {
+        if (fieldData['value'].toLowerCase() == fieldData['accepted']['option']['value'].toLowerCase()) {
             output += 'selected="selected" ';
         }
         output += 'value="' + fieldData['accepted']['option']['value'] + '">';
@@ -461,7 +461,7 @@ function image_upload(field, thumb) {
                     url: 'index.php?route=common/filemanager/image&token=<?php echo $token; ?>&image=' + encodeURIComponent($('#' + field).val()),
                     dataType: 'text',
                     success: function(data) {
-                        if(data != "") {
+                        if (data != "") {
                             $('#' + thumb).replaceWith('<img src="' + data + '" alt="" id="' + thumb + '" />');
                             var imageUrl = $('#' + field).attr('value');
                             $('#' + field).attr('value', '<?php echo HTTPS_CATALOG; ?>image/' + imageUrl);
@@ -482,7 +482,7 @@ function image_upload(field, thumb) {
 }
 
 function validate(formType) {
-    if($('#category_selector').val() == '') {
+    if ($('#category_selector').val() == '') {
         return false;
     }
 
@@ -493,7 +493,7 @@ function validate(formType) {
 
     $('.fields_' + formType + ' :input').each(function (i) {
 
-        if($(this).parent().parent().attr('display') === "no") {
+        if ($(this).parent().parent().attr('display') === "no") {
             return;
         }
 
@@ -504,19 +504,19 @@ function validate(formType) {
         var min_length = $(this).attr('min_length');
         var max_length = $(this).attr('max_length');
 
-        if(field_name === 'Type') {
+        if (field_name === 'Type') {
             productIdType = field_value;
-        } else if(field_name === 'Value') {
+        } else if (field_name === 'Value') {
             productId = field_value;
-            if(field_type === 'required') {
+            if (field_type === 'required') {
                 productIdRequired = true;
             } else {
                 productIdRequired = false;
             }
         }
 
-        if(field_type == 'required' || field_value !== '') {
-            if(field_value === '') {
+        if (field_type == 'required' || field_value !== '') {
+            if (field_value === '') {
                 $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $field_required_text ?>');
                 warnings ++;
             }
@@ -534,10 +534,10 @@ function validate(formType) {
         }
     });
 
-    if(productIdRequired && productIdType !== 'ASIN' && !isValidProductId(productId)) {
+    if (productIdRequired && productIdType !== 'ASIN' && !isValidProductId(productId)) {
         $('.fields_' + formType + ' :input').each(function (i) {
             var field_name = $(this).attr('field_name');
-            if(field_name === 'Value') {
+            if (field_name === 'Value') {
                 $('.fields_' + formType + ' #error_' + field_name).text('Not valid product ID!');
                 warnings ++;
                 return;
@@ -545,11 +545,11 @@ function validate(formType) {
         });
     }
 
-    if($('.fields_' + formType + ' [name="category"]').attr('value') == undefined) {
+    if ($('.fields_' + formType + ' [name="category"]').attr('value') == undefined) {
         warnings ++;
     }
 
-    if(warnings > 0) {
+    if (warnings > 0) {
         return false;
     } else {
         return true;
@@ -558,7 +558,7 @@ function validate(formType) {
 
 //form = 'quick' or 'advanced'
 function validate_and_save(formType) {
-    if(validate(formType)) {
+    if (validate(formType)) {
         if (formType == 'advanced') {
             $("#product_form_advanced").submit();
         } else if (formType == 'quick') {
@@ -572,7 +572,7 @@ function validate_and_save(formType) {
 function save_and_upload() {
     $('#product_form_advanced input[name=upload_after]').val(true);
 
-    if(validate('advanced')) {
+    if (validate('advanced')) {
         $("#product_form_advanced").submit();
     } else {
         alert('<?php echo $not_saved_text; ?>');
@@ -586,7 +586,7 @@ function isValidProductId(value) {
     var calcChecksum = 0;
     barcode.split('').map(function(number, index ) {
         number = parseInt(number, 10);
-        if(value.length === 13) {
+        if (value.length === 13) {
             if (index % 2 === 0) {
                 calcSum += number;
             }
@@ -633,7 +633,7 @@ $('.browseNode').bind('click', function(){
             showGreyScreen('browseNodeForm');
         },
         success: function(data) {
-            if(data.node.error != true){
+            if (data.node.error != true){
                 html += '<select class="nodeSelect mTop20 width250">';
                 html += '<option value=""><?php echo $option_default; ?></option>';
 
@@ -678,8 +678,8 @@ $('.nodeSelect').bind('change', function(){
             $('#browseNodeFormContent').append('<img src="view/image/loading.gif" alt="" />');
         },
         success: function(data) {
-            if(data.node.error != true){
-                if(data.node.final == 0){
+            if (data.node.error != true){
+                if (data.node.final == 0){
                     html += '<select class="nodeSelect mTop20 width250">';
                     html += '<option value=""><?php echo $option_default; ?></option>';
 

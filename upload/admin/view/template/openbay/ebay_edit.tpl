@@ -129,7 +129,7 @@
         var reserve = parseInt($('#qty_reserve').val());
         var local   = parseInt($('#qty_local').val());
 
-        if(reserve > local){
+        if (reserve > local){
             alert('<?php echo $text_error_reserve_size; ?>');
             $('#qty_reserve').val(local);
         }
@@ -146,8 +146,8 @@
                 $('#form-error').hide();
             },
             success: function(data) {
-                if(data.error == false){
-                    if(data.data.listing.status == 0){
+                if (data.error == false){
+                    if (data.data.listing.status == 0){
                         $('#form').hide();
                         $('#btn_end_item').hide();
                         $('#error_box').html('<p><?php echo $text_error_ended; ?></p>').fadeIn('slow');
@@ -155,7 +155,7 @@
                         $('#title').val(data.data.listing.title);
                         $('#itemId').val(data.data.listing.itemId);
 
-                        if(data.data.variant.variant == 1){
+                        if (data.data.variant.variant == 1){
                             $('.stdMatrix').remove();
                             $('#optGroupArray').val(data.data.variant.data.grp_info.optGroupArray);
                             $('#optGroupRelArray').val(data.data.variant.data.grp_info.optGroupRelArray);
@@ -184,7 +184,7 @@
                                 i++;
                             });
 
-                            if(data.data.variant.data.optionsinactive != false){
+                            if (data.data.variant.data.optionsinactive != false){
                                 $('#variantMatrixInactive').show();
 
                                 $.each(data.data.variant.data.optionsinactive, function( k, v ) {
@@ -249,8 +249,8 @@
                 $('#reviewButtonLoading').hide();
                 $('#reviewButton').show();
 
-                if(data.Errors){
-                    if(data.Errors.ShortMessage){
+                if (data.Errors){
+                    if (data.Errors.ShortMessage){
                         $('#error_box').append('<p class="m3">'+data.Errors.LongMessage+'</p>');
                     }else{
                         $.each(data.Errors, function(key,val){
@@ -260,7 +260,7 @@
                     $('#error_box').fadeIn('slow');
                 }
 
-                if(data.Ack !== 'Failure'){
+                if (data.Ack !== 'Failure'){
                     $('#form-success').fadeIn('slow');
                 }
 
@@ -281,7 +281,7 @@
         if (pass == true) {
             var id = $('#itemId').val();
 
-            if(id !== ''){
+            if (id !== ''){
                 $.ajax({
                     type: 'GET',
                     url: 'index.php?route=openbay/ebay/removeItemLink&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>',
@@ -304,13 +304,13 @@
         if (pass == true) {
             var id = $('#itemId').val();
 
-            if(id !== ''){
+            if (id !== ''){
                 $.ajax({
                     type: 'GET',
                     url: 'index.php?route=openbay/ebay/endItem&token=<?php echo $token; ?>&id='+id,
                     dataType: 'json',
                     success: function(data) {
-                        if(data.error == true){
+                        if (data.error == true){
                             alert(data.msg);
                         }else{
                             alert('<?php echo $text_alert_ended; ?>');

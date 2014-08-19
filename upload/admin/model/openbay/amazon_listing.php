@@ -3,7 +3,6 @@ class ModelOpenbayAmazonListing extends Model {
 	private $tabs = array();
 
 	public function search($search_string, $marketplace) {
-
 		$search_params = array(
 			'search_string' => $search_string,
 			'marketplace' => $marketplace,
@@ -14,9 +13,6 @@ class ModelOpenbayAmazonListing extends Model {
 		$products = array();
 
 		foreach ($results['Products'] as $result) {
-
-			$price = '';
-
 			if ($result['price']['amount'] && $result['price']['currency']) {
 				$price = $result['price']['amount'] . ' ' . $result['price']['currency'];
 			} else {
@@ -109,7 +105,7 @@ class ModelOpenbayAmazonListing extends Model {
 		$response = $this->openbay->amazon->callWithResponse('productv3/simpleListing', $request);
 		$response = json_decode($response);
 
-		if(empty($response)) {
+		if (empty($response)) {
 			return array(
 				'status' => 0,
 				'message' => 'Problem connecting OpenBay: API'
@@ -118,7 +114,7 @@ class ModelOpenbayAmazonListing extends Model {
 
 		$response = (array)$response;
 
-		if($response['status'] === 1) {
+	if (($response['status'] === 1)) {
 			$this->db->query("
 				REPLACE INTO `" . DB_PREFIX . "amazon_product`
 				SET `product_id` = " . (int)$data['product_id'] . ",

@@ -32,31 +32,31 @@
               <label class="col-sm-2 control-label"><?php echo $text_profile_default; ?></label>
               <div class="col-sm-10">
                 <input type="hidden" name="default" value="0" />
-                <input type="checkbox" name="default" value="1" <?php if($default == 1){ echo 'checked="checked"'; } ?> />
+                <input type="checkbox" name="default" value="1" <?php if ($default == 1){ echo 'checked="checked"'; } ?> />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="name"><?php echo $text_profile_name; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="name" value="<?php if(isset($name)){ echo $name; } ?>" placeholder="<?php echo $text_profile_name; ?>" id="name" class="form-control" />
+                <input type="text" name="name" value="<?php if (isset($name)){ echo $name; } ?>" placeholder="<?php echo $text_profile_name; ?>" id="name" class="form-control" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="description"><?php echo $text_profile_desc; ?></label>
               <div class="col-sm-10">
-                <textarea name="description" class="form-control" rows="3" id="description"><?php if(isset($description)){ echo $description; } ?></textarea>
+                <textarea name="description" class="form-control" rows="3" id="description"><?php if (isset($description)){ echo $description; } ?></textarea>
               </div>
             </div>
           </div>
           <div class="tab-pane" id="tab-returns">
-            <?php if(!empty($setting['returns']['accepted'])) { ?>
+            <?php if (!empty($setting['returns']['accepted'])) { ?>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $text_returns_accept; ?></label>
                 <div class="col-sm-10">
-                  <?php if(!isset($data['returns_accepted'])){ $data['returns_accepted'] = ''; } ?>
+                  <?php if (!isset($data['returns_accepted'])){ $data['returns_accepted'] = ''; } ?>
                   <select name="data[returns_accepted]" class="form-control">
                     <?php foreach($setting['returns']['accepted'] as $v) { ?>
-                      <option value="<?php echo $v['ReturnsAcceptedOption']; ?>" <?php if($data['returns_accepted'] == $v['ReturnsAcceptedOption']){ echo'selected'; } ?>><?php echo $v['Description']; ?></option>
+                      <option value="<?php echo $v['ReturnsAcceptedOption']; ?>" <?php if ($data['returns_accepted'] == $v['ReturnsAcceptedOption']){ echo'selected'; } ?>><?php echo $v['Description']; ?></option>
                     <?php } ?>
                   </select>
                 </div>
@@ -64,14 +64,14 @@
             <?php }else{ ?>
               <input type="hidden" name="data[returns_accepted]" value="" />
             <?php } ?>
-            <?php if(!empty($setting['returns']['within'])) { ?>
+            <?php if (!empty($setting['returns']['within'])) { ?>
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_returns_days; ?></label>
               <div class="col-sm-10">
-                <?php if(!isset($data['returns_within'])){ $data['returns_within'] = ''; } ?>
+                <?php if (!isset($data['returns_within'])){ $data['returns_within'] = ''; } ?>
                 <select name="data[returns_within]" class="form-control">
                   <?php foreach($setting['returns']['within'] as $v) { ?>
-                  <option value="<?php echo $v['ReturnsWithinOption']; ?>" <?php if($data['returns_within'] == $v['ReturnsWithinOption']){ echo'selected'; } ?>><?php echo $v['Description']; ?></option>
+                  <option value="<?php echo $v['ReturnsWithinOption']; ?>" <?php if ($data['returns_within'] == $v['ReturnsWithinOption']){ echo'selected'; } ?>><?php echo $v['Description']; ?></option>
                   <?php } ?>
                 </select>
               </div>
@@ -79,14 +79,14 @@
             <?php }else{ ?>
             <input type="hidden" name="data[returns_within]" value="" />
             <?php } ?>
-            <?php if(!empty($setting['returns']['paidby'])) { ?>
+            <?php if (!empty($setting['returns']['paidby'])) { ?>
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_returns_costs; ?></label>
               <div class="col-sm-10">
-                <?php if(!isset($data['returns_shipping'])){ $data['returns_shipping'] = ''; } ?>
+                <?php if (!isset($data['returns_shipping'])){ $data['returns_shipping'] = ''; } ?>
                 <select name="data[returns_shipping]" class="form-control">
                   <?php foreach($setting['returns']['paidby'] as $v) { ?>
-                  <option value="<?php echo $v['ShippingCostPaidByOption']; ?>" <?php if($data['returns_shipping'] == $v['ShippingCostPaidByOption']){ echo'selected'; } ?>><?php echo $v['Description']; ?></option>
+                  <option value="<?php echo $v['ShippingCostPaidByOption']; ?>" <?php if ($data['returns_shipping'] == $v['ShippingCostPaidByOption']){ echo'selected'; } ?>><?php echo $v['Description']; ?></option>
                   <?php } ?>
                 </select>
               </div>
@@ -94,14 +94,14 @@
             <?php }else{ ?>
             <input type="hidden" name="data[returns_shipping]" value="" />
             <?php } ?>
-            <?php if(!empty($setting['returns']['refund'])) { ?>
+            <?php if (!empty($setting['returns']['refund'])) { ?>
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_returns_type; ?></label>
               <div class="col-sm-10">
-                <?php if(!isset($data['returns_option'])){ $data['returns_option'] = ''; } ?>
+                <?php if (!isset($data['returns_option'])){ $data['returns_option'] = ''; } ?>
                 <select name="data[returns_option]" class="form-control">
                   <?php foreach($setting['returns']['refund'] as $v) { ?>
-                  <option value="<?php echo $v['RefundOption']; ?>" <?php if($data['returns_option'] == $v['RefundOption']){ echo'selected'; } ?>><?php echo $v['Description']; ?></option>
+                  <option value="<?php echo $v['RefundOption']; ?>" <?php if ($data['returns_option'] == $v['RefundOption']){ echo'selected'; } ?>><?php echo $v['Description']; ?></option>
                   <?php } ?>
                 </select>
               </div>
@@ -109,8 +109,8 @@
             <?php }else{ ?>
             <input type="hidden" name="data[returns_option]" value="" />
             <?php } ?>
-            <?php if($setting['returns']['description'] == true) { ?>
-              <?php if(!isset($data['returns_policy'])){ $data['returns_policy'] = ''; } ?>
+            <?php if ($setting['returns']['description'] == true) { ?>
+              <?php if (!isset($data['returns_policy'])){ $data['returns_policy'] = ''; } ?>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $text_returns_inst; ?></label>
                 <div class="col-sm-10">
@@ -120,14 +120,14 @@
             <?php }else{ ?>
               <input type="hidden" name="data[returns_policy]" value="" />
             <?php } ?>
-            <?php if(!empty($setting['returns']['restocking_fee'])) { ?>
+            <?php if (!empty($setting['returns']['restocking_fee'])) { ?>
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_returns_restock; ?></label>
               <div class="col-sm-10">
-                <?php if(!isset($data['returns_restocking_fee'])){ $data['returns_restocking_fee'] = ''; } ?>
+                <?php if (!isset($data['returns_restocking_fee'])){ $data['returns_restocking_fee'] = ''; } ?>
                 <select name="data[returns_restocking_fee]" class="form-control">
                   <?php foreach($setting['returns']['restocking_fee'] as $v) { ?>
-                  <option value="<?php echo $v['RestockingFeeValueOption']; ?>" <?php if($data['returns_restocking_fee'] == $v['RestockingFeeValueOption']){ echo'selected'; } ?>><?php echo $v['Description']; ?></option>
+                  <option value="<?php echo $v['RestockingFeeValueOption']; ?>" <?php if ($data['returns_restocking_fee'] == $v['RestockingFeeValueOption']){ echo'selected'; } ?>><?php echo $v['Description']; ?></option>
                   <?php } ?>
                 </select>
               </div>

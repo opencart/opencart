@@ -1,6 +1,6 @@
 <?php
 class ModelOpenbayAmazonus extends Model {
-	public function install(){
+	public function install() {
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazonus_order` (
 			  `order_id` int(11) NOT NULL ,
@@ -88,7 +88,7 @@ class ModelOpenbayAmazonus extends Model {
 		);
 	}
 
-	public function uninstall(){
+	public function uninstall() {
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_order`");
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_order_product`");
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_product2`");
@@ -235,31 +235,31 @@ class ModelOpenbayAmazonus extends Model {
 
 	public function getProductStatus($product_id) {
 
-		$rowsUploaded = $this->db->query("
+		$rows_uploaded = $this->db->query("
 			SELECT COUNT(*) count
 			FROM `" . DB_PREFIX . "amazonus_product`
 			WHERE `product_id` = '" . (int)$product_id . "' AND status = 'uploaded'")->row;
-		$rowsUploaded = $rowsUploaded['count'];
+		$rows_uploaded = $rows_uploaded['count'];
 
-		$rowsOk = $this->db->query("
+		$rows_ok = $this->db->query("
 			SELECT COUNT(*) count
 			FROM `" . DB_PREFIX . "amazonus_product`
 			WHERE `product_id` = '" . (int)$product_id . "' AND status = 'ok'")->row;
-		$rowsOk = $rowsOk['count'];
+		$rows_ok = $rows_ok['count'];
 
-		$rowsError = $this->db->query("
+		$rows_error = $this->db->query("
 			SELECT COUNT(*) count
 			FROM `" . DB_PREFIX . "amazonus_product`
 			WHERE `product_id` = '" . (int)$product_id . "' AND status = 'error'")->row;
-		$rowsError = $rowsError['count'];
+		$rows_error = $rows_error['count'];
 
-		$rowsSaved = $this->db->query("
+		$rows_saved = $this->db->query("
 			SELECT COUNT(*) count
 			FROM `" . DB_PREFIX . "amazonus_product`
 			WHERE `product_id` = '" . (int)$product_id . "' AND status = 'saved'")->row;
-		$rowsSaved = $rowsSaved['count'];
+		$rows_saved = $rows_saved['count'];
 
-		$rowsTotal = $rowsUploaded + $rowsOk + $rowsError + $rowsSaved;
+		$rows_total = $rows_uploaded + $rows_ok + $rows_error + $rows_saved;
 
 		$links = $this->db->query("
 			SELECT COUNT(*) as count
@@ -268,25 +268,25 @@ class ModelOpenbayAmazonus extends Model {
 		$links = $links['count'];
 
 
-		if($rowsTotal === 0 && $links > 0) {
+		if($rows_total === 0 && $links > 0) {
 			return 'linked';
-		} else if($rowsTotal == 0) {
+		} else if($rows_total == 0) {
 			return false;
 		}
 
-		if($rowsUploaded > 0) {
+		if($rows_uploaded > 0) {
 			return 'processing';
 		}
 
-		if($rowsUploaded == 0 && $rowsOk > 0 && $rowsError == 0) {
+		if($rows_uploaded == 0 && $rows_ok > 0 && $rows_error == 0) {
 			return 'ok';
 		}
 
-		if($rowsSaved > 0) {
+		if($rows_saved > 0) {
 			return 'saved';
 		}
 
-		if($rowsUploaded == 0 && $rowsError > 0 && $rowsOk == 0) {
+		if($rows_uploaded == 0 && $rows_error > 0 && $rows_ok == 0) {
 			$quick = $this->db->query("
 				SELECT *
 				FROM `" . DB_PREFIX . "amazonus_product`

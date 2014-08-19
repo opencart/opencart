@@ -309,7 +309,7 @@ class ModelCatalogProduct extends Model {
 			$data = array_merge($data, array('product_download' => $this->getProductDownloads($product_id)));
 			$data = array_merge($data, array('product_layout' => $this->getProductLayouts($product_id)));
 			$data = array_merge($data, array('product_store' => $this->getProductStores($product_id)));
-			$data = array_merge($data, array('product_recurrings' => $this->getProfiles($product_id)));
+			$data = array_merge($data, array('product_recurrings' => $this->getRecurrings($product_id)));
 
 			$this->addProduct($data);
 		}

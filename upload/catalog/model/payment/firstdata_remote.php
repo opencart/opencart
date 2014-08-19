@@ -230,7 +230,7 @@ class ModelPaymentFirstdataRemote extends Model {
 			$settle_status = 0;
 		}
 
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "firstdata_remote_order` SET `order_id` = '" . (int)$order_info['order_id'] . "', `order_ref` = '" . $this->db->escape($capture_result['order_id']) . "', `authcode` = '" . $this->db->escape($capture_result['approval_code']) . "', `tdate` = '" . $this->db->escape($capture_result['t_date']) . "', `date_added` = now(), `modified` = now(), `capture_status` = '" . (int)$settle_status . "', `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "firstdata_remote_order` SET `order_id` = '" . (int)$order_info['order_id'] . "', `order_ref` = '" . $this->db->escape($capture_result['order_id']) . "', `authcode` = '" . $this->db->escape($capture_result['approval_code']) . "', `tdate` = '" . $this->db->escape($capture_result['t_date']) . "', `date_added` = now(), `date_modified` = now(), `capture_status` = '" . (int)$settle_status . "', `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) . "'");
 
 		return $this->db->getLastId();
 	}

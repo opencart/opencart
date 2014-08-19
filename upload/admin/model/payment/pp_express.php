@@ -6,7 +6,7 @@ class ModelPaymentPPExpress extends Model {
 			  `paypal_order_id` int(11) NOT NULL AUTO_INCREMENT,
 			  `order_id` int(11) NOT NULL,
 			  `date_added` DATETIME NOT NULL,
-			  `modified` DATETIME NOT NULL,
+			  `date_modified` DATETIME NOT NULL,
 			  `capture_status` ENUM('Complete','NotComplete') DEFAULT NULL,
 			  `currency_code` CHAR(3) NOT NULL,
 			  `authorization_id` VARCHAR(30) NOT NULL,
@@ -78,7 +78,7 @@ class ModelPaymentPPExpress extends Model {
 	}
 
 	public function updateOrder($capture_status, $order_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order` SET `modified` = now(), `capture_status` = '" . $this->db->escape($capture_status) . "' WHERE `order_id` = '" . (int)$order_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order` SET `date_modified` = now(), `capture_status` = '" . $this->db->escape($capture_status) . "' WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
 	public function addTransaction($transaction_data, $request_data = array()) {

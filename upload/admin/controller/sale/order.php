@@ -17,8 +17,8 @@ class ControllerSaleOrder extends Controller {
 
 		$this->load->model('sale/order');
 
-		$this->getForm();
-	}
+    	$this->getForm();
+  	}
 
 	public function edit() {
 		$this->load->language('sale/order');
@@ -27,8 +27,8 @@ class ControllerSaleOrder extends Controller {
 
 		$this->load->model('sale/order');
 
-		$this->getForm();
-	}
+    	$this->getForm();
+  	}
 
 	public function delete() {
 		$this->load->language('sale/order');
@@ -142,8 +142,8 @@ class ControllerSaleOrder extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput($json);
 
-		$this->getForm();
-	}
+    	$this->getForm();
+  	}
 
 	protected function getList() {
 		if (isset($this->request->get['filter_order_id'])) {
@@ -281,6 +281,7 @@ class ControllerSaleOrder extends Controller {
 				'total'         => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
+				'shipping_code' => $result['shipping_code'],
 				'view'          => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL'),
 				'edit'          => $this->url->link('sale/order/edit', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL')
 			);
@@ -307,8 +308,6 @@ class ControllerSaleOrder extends Controller {
 		$data['entry_total'] = $this->language->get('entry_total');
 		$data['entry_date_added'] = $this->language->get('entry_date_added');
 		$data['entry_date_modified'] = $this->language->get('entry_date_modified');
-
-		$data['error_selected'] = $this->language->get('error_selected');
 
 		$data['button_invoice_print'] = $this->language->get('button_invoice_print');
 		$data['button_shipping_print'] = $this->language->get('button_shipping_print');
@@ -898,7 +897,7 @@ class ControllerSaleOrder extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('sale/order_form.tpl', $data));
-	}
+  	}
 
 	public function country() {
 		$json = array();
@@ -2119,7 +2118,7 @@ class ControllerSaleOrder extends Controller {
 			$order_info = $this->model_sale_order->getOrder($order_id);
 
 			// Make sure there is a shipping method
-			if ($order_info && $order_info['shipping_method']) {
+			if ($order_info && $order_info['shipping_code']) {
 				$store_info = $this->model_setting_setting->getSetting('config', $order_info['store_id']);
 
 				if ($store_info) {

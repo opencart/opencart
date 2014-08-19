@@ -9,7 +9,7 @@ class ModelPaymentBluepayredirect extends Model {
 			  `order_id` INT(11) NOT NULL,
 			  `transaction_id` VARCHAR(50),
 			  `date_added` DATETIME NOT NULL,
-			  `modified` DATETIME NOT NULL,
+			  `date_modified` DATETIME NOT NULL,
 			  `release_status` INT(1) DEFAULT 0,
 			  `void_status` INT(1) DEFAULT 0,
 			  `rebate_status` INT(1) DEFAULT 0,

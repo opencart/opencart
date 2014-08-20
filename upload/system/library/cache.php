@@ -3,7 +3,7 @@ class Cache {
 	private $cache;
 
 	public function __construct($driver, $expire = 3600) {
-		$file = dirname(__FILE__) . '/driver/cache/' . $driver . '.php';
+		$file = DIR_SYSTEM . '/library/driver/cache/' . $driver . '.php';
 
 		if (file_exists($file)) {
 			require_once($file);

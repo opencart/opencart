@@ -912,12 +912,17 @@
 <?php foreach ($languages as $language) { ?>
 $('#input-description<?php echo $language['language_id']; ?>').summernote({
 	height: 300,
-	showImageDialog: function(files, editor, $editable) {
-		alert('hi');
-		return false;
+	onImageUpload: function(files, editor, $editable) {
+	   // console.log('image upload:', files, editor, $editable);
+	},	
+	Dialog: function() {
+		showImageDialog: function($editable, $dialog) {
+			console.log('image upload:', files, editor, $editable);
+			
+			return false;
+		}
 	}
-}).tplDialogs.tplImageDialog = function () {alert('hi');
-};
+});
 <?php } ?>
 //--></script> 
 <script type="text/javascript"><!--

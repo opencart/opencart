@@ -14,14 +14,10 @@
     <div class="row">
       <div class="col-sm-3">
         <div class="tile tile-red">
+          <div class="tile-heading"><?php echo $text_new_order; ?></div>
           <div class="tile-body">
-            <span class="pull-right"><i class="fa fa-shopping-cart fa-4x"></i></span>
-            <?php if ($order_percentage > 0) { ?>
-            <span class="label label-success pull-right">+<?php echo $order_percentage; ?>%</span>
-            <?php } else { ?>
-            <span class="label label-danger pull-right"><?php echo $order_percentage; ?>%</span>
-            <?php } ?>
-            <h3><?php echo $text_new_order; ?> <?php echo $order_total; ?></h3>
+            <i class="fa fa-shopping-cart fa-5x"></i>
+            <h2 class="pull-right"><?php echo $order_total; ?></h2>
           </div>
         </div>
       </div>
@@ -29,28 +25,26 @@
         <div class="tile tile-yellow">
           <div class="tile-heading"><?php echo $text_total_sale; ?></div>
           <div class="tile-body">
-          <i class="fa fa-credit-card fa-3x"></i> <span class="label <?php echo $class; ?> pull-right"><?php echo $sale_percentage; ?>%</span>
-            <h3 class="pull-right"><?php echo $sale_total; ?></h3>
+            <i class="fa fa-credit-card fa-5x"></i>
+            <h2 class="pull-right"><?php echo $sale_total; ?></h2>
           </div>
         </div>
       </div>
       <div class="col-sm-3">
         <div class="tile tile-blue">
-          <div class="tile-heading"><?php echo $text_new_customer; ?> <?php echo $customer_total; ?></div>
-          <div class="tile-body"><i class="fa fa-user fa-3x"></i>
-            <?php if ($customer_percentage > 0) { ?>
-            <span class="label label-success pull-right">+<?php echo $customer_percentage; ?>%</span>
-            <?php } else { ?>
-            <span class="label label-danger pull-right"><?php echo $customer_percentage; ?>%</span>
-            <?php } ?>
+          <div class="tile-heading"><?php echo $text_new_customer; ?></div>
+          <div class="tile-body">
+            <i class="fa fa-user fa-5x"></i>
+            <h2 class="pull-right"><?php echo $customer_total; ?></h2>
           </div>
         </div>
       </div>
       <div class="col-sm-3">
         <div class="tile tile-green">
           <div class="tile-heading"><?php echo $text_online; ?></div>
-          <div class="tile-body"><i class="fa fa-eye fa-3x"></i>
-            <h3><?php echo $online_total; ?></h3>
+          <div class="tile-body">
+            <i class="fa fa-eye fa-5x"></i>
+            <h2 class="pull-right"><?php echo $online_total; ?></h2>
           </div>
         </div>
       </div>

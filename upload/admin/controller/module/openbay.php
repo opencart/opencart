@@ -54,7 +54,7 @@ class ControllerModuleOpenbay extends Controller {
 		$this->load->model('tool/event');
 
 		$settings = $this->model_setting_setting->getSetting('openbaymanager');
-		$settings['openbaymanager_show_menu'] = 1;
+		$settings['openbay_menu'] = 1;
 		$this->model_setting_setting->editSetting('openbaymanager', $settings);
 
 		// register the event triggers
@@ -75,7 +75,7 @@ class ControllerModuleOpenbay extends Controller {
 		$this->load->model('tool/event');
 
 		$settings = $this->model_setting_setting->getSetting('openbaymanager');
-		$settings['openbaymanager_show_menu'] = 0;
+		$settings['openbay_menu'] = 0;
 		$this->model_setting_setting->editSetting('openbaymanager', $settings);
 
 		// register the event triggers

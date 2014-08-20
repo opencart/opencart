@@ -18,8 +18,8 @@
         <div class="row">
           <div class="col-sm-12">
             <div class="form-group">
-              <label class="control-label" for="filter_marketplace"><?php echo $text_marketplace; ?></label>
-              <select id="filter_marketplace" name="filter_marketplace" class="form-control">
+              <label class="control-label" for="filter-marketplace"><?php echo $text_marketplace; ?></label>
+              <select id="filter-marketplace" name="filter_marketplace" class="form-control">
                 <?php foreach ($marketplaces as $marketplace) { ?>
                 <?php if ($filter_marketplace == $marketplace['code']) { ?>
                 <option selected="selected" value="<?php echo $marketplace['code'] ?>"><?php echo $marketplace['name'] ?></option>
@@ -212,7 +212,7 @@
     var request_data = $('input[name="product_ids[]"]:checked').serialize();
 
     if (request_data != '') {
-      request_data += '&marketplace=<?php echo $filter_marketplace ?>';
+      request_data += '&marketplace=<?php echo $filter_marketplace; ?>';
 
       $.ajax({
         url: 'index.php?route=openbay/amazon/doBulkSearch&token=<?php echo $token ?>',

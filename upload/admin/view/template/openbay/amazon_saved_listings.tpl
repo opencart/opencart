@@ -26,11 +26,11 @@
       <table class="table">
         <thead>
           <tr>
-            <th><?php echo $text_name_column ;?></th>
-            <th><?php echo $text_model_column ;?></th>
-            <th class="text-center"><?php echo $text_sku_column ;?></th>
-            <th class="text-center"><?php echo $text_amazon_sku_column ;?></th>
-            <th class="text-right"><?php echo $text_actions_column ;?></th>
+            <th><?php echo $text_name_column; ?></th>
+            <th><?php echo $text_model_column; ?></th>
+            <th class="text-center"><?php echo $text_sku_column; ?></th>
+            <th class="text-center"><?php echo $text_amazon_sku_column; ?></th>
+            <th class="text-right"><?php echo $text_actions_column; ?></th>
           </tr>
         </thead>
         <tbody>
@@ -49,7 +49,7 @@
             <?php } ?>
           <?php } else { ?>
             <tr>
-              <td colspan="5" class="text-center"><?php echo $text_no_results ;?></td>
+              <td colspan="5" class="text-center"><?php echo $text_no_results; ?></td>
             </tr>
           <?php } ?>
         </tbody>

@@ -32,7 +32,7 @@ function getFaq(){
                         htmlInj += '<div id="faq" class="alert alert-info">';
                             htmlInj += ' <button type="button" class="close" data-dismiss="alert" onclick="hideFaq();">&times;</button>';
                             htmlInj += '<h4><i class="fa fa-info-circle"></i> '+data.title+'</h4>';
-                            htmlInj += '<h5>'+data.message+'<label class="label label-info pull-right"><a class="alert-link" href="'+data.link+'" target="_BLANK">'+data.faqbtn+'</a></label></h5>';
+                            htmlInj += '<h5>'+data.message+'<label class="label label-info pull-right"><a class="alert-link" href="'+data.link+'" target="_BLANK">'+data.button_faq+'</a></label></h5>';
                         htmlInj += '</div>';
                     htmlInj += '</div>';
                 htmlInj += '</div>';

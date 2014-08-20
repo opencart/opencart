@@ -73,7 +73,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$data = $this->load->language('extension/openbay');
 
-		$this->document->setTitle($this->language->get('text_heading_title'));
+		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['breadcrumbs'] = array();
@@ -84,7 +84,7 @@ class ControllerExtensionOpenbay extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_heading_title'),
+			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
@@ -142,6 +142,8 @@ class ControllerExtensionOpenbay extends Controller {
 			$settings['openbay_version'] = $this->model_openbay_version->getVersion();
 			$this->model_setting_setting->editSetting('openbaymanager', $settings);
 		}
+
+		$data['token'] = $this->session->data['token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
@@ -244,8 +246,8 @@ class ControllerExtensionOpenbay extends Controller {
 			'zh_HK' => 'Simplified Chinese'
 		);
 
-		$data['txt_obp_version'] = $this->config->get('openbay_version');
-		$data['openbaymanager_show_menu'] = $this->config->get('openbaymanager_show_menu');
+		$data['text_version'] = $this->config->get('openbay_version');
+		$data['openbay_menu'] = $this->config->get('openbay_menu');
 
 		$data['action'] = $this->url->link('extension/openbay/manage', 'token=' . $this->session->data['token'], 'SSL');
 		$data['cancel'] = $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL');
@@ -259,13 +261,15 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_heading_title'),
+			'text' => $this->language->get('heading_title'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('extension/openbay/manage', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_manage'),
 		);
+
+		$data['token'] = $this->session->data['token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
@@ -292,7 +296,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function getNotifications() {
+	public function notifications() {
 		$this->load->model('openbay/openbay');
 
 		$json = $this->model_openbay_openbay->getNotifications();
@@ -301,7 +305,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function getVersion() {
+	public function version() {
 		$this->load->model('openbay/openbay');
 
 		$json = $this->model_openbay_openbay->getVersion();
@@ -325,7 +329,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$openbaymanager = $this->model_setting_setting->getSetting('openbaymanager');
 		$openbaymanager['openbay_version'] = (int)$this->model_openbay_version->getVersion();
-		$openbaymanager['openbaymanager_show_menu'] = 1;
+		$openbaymanager['openbay_menu'] = 1;
 		$this->model_setting_setting->editSetting('openbaymanager', $openbaymanager);
 
 		$installed_modules = $this->model_setting_extension->getInstalled('module');
@@ -350,7 +354,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->load->language('extension/openbay');
 
 		$data = $this->model_openbay_openbay->faqGet($this->request->get['qry_route']);
-		$data['faqbtn'] = $this->language->get('text_btn_faq');
+		$data['button_faq'] = $this->language->get('button_faq');
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($data));

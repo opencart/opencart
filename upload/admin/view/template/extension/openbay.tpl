@@ -20,7 +20,7 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="fa fa-puzzle-piece fa-lg"></i> <?php echo $text_heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-puzzle-piece fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <div class="row">
@@ -39,7 +39,7 @@
                 <?php foreach ($extensions as $extension) { ?>
                 <tr>
                   <td class="text-left"><?php echo $extension['name']; ?></td>
-                  <td class="text-center"><?php echo $extension['status'] ?></td>
+                  <td class="text-center"><?php echo $extension['status']; ?></td>
                   <td class="text-right">
                     <?php if ($extension['installed']) { ?>
                       <a href="<?php echo $extension['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
@@ -131,13 +131,13 @@
           </div>
         </div>
         <div class="col-md-6" style="padding-left:10px;">
-          <div id="openbay_version" class="alert alert-info text-left">
-            <div id="openbay_version_loading">
+          <div id="openbay-version" class="alert alert-info text-left">
+            <div id="openbay-version-loading">
               <i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_checking_version; ?>
             </div>
           </div>
-          <div id="openbay_notification" class="alert alert-info text-left">
-            <div id="openbay_loading">
+          <div id="openbay-notification" class="alert alert-info text-left">
+            <div id="openbay-loading">
               <i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_getting_messages; ?>
             </div>
           </div>
@@ -147,69 +147,67 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-var token = "<?php echo $_GET['token']; ?>";
+  function getVersion() {
+    var version = '<?php echo $openbay_version; ?>';
 
-function getOpenbayVersion() {
-  var version = '<?php echo $openbay_version; ?>';
+    $('#openbay-version').empty().html('<div id="openbay-version-loading"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_checking_version; ?></div>');
 
-  $('#openbay_version').empty().html('<div id="openbay_version_loading"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_checking_version; ?></div>');
+    setTimeout(function () {
+      $.ajax({
+        type: 'GET',
+        url: 'index.php?route=extension/openbay/version&token=<?php echo $token; ?>',
+        dataType: 'json',
+        success: function (json) {
+          $('#openbay-version-loading').hide();
 
-  setTimeout(function () {
-    $.ajax({
-      type: 'GET',
-      url: 'index.php?route=extension/openbay/getVersion&token=' + token,
-      dataType: 'json',
-      success: function (json) {
-        $('#openbay_version_loading').hide();
-
-        if (version < json.version) {
-          $('#openbay_version').removeClass('attention').addClass('alert-warning').append('<i class="fa fa-warning"></i> <?php echo $text_version_old_1; ?> v.' + version + ', <?php echo $text_version_old_2; ?> v.' + json.version);
-        } else {
-          $('#openbay_version').removeClass('attention').addClass('alert-success').append('<i class="fa fa-check"></i> <?php echo $text_latest; ?> (v.' + version + ')');
+          if (version < json.version) {
+            $('#openbay-version').removeClass('attention').addClass('alert-warning').append('<i class="fa fa-warning"></i> <?php echo $text_version_old_1; ?> v.' + version + ', <?php echo $text_version_old_2; ?> v.' + json.version);
+          } else {
+            $('#openbay-version').removeClass('attention').addClass('alert-success').append('<i class="fa fa-check"></i> <?php echo $text_latest; ?> (v.' + version + ')');
+          }
+        },
+        failure: function () {
+          $('#openbay-version').html('<?php echo $error_failed_to_load; ?><strong><span onclick="getVersion();"><?php echo $button_retry; ?></span></strong>');
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          if (xhr.status != 0) {
+            alert(xhr.status + "\r\n" + thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          }
         }
-      },
-      failure: function () {
-        $('#openbay_version').html('<?php echo $error_failed_to_load; ?><strong><span onclick="getOpenbayVersion();"><?php echo $button_retry; ?></span></strong>');
-      },
-      error: function (xhr, ajaxOptions, thrownError) {
-        if (xhr.status != 0) {
-          alert(xhr.status + "\r\n" + thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      });
+    }, 500);
+  }
+
+  function getNotifications() {
+    $('#openbay-notification').empty().html('<div id="openbay-loading"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_checking_messages; ?></div>');
+
+    setTimeout(function () {
+      $.ajax({
+        type: 'GET',
+        url: 'index.php?route=extension/openbay/notifications&token=<?php echo $token; ?>',
+        dataType: 'json',
+        success: function (json) {
+          html = '<h4><i class="fa fa-info-circle"></i>  <?php echo $text_title_messages; ?></h4>';
+          html += '<ul>';
+          $.each(json, function (key, val) {
+            html += '<li>' + val + '</li>';
+          });
+          html += '</ul>';
+
+          $('#openbay-notification').html(html);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          if (xhr.status != 0) {
+            alert(xhr.status + "\r\n" +thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          }
         }
-      }
-    });
-  }, 500);
-}
+      });
+    }, 500);
+  }
 
-function getOpenbayNotifications() {
-  $('#openbay_notification').empty().html('<div id="openbay_loading"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_checking_messages; ?></div>');
-
-  setTimeout(function () {
-    $.ajax({
-      type: 'GET',
-      url: 'index.php?route=extension/openbay/getNotifications&token='+token,
-      dataType: 'json',
-      success: function (json) {
-        html = '<h4><i class="fa fa-info-circle"></i>  <?php echo $text_title_messages; ?></h4>';
-        html += '<ul>';
-        $.each(json, function (key, val) {
-          html += '<li>' + val + '</li>';
-        });
-        html += '</ul>';
-
-        $('#openbay_notification').html(html);
-      },
-      error: function (xhr, ajaxOptions, thrownError) {
-        if (xhr.status != 0) {
-          alert(xhr.status + "\r\n" +thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-      }
-    });
-  }, 500);
-}
-
-$(document).ready(function () {
-  getOpenbayVersion();
-  getOpenbayNotifications();
-});
+  $(document).ready(function () {
+    getVersion();
+    getNotifications();
+  });
 //--></script>
 <?php echo $footer; ?>

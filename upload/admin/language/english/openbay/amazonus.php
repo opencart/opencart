@@ -1,7 +1,7 @@
 <?php
 //Heading
 $_['heading_title'] = 'Amazon (US)';
-$_['text_heading_title'] = 'OpenBay Pro for Amazon US';
+$_['heading_title'] = 'OpenBay Pro for Amazon US';
 
 //Settings tab
 $_['token_text'] = 'Token:';

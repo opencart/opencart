@@ -178,8 +178,8 @@ class ControllerCommonMenu extends Controller {
 			$data['zone'] = $this->url->link('localisation/zone', 'token=' . $this->session->data['token'], 'SSL');
 			$data['recurring'] = $this->url->link('catalog/recurring', 'token=' . $this->session->data['token'], 'SSL');
 			$data['order_recurring'] = $this->url->link('sale/recurring', 'token=' . $this->session->data['token'], 'SSL');
-			
-			$data['openbay_show_menu'] = $this->config->get('openbaymanager_show_menu');
+
+			$data['openbay_show_menu'] = $this->config->get('openbay_menu');
 			$data['openbay_link_extension'] = $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL');
 			$data['openbay_link_orders'] = $this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'], 'SSL');
 			$data['openbay_link_items'] = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL');
@@ -198,7 +198,7 @@ class ControllerCommonMenu extends Controller {
 				'amazon' => $this->config->get('amazon_status'),
 				'amazonus' => $this->config->get('amazonus_status'),
 			);
-			
+
 			$data['profile'] = $this->load->controller('common/profile');
 
 			return $this->load->view('common/menu.tpl', $data);

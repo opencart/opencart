@@ -38,11 +38,11 @@
       <table class="table">
         <thead>
           <tr>
-            <th class="text-left"><?php echo $column_name ;?></th>
-            <th class="text-left"><?php echo $column_model ;?></th>
-            <th class="text-left"><?php echo $column_combination ;?></th>
-            <th class="text-left"><?php echo $column_sku ;?></th>
-            <th class="text-left"><?php echo $column_amazon_sku ;?></th>
+            <th class="text-left"><?php echo $column_name; ?></th>
+            <th class="text-left"><?php echo $column_model; ?></th>
+            <th class="text-left"><?php echo $column_combination; ?></th>
+            <th class="text-left"><?php echo $column_sku; ?></th>
+            <th class="text-left"><?php echo $column_amazon_sku; ?></th>
           </tr>
         </thead>
         <tbody>
@@ -58,7 +58,7 @@
             <?php } ?>
           <?php } else { ?>
             <tr>
-              <td colspan="5" class="text-center"><?php echo $text_no_results ;?></td>
+              <td colspan="5" class="text-center"><?php echo $text_no_results; ?></td>
             </tr>
           <?php } ?>
         </tbody>

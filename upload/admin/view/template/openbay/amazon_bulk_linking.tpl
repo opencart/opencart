@@ -20,8 +20,8 @@
           <div class="row">
             <div class="col-sm-12">
               <div class="form-group">
-                <label class="control-label" for="marketplace_select"><?php echo $text_choose_marketplace; ?></label>
-                <select name="marketplace_select" id="marketplace_select" class="form-control">
+                <label class="control-label" for="marketplace-select"><?php echo $text_choose_marketplace; ?></label>
+                <select name="marketplace_select" id="marketplace-select" class="form-control">
                   <?php foreach ($marketplaces as $marketplace) { ?>
                   <option value="<?php echo $marketplace['link']; ?>" <?php if ($marketplace['code'] == $marketplace_code) { echo ' selected'; } ?>><?php echo $marketplace['name'] ?></option>
                   <?php } ?>
@@ -149,8 +149,8 @@
     });
   });
 
-  $('#marketplace_select').bind('change', function() {
-    location = $('#marketplace_select').val();
+  $('#marketplace-select').bind('change', function() {
+    location = $('#marketplace-select').val();
   });
 //--></script>
 <?php echo $footer; ?>

@@ -43,18 +43,11 @@ class ControllerCommonDashboard extends Controller {
 		$this->load->model('sale/order');
 
 		$data['order_total'] = $this->model_sale_order->getTotalOrders();
+		
+		$this->load->model('report/dashboard');
 
-		$today = $this->model_sale_order->getTotalOrders(array('filter_date_added' => date('Y-m-d', strtotime('-1 day'))));
-
-		$yesterday = $this->model_sale_order->getTotalOrders(array('filter_date_added' => date('Y-m-d', strtotime('-2 day'))));
-
-		$difference = $today - $yesterday;
-
-		if ($difference && $today) {
-			$data['order_percentage'] = round(($difference / $today) * 100);
-		} else {
-			$data['order_percentage'] = 0;
-		}
+		// Total Sales
+		$data['sale_total'] = $this->currency->format($this->model_report_dashboard->getTotalSales(), $this->config->get('config_currency'));
 
 		// Customers
 		$this->load->model('sale/customer');
@@ -62,35 +55,6 @@ class ControllerCommonDashboard extends Controller {
 		$customer_total = $this->model_sale_customer->getTotalCustomers();
 
 		$data['customer_total'] = $customer_total;
-
-		$today = $this->model_sale_customer->getTotalCustomers(array('filter_date_added' => date('Y-m-d', strtotime('-1 day'))));
-
-		$yesterday = $this->model_sale_customer->getTotalCustomers(array('filter_date_added' => date('Y-m-d', strtotime('-2 day'))));
-
-		$difference = $today - $yesterday;
-
-		if ($difference && $today) {
-			$data['customer_percentage'] = round(($difference / $today) * 100);
-		} else {
-			$data['customer_percentage'] = 0;
-		}
-
-		$this->load->model('report/dashboard');
-
-		// Total Sales
-		$data['sale_total'] = $this->currency->format($this->model_report_dashboard->getTotalSales(), $this->config->get('config_currency'));
-
-		$today = $this->model_report_dashboard->getTotalSales(array('filter_date_added' => date('Y-m-d', strtotime('-1 day'))));
-
-		$yesterday = $this->model_report_dashboard->getTotalSales(array('filter_date_added' => date('Y-m-d', strtotime('-2 day'))));
-
-		$difference = $today - $yesterday;
-
-		if ($difference && $today) {
-			$data['sale_percentage'] = round(($difference / $today) * 100);
-		} else {
-			$data['sale_percentage'] = 0;
-		}
 
 		// Customers Online
 		$data['online_total'] = $this->model_report_dashboard->getTotalCustomersOnline();

@@ -1,12 +1,12 @@
 /**
- * Super simple wysiwyg editor on Bootstrap v0.5.2
+ * Super simple wysiwyg editor on Bootstrap v0.5.3
  * http://hackerwins.github.io/summernote/
  *
  * summernote.js
  * Copyright 2013 Alan Hong. and outher contributors
  * summernote may be freely distributed under the MIT license./
  *
- * Date: 2014-07-19T03:38Z
+ * Date: 2014-08-08T18:14Z
  */
 (function (factory) {
   /* global define */
@@ -471,8 +471,8 @@
   
       var aNext = [];
       while (node) {
-        aNext.push(node);
         if (pred(node)) { break; }
+        aNext.push(node);
         node = node.previousSibling;
       }
       return aNext;
@@ -489,8 +489,8 @@
   
       var aNext = [];
       while (node) {
-        aNext.push(node);
         if (pred(node)) { break; }
+        aNext.push(node);
         node = node.nextSibling;
       }
       return aNext;
@@ -517,6 +517,23 @@
       })(node);
 
       return aDescendant;
+    };
+
+    /**
+     * wrap node with new tag.
+     *
+     * @param {Element} node
+     * @param {Element} tagName of wrapper
+     * @return {Element} - wrapper
+     */
+    var wrap = function (node, wrapperName) {
+      var parent = node.parentNode;
+      var wrapper = $('<' + wrapperName + '>')[0];
+
+      parent.insertBefore(wrapper, node);
+      wrapper.appendChild(node);
+
+      return wrapper;
     };
   
     /**
@@ -549,6 +566,15 @@
     };
   
     var isText = makePredByNodeName('#text');
+
+    /**
+     * returns whether node is textNode on `note-editable` or not.
+     *
+     * @param {Element} node
+     */
+    var isRootText = function (node) {
+      return dom.isText(node) && isEditable(node.parentNode);
+    };
   
     /**
      * returns #text's text size or element's childNodes size
@@ -710,6 +736,7 @@
       isControlSizing: isControlSizing,
       buildLayoutInfo: buildLayoutInfo,
       isText: isText,
+      isRootText: isRootText,
       isPara: isPara,
       isList: isList,
       isTable: makePredByNodeName('TABLE'),
@@ -734,6 +761,7 @@
       listDescendant: listDescendant,
       commonAncestor: commonAncestor,
       listBetween: listBetween,
+      wrap: wrap,
       insertAfter: insertAfter,
       position: position,
       makeOffsetPath: makeOffsetPath,
@@ -746,7 +774,7 @@
 
   var settings = {
     // version
-    version: '0.5.2',
+    version: '0.5.3',
 
     /**
      * options
@@ -770,7 +798,8 @@
       codemirror: {                 // codemirror options
         mode: 'text/html',
         htmlMode: true,
-        lineNumbers: true
+        lineNumbers: true,
+        autoFormatOnStart: false
       },
 
       // language
@@ -1022,8 +1051,8 @@
         color: {
           recent: 'Recent Color',
           more: 'More Color',
-          background: 'BackColor',
-          foreground: 'FontColor',
+          background: 'Background Color',
+          foreground: 'Foreground Color',
           transparent: 'Transparent',
           setTransparent: 'Set transparent',
           reset: 'Reset',
@@ -1075,7 +1104,7 @@
      * @param {String} sUrl
      * @return {Promise} - then: $image
      */
-    var createImage = function (sUrl) {
+    var createImage = function (sUrl, filename) {
       return $.Deferred(function (deferred) {
         $('<img>').one('load', function () {
           deferred.resolve($(this));
@@ -1083,7 +1112,9 @@
           deferred.reject($(this));
         }).css({
           display: 'none'
-        }).appendTo(document.body).attr('src', sUrl);
+        }).appendTo(document.body)
+          .attr('src', sUrl)
+          .attr('data-filename', filename);
       }).promise();
     };
 
@@ -1296,7 +1327,7 @@
         } else {
           elNode = elCont.childNodes[nOffset] || elCont;
           if (dom.isText(elNode)) {
-            return textRangeInfo(elNode, nOffset);
+            return textRangeInfo(elNode, 0);
           }
   
           nOffset = 0;
@@ -1723,7 +1754,7 @@
      */
     this.currentStyle = function (elTarget) {
       var rng = range.create();
-      return rng.isOnEditable() && style.current(rng, elTarget);
+      return rng ? rng.isOnEditable() && style.current(rng, elTarget) : false;
     };
 
     /**
@@ -1813,8 +1844,8 @@
      * @param {jQuery} $editable
      * @param {String} sUrl
      */
-    this.insertImage = function ($editable, sUrl) {
-      async.createImage(sUrl).then(function ($image) {
+    this.insertImage = function ($editable, sUrl, filename) {
+      async.createImage(sUrl, filename).then(function ($image) {
         recordUndo($editable);
         $image.css({
           display: '',
@@ -2540,6 +2571,7 @@
             $videoDialog.modal('hide');
           });
         }).one('hidden.bs.modal', function () {
+          // dettach events
           $videoUrl.off('keyup');
           $videoBtn.off('click');
 
@@ -2604,7 +2636,10 @@
             $linkDialog.modal('hide');
           });
         }).one('hidden.bs.modal', function () {
+          // dettach events
+          $linkText.off('keyup');
           $linkUrl.off('keyup');
+          $linkBtn.off('click');
 
           if (deferred.state() === 'pending') {
             deferred.reject();
@@ -2690,8 +2725,9 @@
       // else insert Image as dataURL
       } else {
         $.each(files, function (idx, file) {
+          var filename = file.name;
           async.readFileAsDataURL(file).then(function (sDataURL) {
-            editor.insertImage($editable, sDataURL);
+            editor.insertImage($editable, sDataURL, filename);
           }).fail(function () {
             if (callbacks.onImageUploadError) {
               callbacks.onImageUploadError();
@@ -2856,7 +2892,7 @@
             // CodeMirror hasn't Padding.
             cmEditor.setSize(null, $editable.outerHeight());
             // autoFormatRange If formatting included
-            if (cmEditor.autoFormatRange) {
+            if (options.codemirror.autoFormatOnStart && cmEditor.autoFormatRange) {
               cmEditor.autoFormatRange({line: 0, ch: 0}, {
                 line: cmEditor.lineCount(),
                 ch: cmEditor.getTextArea().value.length
@@ -2988,9 +3024,12 @@
       var $btn = $(event.target).closest('[data-event]');
 
       if ($btn.length) {
-        var sEvent = $btn.attr('data-event'), sValue = $btn.attr('data-value');
+        var sEvent = $btn.attr('data-event'),
+            sValue = $btn.attr('data-value');
 
         var oLayoutInfo = makeLayoutInfo(event.target);
+
+        event.preventDefault();
 
         // before command: detect control selection element($target)
         var $target;
@@ -3882,7 +3921,7 @@
                    '<div class="title">' + lang.shortcut.shortcuts + '</div>' +
                    (agent.isMac ? tplShortcutTable(lang, options) : replaceMacKeys(tplShortcutTable(lang, options))) +
                    '<p class="text-center">' +
-                     '<a href="//hackerwins.github.io/summernote/" target="_blank">Summernote 0.5.2</a> · ' +
+                     '<a href="//hackerwins.github.io/summernote/" target="_blank">Summernote 0.5.3</a> · ' +
                      '<a href="//github.com/HackerWins/summernote" target="_blank">Project</a> · ' +
                      '<a href="//github.com/HackerWins/summernote/issues" target="_blank">Issues</a>' +
                    '</p>';
@@ -3963,7 +4002,7 @@
                            '" title="', sColor,
                            '" data-toggle="button" tabindex="-1"></button>'].join(''));
           }
-          aPaletteContents.push('<div>' + aButton.join('') + '</div>');
+          aPaletteContents.push('<div class="note-color-row">' + aButton.join('') + '</div>');
         }
         $palette.html(aPaletteContents.join(''));
       });
@@ -4052,10 +4091,14 @@
       //04. create Toolbar
       var sToolbar = '';
       for (var idx = 0, sz = options.toolbar.length; idx < sz; idx ++) {
-        var group = options.toolbar[idx];
-        sToolbar += '<div class="note-' + group[0] + ' btn-group">';
-        for (var i = 0, szGroup = group[1].length; i < szGroup; i++) {
-          sToolbar += tplButtonInfo[group[1][i]](langInfo, options);
+        var groupName = options.toolbar[idx][0];
+        var groupButtons = options.toolbar[idx][1];
+
+        sToolbar += '<div class="note-' + groupName + ' btn-group">';
+        for (var i = 0, btnLength = groupButtons.length; i < btnLength; i++) {
+          // continue creating toolbar even if a button doesn't exist
+          if (!$.isFunction(tplButtonInfo[groupButtons[i]])) { continue; }
+          sToolbar += tplButtonInfo[groupButtons[i]](langInfo, options);
         }
         sToolbar += '</div>';
       }
@@ -4198,7 +4241,7 @@
         // Textarea: auto filling the code before form submit.
         if (dom.isTextarea($holder[0])) {
           $holder.closest('form').submit(function () {
-            $holder.html($holder.code());
+            $holder.val($holder.code());
           });
         }
       });
@@ -4237,7 +4280,7 @@
           }
           return isCodeview ? info.codable.val() : info.editable.html();
         }
-        return $holder.html();
+        return dom.isTextarea($holder[0]) ? $holder.val() : $holder.html();
       }
 
       // set the HTML contents of note

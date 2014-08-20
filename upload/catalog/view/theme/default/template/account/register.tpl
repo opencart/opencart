@@ -335,7 +335,7 @@
         </div>
         <?php } ?>
         <?php if ($custom_field['type'] == 'datetime') { ?>
-        <div id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
+        <div id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field order-order">
           <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
           <div class="col-sm-10">
             <div class="input-group datetime">
@@ -437,18 +437,26 @@ $('input[name=\'customer_group_id\']').on('change', function() {
 				}
 			}
 			
-			$('.custom-field').each(function(element) {
-				//sort_order = $(element).after(html);
 
-				//$(this).appendTo('.form-group:eq(' + sort_order + ')');
-			});
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 });
-
+			
+$('.custom-field').each(function(element) {
+	if (substr(0, 7).attr('id') == 'account') {
+		
+	}
+	
+	sort_order = $(element).after(html);
+	
+	//alert(sort_order);
+	
+	$(this).appendTo('.form-group:eq(' + sort_order + ')');
+});
+			
 $('input[name=\'customer_group_id\']:checked').trigger('change');
 //--></script>
 <script type="text/javascript"><!--

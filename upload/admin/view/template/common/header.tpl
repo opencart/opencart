@@ -15,8 +15,12 @@
 <link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />
 <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.js"></script>
 <link href="view/javascript/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
-<link href="view/javascript/summernote/summernote.css" type="text/css" rel="stylesheet" />
-<script src="view/javascript/summernote/summernote.min.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="view/javascript/wysiwyg/external/google-code-prettify/prettify.js"></script>
+<link href="view/javascript/wysiwyg/external/google-code-prettify/prettify.css" rel="stylesheet">
+<script type="text/javascript" src="view/javascript/wysiwyg/bootstrap-wysiwyg.js"></script>
+
+
 <script src="view/javascript/jquery/datetimepicker/moment.min.js" type="text/javascript"></script>
 <script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 <link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
@@ -37,7 +41,7 @@
 <header id="header" class="navbar navbar-static-top">
   <div class="navbar-header">
     <?php if ($logged) { ?>
-    <a type="button" id="button-menu" class="pull-left"><i class="fa fa-indent"></i></a>
+    <a type="button" id="button-menu" class="pull-left"><i class="fa fa-indent fa-lg"></i></a>
     <?php } ?>
     <a href="<?php echo $home; ?>" class="navbar-brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a></div>
   <?php if ($logged) { ?>

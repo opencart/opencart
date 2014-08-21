@@ -838,6 +838,19 @@ function addAddress() {
 
 	$('#address a[href=\'#tab-address' + address_row + '\']').tab('show');
 
+	$('.date').datetimepicker({
+		pickTime: false
+	});
+	
+	$('.datetime').datetimepicker({
+		pickDate: true,
+		pickTime: true
+	});
+	
+	$('.time').datetimepicker({
+		pickDate: false
+	});	
+
 	address_row++;
 }
 //--></script>
@@ -1103,5 +1116,18 @@ $('#content').delegate('button[id^=\'button-custom-field\'], button[id^=\'button
 		});
 	});
 });
+
+$('.date').datetimepicker({
+	pickTime: false
+});
+
+$('.datetime').datetimepicker({
+	pickDate: true,
+	pickTime: true
+});
+
+$('.time').datetimepicker({
+	pickDate: false
+});	
 //--></script>
 <?php echo $footer; ?>

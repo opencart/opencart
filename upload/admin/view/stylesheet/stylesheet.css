@@ -72,7 +72,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 }
 #header #button-menu + .navbar-brand {
-	padding: 10px 0px;
+	padding: 10px 10px 10px 10px;
 	margin-right: 10px;
 	height: auto;
 }
@@ -98,7 +98,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #button-menu {
 	padding: 10px 16px 9px 16px;
-	font-size: 21px;
 	line-height: 25px;
 	float: left;
 	display: inline-block;
@@ -170,7 +169,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	list-style: none;
 }
 #menu li a {
-	color: #777777;
+	color: #888888;
 	border-bottom: 1px solid #26333C;
 	text-shadow: 1px 1px 0px #000000;
 	text-decoration: none;

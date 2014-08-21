@@ -57,7 +57,7 @@
       </div>
     </div>
     <div class="table-responsive">
-      <table class="table table-bordered">
+      <table class="table table-striped table-hover">
         <thead>
           <tr>
             <td class="text-left"><?php echo $column_date_start; ?></td>
@@ -95,37 +95,37 @@
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
 	url = 'index.php?route=report/sale_shipping&token=<?php echo $token; ?>';
-	
+
 	var filter_date_start = $('input[name=\'filter_date_start\']').val();
-	
+
 	if (filter_date_start) {
 		url += '&filter_date_start=' + encodeURIComponent(filter_date_start);
 	}
 
 	var filter_date_end = $('input[name=\'filter_date_end\']').val();
-	
+
 	if (filter_date_end) {
 		url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
 	}
-		
+
 	var filter_group = $('select[name=\'filter_group\']').val();
-	
+
 	if (filter_group) {
 		url += '&filter_group=' + encodeURIComponent(filter_group);
 	}
-	
+
 	var filter_order_status_id = $('select[name=\'filter_order_status_id\']').val();
-	
+
 	if (filter_order_status_id != 0) {
 		url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
-	}	
+	}
 
 	location = url;
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

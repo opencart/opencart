@@ -280,7 +280,7 @@ class ControllerAccountReturn extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			unset($this->session->data['captcha']);
-			
+
 			$return_id = $this->model_account_return->addReturn($this->request->post);
 
 			// Add to activity log
@@ -607,7 +607,7 @@ class ControllerAccountReturn extends Controller {
 			$this->error['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email'])) {
+		if ((utf8_strlen($this->request->post['email']) > 96) || !filter_var($this->request->post['email'], FILTER_VALIDATE_EMAIL)) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 

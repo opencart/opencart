@@ -7,7 +7,7 @@
   </div>
   <div class="container-fluid">
     <div class="table-responsive">
-      <table class="table table-bordered">
+      <table class="table table-striped table-hover">
         <thead>
           <tr>
             <td class="text-left"><?php echo $column_customer; ?></td>

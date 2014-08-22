@@ -184,12 +184,10 @@ $('#product').delegate('.fa-minus-circle', 'click', function() {
 });
 
 function send(url) {
-	$('textarea[name=\'message\']').html(CKEDITOR.instances['input-message'].getData());
-	
 	$.ajax({
 		url: url,
 		type: 'post',
-		data: $('select, input, textarea'),		
+		data: $('#content select, #content input, #content textarea'),		
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-send').button('loading');	

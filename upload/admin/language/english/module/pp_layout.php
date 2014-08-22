@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']       = 'PayPal Express Checkout button';
+$_['heading_title']       = 'PayPal Express Checkout Button';
 
 // Text
 $_['text_module']         = 'Modules';
@@ -17,4 +17,4 @@ $_['entry_status']        = 'Status';
 $_['entry_sort_order']    = 'Sort Order';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify module PP Layout!';
+$_['error_permission']    = 'Warning: You do not have permission to modify module PP Layout!';

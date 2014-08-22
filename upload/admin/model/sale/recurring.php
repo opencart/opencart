@@ -1,6 +1,6 @@
 <?php
 class ModelSaleRecurring extends Model {
-	public function getTotalProfiles($data) {
+	public function getTotalRecurrings($data) {
 		$sql = "
 			SELECT COUNT(*) AS `recurring_count`
 			FROM `" . DB_PREFIX . "order_recurring` `or`
@@ -36,7 +36,7 @@ class ModelSaleRecurring extends Model {
 		return $result->row['recurring_count'];
 	}
 
-	public function getProfiles($data) {
+	public function getRecurrings($data) {
 		$sql = "
 			SELECT `or`.order_recurring_id, `or`.order_id, `or`.`status`, `or`.`date_added`, `or`.recurring_reference,
 			  CONCAT(`o`.`firstname`, ' ', `o`.`lastname`) AS `customer`
@@ -119,7 +119,7 @@ class ModelSaleRecurring extends Model {
 		return $recurrings;
 	}
 
-	public function getProfile($order_recurring_id) {
+	public function getRecurring($order_recurring_id) {
 		$recurring = array();
 
 		$result = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_recurring WHERE order_recurring_id = " . (int)$order_recurring_id)->row;
@@ -143,54 +143,43 @@ class ModelSaleRecurring extends Model {
 		return $recurring;
 	}
 
-	public function getProfileTransactions($order_recurring_id) {
+	public function getRecurringTransactions($order_recurring_id) {
 		$results =  $this->db->query("SELECT amount, type, date_added FROM " . DB_PREFIX . "order_recurring_transaction WHERE order_recurring_id = " . (int)$order_recurring_id . " ORDER BY date_added DESC")->rows;
 
 		$transactions = array();
 
 		foreach ($results as $result) {
-
 			switch ($result['type']) {
 				case 0:
 					$type = $this->language->get('text_transaction_date_added');
 					break;
-
 				case 1:
 					$type = $this->language->get('text_transaction_payment');
 					break;
-
 				case 2:
 					$type = $this->language->get('text_transaction_outstanding_payment');
 					break;
-
 				case 3:
 					$type = $this->language->get('text_transaction_skipped');
 					break;
-
 				case 4:
 					$type = $this->language->get('text_transaction_failed');
 					break;
-
 				case 5:
 					$type = $this->language->get('text_transaction_cancelled');
 					break;
-
 				case 6:
 					$type = $this->language->get('text_transaction_suspended');
 					break;
-
 				case 7:
 					$type = $this->language->get('text_transaction_suspended_failed');
 					break;
-
 				case 8:
 					$type = $this->language->get('text_transaction_outstanding_failed');
 					break;
-
 				case 9:
 					$type = $this->language->get('text_transaction_expired');
 					break;
-
 				default:
 					$type = '';
 					break;
@@ -211,27 +200,21 @@ class ModelSaleRecurring extends Model {
 			case 1:
 				$result = $this->language->get('text_status_inactive');
 				break;
-
 			case 2:
 				$result = $this->language->get('text_status_active');
 				break;
-
 			case 3:
 				$result = $this->language->get('text_status_suspended');
 				break;
-
 			case 4:
 				$result = $this->language->get('text_status_cancelled');
 				break;
-
 			case 5:
 				$result = $this->language->get('text_status_expired');
 				break;
-
 			case 6:
 				$result = $this->language->get('text_status_pending');
 				break;
-
 			default:
 				$result = '';
 				break;

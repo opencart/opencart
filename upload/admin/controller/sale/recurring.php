@@ -304,7 +304,7 @@ class ControllerSaleRecurring extends Controller {
 
 		$this->language->load('sale/recurring');
 
-		$order_recurring = $this->model_sale_recurring->getProfile($this->request->get['order_recurring_id']);
+		$order_recurring = $this->model_sale_recurring->getRecurring($this->request->get['order_recurring_id']);
 
 		if ($order_recurring) {
 			$order = $this->model_sale_order->getOrder($order_recurring['order_id']);
@@ -429,7 +429,7 @@ class ControllerSaleRecurring extends Controller {
 			}
 
 			$data['transactions'] = array();
-			$transactions = $this->model_sale_recurring->getProfileTransactions($order_recurring['order_recurring_id']);
+			$transactions = $this->model_sale_recurring->getRecurringTransactions($order_recurring['order_recurring_id']);
 
 			foreach ($transactions as $transaction) {
 				$data['transactions'][] = array(

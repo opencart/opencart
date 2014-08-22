@@ -58,7 +58,7 @@ $(document).ready(function() {
 	}
 
 	if (localStorage.getItem('column-left') == 'active') {
-		$('#button-menu i').replaceWith('<i class="fa fa-dedent"></i>');
+		$('#button-menu i').replaceWith('<i class="fa fa-dedent fa-lg"></i>');
 		
 		$('#column-left').addClass('active');
 		
@@ -78,7 +78,7 @@ $(document).ready(function() {
 		if ($('#column-left').hasClass('active')) {
 			localStorage.setItem('column-left', '');
 
-			$('#button-menu i').replaceWith('<i class="fa fa-indent"></i>');
+			$('#button-menu i').replaceWith('<i class="fa fa-indent fa-lg"></i>');
 
 			$('#column-left').removeClass('active');
 
@@ -87,7 +87,7 @@ $(document).ready(function() {
 		} else {
 			localStorage.setItem('column-left', 'active');
 
-			$('#button-menu i').replaceWith('<i class="fa fa-dedent"></i>');
+			$('#button-menu i').replaceWith('<i class="fa fa-dedent fa-lg"></i>');
 			
 			$('#column-left').addClass('active');
 

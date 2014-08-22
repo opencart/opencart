@@ -133,7 +133,7 @@
               <td class="text-left"><?php echo $order['date_added']; ?></td>
               <td class="text-left"><?php echo $order['date_modified']; ?></td>
               <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a> <a href="<?php echo $order['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
-                <button type="button" value="<?php echo $order['order_id']; ?>" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger"><i class="fa fa-trash-o"></i></button></td>
+                <a href="<?php echo $order['delete']; ?>" id="button-delete<?php echo $order['order_id']; ?>" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger"><i class="fa fa-trash-o"></i></a></td>
             </tr>
             <?php } ?>
             <?php } else { ?>
@@ -236,28 +236,11 @@ $('input[name^=\'selected\']').on('change', function() {
 
 $('input[name^=\'selected\']:first').trigger('change');
 
-$('#form-order button').on('click', function() {
-	var node = this;
+$('a[id^=\'button-delete\']').on('click', function(e) {
+	e.preventDefault();
 	
 	if (confirm('<?php echo $text_confirm; ?>')) {
-		$.ajax({
-			url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/order/delete&order_id=' + this.value,
-			dataType: 'html',
-			beforeSend: function() {
-				$(node).find('i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-				$(node).find('i').prop('disabled', true);
-			},	
-			complete: function() {
-				$(node).find('i').replaceWith('<i class="fa fa-trash-o"></i>');
-				$(node).find('i').prop('disabled', false);
-			},		
-			success: function(json) {
-				alert(json);
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
+		location = $(this).attr('href');
 	}
 });
 //--></script> 

@@ -8,7 +8,7 @@ class Cache {
 		if (file_exists($file)) {
 			require_once($file);
 
-			$class = 'Cache'. $driver;
+			$class = 'Cache' . $driver;
 
 			$this->cache = new $class($expire);
 		} else {

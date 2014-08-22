@@ -2256,8 +2256,7 @@ DROP TABLE IF EXISTS `oc_order_recurring`;
 CREATE TABLE `oc_order_recurring` (
   `order_recurring_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
-  `date_added` datetime NOT NULL,
-  `status` tinyint(4) NOT NULL,
+  `reference` varchar(255) NOT NULL,
   `product_id` int(11) NOT NULL,
   `product_name` varchar(255) NOT NULL,
   `product_quantity` int(11) NOT NULL,
@@ -2273,7 +2272,8 @@ CREATE TABLE `oc_order_recurring` (
   `trial_cycle` smallint(6) NOT NULL,
   `trial_duration` smallint(6) NOT NULL,
   `trial_price` decimal(10,4) NOT NULL,
-  `reference` varchar(255) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `date_added` datetime NOT NULL
   PRIMARY KEY (`order_recurring_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -2287,10 +2287,10 @@ DROP TABLE IF EXISTS `oc_order_recurring_transaction`;
 CREATE TABLE `oc_order_recurring_transaction` (
   `order_recurring_transaction_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_recurring_id` int(11) NOT NULL,
-  `date_added` datetime NOT NULL,
-  `amount` decimal(10,4) NOT NULL,
-  `type` varchar(255) NOT NULL,
   `reference` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `amount` decimal(10,4) NOT NULL,
+  `date_added` datetime NOT NULL,
   PRIMARY KEY (`order_recurring_transaction_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 

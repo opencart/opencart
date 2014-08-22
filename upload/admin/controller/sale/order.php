@@ -66,19 +66,12 @@ class ControllerSaleOrder extends Controller {
 				
 				$json = curl_exec($curl);
 				
-				echo $json;
-				
 				if (!$json) {
 					$this->error['warning'] = sprintf($this->language->get('error_curl'), curl_error($curl), curl_errno($curl));
 				} else {
 					$response = json_decode($json, true);
 				
 					curl_close($curl);
-					
-					if (isset($response['error'])) {
-						$this->error['warning'] = $response['error'];
-					}
-					
 				}
 			}
 		
@@ -102,8 +95,6 @@ class ControllerSaleOrder extends Controller {
 				
 				$json = curl_exec($curl);
 				
-				echo $json;
-				
 				if (!$json) {
 					$this->error['warning'] = sprintf($this->language->get('error_curl'), curl_error($curl), curl_errno($curl));
 				} else {
@@ -113,14 +104,14 @@ class ControllerSaleOrder extends Controller {
 					
 					if (isset($response['error'])) {
 						$this->error['warning'] = $response['error'];
-					}					
-					
-					
+					}										
 				}		
-				
-				
 			}
 		}
+		
+		if (isset($response['error'])) {
+			$this->error['warning'] = $response['error'];
+		}		
 		
 		if (isset($response['success'])) {
 			$this->session->data['success'] = $response['success'];

@@ -31,9 +31,9 @@ class ModelCatalogRecurring extends Model {
 	}
 
 	public function copyProfile($recurring_id) {
-		$data = $this->getProfile($recurring_id);
+		$data = $this->getRecurring($recurring_id);
 		
-		$data['recurring_description'] = $this->getProfileDescription($recurring_id);
+		$data['recurring_description'] = $this->getRecurringDescription($recurring_id);
 
 		foreach ($data['recurring_description'] as &$recurring_description) {
 			$recurring_description['name'] .= ' - 2';

@@ -24,10 +24,10 @@ class ControllerOpenbayEbayProfile extends Controller {
 			$data['success'] = '';
 		}
 
-		$data['insert']  = $this->url->link('openbay/ebay_profile/add', 'token=' . $this->session->data['token'], 'SSL');
-		$data['types']    = $this->model_openbay_ebay_profile->getTypes();
+		$data['insert'] = $this->url->link('openbay/ebay_profile/add', 'token=' . $this->session->data['token'], 'SSL');
+		$data['types'] = $this->model_openbay_ebay_profile->getTypes();
 		$data['profiles'] = $this->model_openbay_ebay_profile->getAll();
-		$data['token']    = $this->session->data['token'];
+		$data['token'] = $this->session->data['token'];
 
 		$data['breadcrumbs'] = array();
 
@@ -48,7 +48,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/ebay_profile/profileAll', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_heading'),
+			'text' => $this->language->get('heading_title'),
 		);
 
 		$data['header'] = $this->load->controller('common/header');
@@ -60,14 +60,12 @@ class ControllerOpenbayEbayProfile extends Controller {
 	}
 
 	public function add() {
-
 		$data = $this->load->language('openbay/ebay_profile');
 
 		$this->load->model('openbay/ebay_profile');
 
-		$data['page_title']   = $data['text_title_list_add'];
-		$data['btn_save']     = $this->url->link('openbay/ebay_profile/add', 'token=' . $this->session->data['token'], 'SSL');
-		$data['cancel']       = $this->url->link('openbay/ebay_profile/profileAll', 'token=' . $this->session->data['token'], 'SSL');
+		$data['btn_save'] = $this->url->link('openbay/ebay_profile/add', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->link('openbay/ebay_profile/profileall', 'token=' . $this->session->data['token'], 'SSL');
 
 		if (!isset($this->request->post['step1'])) {
 			if ($this->request->post && $this->profileValidate()) {
@@ -87,7 +85,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 
 		if (!$this->user->hasPermission('modify', 'openbay/ebay_profile')) {
 			$this->error['warning'] = $this->language->get('invalid_permission');
-		}else{
+		} else {
 			if (isset($this->request->get['ebay_profile_id'])) {
 				$this->model_openbay_ebay_profile->delete($this->request->get['ebay_profile_id']);
 			}
@@ -100,10 +98,6 @@ class ControllerOpenbayEbayProfile extends Controller {
 		$data = $this->load->language('openbay/ebay_profile');
 
 		$this->load->model('openbay/ebay_profile');
-
-		$data['page_title']   = $data['text_title_list_edit'];
-		$data['btn_save']     = $this->url->link('openbay/ebay_profile/edit', 'token=' . $this->session->data['token'], 'SSL');
-		$data['cancel']       = $this->url->link('openbay/ebay_profile/profileAll', 'token=' . $this->session->data['token'], 'SSL');
 
 		if ($this->request->post && $this->profileValidate()) {
 			$this->session->data['success'] = $data['text_updated'];
@@ -175,17 +169,17 @@ class ControllerOpenbayEbayProfile extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => 'OpenBay Pro',
+			'text' => $this->language->get('text_openbay'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => 'eBay',
+			'text' => $this->language->get('text_ebay'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/ebay_profile/profileAll', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => 'Profiles',
+			'text' => $this->language->get('heading_title')
 		);
 
 		if (isset($this->request->post['default'])) {
@@ -268,7 +262,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 			$data['html_international_calculated']		= $this->load->view('openbay/ebay_profile_shipping_international_calculated.tpl', $data);
 		}
 
-		$this->document->setTitle($data['page_title']);
+		$this->document->setTitle($data['heading_title']);
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');

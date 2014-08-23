@@ -11,7 +11,7 @@ class ModelOpenbayEbayProfile extends Model{
 	}
 
 	public function edit($id, $data) {
-	if (($data['default'] == 1) {
+		if ($data['default'] == 1) {
 			$this->clearDefault($data['type']);
 		}
 
@@ -21,37 +21,42 @@ class ModelOpenbayEbayProfile extends Model{
 	public function delete($id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_profile` WHERE `ebay_profile_id` = '" . (int)$id . "' LIMIT 1");
 
-if (f($this->db->countAffected() > 0) {
+		if ($this->db->countAffected() > 0) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
 
 	public function get($id) {
 		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_profile` WHERE `ebay_profile_id` = '" . (int)$id . "' LIMIT 1");
-if (if($qry->num_rows) {
+
+		if ($qry->num_rows) {
 			$row                = $qry->row;
-			$row['link_edit']   = HTTPS_SERVER . 'index.php?route=openbay/ebay_profile/edit&token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'];
-			$row['link_delete'] = HTTPS_SERVER . 'index.php?route=openbay/ebay_profile/delete&token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'];
+			$row['link_edit']   = $this->url->link('openbay/ebay_profile/edit', 'token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'], 'SSL');
+			$row['link_delete'] = $this->url->link('openbay/ebay_profile/delete', 'token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'], 'SSL');
 			$row['data']        = unserialize($row['data']);
 
 			return $row;
-		}else{
+		} else {
 			return false;
 		}
 	}
 
 	public function getAll($type = '') {
-		$type_sql = ''if (	if($type !== '') {
-			$type_sql = "WHERE `type` = '" . (int)$type . "'";
+		$sql = "SELECT * FROM `" . DB_PREFIX . "ebay_profile`";
+
+		if($type !== '') {
+			$sql .= " WHERE `type` = '" . (int)$type . "'";
 		}
 
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_profile`" . $type_sql)if (		if($qry->num_rows) {
+		$qry = $this->db->query($sql);
+
+		if($qry->num_rows) {
 			$profiles = array();
 			foreach ($qry->rows as $row) {
-				$row['link_edit']   = HTTPS_SERVER . 'index.php?route=openbay/ebay_profile/edit&token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'];
-				$row['link_delete'] = HTTPS_SERVER . 'index.php?route=openbay/ebay_profile/delete&token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'];
+				$row['link_edit']   = $this->url->link('openbay/ebay_profile/edit', 'token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'], 'SSL');
+				$row['link_delete'] = $this->url->link('openbay/ebay_profile/delete', 'token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'], 'SSL');
 				$row['data']        = !empty($row['data']) ? unserialize($row['data']) : array();
 				$profiles[]         = $row;
 			}
@@ -65,19 +70,19 @@ if (if($qry->num_rows) {
 	public function getTypes() {
 		$types = array(
 			0 => array(
-				'name'          => 'Shipping',
+				'name'          => $this->language->get('text_type_shipping'),
 				'template'      => 'openbay/ebay_profile_form_shipping.tpl'
 			),
 			1 => array(
-				'name'          => 'Returns',
+				'name'          => $this->language->get('text_type_returns'),
 				'template'      => 'openbay/ebay_profile_form_returns.tpl'
 			),
 			2 => array(
-				'name'          => 'Template &amp; gallery',
+				'name'          => $this->language->get('text_type_template'),
 				'template'      => 'openbay/ebay_profile_form_template.tpl'
 			),
 			3 => array(
-				'name'          => 'General settings',
+				'name'          => $this->language->get('text_type_general'),
 				'template'      => 'openbay/ebay_profile_form_generic.tpl'
 			)
 		);

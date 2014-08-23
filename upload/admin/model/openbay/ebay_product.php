@@ -72,8 +72,6 @@ class ModelOpenbayEbayProduct extends Model {
 	}
 
 	public function searchEbayCatalog($search, $category_id, $page = 1) {
-		if (!isset($data['page'])) { $page = 1; }else{ $page = $data['page']; }
-
 		$response = $this->openbay->ebay->call('listing/searchCatalog/', array('page' => (int)$page, 'categoryId' => $category_id, 'search' => $search));
 
 		return $response;

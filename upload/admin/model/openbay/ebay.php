@@ -305,7 +305,7 @@ class ModelOpenbayEbay extends Model{
 				//get the allocated stock - items that have been bought but not assigned to an order
 				if ($this->config->get('ebay_stock_allocate') == 0) {
 					$data[$row['ebay_item_id']]['allocated'] = $this->openbay->ebay->getAllocatedStock($row['product_id']);
-				}else{
+				} else {
 					$data[$row['ebay_item_id']]['allocated'] = 0;
 				}
 			}
@@ -350,7 +350,7 @@ class ModelOpenbayEbay extends Model{
 
 			if ($response['max_page'] == $page || count($unlinked) >= 5) {
 				break;
-			}else{
+			} else {
 				$page++;
 			}
 		}
@@ -376,7 +376,7 @@ class ModelOpenbayEbay extends Model{
 			foreach ($response as $key => $value) {
 				if (!in_array($key, $local)) {
 					$data['unlinked'][$key] = $value;
-				}else{
+				} else {
 					$data['linked'][$key] = $value;
 				}
 			}
@@ -393,7 +393,7 @@ class ModelOpenbayEbay extends Model{
 			$this->load->model('catalog/product');
 			$this->openbay->ebay->log('Updating eBay with new qty');
 			$this->openbay->ebay->productUpdateListen($data['pid'], $this->model_catalog_product->getProduct($data['pid']));
-		}else{
+		} else {
 			$this->openbay->ebay->log('Qty on eBay is the same as our stock, no update needed');
 			return array('msg' => 'ok', 'error' => false);
 		}
@@ -420,20 +420,20 @@ class ModelOpenbayEbay extends Model{
 								foreach ($qry3->rows as $row3) {
 									$cats[$row3['CategoryID']] = $lev1  . ' > ' . $row2['CategoryName']  . ' > ' . $row3['CategoryName'];
 								}
-							}else{
+							} else {
 								$cats[$row2['CategoryID']] = $lev1  . ' > ' . $row2['CategoryName'];
 							}
 						}
-					}else{
+					} else {
 						$cats[$row['CategoryID']] = $lev1;
 					}
 				}
 
 				return $cats;
-			}else{
+			} else {
 				return false;
 			}
-		}else{
+		} else {
 			return false;
 		}
 	}
@@ -445,7 +445,7 @@ class ModelOpenbayEbay extends Model{
 
 		if (empty($parent)) {
 			$cat_qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_category` WHERE `CategoryID` = `CategoryParentID`");
-		}else{
+		} else {
 			$cat_qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_category` WHERE `CategoryParentID` = '" . $parent . "'");
 		}
 
@@ -456,7 +456,7 @@ class ModelOpenbayEbay extends Model{
 			}
 			$json['items'] = $cat_qry->num_rows;
 
-		}else{
+		} else {
 			if (empty($parent)) {
 				$json['error'] = $this->language->get('error_category_sync');
 			}
@@ -502,7 +502,7 @@ class ModelOpenbayEbay extends Model{
 				$json[] = $row;
 			}
 			return $json;
-		}else{
+		} else {
 			return false;
 		}
 	}
@@ -512,15 +512,15 @@ class ModelOpenbayEbay extends Model{
 		return $qry->row['description'];
 	}
 
-	public function getEbayCategorySpecifics($catId) {
-		$response['data']   = $this->openbay->ebay->call('listing/getEbayCategorySpecifics/', array('id' => $catId));
+	public function getEbayCategorySpecifics($category_id) {
+		$response['data']   = $this->openbay->ebay->call('listing/getEbayCategorySpecifics/', array('id' => $category_id));
 		$response['error']  = $this->openbay->ebay->lasterror;
 		$response['msg']    = $this->openbay->ebay->lastmsg;
 		return $response;
 	}
 
-	public function getCategoryFeatures($catId) {
-		$response['data']   = $this->openbay->ebay->call('listing/getCategoryFeatures/', array('id' => $catId));
+	public function getCategoryFeatures($category_id) {
+		$response['data']   = $this->openbay->ebay->call('listing/getCategoryFeatures/', array('id' => $category_id));
 		$response['error']  = $this->openbay->ebay->lasterror;
 		$response['msg']    = $this->openbay->ebay->lastmsg;
 		return $response;
@@ -564,7 +564,7 @@ class ModelOpenbayEbay extends Model{
 	public function ebayVerifyAddItem($data, $options) {
 		if ($options == 'yes') {
 			$response['data'] = $this->openbay->ebay->call('listing/verifyFixedPrice/', $data);
-		}else{
+		} else {
 			$response['data'] = $this->openbay->ebay->call('listing/ebayVerifyAddItem/', $data);
 		}
 
@@ -578,7 +578,7 @@ class ModelOpenbayEbay extends Model{
 		if ($options == 'yes') {
 			$response = $this->openbay->ebay->call('listing/addFixedPrice/', $data);
 			$variant = 1;
-		}else{
+		} else {
 			$response = $this->openbay->ebay->call('listing/ebayAddItem/', $data);
 			$variant = 0;
 		}
@@ -593,7 +593,7 @@ class ModelOpenbayEbay extends Model{
 			$this->openbay->ebay->addReserve($data, $response['ItemID'], $variant);
 
 			$data2['data']['viewLink']  = html_entity_decode($this->config->get('ebay_itm_link') . $response['ItemID']);
-		}else{
+		} else {
 			$data2['error']             = false;
 			$data2['msg']               = 'ok';
 			$data2['data']['Failed']    = true;
@@ -602,23 +602,23 @@ class ModelOpenbayEbay extends Model{
 		return $data2;
 	}
 
-	public function logCategoryUsed($categoryId) {
+	public function logCategoryUsed($category_id) {
 		$breadcrumb = array();
-		$originalId = $categoryId;
+		$original_id = $category_id;
 		$stop       = false;
 		$i          = 0; //fallback to stop infinate loop
 		$err 		= false;
 
 		while($stop == false && $i < 10) {
-			$cat = $this->getCategoryStructure($categoryId);
+			$cat = $this->getCategoryStructure($category_id);
 
 			if (!empty($cat)) {
 				$breadcrumb[] = $cat['CategoryName'];
 
-				if ($cat['CategoryParentID'] == $categoryId) {
+				if ($cat['CategoryParentID'] == $category_id) {
 					$stop = true;
-				}else{
-					$categoryId = $cat['CategoryParentID'];
+				} else {
+					$category_id = $cat['CategoryParentID'];
 				}
 
 				$i++;
@@ -629,13 +629,13 @@ class ModelOpenbayEbay extends Model{
 		}
 
 		if ($err == false) {
-			$res = $this->db->query("SELECT `used` FROM `" . DB_PREFIX . "ebay_category_history` WHERE `CategoryID` = '" . $originalId . "' LIMIT 1");
+			$res = $this->db->query("SELECT `used` FROM `" . DB_PREFIX . "ebay_category_history` WHERE `CategoryID` = '" . $original_id . "' LIMIT 1");
 
 			if ($res->num_rows) {
 				$new = $res->row['used'] + 1;
-				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_category_history` SET `used` = '" . $new . "' WHERE `CategoryID` = '" . $originalId . "' LIMIT 1");
-			}else{
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_category_history` SET `CategoryID` = '" . $originalId . "', `breadcrumb` = '" .   $this->db->escape(implode(' > ', array_reverse($breadcrumb))) . "', `used` = '1'");
+				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_category_history` SET `used` = '" . $new . "' WHERE `CategoryID` = '" . $original_id . "' LIMIT 1");
+			} else {
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_category_history` SET `CategoryID` = '" . $original_id . "', `breadcrumb` = '" .   $this->db->escape(implode(' > ', array_reverse($breadcrumb))) . "', `used` = '1'");
 			}
 		}
 	}
@@ -647,12 +647,12 @@ class ModelOpenbayEbay extends Model{
 			if ($this->openbay->addonLoad('openstock')) {
 				$this->load->model('openstock/openstock');
 				$this->load->model('tool/image');
-				$variant        = $this->model_openstock_openstock->getProductOptionStocks((int)$id);
-			}else{
-				$variant        = 0;
+				$variant = $this->model_openstock_openstock->getProductOptionStocks((int)$id);
+			} else {
+				$variant = 0;
 			}
-		}else{
-			$variant        = 0;
+		} else {
+			$variant = 0;
 		}
 
 		return array(
@@ -698,7 +698,7 @@ class ModelOpenbayEbay extends Model{
 				'error'     => $this->openbay->ebay->lasterror,
 				'msg'       => $this->openbay->ebay->lastmsg
 			);
-		}else{
+		} else {
 			return array(
 				'error'     => $this->openbay->ebay->lasterror,
 				'msg'       => $this->openbay->ebay->lastmsg,
@@ -727,7 +727,7 @@ class ModelOpenbayEbay extends Model{
 
 			//finish the revise item call
 			return $this->openbay->ebay->call('listing/reviseItem/', $data);
-		}else{
+		} else {
 			$this->openbay->ebay->log('editSave() - variant item');
 
 			$variant_data = array();
@@ -786,7 +786,7 @@ class ModelOpenbayEbay extends Model{
 				$this->openbay->ebay->log('editSave() - Sending to API');
 				$response = $this->openbay->ebay->call('item/reviseVariants', $variant_data);
 				return $response;
-			}else{
+			} else {
 				$this->openbay->ebay->log('editSave() - Ending item');
 				$this->openbay->ebay->endItem($data['itemId']);
 			}

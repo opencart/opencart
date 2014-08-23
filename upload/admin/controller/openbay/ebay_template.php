@@ -83,7 +83,7 @@ class ControllerOpenbayEbayTemplate extends Controller {
 
 		if (!$this->user->hasPermission('modify', 'openbay/ebay_template')) {
 			$this->error['warning'] = $this->language->get('invalid_permission');
-		}else{
+		} else {
 			if (isset($this->request->get['template_id'])) {
 				$this->model_openbay_ebay_template->delete($this->request->get['template_id']);
 

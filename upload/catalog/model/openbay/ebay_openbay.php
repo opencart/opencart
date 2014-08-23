@@ -124,7 +124,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 				$this->openbay->ebay->log('Ignore unpaid orders');
 			}
 
-			if(($order->order->created >= $from || (isset($order->payment->date) && $order->payment->date >= $from)) && (isset($order->payment->date) || $this->config->get('ebay_import_unpaid') == 1) ){
+			if (($order->order->created >= $from || (isset($order->payment->date) && $order->payment->date >= $from)) && (isset($order->payment->date) || $this->config->get('ebay_import_unpaid') == 1)) {
 
 				$this->openbay->ebay->log('Creating new order');
 

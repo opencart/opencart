@@ -1,8 +1,8 @@
 <?php
 // Heading
-$_['heading_title']                     = 'Revise eBay listing';
-$_['text_openbay']                      = 'OpenBay Pro';
-$_['text_ebay']                         = 'eBay';
+$_['heading_title']					= 'Revise eBay listing';
+$_['text_openbay']					= 'OpenBay Pro';
+$_['text_ebay']						= 'eBay';
 
 // Text
 $_['text_ebay']                     = 'eBay';
@@ -25,7 +25,6 @@ $_['entry_price']					= 'Selling price (Includes any tax)';
 $_['entry_stock_store']				= 'Local stock';
 $_['entry_stock_listed']			= 'eBay stock';
 $_['entry_stock_reserve']			= 'Reserve level';
-
 $_['entry_stock_matrix_active']		= 'Stock matrix (active)';
 $_['entry_stock_matrix_inactive']	= 'Stock matrix (inactive)';
 

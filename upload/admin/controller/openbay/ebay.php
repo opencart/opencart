@@ -919,13 +919,13 @@ class ControllerOpenbayEbay extends Controller {
 
 		if (isset($this->request->get['linked_item_page'])){
 			$linked_item_page = (int)$this->request->get['linked_item_page'];
-		}else{
+		} else {
 			$linked_item_page = 1;
 		}
 
 		if (isset($this->request->get['linked_item_limit'])){
 			$linked_item_limit = (int)$this->request->get['linked_item_limit'];
-		}else{
+		} else {
 			$linked_item_limit = 100;
 		}
 
@@ -1143,7 +1143,7 @@ class ControllerOpenbayEbay extends Controller {
 					$option_reserve = $this->openbay->ebay->getReserve($this->request->get['product_id'], $item_id, $option['var']);
 					if ($option_reserve == false) {
 						$option['reserve'] = 0;
-					}else{
+					} else {
 						$option['reserve']  = $this->openbay->ebay->getReserve($this->request->get['product_id'], $item_id, $option['var']);
 					}
 
@@ -1186,7 +1186,7 @@ class ControllerOpenbayEbay extends Controller {
 					)
 				);
 
-			}else{
+			} else {
 				$variant = array('variant' => 0, 'data' => '');
 			}
 
@@ -1457,7 +1457,7 @@ class ControllerOpenbayEbay extends Controller {
 
 				if ($this->openbay->addonLoad('openstock')) {
 					$openstock = 1;
-				}else{
+				} else {
 					$openstock = 0;
 				}
 
@@ -1468,7 +1468,7 @@ class ControllerOpenbayEbay extends Controller {
 
 						if ($openstock == 1 && isset($prod['has_option']) && $prod['has_option'] == 1) {
 							$data['error_warning']['os'] = $this->language->get('text_error_variants');
-						}else{
+						} else {
 							if ($prod['quantity'] > 0) {
 								if ($prod['image'] && file_exists(DIR_IMAGE . $prod['image'])) {
 									$prod['image'] = $this->model_tool_image->resize($prod['image'], 80, 80);
@@ -1477,11 +1477,11 @@ class ControllerOpenbayEbay extends Controller {
 								}
 
 								$products[] = $prod;
-							}else{
+							} else {
 								$data['error_warning']['stock'] = $this->language->get('text_error_stock');
 							}
 						}
-					}else{
+					} else {
 						$data['error_warning']['exists'] = $this->language->get('text_exists');
 					}
 				}
@@ -1495,7 +1495,7 @@ class ControllerOpenbayEbay extends Controller {
 				if ($plan['plan']['listing_bulk'] == 1) {
 					if ($data['count'] == 0) {
 						$data['error_fail'][] = $this->language->get('text_error_no_product');
-					}else{
+					} else {
 						if (($plan['plan']['listing_limit'] == 0) || (($plan['usage']['items'] + $data['count']) <= $plan['plan']['listing_limit'])) {
 							if ($data['count'] > 5) {
 								$data['error_warning']['count'] = sprintf($this->language->get('text_error_count'), $data['count']);
@@ -1575,11 +1575,11 @@ class ControllerOpenbayEbay extends Controller {
 							}
 
 							$data['default'] = $product_info;
-						}else{
+						} else {
 							$data['error_fail']['plan'] = sprintf($this->language->get('text_item_limit'), $this->url->link('openbay/ebay/viewSubscription', 'token=' . $this->session->data['token'], 'SSL'));
 						}
 					}
-				}else{
+				} else {
 					$data['error_fail']['plan'] = sprintf($this->language->get('text_bulk_plan_error'), $this->url->link('openbay/ebay/viewSubscription', 'token=' . $this->session->data['token'], 'SSL'));
 				}
 
@@ -1592,7 +1592,7 @@ class ControllerOpenbayEbay extends Controller {
 				$data['footer'] = $this->load->controller('common/footer');
 
 				$this->response->setOutput($this->load->view('openbay/ebay_new_bulk.tpl', $data));
-			}else{
+			} else {
 				$this->load->language('openbay/ebay_newbulk');
 				$this->session->data['warning'] = $this->language->get('text_error_no_selection');
 				$this->response->redirect($this->url->link('extension/openbay/itemList&token=' . $this->session->data['token']));
@@ -1617,7 +1617,7 @@ class ControllerOpenbayEbay extends Controller {
 					if ($data['template'] != 'None') {
 						$template = $this->model_openbay_ebay_template->get($data['template']);
 						$data['template_html'] = (isset($template['html']) ? base64_encode($template['html']) : '');
-					}else{
+					} else {
 						$data['template_html'] = '';
 					}
 
@@ -1741,7 +1741,7 @@ class ControllerOpenbayEbay extends Controller {
 					$template = $this->model_openbay_ebay_template->get($profile_template['data']['ebay_template_id']);
 					$data['template_html'] = (isset($template['html']) ? base64_encode($template['html']) : '');
 					$data['template'] = $profile_template['data']['ebay_template_id'];
-				}else{
+				} else {
 					$data['template_html'] = '';
 					$data['template'] = '';
 				}
@@ -1834,7 +1834,7 @@ class ControllerOpenbayEbay extends Controller {
 			if ($data['template'] != 'None') {
 				$template = $this->model_openbay_ebay_template->get($data['template']);
 				$data['template_html'] = (isset($template['html']) ? base64_encode($template['html']) : '');
-			}else{
+			} else {
 				$data['template_html'] = '';
 			}
 
@@ -1952,7 +1952,7 @@ class ControllerOpenbayEbay extends Controller {
 					$template = $this->model_openbay_ebay_template->get($profile_template['data']['ebay_template_id']);
 					$data['template_html'] = (isset($template['html']) ? base64_encode($template['html']) : '');
 					$data['template'] = $profile_template['data']['ebay_template_id'];
-				}else{
+				} else {
 					$data['template_html'] = '';
 					$data['template'] = '';
 				}

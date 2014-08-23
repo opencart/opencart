@@ -335,13 +335,13 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 		if (isset($this->request->get['page'])){
 			$page = (int)$this->request->get['page'];
-		}else{
+		} else {
 			$page = 1;
 		}
 
 		if (isset($this->request->get['limit'])){
 			$limit = (int)$this->request->get['limit'];
-		}else{
+		} else {
 			$limit = 100;
 		}
 

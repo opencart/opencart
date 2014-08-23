@@ -1,9 +1,8 @@
 <?php
-//Headings
-$_['text_heading']              		= 'Profiles';
-$_['text_ebay']                 		= 'eBay';
-$_['text_openbay']              		= 'OpenBay Pro';
-$_['text_page_title']           		= 'OpenBay Pro for eBay';
+// Heading
+$_['heading_title']                     = 'Profiles';
+$_['text_openbay']                      = 'OpenBay Pro';
+$_['text_ebay']                         = 'eBay';
 
 //Buttons
 $_['text_btn_add']              		= 'Add profile';
@@ -13,14 +12,17 @@ $_['button_cancel']             		= 'Cancel';
 $_['text_btn_remove']           		= 'Remove';
 
 //General profile options
-$_['text_title_list']           		= 'Profiles';
-$_['text_title_list_add']       		= 'Add Profile';
-$_['text_title_list_edit']      		= 'Edit Profile';
 $_['text_profile_name']         		= 'Name';
 $_['text_profile_default']      		= 'Default';
 $_['text_profile_type']         		= 'Type';
 $_['text_profile_desc']         		= 'Description';
 $_['text_profile_action']       		= 'Action';
+
+// Profile types
+$_['text_type_shipping']       			= 'Shipping';
+$_['text_type_returns']       			= 'Returns';
+$_['text_type_template']       			= 'Template &amp; gallery';
+$_['text_type_general']       			= 'General settings';
 
 //Tabs
 $_['tab_shipping']         				= 'Shipping';

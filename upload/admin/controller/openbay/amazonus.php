@@ -867,13 +867,13 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		if (isset($this->request->get['linked_item_page'])){
 			$linked_item_page = (int)$this->request->get['linked_item_page'];
-		}else{
+		} else {
 			$linked_item_page = 1;
 		}
 
 		if (isset($this->request->get['linked_item_limit'])){
 			$linked_item_limit = (int)$this->request->get['linked_item_limit'];
-		}else{
+		} else {
 			$linked_item_limit = 25;
 		}
 

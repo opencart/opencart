@@ -316,26 +316,20 @@ class ModelOpenbayAmazon extends Model {
 
 	public function getProductErrors($product_id, $version = 2) {
 		if ($version == 3) {
-			$messageRow = $this->db->query("
-			SELECT `messages` FROM `" . DB_PREFIX . "amazon_product`
-			WHERE `product_id` = '" . (int)$product_id . "' AND `version` = 3")->row;
+			$message_row = $this->db->query("SELECT `messages` FROM `" . DB_PREFIX . "amazon_product` WHERE `product_id` = '" . (int)$product_id . "' AND `version` = 3")->row;
 
-			return json_decode($messageRow['messages']);
+			return json_decode($message_row['messages']);
 		}
-
 
 		$result = array();
 
-		$insertionRows = $this->db->query("
-			SELECT `sku`, `insertion_id` FROM `" . DB_PREFIX . "amazon_product`
-			WHERE `product_id` = '" . (int)$product_id . "' AND `version` = 2")->rows;
+		$insertion_rows = $this->db->query("SELECT `sku`, `insertion_id` FROM `" . DB_PREFIX . "amazon_product` WHERE `product_id` = '" . (int)$product_id . "' AND `version` = 2")->rows;
 
-		if (!empty($insertionRows)) {
-			foreach($insertionRows as $insertionRow) {
-				$errorRows = $this->db->query("
-					SELECT * FROM `" . DB_PREFIX . "amazon_product_error`
-					WHERE `sku` = '" . $this->db->escape($insertionRow['sku']) . "' AND `insertion_id` = '" . $this->db->escape($insertionRow['insertion_id']) . "'")->rows;
-				foreach($errorRows as $errorRow) {
+		if (!empty($insertion_rows)) {
+			foreach($insertion_rows as $insertion_row) {
+				$error_rows = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_product_error` WHERE `sku` = '" . $this->db->escape($insertion_row['sku']) . "' AND `insertion_id` = '" . $this->db->escape($insertion_row['insertion_id']) . "'")->rows;
+
+				foreach($error_rows as $errorRow) {
 					$result[] = $errorRow;
 				}
 			}
@@ -396,7 +390,7 @@ class ModelOpenbayAmazon extends Model {
 			ON `apl`.`product_id` = `p`.`product_id`";
 		if ($product_id != 'all') {
 			$query .= " WHERE `apl`.`product_id` = '" . (int)$product_id . "' AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
-		}else{
+		} else {
 			$query .= "WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 		}
 

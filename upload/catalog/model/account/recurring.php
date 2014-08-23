@@ -36,7 +36,7 @@ class ModelAccountRecurring extends Model {
 	public function getProfileByRef($ref) {
 		$recurring = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_recurring` WHERE `reference` = '".$this->db->escape($ref)."' LIMIT 1");
 
-		if($recurring->num_rows > 0) {
+		if ($recurring->num_rows > 0) {
 			return $recurring->row;
 		} else {
 			return false;

@@ -113,20 +113,20 @@ class ModelSaleRecurring extends Model {
 	public function getRecurring($order_recurring_id) {
 		$recurring = array();
 
-		$result = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_recurring WHERE order_recurring_id = " . (int)$order_recurring_id)->row;
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_recurring WHERE order_recurring_id = " . (int)$order_recurring_id);
 
-		if ($result) {
+		if ($query->num_rows) {
 			$recurring = array(
-				'order_recurring_id'    => $result['order_recurring_id'],
-				'order_id'              => $result['order_id'],
-				'reference'             => $result['reference'],
-				'recurring_id'          => $result['recurring_id'],
-				'recurring_name'        => $result['recurring_name'],
-				'recurring_description' => $result['recurring_description'],
-				'product_name'          => $result['product_name'],
-				'product_quantity'      => $result['product_quantity'],
-				'status'                => $this->getStatus($result['status']),
-				'status_id'             => $result['status']				
+				'order_recurring_id'    => $query->row['order_recurring_id'],
+				'order_id'              => $query->row['order_id'],
+				'reference'             => $query->row['reference'],
+				'recurring_id'          => $query->row['recurring_id'],
+				'recurring_name'        => $query->row['recurring_name'],
+				'recurring_description' => $query->row['recurring_description'],
+				'product_name'          => $query->row['product_name'],
+				'product_quantity'      => $query->row['product_quantity'],
+				'status'                => $this->getStatus($query->row['status']),
+				'status_id'             => $query->row['status']				
 			);
 		}
 
@@ -134,11 +134,11 @@ class ModelSaleRecurring extends Model {
 	}
 
 	public function getRecurringTransactions($order_recurring_id) {
-		$results =  $this->db->query("SELECT amount, type, date_added FROM " . DB_PREFIX . "order_recurring_transaction WHERE order_recurring_id = " . (int)$order_recurring_id . " ORDER BY date_added DESC")->rows;
-
 		$transactions = array();
+		
+		$query = $this->db->query("SELECT amount, type, date_added FROM " . DB_PREFIX . "order_recurring_transaction WHERE order_recurring_id = " . (int)$order_recurring_id . " ORDER BY date_added DESC")->rows;
 
-		foreach ($results as $result) {
+		foreach ($query->rows as $result) {
 			switch ($result['type']) {
 				case 0:
 					$type = $this->language->get('text_transaction_date_added');

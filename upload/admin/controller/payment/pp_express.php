@@ -62,23 +62,23 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['entry_reversed_status'] = $this->language->get('entry_reversed_status');
 		$data['entry_voided_status'] = $this->language->get('entry_voided_status');
 		$data['entry_currency'] = $this->language->get('entry_currency');
-		
+
 		$data['entry_recurring_cancellation'] = $this->language->get('entry_recurring_cancellation');
 		$data['entry_display_checkout'] = $this->language->get('entry_display_checkout');
 		$data['entry_allow_notes'] = $this->language->get('entry_allow_notes');
 		$data['entry_logo'] = $this->language->get('entry_logo');
-		
+
 		$data['entry_border_colour'] = $this->language->get('entry_border_colour');
 		$data['entry_header_colour'] = $this->language->get('entry_header_colour');
 		$data['entry_page_colour'] = $this->language->get('entry_page_colour');
-		
+
 		$data['help_total'] = $this->language->get('help_total');
 		$data['help_encryption'] = $this->language->get('help_encryption');
 		$data['help_ipn'] = $this->language->get('help_ipn');
 		$data['help_currency'] = $this->language->get('help_currency');
 		$data['help_logo'] = $this->language->get('help_logo');
 		$data['help_colour'] = $this->language->get('help_colour');
-		
+
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_order_status'] = $this->language->get('tab_order_status');
 		$data['tab_api_details'] = $this->language->get('tab_api_details');
@@ -608,7 +608,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 		if ($refunded != 0.00) {
 			$data['refund_available'] = number_format($data['amount_original'] + $refunded, 2);
-			$data['attention'] = $this->language->get('text_current_refunds').': '.$data['refund_available'];
+			$data['attention'] = $this->language->get('text_current_refunds') . ': ' . $data['refund_available'];
 		} else {
 			$data['refund_available'] = '';
 			$data['attention'] = '';

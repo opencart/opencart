@@ -135,7 +135,7 @@ class ModelShippingUps extends Model {
 			$xml .= '		<Shipper>';
 			$xml .= '			<Address>';
 			$xml .= '				<City>' . $this->config->get('ups_city') . '</City>';
-			$xml .= '				<StateProvinceCode>'. $this->config->get('ups_state') . '</StateProvinceCode>';
+			$xml .= '				<StateProvinceCode>' . $this->config->get('ups_state') . '</StateProvinceCode>';
 			$xml .= '				<CountryCode>' . $this->config->get('ups_country') . '</CountryCode>';
 			$xml .= '				<PostalCode>' . $this->config->get('ups_postcode') . '</PostalCode>';
 			$xml .= '			</Address>';
@@ -156,7 +156,7 @@ class ModelShippingUps extends Model {
 			$xml .= '		<ShipFrom>';
 			$xml .= '			<Address>';
 			$xml .= '				<City>' . $this->config->get('ups_city') . '</City>';
-			$xml .= '				<StateProvinceCode>'. $this->config->get('ups_state') . '</StateProvinceCode>';
+			$xml .= '				<StateProvinceCode>' . $this->config->get('ups_state') . '</StateProvinceCode>';
 			$xml .= '				<CountryCode>' . $this->config->get('ups_country') . '</CountryCode>';
 			$xml .= '				<PostalCode>' . $this->config->get('ups_postcode') . '</PostalCode>';
 			$xml .= '			</Address>';

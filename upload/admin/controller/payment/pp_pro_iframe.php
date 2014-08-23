@@ -62,7 +62,7 @@ class ControllerPaymentPPProIframe extends Controller {
 		$data['tab_settings'] = $this->language->get('tab_settings');
 		$data['tab_order_status'] = $this->language->get('tab_order_status');
 		$data['tab_checkout_customisation'] = $this->language->get('tab_checkout_customisation');
-		
+
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
@@ -305,7 +305,7 @@ class ControllerPaymentPPProIframe extends Controller {
 
 		if ($refunded != 0.00) {
 			$data['refund_available'] = number_format($data['amount_original'] + $refunded, 2);
-			$data['attention'] = $this->language->get('text_current_refunds').': '.$data['refund_available'];
+			$data['attention'] = $this->language->get('text_current_refunds') . ': ' . $data['refund_available'];
 		} else {
 			$data['refund_available'] = '';
 			$data['attention'] = '';

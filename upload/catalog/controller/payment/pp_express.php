@@ -221,7 +221,7 @@ class ControllerPaymentPPExpress extends Controller {
 				}
 
 				if (isset($result['PAYMENTREQUEST_0_SHIPTOSTATE'])) {
- 					$returned_shipping_zone = $result['PAYMENTREQUEST_0_SHIPTOSTATE'];
+					$returned_shipping_zone = $result['PAYMENTREQUEST_0_SHIPTOSTATE'];
 				} else {
 					$returned_shipping_zone = '';
 				}

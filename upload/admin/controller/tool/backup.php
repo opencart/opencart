@@ -39,10 +39,10 @@ class ControllerToolBackup extends Controller {
 		$data['button_restore'] = $this->language->get('button_restore');
 
 		if (isset($this->session->data['error'])) {
-    		$data['error_warning'] = $this->session->data['error'];
+			$data['error_warning'] = $this->session->data['error'];
 
 			unset($this->session->data['error']);
- 		} elseif (isset($this->error['warning'])) {
+		} elseif (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
@@ -56,17 +56,17 @@ class ControllerToolBackup extends Controller {
 			$data['success'] = '';
 		}
 
-  		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 
 		$data['restore'] = $this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL');
 
@@ -93,7 +93,7 @@ class ControllerToolBackup extends Controller {
 			$this->response->addheader('Expires: 0');
 			$this->response->addheader('Content-Description: File Transfer');
 			$this->response->addheader('Content-Type: application/octet-stream');
-			$this->response->addheader('Content-Disposition: attachment; filename=' . date('Y-m-d_H-i-s', time()).'_backup.sql');
+			$this->response->addheader('Content-Disposition: attachment; filename=' . date('Y-m-d_H-i-s', time()) . '_backup.sql');
 			$this->response->addheader('Content-Transfer-Encoding: binary');
 
 			$this->load->model('tool/backup');

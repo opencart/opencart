@@ -507,14 +507,14 @@ class ModelOpenbayEbayOpenbay extends Model{
 
 		$data['totals'][0] = array(
 			'code'          => 'sub_total',
-			'title'         => $totals_language['lang_subtotal'],
+			'title'         => $totals_language['text_total_sub'],
 			'value'         => number_format((double)$total_net, 4, '.', ''),
 			'sort_order'    => '1'
 		);
 
 		$data['totals'][1] = array(
 			'code'          => 'shipping',
-			'title'         => $totals_language['lang_shipping'],
+			'title'         => $totals_language['text_total_shipping'],
 			'value'         => number_format((double)$shipping_net, 4, '.', ''),
 			'sort_order'    => '3'
 		);
@@ -522,7 +522,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 		if ($discount_net != 0.00) {
 			$data['totals'][2] = array(
 				'code'          => 'coupon',
-				'title'         => $totals_language['lang_discount'],
+				'title'         => $totals_language['text_total_discount'],
 				'value'         => number_format((double)$discount_net, 4, '.', ''),
 				'sort_order'    => '4'
 			);
@@ -530,14 +530,14 @@ class ModelOpenbayEbayOpenbay extends Model{
 
 		$data['totals'][3] = array(
 			'code'          => 'tax',
-			'title'         => $totals_language['lang_tax'],
+			'title'         => $totals_language['text_total_tax'],
 			'value'         => number_format((double)$tax, 3, '.', ''),
 			'sort_order'    => '5'
 		);
 
 		$data['totals'][4] = array(
 			'code'          => 'total',
-			'title'         => $totals_language['lang_total'],
+			'title'         => $totals_language['text_total'],
 			'value'         => $totals,
 			'sort_order'    => '6'
 		);

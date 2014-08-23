@@ -8,9 +8,9 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $text_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
       </div>
-      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_page_title; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <div class="alert alert-info" id="form-loading">
@@ -20,7 +20,7 @@
       <div class="alert alert-danger" id="form-error" style="display:none;">
         <div class="row">
           <div class="col-sm-8"><?php echo $text_error_loading; ?></div>
-          <div class="col-sm-4 text-right"><a onclick="load();" class="btn btn-primary"><i class="fa fa-refresh"></i> <?php echo $text_retry; ?></a></div>
+          <div class="col-sm-4 text-right"><a onclick="load();" class="btn btn-primary"><i class="fa fa-refresh"></i> <?php echo $button_retry; ?></a></div>
         </div>
       </div>
 
@@ -31,7 +31,7 @@
         <form method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
           <input type="hidden" name="itemId" value="" id="itemId" />
           <div class="form-group">
-            <label class="col-sm-2 control-label"><?php echo $text_tbl_title; ?></label>
+            <label class="col-sm-2 control-label" for="title"><?php echo $entry_title; ?></label>
             <div class="col-sm-10">
               <input type="text" name="title" value="" id="title" class="form-control" />
             </div>
@@ -40,48 +40,48 @@
             <input type="hidden" name="qty_local" value="0" id="qty_local" />
             <input type="hidden" name="qty_ebay" value="0" id="qty_ebay" />
             <input type="hidden" name="variant" value="0" />
-            <label class="col-sm-2 control-label"><?php echo $text_tbl_price; ?></label>
+            <label class="col-sm-2 control-label" for="price"><?php echo $entry_price; ?></label>
             <div class="col-sm-2">
               <input type="text" name="price" value="" id="price" class="form-control" />
             </div>
           </div>
           <div class="form-group stdMatrix">
-            <label class="col-sm-2 control-label"><?php echo $text_tbl_qty_instock; ?></label>
+            <label class="col-sm-2 control-label" for="qty-instock"><?php echo $entry_stock_store; ?></label>
             <div class="col-sm-2">
-              <input type="text" name="qty_instock" id="qty_instock" class="form-control" disabled="disabled" />
-              <span class="help-block"><?php echo $text_tbl_qty_instock_help; ?></span>
+              <input type="text" name="qty_instock" id="qty-instock" class="form-control" disabled="disabled" />
+              <span class="help-block"><?php echo $help_stock_store; ?></span>
             </div>
           </div>
           <div class="form-group stdMatrix">
-            <label class="col-sm-2 control-label"><?php echo $text_tbl_qty_listed; ?></label>
+            <label class="col-sm-2 control-label" for="qty-listed"><?php echo $entry_stock_listed; ?></label>
             <div class="col-sm-2">
-              <input type="text" name="qty_listed" id="qty_listed" class="form-control" disabled="disabled" />
-              <span class="help-block"><?php echo $text_tbl_qty_listed_help; ?></span>
+              <input type="text" name="qty_listed" id="qty-listed" class="form-control" disabled="disabled" />
+              <span class="help-block"><?php echo $help_stock_listed; ?></span>
             </div>
           </div>
           <div class="form-group stdMatrix">
-            <label class="col-sm-2 control-label"><?php echo $text_tbl_qty_reserve; ?></label>
+            <label class="col-sm-2 control-label"><?php echo $entry_stock_reserve; ?></label>
             <div class="col-sm-2">
               <input type="text" name="qty_reserve" value="0" id="qty_reserve" class="form-control" onkeyup="updateReserveMessage();" />
-              <span class="help-block"><?php echo $text_tbl_qty_reserve_help; ?></span>
+              <span class="help-block"><?php echo $help_stock_reserve; ?></span>
             </div>
           </div>
           <div class="form-group" id="variantMatrix">
-            <label class="col-sm-2 control-label"><?php echo $text_stock_matrix_active; ?></label>
+            <label class="col-sm-2 control-label"><?php echo $entry_stock_matrix_active; ?></label>
             <div class="col-sm-10">
               <table class="table">
                 <thead>
                 <tr>
-                  <td class="text-center"><?php echo $text_stock_col_code; ?></td>
-                  <td class="text-center"><?php echo $text_stock_col_qty_total; ?></td>
-                  <td class="text-center"><?php echo $text_stock_col_listed; ?></td>
-                  <td class="text-center"><?php echo $text_stock_col_limit; ?></td>
-                  <td class="text-left"><?php echo $text_stock_col_comb; ?></td>
-                  <td class="text-center"><?php echo $text_stock_col_price; ?></td>
-                  <td class="text-center"><?php echo $text_stock_col_active; ?></td>
+                  <td class="text-center"><?php echo $column_sku; ?></td>
+                  <td class="text-center"><?php echo $column_stock_total; ?></td>
+                  <td class="text-center"><?php echo $column_stock_listed; ?></td>
+                  <td class="text-center"><?php echo $column_stock_reserve; ?></td>
+                  <td class="text-left"><?php echo $column_combination; ?></td>
+                  <td class="text-center"><?php echo $column_price; ?></td>
+                  <td class="text-center"><?php echo $column_status; ?></td>
                 </tr>
                 </thead>
-                <tbody id="stdMatrixTbl">
+                <tbody id="matrix-active">
                   <input type="hidden" name="variant" value="1" />
                   <input type="hidden" name="optGroupArray" value="" id="optGroupArray" />
                   <input type="hidden" name="optGroupRelArray" value="" id="optGroupRelArray" />
@@ -90,20 +90,20 @@
             </div>
           </div>
           <div class="form-group" id="variantMatrixInactive" style="display:none;">
-            <label class="col-sm-2 control-label"><?php echo $text_stock_matrix_inactive; ?></label>
+            <label class="col-sm-2 control-label"><?php echo $entry_stock_matrix_inactive; ?></label>
             <div class="col-sm-10">
               <table class="table">
                 <thead>
                   <tr>
-                    <th class="text-center"><?php echo $text_stock_col_code; ?></th>
-                    <th class="text-center"><?php echo $text_stock_col_qty_total; ?></th>
-                    <th class="text-center"><?php echo $text_stock_col_limit; ?></th>
-                    <th class="text-left"><?php echo $text_stock_col_comb; ?></th>
-                    <th class="text-center"><?php echo $text_stock_col_price; ?></th>
-                    <th class="text-center"><?php echo $text_stock_col_add; ?></th>
+                    <th class="text-center"><?php echo $column_sku; ?></th>
+                    <th class="text-center"><?php echo $column_stock_total; ?></th>
+                    <th class="text-center"><?php echo $column_stock_reserve; ?></th>
+                    <th class="text-left"><?php echo $column_combination; ?></th>
+                    <th class="text-center"><?php echo $column_price; ?></th>
+                    <th class="text-center"><?php echo $column_add; ?></th>
                   </tr>
                 </thead>
-                <tbody id="stdMatrixInactiveTbl"></tbody>
+                <tbody id="matrix-inactive"></tbody>
               </table>
             </div>
           </div>
@@ -112,9 +112,9 @@
         <div class="well">
           <div class="row">
             <div class="col-sm-12 text-right">
-              <a onclick="endItem();" id="btn_end_item" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $text_end; ?></a>
-              <a onclick="removeLink();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $text_remove; ?></a>
-              <a href="<?php echo $view_link; ?>" class="btn btn-primary" target="_BLANK"><?php echo $text_view; ?></a>
+              <a onclick="endItem();" id="btn-end-item" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_end; ?></a>
+              <a onclick="removeLink();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></a>
+              <a href="<?php echo $view_link; ?>" class="btn btn-primary" target="_BLANK"><?php echo $button_listing; ?></a>
               <a id="button-save" class="btn btn-primary"><i class="fa fa-save"></i> <?php echo $button_save; ?></a>
             </div>
           </div>
@@ -130,7 +130,7 @@
         var local   = parseInt($('#qty_local').val());
 
         if (reserve > local){
-            alert('<?php echo $text_error_reserve_size; ?>');
+            alert('<?php echo $error_reserve; ?>');
             $('#qty_reserve').val(local);
         }
     }
@@ -149,8 +149,8 @@
                 if (data.error == false){
                     if (data.data.listing.status == 0){
                         $('#form').hide();
-                        $('#btn_end_item').hide();
-                        $('#error_box').html('<p><?php echo $text_error_ended; ?></p>').fadeIn('slow');
+                        $('#btn-end-item').hide();
+                        $('#error_box').html('<p><?php echo $error_ended; ?></p>').fadeIn('slow');
                     }else{
                         $('#title').val(data.data.listing.title);
                         $('#itemId').val(data.data.listing.itemId);
@@ -166,7 +166,7 @@
                             $.each(data.data.variant.data.options, function( k, v ) {
                                 html = '';
 
-                                $('#stdMatrixTbl').append('<input type="hidden" name="opt['+i+'][sku]" value="'+v.ebay.SKU+'" />');
+                                $('#matrix-active').append('<input type="hidden" name="opt['+i+'][sku]" value="'+v.ebay.SKU+'" />');
 
                                 html +='<tr>';
                                 html +='<input type="hidden" name="varPriceExCount" class="varPriceExCount" value="'+i+'" />';
@@ -179,7 +179,7 @@
                                 html +='<td class="text-left"><input type="hidden" name="opt['+i+'][active]" value="0" /><input type="checkbox" name="opt['+i+'][active]" value="1" checked="checked" /></td>';
                                 html +='</tr>';
 
-                                $('#stdMatrixTbl').append(html);
+                                $('#matrix-active').append(html);
 
                                 i++;
                             });
@@ -188,7 +188,7 @@
                                 $('#variantMatrixInactive').show();
 
                                 $.each(data.data.variant.data.optionsinactive, function( k, v ) {
-                                    $('#stdMatrixTbl').append('<input type="hidden" name="opt['+i+'][sku]" value="'+v.local.var+'" />');
+                                    $('#matrix-active').append('<input type="hidden" name="opt['+i+'][sku]" value="'+v.local.var+'" />');
                                     html = '';
 
                                     html +='<tr>';
@@ -201,7 +201,7 @@
                                     html +='<td class="text-left"><input type="hidden" name="opt['+i+'][active]" value="0" /><input type="checkbox" name="opt['+i+'][active]" value="1" /></td>';
                                     html +='</tr>';
 
-                                    $('#stdMatrixInactiveTbl').append(html);
+                                    $('#matrix-inactive').append(html);
 
                                     i++;
                                 });
@@ -211,9 +211,9 @@
                             $('#variantMatrix').remove();
 
                             $('#price').val(data.data.listing.price);
-                            $('#qty_instock').val(data.data.stock.quantity);
+                            $('#qty-instock').val(data.data.stock.quantity);
                             $('#qty_local').val(data.data.stock.quantity);
-                            $('#qty_listed').val(data.data.listing.qty);
+                            $('#qty-listed').val(data.data.listing.qty);
                             $('#qty_ebay').val(data.data.listing.qty);
                             $('#qty_reserve').val(data.data.reserve);
                         }

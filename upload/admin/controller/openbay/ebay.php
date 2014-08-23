@@ -757,7 +757,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$data = $this->load->language('openbay/ebay_import');
 
-		$this->document->setTitle($this->language->get('text_heading'));
+		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['breadcrumbs'] = array();
@@ -779,7 +779,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/ebay/viewItemImport', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_heading'),
+			'text' => $this->language->get('heading_title'),
 		);
 
 		$data['return'] = $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL');
@@ -1057,7 +1057,7 @@ class ControllerOpenbayEbay extends Controller {
 				$this->load->model('openbay/ebay');
 				$this->load->model('openbay/ebay_product');
 
-				$this->document->setTitle($data['text_page_title']);
+				$this->document->setTitle($data['heading_title']);
 				$this->document->addScript('view/javascript/openbay/faq.js');
 
 				$data['action']       = $this->url->link('openbay/ebay/create', 'token=' . $this->session->data['token'], 'SSL');
@@ -1075,7 +1075,7 @@ class ControllerOpenbayEbay extends Controller {
 
 				$data['breadcrumbs'][] = array(
 					'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-					'text' => $this->language->get('text_title'),
+					'text' => $this->language->get('text_openbay'),
 				);
 
 				$data['breadcrumbs'][] = array(
@@ -1085,7 +1085,7 @@ class ControllerOpenbayEbay extends Controller {
 
 				$data['breadcrumbs'][] = array(
 					'href' => $this->url->link('openbay/ebay/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'], 'SSL'),
-					'text' => $this->language->get('text_pageaction'),
+					'text' => $this->language->get('heading_title'),
 				);
 
 				$data['header'] = $this->load->controller('common/header');

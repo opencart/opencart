@@ -8,7 +8,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $text_btn_return; ?>" class="btn"><i class="fa fa-reply"></i></a>
+        <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $button_back; ?>" class="btn"><i class="fa fa-reply"></i></a>
       </div>
       <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_heading; ?></h1>
     </div>
@@ -25,7 +25,7 @@
         </form>
       <?php }else{ ?>
         <div class="alert alert-danger">
-          <i class="fa fa-exclamation-circle"></i> <?php echo $text_error_validation; ?>
+          <i class="fa fa-exclamation-circle"></i> <?php echo $error_validation; ?>
         </div>
       <?php } ?>
     </div>

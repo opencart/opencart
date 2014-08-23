@@ -6,7 +6,6 @@ $_['text_title']                    = 'Stock updates';
 $_['text_openbay']                  = 'OpenBay Pro';
 $_['text_amazon']                 	= 'Amazon EU';
 $_['text_my_account']               = 'My account';
-$_['text_btn_return']               = 'Cancel';
 
 //Table columns
 $_['text_ref']                      = 'Ref';

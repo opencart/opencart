@@ -5,7 +5,6 @@ $_['text_ebay']                 = 'eBay';
 $_['text_complete']             = 'Complete';
 $_['text_failed']               = 'Failed to load';
 $_['text_heading']              = 'Syncronise';
-$_['text_btn_return']           = 'Return';
 $_['text_sync_desc']            = 'Sync your store with the latest available shipping and categories options from eBay, this data is only for the options when listing an item to eBay - it will not import categories to your store etc.';
 $_['text_sync_cats_lbl']        = 'Get main eBay categories';
 $_['text_sync_cats_lbl_help']   = 'This does not import any categories to your store!';

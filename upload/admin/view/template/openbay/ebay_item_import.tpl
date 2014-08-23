@@ -8,9 +8,9 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $text_btn_return; ?>" class="btn"><i class="fa fa-reply"></i></a>
+        <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $button_back; ?>" class="btn"><i class="fa fa-reply"></i></a>
       </div>
-      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_heading; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <?php if ($validation === true) { ?>
@@ -23,7 +23,7 @@
 
         <?php if ($maintenance == 1){ ?>
           <div class="alert alert-danger">
-            <i class="fa fa-exclamation-circle"></i> <?php echo $text_maintenance_fail; ?>
+            <i class="fa fa-exclamation-circle"></i> <?php echo $error_maintenance; ?>
           </div>
         <?php } ?>
 
@@ -37,33 +37,33 @@
         </div>
         <form id="form-ebay-import" class="form-horizontal">
           <div class="form-group">
-            <label class="col-sm-2 control-label"><?php echo $text_import_categories; ?></label>
+            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_import_categories; ?>"><?php echo $entry_import_categories; ?></span></label>
             <div class="col-sm-10">
               <input type="checkbox" name="import_categories" id="import_categories" value="1" />
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label"><?php echo $text_sync_item_description; ?></label>
+            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_import_description; ?>"><?php echo $entry_import_description; ?></span></label>
             <div class="col-sm-10">
-              <input type="checkbox" name="import_description" id="import_description" value="1" />
+              <input type="checkbox" name="import_description" id="import-description" value="1" />
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label"><?php echo $text_import_item_advanced; ?></label>
+            <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_import_item_advanced; ?>"><?php echo $entry_import_item_advanced; ?></span></label>
             <div class="col-sm-10">
               <input type="checkbox" name="import_advanced" id="import_advanced" value="1" />
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="button-import"><?php echo $text_import_ebay_items; ?></label>
+            <label class="col-sm-2 control-label" for="button-import"><?php echo $entry_import; ?></label>
             <div class="col-sm-10">
-              <a class="btn btn-primary" id="button-import"><?php echo $text_import; ?></a>
+              <a class="btn btn-primary" id="button-import"><?php echo $button_import; ?></a>
             </div>
           </div>
         </form>
       <?php }else{ ?>
         <div class="alert alert-danger">
-          <i class="fa fa-exclamation-circle"></i> <?php echo $text_error_validation; ?>
+          <i class="fa fa-exclamation-circle"></i> <?php echo $error_validation; ?>
         </div>
       <?php } ?>
     </div>
@@ -72,11 +72,11 @@
 
 <script type="text/javascript"><!--
   $('#button-import').bind('click', function() {
-    var answer = confirm("<?php echo $text_ajax_import_confirm;?>");
+    var answer = confirm("<?php echo $text_import_confirm;?>");
 
     if (answer) {
       var note_import = 0;
-      var import_description = $('#import_description:checked').val();
+      var import_description = $('#import-description:checked').val();
       var import_advanced = $('#import_advanced:checked').val();
       var import_categories = $('#import_categories:checked').val();
       if (import_description == undefined){ import_description = 0; }else{ import_description = 1; }
@@ -92,10 +92,10 @@
         dataType: 'json',
         success: function(json) {
           $('#button-import').empty().removeClass('btn-primary').addClass('btn-success').html('<?php echo $text_complete; ?>');
-          alert('<?php echo $text_ajax_import_notify; ?>');
+          alert('<?php echo $text_import_notify; ?>');
         },
         error: function (xhr, ajaxOptions, thrownError) {
-          $('#button-import').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>').removeAttr('disabled');
+          $('#button-import').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $error_import; ?>').removeAttr('disabled');
           if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
         }
       });

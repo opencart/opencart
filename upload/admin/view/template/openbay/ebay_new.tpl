@@ -388,7 +388,7 @@
                               <table class="list m0">
                                   <thead>
                                       <tr>
-                                          <td class="center"><?php echo $text_stock_col_qty_total; ?></td>
+                                          <td class="center"><?php echo $column_stock_total; ?></td>
                                           <td class="center"><?php echo $text_stock_col_qty; ?></td>
                                           <td class="center"><?php echo $text_stock_col_qty_reserve; ?></td>
                                           <td class="left"><?php echo $text_stock_col_comb; ?></td>
@@ -465,7 +465,7 @@
                 <div class="col-sm-10">
                   <input type="text" name="qty[0]" id="qty_0" value="<?php echo $product['quantity']; ?>" class="form-control" onkeyup="updateReserveMessage('0', '<?php echo $product['quantity']; ?>');" />
                   <span class="help-block"><?php echo $text_qty_help; ?></span>
-                  <span class="help-block"><?php echo $text_stock_col_qty_total; ?>: <?php echo $product['quantity']; ?><br/><span id="qty_reserve_0">0</span> <?php echo $text_stock_reserved; ?></span>
+                  <span class="help-block"><?php echo $column_stock_total; ?>: <?php echo $product['quantity']; ?><br/><span id="qty_reserve_0">0</span> <?php echo $text_stock_reserved; ?></span>
                 </div>
               </div>
               <div class="form-group">

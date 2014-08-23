@@ -9,16 +9,15 @@ $_['text_unlinked_items']           = 'Unlinked items';
 
 // Buttons
 $_['text_btn_resync']               = 'Re-sync';
-$_['text_btn_return']               = 'Return';
 $_['text_btn_edit']                 = 'Edit';
 $_['text_btn_check_unlinked']       = 'Check unlinked items';
 $_['text_btn_remove_link']          = 'Remove link';
 
 // Errors & alerts
-$_['text_error_validation']         = 'You need to register for your API token and enable the module.';
+$_['error_validation']         = 'You need to register for your API token and enable the module.';
 $_['text_alert_stock_local']        = 'Your eBay listing will be updated with your local stock levels!';
 $_['text_ajax_error_listings']      = 'No linked products found';
-$_['text_ajax_load_error']          = 'Sorry, could not get a response. Try later.';
+$_['error_ajax_load']          = 'Sorry, could not get a response. Try later.';
 $_['text_ajax_error_link']          = 'The product link is not value';
 $_['text_ajax_error_link_no_sk']    = 'A link cannot be created for an out of stock item. End the item manually on eBay.';
 $_['text_ajax_loaded_ok']           = 'Items have been loaded ok';

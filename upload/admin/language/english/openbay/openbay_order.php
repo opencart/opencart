@@ -15,7 +15,6 @@ $_['text_other']                = 'Other';
 $_['text_refund_reason']        = 'Refund reason';
 $_['text_refund_message']       = 'Refund message';
 $_['text_update']               = 'Update';
-$_['text_cancel']               = 'Cancel';
 $_['text_e_ajax_1']             = 'A play order is missing a refund message!';
 $_['text_e_ajax_2']             = 'A play order is missing tracking info!';
 $_['text_e_ajax_3']             = 'An Amazon order is missing an "Other Carrier" entry!';

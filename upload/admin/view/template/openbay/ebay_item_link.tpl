@@ -200,10 +200,10 @@
             }
           },
           failure: function() {
-              $('#errorBox').text('<?php echo $text_ajax_load_error; ?>').fadeIn();
+              $('#errorBox').text('<?php echo $error_ajax_load; ?>').fadeIn();
           },
           error: function() {
-              $('#errorBox').text('<?php echo $text_ajax_load_error; ?>').fadeIn();
+              $('#errorBox').text('<?php echo $error_ajax_load; ?>').fadeIn();
           }
       });
   }
@@ -253,11 +253,11 @@
               },
               failure: function() {
                   $('#text-buttons-'+item_id).html(button_old);
-                  alert('<?php echo $text_ajax_load_error; ?>');
+                  alert('<?php echo $error_ajax_load; ?>');
               },
               error: function() {
                   $('#text-buttons-'+item_id).html(button_old);
-                  alert('<?php echo $text_ajax_load_error; ?>');
+                  alert('<?php echo $error_ajax_load; ?>');
               }
           });
       }

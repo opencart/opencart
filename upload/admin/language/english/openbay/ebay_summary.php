@@ -2,11 +2,10 @@
 $_['text_heading']              = 'eBay summary';
 $_['text_openbay']              = 'OpenBay Pro';
 $_['text_ebay']                 = 'eBay';
-$_['text_btn_return']           = 'Return';
 $_['text_use_desc']             = 'This is your eBay account summary page. It is a quick snapshot of any limits on your account along with your DSR selling performance.';
 $_['text_load']                 = 'Refresh';
-$_['text_error_validation']     = 'You need to register for your API token and enable the module.';
-$_['text_ajax_load_error']      = 'Sorry, connection to the server failed';
+$_['error_validation']     = 'You need to register for your API token and enable the module.';
+$_['error_ajax_load']      = 'Sorry, connection to the server failed';
 $_['text_ebay_limit_head']      = 'Your eBay account has selling limits!';
 $_['text_ebay_limit_t1']        = 'You can sell';
 $_['text_ebay_limit_t2']        = 'more items (this is the total amount of items, not individual listings) to the value of';

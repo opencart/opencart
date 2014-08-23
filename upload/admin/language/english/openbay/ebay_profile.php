@@ -10,7 +10,6 @@ $_['text_btn_add']              		= 'Add profile';
 $_['text_btn_edit']             		= 'Edit';
 $_['text_btn_delete']           		= 'Delete';
 $_['button_cancel']             		= 'Cancel';
-$_['text_btn_return']           		= 'Return';
 $_['text_btn_remove']           		= 'Remove';
 
 //General profile options

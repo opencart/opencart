@@ -1,39 +1,49 @@
 <?php
-$_['text_title']                    = 'OpenBay Pro';
-$_['text_page_title']               = 'Revise eBay listing';
-$_['text_home']                     = 'Home';
+// Heading
+$_['heading_title']                     = 'Revise eBay listing';
+$_['text_openbay']                      = 'OpenBay Pro';
+$_['text_ebay']                         = 'eBay';
+
+// Text
 $_['text_ebay']                     = 'eBay';
-$_['text_pageaction']               = 'Revise listing';
-$_['text_view']                     = 'View listing';
-$_['text_remove']                   = 'Remove link';
-$_['text_end']                      = 'End listing';
-$_['text_cancel']                   = 'Cancel';
+$_['text_revise']               	= 'Revise listing';
 $_['text_loading']                  = 'Getting item information from eBay';
-$_['text_retry']                    = 'Retry';
 $_['text_error_loading']            = 'There was an error getting the information from eBay';
 $_['text_saved']                    = 'Listing has been saved';
-$_['text_tbl_title']                = 'Title';
-$_['text_tbl_price']                = 'Selling price (Includes any tax)';
-$_['text_tbl_qty_instock']          = 'Local stock';
-$_['text_tbl_qty_instock_help']     = 'This is the level of stock on in OpenCart';
-$_['text_tbl_qty_listed']           = 'eBay stock';
-$_['text_tbl_qty_listed_help']      = 'This is the current level of stock on eBay';
-$_['text_tbl_qty_reserve']          = 'Reserve level';
-$_['text_tbl_qty_reserve_help']     = 'This is the maximum level of stock on eBay (0 = no reserve limit)';
 $_['text_alert_removed']            = 'The listing has been unlinked';
 $_['text_alert_ended']              = 'The listing has been ended on eBay';
-$_['text_confirm']                  = 'Are you sure?';
 
-$_['text_stock_matrix_active']      = 'Stock matrix (active)';
-$_['text_stock_matrix_inactive']    = 'Stock matrix (inactive)';
-$_['text_stock_col_code']           = 'Var code / SKU';
-$_['text_stock_col_listed']         = 'Listed';
-$_['text_stock_col_limit']          = 'Reserve';
-$_['text_stock_col_qty_total']      = 'In stock';
-$_['text_stock_col_price']          = 'Price';
-$_['text_stock_col_active']         = 'Active';
-$_['text_stock_col_add']            = 'Add';
-$_['text_stock_col_add_help']       = 'Must be active in OpenCart';
-$_['text_stock_col_comb']           = 'Combination';
-$_['text_error_ended']              = 'The linked listing has ended, you are unable to edit it. You should remove the link.';
-$_['text_error_reserve_size']       = 'You cannot set the reserve higher than the local stock';
+// Buttons
+$_['button_view']					= 'View listing';
+$_['button_remove']					= 'Remove link';
+$_['button_end']                    = 'End listing';
+$_['button_retry']					= 'Retry';
+
+// Entry
+$_['entry_title']					= 'Title';
+$_['entry_price']					= 'Selling price (Includes any tax)';
+$_['entry_stock_store']				= 'Local stock';
+$_['entry_stock_listed']			= 'eBay stock';
+$_['entry_stock_reserve']			= 'Reserve level';
+
+$_['entry_stock_matrix_active']		= 'Stock matrix (active)';
+$_['entry_stock_matrix_inactive']	= 'Stock matrix (inactive)';
+
+// Column
+$_['column_sku']					= 'Var code / SKU';
+$_['column_stock_listed']			= 'Listed';
+$_['column_stock_reserve']			= 'Reserve';
+$_['column_stock_total']			= 'In stock';
+$_['column_price']					= 'Price';
+$_['column_status']					= 'Active';
+$_['column_add']					= 'Add';
+$_['column_combination']			= 'Combination';
+
+// Help
+$_['help_stock_store']				= 'This is the level of stock on in OpenCart';
+$_['help_stock_listed']				= 'This is the current level of stock on eBay';
+$_['help_stock_reserve']			= 'This is the maximum level of stock on eBay (0 = no reserve limit)';
+
+// Error
+$_['error_ended']					= 'The linked listing has ended, you are unable to edit it. You should remove the link.';
+$_['error_reserve']					= 'You cannot set the reserve higher than the local stock';

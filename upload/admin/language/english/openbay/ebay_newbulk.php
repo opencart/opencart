@@ -5,7 +5,6 @@ $_['text_ebay']               		= 'eBay';
 $_['text_openbay']               	= 'Openbay Pro';
 
 //Buttons
-$_['text_cancel']                   = 'Cancel';
 $_['text_none']                     = 'None';
 $_['text_preview']                  = 'Preview';
 $_['text_add']                      = 'Add';

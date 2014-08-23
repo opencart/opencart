@@ -2,7 +2,6 @@
 $_['heading_title']        		= 'Etsy listings';
 $_['text_openbay']              = 'OpenBay Pro';
 $_['text_etsy']                 = 'Etsy';
-$_['text_no_results']           = 'No results found';
 $_['text_link_saved']           = 'Item has been linked';
 
 $_['text_activate']         	= 'Activate';

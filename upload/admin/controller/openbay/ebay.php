@@ -83,7 +83,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
 			$this->model_setting_setting->editSetting('openbay', $this->request->post);
-			$this->session->data['success'] = $this->language->get('text_success_settings');
+			$this->session->data['success'] = $this->language->get('text_success');
 			$this->response->redirect($this->url->link('openbay/ebay&token=' . $this->session->data['token']));
 		}
 

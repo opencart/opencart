@@ -14,4 +14,3 @@ $_['text_actions_column']           = 'Action';
 $_['text_uploaded_alert']           = 'Saved listing(s) uploaded!';
 $_['text_delete_confirm']           = 'Are you sure?';
 $_['text_complete']           		= 'Listings uploaded';
-$_['text_no_results']           	= 'No saved listings';

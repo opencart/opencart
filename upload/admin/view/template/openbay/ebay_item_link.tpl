@@ -63,7 +63,7 @@
             <th class="text-center"><?php echo $text_column_allocated; ?></th>
             <th class="text-center"><?php echo $text_column_ebay_stock; ?></th>
             <th class="text-center"><?php echo $text_column_variants; ?></th>
-            <th class="text-center"><?php echo $text_column_action; ?></th>
+            <th class="text-center"><?php echo $column_action; ?></th>
           </tr>
         </thead>
         <tbody id="ebay-listings">
@@ -94,8 +94,8 @@
               <th class="text-center"><?php echo $text_column_stock_reserve; ?></th>
               <th class="text-center"><?php echo $text_column_ebay_stock; ?></th>
               <th class="text-center"><?php echo $text_column_variants; ?></th>
-              <th class="text-center"><?php echo $text_column_status; ?></th>
-              <th class="text-center"><?php echo $text_column_action; ?></th>
+              <th class="text-center"><?php echo $column_status; ?></th>
+              <th class="text-center"><?php echo $column_action; ?></th>
             </tr>
           </thead>
           <tr>
@@ -156,11 +156,11 @@
                 var store_qty       = $('#store-qty-'+key).val();
                 var reserve_qty     = $('#reserve-qty-'+key).val();
                 var html_inj        = '';
-  
+
                 if (val.variants == 0) {
                   $('#text-qty-'+key).text(val.qty);
                   $('#ebay-qty-'+key).val(val.qty);
-  
+
                   if (val.status == 1) {
                     if (val.qty == store_qty || val.qty == reserve_qty) {
                       $('#text-status-'+key).text('OK');
@@ -184,9 +184,9 @@
                     });
                     html_inj += '<br />';
                   });
-  
+
                   $('#text-qty-'+key).html(html_inj);
-  
+
                   if (val.status == 0) {
                     $('#text-status-'+key).text('<?php echo $text_listing_ended; ?>');
                     $('#row-'+key+' > td').css('background-color', '#FFD4D4');
@@ -194,7 +194,7 @@
                   }
                 }
               });
-  
+
               $('#checking-linked-items').hide();
               $('#show-linked-items').show();
             }
@@ -221,13 +221,13 @@
         }
       });
   }
-  
+
   function updateLink(item_id, qty, product_id, store_qty, reserve_qty) {
       var r = confirm("<?php echo $text_alert_stock_local; ?>");
       var button_old = $('#text-buttons-'+item_id).html();
-  
+
       $('#text-buttons-'+item_id).html('<p class="text-center"><i class="fa fa-cog fa-lg fa-spin"></i></p>');
-  
+
       if (r == true) {
           $.ajax({
               type: 'GET',
@@ -262,23 +262,23 @@
           });
       }
   }
-  
+
   function saveListingLink(id) {
       var product_id      = $('#l-'+id+'-pid').val();
       var qty             = $('#l-'+id+'-qty-input').val();
       var ebayqty         = $('#l-'+id+'-qtyebayinput').val();
       var variants        = $('#l-'+id+'-variants').val();
-  
+
       if (product_id === '') {
           alert('<?php echo $text_ajax_error_link; ?>');
           return false;
       }
-  
+
       if (qty < 1) {
           alert('<?php echo $text_ajax_error_link_no_sk; ?>');
           return false;
       }
-  
+
       $.ajax({
           url: 'index.php?route=openbay/ebay/saveItemLink&token=<?php echo $token; ?>&pid='+product_id+'&itemId='+id+'&qty='+qty+'&ebayqty='+ebayqty+'&variants='+variants,
           type: 'post',
@@ -295,7 +295,7 @@
           }
       });
   }
-  
+
   function getProductStock(id, element_id) {
       $.ajax({
           type:'GET',
@@ -320,10 +320,10 @@
           }
       });
   }
-  
+
   $('#check-unlinked-items').bind('click', function() {
     var unlinked_page = $('#unlinked-page').val();
-  
+
     $.ajax({
       url: 'index.php?route=openbay/ebay/loadUnlinked&token=<?php echo $token; ?>&page='+unlinked_page,
       type: 'POST',
@@ -339,7 +339,7 @@
           $('#ebay-listings').append('<tr><td colspan="7"><p><?php echo $text_ajax_error_listings; ?></p></td></tr>');
         } else {
           var html_inj;
-  
+
           $.each (json.data.items, function(key, val) {
             html_inj = '';
             html_inj += '<tr class="listing" id="row'+key+'">';
@@ -351,7 +351,7 @@
             html_inj += '<td class="text-left">'+key+'<input type="hidden" id="l-'+key+'_val" val="'+key+'" /></td>';
             html_inj += '<td class="text-left">'+val.name+'</td>';
             html_inj += '<td class="text-left"><input type="text" class="product-search form-control" placeholder="<?php echo $text_column_product_auto; ?>" id="l-'+key+'" /><input type="hidden" id="l-'+key+'-pid" /></td>';
-  
+
             if (val.variants == 0) {
                 html_inj += '<td class="text-center"><span id="l-'+key+'-qty"></span><input type="hidden" id="l-'+key+'-qtyinput" /></td>';
                 html_inj += '<td class="text-center"><span id="l-'+key+'-allocated"></span><input type="hidden" id="l-'+key+'-allocatedinput" /><input type="hidden" id="l-'+key+'-subtractinput" /></td>';
@@ -375,13 +375,13 @@
             }
             html_inj += '<td class="text-center"><a class="btn btn-primary" style="display:none;" onclick="saveListingLink('+key+'); return false;" id="l-'+key+'-save-button"><span><?php echo $button_save; ?></span></a></td>';
             html_inj += '</tr>';
-  
+
             $('#ebay-listings').append(html_inj);
           });
         }
-  
+
         $('#ebay-listings').show();
-  
+
         if (json.data.more_pages == 1) {
           $('#check-unlinked-items').empty().html('<?php echo $text_btn_check_unlinked; ?>').removeAttr('disabled');
         } else {
@@ -391,7 +391,7 @@
         if (json.data.break == 1) {
           $('#check-unlinked-items').before('<div class="alert alert-warning"><?php echo $text_limit_reached; ?></div>');
         }
-  
+
         $('#unlinked-page').val(json.data.next_page);
       },
       error: function (xhr, ajaxOptions, thrownError) {

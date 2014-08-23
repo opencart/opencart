@@ -16,13 +16,13 @@ class ModelOpenbayOpenbay extends Model {
 		$data['rootpath'] = $data['openbay_ftp_rootpath'];
 
 		if (empty($data['user'])) {
-			return array('connection' => false, 'msg' => $this->language->get('update_error_username'));
+			return array('connection' => false, 'msg' => $this->language->get('error_username'));
 		}
 		if (empty($data['pw'])) {
-			return array('connection' => false, 'msg' => $this->language->get('update_error_password'));
+			return array('connection' => false, 'msg' => $this->language->get('error_password'));
 		}
 		if (empty($data['server'])) {
-			return array('connection' => false, 'msg' => $this->language->get('update_error_server'));
+			return array('connection' => false, 'msg' => $this->language->get('error_server'));
 		}
 
 		$connection = @ftp_connect($data['server']);
@@ -60,19 +60,19 @@ class ModelOpenbayOpenbay extends Model {
 				ftp_close($connection);
 
 				if ($folder_error_admin == true) {
-					return array('connection' => false, 'msg' => $this->language->get('update_okcon_noadmin'));
+					return array('connection' => false, 'msg' => $this->language->get('error_no_admin'));
 				} else {
 					if ($folder_error == true) {
-						return array('connection' => false, 'msg' => $this->language->get('update_okcon_nofiles'), 'dir' => json_encode($directory_list));
+						return array('connection' => false, 'msg' => $this->language->get('error_no_files'), 'dir' => json_encode($directory_list));
 					} else {
-						return array('connection' => true, 'msg' => $this->language->get('update_okcon'));
+						return array('connection' => true, 'msg' => $this->language->get('text_connection_ok'));
 					}
 				}
 			} else {
-				return array('connection' => false, 'msg' => $this->language->get('update_failed_user'));
+				return array('connection' => false, 'msg' => $this->language->get('error_ftp_login'));
 			}
 		} else {
-			return array('connection' => false, 'msg' => $this->language->get('update_failed_connect'));
+			return array('connection' => false, 'msg' => $this->language->get('error_ftp_connect'));
 		}
 	}
 
@@ -97,16 +97,16 @@ class ModelOpenbayOpenbay extends Model {
 		$data['beta'] = ((isset($data['openbay_ftp_beta']) && $data['openbay_ftp_beta'] == 1) ? 1 : 0);
 
 		if (empty($data['user'])) {
-			return array('connection' => false, 'msg' => $this->language->get('update_error_username'));
+			return array('connection' => false, 'msg' => $this->language->get('error_username'));
 		}
 		if (empty($data['pw'])) {
-			return array('connection' => false, 'msg' => $this->language->get('update_error_password'));
+			return array('connection' => false, 'msg' => $this->language->get('error_password'));
 		}
 		if (empty($data['server'])) {
-			return array('connection' => false, 'msg' => $this->language->get('update_error_server'));
+			return array('connection' => false, 'msg' => $this->language->get('error_server'));
 		}
 		if (empty($data['adminDir'])) {
-			return array('connection' => false, 'msg' => $this->language->get('update_error_admindir'));
+			return array('connection' => false, 'msg' => $this->language->get('error_admin'));
 		}
 
 		$connection = @ftp_connect($data['server']);
@@ -286,12 +286,12 @@ class ModelOpenbayOpenbay extends Model {
 
 				$this->writeUpdateLog($updatelog . "\n\n\nErrors:\n" . $output);
 
-				return array('connection' => true, 'msg' => sprintf($this->language->get('update_success'), $filesUpdate['version']), 'version' => $filesUpdate['version']);
+				return array('connection' => true, 'msg' => sprintf($this->language->get('text_updated'), $filesUpdate['version']), 'version' => $filesUpdate['version']);
 			} else {
-				return array('connection' => false, 'msg' => $this->language->get('update_failed_user'));
+				return array('connection' => false, 'msg' => $this->language->get('error_ftp_login'));
 			}
 		} else {
-			return array('connection' => false, 'msg' => $this->language->get('update_failed_connect'));
+			return array('connection' => false, 'msg' => $this->language->get('error_ftp_connect'));
 		}
 	}
 

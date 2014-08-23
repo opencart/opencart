@@ -26,8 +26,8 @@
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <td class="text-left"><?php echo $text_column_name; ?></td>
-            <td class="text-center"><?php echo $text_column_action; ?></td>
+            <td class="text-left"><?php echo $column_name; ?></td>
+            <td class="text-center"><?php echo $column_action; ?></td>
           </tr>
         </thead>
         <tbody>

@@ -26,7 +26,6 @@ $_['text_collectible_very_good'] = 'Collectible - Very Good';
 $_['text_collectible_good'] = 'Collectible - Good';
 $_['text_collectible_acceptable'] = 'Collectible - Acceptable';
 $_['text_refurbished'] = 'Refurbished';
-$_['text_no_results'] = 'No products found';
 
 $_['column_name'] = 'Name';
 $_['column_image'] = 'Image';

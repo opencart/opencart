@@ -30,9 +30,9 @@
               <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <td class="text-left" width="60%"><?php echo $text_column_name; ?></td>
-                  <td class="text-center" width="20%"><?php echo $text_column_status; ?></td>
-                  <td class="text-right" width="20%"><?php echo $text_column_action; ?></td>
+                  <td class="text-left" width="60%"><?php echo $column_name; ?></td>
+                  <td class="text-center" width="20%"><?php echo $column_status; ?></td>
+                  <td class="text-right" width="20%"><?php echo $column_action; ?></td>
                 </tr>
                 </thead>
                 <tbody>
@@ -133,7 +133,7 @@
         <div class="col-md-6" style="padding-left:10px;">
           <div id="openbay-version" class="alert alert-info text-left">
             <div id="openbay-version-loading">
-              <i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_checking_version; ?>
+              <i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_version_check; ?>
             </div>
           </div>
           <div id="openbay-notification" class="alert alert-info text-left">
@@ -150,7 +150,7 @@
   function getVersion() {
     var version = '<?php echo $openbay_version; ?>';
 
-    $('#openbay-version').empty().html('<div id="openbay-version-loading"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_checking_version; ?></div>');
+    $('#openbay-version').empty().html('<div id="openbay-version-loading"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_version_check; ?></div>');
 
     setTimeout(function () {
       $.ajax({
@@ -161,13 +161,13 @@
           $('#openbay-version-loading').hide();
 
           if (version < json.version) {
-            $('#openbay-version').removeClass('attention').addClass('alert-warning').append('<i class="fa fa-warning"></i> <?php echo $text_version_old_1; ?> v.' + version + ', <?php echo $text_version_old_2; ?> v.' + json.version);
+            $('#openbay-version').removeClass('attention').addClass('alert-warning').append('<i class="fa fa-warning"></i> <?php echo $text_version_current; ?> v.' + version + ', <?php echo $text_version_available; ?> v.' + json.version);
           } else {
-            $('#openbay-version').removeClass('attention').addClass('alert-success').append('<i class="fa fa-check"></i> <?php echo $text_latest; ?> (v.' + version + ')');
+            $('#openbay-version').removeClass('attention').addClass('alert-success').append('<i class="fa fa-check"></i> <?php echo $text_version_latest; ?> (v.' + version + ')');
           }
         },
         failure: function () {
-          $('#openbay-version').html('<?php echo $error_failed_to_load; ?><strong><span onclick="getVersion();"><?php echo $button_retry; ?></span></strong>');
+          $('#openbay-version').html('<?php echo $error_failed; ?><strong><span onclick="getVersion();"><?php echo $button_retry; ?></span></strong>');
         },
         error: function (xhr, ajaxOptions, thrownError) {
           if (xhr.status != 0) {
@@ -179,7 +179,7 @@
   }
 
   function getNotifications() {
-    $('#openbay-notification').empty().html('<div id="openbay-loading"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_checking_messages; ?></div>');
+    $('#openbay-notification').empty().html('<div id="openbay-loading"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_getting_messages; ?></div>');
 
     setTimeout(function () {
       $.ajax({

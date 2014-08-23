@@ -173,7 +173,6 @@ $_['error_stock'] = 'You cannot list an item with less than 1 item in stock';
 $_['error_sku'] = 'You must enter an SKU for the item';
 $_['error_price'] = 'You must enter a price for the item';
 $_['error_sending_products'] = 'Could not send products for listing. Please contact OpenBay Pro support';
-$_['text_no_results'] = 'No results found';
 $_['error_no_products_selected'] = 'No products were selected for listing';
 $_['error_not_searched'] = 'Search for matching items before you try to list. Items must be matched against an Amazon catalog item';
 

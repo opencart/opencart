@@ -26,9 +26,7 @@ $_['text_collectible_acceptable'] = 'Collectible - Acceptable';
 $_['text_refurbished'] = 'Refurbished';
 $_['text_product_sent'] = 'Product was successfully sent to Amazon US.';
 $_['text_product_not_sent'] = 'Product was not sent to Amazon US. Reason: %s';
-$_['text_no_results'] = 'No results found';
 $_['text_not_in_catalog'] = 'Or, if its not in the catalog&nbsp;&nbsp;&nbsp;';
-$_['text_no_results'] = 'No saved listings';
 
 //Table columns
 $_['column_image'] = 'Image';

@@ -1,8 +1,8 @@
 <div id="openbay-info">
-  <div class="alert alert-warning"><?php echo $text_ajax_ebay_shipped; ?></div>
+  <div class="alert alert-warning"><?php echo $text_marketplace_shipped; ?></div>
 
   <div class="form-group">
-    <label class="col-sm-2 control-label" for="carrier-id"><?php echo $text_ajax_courier; ?></label>
+    <label class="col-sm-2 control-label" for="carrier-id"><?php echo $entry_courier; ?></label>
     <div class="col-sm-10">
       <select name="carrier_id" id="carrier-id" class="form-control openbay-data">
         <?php foreach($carriers as $carrier){ ?>

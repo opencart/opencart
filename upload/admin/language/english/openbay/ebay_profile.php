@@ -17,7 +17,6 @@ $_['text_btn_remove']           		= 'Remove';
 $_['text_title_list']           		= 'Profiles';
 $_['text_title_list_add']       		= 'Add Profile';
 $_['text_title_list_edit']      		= 'Edit Profile';
-$_['text_no_results']           		= 'No profiles found';
 $_['text_profile_name']         		= 'Name';
 $_['text_profile_default']      		= 'Default';
 $_['text_profile_type']         		= 'Type';

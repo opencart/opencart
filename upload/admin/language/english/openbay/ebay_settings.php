@@ -9,7 +9,7 @@ $_['text_clear']                = 'Clear';
 $_['text_add']                  = 'Add';
 $_['text_remove']               = 'Remove';
 $_['text_load']                 = 'Load';
-$_['text_success_settings']     = 'Your settings have been saved';
+$_['text_success']     = 'Your settings have been saved';
 $_['text_status']         		= 'Status';
 
 $_['tab_api_info']            = 'API details';
@@ -23,8 +23,6 @@ $_['text_legend_default_import']= 'Default import settings';
 $_['text_legend_payments']      = 'Payments';
 $_['text_legend_notify_settings']           = 'Notification settings';
 $_['text_legend_listing']           = 'Listing defaults';
-
-$_['error_oc_version']     = 'Your version of OpenCart is <u>not</u> supported';
 
 $_['text_obp_token']            = 'Token';
 $_['text_obp_token_register']   = 'Register for your eBay token';

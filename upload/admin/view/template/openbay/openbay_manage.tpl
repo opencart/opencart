@@ -23,7 +23,7 @@
         <div class="tab-content">
           <div class="tab-pane active" id="tab-update">
             <div class="alert alert-info text-left">
-              <?php echo $text_installed_version; ?><span id="text-version"><?php echo $text_version; ?></span>
+              <?php echo $text_version_installed; ?><span id="text-version"><?php echo $text_version; ?></span>
             </div>
 
             <input type="hidden" name="openbay_version" value="<?php echo $openbay_version; ?>" />
@@ -199,7 +199,7 @@
         alert('<?php echo $text_patch_complete; ?>');
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        $('#button-patch').empty().html('<?php echo $text_patch_button; ?>');
+        $('#button-patch').empty().html('<?php echo $button_patch; ?>');
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });

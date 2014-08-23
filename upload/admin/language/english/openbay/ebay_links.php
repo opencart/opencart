@@ -39,8 +39,8 @@ $_['text_stock_error']       		= 'Stock error';
 $_['text_listing_ended']       		= 'Listing ended';
 
 // Tables
-$_['text_column_action']            = 'Action';
-$_['text_column_status']            = 'Status';
+$_['column_action']            = 'Action';
+$_['column_status']            = 'Status';
 $_['text_column_variants']          = 'Variants';
 $_['text_column_itemId']            = 'eBay item ID';
 $_['text_column_product']           = 'Product';

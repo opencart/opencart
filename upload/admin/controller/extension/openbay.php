@@ -8,7 +8,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->load->model('setting/extension');
 
 		if (!$this->user->hasPermission('modify', 'extension/openbay')) {
-			$this->session->data['error'] = $this->language->get('text_error_permission');
+			$this->session->data['error'] = $this->language->get('error_permission');
 
 			$this->response->redirect($this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'));
 		} else {
@@ -40,7 +40,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->load->model('setting/extension');
 
 		if (!$this->user->hasPermission('modify', 'extension/openbay')) {
-			$this->session->data['error'] = $this->language->get('text_error_permission');
+			$this->session->data['error'] = $this->language->get('error_permission');
 
 			$this->response->redirect($this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'));
 		} else {
@@ -163,7 +163,7 @@ class ControllerExtensionOpenbay extends Controller {
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			$this->model_setting_setting->editSetting('openbaymanager', $this->request->post);
 
-			$this->session->data['success'] = $this->language->get('text_success_settings');
+			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'));
 		}

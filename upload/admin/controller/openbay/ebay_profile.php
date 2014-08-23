@@ -136,8 +136,8 @@ class ControllerOpenbayEbayProfile extends Controller {
 			$this->response->redirect($this->url->link('openbay/ebay/viewSync&token=' . $this->session->data['token'], 'SSL'));
 		}
 
-	if ((is_array($setting['dispatch_times'])){ ksort($setting['dispatch_times']); }
-if (f(is_array($setting['countries'])){ ksort($setting['countries']); }
+		if (is_array($setting['dispatch_times'])) { ksort($setting['dispatch_times']); }
+		if (is_array($setting['countries'])) { ksort($setting['countries']); }
 
 		$data['setting'] = $setting;
 

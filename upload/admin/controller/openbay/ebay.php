@@ -401,7 +401,13 @@ class ControllerOpenbayEbay extends Controller {
 	public function getSuggestedCategories() {
 		$this->load->model('openbay/ebay');
 
+		$this->load->language('openbay/ebay');
+
 		$json = $this->model_openbay_ebay->getSuggestedCategories($this->request->get['qry']);
+
+		if (empty($json['data'])) {
+			$json['msg'] = $this->language->get('error_category_nosuggestions');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

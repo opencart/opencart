@@ -25,5 +25,5 @@ $_['entry_description']   = 'Include description search';
 $_['entry_site']   		  = 'eBay site';
 
 // Error
-$_['error_permission']    = 'Warning: You do not have permission to modify module featured!';
+$_['error_permission']    = 'Warning: You do not have permission to modify module eBay featured!';
 $_['error_image']         = 'Image width &amp; height dimensions required!';

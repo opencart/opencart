@@ -60,7 +60,7 @@
                     <?php } ?>
                   <?php } ?>
 
-                  <?phif (f($order['channel'] == 'Amazon EU') { ?>
+                  <?php if ($order['channel'] == 'Amazon EU') { ?>
                   <a href="openbay_orderlist_confirm.tpl"></a>
                     <?pif (if($change_order_status_id == $openbay_amazon_order_status_shipped) { ?>
                       <div class="form-group">
@@ -83,8 +83,8 @@
                     <?php } ?>
                   <?php } ?>
 
-                  <?if ( if($order['channel'] == 'Amazon US') { ?>
-                    <if (p if($change_order_status_id == $openbay_amazonus_order_status_shipped) { ?>
+                  <?php if ($order['channel'] == 'Amazon US') { ?>
+                    <php if ($change_order_status_id == $openbay_amazonus_order_status_shipped) { ?>
                       <div class="form-group">
                         <label class="control-label"><?php echo $text_carrier; ?></label>
                         <select name="carrier[<?php echo $order['order_id']; ?>]" class="form-control amazonus_carrier" id="amazonus_carrier_<?php echo $order['order_id']; ?>">

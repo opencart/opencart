@@ -22,10 +22,10 @@ class ModelOpenbayEbayTemplate extends Model {
 	public function get($id) {
 		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_template` WHERE `template_id` = '" . (int)$id . "' LIMIT 1");
 
-	if (($qry->num_rows) {
-			$row                = $qry->row;
-			$row['link_edit']   = HTTPS_SERVER . 'index.php?route=openbay/ebay_template/edit&token=' . $this->session->data['token'] . '&template_id=' . $row['template_id'];
-			$row['link_delete'] = HTTPS_SERVER . 'index.php?route=openbay/ebay_template/delete&token=' . $this->session->data['token'] . '&template_id=' . $row['template_id'];
+		if ($qry->num_rows) {
+			$row = $qry->row;
+			$row['link_edit'] = $this->url->link('openbay/ebay_template/edit&token=' . $this->session->data['token'] . '&template_id=' . $row['template_id'], 'SSL');
+			$row['link_delete'] = $this->url->link('openbay/ebay_template/delete&token=' . $this->session->data['token'] . '&template_id=' . $row['template_id'], 'SSL');
 
 			return $row;
 		}else{
@@ -38,11 +38,11 @@ class ModelOpenbayEbayTemplate extends Model {
 
 		$templates = array();
 
-if (f($qry->num_rows) {
+		if($qry->num_rows) {
 			foreach($qry->rows as $row) {
-				$row['link_edit']   = HTTPS_SERVER . 'index.php?route=openbay/ebay_template/edit&token=' . $this->session->data['token'] . '&template_id=' . $row['template_id'];
-				$row['link_delete'] = HTTPS_SERVER . 'index.php?route=openbay/ebay_template/delete&token=' . $this->session->data['token'] . '&template_id=' . $row['template_id'];
-				$templates[]         = $row;
+				$row['link_edit'] = $this->url->link('openbay/ebay_template/edit&token=' . $this->session->data['token'] . '&template_id=' . $row['template_id'], 'SSL');
+				$row['link_delete'] = $this->url->link('openbay/ebay_template/delete&token=' . $this->session->data['token'] . '&template_id=' . $row['template_id'], 'SSL');
+				$templates[] = $row;
 			}
 		}
 

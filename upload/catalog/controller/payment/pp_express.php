@@ -221,7 +221,7 @@ class ControllerPaymentPPExpress extends Controller {
 				}
 
 				if (isset($result['PAYMENTREQUEST_0_SHIPTOSTATE'])) {
- 					$returned_shipping_zone = $result['PAYMENTREQUEST_0_SHIPTOSTATE'];
+					$returned_shipping_zone = $result['PAYMENTREQUEST_0_SHIPTOSTATE'];
 				} else {
 					$returned_shipping_zone = '';
 				}
@@ -1868,9 +1868,9 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$recurring = $this->model_account_recurring->getProfile($this->request->get['recurring_id']);
 
-		if ($recurring && !empty($recurring['recurring_reference'])) {
+		if ($recurring && !empty($recurring['reference'])) {
 
-			$result = $this->model_payment_pp_express->recurringCancel($recurring['recurring_reference']);
+			$result = $this->model_payment_pp_express->recurringCancel($recurring['reference']);
 
 			if (isset($result['PROFILEID'])) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$recurring['order_recurring_id'] . "', `date_added` = NOW(), `type` = '5'");

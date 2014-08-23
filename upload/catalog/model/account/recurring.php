@@ -34,9 +34,9 @@ class ModelAccountRecurring extends Model {
 	}
 
 	public function getProfileByRef($ref) {
-		$recurring = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_recurring` WHERE `recurring_reference` = '".$this->db->escape($ref)."' LIMIT 1");
+		$recurring = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_recurring` WHERE `reference` = '".$this->db->escape($ref)."' LIMIT 1");
 
-		if($recurring->num_rows > 0) {
+		if ($recurring->num_rows > 0) {
 			return $recurring->row;
 		} else {
 			return false;
@@ -47,7 +47,7 @@ class ModelAccountRecurring extends Model {
 
 		$recurring = $this->getProfile($id);
 
-		$results = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_recurring_transaction` WHERE `order_recurring_id` = '".(int)$id."'");
+		$results = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_recurring_transaction` WHERE `order_recurring_id` = '" . (int)$id . "'");
 
 		if($results->num_rows > 0) {
 			$transactions = array();

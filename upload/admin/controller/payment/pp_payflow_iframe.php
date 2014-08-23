@@ -249,9 +249,9 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 			if ($transaction) {
 				$call_data = array(
 					'TRXTYPE' => 'C',
-					'TENDER' => 'C',
-					'ORIGID' => $transaction['transaction_reference'],
-					'AMT' => $this->request->post['amount'],
+					'TENDER'  => 'C',
+					'ORIGID'  => $transaction['transaction_reference'],
+					'AMT'     => $this->request->post['amount'],
 				);
 
 				$result = $this->model_payment_pp_payflow_iframe->call($call_data);
@@ -300,11 +300,11 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 				}
 
 				$call_data = array(
-					'TRXTYPE' => 'D',
-					'TENDER' => 'C',
-					'ORIGID' => $paypal_order['transaction_reference'],
-					'AMT' => $this->request->post['amount'],
-					'CAPTURECOMPLETE' => $complete,
+					'TRXTYPE'         => 'D',
+					'TENDER'          => 'C',
+					'ORIGID'          => $paypal_order['transaction_reference'],
+					'AMT'             => $this->request->post['amount'],
+					'CAPTURECOMPLETE' => $complete
 				);
 
 				$result = $this->model_payment_pp_payflow_iframe->call($call_data);
@@ -312,10 +312,10 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 				if ($result['RESULT'] == 0) {
 
 					$data = array(
-						'order_id' => $order_id,
-						'type' => 'D',
+						'order_id'              => $order_id,
+						'type'                  => 'D',
 						'transaction_reference' => $result['PNREF'],
-						'amount' => $this->request->post['amount'],
+						'amount'                => $this->request->post['amount']
 					);
 
 					$this->model_payment_pp_payflow_iframe->addTransaction($data);

@@ -24,8 +24,8 @@
             <input type="text" name="filter_order_recurring_id" value="<?php echo $filter_order_recurring_id; ?>" placeholder="<?php echo $entry_order_id; ?>" id="input-order-id" class="form-control" />
           </div>
           <div class="form-group">
-            <label class="control-label" for="input-order-id"><?php echo $entry_payment_reference; ?></label>
-            <input type="text" name="filter_payment_reference" value="<?php echo $filter_payment_reference; ?>" placeholder="<?php echo $entry_payment_reference; ?>" id="input-payment-reference" class="form-control" />
+            <label class="control-label" for="input-reference"><?php echo $entry_reference; ?></label>
+            <input type="text" name="filter_reference" value="<?php echo $filter_reference; ?>" placeholder="<?php echo $entry_reference; ?>" id="input-reference" class="form-control" />
           </div>
         </div>
         <div class="col-sm-4">
@@ -78,25 +78,25 @@
                 <?php } else { ?>
                 <a href="<?php echo $sort_order; ?>"><?php echo $entry_order_id; ?></a>
                 <?php }  ?></td>
-              <td class="text-left"><?php if ($sort == 'or.recurring_reference') { ?>
-                <a href="<?php echo $sort_payment_reference; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_payment_reference; ?></a>
+              <td class="text-left"><?php if ($sort == 'or.reference') { ?>
+                <a href="<?php echo $sort_reference; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_reference; ?></a>
                 <?php } else { ?>
-                <a href="<?php echo $sort_payment_reference; ?>"><?php echo $entry_payment_reference; ?></a>
+                <a href="<?php echo $sort_reference; ?>"><?php echo $entry_reference; ?></a>
                 <?php }  ?></td>
               <td class="text-left"><?php if ($sort == 'customer') { ?>
                 <a href="<?php echo $sort_customer; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_customer ?></a>
                 <?php } else { ?>
                 <a href="<?php echo $sort_customer; ?>"><?php echo $entry_customer ?></a>
                 <?php }  ?>
-              <td class="text-left"><?php if ($sort == 'or.date_added') { ?>
-                <a href="<?php echo $sort_date_added; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_date_added ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_date_added; ?>"><?php echo $entry_date_added ?></a>
-                <?php }  ?></td>
               <td class="text-left"><?php if ($sort == 'or.status') { ?>
                 <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_status; ?></a>
                 <?php } else { ?>
                 <a href="<?php echo $sort_status; ?>"><?php echo $entry_status; ?></a>
+                <?php }  ?></td>
+              <td class="text-left"><?php if ($sort == 'or.date_added') { ?>
+                <a href="<?php echo $sort_date_added; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_date_added ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_date_added; ?>"><?php echo $entry_date_added ?></a>
                 <?php }  ?></td>
               <td class="text-right"><?php echo $entry_action; ?></td>
             </tr>
@@ -107,10 +107,10 @@
             <tr>
               <td class="text-left"><?php echo $recurring['order_recurring_id'] ?></td>
               <td class="text-left"><a href="<?php echo $recurring['order_link']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?> <?php echo $recurring['order_id'] ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
-              <td class="text-left"><?php echo $recurring['recurring_reference'] ?></td>
+              <td class="text-left"><?php echo $recurring['reference'] ?></td>
               <td class="text-left"><?php echo $recurring['customer'] ?></td>
-              <td class="text-left"><?php echo $recurring['date_added'] ?></td>
               <td class="text-left"><?php echo $recurring['status'] ?></td>
+              <td class="text-left"><?php echo $recurring['date_added'] ?></td>
               <td class="text-right"><a href="<?php echo $recurring['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
             </tr>
             <?php } ?>
@@ -145,10 +145,10 @@ $('#button-filter').on('click', function() {
 		url += '&filter_order_id=' + encodeURIComponent(filter_order_id);
 	}
 
-	var filter_payment_reference = $('input[name=\'filter_payment_reference\']').val();
+	var filter_reference = $('input[name=\'filter_reference\']').val();
 	
-	if (filter_payment_reference) {
-		url += '&filter_payment_reference=' + encodeURIComponent(filter_payment_reference);
+	if (filter_reference) {
+		url += '&filter_reference=' + encodeURIComponent(filter_reference);
 	}
 
 	var filter_customer = $('input[name=\'filter_customer\']').val();
@@ -156,19 +156,19 @@ $('#button-filter').on('click', function() {
 	if (filter_customer) {
 		url += '&filter_customer=' + encodeURIComponent(filter_customer);
 	}
-	
-	var filter_date_added = $('input[name=\'filter_date_added\']').val();
-	
-	if (filter_date_added != '') {
-		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
-	}
-	
+
 	var filter_status = $('select[name=\'filter_status\']').val();
 	
 	if (filter_status != 0) {
 		url += '&filter_status=' + encodeURIComponent(filter_status);
 	}
 	
+	var filter_date_added = $('input[name=\'filter_date_added\']').val();
+	
+	if (filter_date_added != '') {
+		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
+	}
+		
 	location = url;
 });
 	

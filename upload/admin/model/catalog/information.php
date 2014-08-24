@@ -190,7 +190,7 @@ class ModelCatalogInformation extends Model {
 	}
 
 	public function getTotalInformations() {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "information");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "information");
 
 		return $query->row['total'];
 	}

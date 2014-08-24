@@ -23,8 +23,8 @@ class Image {
 		}
 	}
 
-	private function create($image) {
-		$mime = $this->info['mime'];
+	private function create($image, $mime = '') {
+		$mime = ($mime) ? $mime : $this->info['mime'];
 
 		if ($mime == 'image/gif') {
 			return imagecreatefromgif ($image);
@@ -69,6 +69,12 @@ class Image {
 			$scale = $scale_w;
 		} elseif ($default == 'h') {
 			$scale = $scale_h;
+		} elseif ($default == 'f') {
+			if ($width/$height > $this->info['width']/$this->info['height']) {
+				$scale = $scale_w;
+			} elseif ($width/$height < $this->info['width']/$this->info['height']) {
+				$scale = $scale_h;
+			} 
 		} else {
 			$scale = min($scale_w, $scale_h);
 		}
@@ -103,32 +109,37 @@ class Image {
 		$this->info['height'] = $height;
 	}
 
-	public function watermark($file, $position = 'bottomright') {
-		$watermark = $this->create($file);
+	public function watermark($file, $position = 'bottomright', $offset = 5) {
+		$info = getimagesize($file);
+		$watermark = $this->create($file, $info['mime']);
 
 		$watermark_width = imagesx($watermark);
 		$watermark_height = imagesy($watermark);
 
 		switch($position) {
 			case 'topleft':
-				$watermark_pos_x = 0;
-				$watermark_pos_y = 0;
+				$watermark_pos_x = 0 + $offset;
+				$watermark_pos_y = 0 + $offset;
 				break;
 			case 'topright':
-				$watermark_pos_x = $this->info['width'] - $watermark_width;
-				$watermark_pos_y = 0;
+				$watermark_pos_x = ($this->info['width'] - $watermark_width) - $offset;
+				$watermark_pos_y = 0 + $offset;
 				break;
 			case 'bottomleft':
-				$watermark_pos_x = 0;
-				$watermark_pos_y = $this->info['height'] - $watermark_height;
+				$watermark_pos_x = 0 + $offset;
+				$watermark_pos_y = ($this->info['height'] - $watermark_height) - $offset;
 				break;
 			case 'bottomright':
-				$watermark_pos_x = $this->info['width'] - $watermark_width;
-				$watermark_pos_y = $this->info['height'] - $watermark_height;
+				$watermark_pos_x = ($this->info['width'] - $watermark_width) - $offset;
+				$watermark_pos_y = ($this->info['height'] - $watermark_height) - $offset;
+				break;
+			default: // center
+				$watermark_pos_x = ($this->info['width'] / 2) - ($watermark_width / 2);
+				$watermark_pos_y = ($this->info['height'] / 2) - ($watermark_height / 2);
 				break;
 		}
 
-		imagecopy($this->image, $watermark, $watermark_pos_x, $watermark_pos_y, 0, 0, 120, 40);
+		$this->imagecopymerge_alpha($this->image, $watermark, $watermark_pos_x, $watermark_pos_y, 0, 0, $watermark_width, $watermark_height, 75);
 
 		imagedestroy($watermark);
 	}
@@ -191,4 +202,25 @@ class Image {
 
 		return array($r, $g, $b);
 	}
+
+	/**
+     * PNG alpha channel support for imagecopymerge()
+     * 
+     * @author  Sina Salek
+     * @link    http://www.php.net/manual/en/function.imagecopymerge.php#92787
+     */
+    private function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct){
+        $w = imagesx($src_im);
+        $h = imagesy($src_im);
+
+        // creating a cut resource
+        $cut = imagecreatetruecolor($src_w, $src_h);
+
+        // copying that section of the background to the cut
+        imagecopy($cut, $dst_im, 0, 0, $dst_x, $dst_y, $src_w, $src_h);
+
+        // placing the watermark now 
+        imagecopy($cut, $src_im, 0, 0, $src_x, $src_y, $src_w, $src_h);
+        imagecopymerge($dst_im, $cut, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct);
+    }
 }

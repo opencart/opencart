@@ -8,7 +8,7 @@
     </rule>
 
     <!-- Test the spacing of inline control statements -->
-    <rule ref="Squiz.ControlStructures.InlineIfDeclarationUnitTest" />
+    <rule ref="Squiz.ControlStructures.InlineIfDeclaration" />
 
     <!-- Check for whitespace after lines of code and checks for spaces/indents on empty lines -->
     <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
@@ -41,10 +41,10 @@
     <rule ref="Generic.Formatting.NoSpaceAfterCast" />
 
     <!-- Pass by reference is now only supported in the method/function params -->
-    <rule ref="Generic.Functions.CallTimePassByReferenceUnitTest" />
+    <rule ref="Generic.Functions.CallTimePassByReference" />
 
     <!-- keep the spacing between function/method params space after comma -->
-    <rule ref="Generic.Functions.FunctionCallArgumentSpacingUnitTest" />
+    <rule ref="Generic.Functions.FunctionCallArgumentSpacing" />
 
     <!-- method names should always be camel case -->
     <rule ref="Generic.NamingConventions.CamelCapsFunctionName"/>

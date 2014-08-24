@@ -1,15 +1,13 @@
 <?php
 /**
- * Squiz_Sniffs_NamingConventions_ValidVariableNameSniff.
- *
- * PHP version 5
+ * Validates variable names.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
  * @copyright 2006-2011 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @license   http://opensource.org/licenses/BSD-3-Clause
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -202,7 +200,7 @@ class OpenCart_Sniffs_Variables_ValidVariableNameSniff extends PHP_CodeSniffer_S
                     $error = 'Variable "%s" is not in valid underscore format';
                     $data  = array($originalVarName);
                     $phpcsFile->addError($error, $stackPtr, 'StringNotUnderscore', $data);
-                    
+
                 }
             }
         }//end if

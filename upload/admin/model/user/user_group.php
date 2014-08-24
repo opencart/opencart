@@ -52,11 +52,11 @@ class ModelUserUserGroup extends Model {
 	}
 
 	public function getTotalUserGroups() {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "user_group");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "user_group");
 
 		return $query->row['total'];
 	}
-	
+
 	public function addPermission($user_id, $type, $route) {
 		$user_query = $this->db->query("SELECT DISTINCT user_group_id FROM " . DB_PREFIX . "user WHERE user_id = '" . (int)$user_id . "'");
 
@@ -81,9 +81,9 @@ class ModelUserUserGroup extends Model {
 
 			if ($user_group_query->num_rows) {
 				$data = unserialize($user_group_query->row['permission']);
-                
+
 				$data[$type] = array_diff($data[$type], array($route));
-				
+
 				$this->db->query("UPDATE " . DB_PREFIX . "user_group SET permission = '" . $this->db->escape(serialize($data)) . "' WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
 			}
 		}

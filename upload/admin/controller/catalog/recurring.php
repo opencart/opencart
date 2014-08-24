@@ -204,19 +204,19 @@ class ControllerCatalogRecurring extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
 		$data['column_action'] = $this->language->get('column_action');
-		
+
 		$data['button_insert'] = $this->language->get('button_insert');
 		$data['button_copy'] = $this->language->get('button_copy');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
-		
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -284,7 +284,7 @@ class ControllerCatalogRecurring extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_profile'] = $this->language->get('text_profile');
@@ -303,7 +303,7 @@ class ControllerCatalogRecurring extends Controller {
 		$data['entry_trial_frequency'] = $this->language->get('entry_trial_frequency');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		
+
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
@@ -318,7 +318,7 @@ class ControllerCatalogRecurring extends Controller {
 		} else {
 			$data['error_name'] = array();
 		}
-				
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -332,7 +332,7 @@ class ControllerCatalogRecurring extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-		
+
 		if (!isset($this->request->get['recurring_id'])) {
 			$data['action'] = $this->url->link('catalog/recurring/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
@@ -344,13 +344,13 @@ class ControllerCatalogRecurring extends Controller {
 		if (isset($this->request->get['recurring_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$recurring_info = $this->model_catalog_recurring->getRecurring($this->request->get['recurring_id']);
 		}
-		
+
 		$data['token'] = $this->session->data['token'];
-		
+
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
-				
+
 		if (isset($this->request->post['recurring_description'])) {
 			$data['recurring_description'] = $this->request->post['recurring_description'];
 		} elseif (!empty($recurring_info)) {
@@ -366,9 +366,9 @@ class ControllerCatalogRecurring extends Controller {
 		} else {
 			$data['price'] = 0;
 		}
-		
+
 		$data['frequencies'] = array();
-		
+
 		$data['frequencies'][] = array(
 			'text'  => $this->language->get('text_day'),
 			'value' => 'day'
@@ -378,22 +378,22 @@ class ControllerCatalogRecurring extends Controller {
 			'text'  => $this->language->get('text_week'),
 			'value' => 'week'
 		);
-		
+
 		$data['frequencies'][] = array(
 			'text'  => $this->language->get('text_semi_month'),
 			'value' => 'semi_month'
 		);
-		
+
 		$data['frequencies'][] = array(
 			'text'  => $this->language->get('text_month'),
 			'value' => 'month'
 		);
-		
+
 		$data['frequencies'][] = array(
 			'text'  => $this->language->get('text_year'),
 			'value' => 'year'
 		);
-		
+
 		if (isset($this->request->post['frequency'])) {
 			$data['frequency'] = $this->request->post['frequency'];
 		} elseif (!empty($recurring_info)) {
@@ -464,7 +464,7 @@ class ControllerCatalogRecurring extends Controller {
 		} else {
 			$data['trial_status'] = 0;
 		}
-				
+
 		if (isset($this->request->post['sort_order'])) {
 			$data['sort_order'] = $this->request->post['sort_order'];
 		} elseif (!empty($recurring_info)) {

@@ -24,49 +24,49 @@
   <?php } ?>
   <br />
   <div id="payment-new" style="display: <?php echo ($addresses ? 'none' : 'block'); ?>;">
-    <div class="form-group required" data-sort="1">
+    <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-payment-firstname"><?php echo $entry_firstname; ?></label>
       <div class="col-sm-10">
         <input type="text" name="firstname" value="" placeholder="<?php echo $entry_firstname; ?>" id="input-payment-firstname" class="form-control" />
       </div>
     </div>
-    <div class="form-group required" data-sort="2">
+    <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-payment-lastname"><?php echo $entry_lastname; ?></label>
       <div class="col-sm-10">
         <input type="text" name="lastname" value="" placeholder="<?php echo $entry_lastname; ?>" id="input-payment-lastname" class="form-control" />
       </div>
     </div>
-    <div class="form-group" data-sort="3">
+    <div class="form-group">
       <label class="col-sm-2 control-label" for="input-payment-company"><?php echo $entry_company; ?></label>
       <div class="col-sm-10">
         <input type="text" name="company" value="" placeholder="<?php echo $entry_company; ?>" id="input-payment-company" class="form-control" />
       </div>
     </div>
-    <div class="form-group required" data-sort="4">
+    <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-payment-address-1"><?php echo $entry_address_1; ?></label>
       <div class="col-sm-10">
         <input type="text" name="address_1" value="" placeholder="<?php echo $entry_address_1; ?>" id="input-payment-address-1" class="form-control" />
       </div>
     </div>
-    <div class="form-group" data-sort="5">
+    <div class="form-group">
       <label class="col-sm-2 control-label" for="input-payment-address-2"><?php echo $entry_address_2; ?></label>
       <div class="col-sm-10">
         <input type="text" name="address_2" value="" placeholder="<?php echo $entry_address_2; ?>" id="input-payment-address-2" class="form-control" />
       </div>
     </div>
-    <div class="form-group required" data-sort="6">
+    <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-payment-city"><?php echo $entry_city; ?></label>
       <div class="col-sm-10">
         <input type="text" name="city" value="" placeholder="<?php echo $entry_city; ?>" id="input-payment-city" class="form-control" />
       </div>
     </div>
-    <div class="form-group required" data-sort="7">
+    <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-payment-postcode"><?php echo $entry_postcode; ?></label>
       <div class="col-sm-10">
         <input type="text" name="postcode" value="" placeholder="<?php echo $entry_postcode; ?>" id="input-payment-postcode" class="form-control" />
       </div>
     </div>
-    <div class="form-group required" data-sort="8">
+    <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-payment-country"><?php echo $entry_country; ?></label>
       <div class="col-sm-10">
         <select name="country_id" id="input-payment-country" class="form-control">
@@ -81,7 +81,7 @@
         </select>
       </div>
     </div>
-    <div class="form-group required" data-sort="9">
+    <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-payment-zone"><?php echo $entry_zone; ?></label>
       <div class="col-sm-10">
         <select name="zone_id" id="input-payment-zone" class="form-control">
@@ -218,12 +218,8 @@ $('input[name=\'payment_address\']').on('change', function() {
 //--></script>
 <script type="text/javascript"><!--
 // Sort the custom fields
-$('#payment-new .form-group[data-sort]').sort(function(a, b) {
-	return $(a).attr('data-sort') - $(b).attr('data-sort');
-}).map(function() {
-	return $(this).closest('.form-group');
-}).each(function(index, element) {
-	$(element).parent().append(element);
+$('#collapse-payment-address .form-group[data-sort]').each(function(index, element) {
+	$('#collapse-payment-address .form-group').eq($(this).attr('data-sort')).after(this);
 });
 //--></script>
 <script type="text/javascript"><!--

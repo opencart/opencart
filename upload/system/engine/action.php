@@ -1,6 +1,5 @@
 <?php
 final class Action {
-	private $file;
 	private $class;
 	private $method;
 	private $args = array();

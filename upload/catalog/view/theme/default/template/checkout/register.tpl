@@ -20,23 +20,23 @@
         <?php } ?>
         <?php } ?>
       </div>
-      <div class="form-group required" data-sort="1">
+      <div class="form-group required">
         <label class="control-label" for="input-payment-firstname"><?php echo $entry_firstname; ?></label>
         <input type="text" name="firstname" value="" placeholder="<?php echo $entry_firstname; ?>" id="input-payment-firstname" class="form-control" />
       </div>
-      <div class="form-group required" data-sort="2">
+      <div class="form-group required">
         <label class="control-label" for="input-payment-lastname"><?php echo $entry_lastname; ?></label>
         <input type="text" name="lastname" value="" placeholder="<?php echo $entry_lastname; ?>" id="input-payment-lastname" class="form-control" />
       </div>
-      <div class="form-group required" data-sort="3">
+      <div class="form-group required">
         <label class="control-label" for="input-payment-email"><?php echo $entry_email; ?></label>
         <input type="text" name="email" value="" placeholder="<?php echo $entry_email; ?>" id="input-payment-email" class="form-control" />
       </div>
-      <div class="form-group required" data-sort="4">
+      <div class="form-group required">
         <label class="control-label" for="input-payment-telephone"><?php echo $entry_telephone; ?></label>
         <input type="text" name="telephone" value="" placeholder="<?php echo $entry_telephone; ?>" id="input-payment-telephone" class="form-control" />
       </div>
-      <div class="form-group" data-sort="5">
+      <div class="form-group">
         <label class="control-label" for="input-payment-fax"><?php echo $entry_fax; ?></label>
         <input type="text" name="fax" value="" placeholder="<?php echo $entry_fax; ?>" id="input-payment-fax" class="form-control" />
       </div>
@@ -149,27 +149,27 @@
   <div class="col-sm-6">
     <fieldset id="address">
       <legend><?php echo $text_your_address; ?></legend>
-      <div class="form-group" data-sort="3">
+      <div class="form-group">
         <label class="control-label" for="input-payment-company"><?php echo $entry_company; ?></label>
         <input type="text" name="company" value="" placeholder="<?php echo $entry_company; ?>" id="input-payment-company" class="form-control" />
       </div>
-      <div class="form-group required" data-sort="4">
+      <div class="form-group required">
         <label class="control-label" for="input-payment-address-1"><?php echo $entry_address_1; ?></label>
         <input type="text" name="address_1" value="" placeholder="<?php echo $entry_address_1; ?>" id="input-payment-address-1" class="form-control" />
       </div>
-      <div class="form-group" data-sort="5">
+      <div class="form-group">
         <label class="control-label" for="input-payment-address-2"><?php echo $entry_address_2; ?></label>
         <input type="text" name="address_2" value="" placeholder="<?php echo $entry_address_2; ?>" id="input-payment-address-2" class="form-control" />
       </div>
-      <div class="form-group required" data-sort="6">
+      <div class="form-group required">
         <label class="control-label" for="input-payment-city"><?php echo $entry_city; ?></label>
         <input type="text" name="city" value="" placeholder="<?php echo $entry_city; ?>" id="input-payment-city" class="form-control" />
       </div>
-      <div class="form-group required" data-sort="7">
+      <div class="form-group required">
         <label class="control-label" for="input-payment-postcode"><?php echo $entry_postcode; ?></label>
         <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-payment-postcode" class="form-control" />
       </div>
-      <div class="form-group required" data-sort="8">
+      <div class="form-group required">
         <label class="control-label" for="input-payment-country"><?php echo $entry_country; ?></label>
         <select name="country_id" id="input-payment-country" class="form-control">
           <option value=""><?php echo $text_select; ?></option>
@@ -182,7 +182,7 @@
           <?php } ?>
         </select>
       </div>
-      <div class="form-group required" data-sort="9">
+      <div class="form-group required">
         <label class="control-label" for="input-payment-zone"><?php echo $entry_zone;; ?></label>
         <select name="zone_id" id="input-payment-zone" class="form-control">
         </select>
@@ -311,21 +311,18 @@
 <?php } ?>
 <script type="text/javascript"><!--
 // Sort the custom fields
-$('#account .form-group[data-sort]').sort(function(a, b) {
-	return $(a).attr('data-sort') - $(b).attr('data-sort');
-}).map(function() {
-	return $(this).closest('.form-group');
-}).each(function(index, element) {
-	$(element).parent().append(element);
+$('#account .form-group[data-sort]').each(function(index, element) {
+	$('#account .form-group').eq($(this).attr('data-sort')).after(this);
 });
 
-// Sort the custom fields
-$('#address .form-group[data-sort]').sort(function(a, b) {
-	return $(a).attr('data-sort') - $(b).attr('data-sort');
-}).map(function() {
-	return $(this).closest('.form-group');
-}).each(function(index, element) {
-	$(element).parent().append(element);
+$('#address .form-group[data-sort]').each(function(index, element) {
+	var sort = $(this).attr('data-sort');
+	
+	if (!sort == 0) {
+		$('#address .form-group').eq($(this).attr('data-sort')).after(this);
+	} else {
+		$('#address .form-group').eq($(this).attr('data-sort')).before(this);
+	}
 });
 
 $('#collapse-payment-address input[name=\'customer_group_id\']').on('change', function() {

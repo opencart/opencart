@@ -89,8 +89,8 @@ class ControllerExtensionOpenbay extends Controller {
 		);
 
 		$data['manage_link'] = $this->url->link('extension/openbay/manage', 'token=' . $this->session->data['token'], 'SSL');
-		$data['product_link'] = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL');
-		$data['order_link'] = $this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'], 'SSL');
+		$data['product_link'] = $this->url->link('extension/openbay/itemlist', 'token=' . $this->session->data['token'], 'SSL');
+		$data['order_link'] = $this->url->link('extension/openbay/orderlist', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['success'] = '';
 		if (isset($this->session->data['success'])) {
@@ -116,7 +116,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$data['extensions'] = array();
 
-		$markets = array('ebay', 'amazon', 'amazonus', 'etsy');
+		$markets = $this->openbay->getInstalled();
 
 		foreach ($markets as $market) {
 			$extension = basename($market, ' . php');

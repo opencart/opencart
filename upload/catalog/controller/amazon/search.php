@@ -12,10 +12,10 @@ class ControllerAmazonSearch extends Controller {
 
 		$token = $this->config->get('openbay_amazon_token');
 
-		$incomingToken = isset($this->request->post['token']) ? $this->request->post['token'] : '';
+		$incoming_token = isset($this->request->post['token']) ? $this->request->post['token'] : '';
 
-		if ($incomingToken !== $token) {
-			$logger->write('amazon/search - Incorrect token: ' . $incomingToken);
+		if ($incoming_token !== $token) {
+			$logger->write('amazon/search - Incorrect token: ' . $incoming_token);
 			return;
 		}
 

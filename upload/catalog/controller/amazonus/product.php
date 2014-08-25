@@ -15,9 +15,9 @@ class ControllerAmazonusProduct extends Controller  {
 
 		$logger->write("AmazonusProduct/inbound: incoming data");
 
-		$incomingToken = isset($this->request->post['token']) ? $this->request->post['token'] : '';
+		$incoming_token = isset($this->request->post['token']) ? $this->request->post['token'] : '';
 
-		if($incomingToken != $this->config->get('openbay_amazonus_token')) {
+		if($incoming_token != $this->config->get('openbay_amazonus_token')) {
 			$logger->write("Error - Incorrect token: " . $this->request->post['token']);
 			ob_get_clean();
 			$this->response->setOutput("tokens did not match");
@@ -32,38 +32,38 @@ class ControllerAmazonusProduct extends Controller  {
 			return;
 		}
 
-		$decodedData = (array)json_decode($data);
-		$logger->write("Received data: " . print_r($decodedData, true));
-		$status = $decodedData['status'];
+		$decoded_data = (array)json_decode($data);
+		$logger->write("Received data: " . print_r($decoded_data, true));
+		$status = $decoded_data['status'];
 
 		if($status == "submit_error") {
 			$message = 'Product was not submited to amazonus properly. Please try again or contact OpenBay.';
-			$this->model_openbay_amazonus_product->setSubmitError($decodedData['insertion_id'], $message);
+			$this->model_openbay_amazonus_product->setSubmitError($decoded_data['insertion_id'], $message);
 		} else {
 			$status = (array)$status;
 			if($status['successful'] == 1) {
-				$this->model_openbay_amazonus_product->setStatus($decodedData['insertion_id'], 'ok');
-				$insertionProduct = $this->model_openbay_amazonus_product->getProduct($decodedData['insertion_id']);
-				$this->model_openbay_amazonus_product->linkProduct($insertionProduct['sku'], $insertionProduct['product_id'], $insertionProduct['var']);
-				$this->model_openbay_amazonus_product->deleteErrors($decodedData['insertion_id']);
+				$this->model_openbay_amazonus_product->setStatus($decoded_data['insertion_id'], 'ok');
+				$insertion_product = $this->model_openbay_amazonus_product->getProduct($decoded_data['insertion_id']);
+				$this->model_openbay_amazonus_product->linkProduct($insertion_product['sku'], $insertion_product['product_id'], $insertion_product['var']);
+				$this->model_openbay_amazonus_product->deleteErrors($decoded_data['insertion_id']);
 
 				$quantity_data = array(
-					$insertionProduct['sku'] => $this->model_openbay_amazonus_product->getProductQuantity($insertionProduct['product_id'], $insertionProduct['var'])
+					$insertion_product['sku'] => $this->model_openbay_amazonus_product->getProductQuantity($insertion_product['product_id'], $insertion_product['var'])
 				);
 				$logger->write('Updating quantity with data: ' . print_r($quantity_data, true));
 				$logger->write('Response: ' . print_r($this->openbay->amazonus->updateQuantities($quantity_data), true));
 			} else {
 				$msg = 'Product was not accepted by amazonus. Please try again or contact OpenBay.';
-				$this->model_openbay_amazonus_product->setSubmitError($decodedData['insertion_id'], $msg);
+				$this->model_openbay_amazonus_product->setSubmitError($decoded_data['insertion_id'], $msg);
 
-				if(isset($decodedData['error_details'])) {
-					foreach($decodedData['error_details'] as $error) {
+				if(isset($decoded_data['error_details'])) {
+					foreach($decoded_data['error_details'] as $error) {
 						$error = (array)$error;
 						$error_data = array(
 							'sku' => $error['sku'],
 							'error_code' => $error['error_code'],
 							'message' => $error['message'],
-							'insertion_id' => $decodedData['insertion_id']
+							'insertion_id' => $decoded_data['insertion_id']
 						);
 						$this->model_openbay_amazonus_product->insertError($error_data);
 
@@ -83,9 +83,9 @@ class ControllerAmazonusProduct extends Controller  {
 			return;
 		}
 
-		$incomingToken = isset($this->request->post['token']) ? $this->request->post['token'] : '';
+		$incoming_token = isset($this->request->post['token']) ? $this->request->post['token'] : '';
 
-		if ($incomingToken != $this->config->get('openbay_amazonus_token')) {
+		if ($incoming_token != $this->config->get('openbay_amazonus_token')) {
 			$this->response->setOutput("error 002");
 			return;
 		}

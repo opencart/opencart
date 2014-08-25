@@ -7,6 +7,13 @@ class ControllerOpenbayEtsy extends Controller {
 		$this->load->model('setting/extension');
 		$this->load->model('tool/event');
 
+		$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'openbay/etsy_product');
+		$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'openbay/etsy_product');
+		$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'openbay/etsy_shipping');
+		$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'openbay/etsy_shipping');
+		$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'openbay/etsy_shop');
+		$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'openbay/etsy_shop');
+
 		$this->model_openbay_etsy->install();
 	}
 

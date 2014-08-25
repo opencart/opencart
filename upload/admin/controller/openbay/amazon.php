@@ -6,6 +6,11 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->load->model('setting/extension');
 		$this->load->model('tool/event');
 
+		$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'openbay/amazon_listing');
+		$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'openbay/amazon_listing');
+		$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'openbay/amazon_product');
+		$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'openbay/amazon_product');
+
 		$this->model_openbay_amazon->install();
 	}
 

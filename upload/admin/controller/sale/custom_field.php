@@ -331,6 +331,8 @@ class ControllerSaleCustomField extends Controller {
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
+		$data['help_sort_order'] = $this->language->get('help_sort_order');
+
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_custom_field_value_add'] = $this->language->get('button_custom_field_value_add');

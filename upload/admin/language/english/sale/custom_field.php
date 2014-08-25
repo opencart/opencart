@@ -36,6 +36,9 @@ $_['entry_required']        = 'Required';
 $_['entry_status']          = 'Status';
 $_['entry_sort_order']      = 'Sort Order';
 
+// Help
+$_['help_sort_order']       = 'Use minus to count backwards from the last field in the set.';
+
 // Error
 $_['error_permission']      = 'Warning: You do not have permission to modify custom fields!';
 $_['error_name']            = 'Custom Field Name must be between 1 and 128 characters!';

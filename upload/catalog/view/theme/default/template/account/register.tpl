@@ -530,17 +530,12 @@
 </div> 
 <script type="text/javascript"><!--
 // Sort the custom fields
-$('#account .form-group[data-sort]').each(function(index, element) {
-	$('#account .form-group:eq(\'' + $(this).attr('data-sort') + '\')').after(this);
-});
-
-$('#address .form-group[data-sort]').each(function(index, element) {
-	var sort = $(this).attr('data-sort');
-	
-	if (sort == 0 || sort == 1 || sort == 2) {
-		$('#address .form-group').eq(0).before(this);
+$('.form-group[data-sort]').each(function(index, element) {
+	// Compensate for the missing first 2 fields
+	if ($(this).parent().find('.form-group').length >= $(this).attr('data-sort')) {
+		$(this).parent().find('.form-group').eq($(this).attr('data-sort')).before(this);		
 	} else {
-		$('#address .form-group').eq(sort).after(this);
+		$(this).parent().find('.form-group:last').after(this);
 	}
 });
 

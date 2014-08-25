@@ -218,7 +218,12 @@ $('input[name=\'shipping_address\']').on('change', function() {
 //--></script>
 <script type="text/javascript"><!--
 $('#collapse-shipping-address .form-group[data-sort]').each(function(index, element) {
-	$('#collapse-shipping-address .form-group').eq($(this).attr('data-sort')).after(this);
+	// Compensate for the missing first 2 fields
+	if ($(this).parent().find('.form-group').length >= $(this).attr('data-sort')) {
+		$(this).parent().find('.form-group').eq($(this).attr('data-sort')).before(this);		
+	} else {
+		$(this).parent().find('.form-group:last').after(this);
+	}
 });
 //--></script>
 <script type="text/javascript"><!--

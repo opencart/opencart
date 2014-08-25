@@ -3,14 +3,14 @@ class ControllerToolUpload extends Controller {
 	private $error = array();
 
 	public function index() {
-		  $this->load->language('tool/upload');
+		$this->load->language('tool/upload');
 
-		  $this->document->setTitle($this->language->get('heading_title'));
+		$this->document->setTitle($this->language->get('heading_title'));
 
-		  $this->load->model('tool/upload');
+		$this->load->model('tool/upload');
 
-		  $this->getList();
-	 }
+		$this->getList();
+	}
 
 	public function delete() {
 		$this->load->language('tool/upload');

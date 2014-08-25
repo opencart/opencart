@@ -81,19 +81,19 @@ class ModelUserUser extends Model {
 	}
 
 	public function getTotalUsers() {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user`");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user`");
 
 		return $query->row['total'];
 	}
 
 	public function getTotalUsersByGroupId($user_group_id) {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user` WHERE user_group_id = '" . (int)$user_group_id . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user` WHERE user_group_id = '" . (int)$user_group_id . "'");
 
 		return $query->row['total'];
 	}
 
 	public function getTotalUsersByEmail($email) {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user` WHERE LCASE(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "user` WHERE LCASE(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 
 		return $query->row['total'];
 	}

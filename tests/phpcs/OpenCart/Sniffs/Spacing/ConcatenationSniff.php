@@ -9,7 +9,7 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  * @Licence   http://www.gnu.org/licenses/gpl-2.0.html
  */
-class OpenCart_Sniffs_Spacing_Concatenation_Php_Sniff implements PHP_CodeSniffer_Sniff {
+class OpenCart_Sniffs_Spacing_ConcatenationSniff implements PHP_CodeSniffer_Sniff {
 	/**
 	 * Returns an array of tokens this test wants to listen for.
 	 *

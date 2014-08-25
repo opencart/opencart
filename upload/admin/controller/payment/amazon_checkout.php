@@ -4,13 +4,13 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 	public function index() {
 		$this->load->language('payment/amazon_checkout');
-		
+
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$this->load->model('setting/setting');
-		
+
 		$this->load->model('payment/amazon_checkout');
-		
+
 		$this->load->library('cba');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
@@ -27,27 +27,27 @@ class ControllerPaymentAmazonCheckout extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$cba = new CBA($this->request->post['amazon_checkout_merchant_id'], $this->request->post['amazon_checkout_access_key'], $this->request->post['amazon_checkout_access_secret'], $this->request->post['amazon_checkout_marketplace']);
-			
+
 			$cba->setMode($this->request->post['amazon_checkout_mode']);
-			
+
 			$cba->scheduleReports();
 
 			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
 		}
-		
+
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_cron_job_token'] = $this->language->get('text_cron_job_token');
 		$data['text_cron_job_url'] = $this->language->get('text_cron_job_url');
 		$data['text_amazon_join'] = $this->language->get('text_amazon_join');
-		
-		
+
+
 		$data['text_germany'] = $this->language->get('text_germany');
 		$data['text_uk'] = $this->language->get('text_uk');
-		
-		
-		
-		
+
+
+
+
 		$data['text_live'] = $this->language->get('text_live');
 		$data['text_sandbox'] = $this->language->get('text_sandbox');
 		$data['text_sort_order'] = $this->language->get('text_sort_order');
@@ -60,8 +60,8 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$data['text_shipped_status'] = $this->language->get('text_shipped_status');
 		$data['text_last_cron_job_run'] = $this->language->get('text_last_cron_job_run');
 		$data['text_ip'] = $this->language->get('text_ip');
-		
-		
+
+
 		$data['text_ip_allowed'] = $this->language->get('text_ip_allowed');
 		$data['text_upload_success'] = $this->language->get('text_upload_success');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -77,31 +77,31 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$data['text_large'] = $this->language->get('text_large');
 		$data['text_x_large'] = $this->language->get('text_x_large');
 		$data['text_background'] = $this->language->get('text_background');
-		
-		
+
+
 		$data['entry_merchant_id'] = $this->language->get('entry_merchant_id');
 		$data['entry_access_key'] = $this->language->get('entry_access_key');
 		$data['entry_access_secret'] = $this->language->get('entry_access_secret');
 		$data['text_checkout_mode'] = $this->language->get('text_checkout_mode');
 		$data['text_marketplace'] = $this->language->get('text_marketplace');
-		
-		
-		
+
+
+
 			$data['text_geo_zone'] = $this->language->get('text_geo_zone');
 		$data['text_status'] = $this->language->get('text_status');
-	
+
 		$data['text_pending_status'] = $this->language->get('text_pending_status');
-		
-		
+
+
 		$data['help_ip'] = $this->language->get('help_ip');
 		$data['help_ip_allowed'] = $this->language->get('help_ip_allowed');
 		$data['help_cron_job_url'] = $this->language->get('help_cron_job_url');
 		$data['help_cron_job_token'] = $this->language->get('help_cron_job_token');
-		
+
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_ip_add'] = $this->language->get('button_ip_add');
-		
+
 		$data['errors'] = $this->errors;
 
 		if (isset($this->request->post['amazon_checkout_status'])) {
@@ -249,17 +249,17 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$data['cron_job_url'] = HTTPS_CATALOG . 'index.php?route=payment/amazon_checkout/cron&token=' . $data['amazon_checkout_cron_job_token'];
 
 		$data['last_cron_job_run'] = $this->config->get('amazon_checkout_last_cron_job_run');
-		
+
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-		
+
 		$this->load->model('localisation/order_status');
-		
+
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-		
+
 		$data['action'] = $this->url->link('payment/amazon_checkout', 'token=' . $this->session->data['token'], 'SSL');
-		
+
 		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token']);
 
 		$data['button_colours'] = array(
@@ -288,16 +288,16 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 	public function install() {
 		$this->load->model('payment/amazon_checkout');
-		
+
 		$this->load->model('setting/setting');
-		
+
 		$this->model_payment_amazon_checkout->install();
 		$this->model_setting_setting->editSetting('amazon_checkout', $this->settings);
 	}
 
 	public function uninstall() {
 		$this->load->model('payment/amazon_checkout');
-		
+
 		$this->model_payment_amazon_checkout->uninstall();
 	}
 

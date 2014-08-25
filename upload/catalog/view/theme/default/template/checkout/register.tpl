@@ -318,10 +318,10 @@ $('#account .form-group[data-sort]').each(function(index, element) {
 $('#address .form-group[data-sort]').each(function(index, element) {
 	var sort = $(this).attr('data-sort');
 	
-	if (!sort == 0) {
-		$('#address .form-group').eq($(this).attr('data-sort')).after(this);
+	if (sort == 0 || sort == 1 || sort == 2) {
+		$('#address .form-group').eq(0).before(this);
 	} else {
-		$('#address .form-group').eq($(this).attr('data-sort')).before(this);
+		$('#address .form-group').eq($(this).attr('data-sort')).after(this);
 	}
 });
 

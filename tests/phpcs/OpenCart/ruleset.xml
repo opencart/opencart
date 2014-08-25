@@ -1,19 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="OpenCart">
     <description>The Code Sniffer rule set for OpenCart</description>
-    <!-- Concatenation must have spacing around dot -->
-    <rule ref="OpenCart.Spacing.Concatenation">
-        <exclude-pattern>*.css</exclude-pattern>
-        <exclude-pattern>*.html</exclude-pattern>
-        <exclude-pattern>*.js</exclude-pattern>
-    </rule>
-
-    <!-- PHP variables must be lowercase with an underscore -->
-    <rule ref="OpenCart.Variables.ValidVariableNameSniff">
-        <exclude-pattern>*.css</exclude-pattern>
-        <exclude-pattern>*.html</exclude-pattern>
-        <exclude-pattern>*.js</exclude-pattern>
-    </rule>
 
     <rule ref="Squiz.ControlStructures.InlineIfDeclaration" />
 

@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <ruleset name="OpenCart">
     <description>The Code Sniffer rule set for OpenCart</description>
+
+    <rule ref="Squiz.ControlStructures.InlineIfDeclaration" />
+
     <!-- Closing PHP tags are not allowed -->
     <rule ref="Zend.Files.ClosingTag">
         <severity>5</severity>

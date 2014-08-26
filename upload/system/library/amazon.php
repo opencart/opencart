@@ -465,12 +465,12 @@ class Amazon {
 						ASC");
 
 					if ($product_option_query->num_rows != 0) {
-						$pOptions = array();
+						$p_options = array();
 						foreach ($product_option_query->rows as $p_option_row) {
-							$pOptions[] = $p_option_row['product_option_value_id'];
+							$p_options[] = $p_option_row['product_option_value_id'];
 						}
 
-						$var = implode(':', $pOptions);
+						$var = implode(':', $p_options);
 						$quantity_left_row = $this->db->query("SELECT `stock` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$order_product['product_id'] . "' AND `var` = '" . $this->db->escape($var) . "'")->row;
 
 						if(empty($quantity_left_row)) {

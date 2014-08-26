@@ -13,7 +13,7 @@ class ModelOpenbayAmazonusProduct extends Model {
 	}
 
 	public function linkItems(array $data) {
-		foreach($data as $amazonusSku => $product_id) {
+		foreach ($data as $amazonusSku => $product_id) {
 			$varRow = $this->db->query("SELECT `var` FROM `" . DB_PREFIX . "amazonus_product` WHERE `sku` = '" . $amazonusSku . "' AND `product_id` = '" . (int)$product_id . "'")->row;
 			$var = isset($varRow['var']) ? $varRow['var'] : '';
 			$this->linkProduct($amazonusSku, $product_id, $var);
@@ -33,7 +33,7 @@ class ModelOpenbayAmazonusProduct extends Model {
 	public function setSubmitError($insertion_id, $message) {
 		$skuRows = $this->db->query("SELECT `sku` FROM `" . DB_PREFIX . "amazonus_product` WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'")->rows;
 
-		foreach($skuRows as $skuRow) {
+		foreach ($skuRows as $skuRow) {
 			$data = array(
 				'sku' => $skuRow['sku'],
 				'error_code' => '0',
@@ -46,7 +46,7 @@ class ModelOpenbayAmazonusProduct extends Model {
 
 	public function linkProduct($amazonus_sku, $product_id, $var = '') {
 		$count = $this->db->query("SELECT COUNT(*) as 'count' FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `product_id` = '" . (int)$product_id . "' AND `amazonus_sku` = '" . $this->db->escape($amazonus_sku) . "' AND `var` = '" . $this->db->escape($var) . "' LIMIT 1")->row;
-		if($count['count'] == 0) {
+		if ($count['count'] == 0) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "amazonus_product_link` SET `product_id` = '" . (int)$product_id . "', `amazonus_sku` = '" . $this->db->escape($amazonus_sku) . "', `var` = '" . $this->db->escape($var) . "'");
 		}
 	}
@@ -62,14 +62,14 @@ class ModelOpenbayAmazonusProduct extends Model {
 			$option_stocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);
 
 			$option = null;
-			foreach ($option_stocks as $optionIterator) {
-				if($optionIterator['var'] === $var) {
-					$option = $optionIterator;
+			foreach ($option_stocks as $option_iterator) {
+				if ($option_iterator['var'] === $var) {
+					$option = $option_iterator;
 					break;
 				}
 			}
 
-			if($option != null) {
+			if ($option != null) {
 				$result = $option['stock'];
 			}
 		} else {

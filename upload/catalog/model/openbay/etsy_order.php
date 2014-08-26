@@ -16,8 +16,8 @@ class ModelOpenbayEtsyOrder extends Model {
 		$this->db->query("TRUNCATE `" . DB_PREFIX . "order_product`");
 		$this->db->query("TRUNCATE `" . DB_PREFIX . "order_total`");
 */
-		if(!empty($orders)) {
-			foreach($orders as $order) {
+		if (!empty($orders)) {
+			foreach ($orders as $order) {
 				$etsy_order = $this->openbay->etsy->orderFind(null, $order->receipt_id);
 
 				if ($etsy_order != false) {
@@ -94,9 +94,9 @@ class ModelOpenbayEtsyOrder extends Model {
 	private function lockExists($order_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "etsy_order_lock` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 
-		if($query->num_rows > 0) {
+		if ($query->num_rows > 0) {
 			return true;
-		}else{
+		} else {
 			$this->lockAdd($order_id);
 			return false;
 		}
@@ -108,16 +108,16 @@ class ModelOpenbayEtsyOrder extends Model {
 
 		$customer_name = $this->openbay->splitName($order->name);
 
-		if(!empty($order->country->iso)){
+		if (!empty($order->country->iso)){
 			$country_qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `iso_code_2` = '" . $this->db->escape($order->country->iso) . "'");
 		}
 
-		if(!empty($country_qry->num_rows)){
+		if (!empty($country_qry->num_rows)){
 			$country_name = $country_qry->row['name'];
 			$country_id = $country_qry->row['country_id'];
 			$zone_id = $this->openbay->getZoneId($order->address_state, $country_id);
 			$country_address_format = $country_qry->row['address_format'];
-		}else{
+		} else {
 			$country_name = (string)$order->country->name;
 			$country_id = '';
 			$zone_id = '';
@@ -184,7 +184,7 @@ class ModelOpenbayEtsyOrder extends Model {
 
 		$order_id = $this->db->getLastId();
 
-		foreach($order->transactions as $transaction) {
+		foreach ($order->transactions as $transaction) {
 			$product = $this->openbay->etsy->getLinkedProduct($transaction->etsy_listing_id);
 
 			if ($product != false) {

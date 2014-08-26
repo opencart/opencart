@@ -547,9 +547,9 @@ class ModelOpenbayAmazon extends Model {
 			$option_stocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);
 
 			$option = null;
-			foreach ($option_stocks as $optionIterator) {
-				if ($optionIterator['var'] === $var) {
-					$option = $optionIterator;
+			foreach ($option_stocks as $option_iterator) {
+				if ($option_iterator['var'] === $var) {
+					$option = $option_iterator;
 					break;
 				}
 			}

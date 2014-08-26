@@ -1,8 +1,8 @@
 <?php
 class Amazonus {
 	private $token;
-	private $encPass;
-	private $encSalt;
+	private $encryption_password;
+	private $encryption_salt;
 	private $server = 'http://us-amazon.openbaypro.com/';
 	private $registry;
 
@@ -10,8 +10,8 @@ class Amazonus {
 		$this->registry = $registry;
 
 		$this->token   = $registry->get('config')->get('openbay_amazonus_token');
-		$this->encPass = $registry->get('config')->get('openbay_amazonus_enc_string1');
-		$this->encSalt = $registry->get('config')->get('openbay_amazonus_enc_string2');
+		$this->encryption_password = $registry->get('config')->get('openbay_amazonus_enc_string1');
+		$this->encryption_salt = $registry->get('config')->get('openbay_amazonus_enc_string2');
 
 	}
 
@@ -41,9 +41,9 @@ class Amazonus {
 				$logger->write(print_r($os_products, true));
 				$quantity_data = array();
 				foreach ($os_products as $os_product) {
-					$amazonusSkuRows = $this->getLinkedSkus($os_product['pid'], $os_product['var']);
-					foreach($amazonusSkuRows as $amazonusSkuRow) {
-						$quantity_data[$amazonusSkuRow['amazonus_sku']] = $os_product['qty_left'];
+					$amazonus_sku_rows = $this->getLinkedSkus($os_product['pid'], $os_product['var']);
+					foreach($amazonus_sku_rows as $amazonus_sku_row) {
+						$quantity_data[$amazonus_sku_row['amazonus_sku']] = $os_product['qty_left'];
 					}
 				}
 				if(!empty($quantity_data)) {
@@ -72,9 +72,9 @@ class Amazonus {
 			$logger->write('openStock found installed and product has options.');
 			$quantity_data = array();
 			foreach($data['product_option_stock'] as $opt_stock) {
-				$amazonusSkuRows = $this->getLinkedSkus($product_id, $opt_stock['var']);
-				foreach($amazonusSkuRows as $amazonusSkuRow) {
-					$quantity_data[$amazonusSkuRow['amazonus_sku']] = $opt_stock['stock'];
+				$amazonus_sku_rows = $this->getLinkedSkus($product_id, $opt_stock['var']);
+				foreach($amazonus_sku_rows as $amazonus_sku_row) {
+					$quantity_data[$amazonus_sku_row['amazonus_sku']] = $opt_stock['stock'];
 				}
 			}
 			if(!empty($quantity_data)) {
@@ -256,7 +256,7 @@ class Amazonus {
 			$arg_string = $data;
 		}
 
-		$token = $this->pbkdf2($this->encPass, $this->encSalt, 1000, 32);
+		$token = $this->pbkdf2($this->encryption_password, $this->encryption_salt, 1000, 32);
 		$crypt = $this->encrypt($arg_string, $token, true);
 
 		$defaults = array(
@@ -288,7 +288,7 @@ class Amazonus {
 			$arg_string = $data;
 		}
 
-		$token = $this->pbkdf2($this->encPass, $this->encSalt, 1000, 32);
+		$token = $this->pbkdf2($this->encryption_password, $this->encryption_salt, 1000, 32);
 		$crypt = $this->encrypt($arg_string, $token, true);
 
 		$defaults = array(
@@ -323,7 +323,7 @@ class Amazonus {
 			}
 		}
 
-		$token = $this->pbkdf2($this->encPass, $this->encSalt, 1000, 32);
+		$token = $this->pbkdf2($this->encryption_password, $this->encryption_salt, 1000, 32);
 		$data = $this->decrypt($crypt, $token);
 
 		return $data;
@@ -466,12 +466,12 @@ class Amazonus {
 						ASC");
 
 					if ($product_option_query->num_rows != 0) {
-						$pOptions = array();
+						$p_options = array();
 						foreach ($product_option_query->rows as $p_option_row) {
-							$pOptions[] = $p_option_row['product_option_value_id'];
+							$p_options[] = $p_option_row['product_option_value_id'];
 						}
 
-						$var = implode(':', $pOptions);
+						$var = implode(':', $p_options);
 						$quantity_left_row = $this->db->query("SELECT `stock` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$order_product['product_id'] . "' AND `var` = '" . $this->db->escape($var) . "'")->row;
 						if(empty($quantity_left_row)) {
 							$quantity_left_row['stock'] = 0;

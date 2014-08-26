@@ -168,7 +168,7 @@ class ModelOpenbayAmazonusOrder extends Model {
 		$options = array();
 
 		$option_value_ids = explode(':', $product_var);
-		foreach($option_value_ids as $optionValueId) {
+		foreach ($option_value_ids as $optionValueId) {
 			$option_details_row = $this->db->query("SELECT
 				pov.product_option_id,
 				pov.product_option_value_id,
@@ -187,7 +187,7 @@ class ModelOpenbayAmazonusOrder extends Model {
 				od.option_id = pov.option_id AND od.language_id = '" . (int)$this->config->get('config_language_id') . "'
 			")->row;
 
-			if(!empty($option_details_row)) {
+			if (!empty($option_details_row)) {
 				$options[] = array(
 					'product_option_id' => (int)$option_details_row['product_option_id'],
 					'product_option_value_id' => (int)$option_details_row['product_option_value_id'],

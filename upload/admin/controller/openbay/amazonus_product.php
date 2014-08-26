@@ -402,9 +402,9 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 		);
 
 		$this->load->model('localisation/weight_class');
-		$weightClass = $this->model_localisation_weight_class->getWeightClass($product_info['weight_class_id']);
-		if (!empty($weightClass)) {
-			$defaults['shippingweightunitofmeasure'] = $weightClass['unit'];
+		$weight_class = $this->model_localisation_weight_class->getWeightClass($product_info['weight_class_id']);
+		if (!empty($weight_class)) {
+			$defaults['shippingweightunitofmeasure'] = $weight_class['unit'];
 		}
 
 		$this->load->model('catalog/manufacturer');
@@ -414,11 +414,11 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 			$defaults['brand'] = $manufacturer['name'];
 		}
 
-		$productImages = $this->model_catalog_product->getProductImages($product_id);
-		$imageIndex = 1;
-		foreach($productImages as $productImage) {
-			$defaults['pt' . $imageIndex] = HTTPS_CATALOG . 'image/' . $productImage['image'];
-			$imageIndex ++;
+		$product_images = $this->model_catalog_product->getProductImages($product_id);
+		$image_index = 1;
+		foreach($product_images as $product_image) {
+			$defaults['pt' . $image_index] = HTTPS_CATALOG . 'image/' . $product_image['image'];
+			$image_index ++;
 		}
 
 		if (!empty($product_info['upc'])) {
@@ -440,9 +440,9 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 			$option_stocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);
 
 			$option = null;
-			foreach ($option_stocks as $optionIterator) {
-				if ($optionIterator['var'] === $var) {
-					$option = $optionIterator;
+			foreach ($option_stocks as $option_iterator) {
+				if ($option_iterator['var'] === $var) {
+					$option = $option_iterator;
 					break;
 				}
 			}
@@ -464,7 +464,7 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 			unset($defaults['shippingweightunitofmeasure']);
 		}
 
-		$filledArray = array();
+		$filled_array = array();
 
 		foreach($fields_array as $field) {
 
@@ -474,11 +474,11 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 				$value_array = array('value' => $defaults[strtolower($field['name'])]);
 			}
 
-			$filledItem = array_merge($field, $value_array);
+			$filled_item = array_merge($field, $value_array);
 
-			$filledArray[] = $filledItem;
+			$filled_array[] = $filled_item;
 		}
-		return $filledArray;
+		return $filled_array;
 	}
 
 	private function fillSavedValues($product_id, $fields_array, $var = '') {
@@ -490,7 +490,7 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 
 		$saved_fields['Quantity'] = $this->model_openbay_amazonus->getProductQuantity($product_id, $var);
 
-		$filledArray = array();
+		$filled_array = array();
 
 		foreach($fields_array as $field) {
 			$value_array = array('value' => '');
@@ -499,12 +499,12 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 				$value_array = array('value' => $saved_fields[$field['name']]);
 			}
 
-			$filledItem = array_merge($field, $value_array);
+			$filled_item = array_merge($field, $value_array);
 
-			$filledArray[] = $filledItem;
+			$filled_array[] = $filled_item;
 		}
 
-		return $filledArray;
+		return $filled_array;
 	}
 
 	public function resetPending() {

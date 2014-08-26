@@ -285,8 +285,8 @@ class ControllerOpenbayAmazonus extends Controller {
 			'text'      => $this->language->get('text_settings'),
 		);
 
-		$data['marketplace_ids']                  = (isset($settings['openbay_amazonus_orders_marketplace_ids']) ? (array)$settings['openbay_amazonus_orders_marketplace_ids'] : array() );
-		$data['default_listing_marketplace_ids']  = ( isset($settings['openbay_amazonus_default_listing_marketplace_ids']) ? (array)$settings['openbay_amazonus_default_listing_marketplace_ids'] : array() );
+		$data['marketplace_ids']                  = (isset($settings['openbay_amazonus_orders_marketplace_ids'])) ? (array)$settings['openbay_amazonus_orders_marketplace_ids'] : array();
+		$data['default_listing_marketplace_ids']  = (isset($settings['openbay_amazonus_default_listing_marketplace_ids'])) ? (array)$settings['openbay_amazonus_default_listing_marketplace_ids'] : array();
 
 		$data['marketplaces'] = array(
 			array('name' => $this->language->get('text_de'), 'id' => 'A1PA6795UKMFR9', 'code' => 'de'),
@@ -962,13 +962,13 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->load->model('openbay/amazonus');
 
 		$links = array();
-		$amazonSkus = array();
+		$amazon_skus = array();
 
 		if (!empty($this->request->post['link'])) {
 			foreach ($this->request->post['link'] as $link) {
 				if (!empty($link['product_id'])) {
 					$links[] = $link;
-					$amazonSkus[] = $link['amazon_sku'];
+					$amazon_skus[] = $link['amazon_sku'];
 				}
 			}
 		}
@@ -978,7 +978,7 @@ class ControllerOpenbayAmazonus extends Controller {
 				$this->model_openbay_amazonus->linkProduct($link['amazon_sku'], $link['product_id'], $link['var']);
 			}
 
-			$this->model_openbay_amazonus->updateAmazonSkusQuantities($amazonSkus);
+			$this->model_openbay_amazonus->updateAmazonSkusQuantities($amazon_skus);
 		}
 	}
 }

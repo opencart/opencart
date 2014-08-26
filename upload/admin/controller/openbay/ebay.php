@@ -1197,7 +1197,9 @@ class ControllerOpenbayEbay extends Controller {
 
 			$data['product'] = $product_info;
 
-			if ($reserve == false) { $reserve = 0; }
+			if ($reserve == false) {
+				$reserve = 0;
+			}
 
 			$data = array(
 				'listing'   => $listings,
@@ -1277,10 +1279,16 @@ class ControllerOpenbayEbay extends Controller {
 				$setting = array();
 
 				$setting['dispatch_times'] = $this->openbay->ebay->getSetting('dispatch_time_max');
-				if (is_array($setting['dispatch_times'])) { ksort($setting['dispatch_times']); }
+
+				if (is_array($setting['dispatch_times'])) {
+					ksort($setting['dispatch_times']);
+				}
 
 				$setting['countries'] = $this->openbay->ebay->getSetting('countries');
-				if (is_array($setting['countries'])) { ksort($setting['countries']); }
+
+				if (is_array($setting['countries'])) {
+					ksort($setting['countries']);
+				}
 
 				$setting['returns'] = $this->openbay->ebay->getSetting('returns');
 				$setting['package_type'] = $this->openbay->ebay->getSetting('package_type');
@@ -1616,7 +1624,7 @@ class ControllerOpenbayEbay extends Controller {
 
 				$item_id = $this->openbay->ebay->getEbayItemId($this->request->post['product_id']);
 
-				if ($item_id == false) { // ensure that the sku is not already listed
+				if ($item_id == false) {
 					$data = $this->request->post;
 
 					if ($data['template'] != 'None') {

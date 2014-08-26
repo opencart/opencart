@@ -77,19 +77,29 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$setting = array();
 
 		$setting['who_made'] = $this->openbay->etsy->getSetting('who_made');
-		if (is_array($setting['who_made'])) { ksort($setting['who_made']); }
+		if (is_array($setting['who_made'])) {
+			ksort($setting['who_made']);
+		}
 
 		$setting['when_made'] = $this->openbay->etsy->getSetting('when_made');
-		if (is_array($setting['when_made'])) { ksort($setting['when_made']); }
+		if (is_array($setting['when_made'])) {
+			ksort($setting['when_made']);
+		}
 
 		$setting['recipient'] = $this->openbay->etsy->getSetting('recipient');
-		if (is_array($setting['recipient'])) { ksort($setting['recipient']); }
+		if (is_array($setting['recipient'])) {
+			ksort($setting['recipient']);
+		}
 
 		$setting['occasion'] = $this->openbay->etsy->getSetting('occasion');
-		if (is_array($setting['occasion'])) { ksort($setting['occasion']); }
+		if (is_array($setting['occasion'])) {
+			ksort($setting['occasion']);
+		}
 
 		$setting['top_categories'] = $this->openbay->etsy->getSetting('top_categories');
-		if (is_array($setting['top_categories'])) { ksort($setting['top_categories']); }
+		if (is_array($setting['top_categories'])) {
+			ksort($setting['top_categories']);
+		}
 
 		$setting['state'] = array('active', 'draft');
 

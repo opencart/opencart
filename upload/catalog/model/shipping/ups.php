@@ -148,7 +148,7 @@ class ModelShippingUps extends Model {
 			$xml .= '				<PostalCode>' . $address['postcode'] . '</PostalCode>';
 
 			if ($this->config->get('ups_quote_type') == 'residential') {
-				 $xml .= '				<ResidentialAddressIndicator />';
+				$xml .= '				<ResidentialAddressIndicator />';
 			}
 
 			$xml .= '			</Address>';

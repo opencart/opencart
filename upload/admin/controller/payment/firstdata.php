@@ -37,7 +37,6 @@ class ControllerPaymentFirstdata extends Controller {
 		$data['text_settle_delayed'] = $this->language->get('text_settle_delayed');
 		$data['text_settle_auto'] = $this->language->get('text_settle_auto');
 
-
 		$data['entry_merchant_id'] = $this->language->get('entry_merchant_id');
 		$data['entry_secret'] = $this->language->get('entry_secret');
 		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');

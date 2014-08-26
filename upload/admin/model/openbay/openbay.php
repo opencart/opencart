@@ -367,7 +367,7 @@ class ModelOpenbayOpenbay extends Model {
 
 		$root_directory = preg_replace('/catalog\/$/', '', DIR_CATALOG);
 
-		if (file_exists($root_directory.'/vqmod/xml/ebay.xml') || file_exists($root_directory.'/vqmod/xml/amazon.xml') || file_exists($root_directory.'/vqmod/xml/amazonus.xml') || file_exists($root_directory.'/vqmod/xml/play.xml') || file_exists($root_directory.'/vqmod/xml/openbay.xml')) {
+		if (file_exists($root_directory . '/vqmod/xml/ebay.xml') || file_exists($root_directory . '/vqmod/xml/amazon.xml') || file_exists($root_directory . '/vqmod/xml/amazonus.xml') || file_exists($root_directory . '/vqmod/xml/play.xml') || file_exists($root_directory . '/vqmod/xml/openbay.xml')) {
 			$error[] = $this->language->get('lang_error_vqmod');
 		}
 

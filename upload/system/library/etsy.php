@@ -37,15 +37,15 @@ final class Etsy {
 		if($this->config->get('etsy_status') == 1) {
 
 			$headers = array ();
-			$headers[] = 'X-Auth-Token: '.$this->token;
-			$headers[] = 'X-Auth-Enc: '.$this->enc1;
+			$headers[] = 'X-Auth-Token: ' . $this->token;
+			$headers[] = 'X-Auth-Enc: ' . $this->enc1;
 			$headers[] = 'Content-Type: application/json';
 			//$headers[] = 'Content-Length: '.strlen(json_encode($data));
 
 			$defaults = array(
 				CURLOPT_HEADER      	=> 0,
 				CURLOPT_HTTPHEADER      => $headers,
-				CURLOPT_URL             => $this->url.$uri,
+				CURLOPT_URL             => $this->url . $uri,
 				CURLOPT_USERAGENT       => "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.1) Gecko/20061204 Firefox/2.0.0.1",
 				CURLOPT_FRESH_CONNECT   => 1,
 				CURLOPT_RETURNTRANSFER  => 1,
@@ -54,7 +54,7 @@ final class Etsy {
 				CURLOPT_SSL_VERIFYPEER  => 0,
 				CURLOPT_SSL_VERIFYHOST  => 0,
 				CURLOPT_VERBOSE 		=> true,
-				CURLOPT_STDERR 			=> fopen(DIR_LOGS.'curl_verbose.log', "w+")
+				CURLOPT_STDERR 			=> fopen(DIR_LOGS . 'curl_verbose.log', "w+")
 			);
 
 			if ($method == 'POST') {
@@ -107,11 +107,11 @@ final class Etsy {
 		$response = $this->call('data/type/getSetup', 'GET');
 
 		foreach ($response['data'] as $key => $options) {
-			$this->db->query("DELETE FROM `" . DB_PREFIX . "etsy_setting_option` WHERE  `key` = '".$this->db->escape($key)."' LIMIT 1");
+			$this->db->query("DELETE FROM `" . DB_PREFIX . "etsy_setting_option` WHERE  `key` = '" . $this->db->escape($key) . "' LIMIT 1");
 
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "etsy_setting_option` SET `data` = '" . $this->db->escape(serialize($options)) . "', `key` = '".$this->db->escape($key)."', `last_updated`  = now()");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "etsy_setting_option` SET `data` = '" . $this->db->escape(serialize($options)) . "', `key` = '" . $this->db->escape($key) . "', `last_updated`  = now()");
 
-			$this->log('Updated Etsy option: '.$key);
+			$this->log('Updated Etsy option: ' . $key);
 		}
 
 		$this->log('Etsy loadDataTypes() complete');
@@ -128,7 +128,7 @@ final class Etsy {
 	}
 
 	public function getLinks($product_id, $status = 0, $limit = null) {
-		$this->log('getLinks() - Product_id: '.$product_id.' status: '.$status.' limit:'.$limit);
+		$this->log('getLinks() - Product_id: ' . $product_id . ' status: ' . $status . ' limit:' . $limit);
 
 		if ($limit != null) {
 			$sql_limit = ' LIMIT 1';
@@ -137,7 +137,7 @@ final class Etsy {
 		}
 
 
-		$qry = $this->db->query("SELECT `el`.*, `p`.`quantity` FROM `" . DB_PREFIX . "etsy_listing` `el` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `el`.`product_id` = `p`.`product_id` WHERE `el`.`product_id` = '" . (int)$product_id . "' AND `el`.`status` = '".(int)$status."' ORDER BY `el`.`created` DESC".$sql_limit);
+		$qry = $this->db->query("SELECT `el`.*, `p`.`quantity` FROM `" . DB_PREFIX . "etsy_listing` `el` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `el`.`product_id` = `p`.`product_id` WHERE `el`.`product_id` = '" . (int)$product_id . "' AND `el`.`status` = '" . (int)$status . "' ORDER BY `el`.`created` DESC" . $sql_limit);
 
 		if ($qry->num_rows) {
 			$links = array();
@@ -179,7 +179,7 @@ final class Etsy {
 
 	public function updateListingStock($etsy_item_id, $new_stock) {
 		if ($new_stock > 0) {
-			$response = $this->call('product/listing/'.(int)$etsy_item_id.'/updateStock', 'POST', array('quantity' => $new_stock));
+			$response = $this->call('product/listing/' . (int)$etsy_item_id . '/updateStock', 'POST', array('quantity' => $new_stock));
 
 			if (isset($response['data']['error'])) {
 				return $response;
@@ -189,7 +189,7 @@ final class Etsy {
 		} else {
 			$this->deleteLink(null, $etsy_item_id);
 
-			$response = $this->call('product/listing/'.(int)$etsy_item_id.'/inactive', 'POST');
+			$response = $this->call('product/listing/' . (int)$etsy_item_id . '/inactive', 'POST');
 
 			if (isset($response['data']['error'])) {
 				return $response;
@@ -327,7 +327,7 @@ final class Etsy {
 
 	public function orderFind($order_id = null, $receipt_id = null) {
 		if ($order_id != null) {
-			$this->log('Find order id: '.$order_id);
+			$this->log('Find order id: ' . $order_id);
 			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "etsy_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 
 			if($query->num_rows > 0) {
@@ -416,7 +416,7 @@ final class Etsy {
 	}
 
 	public function getEtsyItem($listing_id) {
-		$response = $this->openbay->etsy->call('product/listing/'.$listing_id, 'GET');
+		$response = $this->openbay->etsy->call('product/listing/' . $listing_id, 'GET');
 
 		if (isset($response['data']['error'])) {
 			return $response;

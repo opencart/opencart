@@ -270,7 +270,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$get_response = $this->openbay->etsy->getEtsyItem($data['etsy_id']);
 
 		if (isset($get_response['data']['error'])) {
-			echo json_encode(array('error' => $this->language->get('error_etsy').$get_response['data']['error']));
+			echo json_encode(array('error' => $this->language->get('error_etsy') . $get_response['data']['error']));
 			die();
 		} else {
 			if ((int)$get_response['quantity'] != (int)$product['quantity']) {
@@ -278,7 +278,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 				$update_response = $this->openbay->etsy->updateListingStock($data['etsy_id'], $product['quantity']);
 
 				if (isset($update_response['data']['error'])) {
-					echo json_encode(array('error' => $this->language->get('error_etsy').$update_response['data']['error']));
+					echo json_encode(array('error' => $this->language->get('error_etsy') . $update_response['data']['error']));
 					die();
 				}
 			}
@@ -438,7 +438,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			$data['listings'] = array();
 			$data['pagination'] = '';
 			$data['results'] = '';
-			$this->error['warning'] = $this->language->get('error_etsy').$listing_response['data']['error'];
+			$this->error['warning'] = $this->language->get('error_etsy') . $listing_response['data']['error'];
 		}else {
 			$listings = array();
 
@@ -531,7 +531,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$response = $this->openbay->etsy->call('product/listing/' . (int)$data['etsy_item_id'] . '/delete', 'POST', array());
 
 		if (isset($response['data']['error'])) {
-			echo json_encode(array('error' => $this->language->get('error_etsy').$response['data']['error']));
+			echo json_encode(array('error' => $this->language->get('error_etsy') . $response['data']['error']));
 			die();
 		} else {
 			$linked_item = $this->openbay->etsy->getLinkedProduct($data['etsy_item_id']);
@@ -558,7 +558,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$response = $this->openbay->etsy->call('product/listing/' . (int)$data['etsy_item_id'] . '/inactive', 'POST', array());
 
 		if (isset($response['data']['error'])) {
-			echo json_encode(array('error' => $this->language->get('error_etsy').$response['data']['error']));
+			echo json_encode(array('error' => $this->language->get('error_etsy') . $response['data']['error']));
 			die();
 		} else {
 			$linked_item = $this->openbay->etsy->getLinkedProduct($data['etsy_item_id']);
@@ -587,7 +587,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$response = $this->openbay->etsy->call('product/listing/' . (int)$data['etsy_item_id'] . '/active', 'POST', array());
 
 		if (isset($response['data']['error'])) {
-			echo json_encode(array('error' => $this->language->get('error_etsy').$response['data']['error']));
+			echo json_encode(array('error' => $this->language->get('error_etsy') . $response['data']['error']));
 			die();
 		} else {
 			$this->response->setOutput(json_encode(array('error' => false)));

@@ -49,7 +49,7 @@ class ControllerEbayOpenbay extends Controller {
 					if($product_id != false) {
 						$this->openbay->ebay->createLink($product_id, $data['itemId'], '');
 						$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_listing_pending` WHERE `key` = '" . $this->db->escape($data['key']) . "' LIMIT 1");
-						$this->openbay->ebay->log('A link was found with product id: '.$product_id.', item id: '.$data['itemId'].' and key: '.$data['key']);
+						$this->openbay->ebay->log('A link was found with product id: ' . $product_id . ', item id: ' . $data['itemId'] . ' and key: ' . $data['key']);
 					} else {
 						$this->openbay->ebay->log('No link found to previous item');
 					}

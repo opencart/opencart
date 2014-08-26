@@ -37,14 +37,14 @@ final class Openbay {
 		 */
 
 		foreach ($this->installed_markets as $market) {
-			if ($this->config->get($market.'_status') == 1) {
+			if ($this->config->get($market . '_status') == 1) {
 				$this->{$market}->putStockUpdateBulk($product_id_array, $end_inactive);
 			}
 		}
 	}
 
 	public function testDbColumn($table, $column) {
-		$res = $this->db->query("SHOW COLUMNS FROM `".DB_PREFIX.$table."` LIKE '".$column."'");
+		$res = $this->db->query("SHOW COLUMNS FROM `" . DB_PREFIX . $table . "` LIKE '" . $column . "'");
 		if($res->num_rows != 0) {
 			return true;
 		}else{
@@ -127,7 +127,7 @@ final class Openbay {
 	}
 
 	public function getZoneId($name, $country_id) {
-		$query = $this->db->query("SELECT `zone_id` FROM `" . DB_PREFIX . "zone` WHERE `country_id` = '" . (int)$country_id . "' AND status = '1' AND `name` = '".$this->db->escape($name)."'");
+		$query = $this->db->query("SELECT `zone_id` FROM `" . DB_PREFIX . "zone` WHERE `country_id` = '" . (int)$country_id . "' AND status = '1' AND `name` = '" . $this->db->escape($name) . "'");
 
 		if($query->num_rows > 0) {
 			return $query->row['zone_id'];
@@ -229,7 +229,7 @@ final class Openbay {
 		 * Use it to add stock back to the marketplaces
 		 */
 		foreach ($this->installed_markets as $market) {
-			if ($this->config->get($market.'_status') == 1) {
+			if ($this->config->get($market . '_status') == 1) {
 				$this->{$market}->orderDelete($order_id);
 			}
 		}
@@ -237,7 +237,7 @@ final class Openbay {
 
 	public function getProductModelNumber($product_id, $sku = null) {
 		if($sku != null) {
-			$qry = $this->db->query("SELECT `sku` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '".(int)$product_id."' AND `var` = '".$this->db->escape($sku)."'");
+			$qry = $this->db->query("SELECT `sku` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($sku) . "'");
 
 			if($qry->num_rows > 0) {
 				return $qry->row['sku'];
@@ -245,7 +245,7 @@ final class Openbay {
 				return false;
 			}
 		}else{
-			$qry = $this->db->query("SELECT `model` FROM `" . DB_PREFIX . "product` WHERE `product_id` = '".(int)$product_id."' LIMIT 1");
+			$qry = $this->db->query("SELECT `model` FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "' LIMIT 1");
 
 			if($qry->num_rows > 0) {
 				return $qry->row['model'];
@@ -272,7 +272,7 @@ final class Openbay {
 	}
 
 	public function getUserByEmail($email) {
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer` WHERE `email` = '".$this->db->escape($email)."'");
+		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer` WHERE `email` = '" . $this->db->escape($email) . "'");
 
 		if($qry->num_rows){
 			return $qry->row['customer_id'];

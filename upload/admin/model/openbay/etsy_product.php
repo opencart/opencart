@@ -18,7 +18,7 @@ class ModelOpenbayEtsyProduct extends Model{
 	}
 
 	public function addLink($product_id, $etsy_item_id, $status_id = 0) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "etsy_listing` SET `product_id` = '" . (int)$product_id . "', `etsy_item_id` = '".$this->db->escape($etsy_item_id)."', `status` = '" . (int)$status_id . "', `created`  = now()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "etsy_listing` SET `product_id` = '" . (int)$product_id . "', `etsy_item_id` = '" . $this->db->escape($etsy_item_id) . "', `status` = '" . (int)$status_id . "', `created`  = now()");
 	}
 
 	public function loadLinked($limit = 100, $page = 1) {

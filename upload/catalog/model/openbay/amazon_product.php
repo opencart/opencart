@@ -24,25 +24,25 @@ class ModelOpenbayAmazonProduct extends Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "amazon_product_error` SET `sku` = '" . $this->db->escape($data['sku']) . "', `error_code` = '" . (int)$data['error_code'] . "', `message` = '" . $this->db->escape($data['message']) . "', `insertion_id` = '" . $this->db->escape($data['insertion_id']) . "'");
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "amazon_product`SET `status` = 'error' WHERE `sku` = '" . $this->db->escape($data['sku']) . "' AND `insertion_id` = '" . $this->db->escape($data['insertion_id']) . "'");
-	 }
+	}
 
 	public function deleteErrors($insertion_id) {
-		 $this->db->query("DELETE FROM `" . DB_PREFIX . "amazon_product_error` WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'");
-	 }
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "amazon_product_error` WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'");
+	}
 
 	public function setSubmitError($insertion_id, $message) {
-		$skuRows = $this->db->query("SELECT `sku` FROM `" . DB_PREFIX . "amazon_product` WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'")->rows;
+		$sku_rows = $this->db->query("SELECT `sku` FROM `" . DB_PREFIX . "amazon_product` WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'")->rows;
 
-		foreach ($skuRows as $skuRow) {
+		foreach ($sku_rows as $sku_row) {
 			$data = array(
-				'sku' => $skuRow['sku'],
+				'sku' => $sku_row['sku'],
 				'error_code' => '0',
 				'message' => $message,
 				'insertion_id' => $insertion_id
 			);
 			$this->insertError($data);
 		}
-	 }
+	}
 
 	public function linkProduct($amazon_sku, $product_id, $var = '') {
 		$count = $this->db->query("SELECT COUNT(*) as 'count' FROM `" . DB_PREFIX . "amazon_product_link` WHERE `product_id` = '" . (int)$product_id . "' AND `amazon_sku` = '" . $this->db->escape($amazon_sku) . "' AND `var` = '" . $this->db->escape($var) . "' LIMIT 1")->row;

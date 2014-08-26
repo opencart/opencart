@@ -52,43 +52,43 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$data['link_overview'] = $this->url->link('openbay/amazonus/overview', 'token=' . $this->session->data['token'], 'SSL');
 
-		$requestArgs = array();
+		$request_args = array();
 
 		if (isset($this->request->get['filter_date_start'])) {
-			$requestArgs['date_start'] = date("Y-m-d", strtotime($this->request->get['filter_date_start']));
+			$request_args['date_start'] = date("Y-m-d", strtotime($this->request->get['filter_date_start']));
 		} else {
-			$requestArgs['date_start'] = date("Y-m-d");
+			$request_args['date_start'] = date("Y-m-d");
 		}
 
 		if (isset($this->request->get['filter_date_end'])) {
-			$requestArgs['date_end'] = date("Y-m-d", strtotime($this->request->get['filter_date_end']));
+			$request_args['date_end'] = date("Y-m-d", strtotime($this->request->get['filter_date_end']));
 		} else {
-			$requestArgs['date_end'] = date("Y-m-d");
+			$request_args['date_end'] = date("Y-m-d");
 		}
 
-		$data['date_start'] = $requestArgs['date_start'];
-		$data['date_end'] = $requestArgs['date_end'];
+		$data['date_start'] = $request_args['date_start'];
+		$data['date_end'] = $request_args['date_end'];
 
-		$xml = $this->openbay->amazonus->getStockUpdatesStatus($requestArgs);
-		$simpleXmlObj = simplexml_load_string($xml);
+		$xml = $this->openbay->amazonus->getStockUpdatesStatus($request_args);
+		$simple_xml_obj = simplexml_load_string($xml);
 		$data['table_data'] = array();
 
-		if ($simpleXmlObj !== false) {
+		if ($simple_xml_obj !== false) {
 			$table_data = array();
 
-			foreach($simpleXmlObj->update as $updateNode) {
-				$row = array('date_requested' => (string)$updateNode->date_requested,
-					'date_updated' => (string)$updateNode->date_updated,
-					'status' => (string)$updateNode->status,
+			foreach($simple_xml_obj->update as $update_node) {
+				$row = array('date_requested' => (string)$update_node->date_requested,
+					'date_updated' => (string)$update_node->date_updated,
+					'status' => (string)$update_node->status,
 					);
 				$data = array();
-				foreach($updateNode->data->product as $productNode) {
-					$data[] = array('sku' => (string)$productNode->sku,
-						'stock' => (int)$productNode->stock
+				foreach($update_node->data->product as $product_node) {
+					$data[] = array('sku' => (string)$product_node->sku,
+						'stock' => (int)$product_node->stock
 						);
 				}
 				$row['data'] = $data;
-				$table_data[(int)$updateNode->ref] = $row;
+				$table_data[(int)$update_node->ref] = $row;
 			}
 
 			$data['table_data'] = $table_data;
@@ -326,7 +326,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$shipped_status_id = isset($settings['openbay_amazonus_order_status_shipped']) ? $settings['openbay_amazonus_order_status_shipped'] : '';
 		$canceled_status_id = isset($settings['openbay_amazonus_order_status_canceled']) ? $settings['openbay_amazonus_order_status_canceled'] : '';
 
-		$amazonusOrderStatuses = array(
+		$amazonus_order_statuses = array(
 			'unshipped' => array('name' => $this->language->get('text_unshipped'), 'order_status_id' => $unshipped_status_id),
 			'partially_shipped' => array('name' => $this->language->get('text_partially_shipped'), 'order_status_id' => $partially_shipped_status_id),
 			'shipped' => array('name' => $this->language->get('text_shipped'), 'order_status_id' => $shipped_status_id),
@@ -336,7 +336,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
 		$data['openbay_amazonus_order_customer_group'] = isset($settings['openbay_amazonus_order_customer_group']) ? $settings['openbay_amazonus_order_customer_group'] : '';
 
-		$data['amazonus_order_statuses'] = $amazonusOrderStatuses;
+		$data['amazonus_order_statuses'] = $amazonus_order_statuses;
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 		$data['subscription_url'] = $this->url->link('openbay/amazonus/subscription', 'token=' . $this->session->data['token'], 'SSL');

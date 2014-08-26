@@ -110,15 +110,15 @@ class ControllerEbayOpenbay extends Controller {
 	}
 
 	public function ping() {
-		$postSize   = ini_get('post_max_size');
-		$postSize   = (int)str_replace(array('M','m','Mb','MB'), '', $postSize);
+		$post_size   = ini_get('post_max_size');
+		$post_size   = (int)str_replace(array('M','m','Mb','MB'), '', $post_size);
 		$version    = (int)$this->config->get('openbay_version');
 
 		$this->response->addHeader('Cache-Control: no-cache, must-revalidate');
 		$this->response->addHeader('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 		$this->response->addHeader('Content-type: application/json; charset=utf-8');
 
-		$this->response->setOutput(json_encode(array('msg' => 'ok', 'max_post' => $postSize, 'version' => $version)));
+		$this->response->setOutput(json_encode(array('msg' => 'ok', 'max_post' => $post_size, 'version' => $version)));
 	}
 
 	public function autoSetup() {
@@ -170,11 +170,11 @@ class ControllerEbayOpenbay extends Controller {
 		/*
 		// Commented out by default, only used for debug during support request
 		$post = $this->request->post;
-		$postSize   = ini_get('post_max_size');
-		$postSize   = (int)str_replace(array('M','m','Mb','MB'), '', $postSize);
+		$post_size   = ini_get('post_max_size');
+		$post_size   = (int)str_replace(array('M','m','Mb','MB'), '', $post_size);
 
 		$response = array();
-		$response['php_postsize'] = $postSize;
+		$response['php_postsize'] = $post_size;
 		$response['string1_length'] = strlen($post['string1']);
 		$response['string1_text'] = $post['string1'];
 		$response['string2_length'] = isset($post['string2']) ? strlen($post['string2']) : '';

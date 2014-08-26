@@ -416,14 +416,14 @@ class Amazonus {
 		$quantity_data = array();
 		foreach($product_id_array as $product_id) {
 			$amazonus_rows = $this->getLinkedSkus($product_id);
-			foreach($amazonus_rows as $amazonusRow) {
+			foreach($amazonus_rows as $amazonus_row) {
 				$product_row = $this->db->query("SELECT quantity, status FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "'")->row;
 
 				if(!empty($product_row)) {
 					if($end_inactive && $product_row['status'] == '0') {
-						$quantity_data[$amazonusRow['amazonus_sku']] = 0;
+						$quantity_data[$amazonus_row['amazonus_sku']] = 0;
 					} else {
-						$quantity_data[$amazonusRow['amazonus_sku']] = $product_row['quantity'];
+						$quantity_data[$amazonus_row['amazonus_sku']] = $product_row['quantity'];
 					}
 				}
 			}

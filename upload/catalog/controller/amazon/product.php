@@ -98,21 +98,21 @@ class ControllerAmazonProduct extends Controller {
 			return;
 		}
 
-		$dataXml = simplexml_load_string($data);
+		$data_xml = simplexml_load_string($data);
 
-		if(!isset($dataXml->action)) {
+		if(!isset($data_xml->action)) {
 			$this->response->setOutput("error 004");
 			return;
 		}
 
-		$action = trim((string)$dataXml->action);
+		$action = trim((string)$data_xml->action);
 
 		if ($action === "get_amazon_product") {
-			if(!isset($dataXml->product_id)) {
+			if(!isset($data_xml->product_id)) {
 				$this->response->setOutput("error 005");
 				return;
 			}
-			$product_id = trim((string)$dataXml->product_id);
+			$product_id = trim((string)$data_xml->product_id);
 			if ($product_id === "all") {
 				$all_rows = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_product`")->rows;
 

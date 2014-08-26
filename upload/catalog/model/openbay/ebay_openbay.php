@@ -44,8 +44,8 @@ class ModelOpenbayEbayOpenbay extends Model{
 			return;
 		}
 
-		if (!is_array($order->txn)) { 
-			$order->txn = array($order->txn); 
+		if (!is_array($order->txn)) {
+			$order->txn = array($order->txn);
 		}
 
 		$order_id = $this->model_openbay_ebay_order->find($order->smpId);
@@ -232,10 +232,10 @@ class ModelOpenbayEbayOpenbay extends Model{
 		$currency = $this->model_localisation_currency->getCurrencyByCode($this->config->get('openbay_def_currency'));
 
 		if ($this->config->get('openbaypro_create_date') == 1) {
-			$created_dateObj     = new DateTime((string)$order->order->created);
+			$created_date_obj     = new DateTime((string)$order->order->created);
 			$offset             = ($this->config->get('openbaypro_time_offset') != '' ? (int)$this->config->get('openbaypro_time_offset') : (int)0);
-			$created_dateObj->modify($offset . ' hour');
-			$created_date        = $created_dateObj->format('Y-m-d H:i:s');
+			$created_date_obj->modify($offset . ' hour');
+			$created_date        = $created_date_obj->format('Y-m-d H:i:s');
 		} else {
 			$created_date = date("Y-m-d H:i:s");
 			$offset = 0;
@@ -291,8 +291,8 @@ class ModelOpenbayEbayOpenbay extends Model{
 				//calculate taxes that come in from eBay
 				$this->openbay->ebay->log('create() - Using tax rates from eBay');
 
-				$priceNet = $price;
-				$this->openbay->ebay->log('create() - Net price: ' . $priceNet);
+				$price_net = $price;
+				$this->openbay->ebay->log('create() - Net price: ' . $price_net);
 
 				$total_net = $price * $qty;
 				$this->openbay->ebay->log('create() - Total net price: ' . $total_net);
@@ -303,13 +303,13 @@ class ModelOpenbayEbayOpenbay extends Model{
 				//use the store pre-set tax-rate for everything
 				$this->openbay->ebay->log('create() - Using tax rates from store');
 
-				$priceNet = $price / $this->tax;
-				$this->openbay->ebay->log('create() - Net price: ' . $priceNet);
+				$price_net = $price / $this->tax;
+				$this->openbay->ebay->log('create() - Net price: ' . $price_net);
 
-				$total_net = $priceNet * $qty;
+				$total_net = $price_net * $qty;
 				$this->openbay->ebay->log('create() - Total net price: ' . $total_net);
 
-				$tax = number_format(($price - $priceNet), 4, ' . ', '');
+				$tax = number_format(($price - $price_net), 4, ' . ', '');
 				$this->openbay->ebay->log('create() - Tax: ' . $tax);
 			}
 
@@ -324,7 +324,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 					`name`                = '" . $this->db->escape((isset($txn->item->varianttitle) && !empty($txn->item->varianttitle)) ? $txn->item->varianttitle : $txn->item->name) . "',
 					`model`               = '" . $this->db->escape($model_number) . "',
 					`quantity`            = '" . (int)$qty . "',
-					`price`               = '" . (double)$priceNet . "',
+					`price`               = '" . (double)$price_net . "',
 					`total`               = '" . (double)$total_net . "',
 					`tax`                 = '" . (double)$tax . "'
 				");

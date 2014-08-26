@@ -13,10 +13,10 @@ class ModelOpenbayAmazonusProduct extends Model {
 	}
 
 	public function linkItems(array $data) {
-		foreach ($data as $amazonusSku => $product_id) {
-			$varRow = $this->db->query("SELECT `var` FROM `" . DB_PREFIX . "amazonus_product` WHERE `sku` = '" . $amazonusSku . "' AND `product_id` = '" . (int)$product_id . "'")->row;
+		foreach ($data as $amazonus_sku => $product_id) {
+			$varRow = $this->db->query("SELECT `var` FROM `" . DB_PREFIX . "amazonus_product` WHERE `sku` = '" . $amazonus_sku . "' AND `product_id` = '" . (int)$product_id . "'")->row;
 			$var = isset($varRow['var']) ? $varRow['var'] : '';
-			$this->linkProduct($amazonusSku, $product_id, $var);
+			$this->linkProduct($amazonus_sku, $product_id, $var);
 		}
 	}
 
@@ -85,24 +85,24 @@ class ModelOpenbayAmazonusProduct extends Model {
 
 	public function updateSearch($results) {
 		foreach ($results as $result) {
-			$resultsFound = count($result['results']);
+			$results_found = count($result['results']);
 
 			$data = json_encode($result['results']);
 
-			$this->db->query("UPDATE " . DB_PREFIX . "amazonus_product_search SET matches = " . (int)$resultsFound . ", `data` = '" . $this->db->escape($data) . "', `status` = 'finished' WHERE product_id = " . (int)$result['product_id'] . " LIMIT 1");
+			$this->db->query("UPDATE " . DB_PREFIX . "amazonus_product_search SET matches = " . (int)$results_found . ", `data` = '" . $this->db->escape($data) . "', `status` = 'finished' WHERE product_id = " . (int)$result['product_id'] . " LIMIT 1");
 		}
 	}
 
 	public function addListingReport($data) {
 		$sql = "INSERT INTO " . DB_PREFIX . "amazonus_listing_report (sku, quantity, asin, price) VALUES ";
 
-		$sqlValues = array();
+		$sql_values = array();
 
 		foreach ($data as $product) {
-			$sqlValues[] = " ('" . $this->db->escape($product['sku']) . "', " . (int)$product['quantity'] . ", '" . $this->db->escape($product['asin']) . "', " . (double)$product['price'] . ") ";
+			$sql_values[] = " ('" . $this->db->escape($product['sku']) . "', " . (int)$product['quantity'] . ", '" . $this->db->escape($product['asin']) . "', " . (double)$product['price'] . ") ";
 		}
 
-		$sql .= implode(',', $sqlValues);
+		$sql .= implode(',', $sql_values);
 
 		$this->db->query($sql);
 	}

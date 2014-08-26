@@ -85,13 +85,13 @@ class ModelOpenbayAmazonProduct extends Model {
 
 	public function updateSearch($results) {
 		foreach ($results as $result) {
-			$resultsFound = count($result['results']);
+			$results_found = count($result['results']);
 
 			$data = json_encode($result['results']);
 
 			$this->db->query("
 				UPDATE " . DB_PREFIX . "amazon_product_search
-				SET matches = " . (int)$resultsFound . ",
+				SET matches = " . (int)$results_found . ",
 					`data` = '" . $this->db->escape($data) . "',
 					`status` = 'finished'
 				WHERE product_id = " . (int)$result['product_id'] . " AND
@@ -104,13 +104,13 @@ class ModelOpenbayAmazonProduct extends Model {
 	public function addListingReport($data) {
 		$sql = "INSERT INTO " . DB_PREFIX . "amazon_listing_report (marketplace, sku, quantity, asin, price) VALUES ";
 
-		$sqlValues = array();
+		$sql_values = array();
 
 		foreach ($data as $product) {
-			$sqlValues[] = " ('" . $this->db->escape($product['marketplace']) . "', '" . $this->db->escape($product['sku']) . "', " . (int)$product['quantity'] . ", '" . $this->db->escape($product['asin']) . "', " . (double)$product['price'] . ") ";
+			$sql_values[] = " ('" . $this->db->escape($product['marketplace']) . "', '" . $this->db->escape($product['sku']) . "', " . (int)$product['quantity'] . ", '" . $this->db->escape($product['asin']) . "', " . (double)$product['price'] . ") ";
 		}
 
-		$sql .= implode(',', $sqlValues);
+		$sql .= implode(',', $sql_values);
 
 		$this->db->query($sql);
 	}

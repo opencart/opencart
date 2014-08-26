@@ -172,7 +172,7 @@ class ModelOpenbayEbayProduct extends Model {
 			$this->openbay->ebay->log('Categories set not to be created');
 		}
 
-		$imgCount = 0;
+		$img_count = 0;
 
 		$current = $this->openbay->ebay->getLiveListingArray();
 
@@ -330,13 +330,13 @@ class ModelOpenbayEbayProduct extends Model {
 				}
 
 				//images
-				$imgCount = 0;
+				$img_count = 0;
 				if (is_array($item['pictures'])) {
 					foreach ($item['pictures'] as $img) {
 						if (!empty($img)) {
 							$name = rand(500000, 1000000000);
-							$this->addImage($img, DIR_IMAGE . 'data/' . $name . ' . jpg', $name . ' . jpg', $product_id, $imgCount);
-							$imgCount++;
+							$this->addImage($img, DIR_IMAGE . 'data/' . $name . ' . jpg', $name . ' . jpg', $product_id, $img_count);
+							$img_count++;
 						}
 					}
 				}
@@ -703,10 +703,10 @@ class ModelOpenbayEbayProduct extends Model {
 		}
 	}
 
-	private function addImage($orig, $new, $name, $product_id, $imgCount) {
+	private function addImage($orig, $new, $name, $product_id, $img_count) {
 		$orig = str_replace(' ', '%20', $orig);
 
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_image_import` SET `image_original` = '" . $this->db->escape($orig) . "', `image_new` = '" . $this->db->escape($new) . "', `name` = '" . $this->db->escape($name) . "', `product_id` = '" . (int)$product_id . "', `imgcount` = '" . (int)$imgCount . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_image_import` SET `image_original` = '" . $this->db->escape($orig) . "', `image_new` = '" . $this->db->escape($new) . "', `name` = '" . $this->db->escape($name) . "', `product_id` = '" . (int)$product_id . "', `imgcount` = '" . (int)$img_count . "'");
 	}
 
 	public function resize($filename, $width, $height, $type = "") {

@@ -23,14 +23,14 @@
 
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-listing-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
-          <li><a href="#tab-listing-feature" data-toggle="tab"><?php echo $text_tab_feature; ?></a></li>
+          <li><a href="#tab-listing-feature" data-toggle="tab"><?php echo $tab_feature; ?></a></li>
           <li><a href="#tab-listing-catalog" data-toggle="tab"><?php echo $text_tab_ebay_catalog; ?></a></li>
-          <li><a href="#tab-listing-description" data-toggle="tab"><?php echo $text_tab_description; ?></a></li>
-          <li><a href="#tab-listing-images" data-toggle="tab"><?php echo $text_tab_images; ?></a></li>
-          <li><a href="#tab-listing-price" data-toggle="tab"><?php echo $text_tab_price; ?></a></li>
-          <li><a href="#tab-listing-payment" data-toggle="tab"><?php echo $text_tab_payment; ?></a></li>
+          <li><a href="#tab-listing-description" data-toggle="tab"><?php echo $tab_description; ?></a></li>
+          <li><a href="#tab-listing-images" data-toggle="tab"><?php echo $tab_images; ?></a></li>
+          <li><a href="#tab-listing-price" data-toggle="tab"><?php echo $tab_price; ?></a></li>
+          <li><a href="#tab-listing-payment" data-toggle="tab"><?php echo $tab_payment; ?></a></li>
           <li><a href="#tab-listing-shipping" data-toggle="tab"><?php echo $tab_shipping; ?></a></li>
-          <li><a href="#tab-listing-returns" data-toggle="tab"><?php echo $text_tab_returns; ?></a></li>
+          <li><a href="#tab-listing-returns" data-toggle="tab"><?php echo $tab_returns; ?></a></li>
         </ul>
         <div class="tab-content">
           <div id="tab-listing-general" class="tab-pane active">
@@ -315,7 +315,7 @@
                       <td><?php echo $text_option_images_grp; ?></td>
                       <td>
                           <select name="option_image_group" id="option_image_group">
-                              <option value="def">-- <?php echo $text_select; ?> --</option>
+                              <option value="def"><?php echo $text_select; ?></option>
                               <?php foreach($product['option_grp'] as $option_group) { echo'<option value="'.$option_group['option_id'].'">'.$option_group['name'].'</option>'; } ?>
                           </select>
                           <input type="hidden" id="option-image-group-name" name="option-image-group-name" value="" />
@@ -647,7 +647,7 @@
                   </div>
                   <div class="row">
                     <div class="col-sm-12 text-right">
-                      <p><a class="btn btn-primary" onclick="addShipping('national', 'flat');" id="add-national-flat"><i class="fa fa-plus-circle"></i> <?php echo $text_btn_add; ?></a></p>
+                      <p><a class="btn btn-primary" onclick="addShipping('national', 'flat');" id="add-national-flat"><i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?></a></p>
                     </div>
                   </div>
                 </div>
@@ -675,7 +675,7 @@
                   </div>
                   <div class="row">
                     <div class="col-sm-12 text-right">
-                      <p><a class="btn btn-primary" onclick="addShipping('national', 'calculated');" id="add-national-calculated"><i class="fa fa-plus-circle"></i> <?php echo $text_btn_add; ?></a></p>
+                      <p><a class="btn btn-primary" onclick="addShipping('national', 'calculated');" id="add-national-calculated"><i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?></a></p>
                     </div>
                   </div>
                 </div>
@@ -717,7 +717,7 @@
                   </div>
                   <div class="row">
                     <div class="col-sm-12 text-right">
-                      <p><a class="btn btn-primary" onclick="addShipping('international', 'flat');" id="add-international-flat"><i class="fa fa-plus-circle"></i> <?php echo $text_btn_add; ?></a></p>
+                      <p><a class="btn btn-primary" onclick="addShipping('international', 'flat');" id="add-international-flat"><i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?></a></p>
                     </div>
                   </div>
                 </div>
@@ -745,7 +745,7 @@
                   </div>
                   <div class="row">
                     <div class="col-sm-12 text-right">
-                      <p><a class="btn btn-primary" onclick="addShipping('international', 'calculated');" id="add-international-calculated"><i class="fa fa-plus-circle"></i> <?php echo $text_btn_add; ?></a></p>
+                      <p><a class="btn btn-primary" onclick="addShipping('international', 'calculated');" id="add-international-calculated"><i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?></a></p>
                     </div>
                   </div>
                 </div>
@@ -948,8 +948,8 @@
       <div class="well">
         <div class="row">
           <div class="col-sm-6 text-left">
-            <a class="btn btn-primary" id="button-view" target="_BLANK"><i class="fa fa-external-link fa-lg"></i> <?php echo $text_view; ?></a>
-            <a class="btn btn-primary" href="<?php echo $product['edit_link']; ?>"><i class="fa fa-pencil fa-lg"></i> <?php echo $text_edit; ?></a>
+            <a class="btn btn-primary" id="button-view" target="_BLANK"><i class="fa fa-external-link fa-lg"></i> <?php echo $button_view; ?></a>
+            <a class="btn btn-primary" href="<?php echo $product['edit_link']; ?>"><i class="fa fa-pencil fa-lg"></i> <?php echo $button_edit; ?></a>
           </div>
           <div class="col-sm-6 text-right">
             <a class="btn btn-primary" href="<?php echo $cancel; ?>"><i class="fa fa-reply fa-lg"></i> <?php echo $text_return; ?></a>
@@ -1100,7 +1100,7 @@
             success: function(data) {
                 if (data.items != null) {
                     $('#category-select-'+level).empty();
-                    $('#category-select-'+level).append('<option value="">-- <?php echo $text_select; ?> --</option>');
+                    $('#category-select-'+level).append('<option value=""><?php echo $text_select; ?></option>');
 
                     data.cats = $.makeArray(data.cats);
 
@@ -1316,7 +1316,7 @@
                           htmlInj += '<div class="col-sm-10">';
 
                             if (("ValueRecommendation" in val) && (val.ValidationRules.MaxValues == 1)) {
-                                htmlInj2 += '<option value="">-- <?php echo $text_select; ?> --</option>';
+                                htmlInj2 += '<option value=""><?php echo $text_select; ?></option>';
 
                                 val.ValueRecommendation = $.makeArray(val.ValueRecommendation);
 
@@ -1524,16 +1524,16 @@
         html += '</div>';
       }
       html += '<div class="col-sm-3 pull-right text-right">';
-      html += '<a onclick="removeShipping(\'' + id + '\',\'' + count + '\',\''+type+'\');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $text_btn_remove; ?></a>';
+      html += '<a onclick="removeShipping(\'' + id + '\',\'' + count + '\',\''+type+'\');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_delete; ?></a>';
       html += '</div>';
       html += '</div>';
       html += '</div>';
 
       $('#options-' + id + '-' + type).append(html);
-      $('#add-' + id + '-' + type).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $text_btn_add; ?>').removeAttr('disabled');
+      $('#add-' + id + '-' + type).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?>').removeAttr('disabled');
     },
     error: function (xhr, ajaxOptions, thrownError) {
-      $('#add-shipping-'+id).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $text_btn_add; ?>').removeAttr('disabled');
+      $('#add-shipping-'+id).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?>').removeAttr('disabled');
       if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
     }
   });

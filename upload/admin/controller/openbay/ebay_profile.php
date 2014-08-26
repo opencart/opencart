@@ -7,7 +7,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 
 		$this->load->model('openbay/ebay_profile');
 
-		$this->document->setTitle($data['text_title_list']);
+		$this->document->setTitle($data['heading_title']);
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		if (isset($this->session->data['error'])) {
@@ -84,7 +84,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 		$this->load->model('openbay/ebay_profile');
 
 		if (!$this->user->hasPermission('modify', 'openbay/ebay_profile')) {
-			$this->error['warning'] = $this->language->get('invalid_permission');
+			$this->error['warning'] = $this->language->get('error_permission');
 		} else {
 			if (isset($this->request->get['ebay_profile_id'])) {
 				$this->model_openbay_ebay_profile->delete($this->request->get['ebay_profile_id']);
@@ -126,8 +126,8 @@ class ControllerOpenbayEbayProfile extends Controller {
 		$setting['shipping_types'] 				  = $this->openbay->ebay->getSetting('shipping_types');
 
 		if (empty($setting['dispatch_times']) || empty($setting['countries']) || empty($setting['returns'])){
-			$this->session->data['warning'] = $this->language->get('text_error_missing_settings');
-			$this->response->redirect($this->url->link('openbay/ebay/viewSync&token=' . $this->session->data['token'], 'SSL'));
+			$this->session->data['warning'] = $this->language->get('error_missing_settings');
+			$this->response->redirect($this->url->link('openbay/ebay/syncronise&token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		if (is_array($setting['dispatch_times'])) {
@@ -157,9 +157,9 @@ class ControllerOpenbayEbayProfile extends Controller {
 		}
 
 		if (!array_key_exists($type, $data['types'])) {
-			$this->session->data['error'] = $data['text_no_template'];
+			$this->session->data['error'] = $data['error_no_template'];
 
-			$this->response->redirect($this->url->link('openbay/ebay_profile/profileAll&token=' . $this->session->data['token']));
+			$this->response->redirect($this->url->link('openbay/ebay_profile/profileall&token=' . $this->session->data['token']));
 		}
 
 		$this->document->addScript('view/javascript/openbay/faq.js');
@@ -299,7 +299,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 
 			$data['text_shipping_service'] = $this->language->get('text_shipping_service');
 			$data['text_shipping_first'] = $this->language->get('text_shipping_first');
-			$data['text_btn_remove'] = $this->language->get('text_btn_remove');
+			$data['button_delete'] = $this->language->get('button_delete');
 			$data['text_shipping_zones'] = $this->language->get('text_shipping_zones');
 			$data['text_shipping_worldwide'] = $this->language->get('text_shipping_worldwide');
 			$data['text_shipping_add'] = $this->language->get('text_shipping_add');
@@ -339,11 +339,11 @@ class ControllerOpenbayEbayProfile extends Controller {
 
 	private function profileValidate() {
 		if (!$this->user->hasPermission('modify', 'openbay/ebay_profile')) {
-			$this->error['warning'] = $this->language->get('invalid_permission');
+			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
 		if ($this->request->post['name'] == '') {
-			$this->error['name'] = $this->language->get('text_error_name');
+			$this->error['name'] = $this->language->get('error_name');
 		}
 
 		if (!$this->error) {

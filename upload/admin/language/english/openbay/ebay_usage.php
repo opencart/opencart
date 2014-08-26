@@ -1,8 +1,14 @@
 <?php
-$_['text_heading']              = 'Usage';
+// Headings
+$_['heading_title']             = 'Usage';
 $_['text_openbay']              = 'OpenBay Pro';
 $_['text_ebay']                 = 'eBay';
-$_['text_page_title']           = 'OpenBay Pro for eBay';
-$_['text_load']                 = 'Refresh';
+
+// Buttons
+$_['button_load']               = 'Refresh';
+
+// Text
 $_['text_usage_title']          = 'Usage';
-$_['error_ajax_load']      = 'Sorry, could not get a response. Try later.';
+
+// Errors
+$_['error_ajax_load']      		= 'Sorry, could not get a response. Try later.';

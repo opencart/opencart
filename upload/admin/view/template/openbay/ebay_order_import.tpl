@@ -17,9 +17,9 @@
         <form id="form-ebay-import" class="form-horizontal">
           <p><?php echo $text_sync_pull_notice; ?></p>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="button-import"><?php echo $text_sync_pull_orders; ?></label>
+            <label class="col-sm-2 control-label" for="button-import"><?php echo $entry_pull_orders; ?></label>
             <div class="col-sm-10">
-              <a class="btn btn-primary" id="button-import"><?php echo $text_sync_pull_orders; ?></a>
+              <a class="btn btn-primary" id="button-import"><?php echo $button_pull_orders; ?></a>
             </div>
           </div>
         </form>

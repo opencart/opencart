@@ -1,19 +1,29 @@
 <?php
+// Headings
+$_['heading_title']           	= 'Syncronise';
 $_['text_openbay']              = 'OpenBay Pro';
-$_['text_page_title']           = 'OpenBay Pro for eBay';
 $_['text_ebay']                 = 'eBay';
+
+// Buttons
+$_['button_sync']             	= 'Update';
+
+// Entry
+$_['entry_sync_categories']     = 'Get main eBay categories';
+$_['entry_sync_shop']        	= 'Get you shop categories';
+$_['entry_sync_setting']     	= 'Get settings';
+
+// Text
 $_['text_complete']             = 'Complete';
-$_['text_failed']               = 'Failed to load';
-$_['text_heading']              = 'Syncronise';
 $_['text_sync_desc']            = 'Sync your store with the latest available shipping and categories options from eBay, this data is only for the options when listing an item to eBay - it will not import categories to your store etc.';
-$_['text_sync_cats_lbl']        = 'Get main eBay categories';
-$_['text_sync_cats_lbl_help']   = 'This does not import any categories to your store!';
-$_['text_sync_shop_lbl']        = 'Get you shop categories';
-$_['text_sync_shop_lbl_help']   = 'This does not import any categories to your store!';
-$_['text_sync_setting_lbl']     = 'Get settings';
-$_['text_sync_setting_lbl_help']= 'This imports available payment types, shipping, locations and more.';
-$_['text_sync_btn']             = 'Update';
 $_['text_ajax_ebay_categories'] = 'This may take a while, wait 5 minutes before you do anything else.';
 $_['text_ajax_cat_import']      = 'Your eBay shop categories have been imported.';
 $_['text_ajax_setting_import']  = 'Your settings have been imported.';
-$_['text_ajax_setting_import_e']= 'There was an error loading the settings.';
+
+// Help
+$_['help_sync_categories']   	= 'This does not import any categories to your store!';
+$_['help_sync_shop']   			= 'This does not import any categories to your store!';
+$_['help_sync_setting']			= 'This imports available payment types, shipping, locations and more.';
+
+// Errors
+$_['error_settings']			= 'There was an error loading the settings.';
+$_['error_failed']              = 'Failed to load';

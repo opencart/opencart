@@ -191,8 +191,8 @@ function doSearch(){
                     html += '  <td class="left">' + value.name + '</td>';
                     html += '  <td class="center">' + value.price + '</td>';
                     html += '  <td class="center">';
-                    html += '    [<a target="_blank" href="' + value.link + '"><?php echo $text_view_on_amazonus ?></a>]&nbsp;&nbsp;';
-                    html += '    [<a onclick="' + functString + '"><?php echo $text_list ?></a>]';
+                    html += '    [<a target="_blank" href="' + value.link + '"><?php echo $text_view_on_amazonus; ?></a>]&nbsp;&nbsp;';
+                    html += '    [<a onclick="' + functString + '"><?php echo $text_list; ?></a>]';
                     html += '  </td>';
                     html += '</tr>';
 

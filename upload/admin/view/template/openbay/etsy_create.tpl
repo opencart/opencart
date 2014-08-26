@@ -271,7 +271,7 @@
           <div class="well">
             <div class="row">
               <div class="col-sm-12">
-                <a class="btn btn-primary pull-right" id="button-submit" onclick="submitForm();"><span><?php echo $btn_submit; ?></span></a>
+                <a class="btn btn-primary pull-right" id="button-submit" onclick="submitForm();"><span><?php echo $button_submit; ?></span></a>
               </div>
             </div>
           </div>
@@ -312,7 +312,7 @@
               alert(v);
             });
           }
-          $('#button-submit').empty().html('<span><?php echo $btn_submit; ?></span>').removeAttr('disabled');
+          $('#button-submit').empty().html('<span><?php echo $button_submit; ?></span>').removeAttr('disabled');
         } else {
           if (json.listing_id) {
             // upload the primary image
@@ -332,7 +332,7 @@
             $('#listing-id').text(json.listing_id);
             $('#page-listing').hide();
             $('#page-listing-success').fadeIn();
-            $('#button-submit').empty().html('<span><?php echo $btn_submit; ?></span>').removeAttr('disabled');
+            $('#button-submit').empty().html('<span><?php echo $button_submit; ?></span>').removeAttr('disabled');
           } else {
             alert('Error creating listing?');
           }
@@ -340,7 +340,7 @@
       },
       error: function (xhr, ajaxOptions, thrownError) {
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
-        $('#button-submit').empty().html('<span><?php echo $btn_submit; ?></span>').removeAttr('disabled');
+        $('#button-submit').empty().html('<span><?php echo $button_submit; ?></span>').removeAttr('disabled');
       }
     });
   }

@@ -29,7 +29,7 @@
   </div>
   <div class="row form-group">
     <div class="col-sm-3 pull-right text-right">
-      <a onclick="removeShipping('international','<?php echo $key; ?>', 'calculated');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $text_btn_remove; ?></a>
+      <a onclick="removeShipping('international','<?php echo $key; ?>', 'calculated');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_delete; ?></a>
     </div>
   </div>
 </div>

@@ -28,7 +28,7 @@
           <a data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn" onclick="$('#add-profile-form').submit();"><i class="fa fa-plus-circle"></i></a>
         </form>
       </div>
-      <h1 class="panel-title"><i class="fa fa-file-text fa-lg"></i> <?php echo $text_title_list; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-file-text fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <table class="table table-bordered table-hover">
@@ -47,8 +47,8 @@
           <td class="text-left"><?php echo $types[$profile['type']]['name']; ?></td>
           <td class="text-left"><?php echo $profile['description']; ?></td>
           <td class="text-right">
-            <a href="<?php echo $profile['link_edit']; ?>" data-toggle="tooltip" title="<?php echo $text_btn_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>&nbsp;
-            <a href="<?php echo $profile['link_delete']; ?>" data-toggle="tooltip" title="<?php echo $text_btn_delete; ?>" class="btn btn-danger profile-delete"><i class="fa fa-minus-circle"></i></a>
+            <a href="<?php echo $profile['link_edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>&nbsp;
+            <a href="<?php echo $profile['link_delete']; ?>" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger profile-delete"><i class="fa fa-minus-circle"></i></a>
           </td>
         </tr>
         <?php } ?><?php } else { ?>

@@ -22,8 +22,8 @@
             <div class="row">
               <div class="col-sm-12 text-right">
                 <a class="btn btn-primary" id="button-verify"><i class="fa fa-check"></i> <?php echo $text_preview_all; ?></a>
-                <a class="btn btn-primary" id="button-edit" style="display:none;"><i class="fa fa-pencil"></i> <?php echo $text_edit; ?></a>
-                <a class="btn btn-primary" id="button-submit" style="display:none;"><i class="fa fa-plus-circle"></i> <?php echo $text_submit; ?></a>
+                <a class="btn btn-primary" id="button-edit" style="display:none;"><i class="fa fa-pencil"></i> <?php echo $button_edit; ?></a>
+                <a class="btn btn-primary" id="button-submit" style="display:none;"><i class="fa fa-plus-circle"></i> <?php echo $button_submit; ?></a>
               </div>
             </div>
           </div>
@@ -589,7 +589,7 @@
                               htmlInj += '<div class="row form-group">';
 
                               if (("ValueRecommendation" in val) && (val.ValidationRules.MaxValues == 1)) {
-                                htmlInj2 += '<option value="">-- <?php echo $text_select; ?> --</option>';
+                                htmlInj2 += '<option value=""><?php echo $text_select; ?></option>';
 
                                 //force an array in case of single element
                                 val.ValueRecommendation = $.makeArray(val.ValueRecommendation);
@@ -891,7 +891,7 @@
                       });
                     }
 
-                    $('#p_row_buttons_'+data.i).prepend('<a class="btn btn-primary button-listing-view" href="<?php echo $listing_link; ?>'+data.itemid+'" target="_BLANK"><?php echo $text_view; ?></a>');
+                    $('#p_row_buttons_'+data.i).prepend('<a class="btn btn-primary button-listing-view" href="<?php echo $listing_link; ?>'+data.itemid+'" target="_BLANK"><?php echo $button_view; ?></a>');
 
                     html += '<div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $text_listed; ?>'+data.itemid+'</div>';
                   } else {

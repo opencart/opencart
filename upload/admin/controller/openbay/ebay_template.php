@@ -7,7 +7,7 @@ class ControllerOpenbayEbayTemplate extends Controller {
 
 		$this->load->model('openbay/ebay_template');
 
-		$this->document->setTitle($data['text_title_list']);
+		$this->document->setTitle($data['heading_title']);
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		if (isset($this->session->data['error'])) {
@@ -47,7 +47,7 @@ class ControllerOpenbayEbayTemplate extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/ebay_template/listAll', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_heading'),
+			'text' => $this->language->get('heading_title'),
 		);
 
 		$data['header'] = $this->load->controller('common/header');
@@ -82,7 +82,7 @@ class ControllerOpenbayEbayTemplate extends Controller {
 		$this->load->model('openbay/ebay_template');
 
 		if (!$this->user->hasPermission('modify', 'openbay/ebay_template')) {
-			$this->error['warning'] = $this->language->get('invalid_permission');
+			$this->error['warning'] = $this->language->get('error_permission');
 		} else {
 			if (isset($this->request->get['template_id'])) {
 				$this->model_openbay_ebay_template->delete($this->request->get['template_id']);
@@ -187,11 +187,11 @@ class ControllerOpenbayEbayTemplate extends Controller {
 
 	private function templateValidate() {
 		if (!$this->user->hasPermission('modify', 'openbay/ebay_template')) {
-			$this->error['warning'] = $this->language->get('invalid_permission');
+			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
 		if ($this->request->post['name'] == '') {
-			$this->error['warning'] = $this->language->get('text_error_name');
+			$this->error['warning'] = $this->language->get('error_name');
 		}
 
 		if (!$this->error) {

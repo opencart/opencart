@@ -10,8 +10,6 @@ $_['text_preview']                  = 'Preview';
 $_['text_add']                      = 'Add';
 $_['text_remove']                   = 'Remove';
 $_['text_preview_all']              = 'Verify all';
-$_['text_view']                     = 'View listing';
-$_['text_edit']                     = 'Edit';
 $_['text_submit']                   = 'Submit';
 $_['text_features']                 = 'Features';
 $_['text_catalog']                  = 'Select catalog';
@@ -22,7 +20,6 @@ $_['text_close']           			= 'Close';
 //Form options / text
 $_['text_pixels']                   = 'Pixels';
 $_['text_other']                    = 'Other';
-$_['text_select']                   = 'Select';
 
 //Profile names
 $_['text_profile']            		= 'Profiles';
@@ -71,5 +68,5 @@ $_['text_error_variants']           = 'Items with variations cannot be bulk list
 $_['text_error_stock']              = 'Some items are not in stock and have been removed';
 $_['text_error_no_product']         = 'There is no eligible products selected to use the bulk upload feature';
 $_['text_error_reverify']           = 'There was an error, you should edit and re-verify the items';
-$_['text_error_missing_settings']   = 'You cannot bulk list items until you syncronise your eBay settings';
+$_['error_missing_settings']   = 'You cannot bulk list items until you syncronise your eBay settings';
 $_['text_error_no_selection']   	= 'You must select at least 1 item to list';

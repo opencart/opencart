@@ -23,7 +23,5 @@ $_['text_web']                  = 'Web';
 $_['text_ebay']                 = 'eBay';
 $_['text_amazon']               = 'Amazon EU';
 $_['text_amazonus']             = 'Amazon US';
-$_['text_view']                 = 'View';
-$_['text_edit']                 = 'Edit';
 
 $_['column_channel']            = 'Channel';

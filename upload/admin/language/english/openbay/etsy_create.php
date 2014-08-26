@@ -1,7 +1,15 @@
 <?php
+// Headings
 $_['heading_title']      	= 'Create new Etsy listing';
 $_['text_title']      		= 'Etsy';
 $_['text_openbay']      	= 'OpenBay Pro';
+
+// Tabs
+$_['tab_general']      		= 'Required information';
+$_['tab_additional']      	= 'Additional information';
+$_['tab_images']      		= 'Images';
+
+// Text
 $_['text_option']      		= 'Select option';
 $_['text_category_selected']= 'Category selected';
 $_['text_material_add']  	= 'Add Material';
@@ -13,12 +21,7 @@ $_['text_listing_id']  		= 'Listing ID';
 $_['text_img_upload']  		= 'Uploading image';
 $_['text_img_upload_done']  = 'Uploaded image';
 
-$_['tab_general']      		= 'Required information';
-$_['tab_additional']      	= 'Additional information';
-$_['tab_images']      		= 'Images';
-
-$_['btn_submit']      		= 'Submit';
-
+// Entry
 $_['entry_title']      		= 'Product title';
 $_['entry_description']     = 'Description';
 $_['entry_price']      		= 'Price';
@@ -44,6 +47,7 @@ $_['entry_is_custom']  		= 'Can it be customised?';
 $_['entry_image']  			= 'Main image';
 $_['entry_image_other']		= 'Other images';
 
+// Errors
 $_['error_no_shipping']  	= 'You have not setup any shipping profiles!';
 $_['error_no_shop_secton']  = 'You have not setup any shop sections!';
 $_['error_no_img_url']  	= 'No image selected for upload';

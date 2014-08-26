@@ -1,7 +1,10 @@
 <?php
-$_['text_title']                    = 'OpenBay Pro for eBay';
-$_['text_heading']                  = 'eBay dashboard';
-$_['text_openbay']                  = 'OpenBay Pro';
+// Heading
+$_['heading_title']					= 'Dashboard';
+$_['text_openbay']					= 'OpenBay Pro';
+$_['text_ebay']						= 'eBay';
+
+// Text
 $_['text_heading_settings']         = 'Settings';
 $_['text_heading_sync']             = 'Syncronise';
 $_['text_heading_subscription']     = 'Change plan';

@@ -16,7 +16,7 @@
   </div>
   <div class="row">
     <div class="col-sm-2 pull-right text-right">
-      <a onclick="removeShipping('national','<?php echo $key; ?>', 'calculated');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $text_btn_remove; ?></a>
+      <a onclick="removeShipping('national','<?php echo $key; ?>', 'calculated');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_delete; ?></a>
     </div>
   </div>
 </div>

@@ -56,13 +56,13 @@
         <thead>
           <tr>
             <th class="text-left"></th>
-            <th class="text-left"><?php echo $text_column_itemId; ?></th>
-            <th class="text-left"><?php echo $text_column_listing_title; ?></th>
-            <th class="text-left"><?php echo $text_column_product_auto; ?></th>
-            <th class="text-center"><?php echo $text_column_stock_available; ?></th>
-            <th class="text-center"><?php echo $text_column_allocated; ?></th>
-            <th class="text-center"><?php echo $text_column_ebay_stock; ?></th>
-            <th class="text-center"><?php echo $text_column_variants; ?></th>
+            <th class="text-left"><?php echo $column_item_id; ?></th>
+            <th class="text-left"><?php echo $column_listing_title; ?></th>
+            <th class="text-left"><?php echo $column_product_auto; ?></th>
+            <th class="text-center"><?php echo $column_stock_available; ?></th>
+            <th class="text-center"><?php echo $column_allocated; ?></th>
+            <th class="text-center"><?php echo $column_ebay_stock; ?></th>
+            <th class="text-center"><?php echo $column_variants; ?></th>
             <th class="text-center"><?php echo $column_action; ?></th>
           </tr>
         </thead>
@@ -73,7 +73,7 @@
         </tbody>
       </table>
       <div class="buttons">
-        <a class="btn btn-primary" id="check-unlinked-items"><?php echo $text_btn_check_unlinked; ?></a>
+        <a class="btn btn-primary" id="check-unlinked-items"><?php echo $button_check_unlinked; ?></a>
         <input type="hidden" name="unlinked_page" id="unlinked-page" value="1" />
       </div>
     </div>
@@ -87,13 +87,13 @@
         <table class="table">
           <thead>
             <tr>
-              <th class="text-left"><?php echo $text_column_product; ?></th>
-              <th class="text-center"><?php echo $text_column_itemId; ?></th>
-              <th class="text-center"><?php echo $text_column_allocated; ?></th>
-              <th class="text-center"><?php echo $text_column_stock_available; ?></th>
-              <th class="text-center"><?php echo $text_column_stock_reserve; ?></th>
-              <th class="text-center"><?php echo $text_column_ebay_stock; ?></th>
-              <th class="text-center"><?php echo $text_column_variants; ?></th>
+              <th class="text-left"><?php echo $column_product; ?></th>
+              <th class="text-center"><?php echo $column_item_id; ?></th>
+              <th class="text-center"><?php echo $column_allocated; ?></th>
+              <th class="text-center"><?php echo $column_stock_available; ?></th>
+              <th class="text-center"><?php echo $column_stock_reserve; ?></th>
+              <th class="text-center"><?php echo $column_ebay_stock; ?></th>
+              <th class="text-center"><?php echo $column_variants; ?></th>
               <th class="text-center"><?php echo $column_status; ?></th>
               <th class="text-center"><?php echo $column_action; ?></th>
             </tr>
@@ -148,7 +148,7 @@
             if (json.data == '') {
               $('#checking-linked-items').hide();
               $('.pagination').hide();
-              $('#show-linked-items').html('<tr><td colspan="8" class="text-center"><?php echo $text_ajax_error_listings; ?></td></tr>').show();
+              $('#show-linked-items').html('<tr><td colspan="8" class="text-center"><?php echo $error_no_listings; ?></td></tr>').show();
             } else {
               $.each (json.data, function(key, val) {
                 key                 = String(key);
@@ -165,16 +165,16 @@
                     if (val.qty == store_qty || val.qty == reserve_qty) {
                       $('#text-status-'+key).text('OK');
                       $('#row-'+key+' > td').css('background-color', '#E3FFC8');
-                      $('#text-buttons-'+key).html('<a href="<?php echo $edit_url; ?>'+product_id+'" class="btn btn-primary"><span><?php echo $text_btn_edit; ?></span></a>');
+                      $('#text-buttons-'+key).html('<a href="<?php echo $edit_url; ?>'+product_id+'" class="btn btn-primary"><span><?php echo $button_edit; ?></span></a>');
                     } else {
                       $('#text-status-'+key).text('<?php echo $text_stock_error; ?>');
                       $('#row-'+key+' > td').css('background-color', '#FFD4D4');
-                      $('#text-buttons-'+key).html('<a onclick="updateLink('+key+','+val.qty+','+product_id+', '+store_qty+', '+reserve_qty+');" class="btn btn-primary"><span><?php echo $text_btn_resync; ?></a>');
+                      $('#text-buttons-'+key).html('<a onclick="updateLink('+key+','+val.qty+','+product_id+', '+store_qty+', '+reserve_qty+');" class="btn btn-primary"><span><?php echo $button_resync; ?></a>');
                     }
                   } else {
                     $('#text-status-'+key).text('<?php echo $text_listing_ended; ?>');
                     $('#row-'+key+' > td').css('background-color', '#FFD4D4');
-                    $('#text-buttons-'+key).html('<a onclick="removeLink('+product_id+', '+key+');" class="btn btn-danger"><i class="fa fa-minus-circle fa-lg"></i> <?php echo $text_btn_remove_link; ?></a>');
+                    $('#text-buttons-'+key).html('<a onclick="removeLink('+product_id+', '+key+');" class="btn btn-danger"><i class="fa fa-minus-circle fa-lg"></i> <?php echo $button_remove_link; ?></a>');
                   }
                 } else {
                   $.each (val.variants, function(key1, val1) {
@@ -190,7 +190,7 @@
                   if (val.status == 0) {
                     $('#text-status-'+key).text('<?php echo $text_listing_ended; ?>');
                     $('#row-'+key+' > td').css('background-color', '#FFD4D4');
-                    $('#text-buttons-'+key).html('<a onclick="removeLink('+product_id+', '+key+');" class="btn btn-danger"><i class="fa fa-minus-circle fa-lg"></i> <?php echo $text_btn_remove_link; ?></a>');
+                    $('#text-buttons-'+key).html('<a onclick="removeLink('+product_id+', '+key+');" class="btn btn-danger"><i class="fa fa-minus-circle fa-lg"></i> <?php echo $button_remove_link; ?></a>');
                   }
                 }
               });
@@ -236,7 +236,7 @@
               success: function(json) {
                   if (json.error == false) {
                       $('#text-status-'+item_id).text('OK');
-                      $('#text-buttons-'+item_id).empty().html('<a href="<?php echo $edit_url; ?>'+product_id+'" class="btn btn-primary"><?php echo $text_btn_edit; ?></a>');
+                      $('#text-buttons-'+item_id).empty().html('<a href="<?php echo $edit_url; ?>'+product_id+'" class="btn btn-primary"><?php echo $button_edit; ?></a>');
                       $('#row-'+item_id+' > td').css('background-color', '#E3FFC8');
                       $('#l-'+item_id+'-qty-input').val(qty);
                       $('#l-'+item_id+'-qty').val(qty);
@@ -270,12 +270,12 @@
       var variants        = $('#l-'+id+'-variants').val();
 
       if (product_id === '') {
-          alert('<?php echo $text_ajax_error_link; ?>');
+          alert('<?php echo $error_link_value; ?>');
           return false;
       }
 
       if (qty < 1) {
-          alert('<?php echo $text_ajax_error_link_no_sk; ?>');
+          alert('<?php echo $error_link_no_stock; ?>');
           return false;
       }
 
@@ -336,7 +336,7 @@
       },
       success: function(json) {
         if (json.data.items === null) {
-          $('#ebay-listings').append('<tr><td colspan="7"><p><?php echo $text_ajax_error_listings; ?></p></td></tr>');
+          $('#ebay-listings').append('<tr><td colspan="7"><p><?php echo $error_no_listings; ?></p></td></tr>');
         } else {
           var html_inj;
 
@@ -350,7 +350,7 @@
             html_inj += '</td>';
             html_inj += '<td class="text-left">'+key+'<input type="hidden" id="l-'+key+'_val" val="'+key+'" /></td>';
             html_inj += '<td class="text-left">'+val.name+'</td>';
-            html_inj += '<td class="text-left"><input type="text" class="product-search form-control" placeholder="<?php echo $text_column_product_auto; ?>" id="l-'+key+'" /><input type="hidden" id="l-'+key+'-pid" /></td>';
+            html_inj += '<td class="text-left"><input type="text" class="product-search form-control" placeholder="<?php echo $column_product_auto; ?>" id="l-'+key+'" /><input type="hidden" id="l-'+key+'-pid" /></td>';
 
             if (val.variants == 0) {
                 html_inj += '<td class="text-center"><span id="l-'+key+'-qty"></span><input type="hidden" id="l-'+key+'-qtyinput" /></td>';
@@ -383,7 +383,7 @@
         $('#ebay-listings').show();
 
         if (json.data.more_pages == 1) {
-          $('#check-unlinked-items').empty().html('<?php echo $text_btn_check_unlinked; ?>').removeAttr('disabled');
+          $('#check-unlinked-items').empty().html('<?php echo $button_check_unlinked; ?>').removeAttr('disabled');
         } else {
           $('#check-unlinked-items').hide();
         }

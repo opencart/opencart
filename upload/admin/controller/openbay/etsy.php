@@ -48,7 +48,7 @@ class ControllerOpenbayEtsy extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_heading'),
+			'text' => $this->language->get('heading_title'),
 		);
 
 		if (isset($this->session->data['success'])) {
@@ -190,7 +190,7 @@ class ControllerOpenbayEtsy extends Controller {
 
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'openbay/etsy')) {
-			$this->error['warning'] = $this->language->get('invalid_permission');
+			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
 		if (!$this->error) {

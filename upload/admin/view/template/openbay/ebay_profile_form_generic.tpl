@@ -24,7 +24,7 @@
         <input type="hidden" name="ebay_profile_id" value="<?php echo $ebay_profile_id; ?>" />
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
-          <li><a href="#tab-profile" data-toggle="tab"><?php echo $text_tab_settings; ?></a></li>
+          <li><a href="#tab-profile" data-toggle="tab"><?php echo $tab_settings; ?></a></li>
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab-general">

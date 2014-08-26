@@ -4,33 +4,13 @@ $_['heading_title']                     = 'Profiles';
 $_['text_openbay']                      = 'OpenBay Pro';
 $_['text_ebay']                         = 'eBay';
 
-//Buttons
-$_['text_btn_add']              		= 'Add profile';
-$_['text_btn_edit']             		= 'Edit';
-$_['text_btn_delete']           		= 'Delete';
-$_['button_cancel']             		= 'Cancel';
-$_['text_btn_remove']           		= 'Remove';
-
-//General profile options
-$_['text_profile_name']         		= 'Name';
-$_['text_profile_default']      		= 'Default';
-$_['text_profile_type']         		= 'Type';
-$_['text_profile_desc']         		= 'Description';
-$_['text_profile_action']       		= 'Action';
-
-// Profile types
-$_['text_type_shipping']       			= 'Shipping';
-$_['text_type_returns']       			= 'Returns';
-$_['text_type_template']       			= 'Template &amp; gallery';
-$_['text_type_general']       			= 'General settings';
-
 //Tabs
 $_['tab_shipping']         				= 'Shipping';
 $_['tab_general']          				= 'General';
-$_['text_tab_returns']          		= 'Returns';
-$_['text_tab_template']         		= 'Template';
-$_['text_tab_gallery']          		= 'Gallery';
-$_['text_tab_settings']         		= 'Settings';
+$_['tab_returns']          				= 'Returns';
+$_['tab_template']         				= 'Template';
+$_['tab_gallery']          				= 'Gallery';
+$_['tab_settings']         				= 'Settings';
 
 //Shipping Profile
 $_['text_shipping_dispatch_country']    = 'Shipping from country';
@@ -96,12 +76,25 @@ $_['text_general_private']      		= 'List items as private auction';
 $_['text_general_price']        		= 'Price % modification';
 $_['text_general_price_help']   		= '0 is default, -10 will reduce by 10%, 10 will increase by 10% (only used on bulk listing)';
 
+//General profile options
+$_['text_profile_name']         		= 'Name';
+$_['text_profile_default']      		= 'Default';
+$_['text_profile_type']         		= 'Type';
+$_['text_profile_desc']         		= 'Description';
+$_['text_profile_action']       		= 'Action';
+
+// Profile types
+$_['text_type_shipping']       			= 'Shipping';
+$_['text_type_returns']       			= 'Returns';
+$_['text_type_template']       			= 'Template &amp; gallery';
+$_['text_type_general']       			= 'General settings';
+
 //Success messages
 $_['text_added']                		= 'New profile has been added';
 $_['text_updated']              		= 'Profile has been updated';
 
 //Errors
-$_['invalid_permission']        		= 'You do not have permission to edit profiles';
-$_['text_error_name']           		= 'You must enter a profile name';
-$_['text_no_template']          		= 'Template ID does not exist';
-$_['text_error_missing_settings'] 		= 'You cannot add,edit or delete profiles until you syncronise your eBay settings';
+$_['error_permission']        			= 'You do not have permission to edit profiles';
+$_['error_name']           				= 'You must enter a profile name';
+$_['error_no_template']          		= 'Template ID does not exist';
+$_['error_missing_settings'] 			= 'You cannot add,edit or delete profiles until you syncronise your eBay settings';

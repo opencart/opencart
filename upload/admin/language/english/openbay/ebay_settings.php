@@ -1,7 +1,9 @@
 <?php
-$_['heading_title']        = 'eBay marketplace settings';
+// Headings
+$_['heading_title']        		= 'Marketplace settings';
 $_['text_openbay']              = 'OpenBay Pro';
 $_['text_ebay']                 = 'eBay';
+
 $_['text_settings']             = 'Settings';
 $_['text_update']               = 'Update';
 $_['text_import']               = 'Import';

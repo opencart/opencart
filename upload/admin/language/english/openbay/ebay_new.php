@@ -2,47 +2,36 @@
 $_['heading_title']               	= 'New listing';
 $_['text_ebay']               		= 'eBay';
 $_['text_openbay']               	= 'Openbay Pro';
+
+// Buttons
+$_['button_service']           		= 'Add service';
+$_['button_save_listing']           = 'Create listing';
+
+// Columns
+$_['column_stock_total']      		= 'In stock';
+$_['column_combination']           	= 'Combination';
+$_['column_price']          		= 'Price';
+
+//Tabs
+$_['tab_general']              		= 'Category';
+$_['tab_feature']              		= 'Features';
+$_['tab_description']          		= 'Description';
+$_['tab_images']               		= 'Theme &amp; gallery';
+$_['tab_price']                		= 'Price &amp; details';
+$_['tab_payment']              		= 'Payment';
+$_['tab_shipping']             		= 'Shipping';
+$_['tab_returns']              		= 'Returns';
+
+
 $_['text_none']                     = 'None';
 $_['text_pixels']                   = 'Pixels';
 $_['text_add']                      = 'Add';
 $_['text_remove']                   = 'Remove';
 $_['text_other']                    = 'Other';
-$_['text_select']                   = 'Select';
 $_['text_loading']                  = 'Loading';
 $_['text_confirm_action']           = 'Are you sure?';
-$_['button_service']           		= 'Add service';
-$_['button_save_listing']           = 'Create listing';
 $_['text_paypal']           		= 'PayPal email address ';
-
 $_['text_return']                   = 'Return to products';
-$_['text_view']                     = 'View listing';
-$_['text_edit']                     = 'Edit';
-
-$_['text_ajax_catproblem']          = 'You must fix your category problem before you can list. Try re-syncing them in the module admin area.';
-$_['text_ajax_item_condition']      = 'Item Condition';
-$_['text_ajax_error_cat']           = 'Please choose an eBay category';
-$_['text_ajax_error_sku']           = 'Cannot submit a product without an SKU';
-$_['text_ajax_error_name']          = 'Cannot submit a product without a name';
-$_['text_ajax_error_name_len']      = 'Product name must be under 80 characters';
-$_['text_ajax_error_loc']           = 'Enter an item location postcode';
-$_['text_ajax_error_time']          = 'Enter a dispatch time';
-$_['text_ajax_error_nat_svc']       = 'Add at least one national shipping service';
-$_['text_ajax_error_stock']         = 'You must have stock of an item to list it';
-$_['text_ajax_error_duration']      = 'Select a listing duration, select category to load these options';
-$_['text_ajax_image_size']          = 'Ensure that you have a gallery and thumb image size';
-$_['text_ajax_duration']            = 'Select a listing duration';
-$_['text_ajax_noimages']            = 'Listing must have at least 1 image uploaded to eBay';
-$_['text_ajax_mainimage']           = 'You need to choose a main eBay image from your selection of eBay images';
-
-//Tabs
-$_['tab_general']              = 'Category';
-$_['text_tab_feature']              = 'Features';
-$_['text_tab_description']          = 'Description';
-$_['text_tab_images']               = 'Theme &amp; gallery';
-$_['text_tab_price']                = 'Price &amp; details';
-$_['text_tab_payment']              = 'Payment';
-$_['tab_shipping']             = 'Shipping';
-$_['text_tab_returns']              = 'Returns';
 
 //Category
 $_['text_category']                 = 'Category';
@@ -85,11 +74,8 @@ $_['text_listing_10day']            = '10 days';
 $_['text_listing_30day']            = '30 days';
 $_['text_listing_gtc']              = 'GTC- Good till cancelled';
 $_['text_stock_matrix']             = 'Stock matrix';
-$_['column_stock_total']      = 'In stock';
 $_['text_stock_col_qty']            = 'To list';
 $_['text_stock_col_qty_reserve']    = 'Reserved';
-$_['column_combination']           = 'Combination';
-$_['column_price']          = 'Price';
 $_['text_stock_col_enabled']        = 'Enabled';
 $_['text_qty']                      = 'Quantity to list';
 $_['text_stock_reserved']           = ' will be reserved';
@@ -161,28 +147,6 @@ $_['text_verify']             	 	= 'Verify';
 $_['text_created_title']            = 'Listing created';
 $_['text_created_msg']              = 'Your eBay listing has been created. The eBay item number is';
 
-//Failed page
-$_['text_failed_title']             = 'Listing your item failed';
-$_['text_failed_msg1']              = 'There may be multiple reasons for this.';
-$_['text_failed_li1']               = 'If you are a new eBay seller (or have not sold much in the past) - you will need to contact eBay to remove your seller restrictions';
-$_['text_failed_li2']               = 'You may have not subscribed to Selling Manager Pro on eBay - this is a requirement.';
-$_['text_failed_li3']               = 'Your OpenBay Pro account is suspended, please check via your module admin area under the "My Account" tab';
-$_['text_failed_contact']           = 'If this error continues, please contact support after you have ensured the issue is none of the above.';
-$_['text_gallery_select_all']       = 'Tick the box to select all of your images at once';
-$_['text_template_images']          = 'Template images';
-$_['text_ebay_images']              = 'eBay images';
-$_['text_profile_load']             = 'Load profile';
-$_['text_shipping_first']           = 'First item';
-$_['text_shipping_add']             = 'Additional items';
-$_['text_shipping_service']         = 'Service';
-$_['text_shipping_nat']             = 'National shipping services';
-$_['text_shipping_intnat']          = 'International shipping services';
-$_['text_btn_remove']               = 'Remove';
-$_['text_btn_add']               	= 'Add';
-$_['text_shop_category']            = 'Shop Category';
-$_['text_tab_ebay_catalog']         = 'eBay catalog';
-$_['text_shipping_in_desc']         = 'Freight info in description';
-
 //Option images
 $_['text_option_images']            = 'Variation images';
 $_['text_option_images_grp']        = 'Choose option group';
@@ -199,7 +163,41 @@ $_['text_error_choose_category']    = 'You must choose a category';
 $_['text_error_enter_text']         = 'Enter search text';
 $_['text_error_no_stock']           = 'You cannot list an item with zero stock';
 $_['text_error_no_catalog_data']    = 'No eBay catalog data was found for your product in eBay';
-$_['text_error_missing_settings']   = 'You cannot list items until you sync the eBay settings';
+$_['error_missing_settings']   = 'You cannot list items until you sync the eBay settings';
 $_['text_error_category_load']   	= 'Unable to load categories';
 $_['text_error_features']   		= 'Error loading features';
 $_['text_error_catalog']   			= 'Error loading catalog';
+$_['text_ajax_catproblem']          = 'You must fix your category problem before you can list. Try re-syncing them in the module admin area.';
+$_['text_ajax_error_cat']           = 'Please choose an eBay category';
+$_['text_ajax_error_sku']           = 'Cannot submit a product without an SKU';
+$_['text_ajax_error_name']          = 'Cannot submit a product without a name';
+$_['text_ajax_error_name_len']      = 'Product name must be under 80 characters';
+$_['text_ajax_error_loc']           = 'Enter an item location postcode';
+$_['text_ajax_error_time']          = 'Enter a dispatch time';
+$_['text_ajax_error_nat_svc']       = 'Add at least one national shipping service';
+$_['text_ajax_error_stock']         = 'You must have stock of an item to list it';
+$_['text_ajax_error_duration']      = 'Select a listing duration, select category to load these options';
+$_['text_ajax_image_size']          = 'Ensure that you have a gallery and thumb image size';
+$_['text_ajax_duration']            = 'Select a listing duration';
+$_['text_ajax_noimages']            = 'Listing must have at least 1 image uploaded to eBay';
+$_['text_ajax_mainimage']           = 'You need to choose a main eBay image from your selection of eBay images';
+
+//Failed page
+$_['text_failed_title']             = 'Listing your item failed';
+$_['text_failed_msg1']              = 'There may be multiple reasons for this.';
+$_['text_failed_li1']               = 'If you are a new eBay seller (or have not sold much in the past) - you will need to contact eBay to remove your seller restrictions';
+$_['text_failed_li2']               = 'You may have not subscribed to Selling Manager Pro on eBay - this is a requirement.';
+$_['text_failed_li3']               = 'Your OpenBay Pro account is suspended, please check via your module admin area under the "My Account" tab';
+$_['text_failed_contact']           = 'If this error continues, please contact support after you have ensured the issue is none of the above.';
+$_['text_gallery_select_all']       = 'Tick the box to select all of your images at once';
+$_['text_template_images']          = 'Template images';
+$_['text_ebay_images']              = 'eBay images';
+$_['text_profile_load']             = 'Load profile';
+$_['text_shipping_first']           = 'First item';
+$_['text_shipping_add']             = 'Additional items';
+$_['text_shipping_service']         = 'Service';
+$_['text_shipping_nat']             = 'National shipping services';
+$_['text_shipping_intnat']          = 'International shipping services';
+$_['text_shop_category']            = 'Shop Category';
+$_['text_tab_ebay_catalog']         = 'eBay catalog';
+$_['text_shipping_in_desc']         = 'Freight info in description';

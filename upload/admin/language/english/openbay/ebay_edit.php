@@ -5,7 +5,6 @@ $_['text_openbay']					= 'OpenBay Pro';
 $_['text_ebay']						= 'eBay';
 
 // Text
-$_['text_ebay']                     = 'eBay';
 $_['text_revise']               	= 'Revise listing';
 $_['text_loading']                  = 'Getting item information from eBay';
 $_['text_error_loading']            = 'There was an error getting the information from eBay';

@@ -1,12 +1,16 @@
 <?php
+// Headings
 $_['heading_title']        		= 'Etsy links';
 $_['text_openbay']              = 'OpenBay Pro';
 $_['text_etsy']                 = 'Etsy';
+
+// Text
 $_['text_loading']              = 'Loading items';
 $_['text_new_link']             = 'Create new link';
 $_['text_current_links']        = 'Current links';
 $_['text_link_saved']           = 'Item has been linked';
 
+// Columns
 $_['column_product']			= 'Product name';
 $_['column_item_id']			= 'Etsy ID';
 $_['column_store_stock']		= 'Stock';
@@ -14,9 +18,11 @@ $_['column_etsy_stock']			= 'Etsy Stock';
 $_['column_status']				= 'Link Status';
 $_['column_action']				= 'Action';
 
+// Entry
 $_['entry_name']				= 'Product name';
 $_['entry_etsy_id']				= 'Etsy item ID';
 
+// Error
 $_['error_product']				= 'Product does not exist in your store';
 $_['error_stock']				= 'You cannot link an item that has no stock';
 $_['error_product_id']			= 'Product ID required';

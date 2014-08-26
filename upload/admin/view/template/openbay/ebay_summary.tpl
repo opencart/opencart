@@ -9,7 +9,7 @@
     <div class="panel-heading">
       <div class="pull-right">
         <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $button_back; ?>" class="btn"><i class="fa fa-reply"></i></a></div>
-      <h1 class="panel-title"><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $text_heading; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <div class="row">
@@ -58,7 +58,7 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <p><a class="btn btn-primary" id="load-usage"><?php echo $text_load; ?></a></p>
+          <p><a class="btn btn-primary" id="load-usage"><?php echo $button_refresh; ?></a></p>
         </div>
       </div>
     </div>

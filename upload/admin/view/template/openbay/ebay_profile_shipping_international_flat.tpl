@@ -41,7 +41,7 @@
           <input type="text" name="data[international][flat][price_additional][<?php echo $key; ?>]" class="form-control" value="<?php echo $data['international']['flat']['price_additional'][$key]; ?>" />
         </div>
         <div class="col-sm-3 pull-right text-right">
-          <a onclick="removeShipping('international','<?php echo $key; ?>', 'flat');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $text_btn_remove; ?></a>
+          <a onclick="removeShipping('international','<?php echo $key; ?>', 'flat');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_delete; ?></a>
         </div>
       </div>
     </div>

@@ -59,24 +59,24 @@ class ControllerPaymentRealex extends Controller {
 		$data['merchant_id'] = $this->config->get('realex_merchant_id');
 
 		$data['timestamp'] = strftime("%Y%m%d%H%M%S");
-		$data['order_id'] = $this->session->data['order_id'].'T'.$data['timestamp'].mt_rand(1, 999);
+		$data['order_id'] = $this->session->data['order_id'] . 'T'.$data['timestamp'] . mt_rand(1, 999);
 
 		$data['amount'] = round($this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false)*100);
 		$data['currency'] = $order_info['currency_code'];
 
-		$tmp = $data['timestamp'].'.'.$data['merchant_id'].'.'.$data['order_id'].'.'.$data['amount'].'.'.$data['currency'];
+		$tmp = $data['timestamp'] . '.' . $data['merchant_id'] . '.' . $data['order_id'] . '.' . $data['amount'] . '.' . $data['currency'];
 		$hash = sha1($tmp);
-		$tmp = $hash.'.'.$this->config->get('realex_secret');
+		$tmp = $hash . '.' . $this->config->get('realex_secret');
 		$data['hash'] = sha1($tmp);
 
-		$data['billing_code'] = filter_var($order_info['payment_postcode'], FILTER_SANITIZE_NUMBER_INT).'|'.filter_var($order_info['payment_address_1'], FILTER_SANITIZE_NUMBER_INT);
+		$data['billing_code'] = filter_var($order_info['payment_postcode'], FILTER_SANITIZE_NUMBER_INT) . '|' . filter_var($order_info['payment_address_1'], FILTER_SANITIZE_NUMBER_INT);
 		$data['payment_country'] = $order_info['payment_iso_code_2'];
 
 		if ($this->cart->hasShipping()) {
-			$data['shipping_code'] = filter_var($order_info['shipping_postcode'], FILTER_SANITIZE_NUMBER_INT).'|'.filter_var($order_info['shipping_address_1'], FILTER_SANITIZE_NUMBER_INT);
+			$data['shipping_code'] = filter_var($order_info['shipping_postcode'], FILTER_SANITIZE_NUMBER_INT) . '|' . filter_var($order_info['shipping_address_1'], FILTER_SANITIZE_NUMBER_INT);
 			$data['shipping_country'] = $order_info['shipping_iso_code_2'];
 		} else {
-			$data['shipping_code'] = filter_var($order_info['payment_postcode'], FILTER_SANITIZE_NUMBER_INT).'|'.filter_var($order_info['payment_address_1'], FILTER_SANITIZE_NUMBER_INT);
+			$data['shipping_code'] = filter_var($order_info['payment_postcode'], FILTER_SANITIZE_NUMBER_INT) . '|' . filter_var($order_info['payment_address_1'], FILTER_SANITIZE_NUMBER_INT);
 			$data['shipping_country'] = $order_info['payment_iso_code_2'];
 		}
 
@@ -94,8 +94,8 @@ class ControllerPaymentRealex extends Controller {
 
 		$this->load->language('payment/realex');
 
-		$hash = sha1($this->request->post['TIMESTAMP'].'.'.$this->config->get('realex_merchant_id').'.'.$this->request->post['ORDER_ID'].'.'.$this->request->post['RESULT'].'.'.$this->request->post['MESSAGE'].'.'.$this->request->post['PASREF'].'.'.$this->request->post['AUTHCODE']);
-		$tmp = $hash.'.'.$this->config->get('realex_secret');
+		$hash = sha1($this->request->post['TIMESTAMP'] . '.' . $this->config->get('realex_merchant_id') . '.' . $this->request->post['ORDER_ID'] . '.' . $this->request->post['RESULT'] . '.' . $this->request->post['MESSAGE'] . '.' . $this->request->post['PASREF'] . '.' . $this->request->post['AUTHCODE']);
+		$tmp = $hash . '.' . $this->config->get('realex_secret');
 		$hash = sha1($tmp);
 
 		//Check to see if hashes match or not
@@ -117,66 +117,66 @@ class ControllerPaymentRealex extends Controller {
 				$this->request->post['ECI'] = 1;
 			}
 
-			$message = '<strong>'.$this->language->get('text_result').':</strong> '.$this->request->post['RESULT'];
-			$message .= '<br /><strong>'.$this->language->get('text_message').':</strong> '.$this->request->post['MESSAGE'];
+			$message = '<strong>' . $this->language->get('text_result') . ':</strong> '.$this->request->post['RESULT'];
+			$message .= '<br /><strong>' . $this->language->get('text_message') . ':</strong> '.$this->request->post['MESSAGE'];
 
 			if (isset($this->request->post['ORDER_ID'])) {
-				$message .= '<br /><strong>'.$this->language->get('text_order_ref').':</strong> '.$this->request->post['ORDER_ID'];
+				$message .= '<br /><strong>' . $this->language->get('text_order_ref') . ':</strong> '.$this->request->post['ORDER_ID'];
 			}
 
 			if (isset($this->request->post['CVNRESULT'])) {
-				$message .= '<br /><strong>'.$this->language->get('text_cvn_result').':</strong> '.$this->request->post['CVNRESULT'];
+				$message .= '<br /><strong>' . $this->language->get('text_cvn_result') . ':</strong> '.$this->request->post['CVNRESULT'];
 			}
 
 			if (isset($this->request->post['AVSPOSTCODERESULT'])) {
-				$message .= '<br /><strong>'.$this->language->get('text_avs_postcode').':</strong> '.$this->request->post['AVSPOSTCODERESULT'];
+				$message .= '<br /><strong>' . $this->language->get('text_avs_postcode') . ':</strong> '.$this->request->post['AVSPOSTCODERESULT'];
 			}
 
 			if (isset($this->request->post['AVSADDRESSRESULT'])) {
-				$message .= '<br /><strong>'.$this->language->get('text_avs_address').':</strong> '.$this->request->post['AVSADDRESSRESULT'];
+				$message .= '<br /><strong>' . $this->language->get('text_avs_address') . ':</strong> '.$this->request->post['AVSADDRESSRESULT'];
 			}
 
 			if (isset($this->request->post['ECI'])) {
-				$message .= '<br /><strong>'.$this->language->get('text_eci').':</strong> ('.$this->request->post['ECI'].') '.$this->language->get('text_3d_s'.$this->request->post['ECI']);
+				$message .= '<br /><strong>' . $this->language->get('text_eci') . ':</strong> (' . $this->request->post['ECI'] . ') ' . $this->language->get('text_3d_s' . $this->request->post['ECI']);
 			}
 
 			if ($tss == 1 && isset($this->request->post['TSS'])) {
-				$message .= '<br /><strong>'.$this->language->get('text_tss').':</strong> '.$this->request->post['TSS'];
+				$message .= '<br /><strong>' . $this->language->get('text_tss') . ':</strong> ' . $this->request->post['TSS'];
 			}
 
 			if (isset($this->request->post['TIMESTAMP'])) {
-				$message .= '<br /><strong>'.$this->language->get('text_timestamp').':</strong> '.$this->request->post['TIMESTAMP'];
+				$message .= '<br /><strong>' . $this->language->get('text_timestamp') . ':</strong> ' . $this->request->post['TIMESTAMP'];
 			}
 
 			if (isset($this->request->post['CARDDIGITS'])) {
-				$message .= '<br /><strong>'.$this->language->get('text_card_digits').':</strong> '.$this->request->post['CARDDIGITS'];
+				$message .= '<br /><strong>' . $this->language->get('text_card_digits') . ':</strong> ' . $this->request->post['CARDDIGITS'];
 			}
 
 			if (isset($this->request->post['CARDTYPE'])) {
-				$message .= '<br /><strong>'.$this->language->get('text_card_type').':</strong> '.$this->request->post['CARDTYPE'];
+				$message .= '<br /><strong>' . $this->language->get('text_card_type') . ':</strong> ' . $this->request->post['CARDTYPE'];
 			}
 
 			if (isset($this->request->post['EXPDATE'])) {
-				$message .= '<br /><strong>'.$this->language->get('text_card_exp').':</strong> '.$this->request->post['EXPDATE'];
+				$message .= '<br /><strong>' . $this->language->get('text_card_exp') . ':</strong> ' . $this->request->post['EXPDATE'];
 			}
 
 			if (isset($this->request->post['CARDNAME'])) {
-				$message .= '<br /><strong>'.$this->language->get('text_card_name').':</strong> '.$this->request->post['CARDNAME'];
+				$message .= '<br /><strong>' . $this->language->get('text_card_name') . ':</strong> ' . $this->request->post['CARDNAME'];
 			}
 
 			if (isset($this->request->post['DCCAUTHCARDHOLDERAMOUNT']) && isset($this->request->post['DCCAUTHRATE'])) {
-				$message .= '<br /><strong>DCCAUTHCARDHOLDERAMOUNT:</strong> '.$this->request->post['DCCAUTHCARDHOLDERAMOUNT'];
-				$message .= '<br /><strong>DCCAUTHRATE:</strong> '.$this->request->post['DCCAUTHRATE'];
-				$message .= '<br /><strong>DCCAUTHCARDHOLDERCURRENCY:</strong> '.$this->request->post['DCCAUTHCARDHOLDERCURRENCY'];
-				$message .= '<br /><strong>DCCAUTHMERCHANTCURRENCY:</strong> '.$this->request->post['DCCAUTHMERCHANTCURRENCY'];
-				$message .= '<br /><strong>DCCAUTHMERCHANTAMOUNT:</strong> '.$this->request->post['DCCAUTHMERCHANTAMOUNT'];
-				$message .= '<br /><strong>DCCCCP:</strong> '.$this->request->post['DCCCCP'];
-				$message .= '<br /><strong>DCCRATE:</strong> '.$this->request->post['DCCRATE'];
-				$message .= '<br /><strong>DCCMARGINRATEPERCENTAGE:</strong> '.$this->request->post['DCCMARGINRATEPERCENTAGE'];
-				$message .= '<br /><strong>DCCEXCHANGERATESOURCENAME:</strong> '.$this->request->post['DCCEXCHANGERATESOURCENAME'];
-				$message .= '<br /><strong>DCCCOMMISSIONPERCENTAGE:</strong> '.$this->request->post['DCCCOMMISSIONPERCENTAGE'];
-				$message .= '<br /><strong>DCCEXCHANGERATESOURCETIMESTAMP:</strong> '.$this->request->post['DCCEXCHANGERATESOURCETIMESTAMP'];
-				$message .= '<br /><strong>DCCCHOICE:</strong> '.$this->request->post['DCCCHOICE'];
+				$message .= '<br /><strong>DCCAUTHCARDHOLDERAMOUNT:</strong> ' . $this->request->post['DCCAUTHCARDHOLDERAMOUNT'];
+				$message .= '<br /><strong>DCCAUTHRATE:</strong> ' . $this->request->post['DCCAUTHRATE'];
+				$message .= '<br /><strong>DCCAUTHCARDHOLDERCURRENCY:</strong> ' . $this->request->post['DCCAUTHCARDHOLDERCURRENCY'];
+				$message .= '<br /><strong>DCCAUTHMERCHANTCURRENCY:</strong> ' . $this->request->post['DCCAUTHMERCHANTCURRENCY'];
+				$message .= '<br /><strong>DCCAUTHMERCHANTAMOUNT:</strong> ' . $this->request->post['DCCAUTHMERCHANTAMOUNT'];
+				$message .= '<br /><strong>DCCCCP:</strong> ' . $this->request->post['DCCCCP'];
+				$message .= '<br /><strong>DCCRATE:</strong> ' . $this->request->post['DCCRATE'];
+				$message .= '<br /><strong>DCCMARGINRATEPERCENTAGE:</strong> ' . $this->request->post['DCCMARGINRATEPERCENTAGE'];
+				$message .= '<br /><strong>DCCEXCHANGERATESOURCENAME:</strong> ' . $this->request->post['DCCEXCHANGERATESOURCENAME'];
+				$message .= '<br /><strong>DCCCOMMISSIONPERCENTAGE:</strong> ' . $this->request->post['DCCCOMMISSIONPERCENTAGE'];
+				$message .= '<br /><strong>DCCEXCHANGERATESOURCETIMESTAMP:</strong> ' . $this->request->post['DCCEXCHANGERATESOURCETIMESTAMP'];
+				$message .= '<br /><strong>DCCCHOICE:</strong> ' . $this->request->post['DCCCHOICE'];
 			}
 
 			if ($this->request->post['RESULT'] == "00") {

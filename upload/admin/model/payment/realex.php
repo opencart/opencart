@@ -63,7 +63,7 @@ class ModelPaymentRealex extends Model {
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, "https://epage.payandshop.com/epage-remote.cgi");
 			curl_setopt($ch, CURLOPT_POST, 1);
-			curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart ".VERSION);
+			curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -77,7 +77,7 @@ class ModelPaymentRealex extends Model {
 	}
 
 	public function updateVoidStatus($realex_order_id, $status) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "realex_order` SET `void_status` = '".(int)$status."' WHERE `realex_order_id` = '" . (int)$realex_order_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "realex_order` SET `void_status` = '" . (int)$status . "' WHERE `realex_order_id` = '" . (int)$realex_order_id . "'");
 	}
 
 	public function capture($order_id, $amount) {
@@ -128,7 +128,7 @@ class ModelPaymentRealex extends Model {
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, "https://epage.payandshop.com/epage-remote.cgi");
 			curl_setopt($ch, CURLOPT_POST, 1);
-			curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart ".VERSION);
+			curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -142,11 +142,11 @@ class ModelPaymentRealex extends Model {
 	}
 
 	public function updateCaptureStatus($realex_order_id, $status) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "realex_order` SET `capture_status` = '".(int)$status."' WHERE `realex_order_id` = '" . (int)$realex_order_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "realex_order` SET `capture_status` = '" . (int)$status . "' WHERE `realex_order_id` = '" . (int)$realex_order_id . "'");
 	}
 
 	public function updateForRebate($realex_order_id, $pas_ref, $order_ref) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "realex_order` SET `order_ref_previous` = '_multisettle_".$this->db->escape($order_ref)."', `pasref_previous` = '".$this->db->escape($pas_ref)."' WHERE `realex_order_id` = '".(int)$realex_order_id."' LIMIT 1");
+		$this->db->query("UPDATE `" . DB_PREFIX . "realex_order` SET `order_ref_previous` = '_multisettle_" . $this->db->escape($order_ref) . "', `pasref_previous` = '" . $this->db->escape($pas_ref) . "' WHERE `realex_order_id` = '" . (int)$realex_order_id . "' LIMIT 1");
 	}
 
 	public function rebate($order_id, $amount) {
@@ -196,7 +196,7 @@ class ModelPaymentRealex extends Model {
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, "https://epage.payandshop.com/epage-remote.cgi");
 			curl_setopt($ch, CURLOPT_POST, 1);
-			curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart ".VERSION);
+			curl_setopt($ch, CURLOPT_USERAGENT, "OpenCart " . VERSION);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -210,13 +210,13 @@ class ModelPaymentRealex extends Model {
 	}
 
 	public function updateRebateStatus($realex_order_id, $status) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "realex_order` SET `rebate_status` = '".(int)$status."' WHERE `realex_order_id` = '" . (int)$realex_order_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "realex_order` SET `rebate_status` = '" . (int)$status . "' WHERE `realex_order_id` = '" . (int)$realex_order_id . "'");
 	}
 
 	public function getOrder($order_id) {
 		$this->logger('getOrder - ' . $order_id);
 
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "realex_order` WHERE `order_id` = '".(int)$order_id."' LIMIT 1");
+		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "realex_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 
 		if ($qry->num_rows) {
 			$order = $qry->row;
@@ -241,7 +241,7 @@ class ModelPaymentRealex extends Model {
 	}
 
 	public function addTransaction($realex_order_id, $type, $total) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "realex_order_transaction` SET `realex_order_id` = '".(int)$realex_order_id."', `date_added` = now(), `type` = '".$this->db->escape($type)."', `amount` = '".(float)$total."'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "realex_order_transaction` SET `realex_order_id` = '" . (int)$realex_order_id . "', `date_added` = now(), `type` = '" . $this->db->escape($type) . "', `amount` = '" . (float)$total . "'");
 	}
 
 	public function logger($message) {
@@ -252,13 +252,13 @@ class ModelPaymentRealex extends Model {
 	}
 
 	public function getTotalCaptured($realex_order_id) {
-		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "realex_order_transaction` WHERE `realex_order_id` = '".(int)$realex_order_id."' AND (`type` = 'payment' OR `type` = 'rebate')");
+		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "realex_order_transaction` WHERE `realex_order_id` = '" . (int)$realex_order_id . "' AND (`type` = 'payment' OR `type` = 'rebate')");
 
 		return (float)$query->row['total'];
 	}
 
 	public function getTotalRebated($realex_order_id) {
-		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "realex_order_transaction` WHERE `realex_order_id` = '".(int)$realex_order_id."' AND 'rebate'");
+		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "realex_order_transaction` WHERE `realex_order_id` = '" . (int)$realex_order_id . "' AND 'rebate'");
 
 		return (float)$query->row['total'];
 	}

@@ -218,12 +218,17 @@ $('input[name=\'payment_address\']').on('change', function() {
 //--></script>
 <script type="text/javascript"><!--
 // Sort the custom fields
-$('#collapse-payment-address .form-group[data-sort]').each(function(index, element) {
-	// Compensate for the missing first 2 fields
-	if ($(this).parent().find('.form-group').length >= $(this).attr('data-sort')) {
-		$(this).parent().find('.form-group').eq($(this).attr('data-sort')).before(this);		
-	} else {
-		$(this).parent().find('.form-group:last').after(this);
+$('#collapse-payment-address .form-group[data-sort]').detach().each(function() {
+	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#collapse-payment-address .form-group').length) {
+		$('#collapse-payment-address .form-group').eq($(this).attr('data-sort')).before(this);
+	} 
+	
+	if ($(this).attr('data-sort') > $('#collapse-payment-address .form-group').length) {
+		$('#collapse-payment-address .form-group:last').after(this);
+	}
+		
+	if ($(this).attr('data-sort') < -$('#collapse-payment-address .form-group').length) {
+		$('#collapse-payment-address .form-group:first').before(this);
 	}
 });
 //--></script>

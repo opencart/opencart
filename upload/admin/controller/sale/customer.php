@@ -200,7 +200,7 @@ class ControllerSaleCustomer extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('sale/customer');
-		
+
 		$customers = array();
 
 		if (isset($this->request->post['selected'])) {
@@ -208,7 +208,7 @@ class ControllerSaleCustomer extends Controller {
 		} elseif (isset($this->request->get['customer_id'])) {
 			$customers[] = $this->request->get['customer_id'];
 		}
-		
+
 		if ($customers && $this->validateApprove()) {
 			$this->model_sale_customer->approve($this->request->get['customer_id']);
 
@@ -626,7 +626,7 @@ class ControllerSaleCustomer extends Controller {
 		$data['entry_description'] = $this->language->get('entry_description');
 		$data['entry_amount'] = $this->language->get('entry_amount');
 		$data['entry_points'] = $this->language->get('entry_points');
-		
+
 		$data['help_safe'] = $this->language->get('help_safe');
 		$data['help_points'] = $this->language->get('help_points');
 
@@ -820,9 +820,9 @@ class ControllerSaleCustomer extends Controller {
 		$this->load->model('sale/custom_field');
 
 		$data['custom_fields'] = array();
-		
+
 		$custom_fields = $this->model_sale_custom_field->getCustomFields();
-		
+
 		foreach ($custom_fields as $custom_field) {
 			$data['custom_fields'][] = array(
 				'custom_field_id'    => $custom_field['custom_field_id'],
@@ -833,7 +833,7 @@ class ControllerSaleCustomer extends Controller {
 				'location'           => $custom_field['location']
 			);
 		}
-		
+
 		if (isset($this->request->post['custom_field'])) {
 			$data['account_custom_field'] = $this->request->post['custom_field'];
 		} elseif (!empty($customer_info)) {
@@ -857,7 +857,7 @@ class ControllerSaleCustomer extends Controller {
 		} else {
 			$data['status'] = 1;
 		}
-		
+
 		if (isset($this->request->post['safe'])) {
 			$data['safe'] = $this->request->post['safe'];
 		} elseif (!empty($customer_info)) {
@@ -865,7 +865,7 @@ class ControllerSaleCustomer extends Controller {
 		} else {
 			$data['safe'] = 0;
 		}
-		
+
 		if (isset($this->request->post['password'])) {
 			$data['password'] = $this->request->post['password'];
 		} else {

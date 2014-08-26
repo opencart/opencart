@@ -48,7 +48,7 @@ class ModelPaymentPPExpress extends Model {
 
 		curl_setopt_array($ch, $defaults);
 
-		if( ! $result = curl_exec($ch)) {
+		if(!$result = curl_exec($ch)) {
 			$this->log(array('error' => curl_error($ch), 'errno' => curl_errno($ch)), 'cURL failed');
 		}
 

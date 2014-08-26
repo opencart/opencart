@@ -30,7 +30,7 @@ class ControllerCommonMaintenance extends Controller {
 
 		$protocol = "HTTP/1.0";
 
-		if ( "HTTP/1.1" == $_SERVER["SERVER_PROTOCOL"] ) {
+		if ("HTTP/1.1" == $_SERVER["SERVER_PROTOCOL"]) {
 			$protocol = "HTTP/1.1";
 		}
 

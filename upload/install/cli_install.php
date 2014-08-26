@@ -59,15 +59,17 @@ function usage() {
 	echo "Usage:\n";
 	echo "======\n";
 	echo "\n";
-	$options = implode(" ", array('--db_hostname', 'localhost',
-								  '--db_username', 'root',
-								  '--db_password', 'pass',
-								  '--db_database', 'opencart',
-								  '--db_driver', 'mysqli',
-								  '--username', 'admin',
-								  '--password', 'admin',
-								  '--email', 'youremail@example.com',
-								  '--http_server', 'http://localhost/opencart'));
+	$options = implode(" ", array(
+		'--db_hostname', 'localhost',
+		'--db_username', 'root',
+		'--db_password', 'pass',
+		'--db_database', 'opencart',
+		'--db_driver', 'mysqli',
+		'--username', 'admin',
+		'--password', 'admin',
+		'--email', 'youremail@example.com',
+		'--http_server', 'http://localhost/opencart'
+	));
 	echo 'php cli_install.php install ' . $options . "\n\n";
 }
 

@@ -104,7 +104,7 @@ class ControllerPaymentWorldPay extends Controller {
 			} else {
 				$this->model_checkout_order->addOrderHistory($this->request->post['cartId'], $this->config->get('config_order_status_id'), $this->language->get('text_pw_mismatch'));
 			}
-			
+
 			$data['continue'] = $this->url->link('checkout/success');
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/worldpay_success.tpl')) {

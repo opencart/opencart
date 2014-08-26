@@ -263,7 +263,7 @@ class ControllerPaymentFirstdata extends Controller {
 
 				$data['request_timestamp'] = date("Y:m:d-H:i:s");
 
-				$data['hash'] = sha1(bin2hex($data['merchant_id'].$data['request_timestamp'].$data['amount'].$data['currency'].$this->config->get('firstdata_secret')));
+				$data['hash'] = sha1(bin2hex($data['merchant_id'] . $data['request_timestamp'] . $data['amount'] . $data['currency'] . $this->config->get('firstdata_secret')));
 
 				$data['void_url'] = $this->url->link('payment/firstdata/void', 'token=' . $this->session->data['token'], 'SSL');
 				$data['capture_url'] = $this->url->link('payment/firstdata/capture', 'token=' . $this->session->data['token'], 'SSL');

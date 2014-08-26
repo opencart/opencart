@@ -1224,7 +1224,8 @@ class ControllerPaymentPPExpress extends Controller {
 
 				$this->response->redirect($this->url->link('checkout/success'));
 
-				if (isset($result['REDIRECTREQUIRED']) && $result['REDIRECTREQUIRED'] == true) { //- handle german redirect here
+				if (isset($result['REDIRECTREQUIRED']) && $result['REDIRECTREQUIRED'] == true) {
+					//- handle german redirect here
 					$this->response->redirect('https://www.paypal.com/cgi-bin/webscr?cmd=_complete-express-checkout&token='.$this->session->data['paypal']['token']);
 				}
 			} else {
@@ -1485,7 +1486,8 @@ class ControllerPaymentPPExpress extends Controller {
 				}
 			}
 
-			if (isset($result['REDIRECTREQUIRED']) && $result['REDIRECTREQUIRED'] == true) { //- handle german redirect here
+			if (isset($result['REDIRECTREQUIRED']) && $result['REDIRECTREQUIRED'] == true) {
+				//- handle german redirect here
 				$this->response->redirect('https://www.paypal.com/cgi-bin/webscr?cmd=_complete-express-checkout&token='.$this->session->data['paypal']['token']);
 			} else {
 				$this->response->redirect($this->url->link('checkout/success'));
@@ -1821,7 +1823,7 @@ class ControllerPaymentPPExpress extends Controller {
 					}
 				}
 			}
-		} elseif ( (string)$response == "INVALID" ) {
+		} elseif ((string)$response == "INVALID") {
 			$this->model_payment_pp_express->log(array('IPN was invalid'), 'IPN fail');
 		} else {
 			if ($this->config->get('pp_express_debug') == 1) {

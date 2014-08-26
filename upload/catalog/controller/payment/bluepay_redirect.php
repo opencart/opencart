@@ -1,6 +1,5 @@
 <?php
 class ControllerPaymentBluePayRedirect extends Controller {
-
 	public function index() {
 		$this->load->language('payment/bluepay_redirect');
 
@@ -58,9 +57,9 @@ class ControllerPaymentBluePayRedirect extends Controller {
 		$data['existing_cards'] = array();
 		if ($this->customer->isLogged() && $data['bluepay_redirect_card']) {
 			$this->load->model('payment/bluepay_redirect');
-			
+
 			$cards = $this->model_payment_bluepay_redirect->getCards($this->customer->getId());
-			
+
 			$data['existing_cards'] = $cards;
 		}
 
@@ -73,9 +72,9 @@ class ControllerPaymentBluePayRedirect extends Controller {
 
 	public function send() {
 		$this->load->language('payment/bluepay_redirect');
-		
+
 		$this->load->model('checkout/order');
-		
+
 		$this->load->model('payment/bluepay_redirect');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
@@ -85,13 +84,13 @@ class ControllerPaymentBluePayRedirect extends Controller {
 		$post_data["TRANSACTION_TYPE"] = $this->config->get('bluepay_redirect_transaction');
 		$post_data["MODE"] = strtoupper($this->config->get('bluepay_redirect_test'));
 		$post_data["AMOUNT"] = $this->currency->format($order_info['total'], $order_info['currency_code'], false, false);
-		
+
 		if (isset($this->request->post['RRNO'])) {
 			$post_data["RRNO"] = $this->request->post['RRNO'];
 		} else {
 			$post_data["RRNO"] = '';
 		}
-		
+
 		$post_data["NAME"] = substr($order_info['payment_firstname'], 0, 20) . ' ' . substr($order_info['payment_lastname'], 0, 20);
 		$post_data["ADDR1"] = $post_data['BillingAddress1'] = substr($order_info['payment_address_1'], 0, 100);
 		$post_data["CITY"] = $order_info['payment_city'];
@@ -117,11 +116,11 @@ class ControllerPaymentBluePayRedirect extends Controller {
 
 		if ($response_data['Result'] == 'APPROVED') {
 			$bluepay_redirect_order_id = $this->model_payment_bluepay_redirect->addOrder($order_info, $response_data);
-			
+
 			$this->model_payment_bluepay_redirect->addTransaction($bluepay_redirect_order_id, $this->config->get('bluepay_redirect_transaction'), $order_info);
-			
+
 			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('bluepay_redirect_order_status_id'));
-			
+
 			$json['redirect'] = $this->url->link('checkout/success', '', 'SSL');
 		} else {
 			$json['error'] = $response_data['Result'] . ' : ' . $response_data['MESSAGE'];
@@ -133,7 +132,7 @@ class ControllerPaymentBluePayRedirect extends Controller {
 			$card_data['ExpiryDate'] = $post_data['CC_EXPIRES_MONTH'] . '/' . substr($post_data['CC_EXPIRES_YEAR'], 2);
 			$card_data['CardType'] = $response_data['CARD_TYPE'];
 			$card_data['Token'] = $response_data['RRNO'];
-			
+
 			$this->model_payment_bluepay_redirect->addCard($card_data);
 		}
 

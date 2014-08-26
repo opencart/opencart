@@ -62,7 +62,7 @@ class ControllerProductProduct extends Controller {
 
 				$data['breadcrumbs'][] = array(
 					'text' => $category_info['name'],
-					'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'].$url)
+					'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url)
 				);
 			}
 		}
@@ -677,7 +677,7 @@ class ControllerProductProduct extends Controller {
 			if (empty($this->session->data['captcha']) || ($this->session->data['captcha'] != $this->request->post['captcha'])) {
 				$json['error'] = $this->language->get('error_captcha');
 			}
-			
+
 			unset($this->session->data['captcha']);
 
 			if (!isset($json['error'])) {

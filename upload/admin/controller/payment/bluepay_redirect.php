@@ -1,7 +1,5 @@
 <?php
-
 class ControllerPaymentBluepayredirect extends Controller {
-
 	private $error = array();
 
 	public function index() {
@@ -42,7 +40,6 @@ class ControllerPaymentBluepayredirect extends Controller {
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$data['entry_debug'] = $this->language->get('entry_debug');
 		$data['entry_card'] = $this->language->get('entry_card');
-
 
 		$data['help_total'] = $this->language->get('help_total');
 		$data['help_debug'] = $this->language->get('help_debug');
@@ -403,5 +400,4 @@ class ControllerPaymentBluepayredirect extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($this->request->get));
 	}
-
 }

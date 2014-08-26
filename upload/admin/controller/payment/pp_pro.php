@@ -39,7 +39,7 @@ class ControllerPaymentPPPro extends Controller {
 		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		
+
 		$data['help_test'] = $this->language->get('help_test');
 		$data['help_total'] = $this->language->get('help_total');
 

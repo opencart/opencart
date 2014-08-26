@@ -161,14 +161,11 @@ class Amazon {
 
 		$amazon_order_id = $amazon_order['amazon_order_id'];
 
-
 		$log = new Log('amazon.log');
 		$log->write("Order's $amazon_order_id status changed to $order_status_string");
 
-
 		$this->load->model('openbay/amazon');
 		$amazon_order_products = $this->model_openbay_amazon->getAmazonOrderedProducts($order_id);
-
 
 		$request_node = new SimpleXMLElement('<Request/>');
 

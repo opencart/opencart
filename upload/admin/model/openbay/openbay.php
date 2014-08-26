@@ -188,7 +188,6 @@ class ModelOpenbayOpenbay extends Model {
 							$updatelog .= "FAILED TO UPDATE FILE: " . $dir . $file['name'] . "\n";
 						}
 
-
 						unlink($tmp_file);
 
 						while ($dir_level != 0) {
@@ -413,7 +412,6 @@ class ModelOpenbayOpenbay extends Model {
 		curl_setopt_array($ch, ($options + $defaults));
 		$result = curl_exec($ch);
 		curl_close($ch);
-
 
 		if ($content_type == 'json') {
 			$encoding = mb_detect_encoding($result);
@@ -688,7 +686,6 @@ class ModelOpenbayOpenbay extends Model {
 		if (isset($data['filter_manufacturer']) && !is_null($data['filter_manufacturer'])) {
 			$sql .= " AND p.manufacturer_id = '" . (int)$data['filter_manufacturer'] . "'";
 		}
-
 
 		$sql .= " GROUP BY p.product_id";
 

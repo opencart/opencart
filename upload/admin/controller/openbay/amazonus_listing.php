@@ -153,7 +153,6 @@ class ControllerOpenbayAmazonusListing extends Controller{
 
 		$data['sku'] = trim($product_info['sku']);
 
-
 		if ($this->config->get('openbay_amazonus_listing_tax_added')) {
 				$data['price'] = $product_info['price'] * (1 + $this->config->get('openbay_amazonus_listing_tax_added') / 100);
 			} else {
@@ -168,7 +167,6 @@ class ControllerOpenbayAmazonusListing extends Controller{
 
 		$data['price'] = number_format($data['price'], 2);
 		$data['quantity'] = $product_info['quantity'];
-
 
 		$data['product_id'] = $product_info['product_id'];
 

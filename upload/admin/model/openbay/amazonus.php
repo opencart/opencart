@@ -267,7 +267,6 @@ class ModelOpenbayAmazonus extends Model {
 			WHERE `product_id` = '" . (int)$product_id . "'")->row;
 		$links = $links['count'];
 
-
 		if ($rows_total === 0 && $links > 0) {
 			return 'linked';
 		} else if ($rows_total == 0) {
@@ -287,10 +286,7 @@ class ModelOpenbayAmazonus extends Model {
 		}
 
 		if ($rows_uploaded == 0 && $rows_error > 0 && $rows_ok == 0) {
-			$quick = $this->db->query("
-				SELECT *
-				FROM `" . DB_PREFIX . "amazonus_product`
-				WHERE `product_id` = " . (int)$product_id . " AND `version` = 3")->row;
+			$quick = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazonus_product` WHERE `product_id` = " . (int)$product_id . " AND `version` = 3")->row;
 
 			if ($quick) {
 				return 'error_quick';
@@ -313,18 +309,14 @@ class ModelOpenbayAmazonus extends Model {
 			return json_decode($message_row['messages']);
 		}
 
-
 		$result = array();
 
-		$insertion_rows = $this->db->query("
-			SELECT `sku`, `insertion_id` FROM `" . DB_PREFIX . "amazonus_product`
-			WHERE `product_id` = '" . (int)$product_id . "' AND `version` = 2")->rows;
+		$insertion_rows = $this->db->query("SELECT `sku`, `insertion_id` FROM `" . DB_PREFIX . "amazonus_product` WHERE `product_id` = '" . (int)$product_id . "' AND `version` = 2")->rows;
 
 		if (!empty($insertion_rows)) {
 			foreach($insertion_rows as $insertion_row) {
-				$error_rows = $this->db->query("
-					SELECT * FROM `" . DB_PREFIX . "amazonus_product_error`
-					WHERE `sku` = '" . $this->db->escape($insertion_row['sku']) . "' AND `insertion_id` = '" . $this->db->escape($insertion_row['insertion_id']) . "'")->rows;
+				$error_rows = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazonus_product_error` WHERE `sku` = '" . $this->db->escape($insertion_row['sku']) . "' AND `insertion_id` = '" . $this->db->escape($insertion_row['insertion_id']) . "'")->rows;
+
 				foreach($error_rows as $error_row) {
 					$result[] = $error_row;
 				}

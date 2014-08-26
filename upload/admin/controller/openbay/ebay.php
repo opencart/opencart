@@ -1169,7 +1169,6 @@ class ControllerOpenbayEbay extends Controller {
 					$options[] = array('ebay' => $ebay_listing, 'local' => $option, 'var' => $option['var']);
 				}
 
-
 				//unset variants that dont appear on eBay
 				$notlive = array();
 				foreach($options as $k => $option) {
@@ -1394,7 +1393,6 @@ class ControllerOpenbayEbay extends Controller {
 				$product_info['defaults']['gallery_width']          = '400';
 				$product_info['defaults']['thumb_height']           = '100';
 				$product_info['defaults']['thumb_width']            = '100';
-
 
 				$product_info['defaults']['ebay_measurement'] = $this->config->get('ebay_measurement');
 

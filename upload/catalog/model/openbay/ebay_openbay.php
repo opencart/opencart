@@ -81,10 +81,9 @@ class ModelOpenbayEbayOpenbay extends Model{
 			if ($order->shipping->status == 'Shipped' && ($order_loaded['order_status_id'] != $this->default_shipped_id) && $order->payment->status == 'Paid') {
 				$this->model_openbay_ebay_order->update($order_id, $this->default_shipped_id);
 				$this->openbay->ebay->log('Order ID: ' . $order_id . ' -> Shipped');
-			}elseif ($order->payment->status == 'Paid' && isset($order->payment->date) && $order->shipping->status != 'Shipped' && ($order_loaded['order_status_id'] != $this->default_paid_id)) {
+			} elseif ($order->payment->status == 'Paid' && isset($order->payment->date) && $order->shipping->status != 'Shipped' && ($order_loaded['order_status_id'] != $this->default_paid_id)) {
 				$this->model_openbay_ebay_order->update($order_id, $this->default_paid_id);
 				$this->model_openbay_ebay_order->updatePaymentDetails($order_id, $order);
-
 
 				if ($this->config->get('openbaypro_stock_allocate') == 1) {
 					$this->openbay->ebay->log('Stock allocation is set to allocate stock when an order is paid');
@@ -93,12 +92,12 @@ class ModelOpenbayEbayOpenbay extends Model{
 				}
 
 				$this->openbay->ebay->log('Order ID: ' . $order_id . ' -> Paid');
-			}elseif (($order->payment->status == 'Refunded' || $order->payment->status == 'Unpaid') && ($order_loaded['order_status_id'] != $this->default_refunded_id) && in_array($this->default_paid_id, $order_history)) {
+			} elseif (($order->payment->status == 'Refunded' || $order->payment->status == 'Unpaid') && ($order_loaded['order_status_id'] != $this->default_refunded_id) && in_array($this->default_paid_id, $order_history)) {
 				/* @todo what happens if the order has never been paid? - need to find a cancelled in ebay flag*/
 				$this->model_openbay_ebay_order->update($order_id, $this->default_refunded_id);
 				$this->model_openbay_ebay_order->cancel($order_id);
 				$this->openbay->ebay->log('Order ID: ' . $order_id . ' -> Refunded');
-			}elseif ($order->payment->status == 'Part-Refunded' && ($order_loaded['order_status_id'] != $this->default_part_refunded_id) && in_array($this->default_paid_id, $order_history)) {
+			} elseif ($order->payment->status == 'Part-Refunded' && ($order_loaded['order_status_id'] != $this->default_part_refunded_id) && in_array($this->default_paid_id, $order_history)) {
 				$this->model_openbay_ebay_order->update($order_id, $this->default_part_refunded_id);
 				$this->openbay->ebay->log('Order ID: ' . $order_id . ' -> Part Refunded');
 			} else {

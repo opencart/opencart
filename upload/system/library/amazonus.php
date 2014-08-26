@@ -162,14 +162,11 @@ class Amazonus {
 
 		$amazonus_order_id = $amazonus_order['amazonus_order_id'];
 
-
 		$log = new Log('amazonus.log');
 		$log->write("Order's $amazonus_order_id status changed to $order_status_string");
 
-
 		$this->load->model('openbay/amazonus');
 		$amazonus_order_products = $this->model_openbay_amazonus->getAmazonusOrderedProducts($order_id);
-
 
 		$request_node = new SimpleXMLElement('<Request/>');
 

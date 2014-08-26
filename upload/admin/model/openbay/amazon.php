@@ -277,7 +277,6 @@ class ModelOpenbayAmazon extends Model {
 			WHERE `product_id` = '" . (int)$product_id . "'")->row;
 		$links = $links['count'];
 
-
 		if ($rows_total === 0 && $links > 0) {
 			return 'linked';
 		} else if ($rows_total == 0) {
@@ -297,10 +296,7 @@ class ModelOpenbayAmazon extends Model {
 		}
 
 		if ($rows_uploaded == 0 && $rows_error > 0 && $rows_ok == 0) {
-			$quick = $this->db->query("
-				SELECT *
-				FROM `" . DB_PREFIX . "amazon_product`
-				WHERE `product_id` = " . (int)$product_id . " AND `version` = 3")->row;
+			$quick = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_product` WHERE `product_id` = " . (int)$product_id . " AND `version` = 3")->row;
 
 			if ($quick) {
 				return 'error_quick';

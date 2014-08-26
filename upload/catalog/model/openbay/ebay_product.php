@@ -96,10 +96,9 @@ class ModelOpenbayEbayProduct extends Model {
 				}
 			}
 
-
 			$cat_link = array();
-			foreach ($categories as $key1=>$cat1) {
-				foreach ($cat1 as $key2=>$cat2) {
+			foreach ($categories as $key1 => $cat1) {
+				foreach ($cat1 as $key2 => $cat2) {
 					//final cat, add to array as node
 					$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category`, `" . DB_PREFIX . "category_description` WHERE `" . DB_PREFIX . "category`.`parent_id` = '0' AND `" . DB_PREFIX . "category_description`.`name` = '" . $this->db->escape($key2) . "' LIMIT 1");
 
@@ -113,7 +112,7 @@ class ModelOpenbayEbayProduct extends Model {
 					}
 
 					if (!empty($cat2)) {
-						foreach ($cat2 as $key3=>$cat3) {
+						foreach ($cat2 as $key3 => $cat3) {
 							$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category`, `" . DB_PREFIX . "category_description` WHERE `" . DB_PREFIX . "category`.`parent_id` = '" . $this->db->escape($id1) . "' AND `" . DB_PREFIX . "category_description`.`name` = '" . $this->db->escape($key3) . "' LIMIT 1");
 
 							if ($qry->num_rows != 0) {
@@ -126,7 +125,7 @@ class ModelOpenbayEbayProduct extends Model {
 							}
 
 							if (!empty($cat3)) {
-								foreach ($cat3 as $key4=>$cat4) {
+								foreach ($cat3 as $key4 => $cat4) {
 									$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category`, `" . DB_PREFIX . "category_description` WHERE `" . DB_PREFIX . "category`.`parent_id` = '" . $this->db->escape($id2) . "' AND `" . DB_PREFIX . "category_description`.`name` = '" . $this->db->escape($key4) . "' LIMIT 1");
 
 									if ($qry->num_rows != 0) {
@@ -139,7 +138,7 @@ class ModelOpenbayEbayProduct extends Model {
 									}
 
 									if (!empty($cat4)) {
-										foreach ($cat4 as $key5=>$cat5) {
+										foreach ($cat4 as $key5 => $cat5) {
 											$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category`, `" . DB_PREFIX . "category_description` WHERE `" . DB_PREFIX . "category`.`parent_id` = '" . $this->db->escape($id3) . "' AND `" . DB_PREFIX . "category_description`.`name` = '" . $this->db->escape($key5) . "' LIMIT 1");
 
 											if ($qry->num_rows != 0) {

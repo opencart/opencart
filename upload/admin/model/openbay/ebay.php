@@ -744,7 +744,7 @@ class ModelOpenbayEbay extends Model{
 			$variant_data['related']     = $data['optGroupRelArray'];
 			$variant_data['id']          = $data['itemId'];
 
-			$stockFlag = false;
+			$stock_flag = false;
 
 			foreach ($data['opt'] as $k => $opt) {
 				//update the variant reserve level
@@ -756,7 +756,7 @@ class ModelOpenbayEbay extends Model{
 				$this->openbay->ebay->log('editSave() - stock: ' . serialize($stock));
 
 				if ($stock['quantity'] > 0 || $stock == true) {
-					$stockFlag = true;
+					$stock_flag = true;
 				}
 
 				// PRODUCT RESERVE LEVELS FOR VARIANT ITEMS (DOES NOT PASS THROUGH NORMAL SYSTEM)
@@ -782,7 +782,7 @@ class ModelOpenbayEbay extends Model{
 			$this->openbay->ebay->log('editSave() - Debug - ' . serialize($variant_data));
 
 			//send to the api to process
-			if ($stockFlag == true) {
+			if ($stock_flag == true) {
 				$this->openbay->ebay->log('editSave() - Sending to API');
 				$response = $this->openbay->ebay->call('item/reviseVariants', $variant_data);
 				return $response;

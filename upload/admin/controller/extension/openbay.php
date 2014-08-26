@@ -1028,7 +1028,7 @@ class ControllerExtensionOpenbay extends Controller {
 			$i++;
 		}
 
-		$this->session->data['success'] = $i.' ' . $data['text_confirmed'] . ' ' . $status_mapped[$this->request->post['order_status_id']];
+		$this->session->data['success'] = $i . ' ' . $data['text_confirmed'] . ' ' . $status_mapped[$this->request->post['order_status_id']];
 
 		$this->response->redirect($this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'], 'SSL'));
 	}

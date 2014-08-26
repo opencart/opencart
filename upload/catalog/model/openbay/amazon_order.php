@@ -3,12 +3,12 @@ class ModelOpenbayAmazonOrder extends Model {
 	public function acknowledgeOrder($order_id) {
 		$amazon_order_id = $this->getAmazonOrderId($order_id);
 
-		$requestXml = "<Request>
+		$request_xml = "<Request>
   <AmazonOrderId>$amazon_order_id</AmazonOrderId>
   <MerchantOrderId>$order_id</MerchantOrderId>
 </Request>";
 
-		$this->openbay->amazon->callNoResponse('order/acknowledge', $requestXml, false);
+		$this->openbay->amazon->callNoResponse('order/acknowledge', $request_xml, false);
 	}
 
 	public function getProductId($sku) {
@@ -47,35 +47,35 @@ class ModelOpenbayAmazonOrder extends Model {
 
 		switch ($amazonStatus) {
 			case 'pending':
-				$orderStatus = $this->config->get('openbay_amazon_order_status_pending');
+				$order_status = $this->config->get('openbay_amazon_order_status_pending');
 				break;
 
 			case 'unshipped':
-				$orderStatus = $this->config->get('openbay_amazon_order_status_unshipped');
+				$order_status = $this->config->get('openbay_amazon_order_status_unshipped');
 				break;
 
 			case 'partiallyshipped':
-				$orderStatus = $this->config->get('openbay_amazon_order_status_partially_shipped');
+				$order_status = $this->config->get('openbay_amazon_order_status_partially_shipped');
 				break;
 
 			case 'shipped':
-				$orderStatus = $this->config->get('openbay_amazon_order_status_shipped');
+				$order_status = $this->config->get('openbay_amazon_order_status_shipped');
 				break;
 
 			case 'canceled':
-				$orderStatus = $this->config->get('openbay_amazon_order_status_canceled');
+				$order_status = $this->config->get('openbay_amazon_order_status_canceled');
 				break;
 
 			case 'unfulfillable':
-				$orderStatus = $this->config->get('openbay_amazon_order_status_unfulfillable');
+				$order_status = $this->config->get('openbay_amazon_order_status_unfulfillable');
 				break;
 
 			default:
-				$orderStatus = $this->config->get('config_order_status_id');
+				$order_status = $this->config->get('config_order_status_id');
 				break;
 		}
 
-		return $orderStatus;
+		return $order_status;
 	}
 
 	public function getCountryName($country_code) {

@@ -528,9 +528,9 @@ class ControllerOpenbayAmazonProduct extends Controller {
 	private function fillSavedValues($product_id, $fields_array, $var = '') {
 
 		$this->load->model('openbay/amazon');
-		$savedListing = $this->model_openbay_amazon->getProduct($product_id, $var);
+		$saved_listing = $this->model_openbay_amazon->getProduct($product_id, $var);
 
-		$decoded_data = (array)json_decode($savedListing['data']);
+		$decoded_data = (array)json_decode($saved_listing['data']);
 		$saved_fields = (array)$decoded_data['fields'];
 
 		//Show current quantity instead of last uploaded
@@ -562,13 +562,13 @@ class ControllerOpenbayAmazonProduct extends Controller {
 	}
 
 	private function formatUrlsInText($text) {
-		$reg_exUrl = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
-		preg_match_all($reg_exUrl, $text, $matches);
-		$usedPatterns = array();
+		$regex_url = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
+		preg_match_all($regex_url, $text, $matches);
+		$used_patterns = array();
 		foreach($matches[0] as $pattern) {
-			if (!array_key_exists($pattern, $usedPatterns)) {
-				$usedPatterns[$pattern]=true;
-				$text = str_replace($pattern, "<a target='_blank' href=" .$pattern .">" . $pattern . "</a>", $text);
+			if (!array_key_exists($pattern, $used_patterns)) {
+				$used_patterns[$pattern]=true;
+				$text = str_replace($pattern, "<a target='_blank' href=" . $pattern . ">" . $pattern . "</a>", $text);
 			}
 		}
 		return $text;

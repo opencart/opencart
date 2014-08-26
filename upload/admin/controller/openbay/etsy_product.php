@@ -191,7 +191,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		}
 
 		if (!$this->error) {
-			$response = $this->openbay->etsy->call('product/listing/'.(int)$data['listing_id'].'/image', 'POST', $data);
+			$response = $this->openbay->etsy->call('product/listing/' . (int)$data['listing_id'] . '/image', 'POST', $data);
 
 			$this->response->addHeader('Content-Type: application/json');
 
@@ -206,7 +206,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 	public function getCategory() {
 		$data = $this->request->post;
 
-		$categories = $this->openbay->etsy->call('product/category/getCategory?tag='.$data['tag'], 'GET');
+		$categories = $this->openbay->etsy->call('product/category/getCategory?tag=' . $data['tag'], 'GET');
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($categories));
@@ -215,7 +215,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 	public function getSubCategory() {
 		$data = $this->request->post;
 
-		$categories = $this->openbay->etsy->call('product/category/findAllTopCategoryChildren?tag='.$data['tag'], 'GET');
+		$categories = $this->openbay->etsy->call('product/category/findAllTopCategoryChildren?tag=' . $data['tag'], 'GET');
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($categories));
@@ -224,7 +224,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 	public function getSubSubCategory() {
 		$data = $this->request->post;
 
-		$categories = $this->openbay->etsy->call('product/category/findAllSubCategoryChildren?sub_tag='.$data['sub_tag'], 'GET');
+		$categories = $this->openbay->etsy->call('product/category/findAllSubCategoryChildren?sub_tag=' . $data['sub_tag'], 'GET');
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($categories));
@@ -431,7 +431,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 		$data['filter'] = $filter;
 
-		$listing_response = $this->openbay->etsy->call('product/getListings?'.http_build_query($filter), 'GET');
+		$listing_response = $this->openbay->etsy->call('product/getListings?' . http_build_query($filter), 'GET');
 		unset($filter['page']);
 
 		if (isset($listing_response['data']['error'])) {
@@ -477,7 +477,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			$pagination->total = $listing_response['data']['count'];
 			$pagination->page = $listing_response['data']['pagination']['effective_page'];
 			$pagination->limit = $listing_response['data']['pagination']['effective_limit'];
-			$pagination->url = $this->url->link('openbay/etsy_product/listings', 'token=' . $this->session->data['token'] . '&page={page}&'.http_build_query($filter), 'SSL');
+			$pagination->url = $this->url->link('openbay/etsy_product/listings', 'token=' . $this->session->data['token'] . '&page={page}&' . http_build_query($filter), 'SSL');
 
 			$data['pagination'] = $pagination->render();
 			$data['results'] = sprintf($this->language->get('text_pagination'), ($listing_response['data']['count']) ? (($listing_response['data']['pagination']['effective_page'] - 1) * $listing_response['data']['pagination']['effective_limit']) + 1 : 0, ((($listing_response['data']['pagination']['effective_page'] - 1) * $listing_response['data']['pagination']['effective_limit']) > ($listing_response['data']['count'] - $listing_response['data']['pagination']['effective_limit'])) ? $listing_response['data']['count'] : ((($listing_response['data']['pagination']['effective_page'] - 1) * $listing_response['data']['pagination']['effective_limit']) + $listing_response['data']['pagination']['effective_limit']), $listing_response['data']['count'], ceil($listing_response['data']['count'] / $listing_response['data']['pagination']['effective_limit']));
@@ -528,7 +528,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			die();
 		}
 
-		$response = $this->openbay->etsy->call('product/listing/'.(int)$data['etsy_item_id'].'/delete', 'POST', array());
+		$response = $this->openbay->etsy->call('product/listing/' . (int)$data['etsy_item_id'] . '/delete', 'POST', array());
 
 		if (isset($response['data']['error'])) {
 			echo json_encode(array('error' => $this->language->get('error_etsy').$response['data']['error']));
@@ -555,7 +555,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			die();
 		}
 
-		$response = $this->openbay->etsy->call('product/listing/'.(int)$data['etsy_item_id'].'/inactive', 'POST', array());
+		$response = $this->openbay->etsy->call('product/listing/' . (int)$data['etsy_item_id'] . '/inactive', 'POST', array());
 
 		if (isset($response['data']['error'])) {
 			echo json_encode(array('error' => $this->language->get('error_etsy').$response['data']['error']));
@@ -584,7 +584,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			die();
 		}
 
-		$response = $this->openbay->etsy->call('product/listing/'.(int)$data['etsy_item_id'].'/active', 'POST', array());
+		$response = $this->openbay->etsy->call('product/listing/' . (int)$data['etsy_item_id'] . '/active', 'POST', array());
 
 		if (isset($response['data']['error'])) {
 			echo json_encode(array('error' => $this->language->get('error_etsy').$response['data']['error']));

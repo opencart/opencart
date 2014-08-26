@@ -1518,10 +1518,14 @@ class ControllerOpenbayEbay extends Controller {
 							$setting = array();
 
 							$setting['dispatch_times'] = $this->openbay->ebay->getSetting('dispatch_time_max');
-							if (is_array($setting['dispatch_times'])) { ksort($setting['dispatch_times']); }
+							if (is_array($setting['dispatch_times'])) {
+								ksort($setting['dispatch_times']);
+							}
 
 							$setting['countries'] = $this->openbay->ebay->getSetting('countries');
-							if (is_array($setting['countries'])) { ksort($setting['countries']); }
+							if (is_array($setting['countries'])) {
+								ksort($setting['countries']);
+							}
 
 							$setting['returns'] = $this->openbay->ebay->getSetting('returns');
 

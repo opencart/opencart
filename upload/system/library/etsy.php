@@ -67,7 +67,7 @@ final class Etsy {
 
 			$response = array();
 
-			if( ! $result = curl_exec($ch)) {
+			if (! $result = curl_exec($ch)) {
 				$this->log('call() - Curl Failed ' . curl_error($ch) . ' ' . curl_errno($ch));
 
 				return false;

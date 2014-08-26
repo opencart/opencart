@@ -145,7 +145,7 @@ class ModelOpenbayOpenbay extends Model {
 
 					foreach ($files['asset']['file'] as $file) {
 						$dir = '';
-						$dirLevel = 0;
+						$dir_level = 0;
 						if (isset($file['locations']['location']) && is_array($file['locations']['location'])) {
 							foreach ($file['locations']['location'] as $location) {
 								$updatelog .= "Current location: " . $dir . "\n";
@@ -160,13 +160,13 @@ class ModelOpenbayOpenbay extends Model {
 								$updatelog .= "ftp_pwd output: " . ftp_pwd($connection) . "\n";
 
 								if (@ftp_chdir($connection, $location)) {
-									$dirLevel++;
+									$dir_level++;
 								} else {
 									if (@ftp_mkdir($connection, $location)) {
 										$updatelog .= "Created directory: " . $dir . "\n";
 
 										ftp_chdir($connection, $location);
-										$dirLevel++;
+										$dir_level++;
 									} else {
 										$updatelog .= "FAILED TO CREATE DIRECTORY: " . $dir . "\n";
 									}
@@ -176,24 +176,24 @@ class ModelOpenbayOpenbay extends Model {
 
 						$filedata = base64_decode($this->call('update/getFileContent/', array('file' => implode('/', $file['locations']['location']) . '/' . $file['name'], 'beta' => $data['beta'])));
 
-						$tmpFile = DIR_CACHE . 'openbay.tmp';
+						$tmp_file = DIR_CACHE . 'openbay.tmp';
 
-						$fp = fopen($tmpFile, 'w');
+						$fp = fopen($tmp_file, 'w');
 						fwrite($fp, $filedata);
 						fclose($fp);
 
-						if (ftp_put($connection, $file['name'], $tmpFile, FTP_BINARY)) {
+						if (ftp_put($connection, $file['name'], $tmp_file, FTP_BINARY)) {
 							$updatelog .= "Updated file: " . $dir . $file['name'] . "\n";
 						} else {
 							$updatelog .= "FAILED TO UPDATE FILE: " . $dir . $file['name'] . "\n";
 						}
 
 
-						unlink($tmpFile);
+						unlink($tmp_file);
 
-						while ($dirLevel != 0) {
+						while ($dir_level != 0) {
 							ftp_cdup($connection);
-							$dirLevel--;
+							$dir_level--;
 						}
 					}
 
@@ -226,7 +226,7 @@ class ModelOpenbayOpenbay extends Model {
 						$directory_list = ftp_nlist($connection, $data['rootpath']);
 					}
 
-					$filesUpdate = $files;
+					$files_update = $files;
 					$files = $this->call('update/getRemoveList/', $send);
 
 					$updatelog .= "Remove Files: " . print_r($files, 1);
@@ -234,7 +234,7 @@ class ModelOpenbayOpenbay extends Model {
 					if (!empty($files['asset']) && is_array($files['asset'])) {
 						foreach ($files['asset'] as $file) {
 							$dir = '';
-							$dirLevel = 0;
+							$dir_level = 0;
 							$error = false;
 
 							if (!empty($file['locations'])) {
@@ -249,7 +249,7 @@ class ModelOpenbayOpenbay extends Model {
 
 									if (@ftp_chdir($connection, $location)) {
 										$updatelog .= $location . "/ found\n";
-										$dirLevel++;
+										$dir_level++;
 									} else {
 										// folder does not exist, therefore, file does not exist.
 										$updatelog .= "$location not found\n";
@@ -272,9 +272,9 @@ class ModelOpenbayOpenbay extends Model {
 								}
 							}
 
-							while ($dirLevel != 0) {
+							while ($dir_level != 0) {
 								ftp_cdup($connection);
-								$dirLevel--;
+								$dir_level--;
 							}
 						}
 					}
@@ -286,7 +286,7 @@ class ModelOpenbayOpenbay extends Model {
 
 				$this->writeUpdateLog($updatelog . "\n\n\nErrors:\n" . $output);
 
-				return array('connection' => true, 'msg' => sprintf($this->language->get('text_updated'), $filesUpdate['version']), 'version' => $filesUpdate['version']);
+				return array('connection' => true, 'msg' => sprintf($this->language->get('text_updated'), $files_update['version']), 'version' => $files_update['version']);
 			} else {
 				return array('connection' => false, 'msg' => $this->language->get('error_ftp_login'));
 			}

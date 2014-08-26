@@ -77,7 +77,7 @@ final class Ebay {
 
 			$ch = curl_init();
 			curl_setopt_array($ch, ($options + $defaults));
-			if ( ! $result = curl_exec($ch)) {
+			if (! $result = curl_exec($ch)) {
 				$this->log('call() - Curl Failed ' . curl_error($ch) . ' ' . curl_errno($ch));
 			}
 			curl_close($ch);
@@ -347,12 +347,16 @@ final class Ebay {
 	}
 
 	public function encrypt($msg,$k,$base64 = false) {
-		if (!$td = mcrypt_module_open('rijndael-256', '', 'ctr', '')) { return false; }
+		if (!$td = mcrypt_module_open('rijndael-256', '', 'ctr', '')) {
+			return false;
+		}
 
 		$msg = serialize($msg);
 		$iv  = mcrypt_create_iv(32, MCRYPT_RAND);
 
-		if (mcrypt_generic_init($td, $k, $iv) !== 0 ) { return false; }
+		if (mcrypt_generic_init($td, $k, $iv) !== 0 ) {
+			return false;
+		}
 
 		$msg  = mcrypt_generic($td, $msg);
 		$msg  = $iv . $msg;
@@ -362,15 +366,19 @@ final class Ebay {
 		mcrypt_generic_deinit($td);
 		mcrypt_module_close($td);
 
-		if ($base64) { $msg = base64_encode($msg); }
+		if ($base64) {
+			$msg = base64_encode($msg);
+		}
 
 		return $msg;
 	}
 
 	public function decrypt($msg,$k,$base64 = false) {
-		if ( $base64 ) { $msg = base64_decode($msg); }
+		if ($base64) {
+			$msg = base64_decode($msg);
+		}
 
-		if ( ! $td = mcrypt_module_open('rijndael-256', '', 'ctr', '') ) {
+		if (!$td = mcrypt_module_open('rijndael-256', '', 'ctr', '') ) {
 			$this->log('decrypt() - Failed to open cipher');
 			return false;
 		}
@@ -381,12 +389,12 @@ final class Ebay {
 		$msg = substr($msg, 32, strlen($msg)-64);
 		$mac = $this->pbkdf2($iv . $msg, $k, 1000, 32);
 
-		if ( $em !== $mac ) {
+		if ($em !== $mac ) {
 			$this->log('decrypt() - Mac authenticate failed');
 			return false;
 		}
 
-		if ( mcrypt_generic_init($td, $k, $iv) !== 0 ) {
+		if (mcrypt_generic_init($td, $k, $iv) !== 0 ) {
 			$this->log('decrypt() - Buffer init failed');
 			return false;
 		}
@@ -405,10 +413,10 @@ final class Ebay {
 		$kb = ceil($kl / $hl);
 		$dk = '';
 
-		for ($block = 1; $block <= $kb; $block ++) {
+		for ($block = 1; $block <= $kb; $block++) {
 			$ib = $b = hash_hmac($a, $s . pack('N', $block), $p, true);
 
-			for ( $i = 1; $i < $c; $i ++ ) {
+			for ($i = 1; $i < $c; $i++) {
 					$ib ^= ($b = hash_hmac($a, $b, $p, true));
 			}
 			$dk .= $ib;
@@ -429,7 +437,7 @@ final class Ebay {
 
 		$data = json_decode($data);
 
-		if (function_exists( 'json_last_error' )) {
+		if (function_exists('json_last_error')) {
 			switch (json_last_error()) {
 				case JSON_ERROR_NONE:
 					$this->log('validateJsonDecode() - No json decode errors');
@@ -1185,8 +1193,17 @@ final class Ebay {
 
 			if (!empty($cat_array)) {
 				foreach ($cat_array as $cat) {
-					if ($cat['BestOfferEnabled'] == true) { $cat['BestOfferEnabled'] = 1; } else { $cat['BestOfferEnabled'] = 0; }
-					if ($cat['AutoPayEnabled'] == true) { $cat['AutoPayEnabled'] = 1; } else { $cat['AutoPayEnabled'] = 0; }
+					if ($cat['BestOfferEnabled'] == true) {
+						$cat['BestOfferEnabled'] = 1;
+					} else {
+						$cat['BestOfferEnabled'] = 0;
+					}
+
+					if ($cat['AutoPayEnabled'] == true) {
+						$cat['AutoPayEnabled'] = 1;
+					} else {
+						$cat['AutoPayEnabled'] = 0;
+					}
 
 					$this->db->query("
 						INSERT INTO `" . DB_PREFIX . "ebay_category` SET

@@ -50,7 +50,7 @@ class ModelOpenbayEbayProduct extends Model {
 			$item_count_loop = 0;
 			foreach ($new_data_1 as $item) {
 				$item_count_loop++;
-				$this->openbay->ebay->log('Processing item: '.$item_count_loop);
+				$this->openbay->ebay->log('Processing item: ' . $item_count_loop);
 
 				$parts = explode(':', $item['CategoryName']);
 
@@ -151,18 +151,18 @@ class ModelOpenbayEbayProduct extends Model {
 												$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id4) . "', `store_id` = '0'");
 											}
 
-											$cat_link[$key1.':'.$key2.':'.$key3.':'.$key4.':'.$key5] = $id4;
+											$cat_link[$key1 . ':' . $key2 . ':' . $key3 . ':' . $key4 . ':' . $key5] = $id4;
 										}
 									} else {
-										$cat_link[$key1.':'.$key2.':'.$key3.':'.$key4] = $id3;
+										$cat_link[$key1 . ':' . $key2 . ':' . $key3 . ':' . $key4] = $id3;
 									}
 								}
 							} else {
-								$cat_link[$key1.':'.$key2.':'.$key3] = $id2;
+								$cat_link[$key1 . ':' . $key2 . ':' . $key3] = $id2;
 							}
 						}
 					} else {
-						$cat_link[$key1.':'.$key2] = $id1;
+						$cat_link[$key1 . ':' . $key2] = $id1;
 					}
 				}
 			}
@@ -178,7 +178,7 @@ class ModelOpenbayEbayProduct extends Model {
 
 		foreach ($new_data_1 as $item) {
 			if (!in_array($item['ItemID'], $current)) {
-				$this->openbay->ebay->log('New item being created: '.$item['ItemID']);
+				$this->openbay->ebay->log('New item being created: ' . $item['ItemID']);
 
 				//get the manufacturer id
 				$manufacturer_id = 0;
@@ -209,7 +209,7 @@ class ModelOpenbayEbayProduct extends Model {
 
 				//package weight
 				if (isset($item['advanced']['package']['weight']['major'])) {
-					$weight = $item['advanced']['package']['weight']['major'].'.'.$item['advanced']['package']['weight']['minor'];
+					$weight = $item['advanced']['package']['weight']['major'] . ' . ' . $item['advanced']['package']['weight']['minor'];
 				} else {
 					$weight = 0;
 				}
@@ -272,7 +272,7 @@ class ModelOpenbayEbayProduct extends Model {
 				$original_description = $item['Description'];
 
 				if (!empty($original_description)) {
-					if ( false !== ($item['Description'] = gzuncompress($original_description))) {
+					if (false !== ($item['Description'] = gzuncompress($original_description))) {
 						$item['Description'] = html_entity_decode($item['Description']);
 					} else {
 						$this->openbay->ebay->log('Description could not be decompressed, output below');
@@ -335,15 +335,15 @@ class ModelOpenbayEbayProduct extends Model {
 					foreach ($item['pictures'] as $img) {
 						if (!empty($img)) {
 							$name = rand(500000, 1000000000);
-							$this->addImage($img, DIR_IMAGE.'data/'.$name.'.jpg', $name.'.jpg', $product_id, $imgCount);
+							$this->addImage($img, DIR_IMAGE . 'data/' . $name . ' . jpg', $name . ' . jpg', $product_id, $imgCount);
 							$imgCount++;
 						}
 					}
 				}
 
-				$this->openbay->ebay->log('Product import completed.');
+				$this->openbay->ebay->log('Product import completed . ');
 			} else {
-				$this->openbay->ebay->log($item['ItemID'].' exists already');
+				$this->openbay->ebay->log($item['ItemID'] . ' exists already');
 			}
 		}
 
@@ -378,18 +378,18 @@ class ModelOpenbayEbayProduct extends Model {
 				$product_option_id          = $this->getProductOption($product_id, $option['id']);
 				$product_option_value_id    = $this->getProductOptionValue($product_id, $option['id'], $opt['id'], $product_option_id);
 
-				$this->openbay->ebay->log('Option data: '.serialize($option));
+				$this->openbay->ebay->log('Option data: ' . serialize($option));
 
 				$s          = $option['sort'];
 				$vars[$s]   = $product_option_value_id;
 			}
 
-			//$this->openbay->ebay->log('Unsorted: '.serialize($vars));
+			//$this->openbay->ebay->log('Unsorted: ' . serialize($vars));
 
 			//sort the array to the natural sort order
 			ksort($vars);
 
-			//$this->openbay->ebay->log('Sorted: '.serialize($vars));
+			//$this->openbay->ebay->log('Sorted: ' . serialize($vars));
 
 			//remove the key from the array to pass to implode
 			$vars2 = array();
@@ -401,7 +401,7 @@ class ModelOpenbayEbayProduct extends Model {
 			//implode the values
 			$vars = implode(':', $vars2);
 
-			//$this->openbay->ebay->log('Vars: '.$vars);
+			//$this->openbay->ebay->log('Vars: ' . $vars);
 
 			//create the variant
 			$this->createProductVariant(array('var' => $vars, 'price' => $variant['price'], 'stock' => $variant['qty'], 'product_id' => $product_id, 'sku' => $variant['sku']));
@@ -409,14 +409,14 @@ class ModelOpenbayEbayProduct extends Model {
 
 		$this->updateVariantListing($product_id, $data['ItemID']);
 
-		//$this->openbay->ebay->log('Item variant stuff done..');
+		//$this->openbay->ebay->log('Item variant stuff done. . ');
 	}
 
 	private function getOption($name) {
 		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option` `o` LEFT JOIN `" . DB_PREFIX . "option_description` `od` ON (`od`.`option_id` = `o`.`option_id`) WHERE `od`.`name` = '" . $this->db->escape($name) . "'LIMIT 1");
 
 		if ($qry->num_rows) {
-			$this->openbay->ebay->log('Option found: "'.$name.' / '.$qry->row['option_id'].'" with sort order of "'.$qry->row['sort_order'].'"');
+			$this->openbay->ebay->log('Option found: "' . $name . ' / ' . $qry->row['option_id'] . '" with sort order of "' . $qry->row['sort_order'] . '"');
 			return array('id' => (int)$qry->row['option_id'], 'sort' => (int)$qry->row['sort_order']);
 		} else {
 			return $this->createOption($name);
@@ -431,7 +431,7 @@ class ModelOpenbayEbayProduct extends Model {
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "option_description` SET `language_id` = '" . (int)$this->config->get('config_language_id') . "', `name` = '" . $this->db->escape($name) . "', `option_id` = '" . (int)$option_id . "'");
 
-		$this->openbay->ebay->log('No option found, creating: "'.$name.' / '.$option_id.'" with sort order of "'.$qry_sort->row['sort_order'].'"');
+		$this->openbay->ebay->log('No option found, creating: "' . $name . ' / ' . $option_id . '" with sort order of "' . $qry_sort->row['sort_order'] . '"');
 		return array('id' => (int)$option_id, 'sort' => (int)$qry_sort->row['sort_order']);
 	}
 
@@ -439,10 +439,10 @@ class ModelOpenbayEbayProduct extends Model {
 		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option_value` ov LEFT JOIN `" . DB_PREFIX . "option_value_description` `ovd` ON (`ovd`.`option_value_id` = `ov`.`option_value_id`) WHERE `ovd`.`name` = '" . $this->db->escape($name) . "' AND `ovd`.`option_id` = '" . (int)$option_id . "'LIMIT 1");
 
 		if ($qry->num_rows) {
-			//$this->openbay->ebay->log('Option value found: "'.$name.'"');
+			//$this->openbay->ebay->log('Option value found: "' . $name . '"');
 			return array('id' => (int)$qry->row['option_value_id'], 'sort' => (int)$qry->row['sort_order']);
 		} else {
-			//$this->openbay->ebay->log('No option value found, creating "'.$name.'"');
+			//$this->openbay->ebay->log('No option value found, creating "' . $name . '"');
 			return $this->createOptionValue($name, $option_id);
 		}
 	}
@@ -511,8 +511,8 @@ class ModelOpenbayEbayProduct extends Model {
 	private function updateVariantListing($product_id, $item_id) {
 		$variant_data = array();
 
-		$variants           = $this->model_openstock_openstock->getProductOptionStocks($product_id);
-		$groups             = $this->model_catalog_product->getProductOptions($product_id);
+		$variants = $this->model_openstock_openstock->getProductOptionStocks($product_id);
+		$groups = $this->model_catalog_product->getProductOptions($product_id);
 
 		$variant_data['groups']  = array();
 		$variant_data['related'] = array();
@@ -541,7 +541,9 @@ class ModelOpenbayEbayProduct extends Model {
 			$variant_data['opt'][$v]['price']   = number_format($option['price'], 2);
 
 			$variant_data['opt'][$v]['active']  = 0;
-			if ($option['active'] == 1) {  $variant_data['opt'][$v]['active'] = 1; }
+			if ($option['active'] == 1) {
+				$variant_data['opt'][$v]['active'] = 1;
+			}
 
 			$v++;
 		}
@@ -555,7 +557,7 @@ class ModelOpenbayEbayProduct extends Model {
 	}
 
 	private function attributeGroupExists($name) {
-		$this->openbay->ebay->log('Checking attribute group: '.$name);
+		$this->openbay->ebay->log('Checking attribute group: ' . $name);
 		$qry = $this->db->query("SELECT * FROM  `" . DB_PREFIX . "attribute_group_description` WHERE `name` = '" . $this->db->escape(htmlspecialchars($name, ENT_COMPAT)) . "' AND `language_id` = '" . (int)$this->config->get('config_language_id') . "' LIMIT 1");
 
 		if ($qry->num_rows) {
@@ -582,7 +584,7 @@ class ModelOpenbayEbayProduct extends Model {
 	}
 
 	private function attributeExists($group_id, $name) {
-		$this->openbay->ebay->log('Checking attribute: '.$name);
+		$this->openbay->ebay->log('Checking attribute: ' . $name);
 
 		$qry = $this->db->query("
 			SELECT * FROM
@@ -632,7 +634,7 @@ class ModelOpenbayEbayProduct extends Model {
 	}
 
 	private function manufacturerExists($name) {
-		$this->openbay->ebay->log('Checking manufacturer: '.$name);
+		$this->openbay->ebay->log('Checking manufacturer: ' . $name);
 
 		$qry = $this->db->query("SELECT * FROM  `" . DB_PREFIX . "manufacturer` WHERE LCASE(`name`) = '" . $this->db->escape(htmlspecialchars($name, ENT_COMPAT)) . "' LIMIT 1");
 
@@ -660,7 +662,7 @@ class ModelOpenbayEbayProduct extends Model {
 	}
 
 	private function weightClassExists($name) {
-		$this->openbay->ebay->log('Checking weight class: '.$name);
+		$this->openbay->ebay->log('Checking weight class: ' . $name);
 
 		$qry = $this->db->query("SELECT `weight_class_id` FROM `" . DB_PREFIX . "weight_class_description` WHERE LCASE(`title`) = '" . $this->db->escape(strtolower($name)) . "' LIMIT 1");
 
@@ -681,7 +683,7 @@ class ModelOpenbayEbayProduct extends Model {
 	}
 
 	private function lengthClassExists($name) {
-		$this->openbay->ebay->log('Checking length class: '.$name);
+		$this->openbay->ebay->log('Checking length class: ' . $name);
 
 		$qry = $this->db->query("SELECT `length_class_id` FROM `" . DB_PREFIX . "length_class_description` WHERE LCASE(`title`) = '" . $this->db->escape(strtolower($name)) . "' LIMIT 1");
 
@@ -708,17 +710,17 @@ class ModelOpenbayEbayProduct extends Model {
 	}
 
 	public function resize($filename, $width, $height, $type = "") {
-		if (!file_exists(DIR_IMAGE . 'catalog/' . md5($filename).'.jpg')) {
-			copy($filename, DIR_IMAGE . 'catalog/' . md5($filename).'.jpg');
+		if (!file_exists(DIR_IMAGE . 'catalog/' . md5($filename) . ' . jpg')) {
+			copy($filename, DIR_IMAGE . 'catalog/' . md5($filename) . ' . jpg');
 		}
 
-		$old_image = DIR_IMAGE . 'catalog/' . md5($filename).'.jpg';
-		$new_image = 'cache/ebaydisplay/' . md5($filename) . '-' . $width . 'x' . $height . $type .'.jpg';
+		$old_image = DIR_IMAGE . 'catalog/' . md5($filename) . ' . jpg';
+		$new_image = 'cache/ebaydisplay/' . md5($filename) . '-' . $width . 'x' . $height . $type  . ' . jpg';
 
 		if (!file_exists(DIR_IMAGE . $new_image)) {
 			$path = '';
 
-			$directories = explode('/', dirname(str_replace('../', '', $new_image)));
+			$directories = explode('/', dirname(str_replace(' . ./', '', $new_image)));
 
 			foreach ($directories as $directory) {
 				$path = $path . '/' . $directory;

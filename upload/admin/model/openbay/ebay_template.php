@@ -12,7 +12,7 @@ class ModelOpenbayEbayTemplate extends Model {
 	public function delete($id) {
 		$qry = $this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_template` WHERE `template_id` = '" . (int)$id . "' LIMIT 1");
 
-		if ($qry->countAffected > 0) {
+		if ($qry->countAffected() > 0) {
 			return true;
 		}else{
 			return false;

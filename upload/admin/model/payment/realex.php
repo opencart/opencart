@@ -41,24 +41,24 @@ class ModelPaymentRealex extends Model {
 			$merchant_id = $this->config->get('realex_merchant_id');
 			$secret = $this->config->get('realex_secret');
 
-			$this->logger('Void hash construct: '.$timestamp.'.'.$merchant_id.'.'.$realex_order['order_ref'].'...');
+			$this->logger('Void hash construct: ' . $timestamp . '.' . $merchant_id . '.' . $realex_order['order_ref'] . '...');
 
-			$tmp = $timestamp.'.'.$merchant_id.'.'.$realex_order['order_ref'].'...';
+			$tmp = $timestamp . '.' . $merchant_id . '.' . $realex_order['order_ref'] . '...';
 			$hash = sha1($tmp);
-			$tmp = $hash.'.'.$secret;
+			$tmp = $hash . '.' . $secret;
 			$hash = sha1($tmp);
 
 			$xml = '';
-			$xml .= '<request type="void" timestamp="'.$timestamp.'">';
-			$xml .= '<merchantid>'.$merchant_id.'</merchantid>';
-			$xml .= '<account>'.$realex_order['account'].'</account>';
-			$xml .= '<orderid>'.$realex_order['order_ref'].'</orderid>';
-			$xml .= '<pasref>'.$realex_order['pasref'].'</pasref>';
-			$xml .= '<authcode>'.$realex_order['authcode'].'</authcode>';
-			$xml .= '<sha1hash>'.$hash.'</sha1hash>';
+			$xml .= '<request type="void" timestamp="' . $timestamp . '">';
+			$xml .= '<merchantid>' . $merchant_id . '</merchantid>';
+			$xml .= '<account>' . $realex_order['account'] . '</account>';
+			$xml .= '<orderid>' . $realex_order['order_ref'] . '</orderid>';
+			$xml .= '<pasref>' . $realex_order['pasref'] . '</pasref>';
+			$xml .= '<authcode>' . $realex_order['authcode'] . '</authcode>';
+			$xml .= '<sha1hash>' . $hash . '</sha1hash>';
 			$xml .= '</request>';
 
-			$this->logger('Void XML request:\r\n'.print_r(simplexml_load_string($xml), 1));
+			$this->logger('Void XML request:\r\n' . print_r(simplexml_load_string($xml), 1));
 
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, "https://epage.payandshop.com/epage-remote.cgi");
@@ -89,41 +89,41 @@ class ModelPaymentRealex extends Model {
 			$secret = $this->config->get('realex_secret');
 
 			if ($realex_order['settle_type'] == 2) {
-				$this->logger('Capture hash construct: '.$timestamp.'.'.$merchant_id.'.'.$realex_order['order_ref'].'.'.(int)round($amount*100).'.'.(string)$realex_order['currency_code'].'.');
+				$this->logger('Capture hash construct: ' . $timestamp . '.' . $merchant_id . '.' . $realex_order['order_ref'] . '.' . (int)round($amount*100) . '.' . (string)$realex_order['currency_code'] . '.');
 
-				$tmp = $timestamp.'.'.$merchant_id.'.'.$realex_order['order_ref'].'.'.(int)round($amount*100).'.'.(string)$realex_order['currency_code'].'.';
+				$tmp = $timestamp . '.' . $merchant_id . '.' . $realex_order['order_ref'] . '.' . (int)round($amount*100) . '.' . (string)$realex_order['currency_code'] . '.';
 				$hash = sha1($tmp);
-				$tmp = $hash.'.'.$secret;
+				$tmp = $hash . '.' . $secret;
 				$hash = sha1($tmp);
 
 				$settle_type = 'multisettle';
-				$xml_amount = '<amount currency="'.(string)$realex_order['currency_code'].'">'.(int)round($amount*100).'</amount>';
+				$xml_amount = '<amount currency="' . (string)$realex_order['currency_code'] . '">' . (int)round($amount*100) . '</amount>';
 			} else {
-				//$this->logger('Capture hash construct: '.$timestamp.'.'.$merchant_id.'.'.$realex_order['order_ref'].'...');
-				$this->logger('Capture hash construct: '.$timestamp.'.'.$merchant_id.'.'.$realex_order['order_ref'].'.'.(int)round($amount*100).'.'.(string)$realex_order['currency_code'].'.');
+				//$this->logger('Capture hash construct: ' . $timestamp . '.' . $merchant_id . '.' . $realex_order['order_ref'] . '...');
+				$this->logger('Capture hash construct: ' . $timestamp . '.' . $merchant_id . '.' . $realex_order['order_ref'] . '.' . (int)round($amount*100) . '.' . (string)$realex_order['currency_code'] . '.');
 
-				$tmp = $timestamp.'.'.$merchant_id.'.'.$realex_order['order_ref'].'.'.(int)round($amount*100).'.'.(string)$realex_order['currency_code'].'.';
+				$tmp = $timestamp . '.' . $merchant_id . '.' . $realex_order['order_ref'] . '.' . (int)round($amount*100) . '.' . (string)$realex_order['currency_code'] . '.';
 				$hash = sha1($tmp);
-				$tmp = $hash.'.'.$secret;
+				$tmp = $hash . '.' . $secret;
 				$hash = sha1($tmp);
 
 				$settle_type = 'settle';
-				$xml_amount = '<amount currency="'.(string)$realex_order['currency_code'].'">'.(int)round($amount*100).'</amount>';
+				$xml_amount = '<amount currency="' . (string)$realex_order['currency_code'] . '">' . (int)round($amount*100) . '</amount>';
 			}
 
 			$xml = '';
-			$xml .= '<request type="'.$settle_type.'" timestamp="'.$timestamp.'">';
-			$xml .= '<merchantid>'.$merchant_id.'</merchantid>';
-			$xml .= '<account>'.$realex_order['account'].'</account>';
-			$xml .= '<orderid>'.$realex_order['order_ref'].'</orderid>';
+			$xml .= '<request type="' . $settle_type . '" timestamp="' . $timestamp . '">';
+			$xml .= '<merchantid>' . $merchant_id . '</merchantid>';
+			$xml .= '<account>' . $realex_order['account'] . '</account>';
+			$xml .= '<orderid>' . $realex_order['order_ref'] . '</orderid>';
 			$xml .= $xml_amount;
-			$xml .= '<pasref>'.$realex_order['pasref'].'</pasref>';
+			$xml .= '<pasref>' . $realex_order['pasref'] . '</pasref>';
 			$xml .= '<autosettle flag="1" />';
-			$xml .= '<authcode>'.$realex_order['authcode'].'</authcode>';
-			$xml .= '<sha1hash>'.$hash.'</sha1hash>';
+			$xml .= '<authcode>' . $realex_order['authcode'] . '</authcode>';
+			$xml .= '<sha1hash>' . $hash . '</sha1hash>';
 			$xml .= '</request>';
 
-			$this->logger('Settle XML request:\r\n'.print_r(simplexml_load_string($xml), 1));
+			$this->logger('Settle XML request:\r\n' . print_r(simplexml_load_string($xml), 1));
 
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, "https://epage.payandshop.com/epage-remote.cgi");
@@ -158,7 +158,7 @@ class ModelPaymentRealex extends Model {
 			$secret = $this->config->get('realex_secret');
 
 			if ($realex_order['settle_type'] == 2) {
-				$order_ref = '_multisettle_'.$realex_order['order_ref'];
+				$order_ref = '_multisettle_' . $realex_order['order_ref'];
 
 				if (empty($realex_order['pasref_previous'])) {
 					$pas_ref = $realex_order['pasref'];
@@ -170,28 +170,28 @@ class ModelPaymentRealex extends Model {
 				$pas_ref = $realex_order['pasref'];
 			}
 
-			$this->logger('Rebate hash construct: '.$timestamp.'.'.$merchant_id.'.'.$order_ref.'.'.(int)round($amount*100).'.'.$realex_order['currency_code'].'.');
+			$this->logger('Rebate hash construct: ' . $timestamp . '.' . $merchant_id . '.' . $order_ref . '.' . (int)round($amount*100) . '.' . $realex_order['currency_code'] . '.');
 
-			$tmp = $timestamp.'.'.$merchant_id.'.'.$order_ref.'.'.(int)round($amount*100).'.'.$realex_order['currency_code'].'.';
+			$tmp = $timestamp . '.' . $merchant_id . '.' . $order_ref . '.' . (int)round($amount*100) . '.' . $realex_order['currency_code'] . '.';
 			$hash = sha1($tmp);
-			$tmp = $hash.'.'.$secret;
+			$tmp = $hash . '.' . $secret;
 			$hash = sha1($tmp);
 
 			$rebate_hash = sha1($this->config->get('realex_rebate_password'));
 
 			$xml = '';
-			$xml .= '<request type="rebate" timestamp="'.$timestamp.'">';
-			$xml .= '<merchantid>'.$merchant_id.'</merchantid>';
-			$xml .= '<account>'.$realex_order['account'].'</account>';
-			$xml .= '<orderid>'.$order_ref.'</orderid>';
-			$xml .= '<pasref>'.$pas_ref.'</pasref>';
-			$xml .= '<authcode>'.$realex_order['authcode'].'</authcode>';
-			$xml .= '<amount currency="'.(string)$realex_order['currency_code'].'">'.(int)round($amount*100).'</amount>';
-			$xml .= '<refundhash>'.$rebate_hash.'</refundhash>';
-			$xml .= '<sha1hash>'.$hash.'</sha1hash>';
+			$xml .= '<request type="rebate" timestamp="' . $timestamp . '">';
+			$xml .= '<merchantid>' . $merchant_id . '</merchantid>';
+			$xml .= '<account>' . $realex_order['account'] . '</account>';
+			$xml .= '<orderid>' . $order_ref . '</orderid>';
+			$xml .= '<pasref>' . $pas_ref . '</pasref>';
+			$xml .= '<authcode>' . $realex_order['authcode'] . '</authcode>';
+			$xml .= '<amount currency="' . (string)$realex_order['currency_code'] . '">' . (int)round($amount*100) . '</amount>';
+			$xml .= '<refundhash>' . $rebate_hash . '</refundhash>';
+			$xml .= '<sha1hash>' . $hash . '</sha1hash>';
 			$xml .= '</request>';
 
-			$this->logger('Rebate XML request:\r\n'.print_r(simplexml_load_string($xml), 1));
+			$this->logger('Rebate XML request:\r\n' . print_r(simplexml_load_string($xml), 1));
 
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, "https://epage.payandshop.com/epage-remote.cgi");
@@ -214,7 +214,7 @@ class ModelPaymentRealex extends Model {
 	}
 
 	public function getOrder($order_id) {
-		$this->logger('getOrder - '.$order_id);
+		$this->logger('getOrder - ' . $order_id);
 
 		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "realex_order` WHERE `order_id` = '".(int)$order_id."' LIMIT 1");
 

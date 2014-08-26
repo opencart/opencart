@@ -373,7 +373,7 @@ class ControllerSaleReturn extends Controller {
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
-		
+
 		$data['column_return_id'] = $this->language->get('column_return_id');
 		$data['column_order_id'] = $this->language->get('column_order_id');
 		$data['column_customer'] = $this->language->get('column_customer');
@@ -597,7 +597,7 @@ class ControllerSaleReturn extends Controller {
 		} else {
 			$data['return_id'] = 0;
 		}
-		
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

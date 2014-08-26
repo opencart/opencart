@@ -39,12 +39,12 @@ final class DBmPDO {
 				}
 
 				$result = new stdClass();
-				$result->row = ( isset($data[0]) ? $data[0] : array() );
+				$result->row = (isset($data[0])) ? $data[0] : array();
 				$result->rows = $data;
 				$result->num_rows = $this->statement->rowCount();
 			}
 		} catch(PDOException $e) {
-			trigger_error('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode() . ' <br />' . $sql);
+			trigger_error('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode());
 		}
 	}
 

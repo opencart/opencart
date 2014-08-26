@@ -48,13 +48,13 @@ class ControllerSaleRecurring extends Controller {
 		} else {
 			$sort = 'order_recurring_id';
 		}
-		
+
 		if (isset($this->request->get['filter_date_added'])) {
 			$filter_date_added = $this->request->get['filter_date_added'];
 		} else {
 			$filter_date_added = null;
 		}
-		
+
 		if (isset($this->request->get['order'])) {
 			$order = $this->request->get['order'];
 		} else {
@@ -88,7 +88,7 @@ class ControllerSaleRecurring extends Controller {
 		if (isset($this->request->get['filter_status'])) {
 			$url .= '&filter_status=' . $this->request->get['filter_status'];
 		}
-		
+
 		if (isset($this->request->get['filter_date_added'])) {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
@@ -162,12 +162,12 @@ class ControllerSaleRecurring extends Controller {
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_date_added'] = $this->language->get('entry_date_added');
 		$data['entry_action'] = $this->language->get('entry_action');
-		
+
 		$data['button_filter'] = $this->language->get('button_filter');
 		$data['button_view'] = $this->language->get('button_view');
 
 		$data['token'] = $this->session->data['token'];
-		
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -250,7 +250,7 @@ class ControllerSaleRecurring extends Controller {
 		if (isset($this->request->get['filter_date_added'])) {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
-		
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -258,7 +258,7 @@ class ControllerSaleRecurring extends Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
-		
+
 		$pagination = new Pagination();
 		$pagination->total = $recurrings_total;
 		$pagination->page = $page;
@@ -276,7 +276,7 @@ class ControllerSaleRecurring extends Controller {
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_status'] = $filter_status;
 		$data['filter_date_added'] = $filter_date_added;
-				
+
 		$data['statuses'] = array(
 			'0' => '',
 			'1' => $this->language->get('text_status_inactive'),
@@ -286,7 +286,7 @@ class ControllerSaleRecurring extends Controller {
 			'5' => $this->language->get('text_status_expired'),
 			'6' => $this->language->get('text_status_pending'),
 		);
-				
+
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
@@ -336,7 +336,7 @@ class ControllerSaleRecurring extends Controller {
 			if (isset($this->request->get['filter_date_added'])) {
 				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 			}
-			
+
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -379,7 +379,7 @@ class ControllerSaleRecurring extends Controller {
 
 			$data['text_transactions'] = $this->language->get('text_transactions');
 			$data['text_cancel_confirm'] = $this->language->get('text_cancel_confirm');
-			
+
 			$data['entry_order_id'] = $this->language->get('entry_order_id');
 			$data['entry_order_recurring'] = $this->language->get('entry_order_recurring');
 			$data['entry_payment_reference'] = $this->language->get('entry_payment_reference');
@@ -395,7 +395,7 @@ class ControllerSaleRecurring extends Controller {
 			$data['entry_recurring'] = $this->language->get('entry_recurring');
 			$data['entry_payment_type'] = $this->language->get('entry_payment_type');
 			$data['entry_date_added'] = $this->language->get('entry_date_added');
-			
+
 			$data['button_cancel'] = $this->language->get('button_cancel');
 
 			$data['order_recurring_id'] = $order_recurring['order_recurring_id'];
@@ -444,7 +444,7 @@ class ControllerSaleRecurring extends Controller {
 			$data['token'] = $this->request->get['token'];
 
 			$data['buttons'] = $this->load->controller('payment/' . $order['payment_code'] . '/recurringButtons');
-			
+
 			$data['header'] = $this->load->controller('common/header');
 			$data['menu'] = $this->load->controller('common/menu');
 			$data['footer'] = $this->load->controller('common/footer');

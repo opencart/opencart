@@ -14,7 +14,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 .page-header h1 {
 	font-family: 'Open Sans', sans-serif;
-	font-weight: 500;
+	font-weight: 600;
 	font-size: 23px;
 	color: #666666;
 }
@@ -111,7 +111,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	padding: 10px 15px 10px 15px;
 	overflow: auto;
 	color: #666;
-	border-bottom: 1px solid #26333C;
+	border-bottom: 1px solid #353535;
 }
 #profile div {
 	float: left;
@@ -133,7 +133,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #column-left {
 	width: 0px;
 	height: 100%;
-	background-color: #222222;
+	background-color: #2A2A2A;
 	position: absolute;
 	top: 0px;
 	padding-top: 50px;
@@ -169,9 +169,8 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	list-style: none;
 }
 #menu li a {
-	color: #888888;
-	border-bottom: 1px solid #26333C;
-	text-shadow: 1px 1px 0px #000000;
+	color: #737373;
+	border-bottom: 1px dotted #353535;
 	text-decoration: none;
 	display: block;
 	padding: 10px 10px 9px 10px;
@@ -182,7 +181,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	margin-right: 5px;
 }
 #menu li ul {
-	background-color: #131E26;
+	background-color: #252525;
 }
 #menu > li > a {
 	padding-left: 15px;
@@ -340,7 +339,7 @@ input[type=radio]:checked:before {
 }
 /* Buttons */
 .btn {
-	border-radius: 2px;
+	border-radius: 3px;
 	font-size: 12px;
 	box-shadow: none;
 	padding: 7.5px 13px;
@@ -364,51 +363,33 @@ input[type=radio]:checked:before {
 	cursor: pointer;
 	/*background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.1));*/
 }
-/*
+
 .btn-default {
-	color: #555;
-	background: #F4F3F3;
-	background-image: linear-gradient(to bottom, #F5F4F4, #E8E7E7);
-	background-repeat: repeat-x;
-	border-color: #DBDADA;
-	border-bottom-color: #AAAAAA;
+	color: #333;
+	background-color: #FAFAFA;
+	border-color: #ddd;
 }
 .btn-primary {
-	background: #3F97CC;
-	background-image: linear-gradient(to bottom, #499CCF, #3C8FC2);
-	background-repeat: repeat-x;
-	border-color: #3988B7;
-	border-bottom-color: #2C698E;
+	background-color: #1B80C2;
+	border-color: #16689E;
 }
 .btn-info {
-	background: #59CCDF;
-	background-image: linear-gradient(to bottom, #61CFE1, #54C2D4);
-	background-repeat: repeat-x;
-	border-color: #50B7C8;
-	border-bottom-color: #3E8E9C;
+	background-color: #5bccf6;
+	border-color: #3dc4f5;;
 }
 .btn-success {
-	background: #60BB58;
-	background-image: linear-gradient(to bottom, #68BE61, #5BB154);
-	background-repeat: repeat-x;
-	border-color: #56A84F;
-	border-bottom-color: #43833D;
+	background-color: #9cd159;
+	border-color: #8eca3f;
 }
 .btn-warning {
-	background: #F09F4D;
-	background-image: linear-gradient(to bottom, #F1A456, #E49749);
-	background-repeat: repeat-x;
-	border-color: #D88F45;
-	border-bottom-color: #A86F36;
+	background-color: #fa7753;
+	border-color: #f96339;
 }
 .btn-danger {
-	background: #DA4D54;
-	background-image: linear-gradient(to bottom, #DC565D, #CF4950);
-	background-repeat: repeat-x;
-	border-color: #C4454B;
-	border-bottom-color: #98363B;
+	background-color: #ff5757;
+	border-color: #f33;
 }
-*/
+
 .pagination {
 	margin: 0px 0;
 	border-radius: 2px;

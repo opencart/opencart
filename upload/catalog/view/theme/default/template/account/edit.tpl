@@ -21,7 +21,7 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <fieldset>
           <legend><?php echo $text_your_details; ?></legend>
-          <div class="form-group required" data-sort="1">
+          <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-firstname"><?php echo $entry_firstname; ?> </label>
             <div class="col-sm-10">
               <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" class="form-control" />
@@ -30,7 +30,7 @@
               <?php } ?>
             </div>
           </div>
-          <div class="form-group required" data-sort="2">
+          <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
             <div class="col-sm-10">
               <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" class="form-control" />
@@ -39,7 +39,7 @@
               <?php } ?>
             </div>
           </div>
-          <div class="form-group required" data-sort="3">
+          <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
             <div class="col-sm-10">
               <input type="email" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
@@ -48,7 +48,7 @@
               <?php } ?>
             </div>
           </div>
-          <div class="form-group required" data-sort="4">
+          <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
             <div class="col-sm-10">
               <input type="tel" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" class="form-control" />
@@ -57,7 +57,7 @@
               <?php } ?>
             </div>
           </div>
-          <div class="form-group" data-sort="5">
+          <div class="form-group">
             <label class="col-sm-2 control-label" for="input-fax"><?php echo $entry_fax; ?></label>
             <div class="col-sm-10">
               <input type="text" name="fax" value="<?php echo $fax; ?>" placeholder="<?php echo $entry_fax; ?>" id="input-fax" class="form-control" />
@@ -229,12 +229,18 @@
 </div>
 <script type="text/javascript"><!--
 // Sort the custom fields
-$('.form-group[data-sort]').sort(function(a, b) {
-	return $(a).attr('data-sort') - $(b).attr('data-sort');
-}).map(function() {
-	return $(this).closest('.form-group');
-}).each(function(index, element) {
-	$(element).parent().append(element);
+$('.form-group[data-sort]').detach().each(function() {
+	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('.form-group').length) {
+		$('.form-group').eq($(this).attr('data-sort')).before(this);
+	} 
+	
+	if ($(this).attr('data-sort') > $('.form-group').length) {
+		$('.form-group:last').after(this);
+	}
+		
+	if ($(this).attr('data-sort') < -$('.form-group').length) {
+		$('.form-group:first').before(this);
+	}
 });
 //--></script> 
 <script type="text/javascript"><!--

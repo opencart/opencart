@@ -66,6 +66,18 @@ function modification($filename) {
 
 // Autoloader
 function autoload($class) {
+	if (substr($class, 0, 10) == 'controller') {
+		$path = '';
+	}
+	
+	if (substr($class, 0, 10) == 'model') {
+		
+	}
+	
+	if (substr($class, 0, 10) == 'library') {
+		
+	}
+		
 	$file = DIR_SYSTEM . 'library/' . strtolower($class) . '.php';
 
 	if (file_exists($file)) {

@@ -47,7 +47,14 @@ class ControllerCommonContentBottom extends Controller {
 
 			if ($modules) {
 				foreach ($modules as $module) {
-					if ($module['layout_id'] == $layout_id && $module['position'] == 'content_bottom' && $module['status']) {
+					$layout_status = false;
+ +					if (isset($module['layout_id']) && $module['layout_id'] == $layout_id) {
+ +						$layout_status = true;
+ +					}
+ +					if (isset($module['layouts']) && in_array($layout_id, $module['layouts'])) {
+ +						$layout_status = true;
+ +					}
+					if ($layout_status && $module['position'] == 'content_bottom' && $module['status']) {
 						$module_data[] = array(
 							'code'       => $extension['code'],
 							'setting'    => $module,

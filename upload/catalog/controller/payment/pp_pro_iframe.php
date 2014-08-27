@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentPPProIframe extends \Engine\Controller {
+class ControllerPaymentPPProIframe extends Controller {
 	public function index() {
 		$this->load->model('checkout/order');
 		$this->load->model('payment/pp_pro_iframe');

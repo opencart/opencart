@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleHTMLContent extends \Engine\Controller {
+class ControllerModuleHTMLContent extends Controller {
 	public function index($setting) {
 
 		$data['heading_title'] = html_entity_decode($setting['heading'][$this->config->get('config_language_id')], ENT_QUOTES, 'UTF-8');

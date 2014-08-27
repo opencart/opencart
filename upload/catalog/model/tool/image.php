@@ -1,5 +1,5 @@
 <?php
-class ModelToolImage extends \Engine\Model {
+class ModelToolImage extends Model {
 	public function resize($filename, $width, $height) {
 		if (!is_file(DIR_IMAGE . $filename)) {
 			return;

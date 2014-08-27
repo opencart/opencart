@@ -1,6 +1,6 @@
 <?php
 namespace Controller\Affiliate;
-class Password extends \Engine\Controller {
+class Password extends Controller {
 	private $error = array();
 
 	public function index() {

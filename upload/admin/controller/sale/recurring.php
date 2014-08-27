@@ -1,5 +1,5 @@
 <?php
-class ControllerSaleRecurring extends \Engine\Controller {
+class ControllerSaleRecurring extends Controller {
 	private $error = array();
 
 	public function index() {

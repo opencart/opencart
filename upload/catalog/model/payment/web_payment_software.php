@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentWebPaymentSoftware extends \Engine\Model {
+class ModelPaymentWebPaymentSoftware extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('payment/web_payment_software');
 

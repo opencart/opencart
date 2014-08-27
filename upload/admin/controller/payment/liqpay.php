@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentLiqPay extends \Engine\Controller {
+class ControllerPaymentLiqPay extends Controller {
 	private $error = array();
 
 	public function index() {

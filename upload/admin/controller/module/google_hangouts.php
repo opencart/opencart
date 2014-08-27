@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleGoogleHangouts extends \Engine\Controller {
+class ControllerModuleGoogleHangouts extends Controller {
 	private $error = array();
 
 	public function index() {

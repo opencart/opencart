@@ -1,6 +1,6 @@
 <?php
 namespace Controller\Account;
-class Forgotten extends \Engine\Controller {
+class Forgotten extends Controller {
 	private $error = array();
 
 	public function index() {

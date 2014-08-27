@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentKlarnaAccount extends \Engine\Model {
+class ModelPaymentKlarnaAccount extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('payment/klarna_account');
 

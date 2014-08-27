@@ -1,5 +1,5 @@
 <?php
-class ControllerModulePPLayout extends \Engine\Controller {
+class ControllerModulePPLayout extends Controller {
 	public function index($setting) {
 		$status = $this->config->get('pp_express_status');
 

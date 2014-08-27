@@ -1,5 +1,5 @@
 <?php
-class ModelLocalisationLengthClass extends \Engine\Model {
+class ModelLocalisationLengthClass extends Model {
 	public function addLengthClass($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "length_class SET value = '" . (float)$data['value'] . "'");
 

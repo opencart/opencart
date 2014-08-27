@@ -1,5 +1,5 @@
 <?php
-class ControllerExtensionFeed extends \Engine\Controller {
+class ControllerExtensionFeed extends Controller {
 	private $error = array();
 
 	public function index() {

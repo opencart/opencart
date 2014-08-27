@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleCarousel extends \Engine\Controller {
+class ControllerModuleCarousel extends Controller {
 	public function index($setting) {
 		static $module = 0;
 

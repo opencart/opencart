@@ -1,5 +1,5 @@
 <?php
-class ModelCatalogAttribute extends \Engine\Model {
+class ModelCatalogAttribute extends Model {
 	public function addAttribute($data) {
 		$this->event->trigger('pre_admin_add_attribute', $data);
 

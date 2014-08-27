@@ -1,6 +1,5 @@
 <?php
-namespace Controller\Common;
-class Currency extends \Engine\Controller {
+class ControllerCommonCurrency extends Controller {
 	public function index() {
 		$this->load->language('common/currency');
 

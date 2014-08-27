@@ -1,5 +1,5 @@
 <?php
-class ModelCheckoutCoupon extends \Engine\Model {
+class ModelCheckoutCoupon extends Model {
 	public function getCoupon($code) {
 		$status = true;
 

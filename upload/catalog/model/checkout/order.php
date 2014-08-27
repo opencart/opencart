@@ -1,5 +1,5 @@
 <?php
-class ModelCheckoutOrder extends \Engine\Model {
+class ModelCheckoutOrder extends Model {
 	public function addOrder($data) {
 		$this->event->trigger('pre_order_add', $data);
 

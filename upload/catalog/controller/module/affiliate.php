@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleAffiliate extends \Engine\Controller {
+class ControllerModuleAffiliate extends Controller {
 	public function index() {
 		$this->load->language('module/affiliate');
 

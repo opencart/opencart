@@ -1,5 +1,4 @@
 <?php
-namespace Engine;
 abstract class Controller {
 	protected $registry;
 

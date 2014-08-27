@@ -1,6 +1,5 @@
 <?php
-namespace Controller\Api;
-class Login extends \Engine\Controller {
+class ControllerApiLogin extends Controller {
 	public function index() {
 		$this->load->language('api/login');
 

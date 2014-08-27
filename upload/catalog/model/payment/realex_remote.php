@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentRealexRemote extends \Engine\Model {
+class ModelPaymentRealexRemote extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('payment/realex_remote');
 

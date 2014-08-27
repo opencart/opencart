@@ -1,6 +1,6 @@
 <?php
 
-class ModelPaymentBluePayHostedForm extends \Engine\Model {
+class ModelPaymentBluePayHostedForm extends Model {
 
 	public function getMethod($address, $total) {
 		$this->load->language('payment/bluepay_hosted_form');

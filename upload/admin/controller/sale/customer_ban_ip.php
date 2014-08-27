@@ -1,5 +1,5 @@
 <?php
-class ControllerSaleCustomerBanIp extends \Engine\Controller {
+class ControllerSaleCustomerBanIp extends Controller {
 	private $error = array();
 
 	public function index() {

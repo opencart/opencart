@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleCarousel extends \Engine\Controller {
+class ControllerModuleCarousel extends Controller {
 	private $error = array();
 
 	public function index() {

@@ -1,5 +1,5 @@
 <?php
-class ModelSettingStore extends \Engine\Model {
+class ModelSettingStore extends Model {
 	public function getStores($data = array()) {
 		$store_data = $this->cache->get('store');
 

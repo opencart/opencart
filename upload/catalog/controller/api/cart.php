@@ -1,6 +1,5 @@
 <?php
-namespace Controller\Api;
-class Cart extends \Engine\Controller {
+class ControllerApiCart extends Controller {
 	public function add() {
 		$this->load->language('api/cart');
 

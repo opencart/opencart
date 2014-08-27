@@ -1,5 +1,5 @@
 <?php
-class ControllerStep4 extends \Engine\Controller {
+class ControllerStep4 extends Controller {
 	public function index() {
 		$this->document->setTitle($this->language->get('heading_step_4'));
 

@@ -1,5 +1,5 @@
 <?php
-class ControllerToolErrorLog extends \Engine\Controller {
+class ControllerToolErrorLog extends Controller {
 	private $error = array();
 
 	public function index() {

@@ -1,5 +1,5 @@
 <?php
-class ModelSaleVoucherTheme extends \Engine\Model {
+class ModelSaleVoucherTheme extends Model {
 	public function addVoucherTheme($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "voucher_theme SET image = '" . $this->db->escape($data['image']) . "'");
 

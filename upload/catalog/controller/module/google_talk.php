@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleGoogleTalk extends \Engine\Controller {
+class ControllerModuleGoogleTalk extends Controller {
 	public function index() {
 		$this->load->language('module/google_talk');
 

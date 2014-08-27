@@ -1,5 +1,5 @@
 <?php
-class ControllerCommonForgotten extends \Engine\Controller {
+class ControllerCommonForgotten extends Controller {
 	private $error = array();
 
 	public function index() {

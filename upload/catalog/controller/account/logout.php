@@ -1,6 +1,6 @@
 <?php
 namespace Controller\Account;
-class Logout extends \Engine\Controller {
+class Logout extends Controller {
 	public function index() {
 		if ($this->customer->isLogged()) {
 			$this->event->trigger('pre_customer_logout');

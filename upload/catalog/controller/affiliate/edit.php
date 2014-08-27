@@ -1,6 +1,6 @@
 <?php
 namespace Controller\Affiliate;
-class Edit extends \Engine\Controller {
+class Edit extends Controller {
 	private $error = array();
 
 	public function index() {

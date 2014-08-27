@@ -1,5 +1,5 @@
 <?php
-class ModelLocalisationReturnReason extends \Engine\Model {
+class ModelLocalisationReturnReason extends Model {
 	public function addReturnReason($data) {
 		foreach ($data['return_reason'] as $language_id => $value) {
 			if (isset($return_reason_id)) {

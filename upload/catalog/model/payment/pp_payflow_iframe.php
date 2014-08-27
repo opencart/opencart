@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentPPPayflowIframe extends \Engine\Model {
+class ModelPaymentPPPayflowIframe extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('payment/pp_payflow_iframe');
 

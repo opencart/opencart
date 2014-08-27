@@ -1,5 +1,5 @@
 <?php
-class ModelDesignLayout extends \Engine\Model {
+class ModelDesignLayout extends Model {
 	public function addLayout($data) {
 		$this->event->trigger('pre_admin_add_layout', $data);
 

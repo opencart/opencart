@@ -1,5 +1,5 @@
 <?php
-class ModelInstall extends \Engine\Model {
+class ModelInstall extends Model {
 	public function database($data) {
 		$db = new DB($data['db_driver'], $data['db_hostname'], $data['db_username'], $data['db_password'], $data['db_database']);
 

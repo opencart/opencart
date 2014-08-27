@@ -1,5 +1,5 @@
 <?php
-class ModelMarketingMarketing extends \Engine\Model {
+class ModelMarketingMarketing extends Model {
 	public function addMarketing($data) {
 		$this->event->trigger('pre_admin_add_marketing', $data);
 

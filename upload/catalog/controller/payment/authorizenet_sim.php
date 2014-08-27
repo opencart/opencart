@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentAuthorizeNetSim extends \Engine\Controller {
+class ControllerPaymentAuthorizeNetSim extends Controller {
 	public function index() {
 		$this->load->language('payment/authorizenet_sim');
 

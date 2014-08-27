@@ -1,6 +1,6 @@
 <?php
 namespace Controller\Account;
-class WishList extends \Engine\Controller {
+class WishList extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/wishlist', '', 'SSL');

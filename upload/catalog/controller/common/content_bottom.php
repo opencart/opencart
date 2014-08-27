@@ -1,6 +1,5 @@
 <?php
-namespace Controller\Common;
-class ContentBottom extends \Engine\Controller {
+class ControllerCommonContentBottom extends Controller {
 	public function index() {
 		$this->load->model('design/layout');
 		$this->load->model('catalog/category');

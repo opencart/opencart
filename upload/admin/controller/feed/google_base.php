@@ -1,5 +1,5 @@
 <?php
-class ControllerFeedGoogleBase extends \Engine\Controller {
+class ControllerFeedGoogleBase extends Controller {
 	private $error = array();
 
 	public function index() {

@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentRealex extends \Engine\Model {
+class ModelPaymentRealex extends Model {
 	public function install() {
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "realex_order` (

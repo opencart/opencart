@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentBankTransfer extends \Engine\Controller {
+class ControllerPaymentBankTransfer extends Controller {
 	private $error = array();
 
 	public function index() {

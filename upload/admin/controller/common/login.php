@@ -1,5 +1,5 @@
 <?php
-class ControllerCommonLogin extends \Engine\Controller {
+class ControllerCommonLogin extends Controller {
 	private $error = array();
 
 	public function index() {

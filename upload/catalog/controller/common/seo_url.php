@@ -1,12 +1,11 @@
 <?php
-namespace Controller\Common;
-class SeoUrl extends \Engine\Controller {
+class ControllerCommonSeoUrl extends Controller {
 	public function index() {
 		// Add rewrite to url class
 		if ($this->config->get('config_seo_url')) {
 			$this->url->addRewrite($this);
 		}
-
+		
 		// Decode URL
 		if (isset($this->request->get['_route_'])) {
 			$parts = explode('/', $this->request->get['_route_']);

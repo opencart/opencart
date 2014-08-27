@@ -1,5 +1,5 @@
 <?php
-class ControllerSaleCustomField extends \Engine\Controller {
+class ControllerSaleCustomField extends Controller {
 	private $error = array();
 
 	public function index() {

@@ -1,5 +1,5 @@
 <?php
-class ControllerFeedGoogleSitemap extends \Engine\Controller {
+class ControllerFeedGoogleSitemap extends Controller {
 	private $error = array();
 
 	public function index() {

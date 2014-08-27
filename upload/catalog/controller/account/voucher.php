@@ -1,6 +1,6 @@
 <?php
 namespace Controller\Account;
-class Voucher extends \Engine\Controller {
+class Voucher extends Controller {
 	private $error = array();
 
 	public function index() {

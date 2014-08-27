@@ -1,5 +1,5 @@
 <?php
-class ModelTotalSubTotal extends \Engine\Model {
+class ModelTotalSubTotal extends Model {
 	public function getTotal(&$total_data, &$total, &$taxes) {
 		$this->load->language('total/sub_total');
 

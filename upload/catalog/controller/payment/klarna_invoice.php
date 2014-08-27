@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentKlarnaInvoice extends \Engine\Controller {
+class ControllerPaymentKlarnaInvoice extends Controller {
 	public function index() {
 		$this->load->model('checkout/order');
 

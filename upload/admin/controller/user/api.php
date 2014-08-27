@@ -1,5 +1,5 @@
 <?php
-class ControllerUserApi extends \Engine\Controller {
+class ControllerUserApi extends Controller {
 	private $error = array();
 
 	public function index() {

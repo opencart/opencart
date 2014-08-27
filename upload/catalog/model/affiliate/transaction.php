@@ -1,5 +1,5 @@
 <?php
-class ModelAffiliateTransaction extends \Engine\Model {
+class ModelAffiliateTransaction extends Model {
 	public function getTransactions($data = array()) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "affiliate_transaction` WHERE affiliate_id = '" . (int)$this->affiliate->getId() . "'";
 

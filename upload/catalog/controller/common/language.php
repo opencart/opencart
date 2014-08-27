@@ -1,6 +1,5 @@
 <?php
-namespace Controller\Common;
-class Language extends \Engine\Controller {
+class ControllerCommonLanguage extends Controller {
 	public function index() {
 		$this->load->language('common/language');
 

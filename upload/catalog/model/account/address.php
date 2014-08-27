@@ -1,5 +1,5 @@
 <?php
-class ModelAccountAddress extends \Engine\Model {
+class ModelAccountAddress extends Model {
 	public function addAddress($data) {
 		$this->event->trigger('pre_customer_add_address', $data);
 

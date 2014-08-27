@@ -17,18 +17,18 @@ if (!defined('DIR_APPLICATION')) {
 require_once(DIR_SYSTEM . 'startup.php');
 
 // Registry
-$registry = new Engine\Registry();
+$registry = new Registry();
 
 // Loader
-$loader = new Engine\Loader($registry);
+$loader = new Loader($registry);
 $registry->set('load', $loader);
 
 // Config
-$config = new Library\Config();
+$config = new Config();
 $registry->set('config', $config);
 
 // Database
-$db = new Library\DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 $registry->set('db', $db);
 
 // Store
@@ -61,11 +61,11 @@ if (!$store_query->num_rows) {
 }
 
 // Url
-$url = new Library\Url($config->get('config_url'), $config->get('config_secure') ? $config->get('config_ssl') : $config->get('config_url'));
+$url = new Url($config->get('config_url'), $config->get('config_secure') ? $config->get('config_ssl') : $config->get('config_url'));
 $registry->set('url', $url);
 
 // Log
-$log = new Library\Log($config->get('config_error_filename'));
+$log = new Log($config->get('config_error_filename'));
 $registry->set('log', $log);
 
 function error_handler($errno, $errstr, $errfile, $errline) {
@@ -109,21 +109,21 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 set_error_handler('error_handler');
 
 // Request
-$request = new Library\Request();
+$request = new Request();
 $registry->set('request', $request);
 
 // Response
-$response = new Library\Response();
+$response = new Response();
 $response->addHeader('Content-Type: text/html; charset=utf-8');
 $response->setCompression($config->get('config_compression'));
 $registry->set('response', $response);
 
 // Cache
-$cache = new Library\Cache('file');
+$cache = new Cache('file');
 $registry->set('cache', $cache);
 
 // Session
-$session = new Library\Session();
+$session = new Session();
 $registry->set('session', $session);
 
 // Language Detection
@@ -177,15 +177,15 @@ $config->set('config_language_id', $languages[$code]['language_id']);
 $config->set('config_language', $languages[$code]['code']);
 
 // Language
-$language = new Library\Language($languages[$code]['directory']);
+$language = new Language($languages[$code]['directory']);
 $language->load($languages[$code]['filename']);
 $registry->set('language', $language);
 
 // Document
-$registry->set('document', new Library\Document());
+$registry->set('document', new Document());
 
 // Customer
-$customer = new Library\Customer($registry);
+$customer = new Customer($registry);
 $registry->set('customer', $customer);
 
 // Customer Group
@@ -206,47 +206,54 @@ if (isset($request->get['tracking'])) {
 }
 
 // Affiliate
-$registry->set('affiliate', new Library\Affiliate($registry));
+$registry->set('affiliate', new Affiliate($registry));
 
 // Currency
-$registry->set('currency', new Library\Currency($registry));
+$registry->set('currency', new Currency($registry));
 
 // Tax
-$registry->set('tax', new Library\Tax($registry));
+$registry->set('tax', new Tax($registry));
 
 // Weight
-$registry->set('weight', new Library\Weight($registry));
+$registry->set('weight', new Weight($registry));
 
 // Length
-$registry->set('length', new Library\Length($registry));
+$registry->set('length', new Length($registry));
 
 // Cart
-$registry->set('cart', new Library\Cart($registry));
+$registry->set('cart', new Cart($registry));
 
 // Encryption
-$registry->set('encryption', new Library\Encryption($config->get('config_encryption')));
+$registry->set('encryption', new Encryption($config->get('config_encryption')));
 
 // Event
-$registry->set('event', new Library\Event($registry));
+$event = new Event($registry);
+$registry->set('event', $event);
+
+$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "event WHERE store_id = '0' OR store_id = '" . (int)$this->config->get('config_store_id') . "' ORDER BY store_id ASC");
+
+foreach ($query->rows as $result) {
+	$event->register($result['event'], new Action($result['call']));
+}
 
 // Front Controller
-$controller = new Engine\Front($registry);
+$controller = new Front($registry);
 
 // Maintenance Mode
-$controller->addPreAction(new Engine\Action('common/maintenance'));
+$controller->addPreAction(new Action('common/maintenance'));
 
 // SEO URL's
-$controller->addPreAction(new Engine\Action('common/seo_url'));
+$controller->addPreAction(new Action('common/seourl'));
 
 // Router
 if (isset($request->get['route'])) {
-	$action = new Engine\Action($request->get['route']);
+	$action = new Action($request->get['route']);
 } else {
-	$action = new Engine\Action('common/home');
+	$action = new Action('common/home');
 }
 
 // Dispatch
-$controller->dispatch($action, new Engine\Action('error/not_found'));
+$controller->dispatch($action, new Action('error/not_found'));
 
 // Output
 $response->output();

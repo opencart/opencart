@@ -1,5 +1,5 @@
 <?php
-class ModelAccountActivity extends \Engine\Model {
+class ModelAccountActivity extends Model {
 	public function addActivity($key, $data) {
 		if (isset($data['customer_id'])) {
 			$customer_id = $data['customer_id'];

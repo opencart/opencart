@@ -1,6 +1,5 @@
 <?php
-namespace Controller\Checkout;
-class Voucher extends \Engine\Controller {
+class ControllerCheckoutVoucher extends Controller {
 	public function index() {
 		if ($this->config->get('voucher_status')) {
 			$this->load->language('checkout/voucher');

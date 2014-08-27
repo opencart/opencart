@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentPPExpress extends \Engine\Model {
+class ModelPaymentPPExpress extends Model {
 	public function install() {
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "paypal_order` (

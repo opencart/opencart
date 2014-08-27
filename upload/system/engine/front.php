@@ -34,11 +34,16 @@ final class Front {
 	private function execute($action) {
 		$class = 'Controller\\' . $action->getClass();
 		
+		echo '<b>' . $action->getClass() . '</b><br>';
+		
 		if (class_exists($class)) {
 			$controller = new $class($this->registry);
 		
 			if (is_callable(array($controller, $action->getMethod()))) {
 				$action = call_user_func_array(array($controller, $action->getMethod()), $action->getArgs());
+			
+				
+			
 			} else {
 				$action = $this->error;
 	

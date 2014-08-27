@@ -1,5 +1,5 @@
 <?php
-class ControllerShippingRoyalMail extends \Engine\Controller {
+class ControllerShippingRoyalMail extends Controller {
 	private $error = array();
 
 	public function index() {

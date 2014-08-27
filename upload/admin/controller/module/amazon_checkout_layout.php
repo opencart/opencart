@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleAmazonCheckoutLayout extends \Engine\Controller {
+class ControllerModuleAmazonCheckoutLayout extends Controller {
 	public function index() {
 		$this->language->load('module/amazon_checkout_layout');
 

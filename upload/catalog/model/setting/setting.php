@@ -1,5 +1,5 @@
 <?php
-class ModelSettingSetting extends \Engine\Model {
+class ModelSettingSetting extends Model {
 	public function getSetting($group, $store_id = 0) {
 		$data = array();
 

@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleCategory extends \Engine\Controller {
+class ControllerModuleCategory extends Controller {
 	public function index($setting) {
 		$this->load->language('module/category');
 

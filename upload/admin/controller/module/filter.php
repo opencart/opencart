@@ -1,5 +1,5 @@
 <?php
-class ControllerModulefilter extends \Engine\Controller {
+class ControllerModulefilter extends Controller {
 	private $error = array();
 
 	public function index() {

@@ -1,5 +1,5 @@
 <?php
-class ModelCatalogAttributeGroup extends \Engine\Model {
+class ModelCatalogAttributeGroup extends Model {
 	public function addAttributeGroup($data) {
 		$this->event->trigger('pre_admin_add_attribute_group', $data);
 

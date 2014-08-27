@@ -1,11 +1,11 @@
 <?php
-namespace Engine;
 final class Action {
 	private $class;
 	private $method;
 	private $args = array();
 
 	public function __construct($route, $args = array()) {
+		//preg_replace('/[^A-Z0-9\\\._-]/i', '', )
 		$this->class = str_replace('/', '\\', $route);
 		 
 		// Stop any magical methods being called

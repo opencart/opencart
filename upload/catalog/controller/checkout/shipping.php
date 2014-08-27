@@ -1,6 +1,5 @@
 <?php
-namespace Controller\Checkout;
-class Shipping extends \Engine\Controller {
+class ControllerCheckoutShipping extends Controller {
 	public function index() {
 		if ($this->config->get('shipping_status') && $this->config->get('shipping_estimator') && $this->cart->hasShipping()) {
 			$this->load->language('checkout/shipping');

@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentFirstdataRemote extends \Engine\Controller {
+class ControllerPaymentFirstdataRemote extends Controller {
 	public function index() {
 		$this->load->language('payment/firstdata_remote');
 		$this->load->model('payment/firstdata_remote');

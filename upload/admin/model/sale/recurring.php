@@ -1,5 +1,5 @@
 <?php
-class ModelSaleRecurring extends \Engine\Model {
+class ModelSaleRecurring extends Model {
 	public function getTotalRecurrings($data) {
 		$sql = "SELECT COUNT(*) AS `recurring_count` FROM `" . DB_PREFIX . "order_recurring` `or` JOIN `" . DB_PREFIX . "order` o USING(order_id) WHERE 1 = 1";
 

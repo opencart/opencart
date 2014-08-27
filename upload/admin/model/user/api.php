@@ -1,5 +1,5 @@
 <?php
-class ModelUserApi extends \Engine\Model {
+class ModelUserApi extends Model {
 	public function addApi($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "api` SET username = '" . $this->db->escape($data['username']) . "', `password` = '" . $this->db->escape($data['password']) . "', status = '" . (int)$data['status'] . "', date_added = NOW(), date_modified = NOW()");
 	}

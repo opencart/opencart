@@ -1,5 +1,5 @@
 <?php
-class ModelTotalShipping extends \Engine\Model {
+class ModelTotalShipping extends Model {
 	public function getTotal(&$total_data, &$total, &$taxes) {
 		if ($this->cart->hasShipping() && isset($this->session->data['shipping_method'])) {
 			$total_data[] = array(

@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentKlarnaAccount extends \Engine\Controller {
+class ControllerPaymentKlarnaAccount extends Controller {
 	private $error = array();
 	private $pclasses = array();
 

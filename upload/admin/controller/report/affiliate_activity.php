@@ -1,5 +1,5 @@
 <?php
-class ControllerReportAffiliateActivity extends \Engine\Controller {
+class ControllerReportAffiliateActivity extends Controller {
 	public function index() {
 		$this->load->language('report/affiliate_activity');
 

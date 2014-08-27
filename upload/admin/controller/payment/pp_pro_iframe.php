@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentPPProIframe extends \Engine\Controller {
+class ControllerPaymentPPProIframe extends Controller {
 	private $error = array();
 
 	public function index() {

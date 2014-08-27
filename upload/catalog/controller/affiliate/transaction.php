@@ -1,6 +1,6 @@
 <?php
 namespace Controller\Affiliate;
-class Transaction extends \Engine\Controller {
+class Transaction extends Controller {
 	public function index() {
 		if (!$this->affiliate->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('affiliate/transaction', '', 'SSL');

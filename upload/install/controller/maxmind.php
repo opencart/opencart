@@ -1,5 +1,5 @@
 <?php
-class ControllerMaxmind extends \Engine\Controller {
+class ControllerMaxmind extends Controller {
 	private $error = array();
 
 	public function index() {

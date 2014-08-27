@@ -1,5 +1,5 @@
 <?php
-class ModelShippingRoyalMail extends \Engine\Model {
+class ModelShippingRoyalMail extends Model {
 	function getQuote($address) {
 		$this->load->language('shipping/royal_mail');
 

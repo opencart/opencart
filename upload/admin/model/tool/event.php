@@ -1,5 +1,5 @@
 <?php
-class ModelToolEvent extends \Engine\Model {
+class ModelToolEvent extends Model {
 	public function getHandlers($event, $store_id = 0) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "event WHERE store_id = '" . (int)$store_id . "' AND event = '" . $this->db->escape($event) . "'");
 

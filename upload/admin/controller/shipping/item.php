@@ -1,5 +1,5 @@
 <?php
-class ControllerShippingItem extends \Engine\Controller {
+class ControllerShippingItem extends Controller {
 	private $error = array();
 
 	public function index() {

@@ -1,6 +1,5 @@
 <?php
-namespace Controller\Api;
-class Voucher extends \Engine\Controller {
+class ControllerApiVoucher extends Controller {
 	public function index() {
 		$this->load->language('api/voucher');
 

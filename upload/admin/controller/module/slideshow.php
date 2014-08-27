@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleSlideshow extends \Engine\Controller {
+class ControllerModuleSlideshow extends Controller {
 	private $error = array();
 
 	public function index() {

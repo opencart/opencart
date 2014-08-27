@@ -1,5 +1,5 @@
 <?php
-class ModelTotalKlarnaFee extends \Engine\Model {
+class ModelTotalKlarnaFee extends Model {
 	public function getTotal(&$total_data, &$total, &$taxes) {
 		$this->load->language('total/klarna_fee');
 

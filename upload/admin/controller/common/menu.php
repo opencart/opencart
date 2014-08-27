@@ -1,5 +1,5 @@
 <?php
-class ControllerCommonMenu extends \Engine\Controller {
+class ControllerCommonMenu extends Controller {
 	public function index() {
 		if (isset($this->request->get['token']) && isset($this->session->data['token']) && ($this->request->get['token'] == $this->session->data['token'])) {
 			$this->load->language('common/menu');

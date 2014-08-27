@@ -1,6 +1,5 @@
 <?php
-namespace Controller\Common;
-class Maintenance extends \Engine\Controller {
+class ControllerCommonMaintenance extends Controller {
 	public function index() {
 		if ($this->config->get('config_maintenance')) {
 			$route = '';
@@ -19,7 +18,7 @@ class Maintenance extends \Engine\Controller {
 			$this->user = new User($this->registry);
 
 			if (($route != 'payment') && !$this->user->isLogged()) {
-				return new Action('common/maintenance/info');
+				return new \Engine\Action('common/maintenance/info');
 			}
 		}
 	}

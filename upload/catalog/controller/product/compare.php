@@ -1,5 +1,5 @@
 <?php
-class ControllerProductCompare extends \Engine\Controller {
+class ControllerProductCompare extends Controller {
 	public function index() {
 		$this->load->language('product/compare');
 

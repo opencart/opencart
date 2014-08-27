@@ -1,5 +1,5 @@
 <?php
-class ModelMarketingCoupon extends \Engine\Model {
+class ModelMarketingCoupon extends Model {
 	public function addCoupon($data) {
 		$this->event->trigger('pre_admin_add_coupon', $data);
 

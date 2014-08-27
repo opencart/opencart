@@ -1,5 +1,4 @@
 <?php
-namespace Engine;
 final class Loader {
 	private $registry;
 
@@ -8,8 +7,18 @@ final class Loader {
 	}
 
 	public function controller($route) {
-		$class = 'Controller\\' . $model;
+		$class = 'Controller\\' . $route;
+
+		if (class_exists($class)) {
+			$controller = new $class($this->registry);
 		
+			if (is_callable(array($controller, $action->getMethod()))) {
+				return call_user_func_array(array($controller, $action->getMethod()), $action->getArgs());
+			}
+		}
+			
+
+		/*		
 		// function arguments
 		$args = func_get_args();
 
@@ -19,6 +28,7 @@ final class Loader {
 		$action = new Action($route, $args);
 
 		return $action->execute($this->registry);
+		*/
 	}
 
 	public function model($model) {

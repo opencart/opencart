@@ -1,5 +1,5 @@
 <?php
-class ControllerHeader extends \Engine\Controller {
+class ControllerHeader extends Controller {
 	public function index() {
 		$data['title'] = $this->document->getTitle();
 		$data['description'] = $this->document->getDescription();

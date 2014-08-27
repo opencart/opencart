@@ -1,6 +1,6 @@
 <?php
 namespace Controller\Account;
-class Newsletter extends \Engine\Controller {
+class Newsletter extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/newsletter', '', 'SSL');

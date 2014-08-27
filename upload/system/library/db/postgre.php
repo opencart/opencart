@@ -1,5 +1,5 @@
 <?php
-namespace Library\DB;
+namespace DB;
 final class Postgre {
 	private $link;
 

@@ -1,5 +1,5 @@
 <?php
-namespace Library\DB;
+namespace DB;
 final class mPDO {
 	private $pdo = null;
 	private $statement = null;

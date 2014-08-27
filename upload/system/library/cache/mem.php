@@ -1,5 +1,5 @@
 <?php
-namespace Library\Cache;
+namespace Cache;
 class Mem {
 	private $expire;
 	private $cache;

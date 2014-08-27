@@ -1,5 +1,5 @@
 <?php
-namespace Library\Cache;
+namespace Cache;
 class File {
 	private $expire;
 

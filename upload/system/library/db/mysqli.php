@@ -1,5 +1,5 @@
 <?php
-namespace Library\DB;
+namespace DB;
 final class MySQLi {
 	private $link;
 

@@ -46,7 +46,7 @@ class ControllerExtensionOpenbay extends Controller {
 		} else {
 			$this->session->data['success'] = $this->language->get('text_uninstall_success');
 
-			require_once(DIR_APPLICATION . 'controller/openbay/' . $this->request->get['extension'] . ' . php');
+			require_once(DIR_APPLICATION . 'controller/openbay/' . $this->request->get['extension'] . '.php');
 
 			$this->load->model('setting/extension');
 			$this->load->model('setting/setting');
@@ -116,10 +116,10 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$data['extensions'] = array();
 
-		$markets = $this->openbay->getInstalled();
+		$markets = array('ebay', 'etsy', 'amazon', 'amazonus');
 
 		foreach ($markets as $market) {
-			$extension = basename($market, ' . php');
+			$extension = basename($market, '.php');
 
 			$this->load->language('openbay/' . $extension);
 
@@ -129,7 +129,8 @@ class ControllerExtensionOpenbay extends Controller {
 				'status' => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'install' => $this->url->link('extension/openbay/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
 				'uninstall' => $this->url->link('extension/openbay/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
-				'installed' => in_array($extension, $extensions)
+				'installed' => in_array($extension, $extensions),
+				'code' => $extension
 			);
 		}
 

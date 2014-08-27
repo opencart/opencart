@@ -1,11 +1,5 @@
 <?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
-
   <?php if ($success) { ?>
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -14,13 +8,13 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="fa fa-dashboard fa-lg"></i> <?php echo $text_heading; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-dashboard fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <div class="row">
         <div class="col-md-3 text-center">
           <div class="well">
-            <a href="<?php echo $links_settings; ?>">
+            <a href="<?php echo $links_settings; ?>" id="settings-link">
               <span class="fa-stack fa-3x">
                 <i class="fa fa-square-o fa-stack-2x"></i>
                 <i class="fa fa-wrench fa-stack-1x"></i>

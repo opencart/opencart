@@ -24,7 +24,7 @@
           <div class="col-md-6">
             <div class="row">
               <div class="col-md-12">
-                <table class="table table-bordered table-hover">
+                <table class="table table-striped table-hover">
                   <thead>
                   <tr>
                     <td class="text-left" width="60%"><?php echo $column_name; ?></td>
@@ -39,13 +39,12 @@
                     <td class="text-center"><?php echo $extension['status']; ?></td>
                     <td class="text-right">
                       <?php if ($extension['installed']) { ?>
-                        <a href="<?php echo $extension['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                        <a href="<?php echo $extension['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary" id="button-edit-<?php echo $extension['code']; ?>"><i class="fa fa-pencil"></i></a>
                       <?php } ?>
-
                       <?php if (!$extension['installed']) { ?>
-                        <a href="<?php echo $extension['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
+                        <a href="<?php echo $extension['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success" id="button-install-<?php echo $extension['code']; ?>"><i class="fa fa-plus-circle"></i></a>
                       <?php } else { ?>
-                        <a href="<?php echo $extension['uninstall']; ?>" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
+                        <a href="<?php echo $extension['uninstall']; ?>" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger" id="button-uninstall-<?php echo $extension['code']; ?>"><i class="fa fa-minus-circle"></i></a>
                       <?php } ?>
                     </td>
                   </tr>

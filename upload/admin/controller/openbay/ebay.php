@@ -29,7 +29,7 @@ class ControllerOpenbayEbay extends Controller {
 	public function index() {
 		$data = $this->load->language('openbay/ebay_overview');
 
-		$this->document->setTitle($this->language->get('text_heading'));
+		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['breadcrumbs'] = array();

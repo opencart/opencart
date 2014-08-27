@@ -1,25 +1,20 @@
 <?php echo $header; ?><?php echo $menu; ?>
-<div id="content" xmlns="http://www.w3.org/1999/html">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
-  <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
-  <?php } ?>
-  <div class="panel panel-default">
-    <div class="panel-heading">
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-ebay-settings" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn" onclick="validateForm(); return false;"><i class="fa fa-check-circle"></i></button>
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
-      </div>
-      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $heading_title; ?></h1>
+        <button type="submit" form="form-ebay-settings" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary" onclick="validateForm(); return false;"><i class="fa fa-save"></i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="panel-body">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-ebay-settings" class="form-horizontal">
+  </div>
+  <div class="container-fluid">
+    <?php if ($error_warning) { ?>
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    <?php } ?>
+    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-ebay-settings" class="form-horizontal">
         <input type="hidden" name="ebay_itm_link" value="<?php echo $ebay_itm_link; ?>" />
 
         <ul class="nav nav-tabs">
@@ -31,9 +26,9 @@
         <div class="tab-content">
           <div class="tab-pane active" id="tab-general">
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="ebay_status"><?php echo $text_status; ?></label>
+              <label class="col-sm-2 control-label" for="ebay-status"><?php echo $text_status; ?></label>
               <div class="col-sm-10">
-                <select name="ebay_status" id="ebay_status" class="form-control ftpsetting">
+                <select name="ebay_status" id="ebay-status" class="form-control">
                   <?php if ($ebay_status) { ?>
                     <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                     <option value="0"><?php echo $text_disabled; ?></option>
@@ -45,27 +40,27 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="ebay_token"><?php echo $text_obp_token; ?></label>
+              <label class="col-sm-2 control-label" for="ebay-token"><?php echo $text_obp_token; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="ebay_token" value="<?php echo $ebay_token; ?>" placeholder="<?php echo $text_obp_token; ?>" id="ebay_token" class="form-control credentials" />
+                <input type="text" name="ebay_token" value="<?php echo $ebay_token; ?>" placeholder="<?php echo $text_obp_token; ?>" id="ebay-token" class="form-control credentials" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="ebay_token"><?php echo $text_obp_secret; ?></label>
+              <label class="col-sm-2 control-label" for="ebay-secret"><?php echo $text_obp_secret; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="ebay_secret" value="<?php echo $ebay_secret; ?>" placeholder="<?php echo $text_obp_secret; ?>" id="ebay_secret" class="form-control credentials" />
+                <input type="text" name="ebay_secret" value="<?php echo $ebay_secret; ?>" placeholder="<?php echo $text_obp_secret; ?>" id="ebay-secret" class="form-control credentials" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="ebay_string1"><?php echo $text_obp_string1; ?></label>
+              <label class="col-sm-2 control-label" for="ebay-string1"><?php echo $text_obp_string1; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="ebay_string1" value="<?php echo $ebay_string1; ?>" placeholder="<?php echo $text_obp_string1; ?>" id="ebay_string1" class="form-control credentials" />
+                <input type="text" name="ebay_string1" value="<?php echo $ebay_string1; ?>" placeholder="<?php echo $text_obp_string1; ?>" id="ebay-string1" class="form-control credentials" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="ebay_string2"><?php echo $text_obp_string2; ?></label>
+              <label class="col-sm-2 control-label" for="ebay-string2"><?php echo $text_obp_string2; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="ebay_string2" value="<?php echo $ebay_string2; ?>" placeholder="<?php echo $text_obp_string2; ?>" id="ebay_string2" class="form-control credentials" />
+                <input type="text" name="ebay_string2" value="<?php echo $ebay_string2; ?>" placeholder="<?php echo $text_obp_string2; ?>" id="ebay-string2" class="form-control credentials" />
               </div>
             </div>
             <div class="form-group">
@@ -521,7 +516,6 @@
           </div>
         </div>
       </form>
-    </div>
   </div>
 </div>
 <script type="text/javascript"><!--
@@ -604,7 +598,7 @@
             url: 'index.php?route=openbay/ebay/verifyCreds&token=<?php echo $token; ?>',
             type: 'POST',
             dataType: 'json',
-            data: {token: $('#ebay_token').val(), secret: $('#ebay_secret').val(), string1: $('#ebay_string1').val(), string2: $('#ebay_string2').val()},
+            data: {token: $('#ebay-token').val(), secret: $('#ebay-secret').val(), string1: $('#ebay-string1').val(), string2: $('#ebay-string2').val()},
             beforeSend: function() {
               $('#api-status').removeClass('label-success').removeClass('label-danger').addClass('label-primary').html('<i class="fa fa-cog fa-lg fa-spin"></i> Checking details').show();
             },

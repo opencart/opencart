@@ -57,8 +57,8 @@ class ControllerReportCustomerOnline extends \Engine\Controller {
 		$filter_data = array(
 			'filter_ip'       => $filter_ip,
 			'filter_customer' => $filter_customer,
-			'start'           => ($page - 1) * 20,
-			'limit'           => 20
+			'start'           => ($page - 1) * $this->config->get('config_limit_admin'),
+			'limit'           => $this->config->get('config_limit_admin')
 		);
 
 		$customer_total = $this->model_report_customer->getTotalCustomersOnline($filter_data);

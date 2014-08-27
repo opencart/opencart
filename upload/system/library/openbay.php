@@ -173,7 +173,7 @@ final class Openbay {
 					$value = utf8_substr($option['value'], 0, utf8_strrpos($option['value'], '.'));
 				}
 
-				$text .= chr(9) . '-' . $option['name'] . ' ' . (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value) . "\n";
+				$text .= chr(9) . '-' . $option['name'] . ' ' . (utf8_strlen($value) > 20) ? utf8_substr($value, 0, 20) . '..' : $value . "\n";
 			}
 		}
 

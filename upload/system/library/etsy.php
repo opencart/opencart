@@ -136,7 +136,6 @@ final class Etsy {
 			$sql_limit = '';
 		}
 
-
 		$qry = $this->db->query("SELECT `el`.*, `p`.`quantity` FROM `" . DB_PREFIX . "etsy_listing` `el` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `el`.`product_id` = `p`.`product_id` WHERE `el`.`product_id` = '" . (int)$product_id . "' AND `el`.`status` = '" . (int)$status . "' ORDER BY `el`.`created` DESC" . $sql_limit);
 
 		if ($qry->num_rows) {
@@ -338,7 +337,7 @@ final class Etsy {
 				return false;
 			}
 		} elseif($receipt_id != null) {
-			$this->log('Find receipt id: '.$receipt_id);
+			$this->log('Find receipt id: ' . $receipt_id);
 			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "etsy_order` WHERE `receipt_id` = '" . (int)$receipt_id . "' LIMIT 1");
 
 			if($query->num_rows > 0) {

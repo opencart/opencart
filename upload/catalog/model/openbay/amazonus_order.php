@@ -108,10 +108,10 @@ class ModelOpenbayAmazonusOrder extends Model {
 		return 0;
 	}
 
-	public function updateOrderStatus($order_id, $statusId) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_history` (`order_id`, `order_status_id`, `notify`, `comment`, `date_added`) VALUES (" . (int)$order_id . ", " . (int)$statusId . ", 0, '', NOW())");
+	public function updateOrderStatus($order_id, $status_id) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_history` (`order_id`, `order_status_id`, `notify`, `comment`, `date_added`) VALUES (" . (int)$order_id . ", " . (int)$status_id . ", 0, '', NOW())");
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `order_status_id` = " . (int)$statusId . " WHERE `order_id` = " . (int)$order_id);
+		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `order_status_id` = " . (int)$status_id . " WHERE `order_id` = " . (int)$order_id);
 	}
 
 	public function addAmazonusOrder($order_id, $amazonus_order_id) {
@@ -168,7 +168,7 @@ class ModelOpenbayAmazonusOrder extends Model {
 		$options = array();
 
 		$option_value_ids = explode(':', $product_var);
-		foreach ($option_value_ids as $optionValueId) {
+		foreach ($option_value_ids as $option_value_id) {
 			$option_details_row = $this->db->query("SELECT
 				pov.product_option_id,
 				pov.product_option_value_id,
@@ -180,7 +180,7 @@ class ModelOpenbayAmazonusOrder extends Model {
 				 `" . DB_PREFIX . "option` as opt,
 				 `" . DB_PREFIX . "option_value_description` as ovd,
 				 `" . DB_PREFIX . "option_description` as od
-			WHERE pov.product_option_value_id = '" . (int)$optionValueId . "' AND
+			WHERE pov.product_option_value_id = '" . (int)$option_value_id . "' AND
 				po.product_option_id = pov.product_option_id AND
 				opt.option_id = pov.option_id AND
 				ovd.option_value_id = pov.option_value_id AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND

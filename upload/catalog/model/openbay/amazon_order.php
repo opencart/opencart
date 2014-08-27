@@ -42,10 +42,10 @@ class ModelOpenbayAmazonOrder extends Model {
 		}
 	}
 
-	public function getMappedStatus($amazonStatus) {
-		$amazonStatus = trim(strtolower($amazonStatus));
+	public function getMappedStatus($amazon_status) {
+		$amazon_status = trim(strtolower($amazon_status));
 
-		switch ($amazonStatus) {
+		switch ($amazon_status) {
 			case 'pending':
 				$order_status = $this->config->get('openbay_amazon_order_status_pending');
 				break;
@@ -167,7 +167,7 @@ class ModelOpenbayAmazonOrder extends Model {
 		$options = array();
 
 		$option_value_ids = explode(':', $product_var);
-		foreach ($option_value_ids as $optionValueId) {
+		foreach ($option_value_ids as $option_value_id) {
 			$option_details_row = $this->db->query("SELECT
 				pov.product_option_id,
 				pov.product_option_value_id,
@@ -179,7 +179,7 @@ class ModelOpenbayAmazonOrder extends Model {
 				 `" . DB_PREFIX . "option` as opt,
 				 `" . DB_PREFIX . "option_value_description` as ovd,
 				 `" . DB_PREFIX . "option_description` as od
-			WHERE pov.product_option_value_id = '" . (int)$optionValueId . "' AND
+			WHERE pov.product_option_value_id = '" . (int)$option_value_id . "' AND
 				po.product_option_id = pov.product_option_id AND
 				opt.option_id = pov.option_id AND
 				ovd.option_value_id = pov.option_value_id AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "' AND

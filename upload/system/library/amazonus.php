@@ -576,7 +576,7 @@ class Amazonus {
 					'accepted' => (array)$field->accepted,
 					'type' => (string)$type,
 					'child' => false,
-					'order' => isset($attributes['order']) ? (string)$attributes['order'] : '',
+					'order' => (isset($attributes['order'])) ? (string)$attributes['order'] : '',
 					'tab' => (string)$attributes['tab'],
 				);
 			}
@@ -590,7 +590,7 @@ class Amazonus {
 					'type' => (string)$type,
 					'child' => true,
 					'parent' => (array)$field->parent,
-					'order' => isset($attributes['order']) ? (string)$attributes['order'] : '',
+					'order' => (isset($attributes['order'])) ? (string)$attributes['order'] : '',
 					'tab' => (string)$attributes['tab'],
 				);
 			}

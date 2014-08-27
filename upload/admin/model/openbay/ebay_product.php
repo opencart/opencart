@@ -27,7 +27,7 @@ class ModelOpenbayEbayProduct extends Model {
 						'option_value_id'           => $product_option_value['option_value_id'],
 						'name'                      => $product_option_value['name'],
 						'image'                     => $product_option_value['image'],
-						'image_thumb'               => (!empty($product_option_value['image'])?$this->model_tool_image->resize($product_option_value['image'], 100, 100):''),
+						'image_thumb'               => (!empty($product_option_value['image'])) ? $this->model_tool_image->resize($product_option_value['image'], 100, 100) : '',
 						'quantity'                  => $product_option_value['quantity'],
 						'subtract'                  => $product_option_value['subtract'],
 						'price'                     => $product_option_value['price'],

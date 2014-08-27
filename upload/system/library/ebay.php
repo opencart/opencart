@@ -408,7 +408,7 @@ final class Ebay {
 		return $msg;
 	}
 
-	public function pbkdf2( $p, $s, $c, $kl, $a = 'sha256' ) {
+	public function pbkdf2($p, $s, $c, $kl, $a = 'sha256') {
 		$hl = strlen(hash($a, null, true));
 		$kb = ceil($kl / $hl);
 		$dk = '';
@@ -586,7 +586,7 @@ final class Ebay {
 
 		$listing    = $this->call('item/getItem', array('itemId' => $item_id));
 		$product_id = $this->getProductId($item_id);
-		$reserve    = $this->getReserve($product_id, $item_id, ($sku != null ? $sku : ''));
+		$reserve    = $this->getReserve($product_id, $item_id, (($sku != null) ? $sku : ''));
 
 		if ($listing['status'] == 1 ) {
 			if ($reserve != false) {

@@ -429,7 +429,7 @@ class ModelOpenbayEbayOrder extends Model{
 
 						$option_data[] = array(
 							'name'  => $option['name'],
-							'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . ' .  . ' : $value)
+							'value' => (utf8_strlen($value) > 20) ? utf8_substr($value, 0, 20) . '..' : $value
 						);
 					}
 
@@ -473,7 +473,7 @@ class ModelOpenbayEbayOrder extends Model{
 					$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$product['order_product_id'] . "'");
 
 					foreach ($order_option_query->rows as $option) {
-						$text .= chr(9) . '-' . $option['name'] . ' ' . (utf8_strlen($option['value']) > 20 ? utf8_substr($option['value'], 0, 20) . ' .  . ' : $option['value']) . "\n";
+						$text .= chr(9) . '-' . $option['name'] . ' ' . (utf8_strlen($option['value']) > 20) ? utf8_substr($option['value'], 0, 20) . '..' : $option['value'] . "\n";
 					}
 				}
 

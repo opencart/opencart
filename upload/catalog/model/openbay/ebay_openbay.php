@@ -231,10 +231,10 @@ class ModelOpenbayEbayOpenbay extends Model{
 		$currency = $this->model_localisation_currency->getCurrencyByCode($this->config->get('openbay_def_currency'));
 
 		if ($this->config->get('openbaypro_create_date') == 1) {
-			$created_date_obj     = new DateTime((string)$order->order->created);
-			$offset             = ($this->config->get('openbaypro_time_offset') != '' ? (int)$this->config->get('openbaypro_time_offset') : (int)0);
+			$created_date_obj = new DateTime((string)$order->order->created);
+			$offset = ($this->config->get('openbaypro_time_offset') != '') ? (int)$this->config->get('openbaypro_time_offset') : (int)0;
 			$created_date_obj->modify($offset . ' hour');
-			$created_date        = $created_date_obj->format('Y-m-d H:i:s');
+			$created_date = $created_date_obj->format('Y-m-d H:i:s');
 		} else {
 			$created_date = date("Y-m-d H:i:s");
 			$offset = 0;

@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="OpenCart" default="build" basedir=".">
-    <property name="source" value="upload"/>
+    <property name="source" value="$WORKSPACE/upload"/>
 
     <target name="clean" description="Cleanup build artifacts">
-        <delete dir="${basedir}/tests/docs"/>
-        <delete dir="${basedir}/tests/logs"/>
-        <delete dir="${basedir}/tests/testresults"/>
+        <delete dir="$WORKSPACE/tests/docs"/>
+        <delete dir="$WORKSPACE/tests/logs"/>
+        <delete dir="$WORKSPACE/tests/testresults"/>
     </target>
 
     <target name="prepare" depends="clean" description="Prepare for build">
-        <mkdir dir="${basedir}/tests/docs"/>
-        <mkdir dir="${basedir}/tests/logs"/>
-        <mkdir dir="${basedir}/tests/testresults"/>
+        <mkdir dir="$WORKSPACE/tests/docs"/>
+        <mkdir dir="$WORKSPACE/tests/logs"/>
+        <mkdir dir="$WORKSPACE/tests/testresults"/>
     </target>
 
     <target name="lint" description="Perform syntax check of source code files">
         <apply executable="php" failonerror="true">
             <arg value="-l"/>
-            <fileset dir="${basedir}/upload">
+            <fileset dir="$WORKSPACE/upload">
                 <include name="**/*.php"/>
                 <modified/>
             </fileset>
@@ -27,14 +27,14 @@
     <target name="phploc" description="Measure project size using PHPLOC">
         <exec executable="phploc">
             <arg value="--log-csv"/>
-            <arg value="${basedir}/tests/logs/phploc.csv"/>
-            <arg path="${basedir}/upload"/>
+            <arg value="$WORKSPACE/tests/logs/phploc.csv"/>
+            <arg path="$WORKSPACE/upload"/>
         </exec>
     </target>
 
     <target name="phpcs" description="Generate checkstyle.xml using PHP_CodeSniffer">
         <exec executable="phpcs">
-            <arg line="--report=checkstyle --report-file=${basedir}/tests/checkstyle.xml --standard=tests/phpcs/OpenCart/ruleset.xml --extensions=php ${source}/"/>
+            <arg line="--report=checkstyle --report-file=$WORKSPACE/tests/checkstyle.xml --standard=tests/phpcs/OpenCart/ruleset.xml --extensions=php ${source}/"/>
         </exec>
     </target>
 

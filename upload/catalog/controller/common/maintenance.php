@@ -18,7 +18,7 @@ class ControllerCommonMaintenance extends Controller {
 			$this->user = new User($this->registry);
 
 			if (($route != 'payment') && !$this->user->isLogged()) {
-				return new \Engine\Action('common/maintenance/info');
+				return new Action('common/maintenance/info');
 			}
 		}
 	}

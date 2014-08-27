@@ -1,5 +1,4 @@
 <?php
-namespace Library;
 class CBA {
 	private $access_key;
 	private $secret_key;

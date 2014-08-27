@@ -1,5 +1,4 @@
 <?php
-namespace Library;
 class Session {
 	public $data = array();
 

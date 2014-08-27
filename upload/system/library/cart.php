@@ -1,5 +1,4 @@
 <?php
-namespace Library;
 class Cart {
 	private $config;
 	private $db;

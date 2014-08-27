@@ -1,5 +1,4 @@
 <?php
-namespace Library;
 class Request {
 	public $get = array();
 	public $post = array();

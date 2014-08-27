@@ -1,12 +1,12 @@
 <?php
 class ModelToolEvent extends Model {
-	public function getHandlers($event, $store_id = 0) {
+	public function addEvent($data) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "event WHERE store_id = '" . (int)$store_id . "' AND event = '" . $this->db->escape($event) . "'");
 
 		return !empty($query->row['handlers']) ? unserialize($query->row['handlers']) : array();
 	}
 
-	public function setHandler($event, $handler, $store_id = 0) {
+	public function setHandler($event_id, $handler, $store_id = 0) {
 		if (empty($handler['type']) || empty($handler['code']) || empty($handler['method'])) {
 			return false;
 		}

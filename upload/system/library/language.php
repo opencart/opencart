@@ -1,5 +1,4 @@
 <?php
-namespace Library;
 class Language {
 	private $default = 'english';
 	private $directory;

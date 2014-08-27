@@ -66,23 +66,7 @@ function modification($filename) {
 
 // Autoloader
 function autoload($class) {
-	if (substr($class, 0, 10) == 'Controller') {
-		$file = DIR_APPLICATION . str_replace('\\', '/', strtolower($class)) . '.php';
-	}
-	
-	if (substr($class, 0, 5) == 'Model') {
-		$file = DIR_APPLICATION . str_replace('\\', '/', strtolower($class)) . '.php';
-	}
-	
-	if (substr($class, 0, 7) == 'Library') {
-		$file = DIR_SYSTEM . str_replace('\\', '/', strtolower($class)) . '.php';
-	}
-	
-	if (substr($class, 0, 6) == 'Engine') {
-		$file = DIR_SYSTEM . str_replace('\\', '/', strtolower($class)) . '.php';
-	}
-	
-	echo $class . '<br>';
+	$file = DIR_SYSTEM . 'library/' . str_replace('\\', '/', strtolower($class)) . '.php';
 			
 	if (file_exists($file)) {
 		include(modification($file));
@@ -95,6 +79,14 @@ function autoload($class) {
 
 spl_autoload_register('autoload');
 spl_autoload_extensions('.php');
+
+// Engine
+require_once(modification(DIR_SYSTEM . 'engine/action.php')); 
+require_once(modification(DIR_SYSTEM . 'engine/controller.php'));
+require_once(modification(DIR_SYSTEM . 'engine/front.php'));
+require_once(modification(DIR_SYSTEM . 'engine/loader.php')); 
+require_once(modification(DIR_SYSTEM . 'engine/model.php'));
+require_once(modification(DIR_SYSTEM . 'engine/registry.php'));
 
 // Helper
 require_once(DIR_SYSTEM . 'helper/json.php');

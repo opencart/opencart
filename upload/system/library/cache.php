@@ -1,10 +1,9 @@
 <?php
-namespace Library;
 class Cache {
 	private $cache;
 
 	public function __construct($driver, $expire = 3600) {
-		$class = 'Library\Cache\\' . $driver;
+		$class = 'Cache\\' . $driver;
 		
 		if (class_exists($class)) {
 			$this->cache = new $class($expire);

@@ -1,5 +1,4 @@
 <?php
-namespace Library;
 class Currency {
 	private $code;
 	private $currencies = array();

@@ -1,5 +1,4 @@
 <?php
-namespace Library;
 class Length {
 	private $lengths = array();
 

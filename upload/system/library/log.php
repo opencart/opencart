@@ -1,5 +1,4 @@
 <?php
-namespace Library;
 class Log {
 	private $handle;
 

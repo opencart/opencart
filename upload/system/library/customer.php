@@ -1,5 +1,4 @@
 <?php
-namespace Library;
 class Customer {
 	private $customer_id;
 	private $firstname;

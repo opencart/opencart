@@ -1,5 +1,4 @@
 <?php
-namespace Library;
 class Response {
 	private $headers = array();
 	private $level = 0;

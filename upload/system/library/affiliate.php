@@ -1,5 +1,4 @@
 <?php
-namespace Library;
 class Affiliate {
 	private $affiliate_id;
 	private $firstname;

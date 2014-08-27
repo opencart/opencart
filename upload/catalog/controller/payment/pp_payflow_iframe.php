@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentPPPayflowIframe extends Controller {
+class ControllerPaymentPPPayflowIframe extends \Engine\Controller {
 	public function index() {
 		$this->load->model('checkout/order');
 		$this->load->model('payment/pp_payflow_iframe');

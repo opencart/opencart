@@ -1,5 +1,6 @@
 <?php
-final class DBMSSQL {
+namespace Library\DB;
+final class MSSQL {
 	private $link;
 
 	public function __construct($hostname, $username, $password, $database) {

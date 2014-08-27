@@ -1,5 +1,5 @@
 <?php
-class ControllerInformationSitemap extends Controller {
+class ControllerInformationSitemap extends \Engine\Controller {
 	public function index() {
 		$this->load->language('information/sitemap');
 

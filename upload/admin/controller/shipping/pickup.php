@@ -1,5 +1,5 @@
 <?php
-class ControllerShippingPickup extends Controller {
+class ControllerShippingPickup extends \Engine\Controller {
 	private $error = array();
 
 	public function index() {

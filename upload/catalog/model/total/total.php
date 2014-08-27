@@ -1,5 +1,5 @@
 <?php
-class ModelTotalTotal extends Model {
+class ModelTotalTotal extends \Engine\Model {
 	public function getTotal(&$total_data, &$total, &$taxes) {
 		$this->load->language('total/total');
 

@@ -1,5 +1,5 @@
 <?php
-class ControllerCommonReset extends Controller {
+class ControllerCommonReset extends \Engine\Controller {
 	private $error = array();
 
 	public function index() {

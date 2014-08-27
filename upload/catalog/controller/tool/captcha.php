@@ -1,5 +1,5 @@
 <?php
-class ControllerToolCaptcha extends Controller {
+class ControllerToolCaptcha extends \Engine\Controller {
 	public function index() {
 		$this->session->data['captcha'] = substr(sha1(mt_rand()), 17, 6);
 

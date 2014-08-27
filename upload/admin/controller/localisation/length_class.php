@@ -1,5 +1,5 @@
 <?php
-class ControllerLocalisationLengthClass extends Controller {
+class ControllerLocalisationLengthClass extends \Engine\Controller {
 	private $error = array();
 
 	public function index() {

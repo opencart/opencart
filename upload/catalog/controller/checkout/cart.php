@@ -1,5 +1,6 @@
 <?php
-class ControllerCheckoutCart extends Controller {
+namespace Controller\Checkout;
+class Cart extends \Engine\Controller {
 	public function index() {
 		$this->load->language('checkout/cart');
 

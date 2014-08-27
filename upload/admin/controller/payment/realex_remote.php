@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentRealexRemote extends Controller {
+class ControllerPaymentRealexRemote extends \Engine\Controller {
 	private $error = array();
 
 	public function index() {

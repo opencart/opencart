@@ -1,5 +1,5 @@
 <?php
-class ControllerCommonDashboard extends Controller {
+class ControllerCommonDashboard extends \Engine\Controller {
 	public function index() {
 		$this->load->language('common/dashboard');
 

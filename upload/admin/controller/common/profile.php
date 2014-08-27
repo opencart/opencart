@@ -1,5 +1,5 @@
 <?php
-class ControllerCommonProfile extends Controller {
+class ControllerCommonProfile extends \Engine\Controller {
 	public function index() {
 		$this->load->language('common/menu');
 		

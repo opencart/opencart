@@ -1,5 +1,5 @@
 <?php
-class ModelLocalisationStockStatus extends Model {
+class ModelLocalisationStockStatus extends \Engine\Model {
 	public function addStockStatus($data) {
 		foreach ($data['stock_status'] as $language_id => $value) {
 			if (isset($stock_status_id)) {

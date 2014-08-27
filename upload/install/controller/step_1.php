@@ -1,5 +1,5 @@
 <?php
-class ControllerStep1 extends Controller {
+class ControllerStep1 extends \Engine\Controller {
 	public function index() {
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			$this->response->redirect($this->url->link('step_2'));

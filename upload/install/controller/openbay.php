@@ -1,5 +1,5 @@
 <?php
-class ControllerOpenbay extends Controller {
+class ControllerOpenbay extends \Engine\Controller {
 	public function index() {
 		$this->document->setTitle($this->language->get('heading_openbay'));
 

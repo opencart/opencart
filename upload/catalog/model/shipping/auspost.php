@@ -1,5 +1,5 @@
 <?php
-class ModelShippingAusPost extends Model {
+class ModelShippingAusPost extends \Engine\Model {
 	public function getQuote($address) {
 		$this->load->language('shipping/auspost');
 

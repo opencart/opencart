@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentMoneybookers extends Controller {
+class ControllerPaymentMoneybookers extends \Engine\Controller {
 	public function index() {
 		$this->load->model('checkout/order');
 

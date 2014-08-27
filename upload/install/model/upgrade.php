@@ -1,5 +1,5 @@
 <?php
-class ModelUpgrade extends Model {
+class ModelUpgrade extends \Engine\Model {
 	public function mysql() {
 		// Upgrade script to opgrade opencart to the latest version.
 		// Oldest version supported is 1.3.2

@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentPPExpress extends Model {
+class ModelPaymentPPExpress extends \Engine\Model {
 	public function cleanReturn($data) {
 		$data = explode('&', $data);
 

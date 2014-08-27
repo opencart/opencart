@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentPPPro extends Model {
+class ModelPaymentPPPro extends \Engine\Model {
 	public function getMethod($address, $total) {
 		$this->language->load('payment/pp_pro');
 

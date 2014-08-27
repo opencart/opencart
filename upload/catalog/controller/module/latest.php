@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleLatest extends Controller {
+class ControllerModuleLatest extends \Engine\Controller {
 	public function index($setting) {
 		$this->load->language('module/latest');
 

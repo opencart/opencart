@@ -1,5 +1,5 @@
 <?php
-class ControllerDesignLayout extends Controller {
+class ControllerDesignLayout extends \Engine\Controller {
 	private $error = array();
 
 	public function index() {

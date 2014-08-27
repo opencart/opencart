@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonSeoUrl extends Controller {
+namespace Controller\Common;
+class SeoUrl extends \Engine\Controller {
 	public function index() {
 		// Add rewrite to url class
 		if ($this->config->get('config_seo_url')) {

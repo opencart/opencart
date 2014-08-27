@@ -1,5 +1,5 @@
 <?php
-class ControllerModulePPLogin extends Controller {
+class ControllerModulePPLogin extends \Engine\Controller {
 	public function index() {
 		if ($this->config->get('pp_login_status') && !$this->customer->isLogged()) {
 			$data['pp_login_client_id'] = $this->config->get('pp_login_client_id');

@@ -1,5 +1,5 @@
 <?php
-class ControllerMailOrder extends Controller {
+class ControllerMailOrder extends \Engine\Controller {
 	public function index() {
 		// Check for any downloadable products
 		$download_status = false;

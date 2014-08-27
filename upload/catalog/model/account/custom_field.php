@@ -1,5 +1,5 @@
 <?php
-class ModelAccountCustomField extends Model {
+class ModelAccountCustomField extends \Engine\Model {
 	public function getCustomField($custom_field_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field` cf LEFT JOIN `" . DB_PREFIX . "custom_field_description` cfd ON (cf.custom_field_id = cfd.custom_field_id) WHERE cf.custom_field_id = '" . (int)$custom_field_id . "' AND cfd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 

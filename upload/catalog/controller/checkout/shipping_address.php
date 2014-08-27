@@ -1,5 +1,6 @@
 <?php
-class ControllerCheckoutShippingAddress extends Controller {
+namespace Controller\Checkout;
+class ShippingAddress extends \Engine\Controller {
 	public function index() {
 		$this->load->language('checkout/checkout');
 

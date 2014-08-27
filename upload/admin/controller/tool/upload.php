@@ -1,5 +1,5 @@
 <?php
-class ControllerToolUpload extends Controller {
+class ControllerToolUpload extends \Engine\Controller {
 	private $error = array();
 
 	public function index() {

@@ -1,4 +1,5 @@
 <?php
+namespace Library;
 final class Tax {
 	private $tax_rates = array();
 

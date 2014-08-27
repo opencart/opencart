@@ -1,5 +1,5 @@
 <?php
-class ModelCatalogRecurring extends Model {
+class ModelCatalogRecurring extends \Engine\Model {
 	public function addRecurring($data) {
 		$this->event->trigger('pre_admin_add_recurring', $data);
 

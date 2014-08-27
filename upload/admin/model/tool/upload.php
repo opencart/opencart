@@ -1,5 +1,5 @@
 <?php
-class ModelToolUpload extends Model {
+class ModelToolUpload extends \Engine\Model {
 	public function deleteUpload($upload_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "upload WHERE upload_id = '" . (int)$upload_id . "'");
 	}

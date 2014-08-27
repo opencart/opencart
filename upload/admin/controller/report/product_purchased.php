@@ -1,5 +1,5 @@
 <?php
-class ControllerReportProductPurchased extends Controller {
+class ControllerReportProductPurchased extends \Engine\Controller {
 	public function index() {
 		$this->load->language('report/product_purchased');
 

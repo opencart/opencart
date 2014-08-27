@@ -1,5 +1,5 @@
 <?php
-class ControllerCommonFileManager extends Controller {
+class ControllerCommonFileManager extends \Engine\Controller {
 	public function index() {
 		$this->load->language('common/filemanager');
 

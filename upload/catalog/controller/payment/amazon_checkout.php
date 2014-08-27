@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentAmazonCheckout extends Controller {
+class ControllerPaymentAmazonCheckout extends \Engine\Controller {
 	public function address() {
 		if ($this->config->get('amazon_checkout_mode') == 'sandbox') {
 			if ($this->config->get('amazon_checkout_marketplace') == 'uk') {

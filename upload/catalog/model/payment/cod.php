@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentCOD extends Model {
+class ModelPaymentCOD extends \Engine\Model {
 	public function getMethod($address, $total) {
 		$this->load->language('payment/cod');
 

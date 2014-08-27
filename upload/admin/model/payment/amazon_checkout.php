@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentAmazonCheckout extends Model {
+class ModelPaymentAmazonCheckout extends \Engine\Model {
 	public function install() {
 		$this->db->query("
 			CREATE TABLE `" . DB_PREFIX . "order_amazon` (

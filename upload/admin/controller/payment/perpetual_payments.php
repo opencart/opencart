@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentPerpetualPayments extends Controller {
+class ControllerPaymentPerpetualPayments extends \Engine\Controller {
 	private $error = array();
 
 	public function index() {

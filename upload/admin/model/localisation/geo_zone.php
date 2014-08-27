@@ -1,5 +1,5 @@
 <?php
-class ModelLocalisationGeoZone extends Model {
+class ModelLocalisationGeoZone extends \Engine\Model {
 	public function addGeoZone($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "geo_zone SET name = '" . $this->db->escape($data['name']) . "', description = '" . $this->db->escape($data['description']) . "', date_added = NOW()");
 

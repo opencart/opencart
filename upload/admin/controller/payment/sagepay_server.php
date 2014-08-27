@@ -1,6 +1,6 @@
 <?php
 
-class ControllerPaymentSagepayServer extends Controller {
+class ControllerPaymentSagepayServer extends \Engine\Controller {
 
 	private $error = array();
 

@@ -1,4 +1,5 @@
 <?php
+namespace Library;
 class Weight {
 	private $weights = array();
 

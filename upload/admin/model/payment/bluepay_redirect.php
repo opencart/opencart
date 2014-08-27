@@ -1,6 +1,6 @@
 <?php
 
-class ModelPaymentBluepayredirect extends Model {
+class ModelPaymentBluepayredirect extends \Engine\Model {
 
 	public function install() {
 		$this->db->query("

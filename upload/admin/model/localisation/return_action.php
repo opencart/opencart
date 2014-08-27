@@ -1,5 +1,5 @@
 <?php
-class ModelLocalisationReturnAction extends Model {
+class ModelLocalisationReturnAction extends \Engine\Model {
 	public function addReturnAction($data) {
 		foreach ($data['return_action'] as $language_id => $value) {
 			if (isset($return_action_id)) {

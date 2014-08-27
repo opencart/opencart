@@ -1,5 +1,6 @@
 <?php
-final class DBPostgre {
+namespace Library\DB;
+final class Postgre {
 	private $link;
 
 	public function __construct($hostname, $username, $password, $database) {

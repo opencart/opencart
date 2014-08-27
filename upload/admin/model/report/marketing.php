@@ -1,5 +1,5 @@
 <?php
-class ModelReportMarketing extends Model {
+class ModelReportMarketing extends \Engine\Model {
 	public function getMarketing($data = array()) {
 		$sql = "SELECT m.marketing_id, m.name AS campaign, m.code, SUM(m.clicks) AS clicks, (SELECT COUNT(DISTINCT order_id) FROM `" . DB_PREFIX . "order` o1 WHERE o1.marketing_id = m.marketing_id";
 

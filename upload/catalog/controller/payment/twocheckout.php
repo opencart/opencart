@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentTwoCheckout extends Controller {
+class ControllerPaymentTwoCheckout extends \Engine\Controller {
 	public function index() {
 		$data['button_confirm'] = $this->language->get('button_confirm');
 

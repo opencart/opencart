@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleBestSeller extends Controller {
+class ControllerModuleBestSeller extends \Engine\Controller {
 	public function index($setting) {
 		$this->load->language('module/bestseller');
 

@@ -1,5 +1,6 @@
 <?php
-final class DBmPDO {
+namespace Library\DB;
+final class mPDO {
 	private $pdo = null;
 	private $statement = null;
 

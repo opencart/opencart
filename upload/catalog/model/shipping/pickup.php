@@ -1,5 +1,5 @@
 <?php
-class ModelShippingPickup extends Model {
+class ModelShippingPickup extends \Engine\Model {
 	function getQuote($address) {
 		$this->load->language('shipping/pickup');
 

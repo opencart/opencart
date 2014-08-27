@@ -1,4 +1,5 @@
 <?php
+namespace Library;
 class Mail {
 	protected $to;
 	protected $from;

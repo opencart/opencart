@@ -1,5 +1,5 @@
 <?php
-class ModelDesignBanner extends Model {
+class ModelDesignBanner extends \Engine\Model {
 	public function addBanner($data) {
 		$this->event->trigger('pre_admin_add_banner', $data);
 

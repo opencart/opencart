@@ -1,4 +1,5 @@
 <?php
+namespace Engine;
 final class Front {
 	private $registry;
 	private $pre_action = array();
@@ -31,16 +32,22 @@ final class Front {
 	}
 
 	private function execute($action) {
-		$result = $action->execute($this->registry);
-
-		if (is_object($result)) {
-			$action = $result;
-		} elseif ($result === false) {
+		$class = 'Controller\\' . $action->getClass();
+		
+		if (class_exists($class)) {
+			$controller = new $class($this->registry);
+		
+			if (is_callable(array($controller, $action->getMethod()))) {
+				$action = call_user_func_array(array($controller, $action->getMethod()), $action->getArgs());
+			} else {
+				$action = $this->error;
+	
+				$this->error = '';
+			}
+		} else {
 			$action = $this->error;
 
-			$this->error = '';
-		} else {
-			$action = false;
+			$this->error = '';				
 		}
 
 		return $action;

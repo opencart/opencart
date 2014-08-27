@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentPerpetualPayments extends Controller {
+class ControllerPaymentPerpetualPayments extends \Engine\Controller {
 	public function index() {
 		$this->load->language('payment/perpetual_payments');
 

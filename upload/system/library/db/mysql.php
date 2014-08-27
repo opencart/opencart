@@ -1,5 +1,6 @@
 <?php
-final class DBMySQL {
+namespace Library\DB;
+final class MySQL {
 	private $link;
 
 	public function __construct($hostname, $username, $password, $database) {

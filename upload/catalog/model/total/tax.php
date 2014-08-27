@@ -1,5 +1,5 @@
 <?php
-class ModelTotalTax extends Model {
+class ModelTotalTax extends \Engine\Model {
 	public function getTotal(&$total_data, &$total, &$taxes) {
 		foreach ($taxes as $key => $value) {
 			if ($value > 0) {

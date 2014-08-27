@@ -1,5 +1,6 @@
 <?php
-class ControllerCheckoutCoupon extends Controller {
+namespace Controller\Checkout;
+class Coupon extends \Engine\Controller {
 	public function index() {
 		if ($this->config->get('coupon_status')) {
 			$this->load->language('checkout/coupon');

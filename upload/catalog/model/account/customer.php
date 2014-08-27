@@ -1,5 +1,5 @@
 <?php
-class ModelAccountCustomer extends Model {
+class ModelAccountCustomer extends \Engine\Model {
 	public function addCustomer($data) {
 		$this->event->trigger('pre_customer_add', $data);
 

@@ -4,7 +4,7 @@
  *
  * https://github.com/opencart/opencart/wiki/Modification-System
  */
-class ControllerExtensionModification extends Controller {
+class ControllerExtensionModification extends \Engine\Controller {
 	private $error = array();
 
 	public function index() {

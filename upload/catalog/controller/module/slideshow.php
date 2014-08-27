@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleSlideshow extends Controller {
+class ControllerModuleSlideshow extends \Engine\Controller {
 	public function index($setting) {
 		static $module = 0;
 

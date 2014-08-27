@@ -1,5 +1,5 @@
 <?php
-class ModelCatalogProduct extends Model {
+class ModelCatalogProduct extends \Engine\Model {
 	public function addProduct($data) {
 		$this->event->trigger('pre_admin_add_product', $data);
 

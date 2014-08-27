@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentBluePayHostedForm extends Controller {
+class ControllerPaymentBluePayHostedForm extends \Engine\Controller {
 
 	public function index() {
 		$this->load->language('payment/bluepay_hosted_form');

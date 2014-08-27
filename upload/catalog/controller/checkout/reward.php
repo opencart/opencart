@@ -1,5 +1,6 @@
 <?php
-class ControllerCheckoutReward extends Controller {
+namespace Controller\Checkout;
+class Reward extends \Engine\Controller {
 	public function index() {
 		$points = $this->customer->getRewardPoints();
 

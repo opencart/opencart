@@ -1,5 +1,5 @@
 <?php
-class ControllerReportSaleReturn extends Controller {
+class ControllerReportSaleReturn extends \Engine\Controller {
 	public function index() {
 		$this->load->language('report/sale_return');
 

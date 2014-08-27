@@ -1,5 +1,5 @@
 <?php
-class ControllerCatalogRecurring extends Controller {
+class ControllerCatalogRecurring extends \Engine\Controller {
 	private $error = array();
 
 	public function index() {

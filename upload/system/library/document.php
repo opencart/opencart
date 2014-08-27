@@ -1,4 +1,5 @@
 <?php
+namespace Library;
 class Document {
 	private $title;
 	private $description;

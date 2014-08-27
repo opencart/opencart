@@ -1,5 +1,6 @@
 <?php
-class ControllerCheckoutLogin extends Controller {
+namespace Controller\Checkout;
+class Login extends \Engine\Controller {
 	public function index() {
 		$this->load->language('checkout/checkout');
 

@@ -1,5 +1,5 @@
 <?php
-class ControllerSettingStore extends Controller {
+class ControllerSettingStore extends \Engine\Controller {
 	private $error = array();
 
 	public function index() {

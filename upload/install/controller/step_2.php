@@ -1,5 +1,5 @@
 <?php
-class ControllerStep2 extends Controller {
+class ControllerStep2 extends \Engine\Controller {
 	private $error = array();
 
 	public function index() {

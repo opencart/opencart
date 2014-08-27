@@ -1,5 +1,5 @@
 <?php
-class ModelMarketingAffiliate extends Model {
+class ModelMarketingAffiliate extends \Engine\Model {
 	public function addAffiliate($data) {
 		$this->event->trigger('pre_admin_add_affiliate', $data);
 

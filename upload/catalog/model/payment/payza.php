@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentPayza extends Model {
+class ModelPaymentPayza extends \Engine\Model {
 	public function getMethod($address, $total) {
 		$this->load->language('payment/payza');
 

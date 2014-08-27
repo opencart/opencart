@@ -1,5 +1,5 @@
 <?php
-class ModelAccountReturn extends Model {
+class ModelAccountReturn extends \Engine\Model {
 	public function addReturn($data) {
 		$this->event->trigger('pre_return_add', $data);
 

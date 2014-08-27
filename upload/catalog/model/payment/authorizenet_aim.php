@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentAuthorizeNetAim extends Model {
+class ModelPaymentAuthorizeNetAim extends \Engine\Model {
 	public function getMethod($address, $total) {
 		$this->load->language('payment/authorizenet_aim');
 

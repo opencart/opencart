@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentRealexRemote extends Controller {
+class ControllerPaymentRealexRemote extends \Engine\Controller {
 	public function index() {
 		$this->load->language('payment/realex_remote');
 

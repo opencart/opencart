@@ -1,5 +1,5 @@
 <?php
-class ModelCatalogFilter extends Model {
+class ModelCatalogFilter extends \Engine\Model {
 	public function addFilter($data) {
 		$this->event->trigger('pre_admin_add_filter', $data);
 

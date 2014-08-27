@@ -1,5 +1,5 @@
 <?php
-class ControllerCommonHeader extends Controller {
+class ControllerCommonHeader extends \Engine\Controller {
 	public function index() {
 		$data['title'] = $this->document->getTitle();
 

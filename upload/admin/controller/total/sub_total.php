@@ -1,5 +1,5 @@
 <?php
-class ControllerTotalSubTotal extends Controller {
+class ControllerTotalSubTotal extends \Engine\Controller {
 	private $error = array();
 
 	public function index() {

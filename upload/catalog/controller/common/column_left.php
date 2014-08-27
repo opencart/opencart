@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonColumnLeft extends Controller {
+namespace Controller\Common;
+class ColumnLeft extends \Engine\Controller {
 	public function index() {
 		$this->load->model('design/layout');
 		$this->load->model('catalog/category');

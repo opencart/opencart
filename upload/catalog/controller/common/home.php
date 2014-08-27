@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonHome extends Controller {
+namespace Controller\Common;
+class Home extends Engine\Controller {
 	public function index() {
 		$this->document->setTitle($this->config->get('config_meta_title'));
 		$this->document->setDescription($this->config->get('config_meta_description'));

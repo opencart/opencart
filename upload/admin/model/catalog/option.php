@@ -1,5 +1,5 @@
 <?php
-class ModelCatalogOption extends Model {
+class ModelCatalogOption extends \Engine\Model {
 	public function addOption($data) {
 		$this->event->trigger('pre_admin_add_option', $data);
 

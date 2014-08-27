@@ -1,6 +1,6 @@
 <?php
 
-class ControllerPaymentBluePayHostedForm extends Controller {
+class ControllerPaymentBluePayHostedForm extends \Engine\Controller {
 
 	private $error = array();
 

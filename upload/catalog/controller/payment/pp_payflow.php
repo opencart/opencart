@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentPPPayflow extends Controller {
+class ControllerPaymentPPPayflow extends \Engine\Controller {
 	public function index() {
 		$this->language->load('payment/pp_payflow');
 

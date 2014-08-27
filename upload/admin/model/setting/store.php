@@ -1,5 +1,5 @@
 <?php
-class ModelSettingStore extends Model {
+class ModelSettingStore extends \Engine\Model {
 	public function addStore($data) {
 		$this->event->trigger('pre_admin_add_store', $data);
 

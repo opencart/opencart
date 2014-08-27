@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentAmazonCheckout extends Controller {
+class ControllerPaymentAmazonCheckout extends \Engine\Controller {
 	private $errors = array();
 
 	public function index() {

@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentLiqPay extends Model {
+class ModelPaymentLiqPay extends \Engine\Model {
 	public function getMethod($address, $total) {
 		$this->load->language('payment/liqpay');
 

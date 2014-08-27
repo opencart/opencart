@@ -1,5 +1,5 @@
 <?php
-class ModelCatalogCategory extends Model {
+class ModelCatalogCategory extends \Engine\Model {
 	public function addCategory($data) {
 		$this->event->trigger('pre_admin_add_category', $data);
 

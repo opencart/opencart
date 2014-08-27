@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentAuthorizeNetSim extends Controller {
+class ControllerPaymentAuthorizeNetSim extends \Engine\Controller {
 	private $error = array();
 
 	public function index() {

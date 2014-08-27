@@ -1,5 +1,5 @@
 <?php
-class ControllerExtensionInstaller extends Controller {
+class ControllerExtensionInstaller extends \Engine\Controller {
 	private $error = array();
 
 	public function index() {

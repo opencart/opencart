@@ -1,5 +1,5 @@
 <?php
-class ModelCatalogManufacturer extends Model {
+class ModelCatalogManufacturer extends \Engine\Model {
 	public function addManufacturer($data) {
 		$this->event->trigger('pre_admin_add_manufacturer', $data);
 

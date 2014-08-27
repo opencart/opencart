@@ -1,5 +1,6 @@
 <?php
-class CacheAPC {
+namespace Library\Cache;
+class APC {
 	private $expire;
 	private $cache;
 

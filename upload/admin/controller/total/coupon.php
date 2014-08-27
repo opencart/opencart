@@ -1,5 +1,5 @@
 <?php
-class ControllerTotalCoupon extends Controller {
+class ControllerTotalCoupon extends \Engine\Controller {
 	private $error = array();
 
 	public function index() {

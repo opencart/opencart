@@ -1,5 +1,5 @@
 <?php
-class ModelShippingFedex extends Model {
+class ModelShippingFedex extends \Engine\Model {
 	function getQuote($address) {
 		$this->load->language('shipping/fedex');
 

@@ -1,4 +1,5 @@
 <?php
+namespace Engine;
 abstract class Model {
 	protected $registry;
 

@@ -1,6 +1,6 @@
 <?php
 
-class ModelPaymentSagepayServer extends Model {
+class ModelPaymentSagepayServer extends \Engine\Model {
 
 	public function install() {
 		$this->db->query("

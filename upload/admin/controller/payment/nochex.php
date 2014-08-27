@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentNOCHEX extends Controller {
+class ControllerPaymentNOCHEX extends \Engine\Controller {
 	private $error = array();
 
 	public function index() {

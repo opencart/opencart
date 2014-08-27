@@ -1,5 +1,6 @@
 <?php
-class ControllerAccountOrder extends Controller {
+namespace Controller\Account;
+class Order extends \Engine\Controller {
 	private $error = array();
 
 	public function index() {

@@ -1,5 +1,5 @@
 <?php
-class ControllerLocalisationWeightClass extends Controller {
+class ControllerLocalisationWeightClass extends \Engine\Controller {
 	private $error = array();
 
 	public function index() {

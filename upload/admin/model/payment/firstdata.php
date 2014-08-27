@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentFirstdata extends Model {
+class ModelPaymentFirstdata extends \Engine\Model {
 	public function install() {
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "firstdata_order` (

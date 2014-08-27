@@ -1,5 +1,5 @@
 <?php
-class ModelCatalogReview extends Model {
+class ModelCatalogReview extends \Engine\Model {
 	public function addReview($product_id, $data) {
 		$this->event->trigger('pre_review_add', $data);
 

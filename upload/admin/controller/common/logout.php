@@ -1,5 +1,5 @@
 <?php
-class ControllerCommonLogout extends Controller {
+class ControllerCommonLogout extends \Engine\Controller {
 	public function index() {
 		$this->user->logout();
 

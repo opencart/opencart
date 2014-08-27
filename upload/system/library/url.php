@@ -1,4 +1,5 @@
 <?php
+namespace Library;
 class Url {
 	private $domain;
 	private $rewrite = array();

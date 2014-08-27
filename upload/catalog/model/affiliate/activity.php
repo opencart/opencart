@@ -1,5 +1,5 @@
 <?php
-class ModelAffiliateActivity extends Model {
+class ModelAffiliateActivity extends \Engine\Model {
 	public function addActivity($key, $data) {
 		if (isset($data['affiliate_id'])) {
 			$affiliate_id = $data['affiliate_id'];

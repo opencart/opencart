@@ -1,5 +1,5 @@
 <?php
-class ModelReportDashboard extends Model {
+class ModelReportDashboard extends \Engine\Model {
 	// Sales
 	public function getTotalSales($data = array()) {
 		$sql = "SELECT SUM(total) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0'";

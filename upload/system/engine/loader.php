@@ -1,4 +1,5 @@
 <?php
+namespace Engine;
 final class Loader {
 	private $registry;
 
@@ -7,6 +8,8 @@ final class Loader {
 	}
 
 	public function controller($route) {
+		$class = 'Controller\\' . $model;
+		
 		// function arguments
 		$args = func_get_args();
 
@@ -19,30 +22,12 @@ final class Loader {
 	}
 
 	public function model($model) {
-		$file = DIR_APPLICATION . 'model/' . $model . '.php';
-		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $model);
+		$class = 'Model\\' . $model;
 
-		if (file_exists($file)) {
-			include_once($file);
-
+		if (class_exists($class)) {
 			$this->registry->set('model_' . str_replace('/', '_', $model), new $class($this->registry));
 		} else {
 			trigger_error('Error: Could not load model ' . $file . '!');
-			exit();
-		}
-	}
-
-	public function event($model) {
-		$file = DIR_APPLICATION . 'event/' . $model . '.php';
-
-		$class = 'Event' . preg_replace('/[^a-zA-Z0-9]/', '', $model);
-
-		if (file_exists($file)) {
-			include_once($file);
-
-			return new $class($this->registry);
-		} else {
-			trigger_error('Error: Could not load event ' . $file . '!');
 			exit();
 		}
 	}

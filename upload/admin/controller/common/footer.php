@@ -1,5 +1,5 @@
 <?php
-class ControllerCommonFooter extends Controller {
+class ControllerCommonFooter extends \Engine\Controller {
 	public function index() {
 		$this->load->language('common/footer');
 

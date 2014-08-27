@@ -1,5 +1,6 @@
 <?php
-class ControllerApiCoupon extends Controller {
+namespace Controller\Api;
+class Coupon extends \Engine\Controller {
 	public function index() {
 		$this->load->language('api/coupon');
 

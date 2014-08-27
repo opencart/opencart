@@ -1,5 +1,5 @@
 <?php
-class ModelCatalogDownload extends Model {
+class ModelCatalogDownload extends \Engine\Model {
 	public function addDownload($data) {
 		$this->event->trigger('pre_admin_add_download', $data);
 

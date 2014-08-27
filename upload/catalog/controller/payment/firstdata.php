@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentFirstdata extends Controller {
+class ControllerPaymentFirstdata extends \Engine\Controller {
 	public function index() {
 		$this->load->language('payment/firstdata');
 

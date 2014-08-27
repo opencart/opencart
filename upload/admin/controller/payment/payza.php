@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentPayza extends Controller {
+class ControllerPaymentPayza extends \Engine\Controller {
 	private $error = array();
 
 	public function index() {

@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleFeatured extends Controller {
+class ControllerModuleFeatured extends \Engine\Controller {
 	public function index($setting) {
 		$this->load->language('module/featured');
 

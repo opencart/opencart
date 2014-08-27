@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleAmazonCheckoutLayout extends Controller {
+class ControllerModuleAmazonCheckoutLayout extends \Engine\Controller {
 	public function index($setting) {
 		if ($this->config->get('amazon_checkout_status') == 1 && $setting['status']) {
 			$allowed_ips = $this->config->get('amazon_checkout_allowed_ips');

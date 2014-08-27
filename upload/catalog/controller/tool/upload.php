@@ -1,5 +1,5 @@
 <?php
-class ControllerToolUpload extends Controller {
+class ControllerToolUpload extends \Engine\Controller {
 	public function index() {
 		$this->load->language('tool/upload');
 

@@ -1,5 +1,6 @@
 <?php
-class ControllerAccountRegister extends Controller {
+namespace Controller\Account;
+class Register extends \Engine\Controller {
 	private $error = array();
 
 	public function index() {

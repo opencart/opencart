@@ -1,5 +1,5 @@
 <?php
-class ControllerCatalogCategory extends Controller {
+class ControllerCatalogCategory extends \Engine\Controller {
 	private $error = array();
 
 	public function index() {

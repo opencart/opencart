@@ -1,5 +1,5 @@
 <?php
-class ControllerModulePPLayout extends Controller {
+class ControllerModulePPLayout extends \Engine\Controller {
 	public function index() {
 		$this->language->load('module/pp_layout');
 

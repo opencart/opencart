@@ -1,5 +1,5 @@
 <?php
-class ControllerFooter extends Controller {
+class ControllerFooter extends \Engine\Controller {
 	public function index() {
 		$data['text_project'] = $this->language->get('text_project');
 		$data['text_documentation'] = $this->language->get('text_documentation');

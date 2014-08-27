@@ -1,5 +1,5 @@
 <?php
-class ModelShippingCitylink extends Model {
+class ModelShippingCitylink extends \Engine\Model {
 	function getQuote($address) {
 		$this->load->language('shipping/citylink');
 

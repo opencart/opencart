@@ -1,5 +1,5 @@
 <?php
-class ModelAccountDownload extends Model {
+class ModelAccountDownload extends \Engine\Model {
 	public function getDownload($download_id) {
 		$implode = array();
 

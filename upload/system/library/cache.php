@@ -1,15 +1,12 @@
 <?php
+namespace Library;
 class Cache {
 	private $cache;
 
 	public function __construct($driver, $expire = 3600) {
-		$file = DIR_SYSTEM . '/library/driver/cache/' . $driver . '.php';
-
-		if (file_exists($file)) {
-			require_once($file);
-
-			$class = 'Cache' . $driver;
-
+		$class = 'Library\Cache\\' . $driver;
+		
+		if (class_exists($class)) {
 			$this->cache = new $class($expire);
 		} else {
 			exit('Error: Could not load cache driver ' . $driver . ' cache!');

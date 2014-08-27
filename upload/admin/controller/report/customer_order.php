@@ -1,5 +1,5 @@
 <?php
-class ControllerReportCustomerOrder extends Controller {
+class ControllerReportCustomerOrder extends \Engine\Controller {
 	public function index() {
 		$this->load->language('report/customer_order');
 

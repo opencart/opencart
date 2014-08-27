@@ -1,5 +1,6 @@
 <?php
-class ControllerAffiliateSuccess extends Controller {
+namespace Controller\Affiliate;
+class Success extends \Engine\Controller {
 	public function index() {
 		$this->load->language('affiliate/success');
 

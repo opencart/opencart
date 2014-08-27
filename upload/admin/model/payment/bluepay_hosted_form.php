@@ -1,6 +1,6 @@
 <?php
 
-class ModelPaymentBluePayHostedForm extends Model {
+class ModelPaymentBluePayHostedForm extends \Engine\Model {
 
 	public function install() {
 		$this->db->query("

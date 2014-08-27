@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentPaymate extends Controller {
+class ControllerPaymentPaymate extends \Engine\Controller {
 	public function index() {
 		$data['button_confirm'] = $this->language->get('button_confirm');
 

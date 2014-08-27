@@ -1,5 +1,6 @@
 <?php
-class ControllerCommonMaintenance extends Controller {
+namespace Controller\Common;
+class Maintenance extends \Engine\Controller {
 	public function index() {
 		if ($this->config->get('config_maintenance')) {
 			$route = '';
@@ -28,14 +29,13 @@ class ControllerCommonMaintenance extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$protocol = "HTTP/1.0";
-
-		if ("HTTP/1.1" == $_SERVER["SERVER_PROTOCOL"]) {
-			$protocol = "HTTP/1.1";
+		if ($this->request->server['SERVER_PROTOCOL'] == 'HTTP/1.1') {
+			$this->response->addHeader('HTTP/1.1 503 Service Unavailable');
+		} else {
+			$this->response->addHeader('HTTP/1.0 503 Service Unavailable');
 		}
-
-		$this->response->addHeader("$protocol 503 Service Unavailable");
-		$this->response->addHeader("Retry-After: 3600");
+		
+		$this->response->addHeader('Retry-After: 3600');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 

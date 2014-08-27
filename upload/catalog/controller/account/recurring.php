@@ -68,7 +68,7 @@ class Recurring extends \Engine\Controller {
 					'name'                  => $result['product_name'],
 					'status'                => $result['status'],
 					'date_added'               => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-					'href'                  => $this->url->link('account/recurring/info', 'recurring_id='.$result['order_recurring_id'], 'SSL'),
+					'href'                  => $this->url->link('account/recurring/info', 'recurring_id=' . $result['order_recurring_id'], 'SSL'),
 				);
 			}
 		}
@@ -165,8 +165,8 @@ class Recurring extends \Engine\Controller {
 			$recurring['transactions'] = $this->model_account_recurring->getProfileTransactions($this->request->get['recurring_id']);
 
 			$recurring['date_added'] = date($this->language->get('date_format_short'), strtotime($recurring['date_added']));
-			$recurring['product_link'] = $this->url->link('product/product', 'product_id='.$recurring['product_id'], 'SSL');
-			$recurring['order_link'] = $this->url->link('account/order/info', 'order_id='.$recurring['order_id'], 'SSL');
+			$recurring['product_link'] = $this->url->link('product/product', 'product_id=' . $recurring['product_id'], 'SSL');
+			$recurring['order_link'] = $this->url->link('account/order/info', 'order_id=' . $recurring['order_id'], 'SSL');
 
 			$this->document->setTitle($this->language->get('text_recurring'));
 
@@ -219,7 +219,7 @@ class Recurring extends \Engine\Controller {
 
 			$data['recurring'] = $recurring;
 
-			$data['buttons'] = $this->load->controller('payment/' . $recurring['payment_code'].'/recurringButtons');
+			$data['buttons'] = $this->load->controller('payment/' . $recurring['payment_code'] . '/recurringButtons');
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');

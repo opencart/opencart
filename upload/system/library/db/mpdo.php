@@ -6,7 +6,7 @@ final class mPDO {
 
 	public function __construct($hostname, $username, $password, $database, $port = "3306") {
 		try {
-			$this->pdo = new PDO("mysql:host=".$hostname.";port=".$port.";dbname=".$database, $username, $password, array(PDO::ATTR_PERSISTENT => true));
+			$this->pdo = new PDO("mysql:host=" . $hostname . ";port=" . $port . ";dbname=" . $database, $username, $password, array(PDO::ATTR_PERSISTENT => true));
 		} catch(PDOException $e) {
 			trigger_error('Error: Could not make a database link ( ' . $e->getMessage() . '). Error Code : ' . $e->getCode() . ' <br />');
 		}
@@ -40,12 +40,12 @@ final class mPDO {
 				}
 
 				$result = new stdClass();
-				$result->row = ( isset($data[0]) ? $data[0] : array() );
+				$result->row = (isset($data[0])) ? $data[0] : array();
 				$result->rows = $data;
 				$result->num_rows = $this->statement->rowCount();
 			}
 		} catch(PDOException $e) {
-			trigger_error('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode() . ' <br />' . $sql);
+			trigger_error('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode());
 		}
 	}
 

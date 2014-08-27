@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentWebPaymentSoftware extends \Engine\Controller {
+class ControllerPaymentWebPaymentSoftware extends Controller {
 	public function index() {
 		$this->load->language('payment/web_payment_software');
 
@@ -87,7 +87,7 @@ class ControllerPaymentWebPaymentSoftware extends \Engine\Controller {
 		if ($this->config->get('web_payment_software_mode') == 'test') {
 			$end_index = strpos($response, '</WebPaymentSoftwareResponse>');
 			$debug = substr($response, $end_index + 30);
-			$response = substr($response, 0, $end_index)  .'</WebPaymentSoftwareResponse>';
+			$response = substr($response, 0, $end_index) . '</WebPaymentSoftwareResponse>';
 		}
 
 		//get response xml

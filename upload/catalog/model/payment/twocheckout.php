@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentTwoCheckout extends \Engine\Model {
+class ModelPaymentTwoCheckout extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('payment/twocheckout');
 

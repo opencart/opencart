@@ -1,6 +1,5 @@
 <?php
-namespace Controller\Common;
-class Maintenance extends \Engine\Controller {
+class ControllerCommonMaintenance extends Controller {
 	public function index() {
 		if ($this->config->get('config_maintenance')) {
 			$route = '';
@@ -16,7 +15,7 @@ class Maintenance extends \Engine\Controller {
 			// Show site if logged in as admin
 			$this->load->library('user');
 
-			$this->user = new Library\User($this->registry);
+			$this->user = new User($this->registry);
 
 			if (($route != 'payment') && !$this->user->isLogged()) {
 				return new Action('common/maintenance/info');
@@ -29,13 +28,14 @@ class Maintenance extends \Engine\Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		if ('HTTP/1.1' == $_SERVER['SERVER_PROTOCOL']) {
-			$this->response->addHeader('HTTP/1.1 503 Service Unavailable');
-		} else {
-			$this->response->addHeader('HTTP/1.0 503 Service Unavailable');
+		$protocol = "HTTP/1.0";
+
+		if ("HTTP/1.1" == $_SERVER["SERVER_PROTOCOL"]) {
+			$protocol = "HTTP/1.1";
 		}
-		
-		$this->response->addHeader('Retry-After: 3600');
+
+		$this->response->addHeader("$protocol 503 Service Unavailable");
+		$this->response->addHeader("Retry-After: 3600");
 
 		$data['heading_title'] = $this->language->get('heading_title');
 

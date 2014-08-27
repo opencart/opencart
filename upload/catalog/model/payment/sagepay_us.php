@@ -1,5 +1,5 @@
 <?php
-class ModelPaymentSagePayUS extends \Engine\Model {
+class ModelPaymentSagePayUS extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('payment/sagepay_us');
 

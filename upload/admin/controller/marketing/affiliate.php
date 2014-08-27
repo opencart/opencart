@@ -574,25 +574,25 @@ class ControllerMarketingAffiliate extends \Engine\Controller {
 		} else {
 			$data['error_email'] = '';
 		}
-		
+
 		if (isset($this->error['cheque'])) {
 			$data['error_cheque'] = $this->error['cheque'];
 		} else {
 			$data['error_cheque'] = '';
 		}
-		
+
 		if (isset($this->error['paypal'])) {
 			$data['error_paypal'] = $this->error['paypal'];
 		} else {
 			$data['error_paypal'] = '';
 		}
-		
+
 		if (isset($this->error['bank_account_name'])) {
 			$data['error_bank_account_name'] = $this->error['bank_account_name'];
 		} else {
 			$data['error_bank_account_name'] = '';
 		}
-		
+
 		if (isset($this->error['bank_account_number'])) {
 			$data['error_bank_account_number'] = $this->error['bank_account_number'];
 		} else {
@@ -958,7 +958,7 @@ class ControllerMarketingAffiliate extends \Engine\Controller {
 		if ((utf8_strlen($this->request->post['email']) > 96) || (!preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email']))) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
-		
+
 		if ($this->request->post['payment'] == 'cheque') {
 			if ($this->request->post['cheque'] == '') {
 				$this->error['cheque'] = $this->language->get('error_cheque');
@@ -971,7 +971,7 @@ class ControllerMarketingAffiliate extends \Engine\Controller {
 			if ($this->request->post['bank_account_name'] == '') {
 				$this->error['bank_account_name'] = $this->language->get('error_bank_account_name');
 			}
-			
+
 			if ($this->request->post['bank_account_number'] == '') {
 				$this->error['bank_account_number'] = $this->language->get('error_bank_account_number');
 			}

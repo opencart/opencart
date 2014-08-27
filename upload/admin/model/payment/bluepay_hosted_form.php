@@ -1,7 +1,5 @@
 <?php
-
-class ModelPaymentBluePayHostedForm extends \Engine\Model {
-
+class ModelPaymentBluePayHostedForm extends Model {
 	public function install() {
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "bluepay_hosted_form_order` (
@@ -69,7 +67,7 @@ class ModelPaymentBluePayHostedForm extends \Engine\Model {
 			$tamper_proof_data = $this->config->get('bluepay_hosted_form_secret_key') . $void_data['MERCHANT'] . $void_data["TRANSACTION_TYPE"] . $void_data["RRNO"] . $void_data["MODE"];
 
 			$void_data["TAMPER_PROOF_SEAL"] = md5($tamper_proof_data);
-			
+
 			$this->logger('$void_data:\r\n' . print_r($void_data, 1));
 
 			$response_data = $this->sendCurl('https://secure.bluepay.com/interfaces/bp10emu', $void_data);
@@ -229,5 +227,4 @@ class ModelPaymentBluePayHostedForm extends \Engine\Model {
 			$log->write($message);
 		}
 	}
-
 }

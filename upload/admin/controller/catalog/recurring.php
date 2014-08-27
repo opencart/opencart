@@ -177,9 +177,9 @@ class ControllerCatalogRecurring extends \Engine\Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['insert'] = $this->url->link('catalog/recurring/add', 'token=' . $this->session->data['token']. $url, 'SSL');
-		$data['copy'] = $this->url->link('catalog/recurring/copy', 'token=' . $this->session->data['token']. $url, 'SSL');
-		$data['delete'] = $this->url->link('catalog/recurring/delete', 'token=' . $this->session->data['token']. $url, 'SSL');
+		$data['insert'] = $this->url->link('catalog/recurring/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['copy'] = $this->url->link('catalog/recurring/copy', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['delete'] = $this->url->link('catalog/recurring/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['recurrings'] = array();
 

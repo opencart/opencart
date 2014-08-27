@@ -1,5 +1,5 @@
 <?php
-class ControllerToolBackup extends \Engine\Controller {
+class ControllerToolBackup extends Controller {
 	private $error = array();
 
 	public function index() {

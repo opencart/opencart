@@ -1,6 +1,5 @@
 <?php
-class ControllerPaymentBluePayHostedForm extends \Engine\Controller {
-
+class ControllerPaymentBluePayHostedForm extends Controller {
 	public function index() {
 		$this->load->language('payment/bluepay_hosted_form');
 		$this->load->model('checkout/order');
@@ -61,9 +60,9 @@ class ControllerPaymentBluePayHostedForm extends \Engine\Controller {
 
 	public function callback() {
 		$this->load->language('payment/bluepay_hosted_form');
-		
+
 		$this->load->model('checkout/order');
-		
+
 		$this->load->model('payment/bluepay_hosted_form');
 
 		$response_data = $this->request->get;
@@ -73,15 +72,15 @@ class ControllerPaymentBluePayHostedForm extends \Engine\Controller {
 
 			if ($response_data['Result'] == 'APPROVED') {
 				$bluepay_hosted_form_order_id = $this->model_payment_bluepay_hosted_form->addOrder($order_info, $response_data);
-				
+
 				$this->model_payment_bluepay_hosted_form->addTransaction($bluepay_hosted_form_order_id, $this->config->get('bluepay_hosted_form_transaction'), $order_info);
-				
+
 				$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('bluepay_hosted_form_order_status_id'));
-				
+
 				$this->response->redirect($this->url->link('checkout/success', '', 'SSL'));
 			} else {
 				$this->session->data['error'] = $response_data['Result'] . ' : ' . $response_data['MESSAGE'];
-				
+
 				$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
 			}
 		} else {

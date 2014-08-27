@@ -1,5 +1,5 @@
 <?php
-class ControllerProductCategory extends \Engine\Controller {
+class ControllerProductCategory extends Controller {
 	public function index() {
 		$this->load->language('product/category');
 

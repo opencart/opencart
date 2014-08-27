@@ -59,15 +59,17 @@ function usage() {
 	echo "Usage:\n";
 	echo "======\n";
 	echo "\n";
-	$options = implode(" ", array('--db_hostname', 'localhost',
-								  '--db_username', 'root',
-								  '--db_password', 'pass',
-								  '--db_database', 'opencart',
-								  '--db_driver', 'mysqli',
-								  '--username', 'admin',
-								  '--password', 'admin',
-								  '--email', 'youremail@example.com',
-								  '--http_server', 'http://localhost/opencart'));
+	$options = implode(" ", array(
+		'--db_hostname', 'localhost',
+		'--db_username', 'root',
+		'--db_password', 'pass',
+		'--db_database', 'opencart',
+		'--db_driver', 'mysqli',
+		'--username', 'admin',
+		'--password', 'admin',
+		'--email', 'youremail@example.com',
+		'--http_server', 'http://localhost/opencart'
+	));
 	echo 'php cli_install.php install ' . $options . "\n\n";
 }
 
@@ -113,7 +115,7 @@ function valid($options) {
 		}
 	}
 	if (!preg_match('#/$#', $options['http_server'])) {
-		$options['http_server'] = $options['http_server'].'/';
+		$options['http_server'] = $options['http_server'] . '/';
 	}
 	$valid = count($missing) === 0;
 	return array($valid, $missing);
@@ -192,7 +194,7 @@ function write_config_files($options) {
 
 	$output .= '// DIR' . "\n";
 	$output .= 'define(\'DIR_APPLICATION\', \'' . DIR_OPENCART . 'catalog/\');' . "\n";
-	$output .= 'define(\'DIR_SYSTEM\', \'' . DIR_OPENCART. 'system/\');' . "\n";
+	$output .= 'define(\'DIR_SYSTEM\', \'' . DIR_OPENCART . 'system/\');' . "\n";
 	$output .= 'define(\'DIR_DATABASE\', \'' . DIR_OPENCART . 'system/database/\');' . "\n";
 	$output .= 'define(\'DIR_LANGUAGE\', \'' . DIR_OPENCART . 'catalog/language/\');' . "\n";
 	$output .= 'define(\'DIR_TEMPLATE\', \'' . DIR_OPENCART . 'catalog/view/theme/\');' . "\n";
@@ -200,7 +202,7 @@ function write_config_files($options) {
 	$output .= 'define(\'DIR_IMAGE\', \'' . DIR_OPENCART . 'image/\');' . "\n";
 	$output .= 'define(\'DIR_CACHE\', \'' . DIR_OPENCART . 'system/cache/\');' . "\n";
 	$output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_OPENCART . 'system/download/\');' . "\n";
-	$output .= 'define(\'DIR_MODIFICATION\', \'' . DIR_OPENCART. 'system/modification/\');' . "\n";
+	$output .= 'define(\'DIR_MODIFICATION\', \'' . DIR_OPENCART . 'system/modification/\');' . "\n";
 	$output .= 'define(\'DIR_LOGS\', \'' . DIR_OPENCART . 'system/logs/\');' . "\n\n";
 
 	$output .= '// DB' . "\n";
@@ -240,7 +242,7 @@ function write_config_files($options) {
 	$output .= 'define(\'DIR_CACHE\', \'' . DIR_OPENCART . 'system/cache/\');' . "\n";
 	$output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_OPENCART . 'system/download/\');' . "\n";
 	$output .= 'define(\'DIR_LOGS\', \'' . DIR_OPENCART . 'system/logs/\');' . "\n";
-	$output .= 'define(\'DIR_MODIFICATION\', \'' . DIR_OPENCART. 'system/modification/\');' . "\n";
+	$output .= 'define(\'DIR_MODIFICATION\', \'' . DIR_OPENCART . 'system/modification/\');' . "\n";
 	$output .= 'define(\'DIR_CATALOG\', \'' . DIR_OPENCART . 'catalog/\');' . "\n\n";
 
 	$output .= '// DB' . "\n";

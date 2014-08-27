@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentPPStandard extends \Engine\Controller {
+class ControllerPaymentPPStandard extends Controller {
 	public function index() {
 		$this->language->load('payment/pp_standard');
 
@@ -151,9 +151,9 @@ class ControllerPaymentPPStandard extends \Engine\Controller {
 						break;
 					case 'Completed':
 						$receiver_match = (strtolower($this->request->post['receiver_email']) == strtolower($this->config->get('pp_standard_email')));
-						
+
 						$total_paid_match = ((float)$this->request->post['mc_gross'] == $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false));
-						
+
 						if ($receiver_match && $total_paid_match) {
 							$order_status_id = $this->config->get('pp_standard_completed_status_id');
 						} else {

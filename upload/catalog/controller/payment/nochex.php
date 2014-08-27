@@ -1,7 +1,7 @@
 <?php
 // Nochex via form will work for both simple "Seller" account and "Merchant" account holders
 // Nochex via APC maybe only avaiable to "Merchant" account holders only - site docs a bit vague on this point
-class ControllerPaymentNochex extends \Engine\Controller {
+class ControllerPaymentNochex extends Controller {
 	public function index() {
 		$this->load->language('payment/nochex');
 
@@ -15,7 +15,8 @@ class ControllerPaymentNochex extends \Engine\Controller {
 
 		// Nochex minimum requirements
 		// The merchant ID is usually your Nochex registered email address but can be altered for "Merchant" accounts see below
-		if ($this->config->get('nochex_email') != $this->config->get('nochex_merchant')) { // This MUST be changed on your Nochex account!!!!
+		if ($this->config->get('nochex_email') != $this->config->get('nochex_merchant')) {
+			// This MUST be changed on your Nochex account!!!!
 			$data['merchant_id'] = $this->config->get('nochex_merchant');
 		} else {
 			$data['merchant_id'] = $this->config->get('nochex_email');

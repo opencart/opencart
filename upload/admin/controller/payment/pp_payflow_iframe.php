@@ -57,11 +57,11 @@ class ControllerPaymentPPPayflowIframe extends \Engine\Controller {
 		$data['help_test'] = $this->language->get('help_test');
 		$data['help_partner'] = $this->language->get('help_partner');
 		$data['help_checkout_method'] = $this->language->get('help_checkout_method');
-		
+
 		$data['tab_settings'] = $this->language->get('tab_settings');
 		$data['tab_order_status'] = $this->language->get('tab_order_status');
 		$data['tab_checkout_customisation'] = $this->language->get('tab_checkout_customisation');
-		
+
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 

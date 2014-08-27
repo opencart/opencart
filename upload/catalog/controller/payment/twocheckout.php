@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentTwoCheckout extends \Engine\Controller {
+class ControllerPaymentTwoCheckout extends Controller {
 	public function index() {
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
@@ -105,7 +105,7 @@ class ControllerPaymentTwoCheckout extends \Engine\Controller {
 			echo '<html>' . "\n";
 			echo '<head>' . "\n";
 			echo '  <meta http-equiv="Refresh" content="0; url=' . $this->url->link('checkout/success') . '">' . "\n";
-			echo '</head>'. "\n";
+			echo '</head>' . "\n";
 			echo '<body>' . "\n";
 			echo '  <p>Please follow <a href="' . $this->url->link('checkout/success') . '">link</a>!</p>' . "\n";
 			echo '</body>' . "\n";

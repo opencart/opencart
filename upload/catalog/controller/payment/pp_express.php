@@ -1190,7 +1190,7 @@ class ControllerPaymentPPExpress extends \Engine\Controller {
 								'TRIALAMT'                => $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity']
 							);
 
-							$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'].' '.$this->currency->getCode();
+							$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'] . ' ' . $this->currency->getCode();
 							$trial_text =  sprintf($this->language->get('text_trial'), $trial_amt, $item['recurring']['trial_cycle'], $item['recurring']['trial_frequency'], $item['recurring']['trial_duration']);
 
 							$data = array_merge($data, $data_trial);
@@ -1198,7 +1198,7 @@ class ControllerPaymentPPExpress extends \Engine\Controller {
 							$trial_text = '';
 						}
 
-						$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false)  * $item['quantity'].' '.$this->currency->getCode();
+						$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false)  * $item['quantity'] . ' ' . $this->currency->getCode();
 						$recurring_description = $trial_text . sprintf($this->language->get('text_recurring'), $recurring_amt, $item['recurring']['cycle'], $item['recurring']['frequency']);
 
 						if ($item['recurring']['duration'] > 0) {
@@ -1224,8 +1224,9 @@ class ControllerPaymentPPExpress extends \Engine\Controller {
 
 				$this->response->redirect($this->url->link('checkout/success'));
 
-				if (isset($result['REDIRECTREQUIRED']) && $result['REDIRECTREQUIRED'] == true) { //- handle german redirect here
-					$this->response->redirect('https://www.paypal.com/cgi-bin/webscr?cmd=_complete-express-checkout&token='.$this->session->data['paypal']['token']);
+				if (isset($result['REDIRECTREQUIRED']) && $result['REDIRECTREQUIRED'] == true) {
+					//- handle german redirect here
+					$this->response->redirect('https://www.paypal.com/cgi-bin/webscr?cmd=_complete-express-checkout&token=' . $this->session->data['paypal']['token']);
 				}
 			} else {
 				if ($result['L_ERRORCODE0'] == '10486') {
@@ -1315,9 +1316,9 @@ class ControllerPaymentPPExpress extends \Engine\Controller {
 		$this->session->data['paypal']['token'] = $result['TOKEN'];
 
 		if ($this->config->get('pp_express_test') == 1) {
-			header('Location: https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $result['TOKEN'].'&useraction=commit');
+			header('Location: https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $result['TOKEN'] . '&useraction=commit');
 		} else {
-			header('Location: https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $result['TOKEN'].'&useraction=commit');
+			header('Location: https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $result['TOKEN'] . '&useraction=commit');
 		}
 	}
 
@@ -1453,7 +1454,7 @@ class ControllerPaymentPPExpress extends \Engine\Controller {
 							'TRIALAMT'                => $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity']
 						);
 
-						$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'].' '.$this->currency->getCode();
+						$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'] . ' ' . $this->currency->getCode();
 						$trial_text =  sprintf($this->language->get('text_trial'), $trial_amt, $item['recurring']['trial_cycle'], $item['recurring']['trial_frequency'], $item['recurring']['trial_duration']);
 
 						$data = array_merge($data, $data_trial);
@@ -1461,8 +1462,8 @@ class ControllerPaymentPPExpress extends \Engine\Controller {
 						$trial_text = '';
 					}
 
-					$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false)  * $item['quantity'].' '.$this->currency->getCode();
-					$recurring_description = $trial_text.sprintf($this->language->get('text_recurring'), $recurring_amt, $item['recurring']['cycle'], $item['recurring']['frequency']);
+					$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false)  * $item['quantity'] . ' ' . $this->currency->getCode();
+					$recurring_description = $trial_text . sprintf($this->language->get('text_recurring'), $recurring_amt, $item['recurring']['cycle'], $item['recurring']['frequency']);
 
 					if ($item['recurring']['duration'] > 0) {
 						$recurring_description .= sprintf($this->language->get('text_length'), $item['recurring']['duration']);
@@ -1485,8 +1486,9 @@ class ControllerPaymentPPExpress extends \Engine\Controller {
 				}
 			}
 
-			if (isset($result['REDIRECTREQUIRED']) && $result['REDIRECTREQUIRED'] == true) { //- handle german redirect here
-				$this->response->redirect('https://www.paypal.com/cgi-bin/webscr?cmd=_complete-express-checkout&token='.$this->session->data['paypal']['token']);
+			if (isset($result['REDIRECTREQUIRED']) && $result['REDIRECTREQUIRED'] == true) {
+				//- handle german redirect here
+				$this->response->redirect('https://www.paypal.com/cgi-bin/webscr?cmd=_complete-express-checkout&token=' . $this->session->data['paypal']['token']);
 			} else {
 				$this->response->redirect($this->url->link('checkout/success'));
 			}
@@ -1532,7 +1534,7 @@ class ControllerPaymentPPExpress extends \Engine\Controller {
 
 			$data['heading_title'] = $this->language->get('error_heading_title');
 
-			$data['text_error'] = '<div class="warning">'.$result['L_ERRORCODE0'].' : '.$result['L_LONGMESSAGE0'].'</div>';
+			$data['text_error'] = '<div class="warning">' . $result['L_ERRORCODE0'] . ' : ' . $result['L_LONGMESSAGE0'] . '</div>';
 
 			$data['button_continue'] = $this->language->get('button_continue');
 
@@ -1670,9 +1672,9 @@ class ControllerPaymentPPExpress extends \Engine\Controller {
 						$remaining = $this->currency->format($parent_transaction['amount'] - $captured + $refunded, false, false, false);
 
 						if ($this->config->get('pp_express_debug') == 1) {
-							$this->log->write('Captured: '.$captured);
-							$this->log->write('Refunded: '.$refunded);
-							$this->log->write('Remaining: '.$remaining);
+							$this->log->write('Captured: ' . $captured);
+							$this->log->write('Refunded: ' . $refunded);
+							$this->log->write('Remaining: ' . $remaining);
 						}
 
 						if ($remaining > 0.00) {
@@ -1821,7 +1823,7 @@ class ControllerPaymentPPExpress extends \Engine\Controller {
 					}
 				}
 			}
-		} elseif ( (string)$response == "INVALID" ) {
+		} elseif ((string)$response == "INVALID") {
 			$this->model_payment_pp_express->log(array('IPN was invalid'), 'IPN fail');
 		} else {
 			if ($this->config->get('pp_express_debug') == 1) {
@@ -1968,7 +1970,7 @@ class ControllerPaymentPPExpress extends \Engine\Controller {
 		if ($recurring['status'] == 2 || $recurring['status'] == 3) {
 			$data['buttons'][] = array(
 				'text' => $this->language->get('button_cancel_recurring'),
-				'link' => $this->url->link('payment/pp_express/recurringCancel', 'recurring_id='.$this->request->get['recurring_id'], 'SSL')
+				'link' => $this->url->link('payment/pp_express/recurringCancel', 'recurring_id=' . $this->request->get['recurring_id'], 'SSL')
 			);
 		}
 

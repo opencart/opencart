@@ -1,5 +1,5 @@
 <?php
-class ControllerPaymentPaypoint extends \Engine\Controller {
+class ControllerPaymentPaypoint extends Controller {
 	public function index() {
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
@@ -136,9 +136,9 @@ class ControllerPaymentPaypoint extends \Engine\Controller {
 				if (isset($this->request->get['valid'])) {
 					$message .= 'valid: ' . $this->request->get['valid'] . "\n";
 				}
-				
+
 				$this->load->model('checkout/order');
-				
+
 				$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('paypoint_order_status_id'), $message, false);
 
 				$data['continue'] = $this->url->link('checkout/success');

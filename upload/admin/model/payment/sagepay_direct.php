@@ -1,7 +1,5 @@
 <?php
-
-class ModelPaymentSagepayDirect extends \Engine\Model {
-
+class ModelPaymentSagepayDirect extends Model {
 	public function install() {
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "sagepay_direct_order` (
@@ -264,5 +262,4 @@ class ModelPaymentSagepayDirect extends \Engine\Model {
 			$log->write($message);
 		}
 	}
-
 }

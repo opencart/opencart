@@ -1,5 +1,5 @@
 <?php
-class ControllerSettingSetting extends \Engine\Controller {
+class ControllerSettingSetting extends Controller {
 	private $error = array();
 
 	public function index() {
@@ -813,7 +813,7 @@ class ControllerSettingSetting extends \Engine\Controller {
 		} else {
 			$data['config_process_status'] = array();
 		}
-		
+
 		if (isset($this->request->post['config_complete_status'])) {
 			$data['config_complete_status'] = $this->request->post['config_complete_status'];
 		} elseif ($this->config->get('config_complete_status')) {

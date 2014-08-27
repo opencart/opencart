@@ -19,7 +19,7 @@ class ControllerPaymentRealex extends \Engine\Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
-		$data['notify_url'] = HTTPS_CATALOG.'index.php?route=payment/realex/notify';
+		$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=payment/realex/notify';
 
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -68,14 +68,14 @@ class ControllerPaymentRealex extends \Engine\Controller {
 		$data['entry_status_decline_bank'] = $this->language->get('entry_status_decline_bank');
 		$data['entry_status_void'] = $this->language->get('entry_status_void');
 		$data['entry_status_rebate'] = $this->language->get('entry_status_rebate');
-		
+
 		$data['help_total'] = $this->language->get('help_total');
 		$data['help_card_select'] = $this->language->get('help_card_select');
 		$data['help_debug'] = $this->language->get('help_debug');
 		$data['help_dcc_settle'] = $this->language->get('help_dcc_settle');
 		$data['notification_url'] = $this->language->get('notification_url');
 		$data['help_notification'] = $this->language->get('help_notification');
-		
+
 		$data['tab_account'] = $this->language->get('tab_account');
 		$data['tab_sub_account'] = $this->language->get('tab_sub_account');
 		$data['tab_order_status'] = $this->language->get('tab_order_status');
@@ -355,7 +355,7 @@ class ControllerPaymentRealex extends \Engine\Controller {
 
 			$void_response = $this->model_payment_realex->void($this->request->post['order_id']);
 
-			$this->model_payment_realex->logger('Void result:\r\n'.print_r($void_response, 1));
+			$this->model_payment_realex->logger('Void result:\r\n' . print_r($void_response, 1));
 
 			if (isset($void_response->result) && $void_response->result == '00') {
 				$this->model_payment_realex->addTransaction($realex_order['realex_order_id'], 'void', 0.00);
@@ -399,7 +399,7 @@ class ControllerPaymentRealex extends \Engine\Controller {
 
 			$capture_response = $this->model_payment_realex->capture($this->request->post['order_id'], $this->request->post['amount']);
 
-			$this->model_payment_realex->logger('Settle result:\r\n'.print_r($capture_response, 1));
+			$this->model_payment_realex->logger('Settle result:\r\n' . print_r($capture_response, 1));
 
 			if (isset($capture_response->result) && $capture_response->result == '00') {
 				$this->model_payment_realex->addTransaction($realex_order['realex_order_id'], 'payment', $this->request->post['amount']);
@@ -456,7 +456,7 @@ class ControllerPaymentRealex extends \Engine\Controller {
 
 			$rebate_response = $this->model_payment_realex->rebate($this->request->post['order_id'], $this->request->post['amount']);
 
-			$this->model_payment_realex->logger('Rebate result:\r\n'.print_r($rebate_response, 1));
+			$this->model_payment_realex->logger('Rebate result:\r\n' . print_r($rebate_response, 1));
 
 			if (isset($rebate_response->result) && $rebate_response->result == '00') {
 				$this->model_payment_realex->addTransaction($realex_order['realex_order_id'], 'rebate', $this->request->post['amount']*-1);

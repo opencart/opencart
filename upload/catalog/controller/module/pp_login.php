@@ -60,8 +60,8 @@ class ControllerModulePPLogin extends \Engine\Controller {
 		$this->load->model('account/customer_group');
 
 		if ($this->customer->isLogged()) {
-      		echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/account', '', 'SSL') . '"; window.close();</script>';
-    	}
+			echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/account', '', 'SSL') . '"; window.close();</script>';
+		}
 
 		if (!isset($this->request->get['code'])) {
 			if (isset($this->request->get['error']) && isset($this->request->get['error_description'])) {

@@ -1,12 +1,12 @@
 <?php
-class ModelCheckoutFraud extends \Engine\Model {
+class ModelCheckoutFraud extends Model {
 	public function getFraudScore($data) {
 		$risk_score = 0;
 
 		$fraud_info = $this->getFraud($data['order_id']);
 
 		if ($fraud_info) {
-			 $risk_score = $fraud_info['risk_score'];
+			$risk_score = $fraud_info['risk_score'];
 		} else {
 			/*
 			maxmind api

@@ -38,7 +38,7 @@ class ControllerPaymentPPExpress extends \Engine\Controller {
 		$data['text_clear'] = $this->language->get('text_clear');
 		$data['text_browse'] = $this->language->get('text_browse');
 		$data['text_ipn'] = $this->language->get('text_ipn');
-		$data['text_ipn_url'] = HTTPS_CATALOG.'index.php?route=payment/pp_express/ipn';
+		$data['text_ipn_url'] = HTTPS_CATALOG . 'index.php?route=payment/pp_express/ipn';
 
 		$data['entry_username'] = $this->language->get('entry_username');
 		$data['entry_password'] = $this->language->get('entry_password');
@@ -909,10 +909,10 @@ class ControllerPaymentPPExpress extends \Engine\Controller {
 
 			$call_data = array();
 			$call_data['METHOD'] = 'TransactionSearch';
-			$call_data['STARTDATE'] = gmdate($this->request->post['date_start']."\TH:i:s\Z");
+			$call_data['STARTDATE'] = gmdate($this->request->post['date_start'] . "\TH:i:s\Z");
 
 			if (!empty($this->request->post['date_end'])) {
-				$call_data['ENDDATE'] = gmdate($this->request->post['date_end']."\TH:i:s\Z");
+				$call_data['ENDDATE'] = gmdate($this->request->post['date_end'] . "\TH:i:s\Z");
 			}
 
 			if (!empty($this->request->post['transaction_class'])) {
@@ -1156,7 +1156,7 @@ class ControllerPaymentPPExpress extends \Engine\Controller {
 			$this->session->data['error'] = $this->language->get('error_not_found');
 		}
 
-		$this->response->redirect($this->url->link('sale/recurring/info', 'order_recurring_id=' . $this->request->get['order_recurring_id'].'&token='.$this->request->get['token'], 'SSL'));
+		$this->response->redirect($this->url->link('sale/recurring/info', 'order_recurring_id=' . $this->request->get['order_recurring_id'] . '&token=' . $this->request->get['token'], 'SSL'));
 	}
 
 	public function recurringButtons() {
@@ -1169,7 +1169,7 @@ class ControllerPaymentPPExpress extends \Engine\Controller {
 		if ($recurring['status_id'] == 2 || $recurring['status_id'] == 3) {
 			$data['buttons'][] = array(
 				'text' => $this->language->get('button_cancel_recurring'),
-				'link' => $this->url->link('payment/pp_express/recurringCancel', 'order_recurring_id='.$this->request->get['order_recurring_id'].'&token='.$this->request->get['token'], 'SSL')
+				'link' => $this->url->link('payment/pp_express/recurringCancel', 'order_recurring_id=' . $this->request->get['order_recurring_id'] . '&token=' . $this->request->get['token'], 'SSL')
 			);
 		}
 

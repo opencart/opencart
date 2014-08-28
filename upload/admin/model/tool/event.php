@@ -1,50 +1,12 @@
 <?php
 class ModelToolEvent extends Model {
-	public function addEvent($data) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "event WHERE store_id = '" . (int)$store_id . "' AND event = '" . $this->db->escape($event) . "'");
-
-		return !empty($query->row['handlers']) ? unserialize($query->row['handlers']) : array();
+	public function addEvent($code, $trigger, $action) {
+		$this->db->query("DELETE FROM " . DB_PREFIX . "event WHERE code = '" . $this->db->escape($code) . "'");
+		
+		$this->db->query("INSERT INTO " . DB_PREFIX . "event SET code = '" . $this->db->escape($code) . "', trigger = '" . $this->db->escape($trigger) . "', action = '" . $this->db->escape($action) . "'");
 	}
 
-	public function setHandler($event_id, $handler, $store_id = 0) {
-		if (empty($handler['type']) || empty($handler['code']) || empty($handler['method'])) {
-			return false;
-		}
-
-		$handler = $handler['type'] . '/' . $handler['code'] . '/' . $handler['method'];
-
-		$handlers = $this->getHandlers($event, $store_id);
-		$handlers[] = $handler;
-
-		$this->db->query("DELETE FROM " . DB_PREFIX . "event WHERE store_id = '" . (int)$store_id . "' AND event = '" . $this->db->escape($event) . "'");
-
-		$this->db->query("INSERT INTO " . DB_PREFIX . "event SET store_id = '" . (int)$store_id . "', event = '" . $this->db->escape($event) . "', handlers = '" . $this->db->escape(serialize($handlers)) . "'");
-
-		return true;
-	}
-
-	public function removeHandler($event, $handler, $store_id = 0) {
-		if (empty($handler['type']) || empty($handler['code']) || empty($handler['method'])) {
-			return false;
-		}
-
-		$handler = $handler['type'] . '/' . $handler['code'] . '/' . $handler['method'];
-
-		$handlers = $this->getHandlers($event, $store_id);
-		$key = array_search($handler, $handlers);
-
-		if ($key === false) {
-			return true;
-		}
-
-		unset($handlers[$key]);
-
-		$this->db->query("DELETE FROM " . DB_PREFIX . "event WHERE store_id = '" . (int)$store_id . "' AND event = '" . $this->db->escape($event) . "'");
-
-		if (!empty($handlers)) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "event SET store_id = '" . (int)$store_id . "', event = '" . $this->db->escape($event) . "', handlers = '" . $this->db->escape(serialize($handlers)) . "'");
-		}
-
-		return true;
+	public function deleteEvent($code, $trigger, $action) {
+		$this->db->query("DELETE FROM " . DB_PREFIX . "event WHERE code = '" . $this->db->escape($code) . "'");
 	}
 }

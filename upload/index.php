@@ -230,10 +230,10 @@ $registry->set('encryption', new Encryption($config->get('config_encryption')));
 $event = new Event($registry);
 $registry->set('event', $event);
 
-$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "event WHERE store_id = '0' OR store_id = '" . (int)$this->config->get('config_store_id') . "' ORDER BY store_id ASC");
+$query = $db->query("SELECT * FROM " . DB_PREFIX . "event");
 
 foreach ($query->rows as $result) {
-	$event->register($result['event'], new Action($result['call']));
+	$event->register($result['trigger'], new Action($result['action']));
 }
 
 // Front Controller

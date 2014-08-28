@@ -7,18 +7,6 @@ final class Loader {
 	}
 
 	public function controller($route) {
-		$class = 'Controller\\' . $route;
-
-		if (class_exists($class)) {
-			$controller = new $class($this->registry);
-		
-			if (is_callable(array($controller, $action->getMethod()))) {
-				return call_user_func_array(array($controller, $action->getMethod()), $action->getArgs());
-			}
-		}
-			
-
-		/*		
 		// function arguments
 		$args = func_get_args();
 
@@ -28,13 +16,15 @@ final class Loader {
 		$action = new Action($route, $args);
 
 		return $action->execute($this->registry);
-		*/
 	}
 
 	public function model($model) {
-		$class = 'Model\\' . $model;
+		$file = DIR_APPLICATION . 'model/' . $model . '.php';
+		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $model);
 
-		if (class_exists($class)) {
+		if (file_exists($file)) {
+			include_once($file);
+
 			$this->registry->set('model_' . str_replace('/', '_', $model), new $class($this->registry));
 		} else {
 			trigger_error('Error: Could not load model ' . $file . '!');

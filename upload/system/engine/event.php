@@ -11,18 +11,12 @@ class Event {
 	}
 
 	public function unregister($event, $action) {
-		unset($this->data[$event][$key]);
+		unset($this->data[$event]);
 	}
 
 	public function trigger($event, &$data = array()) {
-		if (!array_key_exists($event, $this->events)) {
-			return true;
-		}
-
 		foreach ($this->data[$event] as $action) {
 			$action->execute($data);
 		}
-
-		return true;
 	}
 }

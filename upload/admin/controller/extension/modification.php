@@ -171,7 +171,8 @@ class ControllerExtensionModification extends Controller {
 
 										// Create an array of all the start postions of all the matched code
 										while (($pos = strpos($modification[$key], $search, $pos + 1)) !== false) {
-											$match[$i++] = $pos;
+											$match[$i] = $pos - $i;
+											++$i;
 										}
 
 										// Offset
@@ -189,7 +190,7 @@ class ControllerExtensionModification extends Controller {
 										// Only replace the occurance of the string that is equal to the between the offset and limit
 										for ($i = $offset; $i < $limit; $i++) {
 											if (isset($match[$i])) {
-												$modification[$key] = substr_replace($modification[$key], $replace, $match[$i], strlen($search));
+												$modification[$key] = substr_replace($modification[$key], $replace, $match[$i] - $i, strlen($search));
 											}
 										}
 

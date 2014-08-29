@@ -15,8 +15,10 @@ class Event {
 	}
 
 	public function trigger($event, &$data = array()) {
-		foreach ($this->data[$event] as $action) {
-			$action->execute($data);
+		if (isset($this->data[$event])) {
+			foreach ($this->data[$event] as $action) {
+				$action->execute($data);
+			}
 		}
 	}
 }

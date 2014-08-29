@@ -1,6 +1,5 @@
 <?php
-namespace Controller\Account;
-class Password extends Controller {
+class ControllerAccountPassword extends Controller {
 	private $error = array();
 
 	public function index() {

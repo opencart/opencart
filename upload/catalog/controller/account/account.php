@@ -1,6 +1,5 @@
 <?php
-namespace Controller\Account;
-class Account extends Controller {
+class ControllerAccountAccount extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/account', '', 'SSL');

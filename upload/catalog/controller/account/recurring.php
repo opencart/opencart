@@ -1,6 +1,5 @@
 <?php
-namespace Controller\Account;
-class Recurring extends Controller {
+class ControllerAccountRecurring extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/order', '', 'SSL');

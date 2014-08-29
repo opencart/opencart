@@ -1,6 +1,5 @@
 <?php
-namespace Controller\Affiliate;
-class Forgotten extends Controller {
+class ControllerAffiliateForgotten extends Controller {
 	private $error = array();
 
 	public function index() {

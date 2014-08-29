@@ -1,6 +1,5 @@
 <?php
-namespace Controller\Account;
-class Transaction extends Controller {
+class ControllerAccountTransaction extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/transaction', '', 'SSL');

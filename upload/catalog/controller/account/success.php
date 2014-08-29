@@ -1,6 +1,5 @@
 <?php
-namespace Controller\Account;
-class Success extends Controller {
+class ControllerAccountSuccess extends Controller {
 	public function index() {
 		$this->load->language('account/success');
 

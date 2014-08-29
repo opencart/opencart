@@ -1,6 +1,5 @@
 <?php
-namespace Controller\Account;
-class Address extends Controller {
+class ControllerAccountAddress extends Controller {
 	private $error = array();
 
 	public function index() {

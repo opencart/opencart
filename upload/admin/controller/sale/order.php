@@ -21,7 +21,7 @@ class ControllerSaleOrder extends Controller {
 		
 		unset($this->session->data['cookie']);
 		
-		if ($this->validateForm()) {
+		if ($this->validate()) {
 			// API
 			$this->load->model('user/api');
 
@@ -125,7 +125,9 @@ class ControllerSaleOrder extends Controller {
 
 		$this->load->model('sale/order');
 
-		if (isset($this->request->get['order_id']) && $this->validateDelete()) {
+		unset($this->session->data['cookie']);
+
+		if (isset($this->request->get['order_id']) && $this->validate()) {
 			// API
 			$this->load->model('user/api');
 
@@ -156,45 +158,49 @@ class ControllerSaleOrder extends Controller {
 					$this->error['warning'] = sprintf($this->language->get('error_curl'), curl_error($curl), curl_errno($curl));
 				} else {
 					$response = json_decode($json, true);
-
-					curl_close($curl);
-				}
-			}
-
-			if (isset($response['cookie'])) {
-				$curl = curl_init();
-
-				// Set SSL if required
-				if (substr(HTTPS_CATALOG, 0, 5) == 'https') {
-					curl_setopt($curl, CURLOPT_PORT, 443);
-				}
-
-				curl_setopt($curl, CURLOPT_HEADER, false);
-				curl_setopt($curl, CURLINFO_HEADER_OUT, true);
-				curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-				curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-				curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
-				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-				curl_setopt($curl, CURLOPT_URL, HTTPS_CATALOG . 'index.php?route=api/order/delete&order_id=' . $this->request->get['order_id']);
-				curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $response['cookie'] . ';');
-
-				$json = curl_exec($curl);
-
-				if (!$json) {
-					$this->error['warning'] = sprintf($this->language->get('error_curl'), curl_error($curl), curl_errno($curl));
-				} else {
-					$response = json_decode($json, true);
-
-					curl_close($curl);
-
-					if (isset($response['error'])) {
-						$this->error['warning'] = $response['error'];
+					
+					if (isset($response['cookie'])) {
+						$this->session->data['cookie'] = $response['cookie'];
 					}
+					
+					curl_close($curl);
 				}
 			}
 		}
 
+		if (isset($this->session->data['cookie'])) {
+			$curl = curl_init();
+
+			// Set SSL if required
+			if (substr(HTTPS_CATALOG, 0, 5) == 'https') {
+				curl_setopt($curl, CURLOPT_PORT, 443);
+			}
+
+			curl_setopt($curl, CURLOPT_HEADER, false);
+			curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+			curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
+			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($curl, CURLOPT_URL, HTTPS_CATALOG . 'index.php?route=api/order/delete&order_id=' . $this->request->get['order_id']);
+			curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->session->data['cookie'] . ';');
+
+			$json = curl_exec($curl);
+
+			if (!$json) {
+				$this->error['warning'] = sprintf($this->language->get('error_curl'), curl_error($curl), curl_errno($curl));
+			} else {
+				$response = json_decode($json, true);
+
+				curl_close($curl);
+
+				if (isset($response['error'])) {
+					$this->error['warning'] = $response['error'];
+				}
+			}
+		}
+			
 		if (isset($response['error'])) {
 			$this->error['warning'] = $response['error'];
 		}
@@ -1402,6 +1408,8 @@ class ControllerSaleOrder extends Controller {
 						$data['error_warning'] = sprintf($this->language->get('error_curl'), curl_error($curl), curl_errno($curl));
 					} else {
 						$response = json_decode($json, true);
+						
+						
 					}
 
 					if (isset($response['cookie'])) {
@@ -1659,7 +1667,7 @@ class ControllerSaleOrder extends Controller {
 		}
 	}
 
-	protected function validateDelete() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'sale/order')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

@@ -6,7 +6,7 @@ class ModelCheckoutFraud extends Model {
 		$fraud_info = $this->getFraud($data['order_id']);
 
 		if ($fraud_info) {
-			 $risk_score = $fraud_info['risk_score'];
+			$risk_score = $fraud_info['risk_score'];
 		} else {
 			/*
 			maxmind api

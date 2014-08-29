@@ -139,7 +139,14 @@ $registry->set('length', new Length($registry));
 $registry->set('user', new User($registry));
 
 // Event
-$registry->set('event', new Event($registry));
+$event = new Event($registry);
+$registry->set('event', $event);
+
+$query = $db->query("SELECT * FROM " . DB_PREFIX . "event");
+
+foreach ($query->rows as $result) {
+	$event->register($result['trigger'], new Action($result['action']));
+}
 
 // Front Controller
 $controller = new Front($registry);

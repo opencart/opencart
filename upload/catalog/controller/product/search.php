@@ -427,7 +427,6 @@ class ControllerProductSearch extends Controller {
 
 			$data['pagination'] = $pagination->render();
 
-
 			$this->document->addLink($this->url->link('product/search', $url . '&page=' . $pagination->page), 'canonical');
 
 			if ($pagination->limit && ceil($pagination->total / $pagination->limit) > $pagination->page) {

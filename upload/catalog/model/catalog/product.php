@@ -256,7 +256,7 @@ class ModelCatalogProduct extends Model {
 				$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
 			}
 
-			$this->cache->set('product.latest.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id'). '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit, $product_data);
+			$this->cache->set('product.latest.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit, $product_data);
 		}
 
 		return $product_data;
@@ -275,7 +275,7 @@ class ModelCatalogProduct extends Model {
 	}
 
 	public function getBestSellerProducts($limit) {
-		$product_data = $this->cache->get('product.bestseller.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id'). '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit);
+		$product_data = $this->cache->get('product.bestseller.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit);
 
 		if (!$product_data) {
 			$product_data = array();
@@ -286,7 +286,7 @@ class ModelCatalogProduct extends Model {
 				$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
 			}
 
-			$this->cache->set('product.bestseller.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id'). '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit, $product_data);
+			$this->cache->set('product.bestseller.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit, $product_data);
 		}
 
 		return $product_data;

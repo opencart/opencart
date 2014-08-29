@@ -227,7 +227,14 @@ $registry->set('cart', new Cart($registry));
 $registry->set('encryption', new Encryption($config->get('config_encryption')));
 
 // Event
-$registry->set('event', new Event($registry));
+$event = new Event($registry);
+$registry->set('event', $event);
+
+$query = $db->query("SELECT * FROM " . DB_PREFIX . "event");
+
+foreach ($query->rows as $result) {
+	$event->register($result['trigger'], new Action($result['action']));
+}
 
 // Front Controller
 $controller = new Front($registry);
@@ -236,7 +243,7 @@ $controller = new Front($registry);
 $controller->addPreAction(new Action('common/maintenance'));
 
 // SEO URL's
-$controller->addPreAction(new Action('common/seo_url'));
+$controller->addPreAction(new Action('common/seourl'));
 
 // Router
 if (isset($request->get['route'])) {

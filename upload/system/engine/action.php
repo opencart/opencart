@@ -1,15 +1,16 @@
 <?php
 final class Action {
+	private $file;
 	private $class;
 	private $method;
 	private $args = array();
 
 	public function __construct($route, $args = array()) {
 		$path = '';
-
+		
 		// Break apart the route
 		$parts = explode('/', str_replace('../', '', (string)$route));
-
+		
 		foreach ($parts as $part) {
 			$path .= $part;
 
@@ -21,10 +22,10 @@ final class Action {
 				continue;
 			}
 
-			$controller_file = DIR_APPLICATION . 'controller/' . str_replace(array('../', '..\\', '..'), '', $path) . '.php';
+			$file = DIR_APPLICATION . 'controller/' . str_replace(array('../', '..\\', '..'), '', $path) . '.php';
 
-			if (is_file($controller_file)) {
-				$this->file = $controller_file;
+			if (is_file($file)) {
+				$this->file = $file;
 
 				$this->class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', $path);
 
@@ -33,7 +34,7 @@ final class Action {
 				break;
 			}
 		}
-
+		
 		if ($args) {
 			$this->args = $args;
 		}
@@ -47,12 +48,12 @@ final class Action {
 		}
 	}
 
-	public function execute($registry) {
+	public function execute($registry, $args = array()) {
 		// Stop any magical methods being called
 		if (substr($this->method, 0, 2) == '__') {
 			return false;
 		}
-
+		
 		if (is_file($this->file)) {
 			include_once($this->file);
 
@@ -67,6 +68,6 @@ final class Action {
 			}
 		} else {
 			return false;
-		}
+		}		
 	}
 }

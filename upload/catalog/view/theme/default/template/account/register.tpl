@@ -530,12 +530,31 @@
 </div> 
 <script type="text/javascript"><!--
 // Sort the custom fields
-$('.form-group[data-sort]').each(function(index, element) {
-	// Compensate for the missing first 2 fields
-	if ($(this).parent().find('.form-group').length >= $(this).attr('data-sort')) {
-		$(this).parent().find('.form-group').eq($(this).attr('data-sort')).before(this);		
-	} else {
-		$(this).parent().find('.form-group:last').after(this);
+$('#account .form-group[data-sort]').detach().each(function() {
+	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#account .form-group').length) {
+		$('#account .form-group').eq($(this).attr('data-sort')).before(this);
+	} 
+	
+	if ($(this).attr('data-sort') > $('#account .form-group').length) {
+		$('#account .form-group:last').after(this);
+	}
+		
+	if ($(this).attr('data-sort') < -$('#account .form-group').length) {
+		$('#account .form-group:first').before(this);
+	}
+});
+
+$('#address .form-group[data-sort]').detach().each(function() {
+	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#address .form-group').length) {
+		$('#address .form-group').eq($(this).attr('data-sort')).before(this);
+	} 
+	
+	if ($(this).attr('data-sort') > $('#address .form-group').length) {
+		$('#address .form-group:last').after(this);
+	}
+		
+	if ($(this).attr('data-sort') < -$('#address .form-group').length) {
+		$('#address .form-group:first').before(this);
 	}
 });
 

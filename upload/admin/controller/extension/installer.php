@@ -1,5 +1,7 @@
 <?php
-class ControllerExtensionInstaller extends Controller {
+namespace Controller\Extension;
+use Engine\Extension;
+class Installer extends Controller {
 	private $error = array();
 
 	public function index() {

@@ -19,7 +19,7 @@ h1, h2, h3, h4, h5, h6, p {
 	color: #666666;
 }
 a, a:hover {
-	color: #1e91cf;
+	color: #3EC3D5;
 }
 .form-control {
 	font-size: 12px;
@@ -43,7 +43,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #header {
 	min-height: 0px;
 	background: #FFFFFF;
-	border-bottom: 1px solid #E2E2E2;
+	border-bottom: 1px solid #E1E1E1;
 	margin-bottom: 0;
 	box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.03);
 	margin: 0;
@@ -81,10 +81,11 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	padding: 3px 15px;
 	line-height: 38px;
 	cursor: pointer;
-	color: #6D6D6D;
+	color: #999999;
 }
 #header .nav > li.open > a, #header .nav > li.active > a, #header .nav > li > a:hover {
-	background: #EEEEEE;
+	color: #3EC3D5;
+	background: none;
 }
 #header .nav > li > a > i {
 	/*font-size: 18px;*/
@@ -102,30 +103,31 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	float: left;
 	display: inline-block;
 	cursor: pointer;
-	color: #6D6D6D;
+	color: #999999;
 }
 #button-menu:hover {
-	background: #EEEEEE;
+	color: #3EC3D5;
+	background: none;
 }
 #profile {
 	padding: 10px 15px 10px 15px;
 	overflow: auto;
-	color: #666;
-	border-bottom: 1px solid #353535;
+	border-bottom: 1px solid #272A33;
 }
 #profile div {
 	float: left;
+	color: #999;
 }
 #profile div + div {
 	margin-left: 15px;
 }
 #profile img {
-	border-radius: 50%;
+	border-radius: 7px;
 }
 #profile h4 {
 	margin-top: 10px;
 	font-family: 'Open Sans', sans-serif;
-	font-size: 16px;
+	font-size: 15px;
 	font-weight: 400;
 	color: #FFF;
 	margin-bottom: 0;
@@ -133,7 +135,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #column-left {
 	width: 0px;
 	height: 100%;
-	background-color: #2A2A2A;
+	background-color: #313540;
 	position: absolute;
 	top: 0px;
 	padding-top: 50px;
@@ -169,8 +171,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	list-style: none;
 }
 #menu li a {
-	color: #737373;
-	border-bottom: 1px dotted #353535;
+	color: #FFFFFF;
 	text-decoration: none;
 	display: block;
 	padding: 10px 10px 9px 10px;
@@ -181,10 +182,11 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	margin-right: 5px;
 }
 #menu li ul {
-	background-color: #252525;
+	background-color: #272A33;
 }
 #menu > li > a {
 	padding-left: 15px;
+	border-bottom: 1px solid #272A33;	
 }
 #menu li.active > a {
 	color: #FFFFFF;

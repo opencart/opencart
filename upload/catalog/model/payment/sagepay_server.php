@@ -1,7 +1,5 @@
 <?php
-
 class ModelPaymentSagePayServer extends Model {
-
 	public function getMethod($address, $total) {
 		$this->load->language('payment/sagepay_server');
 
@@ -179,7 +177,6 @@ class ModelPaymentSagePayServer extends Model {
 	}
 
 	private function setPaymentData($order_info, $sagepay_order_info, $price, $order_recurring_id, $recurring_name, $i = null) {
-
 		if ($this->config->get('sagepay_server_test') == 'live') {
 			$url = 'https://live.sagepay.com/gateway/service/repeat.vsp';
 			$payment_data['VPSProtocol'] = '3.00';
@@ -201,8 +198,6 @@ class ModelPaymentSagePayServer extends Model {
 		$payment_data['RelatedVendorTxCode'] = $sagepay_order_info['VendorTxCode'];
 		$payment_data['RelatedSecurityKey'] = $sagepay_order_info['SecurityKey'];
 		$payment_data['RelatedTxAuthNo'] = $sagepay_order_info['TxAuthNo'];
-
-
 
 		if (!empty($order_info['shipping_lastname'])) {
 			$payment_data['DeliverySurname'] = substr($order_info['shipping_lastname'], 0, 20);
@@ -429,5 +424,4 @@ class ModelPaymentSagePayServer extends Model {
 		 */
 		return true;
 	}
-
 }

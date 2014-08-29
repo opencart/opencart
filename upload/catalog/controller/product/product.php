@@ -62,7 +62,7 @@ class ControllerProductProduct extends Controller {
 
 				$data['breadcrumbs'][] = array(
 					'text' => $category_info['name'],
-					'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'].$url)
+					'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url)
 				);
 			}
 		}
@@ -536,6 +536,8 @@ class ControllerProductProduct extends Controller {
 
 			$data['continue'] = $this->url->link('common/home');
 
+			$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
+
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');
@@ -573,7 +575,7 @@ class ControllerProductProduct extends Controller {
 		foreach ($results as $result) {
 			$data['reviews'][] = array(
 				'author'     => $result['author'],
-				'text'       => $result['text'],
+				'text'       => nl2br($result['text']),
 				'rating'     => (int)$result['rating'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
 			);
@@ -677,7 +679,7 @@ class ControllerProductProduct extends Controller {
 			if (empty($this->session->data['captcha']) || ($this->session->data['captcha'] != $this->request->post['captcha'])) {
 				$json['error'] = $this->language->get('error_captcha');
 			}
-			
+
 			unset($this->session->data['captcha']);
 
 			if (!isset($json['error'])) {

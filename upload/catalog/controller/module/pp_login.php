@@ -60,8 +60,8 @@ class ControllerModulePPLogin extends Controller {
 		$this->load->model('account/customer_group');
 
 		if ($this->customer->isLogged()) {
-      		echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/account', '', 'SSL') . '"; window.close();</script>';
-    	}
+			echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/account', '', 'SSL') . '"; window.close();</script>';
+		}
 
 		if (!isset($this->request->get['code'])) {
 			if (isset($this->request->get['error']) && isset($this->request->get['error_description'])) {
@@ -206,6 +206,12 @@ class ControllerModulePPLogin extends Controller {
 		}
 	}
 
+	public function logout() {
+		if (isset($this->session->data['pp_login'])) {
+			unset($this->session->data['pp_login']);
+		}
+	}
+	
 	protected function validate($email) {
 		if (!$this->customer->login($email, '', true)) {
 			$this->error['warning'] = $this->language->get('error_login');

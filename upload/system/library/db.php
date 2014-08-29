@@ -3,13 +3,9 @@ class DB {
 	private $db;
 
 	public function __construct($driver, $hostname, $username, $password, $database) {
-		$file = DIR_SYSTEM . '/library/driver/database/' . $driver . '.php';
+		$class = 'DB\\' . $driver;
 
-		if (file_exists($file)) {
-			require_once($file);
-
-			$class = 'DB' . $driver;
-
+		if (class_exists($class)) {
 			$this->db = new $class($hostname, $username, $password, $database);
 		} else {
 			exit('Error: Could not load database driver ' . $driver . '!');

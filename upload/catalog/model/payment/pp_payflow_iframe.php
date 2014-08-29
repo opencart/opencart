@@ -50,7 +50,7 @@ class ModelPaymentPPPayflowIframe extends Model {
 			UPDATE `" . DB_PREFIX . "paypal_payflow_iframe_order`
 			SET `transaction_reference` = '" . $this->db->escape($data['transaction_reference']) . "',
 				`transaction_type` = '" . $this->db->escape($data['transaction_type']) . "',
-				`complete` = " . (int)$data['complete'] ."
+				`complete` = " . (int)$data['complete'] . "
 			WHERE `secure_token_id` = '" . $this->db->escape($data['secure_token_id']) . "'
 		");
 	}

@@ -22,7 +22,7 @@ class ControllerPaymentFirstdata extends Controller {
 		$data['currency'] = $this->model_payment_firstdata->mapCurrency($order_info['currency_code']);
 		$data['merchant_id'] = $this->config->get('firstdata_merchant_id');
 		$data['timestamp'] = date('Y:m:d-H:i:s');
-		$data['order_id'] = 'CON-' . $this->session->data['order_id'] . 'T' . $data['timestamp'].mt_rand(1, 999);
+		$data['order_id'] = 'CON-' . $this->session->data['order_id'] . 'T' . $data['timestamp'] . mt_rand(1, 999);
 		$data['url_success'] = $this->url->link('checkout/success', '', 'SSL');
 		$data['url_fail'] = $this->url->link('payment/firstdata/fail', '', 'SSL');
 		$data['url_notify'] = $this->url->link('payment/firstdata/notify', '', 'SSL');
@@ -39,11 +39,11 @@ class ControllerPaymentFirstdata extends Controller {
 			$data['txntype'] = 'preauth';
 		}
 
-		$tmp = $data['merchant_id'].$data['timestamp'].$data['amount'].$data['currency'].$this->config->get('firstdata_secret');
+		$tmp = $data['merchant_id'] . $data['timestamp'] . $data['amount'] . $data['currency'] . $this->config->get('firstdata_secret');
 		$ascii = bin2hex($tmp);
 		$data['hash'] = sha1($ascii);
 
-		$data['version'] = 'OPENCART-C-'.VERSION;
+		$data['version'] = 'OPENCART-C-' . VERSION;
 
 		$data['bcompany'] = $order_info['payment_company'];
 		$data['bname'] = $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
@@ -75,7 +75,7 @@ class ControllerPaymentFirstdata extends Controller {
 		if ($this->config->get('firstdata_card_storage') == 1 && $this->customer->isLogged()) {
 			$data['card_storage'] = 1;
 			$data['stored_cards'] = $this->model_payment_firstdata->getStoredCards();
-			$data['new_hosted_id'] = sha1($this->customer->getId()  . '-' . date("Y-m-d-H-i-s").rand(10, 500));
+			$data['new_hosted_id'] = sha1($this->customer->getId()  . '-' . date("Y-m-d-H-i-s") . rand(10, 500));
 		} else {
 			$data['card_storage'] = 0;
 			$data['stored_cards'] = array();

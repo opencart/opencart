@@ -32,21 +32,6 @@ final class Loader {
 		}
 	}
 
-	public function event($model) {
-		$file = DIR_APPLICATION . 'event/' . $model . '.php';
-
-		$class = 'Event' . preg_replace('/[^a-zA-Z0-9]/', '', $model);
-
-		if (file_exists($file)) {
-			include_once($file);
-
-			return new $class($this->registry);
-		} else {
-			trigger_error('Error: Could not load event ' . $file . '!');
-			exit();
-		}
-	}
-
 	public function view($template, $data = array()) {
 		$file = DIR_TEMPLATE . $template;
 

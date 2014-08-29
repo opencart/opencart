@@ -136,9 +136,9 @@ class ControllerPaymentPaypoint extends Controller {
 				if (isset($this->request->get['valid'])) {
 					$message .= 'valid: ' . $this->request->get['valid'] . "\n";
 				}
-				
+
 				$this->load->model('checkout/order');
-				
+
 				$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('paypoint_order_status_id'), $message, false);
 
 				$data['continue'] = $this->url->link('checkout/success');

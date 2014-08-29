@@ -1,5 +1,6 @@
 <?php
-class ControllerAffiliateRegister extends Controller {
+namespace Controller\Affiliate;
+class Register extends Controller {
 	private $error = array();
 
 	public function index() {

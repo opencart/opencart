@@ -18,9 +18,18 @@ class ModelCheckoutOrder extends Model {
 			}
 		}
 
+		// Gift Voucher
+		$this->load->model('checkout/voucher');	
+		
 		// Vouchers
 		foreach ($data['vouchers'] as $voucher) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "order_voucher SET order_id = '" . (int)$order_id . "', description = '" . $this->db->escape($voucher['description']) . "', code = '" . $this->db->escape($voucher['code']) . "', from_name = '" . $this->db->escape($voucher['from_name']) . "', from_email = '" . $this->db->escape($voucher['from_email']) . "', to_name = '" . $this->db->escape($voucher['to_name']) . "', to_email = '" . $this->db->escape($voucher['to_email']) . "', voucher_theme_id = '" . (int)$voucher['voucher_theme_id'] . "', message = '" . $this->db->escape($voucher['message']) . "', amount = '" . (float)$voucher['amount'] . "'");
+			
+			$order_voucher_id = $this->db->getLastId();
+		
+			$voucher_id = $this->model_checkout_voucher->addVoucher($order_id, $voucher);
+
+			$this->db->query("UPDATE " . DB_PREFIX . "order_voucher SET voucher_id = '" . (int)$voucher_id . "' WHERE order_voucher_id = '" . (int)$order_voucher_id . "'");
 		}
 
 		// Totals
@@ -60,6 +69,20 @@ class ModelCheckoutOrder extends Model {
 
 		foreach ($data['vouchers'] as $voucher) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "order_voucher SET order_id = '" . (int)$order_id . "', description = '" . $this->db->escape($voucher['description']) . "', code = '" . $this->db->escape($voucher['code']) . "', from_name = '" . $this->db->escape($voucher['from_name']) . "', from_email = '" . $this->db->escape($voucher['from_email']) . "', to_name = '" . $this->db->escape($voucher['to_name']) . "', to_email = '" . $this->db->escape($voucher['to_email']) . "', voucher_theme_id = '" . (int)$voucher['voucher_theme_id'] . "', message = '" . $this->db->escape($voucher['message']) . "', amount = '" . (float)$voucher['amount'] . "'");
+		
+			// Gift Voucher
+			$this->load->model('checkout/voucher');	
+			
+			// Vouchers
+			foreach ($data['vouchers'] as $voucher) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "order_voucher SET order_id = '" . (int)$order_id . "', description = '" . $this->db->escape($voucher['description']) . "', code = '" . $this->db->escape($voucher['code']) . "', from_name = '" . $this->db->escape($voucher['from_name']) . "', from_email = '" . $this->db->escape($voucher['from_email']) . "', to_name = '" . $this->db->escape($voucher['to_name']) . "', to_email = '" . $this->db->escape($voucher['to_email']) . "', voucher_theme_id = '" . (int)$voucher['voucher_theme_id'] . "', message = '" . $this->db->escape($voucher['message']) . "', amount = '" . (float)$voucher['amount'] . "'");
+				
+				$order_voucher_id = $this->db->getLastId();
+			
+				$voucher_id = $this->model_checkout_voucher->addVoucher($order_id, $voucher);
+	
+				$this->db->query("UPDATE " . DB_PREFIX . "order_voucher SET voucher_id = '" . (int)$voucher_id . "' WHERE order_voucher_id = '" . (int)$order_voucher_id . "'");
+			}		
 		}
 
 		// Totals
@@ -85,9 +108,11 @@ class ModelCheckoutOrder extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_history` WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_fraud` WHERE order_id = '" . (int)$order_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "affiliate_transaction` WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE `or`, ort FROM `" . DB_PREFIX . "order_recurring` `or`, `" . DB_PREFIX . "order_recurring_transaction` `ort` WHERE order_id = '" . (int)$order_id . "' AND ort.order_recurring_id = `or`.order_recurring_id");
-
+		
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "affiliate_transaction` WHERE order_id = '" . (int)$order_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher` WHERE order_id = '" . (int)$order_id . "'");
+		
 		$this->event->trigger('order_delete', $order_id);
 	}
 
@@ -345,37 +370,8 @@ class ModelCheckoutOrder extends Model {
 			}
 
 			$this->cache->delete('product');
-
-			/*
-			
-			If order status is already processing or complete and new order status is not process or complete send update text email
-			If order status is already processing or complete and new order status 0 then dont send any mail
-			*/
-			
-			// If order status in the complete range create any vouchers that where in the order need to be made available.
-			if (in_array($order_info['order_status_id'], $this->config->get('config_complete_status'))) {
-				// Gift Voucher
-				$this->load->model('checkout/voucher');
-
-				$order_voucher_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_voucher WHERE order_id = '" . (int)$order_id . "'");
-
-				foreach ($order_voucher_query->rows as $order_voucher) {
-					$voucher_id = $this->model_checkout_voucher->addVoucher($order_id, $order_voucher);
-
-					$this->db->query("UPDATE " . DB_PREFIX . "order_voucher SET voucher_id = '" . (int)$voucher_id . "' WHERE order_voucher_id = '" . (int)$order_voucher['order_voucher_id'] . "'");
-				}
-
-				// If order status hits complete
-				if ($this->config->get('config_complete_status_id') == $order_status_id) {
-					// Send out any gift voucher mails
-					$this->model_checkout_voucher->confirm($order_id);
-				}
-
-				// Delete any vouchers created by this order
-				$this->db->query("UPDATE `" . DB_PREFIX . "voucher` SET order_id = '0' WHERE order_id = '" . (int)$order_id . "'");
-			}
-
-			// If order status is 0 then becomes proccessing or complete send main html email
+	
+			// If order status is 0 then becomes greater than 0 send main html email
 			if (!$order_info['order_status_id'] && $order_status_id) {
 				// Check for any downloadable products
 				$download_status = false;
@@ -808,6 +804,13 @@ class ModelCheckoutOrder extends Model {
 				$mail->setSubject($subject);
 				$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
 				$mail->send();				
+			}
+			
+						
+			// If order status in the complete range create any vouchers that where in the order need to be made available.
+			if (in_array($order_info['order_status_id'], $this->config->get('config_complete_status'))) {
+				// Send out any gift voucher mails
+				$this->model_checkout_voucher->confirm($order_id);
 			}
 		}
 

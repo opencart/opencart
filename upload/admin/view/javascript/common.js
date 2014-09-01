@@ -37,14 +37,6 @@ $(document).ready(function() {
 		}
 	});
 	
-	// Tooltips on hover
-	$('[data-toggle=\'tooltip\']').tooltip();
-
-	// Makes tooltips work on ajax generated content
-	$(document).ajaxStop(function() {
-		$('[data-toggle=\'tooltip\']').tooltip();
-	});
-	
 	// Set last page opened on the menu
 	$('#menu a[href]').on('click', function() {
 		sessionStorage.setItem('menu', $(this).attr('href'));
@@ -107,30 +99,15 @@ $(document).ready(function() {
 			$(this).parent('li').siblings().removeClass('open').children('ul.in').collapse('hide');
 		}
 	});
-});
-
-// Image Manager
-$(document).delegate('.img-edit', 'click', function(e) {
-	e.preventDefault();
-
-	var element = this;
-
-	$(element).popover({
-		html: true,
-		placement: 'right',
-		trigger: 'click',
-		content: function() {
-			return '<button type="button" id="button-image" class="btn btn-primary"><i class="fa fa-pencil"></i></button> <button type="button" id="button-clear" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>';
-		}
-	});
-
-	$(element).popover('show');
-
-	$('#button-image').on('click', function() {
+	
+	// Override summernotes image manager
+	$('button[data-event=\'showImageDialog\']').attr('data-toggle', 'image').removeAttr('data-event');
+	
+	$(document).delegate('button[data-toggle=\'image\']', 'click', function() {
 		$('#modal-image').remove();
-
+		
 		$.ajax({
-			url: 'index.php?route=common/filemanager&token=' + getURLVar('token') + '&target=' + $(element).parent().find('input').attr('id') + '&thumb=' + $(element).attr('id'),
+			url: 'index.php?route=common/filemanager&token=' + getURLVar('token'),
 			dataType: 'html',
 			beforeSend: function() {
 				$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
@@ -142,20 +119,68 @@ $(document).delegate('.img-edit', 'click', function(e) {
 			},
 			success: function(html) {
 				$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
-
+	
 				$('#modal-image').modal('show');
 			}
+		});	
+	});
+
+	// Image Manager
+	$(document).delegate('a[data-toggle=\'image\']', 'click', function(e) {
+		e.preventDefault();
+	
+		var element = this;
+	
+		$(element).popover({
+			html: true,
+			placement: 'right',
+			trigger: 'click',
+			content: function() {
+				return '<button type="button" id="button-image" class="btn btn-primary"><i class="fa fa-pencil"></i></button> <button type="button" id="button-clear" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>';
+			}
 		});
-
-		$(element).popover('hide');
+	
+		$(element).popover('show');
+	
+		$('#button-image').on('click', function() {
+			$('#modal-image').remove();
+	
+			$.ajax({
+				url: 'index.php?route=common/filemanager&token=' + getURLVar('token') + '&target=' + $(element).parent().find('input').attr('id') + '&thumb=' + $(element).attr('id'),
+				dataType: 'html',
+				beforeSend: function() {
+					$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+					$('#button-image').prop('disabled', true);
+				},
+				complete: function() {
+					$('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
+					$('#button-image').prop('disabled', false);
+				},
+				success: function(html) {
+					$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+	
+					$('#modal-image').modal('show');
+				}
+			});
+	
+			$(element).popover('hide');
+		});
+	
+		$('#button-clear').on('click', function() {
+			$(element).html('<i class="fa fa-camera fa-5x"></i>');
+			$(element).parent().find('input').attr('value', '');
+	
+			$(element).popover('hide');
+		});
 	});
+	
+	// tooltips on hover
+	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 
-	$('#button-clear').on('click', function() {
-		$(element).html('<i class="fa fa-camera fa-5x"></i>');
-		$(element).parent().find('input').attr('value', '');
-
-		$(element).popover('hide');
-	});
+	// Makes tooltips work on ajax generated content
+	$(document).ajaxStop(function() {
+		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
+	});	
 });
 
 // Autocomplete */

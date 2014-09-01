@@ -122,9 +122,9 @@
               <?php } ?>
               <?php } ?></td>
             <td class="text-left"><?php if ($option_value['thumb']) { ?>
-              <a href="" id="thumb-image<?php echo $option_value_row; ?>" class="img-thumbnail img-edit"><img src="<?php echo $option_value['thumb']; ?>" alt="" title="" /></a>
+              <a href="" id="thumb-image<?php echo $option_value_row; ?>" data-toggle="image" class="img-thumbnail"><img src="<?php echo $option_value['thumb']; ?>" alt="" title="" /></a>
               <?php } else { ?>
-              <a href="" id="thumb-image<?php echo $option_value_row; ?>" class="img-thumbnail img-edit"><i class="fa fa-camera fa-5x"></i></a>
+              <a href="" id="thumb-image<?php echo $option_value_row; ?>" data-toggle="image" class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></a>
               <?php } ?>
               <input type="hidden" name="option_value[<?php echo $option_value_row; ?>][image]" value="<?php echo $option_value['image']; ?>" id="input-image<?php echo $option_value_row; ?>" /></td>
             <td class="text-right"><input type="text" name="option_value[<?php echo $option_value_row; ?>][sort_order]" value="<?php echo $option_value['sort_order']; ?>" class="form-control" /></td>
@@ -165,7 +165,7 @@ function addOptionValue() {
     html += '    </div>';
 	<?php } ?>
 	html += '  </td>';
-    html += '  <td class="text-left"><a href="" id="thumb-image' + option_value_row + '" class="img-thumbnail img-edit"><i class="fa fa-camera fa-5x"></i></a><input type="hidden" name="option_value[' + option_value_row + '][image]" value="" id="input-image' + option_value_row + '" /></td>';
+    html += '  <td class="text-left"><a href="" id="thumb-image' + option_value_row + '" data-toggle="image" class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></a><input type="hidden" name="option_value[' + option_value_row + '][image]" value="" id="input-image' + option_value_row + '" /></td>';
 	html += '  <td class="text-right"><input type="text" name="option_value[' + option_value_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#option-value-row' + option_value_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';	

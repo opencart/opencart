@@ -63,10 +63,6 @@ class ControllerCommonFileManager extends Controller {
 					$url .= '&thumb=' . $this->request->get['thumb'];
 				}
 
-				if (isset($this->request->get['ckeditor'])) {
-					$url .= '&ckeditor=' . $this->request->get['ckeditor'];
-				}
-
 				$data['images'][] = array(
 					'thumb' => '',
 					'name'  => implode(' ', $name),
@@ -135,12 +131,6 @@ class ControllerCommonFileManager extends Controller {
 			$data['thumb'] = '';
 		}
 
-		if (isset($this->request->get['ckeditor'])) {
-			$data['ckeditor'] = $this->request->get['ckeditor'];
-		} else {
-			$data['ckeditor'] = '';
-		}
-
 		// Parent
 		$url = '';
 
@@ -160,10 +150,6 @@ class ControllerCommonFileManager extends Controller {
 			$url .= '&thumb=' . $this->request->get['thumb'];
 		}
 
-		if (isset($this->request->get['ckeditor'])) {
-			$url .= '&ckeditor=' . $this->request->get['ckeditor'];
-		}
-
 		$data['parent'] = $this->url->link('common/filemanager', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		// Refresh
@@ -179,10 +165,6 @@ class ControllerCommonFileManager extends Controller {
 
 		if (isset($this->request->get['thumb'])) {
 			$url .= '&thumb=' . $this->request->get['thumb'];
-		}
-
-		if (isset($this->request->get['ckeditor'])) {
-			$url .= '&ckeditor=' . $this->request->get['ckeditor'];
 		}
 
 		$data['refresh'] = $this->url->link('common/filemanager', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -203,10 +185,6 @@ class ControllerCommonFileManager extends Controller {
 
 		if (isset($this->request->get['thumb'])) {
 			$url .= '&thumb=' . $this->request->get['thumb'];
-		}
-
-		if (isset($this->request->get['ckeditor'])) {
-			$url .= '&ckeditor=' . $this->request->get['ckeditor'];
 		}
 
 		$pagination = new Pagination();

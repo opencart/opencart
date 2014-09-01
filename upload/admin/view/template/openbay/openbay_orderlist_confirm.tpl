@@ -23,7 +23,7 @@
               <td class="text-left"><?php echo $column_status; ?></td>
               <td class="text-left"><?php echo $column_channel; ?></td>
               <td class="text-left"><?php echo $column_date_added; ?></td>
-              <td class="text-left"><?php echo $column_addtional; ?></td>
+              <td class="text-left"><?php echo $column_additional; ?></td>
               <td class="text-left"><?php echo $column_comments; ?></td>
               <td class="text-center"><?php echo $column_notify; ?>&nbsp;<input type="checkbox" name="notify_all" id="notify_all" value="1" onchange="notifyAll();" /></td>
             </tr>
@@ -46,7 +46,7 @@
                   <?php if ($order['channel'] == 'eBay') { ?>
                     <?phpif (($change_order_status_id == $ebay_status_shipped_id) { ?>
                       <div class="form-group">
-                        <label class="control-label"><?php echo $text_carrier; ?></label>
+                        <label class="control-label"><?php echo $entry_carrier; ?></label>
                         <select name="carrier[<?php echo $order['order_id']; ?>]" class="form-control">
                           <?php foreach($market_options['ebay']['carriers'] as $carrier) { ?>
                             <option <?php echo ($carrier['description'] == $order['shipping_method'] ? ' selected' : ''); ?>><?php echo $carrier['description']; ?></option>
@@ -54,8 +54,8 @@
                         </select>
                       </div>
                       <div class="form-group">
-                        <label class="control-label"><?php echo $text_tracking; ?></label>
-                        <input type="text" name="tracking[<?php echo $order['order_id']; ?>]" value="" placeholder="<?php echo $text_tracking; ?>" class="form-control" />
+                        <label class="control-label"><?php echo $entry_tracking_no; ?></label>
+                        <input type="text" name="tracking[<?php echo $order['order_id']; ?>]" value="" placeholder="<?php echo $entry_tracking_no; ?>" class="form-control" />
                       </div>
                     <?php } ?>
                   <?php } ?>
@@ -64,7 +64,7 @@
                   <a href="openbay_orderlist_confirm.tpl"></a>
                     <?pif (if($change_order_status_id == $openbay_amazon_order_status_shipped) { ?>
                       <div class="form-group">
-                        <label class="control-label"><?php echo $text_carrier; ?></label>
+                        <label class="control-label"><?php echo $entry_carrier; ?></label>
                         <select name="carrier[<?php echo $order['order_id']; ?>]" class="form-control amazon_carrier" id="amazon_carrier_<?php echo $order['order_id']; ?>">
                           <?php foreach($market_options['amazon']['carriers'] as $courier) { ?>
                           <?php echo '<option'.($courier == $market_options['amazon']['default_carrier'] ? ' selected' : '').'>'.$courier.'</option>'; ?>
@@ -73,12 +73,12 @@
                         </select>
                       </div>
                       <div class="form-group">
-                        <label class="control-label"><?php echo $text_other; ?></label>
-                        <input type="text" name="carrier_other[<?php echo $order['order_id']; ?>]" value="" placeholder="<?php echo $text_other; ?>" class="form-control" id="amazon_carrier_<?php echo $order['order_id']; ?>_other" />
+                        <label class="control-label"><?php echo $entry_other; ?></label>
+                        <input type="text" name="carrier_other[<?php echo $order['order_id']; ?>]" value="" placeholder="<?php echo $entry_other; ?>" class="form-control" id="amazon_carrier_<?php echo $order['order_id']; ?>_other" />
                       </div>
                       <div class="form-group">
-                        <label class="control-label"><?php echo $text_tracking; ?></label>
-                        <input type="text" name="tracking[<?php echo $order['order_id']; ?>]" value="" placeholder="<?php echo $text_tracking; ?>" class="form-control" />
+                        <label class="control-label"><?php echo $entry_tracking_no; ?></label>
+                        <input type="text" name="tracking[<?php echo $order['order_id']; ?>]" value="" placeholder="<?php echo $entry_tracking_no; ?>" class="form-control" />
                       </div>
                     <?php } ?>
                   <?php } ?>
@@ -86,7 +86,7 @@
                   <?php if ($order['channel'] == 'Amazon US') { ?>
                     <php if ($change_order_status_id == $openbay_amazonus_order_status_shipped) { ?>
                       <div class="form-group">
-                        <label class="control-label"><?php echo $text_carrier; ?></label>
+                        <label class="control-label"><?php echo $entry_carrier; ?></label>
                         <select name="carrier[<?php echo $order['order_id']; ?>]" class="form-control amazonus_carrier" id="amazonus_carrier_<?php echo $order['order_id']; ?>">
                           <?php foreach($market_options['amazonus']['carriers'] as $courier) { ?>
                           <?php echo '<option'.($courier == $market_options['amazonus']['default_carrier'] ? ' selected' : '').'>'.$courier.'</option>'; ?>
@@ -95,12 +95,12 @@
                         </select>
                       </div>
                       <div class="form-group">
-                        <label class="control-label"><?php echo $text_other; ?></label>
-                        <input type="text" name="carrier_other[<?php echo $order['order_id']; ?>]" value="" placeholder="<?php echo $text_other; ?>" class="form-control" id="amazonus_carrier_<?php echo $order['order_id']; ?>_other" />
+                        <label class="control-label"><?php echo $entry_other; ?></label>
+                        <input type="text" name="carrier_other[<?php echo $order['order_id']; ?>]" value="" placeholder="<?php echo $entry_other; ?>" class="form-control" id="amazonus_carrier_<?php echo $order['order_id']; ?>_other" />
                       </div>
                       <div class="form-group">
-                        <label class="control-label"><?php echo $text_tracking; ?></label>
-                        <input type="text" name="tracking[<?php echo $order['order_id']; ?>]" value="" placeholder="<?php echo $text_tracking; ?>" class="form-control" />
+                        <label class="control-label"><?php echo $entry_tracking_no; ?></label>
+                        <input type="text" name="tracking[<?php echo $order['order_id']; ?>]" value="" placeholder="<?php echo $entry_tracking_no; ?>" class="form-control" />
                       </div>
                     <?php } ?>
                   <?php } ?>
@@ -161,13 +161,13 @@
         }
       }
     });
-  
+
     if(error_amazon_carrier == true) {
-      alert('<?php echo $text_e_ajax_3; ?>');
+      alert('<?php echo $text_error_carrier_other; ?>');
     }
-  
+
     if(error_amazonus_carrier == true) {
-      alert('<?php echo $text_e_ajax_3; ?>');
+      alert('<?php echo $text_error_carrier_other; ?>');
     }
 
     if(error == false) {

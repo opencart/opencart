@@ -73,10 +73,10 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="etsy_address_format"><?php echo $text_address_format; ?></label>
+              <label class="col-sm-2 control-label" for="etsy_address_format"><?php echo $entry_address_format; ?></label>
               <div class="col-sm-10">
                 <textarea name="etsy_address_format" class="form-control" rows="3" id="etsy_address_format"><?php echo $etsy_address_format; ?></textarea>
-                <span class="help-block"><?php echo $text_address_format_help; ?></span>
+                <span class="help-block"><?php echo $help_address_format; ?></span>
               </div>
             </div>
             <div class="form-group">

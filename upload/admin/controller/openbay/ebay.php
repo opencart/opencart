@@ -367,28 +367,28 @@ class ControllerOpenbayEbay extends Controller {
 		$this->response->setOutput($this->load->view('openbay/ebay_settings.tpl', $data));
 	}
 
-	public function loadSettings() {
+	public function updateSettings() {
 		set_time_limit(0);
 
-		$json = $this->openbay->ebay->loadSettings();
+		$json = $this->openbay->ebay->updateSettings();
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function loadCategories() {
+	public function updateCategories() {
 		set_time_limit(0);
 
-		$json = $this->openbay->ebay->loadCategories();
+		$json = $this->openbay->ebay->updateCategories();
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function loadSellerStore() {
+	public function updateStore() {
 		set_time_limit(0);
 
-		$json = $this->openbay->ebay->loadSellerStore();
+		$json = $this->openbay->ebay->updateStore();
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
@@ -535,6 +535,50 @@ class ControllerOpenbayEbay extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function viewItemImport() {
+		$this->load->model('openbay/ebay_product');
+
+		$data = $this->load->language('openbay/ebay_import');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->addScript('view/javascript/openbay/faq.js');
+
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_home'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_openbay'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_ebay'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/ebay/viewItemImport', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('heading_title'),
+		);
+
+		$data['return'] = $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL');
+		$data['validation'] = $this->openbay->ebay->validate();
+		$data['token'] = $this->session->data['token'];
+		$data['maintenance'] = $this->config->get('config_maintenance');
+		$data['image_import'] = $this->model_openbay_ebay_product->countImportImages();
+		$data['image_import_link'] = $this->url->link('openbay/ebay/getImportImages', 'token=' . $this->session->data['token'], 'SSL');
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('openbay/ebay_item_import.tpl', $data));
+	}
+
 	public function importItems() {
 		$data = array(
 			'adv' => $this->request->get['advanced'],
@@ -589,18 +633,6 @@ class ControllerOpenbayEbay extends Controller {
 			$json['error'] = true;
 			$json['msg'] = $this->language->get('error_subtract_setting');
 		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function getUsage() {
-		$this->load->model('openbay/ebay');
-
-		$json               = $this->model_openbay_ebay->getUsage();
-		$json['html']       = base64_decode($json['html']);
-		$json['lasterror']  = $this->openbay->ebay->lasterror;
-		$json['lastmsg']    = $this->openbay->ebay->lastmsg;
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
@@ -757,48 +789,16 @@ class ControllerOpenbayEbay extends Controller {
 		$this->response->setOutput($this->load->view('openbay/ebay_usage.tpl', $data));
 	}
 
-	public function viewItemImport() {
-		$this->load->model('openbay/ebay_product');
+	public function getUsage() {
+		$this->load->model('openbay/ebay');
 
-		$data = $this->load->language('openbay/ebay_import');
+		$json               = $this->model_openbay_ebay->getUsage();
+		$json['html']       = base64_decode($json['html']);
+		$json['lasterror']  = $this->openbay->ebay->lasterror;
+		$json['lastmsg']    = $this->openbay->ebay->lastmsg;
 
-		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/openbay/faq.js');
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_home'),
-		);
-
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_openbay'),
-		);
-
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_ebay'),
-		);
-
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/ebay/viewItemImport', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('heading_title'),
-		);
-
-		$data['return'] = $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL');
-		$data['validation'] = $this->openbay->ebay->validate();
-		$data['token'] = $this->session->data['token'];
-		$data['maintenance'] = $this->config->get('config_maintenance');
-		$data['image_import'] = $this->model_openbay_ebay_product->countImportImages();
-		$data['image_import_link'] = $this->url->link('openbay/ebay/getImportImages', 'token=' . $this->session->data['token'], 'SSL');
-
-		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
-		$data['footer'] = $this->load->controller('common/footer');
-
-		$this->response->setOutput($this->load->view('openbay/ebay_item_import.tpl', $data));
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function viewOrderImport() {

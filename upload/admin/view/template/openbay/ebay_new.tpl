@@ -453,7 +453,7 @@
                           </td>
                       </tr>
                       <tr>
-                          <td><?php echo $text_tax_inc; ?></td>
+                          <td><?php echo $entry_tax_inc; ?></td>
                           <td><input type="text" name="tax" id="taxRate" onkeyup="updateVarPrice();" value="<?php echo $product['defaults']['tax']; ?>" class="textRight width50" /> %</td>
                       </tr>
               </table>
@@ -484,7 +484,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $text_tax_inc; ?></label>
+                <label class="col-sm-2 control-label"><?php echo $entry_tax_inc; ?></label>
                 <div class="col-sm-10">
                   <div class="input-group col-xs-2">
                     <input type="text" name="tax" value="<?php echo $product['defaults']['tax']; ?>" id="taxRate" class="form-control text-right" onkeyup="updatePriceFromEx();" />
@@ -551,7 +551,7 @@
             </div>
             <?php } ?>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_payment_instruction; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_payment_instruction; ?></label>
               <div class="col-sm-10">
                 <textarea name="payment_instruction" class="form-control" rows="3" id="payment_instruction"><?php echo $product['defaults']['payment_instruction']; ?></textarea>
               </div>

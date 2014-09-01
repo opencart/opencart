@@ -116,14 +116,14 @@ $_['text_qty_help']                 = 'Enter a lower amount if you want to maint
 $_['text_price']             		= 'Price';
 $_['text_price_ex_tax_help']        = 'Your standard item price excluding tax. This value is not sent to eBay.';
 $_['text_price_inc_tax_help']       = 'This value is sent to eBay and is the price users will pay.';
-$_['text_tax_inc']                  = 'Tax included';
+$_['entry_tax_inc']                  = 'Tax included';
 $_['text_offers']                   = 'Allow buyers to make offers';
 $_['text_private']                  = 'Private listing';
 $_['text_private_help']             = 'Hide buyer usernames';
 $_['text_imediate_payment']         = 'Immediate payment required?';
 $_['text_payment']                  = 'Payments accepted';
 $_['text_payment_pp_email']         = 'PayPal payments email:';
-$_['text_payment_instruction']      = 'Payment instructions';
+$_['entry_payment_instruction']      = 'Payment instructions';
 
 // Tab
 $_['tab_general']              		= 'Category';

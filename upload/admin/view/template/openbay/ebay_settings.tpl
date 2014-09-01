@@ -26,7 +26,7 @@
         <div class="tab-content">
           <div class="tab-pane active" id="tab-general">
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="ebay-status"><?php echo $text_status; ?></label>
+              <label class="col-sm-2 control-label" for="ebay-status"><?php echo $entry_status; ?></label>
               <div class="col-sm-10">
                 <select name="ebay_status" id="ebay-status" class="form-control">
                   <?php if ($ebay_status) { ?>
@@ -40,27 +40,27 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="ebay-token"><?php echo $text_obp_token; ?></label>
+              <label class="col-sm-2 control-label" for="ebay-token"><?php echo $entry_token; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="ebay_token" value="<?php echo $ebay_token; ?>" placeholder="<?php echo $text_obp_token; ?>" id="ebay-token" class="form-control credentials" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="ebay-secret"><?php echo $text_obp_secret; ?></label>
+              <label class="col-sm-2 control-label" for="ebay-secret"><?php echo $entry_secret; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="ebay_secret" value="<?php echo $ebay_secret; ?>" placeholder="<?php echo $text_obp_secret; ?>" id="ebay-secret" class="form-control credentials" />
+                <input type="text" name="ebay_secret" value="<?php echo $ebay_secret; ?>" placeholder="<?php echo $entry_secret; ?>" id="ebay-secret" class="form-control credentials" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="ebay-string1"><?php echo $text_obp_string1; ?></label>
+              <label class="col-sm-2 control-label" for="ebay-string1"><?php echo $entry_string1; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="ebay_string1" value="<?php echo $ebay_string1; ?>" placeholder="<?php echo $text_obp_string1; ?>" id="ebay-string1" class="form-control credentials" />
+                <input type="text" name="ebay_string1" value="<?php echo $ebay_string1; ?>" placeholder="<?php echo $entry_string1; ?>" id="ebay-string1" class="form-control credentials" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="ebay-string2"><?php echo $text_obp_string2; ?></label>
+              <label class="col-sm-2 control-label" for="ebay-string2"><?php echo $entry_string2; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="ebay_string2" value="<?php echo $ebay_string2; ?>" placeholder="<?php echo $text_obp_string2; ?>" id="ebay-string2" class="form-control credentials" />
+                <input type="text" name="ebay_string2" value="<?php echo $ebay_string2; ?>" placeholder="<?php echo $entry_string2; ?>" id="ebay-string2" class="form-control credentials" />
               </div>
             </div>
             <div class="form-group">
@@ -72,18 +72,18 @@
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_api_other; ?></label>
               <div class="col-sm-10">
-                <p><a href="https://account.openbaypro.com/ebay/apiRegister/" target="_BLANK"><i class="fa fa-link"></i> <?php echo $text_obp_token_register; ?></a></p>
-                <p><a href="https://account.openbaypro.com/ebay/apiRenew/" target="_BLANK"><i class="fa fa-link"></i> <?php echo $text_obp_token_renew; ?></a></p>
+                <p><a href="https://account.openbaypro.com/ebay/apiRegister/" target="_BLANK"><i class="fa fa-link"></i> <?php echo $text_token_register; ?></a></p>
+                <p><a href="https://account.openbaypro.com/ebay/apiRenew/" target="_BLANK"><i class="fa fa-link"></i> <?php echo $text_token_renew; ?></a></p>
                 <p><a href="http://account.openbaypro.com/ebay/apiUpdate/" target="_BLANK"><i class="fa fa-link"></i> <?php echo $text_obp_detail_update; ?></a></p>
               </div>
             </div>
           </div>
           <div class="tab-pane" id="tab-setup">
             <fieldset>
-              <legend><?php echo $text_legend_app_settings; ?></legend>
-              <p><?php echo $text_app_setting_msg; ?></p>
+              <legend><?php echo $text_app_settings; ?></legend>
+              <p><?php echo $text_application_settings; ?></p>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_enditems"><?php echo $text_app_end_ebay; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_enditems"><?php echo $entry_end_items; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_enditems" id="ebay_enditems" class="form-control">
                     <?php if ($ebay_enditems) { ?>
@@ -94,11 +94,11 @@
                     <option value="0" selected="selected"><?php echo $text_no; ?></option>
                     <?php } ?>
                   </select>
-                  <span class="help-block"><?php echo $text_app_end_ebay_help; ?></span>
+                  <span class="help-block"><?php echo $help_end_items; ?></span>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_relistitems"><?php echo $text_app_relist_ebay; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_relistitems"><?php echo $entry_relist_items; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_relistitems" id="ebay_relistitems" class="form-control">
                     <?php if ($ebay_relistitems) { ?>
@@ -109,11 +109,11 @@
                     <option value="0" selected="selected"><?php echo $text_no; ?></option>
                     <?php } ?>
                   </select>
-                  <span class="help-block"><?php echo $text_app_relist_ebay_help; ?></span>
+                  <span class="help-block"><?php echo $help_relist_items; ?></span>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_disable_nostock"><?php echo $text_app_nostock_ebay; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_disable_nostock"><?php echo $entry_disable_soldout; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_disable_nostock" id="ebay_disable_nostock" class="form-control">
                     <?php if ($ebay_disable_nostock) { ?>
@@ -124,11 +124,11 @@
                     <option value="0" selected="selected"><?php echo $text_no; ?></option>
                     <?php } ?>
                   </select>
-                  <span class="help-block"><?php echo $text_app_nostock_ebay_help; ?></span>
+                  <span class="help-block"><?php echo $help_disable_soldout; ?></span>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_logging"><?php echo $text_app_logging; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_logging"><?php echo $entry_logging; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_logging" id="ebay_logging" class="form-control">
                     <?php if ($ebay_logging) { ?>
@@ -142,51 +142,51 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_def_currency"><?php echo $text_app_currency; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_def_currency"><?php echo $entry_currency; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_def_currency" id="ebay_def_currency" class="form-control">
                     <?php foreach ($currency_list as $currency) { ?>
                     <?php echo '<option value="'.$currency['code'].'"'.($ebay_def_currency == $currency['code'] ? ' selected="selected"' : '').'>'.$currency['title'].'</option>'; ?>
                     <?php } ?>
                   </select>
-                  <span class="help-block"><?php echo $text_app_currency_msg; ?></span>
+                  <span class="help-block"><?php echo $help_currency; ?></span>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_def_customer_grp"><?php echo $text_app_cust_grp; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_def_customer_grp"><?php echo $entry_customer_group; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_def_customer_grp" id="ebay_def_customer_grp" class="form-control">
                     <?php foreach ($customer_grp_list as $customer_grp) { ?>
                     <?php echo '<option value="'.$customer_grp['customer_group_id'].'"'.($ebay_def_customer_grp == $customer_grp['customer_group_id'] ? ' selected="selected"' : '').'>'.$customer_grp['name'].'</option>'; ?>
                     <?php } ?>
                   </select>
-                  <span class="help-block"><?php echo $text_app_cust_grp_help; ?></span>
+                  <span class="help-block"><?php echo $help_customer_group; ?></span>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_stock_allocate"><?php echo $text_app_stock_allocate; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_stock_allocate"><?php echo $entry_stock_allocate; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_stock_allocate" id="ebay_stock_allocate" class="form-control">
                     <?php if ($ebay_stock_allocate) { ?>
-                      <option value="1" selected="selected"><?php echo $text_app_stock_2; ?></option>
-                      <option value="0"><?php echo $text_app_stock_1; ?></option>
+                      <option value="1" selected="selected"><?php echo $text_allocate_2; ?></option>
+                      <option value="0"><?php echo $text_allocate_1; ?></option>
                     <?php } else { ?>
-                      <option value="1"><?php echo $text_app_stock_2; ?></option>
-                      <option value="0" selected="selected"><?php echo $text_app_stock_1; ?></option>
+                      <option value="1"><?php echo $text_allocate_2; ?></option>
+                      <option value="0" selected="selected"><?php echo $text_allocate_1; ?></option>
                     <?php } ?>
                   </select>
-                  <span class="help-block"><?php echo $text_app_stock_allocate_help; ?></span>
+                  <span class="help-block"><?php echo $help_stock_allocate; ?></span>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_created_hours"><?php echo $text_created_hours; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_created_hours"><?php echo $entry_created_hours; ?></label>
                 <div class="col-sm-10">
-                  <input type="text" name="ebay_created_hours" value="<?php echo $ebay_created_hours;?>" placeholder="<?php echo $text_obp_secret; ?>" id="ebay_created_hours" class="form-control" />
-                  <span class="help-block"><?php echo $text_created_hours_help; ?></span>
+                  <input type="text" name="ebay_created_hours" value="<?php echo $ebay_created_hours;?>" placeholder="<?php echo $entry_created_hours; ?>" id="ebay_created_hours" class="form-control" />
+                  <span class="help-block"><?php echo $help_created_hours; ?></span>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_stock_allocate"><?php echo $text_create_date; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_create_date"><?php echo $entry_create_date; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_create_date" id="ebay_create_date" class="form-control">
                     <?php if ($ebay_create_date) { ?>
@@ -197,11 +197,11 @@
                     <option value="0" selected="selected"><?php echo $text_create_date_0; ?></option>
                     <?php } ?>
                   </select>
-                  <span class="help-block"><?php echo $text_create_date_help; ?></span>
+                  <span class="help-block"><?php echo $help_order_date; ?></span>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_time_offset"><?php echo $text_timezone_offset; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_time_offset"><?php echo $entry_timezone_offset; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_time_offset" id="ebay_time_offset" class="form-control">
                     <option value="-12"<?php if ($ebay_time_offset == '-12'){ echo ' selected';} ?>>-12</option>
@@ -230,22 +230,22 @@
                     <option value="+11"<?php if ($ebay_time_offset == '+11'){ echo ' selected';} ?>>+11</option>
                     <option value="+12"<?php if ($ebay_time_offset == '+12'){ echo ' selected';} ?>>+12</option>
                   </select>
-                  <span class="help-block"><?php echo $text_timezone_offset_help; ?></span>
+                  <span class="help-block"><?php echo $help_timezone_offset; ?></span>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_default_addressformat"><?php echo $text_address_format; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_default_addressformat"><?php echo $entry_address_format; ?></label>
                 <div class="col-sm-10">
                   <textarea name="ebay_default_addressformat" class="form-control" rows="3" id="ebay_default_addressformat"><?php echo $ebay_default_addressformat; ?></textarea>
-                  <span class="help-block"><?php echo $text_address_format_help; ?></span>
+                  <span class="help-block"><?php echo $help_address_format; ?></span>
                 </div>
               </div>
             </fieldset>
             <fieldset>
-              <legend><?php echo $text_legend_notify_settings; ?></legend>
-              <p><?php echo $text_notify_setting_msg; ?></p>
+              <legend><?php echo $text_notify_settings; ?></legend>
+              <p><?php echo $text_notifications; ?></p>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_update_notify"><?php echo $text_ebay_update_notify; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_update_notify"><?php echo $entry_notify_order_update; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_update_notify" id="ebay_update_notify" class="form-control">
                     <?php if ($ebay_update_notify) { ?>
@@ -256,11 +256,11 @@
                     <option value="0" selected="selected"><?php echo $text_no; ?></option>
                     <?php } ?>
                   </select>
-                  <span class="help-block"><?php echo $text_ebay_update_notify_help; ?></span>
+                  <span class="help-block"><?php echo $help_notify_order_update; ?></span>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_confirm_notify"><?php echo $text_ebay_confirm_notify; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_confirm_notify"><?php echo $entry_notify_buyer; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_confirm_notify" id="ebay_confirm_notify" class="form-control">
                     <?php if ($ebay_confirm_notify) { ?>
@@ -271,11 +271,11 @@
                     <option value="0" selected="selected"><?php echo $text_no; ?></option>
                     <?php } ?>
                   </select>
-                  <span class="help-block"><?php echo $text_ebay_confirm_notify_help; ?></span>
+                  <span class="help-block"><?php echo $help_notify_buyer; ?></span>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_confirmadmin_notify"><?php echo $text_ebay_confirmadmin_notify; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_confirmadmin_notify"><?php echo $entry_notify_admin; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_confirmadmin_notify" id="ebay_confirmadmin_notify" class="form-control">
                     <?php if ($ebay_confirmadmin_notify) { ?>
@@ -286,11 +286,11 @@
                     <option value="0" selected="selected"><?php echo $text_no; ?></option>
                     <?php } ?>
                   </select>
-                  <span class="help-block"><?php echo $text_ebay_confirmadmin_notify_help; ?></span>
+                  <span class="help-block"><?php echo $help_notify_admin; ?></span>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_email_brand_disable"><?php echo $text_openbaypro_brand_disable; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_email_brand_disable"><?php echo $entry_brand_disable; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_email_brand_disable" id="ebay_email_brand_disable" class="form-control">
                     <?php if ($ebay_email_brand_disable) { ?>
@@ -306,8 +306,8 @@
             </fieldset>
 
             <fieldset>
-              <legend><?php echo $text_legend_default_import; ?></legend>
-              <p><?php echo $text_import_desc; ?></p>
+              <legend><?php echo $text_default_import; ?></legend>
+              <p><?php echo $text_import_description; ?></p>
 
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $text_import_pending; ?></label>
@@ -392,24 +392,24 @@
 
             <fieldset>
               <legend><?php echo $text_developer; ?></legend>
-              <p><?php echo $text_developer_desc; ?></p>
+              <p><?php echo $text_developer_description; ?></p>
 
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="button-clear-data"><?php echo $text_developer_empty; ?></label>
+                <label class="col-sm-2 control-label" for="button-clear-data"><?php echo $entry_empty_data; ?></label>
                 <div class="col-sm-10">
-                  <a class="btn btn-primary" id="button-clear-data"><?php echo $text_clear; ?></a>
+                  <a class="btn btn-primary" id="button-clear-data"><?php echo $button_clear; ?></a>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="button-clear-data"><?php echo $text_developer_locks; ?></label>
+                <label class="col-sm-2 control-label" for="button-clear-data"><?php echo $entry_developer_locks; ?></label>
                 <div class="col-sm-10">
-                  <a class="btn btn-primary" id="button-clear-locks"><?php echo $text_clear; ?></a>
+                  <a class="btn btn-primary" id="button-clear-locks"><?php echo $button_clear; ?></a>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="button-repair-links"><?php echo $text_developer_repairlinks; ?></label>
+                <label class="col-sm-2 control-label" for="button-repair-links"><?php echo $button_repair_links; ?></label>
                 <div class="col-sm-10">
-                  <a class="btn btn-primary" id="button-repair-links"><?php echo $text_update; ?></a>
+                  <a class="btn btn-primary" id="button-repair-links"><?php echo $button_update; ?></a>
                 </div>
               </div>
             </fieldset>
@@ -417,22 +417,22 @@
 
           <div class="tab-pane" id="tab-defaults">
             <fieldset>
-              <legend><?php echo $text_legend_listing; ?></legend>
+              <legend><?php echo $text_listing; ?></legend>
               <p><?php echo $text_setting_desc; ?></p>
 
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_duration"><?php echo $text_openbay_duration; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_duration"><?php echo $entry_duration; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_duration" id="ebay_duration" class="form-control">
                     <?php foreach ($durations as $key => $duration) { ?>
                     <?php echo'<option value="'.$key.'"'.($key == $ebay_duration ? ' selected=selected' : '').'>'.$duration.'</option>'; ?>
                     <?php } ?>
                   </select>
-                  <span class="help-block"><?php echo $text_openbay_duration_help; ?></span>
+                  <span class="help-block"><?php echo $help_duration; ?></span>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_duration"><?php echo $text_openbay_measurement; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_duration"><?php echo $entry_measurement; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_measurement" id="ebay_measurement" class="form-control">
                     <?php foreach ($measurement_types as $key => $type) { ?>
@@ -443,13 +443,13 @@
               </div>
             </fieldset>
             <fieldset>
-              <legend><?php echo $text_legend_payments; ?></legend>
-              <p><?php echo $text_payments_desc; ?></p>
+              <legend><?php echo $text_payments; ?></legend>
+              <p><?php echo $text_payments_description; ?></p>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_payment_instruction"><?php echo $text_payment_instruction; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_payment_instruction"><?php echo $entry_payment_instruction; ?></label>
                 <div class="col-sm-10">
                   <textarea name="ebay_payment_instruction" class="form-control" rows="3" id="ebay_payment_instruction"><?php echo $ebay_payment_instruction; ?></textarea>
-                  <span class="help-block"><?php echo $text_payment_instruction_help; ?></span>
+                  <span class="help-block"><?php echo $help_payment_instruction; ?></span>
                 </div>
               </div>
               <div class="form-group">
@@ -459,7 +459,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $text_payment_types; ?></label>
+                <label class="col-sm-2 control-label"><?php echo $entry_payment_types; ?></label>
                 <div class="col-sm-10">
                   <?php foreach($payment_options as $payment){ ?>
                   <div class="checkbox">
@@ -473,7 +473,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $text_payment_immediate; ?></label>
+                <label class="col-sm-2 control-label"><?php echo $entry_payment_immediate; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_payment_immediate" id="ebay_payment_immediate" class="form-control">
                     <?php if ($ebay_payment_immediate) { ?>
@@ -484,11 +484,11 @@
                       <option value="0" selected="selected"><?php echo $text_no; ?></option>
                     <?php } ?>
                   </select>
-                  <span class="help-block"><?php echo $text_payment_immediate_help; ?></span>
+                  <span class="help-block"><?php echo $help_payment_immediate; ?></span>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $text_tax_listing; ?></label>
+                <label class="col-sm-2 control-label"><?php echo $entry_tax_listing; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_tax_listing" id="ebay_tax_listing" class="form-control">
                     <?php if ($ebay_tax_listing) { ?>
@@ -499,17 +499,17 @@
                       <option value="0" selected="selected"><?php echo $text_tax_use_value; ?></option>
                     <?php } ?>
                   </select>
-                  <span class="help-block"><?php echo $text_tax_listing_help; ?></span>
+                  <span class="help-block"><?php echo $help_listing_tax; ?></span>
                 </div>
               </div>
               <div class="form-group" id="ebay_tax_listing_preset">
-                <label class="col-sm-2 control-label" for="tax"><?php echo $text_tax; ?></label>
+                <label class="col-sm-2 control-label" for="tax"><?php echo $entry_tax; ?></label>
                 <div class="col-sm-10">
                   <div class="input-group col-xs-2">
                     <input type="text" name="tax" value="<?php echo $tax;?>" id="tax" class="form-control" />
                     <span class="input-group-addon">%</span>
                   </div>
-                  <span class="help-block"><?php echo $text_tax_help; ?></span>
+                  <span class="help-block"><?php echo $help_tax; ?></span>
                 </div>
               </div>
             </fieldset>
@@ -520,7 +520,7 @@
 </div>
 <script type="text/javascript"><!--
     $('#button-clear-data').bind('click', function() {
-      var pass = prompt("<?php echo $text_ajax_dev_enter_pw; ?>", "");
+      var pass = prompt("<?php echo $entry_password_prompt; ?>", "");
 
       if (pass != '') {
         $.ajax({
@@ -534,7 +534,7 @@
           success: function(json) {
               setTimeout(function() {
                 alert(json.msg);
-                $('#button-clear-data').empty().html('<?php echo $text_clear; ?>');
+                $('#button-clear-data').empty().html('<?php echo $button_clear; ?>');
               }, 500);
           },
           error: function (xhr, ajaxOptions, thrownError) {
@@ -542,8 +542,8 @@
           }
         });
       } else {
-        alert('<?php echo $text_ajax_dev_enter_warn; ?>');
-        $('#button-clear-data').empty().html('<?php echo $text_clear; ?>');
+        alert('<?php echo $text_action_warning; ?>');
+        $('#button-clear-data').empty().html('<?php echo $button_clear; ?>');
       }
     });
 
@@ -558,12 +558,12 @@
         success: function(json) {
           setTimeout(function() {
             alert(json.msg);
-            $('#button-clear-locks').empty().html('<?php echo $text_clear; ?>');
+            $('#button-clear-locks').empty().html('<?php echo $button_clear; ?>');
           }, 500);
         },
         error: function (xhr, ajaxOptions, thrownError) {
           if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
-          $('#button-clear-locks').empty().html('<?php echo $text_clear; ?>');
+          $('#button-clear-locks').empty().html('<?php echo $button_clear; ?>');
         }
       });
     });
@@ -579,12 +579,12 @@
         success: function(json) {
           setTimeout(function() {
             alert(json.msg);
-            $('#button-repair-links').empty().html('<?php echo $text_update; ?>');
+            $('#button-repair-links').empty().html('<?php echo $button_update; ?>');
           }, 500);
         },
         error: function (xhr, ajaxOptions, thrownError) {
           if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
-          $('#button-repair-links').empty().html('<?php echo $text_update; ?>');
+          $('#button-repair-links').empty().html('<?php echo $button_update; ?>');
         }
       });
     });

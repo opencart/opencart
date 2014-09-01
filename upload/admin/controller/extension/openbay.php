@@ -486,7 +486,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->load->model('openbay/order');
 
 		$data = $this->load->language('openbay/openbay_order');
-		$this->document->setTitle($this->language->get('text_title_order_update'));
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (isset($this->request->get['filter_order_id'])) {
 			$filter_order_id = $this->request->get['filter_order_id'];
@@ -584,7 +584,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('extension/openbay/manage', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $data['text_title_order_update'],
+			'text' => $data['heading_title'],
 		);
 
 		$data['orders'] = array();
@@ -789,7 +789,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 	public function orderListUpdate() {
 		$data = $this->load->language('openbay/openbay_order');
-		$this->document->setTitle($this->language->get('text_title_order_update'));
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (!isset($this->request->post['selected']) || empty($this->request->post['selected'])) {
 			$this->session->data['error'] = $data['text_no_orders'];
@@ -861,7 +861,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'href' => $this->url->link('extension/openbay/manage', 'token=' . $this->session->data['token'], 'SSL'),
-				'text' => $data['text_title_order_update'],
+				'text' => $data['heading_title'],
 			);
 
 			$data['change_order_status_id'] = $this->request->post['change_order_status_id'];

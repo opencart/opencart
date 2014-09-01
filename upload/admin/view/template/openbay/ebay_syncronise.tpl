@@ -21,21 +21,21 @@
         <p><?php echo $text_sync_desc; ?></p>
         <form id="form-ebay-sync" class="form-horizontal">
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="sync-cats"><span data-toggle="tooltip" title="<?php echo $help_sync_categories; ?>"><?php echo $entry_sync_categories; ?></span></label>
+            <label class="col-sm-2 control-label" for="update-categories"><span data-toggle="tooltip" title="<?php echo $help_sync_categories; ?>"><?php echo $entry_sync_categories; ?></span></label>
             <div class="col-sm-10">
-              <a class="btn btn-primary" id="sync-cats"><?php echo $button_sync; ?></a>
+              <a class="btn btn-primary" id="update-categories"><?php echo $button_update; ?></a>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="sync-shop-cats"><span data-toggle="tooltip" title="<?php echo $help_sync_shop; ?>"><?php echo $entry_sync_shop; ?></span></label>
+            <label class="col-sm-2 control-label" for="update-store"><span data-toggle="tooltip" title="<?php echo $help_sync_shop; ?>"><?php echo $entry_sync_shop; ?></span></label>
             <div class="col-sm-10">
-              <a class="btn btn-primary" id="sync-shop-cats"><?php echo $button_sync; ?></a>
+              <a class="btn btn-primary" id="update-store"><?php echo $button_update; ?></a>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="load-settings"><span data-toggle="tooltip" title="<?php echo $help_sync_setting; ?>"><?php echo $entry_sync_setting; ?></span></label>
+            <label class="col-sm-2 control-label" for="update-settings"><span data-toggle="tooltip" title="<?php echo $help_sync_setting; ?>"><?php echo $entry_sync_setting; ?></span></label>
             <div class="col-sm-10">
-              <a class="btn btn-primary" id="load-settings"><?php echo $button_sync; ?></a>
+              <a class="btn btn-primary" id="update-settings"><?php echo $button_update; ?></a>
             </div>
           </div>
         </form>
@@ -48,69 +48,69 @@
 </div>
 
 <script type="text/javascript"><!--
-  $('#sync-cats').bind('click', function() {
+  $('#update-categories').bind('click', function() {
     $.ajax({
-      url: 'index.php?route=openbay/ebay/loadcategories&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/ebay/updatecategories&token=<?php echo $token; ?>',
       beforeSend: function(){
-        $('#sync-cats').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
-        alert('<?php echo $text_ajax_ebay_categories; ?>');
+        $('#update-categories').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        alert('<?php echo $text_ebay_categories; ?>');
       },
       type: 'post',
       dataType: 'json',
       success: function(json) {
-        $('#sync-cats').empty().removeClass('btn-primary').addClass('btn-success').html('<?php echo $text_complete; ?>');
+        $('#update-categories').empty().removeClass('btn-primary').addClass('btn-success').html('<?php echo $text_complete; ?>');
         alert(json.msg);
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        $('#sync-cats').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $error_failed; ?>').removeAttr('disabled');
+        $('#update-categories').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $error_failed; ?>').removeAttr('disabled');
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });
   });
 
-  $('#load-settings').bind('click', function() {
+  $('#update-settings').bind('click', function() {
     $.ajax({
-      url: 'index.php?route=openbay/ebay/loadSettings&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/ebay/updatesettings&token=<?php echo $token; ?>',
       beforeSend: function(){
-        $('#load-settings').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#update-settings').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },
       type: 'post',
       dataType: 'json',
       success: function(json) {
-        $('#load-settings').empty().removeClass('btn-primary').addClass('btn-success').html('<?php echo $text_complete; ?>');
+        $('#update-settings').empty().removeClass('btn-primary').addClass('btn-success').html('<?php echo $text_complete; ?>');
 
         if (json.error == false){
-            alert('<?php echo $text_ajax_setting_import; ?>');
+            alert('<?php echo $text_setting_import; ?>');
         }else{
             alert('<?php echo $error_settings; ?>');
         }
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        $('#load-settings').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $error_failed; ?>').removeAttr('disabled');
+        $('#update-settings').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $error_failed; ?>').removeAttr('disabled');
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });
   });
 
-  $('#sync-shop-cats').bind('click', function() {
+  $('#update-store').bind('click', function() {
     $.ajax({
-      url: 'index.php?route=openbay/ebay/loadsellerstore&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/ebay/updatestore&token=<?php echo $token; ?>',
       beforeSend: function(){
-        $('#sync-shop-cats').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#update-store').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },
       type: 'post',
       dataType: 'json',
       success: function(json) {
-        $('#sync-shop-cats').empty().removeClass('btn-primary').addClass('btn-success').html('<?php echo $text_complete; ?>');
+        $('#update-store').empty().removeClass('btn-primary').addClass('btn-success').html('<?php echo $text_complete; ?>');
 
         if (json.error == 'false'){
-          alert('<?php echo $text_ajax_cat_import; ?>');
+          alert('<?php echo $text_category_import; ?>');
         }else{
           alert(json.msg);
         }
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        $('#sync-shop-cats').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $error_failed; ?>').removeAttr('disabled');
+        $('#update-store').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $error_failed; ?>').removeAttr('disabled');
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });

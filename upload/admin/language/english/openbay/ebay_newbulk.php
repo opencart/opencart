@@ -1,5 +1,5 @@
 <?php
-//Headings
+//Heading
 $_['text_page_title']               = 'Bulk listing';
 $_['text_ebay']               		= 'eBay';
 $_['text_openbay']               	= 'Openbay Pro';

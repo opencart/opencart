@@ -17,7 +17,7 @@
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="fa fa-bars fa-lg"></i> <?php echo $text_manage_items; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-bars fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
     <?php if ($link_amazon_eu_bulk || $link_amazon_us_bulk || $link_ebay_bulk) { ?>
@@ -41,15 +41,15 @@
       <div class="row">
         <div class="col-sm-4">
           <div class="form-group">
-            <label class="control-label" for="filter_name"><?php echo $text_title; ?></label>
-            <input type="text" name="filter_name" value="<?php echo $filter_name; ?>" placeholder="<?php echo $text_title; ?>" id="filter_name" class="form-control" />
+            <label class="control-label" for="filter_name"><?php echo $entry_title; ?></label>
+            <input type="text" name="filter_name" value="<?php echo $filter_name; ?>" placeholder="<?php echo $entry_title; ?>" id="filter_name" class="form-control" />
           </div>
           <div class="form-group">
-            <label class="control-label" for="filter_model"><?php echo $text_model; ?></label>
-            <input type="text" name="filter_model" value="<?php echo $filter_model; ?>" placeholder="<?php echo $text_model; ?>" id="filter_model" class="form-control" />
+            <label class="control-label" for="filter_model"><?php echo $entry_model; ?></label>
+            <input type="text" name="filter_model" value="<?php echo $filter_model; ?>" placeholder="<?php echo $entry_model; ?>" id="filter_model" class="form-control" />
           </div>
           <div class="form-group">
-            <label class="control-label" for="filter_manufacturer"><?php echo $text_manufacturer; ?></label>
+            <label class="control-label" for="filter_manufacturer"><?php echo $entry_manufacturer; ?></label>
             <select name="filter_manufacturer" id="filter_manufacturer" class="form-control">
               <option value=""></option>
               <?php foreach($manufacturer_list as $man) { ?>
@@ -60,7 +60,7 @@
         </div>
         <div class="col-sm-4">
           <div class="form-group">
-            <label class="control-label" for="filter_marketplace"><?php echo $text_status; ?></label>
+            <label class="control-label" for="filter_marketplace"><?php echo $entry_market_status; ?></label>
             <select name="filter_marketplace" id="filter_marketplace" class="form-control">
               <option value="all" <?php echo (!isset($filter_marketplace) || $filter_marketplace == 'all' ? ' selected' : ''); ?>><?php echo $text_status_all; ?></option>
               <?php if ($marketplace_statuses['ebay']) { ?>
@@ -88,7 +88,7 @@
             </select>
           </div>
           <div class="form-group">
-            <label class="control-label"><?php echo $text_status; ?></label>
+            <label class="control-label"><?php echo $entry_status; ?></label>
             <select name="filter_status" class="form-control">
               <option value="*"></option>
               <?php if ($filter_status) { ?>
@@ -104,7 +104,7 @@
             </select>
           </div>
           <div class="form-group">
-            <label class="control-label" for="filter_category"><?php echo $text_category; ?></label>
+            <label class="control-label" for="filter_category"><?php echo $entry_category; ?></label>
             <select name="filter_category" id="filter_category" class="form-control">
               <option value=""></option>
               <option value="none"><?php echo $text_category_missing; ?></option>
@@ -118,7 +118,7 @@
           <div class="form-group">
             <div class="row">
               <div class="col-sm-12">
-                <label class="control-label"><?php echo $text_stock_range; ?></label>
+                <label class="control-label"><?php echo $entry_stock_range; ?></label>
               </div>
             </div>
             <div class="row">
@@ -133,18 +133,18 @@
           <div class="form-group">
             <div class="row">
               <div class="col-sm-12">
-                <label class="control-label"><?php echo $text_populated; ?></label>
+                <label class="control-label"><?php echo $entry_populated; ?></label>
               </div>
             </div>
             <div class="row">
               <div class="col-sm-3">
-                <label class="control-label"><?php echo $text_sku; ?></label>
+                <label class="control-label"><?php echo $entry_sku; ?></label>
               </div>
               <div class="col-sm-3">
                 <input type="checkbox" name="filter_sku" id="filter_sku" value="1" <?php if ($filter_sku == 1) { echo 'checked="checked" ';} ?>/>
               </div>
               <div class="col-sm-3">
-                <label class="control-label"><?php echo $text_description; ?></label>
+                <label class="control-label"><?php echo $entry_description; ?></label>
               </div>
               <div class="col-sm-3">
                 <input type="checkbox" name="filter_desc" id="filter_desc" value="1" <?php if ($filter_desc == 1) { echo 'checked="checked" ';} ?>/>

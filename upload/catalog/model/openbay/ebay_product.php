@@ -537,7 +537,7 @@ class ModelOpenbayEbayProduct extends Model {
 
 			$variant_data['opt'][$v]['sku']     = $option['var'];
 			$variant_data['opt'][$v]['qty']     = $option['stock'];
-			$variant_data['opt'][$v]['price']   = number_format($option['price'], 2);
+			$variant_data['opt'][$v]['price']   = number_format($option['price'], 2, '.', '');
 
 			$variant_data['opt'][$v]['active']  = 0;
 			if ($option['active'] == 1) {

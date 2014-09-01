@@ -1159,7 +1159,7 @@ class ControllerOpenbayEbay extends Controller {
 						$sku = (isset($listing['SKU']) ? $listing['SKU'] : '');
 
 						if ($sku != '' && $sku == $option['var']) {
-							$listing['StartPrice'] = number_format($listing['StartPrice'], 2);
+							$listing['StartPrice'] = number_format($listing['StartPrice'], 2, '.', '');
 							$listing['Quantity'] = $listing['Quantity'] - $listing['SellingStatus']['QuantitySold'];
 
 							$ebay_listing = $listing;

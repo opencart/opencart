@@ -54,8 +54,8 @@ class ModelOpenbayAmazonusListing extends Model {
 		$result = json_decode($this->openbay->amazonus->callWithResponse('productv3/getPrice', $search_params), 1);
 
 		if (isset($result['Price']['Amount']) && $result['Price']['Currency'] && $this->currency->has($result['Price']['Currency'])) {
-			$best_price['amount'] = number_format($this->currency->convert($result['Price']['Amount'], $result['Price']['Currency'], $this->config->get('config_currency')), 2);
-			$best_price['shipping'] = number_format($this->currency->convert($result['Price']['Shipping'], $result['Price']['Currency'], $this->config->get('config_currency')), 2);
+			$best_price['amount'] = number_format($this->currency->convert($result['Price']['Amount'], $result['Price']['Currency'], $this->config->get('config_currency')), 2, '.', '');
+			$best_price['shipping'] = number_format($this->currency->convert($result['Price']['Shipping'], $result['Price']['Currency'], $this->config->get('config_currency')), 2, '.', '');
 			$best_price['currency'] = $result['Price']['Currency'];
 		}
 

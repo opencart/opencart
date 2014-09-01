@@ -3,7 +3,6 @@ $_['heading_title']                 = 'Settings';
 $_['text_openbay']                  = 'OpenBay Pro';
 $_['text_amazon']                 	= 'Amazon US';
 
-$_['text_settings']                 = 'Settings';
 $_['text_status']                 	= 'Status';
 $_['text_token']                    = 'Token';
 $_['text_enc_string1']              = 'Encryption String 1';

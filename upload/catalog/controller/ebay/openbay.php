@@ -158,11 +158,11 @@ class ControllerEbayOpenbay extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 
 		if($this->request->post['process'] == 'categories') {
-			$this->response->setOutput(json_encode($this->openbay->ebay->loadCategories()));
+			$this->response->setOutput(json_encode($this->openbay->ebay->updateCategories()));
 		}elseif($this->request->post['process'] == 'settings') {
-			$this->response->setOutput(json_encode($this->openbay->ebay->loadSettings()));
+			$this->response->setOutput(json_encode($this->openbay->ebay->updateSettings()));
 		}elseif($this->request->post['process'] == 'store') {
-			$this->response->setOutput(json_encode($this->openbay->ebay->loadSellerStore()));
+			$this->response->setOutput(json_encode($this->openbay->ebay->updateStore()));
 		}
 	}
 

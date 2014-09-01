@@ -2,7 +2,7 @@
 $_['heading_title']        		= 'Etsy settings';
 $_['text_openbay']              = 'OpenBay Pro';
 $_['text_etsy']                 = 'Etsy';
-$_['text_settings']             = 'Settings';
+
 $_['text_update']               = 'Update';
 $_['text_import']               = 'Import';
 $_['text_clear']                = 'Clear';
@@ -11,8 +11,8 @@ $_['text_remove']               = 'Remove';
 $_['text_load']                 = 'Load';
 $_['text_success']     = 'Your settings have been saved';
 $_['text_status']         		= 'Status';
-$_['text_address_format']       = 'Default address format';
-$_['text_address_format_help']  = 'Only used if the linked country does not have an address format set-up already.';
+$_['entry_address_format']       = 'Default address format';
+$_['help_address_format']  = 'Only used if the linked country does not have an address format set-up already.';
 $_['text_account_ok']  			= 'Connection to Etsy OK';
 
 $_['text_import_def_id']        = 'Import default status (unpaid):';

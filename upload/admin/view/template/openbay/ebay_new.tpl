@@ -102,13 +102,13 @@
               </div>
             </div>
             <div class="form-group" id="condition-container" style="display: none;">
-              <label class="col-sm-2 control-label"><?php echo $text_listing_condition; ?><br /><span id="condition-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_listing_condition; ?><br /><span id="condition-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
               <div class="col-sm-10">
                 <select name="condition" id="condition-input" class="form-control" style="display: none;"></select>
               </div>
             </div>
             <div class="form-group" id="duration-container" style="display: none;">
-              <label class="col-sm-2 control-label"><?php echo $text_listing_duration; ?><br /><span id="duration-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_listing_duration; ?><br /><span id="duration-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
               <div class="col-sm-10">
                 <select name="auction_duration" id="duration-input" class="form-control" style="display: none;"></select>
               </div>
@@ -389,12 +389,12 @@
                                   <thead>
                                       <tr>
                                           <td class="center"><?php echo $column_stock_total; ?></td>
-                                          <td class="center"><?php echo $text_stock_col_qty; ?></td>
-                                          <td class="center"><?php echo $text_stock_col_qty_reserve; ?></td>
-                                          <td class="left"><?php echo $text_stock_col_comb; ?></td>
-                                          <td class="left"><?php echo $text_price_ex_tax; ?></td>
-                                          <td class="left"><?php echo $text_price_inc_tax; ?></td>
-                                          <td class="center"><?php echo $text_stock_col_enabled; ?></td>
+                                          <td class="center"><?php echo $column_stock_col_qty; ?></td>
+                                          <td class="center"><?php echo $column_stock_col_qty_reserve; ?></td>
+                                          <td class="left"><?php echo $column_stock_col_comb; ?></td>
+                                          <td class="left"><?php echo $column_price_ex_tax; ?></td>
+                                          <td class="left"><?php echo $column_price_inc_tax; ?></td>
+                                          <td class="center"><?php echo $column_stock_col_enabled; ?></td>
                                       </tr>
                                   </thead>
                                   <tbody>
@@ -453,7 +453,7 @@
                           </td>
                       </tr>
                       <tr>
-                          <td><?php echo $text_tax_inc; ?></td>
+                          <td><?php echo $entry_tax_inc; ?></td>
                           <td><input type="text" name="tax" id="taxRate" onkeyup="updateVarPrice();" value="<?php echo $product['defaults']['tax']; ?>" class="textRight width50" /> %</td>
                       </tr>
               </table>
@@ -484,7 +484,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $text_tax_inc; ?></label>
+                <label class="col-sm-2 control-label"><?php echo $entry_tax_inc; ?></label>
                 <div class="col-sm-10">
                   <div class="input-group col-xs-2">
                     <input type="text" name="tax" value="<?php echo $product['defaults']['tax']; ?>" id="taxRate" class="form-control text-right" onkeyup="updatePriceFromEx();" />
@@ -551,7 +551,7 @@
             </div>
             <?php } ?>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_payment_instruction; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_payment_instruction; ?></label>
               <div class="col-sm-10">
                 <textarea name="payment_instruction" class="form-control" rows="3" id="payment_instruction"><?php echo $product['defaults']['payment_instruction']; ?></textarea>
               </div>

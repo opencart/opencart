@@ -234,7 +234,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	public function settings() {
 		$data = $this->load->language('openbay/amazonus_settings');
 		$this->load->language('openbay/amazonus_listing');
-		$this->document->setTitle($this->language->get('text_title'));
+		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$this->load->model('setting/setting');
@@ -282,7 +282,7 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href'      => $this->url->link('openbay/amazonus/settings', 'token=' . $this->session->data['token'], 'SSL'),
-			'text'      => $this->language->get('text_settings'),
+			'text'      => $this->language->get('heading_title'),
 		);
 
 		$data['marketplace_ids']                  = (isset($settings['openbay_amazonus_orders_marketplace_ids'])) ? (array)$settings['openbay_amazonus_orders_marketplace_ids'] : array();
@@ -593,7 +593,7 @@ class ControllerOpenbayAmazonus extends Controller {
 			foreach ($this->request->post['products'] as $product_id => $asin) {
 				$delete_search_results[] = $product_id;
 
-				if (!empty($asin)) {
+				if (!empty($asin) && in_array($product_id, $this->request->post['product_ids'])) {
 					$bulk_list_products[$product_id] = $asin;
 				}
 			}

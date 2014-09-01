@@ -1185,7 +1185,7 @@ final class Ebay {
 		}
 	}
 
-	public function loadCategories() {
+	public function updateCategories() {
 		$cat_array = $this->call('setup/getEbayCategories/', array(), array(), 'json', true);
 
 		if ($this->lasterror != true) {
@@ -1221,7 +1221,7 @@ final class Ebay {
 		return array('msg' => $this->lastmsg, 'error' => $this->lasterror);
 	}
 
-	public function loadSettings() {
+	public function updateSettings() {
 		$response = $this->call('setup/getEbayDetails/', array(), array(), 'json', true);
 
 		$this->log('Getting eBay settings / sync');
@@ -1443,7 +1443,7 @@ final class Ebay {
 		return array('msg' => $this->lastmsg, 'error' => $this->lasterror);
 	}
 
-	public function loadSellerStore() {
+	public function updateStore() {
 		$store = $this->call('setup/getSellerStore/', array(), array(), 'json', true);
 
 		if ($this->lasterror != true) {

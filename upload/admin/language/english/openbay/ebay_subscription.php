@@ -1,5 +1,5 @@
 <?php
-// Headings
+// Heading
 $_['heading_title']             = 'Subscription';
 $_['text_openbay']              = 'OpenBay Pro';
 $_['text_ebay']                 = 'eBay';

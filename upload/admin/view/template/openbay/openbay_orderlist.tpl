@@ -24,7 +24,7 @@
               <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
             <?php } ?>
           </select>
-          <a data-toggle="tooltip" title="<?php echo $text_btn_status; ?>" class="btn" onclick="$('#order-update-form').submit();"><i class="fa fa-plus-circle"></i></a>
+          <a data-toggle="tooltip" title="<?php echo $button_status; ?>" class="btn" onclick="$('#order-update-form').submit();"><i class="fa fa-plus-circle"></i></a>
         </div>
         <h1 class="panel-title"><i class="fa fa-bars fa-lg"></i> <?php echo $heading_title; ?></h1>
       </div>

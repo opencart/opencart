@@ -595,7 +595,7 @@ class ControllerOpenbayAmazon extends Controller {
 			foreach ($this->request->post['products'] as $product_id => $asin) {
 				$delete_search_results[] = $product_id;
 
-				if (!empty($asin)) {
+				if (!empty($asin) && in_array($product_id, $this->request->post['product_ids'])) {
 					$bulk_list_products[$product_id] = $asin;
 				}
 			}

@@ -170,7 +170,7 @@ class ControllerOpenbayAmazonListing extends Controller {
 			$data['listing_errors'] = $this->model_openbay_amazon->getProductErrors($product_info['product_id'], 3);
 		}
 
-		$data['price'] = number_format($data['price'], 2);
+		$data['price'] = number_format($data['price'], 2, '.', '');
 		$data['quantity'] = $product_info['quantity'];
 		$data['product_id'] = $product_info['product_id'];
 

@@ -830,6 +830,8 @@ class ModelCheckoutOrder extends Model {
 			// If order status in the complete range create any vouchers that where in the order need to be made available.
 			if (in_array($order_info['order_status_id'], $this->config->get('config_complete_status'))) {
 				// Send out any gift voucher mails
+				$this->load->model('checkout/voucher');
+				
 				$this->model_checkout_voucher->confirm($order_id);
 			}
 		}

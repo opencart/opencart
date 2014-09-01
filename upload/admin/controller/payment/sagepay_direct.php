@@ -3,7 +3,6 @@ class ControllerPaymentSagepayDirect extends Controller {
 	private $error = array();
 
 	public function index() {
-
 		$this->load->language('payment/sagepay_direct');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -97,7 +96,6 @@ class ControllerPaymentSagepayDirect extends Controller {
 		} else {
 			$data['sagepay_direct_password'] = $this->config->get('sagepay_direct_password');
 		}
-
 
 		if (isset($this->request->post['sagepay_direct_test'])) {
 			$data['sagepay_direct_test'] = $this->request->post['sagepay_direct_test'];

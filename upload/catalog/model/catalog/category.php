@@ -21,7 +21,6 @@ class ModelCatalogCategory extends Model {
 			$implode[] = (int)$result['filter_id'];
 		}
 
-
 		$filter_group_data = array();
 
 		if ($implode) {

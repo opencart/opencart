@@ -43,7 +43,7 @@ class ControllerCommonDashboard extends Controller {
 		$this->load->model('sale/order');
 
 		$data['order_total'] = $this->model_sale_order->getTotalOrders();
-		
+
 		$this->load->model('report/dashboard');
 
 		// Total Sales

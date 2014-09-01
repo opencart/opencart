@@ -358,7 +358,7 @@ class ControllerCatalogProduct extends Controller {
 				'price'      => $result['price'],
 				'special'    => $special,
 				'quantity'   => $result['quantity'],
-				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
+				'status'     => ($result['status']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'edit'       => $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL')
 			);
 		}
@@ -836,7 +836,7 @@ class ControllerCatalogProduct extends Controller {
 		if (isset($this->request->post['date_available'])) {
 			$data['date_available'] = $this->request->post['date_available'];
 		} elseif (!empty($product_info)) {
-			$data['date_available'] = ($product_info['date_available'] != '0000-00-00' ? $product_info['date_available'] : '');
+			$data['date_available'] = ($product_info['date_available'] != '0000-00-00') ? $product_info['date_available'] : '';
 		} else {
 			$data['date_available'] = date('Y-m-d');
 		}
@@ -992,7 +992,7 @@ class ControllerCatalogProduct extends Controller {
 			if ($category_info) {
 				$data['product_categories'][] = array(
 					'category_id' => $category_info['category_id'],
-					'name'        => ($category_info['path'] ? $category_info['path'] . ' &gt; ' : '') . $category_info['name']
+					'name' => ($category_info['path']) ? $category_info['path'] . ' &gt; ' : '' . $category_info['name']
 				);
 			}
 		}
@@ -1120,8 +1120,8 @@ class ControllerCatalogProduct extends Controller {
 				'quantity'          => $product_discount['quantity'],
 				'priority'          => $product_discount['priority'],
 				'price'             => $product_discount['price'],
-				'date_start'        => ($product_discount['date_start'] != '0000-00-00' ? $product_discount['date_start'] : ''),
-				'date_end'          => ($product_discount['date_end'] != '0000-00-00' ? $product_discount['date_end'] : '')
+				'date_start'        => ($product_discount['date_start'] != '0000-00-00') ? $product_discount['date_start'] : '',
+				'date_end'          => ($product_discount['date_end'] != '0000-00-00') ? $product_discount['date_end'] : ''
 			);
 		}
 
@@ -1140,8 +1140,8 @@ class ControllerCatalogProduct extends Controller {
 				'customer_group_id' => $product_special['customer_group_id'],
 				'priority'          => $product_special['priority'],
 				'price'             => $product_special['price'],
-				'date_start'        => ($product_special['date_start'] != '0000-00-00' ? $product_special['date_start'] : ''),
-				'date_end'          => ($product_special['date_end'] != '0000-00-00' ? $product_special['date_end'] :  '')
+				'date_start'        => ($product_special['date_start'] != '0000-00-00') ? $product_special['date_start'] : '',
+				'date_end'          => ($product_special['date_end'] != '0000-00-00') ? $product_special['date_end'] :  ''
 			);
 		}
 

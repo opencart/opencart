@@ -1,9 +1,10 @@
 <?php
-final class DBMySQLi {
+namespace DB;
+final class MySQLi {
 	private $link;
 
 	public function __construct($hostname, $username, $password, $database) {
-		$this->link = new mysqli($hostname, $username, $password, $database);
+		$this->link = new \mysqli($hostname, $username, $password, $database);
 
 		if ($this->link->connect_error) {
 			trigger_error('Error: Could not make a database link (' . $this->link->connect_errno . ') ' . $this->link->connect_error);
@@ -17,14 +18,14 @@ final class DBMySQLi {
 		$query = $this->link->query($sql);
 
 		if (!$this->link->errno) {
-			if ($query instanceof mysqli_result) {
+			if ($query instanceof \mysqli_result) {
 				$data = array();
 
 				while ($row = $query->fetch_assoc()) {
 					$data[] = $row;
 				}
 
-				$result = new stdClass();
+				$result = new \stdClass();
 				$result->num_rows = $query->num_rows;
 				$result->row = isset($data[0]) ? $data[0] : array();
 				$result->rows = $data;

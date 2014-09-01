@@ -403,6 +403,8 @@ class ControllerProductManufacturer extends Controller {
 
 			$data['continue'] = $this->url->link('common/home');
 
+			$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
+
 			$data['header'] = $this->load->controller('common/header');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['column_left'] = $this->load->controller('common/column_left');

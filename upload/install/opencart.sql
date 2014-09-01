@@ -1385,9 +1385,9 @@ CREATE TABLE `oc_download_description` (
 DROP TABLE IF EXISTS `oc_event`;
 CREATE TABLE `oc_event` (
   `event_id` int(11) NOT NULL AUTO_INCREMENT,
-  `store_id` int(11) NOT NULL DEFAULT '0',
-  `event` varchar(255) NOT NULL,
-  `handlers` text NOT NULL,
+  `code` varchar(32) NOT NULL,
+  `trigger` text NOT NULL,
+  `action` text NOT NULL,
   PRIMARY KEY (`event_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 

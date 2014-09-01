@@ -287,13 +287,13 @@ class ControllerUserApi extends Controller {
 		} else {
 			$data['error_username'] = '';
 		}
-		
+
 		if (isset($this->error['password'])) {
 			$data['error_password'] = $this->error['password'];
 		} else {
 			$data['error_password'] = '';
 		}
-		
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -339,7 +339,7 @@ class ControllerUserApi extends Controller {
 		} else {
 			$data['username'] = '';
 		}
-		
+
 		if (isset($this->request->post['password'])) {
 			$data['password'] = $this->request->post['password'];
 		} elseif (!empty($api_info)) {
@@ -347,7 +347,7 @@ class ControllerUserApi extends Controller {
 		} else {
 			$data['password'] = '';
 		}
-		
+
 		if (isset($this->request->post['status'])) {
 			$data['status'] = $this->request->post['status'];
 		} elseif (!empty($api_info)) {
@@ -371,11 +371,11 @@ class ControllerUserApi extends Controller {
 		if ((utf8_strlen(trim($this->request->post['username'])) < 3) || (utf8_strlen(trim($this->request->post['username'])) > 64)) {
 			$this->error['username'] = $this->language->get('error_username');
 		}
-		
+
 		if ((utf8_strlen($this->request->post['password']) < 3) || (utf8_strlen($this->request->post['password']) > 256)) {
 			$this->error['password'] = $this->language->get('error_password');
 		}
-		
+
 		return !$this->error;
 	}
 

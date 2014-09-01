@@ -1153,7 +1153,6 @@ class ControllerMarketingAffiliate extends Controller {
 				$filter_email = '';
 			}
 
-
 			$this->load->model('marketing/affiliate');
 
 			$filter_data = array(

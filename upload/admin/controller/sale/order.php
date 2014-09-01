@@ -19,27 +19,9 @@ class ControllerSaleOrder extends Controller {
 
 		$this->load->model('sale/order');
 
-		$this->getForm();
-	}
+		unset($this->session->data['cookie']);
 
-	public function edit() {
-		$this->load->language('sale/order');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('sale/order');
-
-		$this->getForm();
-	}
-
-	public function delete() {
-		$this->load->language('sale/order');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('sale/order');
-
-		if (isset($this->request->get['order_id']) && $this->validateDelete()) {
+		if ($this->validate()) {
 			// API
 			$this->load->model('user/api');
 
@@ -71,11 +53,34 @@ class ControllerSaleOrder extends Controller {
 				} else {
 					$response = json_decode($json, true);
 
+					if (isset($response['cookie'])) {
+						$this->session->data['cookie'] = $response['cookie'];
+					}
+
 					curl_close($curl);
 				}
 			}
+		}
 
-			if (isset($response['cookie'])) {
+		$this->getForm();
+	}
+
+	public function edit() {
+		$this->load->language('sale/order');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('sale/order');
+
+		unset($this->session->data['cookie']);
+
+		if ($this->validate()) {
+			// API
+			$this->load->model('user/api');
+
+			$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
+
+			if ($api_info) {
 				$curl = curl_init();
 
 				// Set SSL if required
@@ -90,8 +95,9 @@ class ControllerSaleOrder extends Controller {
 				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 				curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-				curl_setopt($curl, CURLOPT_URL, HTTPS_CATALOG . 'index.php?route=api/order/delete&order_id=' . $this->request->get['order_id']);
-				curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $response['cookie'] . ';');
+				curl_setopt($curl, CURLOPT_URL, HTTPS_CATALOG . 'index.php?route=api/login');
+				curl_setopt($curl, CURLOPT_POST, true);
+				curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($api_info));
 
 				$json = curl_exec($curl);
 
@@ -100,11 +106,97 @@ class ControllerSaleOrder extends Controller {
 				} else {
 					$response = json_decode($json, true);
 
-					curl_close($curl);
-
-					if (isset($response['error'])) {
-						$this->error['warning'] = $response['error'];
+					if (isset($response['cookie'])) {
+						$this->session->data['cookie'] = $response['cookie'];
 					}
+
+					curl_close($curl);
+				}
+			}
+		}
+
+		$this->getForm();
+	}
+
+	public function delete() {
+		$this->load->language('sale/order');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('sale/order');
+
+		unset($this->session->data['cookie']);
+
+		if (isset($this->request->get['order_id']) && $this->validate()) {
+			// API
+			$this->load->model('user/api');
+
+			$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
+
+			if ($api_info) {
+				$curl = curl_init();
+
+				// Set SSL if required
+				if (substr(HTTPS_CATALOG, 0, 5) == 'https') {
+					curl_setopt($curl, CURLOPT_PORT, 443);
+				}
+
+				curl_setopt($curl, CURLOPT_HEADER, false);
+				curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+				curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
+				curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+				curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
+				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($curl, CURLOPT_URL, HTTPS_CATALOG . 'index.php?route=api/login');
+				curl_setopt($curl, CURLOPT_POST, true);
+				curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($api_info));
+
+				$json = curl_exec($curl);
+
+				if (!$json) {
+					$this->error['warning'] = sprintf($this->language->get('error_curl'), curl_error($curl), curl_errno($curl));
+				} else {
+					$response = json_decode($json, true);
+
+					if (isset($response['cookie'])) {
+						$this->session->data['cookie'] = $response['cookie'];
+					}
+
+					curl_close($curl);
+				}
+			}
+		}
+
+		if (isset($this->session->data['cookie'])) {
+			$curl = curl_init();
+
+			// Set SSL if required
+			if (substr(HTTPS_CATALOG, 0, 5) == 'https') {
+				curl_setopt($curl, CURLOPT_PORT, 443);
+			}
+
+			curl_setopt($curl, CURLOPT_HEADER, false);
+			curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+			curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
+			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($curl, CURLOPT_URL, HTTPS_CATALOG . 'index.php?route=api/order/delete&order_id=' . $this->request->get['order_id']);
+			curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->session->data['cookie'] . ';');
+
+			$json = curl_exec($curl);
+
+			if (!$json) {
+				$this->error['warning'] = sprintf($this->language->get('error_curl'), curl_error($curl), curl_errno($curl));
+			} else {
+				$response = json_decode($json, true);
+
+				curl_close($curl);
+
+				if (isset($response['error'])) {
+					$this->error['warning'] = $response['error'];
 				}
 			}
 		}
@@ -542,6 +634,14 @@ class ControllerSaleOrder extends Controller {
 		$data['tab_voucher'] = $this->language->get('tab_voucher');
 		$data['tab_total'] = $this->language->get('tab_total');
 
+		$data['token'] = $this->session->data['token'];
+
+		if (isset($this->error['warning'])) {
+			$data['error_warning'] = $this->error['warning'];
+		} else {
+			$data['error_warning'] = '';
+		}
+
 		$url = '';
 
 		if (isset($this->request->get['filter_order_id'])) {
@@ -598,51 +698,6 @@ class ControllerSaleOrder extends Controller {
 			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
 		}
 
-		$data['token'] = $this->session->data['token'];
-
-		// Unset any past sessions this page date_added for the api to work.
-		unset($this->session->data['cookie']);
-
-		if ($this->user->hasPermission('modify', 'sale/order')) {
-			$this->load->model('user/api');
-
-			$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
-
-			if ($api_info) {
-				$curl = curl_init();
-
-				// Set SSL if required
-				if (substr(HTTPS_CATALOG, 0, 5) == 'https') {
-					curl_setopt($curl, CURLOPT_PORT, 443);
-				}
-
-				curl_setopt($curl, CURLOPT_HEADER, false);
-				curl_setopt($curl, CURLINFO_HEADER_OUT, true);
-				curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-				curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-				curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
-				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-				curl_setopt($curl, CURLOPT_URL, HTTPS_CATALOG . 'index.php?route=api/login');
-				curl_setopt($curl, CURLOPT_POST, true);
-				curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($api_info));
-
-				$json = curl_exec($curl);
-
-				if (!$json) {
-					$data['error_warning'] = sprintf($this->language->get('error_curl'), curl_error($curl), curl_errno($curl));
-				} else {
-					$response = json_decode($json, true);
-				}
-			}
-		}
-
-		if (isset($response['cookie'])) {
-			$this->session->data['cookie'] = $response['cookie'];
-		} else {
-			$data['error_warning'] = $this->language->get('error_permission');
-		}
-
 		if (!empty($order_info)) {
 			$data['order_id'] = $this->request->get['order_id'];
 			$data['store_id'] = $order_info['store_id'];
@@ -688,7 +743,7 @@ class ControllerSaleOrder extends Controller {
 			$data['shipping_code'] = $order_info['shipping_code'];
 
 			// Add products to the API
-			if ($this->session->data['cookie']) {
+			if (isset($this->session->data['cookie'])) {
 				$products = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
 
 				foreach ($products as $product) {
@@ -745,7 +800,7 @@ class ControllerSaleOrder extends Controller {
 			}
 
 			// Add vouchers to the API
-			if ($this->session->data['cookie']) {
+			if (isset($this->session->data['cookie'])) {
 				$vouchers = $this->model_sale_order->getOrderVouchers($this->request->get['order_id']);
 
 				foreach ($vouchers as $voucher) {
@@ -1610,7 +1665,7 @@ class ControllerSaleOrder extends Controller {
 		}
 	}
 
-	protected function validateDelete() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'sale/order')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}

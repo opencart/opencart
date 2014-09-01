@@ -57,9 +57,15 @@ $('a.thumbnail').on('click', function(e) {
 	$('#<?php echo $target; ?>').attr('value', $(this).parent().find('input').attr('value'));
 	<?php } ?>
 	
-	<?php if ($ckeditor) { ?>
-	CKEDITOR.instances['<?php echo $ckeditor; ?>'].insertHtml('<img src="' + $(this).attr('href') + '" alt="" title="" />');
-	<?php } ?>
+	var range, sel = window.getSelection(); 
+	
+	if (sel.rangeCount) { 
+		var img = document.createElement('img');
+		img.src = $(this).attr('href');
+	
+		range = sel.getRangeAt(0); 
+		range.insertNode(img); 
+	}
 });
 
 $('a.directory').on('click', function(e) {
@@ -101,10 +107,6 @@ $('#button-search').on('click', function() {
 	
 	<?php if ($target) { ?>
 	url += '&target=' + '<?php echo $target; ?>';
-	<?php } ?>
-	
-	<?php if ($ckeditor) { ?>
-	url += '&ckeditor=' + '<?php echo $ckeditor; ?>';
 	<?php } ?>
 			
 	$('#modal-image').load(url);

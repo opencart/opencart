@@ -1,5 +1,6 @@
 <?php
-class CacheFile {
+namespace Cache;
+class File {
 	private $expire;
 
 	public function __construct($expire = 3600) {

@@ -106,9 +106,9 @@
             <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_image; ?></label>
             <div class="col-sm-10">
               <?php if ($thumb) { ?>
-              <a href="" id="thumb-image" class="img-thumbnail img-edit"><img src="<?php echo $thumb; ?>" alt="" title="" /></a>
+              <a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $thumb; ?>" alt="" title="" /></a>
               <?php } else { ?>
-              <a href="" id="thumb-image" class="img-thumbnail img-edit"><i class="fa fa-camera fa-5x"></i></a>
+              <a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></a>
               <?php } ?>
               <input type="hidden" name="image" value="<?php echo $image; ?>" id="input-image" />
             </div>
@@ -542,9 +542,9 @@
             <label class="col-sm-2 control-label" for="input-logo"><?php echo $entry_logo; ?></label>
             <div class="col-sm-10">
               <?php if ($logo) { ?>
-              <a href="" id="thumb-logo" class="img-thumbnail img-edit"><img src="<?php echo $logo; ?>" alt="" title="" /></a>
+              <a href="" id="thumb-logo" data-toggle="image" class="img-thumbnail"><img src="<?php echo $logo; ?>" alt="" title="" /></a>
               <?php } else { ?>
-              <a href="" id="thumb-logo" class="img-thumbnail img-edit"><i class="fa fa-camera fa-5x"></i></a>
+              <a href="" id="thumb-logo" data-toggle="image" class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></a>
               <?php } ?>
               <input type="hidden" name="config_logo" value="<?php echo $config_logo; ?>" id="input-logo" />
             </div>
@@ -553,9 +553,9 @@
             <label class="col-sm-2 control-label" for="input-icon"><span data-toggle="tooltip" title="<?php echo $help_icon; ?>"><?php echo $entry_icon; ?></span></label>
             <div class="col-sm-10">
               <?php if ($icon) { ?>
-              <a href="" id="thumb-icon" class="img-thumbnail img-edit"><img src="<?php echo $icon; ?>" alt="" title="" /></a>
+              <a href="" id="thumb-icon" data-toggle="image" class="img-thumbnail"><img src="<?php echo $icon; ?>" alt="" title="" /></a>
               <?php } else { ?>
-              <a href="" id="thumb-icon" class="img-thumbnail img-edit"><i class="fa fa-camera fa-5x"></i></a>
+              <a href="" id="thumb-icon" data-toggle="image" class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></a>
               <?php } ?>
               <input type="hidden" name="config_icon" value="<?php echo $config_icon; ?>" id="input-icon" />
             </div>

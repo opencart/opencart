@@ -5,4 +5,3 @@
 /tests export-ignore
 .gitattributes export-ignore
 .gitignore export-ignore
-build.xml export-ignore

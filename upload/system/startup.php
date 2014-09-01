@@ -66,24 +66,14 @@ function modification($filename) {
 
 // Autoloader
 function autoload($class) {
-	if (substr($class, 0, 10) == 'controller') {
-		$path = '';
-	}
-	
-	if (substr($class, 0, 10) == 'model') {
-		
-	}
-	
-	if (substr($class, 0, 10) == 'library') {
-		
-	}
-		
-	$file = DIR_SYSTEM . 'library/' . strtolower($class) . '.php';
+	$file = DIR_SYSTEM . 'library/' . str_replace('\\', '/', strtolower($class)) . '.php';
 
 	if (file_exists($file)) {
 		include(modification($file));
+
+		return true;
 	} else {
-		trigger_error('Error: Could not load class ' . $class . '.php!');
+		return false;
 	}
 }
 
@@ -93,6 +83,7 @@ spl_autoload_extensions('.php');
 // Engine
 require_once(modification(DIR_SYSTEM . 'engine/action.php'));
 require_once(modification(DIR_SYSTEM . 'engine/controller.php'));
+require_once(modification(DIR_SYSTEM . 'engine/event.php'));
 require_once(modification(DIR_SYSTEM . 'engine/front.php'));
 require_once(modification(DIR_SYSTEM . 'engine/loader.php'));
 require_once(modification(DIR_SYSTEM . 'engine/model.php'));

@@ -1,7 +1,7 @@
 <?php
 class ModelAccountCustomer extends Model {
 	public function addCustomer($data) {
-		$this->event->trigger('pre_customer_add', $data);
+		$this->event->trigger('pre.customer.add', $data);
 
 		if (isset($data['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($data['customer_group_id'], $this->config->get('config_customer_group_display'))) {
 			$customer_group_id = $data['customer_group_id'];
@@ -74,7 +74,7 @@ class ModelAccountCustomer extends Model {
 			}
 		}
 
-		$this->event->trigger('customer_add', $customer_id);
+		$this->event->trigger('post.customer.add', $customer_id);
 
 		return $customer_id;
 	}

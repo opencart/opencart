@@ -23,7 +23,6 @@ class ControllerPaymentSagepayDirect extends Controller {
 		$data['entry_cc_issue'] = $this->language->get('entry_cc_issue');
 		$data['entry_cc_choice'] = $this->language->get('entry_cc_choice');
 
-
 		$data['help_start_date'] = $this->language->get('help_start_date');
 		$data['help_issue'] = $this->language->get('help_issue');
 

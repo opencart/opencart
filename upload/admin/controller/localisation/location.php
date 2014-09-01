@@ -129,7 +129,6 @@ class ControllerLocalisationLocation extends Controller {
 			$page = 1;
 		}
 
-
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {

@@ -273,14 +273,14 @@ class ControllerLocalisationLanguage extends Controller {
 		$data['entry_filename'] = $this->language->get('entry_filename');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$data['entry_status'] = $this->language->get('entry_status');
-		
+
 		$data['help_code'] = $this->language->get('help_code');
 		$data['help_locale'] = $this->language->get('help_locale');
 		$data['help_image'] = $this->language->get('help_image');
 		$data['help_directory'] = $this->language->get('help_directory');
 		$data['help_filename'] = $this->language->get('help_filename');
 		$data['help_status'] = $this->language->get('help_status');
-		
+
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 

@@ -27,7 +27,7 @@ class ControllerExtensionPayment extends Controller {
 
 			// Call install method if it exsits
 			$this->load->controller('payment/' . $this->request->get['extension'] . '/install');
-		
+
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));

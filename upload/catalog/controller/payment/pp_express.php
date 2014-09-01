@@ -88,8 +88,6 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$result = $this->model_payment_pp_express->call($data);
 
-
-
 		/**
 		 * If a failed PayPal setup happens, handle it.
 		 */
@@ -168,13 +166,13 @@ class ControllerPaymentPPExpress extends Controller {
 				unset($shipping_name[0]);
 				$shipping_last_name = implode(' ', $shipping_name);
 
-
 				$this->session->data['guest']['payment']['address_1'] = $result['PAYMENTREQUEST_0_SHIPTOSTREET'];
 				if (isset($result['PAYMENTREQUEST_0_SHIPTOSTREET2'])) {
 					$this->session->data['guest']['payment']['address_2'] = $result['PAYMENTREQUEST_0_SHIPTOSTREET2'];
 				} else {
 					$this->session->data['guest']['payment']['address_2'] = '';
 				}
+
 				$this->session->data['guest']['payment']['postcode'] = $result['PAYMENTREQUEST_0_SHIPTOZIP'];
 				$this->session->data['guest']['payment']['city'] = $result['PAYMENTREQUEST_0_SHIPTOCITY'];
 
@@ -182,11 +180,13 @@ class ControllerPaymentPPExpress extends Controller {
 				$this->session->data['guest']['shipping']['lastname'] = $shipping_last_name;
 				$this->session->data['guest']['shipping']['company'] = '';
 				$this->session->data['guest']['shipping']['address_1'] = $result['PAYMENTREQUEST_0_SHIPTOSTREET'];
+
 				if (isset($result['PAYMENTREQUEST_0_SHIPTOSTREET2'])) {
 					$this->session->data['guest']['shipping']['address_2'] = $result['PAYMENTREQUEST_0_SHIPTOSTREET2'];
 				} else {
 					$this->session->data['guest']['shipping']['address_2'] = '';
 				}
+
 				$this->session->data['guest']['shipping']['postcode'] = $result['PAYMENTREQUEST_0_SHIPTOZIP'];
 				$this->session->data['guest']['shipping']['city'] = $result['PAYMENTREQUEST_0_SHIPTOCITY'];
 
@@ -1617,8 +1617,6 @@ class ControllerPaymentPPExpress extends Controller {
 				//if the transaction is pending but the new status is completed
 				if ($transaction['payment_status'] != $this->request->post['payment_status']) {
 					$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order_transaction` SET `payment_status` = '" . $this->request->post['payment_status'] . "' WHERE `transaction_id` = '" . $this->db->escape($transaction['transaction_id']) . "' LIMIT 1");
-
-
 				} elseif ($transaction['payment_status'] == 'Pending' && ($transaction['pending_reason'] != $this->request->post['pending_reason'])) {
 					//payment is still pending but the pending reason has changed, update it.
 					$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order_transaction` SET `pending_reason` = '" . $this->request->post['pending_reason'] . "' WHERE `transaction_id` = '" . $this->db->escape($transaction['transaction_id']) . "' LIMIT 1");

@@ -5,13 +5,13 @@ class ModelCheckoutVoucher extends Model {
 
 		return $this->db->getLastId();
 	}
-	
+
 	public function editVoucher($voucher_id, $data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "voucher SET order_id = '" . (int)$order_id . "', code = '" . $this->db->escape($data['code']) . "', from_name = '" . $this->db->escape($data['from_name']) . "', from_email = '" . $this->db->escape($data['from_email']) . "', to_name = '" . $this->db->escape($data['to_name']) . "', to_email = '" . $this->db->escape($data['to_email']) . "', voucher_theme_id = '" . (int)$data['voucher_theme_id'] . "', message = '" . $this->db->escape($data['message']) . "', amount = '" . (float)$data['amount'] . "', status = '1', date_added = NOW()");
 
 		return $this->db->getLastId();
 	}
-	
+
 	public function getVoucher($code) {
 		$status = true;
 
@@ -19,8 +19,8 @@ class ModelCheckoutVoucher extends Model {
 
 		if ($voucher_query->num_rows) {
 			if ($voucher_query->row['order_id']) {
-				
-				
+
+
 				$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE order_id = '" . (int)$voucher_query->row['order_id'] . "' AND order_status_id = '" . (int)$this->config->get('config_complete_status_id') . "'");
 
 				if (!$order_query->num_rows) {

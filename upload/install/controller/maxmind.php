@@ -16,14 +16,14 @@ class ControllerMaxmind extends Controller {
 
 			$data['heading_maxmind'] = $this->language->get('heading_maxmind');
 			$data['heading_maxmind_small'] = $this->language->get('heading_maxmind_small');
-			
+
 			$data['text_maxmind_top'] = $this->language->get('text_maxmind_top');
 			$data['text_maxmind_link'] = $this->language->get('text_maxmind_link');
-			
+
 			$data['entry_licence_key'] = $this->language->get('entry_licence_key');
 			$data['entry_risk'] = $this->language->get('entry_risk');
 			$data['entry_fraud_status'] = $this->language->get('entry_fraud_status');
-			
+
 			$data['help_maxmind_risk'] = $this->language->get('help_maxmind_risk');
 			$data['help_maxmind_fraud'] = $this->language->get('help_maxmind_fraud');
 
@@ -31,7 +31,7 @@ class ControllerMaxmind extends Controller {
 			$data['button_back'] = $this->language->get('button_back');
 
 			$data['action'] = $this->url->link('maxmind');
-			
+
 			if (isset($this->request->post['config_fraud_detection'])) {
 				$data['config_fraud_detection'] = $this->request->post['config_fraud_detection'];
 			} else {
@@ -71,7 +71,6 @@ class ControllerMaxmind extends Controller {
 			}
 
 			$data['back'] = $this->url->link('step_4');
-			
 
 			$data['footer'] = $this->load->controller('footer');
 			$data['header'] = $this->load->controller('header');

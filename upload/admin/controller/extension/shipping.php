@@ -29,7 +29,7 @@ class ControllerExtensionShipping extends Controller {
 
 			// Call install method if it exsits
 			$this->load->controller('shipping/' . $this->request->get['extension'] . '/install');
-		
+
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'));
@@ -54,7 +54,7 @@ class ControllerExtensionShipping extends Controller {
 
 			// Call uninstall method if it exsits
 			$this->load->controller('shipping/' . $this->request->get['extension'] . '/uninstall');
-			
+
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'));

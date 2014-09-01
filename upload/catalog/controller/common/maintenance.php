@@ -33,7 +33,7 @@ class ControllerCommonMaintenance extends Controller {
 		} else {
 			$this->response->addHeader('HTTP/1.0 503 Service Unavailable');
 		}
-		
+
 		$this->response->addHeader('Retry-After: 3600');
 
 		$data['heading_title'] = $this->language->get('heading_title');

@@ -26,7 +26,7 @@ class ModelSaleRecurring extends Model {
 		if (!empty($data['filter_date_added'])) {
 			$sql .= " AND DATE(or.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
 		}
-		
+
 		$result = $this->db->query($sql);
 
 		return $result->row['recurring_count'];
@@ -58,7 +58,7 @@ class ModelSaleRecurring extends Model {
 		if (!empty($data['filter_date_added'])) {
 			$sql .= " AND DATE(or.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
 		}
-		
+
 		$sort_data = array(
 			'or.order_recurring_id',
 			'or.order_id',
@@ -126,7 +126,7 @@ class ModelSaleRecurring extends Model {
 				'product_name'          => $query->row['product_name'],
 				'product_quantity'      => $query->row['product_quantity'],
 				'status'                => $this->getStatus($query->row['status']),
-				'status_id'             => $query->row['status']				
+				'status_id'             => $query->row['status']
 			);
 		}
 
@@ -135,7 +135,7 @@ class ModelSaleRecurring extends Model {
 
 	public function getRecurringTransactions($order_recurring_id) {
 		$transactions = array();
-		
+
 		$query = $this->db->query("SELECT amount, type, date_added FROM " . DB_PREFIX . "order_recurring_transaction WHERE order_recurring_id = " . (int)$order_recurring_id . " ORDER BY date_added DESC")->rows;
 
 		foreach ($query->rows as $result) {

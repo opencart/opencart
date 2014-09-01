@@ -26,10 +26,10 @@ class ControllerExtensionTotal extends Controller {
 
 			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'total/' . $this->request->get['extension']);
 			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'total/' . $this->request->get['extension']);
-			
+
 			// Call install method if it exsits
 			$this->load->controller('total/' . $this->request->get['extension'] . '/install');
-			
+
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('extension/total', 'token=' . $this->session->data['token'], 'SSL'));
@@ -51,10 +51,10 @@ class ControllerExtensionTotal extends Controller {
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
-			
+
 			// Call uninstall method if it exsits
 			$this->load->controller('total/' . $this->request->get['extension'] . '/uninstall');
-			
+
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('extension/total', 'token=' . $this->session->data['token'], 'SSL'));

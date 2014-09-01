@@ -29,7 +29,7 @@ class ControllerExtensionModule extends Controller {
 
 			// Call install method if it exsits
 			$this->load->controller('module/' . $this->request->get['extension'] . '/install');
-			
+
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
@@ -54,7 +54,7 @@ class ControllerExtensionModule extends Controller {
 
 			// Call uninstall method if it exsits
 			$this->load->controller('module/' . $this->request->get['extension'] . '/uninstall');
-			
+
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));

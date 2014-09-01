@@ -811,7 +811,6 @@ class ControllerPaymentAmazonCheckout extends Controller {
 				$zone = '';
 			}
 
-
 			$this->tax->setShippingAddress($country_id, $zone_id);
 
 			$address = array(

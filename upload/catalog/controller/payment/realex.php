@@ -59,7 +59,7 @@ class ControllerPaymentRealex extends Controller {
 		$data['merchant_id'] = $this->config->get('realex_merchant_id');
 
 		$data['timestamp'] = strftime("%Y%m%d%H%M%S");
-		$data['order_id'] = $this->session->data['order_id'] . 'T'.$data['timestamp'] . mt_rand(1, 999);
+		$data['order_id'] = $this->session->data['order_id'] . 'T' . $data['timestamp'] . mt_rand(1, 999);
 
 		$data['amount'] = round($this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false)*100);
 		$data['currency'] = $order_info['currency_code'];
@@ -117,23 +117,23 @@ class ControllerPaymentRealex extends Controller {
 				$this->request->post['ECI'] = 1;
 			}
 
-			$message = '<strong>' . $this->language->get('text_result') . ':</strong> '.$this->request->post['RESULT'];
-			$message .= '<br /><strong>' . $this->language->get('text_message') . ':</strong> '.$this->request->post['MESSAGE'];
+			$message = '<strong>' . $this->language->get('text_result') . ':</strong> ' . $this->request->post['RESULT'];
+			$message .= '<br /><strong>' . $this->language->get('text_message') . ':</strong> ' . $this->request->post['MESSAGE'];
 
 			if (isset($this->request->post['ORDER_ID'])) {
-				$message .= '<br /><strong>' . $this->language->get('text_order_ref') . ':</strong> '.$this->request->post['ORDER_ID'];
+				$message .= '<br /><strong>' . $this->language->get('text_order_ref') . ':</strong> ' . $this->request->post['ORDER_ID'];
 			}
 
 			if (isset($this->request->post['CVNRESULT'])) {
-				$message .= '<br /><strong>' . $this->language->get('text_cvn_result') . ':</strong> '.$this->request->post['CVNRESULT'];
+				$message .= '<br /><strong>' . $this->language->get('text_cvn_result') . ':</strong> ' . $this->request->post['CVNRESULT'];
 			}
 
 			if (isset($this->request->post['AVSPOSTCODERESULT'])) {
-				$message .= '<br /><strong>' . $this->language->get('text_avs_postcode') . ':</strong> '.$this->request->post['AVSPOSTCODERESULT'];
+				$message .= '<br /><strong>' . $this->language->get('text_avs_postcode') . ':</strong> ' . $this->request->post['AVSPOSTCODERESULT'];
 			}
 
 			if (isset($this->request->post['AVSADDRESSRESULT'])) {
-				$message .= '<br /><strong>' . $this->language->get('text_avs_address') . ':</strong> '.$this->request->post['AVSADDRESSRESULT'];
+				$message .= '<br /><strong>' . $this->language->get('text_avs_address') . ':</strong> '. $this->request->post['AVSADDRESSRESULT'];
 			}
 
 			if (isset($this->request->post['ECI'])) {

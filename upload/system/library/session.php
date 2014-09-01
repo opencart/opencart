@@ -18,7 +18,7 @@ class Session {
 	public function getId() {
 		return session_id();
 	}
-	
+
 	public function destroy() {
 		return session_destroy();
 	}

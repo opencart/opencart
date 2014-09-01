@@ -18,9 +18,9 @@ class ControllerSaleOrder extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('sale/order');
-		
+
 		unset($this->session->data['cookie']);
-		
+
 		if ($this->validate()) {
 			// API
 			$this->load->model('user/api');
@@ -52,11 +52,11 @@ class ControllerSaleOrder extends Controller {
 					$this->error['warning'] = sprintf($this->language->get('error_curl'), curl_error($curl), curl_errno($curl));
 				} else {
 					$response = json_decode($json, true);
-					
+
 					if (isset($response['cookie'])) {
 						$this->session->data['cookie'] = $response['cookie'];
 					}
-					
+
 					curl_close($curl);
 				}
 			}
@@ -105,16 +105,16 @@ class ControllerSaleOrder extends Controller {
 					$this->error['warning'] = sprintf($this->language->get('error_curl'), curl_error($curl), curl_errno($curl));
 				} else {
 					$response = json_decode($json, true);
-					
+
 					if (isset($response['cookie'])) {
 						$this->session->data['cookie'] = $response['cookie'];
 					}
-					
+
 					curl_close($curl);
 				}
 			}
 		}
-		
+
 		$this->getForm();
 	}
 
@@ -158,11 +158,11 @@ class ControllerSaleOrder extends Controller {
 					$this->error['warning'] = sprintf($this->language->get('error_curl'), curl_error($curl), curl_errno($curl));
 				} else {
 					$response = json_decode($json, true);
-					
+
 					if (isset($response['cookie'])) {
 						$this->session->data['cookie'] = $response['cookie'];
 					}
-					
+
 					curl_close($curl);
 				}
 			}
@@ -200,7 +200,7 @@ class ControllerSaleOrder extends Controller {
 				}
 			}
 		}
-			
+
 		if (isset($response['error'])) {
 			$this->error['warning'] = $response['error'];
 		}
@@ -633,7 +633,7 @@ class ControllerSaleOrder extends Controller {
 		$data['tab_product'] = $this->language->get('tab_product');
 		$data['tab_voucher'] = $this->language->get('tab_voucher');
 		$data['tab_total'] = $this->language->get('tab_total');
-		
+
 		$data['token'] = $this->session->data['token'];
 
 		if (isset($this->error['warning'])) {
@@ -1408,8 +1408,6 @@ class ControllerSaleOrder extends Controller {
 						$data['error_warning'] = sprintf($this->language->get('error_curl'), curl_error($curl), curl_errno($curl));
 					} else {
 						$response = json_decode($json, true);
-						
-						
 					}
 
 					if (isset($response['cookie'])) {

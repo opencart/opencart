@@ -211,7 +211,7 @@ class ControllerModulePPLogin extends Controller {
 			unset($this->session->data['pp_login']);
 		}
 	}
-	
+
 	protected function validate($email) {
 		if (!$this->customer->login($email, '', true)) {
 			$this->error['warning'] = $this->language->get('error_login');

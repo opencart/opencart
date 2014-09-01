@@ -1,7 +1,5 @@
 <?php
-
 class ControllerPaymentBluePayHostedForm extends Controller {
-
 	private $error = array();
 
 	public function index() {
@@ -40,7 +38,7 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 		$data['entry_transaction'] = $this->language->get('entry_transaction');
 		$data['entry_card_amex'] = $this->language->get('entry_card_amex');
 		$data['entry_card_discover'] = $this->language->get('entry_card_discover');
-		
+
 		$data['entry_total'] = $this->language->get('entry_total');
 		$data['entry_order_status'] = $this->language->get('entry_order_status');
 		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
@@ -131,13 +129,13 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 		} else {
 			$data['bluepay_hosted_form_transaction'] = $this->config->get('bluepay_hosted_form_transaction');
 		}
-		
+
 		if (isset($this->request->post['bluepay_hosted_form_amex'])) {
 			$data['bluepay_hosted_form_amex'] = $this->request->post['bluepay_hosted_form_amex'];
 		} else {
 			$data['bluepay_hosted_form_amex'] = $this->config->get('bluepay_hosted_form_amex');
 		}
-		
+
 		if (isset($this->request->post['bluepay_hosted_form_discover'])) {
 			$data['bluepay_hosted_form_discover'] = $this->request->post['bluepay_hosted_form_discover'];
 		} else {
@@ -431,5 +429,4 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($this->request->get));
 	}
-
 }

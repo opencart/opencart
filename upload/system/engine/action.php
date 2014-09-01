@@ -7,10 +7,10 @@ final class Action {
 
 	public function __construct($route, $args = array()) {
 		$path = '';
-		
+
 		// Break apart the route
 		$parts = explode('/', str_replace('../', '', (string)$route));
-		
+
 		foreach ($parts as $part) {
 			$path .= $part;
 
@@ -34,7 +34,7 @@ final class Action {
 				break;
 			}
 		}
-		
+
 		if ($args) {
 			$this->args = $args;
 		}
@@ -53,7 +53,7 @@ final class Action {
 		if (substr($this->method, 0, 2) == '__') {
 			return false;
 		}
-		
+
 		if (is_file($this->file)) {
 			include_once($this->file);
 
@@ -68,6 +68,6 @@ final class Action {
 			}
 		} else {
 			return false;
-		}		
+		}
 	}
 }

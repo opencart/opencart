@@ -133,7 +133,7 @@ class ControllerPaymentRealex extends Controller {
 			}
 
 			if (isset($this->request->post['AVSADDRESSRESULT'])) {
-				$message .= '<br /><strong>' . $this->language->get('text_avs_address') . ':</strong> '. $this->request->post['AVSADDRESSRESULT'];
+				$message .= '<br /><strong>' . $this->language->get('text_avs_address') . ':</strong> ' . $this->request->post['AVSADDRESSRESULT'];
 			}
 
 			if (isset($this->request->post['ECI'])) {

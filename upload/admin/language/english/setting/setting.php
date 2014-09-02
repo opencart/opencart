@@ -174,8 +174,8 @@ $_['help_return_status']           = 'Set the default return status when a retur
 $_['help_icon']                    = 'The icon should be a PNG that is 16px x 16px.';
 $_['help_ftp_root']                = 'The directory your OpenCart installation is stored in. Normally \'public_html/\'.';
 $_['help_mail_protocol']           = 'Only choose \'Mail\' unless your host has disabled the php mail function.';
-$_['help_mail_parameter']          = 'When using \'Mail\', additional mail parameters can be added here (e.g. "-f email@storeaddress.com").';
-$_['help_mail_smtp_hostname']      = 'Add \'tls://\' prefix if security connection is required. (e.g. "tls://smtp.gmail.com").';
+$_['help_mail_parameter']          = 'When using \'Mail\', additional mail parameters can be added here (e.g. -f email@storeaddress.com).';
+$_['help_mail_smtp_hostname']      = 'Add \'tls://\' prefix if security connection is required. (e.g. tls://smtp.gmail.com).';
 $_['help_mail_alert']              = 'Any additional emails you want to receive the alert email, in addition to the main store email. (comma separated).';
 $_['help_fraud_detection']         = 'MaxMind is a fraud detection service. If you don\'t have a license key you can <a href="http://www.maxmind.com/?rId=opencart" target="_blank"><u>sign up here</u></a>. Once you have obtained a key, copy and paste it into the field below.';
 $_['help_fraud_score']             = 'The higher the score the more likely the order is fraudulent. Set a score between 0 - 100.';

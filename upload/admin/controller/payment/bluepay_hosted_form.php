@@ -47,7 +47,6 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 		$data['entry_debug'] = $this->language->get('entry_debug');
 		$data['entry_card'] = $this->language->get('entry_card');
 
-
 		$data['help_total'] = $this->language->get('help_total');
 		$data['help_debug'] = $this->language->get('help_debug');
 		$data['help_transaction'] = $this->language->get('help_transaction');

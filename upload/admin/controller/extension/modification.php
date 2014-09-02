@@ -193,7 +193,6 @@ class ControllerExtensionModification extends Controller {
 											}
 										}
 
-
 									//	if () {
 									//		$log->write('Found: %s on line');
 

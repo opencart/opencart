@@ -342,6 +342,7 @@ input[type=radio]:checked:before {
 }
 /* Buttons */
 .btn {
+	border: none;
 	border-radius: 3px;
 	font-size: 12px;
 	box-shadow: none;
@@ -364,33 +365,31 @@ input[type=radio]:checked:before {
 }
 .btn:hover {
 	cursor: pointer;
-	/*background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.1));*/
+	background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
 }
 
 .btn-default {
-	color: #333;
+	color: #FFFFFF;
+	background-color: #BBBBBB;
+}
+.btn-default {
+	color: #FFFFFF;
 	background-color: #FAFAFA;
-	border-color: #ddd;
 }
 .btn-primary {
-	background-color: #1B80C2;
-	border-color: #16689E;
+	background-color: #313540;
 }
 .btn-info {
-	background-color: #5bccf6;
-	border-color: #3dc4f5;;
+	background-color: #3EC3D5;
 }
 .btn-success {
 	background-color: #9cd159;
-	border-color: #8eca3f;
 }
 .btn-warning {
-	background-color: #fa7753;
-	border-color: #f96339;
+	background-color: #E9405A;
 }
 .btn-danger {
 	background-color: #ff5757;
-	border-color: #f33;
 }
 
 .pagination {

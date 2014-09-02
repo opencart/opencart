@@ -5,9 +5,7 @@ $_['text_title']      		= 'Etsy';
 $_['text_openbay']      	= 'OpenBay Pro';
 
 // Tabs
-$_['tab_general']      		= 'Required information';
 $_['tab_additional']      	= 'Additional information';
-$_['tab_images']      		= 'Images';
 
 // Text
 $_['text_option']      		= 'Select option';

@@ -1408,7 +1408,7 @@ class ControllerOpenbayEbay extends Controller {
 				}
 
 				if ($product_info['quantity'] < 1 && (!isset($product_info['has_option']) || $product_info['has_option'] == 0)) {
-					$data['error_warning'] = $this->language->get('text_error_no_stock');
+					$data['error_warning'] = $this->language->get('error_no_stock');
 				}
 
 				$data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);

@@ -24,7 +24,7 @@
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-listing-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
           <li><a href="#tab-listing-feature" data-toggle="tab"><?php echo $tab_feature; ?></a></li>
-          <li><a href="#tab-listing-catalog" data-toggle="tab"><?php echo $text_tab_ebay_catalog; ?></a></li>
+          <li><a href="#tab-listing-catalog" data-toggle="tab"><?php echo $tab_ebay_catalog; ?></a></li>
           <li><a href="#tab-listing-description" data-toggle="tab"><?php echo $tab_description; ?></a></li>
           <li><a href="#tab-listing-images" data-toggle="tab"><?php echo $tab_images; ?></a></li>
           <li><a href="#tab-listing-price" data-toggle="tab"><?php echo $tab_price; ?></a></li>
@@ -36,7 +36,7 @@
           <div id="tab-listing-general" class="tab-pane active">
             <?php if ($product['store_cats'] != false) { ?>
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $text_shop_category; ?></label>
+                <label class="col-sm-2 control-label"><?php echo $entry_shop_category; ?></label>
                 <div class="col-sm-10">
                   <select name="eBayStoreCatId" class="form-control">
                     <?php foreach($product['store_cats'] as $key => $cat) { ?>
@@ -48,7 +48,7 @@
             <?php } ?>
             <?php if (!empty($product['popular_cats'])) { ?>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_category_popular; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_category_popular; ?></label>
               <div class="col-sm-10">
                 <p><input type="radio" name="popular" value="" id="popular_default" checked /> <strong><?php echo $text_none; ?></strong></p>
                 <?php foreach($product['popular_cats'] as $cat) { ?>
@@ -60,13 +60,13 @@
             <input type="hidden" name="popular" value="" />
             <?php } ?>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_category_suggested; ?><br /><span id="suggested-categories-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_category_suggested; ?><br /><span id="suggested-categories-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
               <div class="col-sm-10">
                 <div id="suggested-cats"></div>
               </div>
             </div>
             <div class="form-group" id="category-selections-row">
-              <label class="col-sm-2 control-label"><?php echo $text_category; ?><br /><span id="category-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_category; ?><br /><span id="category-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
               <div class="col-sm-10">
                 <div class="row form-group">
                   <div class="col-sm-12">
@@ -127,7 +127,7 @@
 
           <div id="tab-listing-catalog" class="tab-pane">
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_search_catalog; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_search_catalog; ?></label>
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-3">
@@ -140,7 +140,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_catalog; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_catalog; ?></label>
               <div class="col-sm-10">
                 <span class="help-block">
                   <input type="hidden" value="0" name="catalog_image">
@@ -154,19 +154,19 @@
 
           <div id="tab-listing-description" class="tab-pane">
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_title; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_title; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="name" value="<?php echo $product['name']; ?>" size="85" id="name" class="form-control" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_subtitle; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_subtitle; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="sub_name" value="" size="85" id="sub_name" class="form-control" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_description; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_description; ?></label>
               <div class="col-sm-10">
                 <textarea name="description" id="description-field"><?php echo $product['description']; ?></textarea>
               </div>
@@ -176,7 +176,7 @@
           <div id="tab-listing-images" class="tab-pane">
             <div class="well well-lg">
               <div class="row">
-                <label class="col-sm-2 control-label"><?php echo $text_profile_load; ?></label>
+                <label class="col-sm-2 control-label"><?php echo $entry_profile_load; ?></label>
                 <div class="col-sm-10">
                   <div class="input-group">
                     <span class="input-group-addon" id="profile-theme-icon"><i class="fa fa-lg fa-file-text"></i></span>
@@ -193,7 +193,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_template; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_template; ?></label>
               <div class="col-sm-10">
                 <select name="template" id="template_id" class="form-control">
                   <option value="None">None</option>
@@ -206,7 +206,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_image_gallery; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_image_gallery; ?></label>
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-3">
@@ -227,7 +227,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_image_thumb; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_image_thumb; ?></label>
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-3">
@@ -248,21 +248,21 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_images_supersize; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_images_supersize; ?></label>
               <div class="col-sm-10">
                 <input type="hidden" name="gallery_super" value="0" />
                 <input type="checkbox" name="gallery_super" value="1" id="gallery_super" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_images_gallery_plus; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_images_gallery_plus; ?></label>
               <div class="col-sm-10">
                 <input type="hidden" name="gallery_plus" value="0" />
                 <input type="checkbox" name="gallery_plus" value="1" id="gallery_plus" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_gallery_select_all; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_gallery_select_all; ?></label>
               <div class="col-sm-10">
                 <p><input type="checkbox" name="allTemplateImages" value="1" id="allTemplateImages" style="margin-top:2px;" /> - <?php echo $text_template_images; ?></p>
                 <p><input type="checkbox" name="allEbayImages" value="1" id="allEbayImages" style="margin-top:2px;" /> - <?php echo $text_ebay_images; ?></p>
@@ -461,26 +461,26 @@
 <!-- OPENSTOCK CHANGES FINSISH @TODO -->
 
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $text_qty; ?></label>
+                <label class="col-sm-2 control-label"><?php echo $entry_qty; ?></label>
                 <div class="col-sm-10">
                   <input type="text" name="qty[0]" id="qty_0" value="<?php echo $product['quantity']; ?>" class="form-control" onkeyup="updateReserveMessage('0', '<?php echo $product['quantity']; ?>');" />
-                  <span class="help-block"><?php echo $text_qty_help; ?></span>
+                  <span class="help-block"><?php echo $help_quantity_reserve; ?></span>
                   <span class="help-block"><?php echo $column_stock_total; ?>: <?php echo $product['quantity']; ?><br/><span id="qty_reserve_0">0</span> <?php echo $text_stock_reserved; ?></span>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $text_price; ?></label>
+                <label class="col-sm-2 control-label"><?php echo $entry_price; ?></label>
                 <div class="col-sm-10">
                   <div class="input-group col-xs-4">
                     <input type="text" name="price_no_tax[0]" id="taxEx" value="<?php echo number_format($product['price'], 2, '.', ''); ?>" class="form-control" onkeyup="updatePriceFromEx();" />
                     <span class="input-group-addon"><?php echo $text_price_ex_tax; ?></span>
                   </div>
-                  <span class="help-block"><?php echo $text_price_ex_tax_help; ?></span>
+                  <span class="help-block"><?php echo $help_price_ex_tax; ?></span>
                   <div class="input-group col-xs-4">
                     <input type="text" name="price[0]" id="taxInc" value="<?php echo number_format($product['price'], 2, '.', ''); ?>" class="form-control" onkeyup="updatePriceFromInc();" />
                     <span class="input-group-addon"><?php echo $text_price_inc_tax; ?></span>
                   </div>
-                  <span class="help-block"><?php echo $text_price_inc_tax_help; ?></span>
+                  <span class="help-block"><?php echo $help_price_inc_tax; ?></span>
                 </div>
               </div>
               <div class="form-group">
@@ -495,7 +495,7 @@
             <?php } ?>
             <?php if (empty($product['options'])) { ?>
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $text_offers; ?></label>
+                <label class="col-sm-2 control-label"><?php echo $entry_offers; ?></label>
                 <div class="col-sm-10">
                   <input type="hidden" name="bestoffer" value="0" />
                   <input type="checkbox" name="bestoffer" value="1" id="bestoffer" />
@@ -503,12 +503,12 @@
               </div>
             <?php } ?>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_private; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_private; ?></label>
               <div class="col-sm-10">
                 <span class="help-block">
                   <input type="hidden" name="private_listing" value="0" />
                   <input type="checkbox" name="private_listing" value="1" id="private_listing" />
-                   - <?php echo $text_private_help; ?>
+                   - <?php echo $help_private; ?>
                 </span>
               </div>
             </div>
@@ -516,14 +516,14 @@
 
           <div id="tab-listing-payment" class="tab-pane">
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_imediate_payment; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_imediate_payment; ?></label>
               <div class="col-sm-10">
                 <input type="hidden" name="ebay_payment_immediate" value="0" />
                 <input type="checkbox" name="ebay_payment_immediate" value="1" id="ebay_payment_immediate" <?php if ($product['defaults']['ebay_payment_immediate'] != 1) { echo'checked '; } ?> />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_payment; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_payment; ?></label>
               <div class="col-sm-10">
                 <?php $paypal = false; ?>
                 <?php foreach($product['payments'] as $payment) { ?>
@@ -576,21 +576,21 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_item_postcode; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_item_postcode; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="postcode" id="postcode" class="form-control" />
                 <span class="help-block"><?php echo $text_item_postcode_help; ?></span>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_item_location; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_item_location; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="location" id="location" class="form-control" />
                 <span class="help-block"><?php echo $text_item_location_help; ?></span>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_despatch_country; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_despatch_country; ?></label>
               <div class="col-sm-10">
                 <select name="country" id="country" class="form-control">
                   <?php foreach($setting['countries'] as $country) { ?>
@@ -601,7 +601,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_despatch_time; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_despatch_time; ?></label>
               <div class="col-sm-10">
                 <select name="dispatch_time" id="dispatch_time" class="form-control">
                   <?php foreach($setting['dispatch_times'] as $dis) { ?>
@@ -611,7 +611,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_shipping_getitfast; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_shipping_getitfast; ?></label>
               <div class="col-sm-10">
                 <input type="hidden" name="get_it_fast" value="0" />
                 <input type="checkbox" name="get_it_fast" value="1" id="get_it_fast" />
@@ -619,7 +619,7 @@
             </div>
             <?php if ($product['defaults']['cod_surcharge'] == 1) { ?>
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $text_shipping_cod; ?></label>
+                <label class="col-sm-2 control-label"><?php echo $entry_shipping_cod; ?></label>
                 <div class="col-sm-10">
                   <input type="text" name="cod_fee" id="cod_fee" class="form-control" />
                 </div>
@@ -627,7 +627,7 @@
             <?php } ?>
 
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_shipping_type_nat; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_shipping_type_nat; ?></label>
               <div class="col-sm-10">
                 <select name="data[national][shipping_type]" class="form-control" id="shipping-type-national">
                   <?php echo $setting['shipping_types']['flat'] == 1 ? '<option value="flat"'.(isset($data['national']['shipping_type']) && $data['national']['shipping_type'] == 'flat' ? ' selected' : '').'>'.$text_shipping_flat.'</option>' : ''; ?>
@@ -642,7 +642,7 @@
                 <div class="col-sm-2">
                   <div class="row">
                     <div class="col-sm-12 text-right">
-                      <p><label class="control-label text-right"><?php echo $text_shipping_nat; ?></label></p>
+                      <p><label class="control-label text-right"><?php echo $entry_shipping_nat; ?></label></p>
                     </div>
                   </div>
                   <div class="row">
@@ -661,7 +661,7 @@
 
             <div id="national-container-calculated" style="display:none;" class="shipping-national-container">
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $text_shipping_handling_nat; ?></label>
+                <label class="col-sm-2 control-label"><?php echo $entry_shipping_handling_nat; ?></label>
                 <div class="col-sm-10">
                   <input type="text" name="data[national][calculated][handling_fee]" id="national-handling-fee" class="form-control" />
                 </div>
@@ -670,7 +670,7 @@
                 <div class="col-sm-2">
                   <div class="row">
                     <div class="col-sm-12 text-right">
-                      <p><label class="control-label text-right"><?php echo $text_shipping_nat; ?></label></p>
+                      <p><label class="control-label text-right"><?php echo $entry_shipping_nat; ?></label></p>
                     </div>
                   </div>
                   <div class="row">
@@ -689,7 +689,7 @@
 
             <div id="national-container-freight" style="display:none;" class="shipping-national-container">
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $text_shipping_in_desc; ?></label>
+                <label class="col-sm-2 control-label"><?php echo $entry_shipping_in_desc; ?></label>
                 <div class="col-sm-10">
                   <input type="hidden" name="data[national][freight][in_description]" value="0" />
                   <input type="checkbox" name="data[national][freight][in_description]" value="1" />
@@ -698,7 +698,7 @@
             </div>
 
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_shipping_type_int; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_shipping_type_int; ?></label>
               <div class="col-sm-10">
                 <select name="data[international][shipping_type]" class="form-control" id="shipping-type-international">
                   <?php echo $setting['shipping_types']['flat'] == 1 ? '<option value="flat"'.(isset($data['international']['shipping_type']) && $data['international']['shipping_type'] == 'flat' ? ' selected' : '').'>'.$text_shipping_flat.'</option>' : ''; ?>
@@ -712,7 +712,7 @@
                 <div class="col-sm-2">
                   <div class="row">
                     <div class="col-sm-12 text-right">
-                      <p><label class="control-label text-right"><?php echo $text_shipping_intnat; ?></label></p>
+                      <p><label class="control-label text-right"><?php echo $entry_shipping_intnat; ?></label></p>
                     </div>
                   </div>
                   <div class="row">
@@ -731,7 +731,7 @@
 
             <div id="international-container-calculated" style="display:none;" class="shipping-international-container">
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $text_shipping_handling_int; ?></label>
+                <label class="col-sm-2 control-label"><?php echo $entry_shipping_handling_int; ?></label>
                 <div class="col-sm-10">
                   <input type="text" name="data[international][calculated][handling_fee]" id="international-handling-fee" class="form-control" />
                 </div>
@@ -740,7 +740,7 @@
                 <div class="col-sm-2">
                   <div class="row">
                     <div class="col-sm-12 text-right">
-                      <p><label class="control-label text-right"><?php echo $text_shipping_intnat; ?></label></p>
+                      <p><label class="control-label text-right"><?php echo $entry_shipping_intnat; ?></label></p>
                     </div>
                   </div>
                   <div class="row">
@@ -935,7 +935,7 @@
             <a class="btn btn-primary" id="button-edit"><i class="fa fa-pencil fa-lg"></i> <?php echo $text_review_edit; ?></a>
           </div>
           <div class="col-sm-6 text-right">
-            <a class="btn btn-primary" id="button-save"><i class="fa fa-save fa-lg"></i> <?php echo $button_save_listing; ?></a>
+            <a class="btn btn-primary" id="button-save"><i class="fa fa-save fa-lg"></i> <?php echo $button_save; ?></a>
           </div>
         </div>
       </div>
@@ -1119,7 +1119,7 @@
                     if (data.error) {
                         alert(data.error);
                         $('#button-verify').hide();
-                        $('#content').prepend('<div class="alert alert-warning"><?php echo $text_ajax_catproblem; ?></div>');
+                        $('#content').prepend('<div class="alert alert-warning"><?php echo $error_category_sync; ?></div>');
                         $('#page-listing, .heading').hide();
                     } else {
                         $('#final-category').val($('#category-select-'+prevLevel).val());
@@ -1172,7 +1172,7 @@
                     }
                 } else {
                     if (data.msg == null) {
-                        alert('<?php echo $text_error_features; ?>');
+                        alert('<?php echo $error_features; ?>');
                     } else {
                         alert(data.msg);
                     }
@@ -1189,12 +1189,12 @@
         var cat = $('#final-category').val();
 
         if (cat <= 0) {
-            alert('<?php echo $text_error_choose_category; ?>');
+            alert('<?php echo $error_choose_category; ?>');
             return;
         }
 
         if (qry == '') {
-            alert('<?php echo $text_error_enter_text; ?>');
+            alert('<?php echo $error_search_text; ?>');
             return;
         }
 
@@ -1213,7 +1213,7 @@
             success: function(data) {
                 if (data.error == false) {
                     if (data.data.productSearchResult.paginationOutput.totalEntries == 0 || data.data.ack == 'Failure') {
-                        $('#product-catalog-container').before('<div class="alert alert-warning" id="catalog-search-alert"><?php echo $text_error_no_catalog_data; ?></div>');
+                        $('#product-catalog-container').before('<div class="alert alert-warning" id="catalog-search-alert"><?php echo $error_catalog_data; ?></div>');
                     } else {
                         data.data.productSearchResult.products = $.makeArray(data.data.productSearchResult.products);
 
@@ -1243,7 +1243,7 @@
                     }
                 } else {
                     if (data.msg == null) {
-                        alert('<?php echo $text_error_catalog; ?>');
+                        alert('<?php echo $error_catalog_load; ?>');
                     } else {
                         alert(data.msg);
                     }
@@ -1366,7 +1366,7 @@
                     }
                 } else {
                     if (data.msg == null) {
-                        alert('<?php echo $text_error_features; ?>');
+                        alert('<?php echo $error_features; ?>');
                     } else {
                         alert(data.msg);
                     }
@@ -1552,62 +1552,62 @@
     if ($('.checkboxEbayImage:checked').length > 0) {
       var main_image = $('[name=main_image]:checked').val();
       if (!$('#image-checkbox-'+main_image).attr('checked')) {
-        $('#page-listing').prepend('<div class="alert alert-warning listing-error"><?php echo $text_ajax_mainimage; ?></div>');
+        $('#page-listing').prepend('<div class="alert alert-warning listing-error"><?php echo $error_main_image; ?></div>');
         err = 1;
       }
     } else {
-      $('#page-listing').prepend('<div class="alert alert-warning listing-error"><?php echo $text_ajax_noimages; ?></div>');
+      $('#page-listing').prepend('<div class="alert alert-warning listing-error"><?php echo $error_no_images; ?></div>');
       err = 1;
     }
 
     if ($('#final-category').val() == '') {
-      $('#page-listing').prepend('<div class="alert alert-warning listing-error"><?php echo $text_ajax_error_cat; ?></div>');
+      $('#page-listing').prepend('<div class="alert alert-warning listing-error"><?php echo $error_choose_category; ?></div>');
       err = 1;
     }
 
         if ($('#auction_duration').val() == '') {
             err = 1;
-            alert('<?php echo $text_ajax_duration; ?>');
+            alert('<?php echo $error_duration; ?>');
         }
 
         if ($('#gallery_height').val() == '' || $('#gallery_width').val() == '' || $('#thumb_height').val() == '' || $('#thumb_width').val() == '') {
             err = 1;
-            alert('<?php echo $text_ajax_image_size; ?>');
+            alert('<?php echo $error_image_size; ?>');
         }
 
         if ($('#sku').val() == '') {
             err = 1;
-            alert('<?php echo $text_ajax_error_sku; ?>');
+            alert('<?php echo $error_sku; ?>');
         }
 
         if ($('#name').val() == '') {
             err = 1;
-            alert('<?php echo $text_ajax_error_name; ?>');
+            alert('<?php echo $error_name; ?>');
         }
 
         if ($('#name').val() == '') {
             err = 1;
-            alert('<?php echo $text_ajax_error_name_len; ?>');
+            alert('<?php echo $error_name_length; ?>');
         }
 
         if ($('#location').val() == '' && $('#postcode').val() == '') {
             err = 1;
-            alert('<?php echo $text_ajax_error_loc; ?>');
+            alert('<?php echo $error_item_location; ?>');
         }
 
         if ($('#dispatch_time').val() == '') {
             err = 1;
-            alert('<?php echo $text_ajax_error_time; ?>');
+            alert('<?php echo $error_dispatch_time; ?>');
         }
 
         if ($('#count_national').val() == 0) {
             err = 1;
-            alert('<?php echo $text_ajax_error_nat_svc; ?>');
+            alert('<?php echo $error_shipping_national; ?>');
         }
 
         if ($('#duration-input').val() == '') {
             err = 1;
-            alert('<?php echo $text_ajax_error_duration; ?>');
+            alert('<?php echo $error_listing_duration; ?>');
         }
 
         <?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])) { ?>
@@ -1617,7 +1617,7 @@
 
             if ($('#qty').val() < 1) {
                 err = 1;
-                alert('<?php echo $text_ajax_error_stock; ?>');
+                alert('<?php echo $error_stock; ?>');
             }
         <?php } ?>
 
@@ -1719,7 +1719,7 @@
           $('#button-save').show();
           $('#button-save-loading').hide();
           $('#page-review').hide();
-          $('#button-save').empty().html('<?php echo $button_save_listing; ?>').removeAttr('disabled');
+          $('#button-save').empty().html('<?php echo $button_save; ?>').removeAttr('disabled');
         },
         error: function (xhr, ajaxOptions, thrownError) {
           if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }

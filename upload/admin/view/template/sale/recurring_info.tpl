@@ -51,7 +51,7 @@
         <td><?php echo $reference; ?></td>
       </tr>
       <tr>
-        <td><?php echo $entry_payment_type; ?></td>
+        <td><?php echo $entry_payment_method; ?></td>
         <td><?php echo $payment_method; ?></td>
       </tr>
       <tr>

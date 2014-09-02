@@ -204,7 +204,7 @@ class ModelPaymentRealexRemote extends Model {
 					if ((isset($order_info['shipping_iso_code_2']) && !empty($order_info['shipping_iso_code_2'])) || (isset($order_info['shipping_postcode']) && !empty($order_info['shipping_postcode']))) {
 						$xml .= '<address type="shipping">';
 						if ((isset($order_info['shipping_postcode']) && !empty($order_info['shipping_postcode']))) {
-							$xml .= '<code>'.filter_var($order_info['shipping_postcode'], FILTER_SANITIZE_NUMBER_INT).'|'.filter_var($order_info['shipping_address_1'], FILTER_SANITIZE_NUMBER_INT).'</code>';
+							$xml .= '<code>' . filter_var($order_info['shipping_postcode'], FILTER_SANITIZE_NUMBER_INT) . '|' . filter_var($order_info['shipping_address_1'], FILTER_SANITIZE_NUMBER_INT) . '</code>';
 						}
 						if ((isset($order_info['shipping_iso_code_2']) && !empty($order_info['shipping_iso_code_2']))) {
 							$xml .= '<country>' . $order_info['shipping_iso_code_2'] . '</country>';

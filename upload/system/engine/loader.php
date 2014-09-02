@@ -5,24 +5,24 @@ final class Loader {
 	public function __construct($registry) {
 		$this->registry = $registry;
 	}
-			
+
 	public function controller($route) {
 		// function arguments
 		$args = func_get_args();
 
 		// Remove the route
-		array_shift($args);	
+		array_shift($args);
 
-		$action = new Action($route, $args); 
+		$action = new Action($route, $args);
 
 		return $action->execute($this->registry);
 	}
-		
+
 	public function model($model) {
 		$file = DIR_APPLICATION . 'model/' . $model . '.php';
 		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $model);
-				
-		if (file_exists($file)) { 
+
+		if (file_exists($file)) {
 			include_once($file);
 
 			$this->registry->set('model_' . str_replace('/', '_', $model), new $class($this->registry));
@@ -31,13 +31,13 @@ final class Loader {
 			exit();
 		}
 	}
-	
+
 	public function view($template, $data = array()) {
 		$file = DIR_TEMPLATE . $template;
-		
+
 		if (file_exists($file)) {
 			extract($data);
-			
+
 			ob_start();
 
 			require($file);
@@ -63,7 +63,7 @@ final class Loader {
 			exit();
 		}
 	}
-	
+
 	public function helper($helper) {
 		$file = DIR_SYSTEM . 'helper/' . $helper . '.php';
 

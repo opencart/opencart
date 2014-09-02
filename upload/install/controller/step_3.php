@@ -2,7 +2,7 @@
 class ControllerStep3 extends Controller {
 	private $error = array();
 
-	public function index() {		
+	public function index() {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->load->model('install');
 
@@ -17,14 +17,14 @@ class ControllerStep3 extends Controller {
 
 			$output .= '// DIR' . "\n";
 			$output .= 'define(\'DIR_APPLICATION\', \'' . DIR_OPENCART . 'catalog/\');' . "\n";
-			$output .= 'define(\'DIR_SYSTEM\', \'' . DIR_OPENCART. 'system/\');' . "\n";
+			$output .= 'define(\'DIR_SYSTEM\', \'' . DIR_OPENCART . 'system/\');' . "\n";
 			$output .= 'define(\'DIR_LANGUAGE\', \'' . DIR_OPENCART . 'catalog/language/\');' . "\n";
 			$output .= 'define(\'DIR_TEMPLATE\', \'' . DIR_OPENCART . 'catalog/view/theme/\');' . "\n";
 			$output .= 'define(\'DIR_CONFIG\', \'' . DIR_OPENCART . 'system/config/\');' . "\n";
 			$output .= 'define(\'DIR_IMAGE\', \'' . DIR_OPENCART . 'image/\');' . "\n";
 			$output .= 'define(\'DIR_CACHE\', \'' . DIR_OPENCART . 'system/cache/\');' . "\n";
 			$output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_OPENCART . 'system/download/\');' . "\n";
-			$output .= 'define(\'DIR_MODIFICATION\', \'' . DIR_OPENCART. 'system/modification/\');' . "\n";
+			$output .= 'define(\'DIR_MODIFICATION\', \'' . DIR_OPENCART . 'system/modification/\');' . "\n";
 			$output .= 'define(\'DIR_LOGS\', \'' . DIR_OPENCART . 'system/logs/\');' . "\n\n";
 
 			$output .= '// DB' . "\n";
@@ -60,7 +60,7 @@ class ControllerStep3 extends Controller {
 			$output .= 'define(\'DIR_CACHE\', \'' . DIR_OPENCART . 'system/cache/\');' . "\n";
 			$output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_OPENCART . 'system/download/\');' . "\n";
 			$output .= 'define(\'DIR_LOGS\', \'' . DIR_OPENCART . 'system/logs/\');' . "\n";
-			$output .= 'define(\'DIR_MODIFICATION\', \'' . DIR_OPENCART. 'system/modification/\');' . "\n";
+			$output .= 'define(\'DIR_MODIFICATION\', \'' . DIR_OPENCART . 'system/modification/\');' . "\n";
 			$output .= 'define(\'DIR_CATALOG\', \'' . DIR_OPENCART . 'catalog/\');' . "\n\n";
 
 			$output .= '// DB' . "\n";
@@ -79,7 +79,7 @@ class ControllerStep3 extends Controller {
 
 			$this->response->redirect($this->url->link('step_4'));
 		}
-		
+
 		$this->document->setTitle($this->language->get('heading_step_3'));
 
 		$data['heading_step_3'] = $this->language->get('heading_step_3');
@@ -88,8 +88,8 @@ class ControllerStep3 extends Controller {
 		$data['text_license'] = $this->language->get('text_license');
 		$data['text_installation'] = $this->language->get('text_installation');
 		$data['text_configuration'] = $this->language->get('text_configuration');
-		$data['text_finished'] = $this->language->get('text_finished');	
-		$data['text_db_connection'] = $this->language->get('text_db_connection');	
+		$data['text_finished'] = $this->language->get('text_finished');
+		$data['text_db_connection'] = $this->language->get('text_db_connection');
 		$data['text_db_administration'] = $this->language->get('text_db_administration');
 		$data['text_mysqli'] = $this->language->get('text_mysqli');
 		$data['text_mpdo'] = $this->language->get('text_mpdo');
@@ -104,7 +104,7 @@ class ControllerStep3 extends Controller {
 		$data['entry_username'] = $this->language->get('entry_username');
 		$data['entry_password'] = $this->language->get('entry_password');
 		$data['entry_email'] = $this->language->get('entry_email');
-		
+
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_back'] = $this->language->get('button_back');
 
@@ -148,13 +148,13 @@ class ControllerStep3 extends Controller {
 			$data['error_password'] = $this->error['password'];
 		} else {
 			$data['error_password'] = '';
-		}		
+		}
 
 		if (isset($this->error['email'])) {
 			$data['error_email'] = $this->error['email'];
 		} else {
 			$data['error_email'] = '';
-		}	
+		}
 
 		$data['action'] = $this->url->link('step_3');
 
@@ -222,55 +222,55 @@ class ControllerStep3 extends Controller {
 		$data['footer'] = $this->load->controller('footer');
 		$data['header'] = $this->load->controller('header');
 
-		$this->response->setOutput($this->load->view('step_3.tpl', $data));		
+		$this->response->setOutput($this->load->view('step_3.tpl', $data));
 	}
 
 	private function validate() {
 		if (!$this->request->post['db_hostname']) {
-			$this->error['db_hostname'] = 'Hostname required!';
+			$this->error['db_hostname'] = $this->language->get('error_db_hostname');
 		}
 
 		if (!$this->request->post['db_username']) {
-			$this->error['db_username'] = 'Username required!';
+			$this->error['db_username'] = $this->language->get('error_db_username');
 		}
 
 		if (!$this->request->post['db_database']) {
-			$this->error['db_database'] = 'Database Name required!';
+			$this->error['db_database'] = $this->language->get('error_db_database');
 		}
 
 		if ($this->request->post['db_prefix'] && preg_match('/[^a-z0-9_]/', $this->request->post['db_prefix'])) {
-			$this->error['db_prefix'] = 'DB Prefix can only contain lowercase characters in the a-z range, 0-9 and "_"!';
+			$this->error['db_prefix'] = $this->language->get('error_db_prefix');
 		}
 
 		if ($this->request->post['db_driver'] == 'mysqli') {
 			$mysql = @new mysqli($this->request->post['db_hostname'], $this->request->post['db_username'], $this->request->post['db_password'], $this->request->post['db_database']);
 
 			if ($mysql->connect_error) {
-				$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
+				$this->error['warning'] = $this->language->get('error_db_connect');
 			} else {
 				$mysql->close();
 			}
 		}
 
 		if (!$this->request->post['username']) {
-			$this->error['username'] = 'Username required!';
+			$this->error['username'] = $this->language->get('error_username');
 		}
 
 		if (!$this->request->post['password']) {
-			$this->error['password'] = 'Password required!';
+			$this->error['password'] = $this->language->get('error_password');
 		}
 
 		if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email'])) {
-			$this->error['email'] = 'Invalid E-Mail!';
+			$this->error['email'] = $this->language->get('error_email');
 		}
 
 		if (!is_writable(DIR_OPENCART . 'config.php')) {
-			$this->error['warning'] = 'Error: Could not write to config.php please check you have set the correct permissions on: ' . DIR_OPENCART . 'config.php!';
+			$this->error['warning'] = $this->language->get('error_config') . DIR_OPENCART . 'config.php!';
 		}
 
 		if (!is_writable(DIR_OPENCART . 'admin/config.php')) {
-			$this->error['warning'] = 'Error: Could not write to config.php please check you have set the correct permissions on: ' . DIR_OPENCART . 'admin/config.php!';
-		}	
+			$this->error['warning'] = $this->language->get('error_config') . DIR_OPENCART . 'admin/config.php!';
+		}
 
 		return !$this->error;
 	}

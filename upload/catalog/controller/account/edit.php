@@ -12,7 +12,7 @@ class ControllerAccountEdit extends Controller {
 		$this->load->language('account/edit');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.min.js');
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
 		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
@@ -41,19 +41,19 @@ class ControllerAccountEdit extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),     	
+			'href'      => $this->url->link('common/home'),
 			'separator' => false
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('account/account', '', 'SSL'),        	
+			'href'      => $this->url->link('account/account', '', 'SSL'),
 			'separator' => $this->language->get('text_separator')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_edit'),
-			'href'      => $this->url->link('account/edit', '', 'SSL'),       	
+			'href'      => $this->url->link('account/edit', '', 'SSL'),
 			'separator' => $this->language->get('text_separator')
 		);
 
@@ -62,6 +62,7 @@ class ControllerAccountEdit extends Controller {
 		$data['text_your_details'] = $this->language->get('text_your_details');
 		$data['text_additional'] = $this->language->get('text_additional');
 		$data['text_select'] = $this->language->get('text_select');
+		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['entry_firstname'] = $this->language->get('entry_firstname');
 		$data['entry_lastname'] = $this->language->get('entry_lastname');
@@ -95,13 +96,13 @@ class ControllerAccountEdit extends Controller {
 			$data['error_email'] = $this->error['email'];
 		} else {
 			$data['error_email'] = '';
-		}	
+		}
 
 		if (isset($this->error['telephone'])) {
 			$data['error_telephone'] = $this->error['telephone'];
 		} else {
 			$data['error_telephone'] = '';
-		}	
+		}
 
 		if (isset($this->error['custom_field'])) {
 			$data['error_custom_field'] = $this->error['custom_field'];
@@ -154,39 +155,18 @@ class ControllerAccountEdit extends Controller {
 		} else {
 			$data['fax'] = '';
 		}
-		
+
 		// Custom Fields
 		$this->load->model('account/custom_field');
-		
+
+		$data['custom_fields'] = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
+
 		if (isset($this->request->post['custom_field'])) {
-			$custom_field_info = $this->request->post['custom_field'];
+			$data['account_custom_field'] = $this->request->post['custom_field'];
 		} elseif (isset($customer_info)) {
-			$custom_field_info = unserialize($customer_info['custom_field']);	
+			$data['account_custom_field'] = unserialize($customer_info['custom_field']);
 		} else {
-			$custom_field_info = array();
-		}	
-
-		$data['custom_fields'] = array();
-
-		$custom_fields = $this->model_account_custom_field->getCustomFieldsByCustomerGroupId($this->config->get('config_customer_group_id'));
-
-		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['location'] == 'account') { 
-				if ($custom_field['type'] == 'checkbox') {
-					$value = array();
-				} else {
-					$value = $custom_field['value'];
-				}
-	
-				$data['custom_fields'][] = array(
-					'custom_field_id'    => $custom_field['custom_field_id'],
-					'custom_field_value' => $custom_field['custom_field_value'],
-					'name'               => $custom_field['name'],
-					'type'               => $custom_field['type'],
-					'value'              => isset($custom_field_info[$custom_field['custom_field_id']]) ? $custom_field_info[$custom_field['custom_field_id']] : $value,
-					'required'           => $custom_field['required']
-				);
-			}
+			$data['account_custom_field'] = array();
 		}
 
 		$data['back'] = $this->url->link('account/account', '', 'SSL');
@@ -229,7 +209,7 @@ class ControllerAccountEdit extends Controller {
 		// Custom field validation
 		$this->load->model('account/custom_field');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFieldsByCustomerGroupId($this->config->get('config_customer_group_id'));
+		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
 
 		foreach ($custom_fields as $custom_field) {
 			if (($custom_field['location'] == 'account') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {

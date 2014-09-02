@@ -18,7 +18,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 
 					break;
 				}
-			}			
+			}
 
 			$klarna_data = array(
 				'klarna_invoice_pclasses' => $this->pclasses,
@@ -49,9 +49,9 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 		$data['entry_merchant'] = $this->language->get('entry_merchant');
 		$data['entry_secret'] = $this->language->get('entry_secret');
 		$data['entry_server'] = $this->language->get('entry_server');
-		$data['entry_total'] = $this->language->get('entry_total');	
+		$data['entry_total'] = $this->language->get('entry_total');
 		$data['entry_pending_status'] = $this->language->get('entry_pending_status');
-		$data['entry_accepted_status'] = $this->language->get('entry_accepted_status');		
+		$data['entry_accepted_status'] = $this->language->get('entry_accepted_status');
 		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
@@ -225,9 +225,9 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 
 		$file = DIR_LOGS . 'klarna_invoice.log';
 
-		$handle = fopen($file, 'w+'); 
+		$handle = fopen($file, 'w+');
 
-		fclose($handle); 
+		fclose($handle);
 
 		$this->session->data['success'] = $this->language->get('text_success');
 

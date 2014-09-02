@@ -1,5 +1,5 @@
-<?php    
-class ControllerMarketingAffiliate extends Controller { 
+<?php
+class ControllerMarketingAffiliate extends Controller {
 	private $error = array();
 
 	public function index() {
@@ -12,7 +12,7 @@ class ControllerMarketingAffiliate extends Controller {
 		$this->getList();
 	}
 
-	public function insert() {
+	public function add() {
 		$this->load->language('marketing/affiliate');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -64,7 +64,7 @@ class ControllerMarketingAffiliate extends Controller {
 		$this->getForm();
 	}
 
-	public function update() {
+	public function edit() {
 		$this->load->language('marketing/affiliate');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -146,7 +146,7 @@ class ControllerMarketingAffiliate extends Controller {
 
 			if (isset($this->request->get['filter_approved'])) {
 				$url .= '&filter_approved=' . $this->request->get['filter_approved'];
-			}		
+			}
 
 			if (isset($this->request->get['filter_date_added'])) {
 				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
@@ -175,7 +175,7 @@ class ControllerMarketingAffiliate extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('marketing/affiliate');	
+		$this->load->model('marketing/affiliate');
 
 		if (isset($this->request->get['affiliate_id']) && $this->validateApprove()) {
 			$this->model_marketing_affiliate->approve($this->request->get['affiliate_id']);
@@ -198,7 +198,7 @@ class ControllerMarketingAffiliate extends Controller {
 
 			if (isset($this->request->get['filter_approved'])) {
 				$url .= '&filter_approved=' . $this->request->get['filter_approved'];
-			}	
+			}
 
 			if (isset($this->request->get['filter_date_added'])) {
 				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
@@ -214,13 +214,13 @@ class ControllerMarketingAffiliate extends Controller {
 
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
-			}	
+			}
 
-			$this->response->redirect($this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . $url, 'SSL'));					
+			$this->response->redirect($this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
 		$this->getList();
-	} 
+	}
 
 	protected function getList() {
 		if (isset($this->request->get['filter_name'])) {
@@ -251,12 +251,12 @@ class ControllerMarketingAffiliate extends Controller {
 			$filter_date_added = $this->request->get['filter_date_added'];
 		} else {
 			$filter_date_added = null;
-		}	
+		}
 
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
-			$sort = 'name'; 
+			$sort = 'name';
 		}
 
 		if (isset($this->request->get['order'])) {
@@ -287,7 +287,7 @@ class ControllerMarketingAffiliate extends Controller {
 
 		if (isset($this->request->get['filter_approved'])) {
 			$url .= '&filter_approved=' . $this->request->get['filter_approved'];
-		}	
+		}
 
 		if (isset($this->request->get['filter_date_added'])) {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
@@ -318,16 +318,16 @@ class ControllerMarketingAffiliate extends Controller {
 		);
 
 		$data['approve'] = $this->url->link('marketing/affiliate/approve', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$data['insert'] = $this->url->link('marketing/affiliate/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['insert'] = $this->url->link('marketing/affiliate/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('marketing/affiliate/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['affiliates'] = array();
 
 		$filter_data = array(
-			'filter_name'       => $filter_name, 
-			'filter_email'      => $filter_email, 
-			'filter_status'     => $filter_status, 
-			'filter_approved'   => $filter_approved, 
+			'filter_name'       => $filter_name,
+			'filter_email'      => $filter_email,
+			'filter_status'     => $filter_status,
+			'filter_approved'   => $filter_approved,
 			'filter_date_added' => $filter_date_added,
 			'sort'              => $sort,
 			'order'             => $order,
@@ -347,18 +347,18 @@ class ControllerMarketingAffiliate extends Controller {
 				'balance'      => $this->currency->format($result['balance'], $this->config->get('config_currency')),
 				'status'       => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added'   => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'         => $this->url->link('marketing/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, 'SSL'),
+				'edit'         => $this->url->link('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, 'SSL'),
 				'approve'      => $this->url->link('marketing/affiliate/approve', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, 'SSL'),
 				'approved'     => $result['approved']
 			);
-		}	
+		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');		
+		$data['text_no'] = $this->language->get('text_no');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		$data['text_none'] = $this->language->get('text_none');
@@ -368,7 +368,7 @@ class ControllerMarketingAffiliate extends Controller {
 		$data['column_balance'] = $this->language->get('column_balance');
 		$data['column_status'] = $this->language->get('column_status');
 		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_action'] = $this->language->get('column_action');		
+		$data['column_action'] = $this->language->get('column_action');
 
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_email'] = $this->language->get('entry_email');
@@ -420,7 +420,7 @@ class ControllerMarketingAffiliate extends Controller {
 
 		if (isset($this->request->get['filter_approved'])) {
 			$url .= '&filter_approved=' . $this->request->get['filter_approved'];
-		}	
+		}
 
 		if (isset($this->request->get['filter_date_added'])) {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
@@ -504,6 +504,7 @@ class ControllerMarketingAffiliate extends Controller {
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
+		$data['text_loading'] = $this->language->get('text_loading');
 		$data['text_cheque'] = $this->language->get('text_cheque');
 		$data['text_paypal'] = $this->language->get('text_paypal');
 		$data['text_bank'] = $this->language->get('text_bank');
@@ -572,6 +573,30 @@ class ControllerMarketingAffiliate extends Controller {
 			$data['error_email'] = $this->error['email'];
 		} else {
 			$data['error_email'] = '';
+		}
+
+		if (isset($this->error['cheque'])) {
+			$data['error_cheque'] = $this->error['cheque'];
+		} else {
+			$data['error_cheque'] = '';
+		}
+
+		if (isset($this->error['paypal'])) {
+			$data['error_paypal'] = $this->error['paypal'];
+		} else {
+			$data['error_paypal'] = '';
+		}
+
+		if (isset($this->error['bank_account_name'])) {
+			$data['error_bank_account_name'] = $this->error['bank_account_name'];
+		} else {
+			$data['error_bank_account_name'] = '';
+		}
+
+		if (isset($this->error['bank_account_number'])) {
+			$data['error_bank_account_number'] = $this->error['bank_account_number'];
+		} else {
+			$data['error_bank_account_number'] = '';
 		}
 
 		if (isset($this->error['telephone'])) {
@@ -644,7 +669,7 @@ class ControllerMarketingAffiliate extends Controller {
 
 		if (isset($this->request->get['filter_approved'])) {
 			$url .= '&filter_approved=' . $this->request->get['filter_approved'];
-		}	
+		}
 
 		if (isset($this->request->get['filter_date_added'])) {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
@@ -675,9 +700,9 @@ class ControllerMarketingAffiliate extends Controller {
 		);
 
 		if (!isset($this->request->get['affiliate_id'])) {
-			$data['action'] = $this->url->link('marketing/affiliate/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('marketing/affiliate/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$data['action'] = $this->url->link('marketing/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $this->request->get['affiliate_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $this->request->get['affiliate_id'] . $url, 'SSL');
 		}
 
 		$data['cancel'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -696,7 +721,7 @@ class ControllerMarketingAffiliate extends Controller {
 
 		if (isset($this->request->post['firstname'])) {
 			$data['firstname'] = $this->request->post['firstname'];
-		} elseif (!empty($affiliate_info)) { 
+		} elseif (!empty($affiliate_info)) {
 			$data['firstname'] = $affiliate_info['firstname'];
 		} else {
 			$data['firstname'] = '';
@@ -741,7 +766,7 @@ class ControllerMarketingAffiliate extends Controller {
 		} else {
 			$data['company'] = '';
 		}
-		
+
 		if (isset($this->request->post['website'])) {
 			$data['website'] = $this->request->post['website'];
 		} elseif (!empty($affiliate_info)) {
@@ -749,7 +774,7 @@ class ControllerMarketingAffiliate extends Controller {
 		} else {
 			$data['website'] = '';
 		}
-		
+
 		if (isset($this->request->post['address_1'])) {
 			$data['address_1'] = $this->request->post['address_1'];
 		} elseif (!empty($affiliate_info)) {
@@ -904,7 +929,7 @@ class ControllerMarketingAffiliate extends Controller {
 			$data['password'] = '';
 		}
 
-		if (isset($this->request->post['confirm'])) { 
+		if (isset($this->request->post['confirm'])) {
 			$data['confirm'] = $this->request->post['confirm'];
 		} else {
 			$data['confirm'] = '';
@@ -932,6 +957,24 @@ class ControllerMarketingAffiliate extends Controller {
 
 		if ((utf8_strlen($this->request->post['email']) > 96) || (!preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email']))) {
 			$this->error['email'] = $this->language->get('error_email');
+		}
+
+		if ($this->request->post['payment'] == 'cheque') {
+			if ($this->request->post['cheque'] == '') {
+				$this->error['cheque'] = $this->language->get('error_cheque');
+			}
+		} elseif ($this->request->post['payment'] == 'paypal') {
+			if ((utf8_strlen($this->request->post['paypal']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['paypal'])) {
+				$this->error['paypal'] = $this->language->get('error_paypal');
+			}
+		} elseif ($this->request->post['payment'] == 'bank') {
+			if ($this->request->post['bank_account_name'] == '') {
+				$this->error['bank_account_name'] = $this->language->get('error_bank_account_name');
+			}
+
+			if ($this->request->post['bank_account_number'] == '') {
+				$this->error['bank_account_number'] = $this->language->get('error_bank_account_number');
+			}
 		}
 
 		$affiliate_info = $this->model_marketing_affiliate->getAffiliateByEmail($this->request->post['email']);
@@ -996,7 +1039,7 @@ class ControllerMarketingAffiliate extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		return !$this->error;  
+		return !$this->error;
 	}
 
 	protected function validateApprove() {
@@ -1004,7 +1047,7 @@ class ControllerMarketingAffiliate extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		return !$this->error;  
+		return !$this->error;
 	}
 
 	public function country() {
@@ -1025,10 +1068,11 @@ class ControllerMarketingAffiliate extends Controller {
 				'address_format'    => $country_info['address_format'],
 				'postcode_required' => $country_info['postcode_required'],
 				'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
-				'status'            => $country_info['status']		
+				'status'            => $country_info['status']
 			);
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -1037,7 +1081,7 @@ class ControllerMarketingAffiliate extends Controller {
 
 		$this->load->model('marketing/affiliate');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->user->hasPermission('modify', 'marketing/affiliate')) { 
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->user->hasPermission('modify', 'marketing/affiliate')) {
 			$this->model_marketing_affiliate->addTransaction($this->request->get['affiliate_id'], $this->request->post['description'], $this->request->post['amount']);
 
 			$data['success'] = $this->language->get('text_success');
@@ -1062,7 +1106,7 @@ class ControllerMarketingAffiliate extends Controller {
 			$page = $this->request->get['page'];
 		} else {
 			$page = 1;
-		}  
+		}
 
 		$data['transactions'] = array();
 
@@ -1107,8 +1151,7 @@ class ControllerMarketingAffiliate extends Controller {
 				$filter_email = $this->request->get['filter_email'];
 			} else {
 				$filter_email = '';
-			}			
-
+			}
 
 			$this->load->model('marketing/affiliate');
 
@@ -1130,6 +1173,7 @@ class ControllerMarketingAffiliate extends Controller {
 			}
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($affiliate_data));
-	}		
+	}
 }

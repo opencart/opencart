@@ -151,38 +151,38 @@ class ControllerPaymentPPProIframe extends Controller {
 
 					if (!$order_info['order_status_id']) {
 						$paypal_order_data = array(
-							'order_id' => $order_id,
-							'capture_status' => ($this->config->get('pp_pro_iframe_transaction_method') == 'sale' ? 'Complete' : 'NotComplete'),
-							'currency_code' => $this->request->post['mc_currency'],
+							'order_id'         => $order_id,
+							'capture_status'   => ($this->config->get('pp_pro_iframe_transaction_method') == 'sale' ? 'Complete' : 'NotComplete'),
+							'currency_code'    => $this->request->post['mc_currency'],
 							'authorization_id' => $this->request->post['txn_id'],
-							'total' => $this->request->post['mc_gross'],
+							'total'            => $this->request->post['mc_gross'],
 						);
 
 						$paypal_iframe_order_id = $this->model_payment_pp_pro_iframe->addOrder($paypal_order_data);
 
 						$paypal_transaction_data = array(
 							'paypal_iframe_order_id' => $paypal_iframe_order_id,
-							'transaction_id' => $this->request->post['txn_id'],
-							'parent_transaction_id' => '',
-							'note' => '',
-							'msgsubid' => '',
-							'receipt_id' => $this->request->post['receipt_id'],
-							'payment_type' => $this->request->post['payment_type'],
-							'payment_status' => $this->request->post['payment_status'],
-							'pending_reason' => (isset($this->request->post['pending_reason']) ? $this->request->post['pending_reason'] : ''),
-							'transaction_entity' => ($this->config->get('pp_pro_iframe_transaction_method') == 'sale' ? 'payment' : 'auth'),
-							'amount' => $this->request->post['mc_gross'],
-							'debug_data' => json_encode($this->request->post),
+							'transaction_id'         => $this->request->post['txn_id'],
+							'parent_transaction_id'  => '',
+							'note'                   => '',
+							'msgsubid'               => '',
+							'receipt_id'             => $this->request->post['receipt_id'],
+							'payment_type'           => $this->request->post['payment_type'],
+							'payment_status'         => $this->request->post['payment_status'],
+							'pending_reason'         => (isset($this->request->post['pending_reason']) ? $this->request->post['pending_reason'] : ''),
+							'transaction_entity'     => ($this->config->get('pp_pro_iframe_transaction_method') == 'sale' ? 'payment' : 'auth'),
+							'amount'                 => $this->request->post['mc_gross'],
+							'debug_data'             => json_encode($this->request->post),
 						);
 
 						$this->model_payment_pp_pro_iframe->addTransaction($paypal_transaction_data);
 
-						$this->model_checkout_order->confirm($order_id, $order_status_id);
+						$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
 					} else {
-						$this->model_checkout_order->update($order_id, $order_status_id);
+						$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
 					}
 				} else {
-					$this->model_checkout_order->confirm($order_id, $this->config->get('config_order_status_id'));
+					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('config_order_status_id'));
 				}
 			}
 
@@ -261,7 +261,6 @@ class ControllerPaymentPPProIframe extends Controller {
 		$s_data['L_BUTTONVAR55'] = 'template=templateD';
 		$s_data['L_BUTTONVAR56'] = 'return=' . $this->url->link('checkout/success', '', 'SSL');
 		$s_data['L_BUTTONVAR57'] = 'custom=' . $this->encryption->encrypt($order_info['order_id']);
-
 
 		if ($this->config->get('pp_pro_iframe_test')) {
 			$url = 'https://api-3t.sandbox.paypal.com/nvp';

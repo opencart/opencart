@@ -1,16 +1,18 @@
-<?php 
-class ControllerToolErrorLog extends Controller { 
+<?php
+class ControllerToolErrorLog extends Controller {
 	private $error = array();
-	
-	public function index() {		
+
+	public function index() {
 		$this->load->language('tool/error_log');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
+		$data['text_confirm'] = $this->language->get('text_confirm');
+
 		$data['button_clear'] = $this->language->get('button_clear');
-		
+
 		if (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
 
@@ -74,7 +76,7 @@ class ControllerToolErrorLog extends Controller {
 			} else {
 				$data['log'] = file_get_contents($file, FILE_USE_INCLUDE_PATH, null);
 			}
-		}	
+		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
@@ -91,13 +93,13 @@ class ControllerToolErrorLog extends Controller {
 		} else {
 			$file = DIR_LOGS . $this->config->get('config_error_filename');
 
-			$handle = fopen($file, 'w+'); 
+			$handle = fopen($file, 'w+');
 
-			fclose($handle); 			
+			fclose($handle);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->redirect($this->url->link('tool/error_log', 'token=' . $this->session->data['token'], 'SSL'));		
+		$this->response->redirect($this->url->link('tool/error_log', 'token=' . $this->session->data['token'], 'SSL'));
 	}
 }

@@ -1,4 +1,4 @@
-<?php    
+<?php
 class ControllerMarketingMarketing extends Controller {
 	private $error = array();
 
@@ -12,7 +12,7 @@ class ControllerMarketingMarketing extends Controller {
 		$this->getList();
 	}
 
-	public function insert() {
+	public function add() {
 		$this->load->language('marketing/marketing');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -56,7 +56,7 @@ class ControllerMarketingMarketing extends Controller {
 		$this->getForm();
 	}
 
-	public function update() {
+	public function edit() {
 		$this->load->language('marketing/marketing');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -225,7 +225,7 @@ class ControllerMarketingMarketing extends Controller {
 			'href' => $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$data['insert'] = $this->url->link('marketing/marketing/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['insert'] = $this->url->link('marketing/marketing/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('marketing/marketing/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['marketings'] = array();
@@ -252,7 +252,7 @@ class ControllerMarketingMarketing extends Controller {
 				'clicks'       => $result['clicks'],
 				'orders'       => $result['orders'],
 				'date_added'   => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'         => $this->url->link('marketing/marketing/update', 'token=' . $this->session->data['token'] . '&marketing_id=' . $result['marketing_id'] . $url, 'SSL')
+				'edit'         => $this->url->link('marketing/marketing/edit', 'token=' . $this->session->data['token'] . '&marketing_id=' . $result['marketing_id'] . $url, 'SSL')
 			);
 		}
 
@@ -444,9 +444,9 @@ class ControllerMarketingMarketing extends Controller {
 		);
 
 		if (!isset($this->request->get['marketing_id'])) {
-			$data['action'] = $this->url->link('marketing/marketing/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('marketing/marketing/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$data['action'] = $this->url->link('marketing/marketing/update', 'token=' . $this->session->data['token'] . '&marketing_id=' . $this->request->get['marketing_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('marketing/marketing/edit', 'token=' . $this->session->data['token'] . '&marketing_id=' . $this->request->get['marketing_id'] . $url, 'SSL');
 		}
 
 		$data['cancel'] = $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -511,6 +511,6 @@ class ControllerMarketingMarketing extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		return !$this->error;  
+		return !$this->error;
 	}
 }

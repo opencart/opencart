@@ -1,6 +1,6 @@
-<?php 
+<?php
 class ControllerPaymentPPPro extends Controller {
-	private $error = array(); 
+	private $error = array();
 
 	public function index() {
 		$this->load->language('payment/pp_pro');
@@ -10,7 +10,7 @@ class ControllerPaymentPPPro extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('pp_pro', $this->request->post);				
+			$this->model_setting_setting->editSetting('pp_pro', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -33,14 +33,15 @@ class ControllerPaymentPPPro extends Controller {
 		$data['entry_password'] = $this->language->get('entry_password');
 		$data['entry_signature'] = $this->language->get('entry_signature');
 		$data['entry_test'] = $this->language->get('entry_test');
-		$data['entry_test_help'] = $this->language->get('entry_test_help');
 		$data['entry_transaction'] = $this->language->get('entry_transaction');
-		$data['entry_total'] = $this->language->get('entry_total');	
-		$data['entry_total_help'] = $this->language->get('entry_total_help');
+		$data['entry_total'] = $this->language->get('entry_total');
 		$data['entry_order_status'] = $this->language->get('entry_order_status');
 		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
+
+		$data['help_test'] = $this->language->get('help_test');
+		$data['help_total'] = $this->language->get('help_total');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -102,14 +103,14 @@ class ControllerPaymentPPPro extends Controller {
 		if (isset($this->request->post['pp_pro_total'])) {
 			$data['pp_pro_total'] = $this->request->post['pp_pro_total'];
 		} else {
-			$data['pp_pro_total'] = $this->config->get('pp_pro_total'); 
-		} 
+			$data['pp_pro_total'] = $this->config->get('pp_pro_total');
+		}
 
 		if (isset($this->request->post['pp_pro_order_status_id'])) {
 			$data['pp_pro_order_status_id'] = $this->request->post['pp_pro_order_status_id'];
 		} else {
-			$data['pp_pro_order_status_id'] = $this->config->get('pp_pro_order_status_id'); 
-		} 
+			$data['pp_pro_order_status_id'] = $this->config->get('pp_pro_order_status_id');
+		}
 
 		$this->load->model('localisation/order_status');
 
@@ -118,8 +119,8 @@ class ControllerPaymentPPPro extends Controller {
 		if (isset($this->request->post['pp_pro_geo_zone_id'])) {
 			$data['pp_pro_geo_zone_id'] = $this->request->post['pp_pro_geo_zone_id'];
 		} else {
-			$data['pp_pro_geo_zone_id'] = $this->config->get('pp_pro_geo_zone_id'); 
-		} 
+			$data['pp_pro_geo_zone_id'] = $this->config->get('pp_pro_geo_zone_id');
+		}
 
 		$this->load->model('localisation/geo_zone');
 
@@ -161,6 +162,6 @@ class ControllerPaymentPPPro extends Controller {
 			$this->error['signature'] = $this->language->get('error_signature');
 		}
 
-		return !$this->error;	
+		return !$this->error;
 	}
 }

@@ -1,5 +1,5 @@
-<?php 
-class ControllerLocalisationReturnStatus extends Controller { 
+<?php
+class ControllerLocalisationReturnStatus extends Controller {
 	private $error = array();
 
 	public function index() {
@@ -12,7 +12,7 @@ class ControllerLocalisationReturnStatus extends Controller {
 		$this->getList();
 	}
 
-	public function insert() {
+	public function add() {
 		$this->load->language('localisation/return_status');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -44,7 +44,7 @@ class ControllerLocalisationReturnStatus extends Controller {
 		$this->getForm();
 	}
 
-	public function update() {
+	public function edit() {
 		$this->load->language('localisation/return_status');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -155,8 +155,8 @@ class ControllerLocalisationReturnStatus extends Controller {
 			'href' => $this->url->link('localisation/return_status', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$data['insert'] = $this->url->link('localisation/return_status/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$data['delete'] = $this->url->link('localisation/return_status/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');	
+		$data['insert'] = $this->url->link('localisation/return_status/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['delete'] = $this->url->link('localisation/return_status/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['return_statuses'] = array();
 
@@ -175,9 +175,9 @@ class ControllerLocalisationReturnStatus extends Controller {
 			$data['return_statuses'][] = array(
 				'return_status_id' => $result['return_status_id'],
 				'name'             => $result['name'] . (($result['return_status_id'] == $this->config->get('config_return_status_id')) ? $this->language->get('text_default') : null),
-				'edit'             => $this->url->link('localisation/return_status/update', 'token=' . $this->session->data['token'] . '&return_status_id=' . $result['return_status_id'] . $url, 'SSL')
+				'edit'             => $this->url->link('localisation/return_status/edit', 'token=' . $this->session->data['token'] . '&return_status_id=' . $result['return_status_id'] . $url, 'SSL')
 			);
-		}	
+		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -185,7 +185,7 @@ class ControllerLocalisationReturnStatus extends Controller {
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		$data['column_name'] = $this->language->get('column_name');
-		$data['column_action'] = $this->language->get('column_action');		
+		$data['column_action'] = $this->language->get('column_action');
 
 		$data['button_insert'] = $this->language->get('button_insert');
 		$data['button_edit'] = $this->language->get('button_edit');
@@ -302,9 +302,9 @@ class ControllerLocalisationReturnStatus extends Controller {
 		);
 
 		if (!isset($this->request->get['return_status_id'])) {
-			$data['action'] = $this->url->link('localisation/return_status/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('localisation/return_status/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$data['action'] = $this->url->link('localisation/return_status/update', 'token=' . $this->session->data['token'] . '&return_status_id=' . $this->request->get['return_status_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('localisation/return_status/edit', 'token=' . $this->session->data['token'] . '&return_status_id=' . $this->request->get['return_status_id'] . $url, 'SSL');
 		}
 
 		$data['cancel'] = $this->url->link('localisation/return_status', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -325,7 +325,7 @@ class ControllerLocalisationReturnStatus extends Controller {
 		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('localisation/return_status_form.tpl', $data));	
+		$this->response->setOutput($this->load->view('localisation/return_status_form.tpl', $data));
 	}
 
 	protected function validateForm() {
@@ -352,19 +352,19 @@ class ControllerLocalisationReturnStatus extends Controller {
 		foreach ($this->request->post['selected'] as $return_status_id) {
 			if ($this->config->get('config_return_status_id') == $return_status_id) {
 				$this->error['warning'] = $this->language->get('error_default');
-			}  
+			}
 
 			$return_total = $this->model_sale_return->getTotalReturnsByReturnStatusId($return_status_id);
 
 			if ($return_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_return'), $return_total);
-			}  
+			}
 
 			$return_total = $this->model_sale_return->getTotalReturnHistoriesByReturnStatusId($return_status_id);
 
 			if ($return_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_return'), $return_total);
-			}  			
+			}
 		}
 
 		return !$this->error;

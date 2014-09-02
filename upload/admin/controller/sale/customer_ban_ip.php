@@ -1,5 +1,5 @@
-<?php    
-class ControllerSaleCustomerBanIp extends Controller { 
+<?php
+class ControllerSaleCustomerBanIp extends Controller {
 	private $error = array();
 
 	public function index() {
@@ -12,7 +12,7 @@ class ControllerSaleCustomerBanIp extends Controller {
 		$this->getList();
 	}
 
-	public function insert() {
+	public function add() {
 		$this->load->language('sale/customer_ban_ip');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -44,7 +44,7 @@ class ControllerSaleCustomerBanIp extends Controller {
 		$this->getForm();
 	}
 
-	public function update() {
+	public function edit() {
 		$this->load->language('sale/customer_ban_ip');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -114,7 +114,7 @@ class ControllerSaleCustomerBanIp extends Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
-			$sort = 'ip'; 
+			$sort = 'ip';
 		}
 
 		if (isset($this->request->get['order'])) {
@@ -155,7 +155,7 @@ class ControllerSaleCustomerBanIp extends Controller {
 			'href' => $this->url->link('sale/customer_ban_ip', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$data['insert'] = $this->url->link('sale/customer_ban_ip/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['insert'] = $this->url->link('sale/customer_ban_ip/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('sale/customer_ban_ip/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['customer_ban_ips'] = array();
@@ -177,9 +177,9 @@ class ControllerSaleCustomerBanIp extends Controller {
 				'ip'                 => $result['ip'],
 				'total'              => $result['total'],
 				'customer'           => $this->url->link('sale/customer', 'token=' . $this->session->data['token'] . '&filter_ip=' . $result['ip'], 'SSL'),
-				'edit'               => $this->url->link('sale/customer_ban_ip/update', 'token=' . $this->session->data['token'] . '&customer_ban_ip_id=' . $result['customer_ban_ip_id'] . $url, 'SSL')
+				'edit'               => $this->url->link('sale/customer_ban_ip/edit', 'token=' . $this->session->data['token'] . '&customer_ban_ip_id=' . $result['customer_ban_ip_id'] . $url, 'SSL')
 			);
-		}	
+		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -188,7 +188,7 @@ class ControllerSaleCustomerBanIp extends Controller {
 
 		$data['column_ip'] = $this->language->get('column_ip');
 		$data['column_customer'] = $this->language->get('column_customer');
-		$data['column_action'] = $this->language->get('column_action');		
+		$data['column_action'] = $this->language->get('column_action');
 
 		$data['button_insert'] = $this->language->get('button_insert');
 		$data['button_edit'] = $this->language->get('button_edit');
@@ -305,9 +305,9 @@ class ControllerSaleCustomerBanIp extends Controller {
 		);
 
 		if (!isset($this->request->get['customer_ban_ip_id'])) {
-			$data['action'] = $this->url->link('sale/customer_ban_ip/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('sale/customer_ban_ip/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$data['action'] = $this->url->link('sale/customer_ban_ip/update', 'token=' . $this->session->data['token'] . '&customer_ban_ip_id=' . $this->request->get['customer_ban_ip_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('sale/customer_ban_ip/edit', 'token=' . $this->session->data['token'] . '&customer_ban_ip_id=' . $this->request->get['customer_ban_ip_id'] . $url, 'SSL');
 		}
 
 		$data['cancel'] = $this->url->link('sale/customer_ban_ip', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -318,7 +318,7 @@ class ControllerSaleCustomerBanIp extends Controller {
 
 		if (isset($this->request->post['ip'])) {
 			$data['ip'] = $this->request->post['ip'];
-		} elseif (!empty($customer_ban_ip_info)) { 
+		} elseif (!empty($customer_ban_ip_info)) {
 			$data['ip'] = $customer_ban_ip_info['ip'];
 		} else {
 			$data['ip'] = '';
@@ -348,6 +348,6 @@ class ControllerSaleCustomerBanIp extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		return !$this->error;  
+		return !$this->error;
 	}
 }

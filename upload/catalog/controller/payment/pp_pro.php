@@ -23,40 +23,40 @@ class ControllerPaymentPPPro extends Controller {
 		$data['cards'] = array();
 
 		$data['cards'][] = array(
-			'text'  => 'Visa', 
+			'text'  => 'Visa',
 			'value' => 'VISA'
 		);
 
 		$data['cards'][] = array(
-			'text'  => 'MasterCard', 
+			'text'  => 'MasterCard',
 			'value' => 'MASTERCARD'
 		);
 
 		$data['cards'][] = array(
-			'text'  => 'Discover Card', 
+			'text'  => 'Discover Card',
 			'value' => 'DISCOVER'
 		);
 
 		$data['cards'][] = array(
-			'text'  => 'American Express', 
+			'text'  => 'American Express',
 			'value' => 'AMEX'
 		);
 
 		$data['cards'][] = array(
-			'text'  => 'Maestro', 
+			'text'  => 'Maestro',
 			'value' => 'SWITCH'
 		);
 
 		$data['cards'][] = array(
-			'text'  => 'Solo', 
+			'text'  => 'Solo',
 			'value' => 'SOLO'
-		);		
+		);
 
 		$data['months'] = array();
 
 		for ($i = 1; $i <= 12; $i++) {
 			$data['months'][] = array(
-				'text'  => strftime('%B', mktime(0, 0, 0, $i, 1, 2000)), 
+				'text'  => strftime('%B', mktime(0, 0, 0, $i, 1, 2000)),
 				'value' => sprintf('%02d', $i)
 			);
 		}
@@ -65,9 +65,9 @@ class ControllerPaymentPPPro extends Controller {
 
 		$data['year_valid'] = array();
 
-		for ($i = $today['year'] - 10; $i < $today['year'] + 1; $i++) {	
+		for ($i = $today['year'] - 10; $i < $today['year'] + 1; $i++) {
 			$data['year_valid'][] = array(
-				'text'  => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)), 
+				'text'  => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)),
 				'value' => strftime('%Y', mktime(0, 0, 0, 1, 1, $i))
 			);
 		}
@@ -77,7 +77,7 @@ class ControllerPaymentPPPro extends Controller {
 		for ($i = $today['year']; $i < $today['year'] + 11; $i++) {
 			$data['year_expire'][] = array(
 				'text'  => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)),
-				'value' => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)) 
+				'value' => strftime('%Y', mktime(0, 0, 0, 1, 1, $i))
 			);
 		}
 
@@ -90,7 +90,7 @@ class ControllerPaymentPPPro extends Controller {
 
 	public function send() {
 		if (!$this->config->get('pp_pro_transaction')) {
-			$payment_type = 'Authorization';	
+			$payment_type = 'Authorization';
 		} else {
 			$payment_type = 'Sale';
 		}
@@ -113,7 +113,7 @@ class ControllerPaymentPPPro extends Controller {
 		$request .= '&EXPDATE=' . urlencode($this->request->post['cc_expire_date_month'] . $this->request->post['cc_expire_date_year']);
 		$request .= '&CVV2=' . urlencode($this->request->post['cc_cvv2']);
 
-		if ($this->request->post['cc_type'] == 'SWITCH' || $this->request->post['cc_type'] == 'SOLO') { 
+		if ($this->request->post['cc_type'] == 'SWITCH' || $this->request->post['cc_type'] == 'SOLO') {
 			$request .= '&CARDISSUE=' . urlencode($this->request->post['cc_issue']);
 		}
 
@@ -143,8 +143,8 @@ class ControllerPaymentPPPro extends Controller {
 			$request .= '&SHIPTOCITY=' . urlencode($order_info['payment_city']);
 			$request .= '&SHIPTOSTATE=' . urlencode(($order_info['payment_iso_code_2'] != 'US') ? $order_info['payment_zone'] : $order_info['payment_zone_code']);
 			$request .= '&SHIPTOCOUNTRYCODE=' . urlencode($order_info['payment_iso_code_2']);
-			$request .= '&SHIPTOZIP=' . urlencode($order_info['payment_postcode']);			
-		}		
+			$request .= '&SHIPTOZIP=' . urlencode($order_info['payment_postcode']);
+		}
 
 		if (!$this->config->get('pp_pro_test')) {
 			$curl = curl_init('https://api-3t.paypal.com/nvp');
@@ -176,8 +176,6 @@ class ControllerPaymentPPPro extends Controller {
 		$json = array();
 
 		if (($response_info['ACK'] == 'Success') || ($response_info['ACK'] == 'SuccessWithWarning')) {
-			$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
-
 			$message = '';
 
 			if (isset($response_info['AVSCODE'])) {
@@ -192,13 +190,14 @@ class ControllerPaymentPPPro extends Controller {
 				$message .= 'TRANSACTIONID: ' . $response_info['TRANSACTIONID'] . "\n";
 			}
 
-			$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('pp_pro_order_status_id'), $message, false);
+			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('pp_pro_order_status_id'), $message, false);
 
 			$json['success'] = $this->url->link('checkout/success');
 		} else {
 			$json['error'] = $response_info['L_LONGMESSAGE0'];
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 }

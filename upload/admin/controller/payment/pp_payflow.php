@@ -1,6 +1,6 @@
-<?php 
+<?php
 class ControllerPaymentPPPayflow extends Controller {
-	private $error = array(); 
+	private $error = array();
 
 	public function index() {
 		$this->load->language('payment/pp_payflow');
@@ -10,7 +10,7 @@ class ControllerPaymentPPPayflow extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('pp_payflow', $this->request->post);				
+			$this->model_setting_setting->editSetting('pp_payflow', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -30,45 +30,27 @@ class ControllerPaymentPPPayflow extends Controller {
 		$data['text_sale'] = $this->language->get('text_sale');
 
 		$data['entry_vendor'] = $this->language->get('entry_vendor');
-		$data['entry_vendor_help'] = $this->language->get('entry_vendor_help');
 		$data['entry_user'] = $this->language->get('entry_user');
-		$data['entry_user_help'] = $this->language->get('entry_user_help');
 		$data['entry_password'] = $this->language->get('entry_password');
-		$data['entry_password_help'] = $this->language->get('entry_password_help');
 		$data['entry_partner'] = $this->language->get('entry_partner');
-		$data['entry_partner_help'] = $this->language->get('entry_partner_help');
 		$data['entry_test'] = $this->language->get('entry_test');
-		$data['entry_test_help'] = $this->language->get('entry_test_help');
 		$data['entry_transaction'] = $this->language->get('entry_transaction');
-		$data['entry_total'] = $this->language->get('entry_total');	
-		$data['entry_total_help'] = $this->language->get('entry_total_help');
+		$data['entry_total'] = $this->language->get('entry_total');
+
 		$data['entry_order_status'] = $this->language->get('entry_order_status');
 		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
+		$data['help_test'] = $this->language->get('help_test');
+		$data['help_total'] = $this->language->get('help_total');
+		$data['help_vendor'] = $this->language->get('help_vendor');
+		$data['help_partner'] = $this->language->get('help_partner');
+		$data['help_user'] = $this->language->get('help_user');
+		$data['help_password'] = $this->language->get('help_password');
+
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),       		
-			'separator' => false
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_payment'),
-			'href'      => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => ' :: '
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('payment/pp_payflow', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => ' :: '
-		);
 
 		$data['action'] = $this->url->link('payment/pp_payflow', 'token=' . $this->session->data['token'], 'SSL');
 
@@ -115,14 +97,14 @@ class ControllerPaymentPPPayflow extends Controller {
 		if (isset($this->request->post['pp_payflow_total'])) {
 			$data['pp_payflow_total'] = $this->request->post['pp_payflow_total'];
 		} else {
-			$data['pp_payflow_total'] = $this->config->get('pp_payflow_total'); 
-		} 
+			$data['pp_payflow_total'] = $this->config->get('pp_payflow_total');
+		}
 
 		if (isset($this->request->post['pp_payflow_order_status_id'])) {
 			$data['pp_payflow_order_status_id'] = $this->request->post['pp_payflow_order_status_id'];
 		} else {
-			$data['pp_payflow_order_status_id'] = $this->config->get('pp_payflow_order_status_id'); 
-		} 
+			$data['pp_payflow_order_status_id'] = $this->config->get('pp_payflow_order_status_id');
+		}
 
 		$this->load->model('localisation/order_status');
 
@@ -131,8 +113,8 @@ class ControllerPaymentPPPayflow extends Controller {
 		if (isset($this->request->post['pp_payflow_geo_zone_id'])) {
 			$data['pp_payflow_geo_zone_id'] = $this->request->post['pp_payflow_geo_zone_id'];
 		} else {
-			$data['pp_payflow_geo_zone_id'] = $this->config->get('pp_payflow_geo_zone_id'); 
-		} 
+			$data['pp_payflow_geo_zone_id'] = $this->config->get('pp_payflow_geo_zone_id');
+		}
 
 		$this->load->model('localisation/geo_zone');
 

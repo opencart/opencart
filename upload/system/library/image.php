@@ -27,7 +27,7 @@ class Image {
 		$mime = $this->info['mime'];
 
 		if ($mime == 'image/gif') {
-			return imagecreatefromgif($image);
+			return imagecreatefromgif ($image);
 		} elseif ($mime == 'image/png') {
 			return imagecreatefrompng($image);
 		} elseif ($mime == 'image/jpeg') {
@@ -43,10 +43,10 @@ class Image {
 		if (is_resource($this->image)) {
 			if ($extension == 'jpeg' || $extension == 'jpg') {
 				imagejpeg($this->image, $file, $quality);
-			} elseif($extension == 'png') {
+			} elseif ($extension == 'png') {
 				imagepng($this->image, $file);
-			} elseif($extension == 'gif') {
-				imagegif($this->image, $file);
+			} elseif ($extension == 'gif') {
+				imagegif ($this->image, $file);
 			}
 
 			imagedestroy($this->image);
@@ -146,7 +146,7 @@ class Image {
 
 	public function rotate($degree, $color = 'FFFFFF') {
 		$rgb = $this->html2rgb($color);
-		
+
 		$this->image = imagerotate($this->image, $degree, imagecolorallocate($this->image, $rgb[0], $rgb[1], $rgb[2]));
 
 		$this->info['width'] = imagesx($this->image);
@@ -176,7 +176,7 @@ class Image {
 		if ($color[0] == '#') {
 			$color = substr($color, 1);
 		}
-		
+
 		if (strlen($color) == 6) {
 			list($r, $g, $b) = array($color[0] . $color[1], $color[2] . $color[3], $color[4] . $color[5]);
 		} elseif (strlen($color) == 3) {

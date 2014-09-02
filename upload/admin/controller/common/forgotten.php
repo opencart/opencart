@@ -44,18 +44,6 @@ class ControllerCommonForgotten extends Controller {
 			$this->response->redirect($this->url->link('common/login', '', 'SSL'));
 		}
 
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_forgotten'),
-			'href' => $this->url->link('common/forgotten', '', 'SSL')
-		);
-
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_your_email'] = $this->language->get('text_your_email');
@@ -85,7 +73,7 @@ class ControllerCommonForgotten extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('common/forgotten.tpl', $data));		
+		$this->response->setOutput($this->load->view('common/forgotten.tpl', $data));
 	}
 
 	protected function validate() {

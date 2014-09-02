@@ -14,7 +14,7 @@ $_['text_login']            = 'Login into Store';
 $_['column_name']           = 'Customer Name';
 $_['column_email']          = 'E-Mail';
 $_['column_customer_group'] = 'Customer Group';
-$_['column_status']         = 'Status'; 
+$_['column_status']         = 'Status';
 $_['column_date_added']     = 'Date Added';
 $_['column_comment']        = 'Comment';
 $_['column_description']    = 'Description';
@@ -33,6 +33,7 @@ $_['entry_telephone']       = 'Telephone';
 $_['entry_fax']             = 'Fax';
 $_['entry_newsletter']      = 'Newsletter';
 $_['entry_status']          = 'Status';
+$_['entry_safe']            = 'Safe';
 $_['entry_password']        = 'Password';
 $_['entry_confirm']         = 'Confirm';
 $_['entry_company']         = 'Company';
@@ -53,6 +54,7 @@ $_['entry_ip']              = 'IP';
 $_['entry_date_added']      = 'Date Added';
 
 // Help
+$_['help_safe']             = 'Set to true to avoid this customer from being caught by the anti-fraud system';
 $_['help_points']           = 'Use minus to remove points';
 
 // Error
@@ -71,3 +73,4 @@ $_['error_postcode']        = 'Postcode must be between 2 and 10 characters for 
 $_['error_country']         = 'Please select a country!';
 $_['error_zone']            = 'Please select a region / state!';
 $_['error_custom_field']    = '%s required!';
+$_['error_comment']         = 'You must enter a comment!';

@@ -19,7 +19,7 @@ class ControllerExtensionShipping extends Controller {
 
 		$this->load->model('setting/extension');
 
-		if ($this->validate()) {		
+		if ($this->validate()) {
 			$this->model_setting_extension->install('shipping', $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
@@ -27,16 +27,10 @@ class ControllerExtensionShipping extends Controller {
 			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'shipping/' . $this->request->get['extension']);
 			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'shipping/' . $this->request->get['extension']);
 
+			// Call install method if it exsits
+			$this->load->controller('shipping/' . $this->request->get['extension'] . '/install');
+
 			$this->session->data['success'] = $this->language->get('text_success');
-			
-			require_once(DIR_APPLICATION . 'controller/shipping/' . $this->request->get['extension'] . '.php');
-
-			$class = 'ControllerShipping' . str_replace('_', '', $this->request->get['extension']);
-			$class = new $class($this->registry);
-
-			if (method_exists($class, 'install')) {
-				$class->install();
-			}
 
 			$this->response->redirect($this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'));
 		}
@@ -51,23 +45,17 @@ class ControllerExtensionShipping extends Controller {
 
 		$this->load->model('setting/extension');
 
-		if ($this->validate()) {	
+		if ($this->validate()) {
 			$this->model_setting_extension->uninstall('shipping', $this->request->get['extension']);
 
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
 
+			// Call uninstall method if it exsits
+			$this->load->controller('shipping/' . $this->request->get['extension'] . '/uninstall');
+
 			$this->session->data['success'] = $this->language->get('text_success');
-			
-			require_once(DIR_APPLICATION . 'controller/shipping/' . $this->request->get['extension'] . '.php');
-
-			$class = 'ControllerShipping' . str_replace('_', '', $this->request->get['extension']);
-			$class = new $class($this->registry);
-
-			if (method_exists($class, 'uninstall')) {
-				$class->uninstall();
-			}
 
 			$this->response->redirect($this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'));
 		}
@@ -76,18 +64,6 @@ class ControllerExtensionShipping extends Controller {
 	}
 
 	public function getList() {
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL')
-		);
-
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
@@ -142,10 +118,10 @@ class ControllerExtensionShipping extends Controller {
 					'name'       => $this->language->get('heading_title'),
 					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'edit'       => $this->url->link('shipping/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL'),
 					'install'    => $this->url->link('extension/shipping/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
 					'uninstall'  => $this->url->link('extension/shipping/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
-					'installed'  => in_array($extension, $extensions)
+					'installed'  => in_array($extension, $extensions),
+					'edit'       => $this->url->link('shipping/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL')
 				);
 			}
 		}

@@ -1,8 +1,8 @@
-<?php  
-class ControllerCommonLogin extends Controller { 
+<?php
+class ControllerCommonLogin extends Controller {
 	private $error = array();
 
-	public function index() { 
+	public function index() {
 		$this->load->language('common/login');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -11,7 +11,7 @@ class ControllerCommonLogin extends Controller {
 			$this->response->redirect($this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) { 
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->session->data['token'] = md5(mt_rand());
 
 			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0 || strpos($this->request->post['redirect'], HTTPS_SERVER) === 0 )) {
@@ -77,7 +77,7 @@ class ControllerCommonLogin extends Controller {
 
 			$data['redirect'] = $this->url->link($route, $url, 'SSL');
 		} else {
-			$data['redirect'] = '';	
+			$data['redirect'] = '';
 		}
 
 		if ($this->config->get('config_password')) {
@@ -119,7 +119,7 @@ class ControllerCommonLogin extends Controller {
 			'common/login',
 			'common/forgotten',
 			'common/reset'
-		);	
+		);
 
 		if (!$this->user->isLogged() && !in_array($route, $ignore)) {
 			return new Action('common/login');
@@ -151,5 +151,5 @@ class ControllerCommonLogin extends Controller {
 				return new Action('common/login');
 			}
 		}
-	}	
+	}
 }

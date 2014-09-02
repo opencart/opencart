@@ -1,9 +1,9 @@
-<?php 
+<?php
 class ControllerAffiliateLogin extends Controller {
 	private $error = array();
 
 	public function index() {
-		if ($this->affiliate->isLogged()) {  
+		if ($this->affiliate->isLogged()) {
 			$this->response->redirect($this->url->link('affiliate/account', '', 'SSL'));
 		}
 
@@ -29,7 +29,7 @@ class ControllerAffiliateLogin extends Controller {
 				$this->response->redirect(str_replace('&amp;', '&', $this->request->post['redirect']));
 			} else {
 				$this->response->redirect($this->url->link('affiliate/account', '', 'SSL'));
-			} 
+			}
 		}
 
 		$data['breadcrumbs'] = array();
@@ -53,7 +53,7 @@ class ControllerAffiliateLogin extends Controller {
 
 		$data['text_description'] = sprintf($this->language->get('text_description'), $this->config->get('config_name'), $this->config->get('config_name'), $this->config->get('config_affiliate_commission') . '%');
 		$data['text_new_affiliate'] = $this->language->get('text_new_affiliate');
-		$data['text_register_account'] = $this->language->get('text_register_account'); 	
+		$data['text_register_account'] = $this->language->get('text_register_account');
 		$data['text_returning_affiliate'] = $this->language->get('text_returning_affiliate');
 		$data['text_i_am_returning_affiliate'] = $this->language->get('text_i_am_returning_affiliate');
 		$data['text_forgotten'] = $this->language->get('text_forgotten');
@@ -79,7 +79,7 @@ class ControllerAffiliateLogin extends Controller {
 		} elseif (isset($this->session->data['redirect'])) {
 			$data['redirect'] = $this->session->data['redirect'];
 
-			unset($this->session->data['redirect']);		  	
+			unset($this->session->data['redirect']);
 		} else {
 			$data['redirect'] = '';
 		}

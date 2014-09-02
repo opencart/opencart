@@ -1,17 +1,11 @@
-<nav id="column-left">
+<nav id="column-left"><?php echo $profile; ?>
   <ul id="menu">
-    <li>
-      <div id="search">
-        <button type="button" class="btn btn-link"><i class="fa fa-search fa-fw"></i></button>
-        <input type="text" name="search" value="" placeholder="<?php echo $text_search; ?>" />
-      </div>
-    </li>
-    <li id="dashboard"><a href="<?php echo $home; ?>"><i class="fa fa-home fa-fw fa-lg"></i> <span><?php echo $text_dashboard; ?></span></a></li>
-    <li id="catalog"><a class="parent"><i class="fa fa-tags fa-fw fa-lg"></i> <span><?php echo $text_catalog; ?></span></a>
+    <li id="dashboard"><a href="<?php echo $home; ?>"><i class="fa fa-home fa-fw"></i> <?php echo $text_dashboard; ?></a></li>
+    <li id="catalog"><a class="parent"><i class="fa fa-tags fa-fw"></i> <?php echo $text_catalog; ?></a>
       <ul>
         <li><a href="<?php echo $category; ?>"><?php echo $text_category; ?></a></li>
         <li><a href="<?php echo $product; ?>"><?php echo $text_product; ?></a></li>
-        <li><a href="<?php echo $product_profile; ?>"><?php echo $text_product_profile; ?></a></li>
+        <li><a href="<?php echo $recurring; ?>"><?php echo $text_recurring; ?></a></li>
         <li><a href="<?php echo $filter; ?>"><?php echo $text_filter; ?></a></li>
         <li><a class="parent"><?php echo $text_attribute; ?></a>
           <ul>
@@ -26,7 +20,7 @@
         <li><a href="<?php echo $information; ?>"><?php echo $text_information; ?></a></li>
       </ul>
     </li>
-    <li id="extension"><a class="parent"><i class="fa fa-puzzle-piece fa-fw fa-lg"></i> <span><?php echo $text_extension; ?></span></a>
+    <li id="extension"><a class="parent"><i class="fa fa-puzzle-piece fa-fw"></i> <?php echo $text_extension; ?></a>
       <ul>
         <li><a href="<?php echo $installer; ?>"><?php echo $text_installer; ?></a></li>
         <li><a href="<?php echo $modification; ?>"><?php echo $text_modification; ?></a></li>
@@ -37,10 +31,10 @@
         <li><a href="<?php echo $feed; ?>"><?php echo $text_feed; ?></a></li>
       </ul>
     </li>
-    <li id="sale"><a class="parent"><i class="fa fa-shopping-cart fa-fw fa-lg"></i> <span><?php echo $text_sale; ?></span></a>
+    <li id="sale"><a class="parent"><i class="fa fa-shopping-cart fa-fw"></i> <?php echo $text_sale; ?></a>
       <ul>
         <li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li>
-        <li><a href="<?php echo $recurring_profile; ?>"><?php echo $text_recurring_profile; ?></a></li>
+        <li><a href="<?php echo $order_recurring; ?>"><?php echo $text_order_recurring; ?></a></li>
         <li><a href="<?php echo $return; ?>"><?php echo $text_return; ?></a></li>
         <li><a class="parent"><?php echo $text_customer; ?></a>
           <ul>
@@ -56,14 +50,6 @@
             <li><a href="<?php echo $voucher_theme; ?>"><?php echo $text_voucher_theme; ?></a></li>
           </ul>
         </li>
-        <li><a class="parent"><?php echo $text_marketing; ?></a>
-          <ul>
-            <li><a href="<?php echo $marketing; ?>"><?php echo $text_marketing; ?></a></li>
-            <li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li>
-            <li><a href="<?php echo $coupon; ?>"><?php echo $text_coupon; ?></a></li>
-            <li><a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a></li>
-          </ul>
-        </li>
         <li><a class="parent"><?php echo $text_paypal ?></a>
           <ul>
             <li><a href="<?php echo $paypal_search ?>"><?php echo $text_paypal_search ?></a></li>
@@ -71,7 +57,15 @@
         </li>
       </ul>
     </li>
-    <li id="system"><a class="parent"><i class="fa fa-cog fa-fw fa-lg"></i> <span><?php echo $text_system; ?></span></a>
+    <li><a class="parent"><i class="fa fa-share-alt fa-fw"></i> <?php echo $text_marketing; ?></a>
+      <ul>
+        <li><a href="<?php echo $marketing; ?>"><?php echo $text_marketing; ?></a></li>
+        <li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li>
+        <li><a href="<?php echo $coupon; ?>"><?php echo $text_coupon; ?></a></li>
+        <li><a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a></li>
+      </ul>
+    </li>
+    <li id="system"><a class="parent"><i class="fa fa-cog fa-fw"></i> <?php echo $text_system; ?></a>
       <ul>
         <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
         <li><a class="parent"><?php echo $text_design; ?></a>
@@ -84,6 +78,7 @@
           <ul>
             <li><a href="<?php echo $user; ?>"><?php echo $text_user; ?></a></li>
             <li><a href="<?php echo $user_group; ?>"><?php echo $text_user_group; ?></a></li>
+            <li><a href="<?php echo $api; ?>"><?php echo $text_api; ?></a></li>
           </ul>
         </li>
         <li><a class="parent"><?php echo $text_localisation; ?></a>
@@ -113,16 +108,16 @@
             <li><a href="<?php echo $weight_class; ?>"><?php echo $text_weight_class; ?></a></li>
           </ul>
         </li>
-        <li><a class="parent"><?php echo $text_maintance; ?></a>
-          <ul>
-            <li><a href="<?php echo $error_log; ?>"><?php echo $text_error_log; ?></a></li>
-            <li><a href="<?php echo $upload; ?>"><?php echo $text_upload; ?></a></li>
-            <li><a href="<?php echo $backup; ?>"><?php echo $text_backup; ?></a></li>
-          </ul>
-        </li>
       </ul>
     </li>
-    <li id="reports"><a class="parent"><i class="fa fa-bar-chart-o fa-fw fa-lg"></i> <span><?php echo $text_reports; ?></span></a>
+    <li id="tools"><a class="parent"><i class="fa fa-wrench fa-fw"></i> <?php echo $text_tools; ?></a>
+      <ul>
+        <li><a href="<?php echo $upload; ?>"><?php echo $text_upload; ?></a></li>
+        <li><a href="<?php echo $backup; ?>"><?php echo $text_backup; ?></a></li>
+        <li><a href="<?php echo $error_log; ?>"><?php echo $text_error_log; ?></a></li>
+      </ul>
+    </li>
+    <li id="reports"><a class="parent"><i class="fa fa-bar-chart-o fa-fw"></i> <?php echo $text_reports; ?></a>
       <ul>
         <li><a class="parent"><?php echo $text_sale; ?></a>
           <ul>

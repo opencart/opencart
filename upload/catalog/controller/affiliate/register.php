@@ -1,4 +1,4 @@
-<?php 
+<?php
 class ControllerAffiliateRegister extends Controller {
 	private $error = array();
 
@@ -99,13 +99,13 @@ class ControllerAffiliateRegister extends Controller {
 			$data['error_firstname'] = $this->error['firstname'];
 		} else {
 			$data['error_firstname'] = '';
-		}	
+		}
 
 		if (isset($this->error['lastname'])) {
 			$data['error_lastname'] = $this->error['lastname'];
 		} else {
 			$data['error_lastname'] = '';
-		}		
+		}
 
 		if (isset($this->error['email'])) {
 			$data['error_email'] = $this->error['email'];
@@ -231,7 +231,7 @@ class ControllerAffiliateRegister extends Controller {
 
 		if (isset($this->request->post['country_id'])) {
 			$data['country_id'] = $this->request->post['country_id'];
-		} else {	
+		} else {
 			$data['country_id'] = $this->config->get('config_country_id');
 		}
 
@@ -342,7 +342,7 @@ class ControllerAffiliateRegister extends Controller {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/affiliate/register.tpl', $data));
 		} else {
 			$this->response->setOutput($this->load->view('default/template/affiliate/register.tpl', $data));
-		}	
+		}
 	}
 
 	protected function validate() {
@@ -429,10 +429,11 @@ class ControllerAffiliateRegister extends Controller {
 				'address_format'    => $country_info['address_format'],
 				'postcode_required' => $country_info['postcode_required'],
 				'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
-				'status'            => $country_info['status']		
+				'status'            => $country_info['status']
 			);
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}	
+	}
 }

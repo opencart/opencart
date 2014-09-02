@@ -1,5 +1,5 @@
-<?php 
-class ControllerAffiliateAccount extends Controller { 
+<?php
+class ControllerAffiliateAccount extends Controller {
 	public function index() {
 		if (!$this->affiliate->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('affiliate/account', '', 'SSL');
@@ -59,6 +59,6 @@ class ControllerAffiliateAccount extends Controller {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/affiliate/account.tpl', $data));
 		} else {
 			$this->response->setOutput($this->load->view('default/template/affiliate/account.tpl', $data));
-		}		
+		}
 	}
 }

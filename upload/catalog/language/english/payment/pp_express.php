@@ -6,10 +6,11 @@ $_['text_cart']                     = 'Shopping Cart';
 $_['text_shipping_updated']         = 'Shipping service updated';
 $_['text_trial']                    = '%s every %s %s for %s payments then ';
 $_['text_recurring']                = '%s every %s %s';
+$_['text_recurring_item']           = 'Recurring Item';
 $_['text_length']                   = ' for %s payments';
 
 // Buttons
-$_['button_cancel_profile'] 		= 'Cancel payments';
+$_['button_cancel_recurring'] 		= 'Cancel payments';
 
 // Standard checkout error page
 $_['error_heading_title']           = 'There was an error';

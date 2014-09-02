@@ -57,9 +57,15 @@ $('a.thumbnail').on('click', function(e) {
 	$('#<?php echo $target; ?>').attr('value', $(this).parent().find('input').attr('value'));
 	<?php } ?>
 	
-	<?php if ($ckeditor) { ?>
-	CKEDITOR.instances['<?php echo $ckeditor; ?>'].insertHtml('<img src="' + $(this).attr('href') + '" alt="" title="" />');
-	<?php } ?>
+	var range, sel = window.getSelection(); 
+	
+	if (sel.rangeCount) { 
+		var img = document.createElement('img');
+		img.src = $(this).attr('href');
+	
+		range = sel.getRangeAt(0); 
+		range.insertNode(img); 
+	}
 });
 
 $('a.directory').on('click', function(e) {
@@ -102,10 +108,6 @@ $('#button-search').on('click', function() {
 	<?php if ($target) { ?>
 	url += '&target=' + '<?php echo $target; ?>';
 	<?php } ?>
-	
-	<?php if ($ckeditor) { ?>
-	url += '&ckeditor=' + '<?php echo $ckeditor; ?>';
-	<?php } ?>
 			
 	$('#modal-image').load(url);
 });
@@ -128,7 +130,7 @@ $('#button-upload').on('click', function() {
 			contentType: false,
 			processData: false,		
 			beforeSend: function() {
-				$('#button-upload i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+				$('#button-upload i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 				$('#button-upload').prop('disabled', true);
 			},
 			complete: function() {
@@ -176,7 +178,7 @@ $('#button-folder').on('shown.bs.popover', function() {
 			dataType: 'json',
 			data: 'folder=' + encodeURIComponent($('input[name=\'folder\']').val()),
 			beforeSend: function() {
-				$('#button-create i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+				$('#button-create i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 				$('#button-create').prop('disabled', true);
 			},
 			complete: function() {
@@ -209,7 +211,7 @@ $('#modal-image #button-delete').on('click', function(e) {
 			dataType: 'json',
 			data: $('input[name^=\'path\']:checked'),
 			beforeSend: function() {
-				$('#button-delete i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+				$('#button-delete i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 				$('#button-delete').prop('disabled', true);
 			},	
 			complete: function() {

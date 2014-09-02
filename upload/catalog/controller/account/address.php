@@ -1,4 +1,4 @@
-<?php 
+<?php
 class ControllerAccountAddress extends Controller {
 	private $error = array();
 
@@ -18,7 +18,7 @@ class ControllerAccountAddress extends Controller {
 		$this->getList();
 	}
 
-	public function insert() {
+	public function add() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/address', '', 'SSL');
 
@@ -28,7 +28,7 @@ class ControllerAccountAddress extends Controller {
 		$this->load->language('account/address');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.min.js');
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
 		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
@@ -56,7 +56,7 @@ class ControllerAccountAddress extends Controller {
 		$this->getForm();
 	}
 
-	public function update() {
+	public function edit() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/address', '', 'SSL');
 
@@ -66,7 +66,7 @@ class ControllerAccountAddress extends Controller {
 		$this->load->language('account/address');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.min.js');
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
 		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
@@ -80,7 +80,7 @@ class ControllerAccountAddress extends Controller {
 			if (isset($this->session->data['shipping_address']['address_id']) && ($this->request->get['address_id'] == $this->session->data['shipping_address']['address_id'])) {
 				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->request->get['address_id']);
 
-				unset($this->session->data['shipping_method']);	
+				unset($this->session->data['shipping_method']);
 				unset($this->session->data['shipping_methods']);
 			}
 
@@ -124,18 +124,18 @@ class ControllerAccountAddress extends Controller {
 		$this->load->model('account/address');
 
 		if (isset($this->request->get['address_id']) && $this->validateDelete()) {
-			$this->model_account_address->deleteAddress($this->request->get['address_id']);	
+			$this->model_account_address->deleteAddress($this->request->get['address_id']);
 
 			// Default Shipping Address
 			if (isset($this->session->data['shipping_address']['address_id']) && ($this->request->get['address_id'] == $this->session->data['shipping_address']['address_id'])) {
-				unset($this->session->data['shipping_address']);			
+				unset($this->session->data['shipping_address']);
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['shipping_methods']);
 			}
 
 			// Default Payment Address
 			if (isset($this->session->data['payment_address']['address_id']) && ($this->request->get['address_id'] == $this->session->data['payment_address']['address_id'])) {
-				unset($this->session->data['payment_address']);			
+				unset($this->session->data['payment_address']);
 				unset($this->session->data['payment_method']);
 				unset($this->session->data['payment_methods']);
 			}
@@ -155,7 +155,7 @@ class ControllerAccountAddress extends Controller {
 			$this->response->redirect($this->url->link('account/address', '', 'SSL'));
 		}
 
-		$this->getList();	
+		$this->getList();
 	}
 
 	protected function getList() {
@@ -238,12 +238,12 @@ class ControllerAccountAddress extends Controller {
 			$data['addresses'][] = array(
 				'address_id' => $result['address_id'],
 				'address'    => str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format)))),
-				'update'     => $this->url->link('account/address/update', 'address_id=' . $result['address_id'], 'SSL'),
+				'update'     => $this->url->link('account/address/edit', 'address_id=' . $result['address_id'], 'SSL'),
 				'delete'     => $this->url->link('account/address/delete', 'address_id=' . $result['address_id'], 'SSL')
 			);
 		}
 
-		$data['insert'] = $this->url->link('account/address/insert', '', 'SSL');
+		$data['insert'] = $this->url->link('account/address/add', '', 'SSL');
 		$data['back'] = $this->url->link('account/account', '', 'SSL');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -257,7 +257,7 @@ class ControllerAccountAddress extends Controller {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/address_list.tpl', $data));
 		} else {
 			$this->response->setOutput($this->load->view('default/template/account/address_list.tpl', $data));
-		}	
+		}
 	}
 
 	protected function getForm() {
@@ -281,12 +281,12 @@ class ControllerAccountAddress extends Controller {
 		if (!isset($this->request->get['address_id'])) {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_edit_address'),
-				'href' => $this->url->link('account/address/insert', '', 'SSL')
+				'href' => $this->url->link('account/address/add', '', 'SSL')
 			);
 		} else {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_edit_address'),
-				'href' => $this->url->link('account/address/update', 'address_id=' . $this->request->get['address_id'], 'SSL')
+				'href' => $this->url->link('account/address/edit', 'address_id=' . $this->request->get['address_id'], 'SSL')
 			);
 		}
 
@@ -297,6 +297,7 @@ class ControllerAccountAddress extends Controller {
 		$data['text_no'] = $this->language->get('text_no');
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
+		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['entry_firstname'] = $this->language->get('entry_firstname');
 		$data['entry_lastname'] = $this->language->get('entry_lastname');
@@ -356,9 +357,9 @@ class ControllerAccountAddress extends Controller {
 		}
 
 		if (!isset($this->request->get['address_id'])) {
-			$data['action'] = $this->url->link('account/address/insert', '', 'SSL');
+			$data['action'] = $this->url->link('account/address/add', '', 'SSL');
 		} else {
-			$data['action'] = $this->url->link('account/address/update', 'address_id=' . $this->request->get['address_id'], 'SSL');
+			$data['action'] = $this->url->link('account/address/edit', 'address_id=' . $this->request->get['address_id'], 'SSL');
 		}
 
 		if (isset($this->request->get['address_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
@@ -408,7 +409,7 @@ class ControllerAccountAddress extends Controller {
 		if (isset($this->request->post['postcode'])) {
 			$data['postcode'] = $this->request->post['postcode'];
 		} elseif (!empty($address_info)) {
-			$data['postcode'] = $address_info['postcode'];			
+			$data['postcode'] = $address_info['postcode'];
 		} else {
 			$data['postcode'] = '';
 		}
@@ -442,41 +443,18 @@ class ControllerAccountAddress extends Controller {
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
 		// Custom fields
-		if (isset($this->request->post['custom_field'])) {
-			$custom_field_info = $this->request->post['custom_field'];		
-		} elseif (isset($address_info)) {
-			$custom_field_info = $address_info['custom_field'];
-		} else {
-			$custom_field_info = array();
-		}
-
 		$this->load->model('account/custom_field');
 
-		$data['custom_fields'] = array();
+		$data['custom_fields'] = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
 
-		// If a post request then get a list of all fields that should have been posted for validation checking.
-		$custom_fields = $this->model_account_custom_field->getCustomFieldsByCustomerGroupId($this->config->get('config_customer_group_id'));
+		if (isset($this->request->post['custom_field'])) {
+			$data['address_custom_field'] = $this->request->post['custom_field'];
+		} elseif (isset($address_info)) {
+			$data['address_custom_field'] = $address_info['custom_field'];
+		} else {
+			$data['address_custom_field'] = array();
+		}
 
-		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['location'] == 'address') {
-				if ($custom_field['type'] == 'checkbox') {
-					$value = array();
-				} else {
-					$value = '';
-				}
-	
-				$data['custom_fields'][] = array(
-					'custom_field_id'    => $custom_field['custom_field_id'],
-					'custom_field_value' => $custom_field['custom_field_value'],
-					'name'               => $custom_field['name'],
-					'type'               => $custom_field['type'],
-					'value'              => isset($custom_field_info[$custom_field['custom_field_id']]) ? $custom_field_info[$custom_field['custom_field_id']] : $value,
-					'required'           => $custom_field['required'],
-					'sort_order'         => $custom_field['sort_order']
-				);
-			}
-		}	
-				
 		if (isset($this->request->post['default'])) {
 			$data['default'] = $this->request->post['default'];
 		} elseif (isset($this->request->get['address_id'])) {
@@ -484,7 +462,7 @@ class ControllerAccountAddress extends Controller {
 		} else {
 			$data['default'] = false;
 		}
-		
+
 		$data['back'] = $this->url->link('account/address', '', 'SSL');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -498,7 +476,7 @@ class ControllerAccountAddress extends Controller {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/address_form.tpl', $data));
 		} else {
 			$this->response->setOutput($this->load->view('default/template/account/address_form.tpl', $data));
-		}		
+		}
 	}
 
 	protected function validateForm() {
@@ -537,7 +515,7 @@ class ControllerAccountAddress extends Controller {
 		// Custom field validation
 		$this->load->model('account/custom_field');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFieldsByCustomerGroupId($this->config->get('config_customer_group_id'));
+		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
 
 		foreach ($custom_fields as $custom_field) {
 			if (($custom_field['location'] == 'address') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {

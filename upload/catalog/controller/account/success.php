@@ -1,5 +1,5 @@
-<?php 
-class ControllerAccountSuccess extends Controller {  
+<?php
+class ControllerAccountSuccess extends Controller {
 	public function index() {
 		$this->load->language('account/success');
 
@@ -53,6 +53,6 @@ class ControllerAccountSuccess extends Controller {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/common/success.tpl', $data));
 		} else {
 			$this->response->setOutput($this->load->view('default/template/common/success.tpl', $data));
-		}				
+		}
 	}
 }

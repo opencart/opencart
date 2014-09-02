@@ -12,7 +12,7 @@ $_['text_message']  = '<p>There was a problem processing your payment and the or
 <ul>
   <li>Insufficient funds</li>
   <li>Verification failed</li>
-</ul> 
+</ul>
 
 <p>Please try to order again using a different payment method.</p>
 

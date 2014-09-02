@@ -1,9 +1,9 @@
 <?php
 // Heading
-$_['heading_title']    = 'Store Locations';  
+$_['heading_title']    = 'Store Locations';
 
 // Text
-$_['text_success']     = 'Success: You have modified store locations!'; 
+$_['text_success']     = 'Success: You have modified store locations!';
 $_['text_default']     = 'Default';
 $_['text_time']        = 'Opening Times';
 $_['text_geocode']     = 'Geocode was not successful for the following reason:';

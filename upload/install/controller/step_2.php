@@ -40,7 +40,7 @@ class ControllerStep2 extends Controller {
 		$data['text_global'] = $this->language->get('text_global');
 		$data['text_mysqli'] = $this->language->get('text_mysqli');
 		$data['text_mysql'] = $this->language->get('text_mysql');
-  		$data['text_mpdo'] = $this->language->get('text_mpdo');
+		$data['text_mpdo'] = $this->language->get('text_mpdo');
 		$data['text_pgsql'] = $this->language->get('text_pgsql');
 		$data['text_gd'] = $this->language->get('text_gd');
 		$data['text_curl'] = $this->language->get('text_curl');
@@ -108,8 +108,8 @@ class ControllerStep2 extends Controller {
 		}
 
 		if (!array_filter(array('mysqli', 'pdo', 'pgsql'), 'extension_loaded')) {
-			$this->error['warning'] = 'Warning: A database extension needs to be loaded in th php.ini for OpenCart to work!';
-  		}
+			$this->error['warning'] = 'Warning: A database extension needs to be loaded in the php.ini for OpenCart to work!';
+		}
 
 		if (!extension_loaded('gd')) {
 			$this->error['warning'] = 'Warning: GD extension needs to be loaded for OpenCart to work!';
@@ -169,10 +169,10 @@ class ControllerStep2 extends Controller {
 			$this->error['warning'] = 'Warning: Download directory needs to be writable for OpenCart to work!';
 		}
 
-    	if (!$this->error) {
-      		return true;
-    	} else {
-      		return false;
-    	}
+		if (!$this->error) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

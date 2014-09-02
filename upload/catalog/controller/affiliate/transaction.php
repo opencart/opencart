@@ -45,11 +45,11 @@ class ControllerAffiliateTransaction extends Controller {
 			$page = $this->request->get['page'];
 		} else {
 			$page = 1;
-		}		
+		}
 
 		$data['transactions'] = array();
 
-		$filter_data = array(				  
+		$filter_data = array(
 			'sort'  => 't.date_added',
 			'order' => 'DESC',
 			'start' => ($page - 1) * 10,
@@ -66,12 +66,12 @@ class ControllerAffiliateTransaction extends Controller {
 				'description' => $result['description'],
 				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added']))
 			);
-		}	
+		}
 
 		$pagination = new Pagination();
 		$pagination->total = $transaction_total;
 		$pagination->page = $page;
-		$pagination->limit = 10; 
+		$pagination->limit = 10;
 		$pagination->url = $this->url->link('affiliate/transaction', 'page={page}', 'SSL');
 
 		$data['pagination'] = $pagination->render();
@@ -93,6 +93,6 @@ class ControllerAffiliateTransaction extends Controller {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/affiliate/transaction.tpl', $data));
 		} else {
 			$this->response->setOutput($this->load->view('default/template/affiliate/transaction.tpl', $data));
-		}		
-	} 		
+		}
+	}
 }

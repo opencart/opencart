@@ -73,21 +73,22 @@
                 <div id="review"></div>
                 <h2><?php echo $text_write; ?></h2>
                 <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
-                  <div class="col-sm-10">
+                  <div class="col-sm-12">
+                    <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
                     <input type="text" name="name" value="" id="input-name" class="form-control" />
                   </div>
                 </div>
                 <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-review"><?php echo $entry_review; ?></label>
-                  <div class="col-sm-10">
+                  <div class="col-sm-12">
+                    <label class="control-label" for="input-review"><?php echo $entry_review; ?></label>
                     <textarea name="text" rows="5" id="input-review" class="form-control"></textarea>
                     <div class="help-block"><?php echo $text_note; ?></div>
                   </div>
                 </div>
                 <div class="form-group required">
-                  <label class="col-sm-2 control-label"><?php echo $entry_rating; ?></label>
-                  <div class="col-sm-10"><?php echo $entry_bad; ?>&nbsp;
+                  <div class="col-sm-12">
+                    <label class="control-label"><?php echo $entry_rating; ?></label>
+                    &nbsp;&nbsp;&nbsp; <?php echo $entry_bad; ?>&nbsp;
                     <input type="radio" name="rating" value="1" />
                     &nbsp;
                     <input type="radio" name="rating" value="2" />
@@ -100,10 +101,13 @@
                     &nbsp;<?php echo $entry_good; ?></div>
                 </div>
                 <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-captcha"><?php echo $entry_captcha; ?></label>
-                  <div class="col-sm-10">
+                  <div class="col-sm-12">
+                    <label class="control-label" for="input-captcha"><?php echo $entry_captcha; ?></label>
                     <input type="text" name="captcha" value="" id="input-captcha" class="form-control" />
-                    <img src="index.php?route=product/product/captcha" alt="" id="captcha" /></div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-12"> <img src="index.php?route=tool/captcha" alt="" id="captcha" /> </div>
                 </div>
                 <div class="buttons">
                   <div class="pull-right">
@@ -255,7 +259,7 @@
             <?php if ($option['type'] == 'file') { ?>
             <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
               <label class="control-label"><?php echo $option['name']; ?></label>
-              <button type="button" id="button-upload<?php echo $option['product_option_id']; ?>" class="btn btn-default btn-block"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+              <button type="button" id="button-upload<?php echo $option['product_option_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default btn-block"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
               <input type="hidden" name="option[<?php echo $option['product_option_id']; ?>]" value="" id="input-option<?php echo $option['product_option_id']; ?>" />
             </div>
             <?php } ?>
@@ -291,17 +295,17 @@
             <?php } ?>
             <?php } ?>
             <?php } ?>
-            <?php if ($profiles) { ?>
+            <?php if ($recurrings) { ?>
             <hr>
-            <h3><?php echo $text_payment_profile ?></h3>
+            <h3><?php echo $text_payment_recurring ?></h3>
             <div class="form-group required">
-              <select name="profile_id" class="form-control">
+              <select name="recurring_id" class="form-control">
                 <option value=""><?php echo $text_select; ?></option>
-                <?php foreach ($profiles as $profile) { ?>
-                <option value="<?php echo $profile['profile_id'] ?>"><?php echo $profile['name'] ?></option>
+                <?php foreach ($recurrings as $recurring) { ?>
+                <option value="<?php echo $recurring['recurring_id'] ?>"><?php echo $recurring['name'] ?></option>
                 <?php } ?>
               </select>
-              <div class="help-block" id="profile-description"></div>
+              <div class="help-block" id="recurring-description"></div>
             </div>
             <?php } ?>
             <div class="form-group">
@@ -410,20 +414,20 @@
     <?php echo $column_right; ?></div>
 </div>
 <script type="text/javascript"><!--
-$('select[name="profile_id"], input[name="quantity"]').change(function(){
+$('select[name=\'recurring_id\'], input[name="quantity"]').change(function(){
 	$.ajax({
 		url: 'index.php?route=product/product/getRecurringDescription',
 		type: 'post',
-		data: $('input[name=\'product_id\'], input[name=\'quantity\'], select[name=\'profile_id\']'),
+		data: $('input[name=\'product_id\'], input[name=\'quantity\'], select[name=\'recurring_id\']'),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#profile-description').html('');
+			$('#recurring-description').html('');
 		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();
-		
+			
 			if (json['success']) {
-				$('#profile-description').html(json['success']);
+				$('#recurring-description').html(json['success']);
 			}
 		}
 	});
@@ -431,41 +435,53 @@ $('select[name="profile_id"], input[name="quantity"]').change(function(){
 //--></script> 
 <script type="text/javascript"><!--
 $('#button-cart').on('click', function() {
-    $.ajax({
-        url: 'index.php?route=checkout/cart/add',
-        type: 'post',
-        data: $('#product input[type=\'text\'], #product input[type=\'date\'], #product input[type=\'datetime-local\'], #product input[type=\'time\'], #product input[type=\'hidden\'], #product input[type=\'radio\']:checked, #product input[type=\'checkbox\']:checked, #product select, #product textarea'),
-        dataType: 'json',
-        beforeSend: function() {
-        	$('#button-cart').button('loading');
-		},      
-        complete: function() {
+	$.ajax({
+		url: 'index.php?route=checkout/cart/add',
+		type: 'post',
+		data: $('#product input[type=\'text\'], #product input[type=\'hidden\'], #product input[type=\'radio\']:checked, #product input[type=\'checkbox\']:checked, #product select, #product textarea'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-cart').button('loading');
+		},
+		complete: function() {
 			$('#button-cart').button('reset');
-        },		
-        success: function(json) {
-            $('.alert, .text-danger').remove();
-            
-            if (json['error']) {
-                if (json['error']['option']) {
-                    for (i in json['error']['option']) {
-                        $('#input-option' + i).after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
-                    }
-                }
+		},
+		success: function(json) {
+			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
 
-				if (json['error']['profile']) {
-					$('select[name=\'profile_id\']').after('<div class="text-danger">' + json['error']['profile'] + '</div>');
+			if (json['error']) {
+				if (json['error']['option']) {
+					for (i in json['error']['option']) {
+						var element = $('#input-option' + i.replace('_', '-'));
+						
+						if (element.parent().hasClass('input-group')) {
+							element.parent().after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+						} else {
+							element.after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+						}
+					}
 				}
-            } 
-            
-            if (json['success']) {
-                $('.breadcrumb').after('<div class="alert alert-success">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-                    
-                $('#cart-total').html(json['total']);
-                
-                $('html, body').animate({ scrollTop: 0 }, 'slow'); 
-            }   
-        }
-    });
+				
+				if (json['error']['recurring']) {
+					$('select[name=\'recurring_id\']').after('<div class="text-danger">' + json['error']['recurring'] + '</div>');
+				}
+				
+				// Highlight any found errors
+				$('.text-danger').parent().addClass('has-error');
+			}
+			
+			if (json['success']) {
+				$('.breadcrumb').after('<div class="alert alert-success">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+				$('#cart-total').html(json['total']);
+				
+				$('html, body').animate({ scrollTop: 0 }, 'slow');
+				
+				$('#cart > ul').load('index.php?route=common/cart/info ul li');
+			}
+		}
+	});
 });
 //--></script> 
 <script type="text/javascript"><!--
@@ -481,44 +497,44 @@ $('.datetime').datetimepicker({
 $('.time').datetimepicker({
 	pickDate: false
 });
-		
+
 $('button[id^=\'button-upload\']').on('click', function() {
 	var node = this;
 	
 	$('#form-upload').remove();
 	
 	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
-
+	
 	$('#form-upload input[name=\'file\']').trigger('click');
-
+	
 	$('#form-upload input[name=\'file\']').on('change', function() {
 		$.ajax({
-			url: 'index.php?route=product/product/upload',
-			type: 'post',		
+			url: 'index.php?route=tool/upload',
+			type: 'post',
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
 			cache: false,
 			contentType: false,
-			processData: false,		
+			processData: false,
 			beforeSend: function() {
-				$(node).find('i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
-				$(node).prop('disabled', true);
+				$(node).button('loading');
 			},
 			complete: function() {
-				$(node).find('i').replaceWith('<i class="fa fa-upload"></i>');
-				$(node).prop('disabled', false);			
-			},		
+				$(node).button('reset');
+			},
 			success: function(json) {
+				$('.text-danger').remove();
+				
 				if (json['error']) {
-					$(node).parent().find('input[name^=\'option\']').after('<div class="text-danger">' + json['error'] + '</div>');
+					$(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
 				}
-							
+				
 				if (json['success']) {
 					alert(json['success']);
 					
-					$(node).parent().find('input[name^=\'option\']').attr('value', json['code']);
+					$(node).parent().find('input').attr('value', json['code']);
 				}
-			},			
+			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
@@ -528,54 +544,56 @@ $('button[id^=\'button-upload\']').on('click', function() {
 //--></script> 
 <script type="text/javascript"><!--
 $('#review').delegate('.pagination a', 'click', function(e) {
-	e.preventDefault();
-	
+  e.preventDefault();
+
     $('#review').fadeOut('slow');
-        
+
     $('#review').load(this.href);
-    
+
     $('#review').fadeIn('slow');
-});         
+});
 
 $('#review').load('index.php?route=product/product/review&product_id=<?php echo $product_id; ?>');
 
 $('#button-review').on('click', function() {
-    $.ajax({
-        url: 'index.php?route=product/product/write&product_id=<?php echo $product_id; ?>',
-        type: 'post',
-        dataType: 'json',
-        data: 'name=' + encodeURIComponent($('input[name=\'name\']').val()) + '&text=' + encodeURIComponent($('textarea[name=\'text\']').val()) + '&rating=' + encodeURIComponent($('input[name=\'rating\']:checked').val() ? $('input[name=\'rating\']:checked').val() : '') + '&captcha=' + encodeURIComponent($('input[name=\'captcha\']').val()),
-        beforeSend: function() {
-            $('#button-review').button('loading');
-        },
-        complete: function() {
-            $('#button-review').button('reset');
-        },
-        success: function(json) {
+	$.ajax({
+		url: 'index.php?route=product/product/write&product_id=<?php echo $product_id; ?>',
+		type: 'post',
+		dataType: 'json',
+		data: 'name=' + encodeURIComponent($('input[name=\'name\']').val()) + '&text=' + encodeURIComponent($('textarea[name=\'text\']').val()) + '&rating=' + encodeURIComponent($('input[name=\'rating\']:checked').val() ? $('input[name=\'rating\']:checked').val() : '') + '&captcha=' + encodeURIComponent($('input[name=\'captcha\']').val()),
+		beforeSend: function() {
+			$('#button-review').button('loading');
+		},
+		complete: function() {
+			$('#button-review').button('reset');
+			$('#captcha').attr('src', 'index.php?route=tool/captcha#'+new Date().getTime());
+			$('input[name=\'captcha\']').val('');
+		},
+		success: function(json) {
 			$('.alert-success, .alert-danger').remove();
-            
+			
 			if (json['error']) {
-                $('#review').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
-            }
-            
-            if (json['success']) {
-                $('#review').after('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
-                                
-                $('input[name=\'name\']').val('');
-                $('textarea[name=\'text\']').val('');
-                $('input[name=\'rating\']:checked').prop('checked', false);
-                $('input[name=\'captcha\']').val('');
-            }
-        }
-    });
+				$('#review').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+			}
+			
+			if (json['success']) {
+				$('#review').after('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+				
+				$('input[name=\'name\']').val('');
+				$('textarea[name=\'text\']').val('');
+				$('input[name=\'rating\']:checked').prop('checked', false);
+				$('input[name=\'captcha\']').val('');
+			}
+		}
+	});
 });
 
 $(document).ready(function() {
 	$('.thumbnails').magnificPopup({
 		type:'image',
 		delegate: 'a',
-		gallery: { 
-			enabled:true 
+		gallery: {
+			enabled:true
 		}
 	});
 });

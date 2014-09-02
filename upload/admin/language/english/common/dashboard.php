@@ -3,7 +3,6 @@
 $_['heading_title']                = 'Dashboard';
 
 // Text
-$_['text_welcome']                 = 'Welcome back <strong>%s</strong>!';
 $_['text_new_order']               = 'New Orders';
 $_['text_new_customer']            = 'New Customers';
 $_['text_total_sale']              = 'Total Sales';
@@ -21,16 +20,16 @@ $_['text_customer_address_add']    = '<a href="customer_id=%d">%s</a> added a ne
 $_['text_customer_address_edit']   = '<a href="customer_id=%d">%s</a> updated their address.';
 $_['text_customer_address_delete'] = '<a href="customer_id=%d">%s</a> deleted one of their address.';
 $_['text_customer_edit']           = '<a href="customer_id=%d">%s</a> updated their account details.';
-$_['text_customer_fogotten']       = '<a href="customer_id=%d">%s</a> has requested a new password.';
+$_['text_customer_forgotten']      = '<a href="customer_id=%d">%s</a> has requested a new password.';
 $_['text_customer_login']          = '<a href="customer_id=%d">%s</a> logged in.';
 $_['text_customer_password']       = '<a href="customer_id=%d">%s</a> updated their account password.';
 $_['text_customer_register']       = '<a href="customer_id=%d">%s</a> registered a new account.';
-$_['text_customer_return_accout']  = '<a href="customer_id=%d">%s</a> submitted a product return.';
+$_['text_customer_return_account'] = '<a href="customer_id=%d">%s</a> submitted a product return.';
 $_['text_customer_return_guest']   = '%s submitted a product return.';
-$_['text_customer_order_account']  = '<a href="customer_id=%d">%s</a> created a <a href="order_id=%d">new order</a>.';
+$_['text_customer_order_account']  = '<a href="customer_id=%d">%s</a> date_added a <a href="order_id=%d">new order</a>.';
 $_['text_customer_order_guest']    = '%s created a <a href="order_id=%d">new order</a>.';
 $_['text_affiliate_edit']          = '<a href="affiliate_id=%d">%s</a> updated their account details.';
-$_['text_affiliate_fogotten']      = '<a href="affiliate_id=%d">%s</a> requested a new password.';
+$_['text_affiliate_forgotten']     = '<a href="affiliate_id=%d">%s</a> requested a new password.';
 $_['text_affiliate_login']         = '<a href="affiliate_id=%d">%s</a> logged in.';
 $_['text_affiliate_password']      = '<a href="affiliate_id=%d">%s</a> updated their account password.';
 $_['text_affiliate_payment']       = '<a href="affiliate_id=%d">%s</a> updated their payment details.';

@@ -24,6 +24,6 @@ $_['entry_sort_order']    = 'Sort Order';
 // Help
 $_['help_product']        = '(Autocomplete)';
 
-// Error 
+// Error
 $_['error_permission']    = 'Warning: You do not have permission to modify module featured!';
 $_['error_image']         = 'Image width &amp; height dimensions required!';

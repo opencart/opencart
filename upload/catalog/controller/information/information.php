@@ -1,6 +1,6 @@
-<?php 
+<?php
 class ControllerInformationInformation extends Controller {
-	public function index() {  
+	public function index() {
 		$this->load->language('information/information');
 
 		$this->load->model('catalog/information');
@@ -66,6 +66,8 @@ class ControllerInformationInformation extends Controller {
 
 			$data['continue'] = $this->url->link('common/home');
 
+			$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
+
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');
@@ -88,7 +90,7 @@ class ControllerInformationInformation extends Controller {
 			$information_id = (int)$this->request->get['information_id'];
 		} else {
 			$information_id = 0;
-		}      
+		}
 
 		$output = '';
 

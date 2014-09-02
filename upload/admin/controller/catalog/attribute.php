@@ -1,18 +1,18 @@
-<?php 
-class ControllerCatalogAttribute extends Controller { 
+<?php
+class ControllerCatalogAttribute extends Controller {
 	private $error = array();
 
 	public function index() {
-		  $this->load->language('catalog/attribute');
+		$this->load->language('catalog/attribute');
 
-		  $this->document->setTitle($this->language->get('heading_title'));
+		$this->document->setTitle($this->language->get('heading_title'));
 
-		  $this->load->model('catalog/attribute');
+		$this->load->model('catalog/attribute');
 
-		  $this->getList();
-	  }
+		$this->getList();
+	}
 
-	public function insert() {
+	public function add() {
 		$this->load->language('catalog/attribute');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -44,7 +44,7 @@ class ControllerCatalogAttribute extends Controller {
 		$this->getForm();
 	}
 
-	public function update() {
+	public function edit() {
 		$this->load->language('catalog/attribute');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -143,20 +143,8 @@ class ControllerCatalogAttribute extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'] . $url, 'SSL')
-		);
-
-		$data['insert'] = $this->url->link('catalog/attribute/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$data['delete'] = $this->url->link('catalog/attribute/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');	
+		$data['insert'] = $this->url->link('catalog/attribute/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['delete'] = $this->url->link('catalog/attribute/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['attributes'] = array();
 
@@ -177,9 +165,9 @@ class ControllerCatalogAttribute extends Controller {
 				'name'            => $result['name'],
 				'attribute_group' => $result['attribute_group'],
 				'sort_order'      => $result['sort_order'],
-				'edit'            => $this->url->link('catalog/attribute/update', 'token=' . $this->session->data['token'] . '&attribute_id=' . $result['attribute_id'] . $url, 'SSL')
+				'edit'            => $this->url->link('catalog/attribute/edit', 'token=' . $this->session->data['token'] . '&attribute_id=' . $result['attribute_id'] . $url, 'SSL')
 			);
-		}	
+		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -189,7 +177,7 @@ class ControllerCatalogAttribute extends Controller {
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_attribute_group'] = $this->language->get('column_attribute_group');
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
-		$data['column_action'] = $this->language->get('column_action');		
+		$data['column_action'] = $this->language->get('column_action');
 
 		$data['button_insert'] = $this->language->get('button_insert');
 		$data['button_edit'] = $this->language->get('button_edit');
@@ -297,22 +285,10 @@ class ControllerCatalogAttribute extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'] . $url, 'SSL')
-		);
-
 		if (!isset($this->request->get['attribute_id'])) {
-			$data['action'] = $this->url->link('catalog/attribute/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('catalog/attribute/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$data['action'] = $this->url->link('catalog/attribute/update', 'token=' . $this->session->data['token'] . '&attribute_id=' . $this->request->get['attribute_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('catalog/attribute/edit', 'token=' . $this->session->data['token'] . '&attribute_id=' . $this->request->get['attribute_id'] . $url, 'SSL');
 		}
 
 		$data['cancel'] = $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -343,7 +319,7 @@ class ControllerCatalogAttribute extends Controller {
 
 		$this->load->model('catalog/attribute_group');
 
-		$data['attribute_groups'] = $this->model_catalog_attribute_group->getAttributeGroups();	
+		$data['attribute_groups'] = $this->model_catalog_attribute_group->getAttributeGroups();
 
 		if (isset($this->request->post['sort_order'])) {
 			$data['sort_order'] = $this->request->post['sort_order'];
@@ -357,7 +333,7 @@ class ControllerCatalogAttribute extends Controller {
 		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('catalog/attribute_form.tpl', $data));	
+		$this->response->setOutput($this->load->view('catalog/attribute_form.tpl', $data));
 	}
 
 	protected function validateForm() {
@@ -408,11 +384,11 @@ class ControllerCatalogAttribute extends Controller {
 
 			foreach ($results as $result) {
 				$json[] = array(
-					'attribute_id'    => $result['attribute_id'], 
+					'attribute_id'    => $result['attribute_id'],
 					'name'            => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
 					'attribute_group' => $result['attribute_group']
-				);		
-			}		
+				);
+			}
 		}
 
 		$sort_order = array();
@@ -423,6 +399,7 @@ class ControllerCatalogAttribute extends Controller {
 
 		array_multisort($sort_order, SORT_ASC, $json);
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}		  
+	}
 }

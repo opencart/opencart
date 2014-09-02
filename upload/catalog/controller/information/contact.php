@@ -1,6 +1,6 @@
-<?php 
+<?php
 class ControllerInformationContact extends Controller {
-	private $error = array(); 
+	private $error = array();
 
 	public function index() {
 		$this->load->language('information/contact');
@@ -8,7 +8,9 @@ class ControllerInformationContact extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$mail = new Mail($this->config->get('config_mail'));		
+			unset($this->session->data['captcha']);
+
+			$mail = new Mail($this->config->get('config_mail'));
 			$mail->setTo($this->config->get('config_email'));
 			$mail->setFrom($this->request->post['email']);
 			$mail->setSender($this->request->post['name']);
@@ -59,21 +61,21 @@ class ControllerInformationContact extends Controller {
 			$data['error_email'] = $this->error['email'];
 		} else {
 			$data['error_email'] = '';
-		}		
+		}
 
 		if (isset($this->error['enquiry'])) {
 			$data['error_enquiry'] = $this->error['enquiry'];
 		} else {
 			$data['error_enquiry'] = '';
-		}		
+		}
 
 		if (isset($this->error['captcha'])) {
 			$data['error_captcha'] = $this->error['captcha'];
 		} else {
 			$data['error_captcha'] = '';
-		}	
+		}
 
-		$data['button_continue'] = $this->language->get('button_continue');
+		$data['button_submit'] = $this->language->get('button_submit');
 
 		$data['action'] = $this->url->link('information/contact');
 
@@ -83,14 +85,14 @@ class ControllerInformationContact extends Controller {
 			$data['image'] = $this->model_tool_image->resize($this->config->get('config_image'), $this->config->get('config_image_location_width'), $this->config->get('config_image_location_height'));
 		} else {
 			$data['image'] = false;
-		}		
+		}
 
 		$data['store'] = $this->config->get('config_name');
 		$data['address'] = nl2br($this->config->get('config_address'));
 		$data['geocode'] = $this->config->get('config_geocode');
 		$data['telephone'] = $this->config->get('config_telephone');
 		$data['fax'] = $this->config->get('config_fax');
-		$data['open'] = $this->config->get('config_open');
+		$data['open'] = nl2br($this->config->get('config_open'));
 		$data['comment'] = $this->config->get('config_comment');
 
 		$data['locations'] = array();
@@ -114,9 +116,9 @@ class ControllerInformationContact extends Controller {
 					'geocode'     => $location_info['geocode'],
 					'telephone'   => $location_info['telephone'],
 					'fax'         => $location_info['fax'],
-					'image'       => $image,  
-					'open'        => $location_info['open'],   
-					'comment'     => $location_info['comment']   
+					'image'       => $image,
+					'open'        => nl2br($location_info['open']),
+					'comment'     => $location_info['comment']
 				);
 			}
 		}
@@ -143,7 +145,7 @@ class ControllerInformationContact extends Controller {
 			$data['captcha'] = $this->request->post['captcha'];
 		} else {
 			$data['captcha'] = '';
-		}		
+		}
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -156,13 +158,13 @@ class ControllerInformationContact extends Controller {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/information/contact.tpl', $data));
 		} else {
 			$this->response->setOutput($this->load->view('default/template/information/contact.tpl', $data));
-		}		
+		}
 	}
 
 	public function success() {
 		$this->load->language('information/contact');
 
-		$this->document->setTitle($this->language->get('heading_title')); 
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['breadcrumbs'] = array();
 
@@ -215,40 +217,6 @@ class ControllerInformationContact extends Controller {
 			$this->error['captcha'] = $this->language->get('error_captcha');
 		}
 
-		return !$this->error;  	  
-	}
-
-	public function captcha() {
-		$this->session->data['captcha'] = substr(sha1(mt_rand()), 17, 6);
-
-		$image = imagecreatetruecolor(150, 35);
-
-		$width = imagesx($image); 
-		$height = imagesy($image);
-
-		$black = imagecolorallocate($image, 0, 0, 0); 
-		$white = imagecolorallocate($image, 255, 255, 255); 
-		$red = imagecolorallocatealpha($image, 255, 0, 0, 75); 
-		$green = imagecolorallocatealpha($image, 0, 255, 0, 75); 
-		$blue = imagecolorallocatealpha($image, 0, 0, 255, 75); 
-
-		imagefilledrectangle($image, 0, 0, $width, $height, $white); 
-
-		imagefilledellipse($image, ceil(rand(5, 145)), ceil(rand(0, 35)), 30, 30, $red); 
-		imagefilledellipse($image, ceil(rand(5, 145)), ceil(rand(0, 35)), 30, 30, $green); 
-		imagefilledellipse($image, ceil(rand(5, 145)), ceil(rand(0, 35)), 30, 30, $blue); 
-
-		imagefilledrectangle($image, 0, 0, $width, 0, $black); 
-		imagefilledrectangle($image, $width - 1, 0, $width - 1, $height - 1, $black); 
-		imagefilledrectangle($image, 0, 0, 0, $height - 1, $black); 
-		imagefilledrectangle($image, 0, $height - 1, $width, $height - 1, $black); 
-
-		imagestring($image, 10, intval(($width - (strlen($this->session->data['captcha']) * 9)) / 2), intval(($height - 15) / 2), $this->session->data['captcha'], $black);
-
-		header('Content-type: image/jpeg');
-
-		imagejpeg($image);
-
-		imagedestroy($image);
+		return !$this->error;
 	}
 }

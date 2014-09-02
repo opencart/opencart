@@ -3,7 +3,6 @@
 $_['heading_title']                           = 'Orders';
 
 // Text
-$_['text_success']                            = 'Success: You have modified orders!';
 $_['text_order_detail']                       = 'Order Details';
 $_['text_order_id']                           = 'Order ID:';
 $_['text_invoice_no']                         = 'Invoice No.:';
@@ -114,6 +113,8 @@ $_['text_risk_score']                         = 'Risk Score:';
 $_['text_queries_remaining']                  = 'Queries Remaining:';
 $_['text_maxmind_id']                         = 'Maxmind ID:';
 $_['text_error']                              = 'Error:';
+$_['text_picklist']                           = 'Dispatch note';
+$_['text_history']                            = 'Add Order History';
 
 // Column
 $_['column_order_id']                         = 'Order ID';
@@ -131,6 +132,7 @@ $_['column_notify']                           = 'Customer Notified';
 $_['column_location']                         = 'Location';
 $_['column_reference']                        = 'Reference';
 $_['column_action']                           = 'Action';
+$_['column_weight']                           = 'Product weight';
 
 // Entry
 $_['entry_store']                             = 'Store';
@@ -164,8 +166,8 @@ $_['entry_affiliate']                         = 'Affiliate';
 $_['entry_order_status']                      = 'Order Status';
 $_['entry_notify']                            = 'Notify Customer';
 $_['entry_comment']                           = 'Comment';
-$_['entry_shipping']                          = 'Shipping Method';
-$_['entry_payment']                           = 'Payment Method';
+$_['entry_shipping_method']                   = 'Shipping Method';
+$_['entry_payment_method']                    = 'Payment Method';
 $_['entry_coupon']                            = 'Coupon';
 $_['entry_voucher']                           = 'Voucher';
 $_['entry_reward']                            = 'Reward';
@@ -229,21 +231,5 @@ $_['help_error']                              = 'Returns an error string with a 
 // Error
 $_['error_warning']                           = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']                        = 'Warning: You do not have permission to modify orders!';
-$_['error_firstname']                         = 'First Name must be between 1 and 32 characters!';
-$_['error_lastname']                          = 'Last Name must be between 1 and 32 characters!';
-$_['error_email']                             = 'E-Mail Address does not appear to be valid!';
-$_['error_telephone']                         = 'Telephone must be between 3 and 32 characters!';
-$_['error_password']                          = 'Password must be between 3 and 20 characters!';
-$_['error_confirm']                           = 'Password and password confirmation do not match!';
-$_['error_vat']                               = 'VAT number is invalid!';
-$_['error_address_1']                         = 'Address 1 must be between 3 and 128 characters!';
-$_['error_city']                              = 'City must be between 3 and 128 characters!';
-$_['error_postcode']                          = 'Postcode must be between 2 and 10 characters for this country!';
-$_['error_country']                           = 'Please select a country!';
-$_['error_zone']                              = 'Please select a region / state!';
-$_['error_shipping']                          = 'Warning: Shipping method required!';
-$_['error_payment']                           = 'Warning: Payment method required!';
-$_['error_upload']                            = 'Upload required!';
-$_['error_filename']                          = 'Filename must be between 3 and 128 characters!';
-$_['error_filetype']                          = 'Invalid file type!';
+$_['error_curl']                              = 'Warning: CURL error %s(%s)!';
 $_['error_action']                            = 'Warning: Could not complete this action!';

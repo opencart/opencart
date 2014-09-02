@@ -1,9 +1,9 @@
-<?php  
+<?php
 class ControllerInformationSitemap extends Controller {
 	public function index() {
 		$this->load->language('information/sitemap');
 
-		$this->document->setTitle($this->language->get('heading_title')); 
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['breadcrumbs'] = array();
 
@@ -59,8 +59,8 @@ class ControllerInformationSitemap extends Controller {
 				$level_2_data[] = array(
 					'name'     => $category_2['name'],
 					'children' => $level_3_data,
-					'href'     => $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'])	
-				);					
+					'href'     => $this->url->link('product/category', 'path=' . $category_1['category_id'] . '_' . $category_2['category_id'])
+				);
 			}
 
 			$data['categories'][] = array(
@@ -104,6 +104,6 @@ class ControllerInformationSitemap extends Controller {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/information/sitemap.tpl', $data));
 		} else {
 			$this->response->setOutput($this->load->view('default/template/information/sitemap.tpl', $data));
-		}		
+		}
 	}
 }

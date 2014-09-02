@@ -1,8 +1,8 @@
-<?php 
+<?php
 class ControllerCheckoutRegister extends Controller {
-  	public function index() {
+	public function index() {
 		$this->load->language('checkout/checkout');
-		
+
 		$data['text_checkout_payment_address'] = $this->language->get('text_checkout_payment_address');
 		$data['text_your_details'] = $this->language->get('text_your_details');
 		$data['text_your_address'] = $this->language->get('text_your_address');
@@ -48,20 +48,20 @@ class ControllerCheckoutRegister extends Controller {
 
 		$data['customer_group_id'] = $this->config->get('config_customer_group_id');
 
-		if (isset($this->session->data['shipping_addess']['postcode'])) {
-			$data['postcode'] = $this->session->data['shipping_addess']['postcode'];		
+		if (isset($this->session->data['shipping_address']['postcode'])) {
+			$data['postcode'] = $this->session->data['shipping_address']['postcode'];
 		} else {
 			$data['postcode'] = '';
 		}
 
-		if (isset($this->session->data['shipping_addess']['country_id'])) {
-			$data['country_id'] = $this->session->data['shipping_addess']['country_id'];		
-		} else {	
+		if (isset($this->session->data['shipping_address']['country_id'])) {
+			$data['country_id'] = $this->session->data['shipping_address']['country_id'];
+		} else {
 			$data['country_id'] = $this->config->get('config_country_id');
 		}
 
-		if (isset($this->session->data['shipping_addess']['zone_id'])) {
-			$data['zone_id'] = $this->session->data['shipping_addess']['zone_id'];			
+		if (isset($this->session->data['shipping_address']['zone_id'])) {
+			$data['zone_id'] = $this->session->data['shipping_address']['zone_id'];
 		} else {
 			$data['zone_id'] = '';
 		}
@@ -73,20 +73,7 @@ class ControllerCheckoutRegister extends Controller {
 		// Custom Fields
 		$this->load->model('account/custom_field');
 
-		$data['custom_fields'] = array();
-
-		$custom_fields = $this->model_account_custom_field->getCustomFields();
-
-		foreach ($custom_fields as $custom_field) {
-			$data['custom_fields'][] = array(
-				'custom_field_id'    => $custom_field['custom_field_id'],
-				'custom_field_value' => $custom_field['custom_field_value'],
-				'name'               => $custom_field['name'],
-				'location'           => $custom_field['location'],
-				'type'               => $custom_field['type'],
-				'value'              => $custom_field['value']
-			);
-		}	
+		$data['custom_fields'] = $this->model_account_custom_field->getCustomFields();
 
 		if ($this->config->get('config_account_id')) {
 			$this->load->model('catalog/information');
@@ -108,7 +95,7 @@ class ControllerCheckoutRegister extends Controller {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/register.tpl', $data));
 		} else {
 			$this->response->setOutput($this->load->view('default/template/checkout/register.tpl', $data));
-		}		
+		}
 	}
 
 	public function save() {
@@ -118,7 +105,7 @@ class ControllerCheckoutRegister extends Controller {
 
 		// Validate if customer is already logged out.
 		if ($this->customer->isLogged()) {
-			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');			
+			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
 		}
 
 		// Validate cart has products and has stock.
@@ -126,7 +113,7 @@ class ControllerCheckoutRegister extends Controller {
 			$json['redirect'] = $this->url->link('checkout/cart');
 		}
 
-		// Validate minimum quantity requirments.			
+		// Validate minimum quantity requirements.
 		$products = $this->cart->getProducts();
 
 		foreach ($products as $product) {
@@ -136,17 +123,17 @@ class ControllerCheckoutRegister extends Controller {
 				if ($product_2['product_id'] == $product['product_id']) {
 					$product_total += $product_2['quantity'];
 				}
-			}		
+			}
 
 			if ($product['minimum'] > $product_total) {
 				$json['redirect'] = $this->url->link('checkout/cart');
 
 				break;
-			}				
+			}
 		}
 
 		if (!$json) {
-			$this->load->model('account/customer');					
+			$this->load->model('account/customer');
 
 			if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
 				$json['error']['firstname'] = $this->language->get('error_firstname');
@@ -220,18 +207,18 @@ class ControllerCheckoutRegister extends Controller {
 			// Custom field validation
 			$this->load->model('account/custom_field');
 
-			$custom_fields = $this->model_account_custom_field->getCustomFieldsByCustomerGroupId($customer_group_id);
+			$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
 
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
 					$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 				}
-			}	
+			}
 		}
 
 		if (!$json) {
 			$customer_id = $this->model_account_customer->addCustomer($this->request->post);
-			
+
 			$this->session->data['account'] = 'register';
 
 			$this->load->model('account/customer_group');
@@ -256,20 +243,21 @@ class ControllerCheckoutRegister extends Controller {
 			unset($this->session->data['guest']);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['payment_method']);	
+			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
-			
+
 			// Add to activity log
 			$this->load->model('account/activity');
-			
+
 			$activity_data = array(
 				'customer_id' => $customer_id,
 				'name'        => $this->request->post['firstname'] . ' ' . $this->request->post['lastname']
 			);
-			
-			$this->model_account_activity->addActivity('register', $activity_data);
-		}	
 
-		$this->response->setOutput(json_encode($json));	
+			$this->model_account_activity->addActivity('register', $activity_data);
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

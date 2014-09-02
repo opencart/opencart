@@ -1,0 +1,232 @@
+<?php
+class ControllerModulePPLogin extends Controller {
+	public function index() {
+		if ($this->config->get('pp_login_status') && !$this->customer->isLogged()) {
+			$data['pp_login_client_id'] = $this->config->get('pp_login_client_id');
+			$data['pp_login_return_url'] = $this->url->link('module/pp_login/login', '', 'SSL');
+
+			if ($this->config->get('pp_login_sandbox')) {
+				$data['pp_login_sandbox'] = 'sandbox';
+			} else {
+				$data['pp_login_sandbox'] = '';
+			}
+
+			if ($this->config->get('pp_login_button_colour') == 'grey') {
+				$data['pp_login_button_colour'] = 'neutral';
+			} else {
+				$data['pp_login_button_colour'] = '';
+			}
+
+			$pp_login_locale = $this->config->get('pp_login_locale');
+
+			$this->load->model('localisation/language');
+
+			$languages = $this->model_localisation_language->getLanguages();
+
+			foreach ($languages as $language) {
+				if ($language['status'] && ($language['code'] == $this->session->data['language']) && isset($pp_login_locale[$language['language_id']])) {
+					$data['pp_login_locale'] = $pp_login_locale[$language['language_id']];
+				}
+			}
+
+			if (!isset($data['pp_login_locale'])) {
+				$data['pp_login_locale'] = 'en-gb';
+			}
+
+			$scopes = array(
+				'recurring',
+				'email',
+				'address',
+				'phone'
+			);
+
+			if ($this->config->get('pp_login_seamless')) {
+				$scopes[] = 'https://uri.paypal.com/services/expresscheckout';
+			}
+
+			$data['pp_login_scopes'] = implode(' ', $scopes);
+
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/pp_login.tpl')) {
+				return $this->load->view($this->config->get('config_template') . '/template/module/pp_login.tpl', $data);
+			} else {
+				return $this->load->view('default/template/module/pp_login.tpl', $data);
+			}
+		}
+	}
+
+	public function login() {
+		$this->load->model('module/pp_login');
+		$this->load->model('account/customer');
+		$this->load->model('account/customer_group');
+
+		if ($this->customer->isLogged()) {
+			echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/account', '', 'SSL') . '"; window.close();</script>';
+		}
+
+		if (!isset($this->request->get['code'])) {
+			if (isset($this->request->get['error']) && isset($this->request->get['error_description'])) {
+				$this->model_module_pp_login->log('No code returned. Error: ' . $this->request->get['error'] . ', Error Description: ' . $this->request->get['error_description']);
+			}
+
+			echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/login', '', 'SSL') . '"; window.close();</script>';
+		} else {
+			$tokens = $this->model_module_pp_login->getTokens($this->request->get['code']);
+		}
+
+		if (isset($tokens->access_token) && !isset($tokens->error)) {
+			$user = $this->model_module_pp_login->getUserInfo($tokens->access_token);
+		}
+
+		if (isset($user)) {
+			$customer_info = $this->model_account_customer->getCustomerByEmail($user->email);
+
+			if ($customer_info) {
+				if ($this->validate($user->email)) {
+					unset($this->session->data['guest']);
+
+					// Default Shipping Address
+					$this->load->model('account/address');
+
+					if ($this->config->get('config_tax_customer') == 'payment') {
+						$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+					}
+
+					if ($this->config->get('config_tax_customer') == 'shipping') {
+						$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+					}
+
+					// Add to activity log
+					$this->load->model('account/activity');
+
+					$activity_data = array(
+						'customer_id' => $this->customer->getId(),
+						'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+					);
+
+					$this->model_account_activity->addActivity('login', $activity_data);
+
+					if ($this->config->get('pp_login_seamless')) {
+						$this->session->data['pp_login']['seamless']['customer_id'] = $this->customer->getId();
+						$this->session->data['pp_login']['seamless']['access_token'] = $tokens->access_token;
+					} else {
+						if (isset($this->session->data['pp_login']['seamless'])) {
+							unset($this->session->data['pp_login']['seamless']);
+						}
+					}
+
+					$this->model_module_pp_login->log('Customer logged in - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
+					echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/account', '', 'SSL') . '"; window.close();</script>';
+				} else {
+					$this->model_module_pp_login->log('Could not login to - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
+				}
+			} else {
+				$country = $this->db->query("SELECT `country_id` FROM `" . DB_PREFIX . "country` WHERE iso_code_2 = '" . $this->db->escape($user->address->country) . "'");
+
+				if ($country->num_rows) {
+					$country_id = $country->row['country_id'];
+
+					$zone = $this->db->query("SELECT `zone_id` FROM `" . DB_PREFIX . "zone` WHERE country_id = '" . (int)$country_id . "' AND name = '" . $this->db->escape($user->address->region) . "'");
+
+					if ($zone->num_rows) {
+						$zone_id = $zone->row['zone_id'];
+					} else {
+						$zone_id = 0;
+					}
+				} else {
+					$country_id = 0;
+					$zone_id = 0;
+				}
+
+				if ($this->config->get('pp_login_customer_group_id')) {
+					$customer_group_id = $this->config->get('pp_login_customer_group_id');
+				} else {
+					$customer_group_id = $this->config->get('config_customer_group_id');
+				}
+
+				$data = array(
+					'customer_group_id' => (int)$customer_group_id,
+					'firstname'         => $user->given_name,
+					'lastname'          => $user->family_name,
+					'email'             => $user->email,
+					'telephone'         => $user->phone_number,
+					'fax'               => '',
+					'password'          => uniqid(rand(), true),
+					'company'           => '',
+					'address_1'         => $user->address->street_address,
+					'address_2'         => '',
+					'city'              => $user->address->locality,
+					'postcode'          => $user->address->postal_code,
+					'country_id'        => (int)$country_id,
+					'zone_id'           => (int)$zone_id,
+				);
+
+				$customer_id = $this->model_account_customer->addCustomer($data);
+
+				$this->model_module_pp_login->log('Customer ID date_added: ' . $customer_id);
+
+				if ($this->validate($user->email)) {
+					unset($this->session->data['guest']);
+
+					// Default Shipping Address
+					$this->load->model('account/address');
+
+					if ($this->config->get('config_tax_customer') == 'payment') {
+						$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+					}
+
+					if ($this->config->get('config_tax_customer') == 'shipping') {
+						$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+					}
+
+					// Add to activity log
+					$this->load->model('account/activity');
+
+					$activity_data = array(
+						'customer_id' => $this->customer->getId(),
+						'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+					);
+
+					$this->model_account_activity->addActivity('login', $activity_data);
+
+					if ($this->config->get('pp_login_seamless')) {
+						$this->session->data['pp_login']['seamless']['customer_id'] = $this->customer->getId();
+						$this->session->data['pp_login']['seamless']['access_token'] = $tokens->access_token;
+					} else {
+						if (isset($this->session->data['pp_login']['seamless'])) {
+							unset($this->session->data['pp_login']['seamless']);
+						}
+					}
+
+					$this->model_module_pp_login->log('Customer logged in - ID: ' . $customer_id . ', Email: ' . $user->email);
+					echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/account', '', 'SSL') . '"; window.close();</script>';
+				} else {
+					$this->model_module_pp_login->log('Could not login to - ID: ' . $customer_id . ', Email: ' . $user->email);
+				}
+			}
+		}
+	}
+
+	public function logout() {
+		if (isset($this->session->data['pp_login'])) {
+			unset($this->session->data['pp_login']);
+		}
+	}
+
+	protected function validate($email) {
+		if (!$this->customer->login($email, '', true)) {
+			$this->error['warning'] = $this->language->get('error_login');
+		}
+
+		$customer_info = $this->model_account_customer->getCustomerByEmail($email);
+
+		if ($customer_info && !$customer_info['approved']) {
+			$this->error['warning'] = $this->language->get('error_approved');
+		}
+
+		if (!$this->error) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+}

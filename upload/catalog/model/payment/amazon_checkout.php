@@ -9,7 +9,6 @@ class ModelPaymentAmazonCheckout extends Model {
 	}
 
 	public function isAmazonOrder($order_id) {
-
 		if ($this->config->get('amazon_checkout_status')) {
 			$status = $this->db->query("SELECT COUNT(*) AS `count` FROM " . DB_PREFIX . "order_amazon WHERE order_id =  " . (int)$order_id)->row['count'] == 1;
 		} else {
@@ -41,7 +40,7 @@ class ModelPaymentAmazonCheckout extends Model {
 
 	public function addTaxesForTotals($order_id, $totals) {
 		foreach ($totals as $total) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "order_total_tax` (`order_total_id`, `code`, `tax`) SELECT `order_total_id`, `code`, " . (double)$total['cba_tax'] . " FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int)$order_id . " AND `code` = '" . $this->db->escape($total['code']) . "' AND `title` = '" . $this->db->escape($total['title']) . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "order_total_tax` (`order_total_id`, `code`, `tax`) SELECT `order_total_id`, `code`, " . (float)$total['cba_tax'] . " FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int)$order_id . " AND `code` = '" . $this->db->escape($total['code']) . "' AND `title` = '" . $this->db->escape($total['title']) . "'");
 		}
 	}
 

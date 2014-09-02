@@ -150,13 +150,17 @@
               <textarea name="comment" rows="10" placeholder="<?php echo $entry_fault_detail; ?>" id="input-comment" class="form-control"><?php echo $comment; ?></textarea>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-captcha"><?php echo $entry_captcha; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="captcha" value="<?php echo $captcha; ?>" placeholder="<?php echo $entry_captcha; ?>" id="input-captcha" class="form-control" />
-              <img src="index.php?route=account/return/captcha" alt="" />
+              <input type="text" name="captcha" value="" placeholder="<?php echo $entry_captcha; ?>" id="input-captcha" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-10 pull-right">
+              <img src="index.php?route=tool/captcha" alt="" />
               <?php if ($error_captcha) { ?>
-              <div class="text-danger"><?php echo $error_captcha; ?></div>
+                <div class="text-danger"><?php echo $error_captcha; ?></div>
               <?php } ?>
             </div>
           </div>
@@ -177,7 +181,7 @@
         <div class="buttons clearfix">
           <div class="pull-left"><a href="<?php echo $back; ?>" class="btn btn-default"><?php echo $button_back; ?></a></div>
           <div class="pull-right">
-            <input type="submit" value="<?php echo $button_continue; ?>" class="btn btn-primary" />
+            <input type="submit" value="<?php echo $button_submit; ?>" class="btn btn-primary" />
           </div>
         </div>
         <?php } ?>

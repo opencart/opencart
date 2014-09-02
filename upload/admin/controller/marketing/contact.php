@@ -1,4 +1,4 @@
-<?php 
+<?php
 class ControllerMarketingContact extends Controller {
 	private $error = array();
 
@@ -11,12 +11,13 @@ class ControllerMarketingContact extends Controller {
 
 		$data['text_default'] = $this->language->get('text_default');
 		$data['text_newsletter'] = $this->language->get('text_newsletter');
-		$data['text_customer_all'] = $this->language->get('text_customer_all');	
-		$data['text_customer'] = $this->language->get('text_customer');	
+		$data['text_customer_all'] = $this->language->get('text_customer_all');
+		$data['text_customer'] = $this->language->get('text_customer');
 		$data['text_customer_group'] = $this->language->get('text_customer_group');
-		$data['text_affiliate_all'] = $this->language->get('text_affiliate_all');	
-		$data['text_affiliate'] = $this->language->get('text_affiliate');	
-		$data['text_product'] = $this->language->get('text_product');	
+		$data['text_affiliate_all'] = $this->language->get('text_affiliate_all');
+		$data['text_affiliate'] = $this->language->get('text_affiliate');
+		$data['text_product'] = $this->language->get('text_product');
+		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['entry_store'] = $this->language->get('entry_store');
 		$data['entry_to'] = $this->language->get('entry_to');
@@ -86,7 +87,7 @@ class ControllerMarketingContact extends Controller {
 			if (!$json) {
 				$this->load->model('setting/store');
 
-				$store_info = $this->model_setting_store->getStore($this->request->post['store_id']);			
+				$store_info = $this->model_setting_store->getStore($this->request->post['store_id']);
 
 				if ($store_info) {
 					$store_name = $store_info['name'];
@@ -140,7 +141,7 @@ class ControllerMarketingContact extends Controller {
 
 						foreach ($results as $result) {
 							$emails[] = $result['email'];
-						}						
+						}
 						break;
 					case 'customer_group':
 						$customer_data = array(
@@ -155,10 +156,10 @@ class ControllerMarketingContact extends Controller {
 
 						foreach ($results as $result) {
 							$emails[$result['customer_id']] = $result['email'];
-						}						
+						}
 						break;
 					case 'customer':
-						if (!empty($this->request->post['customer'])) {					
+						if (!empty($this->request->post['customer'])) {
 							foreach ($this->request->post['customer'] as $customer_id) {
 								$customer_info = $this->model_sale_customer->getCustomer($customer_id);
 
@@ -167,23 +168,23 @@ class ControllerMarketingContact extends Controller {
 								}
 							}
 						}
-						break;	
+						break;
 					case 'affiliate_all':
 						$affiliate_data = array(
 							'start'  => ($page - 1) * 10,
 							'limit'  => 10
 						);
 
-						$email_total = $this->model_marketing_affiliate->getTotalAffiliates($affiliate_data);		
+						$email_total = $this->model_marketing_affiliate->getTotalAffiliates($affiliate_data);
 
 						$results = $this->model_marketing_affiliate->getAffiliates($affiliate_data);
 
 						foreach ($results as $result) {
 							$emails[] = $result['email'];
-						}						
-						break;	
+						}
+						break;
 					case 'affiliate':
-						if (!empty($this->request->post['affiliate'])) {					
+						if (!empty($this->request->post['affiliate'])) {
 							foreach ($this->request->post['affiliate'] as $affiliate_id) {
 								$affiliate_info = $this->model_marketing_affiliate->getAffiliate($affiliate_id);
 
@@ -192,10 +193,10 @@ class ControllerMarketingContact extends Controller {
 								}
 							}
 						}
-						break;											
+						break;
 					case 'product':
 						if (isset($this->request->post['product'])) {
-							$email_total = $this->model_sale_order->getTotalEmailsByProductsOrdered($this->request->post['product']);	
+							$email_total = $this->model_sale_order->getTotalEmailsByProductsOrdered($this->request->post['product']);
 
 							$results = $this->model_sale_order->getEmailsByProductsOrdered($this->request->post['product'], ($page - 1) * 10, 10);
 
@@ -203,7 +204,7 @@ class ControllerMarketingContact extends Controller {
 								$emails[] = $result['email'];
 							}
 						}
-						break;												
+						break;
 				}
 
 				if ($emails) {
@@ -212,9 +213,9 @@ class ControllerMarketingContact extends Controller {
 
 					if ($end < $email_total) {
 						$json['success'] = sprintf($this->language->get('text_sent'), $start, $email_total);
-					} else { 
+					} else {
 						$json['success'] = $this->language->get('text_success');
-					}				
+					}
 
 					if ($end < $email_total) {
 						$json['next'] = str_replace('&amp;', '&', $this->url->link('marketing/contact/send', 'token=' . $this->session->data['token'] . '&page=' . ($page + 1), 'SSL'));
@@ -232,11 +233,11 @@ class ControllerMarketingContact extends Controller {
 
 					foreach ($emails as $email) {
 						if (preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $email)) {
-							$mail = new Mail($this->config->get('config_mail'));				
+							$mail = new Mail($this->config->get('config_mail'));
 							$mail->setTo($email);
 							$mail->setFrom($this->config->get('config_email'));
 							$mail->setSender($store_name);
-							$mail->setSubject($this->request->post['subject']);					
+							$mail->setSubject($this->request->post['subject']);
 							$mail->setHtml($message);
 							$mail->send();
 						}
@@ -245,6 +246,7 @@ class ControllerMarketingContact extends Controller {
 			}
 		}
 
-		$this->response->setOutput(json_encode($json));	
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

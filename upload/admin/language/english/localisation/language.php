@@ -1,9 +1,9 @@
 <?php
 // Heading
-$_['heading_title']     = 'Language';  
+$_['heading_title']     = 'Language';
 
 // Text
-$_['text_success']      = 'Success: You have modified languages!'; 
+$_['text_success']      = 'Success: You have modified languages!';
 
 // Column
 $_['column_name']       = 'Language Name';
@@ -22,11 +22,11 @@ $_['entry_status']      = 'Status';
 $_['entry_sort_order']  = 'Sort Order';
 
 // Help
-$_['help_code']         = 'eg: en. Do not change if this is your default language.';
-$_['help_locale']       = 'eg: en_US.UTF-8,en_US,en-gb,en_gb,english';
-$_['help_image']        = 'eg: gb.png';
-$_['help_directory']    = 'name of the language directory (case-sensitive)';
-$_['help_filename']     = 'main language filename without extension';
+$_['help_code']         = 'Example: en. Do not change if this is your default language.';
+$_['help_locale']       = 'Example: en_US.UTF-8,en_US,en-gb,en_gb,english';
+$_['help_image']        = 'Example: gb.png';
+$_['help_directory']    = 'Name of the language directory (case-sensitive)';
+$_['help_filename']     = 'Main language filename without extension';
 $_['help_status']       = 'Hide/Show it in language dropdown';
 
 // Error

@@ -1,8 +1,8 @@
-<?php 
-class ControllerTotalShipping extends Controller { 
-	private $error = array(); 
+<?php
+class ControllerTotalShipping extends Controller {
+	private $error = array();
 
-	public function index() { 
+	public function index() {
 		$this->load->language('total/shipping');
 
 		$this->document->setTitle($this->language->get('heading_title'));

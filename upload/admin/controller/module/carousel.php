@@ -1,8 +1,8 @@
 <?php
 class ControllerModuleCarousel extends Controller {
-	private $error = array(); 
+	private $error = array();
 
-	public function index() {   
+	public function index() {
 		$this->load->language('module/carousel');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -10,7 +10,7 @@ class ControllerModuleCarousel extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('carousel', $this->request->post);		
+			$this->model_setting_setting->editSetting('carousel', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -22,7 +22,7 @@ class ControllerModuleCarousel extends Controller {
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_content_top'] = $this->language->get('text_content_top');
-		$data['text_content_bottom'] = $this->language->get('text_content_bottom');		
+		$data['text_content_bottom'] = $this->language->get('text_content_bottom');
 		$data['text_column_left'] = $this->language->get('text_column_left');
 		$data['text_column_right'] = $this->language->get('text_column_right');
 
@@ -31,7 +31,7 @@ class ControllerModuleCarousel extends Controller {
 		$data['entry_scroll'] = $this->language->get('entry_scroll');
 		$data['entry_image'] = $this->language->get('entry_image');
 		$data['entry_width'] = $this->language->get('entry_width');
-		$data['entry_height'] = $this->language->get('entry_height');		
+		$data['entry_height'] = $this->language->get('entry_height');
 		$data['entry_layout'] = $this->language->get('entry_layout');
 		$data['entry_position'] = $this->language->get('entry_position');
 		$data['entry_status'] = $this->language->get('entry_status');
@@ -42,7 +42,7 @@ class ControllerModuleCarousel extends Controller {
 		$data['button_module_add'] = $this->language->get('button_module_add');
 		$data['button_remove'] = $this->language->get('button_remove');
 
- 		if (isset($this->error['warning'])) {
+		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
@@ -54,22 +54,22 @@ class ControllerModuleCarousel extends Controller {
 			$data['error_image'] = array();
 		}
 
-  		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_module'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_module'),
 			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('module/carousel', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 
 		$data['action'] = $this->url->link('module/carousel', 'token=' . $this->session->data['token'], 'SSL');
 
@@ -79,7 +79,7 @@ class ControllerModuleCarousel extends Controller {
 
 		if (isset($this->request->post['carousel_module'])) {
 			$data['modules'] = $this->request->post['carousel_module'];
-		} elseif ($this->config->get('carousel_module')) { 
+		} elseif ($this->config->get('carousel_module')) {
 			$data['modules'] = $this->config->get('carousel_module');
 		}
 
@@ -90,11 +90,11 @@ class ControllerModuleCarousel extends Controller {
 		$this->load->model('design/banner');
 
 		$data['banners'] = $this->model_design_banner->getBanners();
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
-		
+
 		$this->response->setOutput($this->load->view('module/carousel.tpl', $data));
 	}
 
@@ -104,12 +104,12 @@ class ControllerModuleCarousel extends Controller {
 		}
 
 		if (isset($this->request->post['carousel_module'])) {
-			foreach ($this->request->post['carousel_module'] as $key => $value) {				
+			foreach ($this->request->post['carousel_module'] as $key => $value) {
 				if (!$value['width'] || !$value['height']) {
 					$this->error['image'][$key] = $this->language->get('error_image');
 				}
 			}
-		}	
+		}
 
 		return !$this->error;
 	}

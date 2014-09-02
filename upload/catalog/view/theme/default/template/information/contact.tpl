@@ -133,17 +133,21 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-captcha"><?php echo $entry_captcha; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="captcha" value="<?php echo $captcha; ?>" id="input-captcha" class="form-control" />
-              <img src="index.php?route=information/contact/captcha" alt="" />
+              <input type="text" name="captcha" id="input-captcha" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-10 pull-right">
+              <img src="index.php?route=tool/captcha" alt="" />
               <?php if ($error_captcha) { ?>
-              <div class="text-danger"><?php echo $error_captcha; ?></div>
+                <div class="text-danger"><?php echo $error_captcha; ?></div>
               <?php } ?>
             </div>
           </div>
         </fieldset>
         <div class="buttons">
           <div class="pull-right">
-            <input class="btn btn-primary" type="submit" value="<?php echo $button_continue; ?>" />
+            <input class="btn btn-primary" type="submit" value="<?php echo $button_submit; ?>" />
           </div>
         </div>
       </form>

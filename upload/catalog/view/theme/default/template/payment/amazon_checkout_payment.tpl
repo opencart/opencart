@@ -1,13 +1,19 @@
 <?php echo $header; ?><?php echo $column_left; ?><?php echo $column_right; ?>
-<div id="content"><?php echo $content_top; ?>
-  <h2><?php echo $heading_payment; ?></h2>
-    <div style="float: left" id="amazon-wallet-widget"></div>
-    <div style="clear: both;"></div>
-    <div class="buttons" style="margin-top: 15px">
-      <a href="<?php echo $back ?>" class="button left"><span><?php echo $text_back ?></span></a>
-      <a class="button right" id="continue-button"><span><?php echo $text_continue ?></span></a>
+<div class="container"><?php echo $content_top; ?>
+  <div style="text-align:center;">
+    <h3><?php echo $heading_payment; ?></h3>
+    <div style="margin: 0 auto; width: 400px;" id="amazon-wallet-widget"></div>
+  </div>
+  <div style="clear: both;"></div>
+  <div class="buttons">
+    <div class="pull-left">
+      <a href="<?php echo $back; ?>" class="btn btn-primary"><?php echo $text_back; ?></a>
     </div>
-    <input type="hidden" name="payment_method" value="" />
+    <div class="pull-right">
+      <input class="btn btn-primary" id="continue-button" type="submit" value="<?php echo $text_continue; ?>" />
+    </div>
+  </div>
+  <input type="hidden" name="payment_method" value="" />
   <?php echo $content_bottom; ?>
 </div>
 <script type="text/javascript"><!--
@@ -23,7 +29,7 @@
     });
 
     new CBA.Widgets.WalletWidget({
-      merchantId: '<?php echo $merchant_id ?>',
+      merchantId: '<?php echo $merchant_id; ?>',
       displayMode: 'edit',
       onPaymentSelect: function(widget){
         $("input[name='payment_method']").val('1');

@@ -10,22 +10,22 @@ class ControllerPaymentKlarnaAccount extends Controller {
 
 			$data['text_information'] = $this->language->get('text_information');
 			$data['text_additional'] = $this->language->get('text_additional');
-			$data['text_payment_option'] = $this->language->get('text_payment_option');	
+			$data['text_payment_option'] = $this->language->get('text_payment_option');
 			$data['text_loading'] = $this->language->get('text_loading');
-			$data['text_day'] = $this->language->get('text_day');	
-			$data['text_month'] = $this->language->get('text_month');	
-			$data['text_year'] = $this->language->get('text_year');	
-			$data['text_male'] = $this->language->get('text_male');	
-			$data['text_female'] = $this->language->get('text_female');		
+			$data['text_day'] = $this->language->get('text_day');
+			$data['text_month'] = $this->language->get('text_month');
+			$data['text_year'] = $this->language->get('text_year');
+			$data['text_male'] = $this->language->get('text_male');
+			$data['text_female'] = $this->language->get('text_female');
 
-			$data['entry_pno'] = $this->language->get('entry_pno');		
-			$data['entry_dob'] = $this->language->get('entry_dob');	
-			$data['entry_gender'] = $this->language->get('entry_gender');	
-			$data['entry_street'] = $this->language->get('entry_street');	
-			$data['entry_house_no'] = $this->language->get('entry_house_no');	
-			$data['entry_house_ext'] = $this->language->get('entry_house_ext');	
-			$data['entry_phone_no'] = $this->language->get('entry_phone_no');	
-			$data['entry_company'] = $this->language->get('entry_company');	
+			$data['entry_pno'] = $this->language->get('entry_pno');
+			$data['entry_dob'] = $this->language->get('entry_dob');
+			$data['entry_gender'] = $this->language->get('entry_gender');
+			$data['entry_street'] = $this->language->get('entry_street');
+			$data['entry_house_no'] = $this->language->get('entry_house_no');
+			$data['entry_house_ext'] = $this->language->get('entry_house_ext');
+			$data['entry_phone_no'] = $this->language->get('entry_phone_no');
+			$data['entry_company'] = $this->language->get('entry_company');
 
 			$data['button_confirm'] = $this->language->get('button_confirm');
 
@@ -33,7 +33,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 
 			for ($i = 1; $i <= 31; $i++) {
 				$data['days'][] = array(
-					'text'  => sprintf('%02d', $i), 
+					'text'  => sprintf('%02d', $i),
 					'value' => $i
 				);
 			}
@@ -42,10 +42,10 @@ class ControllerPaymentKlarnaAccount extends Controller {
 
 			for ($i = 1; $i <= 12; $i++) {
 				$data['months'][] = array(
-					'text'  => sprintf('%02d', $i), 
+					'text'  => sprintf('%02d', $i),
 					'value' => $i
 				);
-			}			
+			}
 
 			$data['years'] = array();
 
@@ -54,7 +54,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 					'text'  => $i,
 					'value' => $i
 				);
-			}			
+			}
 
 			// Store Taxes to send to Klarna
 			$total_data = array();
@@ -63,7 +63,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 
 			$this->load->model('setting/extension');
 
-			$sort_order = array(); 
+			$sort_order = array();
 
 			$results = $this->model_setting_extension->getExtensions('total');
 
@@ -127,7 +127,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				'FIN' => 'EUR',
 				'DNK' => 'DKK',
 				'DEU' => 'EUR',
-				'NLD' => 'EUR',
+				'NLD' => 'EUR'
 			);
 
 			if ($order_info['payment_iso_code_3'] == 'DEU' || $order_info['payment_iso_code_3'] == 'NLD') {
@@ -162,7 +162,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				$pclasses = array();
 			}
 
-			foreach ($pclasses as $pclass) {                
+			foreach ($pclasses as $pclass) {
 				// 0 - Campaign
 				// 1 - Account
 				// 2 - Special
@@ -255,7 +255,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				$payment_option[$pclass['id']]['monthly_cost'] = $monthly_cost;
 			}
 
-			$sort_order = array(); 
+			$sort_order = array();
 
 			foreach ($payment_option as $key => $value) {
 				$sort_order[$key] = $value['pclass_id'];
@@ -276,7 +276,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				return $this->load->view($this->config->get('config_template') . '/template/payment/klarna_account.tpl', $data);
 			} else {
 				return $this->load->view('default/template/payment/klarna_account.tpl', $data);
-			}	
+			}
 		}
 	}
 
@@ -297,7 +297,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 
 			if ($this->cart->hasShipping() && !($order_info['payment_firstname'] == $order_info['shipping_firstname'] && $order_info['payment_lastname'] == $order_info['shipping_lastname'] && $order_info['payment_address_1'] == $order_info['shipping_address_1'] && $order_info['payment_address_2'] == $order_info['shipping_address_2'] && $order_info['payment_postcode'] == $order_info['shipping_postcode'] && $order_info['payment_city'] == $order_info['shipping_city'] && $order_info['payment_zone_id'] == $order_info['shipping_zone_id'] && $order_info['payment_zone_code'] == $order_info['shipping_zone_code'] && $order_info['payment_country_id'] == $order_info['shipping_country_id'] && $order_info['payment_country'] == $order_info['shipping_country'] && $order_info['payment_iso_code_3'] == $order_info['shipping_iso_code_3'])) {
 				$json['error'] = $this->language->get('error_address_match');
-			}		
+			}
 
 			if (!$json) {
 				$klarna_account = $this->config->get('klarna_account');
@@ -314,7 +314,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 					'FIN' => 'EUR',
 					'DNK' => 'DKK',
 					'DEU' => 'EUR',
-					'NLD' => 'EUR',
+					'NLD' => 'EUR'
 				);
 
 				switch ($order_info['payment_iso_code_3']) {
@@ -339,21 +339,21 @@ class ControllerPaymentKlarnaAccount extends Controller {
 						$encoding = 5;
 						$currency = 3;
 						break;
-					// Norway	
+					// Norway
 					case 'NOR':
 						$country = 164;
 						$language = 97;
 						$encoding = 3;
 						$currency = 1;
 						break;
-					// Germany	
+					// Germany
 					case 'DEU':
 						$country = 81;
 						$language = 28;
 						$encoding = 6;
 						$currency = 2;
 						break;
-					// Netherlands															
+					// Netherlands
 					case 'NLD':
 						$country = 154;
 						$language = 101;
@@ -393,7 +393,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 					'house_extension' => $house_ext,
 					'zip'             => $order_info['payment_postcode'],
 					'city'            => $order_info['payment_city'],
-					'country'         => $country,
+					'country'         => $country
 				);
 
 				$product_query = $this->db->query("SELECT `name`, `model`, `price`, `quantity`, `tax` / `price` * 100 AS 'tax_rate' FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = " . (int)$order_info['order_id'] . " UNION ALL SELECT '', `code`, `amount`, '1', 0.00 FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = " . (int)$order_info['order_id']);
@@ -407,7 +407,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 							'price'    => (int)str_replace('.', '', $this->currency->format($product['price'], $country_to_currency[$order_info['payment_iso_code_3']], '', false)),
 							'vat'      => (float)$product['tax_rate'],
 							'discount' => 0.0,
-							'flags'    => 0,
+							'flags'    => 0
 						)
 					);
 				}
@@ -428,7 +428,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 								'price'    => (int)str_replace('.', '', $this->currency->format($total['value'], $country_to_currency[$order_info['payment_iso_code_3']], '', false)),
 								'vat'      => (float)$total['tax_rate'],
 								'discount' => 0.0,
-								'flags'    => 0,
+								'flags'    => 0
 							)
 						);
 					}
@@ -466,20 +466,20 @@ class ControllerPaymentKlarnaAccount extends Controller {
 					$pno,
 					$gender,
 					'',
-					'', 
-					(string)$order_info['order_id'], 
 					'',
-					$address, 
-					$address, 
+					(string)$order_info['order_id'],
+					'',
+					$address,
+					$address,
 					$order_info['ip'],
-					0, 
-					$currency, 
+					0,
+					$currency,
 					$country,
-					$language, 
+					$language,
 					(int)$klarna_account[$order_info['payment_iso_code_3']]['merchant'],
-					$digest, 
+					$digest,
 					$encoding,
-					$pclass, 
+					$pclass,
 					$goods_list,
 					$order_info['comment'],
 					array('delay_adjust' => 1),
@@ -499,7 +499,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				}
 
 				$xml .= '  </params>';
-				$xml .= '</methodCall>';        
+				$xml .= '</methodCall>';
 
 				$header = array();
 
@@ -532,7 +532,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 						$log = new Log('klarna_account.log');
 						$log->write('Failed to create an invoice for order #' . $order_info['order_id'] . '. Message: ' . utf8_encode($match[1]) . ' Code: ' . $match2[1]);
 
-						$json['error'] = utf8_encode($match[1]); 
+						$json['error'] = utf8_encode($match[1]);
 					} else {
 						$xml = new DOMDocument();
 						$xml->loadXML($response);
@@ -550,7 +550,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 
 						$comment = sprintf($this->language->get('text_comment'), $invoice_number, $this->config->get('config_currency'), $country_to_currency[$order_info['payment_iso_code_3']], $this->currency->getValue($country_to_currency[$order_info['payment_iso_code_3']]));
 
-						$this->model_checkout_order->confirm($this->session->data['order_id'], $order_status, $comment, 1);
+						$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $order_status, $comment, 1);
 
 						$json['redirect'] = $this->url->link('checkout/success');
 					}
@@ -560,6 +560,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 			}
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 

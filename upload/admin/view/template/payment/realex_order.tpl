@@ -23,7 +23,7 @@
         <?php if ($realex_order['void_status'] == 0) { ?>
           <input type="text" width="10" id="capture_amount" value="<?php echo $realex_order['total']; ?>"/>
           <a class="button btn btn-primary" id="btn_capture"><?php echo $btn_capture; ?></a>
-          <span class="btn btn-primary" id="img_loading_capture" style="display:none;"><i class="fa fa-cog fa-spin fa-lg"></i></span>
+          <span class="btn btn-primary" id="img_loading_capture" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
         <?php } ?>
       <?php } ?>
     </td>
@@ -36,7 +36,7 @@
       <?php } else { ?>
         <span class="void_text"><?php echo $text_no; ?></span>&nbsp;&nbsp;
         <a class="button btn btn-primary" id="btn_void"><?php echo $btn_void; ?></a>
-        <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-cog fa-spin fa-lg"></i></span>
+        <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
       <?php } ?>
     </td>
   </tr>
@@ -51,7 +51,7 @@
         <?php if ($realex_order['total_captured'] > 0 && $realex_order['void_status'] == 0) { ?>
           <input type="text" width="10" id="rebate_amount" />
           <a class="button btn btn-primary" id="btn_rebate"><?php echo $btn_rebate; ?></a>
-          <span class="btn btn-primary" id="img_loading_rebate" style="display:none;"><i class="fa fa-cog fa-spin fa-lg"></i></span>
+          <span class="btn btn-primary" id="img_loading_rebate" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
         <?php } ?>
       <?php } ?>
     </td>
@@ -62,7 +62,7 @@
       <table class="table table-striped table-bordered" id="realex_transactions">
         <thead>
           <tr>
-            <td class="text-left"><strong><?php echo $text_column_created; ?></strong></td>
+            <td class="text-left"><strong><?php echo $text_column_date_added; ?></strong></td>
             <td class="text-left"><strong><?php echo $text_column_type; ?></strong></td>
             <td class="text-left"><strong><?php echo $text_column_amount; ?></strong></td>
           </tr>
@@ -70,7 +70,7 @@
         <tbody>
           <?php foreach($realex_order['transactions'] as $transaction) { ?>
             <tr>
-              <td class="text-left"><?php echo $transaction['created']; ?></td>
+              <td class="text-left"><?php echo $transaction['date_added']; ?></td>
               <td class="text-left"><?php echo $transaction['type']; ?></td>
               <td class="text-left"><?php echo $transaction['amount']; ?></td>
             </tr>
@@ -97,7 +97,7 @@
           if (data.error == false) {
             html = '';
             html += '<tr>';
-            html += '<td class="text-left">'+data.data.created+'</td>';
+            html += '<td class="text-left">'+data.data.date_added+'</td>';
             html += '<td class="text-left">void</td>';
             html += '<td class="text-left">0.00</td>';
             html += '</tr>';
@@ -138,7 +138,7 @@
           if (data.error == false) {
             html = '';
             html += '<tr>';
-            html += '<td class="text-left">'+data.data.created+'</td>';
+            html += '<td class="text-left">'+data.data.date_added+'</td>';
             html += '<td class="text-left">payment</td>';
             html += '<td class="text-left">'+data.data.amount+'</td>';
             html += '</tr>';
@@ -153,7 +153,7 @@
               $('#btn_capture').show();
               $('#capture_amount').val(0.00);
 
-              <?php if($auto_settle == 2) { ?>
+              <?php if ($auto_settle == 2) { ?>
                 $('#capture_amount').show();
               <?php } ?>
             }
@@ -193,7 +193,7 @@
           if (data.error == false) {
             html = '';
             html += '<tr>';
-            html += '<td class="text-left">'+data.data.created+'</td>';
+            html += '<td class="text-left">'+data.data.date_added+'</td>';
             html += '<td class="text-left">rebate</td>';
             html += '<td class="text-left">'+data.data.amount+'</td>';
             html += '</tr>';

@@ -83,8 +83,6 @@ $_['text_view']   		     = 'View details';
 $_['text_maxmind_success']   = 'MaxMind fraud service has been installed';
 $_['text_maxmind_top']   	 = 'If you don\'t have a license key you can';
 $_['text_maxmind_link']   	 = 'sign up here';
-$_['text_maxmind_risk_help'] = 'The higher the score the more likely the order is fraudulent. Set a score between 0 - 100.';
-$_['text_maxmind_fraud_help'] = 'Orders over your set score will be assigned this order status and will not be allowed to reach the complete status automatically.';
 $_['text_ebay_about']	 	 = 'eBay is a multi-billion dollar market place that allows business or private sellers to auction and retail goods online. Available to sellers worldwide.';
 $_['text_amazon_about']	 	 = 'Amazon Marketplace a fixed-price online marketplace allowing sellers to offer new and used items alongside Amazon\'s regular retail service.';
 
@@ -102,9 +100,22 @@ $_['entry_licence_key']      = 'License Key';
 $_['entry_risk']      		 = 'Risk score';
 $_['entry_fraud_status']     = 'Fraud Order Status';
 
+// Help
+$_['help_maxmind_risk']      = 'The higher the score the more likely the order is fraudulent. Set a score between 0 - 100.';
+$_['help_maxmind_fraud']     = 'Orders over your set score will be assigned this order status and will not be allowed to reach the complete status automatically.';
+
 // Error
 $_['error_key'] 			 = 'Maxmind licence key required';
 $_['error_score'] 			 = 'A score between 0 and 100 is accepted';
+$_['error_db_hostname'] 	 = 'Hostname required!';
+$_['error_db_username'] 	 = 'Username required!';
+$_['error_db_database']		 = 'Database Name required!';
+$_['error_db_prefix'] 		 = 'DB Prefix can only contain lowercase characters in the a-z range, 0-9 and underscores';
+$_['error_db_connect'] 		 = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
+$_['error_username'] 		 = 'Username required!';
+$_['error_password'] 		 = 'Password required!';
+$_['error_email'] 			 = 'Invalid E-Mail!';
+$_['error_config'] 			 = 'Error: Could not write to config.php please check you have set the correct permissions on: ';
 
 // Buttons
 $_['button_continue']        = 'Continue';

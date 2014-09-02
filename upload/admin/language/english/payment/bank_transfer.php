@@ -2,7 +2,7 @@
 // Heading
 $_['heading_title']      = 'Bank Transfer';
 
-// Text 
+// Text
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified bank transfer details!';
 

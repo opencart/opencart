@@ -16,7 +16,7 @@ class Customer {
 		$this->request = $registry->get('request');
 		$this->session = $registry->get('session');
 
-		if (isset($this->session->data['customer_id'])) { 
+		if (isset($this->session->data['customer_id'])) {
 			$customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE customer_id = '" . (int)$this->session->data['customer_id'] . "' AND status = '1'");
 
 			if ($customer_query->num_rows) {
@@ -51,7 +51,7 @@ class Customer {
 		}
 
 		if ($customer_query->num_rows) {
-			$this->session->data['customer_id'] = $customer_query->row['customer_id'];	
+			$this->session->data['customer_id'] = $customer_query->row['customer_id'];
 
 			if ($customer_query->row['cart'] && is_string($customer_query->row['cart'])) {
 				$cart = unserialize($customer_query->row['cart']);

@@ -28,7 +28,7 @@ $_['entry_layout']           = 'Layout Override';
 $_['help_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the keyword is globally unique.';
 $_['help_bottom']            = 'Display in the bottom footer.';
 
-// Error 
+// Error
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']       = 'Warning: You do not have permission to modify information!';
 $_['error_title']            = 'Information Title must be between 3 and 64 characters!';

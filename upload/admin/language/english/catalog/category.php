@@ -34,7 +34,7 @@ $_['help_keyword']           = 'Do not use spaces, instead replace spaces with -
 $_['help_top']               = 'Display in the top menu bar. Only works for the top parent categories.';
 $_['help_column']            = 'Number of columns to use for the bottom 3 categories. Only works for the top parent categories.';
 
-// Error 
+// Error
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']       = 'Warning: You do not have permission to modify categories!';
 $_['error_name']             = 'Category Name must be between 2 and 32 characters!';

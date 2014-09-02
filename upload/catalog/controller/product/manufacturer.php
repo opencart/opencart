@@ -18,10 +18,10 @@ class ControllerProductManufacturer extends Controller {
 
 		$data['breadcrumbs'] = array();
 
-      	$data['breadcrumbs'][] = array(
-        	'text' => $this->language->get('text_home'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
-      	);
+		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_brand'),
@@ -50,23 +50,23 @@ class ControllerProductManufacturer extends Controller {
 		}
 
 		$data['continue'] = $this->url->link('common/home');
-		
+
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
-		
+
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/product/manufacturer_list.tpl')) {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/product/manufacturer_list.tpl', $data));
 		} else {
 			$this->response->setOutput($this->load->view('default/template/product/manufacturer_list.tpl', $data));
 		}
-  	}
+	}
 
 	public function info() {
-    	$this->load->language('product/manufacturer');
+		$this->load->language('product/manufacturer');
 
 		$this->load->model('catalog/manufacturer');
 
@@ -106,15 +106,15 @@ class ControllerProductManufacturer extends Controller {
 
 		$data['breadcrumbs'] = array();
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
-   		);
+		);
 
 		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_brand'),
+			'text' => $this->language->get('text_brand'),
 			'href' => $this->url->link('product/manufacturer')
-   		);
+		);
 
 		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($manufacturer_id);
 
@@ -141,9 +141,9 @@ class ControllerProductManufacturer extends Controller {
 			}
 
 			$data['breadcrumbs'][] = array(
-       			'text' => $manufacturer_info['name'],
+				'text' => $manufacturer_info['name'],
 				'href' => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url)
-   			);
+			);
 
 			$data['heading_title'] = $manufacturer_info['name'];
 
@@ -334,7 +334,17 @@ class ControllerProductManufacturer extends Controller {
 			$pagination->url = $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] .  $url . '&page={page}');
 
 			$data['pagination'] = $pagination->render();
-			
+
+			$this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page=' . $pagination->page), 'canonical');
+
+			if ($pagination->limit && ceil($pagination->total / $pagination->limit) > $pagination->page) {
+				$this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page=' . ($pagination->page + 1)), 'next');
+			}
+
+			if ($pagination->page > 1) {
+				$this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page=' . ($pagination->page - 1)), 'prev');
+			}
+
 			$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
 
 			$data['sort'] = $sort;
@@ -342,14 +352,14 @@ class ControllerProductManufacturer extends Controller {
 			$data['limit'] = $limit;
 
 			$data['continue'] = $this->url->link('common/home');
-			
+
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
-					
+
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/product/manufacturer_info.tpl')) {
 				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/product/manufacturer_info.tpl', $data));
 			} else {
@@ -385,26 +395,28 @@ class ControllerProductManufacturer extends Controller {
 
 			$this->document->setTitle($this->language->get('text_error'));
 
-      		$data['heading_title'] = $this->language->get('text_error');
+			$data['heading_title'] = $this->language->get('text_error');
 
-      		$data['text_error'] = $this->language->get('text_error');
+			$data['text_error'] = $this->language->get('text_error');
 
-      		$data['button_continue'] = $this->language->get('button_continue');
+			$data['button_continue'] = $this->language->get('button_continue');
 
-      		$data['continue'] = $this->url->link('common/home');
-			
+			$data['continue'] = $this->url->link('common/home');
+
+			$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . ' 404 Not Found');
+
 			$data['header'] = $this->load->controller('common/header');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
-			
+
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
 				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/error/not_found.tpl', $data));
 			} else {
 				$this->response->setOutput($this->load->view('default/template/error/not_found.tpl', $data));
 			}
 		}
-  	}
+	}
 }

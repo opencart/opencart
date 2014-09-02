@@ -1,5 +1,5 @@
-<?php   
-class ControllerCommonDashboard extends Controller {   
+<?php
+class ControllerCommonDashboard extends Controller {
 	public function index() {
 		$this->load->language('common/dashboard');
 
@@ -7,9 +7,8 @@ class ControllerCommonDashboard extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
-		$data['text_welcome'] = sprintf($this->language->get('text_welcome'), $this->user->getUsername());
 		$data['text_new_order'] = $this->language->get('text_new_order');
-		$data['text_new_customer'] = $this->language->get('text_new_customer');		
+		$data['text_new_customer'] = $this->language->get('text_new_customer');
 		$data['text_total_sale'] = $this->language->get('text_total_sale');
 		$data['text_marketing'] = $this->language->get('text_marketing');
 		$data['text_analytics'] = $this->language->get('text_analytics');
@@ -38,18 +37,6 @@ class ControllerCommonDashboard extends Controller {
 			$data['error_install'] = '';
 		}
 
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-		);
-
 		$data['token'] = $this->session->data['token'];
 
 		// Total Orders
@@ -57,17 +44,10 @@ class ControllerCommonDashboard extends Controller {
 
 		$data['order_total'] = $this->model_sale_order->getTotalOrders();
 
-		$today = $this->model_sale_order->getTotalOrders(array('filter_date_added' => date('Y-m-d', strtotime('-1 day'))));
+		$this->load->model('report/dashboard');
 
-		$yesterday = $this->model_sale_order->getTotalOrders(array('filter_date_added' => date('Y-m-d', strtotime('-2 day'))));
-
-		$difference = $today - $yesterday;
-
-		if ($difference && $today) {
-			$data['order_percentage'] = round(($difference / $today) * 100);
-		} else {
-			$data['order_percentage'] = 0;
-		}
+		// Total Sales
+		$data['sale_total'] = $this->currency->format($this->model_report_dashboard->getTotalSales(), $this->config->get('config_currency'));
 
 		// Customers
 		$this->load->model('sale/customer');
@@ -75,35 +55,6 @@ class ControllerCommonDashboard extends Controller {
 		$customer_total = $this->model_sale_customer->getTotalCustomers();
 
 		$data['customer_total'] = $customer_total;
-
-		$today = $this->model_sale_customer->getTotalCustomers(array('filter_date_added' => date('Y-m-d', strtotime('-1 day'))));
-
-		$yesterday = $this->model_sale_customer->getTotalCustomers(array('filter_date_added' => date('Y-m-d', strtotime('-2 day'))));
-
-		$difference = $today - $yesterday;
-
-		if ($difference && $today) {
-			$data['customer_percentage'] = round(($difference / $today) * 100);
-		} else {
-			$data['customer_percentage'] = 0;
-		}
-
-		$this->load->model('report/dashboard');
-
-		// Total Sales
-		$data['sale_total'] = $this->currency->format($this->model_report_dashboard->getTotalSales(), $this->config->get('config_currency'));
-
-		$today = $this->model_report_dashboard->getTotalSales(array('filter_date_added' => date('Y-m-d', strtotime('-1 day'))));
-
-		$yesterday = $this->model_report_dashboard->getTotalSales(array('filter_date_added' => date('Y-m-d', strtotime('-2 day'))));
-
-		$difference = $today - $yesterday;
-
-		if ($difference && $today) {
-			$data['sale_percentage'] = round(($difference / $today) * 100);
-		} else {
-			$data['sale_percentage'] = 0;
-		}
 
 		// Customers Online
 		$data['online_total'] = $this->model_report_dashboard->getTotalCustomersOnline();
@@ -122,16 +73,16 @@ class ControllerCommonDashboard extends Controller {
 			);
 
 			$replace = array(
-				$this->url->link('sale/customer/update', 'token=' . $this->session->data['token'] . '&customer_id=', 'SSL'),
+				$this->url->link('sale/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=', 'SSL'),
 				$this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=', 'SSL'),
-				$this->url->link('marketing/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=', 'SSL')
+				$this->url->link('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=', 'SSL')
 			);
 
 			$data['activities'][] = array(
 				'comment'    => str_replace($find, $replace, $comment),
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
 			);
-		}	
+		}
 
 		// Last 5 Orders
 		$data['orders'] = array();
@@ -140,7 +91,7 @@ class ControllerCommonDashboard extends Controller {
 			'sort'  => 'o.date_added',
 			'order' => 'DESC',
 			'start' => 0,
-			'limit' => 5 
+			'limit' => 5
 		);
 
 		$results = $this->model_sale_order->getOrders($filter_data);
@@ -200,7 +151,7 @@ class ControllerCommonDashboard extends Controller {
 
 				for ($i = 0; $i < 24; $i++) {
 					$json['xaxis'][] = array($i, $i);
-				}					
+				}
 				break;
 			case 'week':
 				$results = $this->model_report_dashboard->getTotalOrdersByWeek();
@@ -215,13 +166,13 @@ class ControllerCommonDashboard extends Controller {
 					$json['customer']['data'][] = array($key, $value['total']);
 				}
 
-				$date_start = strtotime('-' . date('w') . ' days'); 
+				$date_start = strtotime('-' . date('w') . ' days');
 
 				for ($i = 0; $i < 7; $i++) {
 					$date = date('Y-m-d', $date_start + ($i * 86400));
 
 					$json['xaxis'][] = array(date('w', strtotime($date)), date('D', strtotime($date)));
-				}				
+				}
 				break;
 			case 'month':
 				$results = $this->model_report_dashboard->getTotalOrdersByMonth();
@@ -234,13 +185,13 @@ class ControllerCommonDashboard extends Controller {
 
 				foreach ($results as $key => $value) {
 					$json['customer']['data'][] = array($key, $value['total']);
-				}	
+				}
 
 				for ($i = 1; $i <= date('t'); $i++) {
 					$date = date('Y') . '-' . date('m') . '-' . $i;
 
 					$json['xaxis'][] = array(date('j', strtotime($date)), date('d', strtotime($date)));
-				}					
+				}
 				break;
 			case 'year':
 				$results = $this->model_report_dashboard->getTotalOrdersByYear();
@@ -253,14 +204,15 @@ class ControllerCommonDashboard extends Controller {
 
 				foreach ($results as $key => $value) {
 					$json['customer']['data'][] = array($key, $value['total']);
-				}	
+				}
 
 				for ($i = 1; $i <= 12; $i++) {
 					$json['xaxis'][] = array($i, date('M', mktime(0, 0, 0, $i)));
-				}				
-				break;	
-		} 
+				}
+				break;
+		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -276,14 +228,15 @@ class ControllerCommonDashboard extends Controller {
 
 		foreach ($results as $result) {
 			$json['online']['data'][] = array($result['time'], $result['total']);
-		}	
+		}
 
 		for ($i = strtotime('-1 hour'); $i < time(); $i = ($i + 300)) {
 			$time = (round($i / 300) * 300);
 
 			$json['xaxis'][] = array($time, date('H:i', $time));
-		}	
+		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 }

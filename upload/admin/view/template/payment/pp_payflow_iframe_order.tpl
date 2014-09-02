@@ -70,19 +70,19 @@ function markAsComplete() {
     $('#capture-status').html('<?php echo $text_complete ?>');
 }
 
-function doVoid(){
+function doVoid() {
     if (confirm('<?php echo $text_confirm_void; ?>')) {
         $.ajax({
             type:'POST',
             dataType: 'json',
             data: {'order_id':<?php echo (int)$order_id; ?>},
             url: 'index.php?route=payment/pp_payflow_iframe/void&token=<?php echo $token; ?>',
-            beforeSend: function(){
-                $('#button-void').after('<span class="btn btn-primary loading"><i class="fa fa-cog fa-spin fa-lg"></i></span>');
+            beforeSend: function() {
+                $('#button-void').after('<span class="btn btn-primary loading"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>');
                 $('#button-void').hide();
             },
-            success: function(data){
-                if(!data.error){
+            success: function(data) {
+                if (!data.error) {
                     $('#capture-status').text('<?php echo $text_complete; ?>');
 
                     var html = '';
@@ -98,7 +98,7 @@ function doVoid(){
                     markAsComplete();
                 }
 
-                if(data.error){
+                if (data.error) {
                     alert(data.error);
                     $('#button-void').show();
                 }
@@ -109,7 +109,7 @@ function doVoid(){
     }
 }
 
-function capture(){
+function capture() {
     var amount = $('input[name="capture-amount"]').val();
     var complete = 0;
 
@@ -123,13 +123,13 @@ function capture(){
         data: {'order_id':<?php echo $order_id; ?>, 'amount':amount, 'complete':complete },
         url: 'index.php?route=payment/pp_payflow_iframe/capture&token=<?php echo $token; ?>',
 
-        beforeSend: function(){
-            $('#button-capture').after('<span class="btn btn-primary loading"><i class="fa fa-cog fa-spin fa-lg"></i></span>');
+        beforeSend: function() {
+            $('#button-capture').after('<span class="btn btn-primary loading"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>');
             $('#button-capture').hide();
         },
 
-        success: function(data){
-            if(!data.error){
+        success: function(data) {
+            if (!data.error) {
                 var html = '';
                 html += '<tr>';
                 html += ' <td class="left">' + data.success.transaction_reference + '</td>';
@@ -138,7 +138,7 @@ function capture(){
                 html += ' <td class="left">' + data.success.time + '</td>';
                 html += ' <td class="left">';
 
-                $.each(data.success.actions, function(index, value){
+                $.each(data.success.actions, function(index, value) {
                     html += ' [<a href="' + value.href + '">' + value.title + '</a>] ';
                 });
 
@@ -151,7 +151,7 @@ function capture(){
                 }
             }
 
-            if(data.error){
+            if (data.error) {
                 alert(data.error);
             }
 

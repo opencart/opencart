@@ -1,4 +1,4 @@
-<?php 
+<?php
 class ModelPaymentPPPayflow extends Model {
 	public function getMethod($address, $total) {
 		$this->load->language('payment/pp_payflow');
@@ -13,11 +13,11 @@ class ModelPaymentPPPayflow extends Model {
 			$status = true;
 		} else {
 			$status = false;
-		}	
+		}
 
 		$method_data = array();
 
-		if ($status) {  
+		if ($status) {
 			$method_data = array(
 				'code'       => 'pp_payflow',
 				'title'      => $this->language->get('text_title'),

@@ -39,7 +39,7 @@ class ControllerPaymentPayPoint extends Controller {
 
 		$data['help_password'] = $this->language->get('help_password');
 		$data['help_total'] = $this->language->get('help_total');
-		
+
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
@@ -131,11 +131,11 @@ class ControllerPaymentPayPoint extends Controller {
 		} else {
 			$data['paypoint_sort_order'] = $this->config->get('paypoint_sort_order');
 		}
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
-		
+
 		$this->response->setOutput($this->load->view('payment/paypoint.tpl', $data));
 	}
 

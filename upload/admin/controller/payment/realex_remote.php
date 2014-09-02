@@ -24,16 +24,10 @@ class ControllerPaymentRealexRemote extends Controller {
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
 		$data['text_all_zones'] = $this->language->get('text_all_zones');
-		$data['text_help_total'] = $this->language->get('text_help_total');
-		$data['text_help_card_select'] = $this->language->get('text_help_card_select');
-		$data['text_help_debug'] = $this->language->get('text_help_debug');
-		$data['text_help_liability'] = $this->language->get('text_help_liability');
-		$data['text_help_card_data_status'] = $this->language->get('text_help_card_data_status');
 		$data['text_card_type'] = $this->language->get('text_card_type');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_use_default'] = $this->language->get('text_use_default');
 		$data['text_notification_url'] = $this->language->get('text_notification_url');
-		$data['text_help_notification'] = $this->language->get('text_help_notification');
 		$data['text_merchant_id'] = $this->language->get('text_merchant_id');
 		$data['text_subaccount'] = $this->language->get('text_subaccount');
 		$data['text_secret'] = $this->language->get('text_secret');
@@ -46,6 +40,7 @@ class ControllerPaymentRealexRemote extends Controller {
 		$data['text_settle_delayed'] = $this->language->get('text_settle_delayed');
 		$data['text_settle_auto'] = $this->language->get('text_settle_auto');
 		$data['text_settle_multi'] = $this->language->get('text_settle_multi');
+		$data['text_ip_message'] = $this->language->get('text_ip_message');
 
 		$data['entry_merchant_id'] = $this->language->get('entry_merchant_id');
 		$data['entry_secret'] = $this->language->get('entry_secret');
@@ -60,7 +55,6 @@ class ControllerPaymentRealexRemote extends Controller {
 		$data['entry_liability_shift'] = $this->language->get('entry_liability_shift');
 		$data['entry_total'] = $this->language->get('entry_total');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-
 		$data['entry_status_success_settled'] = $this->language->get('entry_status_success_settled');
 		$data['entry_status_success_unsettled'] = $this->language->get('entry_status_success_unsettled');
 		$data['entry_status_decline'] = $this->language->get('entry_status_decline');
@@ -69,6 +63,13 @@ class ControllerPaymentRealexRemote extends Controller {
 		$data['entry_status_decline_bank'] = $this->language->get('entry_status_decline_bank');
 		$data['entry_status_void'] = $this->language->get('entry_status_void');
 		$data['entry_status_rebate'] = $this->language->get('entry_status_rebate');
+
+		$data['help_total'] = $this->language->get('help_total');
+		$data['help_card_select'] = $this->language->get('help_card_select');
+		$data['help_debug'] = $this->language->get('help_debug');
+		$data['help_liability'] = $this->language->get('help_liability');
+		$data['help_card_data_status'] = $this->language->get('help_card_data_status');
+		$data['help_notification'] = $this->language->get('help_notification');
 
 		$data['tab_account'] = $this->language->get('tab_account');
 		$data['tab_sub_account'] = $this->language->get('tab_sub_account');
@@ -293,7 +294,7 @@ class ControllerPaymentRealexRemote extends Controller {
 				$data['text_no'] = $this->language->get('text_no');
 				$data['text_column_amount'] = $this->language->get('text_column_amount');
 				$data['text_column_type'] = $this->language->get('text_column_type');
-				$data['text_column_created'] = $this->language->get('text_column_created');
+				$data['text_column_date_added'] = $this->language->get('text_column_date_added');
 				$data['btn_capture'] = $this->language->get('btn_capture');
 				$data['btn_rebate'] = $this->language->get('btn_rebate');
 				$data['btn_void'] = $this->language->get('btn_void');
@@ -320,7 +321,7 @@ class ControllerPaymentRealexRemote extends Controller {
 
 			$void_response = $this->model_payment_realex_remote->void($this->request->post['order_id']);
 
-			$this->model_payment_realex_remote->logger('Void result:\r\n'.print_r($void_response, 1));
+			$this->model_payment_realex_remote->logger('Void result:\r\n' . print_r($void_response, 1));
 
 			if (isset($void_response->result) && $void_response->result == '00') {
 				$this->model_payment_realex_remote->addTransaction($realex_order['realex_remote_order_id'], 'void', 0.00);
@@ -338,7 +339,7 @@ class ControllerPaymentRealexRemote extends Controller {
 				$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $history);
 
 				$json['data'] = array();
-				$json['data']['created'] = date("Y-m-d H:i:s");
+				$json['data']['date_added'] = date("Y-m-d H:i:s");
 				$json['error'] = false;
 			} else {
 				$json['error'] = true;
@@ -349,6 +350,7 @@ class ControllerPaymentRealexRemote extends Controller {
 			$json['msg'] = 'Missing data';
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -363,7 +365,7 @@ class ControllerPaymentRealexRemote extends Controller {
 
 			$capture_response = $this->model_payment_realex_remote->capture($this->request->post['order_id'], $this->request->post['amount']);
 
-			$this->model_payment_realex_remote->logger('Settle result:\r\n'.print_r($capture_response, 1));
+			$this->model_payment_realex_remote->logger('Settle result:\r\n' . print_r($capture_response, 1));
 
 			if (isset($capture_response->result) && $capture_response->result == '00') {
 				$this->model_payment_realex_remote->addTransaction($realex_order['realex_remote_order_id'], 'payment', $this->request->post['amount']);
@@ -390,10 +392,10 @@ class ControllerPaymentRealexRemote extends Controller {
 				$this->model_payment_realex_remote->updateForRebate($realex_order['realex_remote_order_id'], $capture_response->pasref, $capture_response->orderid);
 
 				$json['data'] = array();
-				$json['data']['created'] = date("Y-m-d H:i:s");
-				$json['data']['amount'] = (double)$this->request->post['amount'];
+				$json['data']['date_added'] = date("Y-m-d H:i:s");
+				$json['data']['amount'] = (float)$this->request->post['amount'];
 				$json['data']['capture_status'] = $capture_status;
-				$json['data']['total'] = (double)$total_captured;
+				$json['data']['total'] = (float)$total_captured;
 				$json['data']['total_formatted'] = $this->currency->format($total_captured, $realex_order['currency_code'], 1, true);
 				$json['error'] = false;
 			} else {
@@ -406,6 +408,7 @@ class ControllerPaymentRealexRemote extends Controller {
 			$json['msg'] = 'Missing data';
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -420,7 +423,7 @@ class ControllerPaymentRealexRemote extends Controller {
 
 			$rebate_response = $this->model_payment_realex_remote->rebate($this->request->post['order_id'], $this->request->post['amount']);
 
-			$this->model_payment_realex_remote->logger('Rebate result:\r\n'.print_r($rebate_response, 1));
+			$this->model_payment_realex_remote->logger('Rebate result:\r\n' . print_r($rebate_response, 1));
 
 			if (isset($rebate_response->result) && $rebate_response->result == '00') {
 				$this->model_payment_realex_remote->addTransaction($realex_order['realex_remote_order_id'], 'rebate', $this->request->post['amount']*-1);
@@ -447,10 +450,10 @@ class ControllerPaymentRealexRemote extends Controller {
 				}
 
 				$json['data'] = array();
-				$json['data']['created'] = date("Y-m-d H:i:s");
+				$json['data']['date_added'] = date("Y-m-d H:i:s");
 				$json['data']['amount'] = $this->request->post['amount'] * -1;
-				$json['data']['total_captured'] = (double)$total_captured;
-				$json['data']['total_rebated'] = (double)$total_rebated;
+				$json['data']['total_captured'] = (float)$total_captured;
+				$json['data']['total_rebated'] = (float)$total_rebated;
 				$json['data']['rebate_status'] = $rebate_status;
 				$json['error'] = false;
 			} else {
@@ -462,6 +465,7 @@ class ControllerPaymentRealexRemote extends Controller {
 			$json['msg'] = 'Missing data';
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 

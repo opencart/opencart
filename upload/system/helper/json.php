@@ -9,7 +9,7 @@ if (!function_exists('json_encode')) {
 				return $data;
 			case 'resource':
 			case 'string':
-				# Escape non-printable or Non-ASCII characters. 
+				# Escape non-printable or Non-ASCII characters.
 				# I also put the \\ character first, as suggested in comments on the 'addclashes' page.
 				$json = '';
 
@@ -27,25 +27,25 @@ if (!function_exists('json_encode')) {
 						continue;
 					}
 
-					# Double byte 
+					# Double byte
 					$c2 = ord($string[++$i]);
 
 					if (($c1 & 32) === 0) {
 						$json .= sprintf("\\u%04x", ($c1 - 192) * 64 + $c2 - 128);
 
 						continue;
-					} 
+					}
 
-					# Triple 
+					# Triple
 					$c3 = ord($string[++$i]);
-					
+
 					if (($c1 & 16) === 0) {
 						$json .= sprintf("\\u%04x", (($c1 - 224) <<12) + (($c2 - 128) << 6) + ($c3 - 128));
 
 						continue;
-					} 
+					}
 
-					# Quadruple 
+					# Quadruple
 					$c4 = ord($string[++$i]);
 
 					if (($c1 & 8 ) === 0) {
@@ -53,16 +53,16 @@ if (!function_exists('json_encode')) {
 
 						$w1 = (54 << 10) + ($u << 6) + (($c2 & 15) << 2) + (($c3 >> 4) & 3);
 						$w2 = (55 << 10) + (($c3 & 15) << 6) + ($c4 - 128);
-						
+
 						$json .= sprintf("\\u%04x\\u%04x", $w1, $w2);
-					} 
+					}
 				}
 
 				return $json;
 			case 'array':
 				if (empty($data) || array_keys($data) === range(0, sizeof($data) - 1)) {
 					$output = array();
-					
+
 					foreach ($data as $value) {
 						$output[] = json_encode($value);
 					}
@@ -108,7 +108,7 @@ if (!function_exists('json_decode')) {
 		$json = strtr($json, $s2m);
 
 		$a = ($assoc) ? '' : '(object) ';
-		
+
 		$data = array(
 			':' => '=>',
 			'[' => 'array(',

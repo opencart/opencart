@@ -1,5 +1,5 @@
-<?php    
-class ControllerSaleCustomer extends Controller { 
+<?php
+class ControllerSaleCustomer extends Controller {
 	private $error = array();
 
 	public function index() {
@@ -12,7 +12,7 @@ class ControllerSaleCustomer extends Controller {
 		$this->getList();
 	}
 
-	public function insert() {
+	public function add() {
 		$this->load->language('sale/customer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -72,7 +72,7 @@ class ControllerSaleCustomer extends Controller {
 		$this->getForm();
 	}
 
-	public function update() {
+	public function edit() {
 		$this->load->language('sale/customer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -166,7 +166,7 @@ class ControllerSaleCustomer extends Controller {
 
 			if (isset($this->request->get['filter_approved'])) {
 				$url .= '&filter_approved=' . $this->request->get['filter_approved'];
-			}	
+			}
 
 			if (isset($this->request->get['filter_ip'])) {
 				$url .= '&filter_ip=' . $this->request->get['filter_ip'];
@@ -201,10 +201,18 @@ class ControllerSaleCustomer extends Controller {
 
 		$this->load->model('sale/customer');
 
-		if (isset($this->request->get['customer_id']) && $this->validateApprove()) {
+		$customers = array();
+
+		if (isset($this->request->post['selected'])) {
+			$customers = $this->request->post['selected'];
+		} elseif (isset($this->request->get['customer_id'])) {
+			$customers[] = $this->request->get['customer_id'];
+		}
+
+		if ($customers && $this->validateApprove()) {
 			$this->model_sale_customer->approve($this->request->get['customer_id']);
 
-			$this->session->data['success'] = $this->language->get('text_success');	
+			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
 
@@ -246,13 +254,13 @@ class ControllerSaleCustomer extends Controller {
 
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
-			}	
+			}
 
-			$this->response->redirect($this->url->link('sale/customer', 'token=' . $this->session->data['token'] . $url, 'SSL'));			
+			$this->response->redirect($this->url->link('sale/customer', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
 		$this->getList();
-	} 
+	}
 
 	protected function getList() {
 		if (isset($this->request->get['filter_name'])) {
@@ -295,12 +303,12 @@ class ControllerSaleCustomer extends Controller {
 			$filter_date_added = $this->request->get['filter_date_added'];
 		} else {
 			$filter_date_added = null;
-		}		
+		}
 
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
-			$sort = 'name'; 
+			$sort = 'name';
 		}
 
 		if (isset($this->request->get['order'])) {
@@ -335,7 +343,7 @@ class ControllerSaleCustomer extends Controller {
 
 		if (isset($this->request->get['filter_approved'])) {
 			$url .= '&filter_approved=' . $this->request->get['filter_approved'];
-		}	
+		}
 
 		if (isset($this->request->get['filter_ip'])) {
 			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
@@ -369,17 +377,17 @@ class ControllerSaleCustomer extends Controller {
 			'href' => $this->url->link('sale/customer', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$data['insert'] = $this->url->link('sale/customer/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['insert'] = $this->url->link('sale/customer/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('sale/customer/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['customers'] = array();
 
 		$filter_data = array(
-			'filter_name'              => $filter_name, 
-			'filter_email'             => $filter_email, 
-			'filter_customer_group_id' => $filter_customer_group_id, 
-			'filter_status'            => $filter_status, 
-			'filter_approved'          => $filter_approved, 
+			'filter_name'              => $filter_name,
+			'filter_email'             => $filter_email,
+			'filter_customer_group_id' => $filter_customer_group_id,
+			'filter_status'            => $filter_status,
+			'filter_approved'          => $filter_approved,
 			'filter_date_added'        => $filter_date_added,
 			'filter_ip'                => $filter_ip,
 			'sort'                     => $sort,
@@ -401,19 +409,19 @@ class ControllerSaleCustomer extends Controller {
 				'status'         => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'ip'             => $result['ip'],
 				'date_added'     => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'           => $this->url->link('sale/customer/update', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'] . $url, 'SSL'),
+				'edit'           => $this->url->link('sale/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'] . $url, 'SSL'),
 				'approve'        => $this->url->link('sale/customer/approve', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'] . $url, 'SSL'),
 				'approved'       => $result['approved']
 			);
-		}	
+		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');	
-		$data['text_default'] = $this->language->get('text_default');		
+		$data['text_no'] = $this->language->get('text_no');
+		$data['text_default'] = $this->language->get('text_default');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		$data['text_login'] = $this->language->get('text_login');
@@ -425,8 +433,7 @@ class ControllerSaleCustomer extends Controller {
 		$data['column_approved'] = $this->language->get('column_approved');
 		$data['column_ip'] = $this->language->get('column_ip');
 		$data['column_date_added'] = $this->language->get('column_date_added');
-
-		$data['column_action'] = $this->language->get('column_action');		
+		$data['column_action'] = $this->language->get('column_action');
 
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_email'] = $this->language->get('entry_email');
@@ -484,7 +491,7 @@ class ControllerSaleCustomer extends Controller {
 
 		if (isset($this->request->get['filter_approved'])) {
 			$url .= '&filter_approved=' . $this->request->get['filter_approved'];
-		}	
+		}
 
 		if (isset($this->request->get['filter_ip'])) {
 			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
@@ -592,9 +599,10 @@ class ControllerSaleCustomer extends Controller {
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
+		$data['text_loading'] = $this->language->get('text_loading');
 		$data['text_add_ban_ip'] = $this->language->get('text_add_ban_ip');
 		$data['text_remove_ban_ip'] = $this->language->get('text_remove_ban_ip');
-		
+
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$data['entry_firstname'] = $this->language->get('entry_firstname');
 		$data['entry_lastname'] = $this->language->get('entry_lastname');
@@ -604,6 +612,7 @@ class ControllerSaleCustomer extends Controller {
 		$data['entry_password'] = $this->language->get('entry_password');
 		$data['entry_confirm'] = $this->language->get('entry_confirm');
 		$data['entry_newsletter'] = $this->language->get('entry_newsletter');
+		$data['entry_safe'] = $this->language->get('entry_safe');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_company'] = $this->language->get('entry_company');
 		$data['entry_address_1'] = $this->language->get('entry_address_1');
@@ -618,6 +627,7 @@ class ControllerSaleCustomer extends Controller {
 		$data['entry_amount'] = $this->language->get('entry_amount');
 		$data['entry_points'] = $this->language->get('entry_points');
 
+		$data['help_safe'] = $this->language->get('help_safe');
 		$data['help_points'] = $this->language->get('help_points');
 
 		$data['button_save'] = $this->language->get('button_save');
@@ -627,6 +637,7 @@ class ControllerSaleCustomer extends Controller {
 		$data['button_transaction_add'] = $this->language->get('button_transaction_add');
 		$data['button_reward_add'] = $this->language->get('button_reward_add');
 		$data['button_remove'] = $this->language->get('button_remove');
+		$data['button_upload'] = $this->language->get('button_upload');
 
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_address'] = $this->language->get('tab_address');
@@ -685,46 +696,10 @@ class ControllerSaleCustomer extends Controller {
 			$data['error_confirm'] = '';
 		}
 
-		if (isset($this->error['address_firstname'])) {
-			$data['error_address_firstname'] = $this->error['address_firstname'];
+		if (isset($this->error['address'])) {
+			$data['error_address'] = $this->error['address'];
 		} else {
-			$data['error_address_firstname'] = '';
-		}
-
-		if (isset($this->error['address_lastname'])) {
-			$data['error_address_lastname'] = $this->error['address_lastname'];
-		} else {
-			$data['error_address_lastname'] = '';
-		}
-
-		if (isset($this->error['address_address_1'])) {
-			$data['error_address_address_1'] = $this->error['address_address_1'];
-		} else {
-			$data['error_address_address_1'] = '';
-		}
-
-		if (isset($this->error['address_city'])) {
-			$data['error_address_city'] = $this->error['address_city'];
-		} else {
-			$data['error_address_city'] = '';
-		}
-
-		if (isset($this->error['address_postcode'])) {
-			$data['error_address_postcode'] = $this->error['address_postcode'];
-		} else {
-			$data['error_address_postcode'] = '';
-		}
-
-		if (isset($this->error['address_country'])) {
-			$data['error_address_country'] = $this->error['address_country'];
-		} else {
-			$data['error_address_country'] = '';
-		}
-
-		if (isset($this->error['address_zone'])) {
-			$data['error_address_zone'] = $this->error['address_zone'];
-		} else {
-			$data['error_address_zone'] = '';
+			$data['error_address'] = '';
 		}
 
 		$url = '';
@@ -747,7 +722,7 @@ class ControllerSaleCustomer extends Controller {
 
 		if (isset($this->request->get['filter_approved'])) {
 			$url .= '&filter_approved=' . $this->request->get['filter_approved'];
-		}	
+		}
 
 		if (isset($this->request->get['filter_date_added'])) {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
@@ -778,9 +753,9 @@ class ControllerSaleCustomer extends Controller {
 		);
 
 		if (!isset($this->request->get['customer_id'])) {
-			$data['action'] = $this->url->link('sale/customer/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('sale/customer/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$data['action'] = $this->url->link('sale/customer/update', 'token=' . $this->session->data['token'] . '&customer_id=' . $this->request->get['customer_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('sale/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . $this->request->get['customer_id'] . $url, 'SSL');
 		}
 
 		$data['cancel'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -788,7 +763,7 @@ class ControllerSaleCustomer extends Controller {
 		if (isset($this->request->get['customer_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$customer_info = $this->model_sale_customer->getCustomer($this->request->get['customer_id']);
 		}
-		
+
 		$this->load->model('sale/customer_group');
 
 		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
@@ -800,10 +775,10 @@ class ControllerSaleCustomer extends Controller {
 		} else {
 			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
 		}
-		
+
 		if (isset($this->request->post['firstname'])) {
 			$data['firstname'] = $this->request->post['firstname'];
-		} elseif (!empty($customer_info)) { 
+		} elseif (!empty($customer_info)) {
 			$data['firstname'] = $customer_info['firstname'];
 		} else {
 			$data['firstname'] = '';
@@ -840,39 +815,32 @@ class ControllerSaleCustomer extends Controller {
 		} else {
 			$data['fax'] = '';
 		}
-		
+
 		// Custom Fields
 		$this->load->model('sale/custom_field');
-		
-		if (isset($this->request->post['custom_field'])) {
-			$custom_field_info = $this->request->post['custom_field'];
-		} elseif (!empty($customer_info)) {
-			$custom_field_info = unserialize($customer_info['custom_field']);		
-		} else {
-			$custom_field_info = array();
-		}
 
 		$data['custom_fields'] = array();
-		
-		// Customer Group
+
 		$custom_fields = $this->model_sale_custom_field->getCustomFields();
 
 		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['type'] == 'checkbox') {
-				$value = array();
-			} else {
-				$value = $custom_field['value'];
-			}
-
 			$data['custom_fields'][] = array(
 				'custom_field_id'    => $custom_field['custom_field_id'],
-				'custom_field_value' => $custom_field['custom_field_value'],
+				'custom_field_value' => $this->model_sale_custom_field->getCustomFieldValues($custom_field['custom_field_id']),
 				'name'               => $custom_field['name'],
-				'location'           => $custom_field['location'],
+				'value'              => $custom_field['value'],
 				'type'               => $custom_field['type'],
-				'value'              => isset($custom_field_info['custom_field'][$custom_field['location']][$custom_field['custom_field_id']]) ? $custom_field_info['custom_field'][$custom_field['location']][$custom_field['custom_field_id']] : $value
+				'location'           => $custom_field['location']
 			);
-		}		
+		}
+
+		if (isset($this->request->post['custom_field'])) {
+			$data['account_custom_field'] = $this->request->post['custom_field'];
+		} elseif (!empty($customer_info)) {
+			$data['account_custom_field'] = unserialize($customer_info['custom_field']);
+		} else {
+			$data['account_custom_field'] = array();
+		}
 
 		if (isset($this->request->post['newsletter'])) {
 			$data['newsletter'] = $this->request->post['newsletter'];
@@ -890,13 +858,21 @@ class ControllerSaleCustomer extends Controller {
 			$data['status'] = 1;
 		}
 
+		if (isset($this->request->post['safe'])) {
+			$data['safe'] = $this->request->post['safe'];
+		} elseif (!empty($customer_info)) {
+			$data['safe'] = $customer_info['safe'];
+		} else {
+			$data['safe'] = 0;
+		}
+
 		if (isset($this->request->post['password'])) {
 			$data['password'] = $this->request->post['password'];
 		} else {
 			$data['password'] = '';
 		}
 
-		if (isset($this->request->post['confirm'])) { 
+		if (isset($this->request->post['confirm'])) {
 			$data['confirm'] = $this->request->post['confirm'];
 		} else {
 			$data['confirm'] = '';
@@ -906,7 +882,7 @@ class ControllerSaleCustomer extends Controller {
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
-		if (isset($this->request->post['address'])) { 
+		if (isset($this->request->post['address'])) {
 			$data['addresses'] = $this->request->post['address'];
 		} elseif (isset($this->request->get['customer_id'])) {
 			$data['addresses'] = $this->model_sale_customer->getAddresses($this->request->get['customer_id']);
@@ -922,8 +898,6 @@ class ControllerSaleCustomer extends Controller {
 			$data['address_id'] = '';
 		}
 
-
-
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -936,11 +910,11 @@ class ControllerSaleCustomer extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
+		if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
 			$this->error['firstname'] = $this->language->get('error_firstname');
 		}
 
-		if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+		if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
 			$this->error['lastname'] = $this->language->get('error_lastname');
 		}
 
@@ -963,18 +937,18 @@ class ControllerSaleCustomer extends Controller {
 		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
 			$this->error['telephone'] = $this->language->get('error_telephone');
 		}
-		
-		// Custom field validation
-		$this->load->model('account/custom_field');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFieldsByCustomerGroupId($this->request->post['customer_group_id']);
+		// Custom field validation
+		$this->load->model('sale/custom_field');
+
+		$custom_fields = $this->model_sale_custom_field->getCustomFields(array('filter_customer_group_id' => $this->request->post['customer_group_id']));
 
 		foreach ($custom_fields as $custom_field) {
 			if (($custom_field['location'] == 'account') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
 				$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 			}
 		}
-		
+
 		if ($this->request->post['password'] || (!isset($this->request->get['customer_id']))) {
 			if ((utf8_strlen($this->request->post['password']) < 4) || (utf8_strlen($this->request->post['password']) > 20)) {
 				$this->error['password'] = $this->language->get('error_password');
@@ -988,42 +962,42 @@ class ControllerSaleCustomer extends Controller {
 		if (isset($this->request->post['address'])) {
 			foreach ($this->request->post['address'] as $key => $value) {
 				if ((utf8_strlen($value['firstname']) < 1) || (utf8_strlen($value['firstname']) > 32)) {
-					$this->error['address_firstname'][$key] = $this->language->get('error_firstname');
+					$this->error['address'][$key]['firstname'] = $this->language->get('error_firstname');
 				}
 
 				if ((utf8_strlen($value['lastname']) < 1) || (utf8_strlen($value['lastname']) > 32)) {
-					$this->error['address_lastname'][$key] = $this->language->get('error_lastname');
-				}	
+					$this->error['address'][$key]['lastname'] = $this->language->get('error_lastname');
+				}
 
 				if ((utf8_strlen($value['address_1']) < 3) || (utf8_strlen($value['address_1']) > 128)) {
-					$this->error['address_address_1'][$key] = $this->language->get('error_address_1');
+					$this->error['address'][$key]['address_1'] = $this->language->get('error_address_1');
 				}
 
 				if ((utf8_strlen($value['city']) < 2) || (utf8_strlen($value['city']) > 128)) {
-					$this->error['address_city'][$key] = $this->language->get('error_city');
-				} 
+					$this->error['address'][$key]['city'] = $this->language->get('error_city');
+				}
 
 				$this->load->model('localisation/country');
 
 				$country_info = $this->model_localisation_country->getCountry($value['country_id']);
 
 				if ($country_info && $country_info['postcode_required'] && (utf8_strlen($value['postcode']) < 2 || utf8_strlen($value['postcode']) > 10)) {
-					$this->error['address_postcode'][$key] = $this->language->get('error_postcode');
+					$this->error['address'][$key]['postcode'] = $this->language->get('error_postcode');
 				}
 
 				if ($value['country_id'] == '') {
-					$this->error['address_country'][$key] = $this->language->get('error_country');
+					$this->error['address'][$key]['country'] = $this->language->get('error_country');
 				}
 
 				if (!isset($value['zone_id']) || $value['zone_id'] == '') {
-					$this->error['address_zone'][$key] = $this->language->get('error_zone');
+					$this->error['address'][$key]['zone'] = $this->language->get('error_zone');
 				}
-				
+
 				foreach ($custom_fields as $custom_field) {
-					if (($custom_field['location'] == 'address') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
-						$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					if (($custom_field['location'] == 'address') && $custom_field['required'] && empty($value['custom_field'][$custom_field['custom_field_id']])) {
+						$this->error['address'][$key]['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 					}
-				}					
+				}
 			}
 		}
 
@@ -1039,7 +1013,7 @@ class ControllerSaleCustomer extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		return !$this->error;  
+		return !$this->error;
 	}
 
 	protected function validateApprove() {
@@ -1047,7 +1021,19 @@ class ControllerSaleCustomer extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		return !$this->error;  
+		return !$this->error;
+	}
+
+	protected function validateHistory() {
+		if (!$this->user->hasPermission('modify', 'sale/customer')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		if (!isset($this->request->post['comment']) || utf8_strlen($this->request->post['comment']) < 1) {
+			$this->error['warning'] = $this->language->get('error_comment');
+		}
+
+		return !$this->error;
 	}
 
 	public function login() {
@@ -1080,7 +1066,7 @@ class ControllerSaleCustomer extends Controller {
 
 			if ($store_info) {
 				$this->response->redirect($store_info['url'] . 'index.php?route=account/login&token=' . $token);
-			} else { 
+			} else {
 				$this->response->redirect(HTTP_CATALOG . 'index.php?route=account/login&token=' . $token);
 			}
 		} else {
@@ -1117,7 +1103,7 @@ class ControllerSaleCustomer extends Controller {
 
 		$this->load->model('sale/customer');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->user->hasPermission('modify', 'sale/customer')) { 
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateHistory()) {
 			$this->model_sale_customer->addHistory($this->request->get['customer_id'], $this->request->post['comment']);
 
 			$data['success'] = $this->language->get('text_success');
@@ -1125,11 +1111,11 @@ class ControllerSaleCustomer extends Controller {
 			$data['success'] = '';
 		}
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && !$this->user->hasPermission('modify', 'sale/customer')) {
-			$data['error_warning'] = $this->language->get('error_permission');
+		if (isset($this->error['warning'])) {
+			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
-		}		
+		}
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
 
@@ -1140,7 +1126,7 @@ class ControllerSaleCustomer extends Controller {
 			$page = $this->request->get['page'];
 		} else {
 			$page = 1;
-		}  
+		}
 
 		$data['histories'] = array();
 
@@ -1173,7 +1159,7 @@ class ControllerSaleCustomer extends Controller {
 
 		$this->load->model('sale/customer');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->user->hasPermission('modify', 'sale/customer')) { 
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->user->hasPermission('modify', 'sale/customer')) {
 			$this->model_sale_customer->addTransaction($this->request->get['customer_id'], $this->request->post['description'], $this->request->post['amount']);
 
 			$data['success'] = $this->language->get('text_success');
@@ -1185,7 +1171,7 @@ class ControllerSaleCustomer extends Controller {
 			$data['error_warning'] = $this->language->get('error_permission');
 		} else {
 			$data['error_warning'] = '';
-		}		
+		}
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_balance'] = $this->language->get('text_balance');
@@ -1198,7 +1184,7 @@ class ControllerSaleCustomer extends Controller {
 			$page = $this->request->get['page'];
 		} else {
 			$page = 1;
-		}  
+		}
 
 		$data['transactions'] = array();
 
@@ -1219,7 +1205,7 @@ class ControllerSaleCustomer extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $transaction_total;
 		$pagination->page = $page;
-		$pagination->limit = 10; 
+		$pagination->limit = 10;
 		$pagination->url = $this->url->link('sale/customer/transaction', 'token=' . $this->session->data['token'] . '&customer_id=' . $this->request->get['customer_id'] . '&page={page}', 'SSL');
 
 		$data['pagination'] = $pagination->render();
@@ -1234,7 +1220,7 @@ class ControllerSaleCustomer extends Controller {
 
 		$this->load->model('sale/customer');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->user->hasPermission('modify', 'sale/customer')) { 
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->user->hasPermission('modify', 'sale/customer')) {
 			$this->model_sale_customer->addReward($this->request->get['customer_id'], $this->request->post['description'], $this->request->post['points']);
 
 			$data['success'] = $this->language->get('text_success');
@@ -1246,7 +1232,7 @@ class ControllerSaleCustomer extends Controller {
 			$data['error_warning'] = $this->language->get('error_permission');
 		} else {
 			$data['error_warning'] = '';
-		}	
+		}
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_balance'] = $this->language->get('text_balance');
@@ -1259,7 +1245,7 @@ class ControllerSaleCustomer extends Controller {
 			$page = $this->request->get['page'];
 		} else {
 			$page = 1;
-		}  
+		}
 
 		$data['rewards'] = array();
 
@@ -1298,6 +1284,7 @@ class ControllerSaleCustomer extends Controller {
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_add_ban_ip'] = $this->language->get('text_add_ban_ip');
 		$data['text_remove_ban_ip'] = $this->language->get('text_remove_ban_ip');
+		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['column_ip'] = $this->language->get('column_ip');
 		$data['column_total'] = $this->language->get('column_total');
@@ -1308,7 +1295,7 @@ class ControllerSaleCustomer extends Controller {
 			$page = $this->request->get['page'];
 		} else {
 			$page = 1;
-		}  
+		}
 
 		$data['ips'] = array();
 
@@ -1340,13 +1327,13 @@ class ControllerSaleCustomer extends Controller {
 
 		$this->response->setOutput($this->load->view('sale/customer_ip.tpl', $data));
 	}
-		
+
 	public function addBanIp() {
 		$this->load->language('sale/customer');
 
 		$json = array();
 
-		if (isset($this->request->post['ip'])) { 
+		if (isset($this->request->post['ip'])) {
 			if (!$this->user->hasPermission('modify', 'sale/customer')) {
 				$json['error'] = $this->language->get('error_permission');
 			} else {
@@ -1358,6 +1345,7 @@ class ControllerSaleCustomer extends Controller {
 			}
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -1366,7 +1354,7 @@ class ControllerSaleCustomer extends Controller {
 
 		$json = array();
 
-		if (isset($this->request->post['ip'])) { 
+		if (isset($this->request->post['ip'])) {
 			if (!$this->user->hasPermission('modify', 'sale/customer')) {
 				$json['error'] = $this->language->get('error_permission');
 			} else {
@@ -1378,6 +1366,7 @@ class ControllerSaleCustomer extends Controller {
 			}
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -1395,7 +1384,7 @@ class ControllerSaleCustomer extends Controller {
 				$filter_email = $this->request->get['filter_email'];
 			} else {
 				$filter_email = '';
-			}		
+			}
 
 			$this->load->model('sale/customer');
 
@@ -1410,7 +1399,7 @@ class ControllerSaleCustomer extends Controller {
 
 			foreach ($results as $result) {
 				$json[] = array(
-					'customer_id'       => $result['customer_id'], 
+					'customer_id'       => $result['customer_id'],
 					'customer_group_id' => $result['customer_group_id'],
 					'name'              => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
 					'customer_group'    => $result['customer_group'],
@@ -1419,8 +1408,9 @@ class ControllerSaleCustomer extends Controller {
 					'email'             => $result['email'],
 					'telephone'         => $result['telephone'],
 					'fax'               => $result['fax'],
+					'custom_field'      => unserialize($result['custom_field']),
 					'address'           => $this->model_sale_customer->getAddresses($result['customer_id'])
-				);					
+				);
 			}
 		}
 
@@ -1432,8 +1422,47 @@ class ControllerSaleCustomer extends Controller {
 
 		array_multisort($sort_order, SORT_ASC, $json);
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}		
+	}
+
+	public function customfield() {
+		$json = array();
+
+		$this->load->model('sale/custom_field');
+
+		// Customer Group
+		if (isset($this->request->get['customer_group_id'])) {
+			$customer_group_id = $this->request->get['customer_group_id'];
+		} else {
+			$customer_group_id = $this->config->get('config_customer_group_id');
+		}
+
+		$custom_fields = $this->model_sale_custom_field->getCustomFields(array('filter_customer_group_id' => $customer_group_id));
+
+		foreach ($custom_fields as $custom_field) {
+			$json[] = array(
+				'custom_field_id' => $custom_field['custom_field_id'],
+				'required'        => empty($custom_field['required']) || $custom_field['required'] == 0 ? false : true
+			);
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function address() {
+		$json = array();
+
+		if (!empty($this->request->get['address_id'])) {
+			$this->load->model('sale/customer');
+
+			$json = $this->model_sale_customer->getAddress($this->request->get['address_id']);
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 
 	public function country() {
 		$json = array();
@@ -1453,22 +1482,12 @@ class ControllerSaleCustomer extends Controller {
 				'address_format'    => $country_info['address_format'],
 				'postcode_required' => $country_info['postcode_required'],
 				'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
-				'status'            => $country_info['status']		
+				'status'            => $country_info['status']
 			);
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function address() {
-		$json = array();
-
-		if (!empty($this->request->get['address_id'])) {
-			$this->load->model('sale/customer');
-
-			$json = $this->model_sale_customer->getAddress($this->request->get['address_id']);
-		}
-
-		$this->response->setOutput(json_encode($json));		
-	}
 }

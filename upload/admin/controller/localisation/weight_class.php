@@ -1,6 +1,6 @@
 <?php
 class ControllerLocalisationWeightClass extends Controller {
-	private $error = array();  
+	private $error = array();
 
 	public function index() {
 		$this->load->language('localisation/weight_class');
@@ -12,7 +12,7 @@ class ControllerLocalisationWeightClass extends Controller {
 		$this->getList();
 	}
 
-	public function insert() {
+	public function add() {
 		$this->load->language('localisation/weight_class');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -44,7 +44,7 @@ class ControllerLocalisationWeightClass extends Controller {
 		$this->getForm();
 	}
 
-	public function update() {
+	public function edit() {
 		$this->load->language('localisation/weight_class');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -155,7 +155,7 @@ class ControllerLocalisationWeightClass extends Controller {
 			'href' => $this->url->link('localisation/weight_class', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$data['insert'] = $this->url->link('localisation/weight_class/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['insert'] = $this->url->link('localisation/weight_class/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('localisation/weight_class/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['weight_classes'] = array();
@@ -177,7 +177,7 @@ class ControllerLocalisationWeightClass extends Controller {
 				'title'           => $result['title'] . (($result['weight_class_id'] == $this->config->get('config_weight_class_id')) ? $this->language->get('text_default') : null),
 				'unit'            => $result['unit'],
 				'value'           => $result['value'],
-				'edit'            => $this->url->link('localisation/weight_class/update', 'token=' . $this->session->data['token'] . '&weight_class_id=' . $result['weight_class_id'] . $url, 'SSL')
+				'edit'            => $this->url->link('localisation/weight_class/edit', 'token=' . $this->session->data['token'] . '&weight_class_id=' . $result['weight_class_id'] . $url, 'SSL')
 			);
 		}
 
@@ -189,7 +189,7 @@ class ControllerLocalisationWeightClass extends Controller {
 		$data['column_title'] = $this->language->get('column_title');
 		$data['column_unit'] = $this->language->get('column_unit');
 		$data['column_value'] = $this->language->get('column_value');
-		$data['column_action'] = $this->language->get('column_action');	
+		$data['column_action'] = $this->language->get('column_action');
 
 		$data['button_insert'] = $this->language->get('button_insert');
 		$data['button_edit'] = $this->language->get('button_edit');
@@ -283,13 +283,13 @@ class ControllerLocalisationWeightClass extends Controller {
 			$data['error_title'] = $this->error['title'];
 		} else {
 			$data['error_title'] = array();
-		}	
+		}
 
 		if (isset($this->error['unit'])) {
 			$data['error_unit'] = $this->error['unit'];
 		} else {
 			$data['error_unit'] = array();
-		}	
+		}
 
 		$url = '';
 
@@ -318,9 +318,9 @@ class ControllerLocalisationWeightClass extends Controller {
 		);
 
 		if (!isset($this->request->get['weight_class_id'])) {
-			$data['action'] = $this->url->link('localisation/weight_class/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		} else { 
-			$data['action'] = $this->url->link('localisation/weight_class/update', 'token=' . $this->session->data['token'] . '&weight_class_id=' . $this->request->get['weight_class_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('localisation/weight_class/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		} else {
+			$data['action'] = $this->url->link('localisation/weight_class/edit', 'token=' . $this->session->data['token'] . '&weight_class_id=' . $this->request->get['weight_class_id'] . $url, 'SSL');
 		}
 
 		$data['cancel'] = $this->url->link('localisation/weight_class', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -339,7 +339,7 @@ class ControllerLocalisationWeightClass extends Controller {
 			$data['weight_class_description'] = $this->model_localisation_weight_class->getWeightClassDescriptions($this->request->get['weight_class_id']);
 		} else {
 			$data['weight_class_description'] = array();
-		}	
+		}
 
 		if (isset($this->request->post['value'])) {
 			$data['value'] = $this->request->post['value'];
@@ -394,5 +394,5 @@ class ControllerLocalisationWeightClass extends Controller {
 		}
 
 		return !$this->error;
-	}	
+	}
 }

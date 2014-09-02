@@ -777,7 +777,6 @@ class ModelCheckoutOrder extends Model {
 					// Send to additional alert emails
 					$emails = explode(',', $this->config->get('config_mail_alert'));
 
-
 					foreach ($emails as $email) {
 						if ($email && preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $email)) {
 							$mail->setTo($email);
@@ -825,7 +824,6 @@ class ModelCheckoutOrder extends Model {
 				$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
 				$mail->send();
 			}
-
 
 			// If order status in the complete range create any vouchers that where in the order need to be made available.
 			if (in_array($order_info['order_status_id'], $this->config->get('config_complete_status'))) {

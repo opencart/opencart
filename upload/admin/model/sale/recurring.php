@@ -1,7 +1,7 @@
 <?php
 class ModelSaleRecurring extends Model {
 	public function getTotalRecurrings($data) {
-		$sql = "SELECT COUNT(*) AS `recurring_count` FROM `" . DB_PREFIX . "order_recurring` `or` JOIN `" . DB_PREFIX . "order` o USING(order_id) WHERE 1 = 1";
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_recurring` `or` JOIN `" . DB_PREFIX . "order` o USING(order_id) WHERE 1 = 1";
 
 		if (!empty($data['filter_order_recurring_id'])) {
 			$sql .= " AND or.order_recurring_id = " . (int)$data['filter_order_recurring_id'];
@@ -27,9 +27,9 @@ class ModelSaleRecurring extends Model {
 			$sql .= " AND DATE(or.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
 		}
 
-		$result = $this->db->query($sql);
+		$query = $this->db->query($sql);
 
-		return $result->row['recurring_count'];
+		return $query->row['total'];
 	}
 
 	public function getRecurrings($data) {

@@ -537,3 +537,5 @@ input[type=radio]:checked:before {
 	height: 40px;
 	padding-top: 10px;
 }
+
+.dropdown-menu > li > a { white-space: normal; }

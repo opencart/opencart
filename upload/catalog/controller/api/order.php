@@ -648,9 +648,9 @@ class ControllerApiOrder extends Controller {
 				$json['error'] = $this->language->get('error_not_found');
 			}
 		}
-		
+
 		print_r($json);
-		
+
 		//$this->response->addHeader('Content-Type: application/json');
 		//$this->response->setOutput(json_encode($json));
 	}

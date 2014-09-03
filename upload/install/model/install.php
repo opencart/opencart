@@ -48,6 +48,26 @@ class ModelInstall extends Model {
 			$db->query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `group` = 'config', `key` = 'config_encryption', value = '" . $db->escape(md5(mt_rand())) . "'");
 
 			$db->query("UPDATE `" . $data['db_prefix'] . "product` SET `viewed` = '0'");
+
+			// create order API user
+			$characters 	= 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+			$api_username 	= '';
+			$api_password 	= '';
+
+			for ($i = 0; $i < 64; $i++) {
+				$api_username .= $characters[rand(0, strlen($characters) - 1)];
+			}
+
+			for ($i = 0; $i < 256; $i++) {
+				$api_password .= $characters[rand(0, strlen($characters) - 1)];
+			}
+
+			$db->query("INSERT INTO `" . DB_PREFIX . "api` SET username = '" . $db->escape($api_username) . "', `password` = '" . $db->escape($api_password) . "', status = 1, date_added = NOW(), date_modified = NOW()");
+
+			$api_id = $db->getLastId();
+
+			$db->query("DELETE FROM `" . $data['db_prefix'] . "setting` WHERE `key` = 'config_api_id'");
+			$db->query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `group` = 'config', `key` = 'config_api_id', value = '" . (int)$api_id . "'");
 		}
 	}
 }

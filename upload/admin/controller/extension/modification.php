@@ -197,7 +197,7 @@ class ControllerExtensionModification extends Controller {
 											$limit = $offset + $limit;
 										}
 										
-										// Log									// Log
+										// Log
 										$log[] = 'CODE: ' . $search;
 
 										$status = false;
@@ -232,10 +232,13 @@ class ControllerExtensionModification extends Controller {
 										
 										preg_match_all($search, $modification[$key], $match, PREG_OFFSET_CAPTURE);
 										
+										// Remove part of the the result if a limit is set.
+										if ($limit > 0) {
+											$match[0] = array_slice($match[0], 0, $limit);
+										}
+																					
 										if ($match[0]) {
 											$log[] = 'REGEX: ' . $search;
-											
-											$i = 0;
 											
 											for ($i = 0; $i < count($match[0]); $i++) {
 												$log[] = 'LINE: ' . (substr_count(substr($modification[$key], 0, $match[0][$i][1]), "\n") + 1);

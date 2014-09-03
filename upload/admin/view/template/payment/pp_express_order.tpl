@@ -8,7 +8,7 @@
     <td><?php echo $text_amount_auth; ?></td>
     <td><?php echo $paypal_order['total']; ?>
       <?php if ($paypal_order['capture_status'] != 'Complete') { ?>
-      &nbsp;&nbsp; <a onclick="doVoid();" class="button paypal_capture btn btn-primary" id="btn_void"><?php echo $btn_void; ?></a> <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+      &nbsp;&nbsp; <a onclick="doVoid();" class="button paypal_capture btn btn-primary" id="button-void"><?php echo $button_void; ?></a> <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
       <?php } ?></td>
   </tr>
   <tr>
@@ -167,7 +167,7 @@
                 data: {'order_id':<?php echo $order_id; ?> },
                 url: 'index.php?route=payment/pp_express/void&token=<?php echo $token; ?>',
                 beforeSend: function() {
-                    $('#btn_void').hide();
+                    $('#button-void').hide();
                     $('#img_loading_void').show();
                 },
                 success: function(data) {
@@ -190,7 +190,7 @@
                     if (data.error == true) {
                         alert(data.msg);
                     }
-                    $('#btn_void').show();
+                    $('#button-void').show();
                     $('#img_loading_void').hide();
                 }
             });

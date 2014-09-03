@@ -24,7 +24,7 @@ $_['column_date_added']            = 'Created';
 $_['column_action']             = 'Action';
 
 //Buttons
-$_['btn_void']                  = 'Void';
+$_['button_void']                  = 'Void';
 $_['btn_capture']               = 'Capture';
 
 //Messages

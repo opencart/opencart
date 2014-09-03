@@ -155,42 +155,22 @@
 $('#button-filter').on('click', function() {
 	url = 'index.php?route=sale/order&token=<?php echo $token; ?>';
 	
-	var filter_order_id = $('input[name=\'filter_order_id\']').val();
-	
-	if (filter_order_id) {
-		url += '&filter_order_id=' + encodeURIComponent(filter_order_id);
-	}
-	
-	var filter_customer = $('input[name=\'filter_customer\']').val();
-	
-	if (filter_customer) {
-		url += '&filter_customer=' + encodeURIComponent(filter_customer);
-	}
-	
-	var filter_order_status = $('select[name=\'filter_order_status\']').val();
-	
-	if (filter_order_status != '*') {
-		url += '&filter_order_status=' + encodeURIComponent(filter_order_status);
-	}	
+	/* Input */
+	$('input[name^=\'filter_\']').each( function() {
+		var filter_value = $(this).val();
+		if( filter_value ) {
+			url += '&' + $(this).attr('name') + '=' + encodeURIComponent(filter_value);
+		}
+	});
 
-	var filter_total = $('input[name=\'filter_total\']').val();
+	/* Select */
+	$('select[name^=\'filter_\']').each( function() {
+		var filter_value = $(this).val();
+		if( filter_value && filter_value != '*' ) {
+			url += '&' + $(this).attr('name') + '=' + encodeURIComponent(filter_value);
+		}
+	});	
 
-	if (filter_total) {
-		url += '&filter_total=' + encodeURIComponent(filter_total);
-	}	
-	
-	var filter_date_added = $('input[name=\'filter_date_added\']').val();
-	
-	if (filter_date_added) {
-		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
-	}
-	
-	var filter_date_modified = $('input[name=\'filter_date_modified\']').val();
-	
-	if (filter_date_modified) {
-		url += '&filter_date_modified=' + encodeURIComponent(filter_date_modified);
-	}
-				
 	location = url;
 });
 //--></script> 

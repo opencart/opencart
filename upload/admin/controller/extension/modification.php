@@ -61,7 +61,7 @@ class ControllerExtensionModification extends Controller {
 		if ($this->validate()) {
 			//Log
 			$log = array();
-			
+
 			// Clear all modification files
 			$files = glob(DIR_MODIFICATION . '{*.php,*.tpl}', GLOB_BRACE);
 
@@ -72,7 +72,7 @@ class ControllerExtensionModification extends Controller {
 					}
 				}
 			}
-		
+
 			// Begin
 			$xml = array();
 
@@ -94,7 +94,7 @@ class ControllerExtensionModification extends Controller {
 				$dom = new DOMDocument('1.0', 'UTF-8');
 				$dom->preserveWhiteSpace = false;
 				$dom->loadXml($xml);
-				
+
 				// Log
 				$log[] = 'MOD: ' . $dom->getElementsByTagName('name')->item(0)->textContent;
 
@@ -102,7 +102,7 @@ class ControllerExtensionModification extends Controller {
 
 				foreach ($files as $file) {
 					$operations = $file->getElementsByTagName('operation');
-					
+
 					$path = '';
 
 					// Get the full path of the files that are going to be used for modification
@@ -138,16 +138,16 @@ class ControllerExtensionModification extends Controller {
 
 								if (!isset($modification[$key])) {
 									$content = file_get_contents($file);
-									 
+
 									$content = preg_replace('~\r?\n~', "\n", $content);
-									 
+
 									$modification[$key] = $content;
 									$original[$key] = $content;
-									
+
 									// Log
 									$log[] = 'FILE: ' . $key;
 								}
-								
+
 								foreach ($operations as $operation) {
 									// Search and replace
 									if ($operation->getElementsByTagName('search')->item(0)->getAttribute('regex') != 'true') {
@@ -157,7 +157,7 @@ class ControllerExtensionModification extends Controller {
 										$limit = $operation->getElementsByTagName('search')->item(0)->getAttribute('limit');
 										$add = $operation->getElementsByTagName('add')->item(0)->textContent;
 										$position = $operation->getElementsByTagName('add')->item(0)->getAttribute('position');
-										
+
 										// Trim
 										if (!$trim || $trim == 'true') {
 											$search = trim($search);
@@ -196,24 +196,24 @@ class ControllerExtensionModification extends Controller {
 										} else {
 											$limit = $offset + $limit;
 										}
-										
+
 										// Log
 										$log[] = 'CODE: ' . $search;
 
 										$status = false;
-										
+
 										// Only replace the occurance of the string that is equal to the between the offset and limit
 										for ($i = $offset; $i < $limit; $i++) {
 											if (isset($match[$i])) {
 												$modification[$key] = substr_replace($modification[$key], $replace, $match[$i], strlen($search));
-												
+
 												// Log
 												$log[] = 'LINE: ' . (substr_count(substr($modification[$key], 0, $match[$i]), "\n") + 1);
-												
+
 												$status = true;
 											}
 										}
-										
+
 										if (!$status) {
 											$log[] = 'NOT FOUND!';
 										}
@@ -226,25 +226,25 @@ class ControllerExtensionModification extends Controller {
 										if (!$limit) {
 											$limit = -1;
 										}
-										
+
 										// Log
 										$match = array();
-										
+
 										preg_match_all($search, $modification[$key], $match, PREG_OFFSET_CAPTURE);
-										
+
 										// Remove part of the the result if a limit is set.
 										if ($limit > 0) {
 											$match[0] = array_slice($match[0], 0, $limit);
 										}
-																					
+
 										if ($match[0]) {
 											$log[] = 'REGEX: ' . $search;
-											
+
 											for ($i = 0; $i < count($match[0]); $i++) {
 												$log[] = 'LINE: ' . (substr_count(substr($modification[$key], 0, $match[0][$i][1]), "\n") + 1);
 											}
 										} else {
-											$log[] = 'NOT FOUND!'; 
+											$log[] = 'NOT FOUND!';
 										}
 
 										// Make the modification
@@ -254,7 +254,7 @@ class ControllerExtensionModification extends Controller {
 							}
 						}
 					}
-					
+
 					// Log
 					$log[] = '----------------------------------------------------------------';
 				}
@@ -262,31 +262,31 @@ class ControllerExtensionModification extends Controller {
 
 			// Log
 			$ocmod = new Log('ocmod.log');
-			$ocmod->write(implode("\n", $log)); 
+			$ocmod->write(implode("\n", $log));
 
 			// Write all modification files
 			foreach ($modification as $key => $value) {
 				// Only create a file if there are changes
 				if ($original[$key] != $value) {
 					$path = '';
-					
+
 					$directories = explode('/', dirname($key));
-					
+
 					foreach ($directories as $directory) {
 						$path = $path . '/' . $directory;
-						
+
 						if (!is_dir(DIR_MODIFICATION . $path)) {
 							@mkdir(DIR_MODIFICATION . $path, 0777);
 						}
 					}
-					
+
 					$file = DIR_MODIFICATION . $key;
-					
+
 					$handle = fopen($file, 'w');
-	
+
 					fwrite($handle, $value);
-	
-					fclose($handle);					
+
+					fclose($handle);
 				}
 			}
 

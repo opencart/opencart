@@ -19,7 +19,7 @@ $_['text_all_geo_zones']            = 'All Geo Zones';
 
 $_['text_last_cron_job_run']        = 'Last cron job\'s run time';
 $_['text_ip']                       = 'IP Address';
-$_['text_ip_allowed']              = 'IPs allowed';
+$_['text_ip_allowed']              	= 'IPs allowed';
 $_['text_upload_success']           = 'File was uploaded successfully';
 $_['text_button_settings']          = 'Checkout Button Settings';
 $_['text_colour']                   = 'Colour';
@@ -56,9 +56,9 @@ $_['text_checkout_mode']            = 'Checkout mode';
 $_['text_marketplace']              = 'Marketplace';
 
 $_['text_pending_status']           = 'Pending';
-$_['text_ready_status']       = 'Ready to be Shipped status';
-$_['text_shipped_status']     = 'Shipped order status';
-$_['text_canceled_status']    = 'Canceled order status';
+$_['text_ready_status']       		= 'Ready to be Shipped status';
+$_['text_shipped_status']     		= 'Shipped order status';
+$_['text_canceled_status']    		= 'Canceled order status';
 
 
 $_['text_minimum_total']            = 'Minimum Order Total';

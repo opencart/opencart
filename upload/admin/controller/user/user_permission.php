@@ -341,12 +341,16 @@ class ControllerUserUserPermission extends Controller {
 
 		$data['permissions'] = array();
 
-		$files = glob(DIR_APPLICATION . 'controller/*/*.php');
+		$files = array();
+		$tmp = '/*';
+		while (glob(DIR_APPLICATION . 'controller'.$tmp.'/*.php')) {
+			$files = array_merge($files, glob(DIR_APPLICATION . 'controller'.$tmp.'/*.php'));
+			$tmp .= '/*';
+		}
 
 		foreach ($files as $file) {
-			$part = explode('/', dirname($file));
-
-			$permission = end($part) . '/' . basename($file, '.php');
+			$part = substr(dirname($file), strlen(DIR_APPLICATION . 'controller/'));
+			$permission = $part . '/' . basename($file, '.php');
 
 			if (!in_array($permission, $ignore)) {
 				$data['permissions'][] = $permission;

@@ -62,7 +62,7 @@ final class Action {
 			$controller = new $class($registry);
 
 			if (is_callable(array($controller, $this->method))) {
-				return call_user_func_array(array($controller, $this->method), $this->args);
+				return call_user_func_array(array($controller, $this->method), array_merge($this->args, $args));
 			} else {
 				return false;
 			}

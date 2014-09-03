@@ -112,7 +112,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #profile {
 	padding: 10px 15px 10px 15px;
 	overflow: auto;
-	border-bottom: 1px solid #3C434B;	
+	border-bottom: 1px solid #333333;	
 }
 #profile div {
 	float: left;
@@ -122,10 +122,10 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	margin-left: 15px;
 }
 #profile img {
-	border-radius: 7px;
+	border-radius: 25px;
 }
 #profile h4 {
-	margin-top: 10px;
+	margin-top: 8px;
 	font-family: 'Open Sans', sans-serif;
 	font-size: 15px;
 	font-weight: 400;
@@ -135,7 +135,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #column-left {
 	width: 0px;
 	height: 100%;
-	background-color: #353E49;
+	background-color: #3A3A3A;
 	position: absolute;
 	top: 0px;
 	padding-top: 50px;
@@ -171,7 +171,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	list-style: none;
 }
 #menu li a {
-	color: #A3A7AD;
+	color: #BBBBBB;
 	text-decoration: none;
 	display: block;
 	padding: 10px 10px 9px 10px;
@@ -186,13 +186,14 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #menu > li > a {
 	padding-left: 15px;
-	border-bottom: 1px solid #3C434B;	
+	border-bottom: 1px solid #333333;	
 }
 #menu li.active > a {
 	color: #FFFFFF;
+	
 }
 #menu li.active > a:last-child {
-	background-color: #000000;
+	background: #3EC3D5;
 	border-bottom: 1px solid #000000;
 	color: #FFFFFF;
 }

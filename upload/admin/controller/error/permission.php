@@ -20,16 +20,15 @@ class ControllerErrorPermission extends Controller {
 		if (isset($this->request->get['route'])) {
 			$route = '';
 
-			$part = explode('/', $this->request->get['route']);
+			$parts = explode('/', $this->request->get['route']);
 
-			if (isset($part[0])) {
-				$route .= $part[0];
-			}
-
-			if (isset($part[1])) {
-				$route .= '/' . $part[1];
-			}
-
+			foreach ($parts as $part) {
+				if (strlen(trim($route)) > 0) $route .= '/' . $part; else $route = $part;
+				if (file_exists(DIR_APPLICATION . 'controller/' . $route . '.php')) {
+					break;
+				}
+ 			}
+ 
 			$ignore = array(
 				'common/dashboard',
 				'common/login',

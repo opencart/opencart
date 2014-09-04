@@ -38,7 +38,6 @@ class ControllerSaleOrder extends Controller {
 				curl_setopt($curl, CURLOPT_HEADER, false);
 				curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 				curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-				curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 				curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -91,7 +90,6 @@ class ControllerSaleOrder extends Controller {
 				curl_setopt($curl, CURLOPT_HEADER, false);
 				curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 				curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-				curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 				curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -144,7 +142,6 @@ class ControllerSaleOrder extends Controller {
 				curl_setopt($curl, CURLOPT_HEADER, false);
 				curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 				curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-				curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 				curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -179,7 +176,6 @@ class ControllerSaleOrder extends Controller {
 			curl_setopt($curl, CURLOPT_HEADER, false);
 			curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 			curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 			curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -782,7 +778,6 @@ class ControllerSaleOrder extends Controller {
 					curl_setopt($curl, CURLOPT_HEADER, false);
 					curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 					curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-					curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 					curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 					curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 					curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -814,7 +809,6 @@ class ControllerSaleOrder extends Controller {
 					curl_setopt($curl, CURLOPT_HEADER, false);
 					curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 					curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-					curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 					curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 					curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 					curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -1394,7 +1388,6 @@ class ControllerSaleOrder extends Controller {
 					curl_setopt($curl, CURLOPT_HEADER, false);
 					curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 					curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-					curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 					curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 					curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 					curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -2367,7 +2360,6 @@ class ControllerSaleOrder extends Controller {
 			curl_setopt($curl, CURLOPT_HEADER, false);
 			curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 			curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 			curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);

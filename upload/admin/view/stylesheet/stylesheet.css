@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,greek-ext,vietnamese);
+@import url(//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,greek-ext,vietnamese);
 html, body {
 	height: 100%;
 	margin: 0;
@@ -115,7 +115,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #profile {
 	padding: 10px 15px 10px 15px;
 	overflow: auto;
-	border-bottom: 1px solid #333333;	
+	border-bottom: 1px solid #333333;
 }
 #profile div {
 	float: left;
@@ -213,7 +213,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #menu li.open > a {
 	color: #FFFFFF;
-	background-color: #1B2027;	
+	background-color: #1B2027;
 }
 #menu li a:hover {
 	color: #FFFFFF;
@@ -314,13 +314,13 @@ input[type=radio]:before {
     height: 100%;
 	width: 100%;
     font-family: FontAwesome;
-    display: inline-block;	
+    display: inline-block;
     content: "\f10c";
-    letter-spacing: 10px;	
+    letter-spacing: 10px;
 }
 input[type=radio]:checked:before {
     content: "\f192";
-    letter-spacing: 5px;	
+    letter-spacing: 5px;
 }
 
 .alert {
@@ -513,7 +513,7 @@ input[type=radio]:checked:before {
 }
 .panel-default .panel-heading {
 	background: none;
-	
+
 }
 .well {
 	border-radius: 0px;

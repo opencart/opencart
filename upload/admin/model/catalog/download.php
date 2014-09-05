@@ -36,7 +36,7 @@ class ModelCatalogDownload extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "download WHERE download_id = '" . (int)$download_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "download_description WHERE download_id = '" . (int)$download_id . "'");
 
-		$this->event->trigger('admin.delete.download', $download_id);
+		$this->event->trigger('post.admin.delete.download', $download_id);
 	}
 
 	public function getDownload($download_id) {

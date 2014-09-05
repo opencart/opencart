@@ -233,7 +233,7 @@ $registry->set('event', $event);
 $query = $db->query("SELECT * FROM " . DB_PREFIX . "event");
 
 foreach ($query->rows as $result) {
-	$event->register($result['trigger'], new Action($result['action']));
+	$event->register($result['trigger'], $result['action']);
 }
 
 // Front Controller

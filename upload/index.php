@@ -226,6 +226,9 @@ $registry->set('cart', new Cart($registry));
 // Encryption
 $registry->set('encryption', new Encryption($config->get('config_encryption')));
 
+//OpenBay Pro
+$registry->set('openbay', new Openbay($registry));
+
 // Event
 $event = new Event($registry);
 $registry->set('event', $event);

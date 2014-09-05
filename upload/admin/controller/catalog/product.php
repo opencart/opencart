@@ -629,6 +629,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['tab_links'] = $this->language->get('tab_links');
 		$data['tab_reward'] = $this->language->get('tab_reward');
 		$data['tab_design'] = $this->language->get('tab_design');
+		$data['tab_openbay'] = $this->language->get('tab_openbay');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -1271,6 +1272,8 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['product_reward'] = array();
 		}
+
+		$data['openbay'] = $this->load->controller('extension/openbay/linkStatus', array('product_id' => $this->request->get['product_id']));
 
 		if (isset($this->request->post['product_layout'])) {
 			$data['product_layout'] = $this->request->post['product_layout'];

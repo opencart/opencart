@@ -93,6 +93,17 @@ class ControllerCommonMenu extends Controller {
 			$data['text_zone'] = $this->language->get('text_zone');
 			$data['text_recurring'] = $this->language->get('text_recurring');
 			$data['text_order_recurring'] = $this->language->get('text_order_recurring');
+			$data['text_openbay_extension'] = $this->language->get('text_openbay_extension');
+			$data['text_openbay_dashboard'] = $this->language->get('text_openbay_dashboard');
+			$data['text_openbay_orders'] = $this->language->get('text_openbay_orders');
+			$data['text_openbay_items'] = $this->language->get('text_openbay_items');
+			$data['text_openbay_ebay'] = $this->language->get('text_openbay_ebay');
+			$data['text_openbay_amazon'] = $this->language->get('text_openbay_amazon');
+			$data['text_openbay_amazonus'] = $this->language->get('text_openbay_amazonus');
+			$data['text_openbay_settings'] = $this->language->get('text_openbay_settings');
+			$data['text_openbay_links'] = $this->language->get('text_openbay_links');
+			$data['text_openbay_report_price'] = $this->language->get('text_openbay_report_price');
+			$data['text_openbay_order_import'] = $this->language->get('text_openbay_order_import');
 
 			$data['home'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL');
 			$data['affiliate'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'], 'SSL');
@@ -167,6 +178,26 @@ class ControllerCommonMenu extends Controller {
 			$data['zone'] = $this->url->link('localisation/zone', 'token=' . $this->session->data['token'], 'SSL');
 			$data['recurring'] = $this->url->link('catalog/recurring', 'token=' . $this->session->data['token'], 'SSL');
 			$data['order_recurring'] = $this->url->link('sale/recurring', 'token=' . $this->session->data['token'], 'SSL');
+
+			$data['openbay_show_menu'] = $this->config->get('openbay_menu');
+			$data['openbay_link_extension'] = $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL');
+			$data['openbay_link_orders'] = $this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'], 'SSL');
+			$data['openbay_link_items'] = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL');
+			$data['openbay_link_ebay'] = $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL');
+			$data['openbay_link_ebay_settings'] = $this->url->link('openbay/ebay/settings', 'token=' . $this->session->data['token'], 'SSL');
+			$data['openbay_link_ebay_links'] = $this->url->link('openbay/ebay/viewItemLinks', 'token=' . $this->session->data['token'], 'SSL');
+			$data['openbay_link_ebay_orderimport'] = $this->url->link('openbay/ebay/viewOrderImport', 'token=' . $this->session->data['token'], 'SSL');
+			$data['openbay_link_amazon'] = $this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], 'SSL');
+			$data['openbay_link_amazon_settings'] = $this->url->link('openbay/amazon/settings', 'token=' . $this->session->data['token'], 'SSL');
+			$data['openbay_link_amazon_links'] = $this->url->link('openbay/amazon/itemLinks', 'token=' . $this->session->data['token'], 'SSL');
+			$data['openbay_link_amazonus'] = $this->url->link('openbay/amazonus', 'token=' . $this->session->data['token'], 'SSL');
+			$data['openbay_link_amazonus_settings'] = $this->url->link('openbay/amazonus/settings', 'token=' . $this->session->data['token'], 'SSL');
+			$data['openbay_link_amazonus_links'] = $this->url->link('openbay/amazonus/itemLinks', 'token=' . $this->session->data['token'], 'SSL');
+			$data['openbay_markets'] = array(
+				'ebay' => $this->config->get('ebay_status'),
+				'amazon' => $this->config->get('amazon_status'),
+				'amazonus' => $this->config->get('amazonus_status'),
+			);
 
 			$data['profile'] = $this->load->controller('common/profile');
 

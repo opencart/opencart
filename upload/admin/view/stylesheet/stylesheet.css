@@ -20,11 +20,12 @@ h1, h2, h3, h4, h5, h6, p {
 	color: #666666;
 }
 a, a:hover {
-	color: #428bca;
+	color: #3EC3D5;
 }
 a:hover, a:focus {
-  color: #2a6496;
+  color: #39B6C7;
   text-decoration: underline;
+  text-decoration: none;
 }
 .form-control {
 	font-size: 12px;
@@ -38,10 +39,10 @@ a:hover, a:focus {
 .datepicker {
 	font-size: 12px;
 }
-.breadcrumb {
-	background: none;
-	font-size: 11px;
+.tooltip {
+	font-size: 10px;	
 }
+
 /* fix for bootstrap hidden and visible */
 span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: inline;
@@ -58,12 +59,9 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #header {
 	min-height: 0px;
-	background: #F3F3F3;
-	border-bottom: 1px solid #E1E1E1;
-	margin-bottom: 0;
-	
-	background-image: linear-gradient(#FFFFFF, #F2F2F2);
-	box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.03);
+	background: #F1F1F1;
+	border-bottom: 1px solid #E5E5E5;
+	/*box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.03);*/
 	margin: 0;
 	padding: 0;
 }
@@ -206,7 +204,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	color: #FFFFFF;
 }
 #menu li.active > a:last-child {
-	background: #52C9DA;
+	background-image: linear-gradient(#39B6C7, #3EC3D5, #39B6C7);
 	border-bottom: 1px solid #000000;
 	color: #FFFFFF;
 }
@@ -305,7 +303,7 @@ input[type=checkbox]:before {
 }
 input[type=checkbox]:checked:before {
 	font-family: FontAwesome;
-    content:"\f046";
+    content: url(../image/checkmark.png);
     letter-spacing: 5px;
 }
 input[type=radio] {
@@ -385,7 +383,7 @@ input[type=radio]:checked:before {
 }
 .btn-lg {
 	font-size: 15px;
-	line-height: 19px;
+	-height: 19px;
 	padding: 9px 18px;
 }
 .btn-default {
@@ -414,6 +412,31 @@ input[type=radio]:checked:before {
 	border-color: #e51010;	
 }
 
+.breadcrumb {
+	background: none;
+	border-bottom: 1px solid #EBEBEB;
+	margin-bottom: 15px;
+	padding-left: 20px;
+	padding-right: 20px;	
+}
+.breadcrumb li a {
+	padding: 5px 0px;
+	color: #666666;
+}
+.breadcrumb li:first-child a {
+	font-size: 11px;
+	padding: 0px 0px;
+	margin: 0px;
+}
+.breadcrumb li a:hover {
+	text-decoration: none;
+}
+.breadcrumb li + li:before {
+	content: "\f105";
+	font-family: FontAwesome;
+	font-size: 12px;
+	color: #BBBBBB;
+}
 
 .pagination {
 	margin: 0px 0;

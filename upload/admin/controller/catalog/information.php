@@ -142,7 +142,19 @@ class ControllerCatalogInformation extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
+		
+		$data['breadcrumbs'] = array();
 
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('catalog/information', 'token=' . $this->session->data['token'] . $url, 'SSL')
+		);
+		
 		$data['insert'] = $this->url->link('catalog/information/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('catalog/information/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
@@ -322,7 +334,7 @@ class ControllerCatalogInformation extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('user/user', 'token=' . $this->session->data['token'] . $url, 'SSL')
+			'href' => $this->url->link('catalog/information', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 		
 		if (!isset($this->request->get['information_id'])) {

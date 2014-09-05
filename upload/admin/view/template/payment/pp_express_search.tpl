@@ -1,5 +1,10 @@
 <?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right"><a onclick="editSearch();" id="btn_edit" data-toggle="tooltip" style="display:none;" title="<?php echo $btn_edit_search; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a onclick="doSearch();" id="btn_search" data-toggle="tooltip" title="<?php echo $btn_search; ?>" class="btn btn-info"><i class="fa fa-search"></i></a></div>

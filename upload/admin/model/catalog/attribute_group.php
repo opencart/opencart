@@ -1,7 +1,7 @@
 <?php
 class ModelCatalogAttributeGroup extends Model {
 	public function addAttributeGroup($data) {
-		$this->event->trigger('pre_admin_add_attribute_group', $data);
+		$this->event->trigger('pre.admin.add.attribute.group', $data);
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_group SET sort_order = '" . (int)$data['sort_order'] . "'");
 
@@ -11,13 +11,13 @@ class ModelCatalogAttributeGroup extends Model {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_group_description SET attribute_group_id = '" . (int)$attribute_group_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
 		}
 
-		$this->event->trigger('admin_add_attribute_group', $attribute_group_id);
+		$this->event->trigger('post.admin.add.attribute.group', $attribute_group_id);
 
 		return $attribute_group_id;
 	}
 
 	public function editAttributeGroup($attribute_group_id, $data) {
-		$this->event->trigger('pre_admin_edit_attribute_group', $data);
+		$this->event->trigger('pre.admin.edit.attribute.group', $data);
 
 		$this->db->query("UPDATE " . DB_PREFIX . "attribute_group SET sort_order = '" . (int)$data['sort_order'] . "' WHERE attribute_group_id = '" . (int)$attribute_group_id . "'");
 
@@ -27,16 +27,16 @@ class ModelCatalogAttributeGroup extends Model {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_group_description SET attribute_group_id = '" . (int)$attribute_group_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
 		}
 
-		$this->event->trigger('admin_edit_attribute_group');
+		$this->event->trigger('post.admin.edit.attribute.group', $attribute_group_id);
 	}
 
 	public function deleteAttributeGroup($attribute_group_id) {
-		$this->event->trigger('pre_admin_delete_attribute_group', $attribute_group_id);
+		$this->event->trigger('pre.admin.delete.attribute.group', $attribute_group_id);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "attribute_group WHERE attribute_group_id = '" . (int)$attribute_group_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "attribute_group_description WHERE attribute_group_id = '" . (int)$attribute_group_id . "'");
 
-		$this->event->trigger('admin_delete_attribute_group', $attribute_group_id);
+		$this->event->trigger('post.admin.delete.attribute.group', $attribute_group_id);
 	}
 
 	public function getAttributeGroup($attribute_group_id) {

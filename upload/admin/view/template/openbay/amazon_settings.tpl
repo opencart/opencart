@@ -16,7 +16,7 @@
     <div class="panel-body">
       <form action="" method="post" enctype="multipart/form-data" id="settings-form" class="form-horizontal">
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#tab-settings" data-toggle="tab"><?php echo $tab_main_settings; ?></a></li>
+          <li class="active"><a href="#tab-settings" data-toggle="tab"><?php echo $tab_settings; ?></a></li>
           <li><a href="#tab-product" data-toggle="tab"><?php echo $tab_listing; ?></a></li>
           <li><a href="#tab-orders" data-toggle="tab"><?php echo $tab_orders; ?></a></li>
         </ul>

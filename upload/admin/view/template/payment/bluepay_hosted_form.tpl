@@ -69,9 +69,9 @@
         <div class="col-sm-10">
           <select name="bluepay_hosted_form_transaction" id="input-transaction" class="form-control">
             <?php if ($bluepay_hosted_form_transaction == 'SALE') { ?>
-            <option value="SALE" selected="selected"><?php echo $text_payment; ?></option>
+            <option value="SALE" selected="selected"><?php echo $text_sale; ?></option>
             <?php } else { ?>
-            <option value="SALE"><?php echo $text_payment; ?></option>
+            <option value="SALE"><?php echo $text_sale; ?></option>
             <?php } ?>
             <?php if ($bluepay_hosted_form_transaction == 'AUTH') { ?>
             <option value="AUTH" selected="selected"><?php echo $text_authenticate; ?></option>

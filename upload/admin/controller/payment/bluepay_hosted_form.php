@@ -26,7 +26,7 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 		$data['text_sim'] = $this->language->get('text_sim');
 		$data['text_test'] = $this->language->get('text_test');
 		$data['text_live'] = $this->language->get('text_live');
-		$data['text_payment'] = $this->language->get('text_payment');
+		$data['text_sale'] = $this->language->get('text_sale');
 		$data['text_authenticate'] = $this->language->get('text_authenticate');
 		$data['text_amex'] = $this->language->get('text_AMEX');
 		$data['text_DISCOVER'] = $this->language->get('text_DISCOVER');

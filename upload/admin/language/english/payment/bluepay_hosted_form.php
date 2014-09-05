@@ -3,11 +3,12 @@
 $_['heading_title']					= 'BluePay Hosted Form';
 
 // Text
-$_['text_payment']					= 'Sale';
+$_['text_payment']					= 'Payment';
 $_['text_success']					= 'Success: You have modified BluePay Hosted Form account details!';
 $_['text_bluepay_hosted_form']		= '<a href="http://www.bluepay.com/preferred-partner/opencart" target="_blank"><img src="view/image/payment/bluepay.jpg" alt="BluePay Hosted Form" title="BluePay Hosted Form" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_test']						= 'Test';
 $_['text_live']						= 'Live';
+$_['text_sale']					    = 'Sale';
 $_['text_authenticate']				= 'Authenticate';
 $_['text_release_ok']				= 'Release was successful';
 $_['text_release_ok_order']			= 'Release was successful';

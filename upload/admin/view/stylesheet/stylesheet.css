@@ -93,7 +93,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	padding: 3px 16px;
 	line-height: 38px;
 	cursor: pointer;
-	color: #666666;
+	color: #6D6D6D;
 	border-left: 1px solid #E1E1E1;
 }
 #header .nav > li > a > .label {
@@ -109,13 +109,13 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	float: left;
 	display: inline-block;
 	cursor: pointer;
-	color: #666666;
+	color: #6D6D6D;
 	border-right: 1px solid #E1E1E1;
 }
 #profile {
 	padding: 10px 15px 10px 15px;
 	overflow: auto;
-	border-bottom: 1px solid #333333;
+	border-bottom: 1px solid #383838;
 }
 #profile div {
 	float: left;
@@ -123,9 +123,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #profile div + div {
 	margin-left: 15px;
-}
-#profile img {
-	border-radius: 25px;
 }
 #profile h4 {
 	margin-top: 6px;
@@ -138,8 +135,8 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #column-left {
 	width: 0px;
 	height: 100%;
-	background-color: #2A2A2A;
-	border-right: 1px solid #151515;
+	background-color: #2D2D2D;
+	border-right: 1px solid #000000;
 	position: absolute;
 	top: 0px;
 	padding-top: 50px;
@@ -198,13 +195,13 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #menu > li > a {
 	padding-left: 15px;
-	border-bottom: 1px solid #333333;
+	border-bottom: 1px solid #383838;
 }
 #menu li.active > a {
 	color: #FFFFFF;
 }
 #menu li.active > a:last-child {
-	background-image: linear-gradient(#39B6C7, #3EC3D5, #39B6C7);
+	background: #5BC0DE;
 	border-bottom: 1px solid #000000;
 	color: #FFFFFF;
 }
@@ -288,13 +285,12 @@ label.control-label span:after {
 label.control-label {
 	font-weight: normal;
 }
+
+
 input[type="radio"],
 input[type="checkbox"] {
   margin: 2px 0 0;
 }
-
-
-
 .radio,
 .checkbox {
   min-height: 18px;

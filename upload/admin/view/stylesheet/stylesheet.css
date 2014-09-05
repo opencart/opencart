@@ -38,6 +38,10 @@ a:hover, a:focus {
 .datepicker {
 	font-size: 12px;
 }
+.breadcrumb {
+	background: none;
+	font-size: 11px;
+}
 /* fix for bootstrap hidden and visible */
 span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: inline;
@@ -48,11 +52,17 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	position: relative;
 	overflow: hidden;
 }
+.container-fluid {
+	padding-left: 20px;
+	padding-right: 20px;
+}
 #header {
 	min-height: 0px;
-	background: #FFFFFF;
+	background: #F3F3F3;
 	border-bottom: 1px solid #E1E1E1;
 	margin-bottom: 0;
+	
+	background-image: linear-gradient(#FFFFFF, #F2F2F2);
 	box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.03);
 	margin: 0;
 	padding: 0;
@@ -62,10 +72,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #header .nav > li li {
 	min-width: 200px;
-}
-.container-fluid {
-	padding-left: 20px;
-	padding-right: 20px;
 }
 #header .navbar-header {
 	min-height: 0px;
@@ -86,15 +92,11 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 
 #header .nav > li > a {
-	padding: 3px 15px;
+	padding: 3px 16px;
 	line-height: 38px;
 	cursor: pointer;
 	color: #666666;
-	border-left: 1px solid #EEEEEE;
-}
-
-#header .nav > li > a > i {
-	/*font-size: 18px;*/
+	border-left: 1px solid #E1E1E1;
 }
 #header .nav > li > a > .label {
 	text-shadow: none;
@@ -110,7 +112,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: inline-block;
 	cursor: pointer;
 	color: #666666;
-	border-right: 1px solid #EEEEEE;
+	border-right: 1px solid #E1E1E1;
 }
 #profile {
 	padding: 10px 15px 10px 15px;
@@ -138,7 +140,8 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #column-left {
 	width: 0px;
 	height: 100%;
-	background-color: #303641;
+	background-color: #2A2A2A;
+	border-right: 1px solid #151515;
 	position: absolute;
 	top: 0px;
 	padding-top: 50px;
@@ -175,21 +178,17 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	left: 235px;
 }
 }
-/* footer */
-#footer {
-	height: 100px;
-	text-align: center;
-}
+
 #menu, #menu ul, #menu li {
 	padding: 0;
 	margin: 0;
 	list-style: none;
 }
 #menu li a {
-	color: #98A7B5;
+	color: #7A7A7A;
 	text-decoration: none;
 	display: block;
-	padding: 9px 10px 9px 10px;
+	padding: 10px 10px 10px 10px;
 	cursor: pointer;
 }
 #menu li i {
@@ -197,7 +196,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	margin-right: 5px;
 }
 #menu li ul {
-	background-color: #222222;
+	background-color: #151515;
 }
 #menu > li > a {
 	padding-left: 15px;
@@ -207,17 +206,18 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	color: #FFFFFF;
 }
 #menu li.active > a:last-child {
-	background: #3EC3D5;
+	background: #52C9DA;
 	border-bottom: 1px solid #000000;
 	color: #FFFFFF;
 }
 #menu li.open > a {
 	color: #FFFFFF;
-	background-color: #1B2027;
+	background-color: #151515;
+	border-bottom: 1px solid #151515;
 }
 #menu li a:hover {
 	color: #FFFFFF;
-	background-color: #1B2027;
+	background-color: #292929;
 }
 #menu li a.parent:after {
 	font-family: FontAwesome;
@@ -242,6 +242,11 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #column-left #menu li li li li ul a {
 	padding-left: 123px;
+}
+/* footer */
+#footer {
+	height: 100px;
+	text-align: center;
 }
 /* Navs */
 .nav > li.disabled > a {
@@ -285,7 +290,6 @@ label.control-label span:after {
 label.control-label {
 	font-weight: normal;
 }
-
 input[type=checkbox] {
      position: relative;
 }
@@ -304,7 +308,6 @@ input[type=checkbox]:checked:before {
     content:"\f046";
     letter-spacing: 5px;
 }
-
 input[type=radio] {
     position: relative;
 }
@@ -352,10 +355,9 @@ input[type=radio]:checked:before {
 .btn {
 	border-width: 1px;
 	border-radius: 3px;
-	font-size: 12px;
+	font-size: 12px; 
 	box-shadow: none;
 	padding: 8px 13px;
-	/*background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0)); */
 }
 
 .btn:focus, .btn:active:focus, .btn.active:focus {
@@ -386,42 +388,30 @@ input[type=radio]:checked:before {
 	line-height: 19px;
 	padding: 9px 18px;
 }
-
 .btn-default {
-	background-color: #f4f4f4;
-	border-color: #ddd;
-	border-bottom-color: #cecece;
-	color: #555;	
+	border-color: #ccc;
+	color: #696565;	
 }
-
 .btn-primary {
-	background-color: #1a7ab9;
-	border-color: #1871ab;
-	border-bottom-color: #12547e;
+	background-color: #1688ae;
+	border-color: #137697;
 }
-
 .btn-info {
-	border-color: #46b8da;
-	border-bottom-color: #2caed5;
-	background-color: #5bc0de;	
+	background-color: #59b7de;
+	border-color: #44aeda;
 }
-
 .btn-success {
-	border-color: #46ac46;
-	border-bottom-color: #388838;
-	background-color: #4cb64c;	
+	background-color: #7bae16;
+	border-color: #6b9713;
 }
-
 .btn-warning {
-	border-color: #f09411;
-	border-bottom-color: #c2770c;
-	background: #f3a537;	
+	background-color: #ff9800;
+	border-color: #e68900;	
 }
 
 .btn-danger {
-	border-color: #e3503e;
-	border-bottom-color: #df3823;
-	background-color: #e66454;	
+	background-color: #ef2020;
+	border-color: #e51010;	
 }
 
 

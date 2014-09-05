@@ -74,6 +74,14 @@ class ControllerPaymentKlarnaAccount extends Controller {
 			$data['error_warning'] = '';
 		}
 
+		if (isset($this->session->data['success'])) {
+			$data['success'] = $this->session->data['success'];
+
+			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
+		}
+		
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -90,14 +98,6 @@ class ControllerPaymentKlarnaAccount extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('payment/klarna_account', 'token=' . $this->session->data['token'], 'SSL')
 		);
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
 
 		$data['action'] = $this->url->link('payment/klarna_account', 'token=' . $this->session->data['token'], 'SSL');
 

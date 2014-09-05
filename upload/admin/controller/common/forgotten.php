@@ -69,7 +69,7 @@ class ControllerCommonForgotten extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('user/user', 'token=' . '', 'SSL')
+			'href' => $this->url->link('common/forgotten', 'token=' . '', 'SSL')
 		);
 		
 		$data['action'] = $this->url->link('common/forgotten', '', 'SSL');

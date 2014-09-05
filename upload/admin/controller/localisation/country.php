@@ -152,7 +152,7 @@ class ControllerLocalisationCountry extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/review', 'token=' . $this->session->data['token'] . $url, 'SSL')
+			'href' => $this->url->link('localisation/country', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 		
 		$data['insert'] = $this->url->link('localisation/country/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -316,7 +316,7 @@ class ControllerLocalisationCountry extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('user/user', 'token=' . $this->session->data['token'] . $url, 'SSL')
+			'href' => $this->url->link('localisation/country', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 		
 		if (!isset($this->request->get['country_id'])) {

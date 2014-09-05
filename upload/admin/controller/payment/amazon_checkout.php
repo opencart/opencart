@@ -206,7 +206,9 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		}
 		
 		$data['cron_job_url'] = HTTPS_CATALOG . 'index.php?route=payment/amazon_checkout/cron&token=' . $data['amazon_checkout_cron_job_token'];
-
+		
+		$data['store'] = HTTPS_CATALOG;
+		
 		$data['cron_job_last_run'] = $this->config->get('amazon_checkout_cron_job_last_run');
 
 		if (isset($this->request->post['amazon_checkout_allowed_ips'])) {

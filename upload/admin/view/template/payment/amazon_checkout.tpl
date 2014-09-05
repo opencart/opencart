@@ -272,8 +272,8 @@ $('#ip-allowed').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 
-$('input[name=\'amazon_checkout_cron_job_token\']').on('click', function() {
-    $('#cron-job-url').val('<?php echo HTTPS_CATALOG; ?>index.php?route=payment/amazon_checkout/cron&token=' + $(this).val());
+$('input[name=\'amazon_checkout_cron_job_token\']').on('keyup', function() {
+    $('#input-cron-job-url').val('<?php echo $store; ?>index.php?route=payment/amazon_checkout/cron&token=' + $(this).val());
 });
 //--></script> 
 <?php echo $footer; ?>

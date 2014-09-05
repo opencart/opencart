@@ -1,5 +1,10 @@
 <?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
   <div class="page-header">
     <div class="container-fluid">
       <h1><i class="fa fa-dashboard"></i> <?php echo $heading_title; ?></h1>

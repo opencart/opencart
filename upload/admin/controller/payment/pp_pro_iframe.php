@@ -75,21 +75,18 @@ class ControllerPaymentPPProIframe extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => false
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_payment'),
-			'href'      => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => ' :: '
+			'text' => $this->language->get('text_payment'),
+			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('payment/pp_pro_iframe', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => ' :: '
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('payment/pp_pro_iframe', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['action'] = $this->url->link('payment/pp_pro_iframe', 'token=' . $this->session->data['token'], 'SSL');
@@ -257,32 +254,32 @@ class ControllerPaymentPPProIframe extends Controller {
 		$this->document->setTitle($this->language->get('text_refund'));
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		$data['button_cancel'] = $this->language->get('button_cancel');
+		
+		$data['text_refund'] = $this->language->get('text_refund');
+		
 		$data['entry_transaction_id'] = $this->language->get('entry_transaction_id');
 		$data['entry_full_refund'] = $this->language->get('entry_full_refund');
 		$data['entry_amount'] = $this->language->get('entry_amount');
 		$data['entry_message'] = $this->language->get('entry_message');
+		
 		$data['button_refund'] = $this->language->get('button_refund');
-		$data['text_refund'] = $this->language->get('text_refund');
-
+		$data['button_cancel'] = $this->language->get('button_cancel');
+		
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => false
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('payment/pp_pro_iframe', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => ' :: '
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('payment/pp_pro_iframe', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_refund'),
-			'href'      => $this->url->link('payment/pp_pro_iframe/refund', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => ' :: '
+			'text' => $this->language->get('text_refund'),
+			'href' => $this->url->link('payment/pp_pro_iframe/refund', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		//button actions

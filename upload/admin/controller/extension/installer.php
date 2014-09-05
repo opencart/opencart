@@ -20,7 +20,19 @@ class ControllerExtensionInstaller extends Controller {
 		$data['button_upload'] = $this->language->get('button_upload');
 		$data['button_clear'] = $this->language->get('button_clear');
 		$data['button_continue'] = $this->language->get('button_continue');
+		
+		$data['breadcrumbs'] = array();
 
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('extension/installer', 'token=' . $this->session->data['token'], 'SSL')
+		);
+		
 		$data['token'] = $this->session->data['token'];
 
 		$directories = glob(DIR_DOWNLOAD . 'temp-*', GLOB_ONLYDIR);

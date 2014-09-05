@@ -52,6 +52,23 @@ class ControllerPaymentPPPayflow extends Controller {
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_pp_express'),
+			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('payment/pp_payflow', 'token=' . $this->session->data['token'], 'SSL'),
+		);
+		
 		$data['action'] = $this->url->link('payment/pp_payflow', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');

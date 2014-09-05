@@ -14,10 +14,12 @@ class Event {
 		unset($this->data[$event]);
 	}
 
-	public function trigger($event, &$data = array()) {
+	public function trigger($event, &$arg = array()) {
+		$action = new Action($action, $arg);
+		
 		if (isset($this->data[$event])) {
 			foreach ($this->data[$event] as $action) {
-				$action->execute($data);
+				$action->execute($this->registry);
 			}
 		}
 	}

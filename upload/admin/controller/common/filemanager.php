@@ -68,7 +68,7 @@ class ControllerCommonFileManager extends Controller {
 					'name'  => implode(' ', $name),
 					'type'  => 'directory',
 					'path'  => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
-					'href'  => $this->url->link('common/filemanager', 'token=' . $this->session->data['token'] . '&directory=' . utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog/')) . $url, 'SSL')
+					'href'  => $this->url->link('common/filemanager', 'token=' . $this->session->data['token'] . '&directory=' . urlencode(utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog/'))) . $url, 'SSL')
 				);
 			} elseif (is_file($image)) {
 				// Find which protocol to use to pass the full image link back
@@ -82,7 +82,7 @@ class ControllerCommonFileManager extends Controller {
 					'thumb' => $this->model_tool_image->resize(utf8_substr($image, utf8_strlen(DIR_IMAGE)), 100, 100),
 					'name'  => implode(' ', $name),
 					'type'  => 'image',
-					'path'  => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
+					'path'  => urlencode(utf8_substr($image, utf8_strlen(DIR_IMAGE))),
 					'href'  => $server . 'image/' . utf8_substr($image, utf8_strlen(DIR_IMAGE))
 				);
 			}
@@ -106,7 +106,7 @@ class ControllerCommonFileManager extends Controller {
 		$data['token'] = $this->session->data['token'];
 
 		if (isset($this->request->get['directory'])) {
-			$data['directory'] = $this->request->get['directory'];
+			$data['directory'] = urlencode($this->request->get['directory']);
 		} else {
 			$data['directory'] = '';
 		}
@@ -138,7 +138,7 @@ class ControllerCommonFileManager extends Controller {
 			$pos = strrpos($this->request->get['directory'], '/');
 
 			if ($pos) {
-				$url .= '&directory=' . substr($this->request->get['directory'], 0, $pos);
+				$url .= '&directory=' . urlencode(substr($this->request->get['directory'], 0, $pos));
 			}
 		}
 
@@ -156,7 +156,7 @@ class ControllerCommonFileManager extends Controller {
 		$url = '';
 
 		if (isset($this->request->get['directory'])) {
-			$url .= '&directory=' . substr($this->request->get['directory'], 0, $pos);
+			$url .= '&directory=' . urlencode($this->request->get['directory']);
 		}
 
 		if (isset($this->request->get['target'])) {

@@ -30,7 +30,7 @@
     <td id="void_status"><?php if ($realex_order['void_status'] == 1) { ?>
       <span class="void_text"><?php echo $text_yes; ?></span>
       <?php } else { ?>
-      <span class="void_text"><?php echo $text_no; ?></span>&nbsp;&nbsp; <a class="button btn btn-primary" id="btn_void"><?php echo $btn_void; ?></a> <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+      <span class="void_text"><?php echo $text_no; ?></span>&nbsp;&nbsp; <a class="button btn btn-primary" id="button-void"><?php echo $button_void; ?></a> <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
       <?php } ?></td>
   </tr>
   <tr>
@@ -41,7 +41,7 @@
       <span class="rebate_text"><?php echo $text_no; ?></span>&nbsp;&nbsp;
       <?php if ($realex_order['total_captured'] > 0 && $realex_order['void_status'] == 0) { ?>
       <input type="text" width="10" id="rebate_amount" />
-      <a class="button btn btn-primary" id="btn_rebate"><?php echo $btn_rebate; ?></a> <span class="btn btn-primary" id="img_loading_rebate" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+      <a class="button btn btn-primary" id="button-rebate"><?php echo $button_rebate; ?></a> <span class="btn btn-primary" id="img_loading_rebate" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
       <?php } ?>
       <?php } ?></td>
   </tr>
@@ -68,7 +68,7 @@
   </tr>
 </table>
 <script type="text/javascript"><!--
-  $("#btn_void").click(function () {
+  $("#button-void").click(function () {
     if (confirm('<?php echo $text_confirm_void; ?>')) {
       $.ajax({
         type:'POST',
@@ -76,7 +76,7 @@
         data: {'order_id': <?php echo $order_id; ?> },
         url: 'index.php?route=payment/realex_remote/void&token=<?php echo $token; ?>',
         beforeSend: function() {
-          $('#btn_void').hide();
+          $('#button-void').hide();
           $('#img_loading_void').show();
           $('#realex_transaction_msg').hide();
         },
@@ -100,7 +100,7 @@
           }
           if (data.error == true) {
             alert(data.msg);
-            $('#btn_void').show();
+            $('#button-void').show();
           }
 
           $('#img_loading_void').hide();
@@ -134,7 +134,7 @@
             $('#realex_total_captured').text(data.data.total_formatted);
 
             if (data.data.capture_status == 1) {
-              $('#btn_void').hide();
+              $('#button-void').hide();
               $('.capture_text').text('<?php echo $text_yes; ?>');
             } else {
               $('#btn_capture').show();
@@ -149,7 +149,7 @@
               $('#realex_transaction_msg').empty().html('<i class="fa fa-check-circle"></i> '+data.msg).fadeIn();
             }
 
-            $('#btn_rebate').show();
+            $('#button-rebate').show();
             $('#rebate_amount').val(0.00).show();
           }
           if (data.error == true) {
@@ -163,7 +163,7 @@
       });
     }
   });
-  $("#btn_rebate").click(function () {
+  $("#button-rebate").click(function () {
     if (confirm('<?php echo $text_confirm_rebate ?>')) {
       $.ajax({
         type:'POST',
@@ -171,7 +171,7 @@
         data: {'order_id': <?php echo $order_id; ?>, 'amount' : $('#rebate_amount').val() },
         url: 'index.php?route=payment/realex_remote/rebate&token=<?php echo $token; ?>',
         beforeSend: function() {
-          $('#btn_rebate').hide();
+          $('#button-rebate').hide();
           $('#rebate_amount').hide();
           $('#img_loading_rebate').show();
           $('#realex_transaction_msg').hide();
@@ -191,7 +191,7 @@
             if (data.data.rebate_status == 1) {
               $('.rebate_text').text('<?php echo $text_yes; ?>');
             } else {
-              $('#btn_rebate').show();
+              $('#button-rebate').show();
               $('#rebate_amount').val(0.00).show();
             }
 
@@ -201,7 +201,7 @@
           }
           if (data.error == true) {
             alert(data.msg);
-            $('#btn_rebate').show();
+            $('#button-rebate').show();
           }
 
           $('#img_loading_rebate').hide();

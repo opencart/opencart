@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '2.0.0.0a1');
+define('VERSION', '2.0.0.0a5');
 
 // Configuration
 if (is_file('config.php')) {
@@ -148,7 +148,7 @@ $registry->set('event', $event);
 $query = $db->query("SELECT * FROM " . DB_PREFIX . "event");
 
 foreach ($query->rows as $result) {
-	$event->register($result['trigger'], new Action($result['action']));
+	$event->register($result['trigger'], $result['action']);
 }
 
 // Front Controller

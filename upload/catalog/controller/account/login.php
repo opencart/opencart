@@ -7,7 +7,7 @@ class ControllerAccountLogin extends Controller {
 
 		// Login override for admin users
 		if (!empty($this->request->get['token'])) {
-			$this->event->trigger('pre_customer_login');
+			$this->event->trigger('pre.customer.login');
 
 			$this->customer->logout();
 			$this->cart->clear();
@@ -40,7 +40,7 @@ class ControllerAccountLogin extends Controller {
 					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 				}
 
-				$this->event->trigger('customer_login');
+				$this->event->trigger('post.customer.login');
 
 				$this->response->redirect($this->url->link('account/account', '', 'SSL'));
 			}

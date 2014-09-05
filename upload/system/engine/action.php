@@ -48,7 +48,7 @@ final class Action {
 		}
 	}
 
-	public function execute($registry, $args = array()) {
+	public function execute($registry) {
 		// Stop any magical methods being called
 		if (substr($this->method, 0, 2) == '__') {
 			return false;

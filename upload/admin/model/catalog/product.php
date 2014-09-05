@@ -1,7 +1,7 @@
 <?php
 class ModelCatalogProduct extends Model {
 	public function addProduct($data) {
-		$this->event->trigger('pre_admin_add_product', $data);
+		$this->event->trigger('pre.admin.add.product', $data);
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "product SET model = '" . $this->db->escape($data['model']) . "', sku = '" . $this->db->escape($data['sku']) . "', upc = '" . $this->db->escape($data['upc']) . "', ean = '" . $this->db->escape($data['ean']) . "', jan = '" . $this->db->escape($data['jan']) . "', isbn = '" . $this->db->escape($data['isbn']) . "', mpn = '" . $this->db->escape($data['mpn']) . "', location = '" . $this->db->escape($data['location']) . "', quantity = '" . (int)$data['quantity'] . "', minimum = '" . (int)$data['minimum'] . "', subtract = '" . (int)$data['subtract'] . "', stock_status_id = '" . (int)$data['stock_status_id'] . "', date_available = '" . $this->db->escape($data['date_available']) . "', manufacturer_id = '" . (int)$data['manufacturer_id'] . "', shipping = '" . (int)$data['shipping'] . "', price = '" . (float)$data['price'] . "', points = '" . (int)$data['points'] . "', weight = '" . (float)$data['weight'] . "', weight_class_id = '" . (int)$data['weight_class_id'] . "', length = '" . (float)$data['length'] . "', width = '" . (float)$data['width'] . "', height = '" . (float)$data['height'] . "', length_class_id = '" . (int)$data['length_class_id'] . "', status = '" . (int)$data['status'] . "', tax_class_id = '" . $this->db->escape($data['tax_class_id']) . "', sort_order = '" . (int)$data['sort_order'] . "', date_added = NOW()");
 
@@ -122,13 +122,13 @@ class ModelCatalogProduct extends Model {
 
 		$this->cache->delete('product');
 
-		$this->event->trigger('admin_add_product', $product_id);
+		$this->event->trigger('post.admin.add.product', $product_id);
 
 		return $product_id;
 	}
 
 	public function editProduct($product_id, $data) {
-		$this->event->trigger('pre_admin_edit_product', $data);
+		$this->event->trigger('pre.admin.edit.product', $data);
 
 		$this->db->query("UPDATE " . DB_PREFIX . "product SET model = '" . $this->db->escape($data['model']) . "', sku = '" . $this->db->escape($data['sku']) . "', upc = '" . $this->db->escape($data['upc']) . "', ean = '" . $this->db->escape($data['ean']) . "', jan = '" . $this->db->escape($data['jan']) . "', isbn = '" . $this->db->escape($data['isbn']) . "', mpn = '" . $this->db->escape($data['mpn']) . "', location = '" . $this->db->escape($data['location']) . "', quantity = '" . (int)$data['quantity'] . "', minimum = '" . (int)$data['minimum'] . "', subtract = '" . (int)$data['subtract'] . "', stock_status_id = '" . (int)$data['stock_status_id'] . "', date_available = '" . $this->db->escape($data['date_available']) . "', manufacturer_id = '" . (int)$data['manufacturer_id'] . "', shipping = '" . (int)$data['shipping'] . "', price = '" . (float)$data['price'] . "', points = '" . (int)$data['points'] . "', weight = '" . (float)$data['weight'] . "', weight_class_id = '" . (int)$data['weight_class_id'] . "', length = '" . (float)$data['length'] . "', width = '" . (float)$data['width'] . "', height = '" . (float)$data['height'] . "', length_class_id = '" . (int)$data['length_class_id'] . "', status = '" . (int)$data['status'] . "', tax_class_id = '" . $this->db->escape($data['tax_class_id']) . "', sort_order = '" . (int)$data['sort_order'] . "', date_modified = NOW() WHERE product_id = '" . (int)$product_id . "'");
 
@@ -279,7 +279,7 @@ class ModelCatalogProduct extends Model {
 
 		$this->cache->delete('product');
 
-		$this->event->trigger('admin_edit_product');
+		$this->event->trigger('post.admin.edit.product', $product_id);
 	}
 
 	public function copyProduct($product_id) {
@@ -316,7 +316,7 @@ class ModelCatalogProduct extends Model {
 	}
 
 	public function deleteProduct($product_id) {
-		$this->event->trigger('pre_admin_delete_product', $product_id);
+		$this->event->trigger('pre.admin.delete.product', $product_id);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_attribute WHERE product_id = '" . (int)$product_id . "'");
@@ -340,7 +340,7 @@ class ModelCatalogProduct extends Model {
 
 		$this->cache->delete('product');
 
-		$this->event->trigger('admin_delete_product', $product_id);
+		$this->event->trigger('post.admin.delete.product', $product_id);
 	}
 
 	public function getProduct($product_id) {

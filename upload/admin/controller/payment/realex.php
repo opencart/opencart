@@ -330,8 +330,8 @@ class ControllerPaymentRealex extends Controller {
 				$data['text_column_type'] = $this->language->get('text_column_type');
 				$data['text_column_date_added'] = $this->language->get('text_column_date_added');
 				$data['btn_capture'] = $this->language->get('btn_capture');
-				$data['btn_rebate'] = $this->language->get('btn_rebate');
-				$data['btn_void'] = $this->language->get('btn_void');
+				$data['button_rebate'] = $this->language->get('button_rebate');
+				$data['button_void'] = $this->language->get('button_void');
 				$data['text_confirm_void'] = $this->language->get('text_confirm_void');
 				$data['text_confirm_capture'] = $this->language->get('text_confirm_capture');
 				$data['text_confirm_rebate'] = $this->language->get('text_confirm_rebate');

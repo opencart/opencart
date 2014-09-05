@@ -29,7 +29,19 @@ class ControllerCommonDashboard extends Controller {
 		$data['column_action'] = $this->language->get('column_action');
 
 		$data['button_view'] = $this->language->get('button_view');
+		
+		$data['breadcrumbs'] = array();
 
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+		);
+		
 		// Check install directory exists
 		if (is_dir(dirname(DIR_APPLICATION) . '/install')) {
 			$data['error_install'] = $this->language->get('error_install');

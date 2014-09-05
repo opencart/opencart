@@ -240,6 +240,23 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_payment'),
+			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
+		);
+		
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('user/user', 'token=' . $this->session->data['token'], 'SSL')
+		);
+		
 		$data['action'] = $this->url->link('payment/amazon_checkout', 'token=' . $this->session->data['token'], 'SSL');
 		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token']);
 

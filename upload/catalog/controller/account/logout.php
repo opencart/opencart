@@ -2,7 +2,7 @@
 class ControllerAccountLogout extends Controller {
 	public function index() {
 		if ($this->customer->isLogged()) {
-			$this->event->trigger('pre_customer_logout');
+			$this->event->trigger('pre.customer.logout');
 
 			$this->customer->logout();
 			$this->cart->clear();
@@ -21,7 +21,7 @@ class ControllerAccountLogout extends Controller {
 			unset($this->session->data['voucher']);
 			unset($this->session->data['vouchers']);
 
-			$this->event->trigger('customer_logout');
+			$this->event->trigger('post.customer.logout');
 
 			$this->response->redirect($this->url->link('account/logout', '', 'SSL'));
 		}

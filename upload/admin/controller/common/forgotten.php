@@ -60,6 +60,18 @@ class ControllerCommonForgotten extends Controller {
 			$data['error_warning'] = '';
 		}
 
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', '', 'SSL')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('user/user', 'token=' . '', 'SSL')
+		);
+		
 		$data['action'] = $this->url->link('common/forgotten', '', 'SSL');
 
 		$data['cancel'] = $this->url->link('common/login', '', 'SSL');

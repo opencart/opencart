@@ -71,21 +71,18 @@ class ControllerPaymentPPStandard extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => false
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_payment'),
-			'href'      => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => ' :: '
+			'text' => $this->language->get('text_payment'),
+			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('payment/pp_standard', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => ' :: '
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('payment/pp_standard', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['action'] = $this->url->link('payment/pp_standard', 'token=' . $this->session->data['token'], 'SSL');

@@ -1,5 +1,10 @@
 <?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right"><a href="<?php echo $back ?>" class="btn btn-primary"><i class="fa fa-reply"></i> <?php echo $button_back ?></a></div>

@@ -45,7 +45,7 @@ class ModelOpenbayEtsy extends Model{
 				) ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
 
 		// register the event triggers
-		$this->model_tool_event->setHandler('order_add', array(
+		$this->model_tool_event->addEvent('post.order.add', array(
 				'type' => 'openbay',
 				'code' => 'etsy',
 				'method' => 'addOrder')
@@ -54,7 +54,7 @@ class ModelOpenbayEtsy extends Model{
 
 	public function uninstall() {
 		// remove the event triggers
-		$this->model_tool_event->removeHandler('add_order', array(
+		$this->model_tool_event->deleteEvent('post.order.add', array(
 				'type' => 'openbay',
 				'code' => 'etsy',
 				'method' => 'addOrder')

@@ -82,7 +82,7 @@ class ModelOpenbayAmazon extends Model {
 			) DEFAULT COLLATE=utf8_general_ci;");
 
 		// add the event triggers
-		$this->model_tool_event->setHandler('add_order', array(
+		$this->model_tool_event->addEvent('post.order.add', array(
 				'type' => 'openbay',
 				'code' => 'amazon',
 				'method' => 'addOrder')
@@ -105,7 +105,7 @@ class ModelOpenbayAmazon extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `group` = 'openbay_amazon'");
 
 		// remove the event triggers
-		$this->model_tool_event->removeHandler('add_order', array(
+		$this->model_tool_event->deleteEvent('post.order.add', array(
 				'type' => 'openbay',
 				'code' => 'amazon',
 				'method' => 'addOrder')

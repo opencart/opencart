@@ -210,7 +210,7 @@ class ModelOpenbayEbay extends Model{
 				) ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
 
 		// register the event triggers
-		$this->model_tool_event->setHandler('order_add', array(
+		$this->model_tool_event->addEvent('post.order.add', array(
 				'type' => 'openbay',
 				'code' => 'ebay',
 				'method' => 'addOrder')
@@ -230,7 +230,7 @@ class ModelOpenbayEbay extends Model{
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_profile`;");
 
 		// remove the event triggers
-		$this->model_tool_event->removeHandler('add_order', array(
+		$this->model_tool_event->deleteEvent('post.order.add', array(
 				'type' => 'openbay',
 				'code' => 'ebay',
 				'method' => 'addOrder')

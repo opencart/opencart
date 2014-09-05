@@ -40,7 +40,7 @@ a:hover, a:focus {
 	font-size: 12px;
 }
 .tooltip {
-	font-size: 11px;	
+	font-size: 10px;	
 }
 
 /* fix for bootstrap hidden and visible */
@@ -288,94 +288,40 @@ label.control-label span:after {
 label.control-label {
 	font-weight: normal;
 }
-input[type="radio"], input[type="checkbox"] {
-  margin: 2px 0 0;
+input[type=checkbox] {
+     position: relative;
 }
-
-
-input[type="radio"],
-.radio input[type="radio"],
-.radio-inline input[type="radio"],
-input[type="checkbox"],
-.checkbox input[type="checkbox"],
-.checkbox-inline input[type="checkbox"] {
-  position: relative;
-  width: 13px;
-  width: 16px \0;
-  height: 13px;
-  height: 16px \0;
-  -webkit-appearance: none;
-  background: white;
-  border: 1px solid #dcdcdc;
-  border: 1px solid transparent \0;
-  border-radius: 1px;
+input[type=checkbox]:before {
+	position: absolute;
+    background-color: #FFFFFF;
+    height: 100%;
+	width: 100%;
+    font-family: FontAwesome;
+    display: inline-block;
+    content:"\f096";
+    letter-spacing: 10px;
 }
-input[type="radio"]:focus,
-.radio input[type="radio"]:focus,
-.radio-inline input[type="radio"]:focus,
-input[type="checkbox"]:focus,
-.checkbox input[type="checkbox"]:focus,
-.checkbox-inline input[type="checkbox"]:focus {
-  border-color: #4d90fe;
-  outline: 0;
+input[type=checkbox]:checked:before {
+	font-family: FontAwesome;
+    content: url(../image/checkmark.png);
+    letter-spacing: 5px;
 }
-input[type="radio"]:active,
-.radio input[type="radio"]:active,
-.radio-inline input[type="radio"]:active,
-input[type="checkbox"]:active,
-.checkbox input[type="checkbox"]:active,
-.checkbox-inline input[type="checkbox"]:active {
-  background-color: #ebebeb;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffffffff', GradientType=0);
-  border-color: #c6c6c6;
+input[type=radio] {
+    position: relative;
 }
-input[type="radio"]:checked,
-.radio input[type="radio"]:checked,
-.radio-inline input[type="radio"]:checked,
-input[type="checkbox"]:checked,
-.checkbox input[type="checkbox"]:checked,
-.checkbox-inline input[type="checkbox"]:checked {
-  background: #fff;
+input[type=radio]:before {
+	position: absolute;
+    background-color: #FFFFFF;
+    height: 100%;
+	width: 100%;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f10c";
+    letter-spacing: 10px;
 }
-input[type="radio"],
-.radio input[type="radio"],
-.radio-inline input[type="radio"] {
-  width: 15px;
-  width: 18px \0;
-  height: 15px;
-  height: 18px \0;
-  border-radius: 1em;
-}
-input[type="radio"]:checked::after,
-.radio input[type="radio"]:checked::after,
-.radio-inline input[type="radio"]:checked::after {
-  position: relative;
-  top: 3px;
-  left: 3px;
-  display: block;
-  width: 7px;
-  height: 7px;
-  content: '';
-  background: #666;
-  border-radius: 1em;
-}
-input[type="checkbox"]:hover,
-.checkbox input[type="checkbox"]:hover,
-.checkbox-inline input[type="checkbox"]:hover {
-  border-color: #c6c6c6;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .1);
-  -webkit-box-shadow: none \9;
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .1);
-          box-shadow: none \9;
-}
-input[type="checkbox"]:checked::after,
-.checkbox input[type="checkbox"]:checked::after,
-.checkbox-inline input[type="checkbox"]:checked::after {
-  position: absolute;
-  top: -6px;
-  left: -5px;
-  display: block;
-  content: url(../image/checkmark.png);
+input[type=radio]:checked:before {
+    content: "\f192";
+    letter-spacing: 5px;
 }
 
 .alert {
@@ -445,25 +391,25 @@ input[type="checkbox"]:checked::after,
 	color: #696565;	
 }
 .btn-primary {
-	background-color: #2483C0;
-	border-color: #137697;
+	background-color: #428bca;
+	border-color: #357ebd;
 }
 .btn-info {
-	background-color: #59b7de;
-	border-color: #44aeda;
+	background-color: #5bc0de;
+	border-color: #46b8da;
 }
 .btn-success {
-	background-color: #7bae16;
-	border-color: #6b9713;
+	background-color: #47a447;
+	border-color: #398439;
 }
 .btn-warning {
-	background-color: #ff9800;
-	border-color: #e68900;	
+	background-color: #f0ad4e;
+	border-color: #eea236;
 }
 
 .btn-danger {
-	background-color: #ef2020;
-	border-color: #e51010;	
+	background-color: #d9534f;
+	border-color: #d43f3a;
 }
 
 .breadcrumb {

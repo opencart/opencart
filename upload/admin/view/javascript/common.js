@@ -58,7 +58,7 @@ $(document).ready(function() {
 		$('#menu li.active').has('ul').children('ul').addClass('collapse in');
 		$('#menu li').not('.active').has('ul').children('ul').addClass('collapse');
 	} else {
-		$('#button-menu i').replaceWith('<i class="fa fa-indent"></i>');
+		$('#button-menu i').replaceWith('<i class="fa fa-indent fa-lg"></i>');
 		
 		$('#menu li li.active').has('ul').children('ul').addClass('collapse in');
 		$('#menu li li').not('.active').has('ul').children('ul').addClass('collapse');

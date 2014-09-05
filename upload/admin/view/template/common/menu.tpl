@@ -1,7 +1,7 @@
 <nav id="column-left"><?php echo $profile; ?>
   <ul id="menu">
-    <li id="dashboard"><a href="<?php echo $home; ?>"><i class="fa fa-home fa-fw"></i> <?php echo $text_dashboard; ?></a></li>
-    <li id="catalog"><a class="parent"><i class="fa fa-tags fa-fw"></i> <?php echo $text_catalog; ?></a>
+    <li id="dashboard"><a href="<?php echo $home; ?>"><i class="fa fa-home fa-fw"></i> <span><?php echo $text_dashboard; ?></span></a></li>
+    <li id="catalog"><a class="parent"><i class="fa fa-tags fa-fw"></i> <span><?php echo $text_catalog; ?></span></a>
       <ul>
         <li><a href="<?php echo $category; ?>"><?php echo $text_category; ?></a></li>
         <li><a href="<?php echo $product; ?>"><?php echo $text_product; ?></a></li>
@@ -20,7 +20,7 @@
         <li><a href="<?php echo $information; ?>"><?php echo $text_information; ?></a></li>
       </ul>
     </li>
-    <li id="extension"><a class="parent"><i class="fa fa-puzzle-piece fa-fw"></i> <?php echo $text_extension; ?></a>
+    <li id="extension"><a class="parent"><i class="fa fa-puzzle-piece fa-fw"></i> <span><?php echo $text_extension; ?></span></a>
       <ul>
         <li><a href="<?php echo $installer; ?>"><?php echo $text_installer; ?></a></li>
         <li><a href="<?php echo $modification; ?>"><?php echo $text_modification; ?></a></li>
@@ -71,7 +71,7 @@
         <?php } ?>
       </ul>
     </li>
-    <li id="sale"><a class="parent"><i class="fa fa-shopping-cart fa-fw"></i> <?php echo $text_sale; ?></a>
+    <li id="sale"><a class="parent"><i class="fa fa-shopping-cart fa-fw"></i> <span><?php echo $text_sale; ?></span></a>
       <ul>
         <li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li>
         <li><a href="<?php echo $order_recurring; ?>"><?php echo $text_order_recurring; ?></a></li>
@@ -97,7 +97,7 @@
         </li>
       </ul>
     </li>
-    <li><a class="parent"><i class="fa fa-share-alt fa-fw"></i> <?php echo $text_marketing; ?></a>
+    <li><a class="parent"><i class="fa fa-share-alt fa-fw"></i> <span><?php echo $text_marketing; ?></span></a>
       <ul>
         <li><a href="<?php echo $marketing; ?>"><?php echo $text_marketing; ?></a></li>
         <li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li>
@@ -105,7 +105,7 @@
         <li><a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a></li>
       </ul>
     </li>
-    <li id="system"><a class="parent"><i class="fa fa-cog fa-fw"></i> <?php echo $text_system; ?></a>
+    <li id="system"><a class="parent"><i class="fa fa-cog fa-fw"></i> <span><?php echo $text_system; ?></span></a>
       <ul>
         <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
         <li><a class="parent"><?php echo $text_design; ?></a>
@@ -150,14 +150,14 @@
         </li>
       </ul>
     </li>
-    <li id="tools"><a class="parent"><i class="fa fa-wrench fa-fw"></i> <?php echo $text_tools; ?></a>
+    <li id="tools"><a class="parent"><i class="fa fa-wrench fa-fw"></i> <span><?php echo $text_tools; ?></span></a>
       <ul>
         <li><a href="<?php echo $upload; ?>"><?php echo $text_upload; ?></a></li>
         <li><a href="<?php echo $backup; ?>"><?php echo $text_backup; ?></a></li>
         <li><a href="<?php echo $error_log; ?>"><?php echo $text_error_log; ?></a></li>
       </ul>
     </li>
-    <li id="reports"><a class="parent"><i class="fa fa-bar-chart-o fa-fw"></i> <?php echo $text_reports; ?></a>
+    <li id="reports"><a class="parent"><i class="fa fa-bar-chart-o fa-fw"></i> <span><?php echo $text_reports; ?></span></a>
       <ul>
         <li><a class="parent"><?php echo $text_sale; ?></a>
           <ul>

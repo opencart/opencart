@@ -40,7 +40,7 @@ a:hover, a:focus {
 	font-size: 12px;
 }
 .tooltip {
-	font-size: 11px;	
+	font-size: 10px;	
 }
 
 /* fix for bootstrap hidden and visible */
@@ -288,11 +288,17 @@ label.control-label span:after {
 label.control-label {
 	font-weight: normal;
 }
-input[type="radio"], input[type="checkbox"] {
+input[type="radio"],
+input[type="checkbox"] {
   margin: 2px 0 0;
 }
 
 
+
+.radio,
+.checkbox {
+  min-height: 18px;
+}
 input[type="radio"],
 .radio input[type="radio"],
 .radio-inline input[type="radio"],
@@ -378,6 +384,7 @@ input[type="checkbox"]:checked::after,
   content: url(../image/checkmark.png);
 }
 
+
 .alert {
 	padding: 10px 15px;
 }
@@ -445,25 +452,25 @@ input[type="checkbox"]:checked::after,
 	color: #696565;	
 }
 .btn-primary {
-	background-color: #2483C0;
-	border-color: #137697;
+	background-color: #428bca;
+	border-color: #357ebd;
 }
 .btn-info {
-	background-color: #59b7de;
-	border-color: #44aeda;
+	background-color: #5bc0de;
+	border-color: #46b8da;
 }
 .btn-success {
-	background-color: #7bae16;
-	border-color: #6b9713;
+	background-color: #47a447;
+	border-color: #398439;
 }
 .btn-warning {
-	background-color: #ff9800;
-	border-color: #e68900;	
+	background-color: #f0ad4e;
+	border-color: #eea236;
 }
 
 .btn-danger {
-	background-color: #ef2020;
-	border-color: #e51010;	
+	background-color: #d9534f;
+	border-color: #d43f3a;
 }
 
 .breadcrumb {

@@ -152,7 +152,7 @@ class ControllerDesignBanner extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/review', 'token=' . $this->session->data['token'] . $url, 'SSL')
+			'href' => $this->url->link('design/banner', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 		
 		$data['insert'] = $this->url->link('design/banner/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -318,7 +318,7 @@ class ControllerDesignBanner extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('user/user', 'token=' . $this->session->data['token'] . $url, 'SSL')
+			'href' => $this->url->link('design/banner', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 		
 		if (!isset($this->request->get['banner_id'])) {

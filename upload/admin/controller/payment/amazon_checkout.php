@@ -254,7 +254,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('user/user', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('payment/amazon_checkout', 'token=' . $this->session->data['token'], 'SSL')
 		);
 		
 		$data['action'] = $this->url->link('payment/amazon_checkout', 'token=' . $this->session->data['token'], 'SSL');

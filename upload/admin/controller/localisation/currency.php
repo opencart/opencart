@@ -152,7 +152,7 @@ class ControllerLocalisationCurrency extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/review', 'token=' . $this->session->data['token'] . $url, 'SSL')
+			'href' => $this->url->link('localisation/currency', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 		
 		$data['insert'] = $this->url->link('localisation/currency/add', 'token=' . $this->session->data['token'] . $url, 'SSL');

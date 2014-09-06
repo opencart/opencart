@@ -5,8 +5,8 @@ $_['heading_title']					= 'Realex Remote';
 // Tab
 $_['tab_account']					= 'API info';
 $_['tab_sub_account']				= 'Accounts';
-$_['tab_order_status']				= 'Order status';
-$_['tab_payment']					= 'Payment settings';
+$_['tab_order_status']				= 'Order Status';
+$_['tab_payment']					= 'Payment Settings';
 
 // Text
 $_['text_payment']					= 'Payment';
@@ -15,7 +15,7 @@ $_['text_card_type']				= 'Card type';
 $_['text_enabled']					= 'Enabled';
 $_['text_use_default']				= 'Use default';
 $_['text_merchant_id']				= 'Merchant ID';
-$_['text_subaccount']				= 'Subaccount';
+$_['text_subaccount']				= 'Sub Account';
 $_['text_secret']					= 'Shared secret';
 $_['text_card_visa']				= 'Visa';
 $_['text_card_master']				= 'Mastercard';

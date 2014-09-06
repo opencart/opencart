@@ -58,9 +58,9 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #header {
 	min-height: 0px;
-	background: #F1F1F1;
+	background: #FFFFFF;
 	border-bottom: 1px solid #E5E5E5;
-	/*box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.03);*/
+	box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.03);
 	margin: 0;
 	padding: 0;
 }
@@ -143,9 +143,11 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	top: 0px;
 	padding-top: 50px;
 	z-index: 1;
+	transition: all 0.3s;
 }
 #column-left.active {
 	width: 235px;
+	opacity: 1;
 }
 #content {
 	padding-bottom: 40px;
@@ -156,15 +158,12 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #column-left + #content + #footer {
 	margin-left: 50px;
 }
-
-
-
 /* Mobile */
 @media (max-width: 767px) {
 #column-left {
-	width: 0;
 	overflow: hidden;
 	border-right: none;
+	opacity: 0;
 }
 #column-left + #content {
 	margin-left: 0;
@@ -182,14 +181,14 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	position: relative;
 }
 #menu li a {
-	color: #7A7A7A;
+	color: #999999;
 	text-decoration: none;
 	display: block;
 	padding: 10px;
 	cursor: pointer;
 }
 #menu li a i {
-	font-size: 18px;
+	font-size: 16px;
 }
 #menu > li > a {
 	padding-left: 13px;
@@ -216,9 +215,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: none;
 	margin-left: 8px;
 }
-#menu li ul {
-	overflow: hidden;
-}
+
 #menu > li > ul {
 	position: absolute;
 	left: 50px;
@@ -226,6 +223,9 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	width: 210px;
 	background-color: #151515;
 	visibility: hidden;
+}
+#menu li ul {
+	overflow: hidden;
 }
 #menu > li:hover > ul {
 	visibility: visible;

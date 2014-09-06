@@ -35,5 +35,9 @@ class Request {
 
 		return $data;
 	}
+
+    public function method() {
+        return $this->server['REQUEST_METHOD'];
+    }
 }
 ?>

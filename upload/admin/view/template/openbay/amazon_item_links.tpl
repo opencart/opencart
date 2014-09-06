@@ -5,75 +5,75 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="page-header">
+    <div class="container-fluid">
       <div class="pull-right">
-        <a href="<?php echo $href_return; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
+        <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
       </div>
-      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_title; ?></h1>
     </div>
-    <div class="panel-body">
-      <form id="product-form">
-        <div class="alert alert-info">
-          <p><?php echo $text_desc1; ?></p>
-          <p><?php echo $text_desc2; ?></p>
-          <p><?php echo $text_desc3; ?></p>
-        </div>
-        <div class="well">
-          <div class="row">
-            <div class="col-sm-12 text-right">
-              <a class="btn btn-primary" id="button-load"><?php echo $text_load_btn; ?></a>
-            </div>
+  </div>
+  <div class="container-fluid">
+    <form id="product-form">
+      <div class="alert alert-info">
+        <p><?php echo $text_desc1; ?></p>
+        <p><?php echo $text_desc2; ?></p>
+        <p><?php echo $text_desc3; ?></p>
+      </div>
+      <div class="well">
+        <div class="row">
+          <div class="col-sm-12 text-right">
+            <a class="btn btn-primary" id="button-load"><?php echo $text_load_btn; ?></a>
           </div>
         </div>
-        <table class="table">
-          <thead id="table-head-1">
-            <tr>
-              <th class="text-center" colspan="3"><h4><?php echo $text_new_link; ?></h4></th>
-            </tr>
-          </thead>
-          <thead id="table-head-2">
-            <tr>
-              <th class="text-right"><?php echo $text_autocomplete_product; ?></th>
-              <th class="text-left"><?php echo $text_amazon_sku; ?></th>
-              <th class="text-center"><?php echo $text_action; ?></th>
-            </tr>
-          </thead>
-          <tbody id="unlinked-items">
-            <tr>
-              <td class="text-right">
-                <input type="hidden" id="new-product-id">
-                <input id="new-product" type="text" class="form-control" autocomplete="off">
-              </td>
-              <td>
-                <input id="new-amazon-sku" type="text" class="form-control" autocomplete="off">
-              </td>
-              <td class="text-center">
-                <a class="btn btn-primary" id="add-new-button" onclick="addNewLinkAutocomplete()" data-toggle="tooltip" data-original-title="<?php echo $text_add; ?>"><i class="fa fa-plus-circle"></i></a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table class="table">
-          <thead>
-            <tr>
-              <th class="text-center" colspan="6"><h4><?php echo $text_linked_items; ?></h4></th>
-            </tr>
-          </thead>
-          <thead>
-            <tr>
-              <th><?php echo $text_name; ?></th>
-              <th><?php echo $text_model; ?></th>
-              <th><?php echo $text_combination; ?></th>
-              <th><?php echo $text_sku; ?></th>
-              <th><?php echo $text_amazon_sku; ?></th>
-              <th class="text-center"><?php echo $text_action; ?></th>
-            </tr>
-          </thead>
-          <tbody id="linked-items"></tbody>
-        </table>
-      </form>
-    </div>
+      </div>
+      <table class="table">
+        <thead id="table-head-1">
+          <tr>
+            <th class="text-center" colspan="3"><h4><?php echo $text_new_link; ?></h4></th>
+          </tr>
+        </thead>
+        <thead id="table-head-2">
+          <tr>
+            <th class="text-right"><?php echo $text_autocomplete_product; ?></th>
+            <th class="text-left"><?php echo $text_amazon_sku; ?></th>
+            <th class="text-center"><?php echo $text_action; ?></th>
+          </tr>
+        </thead>
+        <tbody id="unlinked-items">
+          <tr>
+            <td class="text-right">
+              <input type="hidden" id="new-product-id">
+              <input id="new-product" type="text" class="form-control" autocomplete="off">
+            </td>
+            <td>
+              <input id="new-amazon-sku" type="text" class="form-control" autocomplete="off">
+            </td>
+            <td class="text-center">
+              <a class="btn btn-primary" id="add-new-button" onclick="addNewLinkAutocomplete()" data-toggle="tooltip" data-original-title="<?php echo $text_add; ?>"><i class="fa fa-plus-circle"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="text-center" colspan="6"><h4><?php echo $text_linked_items; ?></h4></th>
+          </tr>
+        </thead>
+        <thead>
+          <tr>
+            <th><?php echo $text_name; ?></th>
+            <th><?php echo $text_model; ?></th>
+            <th><?php echo $text_combination; ?></th>
+            <th><?php echo $text_sku; ?></th>
+            <th><?php echo $text_amazon_sku; ?></th>
+            <th class="text-center"><?php echo $text_action; ?></th>
+          </tr>
+        </thead>
+        <tbody id="linked-items"></tbody>
+      </table>
+    </form>
   </div>
 </div>
 <script type="text/javascript"><!--
@@ -96,7 +96,7 @@
           rows += '<td class="text-left">' + json[i]['combi'] + '</td>';
           rows += '<td class="text-left">' + json[i]['sku'] + '</td>';
           rows += '<td class="text-left">' + json[i]['amazon_sku'] + '</td>';
-          rows += '<td class="text-center"><a data-toggle="tooltip" data-original-title="<?php echo $text_remove; ?>" class="btn btn-danger" onclick="removeLink(this, \'' + json[i]['amazon_sku'] + '\');"><i class="fa fa-times-circle"></i></a></td>';
+          rows += '<td class="text-center"><a data-toggle="tooltip" data-original-title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="removeLink(this, \'' + json[i]['amazon_sku'] + '\');"><i class="fa fa-times-circle"></i></a></td>';
           rows += '</tr>';
         }
         $('#linked-items').html(rows);
@@ -239,7 +239,7 @@
       }
     });
     if (errors > 0) {
-      alert('<?php echo $text_sku_empty_warning; ?>');
+      alert('<?php echo $error_empty_sku; ?>');
       return;
     }
 
@@ -252,17 +252,17 @@
 
   function addNewLinkAutocomplete() {
     if ($('#new-product').val() == "") {
-      alert('<?php echo $text_name_empty_warning; ?>');
+      alert('<?php echo $error_empty_name; ?>');
       return;
     }
 
     if ($('#new-product-id').attr('label') != $('#new-product').val()) {
-      alert('<?php echo $text_product_warning; ?>');
+      alert('<?php echo $error_no_product_exists; ?>');
       return;
     }
 
     if ($('#new-amazon-sku').val() == "") {
-      alert('<?php echo $text_sku_empty_warning; ?>');
+      alert('<?php echo $error_empty_sku; ?>');
       return;
     }
 

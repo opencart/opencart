@@ -371,9 +371,8 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->document->setTitle($this->language->get('text_title'));
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
-		$data['link_overview'] = $this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL');
-
 		$data['breadcrumbs'] = array();
+
 		$data['breadcrumbs'][] = array(
 			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_home'),
@@ -388,11 +387,13 @@ class ControllerOpenbayAmazon extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href'      => $this->url->link('openbay/amazon/itemLinks', 'token=' . $this->session->data['token'], 'SSL'),
-			'text'      => $this->language->get('text_title'),
+			'href'      => $this->url->link('openbay/amazon/itemlinks', 'token=' . $this->session->data['token'], 'SSL'),
+			'text'      => $this->language->get('heading_title'),
 		);
 
 		$data['token'] = $this->session->data['token'];
+
+		$data['cancel'] = $this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['add_item_link_ajax'] = $this->url->link('openbay/amazon/addItemLinkAjax', 'token=' . $this->session->data['token'], 'SSL');
 		$data['remove_item_link_ajax'] = $this->url->link('openbay/amazon/removeItemLinkAjax', 'token=' . $this->session->data['token'], 'SSL');

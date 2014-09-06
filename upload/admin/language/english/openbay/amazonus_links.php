@@ -1,7 +1,9 @@
 <?php
-$_['text_title']                    = 'Item links';
-$_['text_openbay']                  = 'OpenBay Pro';
-$_['text_amazon']                   = 'Amazon US';
+// Heading
+$_['heading_title']					= 'Item links';
+$_['text_openbay']					= 'OpenBay Pro';
+$_['text_amazon']					= 'Amazon EU';
+
 $_['text_link_items']               = 'Link items';
 $_['text_item_links']               = 'Item links';
 $_['text_desc1']                    = 'Linking your items will allow for stock control on your Amazon listings.';
@@ -14,7 +16,6 @@ $_['text_amazon_sku']               = 'Amazon item SKU';
 $_['text_action']                   = 'Action';
 $_['text_add']                      = 'Add';
 $_['text_add_sku_tooltip']          = 'Add another sku';
-$_['text_remove']                   = 'Remove';
 $_['text_linked_items']             = 'Linked items';
 $_['text_unlinked_items']           = 'Unlinked items';
 $_['text_name']                     = 'Name';
@@ -22,6 +23,8 @@ $_['text_model']                    = 'Model';
 $_['text_combination']              = 'Combination';
 $_['text_sku']                      = 'SKU';
 $_['text_amazon_sku']               = 'Amazon item SKU';
-$_['text_sku_empty_warning']        = 'Amazon SKU can not be empty!';
-$_['text_name_empty_warning']       = 'Product name can not be empty!';
-$_['text_product_warning']          = 'Product does not exist. Please use auto complete values.';
+
+// Error
+$_['error_empty_sku']        		= 'Amazon SKU can not be empty!';
+$_['error_empty_name']       		= 'Product name can not be empty!';
+$_['error_no_product_exists']       = 'Product does not exist. Please use auto complete values.';

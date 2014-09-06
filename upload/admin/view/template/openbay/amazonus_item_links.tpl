@@ -5,15 +5,16 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="page-header">
+    <div class="container-fluid">
       <div class="pull-right">
-        <a href="<?php echo $href_return; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
+        <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
       </div>
-      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_title; ?></h1>
     </div>
-    <div class="panel-body">
-      <form id="product-form">
+  </div>
+  <div class="container-fluid">
+    <form id="product-form">
         <div class="alert alert-info">
           <p><?php echo $text_desc1; ?></p>
           <p><?php echo $text_desc2; ?></p>
@@ -73,7 +74,6 @@
           <tbody id="linked-items"></tbody>
         </table>
       </form>
-    </div>
   </div>
 </div>
 <script type="text/javascript"><!--
@@ -96,7 +96,7 @@ function loadLinks() {
         rows += '<td class="text-left">' + json[i]['combi'] + '</td>';
         rows += '<td class="text-left">' + json[i]['sku'] + '</td>';
         rows += '<td class="text-left">' + json[i]['amazon_sku'] + '</td>';
-        rows += '<td class="text-center"><a data-toggle="tooltip" data-original-title="<?php echo $text_remove; ?>" class="btn btn-danger" onclick="removeLink(this, \'' + json[i]['amazon_sku'] + '\');"><i class="fa fa-times-circle"></i></a></td>';
+        rows += '<td class="text-center"><a data-toggle="tooltip" data-original-title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="removeLink(this, \'' + json[i]['amazon_sku'] + '\');"><i class="fa fa-times-circle"></i></a></td>';
         rows += '</tr>';
       }
       $('#linked-items').html(rows);
@@ -239,7 +239,7 @@ function addNewLink(button, product_id, variation) {
     }
   });
   if (errors > 0) {
-    alert('<?php echo $text_sku_empty_warning; ?>');
+    alert('<?php echo $error_empty_sku; ?>');
     return;
   }
 
@@ -252,17 +252,17 @@ function addNewLink(button, product_id, variation) {
 
 function addNewLinkAutocomplete() {
   if ($('#new-product').val() == "") {
-    alert('<?php echo $text_name_empty_warning; ?>');
+    alert('<?php echo $error_empty_name; ?>');
     return;
   }
 
   if ($('#new-product-id').attr('label') != $('#new-product').val()) {
-    alert('<?php echo $text_product_warning; ?>');
+    alert('<?php echo $error_no_product_exists; ?>');
     return;
   }
 
   if ($('#new-amazon-sku').val() == "") {
-    alert('<?php echo $text_sku_empty_warning; ?>');
+    alert('<?php echo $error_empty_sku; ?>');
     return;
   }
 

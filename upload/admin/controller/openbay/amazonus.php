@@ -366,7 +366,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	public function itemLinks() {
 		$data = $this->load->language('openbay/amazonus_links');
 
-		$this->document->setTitle($this->language->get('text_title'));
+		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['breadcrumbs'] = array();

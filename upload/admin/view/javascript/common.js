@@ -134,13 +134,13 @@ $(document).ready(function() {
 		$(element).popover({
 			html: true,
 			placement: 'right',
-			trigger: 'click',
+			trigger: 'manual',
 			content: function() {
 				return '<button type="button" id="button-image" class="btn btn-primary"><i class="fa fa-pencil"></i></button> <button type="button" id="button-clear" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>';
 			}
 		});
 	
-		$(element).popover('show');
+		$(element).popover('toggle');		
 	
 		$('#button-image').on('click', function() {
 			$('#modal-image').remove();

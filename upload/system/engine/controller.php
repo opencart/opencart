@@ -76,6 +76,7 @@ abstract class Controller {
 
 		if (file_exists(DIR_TEMPLATE . $this->template)) {
 			extract($this->data);
+			extract($this->language->all());
 
 			ob_start();
 

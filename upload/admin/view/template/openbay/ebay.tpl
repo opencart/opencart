@@ -1,17 +1,22 @@
 <?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-  <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  <?php } ?>
-
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h1 class="panel-title"><i class="fa fa-dashboard fa-lg"></i> <?php echo $heading_title; ?></h1>
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
+  <div class="page-header">
+    <div class="container-fluid">
+      <h1><i class="fa fa-pencil"></i> <?php echo $text_dashboard; ?></h1>
     </div>
-    <div class="panel-body">
-      <div class="row">
+  </div>
+  <div class="container-fluid">
+    <?php if ($success) { ?>
+    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    <?php } ?>
+    <div class="row">
         <div class="col-md-3 text-center">
           <div class="well">
             <a href="<?php echo $links_settings; ?>" id="settings-link">
@@ -138,7 +143,6 @@
           </div>
         <?php } ?>
       </div>
-    </div>
   </div>
 </div>
 <?php echo $footer; ?>

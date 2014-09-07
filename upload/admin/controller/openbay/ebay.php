@@ -27,9 +27,9 @@ class ControllerOpenbayEbay extends Controller {
 	}
 
 	public function index() {
-		$data = $this->load->language('openbay/ebay_overview');
+		$data = $this->load->language('openbay/ebay');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->setTitle($this->language->get('text_dashboard'));
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['breadcrumbs'] = array();
@@ -46,7 +46,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('heading_title'),
+			'text' => $this->language->get('text_dashboard'),
 		);
 
 		if (isset($this->session->data['success'])) {
@@ -74,7 +74,7 @@ class ControllerOpenbayEbay extends Controller {
 		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/ebay_overview.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay/ebay.tpl', $data));
 	}
 
 	public function settings() {
@@ -1451,7 +1451,7 @@ class ControllerOpenbayEbay extends Controller {
 					'text'      => $this->language->get('text_openbay'),
 				);
 				$data['breadcrumbs'][] = array(
-					'href'      => $this->url->link('openbay/ebay/overview', 'token=' . $this->session->data['token'], 'SSL'),
+					'href'      => $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL'),
 					'text'      => $this->language->get('text_ebay'),
 				);
 

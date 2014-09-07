@@ -11,7 +11,7 @@
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="fa fa-dashboard fa-lg"></i> <?php echo $text_overview; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-dashboard fa-lg"></i> <?php echo $text_dashboard; ?></h1>
     </div>
     <div class="panel-body">
         <div class="row">

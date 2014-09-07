@@ -61,15 +61,15 @@ class ControllerModuleOpenbay extends Controller {
 		$this->model_setting_setting->editSetting('openbaymanager', $settings);
 
 		// register the event triggers
-		$this->model_tool_event->setHandler('admin_delete_product', array(
-				'type' => 'openbay',
+		$this->model_tool_event->addEvent('post.admin.delete.product', array(
+				'type' => 'extension',
 				'code' => 'openbay',
-				'method' => 'deleteProduct')
+				'method' => 'eventDeleteProduct')
 		);
-		$this->model_tool_event->setHandler('admin_edit_product', array(
-				'type' => 'openbay',
+		$this->model_tool_event->addEvent('post.admin.edit.product', array(
+				'type' => 'extension',
 				'code' => 'openbay',
-				'method' => 'editProduct')
+				'method' => 'eventEditProduct')
 		);
 	}
 
@@ -82,15 +82,15 @@ class ControllerModuleOpenbay extends Controller {
 		$this->model_setting_setting->editSetting('openbaymanager', $settings);
 
 		// register the event triggers
-		$this->model_tool_event->removeHandler('admin_delete_product', array(
-				'type' => 'openbay',
+		$this->model_tool_event->deleteEvent('post.admin.delete.product', array(
+				'type' => 'extension',
 				'code' => 'openbay',
-				'method' => 'deleteProduct')
+				'method' => 'eventDeleteProduct')
 		);
-		$this->model_tool_event->removeHandler('admin_edit_product', array(
-				'type' => 'openbay',
+		$this->model_tool_event->deleteEvent('post.admin.edit.product', array(
+				'type' => 'extension',
 				'code' => 'openbay',
-				'method' => 'editProduct')
+				'method' => 'eventEditProduct')
 		);
 	}
 }

@@ -2,15 +2,25 @@
 class ControllerOpenbayAmazonusProduct extends Controller{
 	public function index() {
 		$this->load->language('catalog/product');
-		$this->load->language('openbay/amazonus');
+		$data = $this->load->language('openbay/amazonus_listing');
 
 		$this->load->model('openbay/amazonus');
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
 
-		$data = $this->load->language('openbay/amazonus_listing');
 		$this->document->addScript('view/javascript/openbay/openbay.js');
 		$this->document->setTitle($this->language->get('text_title'));
+
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+		);
+		$data['breadcrumbs'][] = array(
+			'text' => 'Products',
+			'href' => $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'),
+		);
 
 		$url = '';
 
@@ -69,16 +79,6 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-
-		$data['breadcrumbs'] = array();
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-		);
-		$data['breadcrumbs'][] = array(
-			'text' => 'Products',
-			'href' => $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-		);
 
 		if (isset($this->request->get['product_id'])) {
 			$product_id = $this->request->get['product_id'];

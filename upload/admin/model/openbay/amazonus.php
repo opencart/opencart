@@ -81,7 +81,7 @@ class ModelOpenbayAmazonus extends Model {
 		");
 
 		// register the event triggers
-		$this->model_tool_event->setHandler('order_add', array(
+		$this->model_tool_event->addEvent('post.order.add', array(
 				'type' => 'openbay',
 				'code' => 'amazonus',
 				'method' => 'addOrder')
@@ -103,7 +103,7 @@ class ModelOpenbayAmazonus extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `group` = 'openbay_amazonus'");
 
 		// remove the event triggers
-		$this->model_tool_event->removeHandler('add_order', array(
+		$this->model_tool_event->deleteEvent('post.order.add', array(
 				'type' => 'openbay',
 				'code' => 'amazonus',
 				'method' => 'addOrder')

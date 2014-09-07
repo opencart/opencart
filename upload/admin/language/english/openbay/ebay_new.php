@@ -15,7 +15,6 @@ $_['text_listing_gtc']              = 'GTC- Good till cancelled';
 $_['text_none']                     = 'None';
 $_['text_pixels']                   = 'Pixels';
 $_['text_add']                      = 'Add';
-$_['text_remove']                   = 'Remove';
 $_['text_other']                    = 'Other';
 $_['text_loading']                  = 'Loading';
 $_['text_confirm_action']           = 'Are you sure?';

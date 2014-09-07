@@ -5,29 +5,27 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-
-  <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="page-header">
+    <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="settings-form" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn"><i class="fa fa-check-circle"></i></button>
-        <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
-      </div>
-      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $heading_title; ?></h1>
+        <button type="submit" form="settings-form" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="panel-body">
-      <form action="" method="post" enctype="multipart/form-data" id="settings-form" class="form-horizontal">
-
+  </div>
+  <div class="container-fluid">
+    <form action="" method="post" enctype="multipart/form-data" id="settings-form" class="form-horizontal">
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#tab-settings" data-toggle="tab"><?php echo $text_main_settings; ?></a></li>
-          <li><a href="#tab-product" data-toggle="tab"><?php echo $text_listing; ?></a></li>
-          <li><a href="#tab-orders" data-toggle="tab"><?php echo $text_orders; ?></a></li>
+          <li class="active"><a href="#tab-settings" data-toggle="tab"><?php echo $tab_settings; ?></a></li>
+          <li><a href="#tab-product" data-toggle="tab"><?php echo $tab_listing; ?></a></li>
+          <li><a href="#tab-orders" data-toggle="tab"><?php echo $tab_orders; ?></a></li>
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab-settings">
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="amazonus_status"><?php echo $text_status; ?></label>
+              <label class="col-sm-2 control-label" for="amazonus-status"><?php echo $entry_status; ?></label>
               <div class="col-sm-10">
-                <select name="amazonus_status" id="amazonus_status" class="form-control">
+                <select name="amazonus_status" id="amazonus-status" class="form-control">
                   <?php if ($amazonus_status) { ?>
                   <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                   <option value="0"><?php echo $text_disabled; ?></option>
@@ -39,21 +37,21 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_amazonus_token"><?php echo $text_token; ?></label>
+              <label class="col-sm-2 control-label" for="entry-token"><?php echo $entry_token; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="openbay_amazonus_token" value="<?php echo $openbay_amazonus_token; ?>" placeholder="<?php echo $text_token; ?>" id="openbay_amazonus_token" class="form-control" />
+                <input type="text" name="openbay_amazonus_token" value="<?php echo $openbay_amazonus_token; ?>" placeholder="<?php echo $entry_token; ?>" id="entry-token" class="form-control" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_amazonus_enc_string1"><?php echo $text_enc_string1; ?></label>
+              <label class="col-sm-2 control-label" for="entry-string1"><?php echo $entry_string1; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="openbay_amazonus_enc_string1" value="<?php echo $openbay_amazonus_enc_string1; ?>" placeholder="<?php echo $text_enc_string1; ?>" id="openbay_amazonus_enc_string1" class="form-control" />
+                <input type="text" name="openbay_amazonus_enc_string1" value="<?php echo $openbay_amazonus_enc_string1; ?>" placeholder="<?php echo $entry_string1; ?>" id="entry-string1" class="form-control" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_amazonus_enc_string2"><?php echo $text_enc_string2; ?></label>
+              <label class="col-sm-2 control-label" for="entry-string2"><?php echo $entry_string2; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="openbay_amazonus_enc_string2" value="<?php echo $openbay_amazonus_enc_string2; ?>" placeholder="<?php echo $text_enc_string2; ?>" id="openbay_amazonus_enc_string2" class="form-control" />
+                <input type="text" name="openbay_amazonus_enc_string2" value="<?php echo $openbay_amazonus_enc_string2; ?>" placeholder="<?php echo $entry_string2; ?>" id="entry-string2" class="form-control" />
               </div>
             </div>
             <div class="form-group">
@@ -72,15 +70,15 @@
 
           <div class="tab-pane" id="tab-product">
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_amazonus_listing_tax_added"><?php echo $text_tax_percentage; ?></label>
+              <label class="col-sm-2 control-label" for="entry-tax-percentage"><?php echo $entry_tax_percentage; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="openbay_amazonus_listing_tax_added" value="<?php echo $openbay_amazonus_listing_tax_added; ?>" placeholder="<?php echo $text_tax_percentage; ?>" id="openbay_amazonus_listing_tax_added" class="form-control" />
+                <input type="text" name="openbay_amazonus_listing_tax_added" value="<?php echo $openbay_amazonus_listing_tax_added; ?>" placeholder="<?php echo $entry_tax_percentage; ?>" id="entry-tax-percentage" class="form-control" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_amazonus_listing_default_condition"><?php echo $text_default_condition; ?></label>
+              <label class="col-sm-2 control-label" for="entry-default-condition"><?php echo $entry_default_condition; ?></label>
               <div class="col-sm-10">
-                <select name="openbay_amazonus_listing_default_condition" id="openbay_amazonus_listing_default_condition" class="form-control">
+                <select name="openbay_amazonus_listing_default_condition" id="entry-default-condition" class="form-control">
                   <option></option>
                   <?php foreach ($conditions as $value => $condition) { ?>
                   <?php if ($value == $openbay_amazonus_listing_default_condition) { ?>
@@ -117,18 +115,18 @@
             <h4><?php echo $text_other ?></h4>
 
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_amazonus_order_tax"><?php echo $text_import_tax; ?></label>
+              <label class="col-sm-2 control-label" for="entry-import-tax"><?php echo $entry_import_tax; ?></label>
               <div class="col-sm-10">
                 <div class="input-group col-xs-2">
-                  <input type="text" name="openbay_amazonus_order_tax" value="<?php echo $openbay_amazonus_order_tax;?>" id="openbay_amazonus_order_tax" class="form-control" placeholder="<?php echo $text_import_tax; ?>" />
+                  <input type="text" name="openbay_amazonus_order_tax" value="<?php echo $openbay_amazonus_order_tax;?>" id="entry-import-tax" class="form-control" placeholder="<?php echo $entry_import_tax; ?>" />
                   <span class="input-group-addon">%</span>
                 </div>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_amazonus_order_customer_group"><?php echo $text_customer_group; ?></label>
+              <label class="col-sm-2 control-label" for="entry-customer-group"><?php echo $entry_customer_group; ?></label>
               <div class="col-sm-10">
-                <select name="openbay_amazonus_order_customer_group" id="openbay_amazonus_order_customer_group" class="form-control">
+                <select name="openbay_amazonus_order_customer_group" id="entry-customer-group" class="form-control">
                   <?php foreach($customer_groups as $customer_group) { ?>
                   <?php if ($openbay_amazonus_order_customer_group == $customer_group['customer_group_id']) { ?>
                   <?php echo '<option value="'.$customer_group['customer_group_id'].'" selected="selected">'.$customer_group['name'].'</option>'; ?>
@@ -140,9 +138,9 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_amazonus_notify_admin"><?php echo $text_admin_notify; ?></label>
+              <label class="col-sm-2 control-label" for="entry-notify-admin"><?php echo $entry_notify_admin; ?></label>
               <div class="col-sm-10">
-                <select name="openbay_amazonus_notify_admin" id="openbay_amazonus_notify_admin" class="form-control">
+                <select name="openbay_amazonus_notify_admin" id="entry-notify-admin" class="form-control">
                   <?php if ($openbay_amazonus_notify_admin) { ?>
                   <option value="1" selected="selected"><?php echo $text_yes ?></option>
                   <option value="0"><?php echo $text_no ?></option>
@@ -154,9 +152,9 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_amazonus_default_carrier"><?php echo $text_default_shipping; ?></label>
+              <label class="col-sm-2 control-label" for="entry-default-shipping"><?php echo $entry_default_shipping; ?></label>
               <div class="col-sm-10">
-                <select name="openbay_amazonus_default_carrier" id="openbay_amazonus_default_carrier" class="form-control">
+                <select name="openbay_amazonus_default_carrier" id="entry-default-shipping" class="form-control">
                   <?php foreach($carriers as $carrier) { ?>
                   <?php echo '<option'.($carrier == $openbay_amazonus_default_carrier ? ' selected' : '').'>'.$carrier.'</option>'; ?>
                   <?php } ?>
@@ -166,7 +164,6 @@
           </div>
         </div>
       </form>
-    </div>
   </div>
 </div>
 <?php echo $footer; ?>

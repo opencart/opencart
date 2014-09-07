@@ -8,7 +8,6 @@ $_['text_openbay']               	= 'Openbay Pro';
 $_['text_none']                     = 'None';
 $_['text_preview']                  = 'Preview';
 $_['text_add']                      = 'Add';
-$_['text_remove']                   = 'Remove';
 $_['text_preview_all']              = 'Verify all';
 $_['text_submit']                   = 'Submit';
 $_['text_features']                 = 'Features';

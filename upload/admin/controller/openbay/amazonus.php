@@ -174,6 +174,10 @@ class ControllerOpenbayAmazonus extends Controller {
 			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
+			'href'      => $this->url->link('openbay/amazonus/overview', 'token=' . $this->session->data['token'], 'SSL'),
+			'text'      => $this->language->get('text_amazon'),
+		);
+		$data['breadcrumbs'][] = array(
 			'href'      => $this->url->link('openbay/amazonus/subscription', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('heading_title'),
 		);

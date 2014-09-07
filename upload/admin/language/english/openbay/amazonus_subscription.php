@@ -15,7 +15,12 @@ $_['text_merchantid']               	= 'Merchant ID';
 $_['text_change_merchantid']        	= 'Change';
 $_['text_allowed']                  	= 'Allowed';
 $_['text_not_allowed']              	= 'Not Allowed';
-$_['text_price']              			= 'Not Allowed';
+$_['text_price']              			= 'Price';
+$_['text_name']              			= 'Name';
+$_['text_description']              	= 'Description';
+$_['text_order_frequency']          	= 'Order import frequency';
+$_['text_bulk_listing']             	= 'Bulk Listing';
+$_['text_product_listings']         	= 'Listings per month';
 
 // Columns
 $_['column_name']                     	= 'Name';

@@ -76,7 +76,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	public function stockUpdates() {
 		$data = $this->load->language('openbay/amazonus_stockupdates');
 
-		$this->document->setTitle($this->language->get('text_title'));
+		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['breadcrumbs'] = array();
@@ -95,7 +95,7 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href'      => $this->url->link('openbay/amazonus/stockUpdates', 'token=' . $this->session->data['token'], 'SSL'),
-			'text'      => $this->language->get('text_stock_updates'),
+			'text'      => $this->language->get('heading_title'),
 		);
 
 		$data['link_overview'] = $this->url->link('openbay/amazonus', 'token=' . $this->session->data['token'], 'SSL');
@@ -666,7 +666,7 @@ class ControllerOpenbayAmazonus extends Controller {
 
 				if (!$key) {
 					$json[$product_id] = array(
-						'error' => $this->language->get('error_product_no_searchable_fields')
+						'error' => $this->language->get('error_searchable_fields')
 					);
 				}
 

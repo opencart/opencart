@@ -23,7 +23,7 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="pull-right">
-            <a id="upload_button" onclick="upload()" class="btn btn-primary"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $text_btn_upload; ?></a>
+            <a id="upload_button" onclick="upload()" class="btn btn-primary"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_upload; ?></a>
           </div>
         </div>
       </div>
@@ -31,11 +31,11 @@
     <table class="table">
       <thead>
         <tr>
-          <th><?php echo $text_name_column; ?></th>
-          <th><?php echo $text_model_column; ?></th>
-          <th><?php echo $text_sku_column; ?></th>
-          <th><?php echo $text_amazon_sku_column; ?></th>
-          <th class="text-center"><?php echo $text_actions_column; ?></th>
+          <th><?php echo $column_name; ?></th>
+          <th><?php echo $column_model; ?></th>
+          <th><?php echo $column_sku; ?></th>
+          <th><?php echo $column_amazon_sku; ?></th>
+          <th class="text-center"><?php echo $column_action; ?></th>
         </tr>
       </thead>
       <tbody>
@@ -47,8 +47,8 @@
               <td class="text-left"><?php echo $saved_product['product_sku']; ?></td>
               <td class="text-left"><?php echo $saved_product['amazon_sku']; ?></td>
               <td class="text-center">
-                <a href="<?php echo $saved_product['edit_link']; ?>">[<?php echo $text_actions_edit; ?>]</a>
-                <a onclick="removeSaved('<?php echo $saved_product['product_id']; ?>', '<?php echo $saved_product['var']; ?>')">[<?php echo $text_actions_remove; ?>]</a>
+                <a href="<?php echo $saved_product['edit_link']; ?>">[<?php echo $button_edit; ?>]</a>
+                <a onclick="removeSaved('<?php echo $saved_product['product_id']; ?>', '<?php echo $saved_product['var']; ?>')">[<?php echo $button_remove; ?>]</a>
               </td>
             </tr>
           <?php } ?>
@@ -86,7 +86,7 @@
         $('#upload_button').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },
       complete: function () {
-        $('#upload_button').empty().html('<i class="fa fa-cloud-upload fa-lg"></i> <?php echo $text_btn_upload; ?>').removeAttr('disabled');
+        $('#upload_button').empty().html('<i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_upload; ?>').removeAttr('disabled');
       },
       success: function (data) {
         if (data['status'] == 'ok') {

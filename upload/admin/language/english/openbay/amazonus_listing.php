@@ -1,6 +1,7 @@
 <?php
 //Headings
-$_['text_title'] = 'New Amazon US listing';
+$_['heading_title'] = 'New Amazon listing';
+$_['text_title'] = 'New Amazon listing';
 $_['text_openbay'] = 'OpenBay Pro';
 $_['text_amazonus'] = 'Amazon US';
 
@@ -72,15 +73,15 @@ $_['error_sku'] = 'You must enter an SKU for the item';
 $_['error_price'] = 'You must enter a price for the item';
 
 //Tabs
-$_['tab_required_info'] = 'Required info';
-$_['tab_additional_info'] = 'Additional options';
+$_['tab_required'] = 'Required info';
+$_['tab_additional'] = 'Additional options';
 
 //Tab headers
-$_['item_links_header_text'] = 'Item links';
+$_['tab_links'] = 'Item links';
 $_['quick_listing_header_text'] = 'Quick listing';
 $_['advanced_listing_header_text'] = 'Advanced listing';
 $_['saved_header_text'] = 'Saved listings';
-$_['text_tab_main'] = 'Main';
+$_['tab_main'] = 'Main';
 
 //Tabs
 $_['item_links_tab_text'] = 'Item links';
@@ -89,26 +90,22 @@ $_['advanced_listing_tab_text'] = 'Advanced listing';
 $_['saved_tab_text'] = 'Saved listings';
 
 //Errors
-$_['text_error_connecting'] = 'Warning: There was problem connecting to the API. Please check your OpenBay Pro Amazon extension settings. If the problem persists, please contact support.';
+$_['error_connecting'] = 'Warning: There was problem connecting to the API. Please check your OpenBay Pro Amazon extension settings. If the problem persists, please contact support.';
 
 // Quick/advanced listing tabs
 $_['quick_listing_description'] = 'Use this method when matching product already exist in Amazon US catalogue. Matching is found by Amazon US using Standard product id (ASIN, ISBN, UPS, EAN)';
 $_['advanced_listing_description'] = 'Use this method to create new listings on Amazon US.';
-$_['listing_row_text'] = 'Listing for product:';
+$_['entry_product'] = 'Listing for product:';
 $_['already_saved_text'] = 'This product is already in saved listings. Click edit if you want to revise.';
-$_['save_button_text'] = 'Save';
-$_['save_upload_button_text'] = 'Save and upload';
-$_['saved_listings_button_text'] = 'View saved listings';
-$_['cancel_button_text'] = 'Cancel';
-$_['field_required_text'] = 'This field is required!';
-$_['not_saved_text'] = 'Listing was not saved. Check your input.';
-$_['chars_over_limit_text'] = 'characters over limit.';
-$_['minimum_length_text'] = 'Minimum length is';
-$_['characters_text'] = 'characters';
-$_['delete_confirm_text'] = 'Are you sure?';
-$_['clear_image_text'] = 'Clear';
-$_['browse_image_text'] = 'Browse';
-$_['category_selector_field_text'] = 'Amazon category:';
+$_['button_save_upload'] = 'Save and upload';
+$_['button_saved_listings'] = 'View saved listings';
+$_['error_required'] = 'This field is required!';
+$_['error_not_saved'] = 'Listing was not saved. Check your input.';
+$_['error_char_limit'] = 'characters over limit.';
+$_['error_length'] = 'Minimum length is';
+$_['text_characters'] = 'characters';
+$_['button_browse'] = 'Browse';
+$_['entry_category'] = 'Amazon category:';
 
 //Item links tab
 $_['item_links_description'] = 'Here you can add and edit product links to already existing Amazon items without listing them from OpenCart. This will allow stock control between enabled marketplaces. If you have openStock installed - this will also allow you to link item options to individual Amazon SKUs. (Uploading products from OpenCart to Amazon will automaticaly add links)';
@@ -121,7 +118,7 @@ $_['item_links_table_name'] = 'Item links';
 
 
 //Market places
-$_['marketplaces_field_text'] = 'Marketplace';
+$_['entry_marketplace'] = 'Marketplace';
 $_['marketplaces_help'] = 'You can choose default marketplace in Amazon US extension settings.';
 $_['text_germany'] = 'Germany';
 $_['text_france'] = 'France';
@@ -140,9 +137,9 @@ $_['model_column_text'] = 'Model';
 $_['sku_column_text'] = 'SKU';
 $_['amazonus_sku_column_text'] = 'Amazon item SKU';
 $_['actions_column_text'] = 'Action';
-$_['saved_localy_text'] = 'Listing saved localy.';
-$_['uploaded_alert_text'] = 'Saved listing(s) uploaded!';
-$_['upload_failed'] = 'Failed uploading product with SKU: "%s". Reason: "%s" Uploading process canceled.';
+$_['text_saved_local'] = 'Listing saved localy.';
+$_['text_uploaded'] = 'Saved listing(s) uploaded!';
+$_['error_upload_failed'] = 'Failed uploading product with SKU: "%s". Reason: "%s" Uploading process canceled.';
 
 //Item links
 $_['links_header_text'] = 'Link items';
@@ -165,8 +162,7 @@ $_['links_amazonus_sku_text'] = 'Amazon item SKU';
 $_['links_sku_empty_warning'] = 'Amazon SKU can not be empty!';
 $_['links_name_empty_warning'] = 'Product name can not be empty!';
 $_['links_product_warning'] = 'Product does not exist. Please use autocomplete values.';
-$_['option_default'] = '-- Select option --';
-$_['text_error_load_nodes'] = 'Unable to load browse nodes';
+$_['error_load_nodes'] = 'Unable to load browse nodes';
 $_['error_not_searched'] = 'Search for matching items before you try to list. Items must be matched against an Amazon catalog item';
 
 //Listing edit page

@@ -11,9 +11,9 @@
         <?php if ($has_listing_errors) { ?>
           <a href="<?php echo $url_remove_errors; ?>" data-toggle="tooltip" title="<?php echo $button_remove_error; ?>" class="btn"><i class="fa fa-reply"></i></a>
         <?php } ?>
-        <a href="<?php echo $cancel_url; ?>" data-toggle="tooltip" title="<?php echo $cancel_button_text; ?>" class="btn"><i class="fa fa-reply"></i></a>
+        <a href="<?php echo $cancel_url; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
       </div>
-      <h1><i class="fa fa-pencil"></i> <?php echo $text_title; ?></h1>
+      <h1><i class="fa fa-pencil"></i> <?php echo $text_title_advanced; ?></h1>
     </div>
   </div>
   <div class="container-fluid">
@@ -31,7 +31,7 @@
     <?php } ?>
 
     <div id="tabs" class="htabs">
-        <a href="#page-main"><?php echo $text_tab_main; ?></a>
+        <a href="#page-main"><?php echo $tab_main; ?></a>
         <div id="dynamic_tabs"></div>
     </div>
     <form method="POST" id="product_form_advanced">
@@ -39,7 +39,7 @@
               <table class="form" align="left">
                   <tbody>
                   <tr>
-                      <td style="width: 400px;"><?php echo $listing_row_text; ?></td>
+                      <td style="width: 400px;"><?php echo $entry_product; ?></td>
                       <td>
                           <a href="<?php echo $listing_url; ?>"><?php echo $listing_name; ?><?php if (!empty($options)) { echo " : "; } ?></a>
                           <?php if (!empty($options)) { ?>
@@ -54,7 +54,7 @@
                   </tr>
                   <tr>
                       <td>
-                          <?php echo $category_selector_field_text; ?><br>
+                          <?php echo $entry_category; ?><br>
                           <span class="help"></span>
                       </td>
                       <td>
@@ -84,9 +84,9 @@
     <div class="well">
       <div class="row">
         <div class="col-md-12 text-right">
-          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $save_button_text ?>" onclick="validate_and_save('advanced')"><i class="fa fa-save fa-lg"></i></a>
-          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $save_upload_button_text ?>" onclick="save_and_upload()"><i class="fa fa-cloud-upload fa-lg"></i></a>
-          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $saved_listings_button_text ?>" href="<?php echo $saved_listings_url; ?>"><i class="fa fa-copy fa-lg"></i></a>
+          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save ?>" onclick="validate_and_save('advanced')"><i class="fa fa-save fa-lg"></i></a>
+          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save_upload ?>" onclick="save_and_upload()"><i class="fa fa-cloud-upload fa-lg"></i></a>
+          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_saved_listings ?>" href="<?php echo $saved_listings_url; ?>"><i class="fa fa-copy fa-lg"></i></a>
         </div>
       </div>
     </div>
@@ -100,7 +100,7 @@ $(document).ready(function(){
 
     <?php if (empty($amazonus_categories)) { ?>
         $("#advanced_table").html("");
-        $(".content").prepend('<div id="warning" class="warning"><?php echo $text_error_connecting; ?></div>');
+        $(".content").prepend('<div id="warning" class="warning"><?php echo $error_connecting; ?></div>');
         return;
     <?php } ?>
 
@@ -327,9 +327,9 @@ function getImageField(fieldData) {
     output += "/>";
     output += '<br />';
 
-    output += '<a onclick="image_upload(\'imagefield_' + fieldData['name'] + '\', \'thumb_' + fieldData['name'] + '\')"><?php echo $browse_image_text; ?></a>';
+    output += '<a onclick="image_upload(\'imagefield_' + fieldData['name'] + '\', \'thumb_' + fieldData['name'] + '\')"><?php echo $button_browse; ?></a>';
     output += '  |  ';
-    output += '<a onclick="cleaImageField(\'' + fieldData['name'] + '\')"><?php echo $clear_image_text; ?></a>';
+    output += '<a onclick="cleaImageField(\'' + fieldData['name'] + '\')"><?php echo $button_clear; ?></a>';
     output += "</div>";
 
     return output;
@@ -519,15 +519,15 @@ function validate(formType) {
 
         if (field_type == 'required' || field_value !== '') {
             if (field_value === '') {
-                $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $field_required_text ?>');
+                $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $error_required ?>');
                 warnings ++;
             }
             else if (min_length != undefined && field_value.length < min_length) {
-                $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $minimum_length_text; ?> ' + min_length + ' <?php echo $characters_text; ?>');
+                $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $error_length; ?> ' + min_length + ' <?php echo $text_characters; ?>');
                 warnings ++;
             }
             else if (max_length != undefined && field_value.length > max_length) {
-                $('.fields_' + formType + ' #error_' + field_name).text((field_value.length - max_length) + ' <?php echo $chars_over_limit_text; ?>');
+                $('.fields_' + formType + ' #error_' + field_name).text((field_value.length - max_length) + ' <?php echo $error_char_limit; ?>');
                 warnings ++;
             }
             else {
@@ -567,7 +567,7 @@ function validate_and_save(formType) {
             $("#product_form_quick").submit();
         }
     } else {
-        alert('<?php echo $not_saved_text; ?>');
+        alert('<?php echo $error_not_saved; ?>');
     }
 }
 
@@ -577,7 +577,7 @@ function save_and_upload() {
     if (validate('advanced')) {
         $("#product_form_advanced").submit();
     } else {
-        alert('<?php echo $not_saved_text; ?>');
+        alert('<?php echo $error_not_saved; ?>');
     }
 }
 
@@ -637,7 +637,7 @@ $('.browseNode').bind('click', function(){
         success: function(data) {
             if (data.node.error != true){
                 html += '<select class="nodeSelect mTop20 width250">';
-                html += '<option value=""><?php echo $option_default; ?></option>';
+                html += '<option value=""><?php echo $text_select; ?></option>';
 
                 $.each(data.children, function(k,v){
                     html += '<option value="'+ v.node_id+'">'+ v.name+'</option>';
@@ -652,11 +652,11 @@ $('.browseNode').bind('click', function(){
             }
         },
         failure: function(){
-            alert('<?php echo $text_error_load_nodes; ?>');
+            alert('<?php echo $error_load_nodes; ?>');
             hideGreyScreen('browseNodeForm');
         },
         error: function(){
-            alert('<?php echo $text_error_load_nodes; ?>');
+            alert('<?php echo $error_load_nodes; ?>');
             hideGreyScreen('browseNodeForm');
         }
     });
@@ -683,7 +683,7 @@ $('.nodeSelect').bind('change', function(){
             if (data.node.error != true){
                 if (data.node.final == 0){
                     html += '<select class="nodeSelect mTop20 width250">';
-                    html += '<option value=""><?php echo $option_default; ?></option>';
+                    html += '<option value=""><?php echo $text_select; ?></option>';
 
                     $.each(data.children, function(k,v){
                         html += '<option value="'+ v.node_id+'">'+ v.name+'</option>';
@@ -691,7 +691,7 @@ $('.nodeSelect').bind('change', function(){
 
                     html += '</select>';
                 }else{
-                    html += '<a onclick="saveNode('+data.node.id+')" class="button"><?php echo $save_button_text; ?></a>';
+                    html += '<a onclick="saveNode('+data.node.id+')" class="button"><?php echo $button_save; ?></a>';
                 }
 
                 $('#browseNodeFormContent').html(nodeString+html);
@@ -701,11 +701,11 @@ $('.nodeSelect').bind('change', function(){
             }
         },
         failure: function(){
-            alert('<?php echo $text_error_load_nodes; ?>');
+            alert('<?php echo $error_load_nodes; ?>');
             hideGreyScreen('browseNodeForm');
         },
         error: function(){
-            alert('<?php echo $text_error_load_nodes; ?>');
+            alert('<?php echo $error_load_nodes; ?>');
             hideGreyScreen('browseNodeForm');
         }
     });

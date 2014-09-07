@@ -92,7 +92,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 			$this->response->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
-		$this->document->setTitle($this->language->get('text_title'));
+		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		if (isset($this->session->data['error'])) {
@@ -139,8 +139,8 @@ class ControllerOpenbayAmazonusListing extends Controller{
 		$data['text_view_on_amazonus'] = $this->language->get('text_view_on_amazonus');
 		$data['text_list'] = $this->language->get('text_list');
 
-		$data['tab_required_info'] = $this->language->get('tab_required_info');
-		$data['tab_additional_info'] = $this->language->get('tab_additional_info');
+		$data['tab_required'] = $this->language->get('tab_required');
+		$data['tab_additional'] = $this->language->get('tab_additional');
 
 		$data['text_placeholder_search'] = $this->language->get('text_placeholder_search');
 		$data['text_placeholder_condition'] = $this->language->get('text_placeholder_condition');
@@ -206,7 +206,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-			'text' => $this->language->get('text_title'),
+			'text' => $this->language->get('heading_title'),
 		);
 
 		$data['header'] = $this->load->controller('common/header');
@@ -343,8 +343,6 @@ class ControllerOpenbayAmazonusListing extends Controller{
 		$data['column_combination'] = $this->language->get('column_combination');
 		$data['column_sku'] = $this->language->get('column_sku');
 		$data['column_amazonus_sku'] = $this->language->get('column_amazonus_sku');
-		$data['button_create_new_listing'] = $this->language->get('button_create_new_listing');
-		$data['button_create_new_listing'] = $this->language->get('button_create_new_listing');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');

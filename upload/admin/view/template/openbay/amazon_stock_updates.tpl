@@ -10,7 +10,7 @@
       <div class="pull-right">
         <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
       </div>
-      <h1><i class="fa fa-pencil"></i> <?php echo $text_title; ?></h1>
+      <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">
@@ -18,7 +18,7 @@
       <div class="row">
         <div class="col-sm-5">
           <div class="input-group date">
-            <input type="text" class="form-control" id="input-date-start" data-format="YYYY-MM-DD" placeholder="<?php echo $text_date_start; ?>" value="<?php echo $date_start; ?>" name="filter_date_start">
+            <input type="text" class="form-control" id="input-date-start" data-format="YYYY-MM-DD" placeholder="<?php echo $entry_date_start; ?>" value="<?php echo $date_start; ?>" name="filter_date_start">
             <span class="input-group-btn">
               <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
             </span>
@@ -26,26 +26,26 @@
         </div>
         <div class="col-sm-5">
           <div class="input-group date">
-            <input type="text" class="form-control" id="input-date-end" data-format="YYYY-MM-DD" placeholder="<?php echo $text_date_end; ?>" value="<?php echo $date_end; ?>" name="filter_date_end">
+            <input type="text" class="form-control" id="input-date-end" data-format="YYYY-MM-DD" placeholder="<?php echo $entry_date_end; ?>" value="<?php echo $date_end; ?>" name="filter_date_end">
             <span class="input-group-btn">
               <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
             </span>
           </div>
         </div>
         <div class="col-sm-2 text-right">
-          <a onclick="filter();" class="btn btn-primary"><i class="fa fa-filter"></i> <?php echo $text_filter_btn; ?></a>
+          <a onclick="filter();" class="btn btn-primary"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></a>
         </div>
       </div>
     </div>
     <table class="table">
       <thead>
         <tr>
-          <th class="text-left"><?php echo $text_ref; ?></th>
-          <th class="text-left"><?php echo $text_date_requested; ?></th>
-          <th class="text-right"><?php echo $text_date_updated; ?></th>
-          <th class="text-right"><?php echo $text_status; ?></th>
-          <th class="text-left"><?php echo $text_sku; ?></th>
-          <th class="text-left"><?php echo $text_stock; ?></th>
+          <th class="text-left"><?php echo $column_ref; ?></th>
+          <th class="text-left"><?php echo $column_date_requested; ?></th>
+          <th class="text-right"><?php echo $column_date_updated; ?></th>
+          <th class="text-right"><?php echo $column_status; ?></th>
+          <th class="text-left"><?php echo $column_sku; ?></th>
+          <th class="text-left"><?php echo $column_stock; ?></th>
         </tr>
       </thead>
       <tbody>

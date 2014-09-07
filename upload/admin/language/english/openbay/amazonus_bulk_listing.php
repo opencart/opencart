@@ -15,9 +15,9 @@ $_['text_uk'] = 'United Kingdom';
 $_['text_filter_results'] = 'Filter results';
 $_['text_dont_list'] = 'Do not list';
 $_['text_listing_values'] = 'Listing values';
-$_['text_condition'] = 'Condition';
-$_['text_condition_note'] = 'Condition note';
-$_['text_start_selling'] = 'Start Selling';
+$_['entry_condition'] = 'Condition';
+$_['entry_condition_note'] = 'Condition note';
+$_['entry_start_selling'] = 'Start Selling';
 $_['text_new'] = 'New';
 $_['text_used_like_new'] = 'Used - Like New';
 $_['text_used_very_good'] = 'Used - Very Good';
@@ -38,8 +38,7 @@ $_['column_result'] = 'Result';
 
 $_['button_return'] = 'Return';
 $_['button_list'] = 'List';
-$_['button_search'] = 'Search';
 
 $_['error_product_sku'] = 'Product must have an SKU';
-$_['error_product_no_searchable_fields'] = 'Product must have ISBN, EAN, UPC or JAN field populated';
-$_['error_bulk_listing_not_allowed'] = 'Bulk listing is not allowed. Your account must be on at least Medium plan';
+$_['error_searchable_fields'] = 'Product must have ISBN, EAN, UPC or JAN field populated';
+$_['error_bulk_listing_permission'] = 'Bulk listing is not allowed. Your account must be on at least Medium plan';

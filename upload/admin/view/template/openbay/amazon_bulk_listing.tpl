@@ -92,7 +92,7 @@
         <div class="row">
           <div class="col-sm-4">
             <div class="form-group">
-              <label for="input-condition" class="control-label"><?php echo $text_condition; ?></label>
+              <label for="input-condition" class="control-label"><?php echo $entry_condition; ?></label>
               <select name="condition" class="form-control" id="input-condition">
                 <option value=""></option>
                 <?php foreach ($conditions as $value => $name) { ?><?php if ($value == $default_condition) { ?>
@@ -105,15 +105,15 @@
           </div>
           <div class="col-sm-4">
             <div class="form-group">
-              <label for="input-condition-note" class="control-label"><?php echo $text_condition_note; ?></label>
+              <label for="input-condition-note" class="control-label"><?php echo $entry_condition_note; ?></label>
               <input type="text" name="condition_note" class="form-control" id="input-condition-note" />
             </div>
           </div>
           <div class="col-sm-4">
             <div class="form-group">
-              <label for="input-start" class="control-label"><?php echo $text_start_selling; ?></label>
+              <label for="input-start" class="control-label"><?php echo $entry_start_selling; ?></label>
               <div class="input-group date">
-                <input type="text" class="form-control" id="input-start" data-format="YYYY-MM-DD" placeholder="<?php echo $text_start_selling; ?>" name="start_selling">
+                <input type="text" class="form-control" id="input-start" data-format="YYYY-MM-DD" placeholder="<?php echo $entry_start_selling; ?>" name="start_selling">
                 <span class="input-group-btn">
                   <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
                 </span>
@@ -135,7 +135,7 @@
       <div class="col-sm-6 text-right"><?php echo $results; ?></div>
     </div>
     <?php } else { ?>
-    <div class="warning"><?php echo $error_bulk_listing_not_allowed ?></div>
+    <div class="warning"><?php echo $error_bulk_listing_permission ?></div>
     <?php } ?>
   </div>
 </div>

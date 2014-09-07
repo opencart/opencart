@@ -10,7 +10,7 @@
       <div class="pull-right">
         <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
       </div>
-      <h1><i class="fa fa-pencil"></i> <?php echo $text_title; ?></h1>
+      <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">
@@ -19,7 +19,7 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="pull-right">
-            <a id="button-upload" class="btn btn-primary"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $text_btn_upload; ?></a>
+            <a id="button-upload" class="btn btn-primary"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_upload; ?></a>
           </div>
         </div>
       </div>
@@ -27,11 +27,11 @@
     <table class="table">
       <thead>
         <tr>
-          <th><?php echo $text_name_column; ?></th>
-          <th><?php echo $text_model_column; ?></th>
-          <th class="text-center"><?php echo $text_sku_column; ?></th>
-          <th class="text-center"><?php echo $text_amazon_sku_column; ?></th>
-          <th class="text-right"><?php echo $text_actions_column; ?></th>
+          <th><?php echo $column_name; ?></th>
+          <th><?php echo $column_model; ?></th>
+          <th class="text-center"><?php echo $column_sku; ?></th>
+          <th class="text-center"><?php echo $column_amazon_sku; ?></th>
+          <th class="text-right"><?php echo $column_action; ?></th>
         </tr>
       </thead>
       <tbody>
@@ -43,8 +43,8 @@
               <td class="text-center"><?php echo $saved_product['product_sku']; ?></td>
               <td class="text-center"><?php echo $saved_product['amazon_sku']; ?></td>
               <td class="text-right">
-                <a class="btn btn-primary" href="<?php echo $saved_product['edit_link']; ?>" data-toggle="tooltip" data-original-title="<?php echo $text_actions_edit; ?>"><i class="fa fa-pencil"></i></a>
-                <a class="btn btn-danger" onclick="removeSaved('<?php echo $saved_product['product_id']; ?>', '<?php echo $saved_product['var']; ?>', this)" data-toggle="tooltip" data-original-title="<?php echo $text_actions_remove; ?>"><i class="fa fa-times-circle"></i></a>
+                <a class="btn btn-primary" href="<?php echo $saved_product['edit_link']; ?>" data-toggle="tooltip" data-original-title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a>
+                <a class="btn btn-danger" onclick="removeSaved('<?php echo $saved_product['product_id']; ?>', '<?php echo $saved_product['var']; ?>', this)" data-toggle="tooltip" data-original-title="<?php echo $button_remove; ?>"><i class="fa fa-times-circle"></i></a>
               </td>
             </tr>
           <?php } ?>
@@ -86,7 +86,7 @@
         $('#upload_button').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },
       complete: function () {
-        $('#upload_button').empty().html('<i class="fa fa-cloud-upload fa-lg"></i> <?php echo $text_btn_upload; ?>').removeAttr('disabled');
+        $('#upload_button').empty().html('<i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_upload; ?>').removeAttr('disabled');
       },
       success: function (data) {
         if (data['status'] == 'ok') {

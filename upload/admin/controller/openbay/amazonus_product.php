@@ -102,13 +102,13 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 			if ($data_array['upload_after'] === 'true') {
 				$upload_result = $this->uploadSaved();
 				if ($upload_result['status'] == 'ok') {
-					$this->session->data['success'] = $this->language->get('uploaded_alert_text');
+					$this->session->data['success'] = $this->language->get('text_uploaded');
 					$this->response->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 				} else {
 					$data['errors'][] = Array('message' => $upload_result['error_message']);
 				}
 			} else {
-				$this->session->data['success'] = $this->language->get('saved_localy_text');
+				$this->session->data['success'] = $this->language->get('text_saved_local');
 				$this->response->redirect($this->url->link('openbay/amazonus_product', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'));
 			}
 		}
@@ -303,7 +303,7 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 
 			if (!isset($insertion_response['status']) || $insertion_response['status'] == 'error') {
 				$details = isset($insertion_response['info']) ? $insertion_response['info'] : 'Unknown';
-				$result['error_message'] = sprintf($this->language->get('upload_failed'), $saved_product['sku'], $details);
+				$result['error_message'] = sprintf($this->language->get('error_upload_failed'), $saved_product['sku'], $details);
 				$result['status'] = 'error';
 				break;
 			}

@@ -57,7 +57,7 @@
         </div>
         <div class="col-sm-4">
           <div class="form-group">
-            <label class="control-label" for="filter_marketplace"><?php echo $entry_market_status; ?></label>
+            <label class="control-label" for="filter_marketplace"><?php echo $entry_status_marketplace; ?></label>
             <select name="filter_marketplace" id="filter_marketplace" class="form-control">
               <option value="all" <?php echo (!isset($filter_marketplace) || $filter_marketplace == 'all' ? ' selected' : ''); ?>><?php echo $text_status_all; ?></option>
               <?php if ($marketplace_statuses['ebay']) { ?>

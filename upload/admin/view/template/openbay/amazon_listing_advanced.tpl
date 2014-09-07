@@ -31,7 +31,7 @@
     <?php } ?>
 
     <ul class="nav nav-tabs" id="tabs">
-        <li class="active"><a href="#page-main" data-toggle="tab"><?php echo $text_tab_main; ?></a></li>
+        <li class="active"><a href="#page-main" data-toggle="tab"><?php echo $tab_main; ?></a></li>
       </ul>
 
     <form method="POST" id="product_form_advanced" class="form-horizontal">
@@ -40,7 +40,7 @@
         <div class="tab-content" id="tab-content">
           <div class="tab-pane active" id="page-main">
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $listing_row_text; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_product; ?></label>
               <div class="col-sm-10"><p>
                 <a href="<?php echo $listing_url; ?>"><?php echo $listing_name; ?><?php if (!empty($options)) { echo " : "; } ?></a>
                 <?php if (!empty($options)) { ?>
@@ -54,7 +54,7 @@
               </p></div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $marketplaces_field_text; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $entry_marketplace; ?></label>
               <div class="col-sm-10" id="marketplaces">
                 <?php foreach ($marketplaces as $mp) { ?>
                   <label class="radio-inline">
@@ -69,7 +69,7 @@
               </div>
             </div>
             <div class="form-group required">
-              <label class="col-sm-2 control-label" for="category_selector" id="category_selector_label"><?php echo $category_selector_field_text; ?></label>
+              <label class="col-sm-2 control-label" for="category_selector" id="category_selector_label"><?php echo $entry_category; ?></label>
               <div class="col-sm-4">
                 <select name="category_selector" id="category_selector" class="form-control">
                   <option value=""></option>
@@ -89,7 +89,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                <h4 id="mySmallModalLabel" class="modal-title"><?php echo $text_browse_node; ?></h4>
+                <h4 id="mySmallModalLabel" class="modal-title"><?php echo $entry_browse_node; ?></h4>
               </div>
               <div class="modal-body">
                 <div id="browse-node-content"></div>
@@ -101,9 +101,9 @@
     <div class="well">
       <div class="row">
         <div class="col-md-12 text-right">
-          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $save_button_text ?>" onclick="validate_and_save('advanced')"><i class="fa fa-save fa-lg"></i></a>
-          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $save_upload_button_text ?>" onclick="save_and_upload()"><i class="fa fa-cloud-upload fa-lg"></i></a>
-          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $saved_listings_button_text ?>" href="<?php echo $saved_listings_url; ?>"><i class="fa fa-copy fa-lg"></i></a>
+          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save ?>" onclick="validate_and_save('advanced')"><i class="fa fa-save fa-lg"></i></a>
+          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save_upload ?>" onclick="save_and_upload()"><i class="fa fa-cloud-upload fa-lg"></i></a>
+          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_saved_listings ?>" href="<?php echo $saved_listings_url; ?>"><i class="fa fa-copy fa-lg"></i></a>
         </div>
       </div>
     </div>
@@ -117,7 +117,7 @@ $(document).ready(function(){
 
     <?php if (empty($amazon_categories)) { ?>
         $("#advanced_table").html("");
-        $(".content").prepend('<div id="warning" class="alert alert-danger"><?php echo $text_error_connecting; ?></div>');
+        $(".content").prepend('<div id="warning" class="alert alert-danger"><?php echo $error_connecting; ?></div>');
         return;
     <?php } ?>
 
@@ -486,7 +486,7 @@ function validate(formType) {
   });
 
   if (mChecked == 0) {
-    $('#required_marketplaces').prepend('<div class="alert alert-danger" id="marketplace-alert"><?php echo $field_required_text ?></div>');
+    $('#required_marketplaces').prepend('<div class="alert alert-danger" id="marketplace-alert"><?php echo $error_required ?></div>');
     warnings ++;
   } else {
     $('#marketplace-alert').remove();
@@ -517,15 +517,15 @@ function validate(formType) {
         if (field_type == 'required' || field_value !== '') {
             if (field_value === '') {
               alert('1');
-                $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $field_required_text ?>').show();
+                $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $error_required ?>').show();
                 warnings ++;
             } else if (min_length != undefined && field_value.length < min_length) {
               alert('2');
-                $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $minimum_length_text; ?> ' + min_length + ' <?php echo $characters_text; ?>').show();
+                $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $error_length; ?> ' + min_length + ' <?php echo $text_characters; ?>').show();
                 warnings ++;
             } else if (max_length != undefined && field_value.length > max_length) {
               alert('3');
-                $('.fields_' + formType + ' #error_' + field_name).text((field_value.length - max_length) + ' <?php echo $chars_over_limit_text; ?>').show();
+                $('.fields_' + formType + ' #error_' + field_name).text((field_value.length - max_length) + ' <?php echo $error_char_limit; ?>').show();
                 warnings ++;
             } else {
                 $('.fields_' + formType + ' #error_' + field_name).text('').hide();
@@ -564,7 +564,7 @@ function validate_and_save(formType) {
             $("#product_form_quick").submit();
         }
     } else {
-        alert('<?php echo $not_saved_text; ?>');
+        alert('<?php echo $error_not_saved; ?>');
     }
 }
 
@@ -574,7 +574,7 @@ function save_and_upload() {
     if (validate('advanced')) {
         $("#product_form_advanced").submit();
     } else {
-        alert('<?php echo $not_saved_text; ?>');
+        alert('<?php echo $error_not_saved; ?>');
     }
 }
 
@@ -638,7 +638,7 @@ function loadBrowseNode(field) {
                 html += '<div class="row">';
                   html += '<div class="input-group col-md-12">';
                     html += '<p><select class="form-control" id="root-node" onchange="nodeSelect(\'root-node\', \''+field+'\');">';
-                      html += '<option value=""><?php echo $option_default; ?></option>';
+                      html += '<option value=""><?php echo $text_select; ?></option>';
                       $.each(data.children, function(k,v){
                           html += '<option value="'+ v.node_id+'">'+ v.name+'</option>';
                       });
@@ -652,10 +652,10 @@ function loadBrowseNode(field) {
             }
         },
         failure: function(){
-            alert('<?php echo $text_error_load_nodes; ?>');
+            alert('<?php echo $error_load_nodes; ?>');
         },
         error: function(){
-            alert('<?php echo $text_error_load_nodes; ?>');
+            alert('<?php echo $error_load_nodes; ?>');
         }
     });
 }
@@ -687,7 +687,7 @@ function nodeSelect(field, original_field) {
               html += '<div class="row">';
                 html += '<div class="input-group col-md-12">';
                   html += '<p><select class="form-control" id="'+field+'-'+node+'" onchange="nodeSelect(\''+field+'-'+node+'\', \''+original_field+'\');">';
-                    html += '<option value=""><?php echo $option_default; ?></option>';
+                    html += '<option value=""><?php echo $text_select; ?></option>';
                     $.each(data.children, function(k,v){
                         html += '<option value="'+ v.node_id+'">'+ v.name+'</option>';
                     });
@@ -697,7 +697,7 @@ function nodeSelect(field, original_field) {
             }else{
               html += '<div class="row">';
                 html += '<div class="col-sm-12 text-right">';
-                  html += '<a onclick="saveNode('+data.node.id+', \''+original_field+'\', \''+nodeStringSimple+'\')" class="btn btn-primary"><i class="fa fa-save fa-lg"></i> <?php echo $save_button_text; ?></a>';
+                  html += '<a onclick="saveNode('+data.node.id+', \''+original_field+'\', \''+nodeStringSimple+'\')" class="btn btn-primary"><i class="fa fa-save fa-lg"></i> <?php echo $button_save; ?></a>';
                 html += '</div>';
               html += '</div>';
             }
@@ -708,10 +708,10 @@ function nodeSelect(field, original_field) {
           }
         },
         failure: function(){
-            alert('<?php echo $text_error_load_nodes; ?>');
+            alert('<?php echo $error_load_nodes; ?>');
         },
         error: function(){
-            alert('<?php echo $text_error_load_nodes; ?>');
+            alert('<?php echo $error_load_nodes; ?>');
         }
     });
 }

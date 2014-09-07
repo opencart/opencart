@@ -4,6 +4,7 @@ $_['heading_title']					= 'Item links';
 $_['text_openbay']					= 'OpenBay Pro';
 $_['text_amazon']					= 'Amazon EU';
 
+// Text
 $_['text_link_items']               = 'Link items';
 $_['text_item_links']               = 'Item links';
 $_['text_desc1']                    = 'Linking your items will allow for stock control on your Amazon listings.';

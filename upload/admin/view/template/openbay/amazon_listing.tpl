@@ -28,40 +28,40 @@
     <?php } ?>
     <div class="panel-body" id="search-container">
       <div class="alert alert-danger" id="search-error" style="display:none;"></div>
-        <div class="well">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="form-group">
-                <input type="text" name="search_string" placeholder="<?php echo $text_placeholder_search; ?>" id="search-string" class="form-control" />
-              </div>
-            </div>
-            <div class="col-md-1">
-              <div class="form-group">
-                <a id="search-submit" class="btn btn-primary"><i class="fa fa-search"></i> <?php echo $button_search; ?></a>
-              </div>
+      <div class="well">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <input type="text" name="search_string" placeholder="<?php echo $text_placeholder_search; ?>" id="search-string" class="form-control" />
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <?php foreach ($marketplaces as $id => $name) {?>
-                  <label class="radio-inline">
-                    <?php if ($default_marketplace == $id) { ?>
-                      <input type="radio" name="marketplace" id="marketplace_<?php echo $id ?>" value="<?php echo $id ?>" checked="checked" />
-                    <?php } else { ?>
-                      <input type="radio" name="marketplace" id="marketplace_<?php echo $id ?>" value="<?php echo $id ?>" />
-                    <?php } ?>
+          <div class="col-md-1">
+            <div class="form-group">
+              <a id="search-submit" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_search; ?>"><i class="fa fa-search"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <?php foreach ($marketplaces as $id => $name) {?>
+                <label class="radio-inline">
+                  <?php if ($default_marketplace == $id) { ?>
+                    <input type="radio" name="marketplace" id="marketplace_<?php echo $id ?>" value="<?php echo $id ?>" checked="checked" />
+                  <?php } else { ?>
+                    <input type="radio" name="marketplace" id="marketplace_<?php echo $id ?>" value="<?php echo $id ?>" />
+                  <?php } ?>
 
-                    <?php echo $name ?>
-                  </label>
-                <?php } ?>
-              </div>
+                  <?php echo $name ?>
+                </label>
+              <?php } ?>
             </div>
           </div>
         </div>
-        <div class="well">
-          <?php echo $text_not_in_catalog; ?><a href="<?php echo $url_advanced; ?>" id="create_new" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_new; ?></a>
-        </div>
+      </div>
+      <div class="well">
+        <?php echo $text_not_in_catalog; ?><a href="<?php echo $url_advanced; ?>" id="create_new" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_new; ?></a>
+      </div>
     </div>
     <div class="panel-body" id="search-result-container" style="display:none;">
       <table class="table">
@@ -89,8 +89,8 @@
             <input type="hidden" name="quantity" value="<?php echo $quantity; ?>" id="quantity" />
 
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#required-info" data-toggle="tab"><?php echo $tab_required_info; ?></a></li>
-              <li><a href="#additional-info" data-toggle="tab"><?php echo $tab_additional_info; ?></a></li>
+              <li class="active"><a href="#required-info" data-toggle="tab"><?php echo $tab_required; ?></a></li>
+              <li><a href="#additional-info" data-toggle="tab"><?php echo $tab_additional; ?></a></li>
             </ul>
 
             <div class="tab-content">

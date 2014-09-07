@@ -236,7 +236,7 @@
                         </div>
                         <div class="alert alert-info" id="conditionLoading_<?php echo $i; ?>"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_loading_condition; ?></div>
                         <div class="form-group" id="conditionContainer_<?php echo $i; ?>" style="display:none;">
-                          <label class="col-sm-2 control-label"><?php echo $text_condition; ?></label>
+                          <label class="col-sm-2 control-label"><?php echo $entry_condition; ?></label>
                           <div class="col-sm-10">
                             <select name="condition" class="openbay_data_<?php echo $i; ?> form-control" id="conditionRow_<?php echo $i; ?>">
                               <?php foreach($default['profiles_returns'] as $s) { echo '<option value="'.$s['ebay_profile_id'].'"'.($default['profiles_returns_def'] == $s['ebay_profile_id'] ? ' selected' : '').'>'.$s['name'].'</option>'; } ?>

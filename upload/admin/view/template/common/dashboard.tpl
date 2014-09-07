@@ -152,7 +152,9 @@
   </div>
 </div>
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.js"></script> 
-<script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.resize.min.js"></script> 
+<script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.resize.min.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/jqvmap/jquery.vmap.js"></script> 
+<script type="text/javascript" src="view/javascript/jquery/jqvmap/maps/jquery.vmap.world.js"></script> 
 <script type="text/javascript"><!--
 $('#range a').on('click', function(e) {
 	e.preventDefault();

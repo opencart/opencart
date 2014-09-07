@@ -42,3 +42,4 @@ $_['tab_orders']                   		= 'Orders';
 $_['help_import_tax']          			= 'Used if Amazon does not return tax information';
 $_['help_customer_group']      			= 'Select a customer group to assign to imported orders';
 $_['help_default_shipping']    			= 'Used as the pre-selected option in the bulk order update';
+$_['help_tax_percentage']           	= 'Percentage added to default product price';

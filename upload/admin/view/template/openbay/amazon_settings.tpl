@@ -69,9 +69,12 @@
           </div>
           <div class="tab-pane" id="tab-product">
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="entry-tax-percentage"><?php echo $entry_tax_percentage; ?></label>
+              <label class="col-sm-2 control-label" for="entry-tax-percentage"><span data-toggle="tooltip" data-container="#tab-product" title="<?php echo $help_tax_percentage; ?>"><?php echo $entry_tax_percentage; ?></span></label>
               <div class="col-sm-10">
-                <input type="text" name="openbay_amazon_listing_tax_added" value="<?php echo $openbay_amazon_listing_tax_added; ?>" placeholder="<?php echo $entry_tax_percentage; ?>" id="entry-tax-percentage" class="form-control" />
+                <div class="input-group col-xs-2">
+                  <input type="text" name="openbay_amazon_listing_tax_added" value="<?php echo $openbay_amazon_listing_tax_added; ?>" placeholder="<?php echo $entry_tax_percentage; ?>" id="entry-tax-percentage" class="form-control" />
+                  <span class="input-group-addon">%</span>
+                </div>
               </div>
             </div>
             <div class="form-group">

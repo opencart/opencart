@@ -14,36 +14,19 @@ class ModelReportDashboard extends Model {
 	}
 
 	// Customers Online
+	public function getTotalOrdersByCountry() {
+		$query = $this->db->query("SELECT COUNT(*) AS total, SUM(o.total) AS amount, c.iso_code_2 FROM `" . DB_PREFIX . "order` o LEFT JOIN `" . DB_PREFIX . "country` c ON (o.payment_country_id = c.country_id) WHERE o.order_status_id > '0' GROUP BY o.payment_country_id");
+
+		return $query->rows;
+	}
+	
+	// Wolrd Map
 	public function getTotalCustomersOnline() {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_online`");
 
 		return $query->row['total'];
 	}
-
-	public function getTotalCustomersOnlineByHour() {
-		$online_data = array();
-
-		for ($i = strtotime('-1 hour'); $i < time(); $i = ($i + 60)) {
-			$time = (round($i / 60) * 60);
-
-			$online_data[$time] = array(
-				'time'  => $time,
-				'total' => 0
-			);
-		}
-
-		$query = $this->db->query("SELECT COUNT(*) AS total, DATE_FORMAT(date_added, '%Y-%m-%d %H:%i:00') AS date_added FROM `" . DB_PREFIX . "customer_online` WHERE date_added > '" . date('Y-m-d H:i:s', strtotime('-1 hour')) . "' AND date_added < '" . date('Y-m-d H:i:s') . "' GROUP BY MINUTE(date_added) ORDER BY date_added");
-
-		foreach ($query->rows as $result) {
-			$online_data[strtotime($result['date_added'])] = array(
-				'time'  => strtotime($result['date_added']),
-				'total' => $result['total']
-			);
-		}
-
-		return $online_data;
-	}
-
+	
 	// Orders
 	public function getTotalOrdersByDay() {
 		$order_data = array();

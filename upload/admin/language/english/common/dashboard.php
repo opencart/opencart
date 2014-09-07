@@ -3,19 +3,21 @@
 $_['heading_title']                = 'Dashboard';
 
 // Text
-$_['text_new_order']               = 'New Orders';
-$_['text_new_customer']            = 'New Customers';
-$_['text_total_sale']              = 'Total Sales';
-$_['text_analytics']               = 'Sales Analytics';
-$_['text_online']                  = 'People Online';
+$_['text_order_total']             = 'Total Orders';
+$_['text_customer_total']          = 'Total Customers';
+$_['text_sale_total']              = 'Total Sales';
+$_['text_online_total']            = 'People Online';
+$_['text_map']                     = 'World Map';
+$_['text_sale']                    = 'Sales Analytics';
 $_['text_activity']                = 'Recent Activity';
-$_['text_last_order']              = 'Last 5 Orders';
+$_['text_recent']                  = 'Lastest Orders';
 $_['text_order']                   = 'Orders';
 $_['text_customer']                = 'Customers';
 $_['text_day']                     = 'Today';
 $_['text_week']                    = 'Week';
 $_['text_month']                   = 'Month';
 $_['text_year']                    = 'Year';
+$_['text_view']                    = 'View more...';
 $_['text_customer_address_add']    = '<a href="customer_id=%d">%s</a> added a new address.';
 $_['text_customer_address_edit']   = '<a href="customer_id=%d">%s</a> updated their address.';
 $_['text_customer_address_delete'] = '<a href="customer_id=%d">%s</a> deleted one of their address.';

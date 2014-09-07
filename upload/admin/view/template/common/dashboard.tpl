@@ -19,46 +19,52 @@
     <div class="row">
       <div class="col-sm-3">
         <div class="tile">
-          <div class="tile-heading"><?php echo $text_new_order; ?></div>
-          <div class="tile-body">
-            <i class="fa fa-shopping-cart"></i>
+          <div class="tile-heading"><?php echo $text_order_total; ?></div>
+          <div class="tile-body"> <i class="fa fa-shopping-cart"></i>
             <h2 class="pull-right"><?php echo $order_total; ?></h2>
           </div>
-          <div class="tile-footer">View more...</div>
+          <div class="tile-footer"><a href=""><?php echo $text_view; ?></a></div>
         </div>
       </div>
       <div class="col-sm-3">
         <div class="tile">
-          <div class="tile-heading"><?php echo $text_total_sale; ?></div>
-          <div class="tile-body">
-            <i class="fa fa-credit-card"></i>
+          <div class="tile-heading"><?php echo $text_sale_total; ?></div>
+          <div class="tile-body"> <i class="fa fa-credit-card"></i>
             <h2 class="pull-right"><?php echo $sale_total; ?></h2>
           </div>
-          <div class="tile-footer">View more...</div>
+          <div class="tile-footer"><a href=""><?php echo $text_view; ?></a></div>
         </div>
       </div>
       <div class="col-sm-3">
         <div class="tile">
-          <div class="tile-heading"><?php echo $text_new_customer; ?></div>
-          <div class="tile-body">
-            <i class="fa fa-user"></i>
+          <div class="tile-heading"><?php echo $text_customer_total; ?></div>
+          <div class="tile-body"> <i class="fa fa-user"></i>
             <h2 class="pull-right"><?php echo $customer_total; ?></h2>
           </div>
-          <div class="tile-footer">View more...</div>
+          <div class="tile-footer"><a href=""><?php echo $text_view; ?></a></div>
         </div>
       </div>
       <div class="col-sm-3">
         <div class="tile">
-          <div class="tile-heading"><?php echo $text_online; ?></div>
-          <div class="tile-body">
-            <i class="fa fa-eye"></i>
+          <div class="tile-heading"><?php echo $text_online_total; ?></div>
+          <div class="tile-body"> <i class="fa fa-eye"></i>
             <h2 class="pull-right"><?php echo $online_total; ?></h2>
           </div>
-          <div class="tile-footer">View more...</div>
+          <div class="tile-footer"><a href=""><?php echo $text_view; ?></a></div>
         </div>
       </div>
     </div>
     <div class="row">
+      <div class="col-sm-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h1 class="panel-title"><i class="fa fa-eye fa-lg"></i> <?php echo $text_map; ?></h1>
+          </div>
+          <div class="panel-body">
+            <div id="vmap" style="width: 100%; height: 260px;"></div>
+          </div>
+        </div>
+      </div>
       <div class="col-sm-6">
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -73,20 +79,10 @@
                 </ul>
               </div>
             </div>
-            <h1 class="panel-title"><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $text_analytics; ?></h1>
+            <h1 class="panel-title"><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $text_sale; ?></h1>
           </div>
           <div class="panel-body">
-            <div id="chart-sale" class="chart" style="width: 100%; height: 175px;"></div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h1 class="panel-title"><i class="fa fa-eye fa-lg"></i> <?php echo $text_online; ?></h1>
-          </div>
-          <div class="panel-body">
-            <div id="chart-online" class="chart" style="width: 100%; height: 175px;"></div>
+            <div id="chart-sale" class="chart" style="width: 100%; height: 260px;"></div>
           </div>
         </div>
       </div>
@@ -112,7 +108,7 @@
       <div class="col-sm-8">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h1 class="panel-title"><i class="fa fa-shopping-cart fa-lg"></i> <?php echo $text_last_order; ?></h1>
+            <h1 class="panel-title"><i class="fa fa-shopping-cart fa-lg"></i> <?php echo $text_recent; ?></h1>
           </div>
           <div class="table-responsive">
             <table class="table">
@@ -152,10 +148,50 @@
   </div>
 </div>
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.js"></script> 
-<script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.resize.min.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.resize.min.js"></script> 
+<link type="text/css" href="view/javascript/jquery/jqvmap/jqvmap.css" rel="stylesheet" media="screen" />
 <script type="text/javascript" src="view/javascript/jquery/jqvmap/jquery.vmap.js"></script> 
-<script type="text/javascript" src="view/javascript/jquery/jqvmap/maps/jquery.vmap.world.js"></script> 
+<script type="text/javascript" src="view/javascript/jquery/jqvmap/maps/jquery.vmap.world.js"></script>
 <script type="text/javascript"><!--
+$(document).ready(function() {
+	$.ajax({
+		type: 'get',
+		url: 'index.php?route=common/dashboard/map&token=<?php echo $token; ?>',
+		dataType: 'json',
+		success: function(json) {
+			data = [];
+						
+			for (i in json) {
+				data[i] = json[i]['total'];
+			}
+					
+			$('#vmap').vectorMap({
+				map: 'world_en',
+				backgroundColor: '#FFFFFF',
+				borderColor: '#FFFFFF',
+				color: '#9FD5F1',
+				hoverOpacity: 0.7,
+				selectedColor: '#666666',
+				enableZoom: true,
+				showTooltip: true,
+				values: data,
+				normalizeFunction: 'polynomial',
+				onLabelShow: function(event, label, code) {
+					if (json[code]) {
+						label.text(label.text() + "\n" + 'Totals ' + json[code]['total'] + "\n" + 'Totals ' + json[code]['amount']);
+					}
+				},
+				onRegionClick: function(element, code, region) {
+					return false;	
+				}
+			});			
+		},
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+	});			
+});
+
 $('#range a').on('click', function(e) {
 	e.preventDefault();
 	
@@ -218,63 +254,5 @@ $('#range a').on('click', function(e) {
 });
 
 $('#range .active a').trigger('click');
-
-function online() {
-	$.ajax({
-		type: 'get',
-		url: 'index.php?route=common/dashboard/online&token=<?php echo $token; ?>',
-		dataType: 'json',		
-		success: function(json) {
-			var option = {	
-				shadowSize: 0,
-				colors: ['#B94A48'],
-				lines: { 
-					show: true,
-					fill: true,
-					lineWidth: 1,
-					barColor: '#000000'
-				},
-				grid: {
-					backgroundColor: '#FFFFFF',
-					hoverable: true
-				},
-				points: {
-					show: false		
-				},	
-				xaxis: {
-					ticks: json['xaxis']
-				},
-			}		
-			
-			$.plot('#chart-online', [json['online']], option);
-					
-			$('#chart-online').bind('plothover', function(event, pos, item) {
-				$('.tooltip').remove();
-			  
-				if (item) {
-					$('<div id="tooltip" class="tooltip top in"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + item.datapoint[1].toFixed(2) + '</div></div>').prependTo('body');
-					
-					$('#tooltip').css({
-						position: 'absolute',
-						left: item.pageX - ($('#tooltip').outerWidth() / 2),
-						top: item.pageY - $('#tooltip').outerHeight(),
-						pointer: 'cusror'
-					}).fadeIn('slow');	
-					
-					$('#chart-online').css('cursor', 'pointer');		
-				} else {
-					$('#chart-online').css('cursor', 'auto');
-				}
-			});
-		},
-        error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-	});
-	
-	setTimeout(online, 5000);
-}
-
-online();
 //--></script> 
 <?php echo $footer; ?>

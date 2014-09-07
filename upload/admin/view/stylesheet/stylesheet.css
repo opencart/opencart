@@ -60,7 +60,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	min-height: 0px;
 	background: #FFFFFF;
 	border-bottom: 1px solid #E5E5E5;
-	box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.03);
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.03);
 	margin: 0;
 	padding: 0;
 }
@@ -151,6 +151,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #content {
 	padding-bottom: 40px;
+	transition: all 0.3s;
 }
 #column-left + #content {
 	margin-left: 50px;

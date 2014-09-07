@@ -8,9 +8,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
+        <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
       </div>
-      <h1><i class="fa fa-pencil"></i> <?php echo $text_title; ?></h1>
+      <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">
@@ -23,7 +23,9 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="pull-right">
-            <a id="upload_button" onclick="upload()" class="btn btn-primary"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_upload; ?></a>
+            <?php if (!empty($saved_products)) { ?>
+              <a id="upload_button" onclick="upload()" class="btn btn-primary"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_upload; ?></a>
+            <?php } ?>
           </div>
         </div>
       </div>
@@ -62,14 +64,14 @@
   </div>
 </div>
 <script type="text/javascript">
-  function removeSaved(id, optionVar) {
+  function removeSaved(id, option_var) {
     if (!confirm("<?php echo $text_delete_confirm; ?>")) {
       return;
     }
     $.ajax({
       url: '<?php echo html_entity_decode($deleteSavedAjax); ?>',
       type: 'get',
-      data: 'product_id=' + id + '&var=' + optionVar,
+      data: 'product_id=' + id + '&var=' + option_var,
       success: function () {
         window.location.href = window.location.href;
       },
@@ -78,7 +80,8 @@
       }
     });
   }
-  function upload() {
+
+  $('#button-upload').bind('click', function() {
     $.ajax({
       url: '<?php echo html_entity_decode($uploadSavedAjax); ?>',
       dataType: 'json',
@@ -103,6 +106,6 @@
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });
-  }
+  });
 </script>
 <?php echo $footer; ?>

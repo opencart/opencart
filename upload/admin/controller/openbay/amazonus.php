@@ -404,7 +404,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	public function savedListings() {
 		$data = $this->load->language('openbay/amazonus_listingsaved');
 
-		$this->document->setTitle($this->language->get('text_title'));
+		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['link_overview'] = $this->url->link('openbay/amazonus', 'token=' . $this->session->data['token'], 'SSL');
@@ -425,7 +425,7 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href'      => $this->url->link('openbay/amazonus/savedListings', 'token=' . $this->session->data['token'], 'SSL'),
-			'text'      => $this->language->get('text_title'),
+			'text'      => $this->language->get('heading_title'),
 		);
 
 		$data['token'] = $this->session->data['token'];

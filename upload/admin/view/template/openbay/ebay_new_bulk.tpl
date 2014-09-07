@@ -11,7 +11,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <a onclick="confirmAction('<?php echo $cancel; ?>');" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
+        <a onclick="confirmAction('<?php echo $cancel; ?>');" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
       </div>
       <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_page_title; ?></h1>
     </div>
@@ -577,7 +577,7 @@
                     htmlInj = '';
                     htmlInj += '<div class="panel panel-default">';
                       htmlInj += '<div class="panel-heading">';
-                        htmlInj += '<div class="pull-right"><a onclick="overlayHide();" class="btn" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="fa fa-times"></i></a></div>';
+                        htmlInj += '<div class="pull-right"><a onclick="overlayHide();" class="btn btn-default" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="fa fa-times"></i></a></div>';
                         htmlInj += '<h1 class="panel-title"><?php echo $text_features; ?></h1>';
                       htmlInj += '</div>';
                       htmlInj += '<div class="panel-body">';

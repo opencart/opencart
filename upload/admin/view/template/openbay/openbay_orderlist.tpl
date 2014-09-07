@@ -8,7 +8,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
       </div>
       <h1 class="panel-title"><i class="fa fa-bars fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
@@ -32,7 +32,7 @@
               <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
             <?php } ?>
           </select>
-          <a data-toggle="tooltip" title="<?php echo $button_status; ?>" class="btn" onclick="$('#order-update-form').submit();"><i class="fa fa-plus-circle"></i></a>
+          <a data-toggle="tooltip" title="<?php echo $button_status; ?>" class="btn btn-default" onclick="$('#order-update-form').submit();"><i class="fa fa-plus-circle"></i></a>
         </div>
       </div>
       <div class="container-fluid">

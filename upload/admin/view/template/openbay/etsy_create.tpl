@@ -8,7 +8,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <a data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn" id="btn-cancel"><i class="fa fa-reply"></i></a>
+        <a data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default" id="btn-cancel"><i class="fa fa-reply"></i></a>
       </div>
       <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>

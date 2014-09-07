@@ -18,7 +18,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <a href="<?php echo $insert; ?>" data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn"><i class="fa fa-plus-circle"></i></a>
+        <a href="<?php echo $insert; ?>" data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn btn-default"><i class="fa fa-plus-circle"></i></a>
       </div>
       <h1 class="panel-title"><i class="fa fa-code fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>

@@ -15,29 +15,30 @@ $.extend({
     }
 });
 
-function getFaq(){
+function faq(){
     var route = $.getUrlVar('route');
     var token = $.getUrlVar('token');
 
     $.ajax({
-        url: 'index.php?route=extension/openbay/faqGet&token='+token+'&qry_route='+route,
+        url: 'index.php?route=extension/openbay/faq&token='+token+'&qry_route='+route,
         type: 'GET',
         dataType: 'json',
         success: function(data) {
             if(data.faq_id){
-                var htmlInj = '';
+                var html = '';
 
-                htmlInj += '<div class="row">';
-                    htmlInj += '<div class="col-md-5 col-md-offset-7">';
-                        htmlInj += '<div id="faq" class="alert alert-info">';
-                            htmlInj += ' <button type="button" class="close" data-dismiss="alert" onclick="hideFaq();">&times;</button>';
-                            htmlInj += '<h4><i class="fa fa-info-circle"></i> '+data.title+'</h4>';
-                            htmlInj += '<h5>'+data.message+'<label class="label label-info pull-right"><a class="alert-link" href="'+data.link+'" target="_BLANK">'+data.button_faq+'</a></label></h5>';
-                        htmlInj += '</div>';
-                    htmlInj += '</div>';
-                htmlInj += '</div>';
+                html += '<div class="container-fluid" id="faq">';
+                    html += '<div class="alert alert-info">';
+                    	html += '<div class="pull-right">';
+							html += '<button type="button" class="btn btn-danger" data-toggle="tooltip" title="" id="faq-close"><i class="fa fa-minus-circle"></i></button>';
+							html += '<a href="' + data.link + '" target="_BLANK" data-toggle="tooltip" title="' + data.button_faq + '"><i class="fa fa-info-circle"></i></a>';
+						html += '</div>';
+						html += '<h4>' + data.title + '</h4>';
+						html += '<p>' + data.message + '</p>';
+                    html += '</div>';
+                html += '</div>';
 
-                //$('#content').prepend(htmlInj);
+                $('#content').prepend(html);
                 $('#faq').slideDown('slow');
             }
         }
@@ -45,7 +46,7 @@ function getFaq(){
 }
 
 $(document).ready(function(){
-    getFaq();
+    faq();
 });
 
 $('#faq-close').bind('click', function() {
@@ -55,7 +56,7 @@ $('#faq-close').bind('click', function() {
     $('#faq').fadeOut();
 
     $.ajax({
-        url: 'index.php?route=extension/openbay/faqDismiss&token='+token+'&qry_route='+route,
+        url: 'index.php?route=extension/openbay/faqdismiss&token='+token+'&qry_route='+route,
         type: 'GET',
         dataType: 'json',
         success: function(data) {}

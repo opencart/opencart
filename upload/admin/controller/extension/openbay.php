@@ -349,7 +349,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function faqGet() {
+	public function faq() {
 		$this->load->model('openbay/openbay');
 
 		$this->load->language('extension/openbay');

@@ -8,7 +8,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
+        <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
       </div>
       <h1><i class="fa fa-pencil"></i> <?php echo $text_title; ?></h1>
     </div>
@@ -20,7 +20,7 @@
           <div class="input-group date">
             <input type="text" class="form-control" id="input-date-start" data-format="YYYY-MM-DD" placeholder="<?php echo $entry_date_start; ?>" value="<?php echo $date_start; ?>" name="filter_date_start">
             <span class="input-group-btn">
-              <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
+              <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
             </span>
           </div>
         </div>
@@ -28,12 +28,12 @@
           <div class="input-group date">
             <input type="text" class="form-control" id="input-date-end" data-format="YYYY-MM-DD" placeholder="<?php echo $entry_date_end; ?>" value="<?php echo $date_end; ?>" name="filter_date_end">
             <span class="input-group-btn">
-              <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
+              <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
             </span>
           </div>
         </div>
         <div class="col-sm-2 text-right">
-          <a onclick="filter();" class="btn btn-primary"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></a>
+          <a onclick="filter();" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_filter; ?>"><i class="fa fa-filter"></i></a>
         </div>
       </div>
     </div>

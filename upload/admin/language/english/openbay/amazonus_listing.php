@@ -10,6 +10,7 @@ $_['button_new'] = 'Create new product';
 $_['button_return'] = 'Back to products';
 $_['button_amazonus_price'] = "Get Amazon's price";
 $_['button_list'] = "List on Amazon";
+$_['button_remove_error'] = "Remove error messages";
 
 //Text
 $_['text_view_on_amazonus'] = 'View on Amazon US';

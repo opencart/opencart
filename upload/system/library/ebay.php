@@ -50,16 +50,7 @@ final class Ebay {
 				$domain = HTTPS_SERVER;
 			}
 
-			$data = array(
-				'token'             => $this->token,
-				'language'          => $this->config->get('openbay_language'),
-				'secret'            => $this->secret,
-				'server'            => $this->server,
-				'domain'            => $domain,
-				'openbay_version'   => (int)$this->config->get('openbay_version'),
-				'data'              => $post,
-				'content_type'      => $content_type
-			);
+			$data = array('token' => $this->token, 'secret' => $this->secret, 'server' => $this->server, 'domain' => $domain, 'openbay_version' => (int)$this->config->get('openbay_version'), 'opencart_version' => VERSION, 'data' => $post, 'content_type' => $content_type, 'language' => $this->config->get('openbay_language'));
 
 			$defaults = array(
 				CURLOPT_POST            => 1,
@@ -128,7 +119,7 @@ final class Ebay {
 				$domain = HTTPS_SERVER;
 			}
 
-			$data = array('token' => $this->token, 'secret' => $this->secret, 'server' => $this->server, 'domain' => $domain, 'openbay_version' => (int)$this->config->get('openbay_version'), 'data' => $post, 'content_type' => $content_type, 'language' => $this->config->get('openbay_language'));
+			$data = array('token' => $this->token, 'secret' => $this->secret, 'server' => $this->server, 'domain' => $domain, 'openbay_version' => (int)$this->config->get('openbay_version'), 'opencart_version' => VERSION, 'data' => $post, 'content_type' => $content_type, 'language' => $this->config->get('openbay_language'));
 
 			$defaults = array(
 				CURLOPT_POST            => 1,

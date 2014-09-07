@@ -2,7 +2,7 @@
 // Heading
 $_['heading_title']					= 'Item links';
 $_['text_openbay']					= 'OpenBay Pro';
-$_['text_amazon']					= 'Amazon US';
+$_['text_amazon']					= 'Amazon EU';
 
 $_['text_link_items']               = 'Link items';
 $_['text_item_links']               = 'Item links';

@@ -5,16 +5,16 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="page-header">
+    <div class="container-fluid">
       <div class="pull-right">
         <a href="<?php echo $href_return; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
       </div>
-      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="panel-body">
-
-      <?php if ($bulk_linking_status) { ?>
+  </div>
+  <div class="container-fluid">
+    <?php if ($bulk_linking_status) { ?>
       <div class="alert alert-info"><?php echo $text_load_listings_help ?></div>
       <div class="well">
         <div class="row">
@@ -44,61 +44,60 @@
         </div>
       </div>
       <form id="bulk-link-form" class="form-horizontal">
-        <div id="text-<?php echo $marketplace_code; ?>">
-          <?php if (!in_array($marketplace_code, $marketplaces_processing)) { ?>
-          <?php if ($unlinked_products) { ?>
-          <table class="table">
-            <thead>
-            <tr>
-              <th></th>
-              <th class="text-center" colspan="4"><?php echo $text_amazon ?></th>
-              <th class="text-center" colspan="4"><?php echo $text_local ?></th>
-            </tr>
-            <tr>
-              <th class="text-center"><input type="checkbox" class="master-checkbox" value="<?php echo $marketplace['code'] ?>"/></th>
-              <th class="text-left"><?php echo $column_asin ?></th>
-              <th class="text-left"><?php echo $column_sku ?></th>
-              <th class="text-left"><?php echo $column_quantity ?></th>
-              <th class="text-right"><?php echo $column_price ?></th>
-              <th class="text-left"><?php echo $column_name ?></th>
-              <th class="text-left"><?php echo $column_sku ?></th>
-              <th class="text-left"><?php echo $column_quantity ?></th>
-              <th class="text-left"><?php echo $column_combination ?></th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php $row = 0; ?><?php foreach ($unlinked_products as $product) { ?><?php $row++ ?>
-            <tr>
-              <td class="text-center"><input type="checkbox" class="link-checkbox link-checkbox-<?php echo $marketplace['code'] ?>"/></td>
-              <td class="text-left"><a href="<?php echo $product['href_amazon'] ?>" target="_blank"><?php echo $product['asin'] ?></a></td>
-              <td class="text-left"><?php echo $product['amazon_sku'] ?></td>
-              <td class="text-left"><?php echo $product['amazon_quantity'] ?></td>
-              <td class="text-right"><?php echo $product['amazon_price'] ?></td>
-              <td class="text-left"><a href="<?php echo $product['href_product'] ?>" target="_blank"><?php echo $product['name'] ?></a></td>
-              <td class="text-left"><?php echo $product['sku'] ?></td>
-              <td class="text-left"><?php echo $product['quantity'] ?></td>
-              <td class="text-left"><?php echo $product['combination'] ?></td>
+      <div id="text-<?php echo $marketplace_code; ?>">
+        <?php if (!in_array($marketplace_code, $marketplaces_processing)) { ?>
+        <?php if ($unlinked_products) { ?>
+        <table class="table">
+          <thead>
+          <tr>
+            <th></th>
+            <th class="text-center" colspan="4"><?php echo $text_amazon ?></th>
+            <th class="text-center" colspan="4"><?php echo $text_local ?></th>
+          </tr>
+          <tr>
+            <th class="text-center"><input type="checkbox" class="master-checkbox" value="<?php echo $marketplace['code'] ?>"/></th>
+            <th class="text-left"><?php echo $column_asin ?></th>
+            <th class="text-left"><?php echo $column_sku ?></th>
+            <th class="text-left"><?php echo $column_quantity ?></th>
+            <th class="text-right"><?php echo $column_price ?></th>
+            <th class="text-left"><?php echo $column_name ?></th>
+            <th class="text-left"><?php echo $column_sku ?></th>
+            <th class="text-left"><?php echo $column_quantity ?></th>
+            <th class="text-left"><?php echo $column_combination ?></th>
+          </tr>
+          </thead>
+          <tbody>
+          <?php $row = 0; ?><?php foreach ($unlinked_products as $product) { ?><?php $row++ ?>
+          <tr>
+            <td class="text-center"><input type="checkbox" class="link-checkbox link-checkbox-<?php echo $marketplace['code'] ?>"/></td>
+            <td class="text-left"><a href="<?php echo $product['href_amazon'] ?>" target="_blank"><?php echo $product['asin'] ?></a></td>
+            <td class="text-left"><?php echo $product['amazon_sku'] ?></td>
+            <td class="text-left"><?php echo $product['amazon_quantity'] ?></td>
+            <td class="text-right"><?php echo $product['amazon_price'] ?></td>
+            <td class="text-left"><a href="<?php echo $product['href_product'] ?>" target="_blank"><?php echo $product['name'] ?></a></td>
+            <td class="text-left"><?php echo $product['sku'] ?></td>
+            <td class="text-left"><?php echo $product['quantity'] ?></td>
+            <td class="text-left"><?php echo $product['combination'] ?></td>
 
-              <input type="hidden" name="link[<?php echo $row ?>][amazon_sku]" value="<?php echo $product['amazon_sku'] ?>"/>
-              <input type="hidden" name="link[<?php echo $row ?>][product_id]" value="<?php echo $product['product_id'] ?>"/>
-              <input type="hidden" name="link[<?php echo $row ?>][var]" value="<?php echo $product['var'] ?>"/>
-            </tr>
-            <?php } ?>
-            </tbody>
-          </table>
+            <input type="hidden" name="link[<?php echo $row ?>][amazon_sku]" value="<?php echo $product['amazon_sku'] ?>"/>
+            <input type="hidden" name="link[<?php echo $row ?>][product_id]" value="<?php echo $product['product_id'] ?>"/>
+            <input type="hidden" name="link[<?php echo $row ?>][var]" value="<?php echo $product['var'] ?>"/>
+          </tr>
+          <?php } ?>
+          </tbody>
+        </table>
 
-          <div class="row">
-            <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
-            <div class="col-sm-6 text-right"><?php echo $results; ?></div>
-          </div>
-          <?php } ?>
-          <?php } ?>
+        <div class="row">
+          <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+          <div class="col-sm-6 text-right"><?php echo $results; ?></div>
         </div>
-      </form>
-      <?php } else { ?>
+        <?php } ?>
+        <?php } ?>
+      </div>
+    </form>
+    <?php } else { ?>
       <div class="warning"><?php echo $error_bulk_linking_not_allowed ?></div>
-      <?php } ?>
-    </div>
+    <?php } ?>
   </div>
 </div>
 <script type="text/javascript"><!--

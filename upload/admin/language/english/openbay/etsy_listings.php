@@ -9,7 +9,6 @@ $_['text_deactivate']         	= 'Deactivate';
 $_['text_add_link']         	= 'Add link';
 $_['text_delete_link']         	= 'Delete link';
 $_['text_delete']         		= 'Delete listing';
-
 $_['text_status_stock']         = 'Stock not synced';
 $_['text_status_ok']         	= 'OK';
 $_['text_status_nolink']        = 'Not linked';

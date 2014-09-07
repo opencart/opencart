@@ -1,7 +1,7 @@
 <?php
 final class Etsy {
 	private $registry;
-	private $url    = 'http://etsy.welfordlocal.co.uk/';
+	private $url    = 'http://etsy.openbaypro.com/';
 
 	public function __construct($registry) {
 		$this->registry = $registry;
@@ -35,7 +35,6 @@ final class Etsy {
 
 	public function call($uri, $method, $data = array()) {
 		if($this->config->get('etsy_status') == 1) {
-
 			$headers = array ();
 			$headers[] = 'X-Auth-Token: ' . $this->token;
 			$headers[] = 'X-Auth-Enc: ' . $this->enc1;
@@ -53,8 +52,8 @@ final class Etsy {
 				CURLOPT_TIMEOUT         => 10,
 				CURLOPT_SSL_VERIFYPEER  => 0,
 				CURLOPT_SSL_VERIFYHOST  => 0,
-				CURLOPT_VERBOSE 		=> true,
-				CURLOPT_STDERR 			=> fopen(DIR_LOGS . 'curl_verbose.log', "w+")
+				//CURLOPT_VERBOSE 		=> true,
+				//CURLOPT_STDERR 			=> fopen(DIR_LOGS . 'curl_verbose.log', "w+")
 			);
 
 			if ($method == 'POST') {

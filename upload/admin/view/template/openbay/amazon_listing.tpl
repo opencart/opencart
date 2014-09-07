@@ -5,25 +5,27 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
-  <?php } ?>
-  <?php if ($listing_errors) { ?>
-  <div class="alert alert-danger">
-    <ul>
-      <?php foreach ($listing_errors as $listing_error) { ?>
-      <li><i class="fa fa-exclamation-circle"></i> <?php echo $listing_error ?></li>
-      <?php } ?>
-    </ul>
-  </div>
-  <?php } ?>
-  <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="page-header">
+    <div class="container-fluid">
       <div class="pull-right">
         <a href="<?php echo $url_return; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
       </div>
-      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_title; ?></h1>
+      <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
+  </div>
+  <div class="container-fluid">
+    <?php if ($error_warning) { ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+    <?php } ?>
+    <?php if ($listing_errors) { ?>
+    <div class="alert alert-danger">
+      <ul>
+        <?php foreach ($listing_errors as $listing_error) { ?>
+        <li><i class="fa fa-exclamation-circle"></i> <?php echo $listing_error ?></li>
+        <?php } ?>
+      </ul>
+    </div>
+    <?php } ?>
     <div class="panel-body" id="search-container">
       <div class="alert alert-danger" id="search-error" style="display:none;"></div>
         <div class="well">

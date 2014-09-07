@@ -1,95 +1,97 @@
-<?php echo $header; ?>
+<?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-    <div class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-        <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <?php if ($has_listing_errors) { ?>
+          <a href="<?php echo $url_remove_errors; ?>" data-toggle="tooltip" title="<?php echo $button_remove_error; ?>" class="btn"><i class="fa fa-reply"></i></a>
         <?php } ?>
+        <a href="<?php echo $cancel_url; ?>" data-toggle="tooltip" title="<?php echo $cancel_button_text; ?>" class="btn"><i class="fa fa-reply"></i></a>
+      </div>
+      <h1><i class="fa fa-pencil"></i> <?php echo $text_title; ?></h1>
     </div>
-    <?php if (isset($success)) : ?>
-        <div class="success"><?php echo $success; ?></div>
-    <?php endif; ?>
-
-    <?php if (!empty($errors)) { ?>
-    <div class="warning"><ul>
-            <?php foreach($errors as $error) : ?>
-            <li><?php echo $error['message']; ?></li>
-
-            <?php endforeach; ?>
-        </ul></div>
+  </div>
+  <div class="container-fluid">
+    <?php if ($errors) { ?>
+      <div class="alert alert-danger">
+        <ul>
+          <?php foreach ($errors as $listing_error) { ?>
+          <li><i class="fa fa-exclamation-circle"></i> <?php echo $listing_error ?></li>
+          <?php } ?>
+        </ul>
+      </div>
+    <?php } ?>
+    <?php if ($success) { ?>
+      <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
     <?php } ?>
 
-    <div class="box">
-        <div class="heading">
-            <h1><?php echo $text_title; ?></h1>
-            <div class="buttons">
-                <?php if ($has_listing_errors) { ?>
-                <a onclick="location='<?php echo $url_remove_errors; ?>'" class="button"><span>Remove error messages</span></a>
-                <?php } ?>
-                <a id="save_button" onclick="validate_and_save('advanced')" class="button"><span><?php echo $save_button_text; ?></span></a>
-                <a id="save_button" onclick="save_and_upload()" class="button"><span><?php echo $save_upload_button_text; ?></span></a>
-                <a onclick="location = '<?php echo $saved_listings_url; ?>';" class="button"><span><?php echo $saved_listings_button_text; ?></span></a>
-                <a id="cancel_button" onclick="location = '<?php echo $cancel_url; ?>';" class="button"><span><?php echo $cancel_button_text; ?></span></a>
-
-            </div>
-        </div>
-        <div class="content">
-
-            <div id="tabs" class="htabs">
-                <a href="#page-main"><?php echo $text_tab_main; ?></a>
-                <div id="dynamic_tabs"></div>
-            </div>
-
-            <form method="POST" id="product_form_advanced">
-                <div id="page-main">
-                    <table class="form" align="left">
-                        <tbody>
-                        <tr>
-                            <td style="width: 400px;"><?php echo $listing_row_text; ?></td>
-                            <td>
-                                <a href="<?php echo $listing_url; ?>"><?php echo $listing_name; ?><?php if (!empty($options)) { echo " : "; } ?></a>
-                                <?php if (!empty($options)) { ?>
-                                <select id="openstock_selector" name="optionVar">
-                                    <option></option>
-                                    <?php foreach($options as $option) { ?>
-                                    <option <?php if ($variation === $option['var']) { echo "selected='selected'";} ?> value="<?php echo  $option['var']?>"><?php echo $option['combi']?></option>
-                                    <?php } ?>
-                                </select>
-                                <?php }?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <?php echo $category_selector_field_text; ?><br>
-                                <span class="help"></span>
-                            </td>
-                            <td>
-                                <select id="category_selector">
-                                    <option value=""></option>
-                                    <?php foreach($amazonus_categories as $category) {  ?>
-                                    <option <?php if ($edit_product_category == $category["name"]) echo 'selected="selected"'; ?> value="<?php echo $category['template'] ?>"><?php echo $category['friendly_name'] ?></option>
-                                    <?php } ?>
-                                </select>
-                            </td>
-                        </tr>
-                        </tbody>
-                        <input type="hidden" name="upload_after" value="false">
-                        <tbody class="fields_advanced"></tbody>
-                    </table>
-                </div>
-                <div id="dynamic_pages">
-                </div>
-
-                <div id="greyScreen"></div>
-                <div id="browseNodeForm" class="greyScreenBox nodePage">
-                    <div class="bold border p5 previewClose">X</div>
-                    <div id="browseNodeFormContent"></div>
-                </div>
-            </form>
-        </div>
+    <div id="tabs" class="htabs">
+        <a href="#page-main"><?php echo $text_tab_main; ?></a>
+        <div id="dynamic_tabs"></div>
     </div>
+    <form method="POST" id="product_form_advanced">
+          <div id="page-main">
+              <table class="form" align="left">
+                  <tbody>
+                  <tr>
+                      <td style="width: 400px;"><?php echo $listing_row_text; ?></td>
+                      <td>
+                          <a href="<?php echo $listing_url; ?>"><?php echo $listing_name; ?><?php if (!empty($options)) { echo " : "; } ?></a>
+                          <?php if (!empty($options)) { ?>
+                          <select id="openstock_selector" name="optionVar">
+                              <option></option>
+                              <?php foreach($options as $option) { ?>
+                              <option <?php if ($variation === $option['var']) { echo "selected='selected'";} ?> value="<?php echo  $option['var']?>"><?php echo $option['combi']?></option>
+                              <?php } ?>
+                          </select>
+                          <?php }?>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>
+                          <?php echo $category_selector_field_text; ?><br>
+                          <span class="help"></span>
+                      </td>
+                      <td>
+                          <select id="category_selector">
+                              <option value=""></option>
+                              <?php foreach($amazonus_categories as $category) {  ?>
+                              <option <?php if ($edit_product_category == $category["name"]) echo 'selected="selected"'; ?> value="<?php echo $category['template'] ?>"><?php echo $category['friendly_name'] ?></option>
+                              <?php } ?>
+                          </select>
+                      </td>
+                  </tr>
+                  </tbody>
+                  <input type="hidden" name="upload_after" value="false">
+                  <tbody class="fields_advanced"></tbody>
+              </table>
+          </div>
+          <div id="dynamic_pages">
+          </div>
+
+          <div id="greyScreen"></div>
+          <div id="browseNodeForm" class="greyScreenBox nodePage">
+              <div class="bold border p5 previewClose">X</div>
+              <div id="browseNodeFormContent"></div>
+          </div>
+      </form>
+
+    <div class="well">
+      <div class="row">
+        <div class="col-md-12 text-right">
+          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $save_button_text ?>" onclick="validate_and_save('advanced')"><i class="fa fa-save fa-lg"></i></a>
+          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $save_upload_button_text ?>" onclick="save_and_upload()"><i class="fa fa-cloud-upload fa-lg"></i></a>
+          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $saved_listings_button_text ?>" href="<?php echo $saved_listings_url; ?>"><i class="fa fa-copy fa-lg"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-
 <script type="text/javascript"><!--
 $(document).ready(function(){
     $('#openstock_selector').change(function() {

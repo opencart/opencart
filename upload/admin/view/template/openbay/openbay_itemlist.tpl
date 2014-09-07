@@ -1,25 +1,22 @@
 <?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
-  <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  <?php } ?>
-  <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  <?php } ?>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h1 class="panel-title"><i class="fa fa-bars fa-lg"></i> <?php echo $heading_title; ?></h1>
+  <div class="page-header">
+    <div class="container-fluid">
+      <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="panel-body">
+  </div>
+  <div class="container-fluid">
+    <?php if ($error_warning) { ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    <?php } ?>
+    <?php if ($success) { ?>
+    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    <?php } ?>
+
     <?php if ($link_amazon_eu_bulk || $link_amazon_us_bulk || $link_ebay_bulk) { ?>
       <div class="well" id="bulk-buttons">
         <div class="row">
@@ -156,7 +153,7 @@
       </div>
     </div>
 
-      <form method="post" id="form">
+    <form method="post" id="form">
         <table class="table">
           <thead>
             <tr>
@@ -248,14 +245,12 @@
           </tbody>
         </table>
       </form>
-      <div class="row">
-        <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
-        <div class="col-sm-6 text-right"><?php echo $results; ?></div>
-      </div>
+    <div class="row">
+      <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+      <div class="col-sm-6 text-right"><?php echo $results; ?></div>
     </div>
   </div>
 </div>
-
 <script type="text/javascript"><!--
   function filter() {
       url = 'index.php?route=extension/openbay/itemList&token=<?php echo $token; ?>';

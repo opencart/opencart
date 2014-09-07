@@ -266,7 +266,7 @@ class Amazon {
 			CURLOPT_TIMEOUT => 2,
 			CURLOPT_SSL_VERIFYPEER => 0,
 			CURLOPT_SSL_VERIFYHOST => 0,
-			CURLOPT_POSTFIELDS => 'token=' . $this->token . '&data=' . rawurlencode($crypt),
+			CURLOPT_POSTFIELDS => 'token=' . $this->token . '&data=' . rawurlencode($crypt) . '&opencart_version=' . VERSION,
 		);
 		$ch = curl_init();
 
@@ -298,7 +298,7 @@ class Amazon {
 			CURLOPT_TIMEOUT         => 30,
 			CURLOPT_SSL_VERIFYPEER  => 0,
 			CURLOPT_SSL_VERIFYHOST  => 0,
-			CURLOPT_POSTFIELDS      => 'token=' . $this->token . '&data=' . rawurlencode($crypt),
+			CURLOPT_POSTFIELDS      => 'token=' . $this->token . '&data=' . rawurlencode($crypt) . '&opencart_version=' . VERSION,
 		);
 		$ch = curl_init();
 

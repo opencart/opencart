@@ -5,62 +5,61 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h1 class="panel-title"><i class="fa fa-link fa-lg"></i> <?php echo $heading_title; ?></h1>
+  <div class="page-header">
+    <div class="container-fluid">
+      <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="panel-body">
-      <h4><?php echo $text_new_link; ?></h4>
-      <div class="alert alert-success" id="alert-link-save" style="display:none;"><i class="fa fa-check fa-lg" style="color:green"></i> <?php echo $text_link_saved; ?></div>
-      <div class="alert alert-danger" id="alert-link-error" style="display:none;"></div>
-      <div class="well">
-        <div class="row">
-          <div class="col-sm-6">
-            <div class="form-group">
-              <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
-              <input type="hidden" name="add_link_product_id" value="" id="input-product-id"/>
-              <input type="text" name="add_link_product" value="" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <div class="form-group">
-              <label class="control-label" for="input-etsy-id"><?php echo $entry_etsy_id; ?></label>
-              <input type="text" name="add_link_etsy_id" value="" placeholder="<?php echo $entry_etsy_id; ?>" id="input-etsy-id" class="form-control" />
-            </div>
-            <a onclick="addLink();" class="btn btn-primary pull-right" id="button-submit-link"><i class="fa fa-check"></i> <?php echo $button_save; ?></a>
+  </div>
+  <div class="container-fluid">
+    <h4><?php echo $text_new_link; ?></h4>
+    <div class="alert alert-success" id="alert-link-save" style="display:none;"><i class="fa fa-check fa-lg" style="color:green"></i> <?php echo $text_link_saved; ?></div>
+    <div class="alert alert-danger" id="alert-link-error" style="display:none;"></div>
+    <div class="well">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
+            <input type="hidden" name="add_link_product_id" value="" id="input-product-id"/>
+            <input type="text" name="add_link_product" value="" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
           </div>
         </div>
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label class="control-label" for="input-etsy-id"><?php echo $entry_etsy_id; ?></label>
+            <input type="text" name="add_link_etsy_id" value="" placeholder="<?php echo $entry_etsy_id; ?>" id="input-etsy-id" class="form-control" />
+          </div>
+          <a onclick="addLink();" class="btn btn-primary pull-right" id="button-submit-link"><i class="fa fa-check"></i> <?php echo $button_save; ?></a>
+        </div>
       </div>
-      <h4><?php echo $text_current_links; ?></h4>
-      <table class="table">
-        <thead>
-          <tr>
-            <th class="text-left"><?php echo $column_product; ?></th>
-            <th class="text-center"><?php echo $column_item_id; ?></th>
-            <th class="text-center"><?php echo $column_store_stock; ?></th>
-            <th class="text-center"><?php echo $column_status; ?></th>
-            <th class="text-center"><?php echo $column_action; ?></th>
-          </tr>
-        </thead>
-        <tbody id="show-linked-items">
-          <?php foreach ($items as $id => $item) { ?>
-            <tr id="row-<?php echo $item['etsy_listing_id']; ?>">
-              <td class="text-left"><a href="<?php echo $item['link_edit']; ?>" target="_BLANK"><?php echo $item['name']; ?></a></td>
-              <td class="text-center"><a href="<?php echo $item['link_etsy']; ?>" target="_BLANK"><?php echo $item['etsy_item_id']; ?></a></td>
-              <td class="text-center"><?php echo $item['quantity']; ?></td>
-              <td class="text-center">
-                <?php if ($item['status'] == 1) { ?><i class="fa fa-check" style="color: green;"></i><?php } else { ?><i class="fa fa-times" style="color: red;"></i><?php } ?>
-              </td>
-              <td class="text-center">
-                <button class="btn btn-danger" id="row-delete-btn-<?php echo $item['etsy_listing_id']; ?>" onclick="deleteLink('<?php echo $item['etsy_listing_id']; ?>')"><i class="fa fa-times"></i></button>
-              </td>
-            </tr>
-          <?php } ?>
-        </tbody>
-      </table>
-      <div class="pagination"><?php echo $pagination; ?></div>
     </div>
+    <h4><?php echo $text_current_links; ?></h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="text-left"><?php echo $column_product; ?></th>
+          <th class="text-center"><?php echo $column_item_id; ?></th>
+          <th class="text-center"><?php echo $column_store_stock; ?></th>
+          <th class="text-center"><?php echo $column_status; ?></th>
+          <th class="text-center"><?php echo $column_action; ?></th>
+        </tr>
+      </thead>
+      <tbody id="show-linked-items">
+        <?php foreach ($items as $id => $item) { ?>
+          <tr id="row-<?php echo $item['etsy_listing_id']; ?>">
+            <td class="text-left"><a href="<?php echo $item['link_edit']; ?>" target="_BLANK"><?php echo $item['name']; ?></a></td>
+            <td class="text-center"><a href="<?php echo $item['link_etsy']; ?>" target="_BLANK"><?php echo $item['etsy_item_id']; ?></a></td>
+            <td class="text-center"><?php echo $item['quantity']; ?></td>
+            <td class="text-center">
+              <?php if ($item['status'] == 1) { ?><i class="fa fa-check" style="color: green;"></i><?php } else { ?><i class="fa fa-times" style="color: red;"></i><?php } ?>
+            </td>
+            <td class="text-center">
+              <button class="btn btn-danger" id="row-delete-btn-<?php echo $item['etsy_listing_id']; ?>" onclick="deleteLink('<?php echo $item['etsy_listing_id']; ?>')"><i class="fa fa-times"></i></button>
+            </td>
+          </tr>
+        <?php } ?>
+      </tbody>
+    </table>
+    <div class="pagination"><?php echo $pagination; ?></div>
   </div>
 </div>
 <script type="text/javascript"><!--

@@ -1,46 +1,35 @@
-<?php echo $header; ?>
+<?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-    <div class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-        <?php echo $breadcrumb['separator'] ?><a href="<?php echo $breadcrumb['href'] ?>"><?php echo $breadcrumb['text'] ?></a>
-        <?php } ?>
-    </div>
-
-    <?php if (isset($error_warning)) { ?>
-
-    <div class="warning">
-        <ul>
-            <li><?php echo $error_warning ?></li>
-        </ul>
-    </div>
-
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-
+  </ul>
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <a href="<?php echo $url_return; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
+      </div>
+      <h1><i class="fa fa-pencil"></i> <?php echo $text_title; ?></h1>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <?php if ($error_warning) { ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+    <?php } ?>
     <?php if ($listing_errors) { ?>
-
-    <div class="warning">
-        <ul>
-            <?php foreach ($listing_errors as $listing_error) { ?>
-
-            <li><?php echo $listing_error ?></li>
-
-            <?php } ?>
-        </ul>
+    <div class="alert alert-danger">
+      <ul>
+        <?php foreach ($listing_errors as $listing_error) { ?>
+        <li><i class="fa fa-exclamation-circle"></i> <?php echo $listing_error ?></li>
+        <?php } ?>
+      </ul>
     </div>
-
     <?php } ?>
-
     <div class="box mBottom130">
-        <div class="heading">
-            <h1><?php echo $text_title; ?></h1>
-            <div class="buttons">
-                <a onclick="location = '<?php echo $url_return; ?>';" class="button"><span><?php echo $button_return; ?></span></a>
-            </div>
-        </div>
         <div class="content">
             <div class="search_container">
                 <div class="warning m10 displayNone" id="search_error"></div>
-
                 <div class="border p10">
                     <p>
                         <input type="text" name="search_string" placeholder="<?php echo $text_placeholder_search; ?>" id="search_string" class="width250" />
@@ -48,7 +37,6 @@
                         <img src="view/image/loading.gif" id="search_submit_loading" class="displayNone" alt="Loading" />
                     </p>
                 </div>
-
                 <p class="border p10 mtop5">
                     <span><?php echo $text_not_in_catalog; ?></span><a href="<?php echo $url_advanced; ?>" id="create_new" class="button"><?php echo $button_new; ?></a>
                 </p>

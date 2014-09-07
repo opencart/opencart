@@ -2,7 +2,7 @@
 // Heading
 $_['heading_title']         		= 'Amazon EU';
 $_['text_openbay']					= 'OpenBay Pro';
-$_['text_dashboard']				= 'Dashboard';
+$_['text_dashboard']				= 'Amazon EU Dashboard';
 
 // Text
 $_['text_heading_settings'] 		= 'Settings';

@@ -5,60 +5,60 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="page-header">
+    <div class="container-fluid">
       <div class="pull-right">
         <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
       </div>
-      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_title; ?></h1>
+      <h1><i class="fa fa-pencil"></i> <?php echo $text_title; ?></h1>
     </div>
-    <div class="panel-body">
-      <div class="well">
-        <div class="row">
-          <div class="col-sm-12">
-            <p><?php echo $text_description; ?></p>
-          </div>
+  </div>
+  <div class="container-fluid">
+    <div class="well">
+      <div class="row">
+        <div class="col-sm-12">
+          <p><?php echo $text_description; ?></p>
         </div>
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="pull-right">
-              <a id="upload_button" onclick="upload()" class="btn btn-primary"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $text_btn_upload; ?></a>
-            </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="pull-right">
+            <a id="upload_button" onclick="upload()" class="btn btn-primary"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $text_btn_upload; ?></a>
           </div>
         </div>
       </div>
-      <table class="table">
-        <thead>
-          <tr>
-            <th><?php echo $text_name_column; ?></th>
-            <th><?php echo $text_model_column; ?></th>
-            <th><?php echo $text_sku_column; ?></th>
-            <th><?php echo $text_amazon_sku_column; ?></th>
-            <th class="text-center"><?php echo $text_actions_column; ?></th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php if (!empty($saved_products)) { ?>
-            <?php foreach ($saved_products as $saved_product) { ?>
-              <tr>
-                <td class="text-left"><?php echo $saved_product['product_name']; ?></td>
-                <td class="text-left"><?php echo $saved_product['product_model']; ?></td>
-                <td class="text-left"><?php echo $saved_product['product_sku']; ?></td>
-                <td class="text-left"><?php echo $saved_product['amazon_sku']; ?></td>
-                <td class="text-center">
-                  <a href="<?php echo $saved_product['edit_link']; ?>">[<?php echo $text_actions_edit; ?>]</a>
-                  <a onclick="removeSaved('<?php echo $saved_product['product_id']; ?>', '<?php echo $saved_product['var']; ?>')">[<?php echo $text_actions_remove; ?>]</a>
-                </td>
-              </tr>
-            <?php } ?>
-          <?php } else { ?>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th><?php echo $text_name_column; ?></th>
+          <th><?php echo $text_model_column; ?></th>
+          <th><?php echo $text_sku_column; ?></th>
+          <th><?php echo $text_amazon_sku_column; ?></th>
+          <th class="text-center"><?php echo $text_actions_column; ?></th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php if (!empty($saved_products)) { ?>
+          <?php foreach ($saved_products as $saved_product) { ?>
             <tr>
-              <td colspan="5" class="text-center"><?php echo $text_no_results; ?></td>
+              <td class="text-left"><?php echo $saved_product['product_name']; ?></td>
+              <td class="text-left"><?php echo $saved_product['product_model']; ?></td>
+              <td class="text-left"><?php echo $saved_product['product_sku']; ?></td>
+              <td class="text-left"><?php echo $saved_product['amazon_sku']; ?></td>
+              <td class="text-center">
+                <a href="<?php echo $saved_product['edit_link']; ?>">[<?php echo $text_actions_edit; ?>]</a>
+                <a onclick="removeSaved('<?php echo $saved_product['product_id']; ?>', '<?php echo $saved_product['var']; ?>')">[<?php echo $text_actions_remove; ?>]</a>
+              </td>
             </tr>
           <?php } ?>
-        </tbody>
-      </table>
-    </div>
+        <?php } else { ?>
+          <tr>
+            <td colspan="5" class="text-center"><?php echo $text_no_results; ?></td>
+          </tr>
+        <?php } ?>
+      </tbody>
+    </table>
   </div>
 </div>
 <script type="text/javascript">

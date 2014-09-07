@@ -5,32 +5,36 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <?php if ($errors) { ?>
-  <div class="alert alert-danger">
-    <ul>
-      <?php foreach ($errors as $listing_error) { ?>
-        <li><i class="fa fa-exclamation-circle"></i> <?php echo $listing_error ?></li>
-      <?php } ?>
-    </ul>
-  </div>
-  <?php } ?>
-  <?php if ($success) { ?>
-    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
-  <?php } ?>
-  <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="page-header">
+    <div class="container-fluid">
       <div class="pull-right">
+        <?php if ($has_listing_errors) { ?>
+          <a href="<?php echo $url_remove_errors; ?>" data-toggle="tooltip" title="<?php echo $button_remove_error; ?>" class="btn"><i class="fa fa-reply"></i></a>
+        <?php } ?>
         <a href="<?php echo $cancel_url; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
       </div>
-      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_title_advanced; ?></h1>
+      <h1><i class="fa fa-pencil"></i> <?php echo $text_title_advanced; ?></h1>
     </div>
-    <div class="panel-body">
+  </div>
+  <div class="container-fluid">
+    <?php if ($errors) { ?>
+    <div class="alert alert-danger">
+      <ul>
+        <?php foreach ($errors as $listing_error) { ?>
+        <li><i class="fa fa-exclamation-circle"></i> <?php echo $listing_error ?></li>
+        <?php } ?>
+      </ul>
+    </div>
+    <?php } ?>
+    <?php if ($success) { ?>
+    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
+    <?php } ?>
 
-      <ul class="nav nav-tabs" id="tabs">
+    <ul class="nav nav-tabs" id="tabs">
         <li class="active"><a href="#page-main" data-toggle="tab"><?php echo $text_tab_main; ?></a></li>
       </ul>
 
-      <form method="POST" id="product_form_advanced" class="form-horizontal">
+    <form method="POST" id="product_form_advanced" class="form-horizontal">
         <input type="hidden" name="upload_after" value="false">
 
         <div class="tab-content" id="tab-content">
@@ -94,14 +98,13 @@
           </div>
         </div>
       </form>
-    </div>
-  </div>
-  <div class="well">
-    <div class="row">
-      <div class="col-md-12 text-right">
-        <a class="btn btn-primary" onclick="validate_and_save('advanced')"><i class="fa fa-save fa-lg"></i> <?php echo $save_button_text ?></a>
-        <a class="btn btn-primary" onclick="save_and_upload()"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $save_upload_button_text ?></a>
-        <a class="btn btn-primary" href="<?php echo $saved_listings_url; ?>"><i class="fa fa-copy fa-lg"></i> <?php echo $saved_listings_button_text ?></a>
+    <div class="well">
+      <div class="row">
+        <div class="col-md-12 text-right">
+          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $save_button_text ?>" onclick="validate_and_save('advanced')"><i class="fa fa-save fa-lg"></i></a>
+          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $save_upload_button_text ?>" onclick="save_and_upload()"><i class="fa fa-cloud-upload fa-lg"></i></a>
+          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $saved_listings_button_text ?>" href="<?php echo $saved_listings_url; ?>"><i class="fa fa-copy fa-lg"></i></a>
+        </div>
       </div>
     </div>
   </div>

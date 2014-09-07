@@ -5,37 +5,38 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="page-header">
+    <div class="container-fluid">
       <div class="pull-right">
         <?php if (isset($url_create_new)) { ?>
-          <a href="<?php echo $url_create_new; ?>" data-toggle="tooltip" title="<?php echo $button_create_new_listing; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
+        <a href="<?php echo $url_create_new; ?>" data-toggle="tooltip" title="<?php echo $button_create_new_listing; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
         <?php } ?>
         <?php if (isset($url_delete_links)) { ?>
-          <a href="<?php echo $url_delete_links; ?>" data-toggle="tooltip" title="<?php echo $button_remove_links; ?>" class="btn btn-danger"><i class="fa fa-times-circle"></i></a>
+        <a href="<?php echo $url_delete_links; ?>" data-toggle="tooltip" title="<?php echo $button_remove_links; ?>" class="btn btn-danger"><i class="fa fa-times-circle"></i></a>
         <?php } ?>
         <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
       </div>
-      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_edit_heading; ?></h1>
+      <h1><i class="fa fa-pencil"></i> <?php echo $text_edit_heading; ?></h1>
     </div>
-    <div class="panel-body">
-      <?php if ($has_saved_listings) { ?>
-        <div class="well">
-          <div class="row">
-            <div class="col-sm-12">
-              <p><?php echo $text_has_saved_listings; ?></p>
-            </div>
+  </div>
+  <div class="container-fluid">
+    <?php if ($has_saved_listings) { ?>
+      <div class="well">
+        <div class="row">
+          <div class="col-sm-12">
+            <p><?php echo $text_has_saved_listings; ?></p>
           </div>
-          <div class="row">
-            <div class="col-sm-12">
-              <div class="pull-right">
-                <a onclick="location = '<?php echo $url_saved_listings; ?>'" class="btn btn-primary"><?php echo $button_saved_listings; ?></a>
-              </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="pull-right">
+              <a onclick="location = '<?php echo $url_saved_listings; ?>'" class="btn btn-primary"><?php echo $button_saved_listings; ?></a>
             </div>
           </div>
         </div>
-      <?php } ?>
-      <table class="table">
+      </div>
+    <?php } ?>
+    <table class="table">
         <thead>
           <tr>
             <th class="text-left"><?php echo $column_name; ?></th>
@@ -63,7 +64,6 @@
           <?php } ?>
         </tbody>
       </table>
-    </div>
   </div>
 </div>
 <?php echo $footer; ?>

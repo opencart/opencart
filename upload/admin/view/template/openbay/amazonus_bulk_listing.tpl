@@ -5,15 +5,16 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="page-header">
+    <div class="container-fluid">
       <div class="pull-right">
         <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
       </div>
-      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="panel-body">
-      <?php if ($bulk_listing_status) { ?>
+  </div>
+  <div class="container-fluid">
+    <?php if ($bulk_listing_status) { ?>
       <div class="well">
         <div class="row">
           <div class="col-sm-12">
@@ -133,10 +134,9 @@
         <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
         <div class="col-sm-6 text-right"><?php echo $results; ?></div>
       </div>
-      <?php } else { ?>
+    <?php } else { ?>
       <div class="warning"><?php echo $error_bulk_listing_not_allowed ?></div>
-      <?php } ?>
-    </div>
+    <?php } ?>
   </div>
 </div>
 <script type="text/javascript"><!--

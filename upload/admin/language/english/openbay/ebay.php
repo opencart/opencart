@@ -2,7 +2,7 @@
 // Heading
 $_['heading_title']         		= 'eBay';
 $_['text_openbay']					= 'OpenBay Pro';
-$_['text_dashboard']				= 'Dashboard';
+$_['text_dashboard']				= 'eBay Dashboard';
 
 // Text
 $_['text_success']         			= 'You have saved your changes to the eBay extension';

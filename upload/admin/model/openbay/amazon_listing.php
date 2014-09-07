@@ -8,7 +8,7 @@ class ModelOpenbayAmazonListing extends Model {
 			'marketplace' => $marketplace,
 		);
 
-		$results = json_decode($this->openbay->amazon->callWithResponse('productv3/search', $search_params), 1);
+		$results = json_decode($this->openbay->amazon->call('productv3/search', $search_params), 1);
 
 		$products = array();
 
@@ -57,7 +57,7 @@ class ModelOpenbayAmazonListing extends Model {
 			'marketplace' => $market,
 		);
 
-		$results = json_decode($this->openbay->amazon->callWithResponse('productv3/getProduct', $data), 1);
+		$results = json_decode($this->openbay->amazon->call('productv3/getProduct', $data), 1);
 
 		return $results;
 	}
@@ -71,7 +71,7 @@ class ModelOpenbayAmazonListing extends Model {
 
 		$best_price = '';
 
-		$result = json_decode($this->openbay->amazon->callWithResponse('productv3/getPrice', $search_params), 1);
+		$result = json_decode($this->openbay->amazon->call('productv3/getPrice', $search_params), 1);
 
 		if (isset($result['Price']['Amount']) && $result['Price']['Currency'] && $this->currency->has($result['Price']['Currency'])) {
 			$best_price['amount'] = number_format($this->currency->convert($result['Price']['Amount'], $result['Price']['Currency'], $this->config->get('config_currency')), 2, '.', '');
@@ -98,11 +98,11 @@ class ModelOpenbayAmazonListing extends Model {
 			'start_selling' => $data['start_selling'],
 			'restock_date' => $data['restock_date'],
 			'marketplace' => $data['marketplace'],
-			'response_url' => HTTPS_CATALOG . 'index.php?route=amazon/listing',
+			'response_url' => HTTPS_CATALOG . 'index.php?route=openbay/amazon/listing',
 			'product_id' => $data['product_id'],
 		);
 
-		$response = $this->openbay->amazon->callWithResponse('productv3/simpleListing', $request);
+		$response = $this->openbay->amazon->call('productv3/simpleListing', $request);
 		$response = json_decode($response);
 
 		if (empty($response)) {
@@ -129,7 +129,7 @@ class ModelOpenbayAmazonListing extends Model {
 	}
 
 	public function getBrowseNodes($request) {
-		return $this->openbay->amazon->callWithResponse('productv3/getBrowseNodes', $request);
+		return $this->openbay->amazon->call('productv3/getBrowseNodes', $request);
 	}
 
 	public function doBulkSearch($search_data) {
@@ -143,10 +143,10 @@ class ModelOpenbayAmazonListing extends Model {
 
 		$request_data = array(
 			'search' => $search_data,
-			'response_url' => HTTPS_CATALOG . 'index.php?route=amazon/search'
+			'response_url' => HTTPS_CATALOG . 'index.php?route=openbay/amazon/search'
 		);
 
-		$this->openbay->amazon->callWithResponse('productv3/bulkSearch', $request_data);
+		$this->openbay->amazon->call('productv3/bulkSearch', $request_data);
 	}
 
 	public function deleteSearchResults($marketplace, $product_ids) {
@@ -197,14 +197,14 @@ class ModelOpenbayAmazonListing extends Model {
 					'start_selling' => (isset($data['start_selling']) ? $data['start_selling'] : ''),
 					'restock_date' => '',
 					'marketplace' => $data['marketplace'],
-					'response_url' => HTTPS_CATALOG . 'index.php?route=amazon/listing',
+					'response_url' => HTTPS_CATALOG . 'index.php?route=openbay/amazon/listing',
 					'product_id' => $product['product_id'],
 				);
 			}
 		}
 
 		if ($request) {
-			$response = $this->openbay->amazon->callWithResponse('productv3/bulkListing', $request);
+			$response = $this->openbay->amazon->call('productv3/bulkListing', $request);
 
 			$response = json_decode($response, 1);
 

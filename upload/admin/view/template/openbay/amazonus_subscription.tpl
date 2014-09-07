@@ -17,14 +17,14 @@
     <?php if (!$user_plan) { ?>
       <div class="row">
         <p><?php echo $text_register_invite ?></p>
-        <p><a href="<?php echo $server ?>account/register/" class="btn btn-primary" target="_blank"><?php echo $button_register ?></a></p>
+        <p><a href="<?php echo $link_register; ?>" class="btn btn-primary" target="_blank"><?php echo $button_register ?></a></p>
       </div>
     <?php } else { ?>
       <div class="row">
       <div class="col-md-4">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h1 class="panel-title"><i class="fa fa-user fa-lg"></i> <?php echo $text_current_plan; ?></h1>
+            <h1 class="panel-title"><i class="fa fa-user"></i> <?php echo $text_current_plan; ?></h1>
           </div>
           <div class="panel-body">
             <table class="table">
@@ -73,7 +73,7 @@
               </tr>
               <tr>
                 <td class="text-right"><b><?php echo $text_price; ?>:</b></td>
-                <td class="text-left">&pound;<?php echo $user_plan['price'] ?></td>
+                <td class="text-left">&pound;<?php echo $user_plan['price']; ?></td>
               </tr>
               </tbody>
             </table>
@@ -83,7 +83,7 @@
       <div class="col-md-8">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h1 class="panel-title"><i class="fa fa-list fa-lg"></i> <?php echo $text_available_plans; ?></h1>
+            <h1 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_available_plans; ?></h1>
           </div>
           <div class="panel-body">
             <table class="table">

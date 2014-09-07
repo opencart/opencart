@@ -114,7 +114,7 @@ class ModelOpenbayAmazonus extends Model {
 		$log = new Log('amazonus.log');
 
 		$request_xml = '<Request>
-  <ResponseURL>' . HTTPS_CATALOG . 'index.php?route=amazonus/order' . '</ResponseURL>
+  <ResponseURL>' . HTTPS_CATALOG . 'index.php?route=openbay/amazonus/order' . '</ResponseURL>
   <MarketplaceIDs>';
 
 		foreach ($data['openbay_amazonus_orders_marketplace_ids'] as $marketplace_id) {
@@ -125,7 +125,7 @@ class ModelOpenbayAmazonus extends Model {
   </MarketplaceIDs>
 </Request>';
 
-		$response = $this->openbay->amazonus->callWithResponse('order/scheduleOrders', $request_xml, false);
+		$response = $this->openbay->amazonus->call('order/scheduleOrders', $request_xml, false);
 
 		libxml_use_internal_errors(true);
 		$response_xml = simplexml_load_string($response);

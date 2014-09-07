@@ -181,7 +181,7 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$data['link_overview'] = $this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], 'SSL');
 
-		$response = simplexml_load_string($this->openbay->amazon->callWithResponse('plans/getPlans'));
+		$response = simplexml_load_string($this->openbay->amazon->call('plans/getPlans'));
 
 		$data['plans'] = array();
 
@@ -198,7 +198,7 @@ class ControllerOpenbayAmazon extends Controller {
 			}
 		}
 
-		$response = simplexml_load_string($this->openbay->amazon->callWithResponse('plans/getUsersPlans'));
+		$response = simplexml_load_string($this->openbay->amazon->call('plans/getUsersPlans'));
 
 		$plan = false;
 
@@ -220,6 +220,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$data['user_plan'] = $plan;
 		$data['link_change_plan'] = $this->openbay->amazon->getServer() . 'account/changePlan/?token=' . $this->config->get('openbay_amazon_token');
 		$data['link_change_seller'] = $this->openbay->amazon->getServer() . 'account/changeSellerId/?token=' . $this->config->get('openbay_amazon_token');
+		$data['link_register'] = 'https://account.openbaypro.com/amazon/apiRegister/';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
@@ -340,7 +341,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$data['itemLinks_url'] = $this->url->link('openbay/amazon_product/linkItems', 'token=' . $this->session->data['token'], 'SSL');
 		$data['openbay_amazon_notify_admin'] = isset($settings['openbay_amazon_notify_admin']) ? $settings['openbay_amazon_notify_admin'] : '';
 
-		$ping_info = simplexml_load_string($this->openbay->amazon->callWithResponse('ping/info'));
+		$ping_info = simplexml_load_string($this->openbay->amazon->call('ping/info'));
 
 		$api_status = false;
 		$api_auth = false;
@@ -723,7 +724,7 @@ class ControllerOpenbayAmazon extends Controller {
 			'text'      => $this->language->get('heading_title'),
 		);
 
-		$ping_info = simplexml_load_string($this->openbay->amazon->callWithResponse('ping/info'));
+		$ping_info = simplexml_load_string($this->openbay->amazon->call('ping/info'));
 
 		$bulk_listing_status = false;
 		if ($ping_info) {
@@ -875,7 +876,7 @@ class ControllerOpenbayAmazon extends Controller {
 			'text'      => $this->language->get('heading_title'),
 		);
 
-		$ping_info = simplexml_load_string($this->openbay->amazon->callWithResponse('ping/info'));
+		$ping_info = simplexml_load_string($this->openbay->amazon->call('ping/info'));
 
 		$bulk_linking_status = false;
 		if ($ping_info) {
@@ -999,10 +1000,10 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$request_data = array(
 			'marketplace' => $marketplace,
-			'response_url' => HTTPS_CATALOG . 'index.php?route=amazon/listing_report',
+			'response_url' => HTTPS_CATALOG . 'index.php?route=openbay/amazon/listingreport',
 		);
 
-		$response = $this->openbay->amazon->callWithResponse('report/listing', $request_data);
+		$response = $this->openbay->amazon->call('report/listing', $request_data);
 		$response = json_decode($response, 1);
 
 		$json = array();

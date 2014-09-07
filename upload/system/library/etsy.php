@@ -1,7 +1,10 @@
 <?php
 final class Etsy {
+	private $token;
+	private $enc1;
+	private $enc2;
+	private $url = 'http://etsy.openbaypro.com/';
 	private $registry;
-	private $url    = 'http://etsy.openbaypro.com/';
 
 	public function __construct($registry) {
 		$this->registry = $registry;
@@ -16,21 +19,6 @@ final class Etsy {
 
 	public function __get($name) {
 		return $this->registry->get($name);
-	}
-
-	public function log($data, $write = true) {
-		if(function_exists('getmypid')) {
-			$process_id = getmypid();
-			$data = $process_id . ' - ' . $data;
-		}
-
-		if($write == true) {
-			$this->logger->write($data);
-		}
-	}
-
-	public function getApiServer() {
-		return $this->url;
 	}
 
 	public function call($uri, $method, $data = array()) {
@@ -98,6 +86,49 @@ final class Etsy {
 
 			return false;
 		}
+	}
+
+	public function log($data, $write = true) {
+		if(function_exists('getmypid')) {
+			$process_id = getmypid();
+			$data = $process_id . ' - ' . $data;
+		}
+
+		if($write == true) {
+			$this->logger->write($data);
+		}
+	}
+
+	public function encryptArgs($data, $is_base_64 = true) {
+		if ($is_base_64) {
+			$data = base64_decode($data, true);
+			if (!$data) {
+				return false;
+			}
+		}
+
+		$token = $this->openbay->pbkdf2($this->enc1, $this->enc2, 1000, 32);
+		$crypt = $this->openbay->encrypt($data, $token, true);
+
+		return $crypt;
+	}
+
+	public function decryptArgs($crypt, $is_base_64 = true) {
+		if ($is_base_64) {
+			$crypt = base64_decode($crypt, true);
+			if (!$crypt) {
+				return false;
+			}
+		}
+
+		$token = $this->openbay->pbkdf2($this->enc1, $this->enc2, 1000, 32);
+		$data = $this->openbay->decrypt($crypt, $token);
+
+		return $data;
+	}
+
+	public function getServer() {
+		return $this->url;
 	}
 
 	public function settingsUpdate() {
@@ -195,98 +226,6 @@ final class Etsy {
 				return true;
 			}
 		}
-	}
-
-	public function decryptArgs($crypt, $is_base_64 = true) {
-		if ($is_base_64) {
-			$crypt = base64_decode($crypt, true);
-			if (!$crypt) {
-				return false;
-			}
-		}
-
-		$token = $this->pbkdf2($this->enc1, $this->enc2, 1000, 32);
-		$data = $this->decrypt($crypt, $token);
-
-		return $data;
-	}
-
-	private function encrypt($msg, $k, $base64 = false) {
-		$td = mcrypt_module_open('rijndael-256', '', 'ctr', '');
-
-		if (!$td) {
-			return false;
-		}
-
-		$iv = mcrypt_create_iv(32, MCRYPT_RAND);
-
-		if (mcrypt_generic_init($td, $k, $iv) !== 0) {
-			return false;
-		}
-
-		$msg = mcrypt_generic($td, $msg);
-		$msg = $iv . $msg;
-		$mac = $this->pbkdf2($msg, $k, 1000, 32);
-		$msg .= $mac;
-
-		mcrypt_generic_deinit($td);
-		mcrypt_module_close($td);
-
-		if ($base64) {
-			$msg = base64_encode($msg);
-		}
-
-		return $msg;
-	}
-
-	private function decrypt($msg, $k, $base64 = false) {
-		if ($base64) {
-			$msg = base64_decode($msg);
-		}
-
-		if (!$td = mcrypt_module_open('rijndael-256', '', 'ctr', '')) {
-			return false;
-		}
-
-		$iv = substr($msg, 0, 32);
-		$mo = strlen($msg) - 32;
-		$em = substr($msg, $mo);
-		$msg = substr($msg, 32, strlen($msg) - 64);
-		$mac = $this->pbkdf2($iv . $msg, $k, 1000, 32);
-
-		if ($em !== $mac) {
-			return false;
-		}
-
-		if (mcrypt_generic_init($td, $k, $iv) !== 0) {
-			return false;
-		}
-
-		$msg = mdecrypt_generic($td, $msg);
-		$msg = unserialize($msg);
-
-		mcrypt_generic_deinit($td);
-		mcrypt_module_close($td);
-
-		return $msg;
-	}
-
-	private function pbkdf2($p, $s, $c, $kl, $a = 'sha256') {
-		$hl = strlen(hash($a, null, true));
-		$kb = ceil($kl / $hl);
-		$dk = '';
-
-		for ($block = 1; $block <= $kb; $block++) {
-
-			$ib = $b = hash_hmac($a, $s . pack('N', $block), $p, true);
-
-			for ($i = 1; $i < $c; $i++)
-				$ib ^= ($b = hash_hmac($a, $b, $p, true));
-
-			$dk .= $ib;
-		}
-
-		return substr($dk, 0, $kl);
 	}
 
 	public function deleteProduct($product_id) {

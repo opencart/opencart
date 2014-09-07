@@ -356,7 +356,7 @@ class ControllerOpenbayEbay extends Controller {
 			$data['ebay_status_refunded_id'] = $this->config->get('ebay_status_refunded_id');
 		}
 
-		$data['api_server']       = $this->openbay->ebay->getApiServer();
+		$data['api_server']       = $this->openbay->ebay->getServer();
 		$data['order_statuses']   = $this->model_localisation_order_status->getOrderStatuses();
 		$data['measurement_types'] = $this->openbay->ebay->getSetting('measurement_types');
 

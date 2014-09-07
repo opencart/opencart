@@ -1,21 +1,117 @@
 <?php
 class Amazon {
 	private $token;
-	private $encryption_password;
-	private $encryption_salt;
-	private $server = 'http://uk-amazon.openbaypro.com/';
+	private $enc1;
+	private $enc2;
+	private $url = 'http://uk-amazon.openbaypro.com/';
 	private $registry;
 
 	public function __construct($registry) {
 		$this->registry = $registry;
 
-		$this->token   = $registry->get('config')->get('openbay_amazon_token');
-		$this->encryption_password = $registry->get('config')->get('openbay_amazon_enc_string1');
-		$this->encryption_salt = $registry->get('config')->get('openbay_amazon_enc_string2');
+		$this->token = $this->config->get('openbay_amazon_token');
+		$this->enc1 = $this->config->get('openbay_amazon_enc_string1');
+		$this->enc2 = $this->config->get('openbay_amazon_enc_string2');
 	}
 
 	public function __get($name) {
 		return $this->registry->get($name);
+	}
+
+	public function call($method, $data = array(), $is_json = true) {
+		if  ($is_json) {
+			$arg_string = json_encode($data);
+		} else {
+			$arg_string = $data;
+		}
+
+		$crypt = $this->encryptArgs($arg_string, true);
+
+		$defaults = array(
+			CURLOPT_POST            => 1,
+			CURLOPT_HEADER          => 0,
+			CURLOPT_URL             => $this->url . $method,
+			CURLOPT_USERAGENT       => 'OpenBay Pro for Amazon/Opencart',
+			CURLOPT_FRESH_CONNECT   => 1,
+			CURLOPT_RETURNTRANSFER  => 1,
+			CURLOPT_FORBID_REUSE    => 1,
+			CURLOPT_TIMEOUT         => 30,
+			CURLOPT_SSL_VERIFYPEER  => 0,
+			CURLOPT_SSL_VERIFYHOST  => 0,
+			CURLOPT_POSTFIELDS      => 'token=' . $this->token . '&data=' . rawurlencode($crypt) . '&opencart_version=' . VERSION,
+		);
+		$ch = curl_init();
+
+		curl_setopt_array($ch, $defaults);
+
+		$response = curl_exec($ch);
+
+		curl_close($ch);
+
+		return $response;
+	}
+
+	public function callNoResponse($method, $data = array(), $is_json = true) {
+		if  ($is_json) {
+			$arg_string = json_encode($data);
+		} else {
+			$arg_string = $data;
+		}
+
+		$crypt = $this->encryptArgs($arg_string, true);
+
+		$defaults = array(
+			CURLOPT_POST => 1,
+			CURLOPT_HEADER => 0,
+			CURLOPT_URL => $this->url . $method,
+			CURLOPT_USERAGENT => 'OpenBay Pro for Amazon/Opencart',
+			CURLOPT_FRESH_CONNECT => 1,
+			CURLOPT_RETURNTRANSFER => 1,
+			CURLOPT_FORBID_REUSE => 1,
+			CURLOPT_TIMEOUT => 2,
+			CURLOPT_SSL_VERIFYPEER => 0,
+			CURLOPT_SSL_VERIFYHOST => 0,
+			CURLOPT_POSTFIELDS => 'token=' . $this->token . '&data=' . rawurlencode($crypt) . '&opencart_version=' . VERSION,
+		);
+		$ch = curl_init();
+
+		curl_setopt_array($ch, $defaults);
+
+		curl_exec($ch);
+
+		curl_close($ch);
+	}
+
+	public function encryptArgs($data, $is_base_64 = true) {
+		if ($is_base_64) {
+			$data = base64_decode($data, true);
+			if (!$data) {
+				return false;
+			}
+		}
+
+		$token = $this->openbay->pbkdf2($this->enc1, $this->enc2, 1000, 32);
+		$crypt = $this->openbay->encrypt($data, $token, true);
+
+		return $crypt;
+	}
+
+	public function decryptArgs($crypt, $is_base_64 = true) {
+		if ($is_base_64) {
+			$crypt = base64_decode($crypt, true);
+			if (!$crypt) {
+				return false;
+			}
+		}
+
+		$token = $this->openbay->pbkdf2($this->enc1, $this->enc2, 1000, 32);
+		$data = $this->openbay->decrypt($crypt, $token);
+
+		return $data;
+	}
+
+	public function getServer() {
+		return $this->url;
 	}
 
 	public function addOrder($order_id) {
@@ -137,7 +233,7 @@ class Amazon {
 
 		$log->write('order/bulkUpdate call: ' . print_r($request, 1));
 
-		$response = $this->callWithResponse('order/bulkUpdate', $request);
+		$response = $this->call('order/bulkUpdate', $request);
 
 		$log->write('order/bulkUpdate response: ' . $response);
 	}
@@ -196,12 +292,12 @@ class Amazon {
 
 		$this->model_openbay_amazon->updateAmazonOrderTracking($order_id, $courier_id, $courier_from_list, !empty($courier_id) ? $tracking_no : '');
 		$log->write('Request: ' . $doc->saveXML());
-		$response = $this->callWithResponse('order/update2', $doc->saveXML(), false);
+		$response = $this->call('order/update2', $doc->saveXML(), false);
 		$log->write("Response for Order's status update: $response");
 	}
 
 	public function getCategoryTemplates() {
-		$result = $this->callWithResponse("productv2/RequestTemplateList");
+		$result = $this->call("productv2/RequestTemplateList");
 		if(isset($result)) {
 			return (array)json_decode($result);
 		} else {
@@ -210,7 +306,7 @@ class Amazon {
 	}
 
 	public function registerInsertion($data) {
-		$result = $this->callWithResponse("productv2/RegisterInsertionRequest", $data);
+		$result = $this->call("productv2/RegisterInsertionRequest", $data);
 		if(isset($result)) {
 			return (array)json_decode($result);
 		} else {
@@ -219,7 +315,7 @@ class Amazon {
 	}
 
 	public function insertProduct($data) {
-		$result = $this->callWithResponse("productv2/InsertProductRequest", $data);
+		$result = $this->call("productv2/InsertProductRequest", $data);
 		if(isset($result)) {
 			return (array)json_decode($result);
 		} else {
@@ -228,7 +324,7 @@ class Amazon {
 	}
 
 	public function updateQuantities($data) {
-		$result = $this->callWithResponse("product/UpdateQuantityRequest", $data);
+		$result = $this->call("product/UpdateQuantityRequest", $data);
 		if(isset($result)) {
 			return (array)json_decode($result);
 		} else {
@@ -237,172 +333,12 @@ class Amazon {
 	}
 
 	public function getStockUpdatesStatus($data) {
-		$result = $this->callWithResponse("status/StockUpdates", $data);
+		$result = $this->call("status/StockUpdates", $data);
 		if(isset($result)) {
 			return $result;
 		} else {
 			return false;
 		}
-	}
-
-	public function callNoResponse($method, $data = array(), $is_json = true) {
-		if  ($is_json) {
-			$arg_string = json_encode($data);
-		} else {
-			$arg_string = $data;
-		}
-
-		$token = $this->pbkdf2($this->encryption_password, $this->encryption_salt, 1000, 32);
-		$crypt = $this->encrypt($arg_string, $token, true);
-
-		$defaults = array(
-			CURLOPT_POST => 1,
-			CURLOPT_HEADER => 0,
-			CURLOPT_URL => $this->server . $method,
-			CURLOPT_USERAGENT => 'OpenBay Pro for Amazon/Opencart',
-			CURLOPT_FRESH_CONNECT => 1,
-			CURLOPT_RETURNTRANSFER => 1,
-			CURLOPT_FORBID_REUSE => 1,
-			CURLOPT_TIMEOUT => 2,
-			CURLOPT_SSL_VERIFYPEER => 0,
-			CURLOPT_SSL_VERIFYHOST => 0,
-			CURLOPT_POSTFIELDS => 'token=' . $this->token . '&data=' . rawurlencode($crypt) . '&opencart_version=' . VERSION,
-		);
-		$ch = curl_init();
-
-		curl_setopt_array($ch, $defaults);
-
-		curl_exec($ch);
-
-		curl_close($ch);
-	}
-
-	public function callWithResponse($method, $data = array(), $is_json = true) {
-		if  ($is_json) {
-			$arg_string = json_encode($data);
-		} else {
-			$arg_string = $data;
-		}
-
-		$token = $this->pbkdf2($this->encryption_password, $this->encryption_salt, 1000, 32);
-		$crypt = $this->encrypt($arg_string, $token, true);
-
-		$defaults = array(
-			CURLOPT_POST            => 1,
-			CURLOPT_HEADER          => 0,
-			CURLOPT_URL             => $this->server . $method,
-			CURLOPT_USERAGENT       => 'OpenBay Pro for Amazon/Opencart',
-			CURLOPT_FRESH_CONNECT   => 1,
-			CURLOPT_RETURNTRANSFER  => 1,
-			CURLOPT_FORBID_REUSE    => 1,
-			CURLOPT_TIMEOUT         => 30,
-			CURLOPT_SSL_VERIFYPEER  => 0,
-			CURLOPT_SSL_VERIFYHOST  => 0,
-			CURLOPT_POSTFIELDS      => 'token=' . $this->token . '&data=' . rawurlencode($crypt) . '&opencart_version=' . VERSION,
-		);
-		$ch = curl_init();
-
-		curl_setopt_array($ch, $defaults);
-
-		$response = curl_exec($ch);
-
-		curl_close($ch);
-
-		return $response;
-	}
-
-	public function decryptArgs($crypt, $is_base_64 = true) {
-		if ($is_base_64) {
-			$crypt = base64_decode($crypt, true);
-			if (!$crypt) {
-				return false;
-			}
-		}
-
-		$token = $this->pbkdf2($this->encryption_password, $this->encryption_salt, 1000, 32);
-		$data = $this->decrypt($crypt, $token);
-
-		return $data;
-	}
-
-	private function encrypt($msg, $k, $base64 = false) {
-		if (!$td = mcrypt_module_open('rijndael-256', '', 'ctr', '')) {
-			return false;
-		}
-
-		$iv = mcrypt_create_iv(32, MCRYPT_RAND);
-
-		if (mcrypt_generic_init($td, $k, $iv) !== 0) {
-			return false;
-		}
-
-		$msg = mcrypt_generic($td, $msg);
-		$msg = $iv . $msg;
-		$mac = $this->pbkdf2($msg, $k, 1000, 32);
-		$msg .= $mac;
-
-		mcrypt_generic_deinit($td);
-		mcrypt_module_close($td);
-
-		if ($base64) {
-			$msg = base64_encode($msg);
-		}
-
-		return $msg;
-	}
-
-	private function decrypt($msg, $k, $base64 = false) {
-		if ($base64) {
-			$msg = base64_decode($msg);
-		}
-
-		if (!$td = mcrypt_module_open('rijndael-256', '', 'ctr', '')) {
-			return false;
-		}
-
-		$iv = substr($msg, 0, 32);
-		$mo = strlen($msg) - 32;
-		$em = substr($msg, $mo);
-		$msg = substr($msg, 32, strlen($msg) - 64);
-		$mac = $this->pbkdf2($iv . $msg, $k, 1000, 32);
-
-		if ($em !== $mac) {
-			return false;
-		}
-
-		if (mcrypt_generic_init($td, $k, $iv) !== 0) {
-			return false;
-		}
-
-		$msg = mdecrypt_generic($td, $msg);
-		$msg = unserialize($msg);
-
-		mcrypt_generic_deinit($td);
-		mcrypt_module_close($td);
-
-		return $msg;
-	}
-
-	private function pbkdf2($p, $s, $c, $kl, $a = 'sha256') {
-		$hl = strlen(hash($a, null, true));
-		$kb = ceil($kl / $hl);
-		$dk = '';
-
-		for ($block = 1; $block <= $kb; $block++) {
-			$ib = $b = hash_hmac($a, $s . pack('N', $block), $p, true);
-
-			for ($i = 1; $i < $c; $i++) {
-				$ib ^= ($b = hash_hmac($a, $b, $p, true));
-			}
-
-			$dk .= $ib;
-		}
-
-		return substr($dk, 0, $kl);
-	}
-
-	public function getServer() {
-		return $this->server;
 	}
 
 	public function putStockUpdateBulk($product_id_array, $end_inactive = false){

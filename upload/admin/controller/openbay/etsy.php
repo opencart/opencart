@@ -166,7 +166,7 @@ class ControllerOpenbayEtsy extends Controller {
 			$data['etsy_order_status_shipped'] = $this->config->get('etsy_order_status_shipped');
 		}
 
-		$data['api_server'] = $this->openbay->etsy->getApiServer();
+		$data['api_server'] = $this->openbay->etsy->getServer();
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 		$data['account_info'] = $this->model_openbay_etsy->verifyAccount();
 

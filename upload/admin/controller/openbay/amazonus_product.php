@@ -288,7 +288,7 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 			$product_data_decoded = (array)json_decode($saved_product['data']);
 
 			$catalog = defined(HTTPS_CATALOG) ? HTTPS_CATALOG : HTTP_CATALOG;
-			$response_data = array("response_url" => $catalog . 'index.php?route=amazonus/product/inbound');
+			$response_data = array("response_url" => $catalog . 'index.php?route=openbay/amazonus/product');
 			$category_data = array('category' => (string)$saved_product['category']);
 			$fields_data = array('fields' => (array)$product_data_decoded['fields']);
 
@@ -329,7 +329,7 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 
 		if (isset($this->request->get['xml'])) {
 			$request = array('template' => $this->request->get['xml'], 'version' => 2);
-			$response = $this->openbay->amazonus->callWithResponse("productv2/GetTemplateXml", $request);
+			$response = $this->openbay->amazonus->call("productv2/GetTemplateXml", $request);
 			if ($response) {
 				$template = $this->openbay->amazonus->parseCategoryTemplate($response);
 				if ($template) {

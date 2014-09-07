@@ -48,7 +48,7 @@ class ModelOpenbayEtsy extends Model{
 		$this->model_tool_event->addEvent('post.order.add', array(
 				'type' => 'openbay',
 				'code' => 'etsy',
-				'method' => 'addOrder')
+				'method' => 'eventAddOrder')
 		);
 	}
 
@@ -57,7 +57,7 @@ class ModelOpenbayEtsy extends Model{
 		$this->model_tool_event->deleteEvent('post.order.add', array(
 				'type' => 'openbay',
 				'code' => 'etsy',
-				'method' => 'addOrder')
+				'method' => 'eventAddOrder')
 		);
 	}
 

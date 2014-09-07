@@ -23,6 +23,16 @@ $_['text_it']                       	= 'Italy';
 $_['text_es']                       	= 'Spain';
 $_['text_uk']                       	= 'United Kingdom';
 $_['text_setttings_updated']        	= 'Settings were successfully updated.';
+$_['text_new'] 							= 'New';
+$_['text_used_like_new'] 				= 'Used - Like New';
+$_['text_used_very_good'] 				= 'Used - Very Good';
+$_['text_used_good'] 					= 'Used - Good';
+$_['text_used_acceptable'] 				= 'Used - Acceptable';
+$_['text_collectible_like_new'] 		= 'Collectible - Like New';
+$_['text_collectible_very_good'] 		= 'Collectible - Very Good';
+$_['text_collectible_good'] 			= 'Collectible - Good';
+$_['text_collectible_acceptable'] 		= 'Collectible - Acceptable';
+$_['text_refurbished'] 					= 'Refurbished';
 
 // Error
 $_['error_permission']         			= 'You do not have access to this module';

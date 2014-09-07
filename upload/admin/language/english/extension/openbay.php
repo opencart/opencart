@@ -8,7 +8,7 @@ $_['button_faq_clear']					= 'Clear';
 $_['button_update']						= 'Update';
 $_['button_patch']						= 'Patch';
 $_['button_ftp_test']					= 'Test connection';
-$_['button_faq']						= 'View FAQ';
+$_['button_faq']						= 'View FAQ topic';
 
 // Tab
 $_['tab_setting']						= 'Settings';

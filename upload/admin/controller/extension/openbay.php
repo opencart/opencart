@@ -356,6 +356,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$data = $this->model_openbay_openbay->faqGet($this->request->get['qry_route']);
 		$data['button_faq'] = $this->language->get('button_faq');
+		$data['button_close'] = $this->language->get('button_close');
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($data));

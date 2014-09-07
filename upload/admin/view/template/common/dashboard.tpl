@@ -18,39 +18,43 @@
     <?php } ?>
     <div class="row">
       <div class="col-sm-3">
-        <div class="tile tile-red">
+        <div class="tile">
           <div class="tile-heading"><?php echo $text_new_order; ?></div>
           <div class="tile-body">
-            <i class="fa fa-shopping-cart fa-5x"></i>
+            <i class="fa fa-shopping-cart"></i>
             <h2 class="pull-right"><?php echo $order_total; ?></h2>
           </div>
+          <div class="tile-footer">View more...</div>
         </div>
       </div>
       <div class="col-sm-3">
-        <div class="tile tile-yellow">
+        <div class="tile">
           <div class="tile-heading"><?php echo $text_total_sale; ?></div>
           <div class="tile-body">
-            <i class="fa fa-credit-card fa-5x"></i>
+            <i class="fa fa-credit-card"></i>
             <h2 class="pull-right"><?php echo $sale_total; ?></h2>
           </div>
+          <div class="tile-footer">View more...</div>
         </div>
       </div>
       <div class="col-sm-3">
-        <div class="tile tile-blue">
+        <div class="tile">
           <div class="tile-heading"><?php echo $text_new_customer; ?></div>
           <div class="tile-body">
-            <i class="fa fa-user fa-5x"></i>
+            <i class="fa fa-user"></i>
             <h2 class="pull-right"><?php echo $customer_total; ?></h2>
           </div>
+          <div class="tile-footer">View more...</div>
         </div>
       </div>
       <div class="col-sm-3">
-        <div class="tile tile-green">
+        <div class="tile">
           <div class="tile-heading"><?php echo $text_online; ?></div>
           <div class="tile-body">
-            <i class="fa fa-eye fa-5x"></i>
+            <i class="fa fa-eye"></i>
             <h2 class="pull-right"><?php echo $online_total; ?></h2>
           </div>
+          <div class="tile-footer">View more...</div>
         </div>
       </div>
     </div>

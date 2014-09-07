@@ -85,7 +85,7 @@ class ModelOpenbayAmazon extends Model {
 		$this->model_tool_event->addEvent('post.order.add', array(
 				'type' => 'openbay',
 				'code' => 'amazon',
-				'method' => 'addOrder')
+				'method' => 'eventAddOrder')
 		);
 	}
 
@@ -108,7 +108,7 @@ class ModelOpenbayAmazon extends Model {
 		$this->model_tool_event->deleteEvent('post.order.add', array(
 				'type' => 'openbay',
 				'code' => 'amazon',
-				'method' => 'addOrder')
+				'method' => 'eventAddOrder')
 		);
 	}
 

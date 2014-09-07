@@ -56,4 +56,8 @@ class ControllerOpenbayEtsy extends Controller {
 				break;
 		}
 	}
+
+	public function eventAddOrder($order_id) {
+		$this->openbay->etsy->addOrder($order_id);
+	}
 }

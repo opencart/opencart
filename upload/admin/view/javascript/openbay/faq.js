@@ -27,7 +27,7 @@ function faq(){
             if(data.faq_id){
                 var html = '';
 
-                html += '<div class="container-fluid" id="faq" display:none;>';
+                html += '<div class="container-fluid" id="faq" style="display:none;">';
                     html += '<div class="alert alert-info">';
                     	html += '<div class="pull-right">';
 							html += '<button type="button" class="btn btn-danger" data-toggle="tooltip" title="" id="faq-close"><i class="fa fa-minus-circle"></i></button>';

@@ -27,19 +27,22 @@ function faq(){
             if(data.faq_id){
                 var html = '';
 
-                html += '<div class="container-fluid" id="faq">';
+                html += '<div class="container-fluid" id="faq" display:none;>';
                     html += '<div class="alert alert-info">';
                     	html += '<div class="pull-right">';
 							html += '<button type="button" class="btn btn-danger" data-toggle="tooltip" title="" id="faq-close"><i class="fa fa-minus-circle"></i></button>';
-							html += '<a href="' + data.link + '" target="_BLANK" data-toggle="tooltip" title="' + data.button_faq + '"><i class="fa fa-info-circle"></i></a>';
+							html += '<a class="btn btn-primary" href="' + data.link + '" target="_BLANK" data-toggle="tooltip" title="' + data.button_faq + '"><i class="fa fa-info-circle"></i></a>';
 						html += '</div>';
-						html += '<h4>' + data.title + '</h4>';
+						html += '<h5>' + data.title + '</h5>';
 						html += '<p>' + data.message + '</p>';
                     html += '</div>';
                 html += '</div>';
 
                 $('#content').prepend(html);
-                $('#faq').slideDown('slow');
+
+				setTimeout(function() {
+					$('#faq').slideDown('slow');
+				}, 3000);
             }
         }
     });

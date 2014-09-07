@@ -19,13 +19,13 @@ class Amazon {
 	}
 
 	public function call($method, $data = array(), $is_json = true) {
-		if  ($is_json) {
+		if ($is_json) {
 			$arg_string = json_encode($data);
 		} else {
 			$arg_string = $data;
 		}
 
-		$crypt = $this->encryptArgs($arg_string, true);
+		$crypt = $this->encryptArgs($arg_string);
 
 		$defaults = array(
 			CURLOPT_POST            => 1,
@@ -52,13 +52,13 @@ class Amazon {
 	}
 
 	public function callNoResponse($method, $data = array(), $is_json = true) {
-		if  ($is_json) {
+		if ($is_json) {
 			$arg_string = json_encode($data);
 		} else {
 			$arg_string = $data;
 		}
 
-		$crypt = $this->encryptArgs($arg_string, true);
+		$crypt = $this->encryptArgs($arg_string);
 
 		$defaults = array(
 			CURLOPT_POST => 1,
@@ -82,14 +82,7 @@ class Amazon {
 		curl_close($ch);
 	}
 
-	public function encryptArgs($data, $is_base_64 = true) {
-		if ($is_base_64) {
-			$data = base64_decode($data, true);
-			if (!$data) {
-				return false;
-			}
-		}
-
+	public function encryptArgs($data) {
 		$token = $this->openbay->pbkdf2($this->enc1, $this->enc2, 1000, 32);
 		$crypt = $this->openbay->encrypt($data, $token, true);
 

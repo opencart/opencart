@@ -93,9 +93,9 @@ $_['tab_defaults']					= 'Listing defaults';
 // Help
 $_['help_disable_soldout']			= 'When the item sells out it then disables the product in OpenCart';
 $_['help_relist_items'] 			= 'If an item link existed before it will relist previous item if back in stock';
+
 $_['help_end_items']    			= 'If items sell out, should the listing be ended on eBay?';
 $_['help_currency']     			= 'Based on currencies from your store';
-$_['help_customer_group']    		= 'When new customers are created, what group should they add to?';
 $_['help_created_hours']   			= 'Orders are new when younger than this limit (in hours). Default is 72';
 $_['help_stock_allocate'] 			= 'When should stock be allocated from the store?';
 $_['help_payment_instruction']  	= 'Be as descriptive as possible. Do you require payment within a certain time? Do they call to pay by card? Do you have any special payment terms?';
@@ -104,11 +104,12 @@ $_['help_listing_tax']     			= 'If you use the rate from listings ensure your i
 $_['help_tax']             			= 'Used when you import items or orders';
 $_['help_duration']    				= 'GTC is only available is you have an eBay shop.';
 $_['help_address_format']      		= 'Only used if the country does not have an address format set-up already.';
-$_['help_order_date']         		= 'Choose which created time will appear on an order when it is imported';
+$_['help_create_date']         		= 'Choose which created time will appear on an order when it is imported';
 $_['help_timezone_offset']     		= 'Based on hours. 0 is GMT timezone. Only works if eBay time is used for order creation.';
 $_['help_notify_admin']   			= 'Notify the store admin with the default new order email';
 $_['help_notify_order_update']		= 'This is for automated updates, for example if you update an order in eBay and the new status is updated in your store automatically.';
 $_['help_notify_buyer']        		= 'Notify the user with the default new order email';
+$_['help_measurement']        		= 'Choose what measurement system you want to use for listings';
 
 // Buttons
 $_['button_update']             	= 'Update';

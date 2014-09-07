@@ -115,7 +115,7 @@
             <h4><?php echo $text_other ?></h4>
 
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="entry-import-tax"><?php echo $entry_import_tax; ?></label>
+              <label class="col-sm-2 control-label" for="entry-import-tax"><span data-toggle="tooltip" data-container="#tab-orders" title="<?php echo $help_import_tax; ?>"><?php echo $entry_import_tax; ?></span></label>
               <div class="col-sm-10">
                 <div class="input-group col-xs-2">
                   <input type="text" name="openbay_amazonus_order_tax" value="<?php echo $openbay_amazonus_order_tax;?>" id="entry-import-tax" class="form-control" placeholder="<?php echo $entry_import_tax; ?>" />
@@ -124,7 +124,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="entry-customer-group"><?php echo $entry_customer_group; ?></label>
+              <label class="col-sm-2 control-label" for="entry-customer-group"><span data-toggle="tooltip" data-container="#tab-orders" title="<?php echo $help_customer_group; ?>"><?php echo $entry_customer_group; ?></span></label>
               <div class="col-sm-10">
                 <select name="openbay_amazonus_order_customer_group" id="entry-customer-group" class="form-control">
                   <?php foreach($customer_groups as $customer_group) { ?>
@@ -152,7 +152,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="entry-default-shipping"><?php echo $entry_default_shipping; ?></label>
+              <label class="col-sm-2 control-label" for="entry-default-shipping"><span data-toggle="tooltip" data-container="#tab-orders" title="<?php echo $help_default_shipping; ?>"><?php echo $entry_default_shipping; ?></span></label>
               <div class="col-sm-10">
                 <select name="openbay_amazonus_default_carrier" id="entry-default-shipping" class="form-control">
                   <?php foreach($carriers as $carrier) { ?>

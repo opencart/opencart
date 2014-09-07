@@ -200,6 +200,7 @@ class ControllerCommonMenu extends Controller {
 			);
 
 			$data['profile'] = $this->load->controller('common/profile');
+			$data['stats'] = $this->load->controller('common/stats');
 
 			return $this->load->view('common/menu.tpl', $data);
 		}

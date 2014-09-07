@@ -329,7 +329,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-liability"><span data-toggle="tooltip" title="<?php echo $help_liability_shift; ?>"><?php echo $entry_liability_shift; ?></span></label>
+            <label class="col-sm-2 control-label" for="input-liability"><span data-toggle="tooltip" title="<?php echo $help_liability; ?>"><?php echo $entry_liability_shift; ?></span></label>
             <div class="col-sm-10">
               <select name="realex_remote_liability" id="input-liability" class="form-control">
                 <?php if ($realex_remote_liability) { ?>

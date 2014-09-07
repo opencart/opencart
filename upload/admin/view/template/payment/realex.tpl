@@ -365,7 +365,4 @@
     </form>
   </div>
 </div>
-<script type="text/javascript"><!--
-$('#tabs a:first').tab('show');
-//--></script> 
 <?php echo $footer; ?>

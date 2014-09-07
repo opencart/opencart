@@ -263,7 +263,7 @@ class ModelPaymentPPExpress extends Model {
 					$data['L_PAYMENTREQUEST_0_AMT' . $i] = $this->currency->format($total_row['value'], false, false, false);
 					$data['L_PAYMENTREQUEST_0_QTY' . $i] = 1;
 
-					$item_total = number_format($item_total + $item_price, 2);
+					$item_total = $item_total + $item_price;
 					$i++;
 				}
 			}

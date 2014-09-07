@@ -58,7 +58,7 @@ $(document).ready(function() {
 		$('#menu li.active').has('ul').children('ul').addClass('collapse in');
 		$('#menu li').not('.active').has('ul').children('ul').addClass('collapse');
 	} else {
-		$('#button-menu i').replaceWith('<i class="fa fa-indent"></i>');
+		$('#button-menu i').replaceWith('<i class="fa fa-indent fa-lg"></i>');
 		
 		$('#menu li li.active').has('ul').children('ul').addClass('collapse in');
 		$('#menu li li').not('.active').has('ul').children('ul').addClass('collapse');
@@ -134,13 +134,13 @@ $(document).ready(function() {
 		$(element).popover({
 			html: true,
 			placement: 'right',
-			trigger: 'click',
+			trigger: 'manual',
 			content: function() {
 				return '<button type="button" id="button-image" class="btn btn-primary"><i class="fa fa-pencil"></i></button> <button type="button" id="button-clear" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>';
 			}
 		});
 	
-		$(element).popover('show');
+		$(element).popover('toggle');		
 	
 		$('#button-image').on('click', function() {
 			$('#modal-image').remove();

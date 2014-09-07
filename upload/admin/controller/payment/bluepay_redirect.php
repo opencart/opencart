@@ -26,7 +26,7 @@ class ControllerPaymentBluepayredirect extends Controller {
 		$data['text_sim'] = $this->language->get('text_sim');
 		$data['text_test'] = $this->language->get('text_test');
 		$data['text_live'] = $this->language->get('text_live');
-		$data['text_payment'] = $this->language->get('text_payment');
+		$data['text_sale'] = $this->language->get('text_sale');
 		$data['text_authenticate'] = $this->language->get('text_authenticate');
 
 		$data['entry_vendor'] = $this->language->get('entry_vendor');
@@ -170,18 +170,18 @@ class ControllerPaymentBluepayredirect extends Controller {
 
 	public function install() {
 		$this->load->model('payment/bluepay_redirect');
+		
 		$this->model_payment_bluepay_redirect->install();
 	}
 
 	public function uninstall() {
 		$this->load->model('payment/bluepay_redirect');
+		
 		$this->model_payment_bluepay_redirect->uninstall();
 	}
 
 	public function orderAction() {
-
 		if ($this->config->get('bluepay_redirect_status')) {
-
 			$this->load->model('payment/bluepay_redirect');
 
 			$bluepay_redirect_order = $this->model_payment_bluepay_redirect->getOrder($this->request->get['order_id']);

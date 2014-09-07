@@ -6,19 +6,18 @@ class Event {
 		$this->registry = $registry;
 	}
 
-	public function register($event, $action) {
-		$this->data[$event][] = $action;
+	public function register($key, $action) {
+		$this->data[$key][] = $action;
 	}
 
-	public function unregister($event, $action) {
-		unset($this->data[$event]);
+	public function unregister($key, $action) {
+		unset($this->data[$key]);
 	}
 
-	public function trigger($event, &$arg = array()) {
-		$action = new Action($action, $arg);
-		
-		if (isset($this->data[$event])) {
-			foreach ($this->data[$event] as $action) {
+	public function trigger($key, &$arg = array()) {
+		if (isset($this->data[$key])) {
+			foreach ($this->data[$key] as $event) {
+				$action = new Action($event, $arg);
 				$action->execute($this->registry);
 			}
 		}

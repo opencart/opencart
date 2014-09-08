@@ -494,13 +494,15 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	padding: 5px 8px;
 	background-color: #3DA9E3;
 }
+.panel {
+	border-top: 2px;	
+}
 .panel .panel-heading {
 	position: relative;
 }
 
 .panel.panel-default .panel-heading {
 	color: #595959;
-	border-top: 2px solid #bfbfbf;
 }
 .panel-heading h3 i {
 	margin-right: 8px;	

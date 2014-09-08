@@ -3,7 +3,7 @@ class ControllerCommonReset extends Controller {
 	private $error = array();
 
 	public function index() {
-		if ($this->user->isLogged()) {
+		if ($this->user->isLogged() && isset($this->request->get['token']) && ($this->request->get['token'] == $this->session->data['token'])) {
 			$this->response->redirect($this->url->link('common/dashboard', '', 'SSL'));
 		}
 
@@ -19,9 +19,9 @@ class ControllerCommonReset extends Controller {
 
 		$this->load->model('user/user');
 
-		$user_info = $this->model_user_user->getUserByCode($code);
+		//$user_info = $this->model_user_user->getUserByCode($code);
 
-		if ($user_info) {
+		//if ($user_info) {
 			$this->load->language('common/reset');
 
 			if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
@@ -41,7 +41,19 @@ class ControllerCommonReset extends Controller {
 
 			$data['button_save'] = $this->language->get('button_save');
 			$data['button_cancel'] = $this->language->get('button_cancel');
-
+		
+			$data['breadcrumbs'] = array();
+	
+			$data['breadcrumbs'][] = array(
+				'text' => $this->language->get('text_home'),
+				'href' => $this->url->link('common/dashboard', '', 'SSL')
+			);
+	
+			$data['breadcrumbs'][] = array(
+				'text' => $this->language->get('heading_title'),
+				'href' => $this->url->link('common/reset', '', 'SSL')
+			);
+		
 			if (isset($this->error['password'])) {
 				$data['error_password'] = $this->error['password'];
 			} else {
@@ -74,13 +86,13 @@ class ControllerCommonReset extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 
 			$this->response->setOutput($this->load->view('common/reset.tpl', $data));
-		} else {
-			$this->load->model('setting/setting');
+	//	} else {
+			//$this->load->model('setting/setting');
 
-			$this->model_setting_setting->editSettingValue('config', 'config_password', '0');
+			//$this->model_setting_setting->editSettingValue('config', 'config_password', '0');
 
-			return new Action('common/login');
-		}
+			//return new Action('common/login');
+		//}
 	}
 
 	protected function validate() {

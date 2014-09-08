@@ -82,7 +82,7 @@ class ControllerCommonFileManager extends Controller {
 					'thumb' => $this->model_tool_image->resize(utf8_substr($image, utf8_strlen(DIR_IMAGE)), 100, 100),
 					'name'  => implode(' ', $name),
 					'type'  => 'image',
-					'path'  => urlencode(utf8_substr($image, utf8_strlen(DIR_IMAGE))),
+					'path'  => utf8_substr($image, utf8_strlen(DIR_IMAGE)),
 					'href'  => $server . 'image/' . utf8_substr($image, utf8_strlen(DIR_IMAGE))
 				);
 			}

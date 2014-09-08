@@ -341,13 +341,15 @@ class ControllerExtensionModification extends Controller {
 			
 			// Clear all modification files
 			foreach ($files as $file) {
-				// If file just delete
-				if (is_file($file)) {
-					unlink($file);
-
-				// If directory use the remove directory function
-				} elseif (is_dir($file)) {
-					rmdir($file);
+				if ($file != DIR_MODIFICATION . 'index.html') {
+					// If file just delete
+					if (is_file($file)) {
+						unlink($file);
+	
+					// If directory use the remove directory function
+					} elseif (is_dir($file)) {
+						rmdir($file);
+					}
 				}
 			}					
 

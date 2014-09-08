@@ -4,5 +4,8 @@ class ControllerCommonStats extends Controller {
 		$query = $this->db->query("SHOW GLOBAL STATUS");
 		
 		//print_r($query);
+		$data = array();
+		
+		return $this->load->view('common/stats.tpl', $data);
 	}
 }

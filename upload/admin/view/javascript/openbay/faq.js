@@ -30,29 +30,25 @@ function faq(){
                 html += '<div class="container-fluid" id="faq" style="display:none;">';
                     html += '<div class="alert alert-info">';
                     	html += '<div class="pull-right">';
-				html += '<a class="btn btn-primary" href="' + data.link + '" target="_BLANK" data-toggle="tooltip" title="' + data.button_faq + '"><i class="fa fa-info-circle"></i></a> ';
-							html += '<button type="button" class="btn btn-danger" data-toggle="tooltip" title="' + data.button_close + '" id="faq-close"><i class="fa fa-minus-circle"></i></button>';
+				            html += '<a class="btn btn-primary" href="' + data.link + '" target="_BLANK" data-toggle="tooltip" title="' + data.button_faq + '"><i class="fa fa-info-circle"></i></a> ';
+							html += '<button onclick="close();" type="button" class="btn btn-danger" data-toggle="tooltip" title="' + data.button_close + '" id="faq-close"><i class="fa fa-minus-circle"></i></button>';
 						html += '</div>';
 						html += '<h5>' + data.title + '</h5>';
 						html += '<p>' + data.message + '</p>';
                     html += '</div>';
                 html += '</div>';
 
-                $('.page-header:first').prepend(html);
+                $('.page-header:first').after(html);
 
 				setTimeout(function() {
 					$('#faq').slideDown('slow');
-				}, 3000);
+				}, 2000);
             }
         }
     });
 }
 
-$(document).ready(function(){
-    faq();
-});
-
-$('#faq-close').bind('click', function() {
+function close() {
     var route = $.getUrlVar('route');
     var token = $.getUrlVar('token');
 
@@ -65,4 +61,8 @@ $('#faq-close').bind('click', function() {
         success: function(data) {}
     });
     return false;
+}
+
+$(document).ready(function(){
+    faq();
 });

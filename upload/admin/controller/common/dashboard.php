@@ -56,21 +56,23 @@ class ControllerCommonDashboard extends Controller {
 		$this->load->model('sale/order');
 
 		$data['order_total'] = $this->model_sale_order->getTotalOrders();
+		$data['order'] = $this->url->link('sales/order', 'token=' . $this->session->data['token'], 'SSL');
 
 		$this->load->model('report/dashboard');
-
+		
 		// Total Sales
 		$data['sale_total'] = $this->currency->format($this->model_report_dashboard->getTotalSales(), $this->config->get('config_currency'));
+		$data['sale'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL');
 
 		// Customers
 		$this->load->model('sale/customer');
 
-		$customer_total = $this->model_sale_customer->getTotalCustomers();
-
-		$data['customer_total'] = $customer_total;
+		$data['customer_total'] = $this->model_sale_customer->getTotalCustomers();
+		$data['customer'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'], 'SSL');
 
 		// Customers Online
 		$data['online_total'] = $this->model_report_dashboard->getTotalCustomersOnline();
+		$data['online'] = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['activities'] = array();
 

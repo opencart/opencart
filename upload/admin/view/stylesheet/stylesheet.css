@@ -10,6 +10,7 @@ html, body {
 	text-rendering: optimizeLegibility;
 }
 h1, h2, h3, h4, h5, h6, p {
+	line-height: 1.1;
 	margin-top: 0;
 }
 .page-header {
@@ -338,7 +339,7 @@ label.control-label span:after {
 	margin-left: 4px;
 }
 label.control-label {
-	font-weight: normal;
+	/*font-weight: normal;*/
 }
 input[type="radio"], input[type="checkbox"] {
 	margin: 2px 0 0;
@@ -447,7 +448,6 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .breadcrumb li + li:before {
 	content: "\f105";
 	font-family: FontAwesome;
-	font-size: 12px;
 	color: #BBBBBB;
 }
 
@@ -494,6 +494,20 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .tile-footer {
 	padding: 5px 8px;
 	background-color: #3DA9E3;
+}
+.panel.panel-default .panel-heading {
+	color: #595959;
+	border-top: 2px solid #bfbfbf;
+}
+.panel-heading i {
+	font-size: 16px;
+	font-weight: 500;	
+	margin-right: 8px;
+}
+.panel-heading h3 {
+	font-size: 16px;
+	font-weight: 500;
+	display: inline-block;
 }
 .img-thumbnail i {
 	color: #FFFFFF;

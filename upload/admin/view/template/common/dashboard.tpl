@@ -23,7 +23,7 @@
           <div class="tile-body"> <i class="fa fa-shopping-cart"></i>
             <h2 class="pull-right"><?php echo $order_total; ?></h2>
           </div>
-          <div class="tile-footer"><a href=""><?php echo $text_view; ?></a></div>
+          <div class="tile-footer"><a href="<?php echo $order; ?>"><?php echo $text_view; ?></a></div>
         </div>
       </div>
       <div class="col-sm-3">
@@ -32,7 +32,7 @@
           <div class="tile-body"> <i class="fa fa-credit-card"></i>
             <h2 class="pull-right"><?php echo $sale_total; ?></h2>
           </div>
-          <div class="tile-footer"><a href=""><?php echo $text_view; ?></a></div>
+          <div class="tile-footer"><a href="<?php echo $sale; ?>"><?php echo $text_view; ?></a></div>
         </div>
       </div>
       <div class="col-sm-3">
@@ -41,7 +41,7 @@
           <div class="tile-body"> <i class="fa fa-user"></i>
             <h2 class="pull-right"><?php echo $customer_total; ?></h2>
           </div>
-          <div class="tile-footer"><a href=""><?php echo $text_view; ?></a></div>
+          <div class="tile-footer"><a href="<?php echo $customer; ?>"><?php echo $text_view; ?></a></div>
         </div>
       </div>
       <div class="col-sm-3">
@@ -50,7 +50,7 @@
           <div class="tile-body"> <i class="fa fa-eye"></i>
             <h2 class="pull-right"><?php echo $online_total; ?></h2>
           </div>
-          <div class="tile-footer"><a href=""><?php echo $text_view; ?></a></div>
+          <div class="tile-footer"><a href="<?php echo $online; ?>"><?php echo $text_view; ?></a></div>
         </div>
       </div>
     </div>
@@ -58,7 +58,7 @@
       <div class="col-sm-6">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h1 class="panel-title"><i class="fa fa-eye fa-lg"></i> <?php echo $text_map; ?></h1>
+            <h3 class="panel-title"><i class="fa fa-eye"></i> <?php echo $text_map; ?></h3>
           </div>
           <div class="panel-body">
             <div id="vmap" style="width: 100%; height: 260px;"></div>
@@ -79,7 +79,7 @@
                 </ul>
               </div>
             </div>
-            <h1 class="panel-title"><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $text_sale; ?></h1>
+            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> <?php echo $text_sale; ?></h3>
           </div>
           <div class="panel-body">
             <div id="chart-sale" class="chart" style="width: 100%; height: 260px;"></div>
@@ -91,7 +91,7 @@
       <div class="col-sm-4">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h1 class="panel-title"><i class="fa fa-calendar-o fa-lg"></i> <?php echo $text_activity; ?></h1>
+            <h3 class="panel-title"><i class="fa fa-calendar"></i> <?php echo $text_activity; ?></h13>
           </div>
           <ul class="list-group">
             <?php if ($activities) { ?>
@@ -108,7 +108,7 @@
       <div class="col-sm-8">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h1 class="panel-title"><i class="fa fa-shopping-cart fa-lg"></i> <?php echo $text_recent; ?></h1>
+            <h3 class="panel-title"><i class="fa fa-shopping-cart"></i> <?php echo $text_recent; ?></h3>
           </div>
           <div class="table-responsive">
             <table class="table">

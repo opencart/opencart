@@ -26,7 +26,7 @@
     <?php } ?>
     <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-category">
       <div class="table-responsive">
-        <table class="table table-hover">
+        <table class="table table-striped table-hover">
           <thead>
             <tr>
               <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>

@@ -3,7 +3,7 @@ class ControllerCommonForgotten extends Controller {
 	private $error = array();
 
 	public function index() {
-		if ($this->user->isLogged()) {
+		if ($this->user->isLogged() && isset($this->request->get['token']) && ($this->request->get['token'] == $this->session->data['token'])) {
 			$this->response->redirect($this->url->link('common/dashboard', '', 'SSL'));
 		}
 

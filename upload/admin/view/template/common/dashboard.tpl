@@ -68,16 +68,13 @@
       <div class="col-sm-6">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <div class="pull-right">
-              <div class="btn-group" data-toggle="buttons">
-                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-calendar"></i></button>
-                <ul id="range" class="dropdown-menu dropdown-menu-right">
-                  <li><a href="day"><?php echo $text_day; ?></a></li>
-                  <li><a href="week"><?php echo $text_week; ?></a></li>
-                  <li class="active"><a href="month"><?php echo $text_month; ?></a></li>
-                  <li><a href="year"><?php echo $text_year; ?></a></li>
-                </ul>
-              </div>
+            <div class="pull-right"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-calendar"></i> <i class="caret"></i></a>
+              <ul id="range" class="dropdown-menu dropdown-menu-right">
+                <li><a href="day"><?php echo $text_day; ?></a></li>
+                <li><a href="week"><?php echo $text_week; ?></a></li>
+                <li class="active"><a href="month"><?php echo $text_month; ?></a></li>
+                <li><a href="year"><?php echo $text_year; ?></a></li>
+              </ul>
             </div>
             <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> <?php echo $text_sale; ?></h3>
           </div>
@@ -91,7 +88,9 @@
       <div class="col-sm-4">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-calendar"></i> <?php echo $text_activity; ?></h13>
+            <h3 class="panel-title">
+            <i class="fa fa-calendar"></i> <?php echo $text_activity; ?>
+            </h13>
           </div>
           <ul class="list-group">
             <?php if ($activities) { ?>
@@ -148,10 +147,10 @@
   </div>
 </div>
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.js"></script> 
-<script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.resize.min.js"></script> 
+<script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.resize.min.js"></script>
 <link type="text/css" href="view/javascript/jquery/jqvmap/jqvmap.css" rel="stylesheet" media="screen" />
 <script type="text/javascript" src="view/javascript/jquery/jqvmap/jquery.vmap.js"></script> 
-<script type="text/javascript" src="view/javascript/jquery/jqvmap/maps/jquery.vmap.world.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/jqvmap/maps/jquery.vmap.world.js"></script> 
 <script type="text/javascript"><!--
 $(document).ready(function() {
 	$.ajax({
@@ -204,18 +203,18 @@ $('#range a').on('click', function(e) {
 		success: function(json) {
 			var option = {	
 				shadowSize: 0,
+				colors: ['#9FD5F1', '#1065D2'],
 				bars: { 
 					show: true,
 					fill: true,
-					lineWidth: 1,
-					barColor: '#000000'
+					lineWidth: 1
 				},
 				grid: {
 					backgroundColor: '#FFFFFF',
 					hoverable: true
 				},
 				points: {
-					show: false				
+					show: false
 				},
 				xaxis: {
 					show: true,

@@ -280,9 +280,7 @@ class ControllerExtensionModification extends Controller {
 						}
 					}
 
-					$file = DIR_MODIFICATION . $key;
-
-					$handle = fopen($file, 'w');
+					$handle = fopen(DIR_MODIFICATION . $key, 'w');
 
 					fwrite($handle, $value);
 

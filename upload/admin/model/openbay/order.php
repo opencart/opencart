@@ -21,6 +21,12 @@ class ModelOpenbayOrder extends Model {
 			$sql .= " JOIN (SELECT NULL AS order_id) auso ";
 		}
 
+		if ($this->config->get('etsy_status')) {
+			$sql .= " LEFT JOIN " . DB_PREFIX . "etsy_order eto ON o.order_id = eto.order_id ";
+		} else {
+			$sql .= " JOIN (SELECT NULL AS order_id) eto ";
+		}
+
 		if (isset($data['filter_order_status_id']) && !is_null($data['filter_order_status_id'])) {
 			$sql .= " WHERE `order_status_id` = '" . (int)$data['filter_order_status_id'] . "'";
 		} else {
@@ -40,7 +46,7 @@ class ModelOpenbayOrder extends Model {
 		}
 
 		if (!empty($data['filter_channel'])) {
-			$sql .= " AND IF(ao.order_id IS NULL, IF(auso.order_id IS NULL, IF(eo.order_id IS NULL, 'web', 'ebay'), 'amazonus'), 'amazon') = '" . $this->db->escape($data['filter_channel']) . "'";
+			$sql .= " AND IF(eto.order_id IS NULL, IF(ao.order_id IS NULL, IF(auso.order_id IS NULL, IF(eo.order_id IS NULL, 'web', 'ebay'), 'amazonus'), 'amazon'), 'etsy') = '" . $this->db->escape($data['filter_channel']) . "'";
 		}
 
 		$query = $this->db->query($sql);
@@ -67,6 +73,12 @@ class ModelOpenbayOrder extends Model {
 			$sql .= " LEFT JOIN " . DB_PREFIX . "amazonus_order auso ON auso.order_id = o.order_id ";
 		} else {
 			$sql .= " JOIN (SELECT NULL AS order_id) auso ";
+		}
+
+		if ($this->config->get('amazonus_status')) {
+			$sql .= " LEFT JOIN " . DB_PREFIX . "etsy_order eto ON eto.order_id = o.order_id ";
+		} else {
+			$sql .= " JOIN (SELECT NULL AS order_id) eto ";
 		}
 
 		if (isset($data['filter_order_status_id']) && !is_null($data['filter_order_status_id'])) {
@@ -129,7 +141,7 @@ class ModelOpenbayOrder extends Model {
 	}
 
 	public function getOrder($order_id) {
-		$sql = "SELECT o.order_id, o.order_status_id, o.shipping_method, CONCAT(o.firstname, ' ', o.lastname) AS customer, (SELECT os.name FROM " . DB_PREFIX . "order_status os WHERE os.order_status_id = o.order_status_id AND os.language_id = '" . (int)$this->config->get('config_language_id') . "') AS status, o.currency_code, o.currency_value, o.date_added, IF(ao.order_id IS NULL, IF(auso.order_id IS NULL, IF(eo.order_id IS NULL, 'web', 'ebay'), 'amazonus'), 'amazon') AS channel FROM `" . DB_PREFIX . "order` o";
+		$sql = "SELECT o.order_id, o.order_status_id, o.shipping_method, CONCAT(o.firstname, ' ', o.lastname) AS customer, (SELECT os.name FROM " . DB_PREFIX . "order_status os WHERE os.order_status_id = o.order_status_id AND os.language_id = '" . (int)$this->config->get('config_language_id') . "') AS status, o.currency_code, o.currency_value, o.date_added, IF(eto.order_id IS NULL, IF(ao.order_id IS NULL, IF(auso.order_id IS NULL, IF(eo.order_id IS NULL, 'web', 'ebay'), 'amazonus'), 'amazon'), 'etsy') AS channel FROM `" . DB_PREFIX . "order` o";
 
 		if ($this->config->get('ebay_status')) {
 			$sql .= " LEFT JOIN " . DB_PREFIX . "ebay_order eo ON eo.order_id = o.order_id ";

@@ -661,6 +661,13 @@ class ControllerExtensionOpenbay extends Controller {
 			);
 		}
 
+		if ($this->config->get('etsy_status')) {
+			$data['channels'][] = array(
+				'module' => 'etsy',
+				'title' => $this->language->get('text_etsy'),
+			);
+		}
+
 		$data['heading_title'] = $this->language->get('heading_title');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_missing'] = $this->language->get('text_missing');

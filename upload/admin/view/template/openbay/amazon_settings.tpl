@@ -69,13 +69,16 @@
           </div>
           <div class="tab-pane" id="tab-product">
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="entry-tax-percentage"><?php echo $entry_tax_percentage; ?></label>
+              <label class="col-sm-2 control-label" for="entry-tax-percentage"><span data-toggle="tooltip" data-container="#tab-product" title="<?php echo $help_tax_percentage; ?>"><?php echo $entry_tax_percentage; ?></span></label>
               <div class="col-sm-10">
-                <input type="text" name="openbay_amazon_listing_tax_added" value="<?php echo $openbay_amazon_listing_tax_added; ?>" placeholder="<?php echo $entry_tax_percentage; ?>" id="entry-tax-percentage" class="form-control" />
+                <div class="input-group col-xs-2">
+                  <input type="text" name="openbay_amazon_listing_tax_added" value="<?php echo $openbay_amazon_listing_tax_added; ?>" placeholder="<?php echo $entry_tax_percentage; ?>" id="entry-tax-percentage" class="form-control" />
+                  <span class="input-group-addon">%</span>
+                </div>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $entry_marketplace_default; ?></label>
+              <label class="col-sm-2 control-label"><span data-toggle="tooltip" data-container="#tab-product" title="<?php echo $help_entry_marketplace_default; ?>"><?php echo $entry_marketplace_default; ?></span></label>
               <div class="col-sm-10">
                 <?php foreach ($marketplaces as $marketplace) { ?>
                   <?php if ($marketplace['code'] == $openbay_amazon_default_listing_marketplace) { ?>
@@ -87,7 +90,6 @@
                   <label for="p_code_<?php echo $marketplace['code'] ?>"><?php echo $marketplace['name'] ?></label>
                   <br />
                 <?php } ?>
-                <span class="help-block"><?php echo $help_entry_marketplace_default; ?></span>
               </div>
             </div>
             <div class="form-group">
@@ -146,7 +148,7 @@
             <fieldset>
               <legend><?php echo $text_other ?></legend>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="entry-import-tax"><?php echo $entry_import_tax; ?></label>
+                <label class="col-sm-2 control-label" for="entry-import-tax"><span data-toggle="tooltip" data-container="#tab-orders" title="<?php echo $help_import_tax; ?>"><?php echo $entry_import_tax; ?></span></label>
                 <div class="col-sm-10">
                   <div class="input-group col-xs-2">
                     <input type="text" name="openbay_amazon_order_tax" value="<?php echo $openbay_amazon_order_tax;?>" id="entry-import-tax" class="form-control" placeholder="<?php echo $entry_import_tax; ?>" />
@@ -155,7 +157,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="entry-customer-group"><?php echo $entry_customer_group; ?></label>
+                <label class="col-sm-2 control-label" for="entry-customer-group"><span data-toggle="tooltip" data-container="#tab-orders" title="<?php echo $help_customer_group; ?>"><?php echo $entry_customer_group; ?></span></label>
                 <div class="col-sm-10">
                   <select name="openbay_amazon_order_customer_group" id="entry-customer-group" class="form-control">
                     <?php foreach($customer_groups as $customer_group) { ?>
@@ -183,7 +185,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="entry-default-shipping"><?php echo $entry_default_shipping; ?></label>
+                <label class="col-sm-2 control-label" for="entry-default-shipping"><span data-toggle="tooltip" data-container="#tab-orders" title="<?php echo $help_default_shipping; ?>"><?php echo $entry_default_shipping; ?></span></label>
                 <div class="col-sm-10">
                   <select name="openbay_amazon_default_carrier" id="entry-default-shipping" class="form-control">
                     <?php foreach($carriers as $carrier) { ?>

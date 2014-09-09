@@ -13,8 +13,8 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <a data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn" onclick="$('#form').submit();"><i class="fa fa-check-circle"></i></a>
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
+        <a data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-default" onclick="$('#form').submit();"><i class="fa fa-check-circle"></i></a>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
       </div>
       <h1 class="panel-title"><i class="fa fa-file-text fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>

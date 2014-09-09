@@ -4,8 +4,6 @@ class ControllerEbayOpenbay extends Controller {
 		$encrypted      = $this->request->post;
 		$secret         = $this->config->get('ebay_secret');
 		$active         = $this->config->get('ebay_status');
-		$s1             = $this->config->get('ebay_string1');
-		$s2             = $this->config->get('ebay_string2');
 
 		$this->load->model('openbay/ebay_openbay');
 		$this->load->model('openbay/ebay_product');
@@ -15,8 +13,7 @@ class ControllerEbayOpenbay extends Controller {
 			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode(array('msg' => 'error 002')));
 		} else {
-			$token  = $this->openbay->ebay->pbkdf2($s1, $s2, 1000, 32);
-			$data   = $this->openbay->ebay->decrypt($encrypted['data'], $token, true);
+			$data = $this->openbay->ebay->decryptArgs($encrypted['data'], true);
 
 			if($secret == $data['secret'] && $active == 1) {
 				if($data['action'] == 'ItemUnsold') {

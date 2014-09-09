@@ -9,17 +9,33 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 		$this->load->model('tool/image');
 
 		$this->document->addScript('view/javascript/openbay/openbay.js');
-		$this->document->setTitle($this->language->get('text_title'));
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_home'),
 		);
+
 		$data['breadcrumbs'][] = array(
-			'text' => 'Products',
-			'href' => $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'),
+			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_openbay'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_amazon'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('heading_title'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/amazon_product', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_title_advanced'),
 		);
 
 		$url = '';
@@ -102,13 +118,13 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 			if ($data_array['upload_after'] === 'true') {
 				$upload_result = $this->uploadSaved();
 				if ($upload_result['status'] == 'ok') {
-					$this->session->data['success'] = $this->language->get('uploaded_alert_text');
+					$this->session->data['success'] = $this->language->get('text_uploaded');
 					$this->response->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 				} else {
 					$data['errors'][] = Array('message' => $upload_result['error_message']);
 				}
 			} else {
-				$this->session->data['success'] = $this->language->get('saved_localy_text');
+				$this->session->data['success'] = $this->language->get('text_saved_local');
 				$this->response->redirect($this->url->link('openbay/amazonus_product', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'));
 			}
 		}
@@ -288,7 +304,7 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 			$product_data_decoded = (array)json_decode($saved_product['data']);
 
 			$catalog = defined(HTTPS_CATALOG) ? HTTPS_CATALOG : HTTP_CATALOG;
-			$response_data = array("response_url" => $catalog . 'index.php?route=amazonus/product/inbound');
+			$response_data = array("response_url" => $catalog . 'index.php?route=openbay/amazonus/product');
 			$category_data = array('category' => (string)$saved_product['category']);
 			$fields_data = array('fields' => (array)$product_data_decoded['fields']);
 
@@ -303,7 +319,7 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 
 			if (!isset($insertion_response['status']) || $insertion_response['status'] == 'error') {
 				$details = isset($insertion_response['info']) ? $insertion_response['info'] : 'Unknown';
-				$result['error_message'] = sprintf($this->language->get('upload_failed'), $saved_product['sku'], $details);
+				$result['error_message'] = sprintf($this->language->get('error_upload_failed'), $saved_product['sku'], $details);
 				$result['status'] = 'error';
 				break;
 			}
@@ -329,7 +345,7 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 
 		if (isset($this->request->get['xml'])) {
 			$request = array('template' => $this->request->get['xml'], 'version' => 2);
-			$response = $this->openbay->amazonus->callWithResponse("productv2/GetTemplateXml", $request);
+			$response = $this->openbay->amazonus->call("productv2/GetTemplateXml", $request);
 			if ($response) {
 				$template = $this->openbay->amazonus->parseCategoryTemplate($response);
 				if ($template) {

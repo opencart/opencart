@@ -7,7 +7,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
 
-		$this->document->setTitle($this->language->get('text_title'));
+		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['action']   = $this->url->link('openbay/etsy_product/create', 'token=' . $this->session->data['token'], 'SSL');
@@ -21,20 +21,21 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		}
 
 		$data['breadcrumbs'] = array();
-
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_home'),
 		);
-
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_openbay'),
 		);
-
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/etsy', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_title'),
+			'text' => $this->language->get('text_etsy'),
+		);
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/etsy_product/create', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('heading_title'),
 		);
 
 		$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);

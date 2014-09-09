@@ -7,7 +7,7 @@ class ControllerOpenbayAmazonListing extends Controller {
 		$this->load->model('catalog/product');
 		$this->load->model('localisation/country');
 
-		$this->document->setTitle($this->language->get('text_title'));
+		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		if (isset($this->session->data['error'])) {
@@ -144,8 +144,8 @@ class ControllerOpenbayAmazonListing extends Controller {
 		$data['text_view_on_amazon'] = $this->language->get('text_view_on_amazon');
 		$data['text_list'] = $this->language->get('text_list');
 
-		$data['tab_required_info'] = $this->language->get('tab_required_info');
-		$data['tab_additional_info'] = $this->language->get('tab_additional_info');
+		$data['tab_required'] = $this->language->get('tab_required');
+		$data['tab_additional'] = $this->language->get('tab_additional');
 
 		$data['text_placeholder_search'] = $this->language->get('text_placeholder_search');
 		$data['text_placeholder_condition'] = $this->language->get('text_placeholder_condition');
@@ -219,7 +219,7 @@ class ControllerOpenbayAmazonListing extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_title'),
+			'text' => $this->language->get('heading_title'),
 		);
 
 		$data['header'] = $this->load->controller('common/header');
@@ -234,26 +234,8 @@ class ControllerOpenbayAmazonListing extends Controller {
 		$this->load->model('openbay/amazon');
 		$this->load->language('openbay/amazon_listing');
 
-		$this->document->setTitle($this->language->get('text_title'));
+		$this->document->setTitle($this->language->get('text_edit_heading'));
 		$this->document->addScript('view/javascript/openbay/faq.js');
-
-		$data['breadcrumbs'] = array();
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_home'),
-		);
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_openbay'),
-		);
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_amazon'),
-		);
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/amazon_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'),
-			'text' => $this->language->get('text_edit_heading'),
-		);
 
 		$url = '';
 
@@ -319,6 +301,24 @@ class ControllerOpenbayAmazonListing extends Controller {
 			$this->response->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
+		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_home'),
+		);
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_openbay'),
+		);
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_amazon'),
+		);
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/amazon_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'),
+			'text' => $this->language->get('text_edit_heading'),
+		);
+
 		$status = $this->model_openbay_amazon->getProductStatus($product_id);
 
 		if ($status === false) {
@@ -355,8 +355,6 @@ class ControllerOpenbayAmazonListing extends Controller {
 		$data['column_combination'] = $this->language->get('column_combination');
 		$data['column_sku'] = $this->language->get('column_sku');
 		$data['column_amazon_sku'] = $this->language->get('column_amazon_sku');
-		$data['button_create_new_listing'] = $this->language->get('button_create_new_listing');
-		$data['button_create_new_listing'] = $this->language->get('button_create_new_listing');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 
 		$data['header'] = $this->load->controller('common/header');

@@ -9,7 +9,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 		$this->load->model('tool/image');
 
 		$this->document->addScript('view/javascript/openbay/openbay.js');
-		$this->document->setTitle($this->language->get('text_title'));
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['breadcrumbs'] = array();
 
@@ -30,7 +30,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_title'),
+			'text' => $this->language->get('heading_title'),
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -118,13 +118,13 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			if ($data_array['upload_after'] === 'true') {
 				$upload_result = $this->uploadSaved();
 				if ($upload_result['status'] == 'ok') {
-					$this->session->data['success'] = $this->language->get('uploaded_alert_text');
+					$this->session->data['success'] = $this->language->get('text_uploaded');
 					$this->response->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 				} else {
 					$data['errors'][] = Array('message' => $upload_result['error_message']);
 				}
 			} else {
-				$this->session->data['success'] = $this->language->get('saved_localy_text');
+				$this->session->data['success'] = $this->language->get('text_saved_local');
 				$this->response->redirect($this->url->link('openbay/amazon_product', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'));
 			}
 		}
@@ -200,11 +200,11 @@ class ControllerOpenbayAmazonProduct extends Controller {
 		}
 
 		$data['marketplaces'] = array(
-			array('name' => $this->language->get('de_text'), 'id' => 'A1PA6795UKMFR9', 'code' => 'de'),
-			array('name' => $this->language->get('fr_text'), 'id' => 'A13V1IB3VIYZZH', 'code' => 'fr'),
-			array('name' => $this->language->get('it_text'), 'id' => 'APJ6JRA9NG5V4', 'code' => 'it'),
-			array('name' => $this->language->get('es_text'), 'id' => 'A1RKKUPIHCS9HS', 'code' => 'es'),
-			array('name' => $this->language->get('uk_text'), 'id' => 'A1F83G8C2ARO7P', 'code' => 'uk'),
+			array('name' => $this->language->get('text_germany'), 'id' => 'A1PA6795UKMFR9', 'code' => 'de'),
+			array('name' => $this->language->get('text_france'), 'id' => 'A13V1IB3VIYZZH', 'code' => 'fr'),
+			array('name' => $this->language->get('text_italy'), 'id' => 'APJ6JRA9NG5V4', 'code' => 'it'),
+			array('name' => $this->language->get('text_spain'), 'id' => 'A1RKKUPIHCS9HS', 'code' => 'es'),
+			array('name' => $this->language->get('text_united_kingdom'), 'id' => 'A1F83G8C2ARO7P', 'code' => 'uk'),
 		);
 
 		$marketplace_mapping = array(
@@ -329,7 +329,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			$product_data_decoded = (array)json_decode($saved_product['data']);
 
 			$catalog = defined(HTTPS_CATALOG) ? HTTPS_CATALOG : HTTP_CATALOG;
-			$response_data = array("response_url" => $catalog . 'index.php?route=amazon/product/inbound');
+			$response_data = array("response_url" => $catalog . 'index.php?route=openbay/amazon/product');
 			$category_data = array('category' => (string)$saved_product['category']);
 			$fields_data = array('fields' => (array)$product_data_decoded['fields']);
 
@@ -344,7 +344,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 
 			if (!isset($insertion_response['status']) || $insertion_response['status'] == 'error') {
 				$details = isset($insertion_response['info']) ? $insertion_response['info'] : 'Unknown';
-				$result['error_message'] = sprintf($this->language->get('upload_failed'), $saved_product['sku'], $details);
+				$result['error_message'] = sprintf($this->language->get('error_upload_failed'), $saved_product['sku'], $details);
 				$result['status'] = 'error';
 				break;
 			}
@@ -370,7 +370,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 
 		if (isset($this->request->get['xml'])) {
 			$request = array('template' => $this->request->get['xml'], 'version' => 2);
-			$response = $this->openbay->amazon->callWithResponse("productv2/GetTemplateXml", $request);
+			$response = $this->openbay->amazon->call("productv2/GetTemplateXml", $request);
 			if ($response) {
 				$template = $this->openbay->amazon->parseCategoryTemplate($response);
 				if ($template) {

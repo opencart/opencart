@@ -1,32 +1,33 @@
 <?php echo $header; ?><?php echo $menu; ?>
-<div id="content" xmlns="http://www.w3.org/1999/html">
+<div id="content">
   <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
-  <?php } ?>
-  <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="page-header">
+    <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-etsy-settings" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn" onclick="validateForm(); return false;"><i class="fa fa-check-circle"></i></button>
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
+        <button type="submit" form="form-etsy-settings" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-default" onclick="validateForm(); return false;"><i class="fa fa-check-circle"></i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
       </div>
-      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="panel-body">
-      <?php if ($account_info != false) { ?>
-        <?php if ($account_info['header_code'] == 200) { ?>
-      <div class="alert alert-success"><i class="fa fa-check"></i> <?php echo $text_account_ok; ?></div>
-        <?php } else { ?>
-          <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_account_info; ?> (<?php echo $account_info['header_code']; ?>)</div>
-        <?php } ?>
+  </div>
+  <div class="container-fluid">
+    <?php if ($error_warning) { ?>
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+    <?php } ?>
+    <?php if ($account_info != false) { ?>
+      <?php if ($account_info['header_code'] == 200) { ?>
+        <div class="alert alert-success"><i class="fa fa-check"></i> <?php echo $text_account_ok; ?></div>
+      <?php } else { ?>
+        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_account_info; ?> (<?php echo $account_info['header_code']; ?>)</div>
       <?php } ?>
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-etsy-settings" class="form-horizontal">
+    <?php } ?>
+    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-etsy-settings" class="form-horizontal">
 
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_api_info; ?></a></li>
@@ -49,21 +50,21 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="etsy_token"><?php echo $text_token; ?></label>
+              <label class="col-sm-2 control-label" for="etsy_token"><?php echo $entry_token; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="etsy_token" value="<?php echo $etsy_token; ?>" placeholder="<?php echo $text_token; ?>" id="etsy_token" class="form-control credentials" />
+                <input type="text" name="etsy_token" value="<?php echo $etsy_token; ?>" placeholder="<?php echo $entry_token; ?>" id="etsy_token" class="form-control credentials" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="etsy_enc1"><?php echo $text_enc1; ?></label>
+              <label class="col-sm-2 control-label" for="etsy_enc1"><?php echo $entry_enc1; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="etsy_enc1" value="<?php echo $etsy_enc1; ?>" placeholder="<?php echo $text_enc1; ?>" id="etsy_enc1" class="form-control credentials" />
+                <input type="text" name="etsy_enc1" value="<?php echo $etsy_enc1; ?>" placeholder="<?php echo $entry_enc1; ?>" id="etsy_enc1" class="form-control credentials" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="etsy_enc2"><?php echo $text_enc2; ?></label>
+              <label class="col-sm-2 control-label" for="etsy_enc2"><?php echo $entry_enc2; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="etsy_enc2" value="<?php echo $etsy_enc2; ?>" placeholder="<?php echo $text_enc2; ?>" id="etsy_enc2" class="form-control credentials" />
+                <input type="text" name="etsy_enc2" value="<?php echo $etsy_enc2; ?>" placeholder="<?php echo $entry_enc2; ?>" id="etsy_enc2" class="form-control credentials" />
               </div>
             </div>
             <div class="form-group">
@@ -80,7 +81,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="etsy_order_status_new"><?php echo $text_import_def_id; ?></label>
+              <label class="col-sm-2 control-label" for="etsy_order_status_new"><?php echo $entry_import_def_id; ?></label>
               <div class="col-sm-10">
                 <select name="etsy_order_status_new" id="etsy_order_status_new" class="form-control">
                   <?php if (empty($etsy_order_status_new)) { $etsy_order_status_new = 1; } ?>
@@ -92,7 +93,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="etsy_order_status_paid"><?php echo $text_import_paid_id; ?></label>
+              <label class="col-sm-2 control-label" for="etsy_order_status_paid"><?php echo $entry_import_paid_id; ?></label>
               <div class="col-sm-10">
                 <select name="etsy_order_status_paid" id="etsy_order_status_paid" class="form-control">
                   <?php if (empty($etsy_order_status_paid)) { $etsy_order_status_paid = 2; } ?>
@@ -104,7 +105,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="etsy_order_status_shipped"><?php echo $text_import_shipped_id; ?></label>
+              <label class="col-sm-2 control-label" for="etsy_order_status_shipped"><?php echo $entry_import_shipped_id; ?></label>
               <div class="col-sm-10">
                 <select name="etsy_order_status_shipped" id="etsy_order_status_shipped" class="form-control">
                   <?php if (empty($etsy_order_status_shipped)) { $etsy_order_status_shipped = 3; } ?>
@@ -118,13 +119,12 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="button-import"><?php echo $text_pull_orders; ?></label>
               <div class="col-sm-10">
-                <a class="btn btn-primary" id="button-import"><i class="fa fa-refresh"></i> <?php echo $btn_pull; ?></a>
+                <a class="btn btn-primary" id="button-import"><i class="fa fa-refresh"></i> <?php echo $button_poll; ?></a>
               </div>
             </div>
           </div>
         </div>
       </form>
-    </div>
   </div>
 </div>
 <script type="text/javascript"><!--

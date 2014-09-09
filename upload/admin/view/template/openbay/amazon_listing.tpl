@@ -5,61 +5,63 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
-  <?php } ?>
-  <?php if ($listing_errors) { ?>
-  <div class="alert alert-danger">
-    <ul>
-      <?php foreach ($listing_errors as $listing_error) { ?>
-      <li><i class="fa fa-exclamation-circle"></i> <?php echo $listing_error ?></li>
-      <?php } ?>
-    </ul>
-  </div>
-  <?php } ?>
-  <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="page-header">
+    <div class="container-fluid">
       <div class="pull-right">
-        <a href="<?php echo $url_return; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
+        <a href="<?php echo $url_return; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
       </div>
-      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_title; ?></h1>
+      <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
+  </div>
+  <div class="container-fluid">
+    <?php if ($error_warning) { ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+    <?php } ?>
+    <?php if ($listing_errors) { ?>
+    <div class="alert alert-danger">
+      <ul>
+        <?php foreach ($listing_errors as $listing_error) { ?>
+        <li><i class="fa fa-exclamation-circle"></i> <?php echo $listing_error ?></li>
+        <?php } ?>
+      </ul>
+    </div>
+    <?php } ?>
     <div class="panel-body" id="search-container">
       <div class="alert alert-danger" id="search-error" style="display:none;"></div>
-        <div class="well">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="form-group">
-                <input type="text" name="search_string" placeholder="<?php echo $text_placeholder_search; ?>" id="search-string" class="form-control" />
-              </div>
-            </div>
-            <div class="col-md-1">
-              <div class="form-group">
-                <a id="search-submit" class="btn btn-primary"><i class="fa fa-search"></i> <?php echo $button_search; ?></a>
-              </div>
+      <div class="well">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <input type="text" name="search_string" placeholder="<?php echo $text_placeholder_search; ?>" id="search-string" class="form-control" />
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <?php foreach ($marketplaces as $id => $name) {?>
-                  <label class="radio-inline">
-                    <?php if ($default_marketplace == $id) { ?>
-                      <input type="radio" name="marketplace" id="marketplace_<?php echo $id ?>" value="<?php echo $id ?>" checked="checked" />
-                    <?php } else { ?>
-                      <input type="radio" name="marketplace" id="marketplace_<?php echo $id ?>" value="<?php echo $id ?>" />
-                    <?php } ?>
+          <div class="col-md-1">
+            <div class="form-group">
+              <a id="search-submit" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_search; ?>"><i class="fa fa-search"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <?php foreach ($marketplaces as $id => $name) {?>
+                <label class="radio-inline">
+                  <?php if ($default_marketplace == $id) { ?>
+                    <input type="radio" name="marketplace" id="marketplace_<?php echo $id ?>" value="<?php echo $id ?>" checked="checked" />
+                  <?php } else { ?>
+                    <input type="radio" name="marketplace" id="marketplace_<?php echo $id ?>" value="<?php echo $id ?>" />
+                  <?php } ?>
 
-                    <?php echo $name ?>
-                  </label>
-                <?php } ?>
-              </div>
+                  <?php echo $name ?>
+                </label>
+              <?php } ?>
             </div>
           </div>
         </div>
-        <div class="well">
-          <?php echo $text_not_in_catalog; ?><a href="<?php echo $url_advanced; ?>" id="create_new" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_new; ?></a>
-        </div>
+      </div>
+      <div class="well">
+        <?php echo $text_not_in_catalog; ?><a href="<?php echo $url_advanced; ?>" id="create_new" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_new; ?></a>
+      </div>
     </div>
     <div class="panel-body" id="search-result-container" style="display:none;">
       <table class="table">
@@ -87,8 +89,8 @@
             <input type="hidden" name="quantity" value="<?php echo $quantity; ?>" id="quantity" />
 
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#required-info" data-toggle="tab"><?php echo $tab_required_info; ?></a></li>
-              <li><a href="#additional-info" data-toggle="tab"><?php echo $tab_additional_info; ?></a></li>
+              <li class="active"><a href="#required-info" data-toggle="tab"><?php echo $tab_required; ?></a></li>
+              <li><a href="#additional-info" data-toggle="tab"><?php echo $tab_additional; ?></a></li>
             </ul>
 
             <div class="tab-content">
@@ -209,7 +211,9 @@
   </div>
 </div>
 <script type="text/javascript">
-  $('#search-submit').bind('click', function() {
+  $('#search-submit').bind('click', function(e) {
+    e.preventDefault();
+
     $('#search-string').val($.trim($('#search-string').val()));
 
     $.ajax({
@@ -270,7 +274,9 @@
     });
   });
 
-  $('#button-amazon-price').bind('click', function() {
+  $('#button-amazon-price').bind('click', function(e) {
+    e.preventDefault();
+
     $.ajax({
         url: 'index.php?route=openbay/amazon_listing/bestPrice&token=<?php echo $token; ?>',
         type: 'POST',

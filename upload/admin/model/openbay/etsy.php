@@ -25,7 +25,8 @@ class ModelOpenbayEtsy extends Model{
 				  `product_id` int(11) NOT NULL,
 				  `status` SMALLINT(3) NOT NULL DEFAULT '1',
 				  `created` DATETIME NOT NULL,
-				  PRIMARY KEY (`etsy_listing_id`)
+				  PRIMARY KEY (`etsy_listing_id`),
+  				  KEY `product_id` (`product_id`)
 				) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
 
 		$this->db->query("
@@ -35,7 +36,8 @@ class ModelOpenbayEtsy extends Model{
 				  `receipt_id` int(11) NOT NULL,
 				  `paid` int(1) NOT NULL,
 				  `shipped` int(1) NOT NULL,
-				  PRIMARY KEY (`etsy_order_id`)
+				  PRIMARY KEY (`etsy_order_id`),
+  				  KEY `order_id` (`order_id`)
 				) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
 
 		$this->db->query("

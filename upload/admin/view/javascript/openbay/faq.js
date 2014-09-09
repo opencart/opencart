@@ -15,50 +15,54 @@ $.extend({
     }
 });
 
-function getFaq(){
+function faq(){
     var route = $.getUrlVar('route');
     var token = $.getUrlVar('token');
 
     $.ajax({
-        url: 'index.php?route=extension/openbay/faqGet&token='+token+'&qry_route='+route,
+        url: 'index.php?route=extension/openbay/faq&token='+token+'&qry_route='+route,
         type: 'GET',
         dataType: 'json',
         success: function(data) {
             if(data.faq_id){
-                var htmlInj = '';
+                var html = '';
 
-                htmlInj += '<div class="row">';
-                    htmlInj += '<div class="col-md-5 col-md-offset-7">';
-                        htmlInj += '<div id="faq" class="alert alert-info">';
-                            htmlInj += ' <button type="button" class="close" data-dismiss="alert" onclick="hideFaq();">&times;</button>';
-                            htmlInj += '<h4><i class="fa fa-info-circle"></i> '+data.title+'</h4>';
-                            htmlInj += '<h5>'+data.message+'<label class="label label-info pull-right"><a class="alert-link" href="'+data.link+'" target="_BLANK">'+data.button_faq+'</a></label></h5>';
-                        htmlInj += '</div>';
-                    htmlInj += '</div>';
-                htmlInj += '</div>';
+                html += '<div class="container-fluid" id="faq" style="display:none;">';
+                    html += '<div class="alert alert-info">';
+                    	html += '<div class="pull-right">';
+				            html += '<a class="btn btn-primary" href="' + data.link + '" target="_BLANK" data-toggle="tooltip" title="' + data.button_faq + '"><i class="fa fa-info-circle"></i></a> ';
+							html += '<button onclick="faqclose();" type="button" class="btn btn-danger" data-toggle="tooltip" title="' + data.button_close + '" id="faq-close"><i class="fa fa-minus-circle"></i></button>';
+						html += '</div>';
+						html += '<h5>' + data.title + '</h5>';
+						html += '<p>' + data.message + '</p>';
+                    html += '</div>';
+                html += '</div>';
 
-                //$('#content').prepend(htmlInj);
-                $('#faq').slideDown('slow');
+                $('.page-header:first').after(html);
+
+				setTimeout(function() {
+					$('#faq').slideDown('slow');
+				}, 2000);
             }
         }
     });
 }
 
-$(document).ready(function(){
-    getFaq();
-});
-
-$('#faq-close').bind('click', function() {
+function faqclose() {
     var route = $.getUrlVar('route');
     var token = $.getUrlVar('token');
 
-    $('#faq').fadeOut();
+    $('#faq').slideUp();
 
     $.ajax({
-        url: 'index.php?route=extension/openbay/faqDismiss&token='+token+'&qry_route='+route,
+        url: 'index.php?route=extension/openbay/faqdismiss&token='+token+'&qry_route='+route,
         type: 'GET',
         dataType: 'json',
         success: function(data) {}
     });
     return false;
+}
+
+$(document).ready(function(){
+    faq();
 });

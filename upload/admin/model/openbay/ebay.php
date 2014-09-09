@@ -71,7 +71,8 @@ class ModelOpenbayEbay extends Model{
 					  `product_id` int(11) NOT NULL,
 					  `variant` int(11) NOT NULL,
 					  `status` SMALLINT(3) NOT NULL DEFAULT '1',
-					  PRIMARY KEY (`ebay_listing_id`)
+					  PRIMARY KEY (`ebay_listing_id`),
+  						KEY `product_id` (`product_id`)
 					) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
 		;
 		$this->db->query("
@@ -81,7 +82,8 @@ class ModelOpenbayEbay extends Model{
 					  `product_id` int(11) NOT NULL,
 					  `key` char(50) NOT NULL,
 					  `variant` int(11) NOT NULL,
-					  PRIMARY KEY (`ebay_listing_pending_id`)
+					  PRIMARY KEY (`ebay_listing_pending_id`),
+  						KEY `product_id` (`product_id`)
 					) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
 
 		$this->db->query("
@@ -131,7 +133,10 @@ class ModelOpenbayEbay extends Model{
 						`smp_id` int(11) NOT NULL,
 						`created` DATETIME NOT NULL,
 						`modified` DATETIME NOT NULL,
-					PRIMARY KEY (`ebay_transaction_id`)
+					PRIMARY KEY (`ebay_transaction_id`),
+  						KEY `product_id` (`product_id`),
+  						KEY `order_id` (`order_id`),
+  						KEY `smp_id` (`smp_id`)
 					) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
 
 		$this->db->query("
@@ -142,7 +147,10 @@ class ModelOpenbayEbay extends Model{
 					  `smp_id` int(11) NOT NULL,
 					  `tracking_no` varchar(100) NOT NULL,
 					  `carrier_id` varchar(100) NOT NULL,
-					  PRIMARY KEY (`ebay_order_id`)
+					  PRIMARY KEY (`ebay_order_id`),
+  						KEY `order_id` (`order_id`),
+  						KEY `smp_id` (`smp_id`),
+  						KEY `parent_ebay_order_id` (`parent_ebay_order_id`)
 					) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
 
 		$this->db->query("
@@ -192,7 +200,8 @@ class ModelOpenbayEbay extends Model{
 				  `variant_id` varchar(100) NOT NULL,
 				  `item_id` varchar(100) NOT NULL,
 				  `reserve` int(11) NOT NULL,
-				  PRIMARY KEY (`id`)
+				  PRIMARY KEY (`id`),
+  					KEY `product_id` (`product_id`)
 				) ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
 
 		$this->db->query("

@@ -137,7 +137,7 @@
     $('#ftp-update-row').hide();
   });
 
-  $('#ftp-test').bind('click', function() {
+  $('#ftp-test').bind('click', function(e) {
     e.preventDefault();
 
     $.ajax({
@@ -167,7 +167,7 @@
     });
   });
 
-  $('#button-patch').bind('click', function() {
+  $('#button-patch').bind('click', function(e) {
     e.preventDefault();
 
     $.ajax({
@@ -189,7 +189,7 @@
     });
   });
 
-  $('#button-clear-faq').bind('click', function() {
+  $('#button-clear-faq').bind('click', function(e) {
     e.preventDefault();
 
     $.ajax({

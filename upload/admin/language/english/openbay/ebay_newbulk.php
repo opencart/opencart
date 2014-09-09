@@ -4,7 +4,7 @@ $_['text_page_title']               = 'Bulk listing';
 $_['text_ebay']               		= 'eBay';
 $_['text_openbay']               	= 'Openbay Pro';
 
-//Buttons
+// Buttons
 $_['text_none']                     = 'None';
 $_['text_preview']                  = 'Preview';
 $_['text_add']                      = 'Add';
@@ -36,7 +36,7 @@ $_['text_loading']                  = 'Loading details';
 $_['text_preparing0']               = 'Preparing';
 $_['text_preparing1']               = 'of';
 $_['text_preparing2']               = 'elements';
-$_['text_condition']                = 'Condition';
+$_['entry_condition']                = 'Condition';
 $_['text_duration']                 = 'Duration';
 $_['text_category']                 = 'Category';
 $_['text_exists']                   = 'Some items are already listed on eBay so have been removed';

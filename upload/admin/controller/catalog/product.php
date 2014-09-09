@@ -306,7 +306,7 @@ class ControllerCatalogProduct extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-		
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -318,7 +318,7 @@ class ControllerCatalogProduct extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
-		
+
 		$data['insert'] = $this->url->link('catalog/product/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['copy'] = $this->url->link('catalog/product/copy', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('catalog/product/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -706,7 +706,7 @@ class ControllerCatalogProduct extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
-		
+
 		if (!isset($this->request->get['product_id'])) {
 			$data['action'] = $this->url->link('catalog/product/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
@@ -1272,8 +1272,6 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['product_reward'] = array();
 		}
-
-		$data['openbay'] = $this->load->controller('extension/openbay/linkStatus', array('product_id' => $this->request->get['product_id']));
 
 		if (isset($this->request->post['product_layout'])) {
 			$data['product_layout'] = $this->request->post['product_layout'];

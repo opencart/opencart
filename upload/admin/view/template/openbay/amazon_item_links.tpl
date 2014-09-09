@@ -23,7 +23,7 @@
       <div class="well">
         <div class="row">
           <div class="col-sm-12 text-right">
-            <a class="btn btn-primary" id="button-load"><?php echo $text_load_btn; ?></a>
+            <a class="btn btn-primary" id="button-load"><?php echo $button_load; ?></a>
           </div>
         </div>
       </div>
@@ -50,7 +50,7 @@
               <input id="new-amazon-sku" type="text" class="form-control" autocomplete="off">
             </td>
             <td class="text-center">
-              <a class="btn btn-primary" id="add-new-button" onclick="addNewLinkAutocomplete()" data-toggle="tooltip" data-original-title="<?php echo $text_add; ?>"><i class="fa fa-plus-circle"></i></a>
+              <a class="btn btn-primary" id="add-new-button" onclick="addNewLinkAutocomplete()" data-toggle="tooltip" data-original-title="<?php echo $button_add; ?>"><i class="fa fa-plus-circle"></i></a>
             </td>
           </tr>
         </tbody>
@@ -107,7 +107,9 @@
     });
   }
 
-  $('#button-load').bind('click', function() {
+  $('#button-load').bind('click', function(e) {
+    e.preventDefault();
+
     $.ajax({
       url: '<?php echo html_entity_decode($get_unlinked_items_ajax); ?>',
       type: 'get',
@@ -116,7 +118,7 @@
         $('#button-load').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },
       complete: function () {
-        $('#button-load').empty().html('<?php echo $text_load_btn; ?>').removeAttr('disabled');
+        $('#button-load').empty().html('<?php echo $button_load; ?>').removeAttr('disabled');
       },
       success: function (json) {
         var thread1 = '';
@@ -150,12 +152,12 @@
                     rows += '<input class="form-control amazon_sku_' + json[i]['product_id'] + '_' + json[i]['var'] + '"  type="text">';
                   rows += '</div>';
                   rows += '<div class="col-sm-4 form-group">';
-                    rows += '<a class="btn btn-primary" onclick="addNewSkuField(' + json[i]['product_id'] + ', \'' + json[i]['var'] + '\')"><i class="fa fa-plus-circle"></i> <?php echo $text_add_sku_tooltip; ?></a>';
+                    rows += '<a class="btn btn-primary" onclick="addNewSkuField(' + json[i]['product_id'] + ', \'' + json[i]['var'] + '\')" data-toggle="tooltip" data-original-title="<?php echo $button_add; ?>"><i class="fa fa-plus-circle"></i></a>';
                   rows += '</div>';
                 rows += '</div>';
               rows += '</div>';
             rows += '</td>';
-            rows += '<td class="text-center"><a class="btn btn-primary" onclick="addNewLink(this, \'' + json[i]['product_id'] + '\', \'' + json[i]['var'] + '\')"><i class="fa fa-plus-circle"></i> <?php echo $text_add; ?></a></td>';
+            rows += '<td class="text-center"><a class="btn btn-primary" onclick="addNewLink(this, \'' + json[i]['product_id'] + '\', \'' + json[i]['var'] + '\')" data-toggle="tooltip" data-original-title="<?php echo $button_add; ?>"><i class="fa fa-plus-circle"></i></a></td>';
           rows += '</tr>';
         }
 

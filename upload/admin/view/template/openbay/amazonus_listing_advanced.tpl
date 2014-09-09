@@ -1,95 +1,97 @@
-<?php echo $header; ?>
+<?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-    <div class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-        <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <?php if ($has_listing_errors) { ?>
+          <a href="<?php echo $url_remove_errors; ?>" data-toggle="tooltip" title="<?php echo $button_remove_error; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
         <?php } ?>
+        <a href="<?php echo $cancel_url; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
+      </div>
+      <h1><i class="fa fa-pencil"></i> <?php echo $text_title_advanced; ?></h1>
     </div>
-    <?php if (isset($success)) : ?>
-        <div class="success"><?php echo $success; ?></div>
-    <?php endif; ?>
-
-    <?php if (!empty($errors)) { ?>
-    <div class="warning"><ul>
-            <?php foreach($errors as $error) : ?>
-            <li><?php echo $error['message']; ?></li>
-
-            <?php endforeach; ?>
-        </ul></div>
+  </div>
+  <div class="container-fluid">
+    <?php if ($errors) { ?>
+      <div class="alert alert-danger">
+        <ul>
+          <?php foreach ($errors as $listing_error) { ?>
+          <li><i class="fa fa-exclamation-circle"></i> <?php echo $listing_error ?></li>
+          <?php } ?>
+        </ul>
+      </div>
+    <?php } ?>
+    <?php if ($success) { ?>
+      <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
     <?php } ?>
 
-    <div class="box">
-        <div class="heading">
-            <h1><?php echo $text_title; ?></h1>
-            <div class="buttons">
-                <?php if ($has_listing_errors) { ?>
-                <a onclick="location='<?php echo $url_remove_errors; ?>'" class="button"><span>Remove error messages</span></a>
-                <?php } ?>
-                <a id="save_button" onclick="validate_and_save('advanced')" class="button"><span><?php echo $save_button_text; ?></span></a>
-                <a id="save_button" onclick="save_and_upload()" class="button"><span><?php echo $save_upload_button_text; ?></span></a>
-                <a onclick="location = '<?php echo $saved_listings_url; ?>';" class="button"><span><?php echo $saved_listings_button_text; ?></span></a>
-                <a id="cancel_button" onclick="location = '<?php echo $cancel_url; ?>';" class="button"><span><?php echo $cancel_button_text; ?></span></a>
-
-            </div>
-        </div>
-        <div class="content">
-
-            <div id="tabs" class="htabs">
-                <a href="#page-main"><?php echo $text_tab_main; ?></a>
-                <div id="dynamic_tabs"></div>
-            </div>
-
-            <form method="POST" id="product_form_advanced">
-                <div id="page-main">
-                    <table class="form" align="left">
-                        <tbody>
-                        <tr>
-                            <td style="width: 400px;"><?php echo $listing_row_text; ?></td>
-                            <td>
-                                <a href="<?php echo $listing_url; ?>"><?php echo $listing_name; ?><?php if (!empty($options)) { echo " : "; } ?></a>
-                                <?php if (!empty($options)) { ?>
-                                <select id="openstock_selector" name="optionVar">
-                                    <option></option>
-                                    <?php foreach($options as $option) { ?>
-                                    <option <?php if ($variation === $option['var']) { echo "selected='selected'";} ?> value="<?php echo  $option['var']?>"><?php echo $option['combi']?></option>
-                                    <?php } ?>
-                                </select>
-                                <?php }?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <?php echo $category_selector_field_text; ?><br>
-                                <span class="help"></span>
-                            </td>
-                            <td>
-                                <select id="category_selector">
-                                    <option value=""></option>
-                                    <?php foreach($amazonus_categories as $category) {  ?>
-                                    <option <?php if ($edit_product_category == $category["name"]) echo 'selected="selected"'; ?> value="<?php echo $category['template'] ?>"><?php echo $category['friendly_name'] ?></option>
-                                    <?php } ?>
-                                </select>
-                            </td>
-                        </tr>
-                        </tbody>
-                        <input type="hidden" name="upload_after" value="false">
-                        <tbody class="fields_advanced"></tbody>
-                    </table>
-                </div>
-                <div id="dynamic_pages">
-                </div>
-
-                <div id="greyScreen"></div>
-                <div id="browseNodeForm" class="greyScreenBox nodePage">
-                    <div class="bold border p5 previewClose">X</div>
-                    <div id="browseNodeFormContent"></div>
-                </div>
-            </form>
-        </div>
+    <div id="tabs" class="htabs">
+        <a href="#page-main"><?php echo $tab_main; ?></a>
+        <div id="dynamic_tabs"></div>
     </div>
+    <form method="POST" id="product_form_advanced">
+          <div id="page-main">
+              <table class="form" align="left">
+                  <tbody>
+                  <tr>
+                      <td style="width: 400px;"><?php echo $entry_product; ?></td>
+                      <td>
+                          <a href="<?php echo $listing_url; ?>"><?php echo $listing_name; ?><?php if (!empty($options)) { echo " : "; } ?></a>
+                          <?php if (!empty($options)) { ?>
+                          <select id="openstock_selector" name="optionVar">
+                              <option></option>
+                              <?php foreach($options as $option) { ?>
+                              <option <?php if ($variation === $option['var']) { echo "selected='selected'";} ?> value="<?php echo  $option['var']?>"><?php echo $option['combi']?></option>
+                              <?php } ?>
+                          </select>
+                          <?php }?>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>
+                          <?php echo $entry_category; ?><br>
+                          <span class="help"></span>
+                      </td>
+                      <td>
+                          <select id="category_selector">
+                              <option value=""></option>
+                              <?php foreach($amazonus_categories as $category) {  ?>
+                              <option <?php if ($edit_product_category == $category["name"]) echo 'selected="selected"'; ?> value="<?php echo $category['template'] ?>"><?php echo $category['friendly_name'] ?></option>
+                              <?php } ?>
+                          </select>
+                      </td>
+                  </tr>
+                  </tbody>
+                  <input type="hidden" name="upload_after" value="false">
+                  <tbody class="fields_advanced"></tbody>
+              </table>
+          </div>
+          <div id="dynamic_pages">
+          </div>
+
+          <div id="greyScreen"></div>
+          <div id="browseNodeForm" class="greyScreenBox nodePage">
+              <div class="bold border p5 previewClose">X</div>
+              <div id="browseNodeFormContent"></div>
+          </div>
+      </form>
+
+    <div class="well">
+      <div class="row">
+        <div class="col-md-12 text-right">
+          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save ?>" onclick="validate_and_save('advanced')"><i class="fa fa-save fa-lg"></i></a>
+          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save_upload ?>" onclick="save_and_upload()"><i class="fa fa-cloud-upload fa-lg"></i></a>
+          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_saved_listings ?>" href="<?php echo $saved_listings_url; ?>"><i class="fa fa-copy fa-lg"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-
 <script type="text/javascript"><!--
 $(document).ready(function(){
     $('#openstock_selector').change(function() {
@@ -98,7 +100,7 @@ $(document).ready(function(){
 
     <?php if (empty($amazonus_categories)) { ?>
         $("#advanced_table").html("");
-        $(".content").prepend('<div id="warning" class="warning"><?php echo $text_error_connecting; ?></div>');
+        $(".content").prepend('<div id="warning" class="warning"><?php echo $error_connecting; ?></div>');
         return;
     <?php } ?>
 
@@ -325,9 +327,9 @@ function getImageField(fieldData) {
     output += "/>";
     output += '<br />';
 
-    output += '<a onclick="image_upload(\'imagefield_' + fieldData['name'] + '\', \'thumb_' + fieldData['name'] + '\')"><?php echo $browse_image_text; ?></a>';
+    output += '<a onclick="image_upload(\'imagefield_' + fieldData['name'] + '\', \'thumb_' + fieldData['name'] + '\')"><?php echo $button_browse; ?></a>';
     output += '  |  ';
-    output += '<a onclick="cleaImageField(\'' + fieldData['name'] + '\')"><?php echo $clear_image_text; ?></a>';
+    output += '<a onclick="cleaImageField(\'' + fieldData['name'] + '\')"><?php echo $button_clear; ?></a>';
     output += "</div>";
 
     return output;
@@ -517,15 +519,15 @@ function validate(formType) {
 
         if (field_type == 'required' || field_value !== '') {
             if (field_value === '') {
-                $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $field_required_text ?>');
+                $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $error_required ?>');
                 warnings ++;
             }
             else if (min_length != undefined && field_value.length < min_length) {
-                $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $minimum_length_text; ?> ' + min_length + ' <?php echo $characters_text; ?>');
+                $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $error_length; ?> ' + min_length + ' <?php echo $text_characters; ?>');
                 warnings ++;
             }
             else if (max_length != undefined && field_value.length > max_length) {
-                $('.fields_' + formType + ' #error_' + field_name).text((field_value.length - max_length) + ' <?php echo $chars_over_limit_text; ?>');
+                $('.fields_' + formType + ' #error_' + field_name).text((field_value.length - max_length) + ' <?php echo $error_char_limit; ?>');
                 warnings ++;
             }
             else {
@@ -565,7 +567,7 @@ function validate_and_save(formType) {
             $("#product_form_quick").submit();
         }
     } else {
-        alert('<?php echo $not_saved_text; ?>');
+        alert('<?php echo $error_not_saved; ?>');
     }
 }
 
@@ -575,7 +577,7 @@ function save_and_upload() {
     if (validate('advanced')) {
         $("#product_form_advanced").submit();
     } else {
-        alert('<?php echo $not_saved_text; ?>');
+        alert('<?php echo $error_not_saved; ?>');
     }
 }
 
@@ -614,99 +616,103 @@ var nodeBox = '';
 var nodeString = '';
 var nodeStringSimple = '';
 
-$('.browseNode').bind('click', function(){
-    var html = '';
+$('.browseNode').bind('click', function(e){
+  e.preventDefault();
 
-    nodeBox = $(this).attr("field_name");
-    $('#'+nodeBox+'_text').remove();
-    $(this).val('');
+  var html = '';
 
-    nodeString = '';
-    nodeStringSimple = '';
+  nodeBox = $(this).attr("field_name");
+  $('#'+nodeBox+'_text').remove();
+  $(this).val('');
 
-    $.ajax({
-        url: 'index.php?route=openbay/amazonus_listing/getBrowseNodes&token=<?php echo $token; ?>',
-        type: 'POST',
-        dataType: 'json',
-        beforeSend: function(){
-            $('#browseNodeFormContent').empty();
-            showGreyScreen('browseNodeForm');
-        },
-        success: function(data) {
-            if (data.node.error != true){
-                html += '<select class="nodeSelect mTop20 width250">';
-                html += '<option value=""><?php echo $option_default; ?></option>';
+  nodeString = '';
+  nodeStringSimple = '';
 
-                $.each(data.children, function(k,v){
-                    html += '<option value="'+ v.node_id+'">'+ v.name+'</option>';
-                });
+  $.ajax({
+      url: 'index.php?route=openbay/amazonus_listing/getBrowseNodes&token=<?php echo $token; ?>',
+      type: 'POST',
+      dataType: 'json',
+      beforeSend: function(){
+          $('#browseNodeFormContent').empty();
+          showGreyScreen('browseNodeForm');
+      },
+      success: function(data) {
+          if (data.node.error != true){
+              html += '<select class="nodeSelect mTop20 width250">';
+              html += '<option value=""><?php echo $text_select; ?></option>';
 
-                html += '</select><br />';
+              $.each(data.children, function(k,v){
+                  html += '<option value="'+ v.node_id+'">'+ v.name+'</option>';
+              });
 
-                $('#browseNodeFormContent').html(html);
-            }else{
-                alert(data.node.error);
-                hideGreyScreen('browseNodeForm');
-            }
-        },
-        failure: function(){
-            alert('<?php echo $text_error_load_nodes; ?>');
-            hideGreyScreen('browseNodeForm');
-        },
-        error: function(){
-            alert('<?php echo $text_error_load_nodes; ?>');
-            hideGreyScreen('browseNodeForm');
-        }
-    });
+              html += '</select><br />';
+
+              $('#browseNodeFormContent').html(html);
+          }else{
+              alert(data.node.error);
+              hideGreyScreen('browseNodeForm');
+          }
+      },
+      failure: function(){
+          alert('<?php echo $error_load_nodes; ?>');
+          hideGreyScreen('browseNodeForm');
+      },
+      error: function(){
+          alert('<?php echo $error_load_nodes; ?>');
+          hideGreyScreen('browseNodeForm');
+      }
+  });
 });
 
-$('.nodeSelect').bind('change', function(){
-    //called when the root node id is chosen
-    var html = '';
-    var node = $(this).val();
-    var parentNodeName = $(this).find(":selected").text();
-    nodeString += '<h3>'+parentNodeName+' ></h3>';
-    nodeStringSimple += parentNodeName+' > ';
+$('.nodeSelect').bind('change', function(e){
+  e.preventDefault();
 
-    $.ajax({
-        url: 'index.php?route=openbay/amazonus_listing/getBrowseNodes&token=<?php echo $token; ?>',
-        type: 'POST',
-        data: { node: node},
-        dataType: 'json',
-        beforeSend: function(){
-            $('#browseNodeFormContent select').remove();
-            $('#browseNodeFormContent').append('<img src="view/image/loading.gif" alt="" />');
-        },
-        success: function(data) {
-            if (data.node.error != true){
-                if (data.node.final == 0){
-                    html += '<select class="nodeSelect mTop20 width250">';
-                    html += '<option value=""><?php echo $option_default; ?></option>';
+  //called when the root node id is chosen
+  var html = '';
+  var node = $(this).val();
+  var parentNodeName = $(this).find(":selected").text();
+  nodeString += '<h3>'+parentNodeName+' ></h3>';
+  nodeStringSimple += parentNodeName+' > ';
 
-                    $.each(data.children, function(k,v){
-                        html += '<option value="'+ v.node_id+'">'+ v.name+'</option>';
-                    });
+  $.ajax({
+      url: 'index.php?route=openbay/amazonus_listing/getBrowseNodes&token=<?php echo $token; ?>',
+      type: 'POST',
+      data: { node: node},
+      dataType: 'json',
+      beforeSend: function(){
+          $('#browseNodeFormContent select').remove();
+          $('#browseNodeFormContent').append('<img src="view/image/loading.gif" alt="" />');
+      },
+      success: function(data) {
+          if (data.node.error != true){
+              if (data.node.final == 0){
+                  html += '<select class="nodeSelect mTop20 width250">';
+                  html += '<option value=""><?php echo $text_select; ?></option>';
 
-                    html += '</select>';
-                }else{
-                    html += '<a onclick="saveNode('+data.node.id+')" class="button"><?php echo $save_button_text; ?></a>';
-                }
+                  $.each(data.children, function(k,v){
+                      html += '<option value="'+ v.node_id+'">'+ v.name+'</option>';
+                  });
 
-                $('#browseNodeFormContent').html(nodeString+html);
-            }else{
-                alert(data.node.error);
-                hideGreyScreen('browseNodeForm');
-            }
-        },
-        failure: function(){
-            alert('<?php echo $text_error_load_nodes; ?>');
-            hideGreyScreen('browseNodeForm');
-        },
-        error: function(){
-            alert('<?php echo $text_error_load_nodes; ?>');
-            hideGreyScreen('browseNodeForm');
-        }
-    });
+                  html += '</select>';
+              }else{
+                  html += '<a onclick="saveNode('+data.node.id+')" class="button"><?php echo $button_save; ?></a>';
+              }
+
+              $('#browseNodeFormContent').html(nodeString+html);
+          }else{
+              alert(data.node.error);
+              hideGreyScreen('browseNodeForm');
+          }
+      },
+      failure: function(){
+          alert('<?php echo $error_load_nodes; ?>');
+          hideGreyScreen('browseNodeForm');
+      },
+      error: function(){
+          alert('<?php echo $error_load_nodes; ?>');
+          hideGreyScreen('browseNodeForm');
+      }
+  });
 });
 
 function saveNode(id){

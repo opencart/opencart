@@ -29,9 +29,9 @@ class ControllerOpenbayEtsy extends Controller {
 	}
 
 	public function index() {
-		$data = $this->load->language('openbay/etsy_overview');
+		$data = $this->load->language('openbay/etsy');
 
-		$this->document->setTitle($this->language->get('text_title'));
+		$this->document->setTitle($this->language->get('text_dashboard'));
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['breadcrumbs'] = array();
@@ -48,7 +48,7 @@ class ControllerOpenbayEtsy extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('heading_title'),
+			'text' => $this->language->get('text_dashboard'),
 		);
 
 		if (isset($this->session->data['success'])) {
@@ -67,7 +67,7 @@ class ControllerOpenbayEtsy extends Controller {
 		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/etsy_overview.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay/etsy.tpl', $data));
 	}
 
 	public function settings() {
@@ -166,7 +166,7 @@ class ControllerOpenbayEtsy extends Controller {
 			$data['etsy_order_status_shipped'] = $this->config->get('etsy_order_status_shipped');
 		}
 
-		$data['api_server'] = $this->openbay->etsy->getApiServer();
+		$data['api_server'] = $this->openbay->etsy->getServer();
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 		$data['account_info'] = $this->model_openbay_etsy->verifyAccount();
 

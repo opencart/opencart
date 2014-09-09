@@ -24,6 +24,7 @@ $_['text_web']                  = 'Web';
 $_['text_ebay']                 = 'eBay';
 $_['text_amazon']               = 'Amazon EU';
 $_['text_amazonus']             = 'Amazon US';
+$_['text_etsy']             	= 'Etsy';
 
 // Entry
 $_['entry_carrier']             = 'Carrier';

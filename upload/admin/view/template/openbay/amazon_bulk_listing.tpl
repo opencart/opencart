@@ -163,7 +163,9 @@
     location = url;
   });
 
-  $('#button-list').bind('click', function() {
+  $('#button-list').bind('click', function(e) {
+    e.preventDefault();
+
     var request_data = $('input.amazon-listing:checked').serialize();
 
     if (request_data) {
@@ -208,7 +210,9 @@
     });
   });
 
-  $('#button-search').bind('click', function() {
+  $('#button-search').bind('click', function(e) {
+    e.preventDefault();
+
     var request_data = $('input[name="product_ids[]"]:checked').serialize();
 
     if (request_data != '') {

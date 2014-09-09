@@ -107,7 +107,9 @@ function loadLinks() {
   });
 }
 
-$('#button-load').bind('click', function() {
+$('#button-load').bind('click', function(e) {
+  e.preventDefault();
+
   $.ajax({
     url: '<?php echo html_entity_decode($get_unlinked_items_ajax); ?>',
     type: 'get',

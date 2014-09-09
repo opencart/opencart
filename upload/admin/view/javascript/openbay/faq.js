@@ -31,7 +31,7 @@ function faq(){
                     html += '<div class="alert alert-info">';
                     	html += '<div class="pull-right">';
 				            html += '<a class="btn btn-primary" href="' + data.link + '" target="_BLANK" data-toggle="tooltip" title="' + data.button_faq + '"><i class="fa fa-info-circle"></i></a> ';
-							html += '<button onclick="close();" type="button" class="btn btn-danger" data-toggle="tooltip" title="' + data.button_close + '" id="faq-close"><i class="fa fa-minus-circle"></i></button>';
+							html += '<button onclick="faqclose();" type="button" class="btn btn-danger" data-toggle="tooltip" title="' + data.button_close + '" id="faq-close"><i class="fa fa-minus-circle"></i></button>';
 						html += '</div>';
 						html += '<h5>' + data.title + '</h5>';
 						html += '<p>' + data.message + '</p>';
@@ -48,11 +48,11 @@ function faq(){
     });
 }
 
-function close() {
+function faqclose() {
     var route = $.getUrlVar('route');
     var token = $.getUrlVar('token');
 
-    $('#faq').fadeOut();
+    $('#faq').slideUp();
 
     $.ajax({
         url: 'index.php?route=extension/openbay/faqdismiss&token='+token+'&qry_route='+route,

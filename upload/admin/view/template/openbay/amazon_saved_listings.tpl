@@ -80,7 +80,9 @@
     });
   }
 
-  $('#button-upload').bind('click', function() {
+  $('#button-upload').bind('click', function(e) {
+    e.preventDefault();
+
     $.ajax({
       url: '<?php echo html_entity_decode($uploadSavedAjax); ?>',
       dataType: 'json',

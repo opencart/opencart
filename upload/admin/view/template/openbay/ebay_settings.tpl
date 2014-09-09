@@ -47,7 +47,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="ebay-token"><?php echo $entry_token; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="ebay_token" value="<?php echo $ebay_token; ?>" placeholder="<?php echo $text_obp_token; ?>" id="ebay-token" class="form-control credentials" />
+                <input type="text" name="ebay_token" value="<?php echo $ebay_token; ?>" placeholder="<?php echo $entry_token; ?>" id="ebay-token" class="form-control credentials" />
               </div>
             </div>
             <div class="form-group">

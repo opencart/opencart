@@ -616,99 +616,103 @@ var nodeBox = '';
 var nodeString = '';
 var nodeStringSimple = '';
 
-$('.browseNode').bind('click', function(){
-    var html = '';
+$('.browseNode').bind('click', function(e){
+  e.preventDefault();
 
-    nodeBox = $(this).attr("field_name");
-    $('#'+nodeBox+'_text').remove();
-    $(this).val('');
+  var html = '';
 
-    nodeString = '';
-    nodeStringSimple = '';
+  nodeBox = $(this).attr("field_name");
+  $('#'+nodeBox+'_text').remove();
+  $(this).val('');
 
-    $.ajax({
-        url: 'index.php?route=openbay/amazonus_listing/getBrowseNodes&token=<?php echo $token; ?>',
-        type: 'POST',
-        dataType: 'json',
-        beforeSend: function(){
-            $('#browseNodeFormContent').empty();
-            showGreyScreen('browseNodeForm');
-        },
-        success: function(data) {
-            if (data.node.error != true){
-                html += '<select class="nodeSelect mTop20 width250">';
-                html += '<option value=""><?php echo $text_select; ?></option>';
+  nodeString = '';
+  nodeStringSimple = '';
 
-                $.each(data.children, function(k,v){
-                    html += '<option value="'+ v.node_id+'">'+ v.name+'</option>';
-                });
+  $.ajax({
+      url: 'index.php?route=openbay/amazonus_listing/getBrowseNodes&token=<?php echo $token; ?>',
+      type: 'POST',
+      dataType: 'json',
+      beforeSend: function(){
+          $('#browseNodeFormContent').empty();
+          showGreyScreen('browseNodeForm');
+      },
+      success: function(data) {
+          if (data.node.error != true){
+              html += '<select class="nodeSelect mTop20 width250">';
+              html += '<option value=""><?php echo $text_select; ?></option>';
 
-                html += '</select><br />';
+              $.each(data.children, function(k,v){
+                  html += '<option value="'+ v.node_id+'">'+ v.name+'</option>';
+              });
 
-                $('#browseNodeFormContent').html(html);
-            }else{
-                alert(data.node.error);
-                hideGreyScreen('browseNodeForm');
-            }
-        },
-        failure: function(){
-            alert('<?php echo $error_load_nodes; ?>');
-            hideGreyScreen('browseNodeForm');
-        },
-        error: function(){
-            alert('<?php echo $error_load_nodes; ?>');
-            hideGreyScreen('browseNodeForm');
-        }
-    });
+              html += '</select><br />';
+
+              $('#browseNodeFormContent').html(html);
+          }else{
+              alert(data.node.error);
+              hideGreyScreen('browseNodeForm');
+          }
+      },
+      failure: function(){
+          alert('<?php echo $error_load_nodes; ?>');
+          hideGreyScreen('browseNodeForm');
+      },
+      error: function(){
+          alert('<?php echo $error_load_nodes; ?>');
+          hideGreyScreen('browseNodeForm');
+      }
+  });
 });
 
-$('.nodeSelect').bind('change', function(){
-    //called when the root node id is chosen
-    var html = '';
-    var node = $(this).val();
-    var parentNodeName = $(this).find(":selected").text();
-    nodeString += '<h3>'+parentNodeName+' ></h3>';
-    nodeStringSimple += parentNodeName+' > ';
+$('.nodeSelect').bind('change', function(e){
+  e.preventDefault();
 
-    $.ajax({
-        url: 'index.php?route=openbay/amazonus_listing/getBrowseNodes&token=<?php echo $token; ?>',
-        type: 'POST',
-        data: { node: node},
-        dataType: 'json',
-        beforeSend: function(){
-            $('#browseNodeFormContent select').remove();
-            $('#browseNodeFormContent').append('<img src="view/image/loading.gif" alt="" />');
-        },
-        success: function(data) {
-            if (data.node.error != true){
-                if (data.node.final == 0){
-                    html += '<select class="nodeSelect mTop20 width250">';
-                    html += '<option value=""><?php echo $text_select; ?></option>';
+  //called when the root node id is chosen
+  var html = '';
+  var node = $(this).val();
+  var parentNodeName = $(this).find(":selected").text();
+  nodeString += '<h3>'+parentNodeName+' ></h3>';
+  nodeStringSimple += parentNodeName+' > ';
 
-                    $.each(data.children, function(k,v){
-                        html += '<option value="'+ v.node_id+'">'+ v.name+'</option>';
-                    });
+  $.ajax({
+      url: 'index.php?route=openbay/amazonus_listing/getBrowseNodes&token=<?php echo $token; ?>',
+      type: 'POST',
+      data: { node: node},
+      dataType: 'json',
+      beforeSend: function(){
+          $('#browseNodeFormContent select').remove();
+          $('#browseNodeFormContent').append('<img src="view/image/loading.gif" alt="" />');
+      },
+      success: function(data) {
+          if (data.node.error != true){
+              if (data.node.final == 0){
+                  html += '<select class="nodeSelect mTop20 width250">';
+                  html += '<option value=""><?php echo $text_select; ?></option>';
 
-                    html += '</select>';
-                }else{
-                    html += '<a onclick="saveNode('+data.node.id+')" class="button"><?php echo $button_save; ?></a>';
-                }
+                  $.each(data.children, function(k,v){
+                      html += '<option value="'+ v.node_id+'">'+ v.name+'</option>';
+                  });
 
-                $('#browseNodeFormContent').html(nodeString+html);
-            }else{
-                alert(data.node.error);
-                hideGreyScreen('browseNodeForm');
-            }
-        },
-        failure: function(){
-            alert('<?php echo $error_load_nodes; ?>');
-            hideGreyScreen('browseNodeForm');
-        },
-        error: function(){
-            alert('<?php echo $error_load_nodes; ?>');
-            hideGreyScreen('browseNodeForm');
-        }
-    });
+                  html += '</select>';
+              }else{
+                  html += '<a onclick="saveNode('+data.node.id+')" class="button"><?php echo $button_save; ?></a>';
+              }
+
+              $('#browseNodeFormContent').html(nodeString+html);
+          }else{
+              alert(data.node.error);
+              hideGreyScreen('browseNodeForm');
+          }
+      },
+      failure: function(){
+          alert('<?php echo $error_load_nodes; ?>');
+          hideGreyScreen('browseNodeForm');
+      },
+      error: function(){
+          alert('<?php echo $error_load_nodes; ?>');
+          hideGreyScreen('browseNodeForm');
+      }
+  });
 });
 
 function saveNode(id){

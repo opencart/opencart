@@ -211,7 +211,9 @@
 </div>
 </div>
 <script type="text/javascript">
-  $('#search-submit').bind('click', function() {
+  $('#search-submit').bind('click', function(e) {
+    e.preventDefault();
+
     $('#search-string').val($.trim($('#search-string').val()));
 
     $.ajax({
@@ -272,7 +274,9 @@
     });
   });
 
-  $('#button-amazon-price').bind('click', function() {
+  $('#button-amazon-price').bind('click', function(e) {
+    e.preventDefault();
+
     $.ajax({
       url: 'index.php?route=openbay/amazonus_listing/bestPrice&token=<?php echo $token; ?>',
       type: 'POST',

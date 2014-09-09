@@ -101,7 +101,9 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#button-load-listings').bind('click', function () {
+$('#button-load-listings').bind('click', function (e) {
+  e.preventDefault();
+
   $.ajax({
     url: $(this).attr('href'),
     dataType: 'json',
@@ -133,7 +135,9 @@ $('.master-checkbox').click(function () {
   }
 });
 
-$('.link-button').click(function () {
+$('.link-button').click(function (e) {
+  e.preventDefault();
+
   $.ajax({
     url: '<?php echo html_entity_decode($href_do_bulk_linking) ?>',
     dataType: 'json',

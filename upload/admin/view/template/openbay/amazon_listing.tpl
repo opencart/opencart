@@ -284,7 +284,7 @@
         data: $('form input[name="asin"], form select[name="condition"], form input[name="marketplace"]'),
         beforeSend: function(){
           $('#button-amazon-price').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
-          $('#best-price-info').delete();
+          $('#best-price-info').remove();
         },
         complete: function() {
           $('#button-amazon-price').empty().html('<?php echo $button_amazon_price; ?>').removeAttr('disabled').show();

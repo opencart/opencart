@@ -284,7 +284,7 @@
         data: $('form input[name="asin"], form select[name="condition"], form input[name="marketplace"]'),
         beforeSend: function(){
           $('#button-amazon-price').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
-          $('#best-price-info-container').hide();
+          $('#best-price-info').delete();
         },
         complete: function() {
           $('#button-amazon-price').empty().html('<?php echo $button_amazon_price; ?>').removeAttr('disabled').show();
@@ -295,7 +295,7 @@
           } else {
             $('form input[name="price"]').val(data.data.amount);
 
-            $('#price').before('<div class="alert alert-info">'+data.data.amount+' '+data.data.currency+' plus shipping '+data.data.shipping+' '+data.data.currency+'</div>');
+            $('#price').before('<div class="alert alert-info" id="best-price-info">'+data.data.amount+' '+data.data.currency+' plus shipping '+data.data.shipping+' '+data.data.currency+'</div>');
           }
         },
         error: function(){

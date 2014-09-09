@@ -7,7 +7,6 @@ $_['text_amazon'] 					= 'Amazon EU';
 
 // Buttons
 $_['button_new'] 					= 'Create new product';
-$_['button_return'] 				= 'Back to products';
 $_['button_amazon_price'] 			= 'Get Amazon price';
 $_['button_list'] 					= 'List on Amazon';
 $_['button_remove_error'] 			= 'Remove error messages';

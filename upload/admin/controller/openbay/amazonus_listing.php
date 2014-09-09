@@ -106,7 +106,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 
 		$data['button_search'] = $this->language->get('button_search');
 		$data['button_new'] = $this->language->get('button_new');
-		$data['button_return'] = $this->language->get('button_return');
+		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_amazon_price'] = $this->language->get('button_amazon_price');
 		$data['button_list'] = $this->language->get('button_list');
 		$data['heading_title'] = $this->language->get('heading_title');

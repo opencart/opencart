@@ -4,7 +4,7 @@ $_['text_page_title']               = 'Bulk listing';
 $_['text_ebay']               		= 'eBay';
 $_['text_openbay']               	= 'Openbay Pro';
 
-//Buttons
+// Buttons
 $_['text_none']                     = 'None';
 $_['text_preview']                  = 'Preview';
 $_['text_add']                      = 'Add';

@@ -1,21 +1,21 @@
 <?php
-//Headings
+// Heading
 $_['heading_title'] 				= 'New Amazon listing';
 $_['text_title_advanced'] 			= 'Advanced listing';
 $_['text_openbay'] 					= 'OpenBay Pro';
 $_['text_amazon'] 					= 'Amazon EU';
 
-//Buttons
+// Buttons
 $_['button_new'] 					= 'Create new product';
 $_['button_return'] 				= 'Back to products';
-$_['button_amazon_price'] 			= "Get Amazon price";
-$_['button_list'] 					= "List on Amazon";
-$_['button_remove_error'] 			= "Remove error messages";
+$_['button_amazon_price'] 			= 'Get Amazon price';
+$_['button_list'] 					= 'List on Amazon';
+$_['button_remove_error'] 			= 'Remove error messages';
 $_['button_save_upload'] 			= 'Save and upload';
 $_['button_browse'] 				= 'Browse';
 $_['button_saved_listings'] 		= 'View saved listings';
-$_['button_remove_links'] 			= "Remove links";
-$_['button_create_new_listing'] 	= "Create new listing";
+$_['button_remove_links'] 			= 'Remove links';
+$_['button_create_new_listing'] 	= 'Create new listing';
 
 // Help
 $_['help_sku'] 						= "Unique product's ID assigned by the merchant";
@@ -36,18 +36,18 @@ $_['text_collectible_very_good'] 	= 'Collectible - Very Good';
 $_['text_collectible_good'] 		= 'Collectible - Good';
 $_['text_collectible_acceptable'] 	= 'Collectible - Acceptable';
 $_['text_refurbished'] 				= 'Refurbished';
-$_['text_not_in_catalog'] 			= "Or, if it's not in the catalog&nbsp;&nbsp;&nbsp;";
+$_['text_product_not_sent'] 		= 'Product was not sent to Amazon. Reason: %s';
+$_['text_not_in_catalog'] 			= "Or, if it is not in the catalog&nbsp;&nbsp;&nbsp;";
 $_['text_placeholder_search'] 		= 'Enter product name, UPC, EAN, ISBN or ASIN';
 $_['text_placeholder_condition'] 	= 'Use this box to describe the condition of your products.';
 $_['text_characters'] 				= 'characters';
 $_['text_uploaded'] 				= 'Saved listing(s) uploaded!';
 $_['text_saved_local'] 				= 'Listing saved but not uploaded yet';
 $_['text_product_sent'] 			= 'Product was successfully sent to Amazon.';
-$_['text_product_not_sent'] 		= 'Product was not sent to Amazon. Reason: %s';
 $_['text_links_removed'] 			= 'Amazon product links deleted';
 $_['text_product_links'] 			= 'Product links';
 $_['text_has_saved_listings'] 		= 'This product has one or more saved listings that is not uploaded';
-$_['text_edit_heading'] 			= 'Listing overview';
+$_['text_edit_heading'] 			= 'Edit listing';
 $_['text_germany'] 					= 'Germany';
 $_['text_france'] 					= 'France';
 $_['text_italy'] 					= 'Italy';

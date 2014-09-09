@@ -18,13 +18,6 @@ $_['text_import_description']		= 'Customise the status of an order during differ
 $_['text_payments_description']		= 'Pre populate your payment options for new listings, this will save you entering them for every new listing you create.';
 $_['text_allocate_1']				= 'When customer buys';
 $_['text_allocate_2']				= 'When customer had paid';
-$_['text_import_pending']			= 'Import unpaid orders:';
-$_['text_import_def_id']			= 'Import default status:';
-$_['text_import_paid_id']			= 'Paid status:';
-$_['text_import_shipped_id']		= 'Shipped status:';
-$_['text_import_cancelled_id']		= 'Cancelled status:';
-$_['text_import_refund_id']			= 'Refunded status:';
-$_['text_import_part_refund_id']	= 'Partially refunded status:';
 $_['text_developer_description']	= 'You should not use this area unless instructed to do so';
 $_['text_payment_paypal']			= 'PayPal accepted';
 $_['text_payment_paypal_add']		= 'PayPal email address';
@@ -45,8 +38,6 @@ $_['text_listing_gtc']              = 'GTC- Good till cancelled';
 $_['text_api_status']               = 'API connection status';
 $_['text_api_ok']                   = 'Connection OK, token expires';
 $_['text_api_failed']               = 'Validation failed';
-$_['text_api_connect_fail']         = 'Failure connecting';
-$_['text_api_connect_error']        = 'Error connecting';
 $_['text_api_other']        		= 'Other actions';
 $_['text_create_date_0']            = 'When added to OpenCart';
 $_['text_create_date_1']            = 'When created on eBay';
@@ -84,6 +75,13 @@ $_['entry_password_prompt']			= 'Please enter your admin password';
 $_['entry_notify_order_update']		= 'Order updates';
 $_['entry_notify_buyer']			= 'New order - buyer';
 $_['entry_notify_admin']			= 'New order - admin';
+$_['entry_import_pending']			= 'Import unpaid orders:';
+$_['entry_import_def_id']			= 'Import default status:';
+$_['entry_import_paid_id']			= 'Paid status:';
+$_['entry_import_shipped_id']		= 'Shipped status:';
+$_['entry_import_cancelled_id']		= 'Cancelled status:';
+$_['entry_import_refund_id']		= 'Refunded status:';
+$_['entry_import_part_refund_id']	= 'Partially refunded status:';
 
 // Tabs
 $_['tab_api_info']					= 'API details';
@@ -93,7 +91,6 @@ $_['tab_defaults']					= 'Listing defaults';
 // Help
 $_['help_disable_soldout']			= 'When the item sells out it then disables the product in OpenCart';
 $_['help_relist_items'] 			= 'If an item link existed before it will relist previous item if back in stock';
-
 $_['help_end_items']    			= 'If items sell out, should the listing be ended on eBay?';
 $_['help_currency']     			= 'Based on currencies from your store';
 $_['help_created_hours']   			= 'Orders are new when younger than this limit (in hours). Default is 72';
@@ -114,3 +111,6 @@ $_['help_measurement']        		= 'Choose what measurement system you want to us
 // Buttons
 $_['button_update']             	= 'Update';
 $_['button_repair_links']    		= 'Repair item links';
+
+// Error
+$_['error_api_connect']         	= 'Failed to connect to the API';

@@ -9,17 +9,33 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 		$this->load->model('tool/image');
 
 		$this->document->addScript('view/javascript/openbay/openbay.js');
-		$this->document->setTitle($this->language->get('text_title'));
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_home'),
 		);
+
 		$data['breadcrumbs'][] = array(
-			'text' => 'Products',
-			'href' => $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'),
+			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_openbay'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_amazon'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('heading_title'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/amazon_product', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_title_advanced'),
 		);
 
 		$url = '';

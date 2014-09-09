@@ -302,14 +302,14 @@
               <p><?php echo $text_import_description; ?></p>
 
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $text_import_pending; ?></label>
+                <label class="col-sm-2 control-label"><?php echo $entry_import_pending; ?></label>
                 <div class="col-sm-10">
                   <input type="hidden" name="ebay_import_unpaid" value="0" />
                   <input type="checkbox" name="ebay_import_unpaid" value="1" <?php if ($ebay_import_unpaid == 1){ echo 'checked="checked"'; } ?> />
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_status_import_id"><?php echo $text_import_def_id; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_status_import_id"><?php echo $entry_import_def_id; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_status_import_id" id="ebay_status_import_id" class="form-control">
                     <?php if (empty($ebay_status_import_id)) { $ebay_status_import_id = 1; } ?>
@@ -321,7 +321,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_status_paid_id"><?php echo $text_import_paid_id; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_status_paid_id"><?php echo $entry_import_paid_id; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_status_paid_id" id="ebay_status_paid_id" class="form-control">
                     <?php if (empty($ebay_status_paid_id)) { $ebay_status_paid_id = 2; } ?>
@@ -333,7 +333,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_status_shipped_id"><?php echo $text_import_shipped_id; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_status_shipped_id"><?php echo $entry_import_shipped_id; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_status_shipped_id" id="ebay_status_shipped_id" class="form-control">
                     <?php if (empty($ebay_status_shipped_id)) { $ebay_status_shipped_id = 3; } ?>
@@ -345,7 +345,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_status_cancelled_id"><?php echo $text_import_cancelled_id; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_status_cancelled_id"><?php echo $entry_import_cancelled_id; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_status_cancelled_id" id="ebay_status_cancelled_id" class="form-control">
                     <?php if (empty($ebay_status_cancelled_id)) { $ebay_status_cancelled_id = 7; } ?>
@@ -357,7 +357,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_status_partial_refund_id"><?php echo $text_import_part_refund_id; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_status_partial_refund_id"><?php echo $entry_import_part_refund_id; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_status_partial_refund_id" id="ebay_status_partial_refund_id" class="form-control">
                     <?php if (empty($ebay_status_partial_refund_id)) { $ebay_status_partial_refund_id = 2; } ?>
@@ -369,7 +369,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="ebay_status_refunded_id"><?php echo $text_import_refund_id; ?></label>
+                <label class="col-sm-2 control-label" for="ebay_status_refunded_id"><?php echo $entry_import_refund_id; ?></label>
                 <div class="col-sm-10">
                   <select name="ebay_status_refunded_id" id="ebay_status_refunded_id" class="form-control">
                     <?php if (empty($ebay_status_refunded_id)) { $ebay_status_refunded_id = 11; } ?>
@@ -597,10 +597,10 @@
                 }
             },
             failure: function() {
-              $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> <?php echo $text_api_connect_fail; ?>');
+              $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> <?php echo $error_api_connect; ?>');
             },
             error: function() {
-              $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> <?php echo $text_api_connect_error; ?>');
+              $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> <?php echo $error_api_connect; ?>');
             }
         });
     }

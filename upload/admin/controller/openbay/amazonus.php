@@ -712,12 +712,12 @@ class ControllerOpenbayAmazonus extends Controller {
 		);
 		$data['breadcrumbs'][] = array(
 			'href'      => $this->url->link('openbay/amazonus', 'token=' . $this->session->data['token'], 'SSL'),
-			'text'      => $this->language->get('text_dashboard'),
+			'text'      => $this->language->get('text_amazon'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'href'      => $this->url->link('openbay/amazonus/bulkListProducts', 'token=' . $this->session->data['token'], 'SSL'),
-			'text'      => $this->language->get('text_bulk_listing'),
+			'text'      => $this->language->get('heading_title'),
 		);
 
 		$ping_info = simplexml_load_string($this->openbay->amazonus->call('ping/info'));
@@ -847,12 +847,12 @@ class ControllerOpenbayAmazonus extends Controller {
 		);
 		$data['breadcrumbs'][] = array(
 			'href'      => $this->url->link('openbay/amazonus', 'token=' . $this->session->data['token'], 'SSL'),
-			'text'      => $this->language->get('text_dashboard'),
+			'text'      => $this->language->get('text_amazon'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'href'      => $this->url->link('openbay/amazonus/bulkLinking', 'token=' . $this->session->data['token'], 'SSL'),
-			'text'      => $this->language->get('text_bulk_linking'),
+			'text'      => $this->language->get('heading_title'),
 		);
 
 		$ping_info = simplexml_load_string($this->openbay->amazonus->call('ping/info'));

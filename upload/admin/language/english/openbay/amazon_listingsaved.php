@@ -1,5 +1,5 @@
 <?php
-//Headings
+// Heading
 $_['heading_title'] 				= 'Saved Listings';
 $_['text_openbay'] 					= 'OpenBay Pro';
 $_['text_amazon'] 					= 'Amazon EU';

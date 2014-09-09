@@ -107,19 +107,16 @@ class ControllerOpenbayAmazonusListing extends Controller{
 		$data['button_search'] = $this->language->get('button_search');
 		$data['button_new'] = $this->language->get('button_new');
 		$data['button_return'] = $this->language->get('button_return');
-		$data['button_amazonus_price'] = $this->language->get('button_amazonus_price');
+		$data['button_amazon_price'] = $this->language->get('button_amazon_price');
 		$data['button_list'] = $this->language->get('button_list');
-
 		$data['text_not_in_catalog'] = $this->language->get('text_not_in_catalog');
 		$data['text_title'] = $this->language->get('text_title');
 		$data['text_no_results'] = $this->language->get('text_no_results');
-
 		$data['column_image'] = $this->language->get('column_image');
 		$data['column_asin'] = $this->language->get('column_asin');
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_price'] = $this->language->get('column_price');
 		$data['column_action'] = $this->language->get('column_action');
-
 		$data['entry_sku'] = $this->language->get('entry_sku');
 		$data['entry_condition'] = $this->language->get('entry_condition');
 		$data['entry_condition_note'] = $this->language->get('entry_condition_note');
@@ -131,20 +128,14 @@ class ControllerOpenbayAmazonusListing extends Controller{
 		$data['entry_restock_date'] = $this->language->get('entry_restock_date');
 		$data['entry_from'] = $this->language->get('entry_from');
 		$data['entry_to'] = $this->language->get('entry_to');
-
 		$data['help_restock_date'] = $this->language->get('help_restock_date');
 		$data['help_sku'] = $this->language->get('help_sku');
 		$data['help_sale_price'] = $this->language->get('help_sale_price');
-
-		$data['text_view_on_amazonus'] = $this->language->get('text_view_on_amazonus');
 		$data['text_list'] = $this->language->get('text_list');
-
 		$data['tab_required'] = $this->language->get('tab_required');
 		$data['tab_additional'] = $this->language->get('tab_additional');
-
 		$data['text_placeholder_search'] = $this->language->get('text_placeholder_search');
 		$data['text_placeholder_condition'] = $this->language->get('text_placeholder_condition');
-
 		$data['error_price'] = $this->language->get('error_price');
 		$data['error_sku'] = $this->language->get('error_sku');
 		$data['error_stock'] = $this->language->get('error_stock');
@@ -221,6 +212,9 @@ class ControllerOpenbayAmazonusListing extends Controller{
 		$this->load->model('openbay/amazonus');
 		$this->load->language('openbay/amazonus_listing');
 
+		$this->document->setTitle($this->language->get('text_edit_heading'));
+		$this->document->addScript('view/javascript/openbay/faq.js');
+
 		$url = '';
 
 		if (isset($this->request->get['filter_name'])) {
@@ -285,6 +279,28 @@ class ControllerOpenbayAmazonusListing extends Controller{
 			$this->response->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_home'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_openbay'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/amazonus', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_amazon'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/amazonus_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'),
+			'text' => $this->language->get('text_edit_heading'),
+		);
+
 		$status = $this->model_openbay_amazonus->getProductStatus($product_id);
 
 		if ($status === false) {
@@ -309,28 +325,6 @@ class ControllerOpenbayAmazonusListing extends Controller{
 
 		$data['token'] = $this->session->data['token'];
 
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_home'),
-		);
-
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_openbay'),
-		);
-
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/amazonus', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_amazonus'),
-		);
-
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/amazonus_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'),
-			'text' => $this->language->get('text_edit_heading'),
-		);
-
 		$data['text_edit_heading'] = $this->language->get('text_edit_heading');
 		$data['text_product_links'] = $this->language->get('text_product_links');
 		$data['text_has_saved_listings'] = $this->language->get('text_has_saved_listings');
@@ -342,7 +336,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 		$data['column_model'] = $this->language->get('column_model');
 		$data['column_combination'] = $this->language->get('column_combination');
 		$data['column_sku'] = $this->language->get('column_sku');
-		$data['column_amazonus_sku'] = $this->language->get('column_amazonus_sku');
+		$data['column_amazon_sku'] = $this->language->get('column_amazon_sku');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');

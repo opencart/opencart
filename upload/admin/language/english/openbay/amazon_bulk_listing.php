@@ -40,11 +40,10 @@ $_['column_matches']				= 'Matches';
 $_['column_result'] 				= 'Result';
 
 // Button
-$_['button_return'] 				= 'Return';
 $_['button_list'] 					= 'List';
 
 // Error
 $_['error_product_sku'] 			= 'Product must have an SKU';
 $_['error_searchable_fields'] 		= 'Product must have ISBN, EAN, UPC or JAN field populated';
-$_['error_bulk_listing_permission'] = 'Bulk listing is not allowed with your subscription plan, please upgrade';
+$_['error_bulk_listing_permission'] = 'Bulk listing is not allowed on your plan, please upgrade';
 $_['error_select_items'] 			= 'You must select at least 1 item to search';

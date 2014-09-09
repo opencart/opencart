@@ -50,21 +50,21 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="etsy_token"><?php echo $text_token; ?></label>
+              <label class="col-sm-2 control-label" for="etsy_token"><?php echo $entry_token; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="etsy_token" value="<?php echo $etsy_token; ?>" placeholder="<?php echo $text_token; ?>" id="etsy_token" class="form-control credentials" />
+                <input type="text" name="etsy_token" value="<?php echo $etsy_token; ?>" placeholder="<?php echo $entry_token; ?>" id="etsy_token" class="form-control credentials" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="etsy_enc1"><?php echo $text_enc1; ?></label>
+              <label class="col-sm-2 control-label" for="etsy_enc1"><?php echo $entry_enc1; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="etsy_enc1" value="<?php echo $etsy_enc1; ?>" placeholder="<?php echo $text_enc1; ?>" id="etsy_enc1" class="form-control credentials" />
+                <input type="text" name="etsy_enc1" value="<?php echo $etsy_enc1; ?>" placeholder="<?php echo $entry_enc1; ?>" id="etsy_enc1" class="form-control credentials" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="etsy_enc2"><?php echo $text_enc2; ?></label>
+              <label class="col-sm-2 control-label" for="etsy_enc2"><?php echo $entry_enc2; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="etsy_enc2" value="<?php echo $etsy_enc2; ?>" placeholder="<?php echo $text_enc2; ?>" id="etsy_enc2" class="form-control credentials" />
+                <input type="text" name="etsy_enc2" value="<?php echo $etsy_enc2; ?>" placeholder="<?php echo $entry_enc2; ?>" id="etsy_enc2" class="form-control credentials" />
               </div>
             </div>
             <div class="form-group">
@@ -81,7 +81,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="etsy_order_status_new"><?php echo $text_import_def_id; ?></label>
+              <label class="col-sm-2 control-label" for="etsy_order_status_new"><?php echo $entry_import_def_id; ?></label>
               <div class="col-sm-10">
                 <select name="etsy_order_status_new" id="etsy_order_status_new" class="form-control">
                   <?php if (empty($etsy_order_status_new)) { $etsy_order_status_new = 1; } ?>
@@ -93,7 +93,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="etsy_order_status_paid"><?php echo $text_import_paid_id; ?></label>
+              <label class="col-sm-2 control-label" for="etsy_order_status_paid"><?php echo $entry_import_paid_id; ?></label>
               <div class="col-sm-10">
                 <select name="etsy_order_status_paid" id="etsy_order_status_paid" class="form-control">
                   <?php if (empty($etsy_order_status_paid)) { $etsy_order_status_paid = 2; } ?>
@@ -105,7 +105,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="etsy_order_status_shipped"><?php echo $text_import_shipped_id; ?></label>
+              <label class="col-sm-2 control-label" for="etsy_order_status_shipped"><?php echo $entry_import_shipped_id; ?></label>
               <div class="col-sm-10">
                 <select name="etsy_order_status_shipped" id="etsy_order_status_shipped" class="form-control">
                   <?php if (empty($etsy_order_status_shipped)) { $etsy_order_status_shipped = 3; } ?>
@@ -119,7 +119,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="button-import"><?php echo $text_pull_orders; ?></label>
               <div class="col-sm-10">
-                <a class="btn btn-primary" id="button-import"><i class="fa fa-refresh"></i> <?php echo $btn_pull; ?></a>
+                <a class="btn btn-primary" id="button-import"><i class="fa fa-refresh"></i> <?php echo $button_poll; ?></a>
               </div>
             </div>
           </div>

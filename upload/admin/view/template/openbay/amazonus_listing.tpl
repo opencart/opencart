@@ -144,7 +144,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="condition_note"><?php echo $entry_condition_note; ?></label>
                 <div class="col-sm-10">
-                  <textarea name="condition_note" class="form-control" rows="3" id="condition_note"><?php echo $text_placeholder_condition; ?></textarea>
+                  <textarea name="condition_note" class="form-control" rows="3" id="condition_note" placeholder="<?php echo $text_placeholder_condition; ?>"></textarea>
                 </div>
               </div>
               <div class="form-group">
@@ -247,8 +247,8 @@
             html += '  <td class="text-left">' + value.name + '</td>';
             html += '  <td class="text-center">' + value.price + '</td>';
             html += '  <td class="text-center">';
-            html += '    <a target="_blank" href="' + value.link + '" class="btn btn-primary"><i class="fa fa-eye"></i> <?php echo $text_view_on_amazon ?></a>';
-            html += '    <a onclick="' + functString + '" class="btn btn-primary"><i class="fa fa-check-square"></i> <?php echo $text_list ?></a>';
+            html += '    <a target="_blank" href="' + value.link + '" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_view_on_amazon ?>"><i class="fa fa-eye"></i></a>';
+            html += '    <a onclick="' + functString + '" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $text_list ?>"><i class="fa fa-check-square"></i></a>';
             html += '  </td>';
             html += '</tr>';
 

@@ -158,8 +158,25 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$data = $this->load->language('extension/openbay');
 
-		$this->document->setTitle($this->language->get('text_manager'));
+		$this->document->setTitle($this->language->get('text_manage'));
 		$this->document->addScript('view/javascript/openbay/faq.js');
+
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_home'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('heading_title'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('extension/openbay/manage', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_manage'),
+		);
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			$this->model_setting_setting->editSetting('openbaymanager', $this->request->post);
@@ -252,23 +269,6 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$data['action'] = $this->url->link('extension/openbay/manage', 'token=' . $this->session->data['token'], 'SSL');
 		$data['cancel'] = $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL');
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_home'),
-		);
-
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('heading_title'),
-		);
-
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay/manage', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_manage'),
-		);
 
 		$data['token'] = $this->session->data['token'];
 

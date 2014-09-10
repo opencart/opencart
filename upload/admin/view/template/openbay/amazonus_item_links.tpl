@@ -287,7 +287,7 @@ function addNewLinkAutocomplete() {
 $('#new-product').autocomplete({
   'source': function(request, response) {
     $.ajax({
-      url: 'index.php?route=catalog/product/autocomplete&token=d75c08895b700fd60f97d3c6b71a51f3&filter_name=' +  encodeURIComponent(request),
+      url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
       dataType: 'json',
       success: function (json) {
         response($.map(json, function (item) {

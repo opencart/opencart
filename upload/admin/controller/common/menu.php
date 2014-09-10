@@ -198,9 +198,6 @@ class ControllerCommonMenu extends Controller {
 			'amazonus' => $this->config->get('amazonus_status'),
 		);
 
-		$data['profile'] = $this->load->controller('common/profile');
-		$data['stats'] = $this->load->controller('common/stats');
-
 		return $this->load->view('common/menu.tpl', $data);
 	}
 }

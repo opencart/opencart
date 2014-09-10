@@ -55,23 +55,75 @@ class ControllerCommonDashboard extends Controller {
 		// Total Orders
 		$this->load->model('sale/order');
 
-		$data['order_total'] = $this->model_sale_order->getTotalOrders();
+		$order_total = $this->model_sale_order->getTotalOrders();
+		
+		if ($order_total > 1000000000000) {
+			$data['order_total'] = round($order_total / 1000000000000, 1) . 'T';
+		} elseif ($order_total > 1000000000) {
+			$data['order_total'] = round($order_total / 1000000000, 1) . 'B';
+		} elseif ($order_total > 1000000) {
+			$data['order_total'] = round($order_total / 1000000, 1) . 'M';
+		} elseif ($order_total > 1000) {
+			$data['order_total'] = round($order_total / 1000, 1) . 'K';						
+		} else {
+			$data['order_total'] = $order_total;
+		}
+		
 		$data['order'] = $this->url->link('sales/order', 'token=' . $this->session->data['token'], 'SSL');
 
 		$this->load->model('report/dashboard');
 		
 		// Total Sales
-		$data['sale_total'] = $this->currency->format($this->model_report_dashboard->getTotalSales(), $this->config->get('config_currency'));
+		$sale_total = $this->model_report_dashboard->getTotalSales();
+		
+		if ($sale_total > 1000000000000) {
+			$data['sale_total'] = $this->currency->format(round($sale_total / 1000000000000, 1), $this->config->get('config_currency')) . 'T';
+		} elseif ($sale_total > 1000000000) {
+			$data['sale_total'] = $this->currency->format(round($sale_total / 1000000000, 1), $this->config->get('config_currency')) . 'B';
+		} elseif ($sale_total > 1000000) {
+			$data['sale_total'] = $this->currency->format(round($sale_total / 1000000, 1), $this->config->get('config_currency')) . 'M';
+		} elseif ($sale_total > 1000) {
+			$data['sale_total'] = $this->currency->format(round($sale_total / 1000, 1), $this->config->get('config_currency')) . 'K';						
+		} else {
+			$data['sale_total'] = $this->currency->format($sale_total, $this->config->get('config_currency'));
+		}	
+
 		$data['sale'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL');
 
 		// Customers
 		$this->load->model('sale/customer');
 
-		$data['customer_total'] = $this->model_sale_customer->getTotalCustomers();
+		$customer_total = $this->model_sale_customer->getTotalCustomers();
+		
+		if ($customer_total > 1000000000000) {
+			$data['customer_total'] = round($customer_total / 1000000000000, 1) . 'T';
+		} elseif ($customer_total > 1000000000) {
+			$data['customer_total'] = round($customer_total / 1000000000, 1) . 'B';
+		} elseif ($customer_total > 1000000) {
+			$data['customer_total'] = round($customer_total / 1000000, 1) . 'M';
+		} elseif ($customer_total > 1000) {
+			$data['customer_total'] = round($customer_total / 1000, 1) . 'K';						
+		} else {
+			$data['customer_total'] = $customer_total;
+		}		
+		
 		$data['customer'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'], 'SSL');
 
 		// Customers Online
-		$data['online_total'] = $this->model_report_dashboard->getTotalCustomersOnline();
+		$online_total = $this->model_report_dashboard->getTotalCustomersOnline();
+		
+		if ($online_total > 1000000000000) {
+			$data['online_total'] = round($online_total / 1000000000000, 1) . 'T';
+		} elseif ($online_total > 1000000000) {
+			$data['online_total'] = round($online_total / 1000000000, 1) . 'B';
+		} elseif ($online_total > 1000000) {
+			$data['online_total'] = round($online_total / 1000000, 1) . 'M';
+		} elseif ($online_total > 1000) {
+			$data['online_total'] = round($online_total / 1000, 1) . 'K';						
+		} else {
+			$data['online_total'] = $online_total;
+		}			
+		
 		$data['online'] = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['activities'] = array();
@@ -123,7 +175,7 @@ class ControllerCommonDashboard extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column'] = $this->load->controller('common/column');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('common/dashboard.tpl', $data));

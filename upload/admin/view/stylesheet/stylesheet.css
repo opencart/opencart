@@ -162,6 +162,9 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	margin: 0;
 	list-style: none;
 }
+#menu {
+	margin-bottom: 25px;
+}
 #menu > li {
 	position: relative;
 }
@@ -177,11 +180,15 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	font-size: 16px;
 }
 #menu > li > a {
+	font-size: 14px;	
 	padding-left: 13px;
 	border-bottom: 1px solid #585858;	
 }
 #menu > li > a:hover {
 	background-color: #444444;
+}
+#menu li li a:hover {
+	color: #FFFFFF;
 }
 #menu > li.active > a {
 	color: #DDDDDD;
@@ -456,15 +463,9 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 }
 
 
-.panel {
-	border-top: 2px;	
-}
+
 .panel .panel-heading {
 	position: relative;
-}
-
-.panel.panel-default .panel-heading {
-	color: #595959;
 }
 .panel-heading h3 i {
 	margin-right: 8px;	
@@ -478,6 +479,14 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	font-weight: 500;
 	display: inline-block;
 }
+
+.panel-default {
+	border-top: 2px solid #595959;	
+}
+.panel-default .panel-heading {
+	color: #595959;
+}
+
 .img-thumbnail i {
 	color: #FFFFFF;
 	background-color: #EEEEEE;
@@ -535,6 +544,27 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 }
 
 #stats {
+	border-radius: 2px;
 	color: #666666;
-	background: #515151;
+	background: #2b2b2b;
+	margin: 15px 20px;
+	padding: 5px 0;
+}
+#stats ul, #stats li {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+#stats li {
+	font-size: 11px;
+	color: #9d9d9d;
+	padding: 5px 10px;
+	border-bottom: 1px dotted #373737;
+} 
+#stats div:first-child {
+	margin-bottom: 4px;
+}
+#stats .progress {
+	height: 3px;
+	margin-bottom: 0;
 }

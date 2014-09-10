@@ -1,4 +1,4 @@
-<?php echo $header; ?><?php echo $menu; ?>
+<?php echo $header; ?><?php echo $column; ?>
 <div id="content">
   <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -17,7 +17,7 @@
     </div>
     <?php } ?>
     <div class="row">
-      <div class="col-sm-3">
+      <div class="col-lg-3 col-md-3 col-sm-6">
         <div class="tile">
           <div class="tile-heading"><?php echo $text_order_total; ?></div>
           <div class="tile-body"> <i class="fa fa-shopping-cart"></i>
@@ -26,7 +26,7 @@
           <div class="tile-footer"><a href="<?php echo $order; ?>"><?php echo $text_view; ?></a></div>
         </div>
       </div>
-      <div class="col-sm-3">
+      <div class="col-lg-3 col-md-3 col-sm-6">
         <div class="tile">
           <div class="tile-heading"><?php echo $text_sale_total; ?></div>
           <div class="tile-body"> <i class="fa fa-credit-card"></i>
@@ -35,7 +35,7 @@
           <div class="tile-footer"><a href="<?php echo $sale; ?>"><?php echo $text_view; ?></a></div>
         </div>
       </div>
-      <div class="col-sm-3">
+      <div class="col-lg-3 col-md-3 col-sm-6">
         <div class="tile">
           <div class="tile-heading"><?php echo $text_customer_total; ?></div>
           <div class="tile-body"> <i class="fa fa-user"></i>
@@ -44,7 +44,7 @@
           <div class="tile-footer"><a href="<?php echo $customer; ?>"><?php echo $text_view; ?></a></div>
         </div>
       </div>
-      <div class="col-sm-3">
+      <div class="col-lg-3 col-md-3 col-sm-6">
         <div class="tile">
           <div class="tile-heading"><?php echo $text_online_total; ?></div>
           <div class="tile-body"> <i class="fa fa-eye"></i>
@@ -55,7 +55,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-lg-6 col-md-12 col-sx-12 col-sm-12">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title"><i class="fa fa-eye"></i> <?php echo $text_map; ?></h3>
@@ -65,7 +65,7 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-6">
+      <div class="col-lg-6 col-md-12 col-sx-12 col-sm-12">
         <div class="panel panel-default">
           <div class="panel-heading">
             <div class="pull-right"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-calendar"></i> <i class="caret"></i></a>
@@ -85,7 +85,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-4">
+      <div class="col-lg-4 col-md-12 col-sm-12 col-sx-12">
         <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title">
@@ -103,81 +103,8 @@
             <?php } ?>
           </ul>
         </div>
-
-        <div class="panel panel-success">
-          <div class="panel-heading">
-            <h3 class="panel-title">
-            <i class="fa fa-calendar"></i> <?php echo $text_activity; ?>
-            </h13>
-          </div>
-          <ul class="list-group">
-            <?php if ($activities) { ?>
-            <?php foreach ($activities as $activity) { ?>
-            <li class="list-group-item"><?php echo $activity['comment']; ?><br />
-              <small class="text-muted"><i class="fa fa-clock-o"></i> <?php echo $activity['date_added']; ?></small></li>
-            <?php } ?>
-            <?php } else { ?>
-            <li class="list-group-item text-center"><?php echo $text_no_results; ?></li>
-            <?php } ?>
-          </ul>
-        </div>
-        
-        
-                <div class="panel panel-info">
-          <div class="panel-heading">
-            <h3 class="panel-title">
-            <i class="fa fa-calendar"></i> <?php echo $text_activity; ?>
-            </h13>
-          </div>
-          <ul class="list-group">
-            <?php if ($activities) { ?>
-            <?php foreach ($activities as $activity) { ?>
-            <li class="list-group-item"><?php echo $activity['comment']; ?><br />
-              <small class="text-muted"><i class="fa fa-clock-o"></i> <?php echo $activity['date_added']; ?></small></li>
-            <?php } ?>
-            <?php } else { ?>
-            <li class="list-group-item text-center"><?php echo $text_no_results; ?></li>
-            <?php } ?>
-          </ul>
-        </div>
-        
-                <div class="panel panel-warning">
-          <div class="panel-heading">
-            <h3 class="panel-title">
-            <i class="fa fa-calendar"></i> <?php echo $text_activity; ?>
-            </h13>
-          </div>
-          <ul class="list-group">
-            <?php if ($activities) { ?>
-            <?php foreach ($activities as $activity) { ?>
-            <li class="list-group-item"><?php echo $activity['comment']; ?><br />
-              <small class="text-muted"><i class="fa fa-clock-o"></i> <?php echo $activity['date_added']; ?></small></li>
-            <?php } ?>
-            <?php } else { ?>
-            <li class="list-group-item text-center"><?php echo $text_no_results; ?></li>
-            <?php } ?>
-          </ul>
-        </div> 
-        
-                        <div class="panel panel-danger">
-          <div class="panel-heading">
-            <h3 class="panel-title">
-            <i class="fa fa-calendar"></i> <?php echo $text_activity; ?>
-            </h13>
-          </div>
-          <ul class="list-group">
-            <?php if ($activities) { ?>
-            <?php foreach ($activities as $activity) { ?>
-            <li class="list-group-item"><?php echo $activity['comment']; ?><br />
-              <small class="text-muted"><i class="fa fa-clock-o"></i> <?php echo $activity['date_added']; ?></small></li>
-            <?php } ?>
-            <?php } else { ?>
-            <li class="list-group-item text-center"><?php echo $text_no_results; ?></li>
-            <?php } ?>
-          </ul>
-        </div>        
       </div>
-      <div class="col-sm-8">
+      <div class="col-lg-8 col-md-12 col-sm-12 col-sx-12">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title"><i class="fa fa-shopping-cart"></i> <?php echo $text_recent; ?></h3>

@@ -586,7 +586,7 @@ class ControllerSaleCustomer extends Controller {
 		$data['order'] = $order;
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column'] = $this->load->controller('common/column');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('sale/customer_list.tpl', $data));
@@ -899,7 +899,7 @@ class ControllerSaleCustomer extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column'] = $this->load->controller('common/column');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('sale/customer_form.tpl', $data));
@@ -1091,7 +1091,7 @@ class ControllerSaleCustomer extends Controller {
 			);
 
 			$data['header'] = $this->load->controller('common/header');
-			$data['menu'] = $this->load->controller('common/menu');
+			$data['column'] = $this->load->controller('common/column');
 			$data['footer'] = $this->load->controller('common/footer');
 
 			$this->response->setOutput($this->load->view('error/not_found.tpl', $data));

@@ -107,7 +107,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$data['setting'] = $setting;
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column'] = $this->load->controller('common/column');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/etsy_create.tpl', $data));
@@ -368,7 +368,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$data['items'] = $this->model_openbay_etsy_product->loadLinked($limit, $page);
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column'] = $this->load->controller('common/column');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/etsy_links.tpl', $data));
@@ -513,7 +513,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column'] = $this->load->controller('common/column');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/etsy_listings.tpl', $data));

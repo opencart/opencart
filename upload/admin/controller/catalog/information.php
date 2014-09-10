@@ -252,7 +252,7 @@ class ControllerCatalogInformation extends Controller {
 		$data['order'] = $order;
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column'] = $this->load->controller('common/column');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('catalog/information_list.tpl', $data));
@@ -420,7 +420,7 @@ class ControllerCatalogInformation extends Controller {
 		$data['layouts'] = $this->model_design_layout->getLayouts();
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column'] = $this->load->controller('common/column');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('catalog/information_form.tpl', $data));

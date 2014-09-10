@@ -177,7 +177,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		$data['post_url'] = HTTPS_CATALOG . 'index.php?route=payment/pp_payflow_iframe/paymentipn';
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column'] = $this->load->controller('common/column');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('payment/pp_payflow_iframe.tpl', $data));
@@ -245,7 +245,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 			$data['button_refund'] = $this->language->get('button_refund');
 
 			$data['header'] = $this->load->controller('common/header');
-			$data['menu'] = $this->load->controller('common/menu');
+			$data['column'] = $this->load->controller('common/column');
 			$data['footer'] = $this->load->controller('common/footer');
 
 			$this->response->setOutput($this->load->view('payment/pp_payflow_iframe_refund.tpl', $data));

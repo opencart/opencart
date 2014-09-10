@@ -223,7 +223,7 @@ class ControllerOpenbayAmazonListing extends Controller {
 		);
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column'] = $this->load->controller('common/column');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/amazon_listing.tpl', $data));
@@ -358,7 +358,7 @@ class ControllerOpenbayAmazonListing extends Controller {
 		$data['text_no_results'] = $this->language->get('text_no_results');
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column'] = $this->load->controller('common/column');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/amazon_listing_edit.tpl', $data));

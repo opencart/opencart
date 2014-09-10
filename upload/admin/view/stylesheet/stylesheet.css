@@ -172,7 +172,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	color: #C4C4C4;
 	text-decoration: none;
 	display: block;
-	padding: 10px;
+	padding: 10px 10px 10px 30px;
 	cursor: pointer;
 	border-bottom: 1px solid #515151;
 }
@@ -231,6 +231,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	float: right;
 	margin-right: 8px;
 }
+/*
 #menu li li ul a {
 	padding-left: 25px;
 }
@@ -243,7 +244,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #menu li li li li li ul a {
 	padding-left: 100px;
 }
-
+*/
 /* Menu Active */
 /* Desktop */
 @media (min-width: 768px) {
@@ -542,8 +543,11 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	padding: 5px 8px;
 	background-color: #3DA9E3;
 }
-
+#column-left.active #stats {
+	display: block;
+} 
 #stats {
+	display: none;
 	border-radius: 2px;
 	color: #666666;
 	background: #2b2b2b;

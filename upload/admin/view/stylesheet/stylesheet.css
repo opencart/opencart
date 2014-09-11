@@ -20,7 +20,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 .page-header h1 {
 	font-family: 'Open Sans', sans-serif;
-	font-weight: 600;
+	font-weight: 100;
 	font-size: 30px;
 	color: #848484;
 	display: inline-block;
@@ -30,6 +30,7 @@ h1, h2, h3, h4, h5, h6, p {
 	display: inline-block;
 	background: none;
 	margin: 0;
+	padding: 0 10px;
 }
 .breadcrumb li a {
 	color: #999999;

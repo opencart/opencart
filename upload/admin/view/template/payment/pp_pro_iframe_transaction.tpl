@@ -1,14 +1,14 @@
 <?php echo $header; ?><?php echo $column; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right"><a href="<?php echo $back ?>" class="btn btn-primary"><i class="fa fa-reply"></i> <?php echo $button_back ?></a></div>
       <h1><?php echo $text_transaction; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
   </div>
   <div class="container-fluid">

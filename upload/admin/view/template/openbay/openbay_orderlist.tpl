@@ -1,39 +1,36 @@
 <?php echo $header; ?><?php echo $column; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
-      </div>
-      <h1 class="panel-title"><i class="fa fa-bars fa-lg"></i> <?php echo $heading_title; ?></h1>
+      <div class="pull-right"> <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
+      <h1><i class="fa fa-bars fa-lg"></i> <?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
     <?php } ?>
     <?php if ($success) { ?>
-      <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>
+    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
     <?php } ?>
     <form action="<?php echo $link_update; ?>" method="post" id="order-update-form">
       <div class="container-fluid">
         <div class="pull-right">
           <select name="change_order_status_id">
             <?php foreach ($order_statuses as $order_status) { ?>
-              <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+            <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
             <?php } ?>
           </select>
-          <a data-toggle="tooltip" title="<?php echo $button_status; ?>" class="btn btn-default" onclick="$('#order-update-form').submit();"><i class="fa fa-plus-circle"></i></a>
-        </div>
+          <a data-toggle="tooltip" title="<?php echo $button_status; ?>" class="btn btn-default" onclick="$('#order-update-form').submit();"><i class="fa fa-plus-circle"></i></a> </div>
       </div>
       <div class="container-fluid">
         <table class="table">
@@ -72,64 +69,60 @@
           <tbody>
             <tr class="filter">
               <td></td>
-                <td align="right"><input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" class="form-control" /></td>
-                <td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" class="form-control" /></td>
-              <td>
-                <select name="filter_order_status_id" class="form-control">
+              <td align="right"><input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" class="form-control" /></td>
+              <td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" class="form-control" /></td>
+              <td><select name="filter_order_status_id" class="form-control">
                   <option value="*"></option>
                   <?php if ($filter_order_status_id == '0') { ?>
-                    <option value="0" selected="selected"><?php echo $text_missing; ?></option>
+                  <option value="0" selected="selected"><?php echo $text_missing; ?></option>
                   <?php } else { ?>
-                    <option value="0"><?php echo $text_missing; ?></option>
+                  <option value="0"><?php echo $text_missing; ?></option>
                   <?php } ?>
                   <?php foreach ($order_statuses as $order_status) { ?>
-                    <?php if ($order_status['order_status_id'] == $filter_order_status_id) { ?>
-                      <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                      <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                    <?php } ?>
+                  <?php if ($order_status['order_status_id'] == $filter_order_status_id) { ?>
+                  <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
                   <?php } ?>
-                </select>
-              </td>
+                  <?php } ?>
+                </select></td>
               <td align="text-left"><select name="filter_channel">
-                <option value=""></option>
+                  <option value=""></option>
                   <?php foreach ($channels as $channel) { ?>
-                    <?php if ($channel['module'] == $filter_channel) { ?>
-                      <option value="<?php echo $channel['module'] ?>" selected="selected"><?php echo $channel['title'] ?></option>
-                    <?php } else {  ?>
-                      <option value="<?php echo $channel['module'] ?>"><?php echo $channel['title'] ?></option>
-                    <?php } ?>
+                  <?php if ($channel['module'] == $filter_channel) { ?>
+                  <option value="<?php echo $channel['module'] ?>" selected="selected"><?php echo $channel['title'] ?></option>
+                  <?php } else {  ?>
+                  <option value="<?php echo $channel['module'] ?>"><?php echo $channel['title'] ?></option>
                   <?php } ?>
-              </select></td>
+                  <?php } ?>
+                </select></td>
               <td><input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" size="12" class="form-control" /></td>
               <td></td>
               <td align="right"><a onclick="filter();" class="btn btn-primary"><?php echo $button_filter; ?></a></td>
             </tr>
             <?php if ($orders) { ?>
-              <?php foreach ($orders as $order) { ?>
-                <tr>
-                  <td style="text-align: center;"><?php if ($order['selected']) { ?>
-                  <input type="checkbox" name="selected[]" value="<?php echo $order['order_id']; ?>" checked="checked" />
-                  <?php } else { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $order['order_id']; ?>" />
-                  <?php } ?></td>
-                  <td class="text-left"><?php echo $order['order_id']; ?></td>
-                  <td class="text-left"><?php echo $order['customer']; ?></td>
-                  <td class="text-left"><?php echo $order['status']; ?></td>
-                  <td class="text-left"><?php echo $order['channel']; ?></td>
-                  <td class="text-left"><?php echo $order['date_added']; ?></td>
-                  <td class="text-left"></td>
-                  <td class="text-right">
-                    <?php foreach ($order['action'] as $action) { ?>
-                      [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
-                    <?php } ?>
-                  </td>
-                </tr>
-              <?php } ?>
+            <?php foreach ($orders as $order) { ?>
+            <tr>
+              <td style="text-align: center;"><?php if ($order['selected']) { ?>
+                <input type="checkbox" name="selected[]" value="<?php echo $order['order_id']; ?>" checked="checked" />
+                <?php } else { ?>
+                <input type="checkbox" name="selected[]" value="<?php echo $order['order_id']; ?>" />
+                <?php } ?></td>
+              <td class="text-left"><?php echo $order['order_id']; ?></td>
+              <td class="text-left"><?php echo $order['customer']; ?></td>
+              <td class="text-left"><?php echo $order['status']; ?></td>
+              <td class="text-left"><?php echo $order['channel']; ?></td>
+              <td class="text-left"><?php echo $order['date_added']; ?></td>
+              <td class="text-left"></td>
+              <td class="text-right"><?php foreach ($order['action'] as $action) { ?>
+                [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
+                <?php } ?></td>
+            </tr>
+            <?php } ?>
             <?php } else { ?>
-              <tr>
-                <td class="text-center" colspan="8"><?php echo $text_no_results; ?></td>
-              </tr>
+            <tr>
+              <td class="text-center" colspan="8"><?php echo $text_no_results; ?></td>
+            </tr>
             <?php } ?>
           </tbody>
         </table>
@@ -172,19 +165,19 @@
 
     location = url;
   }
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
   $(document).ready(function() {
 	  $('.date').datepicker({dateFormat: 'yy-mm-dd'});
   });
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
   $('#form input').keydown(function(e) {
     if (e.keyCode == 13) {
       filter();
     }
   });
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
     $.widget('custom.catcomplete', $.ui.autocomplete, {
         _renderMenu: function(ul, items) {
@@ -228,5 +221,5 @@
             return false;
         }
     });
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

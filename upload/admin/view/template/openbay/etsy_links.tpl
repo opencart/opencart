@@ -1,13 +1,13 @@
 <?php echo $header; ?><?php echo $column; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
   <div class="page-header">
     <div class="container-fluid">
       <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
   </div>
   <div class="container-fluid">
@@ -28,8 +28,7 @@
             <label class="control-label" for="input-etsy-id"><?php echo $entry_etsy_id; ?></label>
             <input type="text" name="add_link_etsy_id" value="" placeholder="<?php echo $entry_etsy_id; ?>" id="input-etsy-id" class="form-control" />
           </div>
-          <a onclick="addLink();" class="btn btn-primary pull-right" id="button-submit-link"><i class="fa fa-check"></i> <?php echo $button_save; ?></a>
-        </div>
+          <a onclick="addLink();" class="btn btn-primary pull-right" id="button-submit-link"><i class="fa fa-check"></i> <?php echo $button_save; ?></a> </div>
       </div>
     </div>
     <h4><?php echo $text_current_links; ?></h4>
@@ -45,17 +44,17 @@
       </thead>
       <tbody id="show-linked-items">
         <?php foreach ($items as $id => $item) { ?>
-          <tr id="row-<?php echo $item['etsy_listing_id']; ?>">
-            <td class="text-left"><a href="<?php echo $item['link_edit']; ?>" target="_BLANK"><?php echo $item['name']; ?></a></td>
-            <td class="text-center"><a href="<?php echo $item['link_etsy']; ?>" target="_BLANK"><?php echo $item['etsy_item_id']; ?></a></td>
-            <td class="text-center"><?php echo $item['quantity']; ?></td>
-            <td class="text-center">
-              <?php if ($item['status'] == 1) { ?><i class="fa fa-check" style="color: green;"></i><?php } else { ?><i class="fa fa-times" style="color: red;"></i><?php } ?>
-            </td>
-            <td class="text-center">
-              <button class="btn btn-danger" id="row-delete-btn-<?php echo $item['etsy_listing_id']; ?>" onclick="deleteLink('<?php echo $item['etsy_listing_id']; ?>')"><i class="fa fa-times"></i></button>
-            </td>
-          </tr>
+        <tr id="row-<?php echo $item['etsy_listing_id']; ?>">
+          <td class="text-left"><a href="<?php echo $item['link_edit']; ?>" target="_BLANK"><?php echo $item['name']; ?></a></td>
+          <td class="text-center"><a href="<?php echo $item['link_etsy']; ?>" target="_BLANK"><?php echo $item['etsy_item_id']; ?></a></td>
+          <td class="text-center"><?php echo $item['quantity']; ?></td>
+          <td class="text-center"><?php if ($item['status'] == 1) { ?>
+            <i class="fa fa-check" style="color: green;"></i>
+            <?php } else { ?>
+            <i class="fa fa-times" style="color: red;"></i>
+            <?php } ?></td>
+          <td class="text-center"><button class="btn btn-danger" id="row-delete-btn-<?php echo $item['etsy_listing_id']; ?>" onclick="deleteLink('<?php echo $item['etsy_listing_id']; ?>')"><i class="fa fa-times"></i></button></td>
+        </tr>
         <?php } ?>
       </tbody>
     </table>
@@ -152,5 +151,5 @@
   $(document).ready(function() {
 
   });
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

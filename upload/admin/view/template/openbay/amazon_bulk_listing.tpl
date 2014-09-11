@@ -1,16 +1,14 @@
 <?php echo $header; ?><?php echo $column; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
-      </div>
+      <div class="pull-right"> <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
       <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
   </div>
   <div class="container-fluid">
@@ -33,10 +31,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-12 text-right">
-          <a class="btn btn-primary" id="button-filter"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></a>
-          <a class="btn btn-primary" id="button-search"><i class="fa fa-search"></i> <?php echo $button_search; ?></a>
-        </div>
+        <div class="col-sm-12 text-right"> <a class="btn btn-primary" id="button-filter"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></a> <a class="btn btn-primary" id="button-search"><i class="fa fa-search"></i> <?php echo $button_search; ?></a> </div>
       </div>
     </div>
     <form id="bulk-list-form" class="form-horizontal">
@@ -53,38 +48,45 @@
           </tr>
         </thead>
         <tbody>
-        <?php if (!empty($products)) { ?>
+          <?php if (!empty($products)) { ?>
           <?php foreach ($products as $product) { ?>
-            <tr>
-              <td class="text-center"><input class="amazon-listing" type="checkbox" name="product_ids[]" value="<?php echo $product['product_id'] ?>"/></td>
-              <td class="text-center"><img src="<?php echo $product['image'] ?>"/></td>
-              <td class="text-left"><a href="<?php echo $product['href'] ?>" target="_blank"><?php echo $product['name'] ?></a></td>
-              <td class="text-right"><?php echo $product['model'] ?></td>
-              <td class="text-right"><?php echo $product['search_status'] ?></td>
-              <td class="text-right"><?php if ($product['matches'] !== null) { ?><?php echo $product['matches'] ?><?php } else { ?>-<?php } ?></td>
-              <td class="text-left" id="result-<?php echo $product['product_id'] ?>">
-                <?php if ($product['matches'] !== null) { ?>
-                  <?php $checked = false; ?>
-                  <?php if ($product['matches'] > 0) { ?>
-                    <input class="amazon-listing" type="radio" name="products[<?php echo $product['product_id'] ?>]" value=""/> <?php echo $text_dont_list ?><br/>
-                    <?php foreach ($product['search_results'] as $search_result) { ?>
-                      <?php if (!$checked) { ?>
-                        <input class="amazon-listing" checked="checked" type="radio" name="products[<?php echo $product['product_id'] ?>]" value="<?php echo $search_result['asin'] ?>"/><?php $checked = true; ?>
-                      <?php } else { ?>
-                        <input class="amazon-listing" type="radio" name="products[<?php echo $product['product_id'] ?>]" value="<?php echo $search_result['asin'] ?>"/>
-                      <?php } ?>
-                      <a target="_blank" href="<?php echo $search_result['href'] ?>"><?php echo $search_result['title'] ?></a><br/>
-                    <?php } ?>
-                  <?php } else { ?>
-                    <input class="amazon-listing" checked="checked" type="radio" name="products[<?php echo $product['product_id'] ?>]" value=""/> <?php echo $text_dont_list ?><br/>
-                  <?php } ?>
-                <?php } ?>
-              </td>
-            </tr>
+          <tr>
+            <td class="text-center"><input class="amazon-listing" type="checkbox" name="product_ids[]" value="<?php echo $product['product_id'] ?>"/></td>
+            <td class="text-center"><img src="<?php echo $product['image'] ?>"/></td>
+            <td class="text-left"><a href="<?php echo $product['href'] ?>" target="_blank"><?php echo $product['name'] ?></a></td>
+            <td class="text-right"><?php echo $product['model'] ?></td>
+            <td class="text-right"><?php echo $product['search_status'] ?></td>
+            <td class="text-right"><?php if ($product['matches'] !== null) { ?>
+              <?php echo $product['matches'] ?>
+              <?php } else { ?>
+              -
+              <?php } ?></td>
+            <td class="text-left" id="result-<?php echo $product['product_id'] ?>"><?php if ($product['matches'] !== null) { ?>
+              <?php $checked = false; ?>
+              <?php if ($product['matches'] > 0) { ?>
+              <input class="amazon-listing" type="radio" name="products[<?php echo $product['product_id'] ?>]" value=""/>
+              <?php echo $text_dont_list ?><br/>
+              <?php foreach ($product['search_results'] as $search_result) { ?>
+              <?php if (!$checked) { ?>
+              <input class="amazon-listing" checked="checked" type="radio" name="products[<?php echo $product['product_id'] ?>]" value="<?php echo $search_result['asin'] ?>"/>
+              <?php $checked = true; ?>
+              <?php } else { ?>
+              <input class="amazon-listing" type="radio" name="products[<?php echo $product['product_id'] ?>]" value="<?php echo $search_result['asin'] ?>"/>
+              <?php } ?>
+              <a target="_blank" href="<?php echo $search_result['href'] ?>"><?php echo $search_result['title'] ?></a><br/>
+              <?php } ?>
+              <?php } else { ?>
+              <input class="amazon-listing" checked="checked" type="radio" name="products[<?php echo $product['product_id'] ?>]" value=""/>
+              <?php echo $text_dont_list ?><br/>
+              <?php } ?>
+              <?php } ?></td>
+          </tr>
           <?php } ?>
-        <?php } else { ?>
-          <tr><td colspan="7" class="text-center"><?php echo $text_no_results; ?></td></tr>
-        <?php } ?>
+          <?php } else { ?>
+          <tr>
+            <td colspan="7" class="text-center"><?php echo $text_no_results; ?></td>
+          </tr>
+          <?php } ?>
         </tbody>
       </table>
       <div class="well">
@@ -95,11 +97,13 @@
               <label for="input-condition" class="control-label"><?php echo $entry_condition; ?></label>
               <select name="condition" class="form-control" id="input-condition">
                 <option value=""></option>
-                <?php foreach ($conditions as $value => $name) { ?><?php if ($value == $default_condition) { ?>
+                <?php foreach ($conditions as $value => $name) { ?>
+                <?php if ($value == $default_condition) { ?>
                 <option selected="selected" value="<?php echo $value ?>"><?php echo $name ?></option>
                 <?php } else { ?>
                 <option value="<?php echo $value ?>"><?php echo $name ?></option>
-                <?php } ?><?php } ?>
+                <?php } ?>
+                <?php } ?>
               </select>
             </div>
           </div>
@@ -115,17 +119,14 @@
               <div class="input-group date">
                 <input type="text" class="form-control" id="input-start" data-format="YYYY-MM-DD" placeholder="<?php echo $entry_start_selling; ?>" name="start_selling">
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
-                </span>
-              </div>
+                <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
+                </span> </div>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-12">
-            <div class="pull-right">
-              <a class="btn btn-primary" id="button-list"><i class="fa fa-plus-circle"></i> <?php echo $button_list; ?></a>
-            </div>
+            <div class="pull-right"> <a class="btn btn-primary" id="button-list"><i class="fa fa-plus-circle"></i> <?php echo $button_list; ?></a> </div>
           </div>
         </div>
       </div>
@@ -246,5 +247,5 @@
       $('#bulk-list-form').prepend('<div class="alert alert-danger"><?php echo $error_select_items; ?></div>');
     }
   });
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

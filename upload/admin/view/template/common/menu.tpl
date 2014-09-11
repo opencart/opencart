@@ -29,7 +29,7 @@
       <li><a href="<?php echo $total; ?>"><i class="fa fa-angle-double-right"></i> <?php echo $text_total; ?></a></li>
       <li><a href="<?php echo $feed; ?>"><i class="fa fa-angle-double-right"></i> <?php echo $text_feed; ?></a></li>
       <?php if ($openbay_show_menu == 1) { ?>
-      <li><a class="parent"><?php echo $text_openbay_extension; ?></a>
+      <li><a class="parent"><i class="fa fa-angle-double-right"></i> <?php echo $text_openbay_extension; ?></a>
         <ul>
           <li><a href="<?php echo $openbay_link_extension; ?>"><i class="fa fa-angle-double-right"></i> <?php echo $text_openbay_dashboard; ?></a></li>
           <li><a href="<?php echo $openbay_link_orders; ?>"><i class="fa fa-angle-double-right"></i> <?php echo $text_openbay_orders; ?></a></li>

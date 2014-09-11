@@ -1,19 +1,18 @@
 <?php echo $header; ?><?php echo $column; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
         <?php if ($has_listing_errors) { ?>
-          <a href="<?php echo $url_remove_errors; ?>" data-toggle="tooltip" title="<?php echo $button_remove_error; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
+        <a href="<?php echo $url_remove_errors; ?>" data-toggle="tooltip" title="<?php echo $button_remove_error; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
         <?php } ?>
-        <a href="<?php echo $cancel_url; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
-      </div>
+        <a href="<?php echo $cancel_url; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
       <h1><i class="fa fa-pencil"></i> <?php echo $text_title_advanced; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
   </div>
   <div class="container-fluid">
@@ -29,82 +28,78 @@
     <?php if ($success) { ?>
     <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
     <?php } ?>
-
     <ul class="nav nav-tabs" id="tabs">
-        <li class="active"><a href="#page-main" data-toggle="tab"><?php echo $tab_main; ?></a></li>
-      </ul>
-
+      <li class="active"><a href="#page-main" data-toggle="tab"><?php echo $tab_main; ?></a></li>
+    </ul>
     <form method="POST" id="product_form_advanced" class="form-horizontal">
-        <input type="hidden" name="upload_after" value="false">
-
-        <div class="tab-content" id="tab-content">
-          <div class="tab-pane active" id="page-main">
-            <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $entry_product; ?></label>
-              <div class="col-sm-10"><p>
-                <a href="<?php echo $listing_url; ?>"><?php echo $listing_name; ?><?php if (!empty($options)) { echo " : "; } ?></a>
+      <input type="hidden" name="upload_after" value="false">
+      <div class="tab-content" id="tab-content">
+        <div class="tab-pane active" id="page-main">
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $entry_product; ?></label>
+            <div class="col-sm-10">
+              <p> <a href="<?php echo $listing_url; ?>"><?php echo $listing_name; ?>
+                <?php if (!empty($options)) { echo " : "; } ?>
+                </a>
                 <?php if (!empty($options)) { ?>
-                  <select id="openstock_selector" name="optionVar" class="form-control">
-                    <option></option>
-                    <?php foreach($options as $option) { ?>
-                      <option <?php if ($variation === $option['var']) { echo "selected='selected'";} ?> value="<?php echo  $option['var']?>"><?php echo $option['combi']?></option>
-                    <?php } ?>
-                  </select>
-                <?php }?>
-              </p></div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $entry_marketplace; ?></label>
-              <div class="col-sm-10" id="marketplaces">
-                <?php foreach ($marketplaces as $mp) { ?>
-                  <label class="radio-inline">
-                    <?php if ($saved_marketplaces === false) { ?>
-                    <input class="marketplace_ids" id="adv_marketplace_<?php echo $mp['code'] ?>" <?php if (in_array($mp['id'], $default_marketplaces)) { ?> checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="<?php echo $mp['id']; ?>">
-                    <?php } else { ?>
-                    <input class="marketplace_ids" id="adv_marketplace_<?php echo $mp['code'] ?>" <?php if (in_array($mp['id'], $saved_marketplaces)) { ?> checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="<?php echo $mp['id']; ?>">
-                    <?php } ?>
-                    <?php echo $mp['name'] ?>
-                  </label>
-                <?php } ?>
-              </div>
-            </div>
-            <div class="form-group required">
-              <label class="col-sm-2 control-label" for="category_selector" id="category_selector_label"><?php echo $entry_category; ?></label>
-              <div class="col-sm-4">
-                <select name="category_selector" id="category_selector" class="form-control">
-                  <option value=""></option>
-                  <?php foreach($amazon_categories as $category) {  ?>
-                  <option <?php if ($edit_product_category == $category["name"]) echo 'selected="selected"'; ?> value="<?php echo $category['template'] ?>"><?php echo $category['friendly_name'] ?></option>
+                <select id="openstock_selector" name="optionVar" class="form-control">
+                  <option></option>
+                  <?php foreach($options as $option) { ?>
+                  <option <?php if ($variation === $option['var']) { echo "selected='selected'";} ?> value="<?php echo  $option['var']?>"><?php echo $option['combi']?></option>
                   <?php } ?>
                 </select>
-              </div>
-            </div>
-            <table class="table">
-            <tbody class="fields_advanced"></tbody>
-            </table>
-          </div>
-        </div>
-        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="browse-node-modal">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                <h4 id="mySmallModalLabel" class="modal-title"><?php echo $entry_browse_node; ?></h4>
-              </div>
-              <div class="modal-body">
-                <div id="browse-node-content"></div>
-              </div>
+                <?php }?>
+              </p>
             </div>
           </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $entry_marketplace; ?></label>
+            <div class="col-sm-10" id="marketplaces">
+              <?php foreach ($marketplaces as $mp) { ?>
+              <label class="radio-inline">
+                <?php if ($saved_marketplaces === false) { ?>
+                <input class="marketplace_ids" id="adv_marketplace_<?php echo $mp['code'] ?>" <?php if (in_array($mp['id'], $default_marketplaces)) { ?> checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="<?php echo $mp['id']; ?>">
+                <?php } else { ?>
+                <input class="marketplace_ids" id="adv_marketplace_<?php echo $mp['code'] ?>" <?php if (in_array($mp['id'], $saved_marketplaces)) { ?> checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="<?php echo $mp['id']; ?>">
+                <?php } ?>
+                <?php echo $mp['name'] ?> </label>
+              <?php } ?>
+            </div>
+          </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="category_selector" id="category_selector_label"><?php echo $entry_category; ?></label>
+            <div class="col-sm-4">
+              <select name="category_selector" id="category_selector" class="form-control">
+                <option value=""></option>
+                <?php foreach($amazon_categories as $category) {  ?>
+                <option <?php if ($edit_product_category == $category["name"]) echo 'selected="selected"'; ?> value="<?php echo $category['template'] ?>"><?php echo $category['friendly_name'] ?></option>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
+          <table class="table">
+            <tbody class="fields_advanced">
+            </tbody>
+          </table>
         </div>
-      </form>
+      </div>
+      <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="browse-node-modal">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+              <h4 id="mySmallModalLabel" class="modal-title"><?php echo $entry_browse_node; ?></h4>
+            </div>
+            <div class="modal-body">
+              <div id="browse-node-content"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
     <div class="well">
       <div class="row">
-        <div class="col-md-12 text-right">
-          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save ?>" onclick="validate_and_save('advanced')"><i class="fa fa-save fa-lg"></i></a>
-          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save_upload ?>" onclick="save_and_upload()"><i class="fa fa-cloud-upload fa-lg"></i></a>
-          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_saved_listings ?>" href="<?php echo $saved_listings_url; ?>"><i class="fa fa-copy fa-lg"></i></a>
-        </div>
+        <div class="col-md-12 text-right"> <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save ?>" onclick="validate_and_save('advanced')"><i class="fa fa-save fa-lg"></i></a> <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save_upload ?>" onclick="save_and_upload()"><i class="fa fa-cloud-upload fa-lg"></i></a> <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_saved_listings ?>" href="<?php echo $saved_listings_url; ?>"><i class="fa fa-copy fa-lg"></i></a> </div>
       </div>
     </div>
   </div>
@@ -721,5 +716,5 @@ function saveNode(id, field, text){
   $('#'+field+'_label').text(text).show();
   $('#browse-node-modal').modal('toggle');
 }
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

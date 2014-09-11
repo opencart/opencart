@@ -1,16 +1,14 @@
 <?php echo $header; ?><?php echo $column; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
-      </div>
+      <div class="pull-right"> <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
       <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
   </div>
   <div class="container-fluid">
@@ -20,21 +18,17 @@
           <div class="input-group date">
             <input type="text" class="form-control" id="input-date-start" data-format="YYYY-MM-DD" placeholder="<?php echo $entry_date_start; ?>" value="<?php echo $date_start; ?>" name="filter_date_start">
             <span class="input-group-btn">
-              <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-            </span>
-          </div>
+            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+            </span> </div>
         </div>
         <div class="col-sm-5">
           <div class="input-group date">
             <input type="text" class="form-control" id="input-date-end" data-format="YYYY-MM-DD" placeholder="<?php echo $entry_date_end; ?>" value="<?php echo $date_end; ?>" name="filter_date_end">
             <span class="input-group-btn">
-              <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-            </span>
-          </div>
+            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+            </span> </div>
         </div>
-        <div class="col-sm-2 text-right">
-          <a onclick="filter();" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_filter; ?>"><i class="fa fa-filter"></i></a>
-        </div>
+        <div class="col-sm-2 text-right"> <a onclick="filter();" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_filter; ?>"><i class="fa fa-filter"></i></a> </div>
       </div>
     </div>
     <table class="table">
@@ -50,23 +44,24 @@
       </thead>
       <tbody>
         <?php if (empty($table_data)) { ?>
-          <tr>
-            <td class="text-center" colspan="6"><?php echo $text_empty; ?></td>
-          </tr>
+        <tr>
+          <td class="text-center" colspan="6"><?php echo $text_empty; ?></td>
+        </tr>
         <?php } ?>
         <?php foreach ($table_data as $ref => $row) { ?>
-          <tr>
-            <td class="text-left" rowspan="<?php echo count($row['data']) + 1; ?>"><?php echo $ref; ?></td>
-            <td class="text-left" rowspan="<?php echo count($row['data']) + 1; ?>"><?php echo $row['date_requested']; ?></td>
-            <td class="text-right" rowspan="<?php echo count($row['data']) + 1; ?>"><?php echo $row['date_updated']; ?></td>
-            <td class="text-right" rowspan="<?php echo count($row['data']) + 1; ?>"><?php echo $row['status']; ?></td>
-            <?php foreach ($row['data'] as $dataRow) { ?>
-              <tr>
-                <td class="text-left"><?php echo $dataRow['sku']; ?></td>
-                <td class="text-left"><?php echo $dataRow['stock']; ?></td>
-              </tr>
-            <?php } ?>
+        <tr>
+          <td class="text-left" rowspan="<?php echo count($row['data']) + 1; ?>"><?php echo $ref; ?></td>
+          <td class="text-left" rowspan="<?php echo count($row['data']) + 1; ?>"><?php echo $row['date_requested']; ?></td>
+          <td class="text-right" rowspan="<?php echo count($row['data']) + 1; ?>"><?php echo $row['date_updated']; ?></td>
+          <td class="text-right" rowspan="<?php echo count($row['data']) + 1; ?>"><?php echo $row['status']; ?></td>
+          <?php foreach ($row['data'] as $dataRow) { ?>
+        <tr>
+          <td class="text-left"><?php echo $dataRow['sku']; ?></td>
+          <td class="text-left"><?php echo $dataRow['stock']; ?></td>
+        </tr>
+        <?php } ?>
           </tr>
+        
         <?php } ?>
       </tbody>
     </table>
@@ -89,14 +84,13 @@ function filter() {
 	}
 	location = url;
 }
-//--></script>
-
+//--></script> 
 <script type="text/javascript"><!--
 $(document).ready(function() {
 	$('#date-start').datepicker({dateFormat: 'yy-mm-dd'});
 	$('#date-end').datepicker({dateFormat: 'yy-mm-dd'});
 });
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
   pickTime: false
@@ -110,5 +104,5 @@ $('.datetime').datetimepicker({
 $('.time').datetimepicker({
   pickDate: false
 });
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

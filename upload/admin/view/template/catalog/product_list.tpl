@@ -1,10 +1,5 @@
 <?php echo $header; ?><?php echo $column; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right"><a href="<?php echo $insert; ?>" data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn btn-primary"><i class="fa fa-plus"></i></a>
@@ -12,6 +7,11 @@
         <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-product').submit() : false;"><i class="fa fa-trash-o"></i></button>
       </div>
       <h1><i class="fa fa-bars"></i> <?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
   </div>
   <div class="container-fluid">
@@ -187,7 +187,7 @@ $('#button-filter').on('click', function() {
 
 	location = url;
 });
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('input[name=\'filter_name\']').autocomplete({
 	'source': function(request, response) {
@@ -228,5 +228,5 @@ $('input[name=\'filter_model\']').autocomplete({
 		$('input[name=\'filter_model\']').val(item['label']);
 	}
 });
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

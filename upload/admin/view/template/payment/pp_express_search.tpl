@@ -1,14 +1,14 @@
 <?php echo $header; ?><?php echo $column; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right"><a onclick="editSearch();" id="btn_edit" data-toggle="tooltip" style="display:none;" title="<?php echo $btn_edit_search; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a onclick="doSearch();" id="btn_search" data-toggle="tooltip" title="<?php echo $btn_search; ?>" class="btn btn-info"><i class="fa fa-search"></i></a></div>
-	  <h1><i class="fa fa-search"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="fa fa-search"></i> <?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
   </div>
   <div class="container-fluid">
@@ -19,20 +19,20 @@
           <label class="col-sm-2 control-label"><?php echo $entry_date_start; ?></label>
           <div class="col-sm-10">
             <div class="input-group date">
-            <input type="text" name="date_start" value="<?php echo $date_start; ?>" placeholder="<?php echo $text_format; ?>: yy-mm-dd" data-format="YYYY-MM-DD" class="form-control" />
-            <span class="input-group-btn">
-            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-            </span></div>
+              <input type="text" name="date_start" value="<?php echo $date_start; ?>" placeholder="<?php echo $text_format; ?>: yy-mm-dd" data-format="YYYY-MM-DD" class="form-control" />
+              <span class="input-group-btn">
+              <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+              </span></div>
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label"><?php echo $entry_date_end; ?></label>
           <div class="col-sm-10">
             <div class="input-group date">
-            <input type="text" name="date_end" value="<?php echo $date_end; ?>" placeholder="<?php echo $text_format; ?>: yy-mm-dd" data-format="YYYY-MM-DD" class="form-control" />
-            <span class="input-group-btn">
-            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-            </span></div>
+              <input type="text" name="date_end" value="<?php echo $date_end; ?>" placeholder="<?php echo $text_format; ?>: yy-mm-dd" data-format="YYYY-MM-DD" class="form-control" />
+              <span class="input-group-btn">
+              <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+              </span></div>
           </div>
         </div>
         <h3><?php echo $entry_transaction; ?></h3>
@@ -238,7 +238,7 @@ function editSearch() {
   $('#search_results').empty().hide();
   $('#error').empty().hide();
 }
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false
@@ -252,5 +252,5 @@ $('.datetime').datetimepicker({
 	pickDate: true,
 	pickTime: true
 });
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

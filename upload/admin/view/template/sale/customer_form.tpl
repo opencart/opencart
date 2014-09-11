@@ -1,16 +1,16 @@
 <?php echo $header; ?><?php echo $column; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
         <button type="submit" form="form-customer" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
   </div>
   <div class="container-fluid">
@@ -660,7 +660,7 @@ $('select[name=\'customer_group_id\']').on('change', function() {
 });
 
 $('select[name=\'customer_group_id\']').trigger('change');
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 var address_row = <?php echo $address_row; ?>;
 
@@ -858,7 +858,7 @@ function addAddress() {
 
 	address_row++;
 }
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 function country(element, index, zone_id) {
   if (element.value != '') {
@@ -904,7 +904,7 @@ function country(element, index, zone_id) {
 }
 
 $('select[name$=\'[country_id]\']').trigger('change');
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('#history').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
@@ -937,7 +937,7 @@ $('#button-history').on('click', function(e) {
 		}
 	});
 });
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('#transaction').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
@@ -971,7 +971,7 @@ $('#button-transaction').on('click', function(e) {
 		}
 	});
 });
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('#reward').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
@@ -1134,5 +1134,5 @@ $('.datetime').datetimepicker({
 $('.time').datetimepicker({
 	pickDate: false
 });	
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

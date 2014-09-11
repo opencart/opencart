@@ -1,93 +1,80 @@
 <?php echo $header; ?><?php echo $column; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
         <?php if ($has_listing_errors) { ?>
-          <a href="<?php echo $url_remove_errors; ?>" data-toggle="tooltip" title="<?php echo $button_remove_error; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
+        <a href="<?php echo $url_remove_errors; ?>" data-toggle="tooltip" title="<?php echo $button_remove_error; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
         <?php } ?>
-        <a href="<?php echo $cancel_url; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
-      </div>
+        <a href="<?php echo $cancel_url; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
       <h1><i class="fa fa-pencil"></i> <?php echo $text_title_advanced; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
   </div>
   <div class="container-fluid">
     <?php if ($errors) { ?>
-      <div class="alert alert-danger">
-        <ul>
-          <?php foreach ($errors as $listing_error) { ?>
-          <li><i class="fa fa-exclamation-circle"></i> <?php echo $listing_error ?></li>
-          <?php } ?>
-        </ul>
-      </div>
+    <div class="alert alert-danger">
+      <ul>
+        <?php foreach ($errors as $listing_error) { ?>
+        <li><i class="fa fa-exclamation-circle"></i> <?php echo $listing_error ?></li>
+        <?php } ?>
+      </ul>
+    </div>
     <?php } ?>
     <?php if ($success) { ?>
-      <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
+    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
     <?php } ?>
-
-    <div id="tabs" class="htabs">
-        <a href="#page-main"><?php echo $tab_main; ?></a>
-        <div id="dynamic_tabs"></div>
+    <div id="tabs" class="htabs"> <a href="#page-main"><?php echo $tab_main; ?></a>
+      <div id="dynamic_tabs"></div>
     </div>
     <form method="POST" id="product_form_advanced">
-          <div id="page-main">
-              <table class="form" align="left">
-                  <tbody>
-                  <tr>
-                      <td style="width: 400px;"><?php echo $entry_product; ?></td>
-                      <td>
-                          <a href="<?php echo $listing_url; ?>"><?php echo $listing_name; ?><?php if (!empty($options)) { echo " : "; } ?></a>
-                          <?php if (!empty($options)) { ?>
-                          <select id="openstock_selector" name="optionVar">
-                              <option></option>
-                              <?php foreach($options as $option) { ?>
-                              <option <?php if ($variation === $option['var']) { echo "selected='selected'";} ?> value="<?php echo  $option['var']?>"><?php echo $option['combi']?></option>
-                              <?php } ?>
-                          </select>
-                          <?php }?>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <?php echo $entry_category; ?><br>
-                          <span class="help"></span>
-                      </td>
-                      <td>
-                          <select id="category_selector">
-                              <option value=""></option>
-                              <?php foreach($amazonus_categories as $category) {  ?>
-                              <option <?php if ($edit_product_category == $category["name"]) echo 'selected="selected"'; ?> value="<?php echo $category['template'] ?>"><?php echo $category['friendly_name'] ?></option>
-                              <?php } ?>
-                          </select>
-                      </td>
-                  </tr>
-                  </tbody>
-                  <input type="hidden" name="upload_after" value="false">
-                  <tbody class="fields_advanced"></tbody>
-              </table>
-          </div>
-          <div id="dynamic_pages">
-          </div>
-
-          <div id="greyScreen"></div>
-          <div id="browseNodeForm" class="greyScreenBox nodePage">
-              <div class="bold border p5 previewClose">X</div>
-              <div id="browseNodeFormContent"></div>
-          </div>
-      </form>
-
+      <div id="page-main">
+        <table class="form" align="left">
+          <tbody>
+            <tr>
+              <td style="width: 400px;"><?php echo $entry_product; ?></td>
+              <td><a href="<?php echo $listing_url; ?>"><?php echo $listing_name; ?>
+                <?php if (!empty($options)) { echo " : "; } ?>
+                </a>
+                <?php if (!empty($options)) { ?>
+                <select id="openstock_selector" name="optionVar">
+                  <option></option>
+                  <?php foreach($options as $option) { ?>
+                  <option <?php if ($variation === $option['var']) { echo "selected='selected'";} ?> value="<?php echo  $option['var']?>"><?php echo $option['combi']?></option>
+                  <?php } ?>
+                </select>
+                <?php }?></td>
+            </tr>
+            <tr>
+              <td><?php echo $entry_category; ?><br>
+                <span class="help"></span></td>
+              <td><select id="category_selector">
+                  <option value=""></option>
+                  <?php foreach($amazonus_categories as $category) {  ?>
+                  <option <?php if ($edit_product_category == $category["name"]) echo 'selected="selected"'; ?> value="<?php echo $category['template'] ?>"><?php echo $category['friendly_name'] ?></option>
+                  <?php } ?>
+                </select></td>
+            </tr>
+          </tbody>
+          <input type="hidden" name="upload_after" value="false">
+          <tbody class="fields_advanced">
+          </tbody>
+        </table>
+      </div>
+      <div id="dynamic_pages"> </div>
+      <div id="greyScreen"></div>
+      <div id="browseNodeForm" class="greyScreenBox nodePage">
+        <div class="bold border p5 previewClose">X</div>
+        <div id="browseNodeFormContent"></div>
+      </div>
+    </form>
     <div class="well">
       <div class="row">
-        <div class="col-md-12 text-right">
-          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save ?>" onclick="validate_and_save('advanced')"><i class="fa fa-save fa-lg"></i></a>
-          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save_upload ?>" onclick="save_and_upload()"><i class="fa fa-cloud-upload fa-lg"></i></a>
-          <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_saved_listings ?>" href="<?php echo $saved_listings_url; ?>"><i class="fa fa-copy fa-lg"></i></a>
-        </div>
+        <div class="col-md-12 text-right"> <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save ?>" onclick="validate_and_save('advanced')"><i class="fa fa-save fa-lg"></i></a> <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_save_upload ?>" onclick="save_and_upload()"><i class="fa fa-cloud-upload fa-lg"></i></a> <a class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_saved_listings ?>" href="<?php echo $saved_listings_url; ?>"><i class="fa fa-copy fa-lg"></i></a> </div>
       </div>
     </div>
   </div>
@@ -721,5 +708,5 @@ function saveNode(id){
     hideGreyScreen('browseNodeForm');
 }
 
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

@@ -1,16 +1,16 @@
 <?php echo $header; ?><?php echo $column; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
         <button type="submit" form="settings-form" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
   </div>
   <div class="container-fluid">
@@ -67,15 +67,13 @@
             </div>
           </div>
         </div>
-
         <div class="tab-pane" id="tab-product">
           <div class="form-group">
             <label class="col-sm-2 control-label" for="entry-tax-percentage"><span data-toggle="tooltip" data-container="#tab-product" title="<?php echo $help_tax_percentage; ?>"><?php echo $entry_tax_percentage; ?></span></label>
             <div class="col-sm-10">
               <div class="input-group col-xs-2">
                 <input type="text" name="openbay_amazonus_listing_tax_added" value="<?php echo $openbay_amazonus_listing_tax_added; ?>" placeholder="<?php echo $entry_tax_percentage; ?>" id="entry-tax-percentage" class="form-control" />
-                <span class="input-group-addon">%</span>
-              </div>
+                <span class="input-group-addon">%</span> </div>
             </div>
           </div>
           <div class="form-group">
@@ -94,10 +92,8 @@
             </div>
           </div>
         </div>
-
         <div class="tab-pane" id="tab-orders">
           <h4><?php echo $text_order_statuses ?></h4>
-
           <?php foreach ($amazonus_order_statuses as $key => $amazonus_order_status) { ?>
           <div class="form-group">
             <label class="col-sm-2 control-label"><?php echo $amazonus_order_status['name'] ?></label>
@@ -114,16 +110,13 @@
             </div>
           </div>
           <?php } ?>
-
           <h4><?php echo $text_other ?></h4>
-
           <div class="form-group">
             <label class="col-sm-2 control-label" for="entry-import-tax"><span data-toggle="tooltip" data-container="#tab-orders" title="<?php echo $help_import_tax; ?>"><?php echo $entry_import_tax; ?></span></label>
             <div class="col-sm-10">
               <div class="input-group col-xs-2">
                 <input type="text" name="openbay_amazonus_order_tax" value="<?php echo $openbay_amazonus_order_tax;?>" id="entry-import-tax" class="form-control" placeholder="<?php echo $entry_import_tax; ?>" />
-                <span class="input-group-addon">%</span>
-              </div>
+                <span class="input-group-addon">%</span> </div>
             </div>
           </div>
           <div class="form-group">

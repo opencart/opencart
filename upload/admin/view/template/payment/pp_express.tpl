@@ -1,16 +1,16 @@
 <?php echo $header; ?><?php echo $column; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
         <button type="submit" form="form-ppexpress" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> <a href="<?php echo $search; ?>" data-toggle="tooltip" title="<?php echo $button_search; ?>" class="btn btn-info"><i class="fa fa-search"></i></a></div>
       <h1><i class="fa fa-credit-card"></i> <?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
   </div>
   <div class="container-fluid">
@@ -98,11 +98,11 @@
             <div class="col-sm-10">
               <select name="pp_express_currency" id="input-currency" class="form-control">
                 <?php foreach ($currency_codes as $code) { ?>
-                  <?php if ($code == $pp_express_currency) { ?>
-                    <option value="<?php echo $code; ?>" selected="selected"><?php echo $code; ?></option>
-                  <?php } else { ?>
-                    <option value="<?php echo $code; ?>"><?php echo $code; ?></option>
-                  <?php } ?>
+                <?php if ($code == $pp_express_currency) { ?>
+                <option value="<?php echo $code; ?>" selected="selected"><?php echo $code; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $code; ?>"><?php echo $code; ?></option>
+                <?php } ?>
                 <?php } ?>
               </select>
             </div>

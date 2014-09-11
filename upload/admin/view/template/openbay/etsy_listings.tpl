@@ -1,13 +1,13 @@
 <?php echo $header; ?><?php echo $column; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
   <div class="page-header">
     <div class="container-fluid">
       <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
   </div>
   <div class="container-fluid">
@@ -22,8 +22,7 @@
           <div class="form-group">
             <label class="control-label" for="input-keywords"><?php echo $entry_keywords; ?></label>
             <input type="text" name="keywords" value="<?php echo isset($filter['keywords']) ? $filter['keywords'] : ''; ?>" placeholder="<?php echo $entry_keywords; ?>" id="input-keywords" class="form-control" />
-            <span class="help-block"><?php echo $help_keywords; ?></span>
-          </div>
+            <span class="help-block"><?php echo $help_keywords; ?></span> </div>
           <div class="form-group">
             <label class="control-label" for="input-limit"><?php echo $entry_limit; ?></label>
             <select name="limit" id="input-limit" class="form-control">
@@ -62,13 +61,12 @@
             <label class="control-label" for="input-etsy-id"><?php echo $entry_etsy_id; ?></label>
             <input type="text" name="add_link_etsy_id" value="" placeholder="<?php echo $entry_etsy_id; ?>" id="input-etsy-id" class="form-control" />
           </div>
-          <a onclick="addLink();" class="btn btn-primary pull-right" id="button-submit-link"><i class="fa fa-check"></i> <?php echo $button_save; ?></a>
-        </div>
+          <a onclick="addLink();" class="btn btn-primary pull-right" id="button-submit-link"><i class="fa fa-check"></i> <?php echo $button_save; ?></a> </div>
       </div>
     </div>
     <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-          <thead>
+      <table class="table table-bordered table-hover">
+        <thead>
           <tr>
             <td class="text-left"><?php echo $column_listing_id; ?></td>
             <td class="text-left"><?php echo $column_title; ?></td>
@@ -78,57 +76,53 @@
             <td class="text-center"><?php echo $column_status; ?></td>
             <td class="text-right"><?php echo $column_action; ?></td>
           </tr>
-          </thead>
-          <tbody>
+        </thead>
+        <tbody>
           <?php if ($listings) { ?>
-            <?php foreach ($listings as $listing) { ?>
-            <tr>
-              <td class="text-left"><?php echo $listing['listing']['listing_id']; ?></td>
-              <td class="text-left"><?php echo $listing['listing']['title']; ?></td>
-              <td class="text-center"><?php echo $listing['listing']['quantity']; ?></td>
-              <?php if (!empty($listing['link'])) { ?>
-                <td class="text-center"><?php echo $listing['link']['quantity']; ?></td>
-                <td class="text-center"><i class="fa fa-check" style="color: green;"></i></td>
-                <td class="text-center">
-                  <?php
+          <?php foreach ($listings as $listing) { ?>
+          <tr>
+            <td class="text-left"><?php echo $listing['listing']['listing_id']; ?></td>
+            <td class="text-left"><?php echo $listing['listing']['title']; ?></td>
+            <td class="text-center"><?php echo $listing['listing']['quantity']; ?></td>
+            <?php if (!empty($listing['link'])) { ?>
+            <td class="text-center"><?php echo $listing['link']['quantity']; ?></td>
+            <td class="text-center"><i class="fa fa-check" style="color: green;"></i></td>
+            <td class="text-center"><?php
                     if ($listing['link']['quantity'] != $listing['listing']['quantity']) {
                       echo $text_status_stock;
                     } else {
                       echo $text_status_ok;
                     }
-                   ?>
-                </td>
-              <?php } else { ?>
-                <td class="text-center"><i class="fa fa-minus"></i></td>
-                <td class="text-center"><i class="fa fa-times" style="color: red;"></i></td>
-                <td class="text-center"><?php echo $text_status_nolink; ?></td>
-              <?php } ?>
-              </td>
-              <td class="text-right">
-                <?php if (in_array('activate_item', $listing['actions'])) { ?>
-                <button data-toggle="tooltip" title="<?php echo $text_activate; ?>" class="btn btn-primary" onclick="activateListing('<?php echo $listing['listing']['listing_id']; ?>');" id="btn-activate-<?php echo $listing['listing']['listing_id']; ?>"><i class="fa fa-plus"></i></button>
-                <?php } ?>
-                <?php if (in_array('add_link', $listing['actions'])) { ?>
-                <button data-toggle="tooltip" title="<?php echo $text_add_link; ?>" class="btn btn-primary" onclick="showLinkOption('<?php echo $listing['listing']['listing_id']; ?>');"><i class="fa fa-link"></i></button>
-                <?php } ?>
-                <?php if (in_array('delete_link', $listing['actions'])) { ?>
-                <button data-toggle="tooltip" title="<?php echo $text_delete_link; ?>" class="btn btn-danger" id="btn-delete-<?php echo $listing['link']['etsy_listing_id']; ?>" onclick="deleteLink('<?php echo $listing['link']['etsy_listing_id']; ?>');"><i class="fa fa-unlink"></i></button>
-                <?php } ?>
-                <?php if (in_array('end_item', $listing['actions'])) { ?>
-                  <button data-toggle="tooltip" title="<?php echo $text_delete; ?>" class="btn btn-danger" onclick="endListing('<?php echo $listing['listing']['listing_id']; ?>');" id="btn-end-<?php echo $listing['link']['etsy_listing_id']; ?>"><i class="fa fa-times"></i></button>
-                  <button data-toggle="tooltip" title="<?php echo $text_deactivate; ?>" class="btn btn-danger" onclick="deactivateListing('<?php echo $listing['listing']['listing_id']; ?>');" id="btn-deactivate-<?php echo $listing['listing']['listing_id']; ?>"><i class="fa fa-ban"></i></button>
-                <?php } ?>
-              </td>
-            </tr>
+                   ?></td>
+            <?php } else { ?>
+            <td class="text-center"><i class="fa fa-minus"></i></td>
+            <td class="text-center"><i class="fa fa-times" style="color: red;"></i></td>
+            <td class="text-center"><?php echo $text_status_nolink; ?></td>
             <?php } ?>
+              </td>
+            <td class="text-right"><?php if (in_array('activate_item', $listing['actions'])) { ?>
+              <button data-toggle="tooltip" title="<?php echo $text_activate; ?>" class="btn btn-primary" onclick="activateListing('<?php echo $listing['listing']['listing_id']; ?>');" id="btn-activate-<?php echo $listing['listing']['listing_id']; ?>"><i class="fa fa-plus"></i></button>
+              <?php } ?>
+              <?php if (in_array('add_link', $listing['actions'])) { ?>
+              <button data-toggle="tooltip" title="<?php echo $text_add_link; ?>" class="btn btn-primary" onclick="showLinkOption('<?php echo $listing['listing']['listing_id']; ?>');"><i class="fa fa-link"></i></button>
+              <?php } ?>
+              <?php if (in_array('delete_link', $listing['actions'])) { ?>
+              <button data-toggle="tooltip" title="<?php echo $text_delete_link; ?>" class="btn btn-danger" id="btn-delete-<?php echo $listing['link']['etsy_listing_id']; ?>" onclick="deleteLink('<?php echo $listing['link']['etsy_listing_id']; ?>');"><i class="fa fa-unlink"></i></button>
+              <?php } ?>
+              <?php if (in_array('end_item', $listing['actions'])) { ?>
+              <button data-toggle="tooltip" title="<?php echo $text_delete; ?>" class="btn btn-danger" onclick="endListing('<?php echo $listing['listing']['listing_id']; ?>');" id="btn-end-<?php echo $listing['link']['etsy_listing_id']; ?>"><i class="fa fa-times"></i></button>
+              <button data-toggle="tooltip" title="<?php echo $text_deactivate; ?>" class="btn btn-danger" onclick="deactivateListing('<?php echo $listing['listing']['listing_id']; ?>');" id="btn-deactivate-<?php echo $listing['listing']['listing_id']; ?>"><i class="fa fa-ban"></i></button>
+              <?php } ?></td>
+          </tr>
+          <?php } ?>
           <?php } else { ?>
           <tr>
             <td class="text-center" colspan="8"><?php echo $text_no_results; ?></td>
           </tr>
           <?php } ?>
-          </tbody>
-        </table>
-      </div>
+        </tbody>
+      </table>
+    </div>
     <div class="row">
       <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
       <div class="col-sm-6 text-right"><?php echo $results; ?></div>
@@ -348,5 +342,5 @@ $('input[name=\'add_link_product\']').autocomplete({
     $('#input-product-id').val(item['value']);
   }
 });
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

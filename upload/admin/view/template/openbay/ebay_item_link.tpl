@@ -1,21 +1,19 @@
 <?php echo $header; ?><?php echo $column; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
-
   <div class="alert alert-info">
     <p><?php echo $text_link_desc1; ?></p>
     <p><?php echo $text_link_desc2; ?></p>
     <p><?php echo $text_link_desc3; ?></p>
     <p><?php echo $text_link_desc4; ?></p>
   </div>
-
   <div class="panel panel-default">
     <div class="panel-heading">
       <h1 class="panel-title"><i class="fa fa-unlink fa-lg"></i> <?php echo $text_unlinked_items; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
     <div class="panel-body">
       <p><?php echo $text_text_unlinked_desc; ?></p>
@@ -51,7 +49,6 @@
           </div>
         </div>
       </div>
-
       <table class="table">
         <thead>
           <tr>
@@ -72,8 +69,7 @@
           </tr>
         </tbody>
       </table>
-      <div class="buttons">
-        <a class="btn btn-primary" id="check-unlinked-items"><?php echo $button_check_unlinked; ?></a>
+      <div class="buttons"> <a class="btn btn-primary" id="check-unlinked-items"><?php echo $button_check_unlinked; ?></a>
         <input type="hidden" name="unlinked_page" id="unlinked-page" value="1" />
       </div>
     </div>
@@ -84,55 +80,53 @@
     </div>
     <div class="panel-body">
       <p><?php echo $text_text_linked_desc; ?></p>
-        <table class="table">
-          <thead>
-            <tr>
-              <th class="text-left"><?php echo $column_product; ?></th>
-              <th class="text-center"><?php echo $column_item_id; ?></th>
-              <th class="text-center"><?php echo $column_allocated; ?></th>
-              <th class="text-center"><?php echo $column_stock_available; ?></th>
-              <th class="text-center"><?php echo $column_stock_reserve; ?></th>
-              <th class="text-center"><?php echo $column_ebay_stock; ?></th>
-              <th class="text-center"><?php echo $column_variants; ?></th>
-              <th class="text-center"><?php echo $column_status; ?></th>
-              <th class="text-center"><?php echo $column_action; ?></th>
-            </tr>
-          </thead>
+      <table class="table">
+        <thead>
           <tr>
-            <td class="text-left" colspan="8" id="checking-linked-items">
-              <a class="btn btn-primary" id="load-usage"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_text_loading_items; ?></a>
-            </td>
+            <th class="text-left"><?php echo $column_product; ?></th>
+            <th class="text-center"><?php echo $column_item_id; ?></th>
+            <th class="text-center"><?php echo $column_allocated; ?></th>
+            <th class="text-center"><?php echo $column_stock_available; ?></th>
+            <th class="text-center"><?php echo $column_stock_reserve; ?></th>
+            <th class="text-center"><?php echo $column_ebay_stock; ?></th>
+            <th class="text-center"><?php echo $column_variants; ?></th>
+            <th class="text-center"><?php echo $column_status; ?></th>
+            <th class="text-center"><?php echo $column_action; ?></th>
           </tr>
-          <tbody style="display:none;" id="show-linked-items">
-            <?php foreach ($linked_items as $id => $item) { ?>
-              <input type="hidden" name="ebay_qty_<?php echo $id; ?>" value="" id="ebay-qty-<?php echo $id; ?>" />
-              <input type="hidden" name="store_qty_<?php echo $id; ?>" value="<?php echo $item['qty']; ?>" id="store-qty-<?php echo $id; ?>" />
-              <input type="hidden" name="reserve_qty_<?php echo $id; ?>" value="<?php echo $item['reserve']; ?>" id="reserve-qty-<?php echo $id; ?>" />
-              <input type="hidden" name="item_id[]" id="item-id-<?php echo $id; ?>" value="<?php echo $id; ?>" class="item-id"  />
-              <input type="hidden" name="product_id[]" id="product-id-<?php echo $id; ?>" value="<?php echo $item['product_id']; ?>" />
-              <input type="hidden" name="options" id="options-<?php echo $id; ?>" value="<?php echo (int)$item['options']; ?>" />
-
-              <tr id="row-<?php echo $id; ?>">
-                <td class="text-left"><a href="<?php echo $item['link_edit']; ?>" target="_BLANK"><?php echo $item['name']; ?></a></td>
-                <td class="text-center"><a href="<?php echo $item['link_ebay']; ?>" target="_BLANK"><?php echo $id; ?></a></td>
-                <?php if ($item['options'] == 0) { ?>
-                  <td class="text-center"><?php echo $item['allocated']; ?></td>
-                  <td class="text-center"><?php echo $item['qty']; ?></td>
-                  <td class="text-center"><?php echo $item['reserve']; ?></td>
-                  <td id="text-qty-<?php echo $id; ?>" class="text-center"></td>
-                  <td class="text-center"><i class="fa fa-times-circle text-danger"></i></td>
-                <?php } else { ?>
-                  <td class="text-center">-</td>
-                  <td class="text-center"><?php foreach ($item['options'] as $option) { echo $option['stock'] .' x ' . $option['combi'] . '<br />'; } ?></td>
-                  <td id="text-qty-<?php echo $id; ?>" class="text-center"></td>
-                  <td class="text-center" align="center"><i class="fa fa-check-circle text-success"></i></td>
-                <?php } ?>
-                <td class="text-center" id="text-status-<?php echo $id; ?>"></td>
-                <td class="text-center" id="text-buttons-<?php echo $id; ?>"></td>
-              </tr>
-            <?php } ?>
+        </thead>
+        <tr>
+          <td class="text-left" colspan="8" id="checking-linked-items"><a class="btn btn-primary" id="load-usage"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_text_loading_items; ?></a></td>
+        </tr>
+        <tbody style="display:none;" id="show-linked-items">
+          <?php foreach ($linked_items as $id => $item) { ?>
+        <input type="hidden" name="ebay_qty_<?php echo $id; ?>" value="" id="ebay-qty-<?php echo $id; ?>" />
+        <input type="hidden" name="store_qty_<?php echo $id; ?>" value="<?php echo $item['qty']; ?>" id="store-qty-<?php echo $id; ?>" />
+        <input type="hidden" name="reserve_qty_<?php echo $id; ?>" value="<?php echo $item['reserve']; ?>" id="reserve-qty-<?php echo $id; ?>" />
+        <input type="hidden" name="item_id[]" id="item-id-<?php echo $id; ?>" value="<?php echo $id; ?>" class="item-id"  />
+        <input type="hidden" name="product_id[]" id="product-id-<?php echo $id; ?>" value="<?php echo $item['product_id']; ?>" />
+        <input type="hidden" name="options" id="options-<?php echo $id; ?>" value="<?php echo (int)$item['options']; ?>" />
+        <tr id="row-<?php echo $id; ?>">
+          <td class="text-left"><a href="<?php echo $item['link_edit']; ?>" target="_BLANK"><?php echo $item['name']; ?></a></td>
+          <td class="text-center"><a href="<?php echo $item['link_ebay']; ?>" target="_BLANK"><?php echo $id; ?></a></td>
+          <?php if ($item['options'] == 0) { ?>
+          <td class="text-center"><?php echo $item['allocated']; ?></td>
+          <td class="text-center"><?php echo $item['qty']; ?></td>
+          <td class="text-center"><?php echo $item['reserve']; ?></td>
+          <td id="text-qty-<?php echo $id; ?>" class="text-center"></td>
+          <td class="text-center"><i class="fa fa-times-circle text-danger"></i></td>
+          <?php } else { ?>
+          <td class="text-center">-</td>
+          <td class="text-center"><?php foreach ($item['options'] as $option) { echo $option['stock'] .' x ' . $option['combi'] . '<br />'; } ?></td>
+          <td id="text-qty-<?php echo $id; ?>" class="text-center"></td>
+          <td class="text-center" align="center"><i class="fa fa-check-circle text-success"></i></td>
+          <?php } ?>
+          <td class="text-center" id="text-status-<?php echo $id; ?>"></td>
+          <td class="text-center" id="text-buttons-<?php echo $id; ?>"></td>
+        </tr>
+        <?php } ?>
           </tbody>
-        </table>
+        
+      </table>
       <div class="pagination"><?php echo $pagination; ?></div>
     </div>
   </div>
@@ -431,5 +425,5 @@
   $(document).ready(function() {
       checkLinkedItems();
   });
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

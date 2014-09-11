@@ -1,16 +1,16 @@
 <?php echo $header; ?><?php echo $column; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
         <button type="submit" form="form-affiliate" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
   </div>
   <div class="container-fluid">
@@ -362,7 +362,7 @@ $('select[name=\'country_id\']').on('change', function() {
 });
 
 $('select[name=\'country_id\']').trigger('change');
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('input[name=\'payment\']').on('change', function() {
 	$('.payment').hide();
@@ -371,7 +371,7 @@ $('input[name=\'payment\']').on('change', function() {
 });
 
 $('input[name=\'payment\']:checked').trigger('change');
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('#transaction').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
@@ -403,5 +403,5 @@ $('#button-transaction').on('click', function() {
 		}
 	});
 });
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

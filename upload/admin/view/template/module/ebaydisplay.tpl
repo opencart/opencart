@@ -1,10 +1,5 @@
 <?php echo $header; ?><?php echo $column; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
   <?php if ($error_warning) { ?>
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -16,6 +11,11 @@
         <button type="submit" form="form-featured" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn"><i class="fa fa-check-circle"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a></div>
       <h1 class="panel-title"><i class="fa fa-puzzle-piece fa-lg"></i> <?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-featured" class="form-horizontal">
@@ -73,85 +73,78 @@
         </div>
         <table id="module" class="table table-striped table-bordered table-hover">
           <thead>
-          <tr>
-            <th class="text-left"><?php echo $entry_limit; ?></th>
-            <th class="text-left"><?php echo $entry_image; ?></th>
-            <th class="text-left"><?php echo $entry_layout; ?></th>
-            <th class="text-left"><?php echo $entry_position; ?></th>
-            <th class="text-left"><?php echo $entry_status; ?></th>
-            <th class="text-right"><?php echo $entry_sort_order; ?></th>
-            <th></td>
-          </tr>
+            <tr>
+              <th class="text-left"><?php echo $entry_limit; ?></th>
+              <th class="text-left"><?php echo $entry_image; ?></th>
+              <th class="text-left"><?php echo $entry_layout; ?></th>
+              <th class="text-left"><?php echo $entry_position; ?></th>
+              <th class="text-left"><?php echo $entry_status; ?></th>
+              <th class="text-right"><?php echo $entry_sort_order; ?></th>
+              <th></td>
+            </tr>
           </thead>
-          <?php $module_row = 0; ?><?php foreach ($modules as $module) { ?>
+          <?php $module_row = 0; ?>
+          <?php foreach ($modules as $module) { ?>
           <tbody id="module-row<?php echo $module_row; ?>">
-          <tr>
-            <td class="text-left">
-              <input type="text" name="ebaydisplay_module[<?php echo $module_row; ?>][limit]" value="<?php echo $module['limit']; ?>" size="1" class="form-control" />
-            </td>
-            <td class="text-left">
-              <input type="text" name="ebaydisplay_module[<?php echo $module_row; ?>][image_width]" value="<?php echo $module['image_width']; ?>" size="3" class="form-control" />
-              <input type="text" name="ebaydisplay_module[<?php echo $module_row; ?>][image_height]" value="<?php echo $module['image_height']; ?>" size="3" class="form-control"/><?php if (isset($error_image[$module_row])) { ?>
-              <span class="error"><?php echo $error_image[$module_row]; ?></span><?php } ?></td>
-            <td class="text-left">
-              <select name="ebaydisplay_module[<?php echo $module_row; ?>][layout_id]" class="form-control">
-              <?php foreach ($layouts as $layout) { ?>
-                <?php if ($layout['layout_id'] == $module['layout_id']) { ?>
-                <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
-                <?php } ?>
-              <?php } ?>
-              </select>
-            </td>
-            <td class="text-left">
-              <select name="ebaydisplay_module[<?php echo $module_row; ?>][position]" class="form-control">
-                <?php if ($module['position'] == 'content_top') { ?>
-                <option value="content_top" selected="selected"><?php echo $text_content_top; ?></option>
-                <?php } else { ?>
-                <option value="content_top"><?php echo $text_content_top; ?></option>
-                <?php } ?><?php if ($module['position'] == 'content_bottom') { ?>
-                <option value="content_bottom" selected="selected"><?php echo $text_content_bottom; ?></option>
-                <?php } else { ?>
-                <option value="content_bottom"><?php echo $text_content_bottom; ?></option>
-                <?php } ?><?php if ($module['position'] == 'column_left') { ?>
-                <option value="column_left" selected="selected"><?php echo $text_column_left; ?></option>
-                <?php } else { ?>
-                <option value="column_left"><?php echo $text_column_left; ?></option>
-                <?php } ?><?php if ($module['position'] == 'column_right') { ?>
-                <option value="column_right" selected="selected"><?php echo $text_column_right; ?></option>
-                <?php } else { ?>
-                <option value="column_right"><?php echo $text_column_right; ?></option>
-                <?php } ?>
-              </select>
-            </td>
-            <td class="text-left">
-              <select name="ebaydisplay_module[<?php echo $module_row; ?>][status]" class="form-control">
-                <?php if ($module['status']) { ?>
-                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                <option value="0"><?php echo $text_disabled; ?></option>
-                <?php } else { ?>
-                <option value="1"><?php echo $text_enabled; ?></option>
-                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                <?php } ?>
-              </select>
-            </td>
-            <td class="text-right">
-              <input type="text" name="ebaydisplay_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" size="3" class="form-control" />
-            </td>
-            <td class="text-left">
-              <button type="button" onclick="$('#module-row<?php echo $module_row; ?>').remove();"class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button>
-            </td>
-          </tr>
+            <tr>
+              <td class="text-left"><input type="text" name="ebaydisplay_module[<?php echo $module_row; ?>][limit]" value="<?php echo $module['limit']; ?>" size="1" class="form-control" /></td>
+              <td class="text-left"><input type="text" name="ebaydisplay_module[<?php echo $module_row; ?>][image_width]" value="<?php echo $module['image_width']; ?>" size="3" class="form-control" />
+                <input type="text" name="ebaydisplay_module[<?php echo $module_row; ?>][image_height]" value="<?php echo $module['image_height']; ?>" size="3" class="form-control"/>
+                <?php if (isset($error_image[$module_row])) { ?>
+                <span class="error"><?php echo $error_image[$module_row]; ?></span>
+                <?php } ?></td>
+              <td class="text-left"><select name="ebaydisplay_module[<?php echo $module_row; ?>][layout_id]" class="form-control">
+                  <?php foreach ($layouts as $layout) { ?>
+                  <?php if ($layout['layout_id'] == $module['layout_id']) { ?>
+                  <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select></td>
+              <td class="text-left"><select name="ebaydisplay_module[<?php echo $module_row; ?>][position]" class="form-control">
+                  <?php if ($module['position'] == 'content_top') { ?>
+                  <option value="content_top" selected="selected"><?php echo $text_content_top; ?></option>
+                  <?php } else { ?>
+                  <option value="content_top"><?php echo $text_content_top; ?></option>
+                  <?php } ?>
+                  <?php if ($module['position'] == 'content_bottom') { ?>
+                  <option value="content_bottom" selected="selected"><?php echo $text_content_bottom; ?></option>
+                  <?php } else { ?>
+                  <option value="content_bottom"><?php echo $text_content_bottom; ?></option>
+                  <?php } ?>
+                  <?php if ($module['position'] == 'column_left') { ?>
+                  <option value="column_left" selected="selected"><?php echo $text_column_left; ?></option>
+                  <?php } else { ?>
+                  <option value="column_left"><?php echo $text_column_left; ?></option>
+                  <?php } ?>
+                  <?php if ($module['position'] == 'column_right') { ?>
+                  <option value="column_right" selected="selected"><?php echo $text_column_right; ?></option>
+                  <?php } else { ?>
+                  <option value="column_right"><?php echo $text_column_right; ?></option>
+                  <?php } ?>
+                </select></td>
+              <td class="text-left"><select name="ebaydisplay_module[<?php echo $module_row; ?>][status]" class="form-control">
+                  <?php if ($module['status']) { ?>
+                  <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                  <option value="0"><?php echo $text_disabled; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_enabled; ?></option>
+                  <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                  <?php } ?>
+                </select></td>
+              <td class="text-right"><input type="text" name="ebaydisplay_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" size="3" class="form-control" /></td>
+              <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $module_row; ?>').remove();"class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>
+            </tr>
           </tbody>
-            <?php $module_row++; ?>
-            <?php } ?>
-            <tfoot>
+          <?php $module_row++; ?>
+          <?php } ?>
+          <tfoot>
             <tr>
               <td colspan="6"></td>
               <td class="text-left"><button type="button" onclick="addModule();"class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_module_add; ?></button></td>
             </tr>
-            </tfoot>
+          </tfoot>
         </table>
       </form>
     </div>
@@ -189,5 +182,5 @@
 
         module_row++;
     }
-    //--></script>
+    //--></script> 
 <?php echo $footer; ?>

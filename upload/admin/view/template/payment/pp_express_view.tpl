@@ -1,14 +1,14 @@
 <?php echo $header; ?><?php echo $column; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right"> <a href="<?php echo $cancel; ?>" class="btn btn-primary"><i class="fa fa-reply"></i> <?php echo $button_cancel; ?></a> </div>
       <h1><?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
   </div>
   <div class="container-fluid">
@@ -18,10 +18,10 @@
         <td><?php echo $text_product_lines; ?></td>
         <td><table class="table table-striped table-bordered">
             <?php $i = 0;  foreach($lines as  $k => $v) { ?>
-              <?php if ($i == 0) { ?>
-                <thead>
-                  <tr>
-                    <?php
+            <?php if ($i == 0) { ?>
+            <thead>
+              <tr>
+                <?php
                     foreach($v as $k => $row) {
                       if ($k == 'L_EBAYITEMTXNID') { echo '<td class="left">'.$text_ebay_txn_id.'</td>'; }
                       if ($k == 'L_NAME') { echo '<td class="left">'.$text_name.'</td>'; }
@@ -38,11 +38,11 @@
                       if ($k == 'L_CURRENCYCODE') { echo '<td class="left">'.$text_currency_code.'</td>'; }
                     } $i++;
                     ?>
-                  </tr>
-                </thead>
-              <?php } ?>
-              <tr>
-                <?php
+              </tr>
+            </thead>
+            <?php } ?>
+            <tr>
+              <?php
                 foreach($v as $k => $row) {
                   if ($k == 'L_EBAYITEMTXNID') { echo '<td class="left">'.$row.'</td>'; }
                   if ($k == 'L_NAME') { echo '<td class="left">'.$row.'</td>'; }
@@ -60,7 +60,7 @@
                   if ($k == 'L_CURRENCYCODE') { echo '<td class="left">'.$row.'</td>'; }
                 } $i++;
                 ?>
-              </tr>
+            </tr>
             <?php } ?>
           </table></td>
       </tr>

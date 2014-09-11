@@ -20,7 +20,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 .page-header h1 {
 	font-family: 'Open Sans', sans-serif;
-	font-weight: 100;
+	font-weight: 400;
 	font-size: 30px;
 	color: #848484;
 	display: inline-block;
@@ -200,7 +200,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	position: relative;
 }
 #menu li a {
-	color: #C4C4C4;
 	text-decoration: none;
 	display: block;
 	padding: 10px;
@@ -210,42 +209,53 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #menu li a i {
 	font-size: 16px;
 }
+#menu > li > a {
+	color: #C4C4C4;
+	font-size: 14px;	
+	padding-left: 13px;
+	border-bottom: 1px solid #585858;
 
+}
+#menu > li > a:hover {
+	background-color: #444444;
+}
+#menu > li > a > span {
+	display: none;
+	margin-left: 8px;
+}
+#menu li li a {
+	color: #9d9d9d;
+}
+#menu li li a:hover {
+	color: #FFFFFF;
+	background-color: #373737;
+}
 #menu li li a:before {
 	content: "\f101";
 	font-size: 14px;
 	font-family: FontAwesome;
 	margin-left: 10px;
 	margin-right: 10px;
+	transition: margin ease 0.5s;	
 }
-#menu > li > a {
-	font-size: 14px;	
-	padding-left: 13px;
-	border-bottom: 1px solid #585858;	
-}
-#menu > li > a:hover {
-	background-color: #444444;
-}
-#menu li li a:hover {
-	color: #FFFFFF;
-}
-#menu li li a i {
-	margin-right: 10px;	
+#menu li li a:hover:before {
+	margin-right: 20px;
 }
 #menu > li.active > a {
 	color: #DDDDDD;
 	background: #373737;
 }
-#menu li li > a:hover {
-	background-color: #373737;
+#menu li.active li a {
+	color: #C4C4C4;
 }
 #menu li li.active > a:last-child {
 	color: #FFFFFF;
 }
-#menu > li > a > span {
-	display: none;
-	margin-left: 8px;
+#menu li li.active a:last-child:before {
+	margin-left: 20px;
+	margin-right: 10px;
 }
+
 #menu > li > ul {
 	position: absolute;
 	left: 50px;
@@ -273,20 +283,20 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	margin-right: 8px;
 }
 
-/*	
-#menu li li ul a {
-	padding-left: 30px;
+
+#menu li ul a {
+	padding-left: 20px;
 }
-#menu li li li ul a {
+#menu li li ul a {
 	padding-left: 40px;
 }
+#menu li li li ul a {
+	padding-left: 60px;
+}
 #menu li li li li ul a {
-	padding-left: 75px;
+	padding-left: 80px;
 }
-#menu li li li li li ul a {
-	padding-left: 100px;
-}
-*/
+
 /* Menu Active */
 /* Desktop */
 @media (min-width: 768px) {

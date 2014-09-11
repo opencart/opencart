@@ -24,12 +24,14 @@ class ControllerDashboardChart extends Controller {
 		$this->load->model('report/sale');
 		$this->load->model('report/customer');
 
-		$json['orders'] = array();
-		$json['customers'] = array();
+		$json['order'] = array();
+		$json['customer'] = array();
 		$json['xaxis'] = array();
 
 		$json['order']['label'] = $this->language->get('text_order');
 		$json['customer']['label'] = $this->language->get('text_customer');
+		$json['order']['data'] = array();
+		$json['customer']['data'] = array();
 
 		if (isset($this->request->get['range'])) {
 			$range = $this->request->get['range'];
@@ -62,7 +64,7 @@ class ControllerDashboardChart extends Controller {
 				foreach ($results as $key => $value) {
 					$json['order']['data'][] = array($key, $value['total']);
 				}
-
+				
 				$results = $this->model_report_customer->getTotalCustomersByWeek();
 
 				foreach ($results as $key => $value) {

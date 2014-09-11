@@ -5,8 +5,9 @@ html, body {
 	padding: 0;
 	font-family: 'Open Sans', sans-serif;
 	font-size: 12px;
-	color: #555555;
+	color: #666666;
 	font-weight: 500;
+	line-height: 18px;
 	text-rendering: optimizeLegibility;
 }
 h1, h2, h3, h4, h5, h6, p {
@@ -515,17 +516,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .tile:hover {
 	opacity: 0.95;
 }
-.tile i {
-	font-size: 50px;
-	color: #66BBE9;
-	transition: all 1s;
-}
-.tile:hover i {
-	color: #FFFFFF;
-}
-.tile h2 {
-	font-size: 42px;
-}
+
 .tile a {
 	color: #FFFFFF;
 }
@@ -533,11 +524,31 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	padding: 5px 8px;
 	text-transform: uppercase;
 	background-color: #1E91CF;
+	color: #FFF;
+}
+.tile .tile-heading .pull-right {
+	transition: all 1s;	
+	opacity: 0.7;
+}
+.tile:hover .tile-heading .pull-right {
+	opacity: 1;
 }
 .tile-body {
 	padding: 15px;
 	color: #FFFFFF;
 	line-height: 48px;	
+}
+.tile .tile-body i {
+	font-size: 50px;
+	opacity: 0.3;
+	transition: all 1s;
+}
+.tile:hover .tile-body i {
+	color: #FFFFFF;
+	opacity: 1;
+}
+.tile .tile-body h2 {
+	font-size: 42px;
 }
 .tile-footer {
 	padding: 5px 8px;

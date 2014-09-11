@@ -7,29 +7,11 @@ class ControllerCommonDashboard extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
-		$data['text_order_total'] = $this->language->get('text_order_total');
-		$data['text_sale_total'] = $this->language->get('text_sale_total');
-		$data['text_customer_total'] = $this->language->get('text_customer_total');
-		$data['text_online_total'] = $this->language->get('text_online_total');
 		$data['text_sale'] = $this->language->get('text_sale');
 		$data['text_map'] = $this->language->get('text_map');
 		$data['text_activity'] = $this->language->get('text_activity');
 		$data['text_recent'] = $this->language->get('text_recent');
-		$data['text_day'] = $this->language->get('text_day');
-		$data['text_week'] = $this->language->get('text_week');
-		$data['text_month'] = $this->language->get('text_month');
-		$data['text_year'] = $this->language->get('text_year');
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_view'] = $this->language->get('text_view');
 
-		$data['column_order_id'] = $this->language->get('column_order_id');
-		$data['column_customer'] = $this->language->get('column_customer');
-		$data['column_status'] = $this->language->get('column_status');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_total'] = $this->language->get('column_total');
-		$data['column_action'] = $this->language->get('column_action');
-
-		$data['button_view'] = $this->language->get('button_view');
 		
 		$data['breadcrumbs'] = array();
 
@@ -52,254 +34,18 @@ class ControllerCommonDashboard extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 
-		// Total Orders
-		$this->load->model('sale/order');
-
-		$order_total = $this->model_sale_order->getTotalOrders();
-		
-		if ($order_total > 1000000000000) {
-			$data['order_total'] = round($order_total / 1000000000000, 1) . 'T';
-		} elseif ($order_total > 1000000000) {
-			$data['order_total'] = round($order_total / 1000000000, 1) . 'B';
-		} elseif ($order_total > 1000000) {
-			$data['order_total'] = round($order_total / 1000000, 1) . 'M';
-		} elseif ($order_total > 1000) {
-			$data['order_total'] = round($order_total / 1000, 1) . 'K';						
-		} else {
-			$data['order_total'] = $order_total;
-		}
-		
-		$data['order'] = $this->url->link('sales/order', 'token=' . $this->session->data['token'], 'SSL');
-
-		$this->load->model('report/dashboard');
-		
-		// Total Sales
-		$sale_total = $this->model_report_dashboard->getTotalSales();
-		
-		if ($sale_total > 1000000000000) {
-			$data['sale_total'] = $this->currency->format(round($sale_total / 1000000000000, 1), $this->config->get('config_currency')) . 'T';
-		} elseif ($sale_total > 1000000000) {
-			$data['sale_total'] = $this->currency->format(round($sale_total / 1000000000, 1), $this->config->get('config_currency')) . 'B';
-		} elseif ($sale_total > 1000000) {
-			$data['sale_total'] = $this->currency->format(round($sale_total / 1000000, 1), $this->config->get('config_currency')) . 'M';
-		} elseif ($sale_total > 1000) {
-			$data['sale_total'] = $this->currency->format(round($sale_total / 1000, 1), $this->config->get('config_currency')) . 'K';						
-		} else {
-			$data['sale_total'] = $this->currency->format($sale_total, $this->config->get('config_currency'));
-		}	
-
-		$data['sale'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL');
-
-		// Customers
-		$this->load->model('sale/customer');
-
-		$customer_total = $this->model_sale_customer->getTotalCustomers();
-		
-		if ($customer_total > 1000000000000) {
-			$data['customer_total'] = round($customer_total / 1000000000000, 1) . 'T';
-		} elseif ($customer_total > 1000000000) {
-			$data['customer_total'] = round($customer_total / 1000000000, 1) . 'B';
-		} elseif ($customer_total > 1000000) {
-			$data['customer_total'] = round($customer_total / 1000000, 1) . 'M';
-		} elseif ($customer_total > 1000) {
-			$data['customer_total'] = round($customer_total / 1000, 1) . 'K';						
-		} else {
-			$data['customer_total'] = $customer_total;
-		}		
-		
-		$data['customer'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'], 'SSL');
-
-		// Customers Online
-		$online_total = $this->model_report_dashboard->getTotalCustomersOnline();
-		
-		if ($online_total > 1000000000000) {
-			$data['online_total'] = round($online_total / 1000000000000, 1) . 'T';
-		} elseif ($online_total > 1000000000) {
-			$data['online_total'] = round($online_total / 1000000000, 1) . 'B';
-		} elseif ($online_total > 1000000) {
-			$data['online_total'] = round($online_total / 1000000, 1) . 'M';
-		} elseif ($online_total > 1000) {
-			$data['online_total'] = round($online_total / 1000, 1) . 'K';						
-		} else {
-			$data['online_total'] = $online_total;
-		}			
-		
-		$data['online'] = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'], 'SSL');
-
-		$data['activities'] = array();
-
-		$results = $this->model_report_dashboard->getActivities();
-
-		foreach ($results as $result) {
-			$comment = vsprintf($this->language->get('text_' . $result['key']), unserialize($result['data']));
-
-			$find = array(
-				'customer_id=',
-				'order_id=',
-				'affiliate_id='
-			);
-
-			$replace = array(
-				$this->url->link('sale/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=', 'SSL'),
-				$this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=', 'SSL'),
-				$this->url->link('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=', 'SSL')
-			);
-
-			$data['activities'][] = array(
-				'comment'    => str_replace($find, $replace, $comment),
-				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
-			);
-		}
-
-		// Last 5 Orders
-		$data['orders'] = array();
-
-		$filter_data = array(
-			'sort'  => 'o.date_added',
-			'order' => 'DESC',
-			'start' => 0,
-			'limit' => 5
-		);
-
-		$results = $this->model_sale_order->getOrders($filter_data);
-
-		foreach ($results as $result) {
-			$data['orders'][] = array(
-				'order_id'   => $result['order_id'],
-				'customer'   => $result['customer'],
-				'status'     => $result['status'],
-				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
-				'view'       => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'], 'SSL'),
-			);
-		}
-
 		$data['header'] = $this->load->controller('common/header');
 		$data['column'] = $this->load->controller('common/column');
+		$data['order'] = $this->load->controller('dashboard/order');
+		$data['sale'] = $this->load->controller('dashboard/sale');
+		$data['customer'] = $this->load->controller('dashboard/customer');
+		$data['online'] = $this->load->controller('dashboard/online');
+		$data['map'] = $this->load->controller('dashboard/map');
+		$data['chart'] = $this->load->controller('dashboard/chart');
+		$data['activity'] = $this->load->controller('dashboard/activity');
+		$data['recent'] = $this->load->controller('dashboard/recent');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('common/dashboard.tpl', $data));
-	}
-	
-	public function map() {
-		$this->load->language('common/dashboard');
-		
-		$json = array();
-		
-		$this->load->model('report/dashboard');
-		
-		$results = $this->model_report_dashboard->getTotalOrdersByCountry();
-		
-		foreach ($results as $result) {
-			$json[strtolower($result['iso_code_2'])] = array(
-				'total'  => $result['total'],
-				'amount' => $this->currency->format($result['amount'], $this->config->get('currency_code'))
-			);
-		}
-	
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-	
-	public function sale() {
-		$this->load->language('common/dashboard');
-
-		$json = array();
-
-		$this->load->model('report/dashboard');
-
-		$json['orders'] = array();
-		$json['customers'] = array();
-		$json['xaxis'] = array();
-
-		$json['order']['label'] = $this->language->get('text_order');
-		$json['customer']['label'] = $this->language->get('text_customer');
-
-		if (isset($this->request->get['range'])) {
-			$range = $this->request->get['range'];
-		} else {
-			$range = 'day';
-		}
-
-		switch ($range) {
-			default:
-			case 'day':
-				$results = $this->model_report_dashboard->getTotalOrdersByDay();
-
-				foreach ($results as $key => $value) {
-					$json['order']['data'][] = array($key, $value['total']);
-				}
-
-				$results = $this->model_report_dashboard->getTotalCustomersByDay();
-
-				foreach ($results as $key => $value) {
-					$json['customer']['data'][] = array($key, $value['total']);
-				}
-
-				for ($i = 0; $i < 24; $i++) {
-					$json['xaxis'][] = array($i, $i);
-				}
-				break;
-			case 'week':
-				$results = $this->model_report_dashboard->getTotalOrdersByWeek();
-
-				foreach ($results as $key => $value) {
-					$json['order']['data'][] = array($key, $value['total']);
-				}
-
-				$results = $this->model_report_dashboard->getTotalCustomersByWeek();
-
-				foreach ($results as $key => $value) {
-					$json['customer']['data'][] = array($key, $value['total']);
-				}
-
-				$date_start = strtotime('-' . date('w') . ' days');
-
-				for ($i = 0; $i < 7; $i++) {
-					$date = date('Y-m-d', $date_start + ($i * 86400));
-
-					$json['xaxis'][] = array(date('w', strtotime($date)), date('D', strtotime($date)));
-				}
-				break;
-			case 'month':
-				$results = $this->model_report_dashboard->getTotalOrdersByMonth();
-
-				foreach ($results as $key => $value) {
-					$json['order']['data'][] = array($key, $value['total']);
-				}
-
-				$results = $this->model_report_dashboard->getTotalCustomersByMonth();
-
-				foreach ($results as $key => $value) {
-					$json['customer']['data'][] = array($key, $value['total']);
-				}
-
-				for ($i = 1; $i <= date('t'); $i++) {
-					$date = date('Y') . '-' . date('m') . '-' . $i;
-
-					$json['xaxis'][] = array(date('j', strtotime($date)), date('d', strtotime($date)));
-				}
-				break;
-			case 'year':
-				$results = $this->model_report_dashboard->getTotalOrdersByYear();
-
-				foreach ($results as $key => $value) {
-					$json['order']['data'][] = array($key, $value['total']);
-				}
-
-				$results = $this->model_report_dashboard->getTotalCustomersByYear();
-
-				foreach ($results as $key => $value) {
-					$json['customer']['data'][] = array($key, $value['total']);
-				}
-
-				for ($i = 1; $i <= 12; $i++) {
-					$json['xaxis'][] = array($i, date('M', mktime(0, 0, 0, $i)));
-				}
-				break;
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 }

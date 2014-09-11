@@ -9,7 +9,9 @@ class ControllerDashboardActivity extends Controller {
 
 		$data['activities'] = array();
 
-		$results = $this->model_report_dashboard->getActivities();
+		$this->load->model('report/activity');
+
+		$results = $this->model_report_activity->getActivities();
 
 		foreach ($results as $result) {
 			$comment = vsprintf($this->language->get('text_' . $result['key']), unserialize($result['data']));

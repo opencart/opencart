@@ -10,10 +10,10 @@ class ControllerDashboardOnline extends Controller {
 		$data['token'] = $this->session->data['token'];
 
 		// Total Orders
-		$this->load->model('report/dashboard');
+		$this->load->model('report/customer');
 		
 		// Customers Online
-		$online_total = $this->model_report_dashboard->getTotalCustomersOnline();
+		$online_total = $this->model_report_customer->getTotalCustomersOnline();
 		
 		if ($online_total > 1000000000000) {
 			$data['total'] = round($online_total / 1000000000000, 1) . 'T';

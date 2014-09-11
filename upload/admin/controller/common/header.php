@@ -72,9 +72,9 @@ class ControllerCommonHeader extends Controller {
 			$data['return'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'], 'SSL');
 
 			// Customers
-			$this->load->model('report/dashboard');
+			$this->load->model('report/customer');
 
-			$data['online_total'] = $this->model_report_dashboard->getTotalCustomersOnline();
+			$data['online_total'] = $this->model_report_customer->getTotalCustomersOnline();
 
 			$data['online'] = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'], 'SSL');
 

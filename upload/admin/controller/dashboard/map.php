@@ -16,9 +16,9 @@ class ControllerDashboardMap extends Controller {
 	public function map() {
 		$json = array();
 		
-		$this->load->model('report/dashboard');
+		$this->load->model('report/sale');
 		
-		$results = $this->model_report_dashboard->getTotalOrdersByCountry();
+		$results = $this->model_report_sale->getTotalOrdersByCountry();
 		
 		foreach ($results as $result) {
 			$json[strtolower($result['iso_code_2'])] = array(

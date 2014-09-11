@@ -10,7 +10,7 @@
         <a href="<?php echo $url_delete_links; ?>" data-toggle="tooltip" title="<?php echo $button_remove_links; ?>" class="btn btn-danger"><i class="fa fa-times-circle"></i></a>
         <?php } ?>
         <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
-      <h1><i class="fa fa-pencil"></i> <?php echo $text_edit_heading; ?></h1>
+      <h1><?php echo $text_edit_heading; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
         <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>

@@ -10,7 +10,7 @@
     <div class="pull-right">
       <a href="<?php echo $url_return; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
     </div>
-    <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
+    <h1><?php echo $heading_title; ?></h1>
   </div>
 </div>
 <div class="container-fluid">

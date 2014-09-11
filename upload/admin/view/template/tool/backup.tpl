@@ -6,7 +6,7 @@
         <button type="submit" form="form-backup" data-toggle="tooltip" title="<?php echo $button_backup; ?>" class="btn btn-default"><i class="fa fa-download"></i></button>
         <button type="submit" form="form-restore" data-toggle="tooltip" title="<?php echo $button_restore; ?>" class="btn btn-default"><i class="fa fa-upload"></i></button>
       </div>
-      <h1><i class="fa fa-exchange"></i> <?php echo $heading_title; ?></h1>
+      <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
         <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>

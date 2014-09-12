@@ -148,11 +148,10 @@
               </div>
             </div>
           </div>
-          <a onclick="filter();" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_filter; ?>"><i class="fa fa-filter"></i></a>
+          <a onclick="filter();" class="btn btn-primary pull-right" data-toggle="tooltip" title="<?php echo $button_filter; ?>"><i class="fa fa-filter"></i></a>
         </div>
       </div>
     </div>
-
     <form method="post" id="form">
         <table class="table">
           <thead>
@@ -228,10 +227,18 @@
                   <td class="text-left"><?php echo $product['status']; ?></td>
                   <td>
                     <?php foreach ($product['markets'] as $market) { ?>
-                      <?php if ($market['href'] != '') { ?>
-                        <a href="<?php echo $market['href']; ?>" data-toggle="tooltip" title="<?php echo $market['text']; ?>" class="btn btn-primary btn-block btn-sm"><?php echo $market['name']; ?></a>
+                      <?php if ($market['status'] == 1) { ?>
+                        <a href="<?php echo $market['href']; ?>" data-toggle="tooltip" title="<?php echo $market['text']; ?>" class="btn btn-block btn-sm btn-success"><?php echo $market['name']; ?></a>
+                      <?php } elseif ($market['status'] == 2) { ?>
+                        <a href="<?php echo $market['href']; ?>" data-toggle="tooltip" title="<?php echo $market['text']; ?>" class="btn btn-block btn-sm btn-danger"><?php echo $market['name']; ?></a>
+                      <?php } elseif ($market['status'] == 3) { ?>
+                        <?php if ($market['href'] != '') { ?>
+                          <a href="<?php echo $market['href']; ?>" data-toggle="tooltip" title="<?php echo $market['text']; ?>" class="btn btn-block btn-sm btn-info"><?php echo $market['name']; ?></a>
+                        <?php } else { ?>
+                          <a disable="disable" data-toggle="tooltip" title="<?php echo $market['text']; ?>" class="btn btn-info btn-block btn-sm"><?php echo $market['name']; ?></a>
+                        <?php } ?>
                       <?php } else { ?>
-                        <a disable="disable" data-toggle="tooltip" title="<?php echo $market['text']; ?>" class="btn btn-warning btn-block btn-sm"><?php echo $market['name']; ?></a>
+                        <a href="<?php echo $market['href']; ?>" data-toggle="tooltip" title="<?php echo $market['text']; ?>" class="btn btn-block btn-sm btn-default"><?php echo $market['name']; ?></a>
                       <?php } ?>
                     <?php } ?>
                   </td>

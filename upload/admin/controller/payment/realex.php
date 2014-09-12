@@ -298,6 +298,16 @@ class ControllerPaymentRealex extends Controller {
 		$this->response->setOutput($this->load->view('payment/realex.tpl', $data));
 	}
 
+	public function install() {
+		$this->load->model('payment/realex');
+		$this->model_payment_realex->install();
+	}
+
+	public function uninstall() {
+		$this->load->model('payment/realex');
+		$this->model_payment_realex->uninstall();
+	}
+
 	public function orderAction() {
 		if ($this->config->get('realex_status')) {
 			$this->load->model('payment/realex');

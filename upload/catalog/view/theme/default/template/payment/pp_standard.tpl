@@ -29,7 +29,6 @@
   <input type="hidden" name="address1" value="<?php echo $address1; ?>" />
   <input type="hidden" name="address2" value="<?php echo $address2; ?>" />
   <input type="hidden" name="city" value="<?php echo $city; ?>" />
-  <input type="hidden" name="state" value="<?php echo $state; ?>" />
   <input type="hidden" name="zip" value="<?php echo $zip; ?>" />
   <input type="hidden" name="country" value="<?php echo $country; ?>" />
   <input type="hidden" name="address_override" value="0" />

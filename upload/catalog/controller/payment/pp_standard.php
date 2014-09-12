@@ -76,7 +76,6 @@ class ControllerPaymentPPStandard extends Controller {
 			$this->data['address1'] = html_entity_decode($order_info['payment_address_1'], ENT_QUOTES, 'UTF-8');	
 			$this->data['address2'] = html_entity_decode($order_info['payment_address_2'], ENT_QUOTES, 'UTF-8');	
 			$this->data['city'] = html_entity_decode($order_info['payment_city'], ENT_QUOTES, 'UTF-8');	
-			$this->data['state'] = $order_info['payment_zone'];
 			$this->data['zip'] = html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');	
 			$this->data['country'] = $order_info['payment_iso_code_2'];
 			$this->data['night_phone_b'] = $order_info['telephone'];

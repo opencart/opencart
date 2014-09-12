@@ -11,7 +11,6 @@ $_['tab_advanced']					= 'Advanced';
 
 // Text
 $_['text_success']					= 'Success: You have modified Realex account details!';
-$_['text_notification_url']			= 'Notification URL';
 $_['text_live']						= 'Live';
 $_['text_demo']						= 'Demo';
 $_['text_card_type']				= 'Card type';
@@ -74,6 +73,7 @@ $_['entry_status_decline_stolen']	= 'Decline - stolen card';
 $_['entry_status_decline_bank']		= 'Decline - bank error';
 $_['entry_status_void']				= 'Voided';
 $_['entry_status_rebate']			= 'Rebated';
+$_['entry_notification_url']		= 'Notification URL';
 
 // Help
 $_['help_total']					= 'The checkout total the order must reach before this payment method becomes active';

@@ -27,7 +27,7 @@ class ControllerPaymentRealexRemote extends Controller {
 		$data['text_card_type'] = $this->language->get('text_card_type');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_use_default'] = $this->language->get('text_use_default');
-		$data['text_notification_url'] = $this->language->get('text_notification_url');
+		$data['entry_notification_url'] = $this->language->get('entry_notification_url');
 		$data['text_merchant_id'] = $this->language->get('text_merchant_id');
 		$data['text_subaccount'] = $this->language->get('text_subaccount');
 		$data['text_secret'] = $this->language->get('text_secret');
@@ -267,11 +267,6 @@ class ControllerPaymentRealexRemote extends Controller {
 	public function install() {
 		$this->load->model('payment/realex_remote');
 		$this->model_payment_realex_remote->install();
-	}
-
-	public function uninstall() {
-		$this->load->model('payment/realex_remote');
-		$this->model_payment_realex_remote->uninstall();
 	}
 
 	public function orderAction() {

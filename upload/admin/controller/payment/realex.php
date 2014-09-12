@@ -68,12 +68,12 @@ class ControllerPaymentRealex extends Controller {
 		$data['entry_status_decline_bank'] = $this->language->get('entry_status_decline_bank');
 		$data['entry_status_void'] = $this->language->get('entry_status_void');
 		$data['entry_status_rebate'] = $this->language->get('entry_status_rebate');
+		$data['entry_notification_url'] = $this->language->get('entry_notification_url');
 
 		$data['help_total'] = $this->language->get('help_total');
 		$data['help_card_select'] = $this->language->get('help_card_select');
 		$data['help_debug'] = $this->language->get('help_debug');
 		$data['help_dcc_settle'] = $this->language->get('help_dcc_settle');
-		$data['notification_url'] = $this->language->get('notification_url');
 		$data['help_notification'] = $this->language->get('help_notification');
 
 		$data['tab_account'] = $this->language->get('tab_account');
@@ -301,11 +301,6 @@ class ControllerPaymentRealex extends Controller {
 	public function install() {
 		$this->load->model('payment/realex');
 		$this->model_payment_realex->install();
-	}
-
-	public function uninstall() {
-		$this->load->model('payment/realex');
-		$this->model_payment_realex->uninstall();
 	}
 
 	public function orderAction() {

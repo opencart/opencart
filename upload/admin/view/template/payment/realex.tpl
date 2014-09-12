@@ -353,7 +353,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-sort-order"><span data-toggle="tooltip" title="<?php echo $help_notification; ?>"><?php echo $text_notification_url; ?></span></label>
+            <label class="col-sm-2 control-label" for="input-sort-order"><span data-toggle="tooltip" title="<?php echo $help_notification; ?>"><?php echo $entry_notification_url; ?></span></label>
             <div class="col-sm-10">
               <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
                 <input type="text" value="<?php echo $notify_url; ?>" class="form-control" />

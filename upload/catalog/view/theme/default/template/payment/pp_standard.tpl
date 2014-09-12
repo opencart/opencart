@@ -32,6 +32,7 @@
   <input type="hidden" name="zip" value="<?php echo $zip; ?>" />
   <input type="hidden" name="country" value="<?php echo $country; ?>" />
   <input type="hidden" name="address_override" value="0" />
+  <input type="hidden" name="night_phone_b" value="<?php echo $night_phone_b; ?>" />
   <input type="hidden" name="email" value="<?php echo $email; ?>" />
   <input type="hidden" name="invoice" value="<?php echo $invoice; ?>" />
   <input type="hidden" name="lc" value="<?php echo $lc; ?>" />

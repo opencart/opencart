@@ -7,7 +7,6 @@ $_['text_amazon'] 					= 'Amazon EU';
 
 // Buttons
 $_['button_new'] 					= 'Create new product';
-$_['button_return'] 				= 'Back to products';
 $_['button_amazon_price'] 			= 'Get Amazon price';
 $_['button_list'] 					= 'List on Amazon';
 $_['button_remove_error'] 			= 'Remove error messages';
@@ -24,8 +23,8 @@ $_['help_sale_price'] 				= "Sale Price must have a start and end date";
 
 //Text
 $_['text_products_sent'] 			= 'Products were sent for processing';
-$_['text_view_on_amazon'] 			= 'View on Amazon';
-$_['text_list'] 					= 'List';
+$_['button_view_on_amazon'] 		= 'View on Amazon';
+$_['text_list'] 					= 'List on Amazon';
 $_['text_new'] 						= 'New';
 $_['text_used_like_new'] 			= 'Used - Like New';
 $_['text_used_very_good'] 			= 'Used - Very Good';

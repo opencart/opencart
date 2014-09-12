@@ -1,14 +1,16 @@
-<?php echo $header; ?><?php echo $column_left; ?>
+<?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"> <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
-      <h1><?php echo $heading_title; ?></h1>
-      <ul class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-        <?php } ?>
-      </ul>
+      <div class="pull-right">
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
+      </div>
+      <h1><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">
@@ -20,7 +22,9 @@
       </div>
       <div class="well">
         <div class="row">
-          <div class="col-sm-12 text-right"> <a class="btn btn-primary" id="button-load"><?php echo $button_load; ?></a> </div>
+          <div class="col-sm-12 text-right">
+            <a class="btn btn-primary" id="button-load"><?php echo $button_load; ?></a>
+          </div>
         </div>
       </div>
       <table class="table">
@@ -38,10 +42,16 @@
         </thead>
         <tbody id="unlinked-items">
           <tr>
-            <td class="text-right"><input type="hidden" id="new-product-id">
-              <input id="new-product" type="text" class="form-control" autocomplete="off"></td>
-            <td><input id="new-amazon-sku" type="text" class="form-control" autocomplete="off"></td>
-            <td class="text-center"><a class="btn btn-primary" id="add-new-button" onclick="addNewLinkAutocomplete()" data-toggle="tooltip" data-original-title="<?php echo $button_add; ?>"><i class="fa fa-plus-circle"></i></a></td>
+            <td class="text-right">
+              <input type="hidden" id="new-product-id">
+              <input id="new-product" type="text" class="form-control" autocomplete="off">
+            </td>
+            <td>
+              <input id="new-amazon-sku" type="text" class="form-control" autocomplete="off">
+            </td>
+            <td class="text-center">
+              <a class="btn btn-primary" id="add-new-button" onclick="addNewLinkAutocomplete()" data-toggle="tooltip" data-original-title="<?php echo $button_insert; ?>"><i class="fa fa-plus-circle"></i></a>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -61,8 +71,7 @@
             <th class="text-center"><?php echo $text_action; ?></th>
           </tr>
         </thead>
-        <tbody id="linked-items">
-        </tbody>
+        <tbody id="linked-items"></tbody>
       </table>
     </form>
   </div>
@@ -143,12 +152,12 @@
                     rows += '<input class="form-control amazon_sku_' + json[i]['product_id'] + '_' + json[i]['var'] + '"  type="text">';
                   rows += '</div>';
                   rows += '<div class="col-sm-4 form-group">';
-                    rows += '<a class="btn btn-primary" onclick="addNewSkuField(' + json[i]['product_id'] + ', \'' + json[i]['var'] + '\')" data-toggle="tooltip" data-original-title="<?php echo $button_add; ?>"><i class="fa fa-plus-circle"></i></a>';
+                    rows += '<a class="btn btn-primary" onclick="addNewSkuField(' + json[i]['product_id'] + ', \'' + json[i]['var'] + '\')" data-toggle="tooltip" data-original-title="<?php echo $button_insert; ?>"><i class="fa fa-plus-circle"></i></a>';
                   rows += '</div>';
                 rows += '</div>';
               rows += '</div>';
             rows += '</td>';
-            rows += '<td class="text-center"><a class="btn btn-primary" onclick="addNewLink(this, \'' + json[i]['product_id'] + '\', \'' + json[i]['var'] + '\')" data-toggle="tooltip" data-original-title="<?php echo $button_add; ?>"><i class="fa fa-plus-circle"></i></a></td>';
+            rows += '<td class="text-center"><a class="btn btn-primary" onclick="addNewLink(this, \'' + json[i]['product_id'] + '\', \'' + json[i]['var'] + '\')" data-toggle="tooltip" data-original-title="<?php echo $button_insert; ?>"><i class="fa fa-plus-circle"></i></a></td>';
           rows += '</tr>';
         }
 
@@ -278,7 +287,7 @@
   $('#new-product').autocomplete({
     'source': function(request, response) {
       $.ajax({
-        url: 'index.php?route=catalog/product/autocomplete&token=d75c08895b700fd60f97d3c6b71a51f3&filter_name=' +  encodeURIComponent(request),
+        url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
         dataType: 'json',
         success: function (json) {
           response($.map(json, function (item) {
@@ -287,9 +296,6 @@
               value: item['product_id']
             }
           }));
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-          if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
         }
       });
     },

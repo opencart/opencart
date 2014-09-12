@@ -209,9 +209,6 @@
                             value: item.customer_id
                         }
                     }));
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                  if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
                 }
             });
         },

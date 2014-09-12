@@ -106,12 +106,15 @@ class ControllerOpenbayAmazonusListing extends Controller{
 
 		$data['button_search'] = $this->language->get('button_search');
 		$data['button_new'] = $this->language->get('button_new');
-		$data['button_return'] = $this->language->get('button_return');
+		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_amazon_price'] = $this->language->get('button_amazon_price');
 		$data['button_list'] = $this->language->get('button_list');
-		$data['text_not_in_catalog'] = $this->language->get('text_not_in_catalog');
-		$data['text_title'] = $this->language->get('text_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_list'] = $this->language->get('text_list');
+		$data['text_placeholder_search'] = $this->language->get('text_placeholder_search');
+		$data['text_placeholder_condition'] = $this->language->get('text_placeholder_condition');
+		$data['text_not_in_catalog'] = $this->language->get('text_not_in_catalog');
 		$data['column_image'] = $this->language->get('column_image');
 		$data['column_asin'] = $this->language->get('column_asin');
 		$data['column_name'] = $this->language->get('column_name');
@@ -131,11 +134,8 @@ class ControllerOpenbayAmazonusListing extends Controller{
 		$data['help_restock_date'] = $this->language->get('help_restock_date');
 		$data['help_sku'] = $this->language->get('help_sku');
 		$data['help_sale_price'] = $this->language->get('help_sale_price');
-		$data['text_list'] = $this->language->get('text_list');
 		$data['tab_required'] = $this->language->get('tab_required');
 		$data['tab_additional'] = $this->language->get('tab_additional');
-		$data['text_placeholder_search'] = $this->language->get('text_placeholder_search');
-		$data['text_placeholder_condition'] = $this->language->get('text_placeholder_condition');
 		$data['error_price'] = $this->language->get('error_price');
 		$data['error_sku'] = $this->language->get('error_sku');
 		$data['error_stock'] = $this->language->get('error_stock');

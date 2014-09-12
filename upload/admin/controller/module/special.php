@@ -88,7 +88,7 @@ class ControllerModuleSpecial extends Controller {
 		$data['layouts'] = $this->model_design_layout->getLayouts();
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('module/special.tpl', $data));

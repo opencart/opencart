@@ -67,7 +67,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$data['link_bulk_linking'] = $this->url->link('openbay/amazonus/bulkLinking', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/amazonus.tpl', $data));
@@ -147,7 +147,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$data['token'] = $this->session->data['token'];
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/amazonus_stock_updates.tpl', $data));
@@ -221,7 +221,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$data['link_register'] = 'https://account.openbaypro.com/amazonus/apiRegister/';
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/amazonus_subscription.tpl', $data));
@@ -353,7 +353,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$data['API_auth'] = $api_auth;
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/amazonus_settings.tpl', $data));
@@ -395,7 +395,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$data['get_openstock_options_ajax'] = $this->url->link('openbay/amazonus/getOpenstockOptionsAjax', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/amazonus_item_links.tpl', $data));
@@ -450,7 +450,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$data['uploadSavedAjax'] = $this->url->link('openbay/amazonus_product/uploadSavedAjax', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/amazonus_saved_listings.tpl', $data));
@@ -822,7 +822,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/amazonus_bulk_listing.tpl', $data));
@@ -917,7 +917,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$data['token'] = $this->session->data['token'];
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/amazonus_bulk_linking.tpl', $data));

@@ -24,7 +24,6 @@ $('#range a').on('click', function(e) {
 	
 	$(this).parent().addClass('active');
 	
-	// Sales
 	$.ajax({
 		type: 'get',
 		url: 'index.php?route=dashboard/chart/chart&token=<?php echo $token; ?>&range=' + $(this).attr('href'),

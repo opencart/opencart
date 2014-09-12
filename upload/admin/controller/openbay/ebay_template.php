@@ -51,7 +51,7 @@ class ControllerOpenbayEbayTemplate extends Controller {
 		);
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/ebay_template_list.tpl', $data));
@@ -179,7 +179,7 @@ class ControllerOpenbayEbayTemplate extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/ebay_template_form.tpl', $data));

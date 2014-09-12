@@ -255,7 +255,7 @@ class ControllerLocalisationCountry extends Controller {
 		$data['order'] = $order;
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('localisation/country_list.tpl', $data));
@@ -380,7 +380,7 @@ class ControllerLocalisationCountry extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('localisation/country_form.tpl', $data));

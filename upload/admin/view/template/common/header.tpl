@@ -14,10 +14,12 @@
 
 
 <script type="text/javascript" src="view/javascript/jquery/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.js"></script>
 <!--
 <link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />
 //-->
-<script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.js"></script>
+
+
 <link href="view/javascript/bootstrap/less/bootstrap.less" rel="stylesheet/less" />
 <script src="view/javascript/bootstrap/less-1.7.4.min.js"></script>
 

@@ -1,4 +1,4 @@
-<?php echo $header; ?><?php echo $column; ?>
+<?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
   <?php if ($error_warning) { ?>
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>

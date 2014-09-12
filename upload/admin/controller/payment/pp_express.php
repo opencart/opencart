@@ -283,7 +283,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['token'] = $this->session->data['token'];
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('payment/pp_express.tpl', $data));
@@ -624,7 +624,7 @@ class ControllerPaymentPPExpress extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('payment/pp_express_refund.tpl', $data));
@@ -893,7 +893,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['view_link'] = $this->url->link('payment/pp_express/viewTransaction', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('payment/pp_express_search.tpl', $data));
@@ -1108,7 +1108,7 @@ class ControllerPaymentPPExpress extends Controller {
 		);
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('payment/pp_express_view.tpl', $data));

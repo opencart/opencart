@@ -133,7 +133,7 @@ class ControllerPaymentPayPoint extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('payment/paypoint.tpl', $data));

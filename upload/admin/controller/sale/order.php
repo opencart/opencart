@@ -545,7 +545,7 @@ class ControllerSaleOrder extends Controller {
 		$data['order'] = $order;
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('sale/order_list.tpl', $data));
@@ -956,7 +956,7 @@ class ControllerSaleOrder extends Controller {
 		$data['voucher_themes'] = $this->model_sale_voucher_theme->getVoucherThemes();
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('sale/order_form.tpl', $data));
@@ -1625,7 +1625,7 @@ class ControllerSaleOrder extends Controller {
 			$data['payment_action'] = $this->load->controller('payment/' . $order_info['payment_code'] . '/orderAction', '');
 
 			$data['header'] = $this->load->controller('common/header');
-			$data['column'] = $this->load->controller('common/column');
+			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['footer'] = $this->load->controller('common/footer');
 
 			$this->response->setOutput($this->load->view('sale/order_info.tpl', $data));
@@ -1651,7 +1651,7 @@ class ControllerSaleOrder extends Controller {
 			);
 
 			$data['header'] = $this->load->controller('common/header');
-			$data['column'] = $this->load->controller('common/column');
+			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['footer'] = $this->load->controller('common/footer');
 
 			$this->response->setOutput($this->load->view('error/not_found.tpl', $data));

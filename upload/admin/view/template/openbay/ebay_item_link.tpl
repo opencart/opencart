@@ -1,4 +1,4 @@
-<?php echo $header; ?><?php echo $column; ?>
+<?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
   <div class="alert alert-info">
     <p><?php echo $text_link_desc1; ?></p>

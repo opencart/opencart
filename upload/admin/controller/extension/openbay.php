@@ -147,7 +147,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$data['token'] = $this->session->data['token'];
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('extension/openbay.tpl', $data));
@@ -273,7 +273,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$data['token'] = $this->session->data['token'];
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/openbay_manage.tpl', $data));
@@ -789,7 +789,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$data['order'] = $order;
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/openbay_orderlist.tpl', $data));
@@ -878,7 +878,7 @@ class ControllerExtensionOpenbay extends Controller {
 			$data['openbay_amazonus_order_status_shipped'] = $this->config->get('openbay_amazonus_order_status_shipped');
 
 			$data['header'] = $this->load->controller('common/header');
-			$data['column'] = $this->load->controller('common/column');
+			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['footer'] = $this->load->controller('common/footer');
 
 			$url = '';
@@ -1676,7 +1676,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$data['token'] = $this->request->get['token'];
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/openbay_itemlist.tpl', $data));

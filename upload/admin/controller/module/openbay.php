@@ -31,7 +31,7 @@ class ControllerModuleOpenbay extends Controller {
 		$data['text_installed'] = $this->language->get('text_installed');
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['column'] = $this->load->controller('common/column');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('module/openbay.tpl', $data));

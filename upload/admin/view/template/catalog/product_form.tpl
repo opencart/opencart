@@ -879,10 +879,10 @@
               <tbody>
                 <tr>
                   <td class="text-left"><?php echo $text_default; ?></td>
-                  <td class="text-left"><select name="product_layout[0][layout_id]" class="form-control">
+                  <td class="text-left"><select name="product_layout[0]" class="form-control">
                       <option value=""></option>
                       <?php foreach ($layouts as $layout) { ?>
-                      <?php if (isset($product_layout[0]) && $product_layout[0]['layout_id'] == $layout['layout_id']) { ?>
+                      <?php if (isset($product_layout[0]) && $product_layout[0] == $layout['layout_id']) { ?>
                       <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
                       <?php } else { ?>
                       <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
@@ -893,10 +893,10 @@
                 <?php foreach ($stores as $store) { ?>
                 <tr>
                   <td class="text-left"><?php echo $store['name']; ?></td>
-                  <td class="text-left"><select name="product_layout[<?php echo $store['store_id']; ?>][layout_id]" class="form-control">
+                  <td class="text-left"><select name="product_layout[<?php echo $store['store_id']; ?>]" class="form-control">
                       <option value=""></option>
                       <?php foreach ($layouts as $layout) { ?>
-                      <?php if (isset($product_layout[$store['store_id']]) && $product_layout[$store['store_id']]['layout_id'] == $layout['layout_id']) { ?>
+                      <?php if (isset($product_layout[$store['store_id']]) && $product_layout[$store['store_id']] == $layout['layout_id']) { ?>
                       <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
                       <?php } else { ?>
                       <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>

@@ -66,6 +66,8 @@ $('a.thumbnail').on('click', function(e) {
 		range = sel.getRangeAt(0); 
 		range.insertNode(img); 
 	}
+	
+	$('#modal-image').modal('hide');
 });
 
 $('a.directory').on('click', function(e) {

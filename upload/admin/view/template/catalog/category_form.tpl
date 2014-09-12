@@ -26,7 +26,7 @@
         <li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>
       </ul>
       <div class="tab-content">
-        <div class="tab-pane active" id="tab-general">
+        <div class="tab-pane fade active in" id="tab-general">
           <ul class="nav nav-tabs" id="language">
             <?php foreach ($languages as $language) { ?>
             <li><a href="#language<?php echo $language['language_id']; ?>" data-toggle="tab"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a></li>
@@ -75,7 +75,7 @@
             <?php } ?>
           </div>
         </div>
-        <div class="tab-pane" id="tab-data">
+        <div class="tab-pane fade" id="tab-data">
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-parent"><?php echo $entry_parent; ?></label>
             <div class="col-sm-10">
@@ -185,7 +185,7 @@
             </div>
           </div>
         </div>
-        <div class="tab-pane" id="tab-design">
+        <div class="tab-pane fade" id="tab-design">
           <div class="table-responsive">
             <table class="table table-striped table-hover">
               <thead>
@@ -197,10 +197,10 @@
               <tbody>
                 <tr>
                   <td class="text-left"><?php echo $text_default; ?></td>
-                  <td class="text-left"><select name="category_layout[0][layout_id]" class="form-control">
+                  <td class="text-left"><select name="category_layout[0]" class="form-control">
                       <option value=""></option>
                       <?php foreach ($layouts as $layout) { ?>
-                      <?php if (isset($category_layout[0]) && $category_layout[0]['layout_id'] == $layout['layout_id']) { ?>
+                      <?php if (isset($category_layout[0]) && $category_layout[0] == $layout['layout_id']) { ?>
                       <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
                       <?php } else { ?>
                       <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
@@ -211,10 +211,10 @@
                 <?php foreach ($stores as $store) { ?>
                 <tr>
                   <td class="text-left"><?php echo $store['name']; ?></td>
-                  <td class="text-left"><select name="category_layout[<?php echo $store['store_id']; ?>][layout_id]" class="form-control">
+                  <td class="text-left"><select name="category_layout[<?php echo $store['store_id']; ?>]" class="form-control">
                       <option value=""></option>
                       <?php foreach ($layouts as $layout) { ?>
-                      <?php if (isset($category_layout[$store['store_id']]) && $category_layout[$store['store_id']]['layout_id'] == $layout['layout_id']) { ?>
+                      <?php if (isset($category_layout[$store['store_id']]) && $category_layout[$store['store_id']] == $layout['layout_id']) { ?>
                       <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
                       <?php } else { ?>
                       <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>

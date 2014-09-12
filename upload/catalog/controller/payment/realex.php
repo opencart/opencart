@@ -136,7 +136,7 @@ class ControllerPaymentRealex extends Controller {
 				if ($this->request->post['ECI'] == 6 && (!isset($this->request->post['CAVV']) || empty($this->request->post['CAVV'])) && (!isset($this->request->post['XID']) || empty($this->request->post['CAVV']))) {
 					$this->request->post['ECI'] = 1;
 				}
-				
+
 				$message .= '<br /><strong>' . $this->language->get('text_eci') . ':</strong> (' . $this->request->post['ECI'] . ') ' . $this->language->get('text_3d_s' . $this->request->post['ECI']);
 			}
 

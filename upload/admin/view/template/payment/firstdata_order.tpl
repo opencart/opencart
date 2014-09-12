@@ -25,7 +25,7 @@
       <?php } else { ?>
       <span class="capture_text"><?php echo $text_no; ?></span>&nbsp;&nbsp;
       <?php if ($firstdata_order['void_status'] == 0) { ?>
-      <a class="button btn btn-primary" id="btn_capture"><?php echo $btn_capture; ?></a> <span class="btn btn-primary" id="img_loading_capture" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+      <a class="button btn btn-primary" id="button_capture"><?php echo $button_capture; ?></a> <span class="btn btn-primary" id="img_loading_capture" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
       <?php } ?>
       <?php } ?></td>
   </tr>
@@ -96,7 +96,7 @@ $("#button-void").bind('click', function () {
   }
 });
 
-$("#btn_capture").bind('click', function () {
+$("#button_capture").bind('click', function () {
   if (confirm('<?php echo $text_confirm_capture; ?>')) {
     $('#captureform').submit();
   }

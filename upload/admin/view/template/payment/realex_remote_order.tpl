@@ -21,7 +21,7 @@
       <span class="capture_text"><?php echo $text_no; ?></span>&nbsp;&nbsp;
       <?php if ($realex_order['void_status'] == 0) { ?>
       <input type="text" width="10" id="capture_amount" value="<?php echo $realex_order['total']; ?>"/>
-      <a class="button btn btn-primary" id="btn_capture"><?php echo $btn_capture; ?></a> <span class="btn btn-primary" id="img_loading_capture" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+      <a class="button btn btn-primary" id="button_capture"><?php echo $button_capture; ?></a> <span class="btn btn-primary" id="img_loading_capture" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
       <?php } ?>
       <?php } ?></td>
   </tr>
@@ -91,7 +91,7 @@
 
             $('.void_text').text('<?php echo $text_yes; ?>');
             $('#realex_transactions').append(html);
-            $('#btn_capture').hide();
+            $('#button_capture').hide();
             $('#capture_amount').hide();
 
             if (data.msg != '') {
@@ -108,7 +108,7 @@
       });
     }
   });
-  $("#btn_capture").click(function () {
+  $("#button_capture").click(function () {
     if (confirm('<?php echo $text_confirm_capture; ?>')) {
       $.ajax({
         type:'POST',
@@ -116,7 +116,7 @@
         data: {'order_id': <?php echo $order_id; ?>, 'amount' : $('#capture_amount').val() },
         url: 'index.php?route=payment/realex_remote/capture&token=<?php echo $token; ?>',
         beforeSend: function() {
-          $('#btn_capture').hide();
+          $('#button_capture').hide();
           $('#capture_amount').hide();
           $('#img_loading_capture').show();
           $('#realex_transaction_msg').hide();
@@ -137,7 +137,7 @@
               $('#button-void').hide();
               $('.capture_text').text('<?php echo $text_yes; ?>');
             } else {
-              $('#btn_capture').show();
+              $('#button_capture').show();
               $('#capture_amount').val(0.00);
             }
 
@@ -154,7 +154,7 @@
           }
           if (data.error == true) {
             alert(data.msg);
-            $('#btn_capture').show();
+            $('#button_capture').show();
             $('#capture_amount').show();
           }
 

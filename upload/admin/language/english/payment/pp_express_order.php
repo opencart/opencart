@@ -26,7 +26,7 @@ $_['column_action']					= 'Action';
 
 // Button
 $_['btn_void']						= 'Void';
-$_['btn_capture']					= 'Capture';
+$_['button_capture']					= 'Capture';
 
 // Error
 $_['error_capture_amt']				= 'Enter an amount to capture';

@@ -74,7 +74,7 @@ $_['help_debug']					= 'Enabling debug will write sensitive data to a log file. 
 $_['help_settle']					= 'If you use pre-auth you must complete a post-auth action within 3-5 days otherwise your transaction will be dropped';
 
 // Button
-$_['btn_capture']					= 'Capture';
+$_['button_capture']					= 'Capture';
 $_['btn_refund']					= 'Refund';
 $_['btn_void']						= 'Void';
 

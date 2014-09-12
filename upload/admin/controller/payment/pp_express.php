@@ -741,7 +741,7 @@ class ControllerPaymentPPExpress extends Controller {
 				$data['text_capture_status'] = $this->language->get('text_capture_status');
 				$data['text_amount_auth'] = $this->language->get('text_amount_auth');
 				$data['button_void'] = $this->language->get('button_void');
-				$data['btn_capture'] = $this->language->get('btn_capture');
+				$data['button_capture'] = $this->language->get('button_capture');
 				$data['text_amount_captured'] = $this->language->get('text_amount_captured');
 				$data['text_amount_refunded'] = $this->language->get('text_amount_refunded');
 				$data['text_capture_amount'] = $this->language->get('text_capture_amount');

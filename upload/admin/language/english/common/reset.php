@@ -9,7 +9,7 @@ $_['text_success']   = 'Success: Your password has been successfully updated.';
 
 // Entry
 $_['entry_password'] = 'Password';
-$_['entry_confirm']  = 'Password Confirm';
+$_['entry_confirm']  = 'Confirm';
 
 // Error
 $_['error_password'] = 'Password must be between 5 and 20 characters!';

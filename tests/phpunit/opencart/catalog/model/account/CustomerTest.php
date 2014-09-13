@@ -33,17 +33,19 @@ class CatalogModelAccountCustomerTest extends OpenCartTest {
 		$this->customerLogin('customer@localhost', '', true);
 		
 		$customerData = array(
-			'firstname' => 'firstname',
-			'lastname' => 'lastname',
-			'email' => 'email',
-			'telephone' => 'telephone',
-			'fax' => 'fax',
-			'custom_field' => array(),
+			'firstname'    => 'Jane',
+			'lastname'     => 'Doe',
+			'email'        => 'jdoe@example.com',
+			'telephone'    => '555-0101',
+			'fax'          => '555-0102',
+			'custom_field' => array()
 		);
 		
 		$this->model_account_customer->editCustomer($customerData);
 		$customer = $this->model_account_customer->getCustomer(1);
-		
+
+		$customerData['custom_field'] = serialize(array());
+
 		foreach ($customerData as $key => $value) {
 			$this->assertEquals($value, $customer[$key]);
 		}

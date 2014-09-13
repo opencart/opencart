@@ -17,9 +17,9 @@
 * Change directory to /tests/phpunit/ folder
 * Type in the command line: composer update (this will create you a vendor folder and download all dependencies)
 * Composer will now pull in all of the required externals/dependencies
-* run: vendor\bin\phpunit --bootstrap bootstrap.php opencart\admin to run tests in admin folder
-* run: vendor\bin\phpunit --bootstrap bootstrap.php opencart\catalog to run tests in catalog folder
-* run: vendor\bin\phpunit --bootstrap bootstrap.php opencart\system to run tests in system folder
+* run: vendor\bin\phpunit --bootstrap bootstrap-dist.php opencart\admin to run tests in admin folder
+* run: vendor\bin\phpunit --bootstrap bootstrap-dist.php opencart\catalog to run tests in catalog folder
+* run: vendor\bin\phpunit --bootstrap bootstrap-dist.php opencart\system to run tests in system folder
 
 ## Selenium instructions
 
@@ -27,7 +27,7 @@ Running Acceptance (Functional) Tests with Selenium requires a standalone seleni
 The server can be downloaded from [here](http://code.google.com/p/selenium/downloads/list). Before starting your Selenium Tests
 you have to run the standalone server: `java -jar selenium-server-standalone-2.32.0.jar`. Writing Selenium Tests requires you to extend the OpenCartSeleniumTest class.
 
-* run: vendor\bin\phpunit --bootstrap bootstrap.php selenium\catalog to run tests in system folder
+* run: vendor\bin\phpunit --bootstrap bootstrap-dist.php selenium\catalog to run tests in system folder
 
 ## Please READ!
 The tests are still under development, there is hundreds of them to do.

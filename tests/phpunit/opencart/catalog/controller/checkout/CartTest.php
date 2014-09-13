@@ -17,6 +17,6 @@ class CatalogControllerCheckoutCartTest extends OpenCartTest {
 
 		$this->assertTrue(!empty($response['success']) && !empty($response['total']));
 		$this->assertEquals(1, preg_match('/HTC Touch HD/', $response['success']));
-		$this->assertEquals(1, preg_match('/119\.50/', $response['total']));
+		$this->assertEquals(1, preg_match('/122\.00/', $response['total']));
 	}
 }

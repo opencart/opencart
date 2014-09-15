@@ -170,13 +170,13 @@ class ControllerPaymentBluepayredirect extends Controller {
 
 	public function install() {
 		$this->load->model('payment/bluepay_redirect');
-		
+
 		$this->model_payment_bluepay_redirect->install();
 	}
 
 	public function uninstall() {
 		$this->load->model('payment/bluepay_redirect');
-		
+
 		$this->model_payment_bluepay_redirect->uninstall();
 	}
 
@@ -242,16 +242,6 @@ class ControllerPaymentBluepayredirect extends Controller {
 				$this->model_payment_bluepay_redirect->updateVoidStatus($bluepay_redirect_order['bluepay_redirect_order_id'], 1);
 
 				$json['msg'] = $this->language->get('text_void_ok');
-
-				$this->load->model('sale/order');
-
-				$history = array();
-				$history['order_status_id'] = $this->config->get('bluepay_redirect_order_status_void_id');
-				$history['comment'] = '';
-				$history['notify'] = '';
-
-				$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $history);
-
 				$json['data'] = array();
 				$json['data']['column_date_added'] = date("Y-m-d H:i:s");
 				$json['error'] = false;
@@ -290,15 +280,6 @@ class ControllerPaymentBluepayredirect extends Controller {
 					$this->model_payment_bluepay_redirect->updateReleaseStatus($bluepay_redirect_order['bluepay_redirect_order_id'], 1);
 					$release_status = 1;
 					$json['msg'] = $this->language->get('text_release_ok_order');
-
-					$this->load->model('sale/order');
-
-					$history = array();
-					$history['order_status_id'] = $this->config->get('bluepay_redirect_order_status_id');
-					$history['comment'] = '';
-					$history['notify'] = '';
-
-					$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $history);
 				} else {
 					$release_status = 0;
 					$json['msg'] = $this->language->get('text_release_ok');
@@ -346,15 +327,6 @@ class ControllerPaymentBluepayredirect extends Controller {
 					$this->model_payment_bluepay_redirect->updateRebateStatus($bluepay_redirect_order['bluepay_redirect_order_id'], 1);
 					$rebate_status = 1;
 					$json['msg'] = $this->language->get('text_rebate_ok_order');
-
-					$this->load->model('sale/order');
-
-					$history = array();
-					$history['order_status_id'] = $this->config->get('bluepay_redirect_order_status_rebated_id');
-					$history['comment'] = '';
-					$history['notify'] = '';
-
-					$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $history);
 				} else {
 					$rebate_status = 0;
 					$json['msg'] = $this->language->get('text_rebate_ok');

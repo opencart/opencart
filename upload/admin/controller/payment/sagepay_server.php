@@ -259,15 +259,6 @@ class ControllerPaymentSagepayServer extends Controller {
 
 				$json['msg'] = $this->language->get('text_void_ok');
 
-				$this->load->model('sale/order');
-
-				$history = array();
-				$history['order_status_id'] = $this->config->get('sagepay_server_order_status_void_id');
-				$history['comment'] = '';
-				$history['notify'] = '';
-
-				$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $history);
-
 				$json['data'] = array();
 				$json['data']['date_added'] = date("Y-m-d H:i:s");
 				$json['error'] = false;
@@ -306,15 +297,6 @@ class ControllerPaymentSagepayServer extends Controller {
 					$this->model_payment_sagepay_server->updateReleaseStatus($sagepay_server_order['sagepay_server_order_id'], 1);
 					$release_status = 1;
 					$json['msg'] = $this->language->get('text_release_ok_order');
-
-					$this->load->model('sale/order');
-
-					$history = array();
-					$history['order_status_id'] = $this->config->get('sagepay_server_order_status_success_settled_id');
-					$history['comment'] = '';
-					$history['notify'] = '';
-
-					$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $history);
 				} else {
 					$release_status = 0;
 					$json['msg'] = $this->language->get('text_release_ok');
@@ -362,15 +344,6 @@ class ControllerPaymentSagepayServer extends Controller {
 					$this->model_payment_sagepay_server->updateRebateStatus($sagepay_server_order['sagepay_server_order_id'], 1);
 					$rebate_status = 1;
 					$json['msg'] = $this->language->get('text_rebate_ok_order');
-
-					$this->load->model('sale/order');
-
-					$history = array();
-					$history['order_status_id'] = $this->config->get('sagepay_server_order_status_rebated_id');
-					$history['comment'] = '';
-					$history['notify'] = '';
-
-					$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $history);
 				} else {
 					$rebate_status = 0;
 					$json['msg'] = $this->language->get('text_rebate_ok');

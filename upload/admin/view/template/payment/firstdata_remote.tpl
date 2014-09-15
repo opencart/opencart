@@ -189,34 +189,6 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-order-status-void"><?php echo $entry_status_void; ?></label>
-            <div class="col-sm-10">
-              <select name="firstdata_remote_order_status_void_id" id="input-order-status-void" class="form-control">
-                <?php foreach ($order_statuses as $order_status) { ?>
-                <?php if ($order_status['order_status_id'] == $firstdata_remote_order_status_void_id) { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                <?php } ?>
-                <?php } ?>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-order-status-refund"><?php echo $entry_status_refund; ?></label>
-            <div class="col-sm-10">
-              <select name="firstdata_remote_order_status_refunded_id" id="input-order-status-refund" class="form-control">
-                <?php foreach ($order_statuses as $order_status) { ?>
-                <?php if ($order_status['order_status_id'] == $firstdata_remote_order_status_refunded_id) { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                <?php } ?>
-                <?php } ?>
-              </select>
-            </div>
-          </div>
         </div>
         <div class="tab-pane" id="tab-payment">
           <div class="form-group">

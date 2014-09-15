@@ -260,34 +260,6 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-order-status-void"><?php echo $entry_status_void; ?></label>
-            <div class="col-sm-10">
-              <select name="realex_remote_order_status_void_id" id="input-order-status-void" class="form-control">
-                <?php foreach ($order_statuses as $order_status) { ?>
-                <?php if ($order_status['order_status_id'] == $realex_remote_order_status_void_id) { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                <?php } ?>
-                <?php } ?>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-order-status-rebate"><?php echo $entry_status_rebate; ?></label>
-            <div class="col-sm-10">
-              <select name="realex_remote_order_status_rebated_id" id="input-order-status-rebate" class="form-control">
-                <?php foreach ($order_statuses as $order_status) { ?>
-                <?php if ($order_status['order_status_id'] == $realex_remote_order_status_rebated_id) { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                <?php } ?>
-                <?php } ?>
-              </select>
-            </div>
-          </div>
         </div>
         <div class="tab-pane" id="tab-payment">
           <div class="form-group">
@@ -349,5 +321,5 @@
 </div>
 <script type="text/javascript"><!--
 $('#tabs a:first').tab('show');
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

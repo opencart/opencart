@@ -245,18 +245,6 @@ class ControllerPaymentRealexRemote extends Controller {
 			$data['realex_remote_order_status_decline_bank_id'] = $this->config->get('realex_remote_order_status_decline_bank_id');
 		}
 
-		if (isset($this->request->post['realex_remote_order_status_void_id'])) {
-			$data['realex_remote_order_status_void_id'] = $this->request->post['realex_remote_order_status_void_id'];
-		} else {
-			$data['realex_remote_order_status_void_id'] = $this->config->get('realex_remote_order_status_void_id');
-		}
-
-		if (isset($this->request->post['realex_remote_order_status_rebated_id'])) {
-			$data['realex_remote_order_status_rebated_id'] = $this->request->post['realex_remote_order_status_rebated_id'];
-		} else {
-			$data['realex_remote_order_status_rebated_id'] = $this->config->get('realex_remote_order_status_rebated_id');
-		}
-
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -333,16 +321,6 @@ class ControllerPaymentRealexRemote extends Controller {
 				$this->model_payment_realex_remote->updateVoidStatus($realex_order['realex_remote_order_id'], 1);
 
 				$json['msg'] = $this->language->get('text_void_ok');
-
-				$this->load->model('sale/order');
-
-				$history = array();
-				$history['order_status_id'] = $this->config->get('realex_remote_order_status_void_id');
-				$history['comment'] = '';
-				$history['notify'] = '';
-
-				$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $history);
-
 				$json['data'] = array();
 				$json['data']['date_added'] = date("Y-m-d H:i:s");
 				$json['error'] = false;
@@ -380,15 +358,6 @@ class ControllerPaymentRealexRemote extends Controller {
 					$this->model_payment_realex_remote->updateCaptureStatus($realex_order['realex_remote_order_id'], 1);
 					$capture_status = 1;
 					$json['msg'] = $this->language->get('text_capture_ok_order');
-
-					$this->load->model('sale/order');
-
-					$history = array();
-					$history['order_status_id'] = $this->config->get('realex_remote_order_status_success_settled_id');
-					$history['comment'] = '';
-					$history['notify'] = '';
-
-					$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $history);
 				} else {
 					$capture_status = 0;
 					$json['msg'] = $this->language->get('text_capture_ok');
@@ -440,15 +409,6 @@ class ControllerPaymentRealexRemote extends Controller {
 					$this->model_payment_realex_remote->updateRebateStatus($realex_order['realex_remote_order_id'], 1);
 					$rebate_status = 1;
 					$json['msg'] = $this->language->get('text_rebate_ok_order');
-
-					$this->load->model('sale/order');
-
-					$history = array();
-					$history['order_status_id'] = $this->config->get('realex_remote_order_status_rebated_id');
-					$history['comment'] = '';
-					$history['notify'] = '';
-
-					$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $history);
 				} else {
 					$rebate_status = 0;
 					$json['msg'] = $this->language->get('text_rebate_ok');

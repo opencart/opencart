@@ -13,8 +13,7 @@ $_['entry_amount']					= 'Amount';
 $_['entry_message']					= 'Message';
 
 // Button
-$_['btn_cancel']					= 'Cancel';
-$_['btn_refund']					= 'Issue refund';
+$_['button_refund']					= 'Issue refund';
 
 // Error
 $_['error_partial_amt']				= 'You must enter a partial refund amount';

@@ -25,8 +25,8 @@ $_['column_date_added']				= 'Created';
 $_['column_action']					= 'Action';
 
 // Button
-$_['btn_void']						= 'Void';
-$_['button_capture']					= 'Capture';
+$_['button_void']					= 'Void';
+$_['button_capture']				= 'Capture';
 
 // Error
 $_['error_capture_amt']				= 'Enter an amount to capture';

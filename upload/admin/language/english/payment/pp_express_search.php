@@ -72,7 +72,3 @@ $_['entry_status_processing']		= 'Processing';
 $_['entry_status_success']			= 'Success';
 $_['entry_status_denied']			= 'Denied';
 $_['entry_status_reversed']			= 'Reversed';
-
-// Button
-$_['btn_search']					= 'Search';
-$_['btn_edit_search']				= 'Edit search';

@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a onclick="editSearch();" id="btn_edit" data-toggle="tooltip" style="display:none;" title="<?php echo $btn_edit_search; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a onclick="doSearch();" id="btn_search" data-toggle="tooltip" title="<?php echo $btn_search; ?>" class="btn btn-info"><i class="fa fa-search"></i></a></div>
+      <div class="pull-right"><a onclick="editSearch();" id="button-edit" data-toggle="tooltip" style="display:none;" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a onclick="doSearch();" id="button-search" data-toggle="tooltip" title="<?php echo $button_search; ?>" class="btn btn-info"><i class="fa fa-search"></i></a></div>
       <h1><i class="fa fa-search"></i> <?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div id="search_input">
+    <div id="search-input">
       <form id="form" class="form-horizontal">
         <h3><?php echo $text_date_search; ?></h3>
         <div class="form-group">
@@ -149,7 +149,7 @@
         </div>
       </form>
     </div>
-    <div id="search_box" style="display:none;">
+    <div id="search-box" style="display:none;">
       <div id="searching"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i> <?php echo $text_searching; ?></div>
       <div style="display:none;" id="error" class="alert alert-danger"></div>
       <table id="search_results" style="display:none;" class="table table-striped table-bordered" >
@@ -167,10 +167,10 @@ function doSearch() {
     data: $('#form').serialize(),
     url: 'index.php?route=payment/pp_express/doSearch&token=<?php echo $token; ?>',
     beforeSend: function () {
-      $('#search_input').hide();
-      $('#search_box').show();
-      $('#btn_search').hide();
-      $('#btn_edit').show();
+      $('#search-input').hide();
+      $('#search-box').show();
+      $('#button-search').hide();
+      $('#button-edit').show();
     },
     success: function (data) {
       if (data.error == true) {
@@ -230,15 +230,15 @@ function doSearch() {
 }
 
 function editSearch() {
-  $('#search_box').hide();
-  $('#search_input').show();
-  $('#btn_edit').hide();
-  $('#btn_search').show();
+  $('#search-box').hide();
+  $('#search-input').show();
+  $('#button-edit').hide();
+  $('#button-search').show();
   $('#searching').show();
   $('#search_results').empty().hide();
   $('#error').empty().hide();
 }
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false
@@ -252,5 +252,5 @@ $('.datetime').datetimepicker({
 	pickDate: true,
 	pickTime: true
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

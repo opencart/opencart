@@ -91,7 +91,7 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_checkout_guest'] = $this->language->get('entry_checkout_guest');
 		$data['entry_checkout'] = $this->language->get('entry_checkout');
 		$data['entry_order_status'] = $this->language->get('entry_order_status');
-		$data['entry_process_status'] = $this->language->get('entry_process_status');
+		$data['entry_processing_status'] = $this->language->get('entry_processing_status');
 		$data['entry_complete_status'] = $this->language->get('entry_complete_status');
 		$data['entry_order_mail'] = $this->language->get('entry_order_mail');
 		$data['entry_stock_display'] = $this->language->get('entry_stock_display');
@@ -181,7 +181,7 @@ class ControllerSettingSetting extends Controller {
 		$data['help_checkout'] = $this->language->get('help_checkout');
 		$data['help_invoice_prefix'] = $this->language->get('help_invoice_prefix');
 		$data['help_order_status'] = $this->language->get('help_order_status');
-		$data['help_process_status'] = $this->language->get('help_process_status');
+		$data['help_processing_status'] = $this->language->get('help_processing_status');
 		$data['help_complete_status'] = $this->language->get('help_complete_status');
 		$data['help_order_mail'] = $this->language->get('help_order_mail');
 		$data['help_stock_display'] = $this->language->get('help_stock_display');
@@ -302,10 +302,10 @@ class ControllerSettingSetting extends Controller {
 			$data['error_voucher_max'] = '';
 		}
 
-		if (isset($this->error['process_status'])) {
-			$data['error_process_status'] = $this->error['process_status'];
+		if (isset($this->error['processing_status'])) {
+			$data['error_processing_status'] = $this->error['processing_status'];
 		} else {
-			$data['error_process_status'] = '';
+			$data['error_processing_status'] = '';
 		}
 
 		if (isset($this->error['complete_status'])) {
@@ -806,12 +806,12 @@ class ControllerSettingSetting extends Controller {
 			$data['config_order_status_id'] = $this->config->get('config_order_status_id');
 		}
 
-		if (isset($this->request->post['config_process_status'])) {
-			$data['config_process_status'] = $this->request->post['config_process_status'];
-		} elseif ($this->config->get('config_process_status')) {
-			$data['config_process_status'] = $this->config->get('config_process_status');
+		if (isset($this->request->post['config_processing_status'])) {
+			$data['config_processing_status'] = $this->request->post['config_processing_status'];
+		} elseif ($this->config->get('config_processing_status')) {
+			$data['config_processing_status'] = $this->config->get('config_processing_status');
 		} else {
-			$data['config_process_status'] = array();
+			$data['config_processing_status'] = array();
 		}
 
 		if (isset($this->request->post['config_complete_status'])) {
@@ -1292,8 +1292,8 @@ class ControllerSettingSetting extends Controller {
 			$this->error['voucher_max'] = $this->language->get('error_voucher_max');
 		}
 
-		if (!isset($this->request->post['config_process_status'])) {
-			$this->error['process_status'] = $this->language->get('error_process_status');
+		if (!isset($this->request->post['config_processing_status'])) {
+			$this->error['processing_status'] = $this->language->get('error_processing_status');
 		}
 
 		if (!isset($this->request->post['config_complete_status'])) {

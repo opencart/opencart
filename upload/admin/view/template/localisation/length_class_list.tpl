@@ -24,57 +24,64 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-length-class">
-      <div class="table-responsive">
-        <table class="table table-striped table-hover">
-          <thead>
-            <tr>
-              <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-              <td class="text-left"><?php if ($sort == 'title') { ?>
-                <a href="<?php echo $sort_title; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_title; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_title; ?>"><?php echo $column_title; ?></a>
-                <?php } ?></td>
-              <td class="text-left"><?php if ($sort == 'unit') { ?>
-                <a href="<?php echo $sort_unit; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_unit; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_unit; ?>"><?php echo $column_unit; ?></a>
-                <?php } ?></td>
-              <td class="text-right"><?php if ($sort == 'value') { ?>
-                <a href="<?php echo $sort_value; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_value; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_value; ?>"><?php echo $column_value; ?></a>
-                <?php } ?></td>
-              <td class="text-right"><?php echo $column_action; ?></td>
-            </tr>
-          </thead>
-          <tbody>
-            <?php if ($length_classes) { ?>
-            <?php foreach ($length_classes as $length_class) { ?>
-            <tr>
-              <td class="text-center"><?php if (in_array($length_class['length_class_id'], $selected)) { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $length_class['length_class_id']; ?>" checked="checked" />
-                <?php } else { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $length_class['length_class_id']; ?>" />
-                <?php } ?></td>
-              <td class="text-left"><?php echo $length_class['title']; ?></td>
-              <td class="text-left"><?php echo $length_class['unit']; ?></td>
-              <td class="text-right"><?php echo $length_class['value']; ?></td>
-              <td class="text-right"><a href="<?php echo $length_class['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
-            </tr>
-            <?php } ?>
-            <?php } else { ?>
-            <tr>
-              <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
-            </tr>
-            <?php } ?>
-          </tbody>
-        </table>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
       </div>
-    </form>
-    <div class="row">
-      <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
-      <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+      <div class="panel-body">
+        <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-length-class">
+          <div class="table-responsive">
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                  <td class="text-left"><?php if ($sort == 'title') { ?>
+                    <a href="<?php echo $sort_title; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_title; ?></a>
+                    <?php } else { ?>
+                    <a href="<?php echo $sort_title; ?>"><?php echo $column_title; ?></a>
+                    <?php } ?></td>
+                  <td class="text-left"><?php if ($sort == 'unit') { ?>
+                    <a href="<?php echo $sort_unit; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_unit; ?></a>
+                    <?php } else { ?>
+                    <a href="<?php echo $sort_unit; ?>"><?php echo $column_unit; ?></a>
+                    <?php } ?></td>
+                  <td class="text-right"><?php if ($sort == 'value') { ?>
+                    <a href="<?php echo $sort_value; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_value; ?></a>
+                    <?php } else { ?>
+                    <a href="<?php echo $sort_value; ?>"><?php echo $column_value; ?></a>
+                    <?php } ?></td>
+                  <td class="text-right"><?php echo $column_action; ?></td>
+                </tr>
+              </thead>
+              <tbody>
+                <?php if ($length_classes) { ?>
+                <?php foreach ($length_classes as $length_class) { ?>
+                <tr>
+                  <td class="text-center"><?php if (in_array($length_class['length_class_id'], $selected)) { ?>
+                    <input type="checkbox" name="selected[]" value="<?php echo $length_class['length_class_id']; ?>" checked="checked" />
+                    <?php } else { ?>
+                    <input type="checkbox" name="selected[]" value="<?php echo $length_class['length_class_id']; ?>" />
+                    <?php } ?></td>
+                  <td class="text-left"><?php echo $length_class['title']; ?></td>
+                  <td class="text-left"><?php echo $length_class['unit']; ?></td>
+                  <td class="text-right"><?php echo $length_class['value']; ?></td>
+                  <td class="text-right"><a href="<?php echo $length_class['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                </tr>
+                <?php } ?>
+                <?php } else { ?>
+                <tr>
+                  <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
+                </tr>
+                <?php } ?>
+              </tbody>
+            </table>
+          </div>
+        </form>
+        <div class="row">
+          <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+          <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

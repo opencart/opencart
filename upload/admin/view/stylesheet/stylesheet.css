@@ -35,21 +35,20 @@ h1, h2, h3, h4, h5, h6, p {
 .breadcrumb li a {
 	color: #999999;
 	font-size: 11px;
-	padding: 0px 0px;
+	padding: 0px;
 	margin: 0px;	
 }
 .breadcrumb li:last-child a {
 	color: #1e91cf;
-	font-weight: 500;
-	font-size: 12px;
 }
 .breadcrumb li a:hover {
 	text-decoration: none;
 }
 .breadcrumb li + li:before {
-	content: "\f105";
+	content: "/";
 	font-family: FontAwesome;
 	color: #BBBBBB;
+	padding: 0 5px;	
 }
 
 a:hover, a:focus {
@@ -67,8 +66,8 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	overflow: hidden;
 }
 .container-fluid {
-	padding-left: 30px;
-	padding-right: 30px;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 #header {
 	min-height: 0px;
@@ -337,20 +336,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	width: auto;
 	visibility: visible;
 }
-/*
-#column-left.active #menu li ul a {
-	padding-left: 30px;
-}
-#column-left.active #menu li li ul a {
-	padding-left: 0px;
-}
-#column-left.active #menu li li li ul a {
-	padding-left: 98px;
-}
-#column-left.active #menu li li li li ul a {
-	padding-left: 123px;
-}
-*/
 /* footer */
 #footer {
 	height: 100px;
@@ -474,12 +459,12 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	vertical-align: middle;
 }
 .table a.asc:after {
-	content: " \f0d7";
+	content: " \f107";
 	font-family: FontAwesome;
 	font-size: 14px;
 }
 .table a.desc:after {
-	content: " \f0d8";
+	content: " \f106";
 	font-family: FontAwesome;
 	font-size: 14px;
 }
@@ -488,15 +473,9 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	margin: 0;
 }
 
+.panel {
 
-
-.pagination {
-	margin: 0px 0;
-	border-radius: 2px;
 }
-
-
-
 .panel .panel-heading {
 	position: relative;
 }
@@ -512,14 +491,52 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	font-weight: 500;
 	display: inline-block;
 }
-
 .panel-default {
-	border-top: 2px solid #595959;	
-}
-.panel-default .panel-heading {
-	color: #595959;
+	border-top-style: solid;
+	border-top-width: 2px;	
+	border-top: 2px solid #bfbfbf;
 }
 
+.panel-default .panel-heading {
+	/*color: #595959;*/
+	
+}
+/*
+// Default
+color: #595959;
+border-color: #e8e8e8;
+background: #fcfcfc;
+
+// Primary
+.panel-default {
+	color: #1e91cf;
+	background: #ffffff;
+	border-color: #96d0f0;
+}
+
+// Info
+color: #115376;
+background-color: #f8fcfe;
+border-color: #c3e4f6;
+
+// Danger
+.panel-danger {
+	border-top: 2px solid lighten($warning, 15%);
+	color: #f56b6b;
+	background: #fef1f1;
+	border-color: #fde2e2;
+}
+
+// Warning
+color: #f38733;
+background-color: #fef8f4;
+border-color: #fcdcc3;
+
+// Success
+color: #8fbb6c;
+background: #f9fcf7;
+border-color: #dfebd5;
+*/
 .img-thumbnail i {
 	color: #FFFFFF;
 	background-color: #EEEEEE;

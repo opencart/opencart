@@ -93,8 +93,7 @@
     <div class="warning"><?php echo $error_bulk_link_permission ?></div>
     <?php } ?>
   </div>
-</div>
-<script type="text/javascript"><!--
+  <script type="text/javascript"><!--
   $('#button-load-listings').bind('click', function (e) {
     e.preventDefault();
 
@@ -149,5 +148,5 @@
   $('#marketplace-select').bind('change', function() {
     location = $('#marketplace-select').val();
   });
-//--></script> 
+//--></script></div>
 <?php echo $footer; ?>

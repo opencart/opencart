@@ -149,8 +149,7 @@
       </form>
     </div>
   </div>
-</div>
-<script type="text/javascript"><!--
+  <script type="text/javascript"><!--
     var module_row = <?php echo $module_row; ?>;
 
     function addModule() {
@@ -182,5 +181,5 @@
 
         module_row++;
     }
-    //--></script> 
+    //--></script></div>
 <?php echo $footer; ?>

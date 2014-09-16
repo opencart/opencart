@@ -19,17 +19,24 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-customer-ban-ip" class="form-horizontal">
-      <div class="form-group required">
-        <label class="col-sm-2 control-label" for="input-ip"><?php echo $entry_ip; ?></label>
-        <div class="col-sm-10">
-          <input type="text" name="ip" value="<?php echo $ip; ?>" id="input-ip" class="form-control" />
-          <?php if ($error_ip) { ?>
-          <div class="text-danger"><?php echo $error_ip; ?></div>
-          <?php } ?>
-        </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
       </div>
-    </form>
+      <div class="panel-body">
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-customer-ban-ip" class="form-horizontal">
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-ip"><?php echo $entry_ip; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="ip" value="<?php echo $ip; ?>" id="input-ip" class="form-control" />
+              <?php if ($error_ip) { ?>
+              <div class="text-danger"><?php echo $error_ip; ?></div>
+              <?php } ?>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 <?php echo $footer; ?>

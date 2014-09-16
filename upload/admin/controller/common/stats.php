@@ -1,23 +1,40 @@
 <?php
 class ControllerCommonStats extends Controller {
 	public function index() {
-		//$query = $this->db->query("SHOW STATUS");
+		$this->load->language('common/stats');
 		
-		//print_r($query);
-		//$query = $this->db->query("SELECT node_id, memory_type, total FROM ndbinfo.memoryusage;");
+		$data['text_complete_status'] = $this->language->get('text_complete_status');
+		$data['text_processing_status'] = $this->language->get('text_processing_status');
+		$data['text_other_status'] = $this->language->get('text_other_status');
 		
-		//print_r($query);
+		$this->load->model('sale/order');
+		
+		$order_total = $this->model_sale_order->getTotalOrders();
+		
+		$complete_total = $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $this->config->get('config_complete_status'))));
+		
+		$data['complete_status'] = round(($complete_total / $order_total) * 100);
+		 
+		$processing_total = $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $this->config->get('config_processing_status'))));
+		
+		$data['processing_status'] = round(($processing_total / $order_total) * 100);
+		
+		$this->load->model('localisation/order_status');
+		
+		$order_status_data = array();
+		
+		$results = $this->model_localisation_order_status->getOrderStatuses();	 
+		 
+		foreach ($results as $result) {
+			if (!in_array($result['order_status_id'], array_merge($this->config->get('config_complete_status'), $this->config->get('config_processing_status')))) {
+				$order_status_data[] = $result['order_status_id'];
+			}
+		}
 
-//SELECT @DPAGE * SUM(used) as 'Total DataMemory Used',
-//SELECT @DPAGE * SUM(max) as 'Total DataMemory Available',
-	
-			
-		//echo $this->request->server['REQUEST_TIME'] . ' ' . time();
+		$other_total = $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $order_status_data)));
 		
-		//print_r(phpinfo());
-		
-		$data = array();
-		
+		$data['other_status'] = round(($other_total / $order_total) * 100);
+				 
 		return $this->load->view('common/stats.tpl', $data);
 	}
 }

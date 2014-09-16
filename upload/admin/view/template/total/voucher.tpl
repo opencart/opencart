@@ -19,28 +19,35 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal" id="form-voucher">
-      <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
-        <div class="col-sm-10">
-          <select name="voucher_status" id="input-status" class="form-control">
-            <?php if ($voucher_status) { ?>
-            <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-            <option value="0"><?php echo $text_disabled; ?></option>
-            <?php } else { ?>
-            <option value="1"><?php echo $text_enabled; ?></option>
-            <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-            <?php } ?>
-          </select>
-        </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
       </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-        <div class="col-sm-10">
-          <input type="text" name="voucher_sort_order" value="<?php echo $voucher_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
-        </div>
+      <div class="panel-body">
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal" id="form-voucher">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+            <div class="col-sm-10">
+              <select name="voucher_status" id="input-status" class="form-control">
+                <?php if ($voucher_status) { ?>
+                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                <option value="0"><?php echo $text_disabled; ?></option>
+                <?php } else { ?>
+                <option value="1"><?php echo $text_enabled; ?></option>
+                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="voucher_sort_order" value="<?php echo $voucher_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
+            </div>
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
   </div>
 </div>
 <?php echo $footer; ?>

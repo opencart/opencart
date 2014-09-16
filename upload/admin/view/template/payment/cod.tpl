@@ -19,63 +19,70 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-cod" class="form-horizontal">
-      <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
-        <div class="col-sm-10">
-          <input type="text" name="cod_total" value="<?php echo $cod_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
-        </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
       </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
-        <div class="col-sm-10">
-          <select name="cod_order_status_id" id="input-order-status" class="form-control">
-            <?php foreach ($order_statuses as $order_status) { ?>
-            <?php if ($order_status['order_status_id'] == $cod_order_status_id) { ?>
-            <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-            <?php } else { ?>
-            <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-            <?php } ?>
-            <?php } ?>
-          </select>
-        </div>
+      <div class="panel-body">
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-cod" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="<?php echo $help_total; ?>"><?php echo $entry_total; ?></span></label>
+            <div class="col-sm-10">
+              <input type="text" name="cod_total" value="<?php echo $cod_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
+            <div class="col-sm-10">
+              <select name="cod_order_status_id" id="input-order-status" class="form-control">
+                <?php foreach ($order_statuses as $order_status) { ?>
+                <?php if ($order_status['order_status_id'] == $cod_order_status_id) { ?>
+                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
+            <div class="col-sm-10">
+              <select name="cod_geo_zone_id" id="input-geo-zone" class="form-control">
+                <option value="0"><?php echo $text_all_zones; ?></option>
+                <?php foreach ($geo_zones as $geo_zone) { ?>
+                <?php if ($geo_zone['geo_zone_id'] == $cod_geo_zone_id) { ?>
+                <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+            <div class="col-sm-10">
+              <select name="cod_status" id="input-status" class="form-control">
+                <?php if ($cod_status) { ?>
+                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                <option value="0"><?php echo $text_disabled; ?></option>
+                <?php } else { ?>
+                <option value="1"><?php echo $text_enabled; ?></option>
+                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="cod_sort_order" value="<?php echo $cod_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
+            </div>
+          </div>
+        </form>
       </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
-        <div class="col-sm-10">
-          <select name="cod_geo_zone_id" id="input-geo-zone" class="form-control">
-            <option value="0"><?php echo $text_all_zones; ?></option>
-            <?php foreach ($geo_zones as $geo_zone) { ?>
-            <?php if ($geo_zone['geo_zone_id'] == $cod_geo_zone_id) { ?>
-            <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
-            <?php } else { ?>
-            <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
-            <?php } ?>
-            <?php } ?>
-          </select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
-        <div class="col-sm-10">
-          <select name="cod_status" id="input-status" class="form-control">
-            <?php if ($cod_status) { ?>
-            <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-            <option value="0"><?php echo $text_disabled; ?></option>
-            <?php } else { ?>
-            <option value="1"><?php echo $text_enabled; ?></option>
-            <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-            <?php } ?>
-          </select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-        <div class="col-sm-10">
-          <input type="text" name="cod_sort_order" value="<?php echo $cod_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
-        </div>
-      </div>
-    </form>
+    </div>
   </div>
 </div>
 <?php echo $footer; ?> 

@@ -24,57 +24,64 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-attribute">
-      <div class="table-responsive">
-        <table class="table table-striped table-hover">
-          <thead>
-            <tr>
-              <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-              <td class="text-left"><?php if ($sort == 'ad.name') { ?>
-                <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
-                <?php } ?></td>
-              <td class="text-left"><?php if ($sort == 'attribute_group') { ?>
-                <a href="<?php echo $sort_attribute_group; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_attribute_group; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_attribute_group; ?>"><?php echo $column_attribute_group; ?></a>
-                <?php } ?></td>
-              <td class="text-right"><?php if ($sort == 'a.sort_order') { ?>
-                <a href="<?php echo $sort_sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_sort_order; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_sort_order; ?>"><?php echo $column_sort_order; ?></a>
-                <?php } ?></td>
-              <td class="text-right"><?php echo $column_action; ?></td>
-            </tr>
-          </thead>
-          <tbody>
-            <?php if ($attributes) { ?>
-            <?php foreach ($attributes as $attribute) { ?>
-            <tr>
-              <td class="text-center"><?php if (in_array($attribute['attribute_id'], $selected)) { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $attribute['attribute_id']; ?>" checked="checked" />
-                <?php } else { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $attribute['attribute_id']; ?>" />
-                <?php } ?></td>
-              <td class="text-left"><?php echo $attribute['name']; ?></td>
-              <td class="text-left"><?php echo $attribute['attribute_group']; ?></td>
-              <td class="text-right"><?php echo $attribute['sort_order']; ?></td>
-              <td class="text-right"><a href="<?php echo $attribute['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
-            </tr>
-            <?php } ?>
-            <?php } else { ?>
-            <tr>
-              <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
-            </tr>
-            <?php } ?>
-          </tbody>
-        </table>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?> List</h3>
       </div>
-    </form>
-    <div class="row">
-      <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
-      <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+      <div class="panel-body">
+        <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-attribute">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                  <td class="text-left"><?php if ($sort == 'ad.name') { ?>
+                    <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
+                    <?php } else { ?>
+                    <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
+                    <?php } ?></td>
+                  <td class="text-left"><?php if ($sort == 'attribute_group') { ?>
+                    <a href="<?php echo $sort_attribute_group; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_attribute_group; ?></a>
+                    <?php } else { ?>
+                    <a href="<?php echo $sort_attribute_group; ?>"><?php echo $column_attribute_group; ?></a>
+                    <?php } ?></td>
+                  <td class="text-right"><?php if ($sort == 'a.sort_order') { ?>
+                    <a href="<?php echo $sort_sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_sort_order; ?></a>
+                    <?php } else { ?>
+                    <a href="<?php echo $sort_sort_order; ?>"><?php echo $column_sort_order; ?></a>
+                    <?php } ?></td>
+                  <td class="text-right"><?php echo $column_action; ?></td>
+                </tr>
+              </thead>
+              <tbody>
+                <?php if ($attributes) { ?>
+                <?php foreach ($attributes as $attribute) { ?>
+                <tr>
+                  <td class="text-center"><?php if (in_array($attribute['attribute_id'], $selected)) { ?>
+                    <input type="checkbox" name="selected[]" value="<?php echo $attribute['attribute_id']; ?>" checked="checked" />
+                    <?php } else { ?>
+                    <input type="checkbox" name="selected[]" value="<?php echo $attribute['attribute_id']; ?>" />
+                    <?php } ?></td>
+                  <td class="text-left"><?php echo $attribute['name']; ?></td>
+                  <td class="text-left"><?php echo $attribute['attribute_group']; ?></td>
+                  <td class="text-right"><?php echo $attribute['sort_order']; ?></td>
+                  <td class="text-right"><a href="<?php echo $attribute['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                </tr>
+                <?php } ?>
+                <?php } else { ?>
+                <tr>
+                  <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
+                </tr>
+                <?php } ?>
+              </tbody>
+            </table>
+          </div>
+        </form>
+        <div class="row">
+          <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+          <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -19,45 +19,51 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-download" class="form-horizontal">
-      <div class="form-group required">
-        <label class="col-sm-2 control-label"><?php echo $entry_name; ?></label>
-        <div class="col-sm-10">
-          <?php foreach ($languages as $language) { ?>
-          <div class="input-group"> <span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
-            <input type="text" name="download_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($download_description[$language['language_id']]) ? $download_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
+      </div>
+      <div class="panel-body">
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-download" class="form-horizontal">
+          <div class="form-group required">
+            <label class="col-sm-2 control-label"><?php echo $entry_name; ?></label>
+            <div class="col-sm-10">
+              <?php foreach ($languages as $language) { ?>
+              <div class="input-group"> <span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
+                <input type="text" name="download_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($download_description[$language['language_id']]) ? $download_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
+              </div>
+              <?php if (isset($error_name[$language['language_id']])) { ?>
+              <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
+              <?php } ?>
+              <?php } ?>
+            </div>
           </div>
-          <?php if (isset($error_name[$language['language_id']])) { ?>
-          <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
-          <?php } ?>
-          <?php } ?>
-        </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-filename"><span data-toggle="tooltip" title="<?php echo $help_filename; ?>"><?php echo $entry_filename; ?></span></label>
+            <div class="col-sm-10">
+              <div class="input-group">
+                <input type="text" name="filename" value="<?php echo $filename; ?>" placeholder="<?php echo $entry_filename; ?>" id="input-filename" class="form-control" />
+                <span class="input-group-btn">
+                <button type="button" id="button-upload" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+                </span> </div>
+              <?php if ($error_filename) { ?>
+              <div class="text-danger"><?php echo $error_filename; ?></div>
+              <?php } ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-mask"><span data-toggle="tooltip" title="<?php echo $help_mask; ?>"><?php echo $entry_mask; ?></span></label>
+            <div class="col-sm-10">
+              <input type="text" name="mask" value="<?php echo $mask; ?>" placeholder="<?php echo $entry_mask; ?>" id="input-mask" class="form-control" />
+              <?php if ($error_mask) { ?>
+              <div class="text-danger"><?php echo $error_mask; ?></div>
+              <?php } ?>
+            </div>
+          </div>
+        </form>
       </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-filename"><span data-toggle="tooltip" title="<?php echo $help_filename; ?>"><?php echo $entry_filename; ?></span></label>
-        <div class="col-sm-10">
-          <div class="input-group">
-            <input type="text" name="filename" value="<?php echo $filename; ?>" placeholder="<?php echo $entry_filename; ?>" id="input-filename" class="form-control" />
-            <span class="input-group-btn">
-            <button type="button" id="button-upload" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
-            </span> </div>
-          <?php if ($error_filename) { ?>
-          <div class="text-danger"><?php echo $error_filename; ?></div>
-          <?php } ?>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label" for="input-mask"><span data-toggle="tooltip" title="<?php echo $help_mask; ?>"><?php echo $entry_mask; ?></span></label>
-        <div class="col-sm-10">
-          <input type="text" name="mask" value="<?php echo $mask; ?>" placeholder="<?php echo $entry_mask; ?>" id="input-mask" class="form-control" />
-          <?php if ($error_mask) { ?>
-          <div class="text-danger"><?php echo $error_mask; ?></div>
-          <?php } ?>
-        </div>
-      </div>
-    </form>
+    </div>
   </div>
-</div>
 <script type="text/javascript"><!--
 $('#button-upload').on('click', function() {
 	$('#form-upload').remove();
@@ -99,5 +105,5 @@ $('#button-upload').on('click', function() {
 		});
 	});
 });
-//--></script> 
+//--></script></div> 
 <?php echo $footer; ?>

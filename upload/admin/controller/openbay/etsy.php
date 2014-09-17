@@ -4,7 +4,7 @@ class ControllerOpenbayEtsy extends Controller {
 		$this->load->language('openbay/etsy');
 		$this->load->model('openbay/etsy');
 		$this->load->model('setting/setting');
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 		$this->load->model('tool/event');
 
 		$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'openbay/etsy_product');
@@ -20,11 +20,11 @@ class ControllerOpenbayEtsy extends Controller {
 	public function uninstall() {
 		$this->load->model('openbay/etsy');
 		$this->load->model('setting/setting');
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 		$this->load->model('tool/event');
 
 		$this->model_openbay_etsy->uninstall();
-		$this->model_setting_extension->uninstall('openbay', $this->request->get['extension']);
+		$this->model_extension_extension->uninstall('openbay', $this->request->get['extension']);
 		$this->model_setting_setting->deleteSetting($this->request->get['extension']);
 	}
 

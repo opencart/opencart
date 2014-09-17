@@ -1,16 +1,22 @@
 <?php
-class ControllerModuleHTMLContent extends Controller {
+class ControllerModuleHTML extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/html_content');
+		$this->load->language('module/html');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/setting');
 
+		$this->load->model('extension/module');
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('html_content', $this->request->post);
+			$this->model_setting_setting->editSetting('html', $this->request->post);
+
+			foreach ($this->request->post['html_module'] as $module) {
+				$this->model_setting_setting->addModule('html', $this->request->post);
+			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -60,10 +66,10 @@ class ControllerModuleHTMLContent extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/html_content', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('module/html', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
-		$data['action'] = $this->url->link('module/html_content', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('module/html', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
@@ -71,10 +77,10 @@ class ControllerModuleHTMLContent extends Controller {
 
 		$data['modules'] = array();
 
-		if (isset($this->request->post['html_content_module'])) {
-			$data['modules'] = $this->request->post['html_content_module'];
-		} elseif ($this->config->get('html_content_module')) {
-			$data['modules'] = $this->config->get('html_content_module');
+		if (isset($this->request->post['html_module'])) {
+			$data['modules'] = $this->request->post['html_module'];
+		} elseif ($this->config->get('html_module')) {
+			$data['modules'] = $this->config->get('html_module');
 		}
 
 		$this->load->model('design/layout');
@@ -89,11 +95,11 @@ class ControllerModuleHTMLContent extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/html_content.tpl', $data));
+		$this->response->setOutput($this->load->view('module/html.tpl', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/html_content')) {
+		if (!$this->user->hasPermission('modify', 'module/html')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

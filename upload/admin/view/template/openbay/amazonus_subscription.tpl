@@ -20,7 +20,7 @@
     <?php } else { ?>
     <div class="row">
       <div class="col-md-4">
-        <div class="panel panel-default">
+        <div class="panel panel-primary">
           <div class="panel-heading">
             <h1 class="panel-title"><i class="fa fa-user"></i> <?php echo $text_current_plan; ?></h1>
           </div>
@@ -77,7 +77,7 @@
         </div>
       </div>
       <div class="col-md-8">
-        <div class="panel panel-default">
+        <div class="panel panel-primary">
           <div class="panel-heading">
             <h1 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_available_plans; ?></h1>
           </div>

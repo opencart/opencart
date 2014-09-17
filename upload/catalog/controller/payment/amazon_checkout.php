@@ -127,7 +127,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 	}
 
 	public function confirm() {
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 		$this->load->model('account/address');
 		$this->load->model('account/custom_field');
 		$this->load->model('payment/amazon_checkout');
@@ -198,7 +198,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 		$this->session->data['shipping_method'] = $this->session->data['cba']['shipping_method'];
 
-		$results = $this->model_setting_extension->getExtensions('total');
+		$results = $this->model_extension_extension->getExtensions('total');
 
 		foreach ($results as $key => $value) {
 			if (isset($value['code'])) {
@@ -538,7 +538,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$this->load->library('cba');
 		$this->load->model('checkout/order');
 		$this->load->model('checkout/coupon');
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 		$this->load->model('account/order');
 		$this->load->model('payment/amazon_checkout');
 		$this->load->language('payment/amazon_checkout');
@@ -754,7 +754,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 	}
 
 	public function shippingQuotes() {
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
 		$this->load->library('cba');
 		$this->load->model('payment/amazon_checkout');
@@ -835,7 +835,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 			$quotes = array();
 
-			$results = $this->model_setting_extension->getExtensions('shipping');
+			$results = $this->model_extension_extension->getExtensions('shipping');
 
 			foreach ($results as $result) {
 

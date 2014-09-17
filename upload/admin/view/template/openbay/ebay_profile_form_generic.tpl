@@ -10,7 +10,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel panel-default">
+  <div class="panel panel-primary">
     <div class="panel-heading">
       <div class="pull-right">
         <a data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-default" onclick="$('#form').submit();"><i class="fa fa-check-circle"></i></a>

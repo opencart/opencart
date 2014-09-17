@@ -21,13 +21,13 @@
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_message; ?></div>
     <?php } ?>
     <?php } ?>
-    <div class="panel panel-default">
+    <div class="panel panel-primary">
       <div class="panel-body">
         <div class="row">
           <div class="col-md-6">
             <div class="row">
               <div class="col-md-12">
-                <table class="table table-striped table-hover">
+                <table class="table table-bordered table-hover">
                   <thead>
                     <tr>
                       <td class="text-left" width="60%"><?php echo $column_name; ?></td>

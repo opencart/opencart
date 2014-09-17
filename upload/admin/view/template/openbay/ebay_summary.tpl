@@ -5,7 +5,7 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <div class="panel panel-default">
+  <div class="panel panel-primary">
     <div class="panel-heading">
       <div class="pull-right">
         <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $button_back; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
@@ -20,7 +20,7 @@
       </div>
       <div class="row">
         <div class="col-md-4">
-          <div class="panel panel-default dsr-table">
+          <div class="panel panel-primary dsr-table">
             <div class="panel-heading">
               <h1 class="panel-title"><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $text_report_30; ?></h1>
             </div>
@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="col-md-4">
-          <div class="panel panel-default dsr-table">
+          <div class="panel panel-primary dsr-table">
             <div class="panel-heading">
               <h1 class="panel-title"><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $text_report_52; ?></h1>
             </div>

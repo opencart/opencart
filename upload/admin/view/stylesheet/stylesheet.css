@@ -17,6 +17,7 @@ h1, h2, h3, h4, h5, h6, p {
 	vertical-align: middle;
 	margin: 15px 0;
 	padding: 0;
+	border-bottom: none;
 }
 .page-header h1 {
 	font-family: 'Open Sans', sans-serif;
@@ -367,7 +368,20 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	color: #333;
 }
 
+/*
+.form-horizontal .form-group {
+	padding-left: 0;
+	padding-right: 0;
+	margin-bottom: 0;
+	margin-left: 0;
+	margin-right: 0;
+	 
+}
 
+.form-group + .form-group {
+	border-top: 1px solid #ededed;
+}
+*/
 .form-control:hover {
 	border: 1px solid #b9b9b9;
 	border-top-color: #a0a0a0;

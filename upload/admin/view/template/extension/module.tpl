@@ -21,13 +21,16 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <div class="panel panel-default">
+     <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_layout; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>   
+    <div class="panel panel-primary">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
       </div>
       <div class="panel-body">
         <div class="table-responsive">
-          <table class="table table-striped table-hover">
+          <table class="table table-bordered table-hover">
             <thead>
               <tr>
                 <td class="text-left"><?php echo $column_name; ?></td>

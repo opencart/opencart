@@ -12,7 +12,7 @@ class ControllerCheckoutPaymentMethod extends Controller {
 
 			$this->load->model('setting/extension');
 
-			$results = $this->model_setting_extension->getExtensions('payment');
+			$results = $this->model_extension_extension->getExtensions('payment');
 
 			$recurring = $this->cart->hasRecurringProducts();
 

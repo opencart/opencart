@@ -7,7 +7,7 @@ class ControllerExtensionFeed extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
 		$this->getList();
 	}
@@ -17,10 +17,10 @@ class ControllerExtensionFeed extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
 		if ($this->validate()) {
-			$this->model_setting_extension->install('feed', $this->request->get['extension']);
+			$this->model_extension_extension->install('feed', $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
 
@@ -43,10 +43,10 @@ class ControllerExtensionFeed extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
 		if ($this->validate()) {
-			$this->model_setting_extension->uninstall('feed', $this->request->get['extension']);
+			$this->model_extension_extension->uninstall('feed', $this->request->get['extension']);
 
 			$this->load->model('setting/setting');
 
@@ -101,11 +101,11 @@ class ControllerExtensionFeed extends Controller {
 			$data['success'] = '';
 		}
 
-		$extensions = $this->model_setting_extension->getInstalled('feed');
+		$extensions = $this->model_extension_extension->getInstalled('feed');
 
 		foreach ($extensions as $key => $value) {
 			if (!file_exists(DIR_APPLICATION . 'controller/feed/' . $value . '.php')) {
-				$this->model_setting_extension->uninstall('feed', $value);
+				$this->model_extension_extension->uninstall('feed', $value);
 
 				unset($extensions[$key]);
 			}

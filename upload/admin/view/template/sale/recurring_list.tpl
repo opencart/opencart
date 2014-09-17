@@ -21,7 +21,7 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <div class="panel panel-default">
+    <div class="panel panel-primary">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
       </div>
@@ -75,7 +75,7 @@
         </div>
         <form action="" method="post" enctype="multipart/form-data" id="form">
           <div class="table-responsive">
-            <table class="table table-striped table-hover">
+            <table class="table table-bordered table-hover">
               <thead>
                 <tr>
                   <td width="10" class="text-left"><?php if ($sort == 'or.order_recurring_id') { ?>

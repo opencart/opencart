@@ -7,7 +7,7 @@ class ControllerExtensionShipping extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
 		$this->getList();
 	}
@@ -17,10 +17,10 @@ class ControllerExtensionShipping extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
 		if ($this->validate()) {
-			$this->model_setting_extension->install('shipping', $this->request->get['extension']);
+			$this->model_extension_extension->install('shipping', $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
 
@@ -43,10 +43,10 @@ class ControllerExtensionShipping extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
 		if ($this->validate()) {
-			$this->model_setting_extension->uninstall('shipping', $this->request->get['extension']);
+			$this->model_extension_extension->uninstall('shipping', $this->request->get['extension']);
 
 			$this->load->model('setting/setting');
 
@@ -104,13 +104,13 @@ class ControllerExtensionShipping extends Controller {
 			$data['success'] = '';
 		}
 
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
-		$extensions = $this->model_setting_extension->getInstalled('shipping');
+		$extensions = $this->model_extension_extension->getInstalled('shipping');
 
 		foreach ($extensions as $key => $value) {
 			if (!file_exists(DIR_APPLICATION . 'controller/shipping/' . $value . '.php')) {
-				$this->model_setting_extension->uninstall('shipping', $value);
+				$this->model_extension_extension->uninstall('shipping', $value);
 
 				unset($extensions[$key]);
 			}

@@ -38,9 +38,9 @@ class ControllerCommonColumnLeft extends Controller {
 
 		$module_data = array();
 
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
-		$extensions = $this->model_setting_extension->getExtensions('module');
+		$extensions = $this->model_extension_extension->getExtensions('module');
 
 		foreach ($extensions as $extension) {
 			$modules = $this->config->get($extension['code'] . '_module');

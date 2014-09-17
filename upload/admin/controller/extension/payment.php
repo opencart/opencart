@@ -7,7 +7,7 @@ class ControllerExtensionPayment extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
 		$this->getList();
 	}
@@ -15,10 +15,10 @@ class ControllerExtensionPayment extends Controller {
 	public function install() {
 		$this->load->language('extension/payment');
 
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
 		if ($this->validate()) {
-			$this->model_setting_extension->install('payment', $this->request->get['extension']);
+			$this->model_extension_extension->install('payment', $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
 
@@ -41,10 +41,10 @@ class ControllerExtensionPayment extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
 		if ($this->validate()) {
-			$this->model_setting_extension->uninstall('payment', $this->request->get['extension']);
+			$this->model_extension_extension->uninstall('payment', $this->request->get['extension']);
 
 			$this->load->model('setting/setting');
 
@@ -102,13 +102,13 @@ class ControllerExtensionPayment extends Controller {
 			$data['success'] = '';
 		}
 
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
-		$extensions = $this->model_setting_extension->getInstalled('payment');
+		$extensions = $this->model_extension_extension->getInstalled('payment');
 
 		foreach ($extensions as $key => $value) {
 			if (!file_exists(DIR_APPLICATION . 'controller/payment/' . $value . '.php')) {
-				$this->model_setting_extension->uninstall('payment', $value);
+				$this->model_extension_extension->uninstall('payment', $value);
 
 				unset($extensions[$key]);
 			}

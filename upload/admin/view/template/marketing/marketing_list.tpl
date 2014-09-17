@@ -24,7 +24,7 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <div class="panel panel-default">
+    <div class="panel panel-primary">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
       </div>
@@ -56,7 +56,7 @@
         </div>
         <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-marketing">
           <div class="table-responsive">
-            <table class="table table-striped table-hover">
+            <table class="table table-bordered table-hover">
               <thead>
                 <tr>
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>

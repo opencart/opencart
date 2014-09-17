@@ -263,6 +263,9 @@ class ControllerDesignLayout extends Controller {
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_store'] = $this->language->get('entry_store');
 		$data['entry_route'] = $this->language->get('entry_route');
+		$data['entry_position'] = $this->language->get('entry_position');
+		$data['entry_status'] = $this->language->get('entry_status');
+		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -337,6 +340,30 @@ class ControllerDesignLayout extends Controller {
 			$data['layout_routes'] = $this->model_design_layout->getLayoutRoutes($this->request->get['layout_id']);
 		} else {
 			$data['layout_routes'] = array();
+		}
+		
+		if (isset($this->request->post['layout_module'])) {
+			$data['layout_routes'] = $this->request->post['layout_module'];
+		} elseif (isset($this->request->get['layout_id'])) {
+			$data['layout_modules'] = $this->model_design_layout->getLayoutModules($this->request->get['layout_id']);
+		} else {
+			$data['layout_modules'] = array();
+		}
+		
+		$this->load->model('extension/module');
+		
+		$data['modules'] = array();
+		
+		$modules = $this->model_extension_module->getModules();
+
+		foreach ($modules as $module) {
+			if ($this->load) {
+				$data['modules'] = array(
+					'module_id' => '',
+					'name'      => '',
+					'code'      => ''
+				);
+			}
 		}
 
 		$data['header'] = $this->load->controller('common/header');

@@ -5,10 +5,6 @@ $_['heading_title']        = 'Log In with PayPal';
 //Text
 $_['text_module']          = 'Modules';
 $_['text_success']         = 'Success: You have modified module Log In with PayPal!';
-$_['text_content_top']     = 'Content Top';
-$_['text_content_bottom']  = 'Content Bottom';
-$_['text_column_left']     = 'Column Left';
-$_['text_column_right']    = 'Column Right';
 $_['text_grey_button']     = 'Grey';
 $_['text_blue_button']     = 'Blue (Recommended)';
 
@@ -22,10 +18,6 @@ $_['entry_button']         = 'Button Colour';
 $_['entry_seamless']       = 'Allow "Seamless Checkout"';
 $_['entry_locale']         = 'Locale';
 $_['entry_return_url']     = 'Return URL';
-$_['entry_layout']         = 'Layout';
-$_['entry_position']       = 'Position';
-$_['entry_status']         = 'Status';
-$_['entry_sort_order']     = 'Sort Order';
 
 //Help
 $_['help_sandbox']         = 'Use sandbox (testing) environment?';

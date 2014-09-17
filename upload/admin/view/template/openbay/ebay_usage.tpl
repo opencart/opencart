@@ -5,7 +5,7 @@
       <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <div class="panel panel-default">
+  <div class="panel panel-primary">
     <div class="panel-heading">
       <div class="pull-right">
         <a data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn btn-default" onclick="loadUsage();"><i class="fa fa-cog fa-lg"></i></a>

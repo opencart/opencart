@@ -62,6 +62,7 @@ $_['button_product_add']            = 'Add Product';
 $_['button_filter_add']             = 'Add Filter';
 $_['button_option_add']             = 'Add Option';
 $_['button_option_value_add']       = 'Add Option Value';
+$_['button_recurring_add']          = 'Add Recurring';
 $_['button_discount_add']           = 'Add Discount';
 $_['button_special_add']            = 'Add Special';
 $_['button_image_add']              = 'Add Image';
@@ -95,6 +96,7 @@ $_['button_payment']                = 'Apply Payment Method';
 $_['button_coupon']                 = 'Apply Coupon';
 $_['button_voucher']                = 'Apply Voucher';
 $_['button_reward']                 = 'Apply Points';
+
 
 // Tab
 $_['tab_address']                   = 'Address';

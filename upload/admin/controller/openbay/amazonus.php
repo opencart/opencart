@@ -3,7 +3,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	public function install() {
 		$this->load->model('openbay/amazonus');
 		$this->load->model('setting/setting');
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 		$this->load->model('tool/event');
 
 		$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'openbay/amazonus_listing');
@@ -17,11 +17,11 @@ class ControllerOpenbayAmazonus extends Controller {
 	public function uninstall() {
 		$this->load->model('openbay/amazonus');
 		$this->load->model('setting/setting');
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 		$this->load->model('tool/event');
 
 		$this->model_openbay_amazonus->uninstall();
-		$this->model_setting_extension->uninstall('openbay', $this->request->get['extension']);
+		$this->model_extension_extension->uninstall('openbay', $this->request->get['extension']);
 		$this->model_setting_setting->deleteSetting($this->request->get['extension']);
 	}
 

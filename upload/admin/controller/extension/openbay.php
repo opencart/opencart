@@ -5,14 +5,14 @@ class ControllerExtensionOpenbay extends Controller {
 	public function install() {
 		$this->load->language('extension/openbay');
 
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
 		if (!$this->user->hasPermission('modify', 'extension/openbay')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
 
 			$this->response->redirect($this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'));
 		} else {
-			$this->model_setting_extension->install('openbay', $this->request->get['extension']);
+			$this->model_extension_extension->install('openbay', $this->request->get['extension']);
 
 			$this->session->data['success'] = $this->language->get('text_install_success');
 
@@ -37,7 +37,7 @@ class ControllerExtensionOpenbay extends Controller {
 	public function uninstall() {
 		$this->load->language('extension/openbay');
 
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
 		if (!$this->user->hasPermission('modify', 'extension/openbay')) {
 			$this->session->data['error'] = $this->language->get('error_permission');
@@ -48,10 +48,10 @@ class ControllerExtensionOpenbay extends Controller {
 
 			require_once(DIR_APPLICATION . 'controller/openbay/' . $this->request->get['extension'] . '.php');
 
-			$this->load->model('setting/extension');
+			$this->load->model('extension/extension');
 			$this->load->model('setting/setting');
 
-			$this->model_setting_extension->uninstall('openbay', $this->request->get['extension']);
+			$this->model_extension_extension->uninstall('openbay', $this->request->get['extension']);
 			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
 
 			$class = 'ControllerOpenbay' . str_replace('_', '', $this->request->get['extension']);
@@ -67,7 +67,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 	public function index() {
 		$this->load->model('openbay/openbay');
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 		$this->load->model('setting/setting');
 		$this->load->model('openbay/version');
 
@@ -105,11 +105,11 @@ class ControllerExtensionOpenbay extends Controller {
 			unset($this->session->data['error']);
 		}
 
-		$extensions = $this->model_setting_extension->getInstalled('openbay');
+		$extensions = $this->model_extension_extension->getInstalled('openbay');
 
 		foreach ($extensions as $key => $value) {
 			if (!file_exists(DIR_APPLICATION . 'controller/openbay/' . $value . '.php')) {
-				$this->model_setting_extension->uninstall('openbay', $value);
+				$this->model_extension_extension->uninstall('openbay', $value);
 				unset($extensions[$key]);
 			}
 		}
@@ -319,7 +319,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->load->model('openbay/ebay_patch');
 		$this->load->model('openbay/amazon_patch');
 		$this->load->model('openbay/amazonus_patch');
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 		$this->load->model('setting/setting');
 		$this->load->model('user/user_group');
 		$this->load->model('openbay/version');
@@ -333,10 +333,10 @@ class ControllerExtensionOpenbay extends Controller {
 		$openbaymanager['openbay_menu'] = 1;
 		$this->model_setting_setting->editSetting('openbaymanager', $openbaymanager);
 
-		$installed_modules = $this->model_setting_extension->getInstalled('module');
+		$installed_modules = $this->model_extension_extension->getInstalled('module');
 
 		if (!in_array('openbaypro', $installed_modules)) {
-			$this->model_setting_extension->install('module', 'openbaypro');
+			$this->model_extension_extension->install('module', 'openbaypro');
 			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'module/openbaypro');
 			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'module/openbaypro');
 		}

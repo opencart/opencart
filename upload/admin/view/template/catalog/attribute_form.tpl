@@ -19,45 +19,47 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <div class="panel panel-default">
+    <div class="panel panel-primary">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_edit; ?></h3>
       </div>
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-attribute" class="form-horizontal">
-        <div class="form-group required">
-          <label class="col-sm-2 control-label"><?php echo $entry_name; ?></label>
-          <div class="col-sm-10">
-            <?php foreach ($languages as $language) { ?>
-            <div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
-              <input type="text" name="attribute_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($attribute_description[$language['language_id']]) ? $attribute_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
+      <div class="panel-body">
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-attribute" class="form-horizontal">
+          <div class="form-group required">
+            <label class="col-sm-2 control-label"><?php echo $entry_name; ?></label>
+            <div class="col-sm-10">
+              <?php foreach ($languages as $language) { ?>
+              <div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
+                <input type="text" name="attribute_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($attribute_description[$language['language_id']]) ? $attribute_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
+              </div>
+              <?php if (isset($error_name[$language['language_id']])) { ?>
+              <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
+              <?php } ?>
+              <?php } ?>
             </div>
-            <?php if (isset($error_name[$language['language_id']])) { ?>
-            <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
-            <?php } ?>
-            <?php } ?>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-attribute-group"><?php echo $entry_attribute_group; ?></label>
-          <div class="col-sm-10">
-            <select name="attribute_group_id" id="input-attribute-group" class="form-control">
-              <?php foreach ($attribute_groups as $attribute_group) { ?>
-              <?php if ($attribute_group['attribute_group_id'] == $attribute_group_id) { ?>
-              <option value="<?php echo $attribute_group['attribute_group_id']; ?>" selected="selected"><?php echo $attribute_group['name']; ?></option>
-              <?php } else { ?>
-              <option value="<?php echo $attribute_group['attribute_group_id']; ?>"><?php echo $attribute_group['name']; ?></option>
-              <?php } ?>
-              <?php } ?>
-            </select>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-attribute-group"><?php echo $entry_attribute_group; ?></label>
+            <div class="col-sm-10">
+              <select name="attribute_group_id" id="input-attribute-group" class="form-control">
+                <?php foreach ($attribute_groups as $attribute_group) { ?>
+                <?php if ($attribute_group['attribute_group_id'] == $attribute_group_id) { ?>
+                <option value="<?php echo $attribute_group['attribute_group_id']; ?>" selected="selected"><?php echo $attribute_group['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $attribute_group['attribute_group_id']; ?>"><?php echo $attribute_group['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select>
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-          <div class="col-sm-10">
-            <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
 </div>

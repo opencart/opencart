@@ -183,6 +183,7 @@ class ControllerCatalogAttribute extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
+		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
@@ -263,6 +264,9 @@ class ControllerCatalogAttribute extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
+		
+		$data['text_add'] = $this->language->get('text_add');
+		$data['text_edit'] = $this->language->get('text_edit');
 
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_attribute_group'] = $this->language->get('entry_attribute_group');

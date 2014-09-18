@@ -1,5 +1,5 @@
 <?php
-class ModelSettingModification extends Model {
+class ModelExtensionModification extends Model {
 	public function addModification($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "modification SET name = '" . $this->db->escape($data['name']) . "', author = '" . $this->db->escape($data['author']) . "', version = '" . $this->db->escape($data['version']) . "', link = '" . $this->db->escape($data['link']) . "', code = '" . $this->db->escape($data['code']) . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
 	}

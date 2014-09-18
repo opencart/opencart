@@ -12,7 +12,7 @@ class ControllerExtensionModification extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/modification');
+		$this->load->model('extension/modification');
 
 		$this->getList();
 	}
@@ -22,11 +22,11 @@ class ControllerExtensionModification extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/modification');
+		$this->load->model('extension/modification');
 
 		if (isset($this->request->post['selected']) && $this->validate()) {
 			foreach ($this->request->post['selected'] as $modification_id) {
-				$this->model_setting_modification->deleteModification($modification_id);
+				$this->model_extension_modification->deleteModification($modification_id);
 			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -56,7 +56,7 @@ class ControllerExtensionModification extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/modification');
+		$this->load->model('extension/modification');
 
 		if ($this->validate()) {
 			//Log
@@ -80,7 +80,7 @@ class ControllerExtensionModification extends Controller {
 			$xml[] = file_get_contents(DIR_SYSTEM . 'modification.xml');
 
 			// Get the default modification file
-			$results = $this->model_setting_modification->getModifications();
+			$results = $this->model_extension_modification->getModifications();
 
 			foreach ($results as $result) {
 				if ($result['status']) {
@@ -315,7 +315,7 @@ class ControllerExtensionModification extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/modification');
+		$this->load->model('extension/modification');
 
 		if ($this->validate()) {
 			// Make path into an array
@@ -380,10 +380,10 @@ class ControllerExtensionModification extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/modification');
+		$this->load->model('extension/modification');
 
 		if (isset($this->request->get['modification_id']) && $this->validate()) {
-			$this->model_setting_modification->enableModification($this->request->get['modification_id']);
+			$this->model_extension_modification->enableModification($this->request->get['modification_id']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -412,10 +412,10 @@ class ControllerExtensionModification extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/modification');
+		$this->load->model('extension/modification');
 
 		if (isset($this->request->get['modification_id']) && $this->validate()) {
-			$this->model_setting_modification->disableModification($this->request->get['modification_id']);
+			$this->model_extension_modification->disableModification($this->request->get['modification_id']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -527,9 +527,9 @@ class ControllerExtensionModification extends Controller {
 			'limit' => $this->config->get('config_limit_admin')
 		);
 
-		$modification_total = $this->model_setting_modification->getTotalModifications();
+		$modification_total = $this->model_extension_modification->getTotalModifications();
 
-		$results = $this->model_setting_modification->getModifications($filter_data);
+		$results = $this->model_extension_modification->getModifications($filter_data);
 
 		foreach ($results as $result) {
 			$data['modifications'][] = array(

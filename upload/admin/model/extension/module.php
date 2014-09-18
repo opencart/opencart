@@ -8,8 +8,14 @@ class ModelExtensionModule extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "modification WHERE code = '" . $this->db->escape($code) . "'");
 	}	
 	
-	public function getModules($code) {
+	public function getModule($code) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "module WHERE code = '" . $this->db->escape($code) . "'");
+
+		return $query->rows;
+	}
+		
+	public function getModules() {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "module");
 
 		return $query->rows;
 	}

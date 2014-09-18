@@ -7,11 +7,14 @@ class ControllerModuleBanner extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/setting');
+		$this->load->model('extension/module');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('banner', $this->request->post);
-
+			
+			foreach ($this->request->post as $module) {
+				$this->model_extension_module->editSetting('module', $module);
+			}
+			
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
@@ -98,4 +101,10 @@ class ControllerModuleBanner extends Controller {
 
 		return !$this->error;
 	}
+	
+	public function uninstall() {
+		$this->load->model('extension/module');
+		
+		$this->model_extension_module->deleteModule('checkout_layout');
+	}	
 }

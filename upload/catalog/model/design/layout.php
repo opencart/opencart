@@ -9,4 +9,10 @@ class ModelDesignLayout extends Model {
 			return 0;
 		}
 	}
+	
+	public function getLayoutModules($layout_id, $position) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "layout_module lm LEFT JOIN " . DB_PREFIX . "module m ON (lm.module_id = m.module_id) WHERE lm.layout_id = '" . (int)$layout_id . "' AND lm.position = '" . $this->db->escape($position) . "' ORDER BY lm.sort_order");
+
+		return $query->rows;
+	}	
 }

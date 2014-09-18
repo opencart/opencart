@@ -108,7 +108,7 @@ class ControllerExtensionModule extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('module');
 
 		foreach ($extensions as $key => $value) {
-			if (!file_exists(DIR_APPLICATION . 'langage/module/' . $value . '.php')) {
+			if (!file_exists(DIR_APPLICATION . 'controller/module/' . $value . '.php')) {
 				$this->model_extension_extension->uninstall('module', $value);
 
 				unset($extensions[$key]);

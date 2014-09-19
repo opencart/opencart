@@ -9,7 +9,7 @@ class ControllerModuleInformation extends Controller {
 
 		$this->load->model('setting/setting');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if (($this->request->method() == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('information', $this->request->post);		
 
 			$this->session->data['success'] = $this->language->get('text_success');

@@ -70,7 +70,7 @@ class ControllerSaleContact extends Controller {
 
 		$json = array();
 
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+		if ($this->request->method() == 'POST') {
 			if (!$this->user->hasPermission('modify', 'sale/contact')) {
 				$json['error']['warning'] = $this->language->get('error_permission');
 			}

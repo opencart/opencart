@@ -102,7 +102,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 		/*
 		 * Perform updates to database if form is posted
 		 */
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$dataArray = $this->request->post;
 
 			$this->model_openbay_amazon->saveProduct($product_id, $dataArray);

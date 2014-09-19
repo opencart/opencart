@@ -24,7 +24,7 @@ class ControllerCommonReset extends Controller {
 		if ($user_info) {
 			$this->language->load('common/reset');
 
-			if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			if (($this->request->method() == 'POST') && $this->validate()) {
 				$this->model_user_user->editPassword($user_info['user_id'], $this->request->post['password']);
 
 				$this->session->data['success'] = $this->language->get('text_success');

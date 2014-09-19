@@ -1,7 +1,7 @@
 <?php
 class ControllerStep1 extends Controller {
 	public function index() {
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+		if ($this->request->method() == 'POST') {
 			$this->redirect($this->url->link('step_2'));
 		}	
 		

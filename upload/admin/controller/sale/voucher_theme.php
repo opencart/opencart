@@ -19,7 +19,7 @@ class ControllerSaleVoucherTheme extends Controller {
 
 		$this->load->model('sale/voucher_theme');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_sale_voucher_theme->addVoucherTheme($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerSaleVoucherTheme extends Controller {
 
 		$this->load->model('sale/voucher_theme');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_sale_voucher_theme->editVoucherTheme($this->request->get['voucher_theme_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -325,7 +325,7 @@ class ControllerSaleVoucherTheme extends Controller {
 
 		$this->data['cancel'] = $this->url->link('sale/voucher_theme', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['voucher_theme_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['voucher_theme_id']) && ($this->request->method() != 'POST')) {
 			$voucher_theme_info = $this->model_sale_voucher_theme->getVoucherTheme($this->request->get['voucher_theme_id']);
 		}
 

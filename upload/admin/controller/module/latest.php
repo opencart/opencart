@@ -9,7 +9,7 @@ class ControllerModuleLatest extends Controller {
 
 		$this->load->model('setting/setting');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if (($this->request->method() == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('latest', $this->request->post);		
 
 			$this->cache->delete('product');

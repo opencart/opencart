@@ -19,7 +19,7 @@ class ControllerCatalogAttributeGroup extends Controller {
 
 		$this->load->model('catalog/attribute_group');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_catalog_attribute_group->addAttributeGroup($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerCatalogAttributeGroup extends Controller {
 
 		$this->load->model('catalog/attribute_group');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_catalog_attribute_group->editAttributeGroup($this->request->get['attribute_group_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -318,7 +318,7 @@ class ControllerCatalogAttributeGroup extends Controller {
 
 		$this->data['cancel'] = $this->url->link('catalog/attribute_group', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['attribute_group_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['attribute_group_id']) && ($this->request->method() != 'POST')) {
 			$attribute_group_info = $this->model_catalog_attribute_group->getAttributeGroup($this->request->get['attribute_group_id']);
 		}
 

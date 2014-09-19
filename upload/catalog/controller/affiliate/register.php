@@ -15,7 +15,7 @@ class ControllerAffiliateRegister extends Controller {
 
 		$this->load->model('affiliate/affiliate');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if (($this->request->method() == 'POST') && $this->validate()) {
 			$this->model_affiliate_affiliate->addAffiliate($this->request->post);
 
 			$this->affiliate->login($this->request->post['email'], $this->request->post['password']);

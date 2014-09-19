@@ -19,7 +19,7 @@ class ControllerSaleCoupon extends Controller {
 
 		$this->load->model('sale/coupon');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_sale_coupon->addCoupon($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerSaleCoupon extends Controller {
 
 		$this->load->model('sale/coupon');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_sale_coupon->editCoupon($this->request->get['coupon_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -379,7 +379,7 @@ class ControllerSaleCoupon extends Controller {
 
 		$this->data['cancel'] = $this->url->link('sale/coupon', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['coupon_id']) && (!$this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['coupon_id']) && (!$this->request->method() != 'POST')) {
 			$coupon_info = $this->model_sale_coupon->getCoupon($this->request->get['coupon_id']);
 		}
 

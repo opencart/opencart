@@ -19,7 +19,7 @@ class ControllerSaleOrder extends Controller {
 
 		$this->load->model('sale/order');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_sale_order->addOrder($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -75,7 +75,7 @@ class ControllerSaleOrder extends Controller {
 
 		$this->load->model('sale/order');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_sale_order->editOrder($this->request->get['order_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -749,7 +749,7 @@ class ControllerSaleOrder extends Controller {
 
 		$this->data['cancel'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['order_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['order_id']) && ($this->request->method() != 'POST')) {
 			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
 		}
 
@@ -2160,7 +2160,7 @@ class ControllerSaleOrder extends Controller {
 
 		$this->load->model('sale/order');
 
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+		if ($this->request->method() == 'POST') {
 			if (!$this->user->hasPermission('modify', 'sale/order')) {
 				$this->data['error'] = $this->language->get('error_permission');
 			}
@@ -2286,7 +2286,7 @@ class ControllerSaleOrder extends Controller {
 
 		$json = array();
 
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+		if ($this->request->method() == 'POST') {
 			if (!empty($this->request->files['file']['name'])) {
 				$filename = html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8');
 

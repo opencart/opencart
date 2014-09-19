@@ -19,7 +19,7 @@ class ControllerLocalisationCurrency extends Controller {
 
 		$this->load->model('localisation/currency');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_localisation_currency->addCurrency($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerLocalisationCurrency extends Controller {
 
 		$this->load->model('localisation/currency');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_localisation_currency->editCurrency($this->request->get['currency_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -340,7 +340,7 @@ class ControllerLocalisationCurrency extends Controller {
 
 		$this->data['cancel'] = $this->url->link('localisation/currency', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['currency_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['currency_id']) && ($this->request->method() != 'POST')) {
 			$currency_info = $this->model_localisation_currency->getCurrency($this->request->get['currency_id']);
 		}
 

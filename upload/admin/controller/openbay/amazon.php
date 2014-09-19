@@ -251,7 +251,7 @@ class ControllerOpenbayAmazon extends Controller {
 			$settings['openbay_amazon_orders_marketplace_ids'] = $this->is_serialized($settings['openbay_amazon_orders_marketplace_ids']) ? (array)unserialize($settings['openbay_amazon_orders_marketplace_ids']) : $settings['openbay_amazon_orders_marketplace_ids'];
 		}
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if (($this->request->method() == 'POST') && $this->validate()) {
 
 			if (!isset($this->request->post['openbay_amazon_orders_marketplace_ids'])) {
 				$this->request->post['openbay_amazon_orders_marketplace_ids'] = array();

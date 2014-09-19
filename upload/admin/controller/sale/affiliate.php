@@ -19,7 +19,7 @@ class ControllerSaleAffiliate extends Controller {
 
 		$this->load->model('sale/affiliate');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_sale_affiliate->addAffiliate($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -71,7 +71,7 @@ class ControllerSaleAffiliate extends Controller {
 
 		$this->load->model('sale/affiliate');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_sale_affiliate->editAffiliate($this->request->get['affiliate_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -690,7 +690,7 @@ class ControllerSaleAffiliate extends Controller {
 
 		$this->data['cancel'] = $this->url->link('sale/affiliate', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['affiliate_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['affiliate_id']) && ($this->request->method() != 'POST')) {
 			$affiliate_info = $this->model_sale_affiliate->getAffiliate($this->request->get['affiliate_id']);
 		}
 
@@ -1039,7 +1039,7 @@ class ControllerSaleAffiliate extends Controller {
 
 		$this->load->model('sale/affiliate');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->user->hasPermission('modify', 'sale/affiliate')) { 
+		if (($this->request->method() == 'POST') && $this->user->hasPermission('modify', 'sale/affiliate')) { 
 			$this->model_sale_affiliate->addTransaction($this->request->get['affiliate_id'], $this->request->post['description'], $this->request->post['amount']);
 
 			$this->data['success'] = $this->language->get('text_success');
@@ -1047,7 +1047,7 @@ class ControllerSaleAffiliate extends Controller {
 			$this->data['success'] = '';
 		}
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && !$this->user->hasPermission('modify', 'sale/affiliate')) {
+		if (($this->request->method() == 'POST') && !$this->user->hasPermission('modify', 'sale/affiliate')) {
 			$this->data['error_warning'] = $this->language->get('error_permission');
 		} else {
 			$this->data['error_warning'] = '';

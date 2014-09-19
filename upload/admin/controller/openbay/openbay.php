@@ -85,7 +85,7 @@ class ControllerOpenbayOpenbay extends Controller {
 		$this->load->model('localisation/order_status');
 		$this->load->model('sale/customer_group');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+		if (($this->request->method() == 'POST') && ($this->validate())) {
 			$this->model_setting_setting->editSetting('openbay', $this->request->post);
 			$this->session->data['success'] = $this->language->get('lang_text_success');
 			$this->redirect($this->url->link('openbay/openbay&token=' . $this->session->data['token']));
@@ -1206,7 +1206,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	public function editSave() {
 
 
-		if ($this->checkConfig() == true && $this->request->server['REQUEST_METHOD'] == 'POST') {
+		if ($this->checkConfig() == true && $this->request->method() == 'POST') {
 
 			$this->load->model('openbay/ebay');
 
@@ -1544,7 +1544,7 @@ class ControllerOpenbayOpenbay extends Controller {
 		$this->load->model('openbay/ebay_template');
 		$this->load->model('catalog/product');
 
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+		if ($this->request->method() == 'POST') {
 			if ($this->checkConfig() == true) {
 				$this->model_openbay_ebay->logCategoryUsed($this->request->post['finalCat']);
 
@@ -1603,7 +1603,7 @@ class ControllerOpenbayOpenbay extends Controller {
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
 
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+		if ($this->request->method() == 'POST') {
 			if ($this->checkConfig() == true) {
 				$post = $this->request->post;
 				$data = array();
@@ -1768,7 +1768,7 @@ class ControllerOpenbayOpenbay extends Controller {
 		$this->load->model('openbay/ebay_template');
 		$this->load->model('catalog/product');
 
-		if ($this->checkConfig() == true && $this->request->server['REQUEST_METHOD'] == 'POST') {
+		if ($this->checkConfig() == true && $this->request->method() == 'POST') {
 			$data = $this->request->post;
 
 			if($data['template'] != 'None') {
@@ -1817,7 +1817,7 @@ class ControllerOpenbayOpenbay extends Controller {
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
 
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+		if ($this->request->method() == 'POST') {
 			if ($this->checkConfig() == true) {
 				$post = $this->request->post;
 				$data = array();

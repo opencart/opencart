@@ -19,7 +19,7 @@ class ControllerLocalisationGeoZone extends Controller {
 
 		$this->load->model('localisation/geo_zone');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_localisation_geo_zone->addGeoZone($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerLocalisationGeoZone extends Controller {
 
 		$this->load->model('localisation/geo_zone');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_localisation_geo_zone->editGeoZone($this->request->get['geo_zone_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -328,7 +328,7 @@ class ControllerLocalisationGeoZone extends Controller {
 
 		$this->data['cancel'] = $this->url->link('localisation/geo_zone', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['geo_zone_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['geo_zone_id']) && ($this->request->method() != 'POST')) {
 			$geo_zone_info = $this->model_localisation_geo_zone->getGeoZone($this->request->get['geo_zone_id']);
 		}
 

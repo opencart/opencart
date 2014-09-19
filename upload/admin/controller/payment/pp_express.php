@@ -13,7 +13,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$this->error = array();
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if (($this->request->method() == 'POST') && $this->validate()) {
 			unset($this->request->post['pp_express_module']);
 
 			$this->model_setting_setting->editSetting('pp_express', $this->request->post);

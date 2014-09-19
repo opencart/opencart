@@ -11,7 +11,7 @@ class ControllerCommonLogin extends Controller {
 			$this->redirect($this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) { 
+		if (($this->request->method() == 'POST') && $this->validate()) { 
 			$this->session->data['token'] = md5(mt_rand());
 
 			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0 || strpos($this->request->post['redirect'], HTTPS_SERVER) === 0 )) {

@@ -13,7 +13,7 @@ class ControllerAffiliatePassword extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if (($this->request->method() == 'POST') && $this->validate()) {
 			$this->load->model('affiliate/affiliate');
 
 			$this->model_affiliate_affiliate->editPassword($this->affiliate->getEmail(), $this->request->post['password']);

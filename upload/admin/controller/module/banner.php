@@ -31,6 +31,7 @@ class ControllerModuleBanner extends Controller {
 		$data['entry_height'] = $this->language->get('entry_height');
 		$data['entry_width'] = $this->language->get('entry_width');
 		$data['entry_height'] = $this->language->get('entry_height');
+		$data['entry_status'] = $this->language->get('entry_status');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');

@@ -23,11 +23,10 @@ class ControllerModuleStore extends Controller {
 		$data['text_no'] = $this->language->get('text_no');
 
 		$data['entry_admin'] = $this->language->get('entry_admin');
+		$data['entry_status'] = $this->language->get('entry_status');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_module_add'] = $this->language->get('button_module_add');
-		$data['button_remove'] = $this->language->get('button_remove');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -61,7 +60,13 @@ class ControllerModuleStore extends Controller {
 		} else {
 			$data['store_admin'] = $this->config->get('store_admin');
 		}
-
+		
+		if (isset($this->request->post['store_status'])) {
+			$data['store_status'] = $this->request->post['store_status'];
+		} else {
+			$data['store_status'] = $this->config->get('store_status');
+		}
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

@@ -336,9 +336,9 @@ class ControllerExtensionOpenbay extends Controller {
 		$installed_modules = $this->model_extension_extension->getInstalled('module');
 
 		if (!in_array('openbaypro', $installed_modules)) {
-			$this->model_extension_extension->install('module', 'openbaypro');
-			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'module/openbaypro');
-			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'module/openbaypro');
+			$this->model_extension_extension->install('feed', 'openbaypro');
+			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'feed/openbaypro');
+			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'feed/openbaypro');
 		}
 
 		sleep(1);

@@ -23,6 +23,7 @@ class ControllerModuleSlideshow extends Controller {
 		$data['entry_dimension'] = $this->language->get('entry_dimension');
 		$data['entry_width'] = $this->language->get('entry_width');
 		$data['entry_height'] = $this->language->get('entry_height');
+		$data['entry_status'] = $this->language->get('entry_status');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -70,9 +71,11 @@ class ControllerModuleSlideshow extends Controller {
 			$data['modules'] = $this->config->get('slideshow_module');
 		}
 
-		$this->load->model('design/banner');
-
-		$data['banners'] = $this->model_design_banner->getBanners();
+		if (isset($this->request->post['slideshow_status'])) {
+			$data['slideshow_status'] = $this->request->post['slideshow_status'];
+		} else {
+			$data['slideshow_status'] = $this->config->get('slideshow_status');
+		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

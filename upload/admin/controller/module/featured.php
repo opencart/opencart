@@ -24,6 +24,7 @@ class ControllerModuleFeatured extends Controller {
 		$data['entry_image'] = $this->language->get('entry_image');
 		$data['entry_width'] = $this->language->get('entry_width');
 		$data['entry_height'] = $this->language->get('entry_height');
+		$data['entry_status'] = $this->language->get('entry_status');
 
 		$data['help_product'] = $this->language->get('help_product');
 

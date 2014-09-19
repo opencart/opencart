@@ -1,7 +1,7 @@
 <?php
 class ModelReportMarketing extends Model {
 	public function getMarketing($data = array()) {
-		$sql = "SELECT m.marketing_id, m.name AS campaign, m.code, SUM(m.clicks) AS clicks, (SELECT COUNT(DISTINCT order_id) FROM `" . DB_PREFIX . "order` o1 WHERE o1.marketing_id = m.marketing_id";
+		$sql = "SELECT m.marketing_id, m.name AS campaign, m.code, m.clicks AS clicks, (SELECT COUNT(DISTINCT order_id) FROM `" . DB_PREFIX . "order` o1 WHERE o1.marketing_id = m.marketing_id";
 
 		if (!empty($data['filter_order_status_id'])) {
 			$sql .= " AND o1.order_status_id = '" . (int)$data['filter_order_status_id'] . "'";

@@ -19,7 +19,7 @@ class ControllerCatalogFilter extends Controller {
 
 		$this->load->model('catalog/filter');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_catalog_filter->addFilter($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerCatalogFilter extends Controller {
 
 		$this->load->model('catalog/filter');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_catalog_filter->editFilter($this->request->get['filter_group_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -327,7 +327,7 @@ class ControllerCatalogFilter extends Controller {
 
 		$this->data['cancel'] = $this->url->link('catalog/filter', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['filter_group_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['filter_group_id']) && ($this->request->method() != 'POST')) {
 			$filter_group_info = $this->model_catalog_filter->getFilterGroup($this->request->get['filter_group_id']);
 		}
 

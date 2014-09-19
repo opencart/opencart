@@ -19,7 +19,7 @@ class ControllerLocalisationReturnStatus extends Controller {
 
 		$this->load->model('localisation/return_status');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_localisation_return_status->addReturnStatus($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerLocalisationReturnStatus extends Controller {
 
 		$this->load->model('localisation/return_status');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_localisation_return_status->editReturnStatus($this->request->get['return_status_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');

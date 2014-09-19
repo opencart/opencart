@@ -246,7 +246,7 @@ class ControllerOpenbayAmazonus extends Controller {
 			$settings['openbay_amazonus_orders_marketplace_ids'] = $this->is_serialized($settings['openbay_amazonus_orders_marketplace_ids']) ? (array)unserialize($settings['openbay_amazonus_orders_marketplace_ids']) : $settings['openbay_amazonus_orders_marketplace_ids'];
 		}
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if (($this->request->method() == 'POST') && $this->validate()) {
 
 			if (!isset($this->request->post['openbay_amazonus_orders_marketplace_ids'])) {
 				$this->request->post['openbay_amazonus_orders_marketplace_ids'] = array();

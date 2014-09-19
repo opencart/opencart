@@ -165,7 +165,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+		if ($this->request->method() == 'POST') {
 			$this->model_setting_setting->editSetting('openbaymanager', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('lang_text_success');

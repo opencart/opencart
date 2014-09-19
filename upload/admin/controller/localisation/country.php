@@ -19,7 +19,7 @@ class ControllerLocalisationCountry extends Controller {
 
 		$this->load->model('localisation/country');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_localisation_country->addCountry($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerLocalisationCountry extends Controller {
 
 		$this->load->model('localisation/country');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_localisation_country->editCountry($this->request->get['country_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -330,7 +330,7 @@ class ControllerLocalisationCountry extends Controller {
 
 		$this->data['cancel'] = $this->url->link('localisation/country', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['country_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['country_id']) && ($this->request->method() != 'POST')) {
 			$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
 		}
 

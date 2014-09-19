@@ -19,7 +19,7 @@ class ControllerLocalisationWeightClass extends Controller {
 
 		$this->load->model('localisation/weight_class');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_localisation_weight_class->addWeightClass($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerLocalisationWeightClass extends Controller {
 
 		$this->load->model('localisation/weight_class');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_localisation_weight_class->editWeightClass($this->request->get['weight_class_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -328,7 +328,7 @@ class ControllerLocalisationWeightClass extends Controller {
 
 		$this->data['cancel'] = $this->url->link('localisation/weight_class', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['weight_class_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['weight_class_id']) && ($this->request->method() != 'POST')) {
 			$weight_class_info = $this->model_localisation_weight_class->getWeightClass($this->request->get['weight_class_id']);
 		}
 

@@ -93,7 +93,7 @@ class ControllerCatalogProfile extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_catalog_profile->addProfile($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -110,7 +110,7 @@ class ControllerCatalogProfile extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_catalog_profile->updateProfile($this->request->get['profile_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');

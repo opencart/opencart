@@ -154,7 +154,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 		}
 
 		$profile_info = array();
-		if (isset($this->request->get['ebay_profile_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['ebay_profile_id']) && ($this->request->method() != 'POST')) {
 			$profile_info = $this->model_openbay_ebay_profile->get($this->request->get['ebay_profile_id']);
 		}
 

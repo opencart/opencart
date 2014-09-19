@@ -13,7 +13,7 @@ class ControllerAccountForgotten extends Controller {
 
 		$this->load->model('account/customer');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if (($this->request->method() == 'POST') && $this->validate()) {
 			$this->language->load('mail/forgotten');
 
 			$password = substr(sha1(uniqid(mt_rand(), true)), 0, 10);

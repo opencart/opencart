@@ -9,7 +9,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 
 		$this->load->model('setting/setting');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if (($this->request->method() == 'POST') && $this->validate()) {
 			$status = false;
 
 			foreach ($this->request->post['klarna_invoice'] as $klarna_invoice) {

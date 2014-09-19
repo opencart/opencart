@@ -19,7 +19,7 @@ class ControllerCatalogAttribute extends Controller {
 
 		$this->load->model('catalog/attribute');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_catalog_attribute->addAttribute($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerCatalogAttribute extends Controller {
 
 		$this->load->model('catalog/attribute');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_catalog_attribute->editAttribute($this->request->get['attribute_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -322,7 +322,7 @@ class ControllerCatalogAttribute extends Controller {
 
 		$this->data['cancel'] = $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['attribute_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['attribute_id']) && ($this->request->method() != 'POST')) {
 			$attribute_info = $this->model_catalog_attribute->getAttribute($this->request->get['attribute_id']);
 		}
 

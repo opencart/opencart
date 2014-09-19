@@ -19,7 +19,7 @@ class ControllerCatalogDownload extends Controller {
 
 		$this->load->model('catalog/download');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_catalog_download->addDownload($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerCatalogDownload extends Controller {
 
 		$this->load->model('catalog/download');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_catalog_download->editDownload($this->request->get['download_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -338,7 +338,7 @@ class ControllerCatalogDownload extends Controller {
 
 		$this->data['languages'] = $this->model_localisation_language->getLanguages();
 
-		if (isset($this->request->get['download_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['download_id']) && ($this->request->method() != 'POST')) {
 			$download_info = $this->model_catalog_download->getDownload($this->request->get['download_id']);
 		}
 

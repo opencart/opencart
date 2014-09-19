@@ -19,7 +19,7 @@ class ControllerDesignCustomField extends Controller {
 
 		$this->load->model('design/custom_field');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_design_custom_field->addCustomField($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerDesignCustomField extends Controller {
 
 		$this->load->model('design/custom_field');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_design_custom_field->editCustomField($this->request->get['custom_field_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -408,7 +408,7 @@ class ControllerDesignCustomField extends Controller {
 
 		$this->data['cancel'] = $this->url->link('design/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['custom_field_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['custom_field_id']) && ($this->request->method() != 'POST')) {
 			$custom_field_info = $this->model_design_custom_field->getCustomField($this->request->get['custom_field_id']);
 		}
 

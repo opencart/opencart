@@ -9,7 +9,7 @@ class ControllerToolBackup extends Controller {
 
 		$this->load->model('tool/backup');
 
-		if ($this->request->server['REQUEST_METHOD'] == 'POST' && $this->user->hasPermission('modify', 'tool/backup')) {
+		if ($this->request->method() == 'POST' && $this->user->hasPermission('modify', 'tool/backup')) {
 			if (is_uploaded_file($this->request->files['import']['tmp_name'])) {
 				$content = file_get_contents($this->request->files['import']['tmp_name']);
 			} else {

@@ -15,7 +15,7 @@ class ControllerAccountEdit extends Controller {
 
 		$this->load->model('account/customer');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if (($this->request->method() == 'POST') && $this->validate()) {
 			$this->model_account_customer->editCustomer($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -88,7 +88,7 @@ class ControllerAccountEdit extends Controller {
 
 		$this->data['action'] = $this->url->link('account/edit', '', 'SSL');
 
-		if ($this->request->server['REQUEST_METHOD'] != 'POST') {
+		if ($this->request->method() != 'POST') {
 			$customer_info = $this->model_account_customer->getCustomer($this->customer->getId());
 		}
 

@@ -3,7 +3,7 @@ class ControllerStep3 extends Controller {
 	private $error = array();
 
 	public function index() {		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if (($this->request->method() == 'POST') && $this->validate()) {
 			$this->load->model('install');
 
 			$this->model_install->database($this->request->post);

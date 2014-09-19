@@ -19,7 +19,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 
 		$this->load->model('localisation/order_status');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_localisation_order_status->addOrderStatus($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 
 		$this->load->model('localisation/order_status');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if (($this->request->method() == 'POST') && $this->validateForm()) {
 			$this->model_localisation_order_status->editOrderStatus($this->request->get['order_status_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');

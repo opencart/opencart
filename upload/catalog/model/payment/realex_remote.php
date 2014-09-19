@@ -287,7 +287,7 @@ class ModelPaymentRealexRemote extends Model {
 		}
 
 		if ($response->result == '00') {
-			$this->model_checkout_order->confirm($order_id, $this->config->get('config_order_status_id'));
+			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('config_order_status_id'));
 
 			$realex_order_id = $this->addOrder($order_info, $response, $account, $order_ref);
 

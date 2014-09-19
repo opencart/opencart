@@ -293,10 +293,10 @@ class ModelPaymentRealexRemote extends Model {
 
 			if ($this->config->get('realex_remote_auto_settle') == 1) {
 				$this->addTransaction($realex_order_id, 'payment', $order_info);
-				$this->model_checkout_order->update($order_id, $this->config->get('realex_remote_order_status_success_settled_id'), $message, false);
+				$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('realex_remote_order_status_success_settled_id'), $message);
 			} else {
 				$this->addTransaction($realex_order_id, 'auth', 0);
-				$this->model_checkout_order->update($order_id, $this->config->get('realex_remote_order_status_success_unsettled_id'), $message, false);
+				$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('realex_remote_order_status_success_unsettled_id'), $message);
 			}
 		} elseif ($response->result == "101") {
 			// Decline

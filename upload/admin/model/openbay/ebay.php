@@ -219,11 +219,7 @@ class ModelOpenbayEbay extends Model{
 				) ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
 
 		// register the event triggers
-		$this->model_tool_event->addEvent('post.order.add', array(
-				'type' => 'openbay',
-				'code' => 'ebay',
-				'method' => 'eventAddOrder')
-		);
+		$this->model_tool_event->addEvent('openbaypro_ebay', 'post.order.add', 'openbay/ebay/eventAddOrder');
 	}
 
 	public function uninstall() {

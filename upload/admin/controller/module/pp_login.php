@@ -344,7 +344,7 @@ class ControllerModulePPLogin extends Controller {
 	public function install() {
 		$this->load->model('tool/event');
 
-		$this->model_tool_event->addEvent('pp_login', 'customer_logout', 'module/pp_login/logout');
+		$this->model_tool_event->addEvent('pp_login', 'post.customer.logout', 'module/pp_login/logout');
 	}
 
 	public function uninstall() {

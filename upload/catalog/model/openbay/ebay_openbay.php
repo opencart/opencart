@@ -586,7 +586,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 								`lastname`              = '" . $this->db->escape($name_parts['surname']) . "',
 								`email`                 = '" . $this->db->escape($user['email']) . "',
 								`telephone`             = '" . str_replace(array(' ', '+', '-'), '', $this->db->escape($order->address->phone))."',
-								`password`              = '" . $this->db->escape(md5($order->user->userid)) . "',
+								`password`              = '" . md5($order->user->userid) . "',
 								`newsletter`            = '0',
 								`customer_group_id`     = '" . (int)$this->config->get('openbay_def_customer_grp') . "',
 								`approved`              = '1',

@@ -114,7 +114,7 @@ class ControllerPaymentPPPro extends Controller {
 		$request .= '&CVV2=' . urlencode($this->request->post['cc_cvv2']);
 
 		if ($this->request->post['cc_type'] == 'SWITCH' || $this->request->post['cc_type'] == 'SOLO') {
-			$request .= '&CARDISSUE=' . urlencode($this->request->post['cc_issue']);
+			$request .= '&ISSUENUMBER=' . urlencode($this->request->post['cc_issue']);
 		}
 
 		$request .= '&FIRSTNAME=' . urlencode($order_info['payment_firstname']);

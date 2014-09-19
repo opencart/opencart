@@ -101,7 +101,13 @@ class ControllerModuleFeatured extends Controller {
 		} elseif ($this->config->get('featured_module')) {
 			$data['modules'] = $this->config->get('featured_module');
 		}
-
+		
+		if (isset($this->request->post['featured_status'])) {
+			$data['featured_status'] = $this->request->post['featured_status'];
+		} else {
+			$data['featured_status'] = $this->config->get('featured_status');
+		}
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

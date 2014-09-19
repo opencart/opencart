@@ -142,7 +142,7 @@ class ControllerCatalogAttribute extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-		
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -154,7 +154,7 @@ class ControllerCatalogAttribute extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
-		
+
 		$data['insert'] = $this->url->link('catalog/attribute/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('catalog/attribute/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
@@ -250,7 +250,7 @@ class ControllerCatalogAttribute extends Controller {
 
 		$data['pagination'] = $pagination->render();
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($attribute_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($attribute_total - $this->config->get('config_limit_admin'))) ? $attribute_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $attribute_total, $attribute_total, ceil($attribute_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($attribute_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($attribute_total - $this->config->get('config_limit_admin'))) ? $attribute_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $attribute_total, ceil($attribute_total / $this->config->get('config_limit_admin')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
@@ -264,7 +264,7 @@ class ControllerCatalogAttribute extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_add'] = $this->language->get('text_add');
 		$data['text_edit'] = $this->language->get('text_edit');
 
@@ -312,7 +312,7 @@ class ControllerCatalogAttribute extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
-		
+
 		if (!isset($this->request->get['attribute_id'])) {
 			$data['action'] = $this->url->link('catalog/attribute/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {

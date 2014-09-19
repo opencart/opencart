@@ -5,6 +5,8 @@ class ControllerDashboardActivity extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
+		$data['text_no_results'] = $this->language->get('text_no_results');
+
 		$data['token'] = $this->session->data['token'];
 
 		$data['activities'] = array();

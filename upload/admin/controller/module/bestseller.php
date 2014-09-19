@@ -9,8 +9,10 @@ class ControllerModuleBestSeller extends Controller {
 
 		$this->load->model('setting/setting');
 
+		$this->load->model('extension/module');
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('bestseller', $this->request->post);
+			$this->model_setting_setting->editSetting('bestseller', $this->request->post['bestseller_status']);
 
 			$this->cache->delete('product');
 
@@ -23,19 +25,11 @@ class ControllerModuleBestSeller extends Controller {
 
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_content_top'] = $this->language->get('text_content_top');
-		$data['text_content_bottom'] = $this->language->get('text_content_bottom');
-		$data['text_column_left'] = $this->language->get('text_column_left');
-		$data['text_column_right'] = $this->language->get('text_column_right');
 
 		$data['entry_limit'] = $this->language->get('entry_limit');
 		$data['entry_image'] = $this->language->get('entry_image');
 		$data['entry_width'] = $this->language->get('entry_width');
 		$data['entry_height'] = $this->language->get('entry_height');
-		$data['entry_layout'] = $this->language->get('entry_layout');
-		$data['entry_position'] = $this->language->get('entry_position');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -83,9 +77,11 @@ class ControllerModuleBestSeller extends Controller {
 			$data['modules'] = $this->config->get('bestseller_module');
 		}
 
-		$this->load->model('design/layout');
-
-		$data['layouts'] = $this->model_design_layout->getLayouts();
+		if (isset($this->request->post['banner_status'])) {
+			$data['banner_status'] = $this->request->post['banner_status'];
+		} else {
+			$data['banner_status'] = $this->config->get('banner_status');
+		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

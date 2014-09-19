@@ -35,44 +35,14 @@ class ControllerCommonContentTop extends Controller {
 		if (!$layout_id) {
 			$layout_id = $this->config->get('config_layout_id');
 		}
+		
+		$data['modules'] = array();		
+		
+		$modules = $this->model_design_layout->getLayoutModules($layout_id, 'content_top');
 
-		$module_data = array();
-
-		$this->load->model('extension/extension');
-
-		$extensions = $this->model_extension_extension->getExtensions('module');
-
-		foreach ($extensions as $extension) {
-			$modules = $this->config->get($extension['code'] . '_module');
-
-			if ($modules) {
-				foreach ($modules as $module) {
-					if ($module['layout_id'] == $layout_id && $module['position'] == 'content_top' && $module['status']) {
-						$module_data[] = array(
-							'code'       => $extension['code'],
-							'setting'    => $module,
-							'sort_order' => $module['sort_order']
-						);
-					}
-				}
-			}
-		}
-
-		$sort_order = array();
-
-		foreach ($module_data as $key => $value) {
-			$sort_order[$key] = $value['sort_order'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $module_data);
-
-		$data['modules'] = array();
-
-		foreach ($module_data as $module) {
-			$module = $this->load->controller('module/' . $module['code'], $module['setting']);
-
-			if ($module) {
-				$data['modules'][] = $module;
+		foreach ($modules as $module) {
+			if ($this->config->get($module['code'] . '_status')) {
+				$data['modules'][] = $this->load->controller('module/' . $module['code'], $module['setting']);
 			}
 		}
 

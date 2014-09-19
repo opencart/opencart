@@ -4,7 +4,6 @@ class ControllerModuleAmazonCheckoutLayout extends Controller {
 		$this->language->load('module/amazon_checkout_layout');
 
 		$this->load->model('setting/setting');
-		$this->load->model('design/layout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -20,20 +19,11 @@ class ControllerModuleAmazonCheckoutLayout extends Controller {
 
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_content_top'] = $this->language->get('text_content_top');
-		$data['text_content_bottom'] = $this->language->get('text_content_bottom');
-		$data['text_column_left'] = $this->language->get('text_column_left');
-		$data['text_column_right'] = $this->language->get('text_column_right');
 
-		$data['entry_layout'] = $this->language->get('entry_layout');
-		$data['entry_position'] = $this->language->get('entry_position');
 		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_module_add'] = $this->language->get('button_module_add');
-		$data['button_remove'] = $this->language->get('button_remove');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -62,19 +52,15 @@ class ControllerModuleAmazonCheckoutLayout extends Controller {
 		);
 
 		$data['action'] = $this->url->link('module/amazon_checkout_layout', 'token=' . $this->session->data['token'], 'SSL');
+		
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
-		$data['token'] = $this->session->data['token'];
-
-		$data['modules'] = array();
-
-		if (isset($this->request->post['amazon_checkout_layout_module'])) {
-			$data['modules'] = $this->request->post['amazon_checkout_layout_module'];
-		} elseif ($this->config->get('amazon_checkout_layout_module')) {
-			$data['modules'] = $this->config->get('amazon_checkout_layout_module');
+		
+		if (isset($this->request->post['amazon_checkout_layout_status'])) {
+			$data['amazon_checkout_layout_status'] = $this->request->post['amazon_checkout_layout_status'];
+		} else {
+			$data['amazon_checkout_layout_status'] = $this->config->get('amazon_checkout_layout_status');
 		}
-
-		$data['layouts'] = $this->model_design_layout->getLayouts();
-
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -83,14 +69,18 @@ class ControllerModuleAmazonCheckoutLayout extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/amazon_checkout_layout')) {
+		if (!$this->user->hasPermission('modify', 'module/banner')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
+		if (isset($this->request->post['banner_module'])) {
+			foreach ($this->request->post['banner_module'] as $key => $value) {
+				if (!$value['width'] || !$value['height']) {
+					$this->error['dimension'][$key] = $this->language->get('error_dimension');
+				}
+			}
 		}
+
+		return !$this->error;
 	}
 }

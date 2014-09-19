@@ -67,13 +67,9 @@ $('#button-confirm').bind('click', function() {
     data: $('#payment :input'),
     dataType: 'json',
     beforeSend: function() {
-      $('#realex_message_error').remove();
+      $('#realex-message-error').remove();
       $('#button-confirm').attr('disabled', true);
-      $('#payment').before('<div id="realex_message_wait" class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_wait; ?></div>');
-    },
-    complete: function() {
-      $('#button-confirm').attr('disabled', false);
-      $('#realex_message_wait').remove();
+      $('#payment').before('<div id="realex-message-wait" class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_wait; ?></div>');
     },
     success: function(json) {
       // if 3ds redirect instruction
@@ -93,7 +89,9 @@ $('#button-confirm').bind('click', function() {
 
       // if error
       if (json['error']) {
-        $('#payment').before('<div id="realex_message_error" class="alert alert-warning"><i class="fa fa-info-circle"></i> '+json['error']+'</div>');
+        $('#payment').before('<div id="realex-message-error" class="alert alert-warning"><i class="fa fa-info-circle"></i> '+json['error']+'</div>');
+        $('#button-confirm').attr('disabled', false);
+        $('#realex-message-wait').remove();
       }
 
       // if success

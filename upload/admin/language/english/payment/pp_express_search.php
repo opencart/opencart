@@ -23,7 +23,6 @@ $_['text_name']						= 'Name';
 $_['text_buyer_info']				= 'Buyer information';
 $_['text_view']						= 'View';
 $_['text_format']					= 'Format';
-$_['text_no_results']				= 'No results found';
 
 // Entry
 $_['entry_trans_all']				= 'All';

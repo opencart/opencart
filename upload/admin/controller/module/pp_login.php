@@ -6,7 +6,6 @@ class ControllerModulePPLogin extends Controller {
 		$this->language->load('module/pp_login');
 
 		$this->load->model('setting/setting');
-		$this->load->model('design/layout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

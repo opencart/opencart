@@ -140,15 +140,11 @@ class ControllerModuleEbaydisplay extends Controller {
 			101 => 'Italy',
 			186 => 'Spain',
 			205 => 'Ireland',
-			16 => 'Austria',
+			16  => 'Austria',
 			146 => 'Netherlands',
-			23 => 'Belgium (French)',
+			23  => 'Belgium (French)',
 			123 => 'Belgium (Dutch)',
 		);
-
-		$this->load->model('design/layout');
-
-		$data['layouts'] = $this->model_design_layout->getLayouts();
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

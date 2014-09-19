@@ -20,7 +20,6 @@ $_['entry_store']         = 'Store';
 $_['entry_route']         = 'Route';
 $_['entry_module']        = 'Module';
 $_['entry_position']      = 'Position';
-$_['entry_status']        = 'Status';
 $_['entry_sort_order']    = 'Sort Order';
 
 // Error

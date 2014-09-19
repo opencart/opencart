@@ -1695,7 +1695,6 @@ CREATE TABLE IF NOT EXISTS `oc_layout_module` (
   `layout_id` int(11) NOT NULL,
   `module_id` int(11) NOT NULL,
   `position` varchar(14) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `status` tinyint(1) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`layout_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;

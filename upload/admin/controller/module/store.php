@@ -62,14 +62,6 @@ class ControllerModuleStore extends Controller {
 			$data['store_admin'] = $this->config->get('store_admin');
 		}
 
-		$data['modules'] = array();
-
-		if (isset($this->request->post['store_module'])) {
-			$data['modules'] = $this->request->post['store_module'];
-		} elseif ($this->config->get('store_module')) {
-			$data['modules'] = $this->config->get('store_module');
-		}
-
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

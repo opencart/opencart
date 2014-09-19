@@ -9,8 +9,10 @@ class ControllerModuleBestSeller extends Controller {
 
 		$this->load->model('setting/setting');
 
+		$this->load->model('extension/module');
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('bestseller', $this->request->post);
+			$this->model_setting_setting->editSetting('bestseller', $this->request->post['bestseller_status']);
 
 			$this->cache->delete('product');
 
@@ -20,6 +22,9 @@ class ControllerModuleBestSeller extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
+
+		$data['text_enabled'] = $this->language->get('text_enabled');
+		$data['text_disabled'] = $this->language->get('text_disabled');
 
 		$data['entry_limit'] = $this->language->get('entry_limit');
 		$data['entry_image'] = $this->language->get('entry_image');
@@ -72,9 +77,11 @@ class ControllerModuleBestSeller extends Controller {
 			$data['modules'] = $this->config->get('bestseller_module');
 		}
 
-		$this->load->model('design/layout');
-
-		$data['layouts'] = $this->model_design_layout->getLayouts();
+		if (isset($this->request->post['banner_status'])) {
+			$data['banner_status'] = $this->request->post['banner_status'];
+		} else {
+			$data['banner_status'] = $this->config->get('banner_status');
+		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

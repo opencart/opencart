@@ -1,22 +1,75 @@
 <?php
 class ControllerModuleAffiliate extends Controller {
-	public function install() {
-		$this->load->model('extension/module');
+	public function index() {
+		$this->load->language('module/affiliate');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('setting/setting');
+
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			$this->model_setting_setting->editSetting('affiliate', $this->request->post);
+
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
+		}
+
+		$data['heading_title'] = $this->language->get('heading_title');
+
+		$data['text_enabled'] = $this->language->get('text_enabled');
+		$data['text_disabled'] = $this->language->get('text_disabled');
+
+		$data['entry_status'] = $this->language->get('entry_status');
+
+		$data['button_save'] = $this->language->get('button_save');
+		$data['button_cancel'] = $this->language->get('button_cancel');
+
+		if (isset($this->error['warning'])) {
+			$data['error_warning'] = $this->error['warning'];
+		} else {
+			$data['error_warning'] = '';
+		}
+
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_module'),
+			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('module/affiliate', 'token=' . $this->session->data['token'], 'SSL')
+		);
+
+		$data['action'] = $this->url->link('module/affiliate', 'token=' . $this->session->data['token'], 'SSL');
+
+		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 		
-		$this->model_extension_module->addModule('affiliate');
+		if (isset($this->request->post['affiliate_status'])) {
+			$data['affiliate_status'] = $this->request->post['affiliate_status'];
+		} else {
+			$data['affiliate_status'] = $this->config->get('affiliate_status');
+		}
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('module/affiliate.tpl', $data));
 	}
 
-	public function uninstall() {
-		$this->language->load('extension/module');
-		
-		if (!$this->user->hasPermission('modify', 'extension/module')) {
-			$this->load->model('extension/module');
-			
-			$this->model_extension_module->deleteModule('affiliate');
-		} else {
-			$this->session->data['error'] =	$this->language->load('error_permission');
-			
-			$this->response->redirect($this->url->link('extension/module'));
+	protected function validate() {
+		if (!$this->user->hasPermission('modify', 'module/affiliate')) {
+			$this->error['warning'] = $this->language->get('error_permission');
 		}
+
+		return !$this->error;
 	}
 }

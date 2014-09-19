@@ -22,6 +22,9 @@ class ControllerModuleBanner extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
+		$data['text_enabled'] = $this->language->get('text_enabled');
+		$data['text_disabled'] = $this->language->get('text_disabled');
+
 		$data['entry_banner'] = $this->language->get('entry_banner');
 		$data['entry_dimension'] = $this->language->get('entry_dimension');
 		$data['entry_width'] = $this->language->get('entry_width');
@@ -78,7 +81,13 @@ class ControllerModuleBanner extends Controller {
 		$this->load->model('design/banner');
 
 		$data['banners'] = $this->model_design_banner->getBanners();
-
+		
+		if (isset($this->request->post['banner_status'])) {
+			$data['banner_status'] = $this->request->post['banner_status'];
+		} else {
+			$data['banner_status'] = $this->config->get('banner_status');
+		}
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

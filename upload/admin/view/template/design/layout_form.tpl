@@ -74,7 +74,6 @@
               <tr>
                 <td class="text-left"><?php echo $entry_module; ?></td>
                 <td class="text-left"><?php echo $entry_position; ?></td>
-                <td class="text-left"><?php echo $entry_status; ?></td>
                 <td class="text-right"><?php echo $entry_sort_order; ?></td>
                 <td></td>
               </tr>
@@ -114,15 +113,6 @@
                     <option value="column_right"><?php echo $text_column_right; ?></option>
                     <?php } ?>
                   </select></td>
-                <td class="text-left"><select name="layout_module[<?php echo $module_row; ?>][status]" class="form-control">
-                    <?php if ($layout_module['status']) { ?>
-                    <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                    <option value="0"><?php echo $text_disabled; ?></option>
-                    <?php } else { ?>
-                    <option value="1"><?php echo $text_enabled; ?></option>
-                    <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                    <?php } ?>
-                  </select></td>
                 <td class="text-right"><input type="text" name="layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $layout_module['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>
                 <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $module_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
               </tr>
@@ -131,7 +121,7 @@
             </tbody>
             <tfoot>
               <tr>
-                <td colspan="4"></td>
+                <td colspan="3"></td>
                 <td class="text-left"><button type="button" onclick="addModule();" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
               </tr>
             </tfoot>
@@ -175,10 +165,6 @@ function addModule() {
     html += '    <option value="column_left"><?php echo $text_column_left; ?></option>';
     html += '    <option value="column_right"><?php echo $text_column_right; ?></option>';
     html += '  </select></td>';
-    html += '  <td class="text-left"><select name="layout_module[' + module_row + '][status]" class="form-control">';
-	html += '    <option value="1"><?php echo $text_enabled; ?></option>';
-	html += '    <option value="0"><?php echo $text_disabled; ?></option>';
-	html += '  </select></td>';
 	html += '  <td class="text-left"><input type="text" name="layout_module[' + module_row + '][sort_order]" value="0" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + module_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';

@@ -4,7 +4,6 @@ class ControllerModulePPLayout extends Controller {
 		$this->language->load('module/pp_layout');
 
 		$this->load->model('setting/setting');
-		$this->load->model('design/layout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

@@ -21,10 +21,6 @@ class ControllerModulePPLogin extends Controller {
 
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_content_top'] = $this->language->get('text_content_top');
-		$data['text_content_bottom'] = $this->language->get('text_content_bottom');
-		$data['text_column_left'] = $this->language->get('text_column_left');
-		$data['text_column_right'] = $this->language->get('text_column_right');
 		$data['text_grey_button'] = $this->language->get('text_grey_button');
 		$data['text_blue_button'] = $this->language->get('text_blue_button');
 		$data['text_yes'] = $this->language->get('text_yes');
@@ -40,10 +36,6 @@ class ControllerModulePPLogin extends Controller {
 		$data['entry_locale'] = $this->language->get('entry_locale');
 		$data['entry_return_url'] = $this->language->get('entry_return_url');
 		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_layout'] = $this->language->get('entry_layout');
-		$data['entry_position'] = $this->language->get('entry_position');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
 		$data['help_sandbox'] = $this->language->get('help_sandbox');
 		$data['help_customer_group'] = $this->language->get('help_customer_group');
@@ -265,27 +257,27 @@ class ControllerModulePPLogin extends Controller {
 
 		$data['locales'][] = array(
 			'value' => 'es-es',
-			'text' => 'Spanish'
+			'text'  => 'Spanish'
 		);
 
 		$data['locales'][] = array(
 			'value' => 'es-xc',
-			'text' => 'Spanish (Mexico)'
+			'text'  => 'Spanish (Mexico)'
 		);
 
 		$data['locales'][] = array(
 			'value' => 'sv-se',
-			'text' => 'Swedish'
+			'text'  => 'Swedish'
 		);
 
 		$data['locales'][] = array(
 			'value' => 'th-th',
-			'text' => 'Thai'
+			'text'  => 'Thai'
 		);
 
 		$data['locales'][] = array(
 			'value' => 'tr-tr',
-			'text' => 'Turkish'
+			'text'  => 'Turkish'
 		);
 
 		if (isset($this->request->post['pp_login_locale'])) {

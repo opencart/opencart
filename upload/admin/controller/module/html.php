@@ -27,6 +27,7 @@ class ControllerModuleHTML extends Controller {
 
 		$data['entry_heading'] = $this->language->get('entry_heading');
 		$data['entry_description'] = $this->language->get('entry_description');
+		$data['entry_status'] = $this->language->get('entry_status');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -75,7 +76,13 @@ class ControllerModuleHTML extends Controller {
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
-
+		
+		if (isset($this->request->post['html_status'])) {
+			$data['html_status'] = $this->request->post['html_status'];
+		} else {
+			$data['html_status'] = $this->config->get('html_status');
+		}
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

@@ -10,25 +10,27 @@ class ControllerModuleOpenbay extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_module'),
-			'href'      => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_module'),
+			'href'  => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('module/openbaypro', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('module/openbaypro', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		$data['button_cancel'] = $this->language->get('button_cancel');
+		
 		$data['text_installed'] = $this->language->get('text_installed');
+		
+		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

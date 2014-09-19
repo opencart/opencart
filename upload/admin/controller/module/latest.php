@@ -25,6 +25,7 @@ class ControllerModuleLatest extends Controller {
 		$data['entry_image'] = $this->language->get('entry_image');
 		$data['entry_width'] = $this->language->get('entry_width');
 		$data['entry_height'] = $this->language->get('entry_height');
+		$data['entry_status'] = $this->language->get('entry_status');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -71,7 +72,13 @@ class ControllerModuleLatest extends Controller {
 		} elseif ($this->config->get('latest_module')) {
 			$data['modules'] = $this->config->get('latest_module');
 		}
-
+		
+		if (isset($this->request->post['latest_status'])) {
+			$data['latest_status'] = $this->request->post['latest_status'];
+		} else {
+			$data['latest_status'] = $this->config->get('latest_status');
+		}
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

@@ -31,14 +31,11 @@ class ControllerModuleEbaydisplay extends Controller {
 
 		$data['entry_limit'] = $this->language->get('entry_limit');
 		$data['entry_image'] = $this->language->get('entry_image');
-		$data['entry_layout'] = $this->language->get('entry_layout');
-		$data['entry_position'] = $this->language->get('entry_position');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$data['entry_username'] = $this->language->get('entry_username');
 		$data['entry_keywords'] = $this->language->get('entry_keywords');
 		$data['entry_description'] = $this->language->get('entry_description');
 		$data['entry_site'] = $this->language->get('entry_site');
+		$data['entry_status'] = $this->language->get('entry_status');
 		
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -145,7 +142,13 @@ class ControllerModuleEbaydisplay extends Controller {
 			23  => 'Belgium (French)',
 			123 => 'Belgium (Dutch)',
 		);
-
+		
+		if (isset($this->request->post['ebaydisplay_status'])) {
+			$data['ebaydisplay_status'] = $this->request->post['ebaydisplay_status'];
+		} else {
+			$data['ebaydisplay_status'] = $this->config->get('ebaydisplay_status');
+		}
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

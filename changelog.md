@@ -10,6 +10,7 @@
 * Corrected 404 response headers REF: #1620
 * Trigger JS change on page load to ensure that option choices are hidden/shown when editing an option.
 * Fixed hyphen problem with PayPal Express checkout url
+* Changed PayPal cardissue to issuenumber variabe for PayPal Pro
 
 #### Changes
 * Removed duplicate DELETE SQL query for product attributes REF: #1379

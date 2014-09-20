@@ -13,38 +13,3 @@
     <?php } ?>
   </ul>
 </div>
-
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h3 class="panel-title"><i class="fa fa-calendar"></i> <?php echo $heading_title; ?></h3>
-  </div>
-  <div class="panel-body"> </div>
-</div>
-
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h3 class="panel-title"><i class="fa fa-calendar"></i> <?php echo $heading_title; ?></h3>
-  </div>
-  <div class="panel-body"> </div>
-</div>
-
-<div class="panel panel-success">
-  <div class="panel-heading">
-    <h3 class="panel-title"><i class="fa fa-calendar"></i> <?php echo $heading_title; ?></h3>
-  </div>
-  <div class="panel-body"> </div>
-</div>
-
-<div class="panel panel-warning">
-  <div class="panel-heading">
-    <h3 class="panel-title"><i class="fa fa-calendar"></i> <?php echo $heading_title; ?></h3>
-  </div>
-  <div class="panel-body"> </div>
-</div>
-
-<div class="panel panel-danger">
-  <div class="panel-heading">
-    <h3 class="panel-title"><i class="fa fa-calendar"></i> <?php echo $heading_title; ?></h3>
-  </div>
-  <div class="panel-body"> </div>
-</div>

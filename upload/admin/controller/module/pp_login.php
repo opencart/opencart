@@ -91,8 +91,6 @@ class ControllerModulePPLogin extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['token'] = $this->session->data['token'];
-
 		if (isset($this->request->post['pp_login_client_id'])) {
 			$data['pp_login_client_id'] = $this->request->post['pp_login_client_id'];
 		} else {
@@ -301,10 +299,6 @@ class ControllerModulePPLogin extends Controller {
 		} elseif ($this->config->get('pp_login_module')) {
 			$data['modules'] = $this->config->get('pp_login_module');
 		}
-
-		$this->load->model('design/layout');
-
-		$data['layouts'] = $this->model_design_layout->getLayouts();
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

@@ -1,10 +1,12 @@
 <?php
 class ModelExtensionModule extends Model {
-	public function addModule($code, $data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "modification SET code = '" . $this->db->escape($data['code']) . "', setting = '" . $data[''] . "', date_added = NOW()");
+	public function addModule($code, $data = array()) {
+		$this->db->query("INSERT INTO " . DB_PREFIX . "modification SET code = '" . $this->db->escape($data['code']) . "', setting = '" . $data . "', date_added = NOW()");
 	}
 	
 	public function editModule($code, $data) {
+		$this->db->query("DELETE FROM " . DB_PREFIX . "modification WHERE code = '" . $this->db->escape($code) . "'");
+		
 		$this->db->query("INSERT INTO " . DB_PREFIX . "modification SET code = '" . $this->db->escape($data['code']) . "', date_added = NOW()");
 	}
 	

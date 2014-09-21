@@ -7,6 +7,8 @@ class ControllerModulePPLogin extends Controller {
 
 		$this->load->model('setting/setting');
 
+		$this->load->model('extension/module');
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
@@ -30,7 +32,7 @@ class ControllerModulePPLogin extends Controller {
 		$data['entry_client_id'] = $this->language->get('entry_client_id');
 		$data['entry_secret'] = $this->language->get('entry_secret');
 		$data['entry_sandbox'] = $this->language->get('entry_sandbox');
-		$data['entry_logging'] = $this->language->get('entry_logging');
+		$data['entry_debug'] = $this->language->get('entry_debug');
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$data['entry_button'] = $this->language->get('entry_button');
 		$data['entry_seamless'] = $this->language->get('entry_seamless');
@@ -110,10 +112,10 @@ class ControllerModulePPLogin extends Controller {
 			$data['pp_login_sandbox'] = $this->config->get('pp_login_sandbox');
 		}
 
-		if (isset($this->request->post['pp_login_logging'])) {
-			$data['pp_login_logging'] = $this->request->post['pp_login_logging'];
+		if (isset($this->request->post['pp_login_debug'])) {
+			$data['pp_login_debug'] = $this->request->post['pp_login_debug'];
 		} else {
-			$data['pp_login_logging'] = $this->config->get('pp_login_logging');
+			$data['pp_login_debug'] = $this->config->get('pp_login_debug');
 		}
 
 		$this->load->model('sale/customer_group');

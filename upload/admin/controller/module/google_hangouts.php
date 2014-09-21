@@ -9,6 +9,8 @@ class ControllerModuleGoogleHangouts extends Controller {
 
 		$this->load->model('setting/setting');
 
+		$this->load->model('extension/module');
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('google_hangouts', $this->request->post);
 

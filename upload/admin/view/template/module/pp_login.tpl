@@ -58,10 +58,10 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-loggin"><span data-toggle="tooltip" title="<?php echo $help_debug_logging; ?>"><?php echo $entry_logging; ?></span></label>
+            <label class="col-sm-2 control-label" for="input-loggin"><span data-toggle="tooltip" title="<?php echo $help_debug_logging; ?>"><?php echo $entry_debug; ?></span></label>
             <div class="col-sm-10">
-              <select name="pp_login_logging" id="input-logging" class="form-control">
-                <?php if ($pp_login_logging) { ?>
+              <select name="pp_login_debug" id="input-logging" class="form-control">
+                <?php if ($pp_login_debug) { ?>
                 <option value="1" selected="selected"><?php echo $text_yes; ?></option>
                 <option value="0"><?php echo $text_no; ?></option>
                 <?php } else { ?>
@@ -90,11 +90,11 @@
             <div class="col-sm-10">
               <select name="pp_login_button_colour" id="input-button_colour" class="form-control">
                 <?php if ($pp_login_button_colour == 'blue') { ?>
-                <option value="blue" selected="selected"><?php echo $text_blue_button; ?></option>
+                <option value="blue" selected="selected"><?php echo $text_button_blue; ?></option>
                 <option value="grey"><?php echo $text_button_grey; ?></option>
                 <?php } else { ?>
                 <option value="blue"><?php echo $text_button_blue; ?></option>
-                <option value="grey" selected="selected"><?php echo $text_grey_button; ?></option>
+                <option value="grey" selected="selected"><?php echo $text_button_grey; ?></option>
                 <?php } ?>
               </select>
             </div>

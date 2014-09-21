@@ -128,7 +128,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="ebay_logging"><?php echo $entry_logging; ?></label>
+              <label class="col-sm-2 control-label" for="ebay_logging"><?php echo $entry_debug; ?></label>
               <div class="col-sm-10">
                 <select name="ebay_logging" id="ebay_logging" class="form-control">
                   <?php if ($ebay_logging) { ?>

@@ -13,12 +13,13 @@ $_['text_button_blue']     = 'Blue (Recommended)';
 $_['entry_client_id']      = 'Client ID';
 $_['entry_secret']         = 'Secret';
 $_['entry_sandbox']        = 'Sandbox Mode';
-$_['entry_logging']        = 'Debug Logging';
+$_['entry_debug']          = 'Debug Logging';
 $_['entry_customer_group'] = 'Customer Group';
 $_['entry_button']         = 'Button Colour';
 $_['entry_seamless']       = 'Allow "Seamless Checkout"';
 $_['entry_locale']         = 'Locale';
 $_['entry_return_url']     = 'Return URL';
+$_['entry_status']         = 'Status';
 
 //Help
 $_['help_sandbox']         = 'Use sandbox (testing) environment?';

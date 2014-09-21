@@ -28,8 +28,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
             <div class="col-sm-10">
-              <select name="account_status" id="input-status" class="form-control">
-                <?php if ($account_status) { ?>
+              <select name="carousel_status" id="input-status" class="form-control">
+                <?php if ($carousel_status) { ?>
                 <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                 <option value="0"><?php echo $text_disabled; ?></option>
                 <?php } else { ?>
@@ -53,7 +53,7 @@
               <?php $module_row = 0; ?>
               <?php foreach ($modules as $module) { ?>
               <tr id="module-row<?php echo $module_row; ?>">
-                <td class="text-left"><select name="carousel_module[<?php echo $module_row; ?>][banner_id]" class="form-control">
+                <td class="text-left"><select name="module[<?php echo $module_row; ?>][banner_id]" class="form-control">
                     <?php foreach ($banners as $banner) { ?>
                     <?php if ($banner['banner_id'] == $module['banner_id']) { ?>
                     <option value="<?php echo $banner['banner_id']; ?>" selected="selected"><?php echo $banner['name']; ?></option>
@@ -62,10 +62,10 @@
                     <?php } ?>
                     <?php } ?>
                   </select></td>
-                <td class="text-left"><input type="text" name="carousel_module[<?php echo $module_row; ?>][limit]" value="<?php echo $module['limit']; ?>" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>
-                <td class="text-left"><input type="text" name="carousel_module[<?php echo $module_row; ?>][scroll]" value="<?php echo $module['scroll']; ?>" placeholder="<?php echo $entry_scroll; ?>" class="form-control" /></td>
-                <td class="text-left"><input type="text" name="carousel_module[<?php echo $module_row; ?>][width]" value="<?php echo $module['width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
-                  <input type="text" name="carousel_module[<?php echo $module_row; ?>][height]" value="<?php echo $module['height']; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                <td class="text-left"><input type="text" name="module[<?php echo $module_row; ?>][limit]" value="<?php echo $module['limit']; ?>" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>
+                <td class="text-left"><input type="text" name="module[<?php echo $module_row; ?>][scroll]" value="<?php echo $module['scroll']; ?>" placeholder="<?php echo $entry_scroll; ?>" class="form-control" /></td>
+                <td class="text-left"><input type="text" name="module[<?php echo $module_row; ?>][width]" value="<?php echo $module['width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
+                  <input type="text" name="module[<?php echo $module_row; ?>][height]" value="<?php echo $module['height']; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   <?php if (isset($error_image[$module_row])) { ?>
                   <div class="text-danger"><?php echo $error_image[$module_row]; ?></div>
                   <?php } ?></td>

@@ -22,6 +22,8 @@ class ControllerModuleStore extends Controller {
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
+		$data['text_enabled'] = $this->language->get('text_enabled');
+		$data['text_disabled'] = $this->language->get('text_disabled');
 
 		$data['entry_admin'] = $this->language->get('entry_admin');
 		$data['entry_status'] = $this->language->get('entry_status');

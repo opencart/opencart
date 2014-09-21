@@ -5,6 +5,7 @@ $_['heading_title']        = 'Mail';
 // Text
 $_['text_success']         = 'Your message has been successfully sent!';
 $_['text_sent']            = 'Your message has been successfully sent to %s of %s recipients!';
+$_['text_list']            = 'Layout List';
 $_['text_default']         = 'Default';
 $_['text_newsletter']      = 'All Newsletter Subscribers';
 $_['text_customer_all']    = 'All Customers';

@@ -4,6 +4,7 @@ $_['heading_title']     = 'Downloads';
 
 // Text
 $_['text_success']      = 'Success: You have modified downloads!';
+$_['text_list']         = 'Attribute Group List';
 $_['text_upload']       = 'Your file was successfully uploaded!';
 
 // Column

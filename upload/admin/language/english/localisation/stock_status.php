@@ -4,6 +4,7 @@ $_['heading_title']    = 'Stock Status';
 
 // Text
 $_['text_success']     = 'Success: You have modified stock statuses!';
+$_['text_list']        = 'Layout List';
 
 // Column
 $_['column_name']      = 'Stock Status Name';

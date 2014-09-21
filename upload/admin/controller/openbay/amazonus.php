@@ -771,7 +771,7 @@ class ControllerOpenbayAmazonus extends Controller {
 				if ($product['image'] && file_exists(DIR_IMAGE . $product['image'])) {
 					$image = $this->model_tool_image->resize($product['image'], 40, 40);
 				} else {
-					$image = $this->model_tool_image->resize('no_image.jpg', 40, 40);
+					$image = $this->model_tool_image->resize('placeholder.png', 40, 40);
 				}
 
 				if ($result['status'] == 'searching') {

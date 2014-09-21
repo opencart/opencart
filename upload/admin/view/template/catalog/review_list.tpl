@@ -24,52 +24,52 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <div class="well">
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="form-group">
-            <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
-            <input type="text" name="filter_product" value="<?php echo $filter_product; ?>" placeholder="<?php echo $entry_product; ?>" id="input-product" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="input-author"><?php echo $entry_author; ?></label>
-            <input type="text" name="filter_author" value="<?php echo $filter_author; ?>" placeholder="<?php echo $entry_author; ?>" id="input-author" class="form-control" />
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group">
-            <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
-            <select name="filter_status" id="input-status" class="form-control">
-              <option value="*"></option>
-              <?php if ($filter_status) { ?>
-              <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-              <?php } else { ?>
-              <option value="1"><?php echo $text_enabled; ?></option>
-              <?php } ?>
-              <?php if (($filter_status !== null) && !$filter_status) { ?>
-              <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-              <?php } else { ?>
-              <option value="0"><?php echo $text_disabled; ?></option>
-              <?php } ?>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="input-date-added"><?php echo $entry_date_added; ?></label>
-            <div class="input-group date">
-              <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $entry_date_added; ?>" data-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
-              <span class="input-group-btn">
-              <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-              </span></div>
-          </div>
-          <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
-        </div>
-      </div>
-    </div>
     <div class="panel panel-primary">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
       </div>
       <div class="panel-body">
+        <div class="well">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
+                <input type="text" name="filter_product" value="<?php echo $filter_product; ?>" placeholder="<?php echo $entry_product; ?>" id="input-product" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="input-author"><?php echo $entry_author; ?></label>
+                <input type="text" name="filter_author" value="<?php echo $filter_author; ?>" placeholder="<?php echo $entry_author; ?>" id="input-author" class="form-control" />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
+                <select name="filter_status" id="input-status" class="form-control">
+                  <option value="*"></option>
+                  <?php if ($filter_status) { ?>
+                  <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_enabled; ?></option>
+                  <?php } ?>
+                  <?php if (($filter_status !== null) && !$filter_status) { ?>
+                  <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                  <?php } else { ?>
+                  <option value="0"><?php echo $text_disabled; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="input-date-added"><?php echo $entry_date_added; ?></label>
+                <div class="input-group date">
+                  <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $entry_date_added; ?>" data-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
+                  <span class="input-group-btn">
+                  <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                  </span></div>
+              </div>
+              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
+            </div>
+          </div>
+        </div>
         <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-review">
           <div class="table-responsive">
             <table class="table table-bordered table-hover">

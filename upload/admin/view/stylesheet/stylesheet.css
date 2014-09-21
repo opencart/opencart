@@ -495,6 +495,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 }
 .panel-heading h3 i {
 	margin-right: 8px;	
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 .panel-heading i {
 	font-size: 16px;
@@ -505,8 +506,8 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	font-weight: 500;
 	display: inline-block;
 }
+
 .panel-primary {
-	
 	border: 1px solid #c3e4f6;
 	border-top: 2px solid #5cb7e7;
 }

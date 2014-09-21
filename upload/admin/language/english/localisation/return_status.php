@@ -4,6 +4,7 @@ $_['heading_title']    = 'Return Status';
 
 // Text
 $_['text_success']     = 'Success: You have modified return statuses!';
+$_['text_list']        = 'Layout List';
 
 // Column
 $_['column_name']      = 'Return Status Name';

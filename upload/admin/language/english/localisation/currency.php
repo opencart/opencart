@@ -4,6 +4,7 @@ $_['heading_title']        = 'Currency';
 
 // Text
 $_['text_success']         = 'Success: You have modified currencies!';
+$_['text_list']            = 'Layout List';
 
 // Column
 $_['column_title']         = 'Currency Title';

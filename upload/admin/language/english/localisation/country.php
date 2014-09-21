@@ -4,6 +4,7 @@ $_['heading_title']           = 'Country';
 
 // Text
 $_['text_success']            = 'Success: You have modified countries!';
+$_['text_list']               = 'Layout List';
 
 // Column
 $_['column_name']             = 'Country Name';

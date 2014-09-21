@@ -4,7 +4,8 @@ $_['heading_title']					= 'Amazon Payments';
 
 // Text
 $_['text_payment']					= 'Payment';
-$_['text_success']					= 'Amazon Payments module has been updated';
+$_['text_success']					= 'Success: Amazon Payments module has been updated';
+$_['text_list']                     = 'Layout List';
 $_['text_germany']					= 'Germany';
 $_['text_uk']						= 'United Kingdom';
 $_['text_live']						= 'Live';

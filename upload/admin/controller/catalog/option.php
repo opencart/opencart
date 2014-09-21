@@ -181,7 +181,8 @@ class ControllerCatalogOption extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
@@ -386,19 +387,23 @@ class ControllerCatalogOption extends Controller {
 		foreach ($option_values as $option_value) {
 			if (is_file(DIR_IMAGE . $option_value['image'])) {
 				$image = $option_value['image'];
+				$thumb = $option_value['image'];
 			} else {
 				$image = '';
+				$thumb = 'placeholder.png';
 			}
 
 			$data['option_values'][] = array(
 				'option_value_id'          => $option_value['option_value_id'],
 				'option_value_description' => $option_value['option_value_description'],
 				'image'                    => $image,
-				'thumb'                    => $this->model_tool_image->resize($image, 100, 100),
+				'thumb'                    => $this->model_tool_image->resize($thumb, 100, 100),
 				'sort_order'               => $option_value['sort_order']
 			);
 		}
 
+		$data['placeholder'] = $this->model_tool_image->resize('placeholder.png', 100, 100);
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -480,7 +485,7 @@ class ControllerCatalogOption extends Controller {
 						if (is_file(DIR_IMAGE . $option_value['image'])) {
 							$image = $this->model_tool_image->resize($option_value['image'], 50, 50);
 						} else {
-							$image = '';
+							$image = $this->model_tool_image->resize('placeholder.png', 50, 50);
 						}
 
 						$option_value_data[] = array(

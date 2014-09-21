@@ -4,6 +4,7 @@ $_['heading_title']    = 'Return Action';
 
 // Text
 $_['text_success']     = 'Success: You have modified return actions!';
+$_['text_list']        = 'Layout List';
 
 // Column
 $_['column_name']      = 'Return Action Name';

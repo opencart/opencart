@@ -7,6 +7,7 @@ $_['text_shipping']     = 'Shipping Address';
 $_['text_payment']      = 'Payment Address';
 $_['text_store']        = 'Store Address';
 $_['text_success']      = 'Success: You have modified tax classes!';
+$_['text_list']         = 'Layout List';
 
 // Column
 $_['column_title']      = 'Tax Class Title';

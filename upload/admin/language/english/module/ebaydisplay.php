@@ -5,6 +5,7 @@ $_['heading_title']     = 'eBay display';
 // Text
 $_['text_module']       = 'Modules';
 $_['text_success']      = 'Success: You have modified module eBay featured!';
+$_['text_list']         = 'Layout List';
 $_['text_start_newest'] = 'Start time newest';
 $_['text_start_random'] = 'Random';
 

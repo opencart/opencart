@@ -1411,7 +1411,7 @@ class ControllerOpenbayEbay extends Controller {
 					$data['error_warning'] = $this->language->get('error_no_stock');
 				}
 
-				$data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
+				$data['no_image'] = $this->model_tool_image->resize('placeholder.png', 100, 100);
 
 				$weight_parts = explode(' . ', $product_info['weight']);
 				$product_info['weight_major'] = $weight_parts[0];
@@ -1484,7 +1484,7 @@ class ControllerOpenbayEbay extends Controller {
 								if ($prod['image'] && file_exists(DIR_IMAGE . $prod['image'])) {
 									$prod['image'] = $this->model_tool_image->resize($prod['image'], 80, 80);
 								} else {
-									$prod['image'] = $this->model_tool_image->resize('no_image.jpg', 80, 80);
+									$prod['image'] = $this->model_tool_image->resize('placeholder.png', 80, 80);
 								}
 
 								$products[] = $prod;

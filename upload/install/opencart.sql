@@ -1911,8 +1911,6 @@ DROP TABLE IF EXISTS `oc_module`;
 CREATE TABLE `oc_module` (
   `module_id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(32) NOT NULL,
-  `setting` text NOT NULL,
-  `serialized` tinyint(1) NOT NULL, 
   PRIMARY KEY (`module_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 

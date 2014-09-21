@@ -4,6 +4,7 @@ $_['heading_title']     = 'Filters';
 
 // Text
 $_['text_success']      = 'Success: You have modified filters!';
+$_['text_list']         = 'Attribute Group List';
 
 // Column
 $_['column_group']      = 'Filter Group';

@@ -4,6 +4,7 @@ $_['heading_title']    = 'Length Class';
 
 // Text
 $_['text_success']     = 'Success: You have modified length classes!';
+$_['text_list']        = 'Layout List';
 
 // Column
 $_['column_title']     = 'Length Title';

@@ -403,8 +403,10 @@ class ControllerLocalisationLocation extends Controller {
 		} elseif (!empty($location_info) && is_file(DIR_IMAGE . $location_info['image'])) {
 			$data['thumb'] = $this->model_tool_image->resize($location_info['image'], 100, 100);
 		} else {
-			$data['thumb'] = '';
+			$data['thumb'] = $this->model_tool_image->resize('placeholder.png', 100, 100);
 		}
+
+		$data['placeholder'] = $this->model_tool_image->resize('placeholder.png', 100, 100);
 
 		if (isset($this->request->post['open'])) {
 			$data['open'] = $this->request->post['open'];

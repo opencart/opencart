@@ -4,6 +4,7 @@ $_['heading_title']          = 'Information';
 
 // Text
 $_['text_success']           = 'Success: You have modified information!';
+$_['text_list']              = 'Attribute Group List';
 $_['text_default']           = 'Default';
 
 // Column

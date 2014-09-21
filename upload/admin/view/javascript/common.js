@@ -167,7 +167,8 @@ $(document).ready(function() {
 		});
 	
 		$('#button-clear').on('click', function() {
-			$(element).html('<i class="fa fa-camera fa-5x"></i>');
+			$(element).find('img').attr('src', $(element).find('img').attr('data-placeholder'));
+			
 			$(element).parent().find('input').attr('value', '');
 	
 			$(element).popover('hide');

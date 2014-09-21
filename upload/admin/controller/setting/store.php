@@ -515,7 +515,7 @@ class ControllerSettingStore extends Controller {
 		} elseif (isset($store_info['config_image']) && is_file(DIR_IMAGE . $store_info['config_image'])) {
 			$data['thumb'] = $this->model_tool_image->resize($store_info['config_image'], 100, 100);
 		} else {
-			$data['thumb'] = '';
+			$data['thumb'] = $this->model_tool_image->resize('placeholder.png', 100, 100);
 		}
 
 		if (isset($this->request->post['open'])) {
@@ -787,9 +787,11 @@ class ControllerSettingStore extends Controller {
 		} elseif (isset($store_info['config_logo']) && is_file(DIR_IMAGE . $store_info['config_logo'])) {
 			$data['logo'] = $this->model_tool_image->resize($store_info['config_logo'], 100, 100);
 		} else {
-			$data['logo'] = '';
+			$data['logo'] = $this->model_tool_image->resize('placeholder.png', 100, 100);
 		}
-
+		
+		$data['placeholder'] = $this->model_tool_image->resize('placeholder.png', 100, 100);
+		
 		if (isset($this->request->post['config_icon'])) {
 			$data['config_icon'] = $this->request->post['config_icon'];
 		} elseif (isset($store_info['config_icon'])) {
@@ -803,7 +805,7 @@ class ControllerSettingStore extends Controller {
 		} elseif (isset($store_info['config_icon']) && is_file(DIR_IMAGE . $store_info['config_icon'])) {
 			$data['icon'] = $this->model_tool_image->resize($store_info['config_icon'], 100, 100);
 		} else {
-			$data['icon'] = '';
+			$data['icon'] = $this->model_tool_image->resize('placeholder.png', 100, 100);
 		}
 
 		if (isset($this->request->post['config_image_category_height'])) {

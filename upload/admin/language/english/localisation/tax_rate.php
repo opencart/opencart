@@ -6,6 +6,7 @@ $_['heading_title']        = 'Tax Rates';
 $_['text_percent']         = 'Percentage';
 $_['text_amount']          = 'Fixed Amount';
 $_['text_success']         = 'Success: You have modified tax classes!';
+$_['text_list']            = 'Layout List';
 
 // Column
 $_['column_name']          = 'Tax Name';

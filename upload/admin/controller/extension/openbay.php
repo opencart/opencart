@@ -1358,7 +1358,7 @@ class ControllerExtensionOpenbay extends Controller {
 			if ($result['image'] && file_exists(DIR_IMAGE . $result['image'])) {
 				$image = $this->model_tool_image->resize($result['image'], 40, 40);
 			} else {
-				$image = $this->model_tool_image->resize('no_image.jpg', 40, 40);
+				$image = $this->model_tool_image->resize('placeholder.png', 40, 40);
 			}
 
 			$special = false;

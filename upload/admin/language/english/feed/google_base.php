@@ -5,6 +5,7 @@ $_['heading_title']    = 'Google Base';
 // Text
 $_['text_feed']        = 'Product Feeds';
 $_['text_success']     = 'Success: You have modified Google Base feed!';
+$_['text_list']        = 'Layout List';
 
 // Entry
 $_['entry_status']     = 'Status';

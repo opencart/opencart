@@ -4,6 +4,7 @@ $_['heading_title']     = 'Language';
 
 // Text
 $_['text_success']      = 'Success: You have modified languages!';
+$_['text_list']         = 'Layout List';
 
 // Column
 $_['column_name']       = 'Language Name';

@@ -4,6 +4,7 @@ $_['heading_title']      = 'Banners';
 
 // Text
 $_['text_success']       = 'Success: You have modified banners!';
+$_['text_list']          = 'Attribute Group List';
 $_['text_default']       = 'Default';
 
 // Column

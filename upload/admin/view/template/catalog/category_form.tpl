@@ -19,7 +19,7 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <div class="panel panel-info">
+    <div class="panel panel-primary">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h3>
       </div>
@@ -140,12 +140,7 @@
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_image; ?></label>
-                <div class="col-sm-10">
-                  <?php if ($thumb) { ?>
-                  <a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $thumb; ?>" alt="" title="" /></a>
-                  <?php } else { ?>
-                  <a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></a>
-                  <?php } ?>
+                <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $thumb; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
                   <input type="hidden" name="image" value="<?php echo $image; ?>" id="input-image" />
                 </div>
               </div>

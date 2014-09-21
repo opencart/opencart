@@ -180,7 +180,8 @@ class ControllerDesignLayout extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
@@ -362,13 +363,15 @@ class ControllerDesignLayout extends Controller {
 		$data['modules'] = array();
 		
 		$modules = $this->model_extension_module->getModules();
-
+		
+		$i = 0;
+		
 		foreach ($modules as $module) {
-			if ($this->load) {
-				$data['modules'] = array(
-					'module_id' => '',
-					'name'      => '',
-					'code'      => ''
+			if ($this->load->language('module/' . $module['code'])) {
+				$data['modules'][] = array(
+					'module_id' => $module['module_id'],
+					'name'      => $i++ . ' ' . $this->language->get('heading_title'),
+					'code'      => $module['code']
 				);
 			}
 		}

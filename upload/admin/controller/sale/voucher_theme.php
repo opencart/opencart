@@ -349,9 +349,11 @@ class ControllerSaleVoucherTheme extends Controller {
 		} elseif (!empty($voucher_theme_info) && is_file(DIR_IMAGE . $voucher_theme_info['image'])) {
 			$data['thumb'] = $this->model_tool_image->resize($voucher_theme_info['image'], 100, 100);
 		} else {
-			$data['thumb'] = '';
+			$data['thumb'] = $this->model_tool_image->resize('placeholder.png', 100, 100);
 		}
 
+		$data['placeholder'] = $this->model_tool_image->resize('placeholder.png', 100, 100);
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

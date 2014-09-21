@@ -342,12 +342,7 @@
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-image"><span data-toggle="tooltip" title="<?php echo $help_logo; ?>"><?php echo $entry_logo; ?></span></label>
-                <div class="col-sm-10">
-                  <?php if ($thumb) { ?>
-                  <a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $thumb; ?>" alt="" title="" /></a>
-                  <?php } else { ?>
-                  <a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></a>
-                  <?php } ?>
+                <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $thumb; ?>" alt="" title="" /></a>
                   <input type="hidden" name="pp_express_logo" value="<?php echo $pp_express_logo; ?>" id="input-image" />
                 </div>
               </div>

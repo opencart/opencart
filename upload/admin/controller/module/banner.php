@@ -6,13 +6,18 @@ class ControllerModuleBanner extends Controller {
 		$this->load->language('module/banner');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
+		
+		$this->load->model('setting/setting');
+		
 		$this->load->model('extension/module');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			$this->model_setting_setting->editSetting('banner', $this->request->post);
 			
-			foreach ($this->request->post as $module) {
-				$this->model_extension_module->editSetting('module', $module);
+			if (isset($this->request->post['banner_module'])) {
+				foreach ($this->request->post['banner_module'] as $module) {
+					$this->model_extension_module->addModule('banner', $module);
+				}
 			}
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -70,7 +75,13 @@ class ControllerModuleBanner extends Controller {
 		$data['action'] = $this->url->link('module/banner', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
-
+		
+		if (isset($this->request->post['banner_status'])) {
+			$data['banner_status'] = $this->request->post['banner_status'];
+		} else {
+			$data['banner_status'] = $this->config->get('banner_status');
+		}
+		
 		$data['modules'] = array();
 
 		if (isset($this->request->post['banner_module'])) {
@@ -82,12 +93,6 @@ class ControllerModuleBanner extends Controller {
 		$this->load->model('design/banner');
 
 		$data['banners'] = $this->model_design_banner->getBanners();
-		
-		if (isset($this->request->post['banner_status'])) {
-			$data['banner_status'] = $this->request->post['banner_status'];
-		} else {
-			$data['banner_status'] = $this->config->get('banner_status');
-		}
 		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

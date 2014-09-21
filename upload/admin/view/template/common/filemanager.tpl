@@ -50,7 +50,7 @@ $('a.thumbnail').on('click', function(e) {
 	e.preventDefault();
 
 	<?php if ($thumb) { ?>
-	$('#<?php echo $thumb; ?>').html('<img src="' + $(this).find('img').attr('src') + '" alt="" title="" />');
+	$('#<?php echo $thumb; ?>').find('img').attr('src', $(this).find('img').attr('src'));
 	<?php } ?>
 	
 	<?php if ($target) { ?>

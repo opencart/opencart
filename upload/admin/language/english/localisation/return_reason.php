@@ -4,6 +4,7 @@ $_['heading_title']    = 'Return Reason';
 
 // Text
 $_['text_success']     = 'Success: You have modified return reasons!';
+$_['text_list']        = 'Layout List';
 
 // Column
 $_['column_name']      = 'Return Reason Name';

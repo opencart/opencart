@@ -4,6 +4,7 @@ $_['heading_title']       = 'Coupon';
 
 // Text
 $_['text_success']        = 'Success: You have modified coupons!';
+$_['text_list']           = 'Layout List';
 $_['text_percent']        = 'Percentage';
 $_['text_amount']         = 'Fixed Amount';
 

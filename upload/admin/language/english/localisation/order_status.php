@@ -4,6 +4,7 @@ $_['heading_title']    = 'Order Status';
 
 // Text
 $_['text_success']     = 'Success: You have modified order statuses!';
+$_['text_list']        = 'Layout List';
 
 // Column
 $_['column_name']      = 'Order Status Name';

@@ -129,7 +129,7 @@
               <?php if ($product['thumb']) { ?>
               <a id="thumb-image" class="img-thumbnail"><img src="<?php echo $product['thumb']; ?>" alt="" title="" /></a>
               <?php } else { ?>
-              <a id="thumb-image" class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></a>
+              <a id="thumb-image" class="img-thumbnail"><img src="<?php echo $placeholder; ?>" alt="" title="" /></a>
               <?php } ?>
               <input type="hidden" name="image" value="<?php echo $product['image_url']; ?>" id="input-image" />
             </div>
@@ -147,11 +147,7 @@
                 <?php foreach ($product['product_images'] as $product_image) { ?>
                 <tr>
                   <td class="text-left"><input type="checkbox" name="product_image[<?php echo $image_row; ?>][image_url]" value="<?php echo $product_image['image_url']; ?>" class="product-image" checked="checked" /></td>
-                  <td class="text-left"><?php if ($product_image['thumb']) { ?>
-                    <a href="" class="img-thumbnail"><img src="<?php echo $product_image['thumb']; ?>" alt="" title="" /></a>
-                    <?php } else { ?>
-                    <a href="" class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></a>
-                    <?php } ?></td>
+                  <td class="text-left"><a href="" class="img-thumbnail"><img src="<?php echo $product_image['thumb']; ?>" alt="" title="" /></a></td>
                 </tr>
                 <?php $image_row++; ?>
                 <?php } ?>

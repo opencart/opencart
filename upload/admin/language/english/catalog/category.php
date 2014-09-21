@@ -4,6 +4,7 @@ $_['heading_title']          = 'Category';
 
 // Text
 $_['text_success']           = 'Success: You have modified categories!';
+$_['text_list']              = 'Attribute Group List';
 $_['text_default']           = 'Default';
 
 // Column

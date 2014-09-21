@@ -102,7 +102,7 @@
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_image; ?></label>
-                <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $thumb; ?>" alt="" title="" /></a>
+                <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $thumb; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
                   <input type="hidden" name="config_image" value="<?php echo $config_image; ?>" id="input-image" />
                 </div>
               </div>
@@ -1007,13 +1007,13 @@
             <div class="tab-pane" id="tab-image">
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-logo"><?php echo $entry_logo; ?></label>
-                <div class="col-sm-10"><a href="" id="thumb-logo" data-toggle="image" class="img-thumbnail"><img src="<?php echo $logo; ?>" alt="" title="" /></a>
+                <div class="col-sm-10"><a href="" id="thumb-logo" data-toggle="image" class="img-thumbnail"><img src="<?php echo $logo; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
                   <input type="hidden" name="config_logo" value="<?php echo $config_logo; ?>" id="input-logo" />
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-icon"><?php echo $entry_icon; ?></label>
-                <div class="col-sm-10"><a href="" id="thumb-icon" data-toggle="image" class="img-thumbnail"><img src="<?php echo $icon; ?>" alt="" title="" /></a>
+                <div class="col-sm-10"><a href="" id="thumb-icon" data-toggle="image" class="img-thumbnail"><img src="<?php echo $icon; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
                   <input type="hidden" name="config_icon" value="<?php echo $config_icon; ?>" id="input-icon" />
                 </div>
               </div>

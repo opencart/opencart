@@ -125,12 +125,7 @@
         <div id="tab-images" class="tab-pane">
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_image; ?></label>
-            <div class="col-sm-10">
-              <?php if ($product['thumb']) { ?>
-              <a id="thumb-image" class="img-thumbnail"><img src="<?php echo $product['thumb']; ?>" alt="" title="" /></a>
-              <?php } else { ?>
-              <a id="thumb-image" class="img-thumbnail"><img src="<?php echo $placeholder; ?>" alt="" title="" /></a>
-              <?php } ?>
+            <div class="col-sm-10"><a id="thumb-image" class="img-thumbnail"><img src="<?php echo $placeholder; ?>" alt="" title="" /></a>
               <input type="hidden" name="image" value="<?php echo $product['image_url']; ?>" id="input-image" />
             </div>
           </div>

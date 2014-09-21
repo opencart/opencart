@@ -18,11 +18,12 @@ class ControllerModulePPLogin extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_grey_button'] = $this->language->get('text_grey_button');
-		$data['text_blue_button'] = $this->language->get('text_blue_button');
+		$data['text_button_grey'] = $this->language->get('text_button_grey');
+		$data['text_button_blue'] = $this->language->get('text_button_blue');
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
 
@@ -290,14 +291,6 @@ class ControllerModulePPLogin extends Controller {
 			$data['pp_login_status'] = $this->request->post['pp_login_status'];
 		} else {
 			$data['pp_login_status'] = $this->config->get('pp_login_status');
-		}
-
-		$data['modules'] = array();
-
-		if (isset($this->request->post['pp_login_module'])) {
-			$data['modules'] = $this->request->post['pp_login_module'];
-		} elseif ($this->config->get('pp_login_module')) {
-			$data['modules'] = $this->config->get('pp_login_module');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

@@ -14,7 +14,7 @@ class ControllerModuleAccount extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('account', $this->request->post);
 
-			$this->model_setting_setting->addModule('account');
+			$this->model_extension_module->addModule('account');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -22,7 +22,8 @@ class ControllerModuleAccount extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		
@@ -78,6 +79,7 @@ class ControllerModuleAccount extends Controller {
 
 		return !$this->error;
 	}
+	
 	
 	
 }

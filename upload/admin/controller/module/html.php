@@ -24,7 +24,9 @@ class ControllerModuleHTML extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
+		
 		$data['entry_heading'] = $this->language->get('entry_heading');
 		$data['entry_description'] = $this->language->get('entry_description');
 		$data['entry_status'] = $this->language->get('entry_status');
@@ -63,14 +65,10 @@ class ControllerModuleHTML extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['token'] = $this->session->data['token'];
-
-		$data['modules'] = array();
-
-		if (isset($this->request->post['html_module'])) {
-			$data['modules'] = $this->request->post['html_module'];
-		} elseif ($this->config->get('html_module')) {
-			$data['modules'] = $this->config->get('html_module');
+		if (isset($this->request->post['module'])) {
+			$data['modules'] = $this->request->post['module'];
+		} else {
+			$data['modules'] = $this->model_extension_module->getModulesByCode('html');
 		}
 
 		$this->load->model('localisation/language');

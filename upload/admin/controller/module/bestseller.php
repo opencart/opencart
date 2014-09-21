@@ -22,7 +22,8 @@ class ControllerModuleBestSeller extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 
@@ -70,18 +71,16 @@ class ControllerModuleBestSeller extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['modules'] = array();
-
-		if (isset($this->request->post['bestseller_module'])) {
-			$data['modules'] = $this->request->post['bestseller_module'];
-		} elseif ($this->config->get('bestseller_module')) {
-			$data['modules'] = $this->config->get('bestseller_module');
+		if (isset($this->request->post['module'])) {
+			$data['modules'] = $this->request->post['module'];
+		} else {
+			$data['modules'] = $this->model_extension_module->getModulesByCode('bestseller');
 		}
 
-		if (isset($this->request->post['banner_status'])) {
-			$data['banner_status'] = $this->request->post['banner_status'];
+		if (isset($this->request->post['bestseller_status'])) {
+			$data['bestseller_status'] = $this->request->post['bestseller_status'];
 		} else {
-			$data['banner_status'] = $this->config->get('banner_status');
+			$data['bestseller_status'] = $this->config->get('bestseller_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

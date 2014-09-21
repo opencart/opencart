@@ -18,7 +18,9 @@ class ControllerModuleSlideshow extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
+		
 		$data['entry_banner'] = $this->language->get('entry_banner');
 		$data['entry_dimension'] = $this->language->get('entry_dimension');
 		$data['entry_width'] = $this->language->get('entry_width');
@@ -62,8 +64,6 @@ class ControllerModuleSlideshow extends Controller {
 		$data['action'] = $this->url->link('module/slideshow', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
-
-		$data['modules'] = array();
 
 		if (isset($this->request->post['slideshow_module'])) {
 			$data['modules'] = $this->request->post['slideshow_module'];

@@ -20,7 +20,9 @@ class ControllerModuleSpecial extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
+		
 		$data['entry_limit'] = $this->language->get('entry_limit');
 		$data['entry_image'] = $this->language->get('entry_image');
 		$data['entry_width'] = $this->language->get('entry_width');

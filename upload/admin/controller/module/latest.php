@@ -20,7 +20,9 @@ class ControllerModuleLatest extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
+		
 		$data['entry_limit'] = $this->language->get('entry_limit');
 		$data['entry_image'] = $this->language->get('entry_image');
 		$data['entry_width'] = $this->language->get('entry_width');
@@ -65,12 +67,10 @@ class ControllerModuleLatest extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['modules'] = array();
-
-		if (isset($this->request->post['latest_module'])) {
-			$data['modules'] = $this->request->post['latest_module'];
-		} elseif ($this->config->get('latest_module')) {
-			$data['modules'] = $this->config->get('latest_module');
+		if (isset($this->request->post['module'])) {
+			$data['modules'] = $this->request->post['module'];
+		} else {
+			$data['modules'] = $this->model_extension_module->getModulesByCode('latest');
 		}
 		
 		if (isset($this->request->post['latest_status'])) {

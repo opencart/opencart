@@ -26,7 +26,8 @@ class ControllerModuleBanner extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 
@@ -82,12 +83,10 @@ class ControllerModuleBanner extends Controller {
 			$data['banner_status'] = $this->config->get('banner_status');
 		}
 		
-		$data['modules'] = array();
-
-		if (isset($this->request->post['banner_module'])) {
-			$data['modules'] = $this->request->post['banner_module'];
-		} elseif ($this->config->get('banner_module')) {
-			$data['modules'] = $this->config->get('banner_module');
+		if (isset($this->request->post['module'])) {
+			$data['modules'] = $this->request->post['module'];
+		} else {
+			$data['modules'] = $this->model_extension_module->getModulesByCode('banner');
 		}
 
 		$this->load->model('design/banner');
@@ -120,6 +119,6 @@ class ControllerModuleBanner extends Controller {
 	public function uninstall() {
 		$this->load->model('extension/module');
 		
-		$this->model_extension_module->deleteModule('checkout_layout');
+		$this->model_extension_module->deleteModule('banner');
 	}	
 }

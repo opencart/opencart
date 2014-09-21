@@ -9,6 +9,8 @@ class ControllerModuleFeatured extends Controller {
 
 		$this->load->model('setting/setting');
 
+		$this->load->model('extension/module');
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('featured', $this->request->post);
 
@@ -19,6 +21,10 @@ class ControllerModuleFeatured extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
+		$data['text_edit'] = $this->language->get('text_edit');
+		$data['text_enabled'] = $this->language->get('text_enabled');
+		$data['text_disabled'] = $this->language->get('text_disabled');
+		
 		$data['entry_product'] = $this->language->get('entry_product');
 		$data['entry_limit'] = $this->language->get('entry_limit');
 		$data['entry_image'] = $this->language->get('entry_image');
@@ -94,19 +100,17 @@ class ControllerModuleFeatured extends Controller {
 				);
 			}
 		}
-
-		$data['modules'] = array();
-
-		if (isset($this->request->post['featured_module'])) {
-			$data['modules'] = $this->request->post['featured_module'];
-		} elseif ($this->config->get('featured_module')) {
-			$data['modules'] = $this->config->get('featured_module');
-		}
 		
 		if (isset($this->request->post['featured_status'])) {
 			$data['featured_status'] = $this->request->post['featured_status'];
 		} else {
 			$data['featured_status'] = $this->config->get('featured_status');
+		}
+		
+		if (isset($this->request->post['module'])) {
+			$data['modules'] = $this->request->post['module'];
+		} else {
+			$data['modules'] = $this->model_extension_module->getModulesByCode('featured');
 		}
 		
 		$data['header'] = $this->load->controller('common/header');

@@ -14,7 +14,7 @@
 
 
 <script type="text/javascript" src="view/javascript/jquery/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.min.js"></script>
 <!--
 <link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />
 //-->

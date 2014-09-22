@@ -27,7 +27,7 @@
     <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_refresh; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
-    <div class="panel panel-primary">
+    <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
       </div>

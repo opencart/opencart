@@ -14,10 +14,11 @@ class ControllerModuleBanner extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('banner', $this->request->post);
 			
-			if (isset($this->request->post['banner_module'])) {
-				foreach ($this->request->post['banner_module'] as $module) {
-					$this->model_extension_module->addModule('banner', $module);
-				}
+			// Add positions for all the modules so they can be used with the layouts
+			$this->model_extension_module->deleteModule('banner');
+			
+			foreach (array_keys($this->request->post['banner_module']) as $key) {
+				$this->model_extension_module->addModule('banner', $key);
 			}
 			
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -83,10 +84,23 @@ class ControllerModuleBanner extends Controller {
 			$data['banner_status'] = $this->config->get('banner_status');
 		}
 		
-		if (isset($this->request->post['module'])) {
-			$data['modules'] = $this->request->post['module'];
+		if (isset($this->request->post['banner_module'])) {
+			$modules = $this->request->post['banner_module'];
+		} elseif ($this->config->get('banner_module')) {
+			$modules = $this->config->get('banner_module');
 		} else {
-			$data['modules'] = $this->model_extension_module->getModulesByCode('banner');
+			$modules = array();
+		}
+
+		$data['banner_modules'] = array();
+		
+		foreach ($modules as $key => $module) {
+			$data['banner_modules'][] = array(
+				'key'       => $key,
+				'banner_id' => $module['banner_id'],
+				'width'     => $module['width'],
+				'height'    => $module['height']
+			);
 		}
 
 		$this->load->model('design/banner');
@@ -115,10 +129,4 @@ class ControllerModuleBanner extends Controller {
 
 		return !$this->error;
 	}
-	
-	public function uninstall() {
-		$this->load->model('extension/module');
-		
-		$this->model_extension_module->deleteModule('banner');
-	}	
 }

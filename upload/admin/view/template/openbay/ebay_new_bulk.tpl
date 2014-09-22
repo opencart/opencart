@@ -8,7 +8,7 @@
   <?php foreach($error_warning as $warning) { ?>
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $warning; ?></div>
   <?php } ?>
-  <div class="panel panel-primary">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
         <a onclick="confirmAction('<?php echo $cancel; ?>');" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
@@ -74,7 +74,7 @@
                           <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                               <div class="modal-body">
-                                <div class="panel panel-primary">
+                                <div class="panel panel-default">
                                   <div class="panel-heading">
                                     <div class="text-right"><a onclick="overlayHide();" class="btn pull-right" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="fa fa-times"></i></a></div>
                                     <h1 class="panel-title"><?php echo $text_category; ?></h1>
@@ -141,7 +141,7 @@
                           <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                               <div class="modal-body">
-                                <div class="panel panel-primary">
+                                <div class="panel panel-default">
                                   <div class="panel-heading">
                                     <div class="text-right"><a onclick="overlayHide();" class="btn pull-right" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="fa fa-times"></i></a></div>
                                     <h1 class="panel-title"><?php echo $text_catalog_search; ?></h1>
@@ -174,7 +174,7 @@
                           <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                               <div class="modal-body">
-                                <div class="panel panel-primary">
+                                <div class="panel panel-default">
                                   <div class="panel-heading">
                                     <div class="text-right"><a onclick="overlayHide();" class="btn pull-right" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="fa fa-times"></i></a></div>
                                     <h1 class="panel-title"><?php echo $text_profile; ?></h1>
@@ -575,7 +575,7 @@
 
                   if (data.data.Recommendations.NameRecommendation) {
                     htmlInj = '';
-                    htmlInj += '<div class="panel panel-primary">';
+                    htmlInj += '<div class="panel panel-default">';
                       htmlInj += '<div class="panel-heading">';
                         htmlInj += '<div class="pull-right"><a onclick="overlayHide();" class="btn btn-default" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="fa fa-times"></i></a></div>';
                         htmlInj += '<h1 class="panel-title"><?php echo $text_features; ?></h1>';

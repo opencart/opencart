@@ -19,7 +19,7 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <div class="panel panel-primary">
+    <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_edit; ?></h3>
       </div>
@@ -61,7 +61,7 @@
                     <?php } ?>
                     <?php } ?>
                   </select></td>
-                <td class="text-left"><input type="text" name="banner_module[<?php echo $module_row; ?>][width]" value="<?php echo $module['width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
+                <td class="text-left"><input type="text" name="module[<?php echo $module_row; ?>][width]" value="<?php echo $module['width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
                   <input type="text" name="module[<?php echo $module_row; ?>][height]" value="<?php echo $module['height']; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   <?php if (isset($error_dimension[$module_row])) { ?>
                   <div class="text-danger"><?php echo $error_dimension[$module_row]; ?></div>
@@ -87,12 +87,12 @@ var module_row = <?php echo $module_row; ?>;
 
 function addModule() {	
 	html  = '<tr id="module-row' + module_row + '">';
-	html += '  <td class="text-left"><select name="banner_module[' + module_row + '][banner_id]" class="form-control">';
+	html += '  <td class="text-left"><input type="hidden" name="module[' + module_row + '][module_id]" value="" /><select name="module[' + module_row + '][banner_id]" class="form-control">';
 	<?php foreach ($banners as $banner) { ?>
 	html += '    <option value="<?php echo $banner['banner_id']; ?>"><?php echo addslashes($banner['name']); ?></option>';
 	<?php } ?>
 	html += '  </select></td>';
-	html += '  <td class="text-left"><input type="text" name="banner_module[' + module_row + '][width]" value="" placeholder="<?php echo $entry_width; ?>" class="form-control" /> <input type="text" name="banner_module[' + module_row + '][height]" value="" placeholder="<?php echo $entry_height; ?>" class="form-control" /></td>'; 
+	html += '  <td class="text-left"><input type="text" name="module[' + module_row + '][width]" value="" placeholder="<?php echo $entry_width; ?>" class="form-control" /> <input type="text" name="module[' + module_row + '][height]" value="" placeholder="<?php echo $entry_height; ?>" class="form-control" /></td>'; 
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + module_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 	

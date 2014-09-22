@@ -25,7 +25,7 @@
         <?php foreach ($image as $image) { ?>
         <div class="col-sm-3 text-center">
           <?php if ($image['type'] == 'directory') { ?>
-          <div style="width: 100px; height: 80px; padding-top: 20px;"><a href="<?php echo $image['href']; ?>" class="directory" style="vertical-align: middle;"><i class="fa fa-folder fa-5x"></i></a></div>
+          <div class="text-center"><a href="<?php echo $image['href']; ?>" class="directory" style="vertical-align: middle;"><i class="fa fa-folder fa-5x"></i></a></div>
           <label>
             <input type="checkbox" name="path[]" value="<?php echo $image['path']; ?>" />
             <?php echo $image['name']; ?></label>

@@ -15,7 +15,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel panel-primary">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
         <form action="<?php echo $insert; ?>" method="post" id="add-profile-form">

@@ -42,7 +42,7 @@ class ControllerCommonColumnLeft extends Controller {
 
 		foreach ($modules as $module) {
 			if ($this->config->get($module['code'] . '_status')) {
-				$data['modules'][] = $this->load->controller('module/' . $module['code'], $module['setting']);
+				$data['modules'][] = $this->load->controller('module/' . $module['code'], $this->config->get($module['code'] . '_module_' . $module['index']));
 			}
 		}
 

@@ -4,7 +4,7 @@
     <br />
     <div class="row">
       <div class="col-sm-offset-4 col-sm-4">
-        <div class="panel panel-primary">
+        <div class="panel panel-default">
           <div class="panel-heading">
             <h1 class="panel-title"><i class="fa fa-repeat"></i> <?php echo $heading_title; ?></h1>
           </div>

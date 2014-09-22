@@ -14,7 +14,7 @@ class ControllerModuleAccount extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('account', $this->request->post);
 
-			$this->model_extension_module->addModule('account');
+			$this->model_extension_module->editModule('account');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

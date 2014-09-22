@@ -364,16 +364,16 @@ class ControllerDesignLayout extends Controller {
 		
 		$modules = $this->model_extension_module->getModules();
 		
-		$i = 0;
+		$i = 1;
 		
 		foreach ($modules as $module) {
-			if ($this->load->language('module/' . $module['code'])) {
-				$data['modules'][] = array(
-					'module_id' => $module['module_id'],
-					'name'      => $i++ . ' ' . $this->language->get('heading_title'),
-					'code'      => $module['code']
-				);
-			}
+			$this->load->language('module/' . $module['code']);
+			
+			$data['modules'][] = array(
+				'module_id' => $module['module_id'],
+				'name'      => $this->language->get('heading_title') . ' ' . $i++,
+				'code'      => $module['code']
+			);
 		}
 
 		$data['header'] = $this->load->controller('common/header');

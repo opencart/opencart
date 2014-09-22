@@ -6,7 +6,7 @@
     <p><?php echo $text_link_desc3; ?></p>
     <p><?php echo $text_link_desc4; ?></p>
   </div>
-  <div class="panel panel-primary">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <h1 class="panel-title"><i class="fa fa-unlink fa-lg"></i> <?php echo $text_unlinked_items; ?></h1>
       <ul class="breadcrumb">
@@ -74,7 +74,7 @@
       </div>
     </div>
   </div>
-  <div class="panel panel-primary">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <h1 class="panel-title"><i class="fa fa-link fa-lg"></i> <?php echo $text_linked_items; ?></h1>
     </div>

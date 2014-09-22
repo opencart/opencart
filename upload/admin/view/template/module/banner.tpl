@@ -21,10 +21,24 @@
     <?php } ?>
     <div class="panel panel-primary">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_edit; ?></h3>
       </div>
       <div class="panel-body">
-        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-banner">
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-banner" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+            <div class="col-sm-10">
+              <select name="banner_status" id="input-status" class="form-control">
+                <?php if ($banner_status) { ?>
+                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                <option value="0"><?php echo $text_disabled; ?></option>
+                <?php } else { ?>
+                <option value="1"><?php echo $text_enabled; ?></option>
+                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
           <table id="module" class="table table-striped table-bordered table-hover">
             <thead>
               <tr>
@@ -37,7 +51,8 @@
               <?php $module_row = 0; ?>
               <?php foreach ($modules as $module) { ?>
               <tr id="module-row<?php echo $module_row; ?>">
-                <td class="text-left"><select name="banner_module[<?php echo $module_row; ?>][banner_id]" class="form-control">
+                <td class="text-left"><input type="hidden" name="module[<?php echo $module_row; ?>][module_id]" value="<?php echo $module['module_id']; ?>" />
+                  <select name="module[<?php echo $module_row; ?>][banner_id]" class="form-control">
                     <?php foreach ($banners as $banner) { ?>
                     <?php if ($banner['banner_id'] == $module['banner_id']) { ?>
                     <option value="<?php echo $banner['banner_id']; ?>" selected="selected"><?php echo $banner['name']; ?></option>
@@ -47,7 +62,7 @@
                     <?php } ?>
                   </select></td>
                 <td class="text-left"><input type="text" name="banner_module[<?php echo $module_row; ?>][width]" value="<?php echo $module['width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
-                  <input type="text" name="banner_module[<?php echo $module_row; ?>][height]" value="<?php echo $module['height']; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                  <input type="text" name="module[<?php echo $module_row; ?>][height]" value="<?php echo $module['height']; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   <?php if (isset($error_dimension[$module_row])) { ?>
                   <div class="text-danger"><?php echo $error_dimension[$module_row]; ?></div>
                   <?php } ?></td>

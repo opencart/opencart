@@ -9,6 +9,8 @@ class ControllerModuleSlideshow extends Controller {
 
 		$this->load->model('setting/setting');
 
+		$this->load->model('extension/module');
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('slideshow', $this->request->post);
 
@@ -18,7 +20,11 @@ class ControllerModuleSlideshow extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
+		$data['text_enabled'] = $this->language->get('text_enabled');
+		$data['text_disabled'] = $this->language->get('text_disabled');
+		
 		$data['entry_banner'] = $this->language->get('entry_banner');
 		$data['entry_dimension'] = $this->language->get('entry_dimension');
 		$data['entry_width'] = $this->language->get('entry_width');
@@ -63,14 +69,16 @@ class ControllerModuleSlideshow extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['modules'] = array();
-
 		if (isset($this->request->post['slideshow_module'])) {
 			$data['modules'] = $this->request->post['slideshow_module'];
 		} elseif ($this->config->get('slideshow_module')) {
 			$data['modules'] = $this->config->get('slideshow_module');
 		}
+		
+		$this->load->model('design/banner');
 
+		$data['banners'] = $this->model_design_banner->getBanners();
+		
 		if (isset($this->request->post['slideshow_status'])) {
 			$data['slideshow_status'] = $this->request->post['slideshow_status'];
 		} else {

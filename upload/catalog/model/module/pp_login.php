@@ -74,7 +74,7 @@ class ModelModulePPLogin extends Model {
 	}
 
 	public function log($data) {
-		if ($this->config->get('pp_login_logging')) {
+		if ($this->config->get('pp_login_debug')) {
 			$backtrace = debug_backtrace();
 			$this->log->write('Log In with PayPal debug (' . $backtrace[1]['class'] . '::' . $backtrace[1]['function'] . ') - ' . $data);
 		}

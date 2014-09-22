@@ -9,6 +9,8 @@ class ControllerModuleCarousel extends Controller {
 
 		$this->load->model('setting/setting');
 
+		$this->load->model('extension/module');
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('carousel', $this->request->post);
 
@@ -18,7 +20,8 @@ class ControllerModuleCarousel extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 
@@ -68,12 +71,10 @@ class ControllerModuleCarousel extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['modules'] = array();
-
-		if (isset($this->request->post['carousel_module'])) {
-			$data['modules'] = $this->request->post['carousel_module'];
-		} elseif ($this->config->get('carousel_module')) {
-			$data['modules'] = $this->config->get('carousel_module');
+		if (isset($this->request->post['module'])) {
+			$data['modules'] = $this->request->post['module'];
+		} else {
+			$data['modules'] = $this->model_extension_module->getModulesByCode('carousel');
 		}
 
 		$this->load->model('design/banner');

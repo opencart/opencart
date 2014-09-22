@@ -5,6 +5,8 @@ class ControllerModulePPLayout extends Controller {
 
 		$this->load->model('setting/setting');
 
+		$this->load->model('extension/module');
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
@@ -16,7 +18,8 @@ class ControllerModulePPLayout extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 
@@ -35,31 +38,25 @@ class ControllerModulePPLayout extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => false
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_module'),
-			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => ' :: '
+			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/pp_layout', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => ' :: '
+			'href' => $this->url->link('module/pp_layout', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['action'] = $this->url->link('module/pp_layout', 'token=' . $this->session->data['token'], 'SSL');
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
-		$data['token'] = $this->session->data['token'];
 
-		$data['modules'] = array();
-
-		if (isset($this->request->post['pp_layout_module'])) {
-			$data['modules'] = $this->request->post['pp_layout_module'];
-		} elseif ($this->config->get('pp_layout_module')) {
+		if (isset($this->request->post['module'])) {
+			$data['modules'] = $this->request->post['module'];
+		} else {
 			$data['modules'] = $this->config->get('pp_layout_module');
 		}
 

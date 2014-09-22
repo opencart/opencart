@@ -12,6 +12,7 @@
 * Fixed hyphen problem with PayPal Express checkout url
 * Changed PayPal cardissue to issuenumber variabe for PayPal Pro
 * Used correct admin setting to check if product count should be done on a category REF: #1828
+* Changed response message to hide sensitive DB connection data on failure. REF: 3fff5226d9c48f8f4c948bc2c27a5c91f8dba1a2
 
 #### Changes
 * Removed duplicate DELETE SQL query for product attributes REF: #1379

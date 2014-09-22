@@ -8,7 +8,7 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
 
-		$this->document->addScript('view/javascript/openbay/openbay.js');
+		$this->document->addScript('view/javascript/openbay/js/openbay.js');
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['breadcrumbs'] = array();

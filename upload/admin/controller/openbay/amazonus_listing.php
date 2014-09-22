@@ -93,7 +93,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/openbay/faq.js');
+		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		if (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
@@ -213,7 +213,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 		$this->load->language('openbay/amazonus_listing');
 
 		$this->document->setTitle($this->language->get('text_edit_heading'));
-		$this->document->addScript('view/javascript/openbay/faq.js');
+		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$url = '';
 

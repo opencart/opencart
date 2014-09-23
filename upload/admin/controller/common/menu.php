@@ -35,7 +35,6 @@ class ControllerCommonMenu extends Controller {
 		$this->addPage('extension/payment', $this->language->get('text_payment'), 'extension');
 		$this->addPage('extension/total', $this->language->get('text_total'), 'extension');
 		$this->addPage('extension/feed', $this->language->get('text_feed'), 'extension');
-<<<<<<< HEAD
 		
 		 // FIXME: Some pages don't appear on Acccess/Modify Permissions
 		if ($this->config->get('openbaypro_menu') == 1) {
@@ -67,9 +66,6 @@ class ControllerCommonMenu extends Controller {
 			}
 		}
 		
-=======
-
->>>>>>> FETCH_HEAD
 		// Sales
 		$this->addMenu('sale',  $this->language->get('text_sale'), null, 'fa-shopping-cart');
 		$this->addPage('sale/order', $this->language->get('text_order'), 'sale');
@@ -120,19 +116,11 @@ class ControllerCommonMenu extends Controller {
 		$this->addPage('localisation/return_status', $this->language->get('text_return_status'), 'system_localisation_return');
 		$this->addPage('localisation/return_action', $this->language->get('text_return_action'), 'system_localisation_return');
 		$this->addPage('localisation/return_reason', $this->language->get('text_return_reason'), 'system_localisation_return');
-<<<<<<< HEAD
 
 		$this->addPage('localisation/country', $this->language->get('text_country'), 'system_localisation');
 		$this->addPage('localisation/zone', $this->language->get('text_zone'), 'system_localisation');			
 		$this->addPage('localisation/geo_zone', $this->language->get('text_geo_zone'), 'system_localisation');
 
-=======
-
-		$this->addPage('localisation/country', $this->language->get('text_country'), 'system_localisation');
-		$this->addPage('localisation/zone', $this->language->get('text_zone'), 'system_localisation');			
-		$this->addPage('localisation/geo_zone', $this->language->get('text_geo_zone'), 'system_localisation');
-
->>>>>>> FETCH_HEAD
 		$this->addMenu('system_localisation_tax',  $this->language->get('text_tax'), 'system_localisation');
 		$this->addPage('localisation/tax_class', $this->language->get('text_tax_class'), 'system_localisation_tax');
 		$this->addPage('localisation/tax_rate', $this->language->get('text_tax_rate'), 'system_localisation_tax');
@@ -205,14 +193,8 @@ class ControllerCommonMenu extends Controller {
 	*  @param	{string}	$title - Page title
 	*  @param	{string}	$parent - Parent menu name when exists a connection
 	*  @param	{array}		$params - URL params to be passed, token is already setted
-<<<<<<< HEAD
 	*/
 	private function addPage($route, $title, $parent = null, $params = array()) {
-=======
-	*  @param	{string}	$icon - CSS class to set icon, not used in sub-menus
-	*/
-	private function addPage($route, $title, $parent = null, $params = array(), $icon = null) {
->>>>>>> FETCH_HEAD
 		$params['token'] = $this->session->data['token'];
 		array_push($this->menu, array(
 			'parent' => $parent,
@@ -220,11 +202,7 @@ class ControllerCommonMenu extends Controller {
 			'title' => $title,
 			'route' => $route,
 			'params' => $params,
-<<<<<<< HEAD
 			'icon' => null
-=======
-			'icon' => $icon
->>>>>>> FETCH_HEAD
 		));
 	}
 	
@@ -238,11 +216,7 @@ class ControllerCommonMenu extends Controller {
 
 		if (empty($html)) {
 			$html = PHP_EOL . '<ul id="menu">';
-<<<<<<< HEAD
 			$html .= PHP_EOL . '<li id="menu-dashboard"><a href="' . $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL') . '"><i class="fa fa-dashboard fa-fw"></i> <span>' . $this->language->get('text_dashboard') . '</span></a></li>';
-=======
-			$html .= PHP_EOL . '<li id="menu-dashboard"><a href="' . $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL') . '"><i class="fa fa-home fa-fw"></i> ' . $this->language->get('text_dashboard') . '</a></li>';
->>>>>>> FETCH_HEAD
 		} else {
 			$html .= PHP_EOL . '<ul>';		
 		}
@@ -259,16 +233,9 @@ class ControllerCommonMenu extends Controller {
 			// First level
 			if ($parent == null) {
 
-<<<<<<< HEAD
 				$html .= PHP_EOL . '<li id="menu-' . $item['name'] . '"><a class="parent">';
 				$html .= '<i class="fa fa-fw ' . (empty($item['icon']) ? 'fa-circle' : $item['icon']) . '"></i> ';
 				$html .= '<span>' . $item['title'] . '</span></a>';
-=======
-				$html .= PHP_EOL . '<li id="menu-' . $item['name'] . '"><a ';
-				$html .= empty($item['route']) ? 'class="parent">' : 'href="' . $this->url->link($item['route'], $this->buildParams($item['params']), 'SSL') . '">';
-				$html .= empty($item['icon']) ? null : '<i class="fa fa-fw ' . $item['icon'] . '"></i> ';
-				$html .= $item['title'] . '</a>';
->>>>>>> FETCH_HEAD
 				
 				if (!empty($item['name']))
 					$html = $this->buildList($item['name'], $html);
@@ -330,11 +297,7 @@ class ControllerCommonMenu extends Controller {
 		foreach($params as $key => $value) {
 			$params[$key] = "$key=$value";
 		}
-<<<<<<< HEAD
 		return implode('&amp;', $params);
-=======
-		return implode('&', $params);
->>>>>>> FETCH_HEAD
 	}
 	
 }

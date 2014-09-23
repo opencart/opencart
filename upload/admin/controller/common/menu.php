@@ -204,7 +204,7 @@ class ControllerCommonMenu extends Controller {
 			// First level
 			if ($parent == null) {
 
-				$html .= PHP_EOL . '<li id="menu-' . $item['name'] . '"><a '; // FIXME
+				$html .= PHP_EOL . '<li id="menu-' . $item['name'] . '"><a ';
 				$html .= empty($item['route']) ? 'class="parent">' : 'href="' . $this->url->link($item['route'], $this->buildParams($item['params']), 'SSL') . '">';
 				$html .= empty($item['icon']) ? null : '<i class="fa fa-fw ' . $item['icon'] . '"></i> ';
 				$html .= $item['title'] . '</a>';

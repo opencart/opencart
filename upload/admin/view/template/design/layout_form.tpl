@@ -82,11 +82,11 @@
               <?php $module_row = 0; ?>
               <?php foreach ($layout_modules as $layout_module) { ?>
               <tr id="module-row<?php echo $module_row; ?>">
-                <td class="text-left"><select name="layout_module[<?php echo $module_row; ?>][module_id]" class="form-control">
+                <td class="text-left"><select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control">
                     <?php foreach ($modules as $module) { ?>
                     <optgroup label="<?php echo $module['name']; ?>">
                     <?php foreach ($module['module'] as $module) { ?>
-                    <?php if ($module['module_id'] == $layout_module['module_id']) { ?>
+                    <?php if ($module['code'] == $layout_module['code']) { ?>
                     <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>

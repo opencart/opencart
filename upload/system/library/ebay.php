@@ -576,6 +576,17 @@ final class Ebay {
 			}
 		} else {
 			$this->removeItemByItemId($item_id);
+
+			if($sku == null) {
+				if ($stock <= 0 && $this->config->get('ebay_disable_nostock') == 1) {
+					$this->disableProduct($product_id);
+				}
+			} else {
+				if ($stock <= 0 && $this->config->get('ebay_disable_nostock') == 1) {
+					$this->disableVariant($product_id, $sku);
+				}
+			}
+
 			$this->log('putStockUpdate() - Listing not active, item id: ' . $item_id . ', status returned: ' . $listing['statusActual']);
 		}
 	}

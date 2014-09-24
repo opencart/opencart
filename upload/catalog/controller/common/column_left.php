@@ -41,8 +41,23 @@ class ControllerCommonColumnLeft extends Controller {
 		$modules = $this->model_design_layout->getLayoutModules($layout_id, 'column_left');
 
 		foreach ($modules as $module) {
+			$part = explode('.', $module['code']);
+			
+			if (isset($part[0])) {
+				$code = $part[0];
+			}
+			
+			if (isset($part[1])) {
+				$key = $part[1];
+			}
+			
+			
+			
 			if ($this->config->get($module['code'] . '_status')) {
 				if ($this->config->has($module['code'] . '_module')) {
+					
+					
+					
 					$setting = $this->config->get($module['code'] . '_module');
 				
 					if (isset($setting[$module['key']])) {

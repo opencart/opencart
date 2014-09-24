@@ -52,6 +52,10 @@ class ControllerExtensionModule extends Controller {
 
 			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
 
+			$this->load->model('extension/module');
+			
+			$this->model_extension_module->deleteModule($this->request->get['extension']);
+			
 			// Call uninstall method if it exsits
 			$this->load->controller('module/' . $this->request->get['extension'] . '/uninstall');
 

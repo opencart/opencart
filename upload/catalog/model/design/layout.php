@@ -11,14 +11,8 @@ class ModelDesignLayout extends Model {
 	}
 	
 	public function getLayoutModules($layout_id, $position) {
-		$layout_module_data = array();
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "layout_module WHERE layout_id = '" . (int)$layout_id . "' AND position = '" . $this->db->escape($position) . "' ORDER BY sort_order");
 		
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "layout_module lm LEFT JOIN " . DB_PREFIX . "module m ON (lm.module_id = m.module_id) WHERE lm.layout_id = '" . (int)$layout_id . "' AND lm.position = '" . $this->db->escape($position) . "' ORDER BY lm.sort_order");
-		
-		foreach ($query->rows as $result) {
-			$layout_module_data[$result['module_id']] = $result['code'];
-		}
-		
-		return $layout_module_data;
+		return $query->rows;
 	}	
 }

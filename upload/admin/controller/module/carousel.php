@@ -9,13 +9,8 @@ class ControllerModuleCarousel extends Controller {
 
 		$this->load->model('setting/setting');
 
-		$this->load->model('extension/module');
-
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('carousel', $this->request->post);
-			
-			// We need to add modules to a table
-			$this->model_extension_module->addModule('bestseller', $this->request->post['module']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -80,10 +75,25 @@ class ControllerModuleCarousel extends Controller {
 			$data['carousel_status'] = $this->config->get('carousel_status');
 		}
 		
-		if (isset($this->request->post['module'])) {
-			$data['modules'] = $this->request->post['module'];
+		if (isset($this->request->post['carousel_module'])) {
+			$modules = $this->request->post['carousel_module'];
+		} elseif ($this->config->has('carousel_module')) {
+			$modules = $this->config->get('carousel_module');
 		} else {
-			$data['modules'] = $this->extension_module->getModules('carousel');
+			$modules = array();
+		}
+		
+		$data['carousel_modules'] = array();
+		
+		foreach ($modules as $key => $module) {
+			$data['carousel_modules'][] = array(
+				'key'       => $key,
+				'banner_id' => $module['banner_id'],
+				'limit'     => $module['limit'],
+				'scroll'    => $module['scroll'],
+				'width'     => $module['width'],
+				'height'    => $module['height']
+			);
 		}
 
 		$this->load->model('design/banner');

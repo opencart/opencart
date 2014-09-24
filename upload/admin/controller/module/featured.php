@@ -9,13 +9,8 @@ class ControllerModuleFeatured extends Controller {
 
 		$this->load->model('setting/setting');
 
-		$this->load->model('extension/module');
-
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('featured', $this->request->post);
-			
-			// We need to add modules to a table
-			$this->model_extension_module->addModule('featured', $this->request->post['module']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -109,13 +104,26 @@ class ControllerModuleFeatured extends Controller {
 		} else {
 			$data['featured_status'] = $this->config->get('featured_status');
 		}
-		
-		if (isset($this->request->post['module'])) {
-			$data['modules'] = $this->request->post['module'];
+				
+		if (isset($this->request->post['featured_module'])) {
+			$modules = $this->request->post['featured_module'];
+		} elseif ($this->config->has('featured_module')) {
+			$modules = $this->config->get('featured_module');
 		} else {
-			$data['modules'] = $this->extension_module->getModules('featured');
+			$modules = array();
 		}
 		
+		$data['featured_modules'] = array();
+		
+		foreach ($modules as $key => $module) {
+			$data['featured_modules'][] = array(
+				'key'    => $key,
+				'limit'  => $module['limit'],
+				'width'  => $module['width'],
+				'height' => $module['height']
+			);
+		}
+				
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

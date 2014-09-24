@@ -48,18 +48,16 @@
               </tr>
             </thead>
             <tbody>
-              <?php $module_row = 0; ?>
-              <?php foreach ($modules as $module) { ?>
-              <tr id="module-row<?php echo $module_row; ?>">
-                <td class="text-left"><input type="text" name="special_module[<?php echo $module_row; ?>][limit]" value="<?php echo $module['limit']; ?>" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>
-                <td class="text-left"><input type="text" name="special_module[<?php echo $module_row; ?>][image_width]" value="<?php echo $module['image_width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
-                  <input type="text" name="special_module[<?php echo $module_row; ?>][image_height]" value="<?php echo $module['image_height']; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
-                  <?php if (isset($error_image[$module_row])) { ?>
-                  <div class="text-danger"><?php echo $error_image[$module_row]; ?></div>
+              <?php foreach ($special_modules as $special_module) { ?>
+              <tr id="module-row<?php echo $special_module['key']; ?>">
+                <td class="text-left"><input type="text" name="special_module[<?php echo $special_module['key']; ?>][limit]" value="<?php echo $special_module['limit']; ?>" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>
+                <td class="text-left"><input type="text" name="special_module[<?php echo $special_module['key']; ?>][width]" value="<?php echo $special_module['width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
+                  <input type="text" name="special_module[<?php echo $special_module['key']; ?>][height]" value="<?php echo $special_module['height']; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                  <?php if (isset($error_image[$special_module['key']])) { ?>
+                  <div class="text-danger"><?php echo $error_image[$special_module['key']]; ?></div>
                   <?php } ?></td>
-                <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $module_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $special_module['key']; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
               </tr>
-              <?php $module_row++; ?>
               <?php } ?>
             </tbody>
             <tfoot>
@@ -74,18 +72,17 @@
     </div>
   </div>
   <script type="text/javascript"><!--
-var module_row = <?php echo $module_row; ?>;
-
 function addModule() {	
-	html  = '<tr id="module-row' + module_row + '">';
-	html += '  <td class="text-left"><input type="text" name="special_module[' + module_row + '][limit]" value="5" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><input type="text" name="special_module[' + module_row + '][image_width]" value="200" placeholder="<?php echo $entry_width; ?>" class="form-control" /> <input type="text" name="special_module[' + module_row + '][image_height]" value="200" placeholder="<?php echo $entry_height; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + module_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	var date = new Date();
+	var token = date.getTime();
+
+	html  = '<tr id="module-row' + token + '">';
+	html += '  <td class="text-left"><input type="text" name="special_module[' + token + '][limit]" value="5" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>';
+	html += '  <td class="text-left"><input type="text" name="special_module[' + token + '][width]" value="200" placeholder="<?php echo $entry_width; ?>" class="form-control" /> <input type="text" name="special_module[' + token + '][height]" value="200" placeholder="<?php echo $entry_height; ?>" class="form-control" /></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + token + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 	
 	$('#module tbody').append(html);
-	
-	module_row++;
 }
 //--></script></div>
 <?php echo $footer; ?>

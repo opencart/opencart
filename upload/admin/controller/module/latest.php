@@ -9,13 +9,8 @@ class ControllerModuleLatest extends Controller {
 
 		$this->load->model('setting/setting');
 
-		$this->load->model('extension/module');
-
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('latest', $this->request->post);
-
-			// We need to add modules to a table
-			$this->model_extension_module->addModule('latest', $this->request->post['module']);
 
 			$this->cache->delete('product');
 
@@ -80,10 +75,23 @@ class ControllerModuleLatest extends Controller {
 			$data['latest_status'] = $this->config->get('latest_status');
 		}
 		
-		if (isset($this->request->post['module'])) {
-			$data['modules'] = $this->request->post['module'];
+		if (isset($this->request->post['latest_module'])) {
+			$modules = $this->request->post['latest_module'];
+		} elseif ($this->config->has('latest_module')) {
+			$modules = $this->config->get('latest_module');
 		} else {
-			$data['modules'] = $this->model_extension_module->getModules('latest');
+			$modules = array();
+		}
+		
+		$data['latest_modules'] = array();
+		
+		foreach ($modules as $key => $module) {
+			$data['latest_modules'][] = array(
+				'key'    => $key,
+				'limit'  => $module['limit'],
+				'width'  => $module['width'],
+				'height' => $module['height']
+			);
 		}
 		
 		$data['header'] = $this->load->controller('common/header');

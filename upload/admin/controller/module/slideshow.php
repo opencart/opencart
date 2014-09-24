@@ -9,12 +9,8 @@ class ControllerModuleSlideshow extends Controller {
 
 		$this->load->model('setting/setting');
 
-		$this->load->model('extension/module');
-
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('slideshow', $this->request->post);
-
-			$this->model_extension_module->addModule('slideshow', $this->request->post['module']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -77,10 +73,23 @@ class ControllerModuleSlideshow extends Controller {
 			$data['slideshow_status'] = $this->config->get('slideshow_status');
 		}
 		
-		if (isset($this->request->post['module'])) {
-			$data['modules'] = $this->request->post['module'];
+		if (isset($this->request->post['slideshow_module'])) {
+			$modules = $this->request->post['slideshow_module'];
+		} elseif ($this->config->has('slideshow_module')) {
+			$modules = $this->config->get('slideshow_module');
 		} else {
-			$data['modules'] = $this->model_extension_module->getModules('latest');
+			$modules = array();
+		}
+		
+		$data['slideshow_modules'] = array();
+		
+		foreach ($modules as $key => $module) {
+			$data['slideshow_modules'][] = array(
+				'key'       => $key,
+				'banner_id' => $module['banner_id'],
+				'width'     => $module['width'],
+				'height'    => $module['height']
+			);
 		}
 		
 		$this->load->model('design/banner');

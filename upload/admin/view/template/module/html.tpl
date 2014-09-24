@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-html-content" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <button type="submit" form="form-html" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -24,7 +24,7 @@
         <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_edit; ?></h3>
       </div>
       <div class="panel-body">
-        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-html-content" class="form-horizontal">
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-html" class="form-horizontal">
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
             <div class="col-sm-10">
@@ -66,13 +66,13 @@
                       <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-heading<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>"><?php echo $entry_heading; ?></label>
                         <div class="col-sm-10">
-                          <input type="text" name="module[<?php echo $module_row; ?>][heading][<?php echo $language['language_id']; ?>]" placeholder="<?php echo $entry_heading; ?>" id="input-heading<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>" value="<?php echo isset($module['heading'][$language['language_id']]) ? $module['heading'][$language['language_id']] : ''; ?>" class="form-control" />
+                          <input type="text" name="html_module[<?php echo $module_row; ?>][heading][<?php echo $language['language_id']; ?>]" placeholder="<?php echo $entry_heading; ?>" id="input-heading<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>" value="<?php echo isset($html_module['heading'][$language['language_id']]) ? $html_module['heading'][$language['language_id']] : ''; ?>" class="form-control" />
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-description<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
                         <div class="col-sm-10">
-                          <textarea name="module[<?php echo $module_row; ?>][description][<?php echo $language['language_id']; ?>]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($module['description'][$language['language_id']]) ? $module['description'][$language['language_id']] : ''; ?></textarea>
+                          <textarea name="html_module[<?php echo $module_row; ?>][description][<?php echo $language['language_id']; ?>]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($html_module['description'][$language['language_id']]) ? $html_module['description'][$language['language_id']] : ''; ?></textarea>
                         </div>
                       </div>
                     </div>
@@ -100,8 +100,6 @@ $('#input-description<?php echo $module_row; ?>-language<?php echo $language['la
 <?php } ?>
 //--></script> 
   <script type="text/javascript"><!--
-var module_row = <?php echo $module_row; ?>;
-
 function addModule() {
 	html  = '<div class="tab-pane" id="tab-module' + module_row + '">';
 	html += '  <ul class="nav nav-tabs" id="language' + module_row + '">';

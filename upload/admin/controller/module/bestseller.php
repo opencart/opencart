@@ -9,13 +9,8 @@ class ControllerModuleBestSeller extends Controller {
 
 		$this->load->model('setting/setting');
 
-		$this->load->model('extension/module');
-
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('bestseller', $this->request->post['bestseller_status']);
-
-			// We need to add modules to a table
-			$this->model_extension_module->addModule('bestseller', $this->request->post['module']);
 
 			$this->cache->delete('product');
 
@@ -80,12 +75,25 @@ class ControllerModuleBestSeller extends Controller {
 			$data['bestseller_status'] = $this->config->get('bestseller_status');
 		}
 		
-		if (isset($this->request->post['module'])) {
-			$data['modules'] = $this->request->post['module'];
+		if (isset($this->request->post['bestseller_module'])) {
+			$modules = $this->request->post['bestseller_module'];
+		} elseif ($this->config->has('bestseller_module')) {
+			$modules = $this->config->get('bestseller_module');
 		} else {
-			$data['modules'] = $this->extension_module->getModules('bestseller');
+			$modules = array();
 		}
-
+		
+		$data['bestseller_modules'] = array();
+		
+		foreach ($modules as $key => $module) {
+			$data['bestseller_modules'][] = array(
+				'key'    => $key,
+				'limit'  => $module['limit'],
+				'width'  => $module['width'],
+				'height' => $module['height']
+			);
+		}
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

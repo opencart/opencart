@@ -84,12 +84,39 @@
               <tr id="module-row<?php echo $module_row; ?>">
                 <td class="text-left"><select name="layout_module[<?php echo $module_row; ?>][module_id]" class="form-control">
                     <?php foreach ($modules as $module) { ?>
+                    
+                    <?php if ($module['module']) { ?>
+                    
+                    <optgroup label="<?php echo $module['name']; ?>">
+                    
+                    <?php foreach ($module['module'] as $module) { ?>
+                    
                     <?php if ($module['module_id'] == $layout_module['module_id']) { ?>
-                    <option value="<?php echo $module['module_id']; ?>" selected="selected"><?php echo $module['name']; ?></option>
+                    <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
                     <?php } else { ?>
-                    <option value="<?php echo $module['module_id']; ?>"><?php echo $module['name']; ?></option>
+                    <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
                     <?php } ?>
+                    
                     <?php } ?>
+                    
+                    </optgroup>
+                    
+                    <?php } else { ?>
+                    
+                    <?php if ($module['code'] == $layout_module['code']) { ?>
+                    <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
+                    <?php } ?>
+                    
+                    <?php } ?>
+                    
+                    <?php } ?>
+                    
+                    
+                    
+                    
+                    
                   </select></td>                
                 <td class="text-left"><select name="layout_module[<?php echo $module_row; ?>][position]" class="form-control">
                     <?php if ($layout_module['position'] == 'content_top') { ?>

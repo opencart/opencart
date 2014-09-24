@@ -8,18 +8,14 @@ class ControllerModuleBanner extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('setting/setting');
-		
+
 		$this->load->model('extension/module');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('banner', $this->request->post);
 			
-			// Add positions for all the modules so they can be used with the layouts
-			$this->model_extension_module->deleteModule('banner');
-			
-			foreach (array_keys($this->request->post['banner_module']) as $key) {
-				$this->model_extension_module->addModule('banner', $key);
-			}
+			// We need to add modules to a separate table
+			$this->model_extension_module->addModule('banner', $this->request->post['module']);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -34,8 +30,6 @@ class ControllerModuleBanner extends Controller {
 
 		$data['entry_banner'] = $this->language->get('entry_banner');
 		$data['entry_dimension'] = $this->language->get('entry_dimension');
-		$data['entry_width'] = $this->language->get('entry_width');
-		$data['entry_height'] = $this->language->get('entry_height');
 		$data['entry_width'] = $this->language->get('entry_width');
 		$data['entry_height'] = $this->language->get('entry_height');
 		$data['entry_status'] = $this->language->get('entry_status');
@@ -84,23 +78,10 @@ class ControllerModuleBanner extends Controller {
 			$data['banner_status'] = $this->config->get('banner_status');
 		}
 		
-		if (isset($this->request->post['banner_module'])) {
-			$modules = $this->request->post['banner_module'];
-		} elseif ($this->config->get('banner_module')) {
-			$modules = $this->config->get('banner_module');
+		if (isset($this->request->post['module'])) {
+			$data['modules'] = $this->request->post['module'];
 		} else {
-			$modules = array();
-		}
-
-		$data['banner_modules'] = array();
-		
-		foreach ($modules as $key => $module) {
-			$data['banner_modules'][] = array(
-				'key'       => $key,
-				'banner_id' => $module['banner_id'],
-				'width'     => $module['width'],
-				'height'    => $module['height']
-			);
+			$data['modules'] = $this->extension_module->getModules('banner');
 		}
 
 		$this->load->model('design/banner');

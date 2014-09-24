@@ -5,8 +5,6 @@ class ControllerModulePPLayout extends Controller {
 
 		$this->load->model('setting/setting');
 
-		$this->load->model('extension/module');
-
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
@@ -52,13 +50,8 @@ class ControllerModulePPLayout extends Controller {
 		);
 
 		$data['action'] = $this->url->link('module/pp_layout', 'token=' . $this->session->data['token'], 'SSL');
+		
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
-
-		if (isset($this->request->post['module'])) {
-			$data['modules'] = $this->request->post['module'];
-		} else {
-			$data['modules'] = $this->config->get('pp_layout_module');
-		}
 
 		if (isset($this->request->post['pp_layout_status'])) {
 			$data['pp_layout_status'] = $this->request->post['pp_layout_status'];

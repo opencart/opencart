@@ -13,6 +13,9 @@ class ControllerModuleFeatured extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('featured', $this->request->post);
+			
+			// We need to add modules to a table
+			$this->model_extension_module->addModule('featured', $this->request->post['module']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -110,7 +113,7 @@ class ControllerModuleFeatured extends Controller {
 		if (isset($this->request->post['module'])) {
 			$data['modules'] = $this->request->post['module'];
 		} else {
-			$data['modules'] = $this->model_extension_module->getModulesByCode('featured');
+			$data['modules'] = $this->extension_module->getModules('featured');
 		}
 		
 		$data['header'] = $this->load->controller('common/header');

@@ -13,6 +13,9 @@ class ControllerModuleSpecial extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('special', $this->request->post);
+			
+			// We need to add modules to a table
+			$this->model_extension_module->addModule('special', $this->request->post['module']);
 
 			$this->cache->delete('product');
 
@@ -70,17 +73,17 @@ class ControllerModuleSpecial extends Controller {
 		$data['action'] = $this->url->link('module/special', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
-
-		if (isset($this->request->post['module'])) {
-			$data['modules'] = $this->request->post['module'];
-		} else {
-			$data['modules'] = $this->model_extension_module->getModulesByCode('special');
-		}
 		
 		if (isset($this->request->post['special_status'])) {
 			$data['special_status'] = $this->request->post['special_status'];
 		} else {
 			$data['special_status'] = $this->config->get('special_status');
+		}
+		
+		if (isset($this->request->post['module'])) {
+			$data['modules'] = $this->request->post['module'];
+		} else {
+			$data['modules'] = $this->model_extension_module->getModules('special');
 		}
 		
 		$data['header'] = $this->load->controller('common/header');

@@ -7,8 +7,6 @@ class ControllerModulePPLogin extends Controller {
 
 		$this->load->model('setting/setting');
 
-		$this->load->model('extension/module');
-
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {

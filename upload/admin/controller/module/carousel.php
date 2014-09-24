@@ -13,6 +13,9 @@ class ControllerModuleCarousel extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('carousel', $this->request->post);
+			
+			// We need to add modules to a table
+			$this->model_extension_module->addModule('bestseller', $this->request->post['module']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -71,21 +74,21 @@ class ControllerModuleCarousel extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
-		if (isset($this->request->post['module'])) {
-			$data['modules'] = $this->request->post['module'];
-		} else {
-			$data['modules'] = $this->model_extension_module->getModulesByCode('carousel');
-		}
-
-		$this->load->model('design/banner');
-
-		$data['banners'] = $this->model_design_banner->getBanners();
-
 		if (isset($this->request->post['carousel_status'])) {
 			$data['carousel_status'] = $this->request->post['carousel_status'];
 		} else {
 			$data['carousel_status'] = $this->config->get('carousel_status');
 		}
+		
+		if (isset($this->request->post['module'])) {
+			$data['modules'] = $this->request->post['module'];
+		} else {
+			$data['modules'] = $this->extension_module->getModules('carousel');
+		}
+
+		$this->load->model('design/banner');
+
+		$data['banners'] = $this->model_design_banner->getBanners();
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

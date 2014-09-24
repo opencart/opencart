@@ -14,9 +14,7 @@ class ControllerModuleHTML extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('html', $this->request->post);
 
-			foreach ($this->request->post['html_module'] as $module) {
-				$this->model_setting_setting->addModule('html', $this->request->post);
-			}
+			$this->model_extension_module->addModule('html', $this->request->post['module']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -66,22 +64,22 @@ class ControllerModuleHTML extends Controller {
 		$data['action'] = $this->url->link('module/html', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
-
-		if (isset($this->request->post['module'])) {
-			$data['modules'] = $this->request->post['module'];
-		} else {
-			$data['modules'] = $this->model_extension_module->getModulesByCode('html');
-		}
-
-		$this->load->model('localisation/language');
-
-		$data['languages'] = $this->model_localisation_language->getLanguages();
 		
 		if (isset($this->request->post['html_status'])) {
 			$data['html_status'] = $this->request->post['html_status'];
 		} else {
 			$data['html_status'] = $this->config->get('html_status');
 		}
+		
+		if (isset($this->request->post['module'])) {
+			$data['modules'] = $this->request->post['module'];
+		} else {
+			$data['modules'] = $this->extension_module->getModules('html');
+		}
+
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
 		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

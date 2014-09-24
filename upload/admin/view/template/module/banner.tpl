@@ -51,8 +51,8 @@
               <?php $module_row = 0; ?>
               <?php foreach ($modules as $module) { ?>
               <tr id="module-row<?php echo $module_row; ?>">
-                <td class="text-left"><input type="hidden" name="module[<?php echo $module_row; ?>][module_id]" value="<?php echo $module['module_id']; ?>" />
-                  <select name="module[<?php echo $module_row; ?>][banner_id]" class="form-control">
+                <td class="text-left"><input type="hidden" name="banner_module[<?php echo $module_row; ?>][module_id]" value="<?php echo $module['module_id']; ?>" />
+                  <select name="banner_module[<?php echo $module_row; ?>][banner_id]" class="form-control">
                     <?php foreach ($banners as $banner) { ?>
                     <?php if ($banner['banner_id'] == $module['banner_id']) { ?>
                     <option value="<?php echo $banner['banner_id']; ?>" selected="selected"><?php echo $banner['name']; ?></option>
@@ -61,7 +61,7 @@
                     <?php } ?>
                     <?php } ?>
                   </select></td>
-                <td class="text-left"><input type="text" name="module[<?php echo $module_row; ?>][width]" value="<?php echo $module['width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
+                <td class="text-left"><input type="text" name="banner_module[<?php echo $module_row; ?>][width]" value="<?php echo $module['width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
                   <input type="text" name="module[<?php echo $module_row; ?>][height]" value="<?php echo $module['height']; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   <?php if (isset($error_dimension[$module_row])) { ?>
                   <div class="text-danger"><?php echo $error_dimension[$module_row]; ?></div>
@@ -84,8 +84,8 @@
   </div>
   <script type="text/javascript"><!--
 var module_row = <?php echo $module_row; ?>;
-
-function addModule() {	
+  
+function addModule() {
 	html  = '<tr id="module-row' + module_row + '">';
 	html += '  <td class="text-left"><input type="hidden" name="module[' + module_row + '][module_id]" value="" /><select name="module[' + module_row + '][banner_id]" class="form-control">';
 	<?php foreach ($banners as $banner) { ?>

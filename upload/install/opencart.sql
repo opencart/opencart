@@ -1908,14 +1908,15 @@ CREATE TABLE `oc_modification` (
 --
 
 DROP TABLE IF EXISTS `oc_module`;
-CREATE TABLE `oc_module` (
+CREATE TABLE IF NOT EXISTS `oc_module` (
   `module_id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(32) NOT NULL,
+  `setting` text NOT NULL,
   PRIMARY KEY (`module_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `oc_modification`
+-- Dumping data for table `oc_module`
 --
 
 -- --------------------------------------------------------

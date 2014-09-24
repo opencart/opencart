@@ -14,6 +14,9 @@ class ControllerModuleBestSeller extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('bestseller', $this->request->post['bestseller_status']);
 
+			// We need to add modules to a table
+			$this->model_extension_module->addModule('bestseller', $this->request->post['module']);
+
 			$this->cache->delete('product');
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -71,16 +74,16 @@ class ControllerModuleBestSeller extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
-		if (isset($this->request->post['module'])) {
-			$data['modules'] = $this->request->post['module'];
-		} else {
-			$data['modules'] = $this->model_extension_module->getModulesByCode('bestseller');
-		}
-
 		if (isset($this->request->post['bestseller_status'])) {
 			$data['bestseller_status'] = $this->request->post['bestseller_status'];
 		} else {
 			$data['bestseller_status'] = $this->config->get('bestseller_status');
+		}
+		
+		if (isset($this->request->post['module'])) {
+			$data['modules'] = $this->request->post['module'];
+		} else {
+			$data['modules'] = $this->extension_module->getModules('bestseller');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

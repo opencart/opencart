@@ -14,6 +14,9 @@ class ControllerModuleLatest extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('latest', $this->request->post);
 
+			// We need to add modules to a table
+			$this->model_extension_module->addModule('latest', $this->request->post['module']);
+
 			$this->cache->delete('product');
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -70,17 +73,17 @@ class ControllerModuleLatest extends Controller {
 		$data['action'] = $this->url->link('module/latest', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
-
-		if (isset($this->request->post['module'])) {
-			$data['modules'] = $this->request->post['module'];
-		} else {
-			$data['modules'] = $this->model_extension_module->getModulesByCode('latest');
-		}
 		
 		if (isset($this->request->post['latest_status'])) {
 			$data['latest_status'] = $this->request->post['latest_status'];
 		} else {
 			$data['latest_status'] = $this->config->get('latest_status');
+		}
+		
+		if (isset($this->request->post['module'])) {
+			$data['modules'] = $this->request->post['module'];
+		} else {
+			$data['modules'] = $this->model_extension_module->getModules('latest');
 		}
 		
 		$data['header'] = $this->load->controller('common/header');

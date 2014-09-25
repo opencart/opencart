@@ -81,8 +81,7 @@
   </div>
   <script type="text/javascript"><!--
 function addModule() {	
-	var date = new Date();
-	var token = date.getTime();
+	var token = Math.random().toString(36).substr(2);
 
 	html  = '<tr id="module-row' + token + '">';
 	html += '  <td class="text-left"><select name="slideshow_module[' + token + '][banner_id]" class="form-control">';

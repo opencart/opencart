@@ -460,10 +460,10 @@ class ControllerCatalogCategory extends Controller {
 		} elseif (!empty($category_info) && is_file(DIR_IMAGE . $category_info['image'])) {
 			$data['thumb'] = $this->model_tool_image->resize($category_info['image'], 100, 100);
 		} else {
-			$data['thumb'] = $this->model_tool_image->resize('placeholder.png', 100, 100);
+			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
 
-		$data['placeholder'] = $this->model_tool_image->resize('placeholder.png', 100, 100);
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
 		if (isset($this->request->post['top'])) {
 			$data['top'] = $this->request->post['top'];

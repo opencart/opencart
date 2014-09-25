@@ -386,7 +386,7 @@ class ControllerDesignLayout extends Controller {
 				$module_data[] = array(
 					'name' => $this->language->get('heading_title'),
 					'code' => $code
-				);					
+				);
 			}
 			
 			if ($module_data) {

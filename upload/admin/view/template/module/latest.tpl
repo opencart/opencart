@@ -73,8 +73,7 @@
   </div>
   <script type="text/javascript"><!--
 function addModule() {	
-	var date = new Date();
-	var token = date.getTime();
+	var token = Math.random().toString(36).substr(2);
 	
 	html  = '<tr id="module-row' + token + '">';
 	html += '  <td class="text-left"><input type="text" name="latest_module[' + token + '][limit]" value="5" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>';

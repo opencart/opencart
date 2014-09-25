@@ -99,8 +99,7 @@ $('#input-description<?php echo $html_module['key']; ?>-language<?php echo $lang
   var module_row = <?php echo $module_row; ?>;
   
 function addModule() {
-	var date = new Date();
-	var token = date.getTime();
+	var token = Math.random().toString(36).substr(2);
 	
 	html  = '<div class="tab-pane" id="tab-module' + token + '">';
 	html += '  <ul class="nav nav-tabs" id="language' + token + '">';

@@ -347,7 +347,7 @@ class ControllerCatalogProduct extends Controller {
 			if (is_file(DIR_IMAGE . $result['image'])) {
 				$image = $this->model_tool_image->resize($result['image'], 40, 40);
 			} else {
-				$image = $this->model_tool_image->resize('placeholder.png', 40, 40);
+				$image = $this->model_tool_image->resize('no_image.png', 40, 40);
 			}
 
 			$special = false;
@@ -734,6 +734,26 @@ class ControllerCatalogProduct extends Controller {
 			$data['product_description'] = array();
 		}
 
+		if (isset($this->request->post['image'])) {
+			$data['image'] = $this->request->post['image'];
+		} elseif (!empty($product_info)) {
+			$data['image'] = $product_info['image'];
+		} else {
+			$data['image'] = '';
+		}
+
+		$this->load->model('tool/image');
+
+		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
+			$data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
+		} elseif (!empty($product_info) && is_file(DIR_IMAGE . $product_info['image'])) {
+			$data['thumb'] = $this->model_tool_image->resize($product_info['image'], 100, 100);
+		} else {
+			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+		}
+
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+		
 		if (isset($this->request->post['model'])) {
 			$data['model'] = $this->request->post['model'];
 		} elseif (!empty($product_info)) {
@@ -1170,26 +1190,6 @@ class ControllerCatalogProduct extends Controller {
 			);
 		}
 
-		if (isset($this->request->post['image'])) {
-			$data['image'] = $this->request->post['image'];
-		} elseif (!empty($product_info)) {
-			$data['image'] = $product_info['image'];
-		} else {
-			$data['image'] = '';
-		}
-
-		$this->load->model('tool/image');
-
-		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
-			$data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
-		} elseif (!empty($product_info) && is_file(DIR_IMAGE . $product_info['image'])) {
-			$data['thumb'] = $this->model_tool_image->resize($product_info['image'], 100, 100);
-		} else {
-			$data['thumb'] = $this->model_tool_image->resize('placeholder.png', 100, 100);
-		}
-
-		$data['placeholder'] = $this->model_tool_image->resize('placeholder.png', 100, 100);
-
 		// Images
 		if (isset($this->request->post['product_image'])) {
 			$product_images = $this->request->post['product_image'];
@@ -1207,7 +1207,7 @@ class ControllerCatalogProduct extends Controller {
 				$thumb = $product_image['image'];
 			} else {
 				$image = '';
-				$thumb = 'placeholder.png';
+				$thumb = 'no_image.png';
 			}
 
 			$data['product_images'][] = array(

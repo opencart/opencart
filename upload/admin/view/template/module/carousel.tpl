@@ -42,6 +42,7 @@
           <table id="module" class="table table-striped table-bordered table-hover">
             <thead>
               <tr>
+                <td class="text-left">#</td>
                 <td class="text-left"><?php echo $entry_banner; ?></td>
                 <td class="text-left"><?php echo $entry_limit; ?></td>
                 <td class="text-left"><?php echo $entry_scroll; ?></td>
@@ -50,8 +51,10 @@
               </tr>
             </thead>
             <tbody>
+              <?php $module_row = 1; ?>
               <?php foreach ($carousel_modules as $carousel_module) { ?>
               <tr id="module-row<?php echo $carousel_module['key']; ?>">
+                <td class="text-left"><?php echo $module_row; ?></td>
                 <td class="text-left"><select name="carousel_module[<?php echo $carousel_module['key']; ?>][banner_id]" class="form-control">
                     <?php foreach ($banners as $banner) { ?>
                     <?php if ($banner['banner_id'] == $carousel_module['banner_id']) { ?>
@@ -70,11 +73,12 @@
                   <?php } ?></td>
                 <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $carousel_module['key']; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
               </tr>
+              <?php $module_row++; ?>
               <?php } ?>
             </tbody>
             <tfoot>
               <tr>
-                <td colspan="4"></td>
+                <td colspan="5"></td>
                 <td class="text-left"><button type="button" onclick="addModule();" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
               </tr>
             </tfoot>
@@ -85,10 +89,10 @@
   </div>
   <script type="text/javascript"><!--
 function addModule() {	
-	var date = new Date();
-	var token = date.getTime();
+	var token = Math.random().toString(36).substr(2);
 	
 	html  = '<tr id="module-row' + token + '">';
+	html += '  <td class="text-right"><select name="carousel_module[' + token + '][banner_id]" class="form-control">';
 	html += '  <td class="text-left"><select name="carousel_module[' + token + '][banner_id]" class="form-control">';
 	<?php foreach ($banners as $banner) { ?>
 	html += '    <option value="<?php echo $banner['banner_id']; ?>"><?php echo addslashes($banner['name']); ?></option>';

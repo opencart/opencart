@@ -88,7 +88,7 @@ function addModule() {
 	var token = Math.random().toString(36).substr(2);
 	
 	html  = '<tr id="module-row' + token + '">';
-	html += '  <td class="text-right">' + ($('tbody tr').length() + 1) + '</td>';
+	html += '  <td class="text-right">' + ($('tbody tr').length + 1) + '</td>';
 	html += '  <td class="text-left"><select name="banner_module[' + token + '][banner_id]" class="form-control">';
 	<?php foreach ($banners as $banner) { ?>
 	html += '    <option value="<?php echo $banner['banner_id']; ?>"><?php echo addslashes($banner['name']); ?></option>';

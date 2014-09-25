@@ -42,14 +42,17 @@
           <table id="module" class="table table-striped table-bordered table-hover">
             <thead>
               <tr>
+                <td class="text-right">#</td>
                 <td class="text-left"><?php echo $entry_limit; ?></td>
                 <td class="text-left"><?php echo $entry_image; ?></td>
                 <td></td>
               </tr>
             </thead>
             <tbody>
+              <?php $module_row = 1; ?>
               <?php foreach ($special_modules as $special_module) { ?>
               <tr id="module-row<?php echo $special_module['key']; ?>">
+                <td class="text-right"><?php echo $module_row; ?></td>
                 <td class="text-left"><input type="text" name="special_module[<?php echo $special_module['key']; ?>][limit]" value="<?php echo $special_module['limit']; ?>" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>
                 <td class="text-left"><input type="text" name="special_module[<?php echo $special_module['key']; ?>][width]" value="<?php echo $special_module['width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
                   <input type="text" name="special_module[<?php echo $special_module['key']; ?>][height]" value="<?php echo $special_module['height']; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
@@ -58,6 +61,7 @@
                   <?php } ?></td>
                 <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $special_module['key']; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
               </tr>
+              <?php $module_row++; ?>
               <?php } ?>
             </tbody>
             <tfoot>
@@ -76,6 +80,7 @@ function addModule() {
 	var token = Math.random().toString(36).substr(2);
 
 	html  = '<tr id="module-row' + token + '">';
+	html += '  <td class="text-right">' + ($('tbody tr').length + 1) + '</td>';
 	html += '  <td class="text-left"><input type="text" name="special_module[' + token + '][limit]" value="5" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>';
 	html += '  <td class="text-left"><input type="text" name="special_module[' + token + '][width]" value="200" placeholder="<?php echo $entry_width; ?>" class="form-control" /> <input type="text" name="special_module[' + token + '][height]" value="200" placeholder="<?php echo $entry_height; ?>" class="form-control" /></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + token + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';

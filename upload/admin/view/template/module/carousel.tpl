@@ -54,7 +54,7 @@
               <?php $module_row = 1; ?>
               <?php foreach ($carousel_modules as $carousel_module) { ?>
               <tr id="module-row<?php echo $carousel_module['key']; ?>">
-                <td class="text-left"><?php echo $module_row; ?></td>
+                <td class="text-right"><?php echo $module_row; ?></td>
                 <td class="text-left"><select name="carousel_module[<?php echo $carousel_module['key']; ?>][banner_id]" class="form-control">
                     <?php foreach ($banners as $banner) { ?>
                     <?php if ($banner['banner_id'] == $carousel_module['banner_id']) { ?>
@@ -92,7 +92,7 @@ function addModule() {
 	var token = Math.random().toString(36).substr(2);
 	
 	html  = '<tr id="module-row' + token + '">';
-	html += '  <td class="text-right"><select name="carousel_module[' + token + '][banner_id]" class="form-control">';
+	html += '  <td class="text-right">' + ($('tbody tr').length + 1) + '</td>';
 	html += '  <td class="text-left"><select name="carousel_module[' + token + '][banner_id]" class="form-control">';
 	<?php foreach ($banners as $banner) { ?>
 	html += '    <option value="<?php echo $banner['banner_id']; ?>"><?php echo addslashes($banner['name']); ?></option>';

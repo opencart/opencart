@@ -20,7 +20,7 @@ class ControllerModuleFeatured extends Controller {
 		$products = explode(',', $this->config->get('featured_product'));
 
 		if (empty($setting['limit'])) {
-			$setting['limit'] = 5;
+			$setting['limit'] = 4;
 		}
 
 		$products = array_slice($products, 0, (int)$setting['limit']);

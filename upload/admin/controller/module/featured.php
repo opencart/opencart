@@ -138,7 +138,7 @@ class ControllerModuleFeatured extends Controller {
 
 		if (isset($this->request->post['featured_module'])) {
 			foreach ($this->request->post['featured_module'] as $key => $value) {
-				if (!$value['image_width'] || !$value['image_height']) {
+				if (!$value['width'] || !$value['height']) {
 					$this->error['image'][$key] = $this->language->get('error_image');
 				}
 			}

@@ -79,9 +79,9 @@ class ControllerModuleHTML extends Controller {
 		
 		foreach ($modules as $key => $module) {
 			$data['html_modules'][] = array(
-				'key'          => $key,
-				'heading'      => $module['heading'],
-				'description'  => $module['description']
+				'key'         => $key,
+				'heading'     => $module['heading'],
+				'description' => $module['description']
 			);
 		}
 

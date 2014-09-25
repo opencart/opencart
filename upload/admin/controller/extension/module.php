@@ -52,10 +52,6 @@ class ControllerExtensionModule extends Controller {
 
 			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
 
-			$this->load->model('extension/module');
-			
-			$this->model_extension_module->deleteModule($this->request->get['extension']);
-			
 			// Call uninstall method if it exsits
 			$this->load->controller('module/' . $this->request->get['extension'] . '/uninstall');
 
@@ -79,9 +75,9 @@ class ControllerExtensionModule extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL')
 		);
-				
+
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
@@ -117,9 +113,9 @@ class ControllerExtensionModule extends Controller {
 				$this->model_extension_extension->uninstall('module', $value);
 
 				unset($extensions[$key]);
-			}			
+			}
 		}
-		
+
 		$data['extensions'] = array();
 
 		$files = glob(DIR_APPLICATION . 'controller/module/*.php');

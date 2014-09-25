@@ -61,7 +61,6 @@
                   <?php } ?></td>
                 <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $bestseller_module['key']; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
               </tr>
-              </tr>
               <?php $module_row++; ?>
               <?php } ?>
             </tbody>

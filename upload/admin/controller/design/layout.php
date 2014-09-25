@@ -358,7 +358,6 @@ class ControllerDesignLayout extends Controller {
 			$data['layout_modules'] = array();
 		}
 		
-		
 		$this->load->model('extension/extension');
 		
 		$data['modules'] = array();

@@ -47,29 +47,14 @@ class ControllerCommonColumnLeft extends Controller {
 				$code = $part[0];
 			}
 			
-			if (isset($part[1])) {
-				$key = $part[1];
-			}
-			
-			
-			
-			if ($this->config->get($module['code'] . '_status')) {
-				if ($this->config->has($module['code'] . '_module')) {
-					
-					
-					
-					$setting = $this->config->get($module['code'] . '_module');
+			if ($code && $this->config->get($code . '_status')) { 
+				$setting = $this->config->get($code . '_module');
 				
-					if (isset($setting[$module['key']])) {
-						$config = $setting[$module['key']];
-					} else {
-						$config = array();
-					}
-					
-					$data['modules'][] = $this->load->controller('module/' . $module['code'], $config);
+				if (isset($part[1]) && isset($setting[$part[1]])) {
+					$data['modules'][] = $this->load->controller('module/' . $code, $setting[$part[1]]);
 				} else {
-					$data['modules'][] = $this->load->controller('module/' . $module['code']);
-				}
+					$data['modules'][] = $this->load->controller('module/' . $code);
+				}			
 			}
 		}
 

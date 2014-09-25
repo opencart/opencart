@@ -1,4 +1,4 @@
-<div id="carousel<?php echo $module; ?>" class="flexslider">
+<div id="carousel<?php echo $module; ?>" class="flexslider carousel">
   <ul class="slides">
     <?php foreach ($banners as $banner) { ?>
     <?php if ($banner['link']) { ?>

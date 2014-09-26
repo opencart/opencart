@@ -390,7 +390,7 @@ class ControllerCatalogOption extends Controller {
 				$thumb = $option_value['image'];
 			} else {
 				$image = '';
-				$thumb = 'placeholder.png';
+				$thumb = 'no_image.png';
 			}
 
 			$data['option_values'][] = array(
@@ -402,7 +402,7 @@ class ControllerCatalogOption extends Controller {
 			);
 		}
 
-		$data['placeholder'] = $this->model_tool_image->resize('placeholder.png', 100, 100);
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -485,7 +485,7 @@ class ControllerCatalogOption extends Controller {
 						if (is_file(DIR_IMAGE . $option_value['image'])) {
 							$image = $this->model_tool_image->resize($option_value['image'], 50, 50);
 						} else {
-							$image = $this->model_tool_image->resize('placeholder.png', 50, 50);
+							$image = $this->model_tool_image->resize('no_image.png', 50, 50);
 						}
 
 						$option_value_data[] = array(

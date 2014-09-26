@@ -20,7 +20,7 @@ class ControllerModuleFeatured extends Controller {
 		$products = explode(',', $this->config->get('featured_product'));
 
 		if (empty($setting['limit'])) {
-			$setting['limit'] = 5;
+			$setting['limit'] = 4;
 		}
 
 		$products = array_slice($products, 0, (int)$setting['limit']);
@@ -30,9 +30,9 @@ class ControllerModuleFeatured extends Controller {
 
 			if ($product_info) {
 				if ($product_info['image']) {
-					$image = $this->model_tool_image->resize($product_info['image'], $setting['image_width'], $setting['image_height']);
+					$image = $this->model_tool_image->resize($product_info['image'], $setting['width'], $setting['height']);
 				} else {
-					$image = $this->model_tool_image->resize('placeholder.png', $setting['image_width'], $setting['image_height']);
+					$image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
 				}
 
 				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {

@@ -1,4 +1,4 @@
-<div class="panel panel-primary">
+<div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title"><i class="fa fa-eye"></i> <?php echo $heading_title; ?></h3>
   </div>

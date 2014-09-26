@@ -404,6 +404,11 @@ label.control-label span:after {
 label.control-label {
 	/*font-weight: normal;*/
 }
+
+fieldset legend {
+	padding-bottom: 5px;	
+}
+
 input[type="radio"], input[type="checkbox"] {
 	margin: 2px 0 0;
 }
@@ -487,6 +492,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	margin: 0;
 }
 
+/* Panels */
 .panel {
 	border-radius: 0px;
 }
@@ -507,6 +513,7 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	display: inline-block;
 }
 
+/* Primary Panel */
 .panel-primary {
 	border: 1px solid #c3e4f6;
 	border-top: 2px solid #5cb7e7;
@@ -514,22 +521,25 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 
 .panel-primary .panel-heading {
 	color: #1e91cf;
+	border-color: #96d0f0;
 	background: white;
-	border-color: #96d0f0;
 }
-/*
-// Default
-color: #595959;
-border-color: #e8e8e8;
-background: #fcfcfc;
 
-// Primary
+
+/* Default Panel */
 .panel-default {
-	color: #1e91cf;
-	background: #ffffff;
-	border-color: #96d0f0;
+	border: 1px solid #e8e8e8;
+	border-top: 2px solid #bfbfbf;
 }
 
+.panel-default .panel-heading {
+	color: #595959;
+	border-color: #e8e8e8;
+	background: #fcfcfc;
+}
+
+
+/*
 // Info
 color: #115376;
 background-color: #f8fcfe;

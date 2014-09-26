@@ -509,10 +509,10 @@ class ControllerSettingSetting extends Controller {
 		} elseif ($this->config->get('config_image') && is_file(DIR_IMAGE . $this->config->get('config_image'))) {
 			$data['thumb'] = $this->model_tool_image->resize($this->config->get('config_image'), 100, 100);
 		} else {
-			$data['thumb'] = $this->model_tool_image->resize('placeholder.png', 100, 100);;
+			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);;
 		}
 
-		$data['placeholder'] = $this->model_tool_image->resize('placeholder.png', 100, 100);
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
 		if (isset($this->request->post['config_open'])) {
 			$data['config_open'] = $this->request->post['config_open'];
@@ -917,7 +917,7 @@ class ControllerSettingSetting extends Controller {
 		} elseif ($this->config->get('config_logo') && is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
 			$data['logo'] = $this->model_tool_image->resize($this->config->get('config_logo'), 100, 100);
 		} else {
-			$data['logo'] = $this->model_tool_image->resize('placeholder.png', 100, 100);
+			$data['logo'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
 
 		if (isset($this->request->post['config_icon'])) {
@@ -931,7 +931,7 @@ class ControllerSettingSetting extends Controller {
 		} elseif ($this->config->get('config_icon') && is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
 			$data['icon'] = $this->model_tool_image->resize($this->config->get('config_icon'), 100, 100);
 		} else {
-			$data['icon'] = $this->model_tool_image->resize('placeholder.png', 100, 100);
+			$data['icon'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
 
 		if (isset($this->request->post['config_image_category_width'])) {

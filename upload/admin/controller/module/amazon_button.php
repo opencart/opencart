@@ -1,14 +1,14 @@
 <?php
-class ControllerModulePPLayout extends Controller {
+class ControllerModuleAmazonButton extends Controller {
 	public function index() {
-		$this->language->load('module/pp_layout');
-
-		$this->load->model('setting/setting');
+		$this->language->load('module/amazon_button');
 
 		$this->document->setTitle($this->language->get('heading_title'));
+		
+		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('pp_layout', $this->request->post);
+			$this->model_setting_setting->editSetting('amazon_button', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -16,7 +16,8 @@ class ControllerModulePPLayout extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 
@@ -34,57 +35,53 @@ class ControllerModulePPLayout extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'text'      => $this->language->get('text_home'),
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'separator' => false
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_module'),
-			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'),
+			'text'      => $this->language->get('text_module'),
+			'href'      => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'),
 			'separator' => ' :: '
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/pp_layout', 'token=' . $this->session->data['token'], 'SSL'),
+			'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('module/amazon_button', 'token=' . $this->session->data['token'], 'SSL'),
 			'separator' => ' :: '
 		);
 
-		$data['action'] = $this->url->link('module/pp_layout', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('module/amazon_button', 'token=' . $this->session->data['token'], 'SSL');
+		
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
-		$data['token'] = $this->session->data['token'];
-
-		$data['modules'] = array();
-
-		if (isset($this->request->post['pp_layout_module'])) {
-			$data['modules'] = $this->request->post['pp_layout_module'];
-		} elseif ($this->config->get('pp_layout_module')) {
-			$data['modules'] = $this->config->get('pp_layout_module');
-		}
-
-		if (isset($this->request->post['pp_layout_status'])) {
-			$data['pp_layout_status'] = $this->request->post['pp_layout_status'];
+		
+		if (isset($this->request->post['amazon_button_status'])) {
+			$data['amazon_button_status'] = $this->request->post['amazon_button_status'];
 		} else {
-			$data['pp_layout_status'] = $this->config->get('pp_layout_status');
+			$data['amazon_button_status'] = $this->config->get('amazon_button_status');
 		}
-
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/pp_layout.tpl', $data));
+		$this->response->setOutput($this->load->view('module/amazon_button.tpl', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/pp_layout')) {
+		if (!$this->user->hasPermission('modify', 'module/banner')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
+		if (isset($this->request->post['banner_module'])) {
+			foreach ($this->request->post['banner_module'] as $key => $value) {
+				if (!$value['width'] || !$value['height']) {
+					$this->error['dimension'][$key] = $this->language->get('error_dimension');
+				}
+			}
 		}
+
+		return !$this->error;
 	}
 }

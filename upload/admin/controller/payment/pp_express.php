@@ -253,10 +253,10 @@ class ControllerPaymentPPExpress extends Controller {
 		} elseif (($logo != '') && file_exists(DIR_IMAGE . $logo)) {
 			$data['thumb'] = $this->model_tool_image->resize($logo, 750, 90);
 		} else {
-			$data['thumb'] = $this->model_tool_image->resize('placeholder.png', 750, 90);
+			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 750, 90);
 		}
 
-		$data['no_image'] = $this->model_tool_image->resize('placeholder.png', 750, 90);
+		$data['no_image'] = $this->model_tool_image->resize('no_image.png', 750, 90);
 
 		if (isset($this->request->post['pp_express_geo_zone_id'])) {
 			$data['pp_express_geo_zone_id'] = $this->request->post['pp_express_geo_zone_id'];

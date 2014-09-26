@@ -20,7 +20,11 @@ class ControllerModuleSpecial extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
+		$data['text_enabled'] = $this->language->get('text_enabled');
+		$data['text_disabled'] = $this->language->get('text_disabled');
+		
 		$data['entry_limit'] = $this->language->get('entry_limit');
 		$data['entry_image'] = $this->language->get('entry_image');
 		$data['entry_width'] = $this->language->get('entry_width');
@@ -64,19 +68,30 @@ class ControllerModuleSpecial extends Controller {
 		$data['action'] = $this->url->link('module/special', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
-
-		$data['modules'] = array();
-
-		if (isset($this->request->post['special_module'])) {
-			$data['modules'] = $this->request->post['special_module'];
-		} elseif ($this->config->get('special_module')) {
-			$data['modules'] = $this->config->get('special_module');
-		}
 		
 		if (isset($this->request->post['special_status'])) {
 			$data['special_status'] = $this->request->post['special_status'];
 		} else {
 			$data['special_status'] = $this->config->get('special_status');
+		}
+
+		if (isset($this->request->post['special_module'])) {
+			$modules = $this->request->post['special_module'];
+		} elseif ($this->config->has('special_module')) {
+			$modules = $this->config->get('special_module');
+		} else {
+			$modules = array();
+		}
+				
+		$data['special_modules'] = array();
+		
+		foreach ($modules as $key => $module) {
+			$data['special_modules'][] = array(
+				'key'    => $key,
+				'limit'  => $module['limit'],
+				'width'  => $module['width'],
+				'height' => $module['height']
+			);
 		}
 		
 		$data['header'] = $this->load->controller('common/header');
@@ -93,7 +108,7 @@ class ControllerModuleSpecial extends Controller {
 
 		if (isset($this->request->post['special_module'])) {
 			foreach ($this->request->post['special_module'] as $key => $value) {
-				if (!$value['image_width'] || !$value['image_height']) {
+				if (!$value['width'] || !$value['height']) {
 					$this->error['image'][$key] = $this->language->get('error_image');
 				}
 			}

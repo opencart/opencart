@@ -18,7 +18,8 @@ class ControllerModulefilter extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 
@@ -54,12 +55,12 @@ class ControllerModulefilter extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
-		if (isset($this->request->post['featured_status'])) {
-			$data['featured_status'] = $this->request->post['featured_status'];
+		if (isset($this->request->post['filter_status'])) {
+			$data['filter_status'] = $this->request->post['filter_status'];
 		} else {
-			$data['featured_status'] = $this->config->get('featured_status');
+			$data['filter_status'] = $this->config->get('filter_status');
 		}
-
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

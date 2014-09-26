@@ -19,7 +19,7 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <div class="panel panel-primary">
+    <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
       </div>
@@ -82,15 +82,19 @@
               <?php $module_row = 0; ?>
               <?php foreach ($layout_modules as $layout_module) { ?>
               <tr id="module-row<?php echo $module_row; ?>">
-                <td class="text-left"><select name="layout_module[<?php echo $module_row; ?>][module_id]" class="form-control">
+                <td class="text-left"><select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control">
                     <?php foreach ($modules as $module) { ?>
-                    <?php if ($module['module_id'] == $layout_module['module_id']) { ?>
-                    <option value="<?php echo $module['module_id']; ?>" selected="selected"><?php echo $module['name']; ?></option>
+                    <optgroup label="<?php echo $module['name']; ?>">
+                    <?php foreach ($module['module'] as $module) { ?>
+                    <?php if ($module['code'] == $layout_module['code']) { ?>
+                    <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
                     <?php } else { ?>
-                    <option value="<?php echo $module['module_id']; ?>"><?php echo $module['name']; ?></option>
+                    <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
                     <?php } ?>
                     <?php } ?>
-                  </select></td>                
+                    </optgroup>
+                    <?php } ?>
+                  </select></td>
                 <td class="text-left"><select name="layout_module[<?php echo $module_row; ?>][position]" class="form-control">
                     <?php if ($layout_module['position'] == 'content_top') { ?>
                     <option value="content_top" selected="selected"><?php echo $text_content_top; ?></option>
@@ -154,9 +158,13 @@ var module_row = <?php echo $module_row; ?>;
 
 function addModule() {
 	html  = '<tr id="module-row' + module_row + '">';
-	html += '  <td class="text-left"><select name="layout_module[<?php echo $module_row; ?>][module_id]" class="form-control">';
+	html += '  <td class="text-left"><select name="layout_module[' + module_row + '][code]" class="form-control">';
 	<?php foreach ($modules as $module) { ?>
-    html += '    <option value="<?php echo $module['module_id']; ?>"><?php echo $module['name']; ?></option>';
+    html += '    <optgroup label="<?php echo $module['name']; ?>">';
+    <?php foreach ($module['module'] as $module) { ?>
+	html += '      <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>';
+	<?php } ?>
+	html += '    </optgroup>';
 	<?php } ?>
     html += '  </select></td>'; 
 	html += '  <td class="text-left"><select name="layout_module[' + module_row + '][position]" class="form-control">';

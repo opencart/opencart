@@ -9,8 +9,6 @@ class ControllerModuleBestSeller extends Controller {
 
 		$this->load->model('setting/setting');
 
-		$this->load->model('extension/module');
-
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('bestseller', $this->request->post['bestseller_status']);
 
@@ -22,7 +20,8 @@ class ControllerModuleBestSeller extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 
@@ -70,20 +69,31 @@ class ControllerModuleBestSeller extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['modules'] = array();
-
-		if (isset($this->request->post['bestseller_module'])) {
-			$data['modules'] = $this->request->post['bestseller_module'];
-		} elseif ($this->config->get('bestseller_module')) {
-			$data['modules'] = $this->config->get('bestseller_module');
-		}
-
-		if (isset($this->request->post['banner_status'])) {
-			$data['banner_status'] = $this->request->post['banner_status'];
+		if (isset($this->request->post['bestseller_status'])) {
+			$data['bestseller_status'] = $this->request->post['bestseller_status'];
 		} else {
-			$data['banner_status'] = $this->config->get('banner_status');
+			$data['bestseller_status'] = $this->config->get('bestseller_status');
 		}
-
+		
+		if (isset($this->request->post['bestseller_module'])) {
+			$modules = $this->request->post['bestseller_module'];
+		} elseif ($this->config->has('bestseller_module')) {
+			$modules = $this->config->get('bestseller_module');
+		} else {
+			$modules = array();
+		}
+		
+		$data['bestseller_modules'] = array();
+		
+		foreach ($modules as $key => $module) {
+			$data['bestseller_modules'][] = array(
+				'key'    => $key,
+				'limit'  => $module['limit'],
+				'width'  => $module['width'],
+				'height' => $module['height']
+			);
+		}
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

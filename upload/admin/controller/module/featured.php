@@ -19,6 +19,10 @@ class ControllerModuleFeatured extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
+		$data['text_edit'] = $this->language->get('text_edit');
+		$data['text_enabled'] = $this->language->get('text_enabled');
+		$data['text_disabled'] = $this->language->get('text_disabled');
+		
 		$data['entry_product'] = $this->language->get('entry_product');
 		$data['entry_limit'] = $this->language->get('entry_limit');
 		$data['entry_image'] = $this->language->get('entry_image');
@@ -94,21 +98,32 @@ class ControllerModuleFeatured extends Controller {
 				);
 			}
 		}
-
-		$data['modules'] = array();
-
-		if (isset($this->request->post['featured_module'])) {
-			$data['modules'] = $this->request->post['featured_module'];
-		} elseif ($this->config->get('featured_module')) {
-			$data['modules'] = $this->config->get('featured_module');
-		}
 		
 		if (isset($this->request->post['featured_status'])) {
 			$data['featured_status'] = $this->request->post['featured_status'];
 		} else {
 			$data['featured_status'] = $this->config->get('featured_status');
 		}
+				
+		if (isset($this->request->post['featured_module'])) {
+			$modules = $this->request->post['featured_module'];
+		} elseif ($this->config->has('featured_module')) {
+			$modules = $this->config->get('featured_module');
+		} else {
+			$modules = array();
+		}
 		
+		$data['featured_modules'] = array();
+		
+		foreach ($modules as $key => $module) {
+			$data['featured_modules'][] = array(
+				'key'    => $key,
+				'limit'  => $module['limit'],
+				'width'  => $module['width'],
+				'height' => $module['height']
+			);
+		}
+				
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -123,7 +138,7 @@ class ControllerModuleFeatured extends Controller {
 
 		if (isset($this->request->post['featured_module'])) {
 			foreach ($this->request->post['featured_module'] as $key => $value) {
-				if (!$value['image_width'] || !$value['image_height']) {
+				if (!$value['width'] || !$value['height']) {
 					$this->error['image'][$key] = $this->language->get('error_image');
 				}
 			}

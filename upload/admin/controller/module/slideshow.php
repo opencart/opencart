@@ -18,7 +18,11 @@ class ControllerModuleSlideshow extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
+		$data['text_enabled'] = $this->language->get('text_enabled');
+		$data['text_disabled'] = $this->language->get('text_disabled');
+		
 		$data['entry_banner'] = $this->language->get('entry_banner');
 		$data['entry_dimension'] = $this->language->get('entry_dimension');
 		$data['entry_width'] = $this->language->get('entry_width');
@@ -62,21 +66,36 @@ class ControllerModuleSlideshow extends Controller {
 		$data['action'] = $this->url->link('module/slideshow', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
-
-		$data['modules'] = array();
-
-		if (isset($this->request->post['slideshow_module'])) {
-			$data['modules'] = $this->request->post['slideshow_module'];
-		} elseif ($this->config->get('slideshow_module')) {
-			$data['modules'] = $this->config->get('slideshow_module');
-		}
-
+		
 		if (isset($this->request->post['slideshow_status'])) {
 			$data['slideshow_status'] = $this->request->post['slideshow_status'];
 		} else {
 			$data['slideshow_status'] = $this->config->get('slideshow_status');
 		}
+		
+		if (isset($this->request->post['slideshow_module'])) {
+			$modules = $this->request->post['slideshow_module'];
+		} elseif ($this->config->has('slideshow_module')) {
+			$modules = $this->config->get('slideshow_module');
+		} else {
+			$modules = array();
+		}
+		
+		$data['slideshow_modules'] = array();
+		
+		foreach ($modules as $key => $module) {
+			$data['slideshow_modules'][] = array(
+				'key'       => $key,
+				'banner_id' => $module['banner_id'],
+				'width'     => $module['width'],
+				'height'    => $module['height']
+			);
+		}
+		
+		$this->load->model('design/banner');
 
+		$data['banners'] = $this->model_design_banner->getBanners();
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

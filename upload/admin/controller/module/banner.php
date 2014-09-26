@@ -8,17 +8,9 @@ class ControllerModuleBanner extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('setting/setting');
-		
-		$this->load->model('extension/module');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('banner', $this->request->post);
-			
-			if (isset($this->request->post['banner_module'])) {
-				foreach ($this->request->post['banner_module'] as $module) {
-					$this->model_extension_module->addModule('banner', $module);
-				}
-			}
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -26,14 +18,13 @@ class ControllerModuleBanner extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 
 		$data['entry_banner'] = $this->language->get('entry_banner');
 		$data['entry_dimension'] = $this->language->get('entry_dimension');
-		$data['entry_width'] = $this->language->get('entry_width');
-		$data['entry_height'] = $this->language->get('entry_height');
 		$data['entry_width'] = $this->language->get('entry_width');
 		$data['entry_height'] = $this->language->get('entry_height');
 		$data['entry_status'] = $this->language->get('entry_status');
@@ -82,12 +73,23 @@ class ControllerModuleBanner extends Controller {
 			$data['banner_status'] = $this->config->get('banner_status');
 		}
 		
-		$data['modules'] = array();
-
 		if (isset($this->request->post['banner_module'])) {
-			$data['modules'] = $this->request->post['banner_module'];
-		} elseif ($this->config->get('banner_module')) {
-			$data['modules'] = $this->config->get('banner_module');
+			$modules = $this->request->post['banner_module'];
+		} elseif ($this->config->has('banner_module')) {
+			$modules = $this->config->get('banner_module');
+		} else {
+			$modules = array();
+		}
+		
+		$data['banner_modules'] = array();
+		
+		foreach ($modules as $key => $module) {
+			$data['banner_modules'][] = array(
+				'key'       => $key,
+				'banner_id' => $module['banner_id'],
+				'width'     => $module['width'],
+				'height'    => $module['height']
+			);
 		}
 
 		$this->load->model('design/banner');
@@ -116,10 +118,4 @@ class ControllerModuleBanner extends Controller {
 
 		return !$this->error;
 	}
-	
-	public function uninstall() {
-		$this->load->model('extension/module');
-		
-		$this->model_extension_module->deleteModule('checkout_layout');
-	}	
 }

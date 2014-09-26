@@ -9,14 +9,8 @@ class ControllerModuleHTML extends Controller {
 
 		$this->load->model('setting/setting');
 
-		$this->load->model('extension/module');
-
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('html', $this->request->post);
-
-			foreach ($this->request->post['html_module'] as $module) {
-				$this->model_setting_setting->addModule('html', $this->request->post);
-			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -24,7 +18,11 @@ class ControllerModuleHTML extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
+		$data['text_enabled'] = $this->language->get('text_enabled');
+		$data['text_disabled'] = $this->language->get('text_disabled');
+		
 		$data['entry_heading'] = $this->language->get('entry_heading');
 		$data['entry_description'] = $this->language->get('entry_description');
 		$data['entry_status'] = $this->language->get('entry_status');
@@ -62,26 +60,34 @@ class ControllerModuleHTML extends Controller {
 		$data['action'] = $this->url->link('module/html', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
-
-		$data['token'] = $this->session->data['token'];
-
-		$data['modules'] = array();
-
-		if (isset($this->request->post['html_module'])) {
-			$data['modules'] = $this->request->post['html_module'];
-		} elseif ($this->config->get('html_module')) {
-			$data['modules'] = $this->config->get('html_module');
-		}
-
-		$this->load->model('localisation/language');
-
-		$data['languages'] = $this->model_localisation_language->getLanguages();
 		
 		if (isset($this->request->post['html_status'])) {
 			$data['html_status'] = $this->request->post['html_status'];
 		} else {
 			$data['html_status'] = $this->config->get('html_status');
 		}
+		
+		if (isset($this->request->post['html_module'])) {
+			$modules = $this->request->post['html_module'];
+		} elseif ($this->config->has('html_module')) {
+			$modules = $this->config->get('html_module');
+		} else {
+			$modules = array();
+		}
+		
+		$data['html_modules'] = array();
+		
+		foreach ($modules as $key => $module) {
+			$data['html_modules'][] = array(
+				'key'         => $key,
+				'heading'     => $module['heading'],
+				'description' => $module['description']
+			);
+		}
+
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
 		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

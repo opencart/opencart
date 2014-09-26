@@ -73,11 +73,11 @@ class ControllerExtensionModule extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL')
 		);
-				
+
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
@@ -113,9 +113,9 @@ class ControllerExtensionModule extends Controller {
 				$this->model_extension_extension->uninstall('module', $value);
 
 				unset($extensions[$key]);
-			}			
+			}
 		}
-		
+
 		$data['extensions'] = array();
 
 		$files = glob(DIR_APPLICATION . 'controller/module/*.php');

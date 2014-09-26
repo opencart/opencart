@@ -41,8 +41,20 @@ class ControllerCommonColumnRight extends Controller {
 		$modules = $this->model_design_layout->getLayoutModules($layout_id, 'column_right');
 
 		foreach ($modules as $module) {
-			if ($this->config->get($module['code'] . '_status')) {
-				$data['modules'][] = $this->load->controller('module/' . $module['code'], $module['setting']);
+			$part = explode('.', $module['code']);
+			
+			if (isset($part[0])) {
+				$code = $part[0];
+			}
+			
+			if ($code && $this->config->get($code . '_status')) { 
+				$setting = $this->config->get($code . '_module');
+				
+				if (isset($part[1]) && isset($setting[$part[1]])) {
+					$data['modules'][] = $this->load->controller('module/' . $code, $setting[$part[1]]);
+				} else {
+					$data['modules'][] = $this->load->controller('module/' . $code);
+				}			
 			}
 		}
 

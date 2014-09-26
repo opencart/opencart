@@ -73,6 +73,7 @@ class ControllerStep2 extends Controller {
 		$data['curl'] = extension_loaded('curl');
 		$data['mcrypt_encrypt'] = function_exists('mcrypt_encrypt');
 		$data['zlib'] = extension_loaded('zlib');
+		$data['zip'] = extension_loaded('zip');
 		$data['iconv'] = function_exists('iconv');
 		$data['mbstring'] = extension_loaded('mbstring');
 
@@ -125,6 +126,10 @@ class ControllerStep2 extends Controller {
 
 		if (!extension_loaded('zlib')) {
 			$this->error['warning'] = 'Warning: ZLIB extension needs to be loaded for OpenCart to work!';
+		}
+
+		if (!extension_loaded('zip')) {
+			$this->error['warning'] = 'Warning: ZIP extension needs to be loaded for OpenCart to work!';
 		}
 
 		if (!function_exists('iconv')) {

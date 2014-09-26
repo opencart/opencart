@@ -45,6 +45,7 @@ $_['text_mpdo']              = 'mPDO';
 $_['text_gd']                = 'GD';
 $_['text_curl']              = 'cURL';
 $_['text_mcrypt']            = 'mCrypt';
+$_['text_zlib']              = 'ZLIB';
 $_['text_zip']               = 'ZIP';
 $_['text_mbstring']          = 'mbstring';
 $_['text_on']                = 'On';

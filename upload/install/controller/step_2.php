@@ -45,6 +45,7 @@ class ControllerStep2 extends Controller {
 		$data['text_gd'] = $this->language->get('text_gd');
 		$data['text_curl'] = $this->language->get('text_curl');
 		$data['text_mcrypt'] = $this->language->get('text_mcrypt');
+		$data['text_zlib'] = $this->language->get('text_zlib');
 		$data['text_zip'] = $this->language->get('text_zip');
 		$data['text_mbstring'] = $this->language->get('text_mbstring');
 

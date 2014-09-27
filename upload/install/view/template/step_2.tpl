@@ -124,15 +124,15 @@
             </thead>
             <tbody>
               <tr>
-                <td><?php echo $text_mysql; ?></td>
-                <td><?php if ($mysql) { ?>
+                <td><?php echo $text_db; ?></td>
+                <td><?php if ($db) { ?>
                   <?php echo $text_on; ?>
                   <?php } else { ?>
                   <?php echo $text_off; ?>
                   <?php } ?>
                 </td>
                 <td><?php echo $text_on; ?></td>
-                <td class="text-center"><?php if ($mysql) { ?>
+                <td class="text-center"><?php if ($db) { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>

@@ -62,7 +62,7 @@ class ModelInstall extends Model {
 				$api_password .= $characters[rand(0, strlen($characters) - 1)];
 			}
 
-			$db->query("INSERT INTO `" . $data['db_prefix'] . "api` SET username = '" . $db->escape($api_username) . "', `password` = '" . $db->escape($api_password) . "', status = 1, date_added = NOW(), date_modified = NOW()");
+			$db->query("INSERT INTO `" . $data['db_prefix'] . "api` SET username = '" . $db->escape($api_username) . "', `password` = '" . $db->escape($api_password) . "', firstname = 'John', lastname = 'Doe', status = 1, date_added = NOW(), date_modified = NOW()");
 
 			$api_id = $db->getLastId();
 

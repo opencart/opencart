@@ -243,15 +243,17 @@ class ControllerStep3 extends Controller {
 		}
 
 		if ($this->request->post['db_driver'] == 'mysqli') {
-			$mysql = new mysqli($this->request->post['db_hostname'], $this->request->post['db_username'], $this->request->post['db_password']);
+			$mysql = @new mysqli($this->request->post['db_hostname'], $this->request->post['db_username'], $this->request->post['db_password']);
 
-			if (!$mysql->query("CREATE DATABASE IF NOT EXISTS ".$this->request->post['db_database'])) {
+			if ($mysql->connect_error) {
+				$this->error['warning'] = $this->language->get('error_db_connect');
+			}
+			elseif (!$mysql->query("CREATE DATABASE IF NOT EXISTS ".$this->request->post['db_database'])) {				
 				$this->error['warning'] = $this->language->get('error_db_create_database');
 			}
-			else{
+			else {
 				$mysql->close();
-			}
-			
+			}			
 		}
 
 		if (!$this->request->post['username']) {

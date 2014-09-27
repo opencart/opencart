@@ -113,6 +113,7 @@ $_['error_db_username'] 	 = 'Username required!';
 $_['error_db_database']		 = 'Database Name required!';
 $_['error_db_prefix'] 		 = 'DB Prefix can only contain lowercase characters in the a-z range, 0-9 and underscores';
 $_['error_db_connect'] 		 = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
+$_['error_db_create_database'] = 'Error : Failed to create database - please check user permissions!';
 $_['error_username'] 		 = 'Username required!';
 $_['error_password'] 		 = 'Password required!';
 $_['error_email'] 			 = 'Invalid E-Mail!';

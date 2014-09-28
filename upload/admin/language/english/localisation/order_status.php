@@ -1,10 +1,10 @@
 <?php
 // Heading
-$_['heading_title']    = 'Order Status';
+$_['heading_title']    = 'Order Statuses';
 
 // Text
 $_['text_success']     = 'Success: You have modified order statuses!';
-$_['text_list']        = 'Layout List';
+$_['text_list']        = 'Order Status List';
 
 // Column
 $_['column_name']      = 'Order Status Name';

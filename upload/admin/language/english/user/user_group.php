@@ -1,9 +1,10 @@
 <?php
 // Heading
-$_['heading_title']     = 'User Group';
+$_['heading_title']     = 'User Groups';
 
 // Text
 $_['text_success']      = 'Success: You have modified user groups!';
+$_['text_list']         = 'User Group';
 
 // Column
 $_['column_name']       = 'User Group Name';

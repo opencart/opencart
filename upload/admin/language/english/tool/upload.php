@@ -3,7 +3,8 @@
 $_['heading_title']     = 'Uploads';
 
 // Text
-$_['text_success']      = 'Success: You have modified upload!';
+$_['text_success']      = 'Success: You have modified uploads!';
+$_['text_list']         = 'Upload List';
 
 // Column
 $_['column_name']       = 'Upload Name';

@@ -1,10 +1,10 @@
 <?php
 // Heading
-$_['heading_title']       = 'Coupon';
+$_['heading_title']       = 'Coupons';
 
 // Text
 $_['text_success']        = 'Success: You have modified coupons!';
-$_['text_list']           = 'Layout List';
+$_['text_list']           = 'Coupon List';
 $_['text_percent']        = 'Percentage';
 $_['text_amount']         = 'Fixed Amount';
 

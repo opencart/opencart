@@ -4,6 +4,7 @@ $_['heading_title']                    = 'Settings';
 
 // Text
 $_['text_success']                     = 'Success: You have modified settings!';
+$_['text_list']                        = 'Setting List';
 $_['text_items']                       = 'Items';
 $_['text_tax']                         = 'Taxes';
 $_['text_account']                     = 'Account';

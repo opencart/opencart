@@ -4,7 +4,7 @@ $_['heading_title']     = 'Marketing Tracking';
 
 // Text
 $_['text_success']      = 'Success: You have modified marketing tracking!';
-$_['text_list']         = 'Layout List';
+$_['text_list']         = 'Marketing Tracking List';
 
 // Column
 $_['column_name']       = 'Campaign Name';

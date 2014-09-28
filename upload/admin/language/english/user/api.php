@@ -4,6 +4,7 @@ $_['heading_title']        = 'API\'s';
 
 // Text
 $_['text_success']         = 'Success: You have modified API\'s!';
+$_['text_list']            = 'API List';
 
 // Column
 $_['column_username']      = 'Username';

@@ -1,10 +1,10 @@
 <?php
 // Heading
-$_['heading_title']          = 'Category';
+$_['heading_title']          = 'Categories';
 
 // Text
 $_['text_success']           = 'Success: You have modified categories!';
-$_['text_list']              = 'Attribute Group List';
+$_['text_list']              = 'Category List';
 $_['text_default']           = 'Default';
 
 // Column

@@ -4,7 +4,7 @@ $_['heading_title']    = 'Feeds';
 
 // Text
 $_['text_success']     = 'Success: You have modified feeds!';
-$_['text_list']        = 'Layout List';
+$_['text_list']        = 'Feed List';
 
 // Column
 $_['column_name']      = 'Product Feed Name';

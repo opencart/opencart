@@ -4,7 +4,7 @@ $_['heading_title']          = 'Products';
 
 // Text
 $_['text_success']           = 'Success: You have modified products!';
-$_['text_list']              = 'Attribute Group List';
+$_['text_list']              = 'Product List';
 $_['text_plus']              = '+';
 $_['text_minus']             = '-';
 $_['text_default']           = 'Default';

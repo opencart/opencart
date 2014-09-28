@@ -1,10 +1,10 @@
 <?php
 // Heading
-$_['heading_title']           = 'Country';
+$_['heading_title']           = 'Countries';
 
 // Text
 $_['text_success']            = 'Success: You have modified countries!';
-$_['text_list']               = 'Layout List';
+$_['text_list']               = 'Country List';
 
 // Column
 $_['column_name']             = 'Country Name';

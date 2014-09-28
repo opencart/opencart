@@ -1876,7 +1876,7 @@ class ControllerPaymentPPExpress extends Controller {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$recurring['order_recurring_id'] . "', `date_added` = NOW(), `type` = '5'");
 				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 4 WHERE `order_recurring_id` = '" . (int)$recurring['order_recurring_id'] . "' LIMIT 1");
 
-				$this->session->data['success'] = $this->language->get('success_cancelled');
+				$this->session->data['success'] = $this->language->get('text_cancelled');
 			} else {
 				$this->session->data['error'] = sprintf($this->language->get('error_not_cancelled'), $result['L_LONGMESSAGE0']);
 			}

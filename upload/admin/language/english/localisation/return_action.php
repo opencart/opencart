@@ -1,10 +1,10 @@
 <?php
 // Heading
-$_['heading_title']    = 'Return Action';
+$_['heading_title']    = 'Return Actions';
 
 // Text
 $_['text_success']     = 'Success: You have modified return actions!';
-$_['text_list']        = 'Layout List';
+$_['text_list']        = 'Return Action List';
 
 // Column
 $_['column_name']      = 'Return Action Name';

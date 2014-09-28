@@ -22,7 +22,7 @@
     <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> <?php echo $text_url_message; ?></div>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h3>
       </div>
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-realex" class="form-horizontal">

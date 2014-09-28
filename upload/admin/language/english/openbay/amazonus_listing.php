@@ -47,7 +47,6 @@ $_['text_links_removed'] 			= 'Amazon product links deleted';
 $_['text_product_links'] 			= 'Product links';
 $_['text_has_saved_listings'] 		= 'This product has one or more saved listings that is not uploaded';
 $_['text_edit_heading'] 			= 'Edit listing';
-$_['text_links_removed'] 			= 'Amazon product links deleted';
 
 // Columns
 $_['column_image'] 					= 'Image';

@@ -1,10 +1,10 @@
 <?php
 // Heading
-$_['heading_title']    = 'Stock Status';
+$_['heading_title']    = 'Stock Statuses';
 
 // Text
 $_['text_success']     = 'Success: You have modified stock statuses!';
-$_['text_list']        = 'Layout List';
+$_['text_list']        = 'Stock Status List';
 
 // Column
 $_['column_name']      = 'Stock Status Name';

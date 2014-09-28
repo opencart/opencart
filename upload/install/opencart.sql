@@ -110,6 +110,8 @@ CREATE TABLE IF NOT EXISTS `oc_affiliate_transaction` (
 CREATE TABLE IF NOT EXISTS `oc_api` (
   `api_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(64) NOT NULL,
+  `firstname` varchar(64) NOT NULL,
+  `lastname` varchar(64) NOT NULL,
   `password` text NOT NULL,
   `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,

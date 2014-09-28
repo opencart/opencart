@@ -5,8 +5,8 @@ $_['heading_title']        = 'Tax Rates';
 // Text
 $_['text_percent']         = 'Percentage';
 $_['text_amount']          = 'Fixed Amount';
-$_['text_success']         = 'Success: You have modified tax classes!';
-$_['text_list']            = 'Layout List';
+$_['text_success']         = 'Success: You have modified tax rates!';
+$_['text_list']            = 'Tax Rate List';
 
 // Column
 $_['column_name']          = 'Tax Name';
@@ -25,7 +25,7 @@ $_['entry_customer_group'] = 'Customer Group';
 $_['entry_geo_zone']       = 'Geo Zone';
 
 // Error
-$_['error_permission']     = 'Warning: You do not have permission to modify tax classes!';
+$_['error_permission']     = 'Warning: You do not have permission to modify tax rates!';
 $_['error_tax_rule']       = 'Warning: This tax rate cannot be deleted as it is currently assigned to %s tax classes!';
 $_['error_name']           = 'Tax Name must be between 3 and 32 characters!';
 $_['error_rate']           = 'Tax Rate required!';

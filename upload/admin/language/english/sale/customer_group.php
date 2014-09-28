@@ -1,9 +1,10 @@
 <?php
 // Heading
-$_['heading_title']     = 'Customer Group';
+$_['heading_title']     = 'Customer Groups';
 
 // Text
 $_['text_success']      = 'Success: You have modified customer groups!';
+$_['text_list']         = 'Customer Group List';
 
 // Column
 $_['column_name']       = 'Customer Group Name';

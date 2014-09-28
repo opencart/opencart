@@ -3,6 +3,7 @@
 $_['heading_title']                           = 'Orders';
 
 // Text
+$_['text_list']                               = 'Order List';
 $_['text_order_detail']                       = 'Order Details';
 $_['text_order_id']                           = 'Order ID:';
 $_['text_invoice_no']                         = 'Invoice No.:';

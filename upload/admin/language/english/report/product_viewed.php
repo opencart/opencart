@@ -3,6 +3,7 @@
 $_['heading_title']    = 'Products Viewed Report';
 
 // Text
+$_['text_list']        = 'Products Viewed List';
 $_['text_success']     = 'Success: You have reset the product viewed report!';
 
 // Column

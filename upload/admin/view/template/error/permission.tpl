@@ -13,7 +13,7 @@
 <div class="container-fluid">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
+      <h3 class="panel-title"><i class="fa fa-exclamation-triangle"></i> <?php echo $heading_title; ?></h3>
     </div>
     <div class="panel-body">
       <p class="text-center"><?php echo $text_permission; ?></p>

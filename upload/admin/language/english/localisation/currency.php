@@ -1,10 +1,10 @@
 <?php
 // Heading
-$_['heading_title']        = 'Currency';
+$_['heading_title']        = 'Currencies';
 
 // Text
 $_['text_success']         = 'Success: You have modified currencies!';
-$_['text_list']            = 'Layout List';
+$_['text_list']            = 'Currency List';
 
 // Column
 $_['column_title']         = 'Currency Title';

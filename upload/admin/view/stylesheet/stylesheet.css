@@ -152,11 +152,10 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	width: 50px;
 	height: 100%;
 	background-color: #515151;
-	border-right: 1px solid #515151;
 	position: absolute;
 	top: 0px;
 	padding-top: 50px;
-	z-index: 1;
+	z-index: 10;
 	transition: all 0.3s;
 }
 #column-left.active {
@@ -177,7 +176,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 @media (max-width: 767px) {
 #column-left {
 	overflow: hidden;
-	border-right: none;
 	opacity: 0;
 }
 #column-left + #content {

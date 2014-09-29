@@ -18,9 +18,9 @@ class ControllerModuleEbaydisplay extends Controller {
 
 		foreach ($products['products'] as $product) {
 			if(isset($product['pictures'][0])){
-				$image = $this->model_openbay_ebay_product->resize($product['pictures'][0], $setting['image_width'], $setting['image_height']);
+				$image = $this->model_openbay_ebay_product->resize($product['pictures'][0], $setting['width'], $setting['height']);
 			}else{
-				$image = $this->model_tool_image->resize('placeholder.png', $setting['image_width'], $setting['image_height']);
+				$image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
 			}
 
 			$data['products'][] = array(

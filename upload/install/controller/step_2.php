@@ -35,7 +35,7 @@ class ControllerStep2 extends Controller {
 		$data['text_version'] = $this->language->get('text_version');
 		$data['text_global'] = $this->language->get('text_global');
 		$data['text_magic'] = $this->language->get('text_magic');
-		$data['text_upload'] = $this->language->get('text_upload');
+		$data['text_file_upload'] = $this->language->get('text_file_upload');
 		$data['text_session'] = $this->language->get('text_session');
 		$data['text_global'] = $this->language->get('text_global');
 		$data['text_db'] = $this->language->get('text_db');
@@ -87,6 +87,7 @@ class ControllerStep2 extends Controller {
 		$data['cache'] = DIR_SYSTEM . 'cache';
 		$data['logs'] = DIR_SYSTEM . 'logs';
 		$data['download'] = DIR_SYSTEM . 'download';
+		$data['upload'] = DIR_SYSTEM . 'upload';
 		$data['image'] = DIR_OPENCART . 'image';
 		$data['image_cache'] = DIR_OPENCART . 'image/cache';
 		$data['image_data'] = DIR_OPENCART . 'image/catalog';
@@ -162,6 +163,14 @@ class ControllerStep2 extends Controller {
 			$this->error['warning'] = 'Warning: Logs directory needs to be writable for OpenCart to work!';
 		}
 
+		if (!is_writable(DIR_SYSTEM . 'download')) {
+			$this->error['warning'] = 'Warning: Download directory needs to be writable for OpenCart to work!';
+		}
+		
+		if (!is_writable(DIR_SYSTEM . 'upload')) {
+			$this->error['warning'] = 'Warning: Upload directory needs to be writable for OpenCart to work!';
+		}
+		
 		if (!is_writable(DIR_OPENCART . 'image')) {
 			$this->error['warning'] = 'Warning: Image directory needs to be writable for OpenCart to work!';
 		}
@@ -173,11 +182,7 @@ class ControllerStep2 extends Controller {
 		if (!is_writable(DIR_OPENCART . 'image/catalog')) {
 			$this->error['warning'] = 'Warning: Image catalog directory needs to be writable for OpenCart to work!';
 		}
-
-		if (!is_writable(DIR_SYSTEM . 'download')) {
-			$this->error['warning'] = 'Warning: Download directory needs to be writable for OpenCart to work!';
-		}
-
+				
 		if (!$this->error) {
 			return true;
 		} else {

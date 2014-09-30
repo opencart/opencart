@@ -110,7 +110,7 @@ class ModelPaymentSagepayServer extends Model {
 		$sagepay_server_order = $this->getOrder($order_id);
 		$total_released = $this->getTotalReleased($sagepay_server_order['sagepay_server_order_id']);
 
-		if (!empty($sagepay_server_order) && $sagepay_server_order['release_status'] == 0 && $total_released <= $amount) {
+		if (!empty($sagepay_server_order) && $sagepay_server_order['release_status'] == 0 && ($total_released + $amount <= $sagepay_server_order['total'])) {
 			$release_data = array();
 
 			if ($this->config->get('sagepay_server_test') == 'live') {

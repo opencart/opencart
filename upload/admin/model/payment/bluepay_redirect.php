@@ -84,7 +84,7 @@ class ModelPaymentBluepayredirect extends Model {
 		$bluepay_redirect_order = $this->getOrder($order_id);
 		$total_released = $this->getTotalReleased($bluepay_redirect_order['bluepay_redirect_order_id']);
 
-		if (!empty($bluepay_redirect_order) && $bluepay_redirect_order['release_status'] == 0 && $total_released >= $amount) {
+		if (!empty($bluepay_redirect_order) && $bluepay_redirect_order['release_status'] == 0 && ($total_released + $amount <= $bluepay_redirect_order['total'])) {
 			$release_data = array();
 
 			$release_data['MERCHANT'] = $this->config->get('bluepay_redirect_account_id');

@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']     = 'Lastest Orders';
+$_['heading_title']     = 'Latest Orders';
 
 // Column
 $_['column_order_id']   = 'Order ID';

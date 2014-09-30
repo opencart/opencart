@@ -5,6 +5,8 @@ $_['heading_title']    = 'Banned IP\'s';
 // Text
 $_['text_success']     = 'Success: You have modified customer banned IP\'s!';
 $_['text_list']        = 'Banned IP List';
+$_['text_add']         = 'Add Banned IP';
+$_['text_edit']        = 'Edit Banned IP';
 
 // Column
 $_['column_ip']        = 'IP';

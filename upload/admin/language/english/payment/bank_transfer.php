@@ -5,6 +5,7 @@ $_['heading_title']					= 'Bank Transfer';
 // Text
 $_['text_payment']					= 'Payment';
 $_['text_success']					= 'Success: You have modified bank transfer details!';
+$_['text_edit']                     = 'Edit Bank Transfer';
 
 // Entry
 $_['entry_bank']					= 'Bank Transfer Instructions';

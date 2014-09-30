@@ -5,6 +5,7 @@ $_['heading_title']      = 'Australia Post';
 // Text
 $_['text_shipping']      = 'Shipping';
 $_['text_success']       = 'Success: You have modified Australia Post shipping!';
+$_['text_edit']          = 'Edit Australia Post Shipping';
 
 // Entry
 $_['entry_postcode']     = 'Post Code';

@@ -5,6 +5,7 @@ $_['heading_title']    = 'Store Credit';
 // Text
 $_['text_total']       = 'Order Totals';
 $_['text_success']     = 'Success: You have modified store credit total!';
+$_['text_edit']        = 'Edit Store Credit Total';
 
 // Entry
 $_['entry_status']     = 'Status';

@@ -2,15 +2,10 @@
 // Heading
 $_['heading_title']					= 'Realex Remote';
 
-// Tab
-$_['tab_account']					= 'API info';
-$_['tab_sub_account']				= 'Accounts';
-$_['tab_order_status']				= 'Order Status';
-$_['tab_payment']					= 'Payment Settings';
-
 // Text
 $_['text_payment']					= 'Payment';
 $_['text_success']					= 'Success: You have modified Realex account details!';
+$_['text_edit']                     = 'Edit Realex Remote';
 $_['text_card_type']				= 'Card type';
 $_['text_enabled']					= 'Enabled';
 $_['text_use_default']				= 'Use default';
@@ -80,6 +75,12 @@ $_['help_notification']				= 'You need to supply this URL to Realex to get payme
 $_['help_debug']					= 'Enabling debug will write sensitive data to a log file. You should always disable unless instructed otherwise.';
 $_['help_liability']				= 'Accepting liability means you will still accept payments when a user fails 3D secure.';
 $_['help_card_data_status']			= 'Logs last 4 cards digits, expire, name, type and issuing bank information';
+
+// Tab
+$_['tab_account']					= 'API info';
+$_['tab_sub_account']				= 'Accounts';
+$_['tab_order_status']				= 'Order Status';
+$_['tab_payment']					= 'Payment Settings';
 
 // Button
 $_['button_capture']				= 'Capture';

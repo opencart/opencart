@@ -5,6 +5,8 @@ $_['heading_title']			= 'Recurring Profiles';
 // Text
 $_['text_success']          = 'Success: You have modified recurring profiles!';
 $_['text_list']             = 'Recurring Profile List';
+$_['text_add']              = 'Add Recurring Profile';
+$_['text_edit']             = 'Edit Recurring Profile';
 $_['text_day']				= 'Day';
 $_['text_week']				= 'Week';
 $_['text_semi_month']		= 'Semi Month';

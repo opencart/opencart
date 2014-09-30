@@ -2,15 +2,9 @@
 // Heading
 $_['heading_title']					= 'Realex Redirect';
 
-// Tab
-$_['tab_account']					= 'API info';
-$_['tab_sub_account']				= 'Accounts';
-$_['tab_order_status']				= 'Order status';
-$_['tab_payment']					= 'Payment settings';
-$_['tab_advanced']					= 'Advanced';
-
 // Text
 $_['text_success']					= 'Success: You have modified Realex account details!';
+$_['text_edit']                     = 'Edit Realex Redirect';
 $_['text_live']						= 'Live';
 $_['text_demo']						= 'Demo';
 $_['text_card_type']				= 'Card type';
@@ -81,6 +75,13 @@ $_['help_card_select']				= 'Ask the user to choose their card type before they 
 $_['help_notification']				= 'You need to supply this URL to Realex to get payment notifications';
 $_['help_debug']					= 'Enabling debug will write sensitive data to a log file. You should always disable unless instructed otherwise';
 $_['help_dcc_settle']				= 'If your subaccount is DCC enabled you must use Autosettle';
+
+// Tab
+$_['tab_account']					= 'API info';
+$_['tab_sub_account']				= 'Accounts';
+$_['tab_order_status']				= 'Order status';
+$_['tab_payment']					= 'Payment settings';
+$_['tab_advanced']					= 'Advanced';
 
 // Button
 $_['button_capture']				= 'Capture';

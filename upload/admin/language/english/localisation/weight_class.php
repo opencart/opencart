@@ -5,6 +5,8 @@ $_['heading_title']    = 'Weight Classes';
 // Text
 $_['text_success']     = 'Success: You have modified weight classes!';
 $_['text_list']        = 'Weight Class List';
+$_['text_add']         = 'Add Weight Class';
+$_['text_edit']        = 'Edit Weight Class';
 
 // Column
 $_['column_title']     = 'Weight Title';

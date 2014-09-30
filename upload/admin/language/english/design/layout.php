@@ -5,6 +5,8 @@ $_['heading_title']       = 'Layouts';
 // Text
 $_['text_success']        = 'Success: You have modified layouts!';
 $_['text_list']           = 'Layout List';
+$_['text_add']            = 'Add Layout';
+$_['text_edit']           = 'Edit Layout';
 $_['text_default']        = 'Default';
 $_['text_content_top']    = 'Content Top';
 $_['text_content_bottom'] = 'Content Bottom';

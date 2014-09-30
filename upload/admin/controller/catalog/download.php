@@ -261,7 +261,8 @@ class ControllerCatalogDownload extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_form'] = !isset($this->request->get['download_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['entry_name'] = $this->language->get('entry_name');

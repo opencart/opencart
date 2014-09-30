@@ -258,7 +258,8 @@ class ControllerUserUserPermission extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_form'] = !isset($this->request->get['user_group_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_select_all'] = $this->language->get('text_select_all');
 		$data['text_unselect_all'] = $this->language->get('text_unselect_all');
 

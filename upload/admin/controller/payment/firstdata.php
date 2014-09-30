@@ -18,9 +18,8 @@ class ControllerPaymentFirstdata extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=payment/firstdata/notify';
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_live'] = $this->language->get('text_live');
@@ -70,6 +69,8 @@ class ControllerPaymentFirstdata extends Controller {
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
+		
+		$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=payment/firstdata/notify';
 
 		$this->load->model('localisation/order_status');
 

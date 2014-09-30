@@ -19,7 +19,8 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_all_zones'] = $this->language->get('text_all_zones');
@@ -28,8 +29,8 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 		$data['text_live'] = $this->language->get('text_live');
 		$data['text_sale'] = $this->language->get('text_sale');
 		$data['text_authenticate'] = $this->language->get('text_authenticate');
-		$data['text_amex'] = $this->language->get('text_AMEX');
-		$data['text_DISCOVER'] = $this->language->get('text_DISCOVER');
+		$data['text_amex'] = $this->language->get('text_amex');
+		$data['text_discover'] = $this->language->get('text_discover');
 
 		$data['entry_account_name'] = $this->language->get('entry_account_name');
 		$data['entry_account_id'] = $this->language->get('entry_account_id');

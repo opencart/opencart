@@ -18,9 +18,8 @@ class ControllerPaymentRealex extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
-		$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=payment/realex/notify';
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_live'] = $this->language->get('text_live');
@@ -86,6 +85,8 @@ class ControllerPaymentRealex extends Controller {
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		$data['error_use_select_card'] = $this->language->get('error_use_select_card');
+		
+		$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=payment/realex/notify';
 
 		$this->load->model('localisation/order_status');
 

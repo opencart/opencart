@@ -261,7 +261,9 @@ class ControllerSaleCustomerBanIp extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_form'] = !isset($this->request->get['customer_ban_ip_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+		
 		$data['entry_ip'] = $this->language->get('entry_ip');
 
 		$data['button_save'] = $this->language->get('button_save');

@@ -556,7 +556,8 @@ class ControllerSaleOrder extends Controller {
 		$this->load->model('sale/customer');
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_form'] = !isset($this->request->get['order_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_default'] = $this->language->get('text_default');
 		$data['text_select'] = $this->language->get('text_select');

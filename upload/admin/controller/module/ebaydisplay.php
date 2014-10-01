@@ -6,7 +6,7 @@ class ControllerModuleEbaydisplay extends Controller {
 		$this->load->language('module/ebaydisplay');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/openbay/faq.js');
+		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$this->load->model('setting/setting');
 
@@ -37,7 +37,7 @@ class ControllerModuleEbaydisplay extends Controller {
 		$data['entry_description'] = $this->language->get('entry_description');
 		$data['entry_site'] = $this->language->get('entry_site');
 		$data['entry_status'] = $this->language->get('entry_status');
-		
+
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_module_add'] = $this->language->get('button_module_add');
@@ -143,13 +143,13 @@ class ControllerModuleEbaydisplay extends Controller {
 			23  => 'Belgium (French)',
 			123 => 'Belgium (Dutch)',
 		);
-		
+
 		if (isset($this->request->post['ebaydisplay_status'])) {
 			$data['ebaydisplay_status'] = $this->request->post['ebaydisplay_status'];
 		} else {
 			$data['ebaydisplay_status'] = $this->config->get('ebaydisplay_status');
 		}
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

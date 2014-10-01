@@ -32,7 +32,7 @@ class ControllerOpenbayEtsy extends Controller {
 		$data = $this->load->language('openbay/etsy');
 
 		$this->document->setTitle($this->language->get('text_dashboard'));
-		$this->document->addScript('view/javascript/openbay/faq.js');
+		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$data['breadcrumbs'] = array();
 
@@ -84,7 +84,7 @@ class ControllerOpenbayEtsy extends Controller {
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/openbay/faq.js');
+		$this->document->addScript('view/javascript/openbay/js/faq.js');
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(

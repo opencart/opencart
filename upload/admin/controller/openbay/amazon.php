@@ -34,7 +34,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$data = $this->load->language('openbay/amazon');
 
 		$this->document->setTitle($this->language->get('text_dashboard'));
-		$this->document->addScript('view/javascript/openbay/faq.js');
+		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
@@ -78,7 +78,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$data = $this->load->language('openbay/amazon_stockupdates');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/openbay/faq.js');
+		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
@@ -159,7 +159,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$data = $this->load->language('openbay/amazon_subscription');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/openbay/faq.js');
+		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
@@ -233,7 +233,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$data = $this->load->language('openbay/amazon_settings');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/openbay/faq.js');
+		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$this->load->model('setting/setting');
 		$this->load->model('localisation/order_status');
@@ -363,7 +363,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$data = $this->load->language('openbay/amazon_links');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/openbay/faq.js');
+		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$data['breadcrumbs'] = array();
 
@@ -406,7 +406,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$data = $this->load->language('openbay/amazon_listingsaved');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/openbay/faq.js');
+		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$data['link_overview'] = $this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], 'SSL');
 
@@ -702,7 +702,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$data = $this->load->language('openbay/amazon_bulk_listing');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/openbay/faq.js');
+		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
@@ -854,7 +854,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$data = $this->load->language('openbay/amazon_bulk_linking');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/openbay/faq.js');
+		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(

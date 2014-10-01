@@ -11,10 +11,10 @@ $_['text_account_ok']  			= 'Connection to Etsy OK';
 $_['text_api_other']            = 'Links';
 $_['text_token_register']       = 'Register';
 $_['text_api_ok']       		= 'API connection OK';
-$_['text_pull_orders']    		= 'Poll for orders';
+$_['text_pull_orders']    		= 'Pull orders';
 $_['text_complete']    			= 'Complete';
 $_['text_failed']    			= 'Failed';
-$_['text_orders_imported']    	= 'Order poll has been requested';
+$_['text_orders_imported']    	= 'Order pull has been requested';
 $_['text_api_status']           = 'API connection';
 
 // Entry
@@ -27,7 +27,7 @@ $_['entry_token']            	= 'API token';
 $_['entry_address_format']      = 'Default address format';
 
 // Buttons
-$_['button_poll']    			= 'Poll now';
+$_['button_pull']    			= 'Pull now';
 
 // Error
 $_['error_api_connect']         = 'Failed to connect to the API';

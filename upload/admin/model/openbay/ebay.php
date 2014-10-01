@@ -235,11 +235,7 @@ class ModelOpenbayEbay extends Model{
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_profile`;");
 
 		// remove the event triggers
-		$this->model_tool_event->deleteEvent('post.order.add', array(
-				'type' => 'openbay',
-				'code' => 'ebay',
-				'method' => 'eventAddOrder')
-		);
+		$this->model_tool_event->deleteEvent('openbaypro_ebay');
 	}
 
 	public function totalLinked() {

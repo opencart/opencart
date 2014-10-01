@@ -52,11 +52,7 @@ class ModelOpenbayEtsy extends Model{
 
 	public function uninstall() {
 		// remove the event triggers
-		$this->model_tool_event->deleteEvent('post.order.add', array(
-				'type' => 'openbay',
-				'code' => 'etsy',
-				'method' => 'eventAddOrder')
-		);
+		$this->model_tool_event->deleteEvent('openbaypro_etsy');
 	}
 
 	public function verifyAccount() {

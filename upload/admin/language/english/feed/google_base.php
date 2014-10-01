@@ -3,7 +3,7 @@
 $_['heading_title']    = 'Google Base';
 
 // Text
-$_['text_feed']        = 'Product Feeds';
+$_['text_feed']        = 'Feeds';
 $_['text_success']     = 'Success: You have modified Google Base feed!';
 $_['text_list']        = 'Layout List';
 

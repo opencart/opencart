@@ -30,7 +30,7 @@ class ControllerOpenbayEbay extends Controller {
 		$data = $this->load->language('openbay/ebay');
 
 		$this->document->setTitle($this->language->get('text_dashboard'));
-		$this->document->addScript('view/javascript/openbay/faq.js');
+		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$data['breadcrumbs'] = array();
 
@@ -93,7 +93,7 @@ class ControllerOpenbayEbay extends Controller {
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/openbay/faq.js');
+		$this->document->addScript('view/javascript/openbay/js/faq.js');
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -482,7 +482,7 @@ class ControllerOpenbayEbay extends Controller {
 		$data = $this->load->language('openbay/ebay_summary');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/openbay/faq.js');
+		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$data['breadcrumbs'] = array();
 
@@ -541,7 +541,7 @@ class ControllerOpenbayEbay extends Controller {
 		$data = $this->load->language('openbay/ebay_import');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/openbay/faq.js');
+		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$data['breadcrumbs'] = array();
 
@@ -715,7 +715,7 @@ class ControllerOpenbayEbay extends Controller {
 		$data = $this->load->language('openbay/ebay_subscription');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/openbay/faq.js');
+		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$data['breadcrumbs'] = array();
 
@@ -754,7 +754,7 @@ class ControllerOpenbayEbay extends Controller {
 		$data = $this->load->language('openbay/ebay_usage');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/openbay/faq.js');
+		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$data['breadcrumbs'] = array();
 
@@ -805,7 +805,7 @@ class ControllerOpenbayEbay extends Controller {
 		$data = $this->load->language('openbay/ebay_orders');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/openbay/faq.js');
+		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$data['breadcrumbs'] = array();
 
@@ -844,7 +844,7 @@ class ControllerOpenbayEbay extends Controller {
 		$data = $this->load->language('openbay/ebay_syncronise');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/openbay/faq.js');
+		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$data['breadcrumbs'] = array();
 
@@ -891,7 +891,7 @@ class ControllerOpenbayEbay extends Controller {
 		$data = $this->load->language('openbay/ebay_links');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('view/javascript/openbay/faq.js');
+		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$data['breadcrumbs'] = array();
 
@@ -1063,7 +1063,7 @@ class ControllerOpenbayEbay extends Controller {
 				$this->load->model('openbay/ebay_product');
 
 				$this->document->setTitle($data['heading_title']);
-				$this->document->addScript('view/javascript/openbay/faq.js');
+				$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 				$data['action']       = $this->url->link('openbay/ebay/create', 'token=' . $this->session->data['token'], 'SSL');
 				$data['cancel']       = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL');
@@ -1248,7 +1248,7 @@ class ControllerOpenbayEbay extends Controller {
 				$this->load->model('openbay/ebay_profile');
 
 				$this->document->setTitle($data['heading_title']);
-				$this->document->addScript('view/javascript/openbay/faq.js');
+				$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 				$data['action']   = $this->url->link('openbay/ebay/create', 'token=' . $this->session->data['token'], 'SSL');
 				$data['cancel']   = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL');
@@ -1599,8 +1599,8 @@ class ControllerOpenbayEbay extends Controller {
 				}
 
 				$this->document->setTitle($data['text_page_title']);
-				$this->document->addScript('view/javascript/openbay/faq.js');
-				$this->document->addScript('view/javascript/openbay/openbay.js');
+				$this->document->addScript('view/javascript/openbay/js/faq.js');
+				$this->document->addScript('view/javascript/openbay/js/openbay.js');
 
 				$data['header'] = $this->load->controller('common/header');
 				$data['column_left'] = $this->load->controller('common/column_left');

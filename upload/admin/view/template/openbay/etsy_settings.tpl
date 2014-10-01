@@ -111,7 +111,7 @@
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="button-import"><?php echo $text_pull_orders; ?></label>
-            <div class="col-sm-10"> <a class="btn btn-primary" id="button-import"><i class="fa fa-refresh"></i> <?php echo $button_poll; ?></a> </div>
+            <div class="col-sm-10"> <a class="btn btn-primary" id="button-import"><i class="fa fa-refresh"></i> <?php echo $button_pull; ?></a> </div>
           </div>
         </div>
       </div>
@@ -154,5 +154,5 @@
       }
     });
   });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

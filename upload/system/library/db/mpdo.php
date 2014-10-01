@@ -74,7 +74,7 @@ final class mPDO {
 		if ($result) {
 			return $result;
 		} else {
-			$result = new stdClass();
+			$result = new \stdClass();
 			$result->row = array();
 			$result->rows = array();
 			$result->num_rows = 0;

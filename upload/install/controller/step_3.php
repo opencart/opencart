@@ -248,7 +248,7 @@ class ControllerStep3 extends Controller {
 			$mysql = @new mysqli($this->request->post['db_hostname'], $this->request->post['db_username'], $this->request->post['db_password'], $this->request->post['db_database']);
 
 			if ($mysql->connect_error) {
-				$this->error['warning'] = $this->language->get('error_db_connect');
+				$this->error['warning'] = $mysql->connect_error;
 			} else {
 				$mysql->close();
 			}

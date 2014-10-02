@@ -20,7 +20,19 @@ class ControllerExtensionInstaller extends Controller {
 		$data['button_upload'] = $this->language->get('button_upload');
 		$data['button_clear'] = $this->language->get('button_clear');
 		$data['button_continue'] = $this->language->get('button_continue');
+		
+		$data['breadcrumbs'] = array();
 
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('extension/installer', 'token=' . $this->session->data['token'], 'SSL')
+		);
+		
 		$data['token'] = $this->session->data['token'];
 
 		$directories = glob(DIR_DOWNLOAD . 'temp-*', GLOB_ONLYDIR);
@@ -32,7 +44,7 @@ class ControllerExtensionInstaller extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('extension/installer.tpl', $data));
@@ -382,7 +394,7 @@ class ControllerExtensionInstaller extends Controller {
 		}
 
 		if (!$json) {
-			$this->load->model('setting/modification');
+			$this->load->model('extension/modification');
 
 			// If xml file just put it straight into the DB
 			$xml = file_get_contents($file);
@@ -433,9 +445,7 @@ class ControllerExtensionInstaller extends Controller {
 						'status'     => 1
 					);
 
-					$this->model_setting_modification->addModification($modification_data);
-					
-					$this->model_setting_modification->refresh();
+					$this->model_extension_modification->addModification($modification_data);
 				} catch(Exception $exception) {
 					$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 				}

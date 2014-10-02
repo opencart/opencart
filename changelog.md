@@ -6,7 +6,7 @@
 * Added missing text_edit string in the settings area.
 
 #### Changes
-None
+* Changed DB connection error response during install when using mysqli to use native message from mysqli.
 
 #### Added
 None

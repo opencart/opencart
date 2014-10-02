@@ -25,6 +25,7 @@ class ControllerSettingSetting extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_yes'] = $this->language->get('text_yes');

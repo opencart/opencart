@@ -330,10 +330,10 @@ class ModelSaleOrder extends Model {
 		return $query->row['total'];
 	}
 
-	public function getTotalOrdersByProcessStatus() {
+	public function getTotalOrdersByProcessingStatus() {
 		$implode = array();
 
-		$order_statuses = $this->config->get('config_process_status');
+		$order_statuses = $this->config->get('config_processing_status');
 
 		foreach ($order_statuses as $order_status_id) {
 			$implode[] = "order_status_id = '" . (int)$order_status_id . "'";

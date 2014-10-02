@@ -208,7 +208,7 @@ class ControllerApiOrder extends Controller {
 				}
 
 				// Order Totals
-				$this->load->model('setting/extension');
+				$this->load->model('extension/extension');
 
 				$order_data['totals'] = array();
 				$total = 0;
@@ -216,7 +216,7 @@ class ControllerApiOrder extends Controller {
 
 				$sort_order = array();
 
-				$results = $this->model_setting_extension->getExtensions('total');
+				$results = $this->model_extension_extension->getExtensions('total');
 
 				foreach ($results as $key => $value) {
 					$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
@@ -299,22 +299,22 @@ class ControllerApiOrder extends Controller {
 				} else {
 					$order_data['accept_language'] = '';
 				}
+				
+				$this->load->model('checkout/order');
+	
+				$json['order_id'] = $this->model_checkout_order->addOrder($order_data);
+	
+				// Set the order history
+				if (isset($this->request->post['order_status_id'])) {
+					$order_status_id = $this->request->post['order_status_id'];
+				} else {
+					$order_status_id = $this->config->get('config_order_status_id');
+				}
+	
+				$this->model_checkout_order->addOrderHistory($json['order_id'], $order_status_id);
+	
+				$json['success'] = $this->language->get('text_success');				
 			}
-
-			$this->load->model('checkout/order');
-
-			$json['order_id'] = $this->model_checkout_order->addOrder($order_data);
-
-			// Set the order history
-			if (isset($this->request->post['order_status_id'])) {
-				$order_status_id = $this->request->post['order_status_id'];
-			} else {
-				$order_status_id = $this->config->get('config_order_status_id');
-			}
-
-			$this->model_checkout_order->addOrderHistory($json['order_id'], $order_status_id);
-
-			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -540,7 +540,7 @@ class ControllerApiOrder extends Controller {
 					}
 
 					// Order Totals
-					$this->load->model('setting/extension');
+					$this->load->model('extension/extension');
 
 					$order_data['totals'] = array();
 					$total = 0;
@@ -548,7 +548,7 @@ class ControllerApiOrder extends Controller {
 
 					$sort_order = array();
 
-					$results = $this->model_setting_extension->getExtensions('total');
+					$results = $this->model_extension_extension->getExtensions('total');
 
 					foreach ($results as $key => $value) {
 						$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');

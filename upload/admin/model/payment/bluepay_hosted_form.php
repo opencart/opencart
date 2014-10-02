@@ -88,7 +88,7 @@ class ModelPaymentBluePayHostedForm extends Model {
 		$bluepay_hosted_form_order = $this->getOrder($order_id);
 		$total_released = $this->getTotalReleased($bluepay_hosted_form_order['bluepay_hosted_form_order_id']);
 
-		if (!empty($bluepay_hosted_form_order) && $bluepay_hosted_form_order['release_status'] == 0 && $total_released >= $amount) {
+		if (!empty($bluepay_hosted_form_order) && $bluepay_hosted_form_order['release_status'] == 0 && ($total_released + $amount <= $bluepay_hosted_form_order['total'])) {
 			$release_data = array();
 
 			$release_data['MERCHANT'] = $this->config->get('bluepay_hosted_form_account_id');

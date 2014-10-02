@@ -104,7 +104,7 @@ class CatalogSagePayExpressTest extends OpenCartSeleniumTest {
 			$this->byCssSelector('.fa-plus-circle')->click();
 
 			for ($i = 1; ; $i++) {
-				$element = $this->byCssSelector("select[name=\"pp_layout_module[0][layout_id]\"] option:nth-child($i)");
+				$element = $this->byCssSelector("select[name=\"pp_button_module[0][layout_id]\"] option:nth-child($i)");
 
 				if ($element->text() == 'Cart') {
 					$element->click();

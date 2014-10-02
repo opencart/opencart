@@ -13,10 +13,10 @@ class ControllerModulePPLayout extends Controller {
 			$data['is_mobile'] = $this->model_payment_pp_express->isMobile();
 			$data['payment_url'] = $this->url->link('payment/pp_express/express', '', 'SSL');
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/pp_layout.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/module/pp_layout.tpl', $data);
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/pp_button.tpl')) {
+				return $this->load->view($this->config->get('config_template') . '/template/module/pp_button.tpl', $data);
 			} else {
-				return $this->load->view('default/template/module/pp_layout.tpl', $data);
+				return $this->load->view('default/template/module/pp_button.tpl', $data);
 			}
 		}
 	}

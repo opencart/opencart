@@ -18,13 +18,19 @@ Please read the instructions below before you create a bug report.
 - If your bug report is not related to the core code (such as a 3rd party module or your server configuration) then the issue will be closed without a reason. You must use the forum or a commercial partner to resolve a 3rd party code issue.
 - If you would like to report a serious security bug please PM an OpenCart moderator on the forum
 
-## How to Contribute
+## Making a suggestion
 
-Fork the repository, edit and submit a pull request.
+Please do not create a bug report if you think something needs improving / adding (such as features or changes to code standards etc).
 
-Please be very clear on your commit messages and pull request, empty pull request messages may be rejected without reason.
+We welcome public suggestions on our [User Voice site](http://opencart.uservoice.com). 
 
-Your code should be inline with the [OpenCart coding standards](https://github.com/opencart/opencart/wiki/Coding-standards).
+## How to contribute
+
+Fork the repository, edit and [submit a pull request](https://github.com/opencart/opencart/wiki/Creating-a-pull-request).
+
+Please be very clear on your commit messages and pull request, empty pull request messages will be rejected without reason.
+
+Your code should standards should match the [OpenCart coding standards](https://github.com/opencart/opencart/wiki/Coding-standards).
 
 ## How to install
 
@@ -41,3 +47,5 @@ Please read the installation instructions included in the repository.
 - [OpenCart blog](http://www.opencart.com/index.php?route=feature/blog)
 - [How to documents](http://docs.opencart.com/display/opencart/OpenCart+1.5+Home)
 - [Newsletter](http://newsletter.opencart.com/h/r/B660EBBE4980C85C)
+- [User Voice suggestions](http://opencart.uservoice.com)
+- [2.0 Atlassian bug tracker](http://opencart.atlassian.net)

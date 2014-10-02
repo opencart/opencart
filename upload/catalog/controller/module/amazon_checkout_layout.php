@@ -33,10 +33,10 @@ class ControllerModuleAmazonCheckoutLayout extends Controller {
 				$data['layout_id'] = $setting['layout_id'];
 				$data['position'] = $setting['position'];
 
-				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/amazon_checkout_layout.tpl')) {
-					return $this->load->view($this->config->get('config_template') . '/template/module/amazon_checkout_layout.tpl', $data);
+				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/amazon_button.tpl')) {
+					return $this->load->view($this->config->get('config_template') . '/template/module/amazon_button.tpl', $data);
 				} else {
-					return $this->load->view('default/template/module/amazon_checkout_layout.tpl', $data);
+					return $this->load->view('default/template/module/amazon_button.tpl', $data);
 				}
 			}
 		}

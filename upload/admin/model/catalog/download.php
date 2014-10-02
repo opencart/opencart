@@ -1,7 +1,7 @@
 <?php
 class ModelCatalogDownload extends Model {
 	public function addDownload($data) {
-		$this->event->trigger('pre_admin_add_download', $data);
+		$this->event->trigger('pre.admin.add.download', $data);
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "download SET filename = '" . $this->db->escape($data['filename']) . "', mask = '" . $this->db->escape($data['mask']) . "', date_added = NOW()");
 
@@ -11,13 +11,13 @@ class ModelCatalogDownload extends Model {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "download_description SET download_id = '" . (int)$download_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
 		}
 
-		$this->event->trigger('admin_add_download', $download_id);
+		$this->event->trigger('post.admin.add.download', $download_id);
 
 		return $download_id;
 	}
 
 	public function editDownload($download_id, $data) {
-		$this->event->trigger('pre_admin_edit_download', $data);
+		$this->event->trigger('pre.admin.edit.download', $data);
 
 		$this->db->query("UPDATE " . DB_PREFIX . "download SET filename = '" . $this->db->escape($data['filename']) . "', mask = '" . $this->db->escape($data['mask']) . "' WHERE download_id = '" . (int)$download_id . "'");
 
@@ -27,16 +27,16 @@ class ModelCatalogDownload extends Model {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "download_description SET download_id = '" . (int)$download_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
 		}
 
-		$this->event->trigger('admin_edit_download');
+		$this->event->trigger('post.admin.edit.download', $download_id);
 	}
 
 	public function deleteDownload($download_id) {
-		$this->event->trigger('pre_admin_delete_download', $download_id);
+		$this->event->trigger('pre.admin.delete.download', $download_id);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "download WHERE download_id = '" . (int)$download_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "download_description WHERE download_id = '" . (int)$download_id . "'");
 
-		$this->event->trigger('admin_delete_download', $download_id);
+		$this->event->trigger('post.admin.delete.download', $download_id);
 	}
 
 	public function getDownload($download_id) {

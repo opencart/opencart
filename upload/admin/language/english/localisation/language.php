@@ -1,9 +1,12 @@
 <?php
 // Heading
-$_['heading_title']     = 'Language';
+$_['heading_title']     = 'Languages';
 
 // Text
 $_['text_success']      = 'Success: You have modified languages!';
+$_['text_list']         = 'Language List';
+$_['text_add']          = 'Add Language';
+$_['text_edit']         = 'Edit Language';
 
 // Column
 $_['column_name']       = 'Language Name';

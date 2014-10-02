@@ -113,10 +113,6 @@ class ControllerPaymentRealex extends Controller {
 			$auto_settle = (int)$this->config->get('realex_auto_settle');
 			$tss = (int)$this->config->get('realex_tss_check');
 
-			if ($this->request->post['ECI'] == 6 && (!isset($this->request->post['CAVV']) || empty($this->request->post['CAVV'])) && (!isset($this->request->post['XID']) || empty($this->request->post['CAVV']))) {
-				$this->request->post['ECI'] = 1;
-			}
-
 			$message = '<strong>' . $this->language->get('text_result') . ':</strong> ' . $this->request->post['RESULT'];
 			$message .= '<br /><strong>' . $this->language->get('text_message') . ':</strong> ' . $this->request->post['MESSAGE'];
 
@@ -137,6 +133,10 @@ class ControllerPaymentRealex extends Controller {
 			}
 
 			if (isset($this->request->post['ECI'])) {
+				if ($this->request->post['ECI'] == 6 && (!isset($this->request->post['CAVV']) || empty($this->request->post['CAVV'])) && (!isset($this->request->post['XID']) || empty($this->request->post['CAVV']))) {
+					$this->request->post['ECI'] = 1;
+				}
+
 				$message .= '<br /><strong>' . $this->language->get('text_eci') . ':</strong> (' . $this->request->post['ECI'] . ') ' . $this->language->get('text_3d_s' . $this->request->post['ECI']);
 			}
 

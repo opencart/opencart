@@ -684,6 +684,9 @@ h2.price {
 .flexslider .slides img {
 	width: inherit;
 }
+.flexslider.carousel .slides img {
+	width: auto;
+}
 .slides {
 	padding: 0;
 	margin:0;

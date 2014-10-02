@@ -5,7 +5,7 @@ class ModelPaymentPPExpress extends Model {
 
 		$arr = array();
 
-		foreach($data as $k=>$v) {
+		foreach ($data as $k=>$v) {
 			$tmp = explode('=', $v);
 			$arr[$tmp[0]] = urldecode($tmp[1]);
 		}
@@ -48,7 +48,7 @@ class ModelPaymentPPExpress extends Model {
 
 		curl_setopt_array($ch, $defaults);
 
-		if(!$result = curl_exec($ch)) {
+		if (!$result = curl_exec($ch)) {
 			$this->log(array('error' => curl_error($ch), 'errno' => curl_errno($ch)), 'cURL failed');
 		}
 
@@ -73,7 +73,7 @@ class ModelPaymentPPExpress extends Model {
 	}
 
 	public function log($data, $title = null) {
-		if($this->config->get('pp_express_debug')) {
+		if ($this->config->get('pp_express_debug')) {
 			$this->log->write('PayPal Express debug (' . $title . '): ' . json_encode($data));
 		}
 	}
@@ -218,7 +218,7 @@ class ModelPaymentPPExpress extends Model {
 		}
 
 		// Totals
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
 		$total_data = array();
 		$total = 0;
@@ -228,7 +228,7 @@ class ModelPaymentPPExpress extends Model {
 		if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
 			$sort_order = array();
 
-			$results = $this->model_setting_extension->getExtensions('total');
+			$results = $this->model_extension_extension->getExtensions('total');
 
 			foreach ($results as $key => $value) {
 				$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
@@ -263,7 +263,7 @@ class ModelPaymentPPExpress extends Model {
 					$data['L_PAYMENTREQUEST_0_AMT' . $i] = $this->currency->format($total_row['value'], false, false, false);
 					$data['L_PAYMENTREQUEST_0_QTY' . $i] = 1;
 
-					$item_total = number_format($item_total + $item_price, 2);
+					$item_total = $item_total + $item_price;
 					$i++;
 				}
 			}
@@ -279,10 +279,10 @@ class ModelPaymentPPExpress extends Model {
 		if ($recurring_products) {
 			$this->language->load('payment/pp_express');
 
-			foreach($recurring_products as $item) {
+			foreach ($recurring_products as $item) {
 				$data['L_BILLINGTYPE' . $z] = 'RecurringPayments';
 
-				if($item['recurring']['trial']) {
+				if ($item['recurring']['trial']) {
 					$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'] . ' ' . $this->currency->getCode();
 					$trial_text =  sprintf($this->language->get('text_trial'), $trial_amt, $item['recurring']['trial_cycle'], $item['recurring']['trial_frequency'], $item['recurring']['trial_duration']);
 				} else {
@@ -318,7 +318,7 @@ class ModelPaymentPPExpress extends Model {
 	public function getTransactionRow($transaction_id) {
 		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "paypal_order_transaction` `pt` LEFT JOIN `" . DB_PREFIX . "paypal_order` `po` ON `pt`.`paypal_order_id` = `po`.`paypal_order_id`  WHERE `pt`.`transaction_id` = '" . $this->db->escape($transaction_id) . "' LIMIT 1");
 
-		if($qry->num_rows > 0) {
+		if ($qry->num_rows > 0) {
 			return $qry->row;
 		} else {
 			return false;

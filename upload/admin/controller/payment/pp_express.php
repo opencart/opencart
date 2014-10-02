@@ -8,7 +8,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/setting');
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 		$this->load->model('payment/pp_express');
 
 		$this->error = array();
@@ -26,7 +26,8 @@ class ControllerPaymentPPExpress extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_image_manager'] = $this->language->get('text_image_manager');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -87,18 +88,18 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_payment'),
-			'href'      => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_payment'),
+			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('payment/pp_express', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('payment/pp_express', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
 		//button actions
@@ -253,10 +254,10 @@ class ControllerPaymentPPExpress extends Controller {
 		} elseif (($logo != '') && file_exists(DIR_IMAGE . $logo)) {
 			$data['thumb'] = $this->model_tool_image->resize($logo, 750, 90);
 		} else {
-			$data['thumb'] = $this->model_tool_image->resize('no_image.jpg', 750, 90);
+			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 750, 90);
 		}
 
-		$data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 750, 90);
+		$data['no_image'] = $this->model_tool_image->resize('no_image.png', 750, 90);
 
 		if (isset($this->request->post['pp_express_geo_zone_id'])) {
 			$data['pp_express_geo_zone_id'] = $this->request->post['pp_express_geo_zone_id'];
@@ -283,7 +284,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['token'] = $this->session->data['token'];
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('payment/pp_express.tpl', $data));
@@ -578,18 +579,18 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_pp_express'),
-			'href'      => $this->url->link('payment/pp_express', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_pp_express'),
+			'href' => $this->url->link('payment/pp_express', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('payment/pp_express/refund', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('payment/pp_express/refund', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
 		//button actions
@@ -624,7 +625,7 @@ class ControllerPaymentPPExpress extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('payment/pp_express_refund.tpl', $data));
@@ -740,8 +741,8 @@ class ControllerPaymentPPExpress extends Controller {
 				$data['text_payment_info'] = $this->language->get('text_payment_info');
 				$data['text_capture_status'] = $this->language->get('text_capture_status');
 				$data['text_amount_auth'] = $this->language->get('text_amount_auth');
-				$data['btn_void'] = $this->language->get('btn_void');
-				$data['btn_capture'] = $this->language->get('btn_capture');
+				$data['button_void'] = $this->language->get('button_void');
+				$data['button_capture'] = $this->language->get('button_capture');
 				$data['text_amount_captured'] = $this->language->get('text_amount_captured');
 				$data['text_amount_refunded'] = $this->language->get('text_amount_refunded');
 				$data['text_capture_amount'] = $this->language->get('text_capture_amount');
@@ -797,8 +798,8 @@ class ControllerPaymentPPExpress extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		$data['btn_search'] = $this->language->get('btn_search');
-		$data['btn_edit_search'] = $this->language->get('btn_edit_search');
+		$data['button_search'] = $this->language->get('button_search');
+		$data['button_edit'] = $this->language->get('button_edit');
 		$data['entry_date'] = $this->language->get('entry_date');
 		$data['entry_date_start'] = $this->language->get('entry_date_start');
 		$data['entry_date_end'] = $this->language->get('entry_date_end');
@@ -893,7 +894,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['view_link'] = $this->url->link('payment/pp_express/viewTransaction', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('payment/pp_express_search.tpl', $data));
@@ -1108,7 +1109,7 @@ class ControllerPaymentPPExpress extends Controller {
 		);
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('payment/pp_express_view.tpl', $data));
@@ -1148,7 +1149,7 @@ class ControllerPaymentPPExpress extends Controller {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$recurring['order_recurring_id'] . "', `date_added` = NOW(), `type` = '5'");
 				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 4 WHERE `order_recurring_id` = '" . (int)$recurring['order_recurring_id'] . "' LIMIT 1");
 
-				$this->session->data['success'] = $this->language->get('success_cancelled');
+				$this->session->data['success'] = $this->language->get('text_cancelled');
 			} else {
 				$this->session->data['error'] = sprintf($this->language->get('error_not_cancelled'), $result['L_LONGMESSAGE0']);
 			}

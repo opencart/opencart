@@ -1,7 +1,7 @@
 <?php
 class ModelCatalogInformation extends Model {
 	public function addInformation($data) {
-		$this->event->trigger('pre_admin_add_information', $data);
+		$this->event->trigger('pre.admin.add.information', $data);
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "information SET sort_order = '" . (int)$data['sort_order'] . "', bottom = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', status = '" . (int)$data['status'] . "'");
 
@@ -18,10 +18,8 @@ class ModelCatalogInformation extends Model {
 		}
 
 		if (isset($data['information_layout'])) {
-			foreach ($data['information_layout'] as $store_id => $layout) {
-				if ($layout) {
-					$this->db->query("INSERT INTO " . DB_PREFIX . "information_to_layout SET information_id = '" . (int)$information_id . "', store_id = '" . (int)$store_id . "', layout_id = '" . (int)$layout['layout_id'] . "'");
-				}
+			foreach ($data['information_layout'] as $store_id => $layout_id) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "information_to_layout SET information_id = '" . (int)$information_id . "', store_id = '" . (int)$store_id . "', layout_id = '" . (int)$layout_id . "'");
 			}
 		}
 
@@ -31,13 +29,13 @@ class ModelCatalogInformation extends Model {
 
 		$this->cache->delete('information');
 
-		$this->event->trigger('admin_add_information', $information_id);
+		$this->event->trigger('post.admin.add.information', $information_id);
 
 		return $information_id;
 	}
 
 	public function editInformation($information_id, $data) {
-		$this->event->trigger('pre_admin_edit_information', $data);
+		$this->event->trigger('pre.admin.edit.information', $data);
 
 		$this->db->query("UPDATE " . DB_PREFIX . "information SET sort_order = '" . (int)$data['sort_order'] . "', bottom = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "', status = '" . (int)$data['status'] . "' WHERE information_id = '" . (int)$information_id . "'");
 
@@ -58,10 +56,8 @@ class ModelCatalogInformation extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information_to_layout WHERE information_id = '" . (int)$information_id . "'");
 
 		if (isset($data['information_layout'])) {
-			foreach ($data['information_layout'] as $store_id => $layout) {
-				if ($layout['layout_id']) {
-					$this->db->query("INSERT INTO " . DB_PREFIX . "information_to_layout SET information_id = '" . (int)$information_id . "', store_id = '" . (int)$store_id . "', layout_id = '" . (int)$layout['layout_id'] . "'");
-				}
+			foreach ($data['information_layout'] as $store_id => $layout_id) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "information_to_layout SET information_id = '" . (int)$information_id . "', store_id = '" . (int)$store_id . "', layout_id = '" . (int)$layout_id . "'");
 			}
 		}
 
@@ -73,11 +69,11 @@ class ModelCatalogInformation extends Model {
 
 		$this->cache->delete('information');
 
-		$this->event->trigger('admin_edit_information');
+		$this->event->trigger('post.admin.edit.information', $information_id);
 	}
 
 	public function deleteInformation($information_id) {
-		$this->event->trigger('pre_admin_delete_information', $information_id);
+		$this->event->trigger('pre.admin.delete.information', $information_id);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information WHERE information_id = '" . (int)$information_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "information_description WHERE information_id = '" . (int)$information_id . "'");
@@ -87,7 +83,7 @@ class ModelCatalogInformation extends Model {
 
 		$this->cache->delete('information');
 
-		$this->event->trigger('admin_delete_information', $information_id);
+		$this->event->trigger('post.admin.delete.information', $information_id);
 	}
 
 	public function getInformation($information_id) {

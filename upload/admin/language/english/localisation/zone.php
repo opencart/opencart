@@ -4,6 +4,9 @@ $_['heading_title']          = 'Zones';
 
 // Text
 $_['text_success']           = 'Success: You have modified zones!';
+$_['text_list']              = 'Zone List';
+$_['text_add']               = 'Add Zone';
+$_['text_edit']              = 'Edit Zone';
 
 // Column
 $_['column_name']            = 'Zone Name';

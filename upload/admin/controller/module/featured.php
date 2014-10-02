@@ -19,22 +19,16 @@ class ControllerModuleFeatured extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_content_top'] = $this->language->get('text_content_top');
-		$data['text_content_bottom'] = $this->language->get('text_content_bottom');
-		$data['text_column_left'] = $this->language->get('text_column_left');
-		$data['text_column_right'] = $this->language->get('text_column_right');
-
+		
 		$data['entry_product'] = $this->language->get('entry_product');
 		$data['entry_limit'] = $this->language->get('entry_limit');
 		$data['entry_image'] = $this->language->get('entry_image');
 		$data['entry_width'] = $this->language->get('entry_width');
 		$data['entry_height'] = $this->language->get('entry_height');
-		$data['entry_layout'] = $this->language->get('entry_layout');
-		$data['entry_position'] = $this->language->get('entry_position');
 		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
 		$data['help_product'] = $this->language->get('help_product');
 
@@ -104,21 +98,34 @@ class ControllerModuleFeatured extends Controller {
 				);
 			}
 		}
-
-		$data['modules'] = array();
-
-		if (isset($this->request->post['featured_module'])) {
-			$data['modules'] = $this->request->post['featured_module'];
-		} elseif ($this->config->get('featured_module')) {
-			$data['modules'] = $this->config->get('featured_module');
+		
+		if (isset($this->request->post['featured_status'])) {
+			$data['featured_status'] = $this->request->post['featured_status'];
+		} else {
+			$data['featured_status'] = $this->config->get('featured_status');
 		}
-
-		$this->load->model('design/layout');
-
-		$data['layouts'] = $this->model_design_layout->getLayouts();
-
+				
+		if (isset($this->request->post['featured_module'])) {
+			$modules = $this->request->post['featured_module'];
+		} elseif ($this->config->has('featured_module')) {
+			$modules = $this->config->get('featured_module');
+		} else {
+			$modules = array();
+		}
+		
+		$data['featured_modules'] = array();
+		
+		foreach ($modules as $key => $module) {
+			$data['featured_modules'][] = array(
+				'key'    => $key,
+				'limit'  => $module['limit'],
+				'width'  => $module['width'],
+				'height' => $module['height']
+			);
+		}
+				
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('module/featured.tpl', $data));
@@ -131,7 +138,7 @@ class ControllerModuleFeatured extends Controller {
 
 		if (isset($this->request->post['featured_module'])) {
 			foreach ($this->request->post['featured_module'] as $key => $value) {
-				if (!$value['image_width'] || !$value['image_height']) {
+				if (!$value['width'] || !$value['height']) {
 					$this->error['image'][$key] = $this->language->get('error_image');
 				}
 			}

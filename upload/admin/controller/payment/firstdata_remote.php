@@ -18,7 +18,8 @@ class ControllerPaymentFirstdataRemote extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_yes'] = $this->language->get('text_yes');
@@ -307,7 +308,7 @@ class ControllerPaymentFirstdataRemote extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('payment/firstdata_remote.tpl', $data));
@@ -378,16 +379,6 @@ class ControllerPaymentFirstdataRemote extends Controller {
 				$this->model_payment_firstdata_remote->updateVoidStatus($firstdata_order['firstdata_remote_order_id'], 1);
 
 				$json['msg'] = $this->language->get('text_void_ok');
-
-				$this->load->model('sale/order');
-
-				$history = array();
-				$history['order_status_id'] = $this->config->get('firstdata_remote_order_status_void_id');
-				$history['comment'] = '';
-				$history['notify'] = '';
-
-				$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $history);
-
 				$json['data'] = array();
 				$json['data']['column_date_added'] = date('Y-m-d H:i:s');
 				$json['error'] = false;
@@ -424,16 +415,6 @@ class ControllerPaymentFirstdataRemote extends Controller {
 				$this->model_payment_firstdata_remote->updateCaptureStatus($firstdata_order['firstdata_remote_order_id'], 1);
 				$capture_status = 1;
 				$json['msg'] = $this->language->get('text_capture_ok_order');
-
-				$this->load->model('sale/order');
-
-				$history = array();
-				$history['order_status_id'] = $this->config->get('firstdata_remote_order_status_success_settled_id');
-				$history['comment'] = '';
-				$history['notify'] = '';
-
-				$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $history);
-
 				$json['data'] = array();
 				$json['data']['column_date_added'] = date("Y-m-d H:i:s");
 				$json['data']['amount'] = (float)$firstdata_order['total'];
@@ -479,15 +460,6 @@ class ControllerPaymentFirstdataRemote extends Controller {
 					$this->model_payment_firstdata_remote->updateRefundStatus($firstdata_order['firstdata_remote_order_id'], 1);
 					$refund_status = 1;
 					$json['msg'] = $this->language->get('text_refund_ok_order');
-
-					$this->load->model('sale/order');
-
-					$history = array();
-					$history['order_status_id'] = $this->config->get('firstdata_remote_order_status_refunded_id');
-					$history['comment'] = '';
-					$history['notify'] = '';
-
-					$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $history);
 				} else {
 					$refund_status = 0;
 					$json['msg'] = $this->language->get('text_refund_ok');

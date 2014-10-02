@@ -36,43 +36,25 @@ class ControllerCommonColumnRight extends Controller {
 			$layout_id = $this->config->get('config_layout_id');
 		}
 
-		$module_data = array();
-
-		$this->load->model('setting/extension');
-
-		$extensions = $this->model_setting_extension->getExtensions('module');
-
-		foreach ($extensions as $extension) {
-			$modules = $this->config->get($extension['code'] . '_module');
-
-			if ($modules) {
-				foreach ($modules as $module) {
-					if ($module['layout_id'] == $layout_id && $module['position'] == 'column_right' && $module['status']) {
-						$module_data[] = array(
-							'code'       => $extension['code'],
-							'setting'    => $module,
-							'sort_order' => $module['sort_order']
-						);
-					}
-				}
-			}
-		}
-
-		$sort_order = array();
-
-		foreach ($module_data as $key => $value) {
-			$sort_order[$key] = $value['sort_order'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $module_data);
-
 		$data['modules'] = array();
+		
+		$modules = $this->model_design_layout->getLayoutModules($layout_id, 'column_right');
 
-		foreach ($module_data as $module) {
-			$module = $this->load->controller('module/' . $module['code'], $module['setting']);
-
-			if ($module) {
-				$data['modules'][] = $module;
+		foreach ($modules as $module) {
+			$part = explode('.', $module['code']);
+			
+			if (isset($part[0])) {
+				$code = $part[0];
+			}
+			
+			if ($code && $this->config->get($code . '_status')) { 
+				$setting = $this->config->get($code . '_module');
+				
+				if (isset($part[1]) && isset($setting[$part[1]])) {
+					$data['modules'][] = $this->load->controller('module/' . $code, $setting[$part[1]]);
+				} else {
+					$data['modules'][] = $this->load->controller('module/' . $code);
+				}			
 			}
 		}
 

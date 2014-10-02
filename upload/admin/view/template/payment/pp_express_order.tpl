@@ -8,7 +8,7 @@
     <td><?php echo $text_amount_auth; ?></td>
     <td><?php echo $paypal_order['total']; ?>
       <?php if ($paypal_order['capture_status'] != 'Complete') { ?>
-      &nbsp;&nbsp; <a onclick="doVoid();" class="button paypal_capture btn btn-primary" id="btn_void"><?php echo $btn_void; ?></a> <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+      &nbsp;&nbsp; <a onclick="doVoid();" class="button paypal_capture btn btn-primary" id="button-void"><?php echo $button_void; ?></a> <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
       <?php } ?></td>
   </tr>
   <tr>
@@ -27,7 +27,7 @@
         <?php echo $text_complete_capture; ?></p>
       <p>
         <input type="text" size="10" id="paypal_capture_amount" value="<?php echo $paypal_order['remaining']; ?>"/>
-        <a class="btn btn-primary" onclick="capture();" id="btn_capture"><?php echo $btn_capture; ?></a> <span class="btn btn-primary" id="img_loading_capture" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span> </p></td>
+        <a class="btn btn-primary" onclick="capture();" id="button_capture"><?php echo $button_capture; ?></a> <span class="btn btn-primary" id="img_loading_capture" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span> </p></td>
   </tr>
   <?php } ?>
   <tr>
@@ -90,7 +90,7 @@
                 data: {'amount':amt, 'order_id':<?php echo $order_id; ?>, 'complete': captureComplete},
                 url: 'index.php?route=payment/pp_express/capture&token=<?php echo $token; ?>',
                 beforeSend: function() {
-                    $('#btn_capture').hide();
+                    $('#button_capture').hide();
                     $('#img_loading_capture').show();
                 },
                 success: function(data) {
@@ -135,7 +135,7 @@
                     }
                     if (data.error == true) {
                         alert(data.msg);
-                        
+
                         if (data.failed_transaction) {
                             html = '';
                             html += '<tr>';
@@ -147,12 +147,12 @@
                             html += '<td class="text-left">' + data.failed_transaction.date_added + '</td>';
                             html += '<td class="text-left"><a onclick="resendTransaction(this); return false;" href="<?php echo $resend_link ?>&paypal_order_transaction_id=' + data.failed_transaction.paypal_order_transaction_id + '"><?php echo $text_resend ?></a></td>';
                             html += '/<tr>';
-                            
+
                             $('#paypal_transactions').append(html);
                         }
                     }
 
-                    $('#btn_capture').show();
+                    $('#button_capture').show();
                     $('#img_loading_capture').hide();
                 }
             });
@@ -167,7 +167,7 @@
                 data: {'order_id':<?php echo $order_id; ?> },
                 url: 'index.php?route=payment/pp_express/void&token=<?php echo $token; ?>',
                 beforeSend: function() {
-                    $('#btn_void').hide();
+                    $('#button-void').hide();
                     $('#img_loading_void').show();
                 },
                 success: function(data) {
@@ -190,34 +190,34 @@
                     if (data.error == true) {
                         alert(data.msg);
                     }
-                    $('#btn_void').show();
+                    $('#button-void').show();
                     $('#img_loading_void').hide();
                 }
             });
         }
     }
-    
+
     function resendTransaction(element) {
         $.ajax({
             type:'GET',
             dataType: 'json',
             url: $(element).attr('href'),
-            
+
             beforeSend: function() {
                 $(element).hide();
                 $(element).after('<span class="btn btn-primary loading"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>');
             },
-                    
+
             success: function(data) {
                 $(element).show();
                 $('.loading').remove();
-                
+
                 if (data.error) {
                     alert(data.error);
                 }
-                
+
                 if (data.success) {
-                    location.reload(); 
+                    location.reload();
                 }
             }
         });

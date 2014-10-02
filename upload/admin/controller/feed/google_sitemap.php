@@ -18,7 +18,8 @@ class ControllerFeedGoogleSitemap extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 
@@ -36,6 +37,18 @@ class ControllerFeedGoogleSitemap extends Controller {
 			$data['error_warning'] = '';
 		}
 
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('feed/google_sitemap', 'token=' . $this->session->data['token'], 'SSL')
+		);
+		
 		$data['action'] = $this->url->link('feed/google_sitemap', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['cancel'] = $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL');
@@ -49,7 +62,7 @@ class ControllerFeedGoogleSitemap extends Controller {
 		$data['data_feed'] = HTTP_CATALOG . 'index.php?route=feed/google_sitemap';
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('feed/google_sitemap.tpl', $data));

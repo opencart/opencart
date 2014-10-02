@@ -140,6 +140,7 @@ class ControllerPaymentRealexRemote extends Controller {
 
 					$this->response->addHeader('Content-Type: application/json');
 					$this->response->setOutput(json_encode($json));
+					$this->response->output();
 					die();
 				}
 
@@ -164,6 +165,7 @@ class ControllerPaymentRealexRemote extends Controller {
 
 						$this->response->addHeader('Content-Type: application/json');
 						$this->response->setOutput(json_encode($json));
+						$this->response->output();
 						die();
 					} else {
 						$eci_ref = 2;
@@ -186,6 +188,7 @@ class ControllerPaymentRealexRemote extends Controller {
 
 						$this->response->addHeader('Content-Type: application/json');
 						$this->response->setOutput(json_encode($json));
+						$this->response->output();
 						die();
 					} else {
 						$eci_ref = 3;

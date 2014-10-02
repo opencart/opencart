@@ -38,7 +38,6 @@ class ControllerSaleOrder extends Controller {
 				curl_setopt($curl, CURLOPT_HEADER, false);
 				curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 				curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-				curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 				curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -91,7 +90,6 @@ class ControllerSaleOrder extends Controller {
 				curl_setopt($curl, CURLOPT_HEADER, false);
 				curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 				curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-				curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 				curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -144,7 +142,6 @@ class ControllerSaleOrder extends Controller {
 				curl_setopt($curl, CURLOPT_HEADER, false);
 				curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 				curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-				curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 				curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -179,7 +176,6 @@ class ControllerSaleOrder extends Controller {
 			curl_setopt($curl, CURLOPT_HEADER, false);
 			curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 			curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 			curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -396,7 +392,8 @@ class ControllerSaleOrder extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		$data['text_missing'] = $this->language->get('text_missing');
@@ -549,7 +546,7 @@ class ControllerSaleOrder extends Controller {
 		$data['order'] = $order;
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('sale/order_list.tpl', $data));
@@ -559,7 +556,8 @@ class ControllerSaleOrder extends Controller {
 		$this->load->model('sale/customer');
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_form'] = !isset($this->request->get['order_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_default'] = $this->language->get('text_default');
 		$data['text_select'] = $this->language->get('text_select');
@@ -782,7 +780,6 @@ class ControllerSaleOrder extends Controller {
 					curl_setopt($curl, CURLOPT_HEADER, false);
 					curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 					curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-					curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 					curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 					curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 					curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -814,7 +811,6 @@ class ControllerSaleOrder extends Controller {
 					curl_setopt($curl, CURLOPT_HEADER, false);
 					curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 					curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-					curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 					curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 					curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 					curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -962,7 +958,7 @@ class ControllerSaleOrder extends Controller {
 		$data['voucher_themes'] = $this->model_sale_voucher_theme->getVoucherThemes();
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('sale/order_form.tpl', $data));
@@ -1394,7 +1390,6 @@ class ControllerSaleOrder extends Controller {
 					curl_setopt($curl, CURLOPT_HEADER, false);
 					curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 					curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-					curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 					curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 					curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 					curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -1632,7 +1627,7 @@ class ControllerSaleOrder extends Controller {
 			$data['payment_action'] = $this->load->controller('payment/' . $order_info['payment_code'] . '/orderAction', '');
 
 			$data['header'] = $this->load->controller('common/header');
-			$data['menu'] = $this->load->controller('common/menu');
+			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['footer'] = $this->load->controller('common/footer');
 
 			$this->response->setOutput($this->load->view('sale/order_info.tpl', $data));
@@ -1658,7 +1653,7 @@ class ControllerSaleOrder extends Controller {
 			);
 
 			$data['header'] = $this->load->controller('common/header');
-			$data['menu'] = $this->load->controller('common/menu');
+			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['footer'] = $this->load->controller('common/footer');
 
 			$this->response->setOutput($this->load->view('error/not_found.tpl', $data));
@@ -2367,7 +2362,6 @@ class ControllerSaleOrder extends Controller {
 			curl_setopt($curl, CURLOPT_HEADER, false);
 			curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 			curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 			curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);

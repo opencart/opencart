@@ -26,6 +26,10 @@
 /upload/system/download/*
 !/upload/system/download/index.html
 
+# Upload Files
+/upload/system/upload/*
+!/upload/system/upload/index.html
+
 !/upload/data/index.html
 
 # Flags 

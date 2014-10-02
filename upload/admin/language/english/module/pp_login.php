@@ -4,28 +4,22 @@ $_['heading_title']        = 'Log In with PayPal';
 
 //Text
 $_['text_module']          = 'Modules';
-$_['text_success']         = 'Success: You have modified module Log In with PayPal!';
-$_['text_content_top']     = 'Content Top';
-$_['text_content_bottom']  = 'Content Bottom';
-$_['text_column_left']     = 'Column Left';
-$_['text_column_right']    = 'Column Right';
-$_['text_grey_button']     = 'Grey';
-$_['text_blue_button']     = 'Blue (Recommended)';
+$_['text_success']         = 'Success: You have modified Log In with PayPal module!';
+$_['text_edit']            = 'Edit Log In with PayPal Module';
+$_['text_button_grey']     = 'Grey';
+$_['text_button_blue']     = 'Blue (Recommended)';
 
 //Entry
 $_['entry_client_id']      = 'Client ID';
 $_['entry_secret']         = 'Secret';
 $_['entry_sandbox']        = 'Sandbox Mode';
-$_['entry_logging']        = 'Debug Logging';
+$_['entry_debug']          = 'Debug Logging';
 $_['entry_customer_group'] = 'Customer Group';
 $_['entry_button']         = 'Button Colour';
 $_['entry_seamless']       = 'Allow "Seamless Checkout"';
 $_['entry_locale']         = 'Locale';
 $_['entry_return_url']     = 'Return URL';
-$_['entry_layout']         = 'Layout';
-$_['entry_position']       = 'Position';
 $_['entry_status']         = 'Status';
-$_['entry_sort_order']     = 'Sort Order';
 
 //Help
 $_['help_sandbox']         = 'Use sandbox (testing) environment?';
@@ -36,6 +30,6 @@ $_['help_locale']          = 'This is the PayPal locale setting for your store l
 $_['help_return_url']      = 'This needs to be added in the PayPal app configuration under app redirect URLs.';
 
 //Error
-$_['error_permission']     = 'Warning: You do not have permission to modify module Log In with PayPal!';
+$_['error_permission']     = 'Warning: You do not have permission to modify Log In with PayPal module!';
 $_['error_client_id']      = 'Client ID required!';
 $_['error_secret']         = 'Secret required!';

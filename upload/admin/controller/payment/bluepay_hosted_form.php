@@ -19,17 +19,18 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_all_zones'] = $this->language->get('text_all_zones');
 		$data['text_sim'] = $this->language->get('text_sim');
 		$data['text_test'] = $this->language->get('text_test');
 		$data['text_live'] = $this->language->get('text_live');
-		$data['text_payment'] = $this->language->get('text_payment');
+		$data['text_sale'] = $this->language->get('text_sale');
 		$data['text_authenticate'] = $this->language->get('text_authenticate');
-		$data['text_amex'] = $this->language->get('text_AMEX');
-		$data['text_DISCOVER'] = $this->language->get('text_DISCOVER');
+		$data['text_amex'] = $this->language->get('text_amex');
+		$data['text_discover'] = $this->language->get('text_discover');
 
 		$data['entry_account_name'] = $this->language->get('entry_account_name');
 		$data['entry_account_id'] = $this->language->get('entry_account_id');
@@ -186,7 +187,7 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('payment/bluepay_hosted_form.tpl', $data));
@@ -233,9 +234,9 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 				$data['text_column_amount'] = $this->language->get('text_column_amount');
 				$data['text_column_type'] = $this->language->get('text_column_type');
 				$data['text_column_date_added'] = $this->language->get('text_column_date_added');
-				$data['btn_release'] = $this->language->get('btn_release');
-				$data['btn_rebate'] = $this->language->get('btn_rebate');
-				$data['btn_void'] = $this->language->get('btn_void');
+				$data['button_release'] = $this->language->get('button_release');
+				$data['button_rebate'] = $this->language->get('button_rebate');
+				$data['button_void'] = $this->language->get('button_void');
 				$data['text_confirm_void'] = $this->language->get('text_confirm_void');
 				$data['text_confirm_release'] = $this->language->get('text_confirm_release');
 				$data['text_confirm_rebate'] = $this->language->get('text_confirm_rebate');
@@ -266,16 +267,6 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 				$this->model_payment_bluepay_hosted_form->updateVoidStatus($bluepay_hosted_form_order['bluepay_hosted_form_order_id'], 1);
 
 				$json['msg'] = $this->language->get('text_void_ok');
-
-				$this->load->model('sale/order');
-
-				$history = array();
-				$history['order_status_id'] = $this->config->get('bluepay_hosted_form_order_status_void_id');
-				$history['comment'] = '';
-				$history['notify'] = '';
-
-				$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $history);
-
 				$json['data'] = array();
 				$json['data']['column_date_added'] = date("Y-m-d H:i:s");
 				$json['error'] = false;
@@ -314,15 +305,6 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 					$this->model_payment_bluepay_hosted_form->updateReleaseStatus($bluepay_hosted_form_order['bluepay_hosted_form_order_id'], 1);
 					$release_status = 1;
 					$json['msg'] = $this->language->get('text_release_ok_order');
-
-					$this->load->model('sale/order');
-
-					$history = array();
-					$history['order_status_id'] = $this->config->get('bluepay_hosted_form_order_status_id');
-					$history['comment'] = '';
-					$history['notify'] = '';
-
-					$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $history);
 				} else {
 					$release_status = 0;
 					$json['msg'] = $this->language->get('text_release_ok');
@@ -370,15 +352,6 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 					$this->model_payment_bluepay_hosted_form->updateRebateStatus($bluepay_hosted_form_order['bluepay_hosted_form_order_id'], 1);
 					$rebate_status = 1;
 					$json['msg'] = $this->language->get('text_rebate_ok_order');
-
-					$this->load->model('sale/order');
-
-					$history = array();
-					$history['order_status_id'] = $this->config->get('bluepay_hosted_form_order_status_rebated_id');
-					$history['comment'] = '';
-					$history['notify'] = '';
-
-					$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $history);
 				} else {
 					$rebate_status = 0;
 					$json['msg'] = $this->language->get('text_rebate_ok');

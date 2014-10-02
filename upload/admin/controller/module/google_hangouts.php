@@ -18,26 +18,18 @@ class ControllerModuleGoogleHangouts extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_content_top'] = $this->language->get('text_content_top');
-		$data['text_content_bottom'] = $this->language->get('text_content_bottom');
-		$data['text_column_left'] = $this->language->get('text_column_left');
-		$data['text_column_right'] = $this->language->get('text_column_right');
-
+		
 		$data['entry_code'] = $this->language->get('entry_code');
-		$data['entry_layout'] = $this->language->get('entry_layout');
-		$data['entry_position'] = $this->language->get('entry_position');
 		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
 		$data['help_code'] = $this->language->get('help_code');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_module_add'] = $this->language->get('button_module_add');
-		$data['button_remove'] = $this->language->get('button_remove');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -77,21 +69,15 @@ class ControllerModuleGoogleHangouts extends Controller {
 		} else {
 			$data['google_hangouts_code'] = $this->config->get('google_hangouts_code');
 		}
-
-		$data['modules'] = array();
-
-		if (isset($this->request->post['google_hangouts_module'])) {
-			$data['modules'] = $this->request->post['google_hangouts_module'];
-		} elseif ($this->config->get('google_hangouts_module')) {
-			$data['modules'] = $this->config->get('google_hangouts_module');
+		
+		if (isset($this->request->post['google_hangouts_status'])) {
+			$data['google_hangouts_status'] = $this->request->post['google_hangouts_status'];
+		} else {
+			$data['google_hangouts_status'] = $this->config->get('google_hangouts_status');
 		}
-
-		$this->load->model('design/layout');
-
-		$data['layouts'] = $this->model_design_layout->getLayouts();
-
+		
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('module/google_hangouts.tpl', $data));

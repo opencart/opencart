@@ -77,7 +77,7 @@
                 </td>
               </tr>
               <tr>
-                <td><?php echo $text_upload; ?></td>
+                <td><?php echo $text_file_upload; ?></td>
                 <td><?php if ($file_uploads) { ?>
                   <?php echo $text_on; ?>
                   <?php } else { ?>
@@ -124,15 +124,15 @@
             </thead>
             <tbody>
               <tr>
-                <td><?php echo $text_mysql; ?></td>
-                <td><?php if ($mysql) { ?>
+                <td><?php echo $text_db; ?></td>
+                <td><?php if ($db) { ?>
                   <?php echo $text_on; ?>
                   <?php } else { ?>
                   <?php echo $text_off; ?>
                   <?php } ?>
                 </td>
                 <td><?php echo $text_on; ?></td>
-                <td class="text-center"><?php if ($mysql) { ?>
+                <td class="text-center"><?php if ($db) { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
@@ -188,7 +188,7 @@
                 </td>
               </tr>
               <tr>
-                <td><?php echo $text_zip; ?></td>
+                <td><?php echo $text_zlib; ?></td>
                 <td><?php if ($zlib) { ?>
                   <?php echo $text_on; ?>
                   <?php } else { ?>
@@ -197,6 +197,22 @@
                 </td>
                 <td><?php echo $text_on; ?></td>
                 <td class="text-center"><?php if ($zlib) { ?>
+                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <?php } ?>
+                </td>
+              </tr>
+              <tr>
+                <td><?php echo $text_zip; ?></td>
+                <td><?php if ($zip) { ?>
+                  <?php echo $text_on; ?>
+                  <?php } else { ?>
+                  <?php echo $text_off; ?>
+                  <?php } ?>
+                </td>
+                <td><?php echo $text_on; ?></td>
+                <td class="text-center"><?php if ($zip) { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
@@ -298,6 +314,15 @@
                   <?php } ?>
                 </td>
               </tr>
+              <tr>
+                <td><?php echo $upload . '/'; ?></td>
+                <td><?php if (is_writable($upload)) { ?>
+                  <span class="text-success"><?php echo $text_writable; ?></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><?php echo $text_unwritable; ?></span>
+                  <?php } ?>
+                </td>
+              </tr>              
               <tr>
                 <td><?php echo $image . '/'; ?></td>
                 <td><?php if (is_writable($image)) { ?>

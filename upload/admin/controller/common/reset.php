@@ -3,7 +3,7 @@ class ControllerCommonReset extends Controller {
 	private $error = array();
 
 	public function index() {
-		if ($this->user->isLogged()) {
+		if ($this->user->isLogged() && isset($this->request->get['token']) && ($this->request->get['token'] == $this->session->data['token'])) {
 			$this->response->redirect($this->url->link('common/dashboard', '', 'SSL'));
 		}
 
@@ -24,6 +24,8 @@ class ControllerCommonReset extends Controller {
 		if ($user_info) {
 			$this->load->language('common/reset');
 
+			$this->document->setTitle($this->language->get('heading_title'));
+
 			if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 				$this->model_user_user->editPassword($user_info['user_id'], $this->request->post['password']);
 
@@ -41,6 +43,18 @@ class ControllerCommonReset extends Controller {
 
 			$data['button_save'] = $this->language->get('button_save');
 			$data['button_cancel'] = $this->language->get('button_cancel');
+
+			$data['breadcrumbs'] = array();
+
+			$data['breadcrumbs'][] = array(
+				'text' => $this->language->get('text_home'),
+				'href' => $this->url->link('common/dashboard', '', 'SSL')
+			);
+
+			$data['breadcrumbs'][] = array(
+				'text' => $this->language->get('heading_title'),
+				'href' => $this->url->link('common/reset', '', 'SSL')
+			);
 
 			if (isset($this->error['password'])) {
 				$data['error_password'] = $this->error['password'];
@@ -82,7 +96,7 @@ class ControllerCommonReset extends Controller {
 			return new Action('common/login');
 		}
 	}
-
+	
 	protected function validate() {
 		if ((utf8_strlen($this->request->post['password']) < 4) || (utf8_strlen($this->request->post['password']) > 20)) {
 			$this->error['password'] = $this->language->get('error_password');

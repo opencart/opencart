@@ -55,8 +55,8 @@ class ControllerCommonHeader extends Controller {
 			$this->load->model('sale/order');
 
 			// Processing Orders
-			$data['order_status_total'] = $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $this->config->get('config_process_status'))));
-			$data['order_status'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&filter_order_status=' . implode(',', $this->config->get('config_process_status')), 'SSL');
+			$data['order_status_total'] = $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $this->config->get('config_processing_status'))));
+			$data['order_status'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&filter_order_status=' . implode(',', $this->config->get('config_processing_status')), 'SSL');
 
 			// Complete Orders
 			$data['complete_status_total'] = $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $this->config->get('config_complete_status'))));
@@ -72,9 +72,9 @@ class ControllerCommonHeader extends Controller {
 			$data['return'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'], 'SSL');
 
 			// Customers
-			$this->load->model('report/dashboard');
+			$this->load->model('report/customer');
 
-			$data['online_total'] = $this->model_report_dashboard->getTotalCustomersOnline();
+			$data['online_total'] = $this->model_report_customer->getTotalCustomersOnline();
 
 			$data['online'] = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'], 'SSL');
 

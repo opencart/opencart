@@ -4,6 +4,9 @@ $_['heading_title']          = 'Information';
 
 // Text
 $_['text_success']           = 'Success: You have modified information!';
+$_['text_list']              = 'Information List';
+$_['text_add']               = 'Add Information';
+$_['text_edit']              = 'Edit Information';
 $_['text_default']           = 'Default';
 
 // Column

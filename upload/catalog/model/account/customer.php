@@ -80,27 +80,29 @@ class ModelAccountCustomer extends Model {
 	}
 
 	public function editCustomer($data) {
-		$this->event->trigger('pre_customer_edit', $data);
+		$this->event->trigger('pre.customer.edit', $data);
 
-		$this->db->query("UPDATE " . DB_PREFIX . "customer SET firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? serialize($data['custom_field']) : '') . "' WHERE customer_id = '" . (int)$this->customer->getId() . "'");
+		$customer_id = $this->customer->getId();
 
-		$this->event->trigger('customer_edit');
+		$this->db->query("UPDATE " . DB_PREFIX . "customer SET firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? serialize($data['custom_field']) : '') . "' WHERE customer_id = '" . (int)$customer_id . "'");
+
+		$this->event->trigger('post.customer.edit', $customer_id);
 	}
 
 	public function editPassword($email, $password) {
-		$this->event->trigger('pre_customer_edit_password');
+		$this->event->trigger('pre.customer.edit.password');
 
 		$this->db->query("UPDATE " . DB_PREFIX . "customer SET salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($password)))) . "' WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 
-		$this->event->trigger('customer_edit_password');
+		$this->event->trigger('post.customer.edit.password');
 	}
 
 	public function editNewsletter($newsletter) {
-		$this->event->trigger('pre_customer_edit_newsletter');
+		$this->event->trigger('pre.customer.edit.newsletter');
 
 		$this->db->query("UPDATE " . DB_PREFIX . "customer SET newsletter = '" . (int)$newsletter . "' WHERE customer_id = '" . (int)$this->customer->getId() . "'");
 
-		$this->event->trigger('customer_edit_newsletter');
+		$this->event->trigger('post.customer.edit.newsletter');
 	}
 
 	public function getCustomer($customer_id) {

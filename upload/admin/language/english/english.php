@@ -25,7 +25,7 @@ $_['text_pagination']               = 'Showing %d to %d of %d (%d Pages)';
 $_['text_loading']                  = 'Loading...';
 $_['text_no_results']               = 'No results!';
 $_['text_confirm']                  = 'Are you sure?';
-$_['text_home']                     = '<i class="fa fa-home fa-lg"></i>';
+$_['text_home']                     = 'Home';
 $_['text_confirm']                  = 'Delete/Uninstall cannot be undone! Are you sure you want to do this?';
 
 // Button
@@ -62,6 +62,7 @@ $_['button_product_add']            = 'Add Product';
 $_['button_filter_add']             = 'Add Filter';
 $_['button_option_add']             = 'Add Option';
 $_['button_option_value_add']       = 'Add Option Value';
+$_['button_recurring_add']          = 'Add Recurring';
 $_['button_discount_add']           = 'Add Discount';
 $_['button_special_add']            = 'Add Special';
 $_['button_image_add']              = 'Add Image';
@@ -95,6 +96,7 @@ $_['button_payment']                = 'Apply Payment Method';
 $_['button_coupon']                 = 'Apply Coupon';
 $_['button_voucher']                = 'Apply Voucher';
 $_['button_reward']                 = 'Apply Points';
+
 
 // Tab
 $_['tab_address']                   = 'Address';

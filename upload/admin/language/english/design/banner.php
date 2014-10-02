@@ -4,6 +4,9 @@ $_['heading_title']      = 'Banners';
 
 // Text
 $_['text_success']       = 'Success: You have modified banners!';
+$_['text_list']          = 'Banner List';
+$_['text_add']           = 'Add Banner';
+$_['text_edit']          = 'Edit Banner';
 $_['text_default']       = 'Default';
 
 // Column

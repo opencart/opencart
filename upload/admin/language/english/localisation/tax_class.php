@@ -1,12 +1,15 @@
 <?php
 // Heading
-$_['heading_title']     = 'Tax Class';
+$_['heading_title']     = 'Tax Classes';
 
 // Text
+$_['text_success']      = 'Success: You have modified tax classes!';
+$_['text_list']         = 'Tax Class List';
+$_['text_add']          = 'Add Tax Class';
+$_['text_edit']         = 'Edit Tax Class';
 $_['text_shipping']     = 'Shipping Address';
 $_['text_payment']      = 'Payment Address';
 $_['text_store']        = 'Store Address';
-$_['text_success']      = 'Success: You have modified tax classes!';
 
 // Column
 $_['column_title']      = 'Tax Class Title';

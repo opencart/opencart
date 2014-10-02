@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '2.0.0.0a1');
+define('VERSION', '2.0.0.1b');
 
 // Configuration
 if (is_file('config.php')) {
@@ -226,6 +226,9 @@ $registry->set('cart', new Cart($registry));
 // Encryption
 $registry->set('encryption', new Encryption($config->get('config_encryption')));
 
+//OpenBay Pro
+$registry->set('openbay', new Openbay($registry));
+
 // Event
 $event = new Event($registry);
 $registry->set('event', $event);
@@ -233,7 +236,7 @@ $registry->set('event', $event);
 $query = $db->query("SELECT * FROM " . DB_PREFIX . "event");
 
 foreach ($query->rows as $result) {
-	$event->register($result['trigger'], new Action($result['action']));
+	$event->register($result['trigger'], $result['action']);
 }
 
 // Front Controller

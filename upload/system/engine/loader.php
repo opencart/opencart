@@ -6,13 +6,7 @@ final class Loader {
 		$this->registry = $registry;
 	}
 
-	public function controller($route) {
-		// function arguments
-		$args = func_get_args();
-
-		// Remove the route
-		array_shift($args);
-
+	public function controller($route, $args = array()) {
 		$action = new Action($route, $args);
 
 		return $action->execute($this->registry);

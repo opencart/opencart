@@ -1,9 +1,12 @@
 <?php
 // Heading
-$_['heading_title']                    = 'Settings';
+$_['heading_title']                    = 'Stores';
 
 // Text
-$_['text_success']                     = 'Success: You have modified settings!';
+$_['text_success']                     = 'Success: You have modified Stores!';
+$_['text_list']                        = 'Store List';
+$_['text_add']                         = 'Add Store';
+$_['text_edit']                        = 'Edit Store';
 $_['text_items']                       = 'Items';
 $_['text_tax']                         = 'Taxes';
 $_['text_account']                     = 'Account';

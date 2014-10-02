@@ -7,7 +7,7 @@ class ControllerExtensionModule extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
 		$this->getList();
 	}
@@ -17,10 +17,10 @@ class ControllerExtensionModule extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
 		if ($this->validate()) {
-			$this->model_setting_extension->install('module', $this->request->get['extension']);
+			$this->model_extension_extension->install('module', $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
 
@@ -43,10 +43,10 @@ class ControllerExtensionModule extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
 		if ($this->validate()) {
-			$this->model_setting_extension->uninstall('module', $this->request->get['extension']);
+			$this->model_extension_extension->uninstall('module', $this->request->get['extension']);
 
 			$this->load->model('setting/setting');
 
@@ -64,10 +64,24 @@ class ControllerExtensionModule extends Controller {
 	}
 
 	public function getList() {
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL')
+		);
+
 		$data['heading_title'] = $this->language->get('heading_title');
 
+		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_layout'] = sprintf($this->language->get('text_layout'), $this->url->link('design/layout', 'token=' . $this->session->data['token'], 'SSL'));
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_action'] = $this->language->get('column_action');
@@ -90,13 +104,13 @@ class ControllerExtensionModule extends Controller {
 			$data['success'] = '';
 		}
 
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
-		$extensions = $this->model_setting_extension->getInstalled('module');
+		$extensions = $this->model_extension_extension->getInstalled('module');
 
 		foreach ($extensions as $key => $value) {
 			if (!file_exists(DIR_APPLICATION . 'controller/module/' . $value . '.php')) {
-				$this->model_setting_extension->uninstall('module', $value);
+				$this->model_extension_extension->uninstall('module', $value);
 
 				unset($extensions[$key]);
 			}
@@ -123,7 +137,7 @@ class ControllerExtensionModule extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('extension/module.tpl', $data));

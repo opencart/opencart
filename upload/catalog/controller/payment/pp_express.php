@@ -552,9 +552,9 @@ class ControllerPaymentPPExpress extends Controller {
 				// Shipping Methods
 				$quote_data = array();
 
-				$this->load->model('setting/extension');
+				$this->load->model('extension/extension');
 
-				$results = $this->model_setting_extension->getExtensions('shipping');
+				$results = $this->model_extension_extension->getExtensions('shipping');
 
 				if (!empty($results)) {
 					foreach ($results as $result) {
@@ -611,7 +611,7 @@ class ControllerPaymentPPExpress extends Controller {
 		}
 
 		// Totals
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
 		$total_data = array();
 		$total = 0;
@@ -621,7 +621,7 @@ class ControllerPaymentPPExpress extends Controller {
 		if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
 			$sort_order = array();
 
-			$results = $this->model_setting_extension->getExtensions('total');
+			$results = $this->model_extension_extension->getExtensions('total');
 
 			foreach ($results as $key => $value) {
 				$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
@@ -667,9 +667,9 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$method_data = array();
 
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
-		$results = $this->model_setting_extension->getExtensions('payment');
+		$results = $this->model_extension_extension->getExtensions('payment');
 
 		foreach ($results as $result) {
 			if ($this->config->get($result['code'] . '_status')) {
@@ -804,11 +804,11 @@ class ControllerPaymentPPExpress extends Controller {
 			$total = 0;
 			$taxes = $this->cart->getTaxes();
 
-			$this->load->model('setting/extension');
+			$this->load->model('extension/extension');
 
 			$sort_order = array();
 
-			$results = $this->model_setting_extension->getExtensions('total');
+			$results = $this->model_extension_extension->getExtensions('total');
 
 			foreach ($results as $key => $value) {
 				$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
@@ -1876,7 +1876,7 @@ class ControllerPaymentPPExpress extends Controller {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$recurring['order_recurring_id'] . "', `date_added` = NOW(), `type` = '5'");
 				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 4 WHERE `order_recurring_id` = '" . (int)$recurring['order_recurring_id'] . "' LIMIT 1");
 
-				$this->session->data['success'] = $this->language->get('success_cancelled');
+				$this->session->data['success'] = $this->language->get('text_cancelled');
 			} else {
 				$this->session->data['error'] = sprintf($this->language->get('error_not_cancelled'), $result['L_LONGMESSAGE0']);
 			}

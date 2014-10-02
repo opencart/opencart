@@ -1,9 +1,12 @@
 <?php
 // Heading
-$_['heading_title']    = 'Length Class';
+$_['heading_title']    = 'Length Classes';
 
 // Text
 $_['text_success']     = 'Success: You have modified length classes!';
+$_['text_list']        = 'Length Class List';
+$_['text_add']         = 'Add Length Class';
+$_['text_edit']        = 'Edit Length Class';
 
 // Column
 $_['column_title']     = 'Length Title';

@@ -35,9 +35,10 @@ class ControllerStep2 extends Controller {
 		$data['text_version'] = $this->language->get('text_version');
 		$data['text_global'] = $this->language->get('text_global');
 		$data['text_magic'] = $this->language->get('text_magic');
-		$data['text_upload'] = $this->language->get('text_upload');
+		$data['text_file_upload'] = $this->language->get('text_file_upload');
 		$data['text_session'] = $this->language->get('text_session');
 		$data['text_global'] = $this->language->get('text_global');
+		$data['text_db'] = $this->language->get('text_db');
 		$data['text_mysqli'] = $this->language->get('text_mysqli');
 		$data['text_mysql'] = $this->language->get('text_mysql');
 		$data['text_mpdo'] = $this->language->get('text_mpdo');
@@ -45,6 +46,7 @@ class ControllerStep2 extends Controller {
 		$data['text_gd'] = $this->language->get('text_gd');
 		$data['text_curl'] = $this->language->get('text_curl');
 		$data['text_mcrypt'] = $this->language->get('text_mcrypt');
+		$data['text_zlib'] = $this->language->get('text_zlib');
 		$data['text_zip'] = $this->language->get('text_zip');
 		$data['text_mbstring'] = $this->language->get('text_mbstring');
 
@@ -65,14 +67,17 @@ class ControllerStep2 extends Controller {
 		$data['file_uploads'] = ini_get('file_uploads');
 		$data['session_auto_start'] = ini_get('session_auto_start');
 
-		$data['mysql'] = extension_loaded('mysql');
-		$data['mysqli'] = extension_loaded('mysqli');
-		$data['mpdo'] = extension_loaded('pdo');
-		$data['pgsql'] = extension_loaded('pgsql');
+		if (!array_filter(array('mysql', 'mysqli', 'pgsql', 'pdo'), 'extension_loaded')) {
+			$data['db'] = false;
+		} else {
+			$data['db'] = true;
+		}
+
 		$data['gd'] = extension_loaded('gd');
 		$data['curl'] = extension_loaded('curl');
 		$data['mcrypt_encrypt'] = function_exists('mcrypt_encrypt');
 		$data['zlib'] = extension_loaded('zlib');
+		$data['zip'] = extension_loaded('zip');
 		$data['iconv'] = function_exists('iconv');
 		$data['mbstring'] = extension_loaded('mbstring');
 
@@ -82,6 +87,7 @@ class ControllerStep2 extends Controller {
 		$data['cache'] = DIR_SYSTEM . 'cache';
 		$data['logs'] = DIR_SYSTEM . 'logs';
 		$data['download'] = DIR_SYSTEM . 'download';
+		$data['upload'] = DIR_SYSTEM . 'upload';
 		$data['image'] = DIR_OPENCART . 'image';
 		$data['image_cache'] = DIR_OPENCART . 'image/cache';
 		$data['image_data'] = DIR_OPENCART . 'image/catalog';
@@ -107,7 +113,7 @@ class ControllerStep2 extends Controller {
 			$this->error['warning'] = 'Warning: OpenCart will not work with session.auto_start enabled!';
 		}
 
-		if (!array_filter(array('mysqli', 'pdo', 'pgsql'), 'extension_loaded')) {
+		if (!array_filter(array('mysql', 'mysqli', 'pdo', 'pgsql'), 'extension_loaded')) {
 			$this->error['warning'] = 'Warning: A database extension needs to be loaded in the php.ini for OpenCart to work!';
 		}
 
@@ -125,6 +131,10 @@ class ControllerStep2 extends Controller {
 
 		if (!extension_loaded('zlib')) {
 			$this->error['warning'] = 'Warning: ZLIB extension needs to be loaded for OpenCart to work!';
+		}
+
+		if (!extension_loaded('zip')) {
+			$this->error['warning'] = 'Warning: ZIP extension needs to be loaded for OpenCart to work!';
 		}
 
 		if (!function_exists('iconv')) {
@@ -153,6 +163,14 @@ class ControllerStep2 extends Controller {
 			$this->error['warning'] = 'Warning: Logs directory needs to be writable for OpenCart to work!';
 		}
 
+		if (!is_writable(DIR_SYSTEM . 'download')) {
+			$this->error['warning'] = 'Warning: Download directory needs to be writable for OpenCart to work!';
+		}
+		
+		if (!is_writable(DIR_SYSTEM . 'upload')) {
+			$this->error['warning'] = 'Warning: Upload directory needs to be writable for OpenCart to work!';
+		}
+		
 		if (!is_writable(DIR_OPENCART . 'image')) {
 			$this->error['warning'] = 'Warning: Image directory needs to be writable for OpenCart to work!';
 		}
@@ -164,11 +182,7 @@ class ControllerStep2 extends Controller {
 		if (!is_writable(DIR_OPENCART . 'image/catalog')) {
 			$this->error['warning'] = 'Warning: Image catalog directory needs to be writable for OpenCart to work!';
 		}
-
-		if (!is_writable(DIR_SYSTEM . 'download')) {
-			$this->error['warning'] = 'Warning: Download directory needs to be writable for OpenCart to work!';
-		}
-
+				
 		if (!$this->error) {
 			return true;
 		} else {

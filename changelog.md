@@ -8,8 +8,9 @@
 * Fixed image_width and image_height modules #1916
 
 #### Changes
-* Changed DB connection error response during install when using mysqli to use native message from mysqli.
-* Removed unused text in stats menu in the admin.
+* Changed DB connection error response during install when using mysqli to use native message from mysqli
+* Removed unused text in stats menu in the admin
+* No module validation added (https://github.com/opencart/opencart/commit/d8fb60b2958223a69b042530220962d725cdf6a7)
 
 #### Added
 None

@@ -118,6 +118,8 @@ class ControllerModuleCarousel extends Controller {
 					$this->error['image'][$key] = $this->language->get('error_image');
 				}
 			}
+		} else {
+			$this->error['warning'] = $this->language->get('error_module');
 		}
 
 		return !$this->error;

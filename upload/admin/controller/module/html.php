@@ -101,6 +101,10 @@ class ControllerModuleHTML extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
+		if (!isset($this->request->post['html_module'])) {
+			$this->error['warning'] = $this->language->get('error_module');
+		}
+		
 		return !$this->error;
 	}
 }

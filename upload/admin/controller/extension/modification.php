@@ -63,14 +63,8 @@ class ControllerExtensionModification extends Controller {
 			$log = array();
 
 			// Clear all modification files
-			$files = glob(DIR_MODIFICATION . '{*.php,*.tpl}', GLOB_BRACE);
-
-			if ($files) {
-				foreach ($files as $file) {
-					if (file_exists($file)) {
-						unlink($file);
-					}
-				}
+			foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator(DIR_MODIFICATION, FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::CHILD_FIRST) as $path) {
+				$path->isDir() ? rmdir($path->getPathname()) : unlink($path->getPathname());
 			}
 
 			// Begin

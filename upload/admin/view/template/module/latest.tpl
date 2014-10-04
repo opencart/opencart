@@ -82,7 +82,7 @@ function addModule() {
 	html  = '<tr id="module-row' + token + '">';
 	html += '  <td class="text-right">' + ($('tbody tr').length + 1) + '</td>';
 	html += '  <td class="text-left"><input type="text" name="latest_module[' + token + '][limit]" value="5" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><input type="text" name="latest_module[' + token + '][width]" value="200" placeholder="<?php echo $entry_width; ?>" class="form-control" /> <input type="text" name="latest_module[' + token + '][image_height]" value="200" placeholder="<?php echo $entry_height; ?>" class="form-control" /></td>';
+	html += '  <td class="text-left"><input type="text" name="latest_module[' + token + '][width]" value="200" placeholder="<?php echo $entry_width; ?>" class="form-control" /> <input type="text" name="latest_module[' + token + '][height]" value="200" placeholder="<?php echo $entry_height; ?>" class="form-control" /></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + token + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 	

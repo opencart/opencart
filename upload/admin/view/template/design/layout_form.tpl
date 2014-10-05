@@ -162,7 +162,7 @@ function addModule() {
 	<?php foreach ($modules as $module) { ?>
     html += '    <optgroup label="<?php echo $module['name']; ?>">';
     <?php foreach ($module['module'] as $module) { ?>
-	html += '      <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>';
+	html += '      <option value="<?php echo $module['code']; ?>"><?php echo addslashes($module['name']); ?></option>';
 	<?php } ?>
 	html += '    </optgroup>';
 	<?php } ?>

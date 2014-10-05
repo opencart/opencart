@@ -318,6 +318,8 @@ class ControllerExtensionModification extends Controller {
 		$this->load->model('extension/modification');
 
 		if ($this->validate()) {
+			$files = array();
+			
 			// Make path into an array
 			$path = array(DIR_MODIFICATION . '*');
 

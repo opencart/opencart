@@ -257,6 +257,11 @@ class ControllerExtensionInstaller extends Controller {
 		if (!$this->user->hasPermission('modify', 'extension/installer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
+		
+		// Check FTP status
+		if (!$this->config->get('ftp_status')) {
+			$json['error'] = $this->language->get('error_ftp_status');
+		}
 
 		$directory = DIR_DOWNLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/upload/';
 

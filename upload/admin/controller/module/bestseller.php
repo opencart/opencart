@@ -10,7 +10,7 @@ class ControllerModuleBestSeller extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('bestseller', $this->request->post['bestseller_status']);
+			$this->model_setting_setting->editSetting('bestseller', $this->request->post);
 
 			$this->cache->delete('product');
 

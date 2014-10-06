@@ -63,16 +63,43 @@ class ControllerExtensionModification extends Controller {
 			$log = array();
 
 			// Clear all modification files
-			$files = glob(DIR_MODIFICATION . '{*.php,*.tpl}', GLOB_BRACE);
+			$files = array();
+			
+			// Make path into an array
+			$path = array(DIR_MODIFICATION . '*');
 
-			if ($files) {
-				foreach ($files as $file) {
-					if (file_exists($file)) {
-						unlink($file);
+			// While the path array is still populated keep looping through
+			while (count($path) != 0) {
+				$next = array_shift($path);
+
+				foreach (glob($next) as $file) {
+					// If directory add to path array
+					if (is_dir($file)) {
+						$path[] = $file . '/*';
 					}
+
+					// Add the file to the files to be deleted array
+					$files[] = $file;
 				}
 			}
-
+			
+			// Reverse sort the file array
+			rsort($files);
+			
+			// Clear all modification files
+			foreach ($files as $file) {
+				if ($file != DIR_MODIFICATION . 'index.html') {
+					// If file just delete
+					if (is_file($file)) {
+						unlink($file);
+	
+					// If directory use the remove directory function
+					} elseif (is_dir($file)) {
+						rmdir($file);
+					}
+				}
+			}	
+			
 			// Begin
 			$xml = array();
 

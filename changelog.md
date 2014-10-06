@@ -12,6 +12,7 @@
 * Removed unused text in stats menu in the admin
 * No module validation added (https://github.com/opencart/opencart/commit/d8fb60b2958223a69b042530220962d725cdf6a7)
 * Typo fix #1929
+* Changed ftp_status to config_ftp_status in extension installer
 
 #### Added
 None

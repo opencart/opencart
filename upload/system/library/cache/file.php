@@ -26,16 +26,17 @@ class File {
 
 		if ($files) {
 			$handle = fopen($files[0], 'r');
+			if ($handle) {
+				flock($handle, LOCK_SH);
 
-			flock($handle, LOCK_SH);
+				$data = fread($handle, filesize($files[0]));
 
-			$data = fread($handle, filesize($files[0]));
+				flock($handle, LOCK_UN);
 
-			flock($handle, LOCK_UN);
+				fclose($handle);
 
-			fclose($handle);
-
-			return unserialize($data);
+				return unserialize($data);
+			}
 		}
 
 		return false;
@@ -47,16 +48,17 @@ class File {
 		$file = DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.' . (time() + $this->expire);
 
 		$handle = fopen($file, 'w');
+		if ($handle) {
+			flock($handle, LOCK_EX);
 
-		flock($handle, LOCK_EX);
+			fwrite($handle, serialize($value));
 
-		fwrite($handle, serialize($value));
+			fflush($handle);
 
-		fflush($handle);
+			flock($handle, LOCK_UN);
 
-		flock($handle, LOCK_UN);
-
-		fclose($handle);
+			fclose($handle);
+		}
 	}
 
 	public function delete($key) {

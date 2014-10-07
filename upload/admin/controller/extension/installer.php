@@ -259,7 +259,7 @@ class ControllerExtensionInstaller extends Controller {
 		}
 		
 		// Check FTP status
-		if (!$this->config->get('ftp_status')) {
+		if (!$this->config->get('config_ftp_status')) {
 			$json['error'] = $this->language->get('error_ftp_status');
 		}
 

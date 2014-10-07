@@ -30,6 +30,7 @@ class ControllerSettingSetting extends Controller {
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_product'] = $this->language->get('text_product');
 		$data['text_review'] = $this->language->get('text_review');
 		$data['text_voucher'] = $this->language->get('text_voucher');

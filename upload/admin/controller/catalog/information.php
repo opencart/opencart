@@ -312,7 +312,13 @@ class ControllerCatalogInformation extends Controller {
 		} else {
 			$data['error_meta_title'] = array();
 		}
-
+		
+		if (isset($this->error['keyword'])) {
+			$data['error_keyword'] = $this->error['keyword'];
+		} else {
+			$data['error_keyword'] = '';
+		}
+		
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -446,7 +452,19 @@ class ControllerCatalogInformation extends Controller {
 				$this->error['meta_title'][$language_id] = $this->language->get('error_meta_title');
 			}
 		}
+		
+		$this->load->model('catalog/url_alias');
 
+		$url_alias_info = $this->model_url_alas->getUrlAlias($this->request->post['keyword']);
+		
+		if ($url_alias_info && isset($this->request->get['information_id']) && $url_alias_info['query'] != 'information_id=' . $this->request->get['information_id']) {
+			$this->error['keyword'] = sprintf($this->language->get('error_keyword'));
+		}
+		
+		if ($url_alias_info && !isset($this->request->get['information_id'])) {
+			$this->error['keyword'] = sprintf($this->language->get('error_keyword'));
+		}
+		
 		if ($this->error && !isset($this->error['warning'])) {
 			$this->error['warning'] = $this->language->get('error_warning');
 		}

@@ -313,11 +313,7 @@ class ControllerModulePPLogin extends Controller {
 			$this->error['secret'] = $this->language->get('error_secret');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 
 	public function install() {

@@ -389,10 +389,6 @@ class ControllerPaymentFirstdata extends Controller {
 			$this->error['error_demo_url'] = $this->language->get('error_demo_url');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 }

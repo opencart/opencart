@@ -223,10 +223,6 @@ class ControllerModulePPLogin extends Controller {
 			$this->error['warning'] = $this->language->get('error_approved');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 }

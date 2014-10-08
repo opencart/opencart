@@ -25,7 +25,7 @@
       </div>
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-featured" class="form-horizontal">
-        <p>The eBay display module allows you to display products from your eBay account directly on your website.</p>
+        <p><?php echo $text_about; ?></p>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="input-username"><?php echo $entry_username; ?></label>
           <div class="col-sm-10">
@@ -59,7 +59,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-sort"><?php echo $entry_sort_order; ?></label>
+          <label class="col-sm-2 control-label" for="input-sort"><?php echo $entry_sort; ?></label>
           <div class="col-sm-10">
             <select name="ebaydisplay_module_sort" id="input-sort" class="form-control">
               <option value="StartTimeNewest" <?php echo ($ebaydisplay_module_sort == 'StartTimeNewest' ? 'selected' : ''); ?>><?php echo $text_start_newest; ?></option>
@@ -88,8 +88,8 @@
           </thead>
           <?php $module_row = 1; ?>
           <?php foreach ($modules as $module) { ?>
-          <tbody id="module-row<?php echo $module['key']; ?>">
-            <tr>
+          <tbody>
+            <tr id="module-row<?php echo $module['key']; ?>">
               <td class="text-right"><?php echo $module_row; ?></td>
               <td class="text-left"><input type="text" name="ebaydisplay_module['<?php echo $module['key']; ?>'][limit]" value="<?php echo $module['limit']; ?>" size="1" class="form-control" /></td>
               <td class="text-left">
@@ -106,8 +106,8 @@
           <?php } ?>
           <tfoot>
             <tr>
-              <td colspan="6"></td>
-              <td class="text-left"><button type="button" onclick="addModule();"class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_module_add; ?></button></td>
+              <td colspan="3"></td>
+              <td class="text-left"><button type="button" onclick="addModule();" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
             </tr>
           </tfoot>
         </table>

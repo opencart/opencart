@@ -5,9 +5,11 @@ $_['heading_title']     = 'eBay display';
 // Text
 $_['text_module']       = 'Modules';
 $_['text_success']      = 'Success: You have modified module eBay featured!';
+$_['text_edit']        	= 'Edit eBay display module';
 $_['text_list']         = 'Layout List';
 $_['text_start_newest'] = 'Start time newest';
 $_['text_start_random'] = 'Random';
+$_['text_about'] 		= 'The eBay display module allows you to display products from your eBay account directly on your website.';
 
 // Entry
 $_['entry_limit']       = 'Limit';

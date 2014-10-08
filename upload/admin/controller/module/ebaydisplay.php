@@ -27,6 +27,7 @@ class ControllerModuleEbaydisplay extends Controller {
 		$data['text_no'] = $this->language->get('text_no');
 		$data['text_start_newest'] = $this->language->get('text_start_newest');
 		$data['text_start_random'] = $this->language->get('text_start_random');
+		$data['text_about'] = $this->language->get('text_about');
 
 		$data['entry_limit'] = $this->language->get('entry_limit');
 		$data['entry_image'] = $this->language->get('entry_image');

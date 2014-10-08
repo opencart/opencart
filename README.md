@@ -48,4 +48,3 @@ Please read the installation instructions included in the repository.
 - [How to documents](http://docs.opencart.com/display/opencart/OpenCart+1.5+Home)
 - [Newsletter](http://newsletter.opencart.com/h/r/B660EBBE4980C85C)
 - [User Voice suggestions](http://opencart.uservoice.com)
-- [2.0 Atlassian bug tracker](http://opencart.atlassian.net)

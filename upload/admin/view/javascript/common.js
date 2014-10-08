@@ -106,6 +106,8 @@ $(document).ready(function() {
 	$(document).delegate('button[data-toggle=\'image\']', 'click', function() {
 		$('#modal-image').remove();
 		
+		$(this).parents('.note-editor').find('.note-editable').focus();
+				
 		$.ajax({
 			url: 'index.php?route=common/filemanager&token=' + getURLVar('token'),
 			dataType: 'html',
@@ -139,7 +141,7 @@ $(document).ready(function() {
 				return '<button type="button" id="button-image" class="btn btn-primary"><i class="fa fa-pencil"></i></button> <button type="button" id="button-clear" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>';
 			}
 		});
-	
+		
 		$(element).popover('toggle');		
 	
 		$('#button-image').on('click', function() {

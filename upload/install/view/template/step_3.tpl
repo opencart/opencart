@@ -81,7 +81,10 @@
             <label class="col-sm-2 control-label" for="input-db-prefix"><?php echo $entry_db_prefix; ?></label>
             <div class="col-sm-10">
               <input type="text" name="db_prefix" value="<?php echo $db_prefix; ?>" id="input-db-prefix" class="form-control" />
-            </div>
+              <?php if ($error_db_prefix) { ?>
+              <div class="text-danger"><?php echo $error_db_prefix; ?></div>
+              <?php } ?>           
+           </div>
           </div>
         </fieldset>
         <p><?php echo $text_db_administration; ?></p>

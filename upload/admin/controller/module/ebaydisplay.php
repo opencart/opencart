@@ -21,10 +21,8 @@ class ControllerModuleEbaydisplay extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_edit'] = $this->language->get('text_edit');
-		$data['text_enabled'] = $this->language->get('text_enabled');
-		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
 		$data['text_start_newest'] = $this->language->get('text_start_newest');
@@ -36,7 +34,7 @@ class ControllerModuleEbaydisplay extends Controller {
 		$data['entry_keywords'] = $this->language->get('entry_keywords');
 		$data['entry_description'] = $this->language->get('entry_description');
 		$data['entry_site'] = $this->language->get('entry_site');
-		$data['entry_status'] = $this->language->get('entry_status');
+		$data['entry_sort'] = $this->language->get('entry_sort');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');

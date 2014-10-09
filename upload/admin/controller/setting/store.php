@@ -520,6 +520,8 @@ class ControllerSettingStore extends Controller {
 			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
 
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+
 		if (isset($this->request->post['open'])) {
 			$data['open'] = $this->request->post['open'];
 		} elseif (isset($store_info['config_open'])) {

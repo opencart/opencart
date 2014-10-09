@@ -28,14 +28,19 @@ class ControllerModuleEbaydisplay extends Controller {
 		$data['text_start_newest'] = $this->language->get('text_start_newest');
 		$data['text_start_random'] = $this->language->get('text_start_random');
 		$data['text_about'] = $this->language->get('text_about');
+		$data['text_disabled'] = $this->language->get('text_disabled');
+		$data['text_enabled'] = $this->language->get('text_enabled');
 
 		$data['entry_limit'] = $this->language->get('entry_limit');
 		$data['entry_image'] = $this->language->get('entry_image');
+		$data['entry_width'] = $this->language->get('entry_width');
+		$data['entry_height'] = $this->language->get('entry_height');
 		$data['entry_username'] = $this->language->get('entry_username');
 		$data['entry_keywords'] = $this->language->get('entry_keywords');
 		$data['entry_description'] = $this->language->get('entry_description');
 		$data['entry_site'] = $this->language->get('entry_site');
 		$data['entry_sort'] = $this->language->get('entry_sort');
+		$data['entry_status'] = $this->language->get('entry_status');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -147,6 +152,29 @@ class ControllerModuleEbaydisplay extends Controller {
 			$data['ebaydisplay_status'] = $this->request->post['ebaydisplay_status'];
 		} else {
 			$data['ebaydisplay_status'] = $this->config->get('ebaydisplay_status');
+		}
+
+		if (isset($this->request->post['ebaydisplay_module'])) {
+			$modules = $this->request->post['ebaydisplay_module'];
+		} elseif ($this->config->has('ebaydisplay_module')) {
+			$modules = $this->config->get('ebaydisplay_module');
+		} else {
+			$modules = array();
+		}
+
+		$data['ebaydisplay_modules'] = array();
+
+		foreach ($modules as $key => $module) {
+			$data['ebaydisplay_modules'][] = array(
+				'key'    => $key,
+				'limit'  => $module['limit'],
+				'width'  => $module['width'],
+				'height' => $module['height']
+			);
+		}
+
+		if ($this->config->get('ebay_status') != 1) {
+			$data['error_warning'] = $this->language->get('error_openbay');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

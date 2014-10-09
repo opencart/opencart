@@ -77,7 +77,21 @@
             </select>
           </div>
         </div>
-        <table id="module" class="table table-striped table-bordered table-hover">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+            <div class="col-sm-10">
+              <select name="ebaydisplay_status" id="input-status" class="form-control">
+                <?php if ($ebaydisplay_status) { ?>
+                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                <option value="0"><?php echo $text_disabled; ?></option>
+                <?php } else { ?>
+                <option value="1"><?php echo $text_enabled; ?></option>
+                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
+          <table id="module" class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
               <td class="text-right">#</td>
@@ -86,24 +100,24 @@
               <td></td>
             </tr>
           </thead>
-          <?php $module_row = 1; ?>
-          <?php foreach ($modules as $module) { ?>
           <tbody>
+          <?php $module_row = 1; ?>
+          <?php foreach ($ebaydisplay_modules as $module) { ?>
             <tr id="module-row<?php echo $module['key']; ?>">
               <td class="text-right"><?php echo $module_row; ?></td>
-              <td class="text-left"><input type="text" name="ebaydisplay_module['<?php echo $module['key']; ?>'][limit]" value="<?php echo $module['limit']; ?>" size="1" class="form-control" /></td>
+              <td class="text-left"><input type="text" name="ebaydisplay_module[<?php echo $module['key']; ?>][limit]" value="<?php echo $module['limit']; ?>" size="1" class="form-control" /></td>
               <td class="text-left">
-                <input type="text" name="ebaydisplay_module['<?php echo $module['key']; ?>'][width]" value="<?php echo $module['width']; ?>" size="3" class="form-control" />
-                <input type="text" name="ebaydisplay_module['<?php echo $module['key']; ?>'][height]" value="<?php echo $module['height']; ?>" size="3" class="form-control"/>
+                <input type="text" name="ebaydisplay_module[<?php echo $module['key']; ?>][width]" value="<?php echo $module['width']; ?>" size="3" class="form-control" />
+                <input type="text" name="ebaydisplay_module[<?php echo $module['key']; ?>][height]" value="<?php echo $module['height']; ?>" size="3" class="form-control"/>
                 <?php if (isset($error_image[$module_row])) { ?>
                 <span class="error"><?php echo $error_image[$module_row]; ?></span>
                 <?php } ?>
               </td>
-              <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $module_row; ?>').remove();"class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>
+              <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $module_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
             </tr>
-          </tbody>
           <?php $module_row++; ?>
           <?php } ?>
+          </tbody>
           <tfoot>
             <tr>
               <td colspan="3"></td>

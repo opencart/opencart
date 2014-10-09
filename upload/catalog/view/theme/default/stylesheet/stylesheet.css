@@ -363,7 +363,6 @@ footer h5 {
 /* buttons */
 .buttons {
 	margin: 1em 0;
-	overflow: auto;
 }
 .btn {
 	padding: 7.5px 12px;

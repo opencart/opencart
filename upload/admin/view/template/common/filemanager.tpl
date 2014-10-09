@@ -57,7 +57,7 @@ $('a.thumbnail').on('click', function(e) {
 	$('#<?php echo $target; ?>').attr('value', $(this).parent().find('input').attr('value'));
 	<?php } ?>
 	
-	var range, sel = window.getSelection(); 
+	var range, sel = document.getSelection(); 
 	
 	if (sel.rangeCount) { 
 		var img = document.createElement('img');

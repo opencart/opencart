@@ -183,10 +183,6 @@ class ControllerStep2 extends Controller {
 			$this->error['warning'] = 'Warning: Image catalog directory needs to be writable for OpenCart to work!';
 		}
 				
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 }

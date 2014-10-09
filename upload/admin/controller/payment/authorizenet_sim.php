@@ -169,10 +169,6 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 			$this->error['key'] = $this->language->get('error_key');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 }

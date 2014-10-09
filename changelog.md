@@ -23,6 +23,7 @@
 * FTP status check added (https://github.com/opencart/opencart/commit/0b7fcfc7d652dc0e67b3ef3109f1736c05842df1)
 * Added check for compression size #1772
 * Update moment.js #1896
+* Updated Authorize.net affiliate link to correct OpenCart promotion page for users to get special offer.
 
 #### Added
 * Check for URL alias #1915 (https://github.com/opencart/opencart/commit/69d6252f4157faf207e3db0504de20b34eab58ef)

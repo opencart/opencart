@@ -33,7 +33,7 @@ class ModelOpenbayOpenbay extends Model {
 					@ftp_chdir($connection, $data['rootpath']);
 				}
 
-				$directory_list = ftp_nlist($connection, " . ");
+				$directory_list = ftp_nlist($connection, ".");
 
 				$folders = array();
 				foreach ($directory_list as $key => $list) {

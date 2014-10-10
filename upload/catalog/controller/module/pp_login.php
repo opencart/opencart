@@ -34,7 +34,7 @@ class ControllerModulePPLogin extends Controller {
 			}
 
 			$scopes = array(
-				'recurring',
+				'profile',
 				'email',
 				'address',
 				'phone'

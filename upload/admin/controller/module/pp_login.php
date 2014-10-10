@@ -18,7 +18,7 @@ class ControllerModulePPLogin extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -169,7 +169,7 @@ class ControllerModulePPLogin extends Controller {
 		$data['locales'][] = array(
 			'value' => 'zh-xc',
 			'text' => 'Chinese (US)'
-			);
+		);
 
 		$data['locales'][] = array(
 			'value' => 'da-dk',
@@ -188,7 +188,8 @@ class ControllerModulePPLogin extends Controller {
 
 		$data['locales'][] = array(
 			'value' => 'en-us',
-			'text' => 'English (US)',);
+			'text' => 'English (US)',
+		);
 
 		$data['locales'][] = array(
 			'value' => 'fr-fr',

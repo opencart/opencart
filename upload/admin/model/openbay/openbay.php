@@ -196,9 +196,9 @@ class ModelOpenbayOpenbay extends Model {
 						}
 					}
 
-					$openbay_settings = $this->model_setting_setting->getSetting('openbaymanager');
+					$openbay_settings = $this->model_setting_setting->getSetting('openbay');
 					$openbay_settings['openbay_version'] = $files['version'];
-					$this->model_setting_setting->editSetting('openbaymanager', $openbay_settings);
+					$this->model_setting_setting->editSetting('openbay', $openbay_settings);
 
 					@ftp_close($connection);
 

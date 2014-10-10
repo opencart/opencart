@@ -134,14 +134,14 @@ class ControllerExtensionOpenbay extends Controller {
 			);
 		}
 
-		$settings = $this->model_setting_setting->getSetting('openbaymanager');
+		$settings = $this->model_setting_setting->getSetting('openbay');
 
 		if (isset($settings['openbay_version'])) {
 			$data['openbay_version'] = $settings['openbay_version'];
 		} else {
-			$data['openbay_version']  = $this->model_openbay_version->getVersion();
+			$data['openbay_version'] = $this->model_openbay_version->getVersion();
 			$settings['openbay_version'] = $this->model_openbay_version->getVersion();
-			$this->model_setting_setting->editSetting('openbaymanager', $settings);
+			$this->model_setting_setting->editSetting('openbay', $settings);
 		}
 
 		$data['token'] = $this->session->data['token'];
@@ -179,7 +179,7 @@ class ControllerExtensionOpenbay extends Controller {
 		);
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
-			$this->model_setting_setting->editSetting('openbaymanager', $this->request->post);
+			$this->model_setting_setting->editSetting('openbay', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -189,7 +189,7 @@ class ControllerExtensionOpenbay extends Controller {
 		if (isset($this->request->post['openbay_version'])) {
 			$data['openbay_version'] = $this->request->post['openbay_version'];
 		} else {
-			$settings = $this->model_setting_setting->getSetting('openbaymanager');
+			$settings = $this->model_setting_setting->getSetting('openbay');
 
 			if (isset($settings['openbay_version'])) {
 				$data['openbay_version'] = $settings['openbay_version'];
@@ -197,7 +197,7 @@ class ControllerExtensionOpenbay extends Controller {
 				$this->load->model('openbay/version');
 				$settings['openbay_version'] = $this->model_openbay_version->getVersion();
 				$data['openbay_version'] = $this->model_openbay_version->getVersion();
-				$this->model_setting_setting->editSetting('openbaymanager', $settings);
+				$this->model_setting_setting->editSetting('openbay', $settings);
 			}
 		}
 
@@ -328,17 +328,17 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->model_openbay_amazon_patch->runPatch();
 		$this->model_openbay_amazonus_patch->runPatch();
 
-		$openbaymanager = $this->model_setting_setting->getSetting('openbaymanager');
-		$openbaymanager['openbay_version'] = (int)$this->model_openbay_version->getVersion();
-		$openbaymanager['openbay_menu'] = 1;
-		$this->model_setting_setting->editSetting('openbaymanager', $openbaymanager);
+		$openbay = $this->model_setting_setting->getSetting('openbay');
+		$openbay['openbay_version'] = (int)$this->model_openbay_version->getVersion();
+		$openbay['openbay_menu'] = 1;
+		$this->model_setting_setting->editSetting('openbay', $openbay);
 
 		$installed_modules = $this->model_extension_extension->getInstalled('module');
 
-		if (!in_array('openbaypro', $installed_modules)) {
-			$this->model_extension_extension->install('feed', 'openbaypro');
-			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'feed/openbaypro');
-			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'feed/openbaypro');
+		if (!in_array('openbay', $installed_modules)) {
+			$this->model_extension_extension->install('feed', 'openbay');
+			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'feed/openbay');
+			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'feed/openbay');
 		}
 
 		sleep(1);

@@ -237,20 +237,17 @@ class ControllerPaymentSecureTradingPp extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => false,
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => ' :: ',
+			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/securetrading_pp', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => ' :: ',
+			'href' => $this->url->link('payment/securetrading_pp', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();

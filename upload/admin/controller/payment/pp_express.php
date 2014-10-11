@@ -63,12 +63,10 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['entry_reversed_status'] = $this->language->get('entry_reversed_status');
 		$data['entry_voided_status'] = $this->language->get('entry_voided_status');
 		$data['entry_currency'] = $this->language->get('entry_currency');
-
 		$data['entry_recurring_cancellation'] = $this->language->get('entry_recurring_cancellation');
 		$data['entry_display_checkout'] = $this->language->get('entry_display_checkout');
 		$data['entry_allow_notes'] = $this->language->get('entry_allow_notes');
 		$data['entry_logo'] = $this->language->get('entry_logo');
-
 		$data['entry_border_colour'] = $this->language->get('entry_border_colour');
 		$data['entry_header_colour'] = $this->language->get('entry_header_colour');
 		$data['entry_page_colour'] = $this->language->get('entry_page_colour');
@@ -79,6 +77,10 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['help_currency'] = $this->language->get('help_currency');
 		$data['help_logo'] = $this->language->get('help_logo');
 		$data['help_colour'] = $this->language->get('help_colour');
+		
+		$data['button_save'] = $this->language->get('button_save');
+		$data['button_cancel'] = $this->language->get('button_cancel');
+		$data['button_search'] = $this->language->get('button_search');
 		
 		$data['tab_api'] = $this->language->get('tab_api');
 		$data['tab_general'] = $this->language->get('tab_general');
@@ -126,7 +128,6 @@ class ControllerPaymentPPExpress extends Controller {
 			'href' => $this->url->link('payment/pp_express', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
-		//button actions
 		$data['action'] = $this->url->link('payment/pp_express', 'token=' . $this->session->data['token'], 'SSL');
 		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
 		$data['search'] = $this->url->link('payment/pp_express/search', 'token=' . $this->session->data['token'], 'SSL');

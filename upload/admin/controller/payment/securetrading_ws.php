@@ -152,7 +152,7 @@ class ControllerPaymentSecureTradingWs extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['tab_settings'] = $this->language->get('tab_settings');
-		$data['tab_statuses'] = $this->language->get('tab_statuses');
+		$data['tab_order_status'] = $this->language->get('tab_order_status');
 		$data['tab_myst'] = $this->language->get('tab_myst');
 
 		$data['entry_site_reference'] = $this->language->get('entry_site_reference');

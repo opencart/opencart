@@ -3,7 +3,6 @@ class ControllerPaymentBluePayHosted extends Controller {
 	private $error = array();
 
 	public function index() {
-
 		$this->load->language('payment/bluepay_hosted');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -206,9 +205,7 @@ class ControllerPaymentBluePayHosted extends Controller {
 	}
 
 	public function orderAction() {
-
 		if ($this->config->get('bluepay_hosted_status')) {
-
 			$this->load->model('payment/bluepay_hosted');
 
 			$bluepay_hosted_order = $this->model_payment_bluepay_hosted->getOrder($this->request->get['order_id']);

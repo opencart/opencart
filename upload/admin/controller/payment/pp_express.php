@@ -11,8 +11,6 @@ class ControllerPaymentPPExpress extends Controller {
 		$this->load->model('extension/extension');
 		$this->load->model('payment/pp_express');
 
-		$this->error = array();
-
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			unset($this->request->post['pp_express_module']);
 
@@ -21,8 +19,6 @@ class ControllerPaymentPPExpress extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
-		} else {
-			$data['error'] = @$this->error;
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');

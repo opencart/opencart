@@ -1521,15 +1521,13 @@ class ControllerPaymentPPExpress extends Controller {
 			$data['breadcrumbs'] = array();
 
 			$data['breadcrumbs'][] = array(
-				'href'      => $this->url->link('common/home'),
-				'text'      => $this->language->get('text_home'),
-				'separator' => false
+				'href' => $this->url->link('common/home'),
+				'text' => $this->language->get('text_home')
 			);
 
 			$data['breadcrumbs'][] = array(
-				'href'      => $this->url->link('checkout/cart'),
-				'text'      => $this->language->get('text_cart'),
-				'separator' => $this->language->get('text_separator')
+				'href' => $this->url->link('checkout/cart'),
+				'text' => $this->language->get('text_cart')
 			);
 
 			$data['heading_title'] = $this->language->get('error_heading_title');

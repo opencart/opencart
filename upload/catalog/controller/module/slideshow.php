@@ -11,6 +11,7 @@ class ControllerModuleSlideshow extends Controller {
 
 		$data['width'] = $setting['width'];
 		$data['height'] = $setting['height'];
+		$data['direction'] = $this->language->get('direction');
 
 		$data['banners'] = array();
 

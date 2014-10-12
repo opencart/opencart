@@ -371,6 +371,7 @@ class ControllerPaymentBluepayredirect extends Controller {
 
 	public function callback() {
 		$this->response->addHeader('Content-Type: application/json');
+		
 		$this->response->setOutput(json_encode($this->request->get));
 	}
 }

@@ -5,13 +5,13 @@ class ControllerModuleSlideshow extends Controller {
 
 		$this->load->model('design/banner');
 		$this->load->model('tool/image');
-
+		
 		$this->document->addStyle('catalog/view/javascript/jquery/flexslider/flexslider.css');
 		$this->document->addScript('catalog/view/javascript/jquery/flexslider/jquery.flexslider-min.js');
-
+		
 		$data['width'] = $setting['width'];
 		$data['height'] = $setting['height'];
-		$data['direction'] = $this->language->get('direction');
+		$data['direction'] = 
 
 		$data['banners'] = array();
 

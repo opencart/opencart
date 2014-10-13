@@ -14,6 +14,6 @@ $('#slideshow<?php echo $module; ?>').flexslider({
 	animation: 'slide',
 	animationLoop: true,
 	itemWidth: <?php echo $width; ?>,
-	rtl: <?php echo ($direction == 'rtl' ? 'true' : 'false'); ?>
+	reverse: <?php echo ($direction == 'rtl' ? 'true' : 'false'); ?>
 });
 --></script>

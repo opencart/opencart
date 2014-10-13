@@ -15,7 +15,6 @@ $('#carousel<?php echo $module; ?>').flexslider({
 	itemWidth: <?php echo $width; ?>,
 	itemMargin: 100,
 	minItems: 2,
-    maxItems: 4,
-	reverse: <?php echo ($direction == 'rtl' ? 'true' : 'false'); ?>
+    maxItems: 4
 });
 --></script>

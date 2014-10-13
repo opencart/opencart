@@ -16,7 +16,6 @@ $('#banner<?php echo $module; ?>').flexslider({
 	itemWidth: <?php echo $width; ?>,
 	itemMargin: 5,
 	controlNav: false,
-	directionNav: false,
-	reverse: <?php echo ($direction == 'rtl' ? 'true' : 'false'); ?>
+	directionNav: false
 });
 --></script>

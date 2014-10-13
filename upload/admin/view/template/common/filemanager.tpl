@@ -55,8 +55,7 @@ $('a.thumbnail').on('click', function(e) {
 	
 	<?php if ($target) { ?>
 	$('#<?php echo $target; ?>').attr('value', $(this).parent().find('input').attr('value'));
-	<?php } ?>
-	
+	<?php } else { ?>
 	var range, sel = document.getSelection(); 
 	
 	if (sel.rangeCount) { 
@@ -66,7 +65,8 @@ $('a.thumbnail').on('click', function(e) {
 		range = sel.getRangeAt(0); 
 		range.insertNode(img); 
 	}
-	
+	<?php } ?>
+
 	$('#modal-image').modal('hide');
 });
 

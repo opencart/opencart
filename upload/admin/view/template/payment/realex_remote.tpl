@@ -27,13 +27,13 @@
         <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> <?php echo $text_ip_message; ?></div>
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-realex" class="form-horizontal">
           <ul class="nav nav-tabs" id="tabs">
-            <li class="active"><a href="#tab-account" data-toggle="tab"><?php echo $tab_account; ?></a></li>
-            <li><a href="#tab-sub-account" data-toggle="tab"><?php echo $tab_sub_account; ?></a></li>
+            <li class="active"><a href="#tab-api" data-toggle="tab"><?php echo $tab_api; ?></a></li>
+            <li><a href="#tab-account" data-toggle="tab"><?php echo $tab_account; ?></a></li>
             <li><a href="#tab-order-status" data-toggle="tab"><?php echo $tab_order_status; ?></a></li>
             <li><a href="#tab-payment" data-toggle="tab"><?php echo $tab_payment; ?></a></li>
           </ul>
           <div class="tab-content">
-            <div class="tab-pane active" id="tab-account">
+            <div class="tab-pane active" id="tab-api">
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-merchant-id"><?php echo $entry_merchant_id; ?></label>
                 <div class="col-sm-10">
@@ -128,7 +128,7 @@
                 </div>
               </div>
             </div>
-            <div class="tab-pane" id="tab-sub-account">
+            <div class="tab-pane" id="tab-account">
               <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover">
                   <thead>

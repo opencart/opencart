@@ -45,6 +45,30 @@ class ControllerPaymentPPPro extends Controller {
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
+		if (isset($this->error['warning'])) {
+			$data['error_warning'] = $this->error['warning'];
+		} else {
+			$data['error_warning'] = '';
+		}
+		
+		if (isset($this->error['username'])) {
+			$data['error_username'] = $this->error['username'];
+		} else {
+			$data['error_username'] = '';
+		}
+		
+		if (isset($this->error['password'])) {
+			$data['error_password'] = $this->error['password'];
+		} else {
+			$data['error_password'] = '';
+		}
+		
+		if (isset($this->error['signature'])) {
+			$data['error_signature'] = $this->error['signature'];
+		} else {
+			$data['error_signature'] = '';
+		}
+					
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(

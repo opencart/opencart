@@ -77,8 +77,8 @@ $_['help_liability']				= 'Accepting liability means you will still accept payme
 $_['help_card_data_status']			= 'Logs last 4 cards digits, expire, name, type and issuing bank information';
 
 // Tab
-$_['tab_account']					= 'API info';
-$_['tab_sub_account']				= 'Accounts';
+$_['tab_api']					    = 'API Details';
+$_['tab_account']				    = 'Accounts';
 $_['tab_order_status']				= 'Order Status';
 $_['tab_payment']					= 'Payment Settings';
 

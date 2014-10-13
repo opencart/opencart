@@ -37,8 +37,8 @@
                 <label class="col-sm-2 control-label" for="entry-username"><?php echo $entry_username; ?></label>
                 <div class="col-sm-10">
                   <input type="text" name="pp_express_username" value="<?php echo $pp_express_username; ?>" placeholder="<?php echo $entry_username; ?>" id="entry-username" class="form-control" />
-                  <?php if (isset($error['username'])) { ?>
-                  <div class="text-danger"><?php echo $error['username']; ?></div>
+                  <?php if ($error_username) { ?>
+                  <div class="text-danger"><?php echo $error_username; ?></div>
                   <?php } ?>
                 </div>
               </div>

@@ -14,8 +14,8 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if (isset($error['error_warning'])) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error['error_warning']; ?>
+    <?php if ($error_warning) { ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
@@ -175,7 +175,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label"><?php echo $entry_cancel_url; ?></label>
             <div class="col-sm-10">
-              <div class="input-group"> <span class="input-group-addon"><i class="fa fa-link"></i></span>
+              <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
                 <input type="text" value="<?php echo $cancel_url ?>" class="form-control" />
               </div>
             </div>
@@ -183,7 +183,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label"><?php echo $entry_error_url; ?></label>
             <div class="col-sm-10">
-              <div class="input-group"> <span class="input-group-addon"><i class="fa fa-link"></i></span>
+              <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
                 <input type="text" value="<?php echo $error_url ?>" class="form-control" />
               </div>
             </div>
@@ -191,7 +191,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label"><?php echo $entry_return_url; ?></label>
             <div class="col-sm-10">
-              <div class="input-group"> <span class="input-group-addon"><i class="fa fa-link"></i></span>
+              <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
                 <input type="text" value="<?php echo $return_url ?>" class="form-control" />
               </div>
             </div>
@@ -199,7 +199,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label"><?php echo $entry_post_url; ?></label>
             <div class="col-sm-10">
-              <div class="input-group"> <span class="input-group-addon"><i class="fa fa-link"></i></span>
+              <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
                 <input type="text" value="<?php echo $post_url ?>" class="form-control" />
               </div>
             </div>

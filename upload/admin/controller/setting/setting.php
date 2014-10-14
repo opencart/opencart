@@ -25,6 +25,7 @@ class ControllerSettingSetting extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_yes'] = $this->language->get('text_yes');
@@ -509,7 +510,7 @@ class ControllerSettingSetting extends Controller {
 		} elseif ($this->config->get('config_image') && is_file(DIR_IMAGE . $this->config->get('config_image'))) {
 			$data['thumb'] = $this->model_tool_image->resize($this->config->get('config_image'), 100, 100);
 		} else {
-			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);;
+			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);

@@ -43,7 +43,7 @@ class ModelMarketingMarketing extends Model {
 			$implode[] = "o.order_status_id = '" . (int)$order_status_id . "'";
 		}
 
-		$sql = "SELECT *, (SELECT COUNT(*) FROM `" . DB_PREFIX . "order` o WHERE o.order_status_id = '" . (int)$this->config->get('config_complete_status_id') . "' AND o.marketing_id = m.marketing_id) AS orders FROM " . DB_PREFIX . "marketing m";
+		$sql = "SELECT *, (SELECT COUNT(*) FROM `" . DB_PREFIX . "order` o WHERE (" . implode(" OR ", $implode) . ") AND o.marketing_id = m.marketing_id) AS orders FROM " . DB_PREFIX . "marketing m";
 
 		$implode = array();
 

@@ -657,7 +657,7 @@ class ControllerOpenbayAmazon extends Controller {
 
 				$key = '';
 
-				$id_types = array('isbn', 'upc', 'ean', 'jan');
+				$id_types = array('isbn', 'upc', 'ean', 'jan', 'sku');
 
 				foreach ($id_types as $id_type) {
 					if (!empty($product[$id_type])) {

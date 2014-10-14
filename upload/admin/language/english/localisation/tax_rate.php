@@ -3,10 +3,12 @@
 $_['heading_title']        = 'Tax Rates';
 
 // Text
-$_['text_percent']         = 'Percentage';
-$_['text_amount']          = 'Fixed Amount';
 $_['text_success']         = 'Success: You have modified tax rates!';
 $_['text_list']            = 'Tax Rate List';
+$_['text_add']             = 'Add Tax Rate';
+$_['text_edit']            = 'Edit Tax Rate';
+$_['text_percent']         = 'Percentage';
+$_['text_amount']          = 'Fixed Amount';
 
 // Column
 $_['column_name']          = 'Tax Name';

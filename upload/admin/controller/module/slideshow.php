@@ -114,6 +114,8 @@ class ControllerModuleSlideshow extends Controller {
 					$this->error['dimension'][$key] = $this->language->get('error_dimension');
 				}
 			}
+		} else {
+			$this->error['warning'] = $this->language->get('error_module');
 		}
 
 		return !$this->error;

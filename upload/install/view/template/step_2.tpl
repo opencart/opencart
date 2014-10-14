@@ -77,7 +77,7 @@
                 </td>
               </tr>
               <tr>
-                <td><?php echo $text_upload; ?></td>
+                <td><?php echo $text_file_upload; ?></td>
                 <td><?php if ($file_uploads) { ?>
                   <?php echo $text_on; ?>
                   <?php } else { ?>
@@ -314,6 +314,15 @@
                   <?php } ?>
                 </td>
               </tr>
+              <tr>
+                <td><?php echo $upload . '/'; ?></td>
+                <td><?php if (is_writable($upload)) { ?>
+                  <span class="text-success"><?php echo $text_writable; ?></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><?php echo $text_unwritable; ?></span>
+                  <?php } ?>
+                </td>
+              </tr>              
               <tr>
                 <td><?php echo $image . '/'; ?></td>
                 <td><?php if (is_writable($image)) { ?>

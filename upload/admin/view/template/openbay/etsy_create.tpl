@@ -21,7 +21,7 @@
       <ul class="nav nav-tabs">
         <li class="active"><a href="#tab-listing-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
         <li><a href="#tab-listing-additional" data-toggle="tab"><?php echo $tab_additional; ?></a></li>
-        <li><a href="#tab-images" data-toggle="tab"><?php echo $tab_images; ?></a></li>
+        <li><a href="#tab-images" data-toggle="tab"><?php echo $tab_image; ?></a></li>
       </ul>
       <div class="tab-content">
         <div id="tab-listing-general" class="tab-pane active">
@@ -120,34 +120,6 @@
               <select name="shipping_template_id" id="input-shipping" class="form-control" disabled="disabled">
               </select>
             </div>
-          </div>
-        </div>
-        <div id="tab-images" class="tab-pane">
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_image; ?></label>
-            <div class="col-sm-10"><a id="thumb-image" class="img-thumbnail"><img src="<?php echo $placeholder; ?>" alt="" title="" /></a>
-              <input type="hidden" name="image" value="<?php echo $product['image_url']; ?>" id="input-image" />
-            </div>
-          </div>
-          <div class="table-responsive">
-            <table id="images" class="table table-striped table-bordered table-hover">
-              <thead>
-                <tr>
-                  <td class="text-right" style="width: 1px;"></td>
-                  <td class="text-left"><?php echo $entry_image_other; ?></td>
-                </tr>
-              </thead>
-              <tbody>
-                <?php $image_row = 0; ?>
-                <?php foreach ($product['product_images'] as $product_image) { ?>
-                <tr>
-                  <td class="text-left"><input type="checkbox" name="product_image[<?php echo $image_row; ?>][image_url]" value="<?php echo $product_image['image_url']; ?>" class="product-image" checked="checked" /></td>
-                  <td class="text-left"><a href="" class="img-thumbnail"><img src="<?php echo $product_image['thumb']; ?>" alt="" title="" /></a></td>
-                </tr>
-                <?php $image_row++; ?>
-                <?php } ?>
-              </tbody>
-            </table>
           </div>
         </div>
         <div id="tab-listing-additional" class="tab-pane">
@@ -254,6 +226,36 @@
               </div>
             </div>
           </div>
+        </div>
+        <div id="tab-images" class="tab-pane">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_image; ?></label>
+            <div class="col-sm-10"><a id="thumb-image" class="img-thumbnail"><img src="<?php echo $product['thumb']; ?>" alt="" title="" /></a>
+              <input type="hidden" name="image" value="<?php echo $product['image_url']; ?>" id="input-image" />
+            </div>
+          </div>
+          <?php if (!empty($product['product_images'])) { ?>
+          <div class="table-responsive">
+            <table id="images" class="table table-striped table-bordered table-hover">
+              <thead>
+              <tr>
+                <td class="text-right" style="width: 1px;"></td>
+                <td class="text-left"><?php echo $entry_image_other; ?></td>
+              </tr>
+              </thead>
+              <tbody>
+              <?php $image_row = 0; ?>
+              <?php foreach ($product['product_images'] as $product_image) { ?>
+              <tr>
+                <td class="text-left"><input type="checkbox" name="product_image[<?php echo $image_row; ?>][image_url]" value="<?php echo $product_image['image_url']; ?>" class="product-image" checked="checked" /></td>
+                <td class="text-left"><a href="" class="img-thumbnail"><img src="<?php echo $product_image['thumb']; ?>" alt="" title="" /></a></td>
+              </tr>
+              <?php $image_row++; ?>
+              <?php } ?>
+              </tbody>
+            </table>
+          </div>
+          <?php } ?>
         </div>
         <div class="well">
           <div class="row">
@@ -537,5 +539,5 @@
     getShopSection();
   });
 
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

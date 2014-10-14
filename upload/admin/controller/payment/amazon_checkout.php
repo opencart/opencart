@@ -37,6 +37,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 		
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_amazon_join'] = $this->language->get('text_amazon_join');
 		$data['text_sandbox'] = $this->language->get('text_sandbox');
 		$data['text_live'] = $this->language->get('text_live');

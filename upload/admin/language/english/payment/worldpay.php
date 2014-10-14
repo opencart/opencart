@@ -5,6 +5,7 @@ $_['heading_title']					= 'WorldPay';
 // Text
 $_['text_payment']					= 'Payment';
 $_['text_success']					= 'Success: You have modified WorldPay account details!';
+$_['text_edit']                     = 'Edit WorldPay';
 $_['text_worldpay']					= '<a href="https://business.worldpay.com/partner/opencart" target="_blank"><img src="view/image/payment/worldpay.png" alt="Worldpay" title="Worldpay" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_successful']				= 'On - Always Successful';
 $_['text_declined']					= 'On - Always Declined';

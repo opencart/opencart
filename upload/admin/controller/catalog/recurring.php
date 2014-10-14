@@ -297,7 +297,8 @@ class ControllerCatalogRecurring extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_form'] = !isset($this->request->get['recurring_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_profile'] = $this->language->get('text_profile');
@@ -531,7 +532,7 @@ class ControllerCatalogRecurring extends Controller {
 		$this->load->model('catalog/product');
 
 		foreach ($this->request->post['selected'] as $recurring_id) {
-			$product_total = $this->model_catalog_product->getTotalProductsByRcurringId($recurring_id);
+			$product_total = $this->model_catalog_product->getTotalProductsByProfileId($recurring_id);
 
 			if ($product_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_product'), $product_total);

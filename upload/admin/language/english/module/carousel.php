@@ -18,4 +18,5 @@ $_['entry_status']     = 'Status';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify carousel module!';
+$_['error_module']     = 'Warning: Module required!';
 $_['error_image']      = 'Image width &amp; height dimensions required!';

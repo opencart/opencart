@@ -10,12 +10,11 @@
   </ul>
 </div>
 <script type="text/javascript"><!--
-$(window).load(function() {
 $('#carousel<?php echo $module; ?>').flexslider({
 	animation: 'slide',
-	itemWidth: 130,
+	itemWidth: <?php echo $width; ?>,
 	itemMargin: 100,
 	minItems: 2,
     maxItems: 4
-});});
+});
 --></script>

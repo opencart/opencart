@@ -205,13 +205,13 @@
         alert('<?php echo $text_clear_faq_complete; ?>');
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        $('#button-clear-faq').empty().html('<?php echo $text_clear; ?>');
+        $('#button-clear-faq').empty().html('<?php echo $button_faq_clear; ?>');
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });
   });
 
-  $('#ftp-update-module').bind('click', function() {
+  $('#ftp-update-module').bind('click', function(e) {
     e.preventDefault();
 
     $.ajax({

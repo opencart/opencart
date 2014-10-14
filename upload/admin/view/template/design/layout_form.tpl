@@ -21,7 +21,7 @@
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h3>
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_form; ?></h3>
       </div>
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-layout" class="form-horizontal">
@@ -162,7 +162,7 @@ function addModule() {
 	<?php foreach ($modules as $module) { ?>
     html += '    <optgroup label="<?php echo $module['name']; ?>">';
     <?php foreach ($module['module'] as $module) { ?>
-	html += '      <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>';
+	html += '      <option value="<?php echo $module['code']; ?>"><?php echo addslashes($module['name']); ?></option>';
 	<?php } ?>
 	html += '    </optgroup>';
 	<?php } ?>

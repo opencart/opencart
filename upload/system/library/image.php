@@ -13,8 +13,8 @@ class Image {
 			$this->info = array(
 				'width'  => $info[0],
 				'height' => $info[1],
-				'bits'   => $info['bits'],
-				'mime'   => $info['mime']
+				'bits'   => isset($info['bits']) ? $info['bits'] : '',
+				'mime'   => isset($info['mime']) ? $info['mime'] : ''
 			);
 
 			$this->image = $this->create($file);

@@ -5,7 +5,7 @@ $_['heading_title']					= 'Amazon Payments';
 // Text
 $_['text_payment']					= 'Payment';
 $_['text_success']					= 'Success: Amazon Payments module has been updated';
-$_['text_list']                     = 'Layout List';
+$_['text_edit']                     = 'Edit Amazon Payment';
 $_['text_germany']					= 'Germany';
 $_['text_uk']						= 'United Kingdom';
 $_['text_live']						= 'Live';
@@ -48,7 +48,7 @@ $_['entry_cron_job_url']			= 'Cron Job\'s URL';
 $_['entry_cron_job_token']			= 'Secret Token';
 $_['entry_cron_job_last_run']		= 'Cron job\'s Last Run Time';
 $_['entry_ip']						= 'IP Address';
-$_['entry_ip_allowed']				= 'IP\'s allowed';
+$_['entry_ip_allowed']				= 'IPs allowed';
 $_['entry_total']	         		= 'Total';
 $_['entry_geo_zone']			    = 'Geo Zone';
 $_['entry_status']					= 'Status';

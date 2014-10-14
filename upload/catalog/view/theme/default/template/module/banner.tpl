@@ -1,4 +1,4 @@
-<div id="carousel<?php echo $module; ?>" class="flexslider">
+<div id="banner<?php echo $module; ?>" class="flexslider">
   <ul class="slides">
     <?php foreach ($banners as $banner) { ?>
     <?php if ($banner['link']) { ?>
@@ -10,10 +10,12 @@
   </ul>
 </div>
 <script type="text/javascript"><!--
-$('banner<?php echo $module; ?>').flexslider({
-	animation: 'slide',
+$('#banner<?php echo $module; ?>').flexslider({
+	animation: 'fade',
 	animationLoop: true,
-	itemWidth: 1,
-	itemMargin: 5
+	itemWidth: <?php echo $width; ?>,
+	itemMargin: 5,
+	controlNav: false,
+	directionNav: false
 });
 --></script>

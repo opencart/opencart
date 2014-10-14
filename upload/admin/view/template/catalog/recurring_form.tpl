@@ -22,7 +22,7 @@
     <div class="alert alert-info"><?php echo $text_recurring; ?></div>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h3>
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_form; ?></h3>
       </div>
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-recurring" class="form-horizontal">
@@ -63,11 +63,11 @@
               <label class="col-sm-2 control-label" for="input-frequency"><?php echo $entry_frequency; ?></label>
               <div class="col-sm-10">
                 <select name="frequency" id="input-frequency" class="form-control">
-                  <?php foreach ($frequencies as $frequency) { ?>
-                  <?php if ($frequency['code'] == $key) { ?>
-                  <option value="<?php echo $frequency['code']; ?>" selected="selected"><?php echo $frequency['text']; ?></option>
+                  <?php foreach ($frequencies as $frequency_option) { ?>
+                  <?php if ($frequency == $frequency_option['value']) { ?>
+                  <option value="<?php echo $frequency_option['value']; ?>" selected="selected"><?php echo $frequency_option['text']; ?></option>
                   <?php } else { ?>
-                  <option value="<?php echo $frequency['code']; ?>"><?php echo $frequency['text']; ?></option>
+                  <option value="<?php echo $frequency_option['value']; ?>"><?php echo $frequency_option['text']; ?></option>
                   <?php } ?>
                   <?php } ?>
                 </select>
@@ -112,11 +112,11 @@
               <label class="col-sm-2 control-label" for="input-trial-frequency"><?php echo $entry_trial_frequency; ?></label>
               <div class="col-sm-10">
                 <select name="trial_frequency" id="input-trial-frequency" class="form-control">
-                  <?php foreach ($frequencies as $frequency) { ?>
-                  <?php if ($trial_frequency  == $key) { ?>
-                  <option value="<?php echo $frequency['code']; ?>" selected="selected"><?php echo $frequency['text']; ?></option>
+                  <?php foreach ($frequencies as $frequency_option) { ?>
+                  <?php if ($trial_frequency  == $frequency_option['value']) { ?>
+                  <option value="<?php echo $frequency_option['value']; ?>" selected="selected"><?php echo $frequency_option['text']; ?></option>
                   <?php } else { ?>
-                  <option value="<?php echo $frequency['code']; ?>"><?php echo $frequency['text']; ?></option>
+                  <option value="<?php echo $frequency_option['value']; ?>"><?php echo $frequency_option['text']; ?></option>
                   <?php } ?>
                   <?php } ?>
                 </select>

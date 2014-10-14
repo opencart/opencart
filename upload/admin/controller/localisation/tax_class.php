@@ -258,7 +258,8 @@ class ControllerLocalisationTaxClass extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_form'] = !isset($this->request->get['tax_class_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_shipping'] = $this->language->get('text_shipping');
 		$data['text_payment'] = $this->language->get('text_payment');
 		$data['text_store'] = $this->language->get('text_store');

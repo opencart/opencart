@@ -11,7 +11,7 @@ class ControllerAccountRegister extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.min.js');
+		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.js');
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
 		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
@@ -40,21 +40,18 @@ class ControllerAccountRegister extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),
-			'separator' => false
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home')
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('account/account', '', 'SSL'),
-			'separator' => $this->language->get('text_separator')
+			'text' => $this->language->get('text_account'),
+			'href' => $this->url->link('account/account', '', 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_register'),
-			'href'      => $this->url->link('account/register', '', 'SSL'),
-			'separator' => $this->language->get('text_separator')
+			'text' => $this->language->get('text_register'),
+			'href' => $this->url->link('account/register', '', 'SSL')
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');

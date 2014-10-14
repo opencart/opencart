@@ -174,7 +174,7 @@
             <?php } else { ?>
             <input type="checkbox" name="agree" value="1" />
             <?php } ?>
-            <input type="submit" value="<?php echo $button_continue; ?>" class="btn btn-primary" />
+            <input type="submit" value="<?php echo $button_submit; ?>" class="btn btn-primary" />
           </div>
         </div>
         <?php } else { ?>
@@ -194,4 +194,4 @@ $('.date').datetimepicker({
 	pickTime: false
 });
 //--></script>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

@@ -18,7 +18,8 @@ class ControllerPaymentPPStandard extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_all_zones'] = $this->language->get('text_all_zones');
@@ -54,7 +55,7 @@ class ControllerPaymentPPStandard extends Controller {
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		$data['tab_general'] = $this->language->get('tab_general');
-		$data['tab_status'] = $this->language->get('tab_status');
+		$data['tab_order_status'] = $this->language->get('tab_order_status');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

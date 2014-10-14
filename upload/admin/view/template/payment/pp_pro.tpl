@@ -14,14 +14,14 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if (isset($error['error_warning'])) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error['error_warning']; ?>
+    <?php if ($error_warning) { ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h3>
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_edit; ?></h3>
       </div>
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-pp-pro-uk" class="form-horizontal">
@@ -29,8 +29,8 @@
             <label class="col-sm-2 control-label" for="entry-username"><?php echo $entry_username; ?></label>
             <div class="col-sm-10">
               <input type="text" name="pp_pro_username" value="<?php echo $pp_pro_username; ?>" placeholder="<?php echo $entry_username; ?>" id="entry-username" class="form-control"/>
-              <?php if (isset($error['username'])) { ?>
-              <div class="text-danger"><?php echo $error['username']; ?></div>
+              <?php if ($error_username) { ?>
+              <div class="text-danger"><?php echo $error_username; ?></div>
               <?php } ?>
             </div>
           </div>
@@ -38,8 +38,8 @@
             <label class="col-sm-2 control-label" for="entry-password"><?php echo $entry_password; ?></label>
             <div class="col-sm-10">
               <input type="text" name="pp_pro_password" value="<?php echo $pp_pro_password; ?>" placeholder="<?php echo $entry_password; ?>" id="entry-password" class="form-control"/>
-              <?php if (isset($error['password'])) { ?>
-              <div class="text-danger"><?php echo $error['password']; ?></div>
+              <?php if ($error_password) { ?>
+              <div class="text-danger"><?php echo $error_password; ?></div>
               <?php } ?>
             </div>
           </div>
@@ -47,8 +47,8 @@
             <label class="col-sm-2 control-label" for="entry-signature"><?php echo $entry_signature; ?></label>
             <div class="col-sm-10">
               <input type="text" name="pp_pro_signature" value="<?php echo $pp_pro_signature; ?>" placeholder="<?php echo $entry_signature; ?>" id="entry-signature" class="form-control"/>
-              <?php if (isset($error['signature'])) { ?>
-              <div class="text-danger"><?php echo $error['signature']; ?></div>
+              <?php if ($error_signature) { ?>
+              <div class="text-danger"><?php echo $error_signature; ?></div>
               <?php } ?>
             </div>
           </div>

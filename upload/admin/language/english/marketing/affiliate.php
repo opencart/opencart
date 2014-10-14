@@ -6,6 +6,8 @@ $_['heading_title']             = 'Affiliates';
 $_['text_success']              = 'Success: You have modified affiliates!';
 $_['text_approved']             = 'You have approved %s accounts!';
 $_['text_list']                 = 'Affiliate List';
+$_['text_add']                  = 'Add Affiliate';
+$_['text_edit']                 = 'Edit Affiliate';
 $_['text_balance']              = 'Balance';
 $_['text_cheque']               = 'Cheque';
 $_['text_paypal']               = 'PayPal';
@@ -59,7 +61,7 @@ $_['entry_date_added']          = 'Date Added';
 
 // Help
 $_['help_code']                 = 'The tracking code that will be used to track referrals.';
-$_['help_commission']           = 'Percentage the affiliate recieves on each order.';
+$_['help_commission']           = 'Percentage the affiliate receives on each order.';
 
 // Error
 $_['error_permission']          = 'Warning: You do not have permission to modify affiliates!';

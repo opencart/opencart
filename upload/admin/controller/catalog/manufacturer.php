@@ -261,7 +261,8 @@ class ControllerCatalogManufacturer extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_form'] = !isset($this->request->get['manufacturer_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_default'] = $this->language->get('text_default');
@@ -291,7 +292,13 @@ class ControllerCatalogManufacturer extends Controller {
 		} else {
 			$data['error_name'] = '';
 		}
-
+		
+		if (isset($this->error['keyword'])) {
+			$data['error_keyword'] = $this->error['keyword'];
+		} else {
+			$data['error_keyword'] = '';
+		}
+		
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -404,6 +411,18 @@ class ControllerCatalogManufacturer extends Controller {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 
+		$this->load->model('catalog/url_alias');
+
+		$url_alias_info = $this->model_catalog_url_alias->getUrlAlias($this->request->post['keyword']);
+		
+		if ($url_alias_info && isset($this->request->get['manufacturer_id']) && $url_alias_info['query'] != 'manufacturer_id=' . $this->request->get['manufacturer_id']) {
+			$this->error['keyword'] = sprintf($this->language->get('error_keyword'));
+		}
+		
+		if ($url_alias_info && !isset($this->request->get['manufacturer_id'])) {
+			$this->error['keyword'] = sprintf($this->language->get('error_keyword'));
+		}
+		
 		return !$this->error;
 	}
 

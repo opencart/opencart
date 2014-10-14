@@ -10,7 +10,7 @@ class ControllerModuleBestSeller extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('bestseller', $this->request->post['bestseller_status']);
+			$this->model_setting_setting->editSetting('bestseller', $this->request->post);
 
 			$this->cache->delete('product');
 
@@ -108,10 +108,12 @@ class ControllerModuleBestSeller extends Controller {
 
 		if (isset($this->request->post['bestseller_module'])) {
 			foreach ($this->request->post['bestseller_module'] as $key => $value) {
-				if (!$value['image_width'] || !$value['image_height']) {
+				if (!$value['width'] || !$value['height']) {
 					$this->error['image'][$key] = $this->language->get('error_image');
 				}
 			}
+		} else {
+			$this->error['warning'] = $this->language->get('error_module');
 		}
 
 		return !$this->error;

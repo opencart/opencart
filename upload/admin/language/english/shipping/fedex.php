@@ -5,6 +5,7 @@ $_['heading_title']                            = 'Fedex';
 // Text
 $_['text_shipping']                            = 'Shipping';
 $_['text_success']                             = 'Success: You have modified Fedex shipping!';
+$_['text_edit']                                = 'Edit Fedex Shipping';
 $_['text_europe_first_international_priority'] = 'Europe First International Priority';
 $_['text_fedex_1_day_freight']                 = 'Fedex 1 Day Freight';
 $_['text_fedex_2_day']                         = 'Fedex 2 Day';
@@ -62,7 +63,7 @@ $_['entry_sort_order']                         = 'Sort Order';
 
 // Help
 $_['help_display_time']                        = 'Do you want to display the shipping time? (e.g. Ships within 3 to 5 days)';
-$_['help_display_weight']                      = 'Do you want to display the shipping weight? (e.g. Delivery Weight : 2.7674 Kg\'s)';
+$_['help_display_weight']                      = 'Do you want to display the shipping weight? (e.g. Delivery Weight : 2.7674 kg)';
 $_['help_weight_class']                        = 'Set to kilograms or pounds.';
 
 // Error

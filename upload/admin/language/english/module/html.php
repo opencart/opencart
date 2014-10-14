@@ -14,3 +14,4 @@ $_['entry_status']      = 'Status';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify HTML Content module!';
+$_['error_module']      = 'Warning: Module required!';

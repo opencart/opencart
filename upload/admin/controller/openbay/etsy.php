@@ -179,6 +179,11 @@ class ControllerOpenbayEtsy extends Controller {
 
 	public function settingsUpdate() {
 		$this->openbay->etsy->settingsUpdate();
+
+		$response = array('header_code' => 200);
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($response));
 	}
 
 	public function getOrders() {
@@ -193,10 +198,6 @@ class ControllerOpenbayEtsy extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 }

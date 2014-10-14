@@ -18,7 +18,8 @@ class ControllerPaymentFirstdataRemote extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_yes'] = $this->language->get('text_yes');
@@ -517,10 +518,6 @@ class ControllerPaymentFirstdataRemote extends Controller {
 			$this->error['error_ca'] = $this->language->get('error_ca');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 }

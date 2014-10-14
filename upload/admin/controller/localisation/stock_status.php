@@ -258,7 +258,9 @@ class ControllerLocalisationStockStatus extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_form'] = !isset($this->request->get['stock_status_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+		
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 

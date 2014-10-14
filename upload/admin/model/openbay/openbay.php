@@ -33,7 +33,7 @@ class ModelOpenbayOpenbay extends Model {
 					@ftp_chdir($connection, $data['rootpath']);
 				}
 
-				$directory_list = ftp_nlist($connection, " . ");
+				$directory_list = ftp_nlist($connection, ".");
 
 				$folders = array();
 				foreach ($directory_list as $key => $list) {
@@ -196,9 +196,9 @@ class ModelOpenbayOpenbay extends Model {
 						}
 					}
 
-					$openbay_settings = $this->model_setting_setting->getSetting('openbaymanager');
+					$openbay_settings = $this->model_setting_setting->getSetting('openbay');
 					$openbay_settings['openbay_version'] = $files['version'];
-					$this->model_setting_setting->editSetting('openbaymanager', $openbay_settings);
+					$this->model_setting_setting->editSetting('openbay', $openbay_settings);
 
 					@ftp_close($connection);
 

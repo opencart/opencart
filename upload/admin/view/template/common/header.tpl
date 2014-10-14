@@ -26,7 +26,7 @@
 <link href="view/javascript/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
 <link href="view/javascript/summernote/summernote.css" rel="stylesheet">
 <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
-<script src="view/javascript/jquery/datetimepicker/moment.min.js" type="text/javascript"></script>
+<script src="view/javascript/jquery/datetimepicker/moment.js" type="text/javascript"></script>
 <script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 <link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
 
@@ -66,7 +66,7 @@
         <li><a href="<?php echo $customer_approval; ?>"><?php echo $text_approval; ?> <span class="label label-danger pull-right"><?php echo $customer_total; ?></span></a></li>
         <li class="divider"></li>
         <li class="dropdown-header"><?php echo $text_product; ?></li>
-        <li><a href="<?php echo $product; ?>"><?php echo $text_stock; ?> <span class="label label-danger pull-right"><?php echo $product_total; ?></a></li>
+        <li><a href="<?php echo $product; ?>"><?php echo $text_stock; ?> <span class="label label-danger pull-right"><?php echo $product_total; ?></span></a></li>
         <li><a href="<?php echo $review; ?>"><?php echo $text_review; ?> <span class="label label-danger pull-right"><?php echo $review_total; ?></span></a></li>
         <li class="divider"></li>
         <li class="dropdown-header"><?php echo $text_affiliate; ?></li>

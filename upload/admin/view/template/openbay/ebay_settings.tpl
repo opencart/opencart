@@ -86,7 +86,7 @@
             <legend><?php echo $text_app_settings; ?></legend>
             <p><?php echo $text_application_settings; ?></p>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="entry-enditems"><span data-toggle="tooltip" data-container="#tab-setup" title="<?php echo $help_end_items; ?>"><?php echo $entry_end_items; ?></span></label>
+              <label class="col-sm-2 control-label" for="ebay-enditems"><span data-toggle="tooltip" data-container="#tab-setup" title="<?php echo $help_end_items; ?>"><?php echo $entry_end_items; ?></span></label>
               <div class="col-sm-10">
                 <select name="ebay_enditems" id="ebay-enditems" class="form-control">
                   <?php if ($ebay_enditems) { ?>

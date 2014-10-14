@@ -22,7 +22,7 @@ final class mPDO {
 		$this->statement = $this->pdo->prepare($sql);
 	}
 
-	public function bindParam($parameter, $variable, $data_type = PDO::PARAM_STR, $length = 0) {
+	public function bindParam($parameter, $variable, $data_type = \PDO::PARAM_STR, $length = 0) {
 		if ($length) {
 			$this->statement->bindParam($parameter, $variable, $data_type, $length);
 		} else {
@@ -35,16 +35,16 @@ final class mPDO {
 			if ($this->statement && $this->statement->execute()) {
 				$data = array();
 
-				while ($row = $this->statement->fetch(PDO::FETCH_ASSOC)) {
+				while ($row = $this->statement->fetch(\PDO::FETCH_ASSOC)) {
 					$data[] = $row;
 				}
 
-				$result = new stdClass();
+				$result = new \stdClass();
 				$result->row = (isset($data[0])) ? $data[0] : array();
 				$result->rows = $data;
 				$result->num_rows = $this->statement->rowCount();
 			}
-		} catch(PDOException $e) {
+		} catch(\PDOException $e) {
 			trigger_error('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode());
 		}
 	}
@@ -66,7 +66,7 @@ final class mPDO {
 				$result->rows = $data;
 				$result->num_rows = $this->statement->rowCount();
 			}
-		} catch (PDOException $e) {
+		} catch (\PDOException $e) {
 			trigger_error('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode() . ' <br />' . $sql);
 			exit();
 		}
@@ -74,7 +74,7 @@ final class mPDO {
 		if ($result) {
 			return $result;
 		} else {
-			$result = new stdClass();
+			$result = new \stdClass();
 			$result->row = array();
 			$result->rows = array();
 			$result->num_rows = 0;

@@ -47,7 +47,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			$product_info['thumb'] = $this->model_tool_image->resize($product_info['image'], 100, 100);
 		} else {
 			$product_info['image_url'] = '';
-			$product_info['thumb'] = '';
+			$product_info['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
 
 		// Images

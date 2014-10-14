@@ -139,12 +139,18 @@
               </thead>
               <tbody>
                 <?php $image_row = 0; ?>
-                <?php foreach ($product['product_images'] as $product_image) { ?>
-                <tr>
-                  <td class="text-left"><input type="checkbox" name="product_image[<?php echo $image_row; ?>][image_url]" value="<?php echo $product_image['image_url']; ?>" class="product-image" checked="checked" /></td>
-                  <td class="text-left"><a href="" class="img-thumbnail"><img src="<?php echo $product_image['thumb']; ?>" alt="" title="" /></a></td>
-                </tr>
-                <?php $image_row++; ?>
+                <?php if (!empty($product['product_images'])) { ?>
+                  <?php foreach ($product['product_images'] as $product_image) { ?>
+                  <tr>
+                    <td class="text-left"><input type="checkbox" name="product_image[<?php echo $image_row; ?>][image_url]" value="<?php echo $product_image['image_url']; ?>" class="product-image" checked="checked" /></td>
+                    <td class="text-left"><a href="" class="img-thumbnail"><img src="<?php echo $product_image['thumb']; ?>" alt="" title="" /></a></td>
+                  </tr>
+                  <?php $image_row++; ?>
+                  <?php } ?>
+                <?php } else { ?>
+                  <tr>
+                    <td class="text-center" colspan="2"><?php echo $text_no_results; ?></td>
+                  </tr>
                 <?php } ?>
               </tbody>
             </table>

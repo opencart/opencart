@@ -170,10 +170,8 @@
       success: function(json) {
         if (json.header_code == 200) {
           $('#button-settings').empty().removeClass('btn-primary').addClass('btn-success').html('<?php echo $text_complete; ?>');
-          alert('<?php echo $text_orders_imported; ?>');
         } else {
           $('#button-settings').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>').removeAttr('disabled');
-          alert(json.data.error + '(' + json.data.code + ')');
         }
       },
       error: function (xhr, ajaxOptions, thrownError) {

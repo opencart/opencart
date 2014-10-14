@@ -180,7 +180,7 @@ class ControllerOpenbayEtsy extends Controller {
 	public function settingsUpdate() {
 		$this->openbay->etsy->settingsUpdate();
 
-		$response = array('ok');
+		$response = array('header_code' => 200);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($response));

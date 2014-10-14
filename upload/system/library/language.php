@@ -12,6 +12,23 @@ class Language {
 		return (isset($this->data[$key]) ? $this->data[$key] : $key);
 	}
 	
+		public function getall($ignore=null) {
+		$data = array();
+		
+		if(is_array($ignore)){
+			foreach($this->data as $k=>$v)
+			{
+				if(!in_array($k,$ignore)){
+					$data[$k]=$v;
+				}
+			}
+		
+		}else{
+		$data=$this->data;
+		}
+		return $data;
+	}
+	
 	public function load($filename) {
 		$_ = array();
 

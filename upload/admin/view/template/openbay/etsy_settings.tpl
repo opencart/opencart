@@ -110,12 +110,12 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="button-import"><?php echo $text_pull_orders; ?></label>
-            <div class="col-sm-10"> <a class="btn btn-primary" id="button-import"><i class="fa fa-refresh"></i> <?php echo $button_pull; ?></a> </div>
+            <label class="col-sm-2 control-label" for="button-import"><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_pull_orders; ?>"><?php echo $text_pull_orders; ?></span></label>
+            <div class="col-sm-10"> <a class="btn btn-primary" id="button-import"><i class="fa fa-refresh"></i></a> </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="button-settings"><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_sync_settings; ?>"><?php echo $text_sync_settings; ?></span></label>
-            <div class="col-sm-10"> <a class="btn btn-primary" id="button-settings"><i class="fa fa-refresh"></i> <?php echo $button_pull; ?></a> </div>
+            <div class="col-sm-10"> <a class="btn btn-primary" id="button-settings"><i class="fa fa-refresh"></i></a> </div>
           </div>
         </div>
       </div>

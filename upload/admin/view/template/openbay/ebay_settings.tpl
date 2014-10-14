@@ -391,7 +391,6 @@
         <div class="tab-pane" id="tab-defaults">
           <fieldset>
             <legend><?php echo $text_listing; ?></legend>
-            <p><?php echo $text_setting_desc; ?></p>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="entry-duration"><span data-toggle="tooltip" data-container="#tab-setup" title="<?php echo $help_duration; ?>"><?php echo $entry_duration; ?></span></label>
               <div class="col-sm-10">
@@ -603,5 +602,5 @@
       checkCredentials();
       changeTaxHandler();
     });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

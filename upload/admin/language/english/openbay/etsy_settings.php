@@ -12,6 +12,7 @@ $_['text_api_other']            = 'Links';
 $_['text_token_register']       = 'Register';
 $_['text_api_ok']       		= 'API connection OK';
 $_['text_pull_orders']    		= 'Pull orders';
+$_['text_sync_settings']    	= 'Sync settings';
 $_['text_complete']    			= 'Complete';
 $_['text_failed']    			= 'Failed';
 $_['text_orders_imported']    	= 'Order pull has been requested';
@@ -38,3 +39,4 @@ $_['tab_api_info']            	= 'API details';
 
 // Help
 $_['help_address_format']  		= 'Only used if the linked country does not have an address format set-up already.';
+$_['help_sync_settings']  		= 'This will update your database with the latest setting options such as condition types, dates and more.';

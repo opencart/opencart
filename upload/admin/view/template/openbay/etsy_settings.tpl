@@ -71,10 +71,10 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="etsy_address_format"><?php echo $entry_address_format; ?></label>
+            <label class="col-sm-2 control-label" for="etsy_address_format"><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_address_format; ?>"><?php echo $entry_address_format; ?></span></label>
             <div class="col-sm-10">
               <textarea name="etsy_address_format" class="form-control" rows="3" id="etsy_address_format"><?php echo $etsy_address_format; ?></textarea>
-              <span class="help-block"><?php echo $help_address_format; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="etsy_order_status_new"><?php echo $entry_import_def_id; ?></label>
@@ -113,6 +113,10 @@
             <label class="col-sm-2 control-label" for="button-import"><?php echo $text_pull_orders; ?></label>
             <div class="col-sm-10"> <a class="btn btn-primary" id="button-import"><i class="fa fa-refresh"></i> <?php echo $button_pull; ?></a> </div>
           </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="button-settings"><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_sync_settings; ?>"><?php echo $text_sync_settings; ?></span></label>
+            <div class="col-sm-10"> <a class="btn btn-primary" id="button-settings"><i class="fa fa-refresh"></i> <?php echo $button_pull; ?></a> </div>
+          </div>
         </div>
       </div>
     </form>
@@ -150,6 +154,30 @@
       },
       error: function (xhr, ajaxOptions, thrownError) {
         $('#button-import').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>').removeAttr('disabled');
+        if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
+      }
+    });
+  });
+
+  $('#button-settings').bind('click', function() {
+    $.ajax({
+      url: 'index.php?route=openbay/etsy/settingsupdate&token=<?php echo $token; ?>',
+      beforeSend: function(){
+        $('#button-settings').removeClass('btn-success').removeClass('btn-danger').addClass('btn-primary').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+      },
+      type: 'get',
+      dataType: 'json',
+      success: function(json) {
+        if (json.header_code == 200) {
+          $('#button-settings').empty().removeClass('btn-primary').addClass('btn-success').html('<?php echo $text_complete; ?>');
+          alert('<?php echo $text_orders_imported; ?>');
+        } else {
+          $('#button-settings').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>').removeAttr('disabled');
+          alert(json.data.error + '(' + json.data.code + ')');
+        }
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        $('#button-settings').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>').removeAttr('disabled');
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });

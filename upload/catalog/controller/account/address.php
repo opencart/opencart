@@ -356,6 +356,12 @@ class ControllerAccountAddress extends Controller {
 			$data['error_zone'] = '';
 		}
 
+		if (isset($this->error['custom_field'])) {
+			$data['error_custom_field'] = $this->error['custom_field'];
+		} else {
+			$data['error_custom_field'] = array();
+		}
+		
 		if (!isset($this->request->get['address_id'])) {
 			$data['action'] = $this->url->link('account/address/add', '', 'SSL');
 		} else {

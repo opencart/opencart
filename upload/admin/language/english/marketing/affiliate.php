@@ -61,7 +61,7 @@ $_['entry_date_added']          = 'Date Added';
 
 // Help
 $_['help_code']                 = 'The tracking code that will be used to track referrals.';
-$_['help_commission']           = 'Percentage the affiliate recieves on each order.';
+$_['help_commission']           = 'Percentage the affiliate receives on each order.';
 
 // Error
 $_['error_permission']          = 'Warning: You do not have permission to modify affiliates!';

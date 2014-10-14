@@ -66,7 +66,7 @@
         <li><a href="<?php echo $customer_approval; ?>"><?php echo $text_approval; ?> <span class="label label-danger pull-right"><?php echo $customer_total; ?></span></a></li>
         <li class="divider"></li>
         <li class="dropdown-header"><?php echo $text_product; ?></li>
-        <li><a href="<?php echo $product; ?>"><?php echo $text_stock; ?> <span class="label label-danger pull-right"><?php echo $product_total; ?></a></li>
+        <li><a href="<?php echo $product; ?>"><?php echo $text_stock; ?> <span class="label label-danger pull-right"><?php echo $product_total; ?></span></a></li>
         <li><a href="<?php echo $review; ?>"><?php echo $text_review; ?> <span class="label label-danger pull-right"><?php echo $review_total; ?></span></a></li>
         <li class="divider"></li>
         <li class="dropdown-header"><?php echo $text_affiliate; ?></li>

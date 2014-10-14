@@ -223,7 +223,7 @@ class Cart {
 
 					if ($recurring_query->num_rows) {
 						$recurring = array(
-							'recurring_id'      => $recurring_id,
+							'recurring_id'    => $recurring_id,
 							'name'            => $recurring_query->row['name'],
 							'frequency'       => $recurring_query->row['frequency'],
 							'price'           => $recurring_query->row['price'],

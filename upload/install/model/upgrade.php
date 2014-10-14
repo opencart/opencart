@@ -120,7 +120,7 @@ class ModelUpgrade extends Model {
 			}
 
 			// Get Table Name
-			preg_match_all('#create\s*table\s*`(\w[\w\d]*)`#i', $sql, $table);
+			preg_match_all('#create\s*table\s*if\s*not\s*exists\s*`(\w[\w\d]*)`#i', $sql, $table);
 
 			if (isset($table[1][0])) {
 				$table_new_data[] = array(

@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-ppexpress" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <button type="submit" form="form-pp-express" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> <a href="<?php echo $search; ?>" data-toggle="tooltip" title="<?php echo $button_search; ?>" class="btn btn-info"><i class="fa fa-search"></i></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -14,7 +14,7 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if (isset($error['error_warning'])) { ?>
+    <?php if ($error_warning) { ?>
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error['error_warning']; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
@@ -24,21 +24,21 @@
         <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_edit; ?></h3>
       </div>
       <div class="panel-body">
-        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-ppexpress" class="form-horizontal">
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-pp-express" class="form-horizontal">
           <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab-api-details" data-toggle="tab"><?php echo $tab_api_details; ?></a></li>
+            <li class="active"><a href="#tab-api" data-toggle="tab"><?php echo $tab_api; ?></a></li>
             <li><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
-            <li><a href="#tab-status" data-toggle="tab"><?php echo $tab_order_status; ?></a></li>
-            <li><a href="#tab-customise" data-toggle="tab"><?php echo $tab_customise; ?></a></li>
+            <li><a href="#tab-order-status" data-toggle="tab"><?php echo $tab_order_status; ?></a></li>
+            <li><a href="#tab-checkout" data-toggle="tab"><?php echo $tab_checkout; ?></a></li>
           </ul>
           <div class="tab-content">
-            <div class="tab-pane active" id="tab-api-details">
+            <div class="tab-pane active" id="tab-api">
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="entry-username"><?php echo $entry_username; ?></label>
                 <div class="col-sm-10">
                   <input type="text" name="pp_express_username" value="<?php echo $pp_express_username; ?>" placeholder="<?php echo $entry_username; ?>" id="entry-username" class="form-control" />
-                  <?php if (isset($error['username'])) { ?>
-                  <div class="text-danger"><?php echo $error['username']; ?></div>
+                  <?php if ($error_username) { ?>
+                  <div class="text-danger"><?php echo $error_username; ?></div>
                   <?php } ?>
                 </div>
               </div>
@@ -46,8 +46,8 @@
                 <label class="col-sm-2 control-label" for="entry-password"><?php echo $entry_password; ?></label>
                 <div class="col-sm-10">
                   <input type="text" name="pp_express_password" value="<?php echo $pp_express_password; ?>" placeholder="<?php echo $entry_password; ?>" id="entry-password" class="form-control" />
-                  <?php if (isset($error['password'])) { ?>
-                  <div class="text-danger"><?php echo $error['password']; ?></div>
+                  <?php if ($error_password) { ?>
+                  <div class="text-danger"><?php echo $error_password; ?></div>
                   <?php } ?>
                 </div>
               </div>
@@ -55,8 +55,8 @@
                 <label class="col-sm-2 control-label" for="entry-signature"><?php echo $entry_signature; ?></label>
                 <div class="col-sm-10">
                   <input type="text" name="pp_express_signature" value="<?php echo $pp_express_signature; ?>" placeholder="<?php echo $entry_signature; ?>" id="entry-signature" class="form-control" />
-                  <?php if (isset($error['signature'])) { ?>
-                  <div class="text-danger"><?php echo $error['signature']; ?></div>
+                  <?php if ($error_signature) { ?>
+                  <div class="text-danger"><?php echo $error_signature; ?></div>
                   <?php } ?>
                 </div>
               </div>
@@ -130,8 +130,16 @@
                 <label class="col-sm-2 control-label" for="input-method"><?php echo $entry_method; ?></label>
                 <div class="col-sm-10">
                   <select name="pp_express_method" id="input-method" class="form-control">
-                    <option value="Sale" <?php  echo (($pp_express_method == '' || $pp_express_method == 'Sale') ? 'selected="selected"' : ''); ?>><?php echo $text_sale; ?></option>
-                    <option value="Authorization" <?php echo ($pp_express_method == 'Authorization' ? 'selected="selected"' : ''); ?>><?php echo $text_authorization; ?></option>
+                    <?php if ($pp_express_method == 'sale') { ?>
+                    <option value="Sale" selected="selected"><?php echo $text_sale; ?></option>
+                    <?php } else { ?>
+                    <option value="Sale"><?php echo $text_sale; ?></option>
+                    <?php } ?>
+                    <?php if ($pp_express_method == 'Authorization') { ?>
+                    <option value="Authorization" selected="selected"><?php echo $text_authorization; ?></option>
+                    <?php } else { ?>
+                    <option value="Authorization"><?php echo $text_authorization; ?></option>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
@@ -177,7 +185,7 @@
                 </div>
               </div>
             </div>
-            <div class="tab-pane" id="tab-status">
+            <div class="tab-pane" id="tab-order-status">
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_canceled_reversal_status; ?></label>
                 <div class="col-sm-10">
@@ -319,7 +327,7 @@
                 </div>
               </div>
             </div>
-            <div class="tab-pane" id="tab-customise">
+            <div class="tab-pane" id="tab-checkout">
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-notes"><?php echo $entry_allow_notes; ?></label>
                 <div class="col-sm-10">
@@ -343,7 +351,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-image"><span data-toggle="tooltip" title="<?php echo $help_logo; ?>"><?php echo $entry_logo; ?></span></label>
                 <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $thumb; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
-                  <input type="hidden" name="pp_express_logo" value="<?php echo $pp_express_logo; ?>" id="input-image" />
+                  <input type="hidden" name="pp_express_logo" value="<?php echo $pp_express_logo; ?>" />
                 </div>
               </div>
             </div>

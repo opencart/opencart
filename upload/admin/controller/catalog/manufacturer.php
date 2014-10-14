@@ -413,7 +413,7 @@ class ControllerCatalogManufacturer extends Controller {
 
 		$this->load->model('catalog/url_alias');
 
-		$url_alias_info = $this->model_url_alas->getUrlAlias($this->request->post['keyword']);
+		$url_alias_info = $this->model_catalog_url_alias->getUrlAlias($this->request->post['keyword']);
 		
 		if ($url_alias_info && isset($this->request->get['manufacturer_id']) && $url_alias_info['query'] != 'manufacturer_id=' . $this->request->get['manufacturer_id']) {
 			$this->error['keyword'] = sprintf($this->language->get('error_keyword'));

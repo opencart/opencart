@@ -213,7 +213,7 @@ class ControllerExtensionModification extends Controller {
 											}
 											
 											// Check to see if the line matches the search code.
-											if ($search == trim($line)) {
+											if (stripos($line, $search) !== false) {
 												// If indexes are not used then just set the found status to true.
 												if (!$indexes) {
 													$status = true;

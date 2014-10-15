@@ -11,7 +11,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 		$data['action']   = $this->url->link('openbay/etsy_product/create', 'token=' . $this->session->data['token'], 'SSL');
-		$data['cancel']   = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel']   = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], 'SSL');
 		$data['token']    = $this->session->data['token'];
 
 		$data['breadcrumbs'] = array();

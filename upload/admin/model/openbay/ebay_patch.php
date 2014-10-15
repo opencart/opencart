@@ -1,6 +1,6 @@
 <?php
 class ModelOpenbayEbayPatch extends Model {
-	public function runPatch($manual = true) {
+	public function patch($manual = true) {
 		$this->load->model('setting/setting');
 
 		$this->openbay->ebay->updateSettings();

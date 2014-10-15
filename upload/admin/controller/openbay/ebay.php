@@ -1062,7 +1062,7 @@ class ControllerOpenbayEbay extends Controller {
 				$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 				$data['action']       = $this->url->link('openbay/ebay/create', 'token=' . $this->session->data['token'], 'SSL');
-				$data['cancel']       = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL');
+				$data['cancel']       = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], 'SSL');
 				$data['view_link']    = $this->config->get('ebay_itm_link') . $this->openbay->ebay->getEbayItemId($this->request->get['product_id']);
 				$data['token']        = $this->session->data['token'];
 				$data['product_id']   = $this->request->get['product_id'];
@@ -1095,7 +1095,7 @@ class ControllerOpenbayEbay extends Controller {
 
 				$this->response->setOutput($this->load->view('openbay/ebay_edit.tpl', $data));
 			} else {
-				$this->response->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL'));
+				$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], 'SSL'));
 			}
 		}
 	}
@@ -1226,7 +1226,7 @@ class ControllerOpenbayEbay extends Controller {
 			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode($json));
 		} else {
-			$this->response->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 	}
 
@@ -1247,7 +1247,7 @@ class ControllerOpenbayEbay extends Controller {
 				$this->document->addScript('view/javascript/openbay/js/faq.js');
 
 				$data['action']   = $this->url->link('openbay/ebay/create', 'token=' . $this->session->data['token'], 'SSL');
-				$data['cancel']   = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL');
+				$data['cancel']   = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], 'SSL');
 				$data['token']    = $this->session->data['token'];
 
 				$data['breadcrumbs'] = array();
@@ -1421,7 +1421,7 @@ class ControllerOpenbayEbay extends Controller {
 
 				$this->response->setOutput($this->load->view('openbay/ebay_new.tpl', $data));
 			} else {
-				$this->response->redirect($this->url->link('extension/openbay/itemList&token=' . $this->session->data['token']));
+				$this->response->redirect($this->url->link('extension/openbay/items&token=' . $this->session->data['token']));
 			}
 		}
 	}
@@ -1606,7 +1606,7 @@ class ControllerOpenbayEbay extends Controller {
 			} else {
 				$this->load->language('openbay/ebay_newbulk');
 				$this->session->data['warning'] = $this->language->get('text_error_no_selection');
-				$this->response->redirect($this->url->link('extension/openbay/itemList&token=' . $this->session->data['token']));
+				$this->response->redirect($this->url->link('extension/openbay/items&token=' . $this->session->data['token']));
 			}
 		}
 	}
@@ -1664,7 +1664,7 @@ class ControllerOpenbayEbay extends Controller {
 				}
 			}
 		} else {
-			$this->response->redirect($this->url->link('extension/openbay/itemList&token=' . $this->session->data['token']));
+			$this->response->redirect($this->url->link('extension/openbay/items&token=' . $this->session->data['token']));
 		}
 	}
 
@@ -1830,7 +1830,7 @@ class ControllerOpenbayEbay extends Controller {
 				$this->response->setOutput(json_encode($json));
 			}
 		} else {
-			$this->response->redirect($this->url->link('extension/openbay/itemList&token=' . $this->session->data['token']));
+			$this->response->redirect($this->url->link('extension/openbay/items&token=' . $this->session->data['token']));
 		}
 	}
 
@@ -1876,7 +1876,7 @@ class ControllerOpenbayEbay extends Controller {
 			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode($json));
 		} else {
-			$this->response->redirect($this->url->link('extension/openbay/itemList&token=' . $this->session->data['token']));
+			$this->response->redirect($this->url->link('extension/openbay/items&token=' . $this->session->data['token']));
 		}
 	}
 
@@ -2041,7 +2041,7 @@ class ControllerOpenbayEbay extends Controller {
 				$this->response->setOutput(json_encode($json));
 			}
 		} else {
-			$this->response->redirect($this->url->link('extension/openbay/itemList&token=' . $this->session->data['token']));
+			$this->response->redirect($this->url->link('extension/openbay/items&token=' . $this->session->data['token']));
 		}
 	}
 

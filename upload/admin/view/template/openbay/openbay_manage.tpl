@@ -141,7 +141,7 @@
     e.preventDefault();
 
     $.ajax({
-      url: 'index.php?route=extension/openbay/ftptestconnection&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/updatetest&token=<?php echo $token; ?>',
       type: 'post',
       data: $('.ftp-setting').serialize(),
       dataType: 'json',
@@ -171,7 +171,7 @@
     e.preventDefault();
 
     $.ajax({
-      url: 'index.php?route=extension/openbay/runpatch&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/patch&token=<?php echo $token; ?>',
       type: 'post',
       dataType: 'json',
       beforeSend: function() {
@@ -215,7 +215,7 @@
     e.preventDefault();
 
     $.ajax({
-      url: 'index.php?route=extension/openbay/ftpupdatemodule&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/update&token=<?php echo $token; ?>',
       type: 'post',
       data: $('.ftp-setting').serialize(),
       dataType: 'json',

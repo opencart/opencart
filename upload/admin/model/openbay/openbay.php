@@ -6,7 +6,7 @@ class ModelOpenbayOpenbay extends Model {
 		$this->url = $url;
 	}
 
-	public function ftpTestConnection() {
+	public function updateTest() {
 		$this->load->language('extension/openbay');
 
 		$data = $this->request->post;
@@ -76,7 +76,7 @@ class ModelOpenbayOpenbay extends Model {
 		}
 	}
 
-	public function ftpUpdateModule() {
+	public function update() {
 		/*
 		 * Disable error reporting due to noticed thrown when directories are checked
 		 * It will cause constant loading icon otherwise.
@@ -206,11 +206,11 @@ class ModelOpenbayOpenbay extends Model {
 					 * Run the patch files
 					 */
 					$this->load->model('openbay/ebay_patch');
-					$this->model_openbay_ebay_patch->runPatch(false);
+					$this->model_openbay_ebay_patch->patch(false);
 					$this->load->model('openbay/amazon_patch');
-					$this->model_openbay_amazon_patch->runPatch(false);
+					$this->model_openbay_amazon_patch->patch(false);
 					$this->load->model('openbay/amazonus_patch');
-					$this->model_openbay_amazonus_patch->runPatch(false);
+					$this->model_openbay_amazonus_patch->patch(false);
 
 					/**
 					 * File remove operation (clean up old files)
@@ -299,7 +299,7 @@ class ModelOpenbayOpenbay extends Model {
 		return $data;
 	}
 
-	public function getVersion() {
+	public function version() {
 		$data = $this->call('update/getStableVersion/');
 		return $data;
 	}

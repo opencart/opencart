@@ -139,8 +139,8 @@ class ControllerExtensionOpenbay extends Controller {
 		if (isset($settings['openbay_version'])) {
 			$data['openbay_version'] = $settings['openbay_version'];
 		} else {
-			$data['openbay_version'] = $this->model_openbay_version->getVersion();
-			$settings['openbay_version'] = $this->model_openbay_version->getVersion();
+			$data['openbay_version'] = $this->model_openbay_version->version();
+			$settings['openbay_version'] = $this->model_openbay_version->version();
 			$this->model_setting_setting->editSetting('openbay', $settings);
 		}
 
@@ -195,8 +195,8 @@ class ControllerExtensionOpenbay extends Controller {
 				$data['openbay_version'] = $settings['openbay_version'];
 			} else {
 				$this->load->model('openbay/version');
-				$settings['openbay_version'] = $this->model_openbay_version->getVersion();
-				$data['openbay_version'] = $this->model_openbay_version->getVersion();
+				$settings['openbay_version'] = $this->model_openbay_version->version();
+				$data['openbay_version'] = $this->model_openbay_version->version();
 				$this->model_setting_setting->editSetting('openbay', $settings);
 			}
 		}
@@ -279,19 +279,53 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->response->setOutput($this->load->view('openbay/openbay_manage.tpl', $data));
 	}
 
-	public function ftpTestConnection() {
+	public function updateTest() {
 		$this->load->model('openbay/openbay');
 
-		$json = $this->model_openbay_openbay->ftpTestConnection();
+		$json = $this->model_openbay_openbay->updateTest();
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function ftpUpdateModule() {
+	public function update() {
 		$this->load->model('openbay/openbay');
 
-		$json = $this->model_openbay_openbay->ftpUpdateModule();
+		$json = $this->model_openbay_openbay->update();
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function patch() {
+		$this->load->model('openbay/ebay_patch');
+		$this->load->model('openbay/amazon_patch');
+		$this->load->model('openbay/amazonus_patch');
+		$this->load->model('extension/extension');
+		$this->load->model('setting/setting');
+		$this->load->model('user/user_group');
+		$this->load->model('openbay/version');
+
+		$this->model_openbay_ebay_patch->patch();
+		$this->model_openbay_amazon_patch->patch();
+		$this->model_openbay_amazonus_patch->patch();
+
+		$openbay = $this->model_setting_setting->getSetting('openbay');
+		$openbay['openbay_version'] = (int)$this->model_openbay_version->version();
+		$openbay['openbay_menu'] = 1;
+		$this->model_setting_setting->editSetting('openbay', $openbay);
+
+		$installed_modules = $this->model_extension_extension->getInstalled('module');
+
+		if (!in_array('openbay', $installed_modules)) {
+			$this->model_extension_extension->install('feed', 'openbay');
+			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'feed/openbay');
+			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'feed/openbay');
+		}
+
+		sleep(1);
+
+		$json = array('msg' => 'ok');
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
@@ -309,41 +343,7 @@ class ControllerExtensionOpenbay extends Controller {
 	public function version() {
 		$this->load->model('openbay/openbay');
 
-		$json = $this->model_openbay_openbay->getVersion();
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function runPatch() {
-		$this->load->model('openbay/ebay_patch');
-		$this->load->model('openbay/amazon_patch');
-		$this->load->model('openbay/amazonus_patch');
-		$this->load->model('extension/extension');
-		$this->load->model('setting/setting');
-		$this->load->model('user/user_group');
-		$this->load->model('openbay/version');
-
-		$this->model_openbay_ebay_patch->runPatch();
-		$this->model_openbay_amazon_patch->runPatch();
-		$this->model_openbay_amazonus_patch->runPatch();
-
-		$openbay = $this->model_setting_setting->getSetting('openbay');
-		$openbay['openbay_version'] = (int)$this->model_openbay_version->getVersion();
-		$openbay['openbay_menu'] = 1;
-		$this->model_setting_setting->editSetting('openbay', $openbay);
-
-		$installed_modules = $this->model_extension_extension->getInstalled('module');
-
-		if (!in_array('openbay', $installed_modules)) {
-			$this->model_extension_extension->install('feed', 'openbay');
-			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'feed/openbay');
-			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'feed/openbay');
-		}
-
-		sleep(1);
-
-		$json = array('msg' => 'ok');
+		$json = $this->model_openbay_openbay->version();
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
@@ -1042,7 +1042,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->response->redirect($this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'], 'SSL'));
 	}
 
-	public function itemList() {
+	public function items() {
 		$this->document->addScript('view/javascript/openbay/js/openbay.js');
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
@@ -1235,7 +1235,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_manage_items'),
-			'href'      => $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'),
+			'href'      => $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, 'SSL'),
 		);
 
 		if ($this->config->get('amazon_status')) {
@@ -1322,22 +1322,22 @@ class ControllerExtensionOpenbay extends Controller {
 		);
 
 		if ($this->config->get('ebay_status') != '1' && $filter['filter_market_name'] == 'ebay') {
-			$this->response->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], 'SSL'));
 			return;
 		}
 
 		if ($this->config->get('amazon_status') != '1' && $filter['filter_market_name'] == 'amazon') {
-			$this->response->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], 'SSL'));
 			return;
 		}
 
 		if ($this->config->get('amazonus_status') != '1' && $filter['filter_market_name'] == 'amazonus') {
-			$this->response->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], 'SSL'));
 			return;
 		}
 
 		if ($this->config->get('etsy_status') != '1' && $filter['filter_market_name'] == 'etsy') {
-			$this->response->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], 'SSL'));
 			return;
 		}
 
@@ -1353,7 +1353,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$results = $this->model_openbay_openbay->getProducts($filter);
 
 		foreach ($results as $result) {
-			$edit = $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL');
+			$edit = $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL');
 
 			if ($result['image'] && file_exists(DIR_IMAGE . $result['image'])) {
 				$image = $this->model_tool_image->resize($result['image'], 40, 40);
@@ -1600,12 +1600,12 @@ class ControllerExtensionOpenbay extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . '&sort=pd.name' . $url, 'SSL');
-		$data['sort_model'] = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . '&sort=p.model' . $url, 'SSL');
-		$data['sort_price'] = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . '&sort=p.price' . $url, 'SSL');
-		$data['sort_quantity'] = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . '&sort=p.quantity' . $url, 'SSL');
-		$data['sort_status'] = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . '&sort=p.status' . $url, 'SSL');
-		$data['sort_order'] = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . '&sort=p.sort_order' . $url, 'SSL');
+		$data['sort_name'] = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . '&sort=pd.name' . $url, 'SSL');
+		$data['sort_model'] = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . '&sort=p.model' . $url, 'SSL');
+		$data['sort_price'] = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . '&sort=p.price' . $url, 'SSL');
+		$data['sort_quantity'] = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . '&sort=p.quantity' . $url, 'SSL');
+		$data['sort_status'] = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . '&sort=p.status' . $url, 'SSL');
+		$data['sort_order'] = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . '&sort=p.sort_order' . $url, 'SSL');
 
 		$url = '';
 
@@ -1670,7 +1670,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
 		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
+		$pagination->url = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
 		$data['pagination'] = $pagination->render();
 

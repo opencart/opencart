@@ -16,6 +16,10 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
+    <?php if ($error_warning) { ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+    </div>
+    <?php } ?>
     <div class="well">
       <div class="row">
         <div class="col-sm-6">
@@ -342,5 +346,5 @@ $('input[name=\'add_link_product\']').autocomplete({
     $('#input-product-id').val(item['value']);
   }
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

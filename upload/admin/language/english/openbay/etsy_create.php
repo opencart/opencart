@@ -59,3 +59,4 @@ $_['error_style_1_tag']  		= 'Style 1 tag is not valid';
 $_['error_style_2_tag']  		= 'Style 2 tag is not valid';
 $_['error_materials']  			= 'You can only add 13 materials';
 $_['error_tags']  				= 'You can only add 13 tags';
+$_['error_stock_max']  			= 'The maximum stock you can list on Etsy is 999, you have %s in stock';

@@ -14,12 +14,6 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$data['cancel']   = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL');
 		$data['token']    = $this->session->data['token'];
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
@@ -105,6 +99,16 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$setting['state'] = array('active', 'draft');
 
 		$data['setting'] = $setting;
+
+		if ($product_info['quantity'] > 999) {
+			$this->error['warning'] = sprintf($this->language->get('error_stock_max'), $product_info['quantity']);
+		}
+
+		if (isset($this->error['warning'])) {
+			$data['error_warning'] = $this->error['warning'];
+		} else {
+			$data['error_warning'] = '';
+		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

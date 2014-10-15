@@ -288,16 +288,16 @@ class ControllerAccountReturn extends Controller {
 
 			if ($this->customer->isLogged()) {
 				$activity_data = array(
-					'return_id'   => $return_id,
 					'customer_id' => $this->customer->getId(),
-					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName(),
+					'return_id'   => $return_id
 				);
 
 				$this->model_account_activity->addActivity('return_account', $activity_data);
 			} else {
 				$activity_data = array(
-					'return_id'   => $return_id,
-					'name'        => $this->request->post['firstname'] . ' ' . $this->request->post['lastname']
+					'name'      => $this->request->post['firstname'] . ' ' . $this->request->post['lastname'],
+					'return_id' => $return_id
 				);
 
 				$this->model_account_activity->addActivity('return_guest', $activity_data);

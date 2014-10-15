@@ -165,6 +165,14 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			}
 		}
 
+		if (!isset($data['quantity']) > 999) {
+			$this->error['quantity'] = sprintf($this->language->get('error_stock_max'), $data['quantity']);
+		}
+
+		if (count($data['product_image']) > 4) {
+			$this->error['images'] = sprintf($this->language->get('error_image_max'), count($data['product_image'])+1);
+		}
+
 		if (!$this->error) {
 			// process the request
 			$response = $this->openbay->etsy->call('product/listing/create', 'POST', $data);

@@ -165,7 +165,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			}
 		}
 
-		if (!isset($data['quantity']) > 999) {
+		if ($data['quantity'] > 999) {
 			$this->error['quantity'] = sprintf($this->language->get('error_stock_max'), $data['quantity']);
 		}
 
@@ -179,11 +179,14 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 			$this->response->addHeader('Content-Type: application/json');
 
+			if (isset($response['data']['results'][0]['listing_id'])) {
+				$this->model_openbay_etsy_product->addLink($data['product_id'], $response['data']['results'][0]['listing_id'], 1);
+			}
+
 			if (isset($response['data']['error'])) {
 				$this->response->setOutput(json_encode($response['data']));
 			} else {
 				$this->response->setOutput(json_encode($response['data']['results'][0]));
-				$this->model_openbay_etsy_product->addLink($data['product_id'], $response['data']['results'][0]['listing_id'], 1);
 			}
 		} else {
 			$this->response->setOutput(json_encode(array('error' => $this->error)));

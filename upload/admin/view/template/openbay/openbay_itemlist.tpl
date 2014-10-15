@@ -260,7 +260,7 @@
 </div>
 <script type="text/javascript"><!--
   function filter() {
-      url = 'index.php?route=extension/openbay/itemList&token=<?php echo $token; ?>';
+      url = 'index.php?route=extension/openbay/items&token=<?php echo $token; ?>';
 
       var filter_name = $('input[name=\'filter_name\']').val();
 

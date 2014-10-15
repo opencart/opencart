@@ -384,7 +384,7 @@
       $('#total-items').val($('#total-items').val()-1);
 
       if ($('.listingBox').length == 1) {
-          window.location = "index.php?route=extension/openbay/itemList&token=<?php echo $token; ?>";
+          window.location = "index.php?route=extension/openbay/items&token=<?php echo $token; ?>";
       } else {
           $('#activeItems').text($('#total-items').val());
       }

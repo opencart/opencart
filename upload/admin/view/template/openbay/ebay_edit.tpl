@@ -77,7 +77,7 @@
               <input type="hidden" name="optGroupArray" value="" id="optGroupArray" />
               <input type="hidden" name="optGroupRelArray" value="" id="optGroupRelArray" />
                 </tbody>
-              
+
             </table>
           </div>
         </div>
@@ -273,7 +273,7 @@
                     dataType: 'json',
                     success: function() {
                         alert('<?php echo $text_alert_removed; ?>');
-                        window.location = 'index.php?route=extension/openbay/itemList&token=<?php echo $token; ?>';
+                        window.location = 'index.php?route=extension/openbay/items&token=<?php echo $token; ?>';
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                       if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
@@ -299,7 +299,7 @@
                             alert(data.msg);
                         }else{
                             alert('<?php echo $text_alert_ended; ?>');
-                            window.location = 'index.php?route=extension/openbay/itemList&token=<?php echo $token; ?>';
+                            window.location = 'index.php?route=extension/openbay/items&token=<?php echo $token; ?>';
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
@@ -313,5 +313,5 @@
     $(document).ready(function() {
         load();
     });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

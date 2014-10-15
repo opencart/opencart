@@ -89,7 +89,7 @@ class ControllerExtensionOpenbay extends Controller {
 		);
 
 		$data['manage_link'] = $this->url->link('extension/openbay/manage', 'token=' . $this->session->data['token'], 'SSL');
-		$data['product_link'] = $this->url->link('extension/openbay/itemlist', 'token=' . $this->session->data['token'], 'SSL');
+		$data['product_link'] = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], 'SSL');
 		$data['order_link'] = $this->url->link('extension/openbay/orderlist', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['success'] = '';

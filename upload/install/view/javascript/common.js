@@ -1,29 +1,32 @@
-function getURLVar(urlVarName) {
-	var urlHalves = String(document.location).toLowerCase().split('?');
-	var urlVarValue = '';
-	
-	if (urlHalves[1]) {
-		var urlVars = urlHalves[1].split('&');
+function getURLVar(key) {
+    var value = [];
+    
+    var query = String(document.location).split('?');
+    
+    if (query[1]) {
+        var part = query[1].split('&');
 
-		for (var i = 0; i <= (urlVars.length); i++) {
-			if (urlVars[i]) {
-				var urlVarPair = urlVars[i].split('=');
-				
-				if (urlVarPair[0] && urlVarPair[0] == urlVarName.toLowerCase()) {
-					urlVarValue = urlVarPair[1];
-				}
-			}
-		}
-	}
-	
-	return urlVarValue;
+        for (i = 0; i < part.length; i++) {
+            var data = part[i].split('=');
+            
+            if (data[0] && data[1]) {
+                value[data[0]] = data[1];
+            }
+        }
+        
+        if (value[key]) {
+            return value[key];
+        } else {
+            return '';
+        }
+    }
 } 
 
 $(document).ready(function() {
 	route = getURLVar('route');
 	
 	if (!route) {
-		$('#menu #home').addClass('selected');
+		$('#menu #home').addClass('active');
 	} else {
 		part = route.split('/');
 		
@@ -33,6 +36,6 @@ $(document).ready(function() {
 			url += '/' + part[1];
 		}		
 		
-		$('#menu a[href*=\'index.php?route=' + url + '\']').parents('li[id]').addClass('selected');
+		$('#menu a[href*=\'index.php?route=' + url + '\']').parents('li[id]').addClass('active');
 	}	
 });

@@ -2,14 +2,14 @@
 class DB {
 	private $db;
 
-	public function __construct($type, $hostname, $username, $password, $database) {
-		if (file_exists(DIR_DATABASE . $type . '.php')) {
-			require_once(DIR_DATABASE . $type . '.php');
-		} else {
-			exit('Error: Could not load database file ' . $driver . '!');
-		}
+	public function __construct($driver, $hostname, $username, $password, $database) {
+		$class = 'DB\\' . $driver;
 
-		$this->db = new $type($hostname, $username, $password, $database);
+		if (class_exists($class)) {
+			$this->db = new $class($hostname, $username, $password, $database);
+		} else {
+			exit('Error: Could not load database driver ' . $driver . '!');
+		}
 	}
 
 	public function query($sql) {
@@ -28,4 +28,3 @@ class DB {
 		return $this->db->getLastId();
 	}
 }
-?>

@@ -1,104 +1,98 @@
 <?php
 class ControllerShippingPickup extends Controller {
-	private $error = array(); 
-	
-	public function index() {   
-		$this->language->load('shipping/pickup');
+	private $error = array();
+
+	public function index() {
+		$this->load->language('shipping/pickup');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$this->load->model('setting/setting');
-				
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('pickup', $this->request->post);		
-					
+			$this->model_setting_setting->editSetting('pickup', $this->request->post);
+
 			$this->session->data['success'] = $this->language->get('text_success');
-						
-			$this->redirect($this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'));
+
+			$this->response->redirect($this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'));
 		}
-				
-		$this->data['heading_title'] = $this->language->get('heading_title');
 
-		$this->data['text_enabled'] = $this->language->get('text_enabled');
-		$this->data['text_disabled'] = $this->language->get('text_disabled');
-		$this->data['text_all_zones'] = $this->language->get('text_all_zones');
-		$this->data['text_none'] = $this->language->get('text_none');
+		$data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		
-		$this->data['button_save'] = $this->language->get('button_save');
-		$this->data['button_cancel'] = $this->language->get('button_cancel');
+		$data['text_edit'] = $this->language->get('text_edit');
+		$data['text_enabled'] = $this->language->get('text_enabled');
+		$data['text_disabled'] = $this->language->get('text_disabled');
+		$data['text_all_zones'] = $this->language->get('text_all_zones');
+		$data['text_none'] = $this->language->get('text_none');
 
- 		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
+		$data['entry_status'] = $this->language->get('entry_status');
+		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
+
+		$data['button_save'] = $this->language->get('button_save');
+		$data['button_cancel'] = $this->language->get('button_cancel');
+
+		if (isset($this->error['warning'])) {
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 
-  		$this->data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+		);
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_shipping'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_shipping'),
 			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL')
-   		);
-		
-   		$this->data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('shipping/pickup', 'token=' . $this->session->data['token'], 'SSL')
-   		);
-		
-		$this->data['action'] = $this->url->link('shipping/pickup', 'token=' . $this->session->data['token'], 'SSL');
-		
-		$this->data['cancel'] = $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL');
+		);
+
+		$data['action'] = $this->url->link('shipping/pickup', 'token=' . $this->session->data['token'], 'SSL');
+
+		$data['cancel'] = $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL');
 
 		if (isset($this->request->post['pickup_geo_zone_id'])) {
-			$this->data['pickup_geo_zone_id'] = $this->request->post['pickup_geo_zone_id'];
+			$data['pickup_geo_zone_id'] = $this->request->post['pickup_geo_zone_id'];
 		} else {
-			$this->data['pickup_geo_zone_id'] = $this->config->get('pickup_geo_zone_id');
+			$data['pickup_geo_zone_id'] = $this->config->get('pickup_geo_zone_id');
 		}
-		
+
 		$this->load->model('localisation/geo_zone');
-		
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-		
+
+		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+
 		if (isset($this->request->post['pickup_status'])) {
-			$this->data['pickup_status'] = $this->request->post['pickup_status'];
+			$data['pickup_status'] = $this->request->post['pickup_status'];
 		} else {
-			$this->data['pickup_status'] = $this->config->get('pickup_status');
+			$data['pickup_status'] = $this->config->get('pickup_status');
 		}
-		
+
 		if (isset($this->request->post['pickup_sort_order'])) {
-			$this->data['pickup_sort_order'] = $this->request->post['pickup_sort_order'];
+			$data['pickup_sort_order'] = $this->request->post['pickup_sort_order'];
 		} else {
-			$this->data['pickup_sort_order'] = $this->config->get('pickup_sort_order');
-		}				
-		
-		$this->template = 'shipping/pickup.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+			$data['pickup_sort_order'] = $this->config->get('pickup_sort_order');
+		}
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('shipping/pickup.tpl', $data));
 	}
-	
+
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'shipping/pickup')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
-		
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}	
+
+		return !$this->error;
 	}
 }
-?>

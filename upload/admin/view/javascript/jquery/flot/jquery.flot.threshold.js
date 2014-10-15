@@ -1,26 +1,45 @@
-/*
-Flot plugin for thresholding data. Controlled through the option
-"threshold" in either the global series options
+/* Flot plugin for thresholding data.
 
-  series: {
-    threshold: {
-      below: number
-      color: colorspec
-    }
-  }
+Copyright (c) 2007-2013 IOLA and Ole Laursen.
+Licensed under the MIT license.
 
-or in a specific series
+The plugin supports these options:
 
-  $.plot($("#placeholder"), [{ data: [ ... ], threshold: { ... }}])
+	series: {
+		threshold: {
+			below: number
+			color: colorspec
+		}
+	}
 
-The data points below "below" are drawn with the specified color. This
-makes it easy to mark points below 0, e.g. for budget data.
+It can also be applied to a single series, like this:
 
-Internally, the plugin works by splitting the data into two series,
-above and below the threshold. The extra series below the threshold
-will have its label cleared and the special "originSeries" attribute
-set to the original series. You may need to check for this in hover
-events.
+	$.plot( $("#placeholder"), [{
+		data: [ ... ],
+		threshold: { ... }
+	}])
+
+An array can be passed for multiple thresholding, like this:
+
+	threshold: [{
+		below: number1
+		color: color1
+	},{
+		below: number2
+		color: color2
+	}]
+
+These multiple threshold objects can be passed in any order since they are
+sorted by the processing function.
+
+The data points below "below" are drawn with the specified color. This makes
+it easy to mark points below 0, e.g. for budget data.
+
+Internally, the plugin works by splitting the data into two series, above and
+below the threshold. The extra series below the threshold will have its label
+cleared and the special "originSeries" attribute set to the original series.
+You may need to check for this in hover events.
+
 */
 
 (function ($) {
@@ -29,29 +48,26 @@ events.
     };
     
     function init(plot) {
-        function thresholdData(plot, s, datapoints) {
-            if (!s.threshold)
-                return;
-            
+        function thresholdData(plot, s, datapoints, below, color) {
             var ps = datapoints.pointsize, i, x, y, p, prevp,
                 thresholded = $.extend({}, s); // note: shallow copy
 
-            thresholded.datapoints = { points: [], pointsize: ps };
+            thresholded.datapoints = { points: [], pointsize: ps, format: datapoints.format };
             thresholded.label = null;
-            thresholded.color = s.threshold.color;
+            thresholded.color = color;
             thresholded.threshold = null;
             thresholded.originSeries = s;
             thresholded.data = [];
-
-            var below = s.threshold.below,
-                origpoints = datapoints.points,
+ 
+            var origpoints = datapoints.points,
                 addCrossingPoints = s.lines.show;
 
-            threspoints = [];
-            newpoints = [];
+            var threspoints = [];
+            var newpoints = [];
+            var m;
 
             for (i = 0; i < origpoints.length; i += ps) {
-                x = origpoints[i]
+                x = origpoints[i];
                 y = origpoints[i + 1];
 
                 prevp = p;
@@ -62,7 +78,7 @@ events.
 
                 if (addCrossingPoints && prevp != p && x != null
                     && i > 0 && origpoints[i - ps] != null) {
-                    var interx = (x - origpoints[i - ps]) / (y - origpoints[i - ps + 1]) * (below - y) + x;
+                    var interx = x + (below - y) * (x - origpoints[i - ps]) / (y - origpoints[i - ps + 1]);
                     prevp.push(interx);
                     prevp.push(below);
                     for (m = 2; m < ps; ++m)
@@ -80,24 +96,47 @@ events.
 
                 p.push(x);
                 p.push(y);
+                for (m = 2; m < ps; ++m)
+                    p.push(origpoints[i + m]);
             }
 
             datapoints.points = newpoints;
             thresholded.datapoints.points = threspoints;
             
-            if (thresholded.datapoints.points.length > 0)
-                plot.getData().push(thresholded);
+            if (thresholded.datapoints.points.length > 0) {
+                var origIndex = $.inArray(s, plot.getData());
+                // Insert newly-generated series right after original one (to prevent it from becoming top-most)
+                plot.getData().splice(origIndex + 1, 0, thresholded);
+            }
                 
             // FIXME: there are probably some edge cases left in bars
         }
         
-        plot.hooks.processDatapoints.push(thresholdData);
+        function processThresholds(plot, s, datapoints) {
+            if (!s.threshold)
+                return;
+            
+            if (s.threshold instanceof Array) {
+                s.threshold.sort(function(a, b) {
+                    return a.below - b.below;
+                });
+                
+                $(s.threshold).each(function(i, th) {
+                    thresholdData(plot, s, datapoints, th.below, th.color);
+                });
+            }
+            else {
+                thresholdData(plot, s, datapoints, s.threshold.below, s.threshold.color);
+            }
+        }
+        
+        plot.hooks.processDatapoints.push(processThresholds);
     }
     
     $.plot.plugins.push({
         init: init,
         options: options,
         name: 'threshold',
-        version: '1.0'
+        version: '1.2'
     });
 })(jQuery);

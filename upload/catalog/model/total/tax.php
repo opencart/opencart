@@ -5,8 +5,7 @@ class ModelTotalTax extends Model {
 			if ($value > 0) {
 				$total_data[] = array(
 					'code'       => 'tax',
-					'title'      => $this->tax->getRateName($key), 
-					'text'       => $this->currency->format($value),
+					'title'      => $this->tax->getRateName($key),
 					'value'      => $value,
 					'sort_order' => $this->config->get('tax_sort_order')
 				);
@@ -16,4 +15,3 @@ class ModelTotalTax extends Model {
 		}
 	}
 }
-?>

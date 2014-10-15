@@ -8,9 +8,9 @@ class Response {
 		$this->headers[] = $header;
 	}
 
-	public function redirect($url) {
-		header('Location: ' . $url);
-		exit;
+	public function redirect($url, $status = 302) {
+		header('Location: ' . str_replace(array('&amp;', "\n", "\r"), array('&', '', ''), $url), true, $status);
+		exit();
 	}
 
 	public function setCompression($level) {
@@ -19,6 +19,10 @@ class Response {
 
 	public function setOutput($output) {
 		$this->output = $output;
+	}
+
+	public function getOutput() {
+		return $this->output;
 	}
 
 	private function compress($data, $level = 0) {
@@ -30,7 +34,7 @@ class Response {
 			$encoding = 'x-gzip';
 		}
 
-		if (!isset($encoding)) {
+		if (!isset($encoding) || ($level < -1 || $level > 9)) {
 			return $data;
 		}
 
@@ -54,9 +58,9 @@ class Response {
 	public function output() {
 		if ($this->output) {
 			if ($this->level) {
-				$ouput = $this->compress($this->output, $this->level);
+				$output = $this->compress($this->output, $this->level);
 			} else {
-				$ouput = $this->output;
+				$output = $this->output;
 			}
 
 			if (!headers_sent()) {
@@ -65,8 +69,7 @@ class Response {
 				}
 			}
 
-			echo $ouput;
+			echo $output;
 		}
 	}
 }
-?>

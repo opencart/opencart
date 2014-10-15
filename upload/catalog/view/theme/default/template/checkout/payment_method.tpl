@@ -1,101 +1,45 @@
 <?php if ($error_warning) { ?>
-<div class="warning"><?php echo $error_warning; ?></div>
+<div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
 <?php } ?>
 <?php if ($payment_methods) { ?>
 <p><?php echo $text_payment_method; ?></p>
-<table class="radio">
-  <?php foreach ($payment_methods as $payment_method) { ?>
-  <tr class="highlight">
-    <td><?php if ($payment_method['code'] == $code || !$code) { ?>
-      <?php $code = $payment_method['code']; ?>
-      <input type="radio" name="payment_method" value="<?php echo $payment_method['code']; ?>" id="<?php echo $payment_method['code']; ?>" checked="checked" />
-      <?php } else { ?>
-      <input type="radio" name="payment_method" value="<?php echo $payment_method['code']; ?>" id="<?php echo $payment_method['code']; ?>" />
-      <?php } ?></td>
-    <td><label for="<?php echo $payment_method['code']; ?>"><?php echo $payment_method['title']; ?></label></td>
-  </tr>
-  <?php } ?>
-</table>
-<br />
+<?php foreach ($payment_methods as $payment_method) { ?>
+<div class="radio">
+  <label>
+    <?php if ($payment_method['code'] == $code || !$code) { ?>
+    <?php $code = $payment_method['code']; ?>
+    <input type="radio" name="payment_method" value="<?php echo $payment_method['code']; ?>" checked="checked" />
+    <?php } else { ?>
+    <input type="radio" name="payment_method" value="<?php echo $payment_method['code']; ?>" />
+    <?php } ?>
+    <?php echo $payment_method['title']; ?>
+    <?php if ($payment_method['terms']) { ?>
+    (<?php echo $payment_method['terms']; ?>)
+    <?php } ?>
+  </label>
+</div>
 <?php } ?>
-<b><?php echo $text_comments; ?></b>
-<textarea name="comment" rows="8" style="width: 98%;"><?php echo $comment; ?></textarea>
-<br />
-<br />
+<?php } ?>
+<p><strong><?php echo $text_comments; ?></strong></p>
+<p>
+  <textarea name="comment" rows="8" class="form-control"><?php echo $comment; ?></textarea>
+</p>
 <?php if ($text_agree) { ?>
 <div class="buttons">
-  <div class="right"><?php echo $text_agree; ?>
+  <div class="pull-right"><?php echo $text_agree; ?>
     <?php if ($agree) { ?>
     <input type="checkbox" name="agree" value="1" checked="checked" />
     <?php } else { ?>
     <input type="checkbox" name="agree" value="1" />
     <?php } ?>
-    <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-method" class="button" />
+    &nbsp;
+    <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-method" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
   </div>
 </div>
 <?php } else { ?>
 <div class="buttons">
-  <div class="right">
-    <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-method" class="button" />
+  <div class="pull-right">
+    <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-method" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
   </div>
 </div>
 <?php } ?>
-<script type="text/javascript"><!--
-$('#button-payment-method').off().on('click', function() {
-	$.ajax({
-		url: 'index.php?route=checkout/payment_method/save', 
-		type: 'post',
-		data: $('#payment-method input[type=\'radio\']:checked, #payment-method input[type=\'checkbox\']:checked, #payment-method textarea'),
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-payment-method').attr('disabled', true);
-			$('#button-payment-method').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
-		},	
-		complete: function() {
-			$('#button-payment-method').attr('disabled', false);
-			$('.loading').remove();
-		},			
-		success: function(json) {
-			$('.warning, .error').remove();
-			
-			if (json['redirect']) {
-				location = json['redirect'];
-			} else if (json['error']) {
-				if (json['error']['warning']) {
-					$('#payment-method .checkout-content').prepend('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
-					
-					$('.warning').fadeIn('slow');
-				}			
-			} else {
-				$.ajax({
-					url: 'index.php?route=checkout/confirm',
-					dataType: 'html',
-					success: function(html) {
-						$('#confirm .checkout-content').html(html);
-						
-						$('#payment-method .checkout-content').slideUp('slow');
-						
-						$('#confirm .checkout-content').slideDown('slow');
-						
-						$('#payment-method .checkout-heading a').remove();
-						
-						$('#payment-method .checkout-heading').append('<a><?php echo $text_modify; ?></a>');	
-					},
-					error: function(xhr, ajaxOptions, thrownError) {
-						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-					}
-				});	
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});	
-});
-//--></script>
-<script type="text/javascript"><!--
-$('.colorbox').colorbox({
-	width: 640,
-	height: 480
-});
-//--></script> 

@@ -10,8 +10,8 @@
   <input type="hidden" name="test_success_url" value="<?php echo $success_url; ?>" />
   <input type="hidden" name="test_cancel_url" value="<?php echo $cancel_url; ?>" />
   <input type="hidden" name="test_declined_url" value="<?php echo $declined_url; ?>" />
-  <input type="hidden" name="callback_url" value="<?php echo $callback_url; ?>" />
   <?php } ?>
+  <input type="hidden" name="callback_url" value="<?php echo $callback_url; ?>" />
   <input type="hidden" name="amount" value="<?php echo $amount; ?>" />
   <input type="hidden" name="description" value="<?php echo $description; ?>" />
   <input type="hidden" name="order_id" value="<?php echo $order_id; ?>" />
@@ -25,8 +25,8 @@
   <input type="hidden" name="email_address" value="<?php echo $email_address; ?>" />
   <input type="hidden" name="hide_billing_details" value="true" />
   <div class="buttons">
-    <div class="right">
-      <input type="submit" value="<?php echo $button_confirm; ?>" class="button" />
+    <div class="pull-right">
+      <input type="submit" value="<?php echo $button_confirm; ?>" class="btn btn-primary" />
     </div>
   </div>
 </form>

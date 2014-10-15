@@ -3,7 +3,7 @@ final class Registry {
 	private $data = array();
 
 	public function get($key) {
-		return (isset($this->data[$key]) ? $this->data[$key] : NULL);
+		return (isset($this->data[$key]) ? $this->data[$key] : null);
 	}
 
 	public function set($key, $value) {
@@ -14,4 +14,3 @@ final class Registry {
 		return isset($this->data[$key]);
 	}
 }
-?>

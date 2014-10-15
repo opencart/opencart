@@ -1,142 +1,104 @@
-<?php echo $header; ?>
+<?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
-  <?php if ($error_warning) { ?>
-  <div class="warning"><?php echo $error_warning; ?></div>
-  <?php } ?>
-  <div class="box">
-    <div class="heading">
-      <h1><img src="view/image/module.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
-    </div>
-    <div class="content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-        <table id="module" class="list">
-          <thead>
-            <tr>
-              <td class="left"><?php echo $entry_banner; ?></td>
-              <td class="left"><?php echo $entry_dimension; ?></td>
-              <td class="left"><?php echo $entry_layout; ?></td>
-              <td class="left"><?php echo $entry_position; ?></td>
-              <td class="left"><?php echo $entry_status; ?></td>
-              <td class="right"><?php echo $entry_sort_order; ?></td>
-              <td></td>
-            </tr>
-          </thead>
-          <?php $module_row = 0; ?>
-          <?php foreach ($modules as $module) { ?>
-          <tbody id="module-row<?php echo $module_row; ?>">
-            <tr>
-              <td class="left"><select name="slideshow_module[<?php echo $module_row; ?>][banner_id]">
-                  <?php foreach ($banners as $banner) { ?>
-                  <?php if ($banner['banner_id'] == $module['banner_id']) { ?>
-                  <option value="<?php echo $banner['banner_id']; ?>" selected="selected"><?php echo $banner['name']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $banner['banner_id']; ?>"><?php echo $banner['name']; ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select></td>
-              <td class="left"><input type="text" name="slideshow_module[<?php echo $module_row; ?>][width]" value="<?php echo $module['width']; ?>" size="3" />
-                <input type="text" name="slideshow_module[<?php echo $module_row; ?>][height]" value="<?php echo $module['height']; ?>" size="3"/>
-                <?php if (isset($error_dimension[$module_row])) { ?>
-                <span class="error"><?php echo $error_dimension[$module_row]; ?></span>
-                <?php } ?></td>
-              <td class="left"><select name="slideshow_module[<?php echo $module_row; ?>][layout_id]">
-                  <?php foreach ($layouts as $layout) { ?>
-                  <?php if ($layout['layout_id'] == $module['layout_id']) { ?>
-                  <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select></td>
-              <td class="left"><select name="slideshow_module[<?php echo $module_row; ?>][position]">
-                  <?php if ($module['position'] == 'content_top') { ?>
-                  <option value="content_top" selected="selected"><?php echo $text_content_top; ?></option>
-                  <?php } else { ?>
-                  <option value="content_top"><?php echo $text_content_top; ?></option>
-                  <?php } ?>
-                  <?php if ($module['position'] == 'content_bottom') { ?>
-                  <option value="content_bottom" selected="selected"><?php echo $text_content_bottom; ?></option>
-                  <?php } else { ?>
-                  <option value="content_bottom"><?php echo $text_content_bottom; ?></option>
-                  <?php } ?>
-                  <?php if ($module['position'] == 'column_left') { ?>
-                  <option value="column_left" selected="selected"><?php echo $text_column_left; ?></option>
-                  <?php } else { ?>
-                  <option value="column_left"><?php echo $text_column_left; ?></option>
-                  <?php } ?>
-                  <?php if ($module['position'] == 'column_right') { ?>
-                  <option value="column_right" selected="selected"><?php echo $text_column_right; ?></option>
-                  <?php } else { ?>
-                  <option value="column_right"><?php echo $text_column_right; ?></option>
-                  <?php } ?>
-                </select></td>
-              <td class="left"><select name="slideshow_module[<?php echo $module_row; ?>][status]">
-                  <?php if ($module['status']) { ?>
-                  <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                  <option value="0"><?php echo $text_disabled; ?></option>
-                  <?php } else { ?>
-                  <option value="1"><?php echo $text_enabled; ?></option>
-                  <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                  <?php } ?>
-                </select></td>
-              <td class="right"><input type="text" name="slideshow_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" size="3" /></td>
-              <td class="left"><a onclick="$('#module-row<?php echo $module_row; ?>').remove();" class="button"><?php echo $button_remove; ?></a></td>
-            </tr>
-          </tbody>
-          <?php $module_row++; ?>
-          <?php } ?>
-          <tfoot>
-            <tr>
-              <td colspan="6"></td>
-              <td class="left"><a onclick="addModule();" class="button"><?php echo $button_add_module; ?></a></td>
-            </tr>
-          </tfoot>
-        </table>
-      </form>
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-slideshow" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1><?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
   </div>
-</div>
-<script type="text/javascript"><!--
-var module_row = <?php echo $module_row; ?>;
-
+  <div class="container-fluid">
+    <?php if ($error_warning) { ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    <?php } ?>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_edit; ?></h3>
+      </div>
+      <div class="panel-body">
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-slideshow" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+            <div class="col-sm-10">
+              <select name="slideshow_status" id="input-status" class="form-control">
+                <?php if ($slideshow_status) { ?>
+                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                <option value="0"><?php echo $text_disabled; ?></option>
+                <?php } else { ?>
+                <option value="1"><?php echo $text_enabled; ?></option>
+                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
+          <table id="module" class="table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <td class="text-right">#</td>
+                <td class="text-left"><?php echo $entry_banner; ?></td>
+                <td class="text-left"><?php echo $entry_dimension; ?></td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <?php $module_row = 1; ?>
+              <?php foreach ($slideshow_modules as $slideshow_module) { ?>
+              <tr id="module-row<?php echo $slideshow_module['key']; ?>">
+                <td class="text-right"><?php echo $module_row; ?></td>
+                <td class="text-left"><select name="slideshow_module[<?php echo $slideshow_module['key']; ?>][banner_id]" class="form-control">
+                    <?php foreach ($banners as $banner) { ?>
+                    <?php if ($banner['banner_id'] == $slideshow_module['banner_id']) { ?>
+                    <option value="<?php echo $banner['banner_id']; ?>" selected="selected"><?php echo $banner['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $banner['banner_id']; ?>"><?php echo $banner['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select></td>
+                <td class="text-left"><input type="text" name="slideshow_module[<?php echo $slideshow_module['key']; ?>][width]" value="<?php echo $slideshow_module['width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
+                  <input type="text" name="slideshow_module[<?php echo $slideshow_module['key']; ?>][height]" value="<?php echo $slideshow_module['height']; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                  <?php if (isset($error_dimension[$slideshow_module['key']])) { ?>
+                  <div class="text-danger"><?php echo $error_dimension[$slideshow_module['key']]; ?></div>
+                  <?php } ?></td>
+                <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $slideshow_module['key']; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+              </tr>
+              <?php $module_row++; ?>
+              <?php } ?>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="3"></td>
+                <td class="text-left"><button type="button" onclick="addModule();" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+              </tr>
+            </tfoot>
+          </table>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript"><!--
 function addModule() {	
-	html  = '<tbody id="module-row' + module_row + '">';
-	html += '  <tr>';
-	html += '    <td class="left"><select name="slideshow_module[' + module_row + '][banner_id]">';
+	var token = Math.random().toString(36).substr(2);
+
+	html  = '<tr id="module-row' + token + '">';
+	html += '  <td class="text-right">' + ($('tbody tr').length + 1) + '</td>';
+	html += '  <td class="text-left"><select name="slideshow_module[' + token + '][banner_id]" class="form-control">';
 	<?php foreach ($banners as $banner) { ?>
-	html += '      <option value="<?php echo $banner['banner_id']; ?>"><?php echo addslashes($banner['name']); ?></option>';
+	html += '    <option value="<?php echo $banner['banner_id']; ?>"><?php echo addslashes($banner['name']); ?></option>';
 	<?php } ?>
-	html += '    </select></td>';
-	html += '    <td class="left"><input type="text" name="slideshow_module[' + module_row + '][width]" value="" size="3" /> <input type="text" name="slideshow_module[' + module_row + '][height]" value="" size="3" /></td>';
-	html += '    <td class="left"><select name="slideshow_module[' + module_row + '][layout_id]">';
-	<?php foreach ($layouts as $layout) { ?>
-	html += '      <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';
-	<?php } ?>
-	html += '    </select></td>';
-	html += '    <td class="left"><select name="slideshow_module[' + module_row + '][position]">';
-	html += '      <option value="content_top"><?php echo $text_content_top; ?></option>';
-	html += '      <option value="content_bottom"><?php echo $text_content_bottom; ?></option>';
-	html += '      <option value="column_left"><?php echo $text_column_left; ?></option>';
-	html += '      <option value="column_right"><?php echo $text_column_right; ?></option>';
-	html += '    </select></td>';
-	html += '    <td class="left"><select name="slideshow_module[' + module_row + '][status]">';
-    html += '      <option value="1" selected="selected"><?php echo $text_enabled; ?></option>';
-    html += '      <option value="0"><?php echo $text_disabled; ?></option>';
-    html += '    </select></td>';
-	html += '    <td class="right"><input type="text" name="slideshow_module[' + module_row + '][sort_order]" value="" size="3" /></td>';
-	html += '    <td class="left"><a onclick="$(\'#module-row' + module_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
-	html += '  </tr>';
-	html += '</tbody>';
+	html += '  </select></td>';
+	html += '  <td class="text-left"><input type="text" name="slideshow_module[' + token + '][width]" value="" placeholder="<?php echo $entry_width; ?>" class="form-control" /> <input type="text" name="slideshow_module[' + token + '][height]" value="" placeholder="<?php echo $entry_height; ?>" class="form-control" /></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + token + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '</tr>';
 	
-	$('#module tfoot').before(html);
-	
-	module_row++;
+	$('#module tbody').append(html);
 }
-//--></script> 
+//--></script></div>
 <?php echo $footer; ?>

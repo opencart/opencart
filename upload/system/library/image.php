@@ -13,8 +13,8 @@ class Image {
 			$this->info = array(
 				'width'  => $info[0],
 				'height' => $info[1],
-				'bits'   => $info['bits'],
-				'mime'   => $info['mime']
+				'bits'   => isset($info['bits']) ? $info['bits'] : '',
+				'mime'   => isset($info['mime']) ? $info['mime'] : ''
 			);
 
 			$this->image = $this->create($file);
@@ -27,7 +27,7 @@ class Image {
 		$mime = $this->info['mime'];
 
 		if ($mime == 'image/gif') {
-			return imagecreatefromgif($image);
+			return imagecreatefromgif ($image);
 		} elseif ($mime == 'image/png') {
 			return imagecreatefrompng($image);
 		} elseif ($mime == 'image/jpeg') {
@@ -43,26 +43,16 @@ class Image {
 		if (is_resource($this->image)) {
 			if ($extension == 'jpeg' || $extension == 'jpg') {
 				imagejpeg($this->image, $file, $quality);
-			} elseif($extension == 'png') {
+			} elseif ($extension == 'png') {
 				imagepng($this->image, $file);
-			} elseif($extension == 'gif') {
-				imagegif($this->image, $file);
+			} elseif ($extension == 'gif') {
+				imagegif ($this->image, $file);
 			}
 
 			imagedestroy($this->image);
 		}
 	}
 
-	/**
-	*	
-	*	@param width 
-	*	@param height
-	*	@param default char [default, w, h]
-	*				   default = scale with white space, 
-	*				   w = fill according to width, 
-	*				   h = fill according to height
-	*	
-	*/
 	public function resize($width = 0, $height = 0, $default = '') {
 		if (!$this->info['width'] || !$this->info['height']) {
 			return;
@@ -77,7 +67,7 @@ class Image {
 
 		if ($default == 'w') {
 			$scale = $scale_w;
-		} elseif ($default == 'h'){
+		} elseif ($default == 'h') {
 			$scale = $scale_h;
 		} else {
 			$scale = min($scale_w, $scale_h);
@@ -156,7 +146,7 @@ class Image {
 
 	public function rotate($degree, $color = 'FFFFFF') {
 		$rgb = $this->html2rgb($color);
-		
+
 		$this->image = imagerotate($this->image, $degree, imagecolorallocate($this->image, $rgb[0], $rgb[1], $rgb[2]));
 
 		$this->info['width'] = imagesx($this->image);
@@ -176,8 +166,8 @@ class Image {
 	private function merge($file, $x = 0, $y = 0, $opacity = 100) {
 		$merge = $this->create($file);
 
-		$merge_width = imagesx($image);
-		$merge_height = imagesy($image);
+		$merge_width = imagesx($merge);
+		$merge_height = imagesy($merge);
 
 		imagecopymerge($this->image, $merge, $x, $y, 0, 0, $merge_width, $merge_height, $opacity);
 	}
@@ -186,7 +176,7 @@ class Image {
 		if ($color[0] == '#') {
 			$color = substr($color, 1);
 		}
-		
+
 		if (strlen($color) == 6) {
 			list($r, $g, $b) = array($color[0] . $color[1], $color[2] . $color[3], $color[4] . $color[5]);
 		} elseif (strlen($color) == 3) {
@@ -202,4 +192,3 @@ class Image {
 		return array($r, $g, $b);
 	}
 }
-?>

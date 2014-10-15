@@ -1,97 +1,38 @@
 <?php
+/**
+ * Modifcation XML Documentation can be found here:
+ *
+ * https://github.com/opencart/opencart/wiki/Modification-System
+ */
 class ControllerExtensionModification extends Controller {
 	private $error = array();
-   
-  	public function index() {
-		$this->language->load('extension/modification');
-	
-    	$this->document->setTitle($this->language->get('heading_title'));
-		
-		$this->load->model('setting/modification');
-		
-    	$this->getList();
-  	}
-		
-  	public function insert() {
-		$this->language->load('extension/modification');
-	
-    	$this->document->setTitle($this->language->get('heading_title'));
-		
-		$this->load->model('setting/modification');
-			
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-      		$this->model_setting_modification->addModification($this->request->post);
-		  	
-			$this->session->data['success'] = $this->language->get('text_success');
 
-			$url = '';
-			
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
+	public function index() {
+		$this->load->language('extension/modification');
 
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
+		$this->document->setTitle($this->language->get('heading_title'));
 
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-						
-      		$this->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
-		}
-	
-    	$this->getForm();
-  	}
+		$this->load->model('extension/modification');
 
-  	public function update() {
-		$this->language->load('extension/modification');
-	
-    	$this->document->setTitle($this->language->get('heading_title'));
-		
-		$this->load->model('setting/modification');
-		
-    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-	  		$this->model_setting_modification->editModification($this->request->get['modification_id'], $this->request->post);
-			
-			$this->session->data['success'] = $this->language->get('text_success');
+		$this->getList();
+	}
 
-			$url = '';
-			
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
+	public function delete() {
+		$this->load->language('extension/modification');
 
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
+		$this->document->setTitle($this->language->get('heading_title'));
 
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-			
-			$this->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
-    	}
-	
-    	$this->getForm();
-  	}
+		$this->load->model('extension/modification');
 
-  	public function delete() {
-		$this->language->load('extension/modification');
-	
-    	$this->document->setTitle($this->language->get('heading_title'));
-		
-		$this->load->model('setting/modification');
-		
-    	if (isset($this->request->post['selected']) && $this->validateDelete()) {
+		if (isset($this->request->post['selected']) && $this->validate()) {
 			foreach ($this->request->post['selected'] as $modification_id) {
-				$this->model_setting_modification->deleteModification($modification_id);
+				$this->model_extension_modification->deleteModification($modification_id);
 			}
-			      		
+
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
-			
+
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -103,78 +44,488 @@ class ControllerExtensionModification extends Controller {
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-			
-			$this->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
-   		}
-	
-    	$this->getList();
-  	}
-	
-	public function install() {
-		$this->language->load('extension/payment');
-		
-		if (!$this->user->hasPermission('modify', 'extension/payment')) {
-			$this->session->data['error'] = $this->language->get('error_permission'); 
-			
-			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
-		} else {
-			$this->load->model('setting/extension');
-		
-			$this->model_setting_extension->install('payment', $this->request->get['extension']);
 
-			$this->load->model('user/user_group');
-		
-			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'payment/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'payment/' . $this->request->get['extension']);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
+
+		$this->getList();
 	}
-	
-	public function uninstall() {
-		$this->language->load('extension/payment');
-		
-		if (!$this->user->hasPermission('modify', 'extension/payment')) {
-			$this->session->data['error'] = $this->language->get('error_permission'); 
+
+	public function refresh() {
+		$this->load->language('extension/modification');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('extension/modification');
+
+		if ($this->validate()) {
+			//Log
+			$log = array();
+
+			// Clear all modification files
+			$files = array();
 			
-			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
-		} else {		
-			$this->load->model('setting/extension');
-			$this->load->model('setting/setting');
-				
-			$this->model_setting_extension->uninstall('payment', $this->request->get['extension']);
-		
-			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
-		
+			// Make path into an array
+			$path = array(DIR_MODIFICATION . '*');
+
+			// While the path array is still populated keep looping through
+			while (count($path) != 0) {
+				$next = array_shift($path);
+
+				foreach (glob($next) as $file) {
+					// If directory add to path array
+					if (is_dir($file)) {
+						$path[] = $file . '/*';
+					}
+
+					// Add the file to the files to be deleted array
+					$files[] = $file;
+				}
+			}
+			
+			// Reverse sort the file array
+			rsort($files);
+			
+			// Clear all modification files
+			foreach ($files as $file) {
+				if ($file != DIR_MODIFICATION . 'index.html') {
+					// If file just delete
+					if (is_file($file)) {
+						unlink($file);
+	
+					// If directory use the remove directory function
+					} elseif (is_dir($file)) {
+						rmdir($file);
+					}
+				}
+			}	
+			
+			// Begin
+			$xml = array();
+
+			// Load the default modification XML
+			$xml[] = file_get_contents(DIR_SYSTEM . 'modification.xml');
+
+			// Get the default modification file
+			$results = $this->model_extension_modification->getModifications();
+
+			foreach ($results as $result) {
+				if ($result['status']) {
+					$xml[] = $result['code'];
+				}
+			}
+
+			$modification = array();
+
+			foreach ($xml as $xml) {
+				$dom = new DOMDocument('1.0', 'UTF-8');
+				$dom->preserveWhiteSpace = false;
+				$dom->loadXml($xml);
+
+				// Log
+				$log[] = 'MOD: ' . $dom->getElementsByTagName('name')->item(0)->textContent;
+
+				$files = $dom->getElementsByTagName('modification')->item(0)->getElementsByTagName('file');
+
+				foreach ($files as $file) {
+					$operations = $file->getElementsByTagName('operation');
+
+					$path = '';
+
+					// Get the full path of the files that are going to be used for modification
+					if (substr($file->getAttribute('path'), 0, 7) == 'catalog') {
+						$path = DIR_CATALOG . str_replace('../', '', substr($file->getAttribute('path'), 8));
+					}
+
+					if (substr($file->getAttribute('path'), 0, 5) == 'admin') {
+						$path = DIR_APPLICATION . str_replace('../', '', substr($file->getAttribute('path'), 6));
+					}
+
+					if (substr($file->getAttribute('path'), 0, 6) == 'system') {
+						$path = DIR_SYSTEM . str_replace('../', '', substr($file->getAttribute('path'), 7));
+					}
+
+					if ($path) {
+						$files = glob($path, GLOB_BRACE);
+
+						if ($files) {
+							foreach ($files as $file) {
+								// Get the key to be used for the modification cache filename.
+								if (substr($file, 0, strlen(DIR_CATALOG)) == DIR_CATALOG) {
+									$key = 'catalog/' . substr($file, strlen(DIR_CATALOG));
+								}
+
+								if (substr($file, 0, strlen(DIR_APPLICATION)) == DIR_APPLICATION) {
+									$key = 'admin/' . substr($file, strlen(DIR_APPLICATION));
+								}
+
+								if (substr($file, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {
+									$key = 'system/' . substr($file, strlen(DIR_SYSTEM));
+								}
+
+								if (!isset($modification[$key])) {
+									$content = file_get_contents($file);
+
+									$modification[$key] = preg_replace('~\r?\n~', "\n", $content);
+									$original[$key] = preg_replace('~\r?\n~', "\n", $content);
+
+									// Log
+									$log[] = 'FILE: ' . $key;
+								}
+
+								foreach ($operations as $operation) {
+									// Search and replace
+									if ($operation->getElementsByTagName('search')->item(0)->getAttribute('regex') != 'true') {
+										$search = $operation->getElementsByTagName('search')->item(0)->textContent;
+										$trim = $operation->getElementsByTagName('search')->item(0)->getAttribute('trim');
+										$index = $operation->getElementsByTagName('search')->item(0)->getAttribute('index');
+										$add = $operation->getElementsByTagName('add')->item(0)->textContent;
+										$position = $operation->getElementsByTagName('add')->item(0)->getAttribute('position');
+										$offset = $operation->getElementsByTagName('add')->item(0)->getAttribute('offset');
+
+										// Log
+										$log[] = 'CODE: ' . $search;
+										
+										$found = false;
+										
+										// Turn the code that we are going to add into an array.
+										$add = explode("\n", $add);
+
+										// Check if using indexes
+										if ($index) {
+											$indexes = explode(',', $index);
+										} else {
+											$indexes = array();
+										}
+										
+										// Get all the matches
+										$i = 0;
+										
+										$lines = explode("\n", $modification[$key]);
+
+										foreach ($lines as $line_id => $line) {
+											// Status
+											$status = false;
+											
+											// Trim line if no trim attribute is set or is set to true.
+											if (!$trim || $trim == 'true') {
+												$search = trim($search);
+											}
+											
+											// Check to see if the line matches the search code.
+											if (stripos($line, $search) !== false) {
+												// If indexes are not used then just set the found status to true.
+												if (!$indexes) {
+													$status = true;
+												} elseif (in_array($i, $indexes)) {
+													$status = true;
+												}
+												
+												$i++;
+											}
+											
+											// Now for replacing or adding to the matched elements
+											if ($status) {
+												switch ($position) {
+													default:
+													case 'replace':
+														array_splice($lines, $line_id, count($add) + $offset, $add);
+														break;
+													case 'before':
+														array_splice($lines, $line_id - $offset, 0, $add);
+														break;
+													case 'after':
+														array_splice($lines, ($line_id + 1) + $offset, 0, $add);
+														break;
+												}
+												
+												// Log
+												$log[] = 'LINE: ' . $line_id;
+												
+												$found = true;										
+											}
+										}
+										
+										if (!$found) {
+											$log[] = 'NOT FOUND!';
+										}
+										
+										$modification[$key] = implode("\n", $lines);
+									} else {
+										$search = $operation->getElementsByTagName('search')->item(0)->textContent;
+										$replace = $operation->getElementsByTagName('add')->item(0)->textContent;
+										$limit = $operation->getElementsByTagName('search')->item(0)->getAttribute('limit');
+
+										// Limit
+										if (!$limit) {
+											$limit = -1;
+										}
+
+										// Log
+										$match = array();
+
+										preg_match_all($search, $modification[$key], $match, PREG_OFFSET_CAPTURE);
+
+										// Remove part of the the result if a limit is set.
+										if ($limit > 0) {
+											$match[0] = array_slice($match[0], 0, $limit);
+										}
+
+										if ($match[0]) {
+											$log[] = 'REGEX: ' . $search;
+
+											for ($i = 0; $i < count($match[0]); $i++) {
+												$log[] = 'LINE: ' . (substr_count(substr($modification[$key], 0, $match[0][$i][1]), "\n") + 1);
+											}
+										} else {
+											$log[] = 'NOT FOUND!';
+										}
+
+										// Make the modification
+										$modification[$key] = preg_replace($search, $replace, $modification[$key], $limit);
+									}
+								}
+							}
+						}
+					}
+
+					// Log
+					$log[] = '----------------------------------------------------------------';
+				}
+			}
+
+			// Log
+			$ocmod = new Log('ocmod.log');
+			$ocmod->write(implode("\n", $log));
+
+			// Write all modification files
+			foreach ($modification as $key => $value) {
+				// Only create a file if there are changes
+				if ($original[$key] != $value) {
+					$path = '';
+
+					$directories = explode('/', dirname($key));
+
+					foreach ($directories as $directory) {
+						$path = $path . '/' . $directory;
+
+						if (!is_dir(DIR_MODIFICATION . $path)) {
+							@mkdir(DIR_MODIFICATION . $path, 0777);
+						}
+					}
+
+					$handle = fopen(DIR_MODIFICATION . $key, 'w');
+
+					fwrite($handle, $value);
+
+					fclose($handle);
+				}
+			}
+
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));	
-		}			
+			$url = '';
+
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+
+			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+		}
+
+		$this->getList();
 	}
+
+	public function clear() {
+		$this->load->language('extension/modification');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('extension/modification');
+
+		if ($this->validate()) {
+			$files = array();
+			
+			// Make path into an array
+			$path = array(DIR_MODIFICATION . '*');
+
+			// While the path array is still populated keep looping through
+			while (count($path) != 0) {
+				$next = array_shift($path);
+
+				foreach (glob($next) as $file) {
+					// If directory add to path array
+					if (is_dir($file)) {
+						$path[] = $file . '/*';
+					}
+
+					// Add the file to the files to be deleted array
+					$files[] = $file;
+				}
+			}
+			
+			// Reverse sort the file array
+			rsort($files);
+			
+			// Clear all modification files
+			foreach ($files as $file) {
+				if ($file != DIR_MODIFICATION . 'index.html') {
+					// If file just delete
+					if (is_file($file)) {
+						unlink($file);
 	
+					// If directory use the remove directory function
+					} elseif (is_dir($file)) {
+						rmdir($file);
+					}
+				}
+			}					
+
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$url = '';
+
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+
+			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+		}
+
+		$this->getList();
+	}
+
+	public function enable() {
+		$this->load->language('extension/modification');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('extension/modification');
+
+		if (isset($this->request->get['modification_id']) && $this->validate()) {
+			$this->model_extension_modification->enableModification($this->request->get['modification_id']);
+
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$url = '';
+
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+
+			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+		}
+
+		$this->getList();
+	}
+
+	public function disable() {
+		$this->load->language('extension/modification');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('extension/modification');
+
+		if (isset($this->request->get['modification_id']) && $this->validate()) {
+			$this->model_extension_modification->disableModification($this->request->get['modification_id']);
+
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$url = '';
+
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+
+			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+		}
+
+		$this->getList();
+	}
+
+	public function clearlog() {
+		$this->load->language('extension/modification');
+
+		if ($this->validate()) {
+			$handle = fopen(DIR_LOGS . 'ocmod.log', 'w+');
+
+			fclose($handle);
+
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$url = '';
+
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+
+			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+		}
+
+		$this->getList();
+	}
+
 	protected function getList() {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
 			$sort = 'name';
 		}
-		
+
 		if (isset($this->request->get['order'])) {
 			$order = $this->request->get['order'];
 		} else {
 			$order = 'ASC';
 		}
-		
+
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
 		} else {
 			$page = 1;
 		}
-				
+
 		$url = '';
-			
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -182,92 +533,101 @@ class ControllerExtensionModification extends Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
-		
+
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-						
-		$this->language->load('extension/modification');
-		 
-		$this->document->setTitle($this->language->get('heading_title')); 
+		
+		$data['breadcrumbs'] = array();
 
-  		$this->data['breadcrumbs'] = array();
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+		);
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
-   		);
-
-   		$this->data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL')
-   		);
-				
-		$this->data['insert'] = $this->url->link('extension/modification/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$this->data['delete'] = $this->url->link('extension/modification/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');	
-
-		$this->data['modifications'] = array();
-
-		$data = array(
-			'sort'  => $sort,
-			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
-			'limit' => $this->config->get('config_admin_limit')
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('extension/modification', 'token=' . $this->session->data['token'], 'SSL')
 		);
 		
-		$modification_total = $this->model_setting_modification->getTotalModifications();
-	
-		$results = $this->model_setting_modification->getModifications($data);
- 
-    	foreach ($results as $result) {
-			$action = array();
-			
-			$action[] = array(
-				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('extension/modification/update', 'token=' . $this->session->data['token'] . '&modification_id=' . $result['modification_id'] . $url, 'SSL')
-			);
-						
-			$this->data['modifications'][] = array(
+		$data['refresh'] = $this->url->link('extension/modification/refresh', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['clear'] = $this->url->link('extension/modification/clear', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['delete'] = $this->url->link('extension/modification/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
+
+		$data['modifications'] = array();
+
+		$filter_data = array(
+			'sort'  => $sort,
+			'order' => $order,
+			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
+			'limit' => $this->config->get('config_limit_admin')
+		);
+
+		$modification_total = $this->model_extension_modification->getTotalModifications();
+
+		$results = $this->model_extension_modification->getModifications($filter_data);
+
+		foreach ($results as $result) {
+			$data['modifications'][] = array(
 				'modification_id' => $result['modification_id'],
 				'name'            => $result['name'],
 				'author'          => $result['author'],
-				'date_added'      => $result['date_added'],
-				'date_modified'   => $result['date_modified'],
-				'selected'        => isset($this->request->post['selected']) && in_array($result['modification_id'], $this->request->post['selected']),
-				'action'          => $action
+				'version'         => $result['version'],
+				'status'          => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'link'            => $result['link'],
+				'enable'          => $this->url->link('extension/modification/enable', 'token=' . $this->session->data['token'] . '&modification_id=' . $result['modification_id'], 'SSL'),
+				'disable'         => $this->url->link('extension/modification/disable', 'token=' . $this->session->data['token'] . '&modification_id=' . $result['modification_id'], 'SSL'),
+				'enabled'         => $result['status'],
 			);
-		}			
-		
-		$this->data['heading_title'] = $this->language->get('heading_title');
-		
-		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		$this->data['text_confirm'] = $this->language->get('text_confirm');
+		}
 
-		$this->data['column_name'] = $this->language->get('column_name');
-		$this->data['column_author'] = $this->language->get('column_author');
-		$this->data['column_date_added'] = $this->language->get('column_date_added');
-		$this->data['column_date_modified'] = $this->language->get('column_date_modified');
-		$this->data['column_action'] = $this->language->get('column_action');
+		$data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['button_insert'] = $this->language->get('button_insert');
-		$this->data['button_delete'] = $this->language->get('button_delete');
-		
+		$data['text_list'] = $this->language->get('text_list');
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_refresh'] = $this->language->get('text_refresh');
+
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_author'] = $this->language->get('column_author');
+		$data['column_version'] = $this->language->get('column_version');
+		$data['column_status'] = $this->language->get('column_status');
+		$data['column_date_added'] = $this->language->get('column_date_added');
+		$data['column_action'] = $this->language->get('column_action');
+
+		$data['button_refresh'] = $this->language->get('button_refresh');
+		$data['button_clear'] = $this->language->get('button_clear');
+		$data['button_delete'] = $this->language->get('button_delete');
+		$data['button_link'] = $this->language->get('button_link');
+		$data['button_enable'] = $this->language->get('button_enable');
+		$data['button_disable'] = $this->language->get('button_disable');
+
+		$data['tab_general'] = $this->language->get('tab_general');
+		$data['tab_log'] = $this->language->get('tab_log');
+
+		$data['token'] = $this->session->data['token'];
+
+		if (isset($this->error['warning'])) {
+			$data['error_warning'] = $this->error['warning'];
+		} else {
+			$data['error_warning'] = '';
+		}
+
 		if (isset($this->session->data['success'])) {
-			$this->data['success'] = $this->session->data['success'];
-		
+			$data['success'] = $this->session->data['success'];
+
 			unset($this->session->data['success']);
 		} else {
-			$this->data['success'] = '';
+			$data['success'] = '';
 		}
 
-		if (isset($this->session->data['error'])) {
-			$this->data['error'] = $this->session->data['error'];
-		
-			unset($this->session->data['error']);
+		if (isset($this->request->post['selected'])) {
+			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$this->data['error'] = '';
+			$data['selected'] = array();
 		}
-		
+
 		$url = '';
 
 		if ($order == 'ASC') {
@@ -279,18 +639,19 @@ class ControllerExtensionModification extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-		
-		$this->data['sort_name'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=name' . $url, 'SSL');
-		$this->data['sort_author'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=author' . $url, 'SSL');
-		$this->data['sort_date_added'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, 'SSL');
-		$this->data['sort_date_modified'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=date_modified' . $url, 'SSL');
-		
+
+		$data['sort_name'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=name' . $url, 'SSL');
+		$data['sort_author'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=author' . $url, 'SSL');
+		$data['sort_version'] = $this->url->link('extension/version', 'token=' . $this->session->data['token'] . '&sort=author' . $url, 'SSL');
+		$data['sort_status'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=status' . $url, 'SSL');
+		$data['sort_date_added'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, 'SSL');
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
-												
+
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
@@ -298,380 +659,39 @@ class ControllerExtensionModification extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $modification_total;
 		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->text = $this->language->get('text_pagination');
+		$pagination->limit = $this->config->get('config_limit_admin');
 		$pagination->url = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
-			
-		$this->data['pagination'] = $pagination->render();
 
-		$this->data['sort'] = $sort;
-		$this->data['order'] = $order;
-		
-		$this->template = 'extension/modification_list.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		$data['pagination'] = $pagination->render();
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($modification_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($modification_total - $this->config->get('config_limit_admin'))) ? $modification_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $modification_total, ceil($modification_total / $this->config->get('config_limit_admin')));
+
+		$data['sort'] = $sort;
+		$data['order'] = $order;
+
+		// Log
+		$file = DIR_LOGS . 'ocmod.log';
+
+		if (file_exists($file)) {
+			$data['log'] = file_get_contents($file, FILE_USE_INCLUDE_PATH, null);
+		} else {
+			$data['log'] = '';
+		}
+
+		$data['clear_log'] = $this->url->link('extension/modification/clearlog', 'token=' . $this->session->data['token'], 'SSL');
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('extension/modification.tpl', $data));
 	}
-	
-  	protected function getForm() {
-     	$this->data['heading_title'] = $this->language->get('heading_title');
 
-    	$this->data['entry_name'] = $this->language->get('entry_name');
-
-    	$this->data['button_save'] = $this->language->get('button_save');
-    	$this->data['button_cancel'] = $this->language->get('button_cancel');
-    
- 		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
-		} else {
-			$this->data['error_warning'] = '';
-		}
-
- 		if (isset($this->error['name'])) {
-			$this->data['error_name'] = $this->error['name'];
-		} else {
-			$this->data['error_name'] = array();
-		}
-		
-		$url = '';
-			
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-		
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-  		$this->data['breadcrumbs'] = array();
-
-   		$this->data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
-   		);
-
-   		$this->data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'] . $url, 'SSL')
-   		);
-		
-		if (!isset($this->request->get['modification_id'])) {
-			$this->data['action'] = $this->url->link('extension/modification/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		} else {
-			$this->data['action'] = $this->url->link('extension/modification/update', 'token=' . $this->session->data['token'] . '&modification_id=' . $this->request->get['modification_id'] . $url, 'SSL');
-		}
-			
-		$this->data['cancel'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL');
-
-		if (isset($this->request->get['modification_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-			$modification_info = $this->model_extension_modification->getModification($this->request->get['modification_id']);
-		}
-		
-		$this->data['token'] = $this->session->data['token'];
-		
-		$this->template = 'extension/modification_form.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());	
-  	}
-	
-	protected function validateForm() {
-    	if (!$this->user->hasPermission('modify', 'extension/modification')) {
-      		$this->error['warning'] = $this->language->get('error_permission');
-    	}
-		
-		if (!$this->error) {
-	  		return true;
-		} else {
-	  		return false;
-		}
-  	}
-
-  	protected function validateDelete() {
+	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'extension/modification')) {
-      		$this->error['warning'] = $this->language->get('error_permission');
-    	}
-		
-		if (!$this->error) { 
-	  		return true;
-		} else {
-	  		return false;
+			$this->error['warning'] = $this->language->get('error_permission');
 		}
-  	}
-			
-	public function upload() {
-/* 
-New XML Modifcation Standard 
 
-<modification>
-	<id><![CDATA[Test]]></id>
-	<version><![CDATA[1.0]]></version>
-	<author><![CDATA[http://www.opencart.com]]></author>
-	<file name="catalog/controller/product/product.php" error="log|skip|abort">
-		<operation>
-			<search index="1" error="log|skip|abort"><![CDATA[
-			
-			code
-			
-			]]></search>
-			
-			<add position="replace|before|after"><![CDATA[
-			
-			code
-			
-			]]></add>
-		</operation>
-	</file>	
-</modification>
-*/	
-		
-		$this->language->load('extension/manager');
-		
-		$json = array();
-		
-		if (!$this->user->hasPermission('modify', 'extension/manager')) {
-      		$json['error'] = $this->language->get('error_permission') . "\n";
-    	}		
-		
-		if (!empty($this->request->files['file']['name'])) {
-			if (strrchr($this->request->files['file']['name'], '.') != '.zip') {
-				$json['error'] = $this->language->get('error_filetype');
-       		}
-					
-			if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
-				$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
-			}
-		} else {
-			$json['error'] = $this->language->get('error_upload');
-		}
-	
-		if (!isset($json['error']) && is_uploaded_file($this->request->files['file']['tmp_name']) && file_exists($this->request->files['file']['tmp_name'])) {
-			// Unzip the files
-			$file = $this->request->files['file']['tmp_name'];
-			$directory = dirname($this->request->files['file']['tmp_name']) . '/' . basename($this->request->files['file']['name'], '.zip') . '/';
-	
-			$zip = new ZipArchive();
-			$zip->open($file);
-			$zip->extractTo($directory);
-			$zip->close();
-			
-			// Remove Zip
-			unlink($file);
-			
-			// Get a list of files ready to upload
-			$files = array();
-			
-			$path = array($directory . '*');
-			
-			while(count($path) != 0) {
-				$next = array_shift($path);
-		
-				foreach(glob($next) as $file) {
-					if (is_dir($file)) {
-						$path[] = $file . '/*';
-					}
-					
-					$files[] = $file;
-				}
-			}
-			
-			sort($files);
-					
-			// Connect to the site via FTP
-			$connection = ftp_connect($this->config->get('config_ftp_host'), $this->config->get('config_ftp_port'));
-	
-			if (!$connection) {
-				exit($this->language->get('error_ftp_connection') . $this->config->get('config_ftp_host') . ':' . $this->config->get('config_ftp_port')) ;
-			}
-			
-			$login = ftp_login($connection, $this->config->get('config_ftp_username'), $this->config->get('config_ftp_password'));
-			
-			if (!$login) {
-				exit('Couldn\'t connect as ' . $this->config->get('config_ftp_username'));
-			}
-			
-			if ($this->config->get('config_ftp_root')) {
-				$root = ftp_chdir($connection, $this->config->get('config_ftp_root'));
-				
-				if (!$root) {
-					exit('Couldn\'t change to directory ' . $this->config->get('config_ftp_root'));
-				}
-			}
-		
-			foreach ($files as $file) {
-				// Upload everything in the upload directory
-				if (substr(substr($file, strlen($directory)), 0, 7) == 'upload/') {
-					$destination = substr(substr($file, strlen($directory)), 7);
-					
-					if (is_dir($file)) {
-						$list = ftp_nlist($connection, substr($destination, 0, strrpos($destination, '/')));
-						
-						if (!in_array($destination, $list)) {
-							if (ftp_mkdir($connection, $destination)) {
-								echo 'Made directory ' . $destination . '<br />';
-							}
-						}
-					}	
-					
-					if (is_file($file)) {
-						if (ftp_put($connection, $destination, $file, FTP_ASCII)) {		
-							echo 'Successfully uploaded ' . $file . '<br />';
-						}
-					}
-				} elseif (strrchr(basename($file), '.') == '.sql') {
-					$sql = file_get_contents($file);
-				
-				
-				} elseif (strrchr(basename($file), '.') == '.xml') {
-					$xml = file_get_contents($file);
-					
-				}
-			}
-			
-			ftp_close($connection);
-			
-			rsort($files);
-						
-			foreach ($files as $file) {
-				if (is_file($file)) {
-					unlink($file);
-				} elseif (is_dir($file)) {
-					rmdir($file);	
-				}
-			}
-			
-			if (file_exists($directory)) {
-				rmdir($directory);
-			}
-						
-			$json['success'] = $this->language->get('text_success');
-		}	
-		
-		
-		if (file_exists($file)) { 
-			$xml = file_get_contents($file);
-			
-			$this->parse($xml);
-		} else {
-			trigger_error('Error: Could not load modification ' . $file . '!');
-			exit();
-		}	
-		
-
-					
-		$this->response->setOutput(json_encode($json));
+		return !$this->error;
 	}
-	
-	public function sql() {
-		$query = '';
-
-		foreach($lines as $line) {
-			if ($line && (substr($line, 0, 2) != '--') && (substr($line, 0, 1) != '#')) {
-				$query .= $line;
-
-				if (preg_match('/;\s*$/', $line)) {
-					$query = str_replace("DROP TABLE IF EXISTS `oc_", "DROP TABLE IF EXISTS `" . $data['db_prefix'], $query);
-					$query = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . $data['db_prefix'], $query);
-					$query = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $query);
-					
-					$result = mysql_query($query, $connection); 
-
-					if (!$result) {
-						die(mysql_error());
-					}
-
-					$query = '';
-				}
-			}
-		}	
-	}
-	
-	public function xml() {
-		$dom = new DOMDocument('1.0', 'UTF-8');
-		$dom->loadXml($xml);
-		
-		$files = array();
-		
-		$files = $dom->getElementsByTagName('modification')->item(0)->getElementsByTagName('file');		
-		
-
-		
-		foreach ($files as $file) {
-		//	foreach () {
-		//		$files = glob($file);
-			
-		//		if ($files) {
-			
-		//		}			
-		//	}
-
-			$filename = $file->getAttribute('name');
-		
-			if (!isset($this->data[$filename])) {
-				if (file_exists($filename)) {
-					$content = file_get_contents($filename);
-				} else {
-					trigger_error('Error: Could not load language ' . $filename . '!');
-					exit();
-				}			
-			} else {
-				$content = $this->data[$filename];
-			}
-
-			$operations = $file->getElementsByTagName('operation');
-		
-			foreach ($operations as $operation) {
-				$search = $operation->getElementsByTagName('search')->item(0)->nodeValue;
-				$index = $operation->getElementsByTagName('search')->item(0)->getAttribute('index');
-				$add = $operation->getElementsByTagName('add')->item(0)->nodeValue;
-				$position = $operation->getElementsByTagName('add')->item(0)->getAttribute('position');
-					
-				if (!$index) {
-					$index = 1;
-				}
-				
-				switch ($position) {
-					default:
-					case 'replace':
-						$replace = $add;
-						break;
-					case 'before':
-						$replace = $add . $search;
-						break;					
-					case 'after':
-						$replace = $search . $add;
-						break;
-				}
-
-				$i = 0;
-				$pos = -1;
-				$result = array();
-
-				while (($pos = strpos($content, $search, $pos + 1)) !== false) {
-					$result[$i++] = $pos; 
-				}
-				
-				// Only replace the occurance of the string that is equal to the index					
-				if (isset($result[$index - 1])) {
-					$content = substr_replace($content, $replace, $result[$index - 1], strlen($search));
-				}
-			}
-
-			echo '<pre>';
-			print_r($result);
-			echo $content;
-			echo '</pre>';
-		}
-	}			
 }
-?>

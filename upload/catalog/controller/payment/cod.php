@@ -1,23 +1,22 @@
 <?php
 class ControllerPaymentCod extends Controller {
-	protected function index() {
-    	$this->data['button_confirm'] = $this->language->get('button_confirm');
+	public function index() {
+		$data['button_confirm'] = $this->language->get('button_confirm');
 
-		$this->data['continue'] = $this->url->link('checkout/success');
-		
+		$data['continue'] = $this->url->link('checkout/success');
+
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/cod.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/payment/cod.tpl';
+			return $this->load->view($this->config->get('config_template') . '/template/payment/cod.tpl', $data);
 		} else {
-			$this->template = 'default/template/payment/cod.tpl';
-		}	
-		
-		$this->render();
+			return $this->load->view('default/template/payment/cod.tpl', $data);
+		}
 	}
-	
+
 	public function confirm() {
-		$this->load->model('checkout/order');
-		
-		$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('cod_order_status_id'));
+		if ($this->session->data['payment_method']['code'] == 'cod') {
+			$this->load->model('checkout/order');
+
+			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('cod_order_status_id'));
+		}
 	}
 }
-?>

@@ -1,14 +1,20 @@
-<div id="carousel<?php echo $module; ?>">
-  <ul class="jcarousel-skin-opencart">
+<div id="carousel<?php echo $module; ?>" class="flexslider carousel">
+  <ul class="slides">
     <?php foreach ($banners as $banner) { ?>
-    <li><a href="<?php echo $banner['link']; ?>"><img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" title="<?php echo $banner['title']; ?>" /></a></li>
+    <?php if ($banner['link']) { ?>
+    <li><a href="<?php echo $banner['link']; ?>"><img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" class="img-responsive" /></a></li>
+    <?php } else { ?>
+    <li><img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" class="img-responsive" /></li>
+    <?php } ?>
     <?php } ?>
   </ul>
 </div>
 <script type="text/javascript"><!--
-$('#carousel<?php echo $module; ?> ul').jcarousel({
-	vertical: false,
-	visible: <?php echo $limit; ?>,
-	scroll: <?php echo $scroll; ?>
+$('#carousel<?php echo $module; ?>').flexslider({
+	animation: 'slide',
+	itemWidth: <?php echo $width; ?>,
+	itemMargin: 100,
+	minItems: 2,
+    maxItems: 4
 });
-//--></script>
+--></script>

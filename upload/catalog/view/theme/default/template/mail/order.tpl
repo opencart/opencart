@@ -31,7 +31,8 @@
           <?php } ?></td>
         <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;"><b><?php echo $text_email; ?></b> <?php echo $email; ?><br />
           <b><?php echo $text_telephone; ?></b> <?php echo $telephone; ?><br />
-          <b><?php echo $text_ip; ?></b> <?php echo $ip; ?><br /></td>
+          <b><?php echo $text_ip; ?></b> <?php echo $ip; ?><br />
+          <b><?php echo $text_order_status; ?></b> <?php echo $order_status; ?><br /></td>
       </tr>
     </tbody>
   </table>
@@ -111,7 +112,6 @@
     </tfoot>
   </table>
   <p style="margin-top: 0px; margin-bottom: 20px;"><?php echo $text_footer; ?></p>
-  <p style="margin-top: 0px; margin-bottom: 20px;"><?php echo $text_powered; ?></p>
 </div>
 </body>
 </html>

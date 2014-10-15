@@ -1,33 +1,60 @@
-<?php    
-class ControllerErrorPermission extends Controller {    
-	public function index() { 
-    	$this->language->load('error/permission');
-  
-    	$this->document->setTitle($this->language->get('heading_title'));
-		
-    	$this->data['heading_title'] = $this->language->get('heading_title');
+<?php
+class ControllerErrorPermission extends Controller {
+	public function index() {
+		$this->load->language('error/permission');
 
-		$this->data['text_permission'] = $this->language->get('text_permission');
-													
-  		$this->data['breadcrumbs'] = array();
+		$this->document->setTitle($this->language->get('heading_title'));
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		$data['heading_title'] = $this->language->get('heading_title');
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('error/permission', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		$data['text_permission'] = $this->language->get('text_permission');
 
-		$this->template = 'error/permission.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 		);
-				
-		$this->response->setOutput($this->render());
-  	}
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('error/permission', 'token=' . $this->session->data['token'], 'SSL')
+		);
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('error/permission.tpl', $data));
+	}
+
+	public function check() {
+		if (isset($this->request->get['route'])) {
+			$route = '';
+
+			$part = explode('/', $this->request->get['route']);
+
+			if (isset($part[0])) {
+				$route .= $part[0];
+			}
+
+			if (isset($part[1])) {
+				$route .= '/' . $part[1];
+			}
+
+			$ignore = array(
+				'common/dashboard',
+				'common/login',
+				'common/logout',
+				'common/forgotten',
+				'common/reset',
+				'error/not_found',
+				'error/permission'
+			);
+
+			if (!in_array($route, $ignore) && !$this->user->hasPermission('access', $route)) {
+				return new Action('error/permission');
+			}
+		}
+	}
 }
-?>

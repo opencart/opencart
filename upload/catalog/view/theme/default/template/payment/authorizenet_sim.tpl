@@ -1,11 +1,13 @@
-<form action="<?php echo $action; ?>" method="post">
+<form action="https://test.authorize.net/gateway/transact.dll" method="post">
   <input type="hidden" name="x_login" value="<?php echo $x_login; ?>" />
   <input type="hidden" name="x_fp_sequence" value="<?php echo $x_fp_sequence; ?>" />
   <input type="hidden" name="x_fp_timestamp" value="<?php echo $x_fp_timestamp; ?>" />
   <input type="hidden" name="x_amount" value="<?php echo $x_amount; ?>" />
   <input type="hidden" name="x_fp_hash" value="<?php echo $x_fp_hash; ?>" />
   <input type="hidden" name="x_show_form" value="<?php echo $x_show_form; ?>" />
+  <?php if ($x_test_request) { ?>
   <input type="hidden" name="x_test_request" value="<?php echo $x_test_request; ?>" />
+  <?php } ?>
   <input type="hidden" name="x_type" value="<?php echo $x_type; ?>" />
   <input type="hidden" name="x_currency_code" value="<?php echo $x_currency_code; ?>" />
   <input type="hidden" name="x_invoice_num" value="<?php echo $x_invoice_num; ?>" />
@@ -30,9 +32,10 @@
   <input type="hidden" name="x_customer_ip" value="<?php echo $x_customer_ip; ?>" />
   <input type="hidden" name="x_email" value="<?php echo $x_email; ?>" />
   <input type="hidden" name="x_relay_response" value="<?php echo $x_relay_response; ?>" />
+  <input type="hidden" name="x_solution_id" value="A1000015" />
   <div class="buttons">
-    <div class="right">
-      <input type="submit" value="<?php echo $button_confirm; ?>" class="button" />
+    <div class="pull-right">
+      <input type="submit" value="<?php echo $button_confirm; ?>" class="btn btn-primary" />
     </div>
   </div>
 </form>

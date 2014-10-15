@@ -1,20 +1,34 @@
-<?php echo $header; ?>
+<?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
-  <?php if ($success) { ?>
-  <div class="success"><?php echo $success; ?></div>
-  <?php } ?>
-  <div class="box">
-    <div class="heading">
-      <h1><img src="view/image/log.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a href="<?php echo $clear; ?>" class="button"><?php echo $button_clear; ?></a></div>
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right"><a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $clear; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_clear; ?>" class="btn btn-danger"><i class="fa fa-eraser"></i></a></div>
+      <h1><i class="fa fa-exclamation-circle"></i> <?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
-    <div class="content">
-      <textarea wrap="off" style="width: 98%; height: 300px; padding: 5px; border: 1px solid #CCCCCC; background: #FFFFFF; overflow: scroll;"><?php echo $log; ?></textarea>
+  </div>
+  <div class="container-fluid">
+    <?php if ($error_warning) { ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    <?php } ?>
+    <?php if ($success) { ?>
+    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    <?php } ?>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-exclamation-triangle"></i> <?php echo $text_list; ?></h3>
+      </div>
+      <div class="panel-body">
+        <textarea wrap="off" rows="15" readonly="readonly" class="form-control"><?php echo $log; ?></textarea>
+      </div>
     </div>
   </div>
 </div>

@@ -14,7 +14,7 @@ class Affiliate {
 		$this->request = $registry->get('request');
 		$this->session = $registry->get('session');
 
-		if (isset($this->session->data['affiliate_id'])) { 
+		if (isset($this->session->data['affiliate_id'])) {
 			$affiliate_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "affiliate WHERE affiliate_id = '" . (int)$this->session->data['affiliate_id'] . "' AND status = '1'");
 
 			if ($affiliate_query->num_rows) {
@@ -37,7 +37,7 @@ class Affiliate {
 		$affiliate_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "affiliate WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "' AND (password = SHA1(CONCAT(salt, SHA1(CONCAT(salt, SHA1('" . $this->db->escape($password) . "'))))) OR password = '" . $this->db->escape(md5($password)) . "') AND status = '1' AND approved = '1'");
 
 		if ($affiliate_query->num_rows) {
-			$this->session->data['affiliate_id'] = $affiliate_query->row['affiliate_id'];	
+			$this->session->data['affiliate_id'] = $affiliate_query->row['affiliate_id'];
 
 			$this->affiliate_id = $affiliate_query->row['affiliate_id'];
 			$this->firstname = $affiliate_query->row['firstname'];
@@ -96,4 +96,3 @@ class Affiliate {
 		return $this->code;
 	}
 }
-?>

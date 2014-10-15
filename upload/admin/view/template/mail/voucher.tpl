@@ -33,7 +33,9 @@ a img {
 </head>
 <body>
 <div id="container">
+  <?php if ($image) { ?>
   <div style="float: right; margin-left: 20px;"><a href="<?php echo $store_url; ?>" title="<?php echo $store_name; ?>"><img src="<?php echo $image; ?>" alt="<?php echo $store_name; ?>" /></a></div>
+  <?php } ?>
   <div>
     <p><?php echo $text_greeting; ?></p>
     <p><?php echo $text_from; ?></p>

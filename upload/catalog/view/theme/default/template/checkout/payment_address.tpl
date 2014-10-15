@@ -1,55 +1,75 @@
-<?php if ($addresses) { ?>
-<input type="radio" name="payment_address" value="existing" id="payment-address-existing" checked="checked" />
-<label for="payment-address-existing"><?php echo $text_address_existing; ?></label>
-<div id="payment-existing">
-  <select name="address_id" style="width: 100%; margin-bottom: 15px;" size="5">
-    <?php foreach ($addresses as $address) { ?>
-    <?php if ($address['address_id'] == $address_id) { ?>
-    <option value="<?php echo $address['address_id']; ?>" selected="selected"><?php echo $address['firstname']; ?> <?php echo $address['lastname']; ?>, <?php echo $address['address_1']; ?>, <?php echo $address['city']; ?>, <?php echo $address['zone']; ?>, <?php echo $address['country']; ?></option>
-    <?php } else { ?>
-    <option value="<?php echo $address['address_id']; ?>"><?php echo $address['firstname']; ?> <?php echo $address['lastname']; ?>, <?php echo $address['address_1']; ?>, <?php echo $address['city']; ?>, <?php echo $address['zone']; ?>, <?php echo $address['country']; ?></option>
-    <?php } ?>
-    <?php } ?>
-  </select>
-</div>
-<p>
-  <input type="radio" name="payment_address" value="new" id="payment-address-new" />
-  <label for="payment-address-new"><?php echo $text_address_new; ?></label>
-</p>
-<?php } ?>
-<div id="payment-new" style="display: <?php echo ($addresses ? 'none' : 'block'); ?>;">
-  <table class="form">
-    <tr>
-      <td><span class="required">*</span> <?php echo $entry_firstname; ?></td>
-      <td><input type="text" name="firstname" value="" class="large-field" /></td>
-    </tr>
-    <tr>
-      <td><span class="required">*</span> <?php echo $entry_lastname; ?></td>
-      <td><input type="text" name="lastname" value="" class="large-field" /></td>
-    </tr>
-    <tr>
-      <td><?php echo $entry_company; ?></td>
-      <td><input type="text" name="company" value="" class="large-field" /></td>
-    </tr>
-    <tr>
-      <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
-      <td><input type="text" name="address_1" value="" class="large-field" /></td>
-    </tr>
-    <tr>
-      <td><?php echo $entry_address_2; ?></td>
-      <td><input type="text" name="address_2" value="" class="large-field" /></td>
-    </tr>
-    <tr>
-      <td><span class="required">*</span> <?php echo $entry_city; ?></td>
-      <td><input type="text" name="city" value="" class="large-field" /></td>
-    </tr>
-    <tr>
-      <td><span id="payment-postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></td>
-      <td><input type="text" name="postcode" value="" class="large-field" /></td>
-    </tr>
-    <tr>
-      <td><span class="required">*</span> <?php echo $entry_country; ?></td>
-      <td><select name="country_id" class="large-field">
+<form class="form-horizontal">
+  <?php if ($addresses) { ?>
+  <div class="radio">
+    <label>
+      <input type="radio" name="payment_address" value="existing" checked="checked" />
+      <?php echo $text_address_existing; ?></label>
+  </div>
+  <div id="payment-existing">
+    <select name="address_id" class="form-control">
+      <?php foreach ($addresses as $address) { ?>
+      <?php if ($address['address_id'] == $address_id) { ?>
+      <option value="<?php echo $address['address_id']; ?>" selected="selected"><?php echo $address['firstname']; ?> <?php echo $address['lastname']; ?>, <?php echo $address['address_1']; ?>, <?php echo $address['city']; ?>, <?php echo $address['zone']; ?>, <?php echo $address['country']; ?></option>
+      <?php } else { ?>
+      <option value="<?php echo $address['address_id']; ?>"><?php echo $address['firstname']; ?> <?php echo $address['lastname']; ?>, <?php echo $address['address_1']; ?>, <?php echo $address['city']; ?>, <?php echo $address['zone']; ?>, <?php echo $address['country']; ?></option>
+      <?php } ?>
+      <?php } ?>
+    </select>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="payment_address" value="new" />
+      <?php echo $text_address_new; ?></label>
+  </div>
+  <?php } ?>
+  <br />
+  <div id="payment-new" style="display: <?php echo ($addresses ? 'none' : 'block'); ?>;">
+    <div class="form-group required">
+      <label class="col-sm-2 control-label" for="input-payment-firstname"><?php echo $entry_firstname; ?></label>
+      <div class="col-sm-10">
+        <input type="text" name="firstname" value="" placeholder="<?php echo $entry_firstname; ?>" id="input-payment-firstname" class="form-control" />
+      </div>
+    </div>
+    <div class="form-group required">
+      <label class="col-sm-2 control-label" for="input-payment-lastname"><?php echo $entry_lastname; ?></label>
+      <div class="col-sm-10">
+        <input type="text" name="lastname" value="" placeholder="<?php echo $entry_lastname; ?>" id="input-payment-lastname" class="form-control" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="input-payment-company"><?php echo $entry_company; ?></label>
+      <div class="col-sm-10">
+        <input type="text" name="company" value="" placeholder="<?php echo $entry_company; ?>" id="input-payment-company" class="form-control" />
+      </div>
+    </div>
+    <div class="form-group required">
+      <label class="col-sm-2 control-label" for="input-payment-address-1"><?php echo $entry_address_1; ?></label>
+      <div class="col-sm-10">
+        <input type="text" name="address_1" value="" placeholder="<?php echo $entry_address_1; ?>" id="input-payment-address-1" class="form-control" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="input-payment-address-2"><?php echo $entry_address_2; ?></label>
+      <div class="col-sm-10">
+        <input type="text" name="address_2" value="" placeholder="<?php echo $entry_address_2; ?>" id="input-payment-address-2" class="form-control" />
+      </div>
+    </div>
+    <div class="form-group required">
+      <label class="col-sm-2 control-label" for="input-payment-city"><?php echo $entry_city; ?></label>
+      <div class="col-sm-10">
+        <input type="text" name="city" value="" placeholder="<?php echo $entry_city; ?>" id="input-payment-city" class="form-control" />
+      </div>
+    </div>
+    <div class="form-group required">
+      <label class="col-sm-2 control-label" for="input-payment-postcode"><?php echo $entry_postcode; ?></label>
+      <div class="col-sm-10">
+        <input type="text" name="postcode" value="" placeholder="<?php echo $entry_postcode; ?>" id="input-payment-postcode" class="form-control" />
+      </div>
+    </div>
+    <div class="form-group required">
+      <label class="col-sm-2 control-label" for="input-payment-country"><?php echo $entry_country; ?></label>
+      <div class="col-sm-10">
+        <select name="country_id" id="input-payment-country" class="form-control">
           <option value=""><?php echo $text_select; ?></option>
           <?php foreach ($countries as $country) { ?>
           <?php if ($country['country_id'] == $country_id) { ?>
@@ -58,23 +78,135 @@
           <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
           <?php } ?>
           <?php } ?>
-        </select></td>
-    </tr>
-    <tr>
-      <td><span class="required">*</span> <?php echo $entry_zone; ?></td>
-      <td><select name="zone_id" class="large-field">
-        </select></td>
-    </tr>
-  </table>
-</div>
-<br />
-<div class="buttons">
-  <div class="right">
-    <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-address" class="button" />
+        </select>
+      </div>
+    </div>
+    <div class="form-group required">
+      <label class="col-sm-2 control-label" for="input-payment-zone"><?php echo $entry_zone; ?></label>
+      <div class="col-sm-10">
+        <select name="zone_id" id="input-payment-zone" class="form-control">
+        </select>
+      </div>
+    </div>
+    <?php foreach ($custom_fields as $custom_field) { ?>
+    <?php if ($custom_field['location'] == 'address') { ?>
+    <?php if ($custom_field['type'] == 'select') { ?>
+    <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field" data-sort="<?php echo $custom_field['sort_order']; ?>">
+      <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+      <div class="col-sm-10">
+        <select name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">
+          <option value=""><?php echo $text_select; ?></option>
+          <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+          <option value="<?php echo $custom_field_value['custom_field_value_id']; ?>"><?php echo $custom_field_value['name']; ?></option>
+          <?php } ?>
+        </select>
+      </div>
+    </div>
+    <?php } ?>
+    <?php if ($custom_field['type'] == 'radio') { ?>
+    <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field" data-sort="<?php echo $custom_field['sort_order']; ?>">
+      <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
+      <div class="col-sm-10">
+        <div id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>">
+          <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+          <div class="radio">
+            <label>
+              <input type="radio" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
+              <?php echo $custom_field_value['name']; ?></label>
+          </div>
+          <?php } ?>
+        </div>
+      </div>
+    </div>
+    <?php } ?>
+    <?php if ($custom_field['type'] == 'checkbox') { ?>
+    <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field" data-sort="<?php echo $custom_field['sort_order']; ?>">
+      <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
+      <div class="col-sm-10">
+        <div id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>">
+          <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
+              <?php echo $custom_field_value['name']; ?></label>
+          </div>
+          <?php } ?>
+        </div>
+      </div>
+    </div>
+    <?php } ?>
+    <?php if ($custom_field['type'] == 'text') { ?>
+    <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field" data-sort="<?php echo $custom_field['sort_order']; ?>">
+      <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+      <div class="col-sm-10">
+        <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" placeholder="<?php echo $custom_field['name']; ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+      </div>
+    </div>
+    <?php } ?>
+    <?php if ($custom_field['type'] == 'textarea') { ?>
+    <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field" data-sort="<?php echo $custom_field['sort_order']; ?>">
+      <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+      <div class="col-sm-10">
+        <textarea name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" rows="5" placeholder="<?php echo $custom_field['name']; ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control"><?php echo $custom_field['value']; ?></textarea>
+      </div>
+    </div>
+    <?php } ?>
+    <?php if ($custom_field['type'] == 'file') { ?>
+    <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field" data-sort="<?php echo $custom_field['sort_order']; ?>">
+      <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
+      <div class="col-sm-10">
+        <button type="button" id="button-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+        <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="" />
+      </div>
+    </div>
+    <?php } ?>
+    <?php if ($custom_field['type'] == 'date') { ?>
+    <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field" data-sort="<?php echo $custom_field['sort_order']; ?>">
+      <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+      <div class="col-sm-10">
+        <div class="input-group date">
+          <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+          <span class="input-group-btn">
+          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+          </span></div>
+      </div>
+    </div>
+    <?php } ?>
+    <?php if ($custom_field['type'] == 'time') { ?>
+    <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field" data-sort="<?php echo $custom_field['sort_order']; ?>">
+      <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+      <div class="col-sm-10">
+        <div class="input-group time">
+          <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="HH:mm" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+          <span class="input-group-btn">
+          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+          </span></div>
+      </div>
+    </div>
+    <?php } ?>
+    <?php if ($custom_field['type'] == 'datetime') { ?>
+    <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field" data-sort="<?php echo $custom_field['sort_order']; ?>">
+      <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+      <div class="col-sm-10">
+        <div class="input-group datetime">
+          <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD HH:mm" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+          <span class="input-group-btn">
+          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+          </span></div>
+      </div>
+    </div>
+    <?php } ?>
+    <?php } ?>
+    <?php } ?>
   </div>
-</div>
+  <div class="buttons clearfix">
+    <div class="pull-right">
+      <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-address" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+    </div>
+  </div>
+</form>
 <script type="text/javascript"><!--
-$('#payment-address input[name=\'payment_address\']').off().on('change', function() {
+$('input[name=\'payment_address\']').on('change', function() {
 	if (this.value == 'new') {
 		$('#payment-existing').hide();
 		$('#payment-new').show();
@@ -83,164 +215,119 @@ $('#payment-address input[name=\'payment_address\']').off().on('change', functio
 		$('#payment-new').hide();
 	}
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
-// Payment Address	
-$('#button-payment-address').off().on('click', function() {
-	$.ajax({
-		url: 'index.php?route=checkout/payment_address/save',
-		type: 'post',
-		data: $('#payment-address input[type=\'text\'], #payment-address input[type=\'password\'], #payment-address input[type=\'checkbox\']:checked, #payment-address input[type=\'radio\']:checked, #payment-address input[type=\'hidden\'], #payment-address select'),
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-payment-address').attr('disabled', true);
-			$('#button-payment-address').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
-		},	
-		complete: function() {
-			$('#button-payment-address').attr('disabled', false);
-			$('.loading').remove();
-		},			
-		success: function(json) {
-			$('.warning, .error').remove();
-			
-			if (json['redirect']) {
-				location = json['redirect'];
-			} else if (json['error']) {
-				if (json['error']['warning']) {
-					$('#payment-address .checkout-content').prepend('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
-					
-					$('.warning').fadeIn('slow');
+// Sort the custom fields
+$('#collapse-payment-address .form-group[data-sort]').detach().each(function() {
+	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#collapse-payment-address .form-group').length) {
+		$('#collapse-payment-address .form-group').eq($(this).attr('data-sort')).before(this);
+	} 
+	
+	if ($(this).attr('data-sort') > $('#collapse-payment-address .form-group').length) {
+		$('#collapse-payment-address .form-group:last').after(this);
+	}
+		
+	if ($(this).attr('data-sort') < -$('#collapse-payment-address .form-group').length) {
+		$('#collapse-payment-address .form-group:first').before(this);
+	}
+});
+//--></script>
+<script type="text/javascript"><!--
+$('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('click', function() {
+	var node = this;
+
+	$('#form-upload').remove();
+
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+
+	$('#form-upload input[name=\'file\']').trigger('click');
+
+	$('#form-upload input[name=\'file\']').on('change', function() {
+		$.ajax({
+			url: 'index.php?route=tool/upload',
+			type: 'post',
+			dataType: 'json',
+			data: new FormData($(this).parent()[0]),
+			cache: false,
+			contentType: false,
+			processData: false,
+			beforeSend: function() {
+				$(node).button('loading');
+			},
+			complete: function() {
+				$(node).button('reset');
+			},
+			success: function(json) {
+				$('.text-danger').remove();
+				
+				if (json['error']) {
+					$(node).parent().find('input[name^=\'custom_field\']').after('<div class="text-danger">' + json['error'] + '</div>');
 				}
-								
-				if (json['error']['firstname']) {
-					$('#payment-address input[name=\'firstname\']').after('<span class="error">' + json['error']['firstname'] + '</span>');
+
+				if (json['success']) {
+					alert(json['success']);
+
+					$(node).parent().find('input[name^=\'custom_field\']').attr('value', json['file']);
 				}
-				
-				if (json['error']['lastname']) {
-					$('#payment-address input[name=\'lastname\']').after('<span class="error">' + json['error']['lastname'] + '</span>');
-				}	
-				
-				if (json['error']['telephone']) {
-					$('#payment-address input[name=\'telephone\']').after('<span class="error">' + json['error']['telephone'] + '</span>');
-				}		
-														
-				if (json['error']['address_1']) {
-					$('#payment-address input[name=\'address_1\']').after('<span class="error">' + json['error']['address_1'] + '</span>');
-				}	
-				
-				if (json['error']['city']) {
-					$('#payment-address input[name=\'city\']').after('<span class="error">' + json['error']['city'] + '</span>');
-				}	
-				
-				if (json['error']['postcode']) {
-					$('#payment-address input[name=\'postcode\']').after('<span class="error">' + json['error']['postcode'] + '</span>');
-				}	
-				
-				if (json['error']['country']) {
-					$('#payment-address select[name=\'country_id\']').after('<span class="error">' + json['error']['country'] + '</span>');
-				}	
-				
-				if (json['error']['zone']) {
-					$('#payment-address select[name=\'zone_id\']').after('<span class="error">' + json['error']['zone'] + '</span>');
-				}
-			} else {
-				<?php if ($shipping_required) { ?>
-				$.ajax({
-					url: 'index.php?route=checkout/shipping_address',
-					dataType: 'html',
-					success: function(html) {
-						$('#shipping-address .checkout-content').html(html);
-					
-						$('#payment-address .checkout-content').slideUp('slow');
-						
-						$('#shipping-address .checkout-content').slideDown('slow');
-						
-						$('#payment-address .checkout-heading a').remove();
-						$('#shipping-address .checkout-heading a').remove();
-						$('#shipping-method .checkout-heading a').remove();
-						$('#payment-method .checkout-heading a').remove();
-						
-						$('#payment-address .checkout-heading').append('<a><?php echo $text_modify; ?></a>');	
-					},
-					error: function(xhr, ajaxOptions, thrownError) {
-						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-					}
-				});
-				<?php } else { ?>
-				$.ajax({
-					url: 'index.php?route=checkout/payment_method',
-					dataType: 'html',
-					success: function(html) {
-						$('#payment-method .checkout-content').html(html);
-					
-						$('#payment-address .checkout-content').slideUp('slow');
-						
-						$('#payment-method .checkout-content').slideDown('slow');
-						
-						$('#payment-address .checkout-heading a').remove();
-						$('#payment-method .checkout-heading a').remove();
-													
-						$('#payment-address .checkout-heading').append('<a><?php echo $text_modify; ?></a>');	
-					},
-					error: function(xhr, ajaxOptions, thrownError) {
-						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-					}
-				});	
-				<?php } ?>
-				
-				$.ajax({
-					url: 'index.php?route=checkout/payment_address',
-					dataType: 'html',
-					success: function(html) {
-						$('#payment-address .checkout-content').html(html);
-					},
-					error: function(xhr, ajaxOptions, thrownError) {
-						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-					}
-				});				
-			}	  
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});	
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	});
+});
+//--></script>
+<script type="text/javascript"><!--
+$('.date').datetimepicker({
+	pickTime: false
 });
 
-$('#payment-address select[name=\'country_id\']').off().on('change', function() {
-	if (this.value == '') return;
+$('.time').datetimepicker({
+	pickDate: false
+});
+
+$('.datetime').datetimepicker({
+	pickDate: true,
+	pickTime: true
+});
+//--></script>
+<script type="text/javascript"><!--
+$('#collapse-payment-address select[name=\'country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('#payment-address select[name=\'country_id\']').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+			$('#collapse-payment-address select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
 		},
 		complete: function() {
-			$('.loading').remove();
-		},			
+			$('.fa-spin').remove();
+		},
 		success: function(json) {
+			$('.fa-spin').remove();
+
 			if (json['postcode_required'] == '1') {
-				$('#payment-postcode-required').show();
+				$('#collapse-payment-address input[name=\'postcode\']').parent().parent().addClass('required');
 			} else {
-				$('#payment-postcode-required').hide();
+				$('#collapse-payment-address input[name=\'postcode\']').parent().parent().removeClass('required');
 			}
-			
+
 			html = '<option value=""><?php echo $text_select; ?></option>';
-			
-			if (json['zone'] != '') {
+
+			if (json['zone']) {
 				for (i = 0; i < json['zone'].length; i++) {
-        			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-	    			
+					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+
 					if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
-	      				html += ' selected="selected"';
-	    			}
-	
-	    			html += '>' + json['zone'][i]['name'] + '</option>';
+						html += ' selected="selected"';
+					}
+
+					html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
 				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
 			}
-			
-			$('#payment-address select[name=\'zone_id\']').html(html);
+
+			$('#collapse-payment-address select[name=\'zone_id\']').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -248,5 +335,5 @@ $('#payment-address select[name=\'country_id\']').off().on('change', function() 
 	});
 });
 
-$('#payment-address select[name=\'country_id\']').trigger('change');
+$('#collapse-payment-address select[name=\'country_id\']').trigger('change');
 //--></script>

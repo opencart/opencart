@@ -1,0 +1,11 @@
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/welfordmedia/opencart-test-suite.git"
+        }
+    ],
+    "require": {
+        "welfordmedia/opencart-test-suite": "dev-master"
+    }
+}

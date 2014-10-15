@@ -32,7 +32,7 @@ function vat_validation($prefix, $number) {
 	);
 
 	if (array_search(substr($number, 0, 2), $iso_code_2_data)) {
-		$number = str_replace(' ','', substr($number, 2));
+		$number = str_replace(' ', '', substr($number, 2));
 	}
 
 	if (array_key_exists($prefix, $iso_code_2_data)) {
@@ -44,9 +44,8 @@ function vat_validation($prefix, $number) {
 
 		if (preg_match('/\binvalid VAT number\b/i', $response)) {
 			return 'invalid';
-		} 
+		}
 	} else {
 		return 'unknown';
 	}
 }
-?>

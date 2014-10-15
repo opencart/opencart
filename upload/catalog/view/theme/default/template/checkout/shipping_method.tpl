@@ -1,95 +1,34 @@
 <?php if ($error_warning) { ?>
-<div class="warning"><?php echo $error_warning; ?></div>
+<div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
 <?php } ?>
 <?php if ($shipping_methods) { ?>
 <p><?php echo $text_shipping_method; ?></p>
-<table class="radio">
-  <?php foreach ($shipping_methods as $shipping_method) { ?>
-  <tr>
-    <td colspan="3"><b><?php echo $shipping_method['title']; ?></b></td>
-  </tr>
-  <?php if (!$shipping_method['error']) { ?>
-  <?php foreach ($shipping_method['quote'] as $quote) { ?>
-  <tr class="highlight">
-    <td><?php if ($quote['code'] == $code || !$code) { ?>
-      <?php $code = $quote['code']; ?>
-      <input type="radio" name="shipping_method" value="<?php echo $quote['code']; ?>" id="<?php echo $quote['code']; ?>" checked="checked" />
-      <?php } else { ?>
-      <input type="radio" name="shipping_method" value="<?php echo $quote['code']; ?>" id="<?php echo $quote['code']; ?>" />
-      <?php } ?></td>
-    <td><label for="<?php echo $quote['code']; ?>"><?php echo $quote['title']; ?></label></td>
-    <td style="text-align: right;"><label for="<?php echo $quote['code']; ?>"><?php echo $quote['text']; ?></label></td>
-  </tr>
-  <?php } ?>
-  <?php } else { ?>
-  <tr>
-    <td colspan="3"><div class="error"><?php echo $shipping_method['error']; ?></div></td>
-  </tr>
-  <?php } ?>
-  <?php } ?>
-</table>
-<br />
+<?php foreach ($shipping_methods as $shipping_method) { ?>
+<p><strong><?php echo $shipping_method['title']; ?></strong></p>
+<?php if (!$shipping_method['error']) { ?>
+<?php foreach ($shipping_method['quote'] as $quote) { ?>
+<div class="radio">
+  <label>
+    <?php if ($quote['code'] == $code || !$code) { ?>
+    <?php $code = $quote['code']; ?>
+    <input type="radio" name="shipping_method" value="<?php echo $quote['code']; ?>" checked="checked" />
+    <?php } else { ?>
+    <input type="radio" name="shipping_method" value="<?php echo $quote['code']; ?>" />
+    <?php } ?>
+    <?php echo $quote['title']; ?> - <?php echo $quote['text']; ?></label>
+</div>
 <?php } ?>
-<b><?php echo $text_comments; ?></b>
-<textarea name="comment" rows="8" style="width: 98%;"><?php echo $comment; ?></textarea>
-<br />
-<br />
+<?php } else { ?>
+<div class="alert alert-danger"><?php echo $shipping_method['error']; ?></div>
+<?php } ?>
+<?php } ?>
+<?php } ?>
+<p><strong><?php echo $text_comments; ?></strong></p>
+<p>
+  <textarea name="comment" rows="8" class="form-control"><?php echo $comment; ?></textarea>
+</p>
 <div class="buttons">
-  <div class="right">
-    <input type="button" value="<?php echo $button_continue; ?>" id="button-shipping-method" class="button" />
+  <div class="pull-right">
+    <input type="button" value="<?php echo $button_continue; ?>" id="button-shipping-method" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
   </div>
 </div>
-<script type="text/javascript"><!--
-$('#button-shipping-method').off().on('click', function() {
-	$.ajax({
-		url: 'index.php?route=checkout/shipping_method/save',
-		type: 'post',
-		data: $('#shipping-method input[type=\'radio\']:checked, #shipping-method textarea'),
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-shipping-method').attr('disabled', true);
-			$('#button-shipping-method').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
-		},	
-		complete: function() {
-			$('#button-shipping-method').attr('disabled', false);
-			$('.loading').remove();
-		},			
-		success: function(json) {
-			$('.warning, .error').remove();
-			
-			if (json['redirect']) {
-				location = json['redirect'];
-			} else if (json['error']) {
-				if (json['error']['warning']) {
-					$('#shipping-method .checkout-content').prepend('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
-					
-					$('.warning').fadeIn('slow');
-				}			
-			} else {
-				$.ajax({
-					url: 'index.php?route=checkout/payment_method',
-					dataType: 'html',
-					success: function(html) {
-						$('#payment-method .checkout-content').html(html);
-						
-						$('#shipping-method .checkout-content').slideUp('slow');
-						
-						$('#payment-method .checkout-content').slideDown('slow');
-
-						$('#shipping-method .checkout-heading a').remove();
-						$('#payment-method .checkout-heading a').remove();
-						
-						$('#shipping-method .checkout-heading').append('<a><?php echo $text_modify; ?></a>');	
-					},
-					error: function(xhr, ajaxOptions, thrownError) {
-						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-					}
-				});					
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});	
-});
-//--></script> 

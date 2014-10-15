@@ -62,10 +62,8 @@ v153
    - New "Category Product Count" setting in the Admin->System->Settings under the Server tab. This is disabled by default and should only be used for small stores as it causes massive performance loss for larger stores with lots of categories.
  
 11. Load the store front and again press CTRL+F5 3x times to refresh your browser cache. That will prevent oddly shifted elements due to stylesheet.
- 
-12. If you upgraded from a patch version to a full version, you may have an old system/config/svn.ver file. It won't hurt anything but it may show like "v1.5.3.r990" in the footer. So best to delete that file if upgrading to a full release version. Future versions of OpenCart should have an updated version of that file and you won't need to delete it, but for now (as of 1.5.3) you will need to delete it.
- 
-13. If you use vQmod (by now everyone should be) you should first check for a new version at http://vQmod.com. Be sure to download the version that is marked for "opencart".
+
+12. If you use vQmod (by now everyone should be) you should first check for a new version at http://vQmod.com. Be sure to download the version that is marked for "opencart".
 You will also need to re-run the vQmod installer, even if you have the latest version. You should already have the installer on your site as it isn't meant to be deleted from the first time you run it. Simply browse to:
 http://yoursite.com/vqmod/install and you should see a success message. If you do not see a success message, follow the full install guide from the http://vQmod.com site.
 

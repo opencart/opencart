@@ -283,7 +283,7 @@
 
   function submitForm() {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/createSubmit&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_product/createsubmit&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#button-submit').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },
@@ -334,7 +334,7 @@
 
   function uploadImage(listing_id, url, id) {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/addImage&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_product/addimage&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#listing-image-status').append('<li class="list-group-item list-group-item-info" id="image-upload-status-'+id+'"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_img_upload; ?> '+id+'</li>');
       },
@@ -380,7 +380,7 @@
 
   $('#input-category').on('change', function() {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/getSubCategory&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_product/getsubcategory&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#input-category').attr('disabled','disabled');
         $('#input-sub-category').empty();
@@ -416,7 +416,7 @@
     var sub_tag = $(this).val();
 
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/getSubSubCategory&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_product/getsubsubcategory&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#input-category').attr('disabled','disabled');
         $('#input-sub-category').attr('disabled','disabled');
@@ -463,7 +463,7 @@
 
   function getCategory(tag) {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/getCategory&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_product/getcategory&token=<?php echo $token; ?>',
       beforeSend: function(){ },
       type: 'post',
       data: {'tag' : tag},
@@ -484,7 +484,7 @@
 
   function getShippingProfiles() {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_shipping/getAll&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_shipping/getall&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#shipping-loading').show();
       },
@@ -510,7 +510,7 @@
 
   function getShopSection() {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_shop/getSections&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_shop/getsections&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#shop-section-loading').show();
       },

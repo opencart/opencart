@@ -218,7 +218,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			'text' => $this->language->get('text_etsy'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/etsy_product/create', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->link('openbay/etsy_product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'], 'SSL'),
 			'text' => $this->language->get('heading_title'),
 		);
 
@@ -226,11 +226,62 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 		$data['listing'] = $this->openbay->etsy->getEtsyItem($links[0]['etsy_item_id']);
 
+		$data['etsy_item_id'] = $links[0]['etsy_item_id'];
+
+		if (isset($this->error['warning'])) {
+			$data['error_warning'] = $this->error['warning'];
+		} else {
+			$data['error_warning'] = '';
+		}
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/etsy_create.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay/etsy_edit.tpl', $data));
+	}
+
+	public function editSubmit() {
+		$this->load->language('openbay/etsy_edit');
+		$this->load->model('openbay/etsy_product');
+
+		$data = $this->request->post;
+
+		// validation
+		if (!isset($data['title']) || empty($data['title']) || strlen($data['title']) > 255) {
+			if (strlen($data['title']) > 255) {
+				$this->error['title'] = $this->language->get('error_title_length');
+			} else {
+				$this->error['title'] = $this->language->get('error_title_missing');
+			}
+		}
+
+		if (!isset($data['description']) || empty($data['description'])) {
+			$this->error['title'] = $this->language->get('error_desc_missing');
+		}
+
+		if (!isset($data['price']) || empty($data['price'])) {
+			$this->error['price'] = $this->language->get('error_price_missing');
+		}
+
+		if (!$this->error) {
+			// process the request
+			//$response = $this->openbay->etsy->call('product/listing/' . $data['etsy_item_id'] . '/update', 'POST', $data);
+
+			$this->response->addHeader('Content-Type: application/json');
+
+			echo '<pre>';
+			print_r($response);
+			die();
+
+			if (isset($response['data']['error'])) {
+				$this->response->setOutput(json_encode($response['data']));
+			} else {
+				$this->response->setOutput(json_encode($response['data']['results'][0]));
+			}
+		} else {
+			$this->response->setOutput(json_encode(array('error' => $this->error)));
+		}
 	}
 
 	public function addImage() {

@@ -16,6 +16,7 @@
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
     <?php } ?>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
+      <input type="hidden" name="etsy_item_id" value="<?php echo $listing['etsy_item_id']; ?>" />
       <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>"/>
       <input type="hidden" name="quantity" value="<?php echo $product['quantity']; ?>"/>
       <ul class="nav nav-tabs">
@@ -68,7 +69,7 @@
 
   function submitForm() {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/createSubmit&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_product/editsubmit&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#button-submit').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },
@@ -87,21 +88,6 @@
           $('#button-submit').empty().html('<span><?php echo $button_submit; ?></span>').removeAttr('disabled');
         } else {
           if (json.listing_id) {
-            // upload the primary image
-            var image_primary = $('#input-image').val();
-
-            if (image_primary != '') {
-              uploadImage(json.listing_id, $('#input-image').val(), image_count);
-              image_count = image_count + 1;
-            }
-
-            // get the extra images and upload
-            $('.product-image:checkbox:checked').each(function() {
-              uploadImage(json.listing_id, $(this).val(), image_count);
-              image_count = image_count + 1;
-            });
-
-            $('#listing-id').text(json.listing_id);
             $('#page-listing').hide();
             $('#page-listing-success').fadeIn();
             $('#button-submit').empty().html('<span><?php echo $button_submit; ?></span>').removeAttr('disabled');

@@ -115,7 +115,6 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/etsy_create.tpl', $data));
-
 	}
 
 	public function createSubmit() {
@@ -191,6 +190,47 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		} else {
 			$this->response->setOutput(json_encode(array('error' => $this->error)));
 		}
+	}
+
+	public function edit() {
+		$data = $this->load->language('openbay/etsy_edit');
+		$this->load->model('openbay/etsy_product');
+		$this->load->model('tool/image');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->addScript('view/javascript/openbay/js/faq.js');
+
+		$data['action']   = $this->url->link('openbay/etsy_product/editSubmit', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel']   = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], 'SSL');
+		$data['token']    = $this->session->data['token'];
+
+		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_home'),
+		);
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_openbay'),
+		);
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/etsy', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_etsy'),
+		);
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/etsy_product/create', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('heading_title'),
+		);
+
+		$links = $this->openbay->etsy->getLinks($this->request->get['product_id'], 1, 1);
+
+		$data['listing'] = $this->openbay->etsy->getEtsyItem($links[0]['etsy_item_id']);
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('openbay/etsy_create.tpl', $data));
 	}
 
 	public function addImage() {

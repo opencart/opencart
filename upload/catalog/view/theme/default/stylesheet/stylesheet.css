@@ -700,3 +700,19 @@ h2.price {
 .flex-direction-nav a:before {
 	line-height: 40px;
 }
+/* fixed colum left + content + right*/
+
+@media (min-width: 768px) {
+    #column-left  .product-layout .col-md-3{
+       width: 100%
+    }
+    #column-left + #content .product-layout .col-md-3{
+       width: 50%
+    }
+    #column-left + #content + #column-right .product-layout .col-md-3{
+       width: 100%
+    }
+    #content + #column-right .product-layout .col-md-3{
+       width: 100%
+    }
+}

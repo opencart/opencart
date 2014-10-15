@@ -1,5 +1,5 @@
 <?php
-class ControllerModulePPLayout extends Controller {
+class ControllerModulePPButton extends Controller {
 	public function index($setting) {
 		$status = $this->config->get('pp_express_status');
 
@@ -9,8 +9,13 @@ class ControllerModulePPLayout extends Controller {
 
 		if ($status) {
 			$this->load->model('payment/pp_express');
-
-			$data['is_mobile'] = $this->model_payment_pp_express->isMobile();
+		
+			if (preg_match("/Mobile|Android|BlackBerry|iPhone|Windows Phone/", $this->request->server['HTTP_USER_AGENT'])) {
+				$data['mobile'] = true;
+			} else {
+				$data['mobile'] = false;
+			}
+		
 			$data['payment_url'] = $this->url->link('payment/pp_express/express', '', 'SSL');
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/pp_button.tpl')) {

@@ -209,11 +209,11 @@ class ControllerExtensionModification extends Controller {
 											
 											// Trim line if no trim attribute is set or is set to true.
 											if (!$trim || $trim == 'true') {
-												$line = trim($line);
+												$search = trim($search);
 											}
 											
 											// Check to see if the line matches the search code.
-											if (trim($search) == $line) {
+											if ($search == trim($line)) {
 												// If indexes are not used then just set the found status to true.
 												if (!$indexes) {
 													$status = true;

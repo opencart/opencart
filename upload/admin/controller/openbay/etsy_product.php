@@ -233,6 +233,10 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 		$data['setting'] = $setting;
 
+		if ($data['listing']['state'] == 'edit') {
+			$data['listing']['state'] = 'inactive';
+		}
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

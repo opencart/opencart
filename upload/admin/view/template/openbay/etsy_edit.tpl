@@ -46,7 +46,7 @@
             <div class="col-sm-10">
               <select name="state" id="input-state" class="form-control">
                 <?php foreach ($setting['state'] as $value) { ?>
-                <option value="<?php echo $value; ?>"<?php echo ($listing['price'] == $value) ? ' selected' : ''; ?>><?php echo $value; ?></option>
+                <option value="<?php echo $value; ?>"<?php echo ($listing['state'] == $value) ? ' selected' : ''; ?>><?php echo $value; ?></option>
                 <?php } ?>
               </select>
             </div>

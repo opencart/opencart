@@ -199,7 +199,7 @@ function addLink() {
     method: 'POST',
     data: { 'product_id' : product_id, 'etsy_id' : etsy_id },
     beforeSend: function() {
-      $('#alert-link-error').hide().empty();
+      $('#alert-error').hide().empty();
       $('#button-submit-link').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
     },
     success: function(json) {
@@ -207,7 +207,7 @@ function addLink() {
         url += '&link_added=1';
         location = url;
       } else {
-        $('#alert-link-error').html('<i class="fa fa-times fa-lg" style="color:red;"></i> '+json.error).show();
+        $('#alert-error').html('<i class="fa fa-times fa-lg" style="color:red;"></i> '+json.error).show();
       }
 
       $('#button-submit-link').empty().html('<i class="fa fa-check"></i> <?php echo $button_save; ?>').removeAttr('disabled');

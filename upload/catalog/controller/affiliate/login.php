@@ -119,16 +119,28 @@ class ControllerAffiliateLogin extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->affiliate->login($this->request->post['email'], $this->request->post['password'])) {
-			$this->error['warning'] = $this->language->get('error_login');
-		}
-
+		$login_info = $this->model_affiliate_affiliate->getLoginAttempts($this->request->post['email']);
+				
+		if ($login_info && ($login_info['total'] > 5) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
+			$this->error['warning'] = $this->language->get('error_attempts');
+		}		
+		
 		$affiliate_info = $this->model_affiliate_affiliate->getAffiliateByEmail($this->request->post['email']);
 
 		if ($affiliate_info && !$affiliate_info['approved']) {
 			$this->error['warning'] = $this->language->get('error_approved');
 		}
-
+		
+		if (!$this->error) {
+			if (!$this->affiliate->login($this->request->post['email'], $this->request->post['password'])) {
+				$this->error['warning'] = $this->language->get('error_login');
+			
+				$this->model_affiliate_affiliate->addLoginAttempt($this->request->post['email']);
+			} else {
+				$this->model_affiliate_affiliate->deleteLoginAttempts($this->request->post['email']);
+			}
+		}
+		
 		return !$this->error;
 	}
 }

@@ -234,7 +234,10 @@ final class Etsy {
 	}
 
 	public function productUpdateListen($product_id, $data) {
+		$this->log('productUpdateListen() - ' . $product_id);
 		$links = $this->getLinks($product_id, 1);
+		$this->log(print_r($links, true));
+
 
 		if (!empty($links)) {
 			foreach ($links as $link) {

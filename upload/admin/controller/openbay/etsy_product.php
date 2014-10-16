@@ -267,7 +267,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 		if (!$this->error) {
 			// process the request
-			//$response = $this->openbay->etsy->call('product/listing/' . $data['etsy_item_id'] . '/update', 'POST', $data);
+			$response = $this->openbay->etsy->call('product/listing/' . $data['etsy_item_id'] . '/update', 'POST', $data);
 
 			$this->response->addHeader('Content-Type: application/json');
 

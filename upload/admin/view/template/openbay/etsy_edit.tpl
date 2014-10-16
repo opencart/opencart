@@ -17,7 +17,7 @@
     <?php } ?>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
       <input type="hidden" name="etsy_item_id" value="<?php echo $etsy_item_id; ?>" />
-      <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>"/>
+      <input type="hidden" name="product_id" value="<?php echo $product_id; ?>"/>
       <ul class="nav nav-tabs">
         <li class="active"><a href="#tab-listing-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
       </ul>

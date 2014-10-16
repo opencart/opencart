@@ -235,19 +235,16 @@ final class Etsy {
 
 	public function productUpdateListen($product_id, $data) {
 		$this->log('productUpdateListen() - ' . $product_id);
-		$links = $this->getLinks($product_id, 1);
-		$this->log(print_r($links, true));
 
+		$links = $this->getLinks($product_id, 1);
 
 		if (!empty($links)) {
 			foreach ($links as $link) {
 				$etsy_listing = $this->getEtsyItem($link['etsy_item_id']);
 
-				$this->log(print_r($etsy_listing, true));
-
 				$this->log('Listings update');
 
-				if ($etsy_listing != false && isset($etsy_listing['state']) && ($etsy_listing['state'] == 'active' || $etsy_listing['state'] == 'private')) {
+				if ($etsy_listing != false && isset($etsy_listing['state']) && ($etsy_listing['state'] == 'active' || $etsy_listing['state'] == 'private' || $etsy_listing['state'] == 'draft' || $etsy_listing['state'] == 'edit')) {
 					if ($etsy_listing['quantity'] != $link['quantity']) {
 						$this->updateListingStock($link['etsy_item_id'], $link['quantity']);
 					}

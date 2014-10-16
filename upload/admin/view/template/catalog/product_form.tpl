@@ -712,7 +712,7 @@
                       <td class="text-left"><?php echo $entry_customer_group; ?></td>
                       <td class="text-right"><?php echo $entry_quantity; ?></td>
                       <td class="text-right"><?php echo $entry_priority; ?></td>
-                      <td class="text-right"><?php echo $entry_price; ?></td>
+                      <td style="min-width: 100px;" class="text-center"><?php echo $entry_price; ?></td>
                       <td class="text-left"><?php echo $entry_date_start; ?></td>
                       <td class="text-left"><?php echo $entry_date_end; ?></td>
                       <td></td>
@@ -765,7 +765,7 @@
                     <tr>
                       <td class="text-left"><?php echo $entry_customer_group; ?></td>
                       <td class="text-right"><?php echo $entry_priority; ?></td>
-                      <td class="text-right"><?php echo $entry_price; ?></td>
+                      <td  style="min-width: 100px;" class="text-center" ><?php echo $entry_price; ?></td>
                       <td class="text-left"><?php echo $entry_date_start; ?></td>
                       <td class="text-left"><?php echo $entry_date_end; ?></td>
                       <td></td>

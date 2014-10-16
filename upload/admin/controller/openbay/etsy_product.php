@@ -391,7 +391,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		} else {
 			if ((int)$get_response['quantity'] != (int)$product['quantity']) {
 				// if the stock is different than the item being linked update the etsy stock level
-				$update_response = $this->openbay->etsy->updateListingStock($data['etsy_id'], $product['quantity']);
+				$update_response = $this->openbay->etsy->updateListingStock($data['etsy_id'], $product['quantity'], $get_response['state']);
 
 				if (isset($update_response['data']['error'])) {
 					echo json_encode(array('error' => $this->language->get('error_etsy') . $update_response['data']['error']));

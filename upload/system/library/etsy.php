@@ -199,9 +199,9 @@ final class Etsy {
 		 * */
 	}
 
-	public function updateListingStock($etsy_item_id, $new_stock) {
+	public function updateListingStock($etsy_item_id, $new_stock, $status) {
 		if ($new_stock > 0) {
-			$response = $this->call('product/listing/' . (int)$etsy_item_id . '/updateStock', 'POST', array('quantity' => $new_stock));
+			$response = $this->call('product/listing/' . (int)$etsy_item_id . '/updateStock', 'POST', array('quantity' => $new_stock, 'state' => $status));
 
 			if (isset($response['data']['error'])) {
 				return $response;
@@ -246,7 +246,7 @@ final class Etsy {
 
 				if ($etsy_listing != false && isset($etsy_listing['state']) && ($etsy_listing['state'] == 'active' || $etsy_listing['state'] == 'private' || $etsy_listing['state'] == 'draft' || $etsy_listing['state'] == 'edit')) {
 					if ($etsy_listing['quantity'] != $link['quantity']) {
-						$this->updateListingStock($link['etsy_item_id'], $link['quantity']);
+						$this->updateListingStock($link['etsy_item_id'], $link['quantity'], $etsy_listing['state']);
 					}
 				} else {
 					$this->deleteLink($link['etsy_listing_id']);
@@ -283,11 +283,11 @@ final class Etsy {
 
 	public function addOrder($order_id) {
 		if(!$this->orderFind($order_id)) {
-			$query = $this->db->query("SELECT `p`.`quantity`, `p`.`product_id`, `el`.`etsy_item_id` FROM `" . DB_PREFIX . "order_product` `op` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `op`.`product_id` = `p`.`product_id` LEFT JOIN `" . DB_PREFIX . "etsy_listing` `el` ON `op`.`product_id` = `p`.`product_id` WHERE `op`.`order_id` = '" . (int)$order_id . "' AND `el`.`status` = 1");
+			$query = $this->db->query("SELECT `p`.`product_id` FROM `" . DB_PREFIX . "order_product` `op` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `op`.`product_id` = `p`.`product_id` WHERE `op`.`order_id` = '" . (int)$order_id . "'");
 
 			if($query->num_rows > 0) {
 				foreach ($query->rows as $product) {
-					$this->updateListingStock((int)$product['etsy_item_id'], (int)$product['quantity']);
+					$this->productUpdateListen((int)$product['product_id'], array());
 				}
 			}
 		}
@@ -295,11 +295,11 @@ final class Etsy {
 
 	public function orderDelete($order_id) {
 		if(!$this->orderFind($order_id)) {
-			$query = $this->db->query("SELECT `p`.`quantity`, `p`.`product_id`, `el`.`etsy_item_id` FROM `" . DB_PREFIX . "order_product` `op` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `op`.`product_id` = `p`.`product_id` LEFT JOIN `" . DB_PREFIX . "etsy_listing` `el` ON `op`.`product_id` = `p`.`product_id` WHERE `op`.`order_id` = '" . (int)$order_id . "' AND `el`.`status` = 1");
+			$query = $this->db->query("SELECT `p`.`product_id` FROM `" . DB_PREFIX . "order_product` `op` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `op`.`product_id` = `p`.`product_id` WHERE `op`.`order_id` = '" . (int)$order_id . "'");
 
 			if($query->num_rows > 0) {
 				foreach ($query->rows as $product) {
-					$this->updateListingStock((int)$product['etsy_item_id'], (int)$product['quantity']);
+					$this->productUpdateListen((int)$product['product_id'], array());
 				}
 			}
 		}
@@ -333,9 +333,9 @@ final class Etsy {
 				foreach ($links as $link) {
 					$etsy_listing = $this->getEtsyItem($link['etsy_item_id']);
 
-					if ($etsy_listing != false && isset($etsy_listing['state']) && ($etsy_listing['state'] == 'active' || $etsy_listing['state'] == 'private')) {
+					if ($etsy_listing != false && isset($etsy_listing['state']) && ($etsy_listing['state'] == 'active' || $etsy_listing['state'] == 'private' || $etsy_listing['state'] == 'draft' || $etsy_listing['state'] == 'edit')) {
 						if ($etsy_listing['quantity'] != $link['quantity']) {
-							$this->updateListingStock($link['etsy_item_id'], $link['quantity']);
+							$this->updateListingStock($link['etsy_item_id'], $link['quantity'], $etsy_listing['state']);
 						}
 					} else {
 						$this->deleteLink($link['etsy_listing_id']);

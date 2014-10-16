@@ -3307,7 +3307,36 @@ INSERT INTO `oc_url_alias` (`url_alias_id`, `query`, `keyword`) VALUES
 (832, 'manufacturer_id=10', 'sony'),
 (841, 'information_id=6', 'delivery'),
 (842, 'information_id=3', 'privacy'),
-(843, 'information_id=5', 'terms');
+(843, 'information_id=5', 'terms'),
+(845, 'common/home', ''),
+(846, 'information/contact', 'contact-us'),
+(847, 'information/sitemap', 'sitemap'),
+(848, 'product/special', 'specials'),
+(849, 'product/manufacturer', 'brands'),
+(850, 'product/compare', 'compare-products'),
+(851, 'product/search', 'search'),
+(852, 'checkout/cart', 'cart'),
+(853, 'checkout/checkout', 'checkout'),
+(854, 'account/login', 'login'),
+(855, 'account/logout', 'logout'),
+(856, 'account/voucher', 'vouchers'),
+(857, 'account/wishlist', 'wishlist'),
+(858, 'account/account', 'my-account'),
+(859, 'account/order', 'order-history'),
+(860, 'account/newsletter', 'newsletter'),
+(861, 'account/return/add', 'return-add'),
+(862, 'account/forgotten', 'forgot-password'),
+(863, 'account/download', 'downloads'),
+(864, 'account/return', 'returns'),
+(865, 'account/transaction', 'transactions'),
+(866, 'account/register', 'create-account'),
+(867, 'account/recurring', 'recurring'),
+(868, 'account/address', 'address-book'),
+(869, 'account/reward', 'reward-points'),
+(870, 'affiliate/forgotten', 'affiliate-forgot-password'),
+(871, 'affiliate/register', 'create-affiliate-account'),
+(872, 'affiliate/login', 'affiliate-login'),
+(873, 'affiliate/account', 'affiliates');
 
 -- --------------------------------------------------------
 
@@ -4175,9 +4204,9 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (674, 43, 'Atacama', 'AT', 1),
 (675, 43, 'Bio-Bio', 'BI', 1),
 (676, 43, 'Coquimbo', 'CO', 1),
-(677, 43, 'Libertador General Bernardo O''Hi', 'LI', 1),
+(677, 43, 'Libertador General Bernardo O''Higgins', 'LI', 1),
 (678, 43, 'Los Lagos', 'LL', 1),
-(679, 43, 'Magallanes y de la Antartica Chi', 'MA', 1),
+(679, 43, 'Magallanes y de la Antartica Chilena', 'MA', 1),
 (680, 43, 'Maule', 'ML', 1),
 (681, 43, 'Region Metropolitana', 'RM', 1),
 (682, 43, 'Tarapaca', 'TA', 1),
@@ -7635,7 +7664,9 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (4218, 117, 'Viļāni, Viļānu novads', '0781817', 1),
 (4219, 117, 'Viļānu novads', '0781800', 1),
 (4220, 117, 'Zilupe, Zilupes novads', '0681817', 1),
-(4221, 117, 'Zilupes novads', '0681801', 1);
+(4221, 117, 'Zilupes novads', '0681801', 1),
+(4222, 43, 'Arica y Parinacota', 'AP', 1),
+(4223, 43, 'Los Rios', 'LR', 1);
 
 -- --------------------------------------------------------
 

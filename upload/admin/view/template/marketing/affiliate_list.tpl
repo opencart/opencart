@@ -90,7 +90,7 @@
             </div>
           </div>
         </div>
-        <form action="" method="post" enctype="multipart/form-data" id="form-affiliate">
+        <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-affiliate">
           <div class="table-responsive">
             <table class="table table-bordered table-hover">
               <thead>

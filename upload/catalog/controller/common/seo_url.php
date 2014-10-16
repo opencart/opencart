@@ -67,6 +67,12 @@ class ControllerCommonSeoUrl extends Controller {
 			if (isset($this->request->get['route'])) {
 				return new Action($this->request->get['route']);
 			}
+		} elseif (isset($this->request->get['route'])) {
+			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE query = '" . $this->request->get['route'] . "'");
+			
+			if ($query->num_rows) {
+				header('Location:/' . $query->row['keyword'], true, 301);
+			}
 		}
 	}
 

@@ -19,6 +19,15 @@ function getURLVar(key) {
 		} else {
 			return '';
 		}
+	} else {
+		if (document.location.pathname == '/cart') value['route'] = 'checkout/cart';
+		if (document.location.pathname == '/checkout') value['route'] = 'checkout/checkout';
+		
+		if (value[key]) {
+			return value[key];
+		} else {
+			return '';
+		}
 	}
 }
 

@@ -166,10 +166,8 @@ class ControllerExtensionModification extends Controller {
 								if (!isset($modification[$key])) {
 									$content = file_get_contents($file);
 
-									$content = preg_replace('~\r?\n~', "\n", $content);
-
-									$modification[$key] = $content;
-									$original[$key] = $content;
+									$modification[$key] = preg_replace('~\r?\n~', "\n", $content);
+									$original[$key] = preg_replace('~\r?\n~', "\n", $content);
 
 									// Log
 									$log[] = 'FILE: ' . $key;
@@ -180,70 +178,79 @@ class ControllerExtensionModification extends Controller {
 									if ($operation->getElementsByTagName('search')->item(0)->getAttribute('regex') != 'true') {
 										$search = $operation->getElementsByTagName('search')->item(0)->textContent;
 										$trim = $operation->getElementsByTagName('search')->item(0)->getAttribute('trim');
-										$offset = $operation->getElementsByTagName('search')->item(0)->getAttribute('offset');
-										$limit = $operation->getElementsByTagName('search')->item(0)->getAttribute('limit');
+										$index = $operation->getElementsByTagName('search')->item(0)->getAttribute('index');
 										$add = $operation->getElementsByTagName('add')->item(0)->textContent;
 										$position = $operation->getElementsByTagName('add')->item(0)->getAttribute('position');
-
-										// Trim
-										if (!$trim || $trim == 'true') {
-											$search = trim($search);
-										}
-
-										switch ($position) {
-											default:
-											case 'replace':
-												$replace = $add;
-												break;
-											case 'before':
-												$replace = $add . $search;
-												break;
-											case 'after':
-												$replace = $search . $add;
-												break;
-										}
-
-										$i = 0;
-										$pos = -1;
-										$match = array();
-
-										// Create an array of all the start postions of all the matched code
-										while (($pos = strpos($modification[$key], $search, $pos + 1)) !== false) {
-											$match[$i++] = $pos;
-										}
-
-										// Offset
-										if (!$offset) {
-											$offset = 0;
-										}
-
-										// Limit
-										if (!$limit) {
-											$limit = count($match);
-										} else {
-											$limit = $offset + $limit;
-										}
+										$offset = $operation->getElementsByTagName('add')->item(0)->getAttribute('offset');
 
 										// Log
 										$log[] = 'CODE: ' . $search;
+										
+										$found = false;
+										
+										// Turn the code that we are going to add into an array.
+										$add = explode("\n", $add);
 
-										$status = false;
+										// Check if using indexes
+										if ($index) {
+											$indexes = explode(',', $index);
+										} else {
+											$indexes = array();
+										}
+										
+										// Get all the matches
+										$i = 0;
+										
+										$lines = explode("\n", $modification[$key]);
 
-										// Only replace the occurance of the string that is equal to the between the offset and limit
-										for ($i = $offset; $i < $limit; $i++) {
-											if (isset($match[$i])) {
-												$modification[$key] = substr_replace($modification[$key], $replace, $match[$i], strlen($search));
-
+										foreach ($lines as $line_id => $line) {
+											// Status
+											$status = false;
+											
+											// Trim line if no trim attribute is set or is set to true.
+											if (!$trim || $trim == 'true') {
+												$search = trim($search);
+											}
+											
+											// Check to see if the line matches the search code.
+											if (stripos($line, $search) !== false) {
+												// If indexes are not used then just set the found status to true.
+												if (!$indexes) {
+													$status = true;
+												} elseif (in_array($i, $indexes)) {
+													$status = true;
+												}
+												
+												$i++;
+											}
+											
+											// Now for replacing or adding to the matched elements
+											if ($status) {
+												switch ($position) {
+													default:
+													case 'replace':
+														array_splice($lines, $line_id, count($add) + $offset, $add);
+														break;
+													case 'before':
+														array_splice($lines, $line_id - $offset, 0, $add);
+														break;
+													case 'after':
+														array_splice($lines, ($line_id + 1) + $offset, 0, $add);
+														break;
+												}
+												
 												// Log
-												$log[] = 'LINE: ' . (substr_count(substr($modification[$key], 0, $match[$i]), "\n") + 1);
-
-												$status = true;
+												$log[] = 'LINE: ' . $line_id;
+												
+												$found = true;										
 											}
 										}
-
-										if (!$status) {
+										
+										if (!$found) {
 											$log[] = 'NOT FOUND!';
 										}
+										
+										$modification[$key] = implode("\n", $lines);
 									} else {
 										$search = $operation->getElementsByTagName('search')->item(0)->textContent;
 										$replace = $operation->getElementsByTagName('add')->item(0)->textContent;

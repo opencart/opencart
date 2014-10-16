@@ -1173,7 +1173,7 @@ class ControllerPaymentPPExpress extends Controller {
 						$data = array(
 							'METHOD'             => 'CreateRecurringPaymentsProfile',
 							'TOKEN'              => $this->session->data['paypal']['token'],
-							'PROFILESTARTDATE'   => gmdate("Y-m-d\TH:i:s\Z", mktime(gmdate("H"), gmdate("i")+5, gmdate("s"), gmdate("m"), gmdate("d"), gmdate("y"))),
+							'PROFILESTARTDATE'   => gmdate("Y-m-d\TH:i:s\Z", gmmktime(gmdate("H"), gmdate("i")+5, gmdate("s"), gmdate("m"), gmdate("d"), gmdate("y"))),
 							'BILLINGPERIOD'      => $billing_period[$item['recurring']['frequency']],
 							'BILLINGFREQUENCY'   => $item['recurring']['cycle'],
 							'TOTALBILLINGCYCLES' => $item['recurring']['duration'],
@@ -1437,7 +1437,7 @@ class ControllerPaymentPPExpress extends Controller {
 					$data = array(
 						'METHOD'             => 'CreateRecurringPaymentsProfile',
 						'TOKEN'              => $this->session->data['paypal']['token'],
-						'PROFILESTARTDATE'   => gmdate("Y-m-d\TH:i:s\Z", mktime(gmdate('H'), gmdate('i') + 5, gmdate('s'), gmdate('m'), gmdate('d'), gmdate('y'))),
+						'PROFILESTARTDATE'   => gmdate("Y-m-d\TH:i:s\Z", gmmktime(gmdate('H'), gmdate('i') + 5, gmdate('s'), gmdate('m'), gmdate('d'), gmdate('y'))),
 						'BILLINGPERIOD'      => $billing_period[$item['recurring']['frequency']],
 						'BILLINGFREQUENCY'   => $item['recurring']['cycle'],
 						'TOTALBILLINGCYCLES' => $item['recurring']['duration'],

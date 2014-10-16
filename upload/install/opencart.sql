@@ -4204,9 +4204,9 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (674, 43, 'Atacama', 'AT', 1),
 (675, 43, 'Bio-Bio', 'BI', 1),
 (676, 43, 'Coquimbo', 'CO', 1),
-(677, 43, 'Libertador General Bernardo O''Hi', 'LI', 1),
+(677, 43, 'Libertador General Bernardo O''Higgins', 'LI', 1),
 (678, 43, 'Los Lagos', 'LL', 1),
-(679, 43, 'Magallanes y de la Antartica Chi', 'MA', 1),
+(679, 43, 'Magallanes y de la Antartica Chilena', 'MA', 1),
 (680, 43, 'Maule', 'ML', 1),
 (681, 43, 'Region Metropolitana', 'RM', 1),
 (682, 43, 'Tarapaca', 'TA', 1),
@@ -7664,7 +7664,9 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (4218, 117, 'Viļāni, Viļānu novads', '0781817', 1),
 (4219, 117, 'Viļānu novads', '0781800', 1),
 (4220, 117, 'Zilupe, Zilupes novads', '0681817', 1),
-(4221, 117, 'Zilupes novads', '0681801', 1);
+(4221, 117, 'Zilupes novads', '0681801', 1),
+(4222, 43, 'Arica y Parinacota', 'AP', 1),
+(4223, 43, 'Los Rios', 'LR', 1);
 
 -- --------------------------------------------------------
 

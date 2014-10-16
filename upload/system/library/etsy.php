@@ -201,6 +201,10 @@ final class Etsy {
 
 	public function updateListingStock($etsy_item_id, $new_stock, $status) {
 		if ($new_stock > 0) {
+			if ($status == 'edit') {
+				$status = 'inactive';
+			}
+
 			$response = $this->call('product/listing/' . (int)$etsy_item_id . '/updateStock', 'POST', array('quantity' => $new_stock, 'state' => $status));
 
 			if (isset($response['data']['error'])) {

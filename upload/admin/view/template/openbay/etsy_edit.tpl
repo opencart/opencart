@@ -54,10 +54,7 @@
     <div class="well">
       <div class="row">
         <div class="col-sm-12">
-          <h3><?php echo $text_created; ?></h3>
-          <p><?php echo $text_listing_id; ?>: <span id="listing-id"></span></p>
-          <ul class="list-group" id="listing-image-status">
-          </ul>
+          <h3><?php echo $text_updated; ?></h3>
         </div>
       </div>
     </div>
@@ -90,8 +87,6 @@
             $('#page-listing').hide();
             $('#page-listing-success').fadeIn();
             $('#button-submit').empty().html('<span><?php echo $button_submit; ?></span>').removeAttr('disabled');
-          } else {
-            alert('Error creating listing?');
           }
         }
       },
@@ -103,8 +98,7 @@
   }
 
   $(document).ready(function() {
-    getShippingProfiles();
-    getShopSection();
+
   });
 
 //--></script>

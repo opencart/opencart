@@ -271,10 +271,6 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 			$this->response->addHeader('Content-Type: application/json');
 
-			echo '<pre>';
-			print_r($response);
-			die();
-
 			if (isset($response['data']['error'])) {
 				$this->response->setOutput(json_encode($response['data']));
 			} else {

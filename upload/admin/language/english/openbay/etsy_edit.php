@@ -9,6 +9,7 @@ $_['text_etsy']             	= 'Etsy';
 // Text
 $_['text_option']      			= 'Select option';
 $_['text_listing_id']  			= 'Listing ID';
+$_['text_updated']  			= 'Your Etsy listing has been updated';
 
 // Entry
 $_['entry_title']      			= 'Product title';

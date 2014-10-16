@@ -41,6 +41,16 @@
               <input type="text" name="price" value="<?php echo $listing['price']; ?>" placeholder="<?php echo $entry_price; ?>" id="input-price" class="form-control" />
             </div>
           </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-state"><?php echo $entry_state; ?></label>
+            <div class="col-sm-10">
+              <select name="state" id="input-state" class="form-control">
+                <?php foreach ($setting['state'] as $value) { ?>
+                <option value="<?php echo $value; ?>"<?php echo ($listing['price'] == $value) ? ' selected' : ''; ?>><?php echo $value; ?></option>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
         </div>
         <div class="well">
           <div class="row">

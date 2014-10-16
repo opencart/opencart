@@ -265,6 +265,10 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			$this->error['price'] = $this->language->get('error_price_missing');
 		}
 
+		if (!isset($data['state']) || empty($data['state'])) {
+			$this->error['state'] = $this->language->get('error_state_missing');
+		}
+
 		if (!$this->error) {
 			// process the request
 			$response = $this->openbay->etsy->call('product/listing/' . $data['etsy_item_id'] . '/update', 'POST', $data);

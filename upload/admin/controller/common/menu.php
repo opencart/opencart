@@ -1,203 +1,303 @@
 <?php
 class ControllerCommonMenu extends Controller {
+	
+	private $menu = array();
+	
 	public function index() {
+
 		$this->load->language('common/menu');
 
-		$data['text_affiliate'] = $this->language->get('text_affiliate');
-		$data['text_affiliate_activity'] = $this->language->get('text_affiliate_activity');
-		$data['text_api'] = $this->language->get('text_api');
-		$data['text_attribute'] = $this->language->get('text_attribute');
-		$data['text_attribute_group'] = $this->language->get('text_attribute_group');
-		$data['text_backup'] = $this->language->get('text_backup');
-		$data['text_banner'] = $this->language->get('text_banner');
-		$data['text_catalog'] = $this->language->get('text_catalog');
-		$data['text_category'] = $this->language->get('text_category');
-		$data['text_confirm'] = $this->language->get('text_confirm');
-		$data['text_contact'] = $this->language->get('text_contact');
-		$data['text_country'] = $this->language->get('text_country');
-		$data['text_coupon'] = $this->language->get('text_coupon');
-		$data['text_currency'] = $this->language->get('text_currency');
-		$data['text_customer'] = $this->language->get('text_customer');
-		$data['text_customer_group'] = $this->language->get('text_customer_group');
-		$data['text_customer_field'] = $this->language->get('text_customer_field');
-		$data['text_customer_ban_ip'] = $this->language->get('text_customer_ban_ip');
-		$data['text_custom_field'] = $this->language->get('text_custom_field');
-		$data['text_sale'] = $this->language->get('text_sale');
-		$data['text_paypal'] = $this->language->get('text_paypal');
-		$data['text_paypal_search'] = $this->language->get('text_paypal_search');
-		$data['text_design'] = $this->language->get('text_design');
-		$data['text_download'] = $this->language->get('text_download');
-		$data['text_error_log'] = $this->language->get('text_error_log');
-		$data['text_extension'] = $this->language->get('text_extension');
-		$data['text_feed'] = $this->language->get('text_feed');
-		$data['text_filter'] = $this->language->get('text_filter');
-		$data['text_geo_zone'] = $this->language->get('text_geo_zone');
-		$data['text_dashboard'] = $this->language->get('text_dashboard');
-		$data['text_help'] = $this->language->get('text_help');
-		$data['text_information'] = $this->language->get('text_information');
-		$data['text_installer'] = $this->language->get('text_installer');
-		$data['text_language'] = $this->language->get('text_language');
-		$data['text_layout'] = $this->language->get('text_layout');
-		$data['text_localisation'] = $this->language->get('text_localisation');
-		$data['text_location'] = $this->language->get('text_location');
-		$data['text_marketing'] = $this->language->get('text_marketing');
-		$data['text_modification'] = $this->language->get('text_modification');
-		$data['text_manufacturer'] = $this->language->get('text_manufacturer');
-		$data['text_module'] = $this->language->get('text_module');
-		$data['text_option'] = $this->language->get('text_option');
-		$data['text_order'] = $this->language->get('text_order');
-		$data['text_order_status'] = $this->language->get('text_order_status');
-		$data['text_opencart'] = $this->language->get('text_opencart');
-		$data['text_payment'] = $this->language->get('text_payment');
-		$data['text_product'] = $this->language->get('text_product');
-		$data['text_reports'] = $this->language->get('text_reports');
-		$data['text_report_sale_order'] = $this->language->get('text_report_sale_order');
-		$data['text_report_sale_tax'] = $this->language->get('text_report_sale_tax');
-		$data['text_report_sale_shipping'] = $this->language->get('text_report_sale_shipping');
-		$data['text_report_sale_return'] = $this->language->get('text_report_sale_return');
-		$data['text_report_sale_coupon'] = $this->language->get('text_report_sale_coupon');
-		$data['text_report_product_viewed'] = $this->language->get('text_report_product_viewed');
-		$data['text_report_product_purchased'] = $this->language->get('text_report_product_purchased');
-		$data['text_report_customer_activity'] = $this->language->get('text_report_customer_activity');
-		$data['text_report_customer_online'] = $this->language->get('text_report_customer_online');
-		$data['text_report_customer_order'] = $this->language->get('text_report_customer_order');
-		$data['text_report_customer_reward'] = $this->language->get('text_report_customer_reward');
-		$data['text_report_customer_credit'] = $this->language->get('text_report_customer_credit');
-		$data['text_report_sale_return'] = $this->language->get('text_report_sale_return');
-		$data['text_report_product_viewed'] = $this->language->get('text_report_product_viewed');
-		$data['text_report_customer_order'] = $this->language->get('text_report_customer_order');
-		$data['text_review'] = $this->language->get('text_review');
-		$data['text_return'] = $this->language->get('text_return');
-		$data['text_return_action'] = $this->language->get('text_return_action');
-		$data['text_return_reason'] = $this->language->get('text_return_reason');
-		$data['text_return_status'] = $this->language->get('text_return_status');
-		$data['text_shipping'] = $this->language->get('text_shipping');
-		$data['text_setting'] = $this->language->get('text_setting');
-		$data['text_stock_status'] = $this->language->get('text_stock_status');
-		$data['text_system'] = $this->language->get('text_system');
-		$data['text_tax'] = $this->language->get('text_tax');
-		$data['text_tax_class'] = $this->language->get('text_tax_class');
-		$data['text_tax_rate'] = $this->language->get('text_tax_rate');
-		$data['text_tools'] = $this->language->get('text_tools');
-		$data['text_total'] = $this->language->get('text_total');
-		$data['text_upload'] = $this->language->get('text_upload');
-		$data['text_tracking'] = $this->language->get('text_tracking');
-		$data['text_user'] = $this->language->get('text_user');
-		$data['text_user_group'] = $this->language->get('text_user_group');
-		$data['text_users'] = $this->language->get('text_users');
-		$data['text_voucher'] = $this->language->get('text_voucher');
-		$data['text_voucher_theme'] = $this->language->get('text_voucher_theme');
-		$data['text_weight_class'] = $this->language->get('text_weight_class');
-		$data['text_length_class'] = $this->language->get('text_length_class');
-		$data['text_zone'] = $this->language->get('text_zone');
-		$data['text_recurring'] = $this->language->get('text_recurring');
-		$data['text_order_recurring'] = $this->language->get('text_order_recurring');
-		$data['text_openbay_extension'] = $this->language->get('text_openbay_extension');
-		$data['text_openbay_dashboard'] = $this->language->get('text_openbay_dashboard');
-		$data['text_openbay_orders'] = $this->language->get('text_openbay_orders');
-		$data['text_openbay_items'] = $this->language->get('text_openbay_items');
-		$data['text_openbay_ebay'] = $this->language->get('text_openbay_ebay');
-		$data['text_openbay_amazon'] = $this->language->get('text_openbay_amazon');
-		$data['text_openbay_amazonus'] = $this->language->get('text_openbay_amazonus');
-		$data['text_openbay_settings'] = $this->language->get('text_openbay_settings');
-		$data['text_openbay_links'] = $this->language->get('text_openbay_links');
-		$data['text_openbay_report_price'] = $this->language->get('text_openbay_report_price');
-		$data['text_openbay_order_import'] = $this->language->get('text_openbay_order_import');
+		$data['profile'] = $this->load->controller('common/profile');
+		
+		// Catalog
+		$this->addMenu('catalog',  $this->language->get('text_catalog'), null, 'fa-tags');
+		$this->addPage('catalog/category', $this->language->get('text_category'), 'catalog');
+		$this->addPage('catalog/product', $this->language->get('text_product'), 'catalog');
+		$this->addPage('catalog/recurring', $this->language->get('text_recurring'), 'catalog');
+		$this->addPage('catalog/filter', $this->language->get('text_filter'), 'catalog');
+		
+		$this->addMenu('catalog_attribute',  $this->language->get('text_attribute'), 'catalog');
+		$this->addPage('catalog/attribute', $this->language->get('text_attribute'), 'catalog_attribute');
+		$this->addPage('catalog/attribute_group', $this->language->get('text_attribute_group'), 'catalog_attribute');
+		
+		$this->addPage('catalog/option', $this->language->get('text_option'), 'catalog');
+		$this->addPage('catalog/manufacturer', $this->language->get('text_manufacturer'), 'catalog');
+		$this->addPage('catalog/download', $this->language->get('text_download'), 'catalog');
+		$this->addPage('catalog/review', $this->language->get('text_review'), 'catalog');
+		$this->addPage('catalog/information', $this->language->get('text_information'), 'catalog');
 
-		$data['home'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL');
-		$data['affiliate'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'], 'SSL');
-		$data['api'] = $this->url->link('user/api', 'token=' . $this->session->data['token'], 'SSL');
-		$data['attribute'] = $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'], 'SSL');
-		$data['attribute_group'] = $this->url->link('catalog/attribute_group', 'token=' . $this->session->data['token'], 'SSL');
-		$data['backup'] = $this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL');
-		$data['banner'] = $this->url->link('design/banner', 'token=' . $this->session->data['token'], 'SSL');
-		$data['category'] = $this->url->link('catalog/category', 'token=' . $this->session->data['token'], 'SSL');
-		$data['country'] = $this->url->link('localisation/country', 'token=' . $this->session->data['token'], 'SSL');
-		$data['contact'] = $this->url->link('marketing/contact', 'token=' . $this->session->data['token'], 'SSL');
-		$data['coupon'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'], 'SSL');
-		$data['currency'] = $this->url->link('localisation/currency', 'token=' . $this->session->data['token'], 'SSL');
-		$data['customer'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'], 'SSL');
-		$data['customer_fields'] = $this->url->link('sale/customer_field', 'token=' . $this->session->data['token'], 'SSL');
-		$data['customer_group'] = $this->url->link('sale/customer_group', 'token=' . $this->session->data['token'], 'SSL');
-		$data['customer_ban_ip'] = $this->url->link('sale/customer_ban_ip', 'token=' . $this->session->data['token'], 'SSL');
-		$data['custom_field'] = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'], 'SSL');
-		$data['download'] = $this->url->link('catalog/download', 'token=' . $this->session->data['token'], 'SSL');
-		$data['error_log'] = $this->url->link('tool/error_log', 'token=' . $this->session->data['token'], 'SSL');
-		$data['feed'] = $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL');
-		$data['filter'] = $this->url->link('catalog/filter', 'token=' . $this->session->data['token'], 'SSL');
-		$data['geo_zone'] = $this->url->link('localisation/geo_zone', 'token=' . $this->session->data['token'], 'SSL');
-		$data['information'] = $this->url->link('catalog/information', 'token=' . $this->session->data['token'], 'SSL');
-		$data['installer'] = $this->url->link('extension/installer', 'token=' . $this->session->data['token'], 'SSL');
-		$data['language'] = $this->url->link('localisation/language', 'token=' . $this->session->data['token'], 'SSL');
-		$data['layout'] = $this->url->link('design/layout', 'token=' . $this->session->data['token'], 'SSL');
-		$data['location'] = $this->url->link('localisation/location', 'token=' . $this->session->data['token'], 'SSL');
-		$data['modification'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'], 'SSL');
-		$data['manufacturer'] = $this->url->link('catalog/manufacturer', 'token=' . $this->session->data['token'], 'SSL');
-		$data['marketing'] = $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'], 'SSL');
-		$data['module'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
-		$data['option'] = $this->url->link('catalog/option', 'token=' . $this->session->data['token'], 'SSL');
-		$data['order'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL');
-		$data['order_status'] = $this->url->link('localisation/order_status', 'token=' . $this->session->data['token'], 'SSL');
-		$data['payment'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
-		$data['paypal_search'] = $this->url->link('payment/pp_express/search', 'token=' . $this->session->data['token'], 'SSL');
-		$data['product'] = $this->url->link('catalog/product', 'token=' . $this->session->data['token'], 'SSL');
-		$data['report_sale_order'] = $this->url->link('report/sale_order', 'token=' . $this->session->data['token'], 'SSL');
-		$data['report_sale_tax'] = $this->url->link('report/sale_tax', 'token=' . $this->session->data['token'], 'SSL');
-		$data['report_sale_shipping'] = $this->url->link('report/sale_shipping', 'token=' . $this->session->data['token'], 'SSL');
-		$data['report_sale_return'] = $this->url->link('report/sale_return', 'token=' . $this->session->data['token'], 'SSL');
-		$data['report_sale_coupon'] = $this->url->link('report/sale_coupon', 'token=' . $this->session->data['token'], 'SSL');
-		$data['report_product_viewed'] = $this->url->link('report/product_viewed', 'token=' . $this->session->data['token'], 'SSL');
-		$data['report_product_purchased'] = $this->url->link('report/product_purchased', 'token=' . $this->session->data['token'], 'SSL');
-		$data['report_customer_activity'] = $this->url->link('report/customer_activity', 'token=' . $this->session->data['token'], 'SSL');
-		$data['report_customer_online'] = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'], 'SSL');
-		$data['report_customer_order'] = $this->url->link('report/customer_order', 'token=' . $this->session->data['token'], 'SSL');
-		$data['report_customer_reward'] = $this->url->link('report/customer_reward', 'token=' . $this->session->data['token'], 'SSL');
-		$data['report_customer_credit'] = $this->url->link('report/customer_credit', 'token=' . $this->session->data['token'], 'SSL');
-		$data['report_marketing'] = $this->url->link('report/marketing', 'token=' . $this->session->data['token'], 'SSL');
-		$data['report_affiliate'] = $this->url->link('report/affiliate', 'token=' . $this->session->data['token'], 'SSL');
-		$data['report_affiliate_activity'] = $this->url->link('report/affiliate_activity', 'token=' . $this->session->data['token'], 'SSL');
-		$data['review'] = $this->url->link('catalog/review', 'token=' . $this->session->data['token'], 'SSL');
-		$data['return'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'], 'SSL');
-		$data['return_action'] = $this->url->link('localisation/return_action', 'token=' . $this->session->data['token'], 'SSL');
-		$data['return_reason'] = $this->url->link('localisation/return_reason', 'token=' . $this->session->data['token'], 'SSL');
-		$data['return_status'] = $this->url->link('localisation/return_status', 'token=' . $this->session->data['token'], 'SSL');
-		$data['shipping'] = $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL');
-		$data['setting'] = $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL');
-		$data['stock_status'] = $this->url->link('localisation/stock_status', 'token=' . $this->session->data['token'], 'SSL');
-		$data['tax_class'] = $this->url->link('localisation/tax_class', 'token=' . $this->session->data['token'], 'SSL');
-		$data['tax_rate'] = $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'], 'SSL');
-		$data['total'] = $this->url->link('extension/total', 'token=' . $this->session->data['token'], 'SSL');
-		$data['upload'] = $this->url->link('tool/upload', 'token=' . $this->session->data['token'], 'SSL');
-		$data['user'] = $this->url->link('user/user', 'token=' . $this->session->data['token'], 'SSL');
-		$data['user_group'] = $this->url->link('user/user_permission', 'token=' . $this->session->data['token'], 'SSL');
-		$data['voucher'] = $this->url->link('sale/voucher', 'token=' . $this->session->data['token'], 'SSL');
-		$data['voucher_theme'] = $this->url->link('sale/voucher_theme', 'token=' . $this->session->data['token'], 'SSL');
-		$data['weight_class'] = $this->url->link('localisation/weight_class', 'token=' . $this->session->data['token'], 'SSL');
-		$data['length_class'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'], 'SSL');
-		$data['zone'] = $this->url->link('localisation/zone', 'token=' . $this->session->data['token'], 'SSL');
-		$data['recurring'] = $this->url->link('catalog/recurring', 'token=' . $this->session->data['token'], 'SSL');
-		$data['order_recurring'] = $this->url->link('sale/recurring', 'token=' . $this->session->data['token'], 'SSL');
+		// Extensions
+		$this->addMenu('extension',  $this->language->get('text_extension'), null, 'fa-puzzle-piece');
+		$this->addPage('extension/installer', $this->language->get('text_installer'), 'extension');
+		$this->addPage('extension/modification', $this->language->get('text_modification'), 'extension');
+		$this->addPage('extension/module', $this->language->get('text_module'), 'extension');
+		$this->addPage('extension/shipping', $this->language->get('text_shipping'), 'extension');
+		$this->addPage('extension/payment', $this->language->get('text_payment'), 'extension');
+		$this->addPage('extension/total', $this->language->get('text_total'), 'extension');
+		$this->addPage('extension/feed', $this->language->get('text_feed'), 'extension');
+		
+		 // FIXME: Some pages don't appear on Acccess/Modify Permissions
+		if ($this->config->get('openbaypro_menu') == 1) {
+			$this->addMenu('openbay',  $this->language->get('text_openbay_extension'), 'extension');
+			$this->addPage('extension/openbay', $this->language->get('text_openbay_dashboard'), 'openbay');
+			$this->addPage('extension/openbay/orderlist', $this->language->get('text_openbay_orders'), 'openbay');
+			$this->addPage('extension/openbay/itemlist', $this->language->get('text_openbay_items'), 'openbay');
+			
+			if ($this->config->get('ebay_status') == 1) {
+				$this->addMenu('openbay_ebay',  $this->language->get('text_openbay_ebay'), 'openbay');
+				$this->addPage('openbay/ebay', $this->language->get('text_openbay_dashboard'), 'openbay_ebay');
+				$this->addPage('openbay/ebay/settings', $this->language->get('text_openbay_settings'), 'openbay_ebay');
+				$this->addPage('openbay/ebay/viewitemlinks', $this->language->get('text_openbay_links'), 'openbay_ebay');
+				$this->addPage('openbay/ebay/vieworderimport', $this->language->get('text_openbay_order_import'), 'openbay_ebay');
+			}
+			
+			if ($this->config->get('amazon_status') == 1) {
+				$this->addMenu('openbay_amazon',  $this->language->get('text_openbay_amazon'), 'openbay');
+				$this->addPage('openbay/amazon', $this->language->get('text_openbay_dashboard'), 'openbay_amazon');
+				$this->addPage('openbay/amazon/settings', $this->language->get('text_openbay_settings'), 'openbay_amazon');
+				$this->addPage('openbay/amazon/itemlinks', $this->language->get('text_openbay_links'), 'openbay_amazon');
+			}
+			
+			if ($this->config->get('amazonus_status') == 1) {
+				$this->addMenu('openbay_amazonus',  $this->language->get('text_openbay_amazonus'), 'openbay');
+				$this->addPage('openbay/amazonus', $this->language->get('text_openbay_dashboard'), 'openbay_amazonus');
+				$this->addPage('openbay/amazonus/settings', $this->language->get('text_openbay_settings'), 'openbay_amazonus');
+				$this->addPage('openbay/amazonus/itemlinks', $this->language->get('text_openbay_links'), 'openbay_amazonus');
+			}
+		}
+		
+		// Sales
+		$this->addMenu('sale',  $this->language->get('text_sale'), null, 'fa-shopping-cart');
+		$this->addPage('sale/order', $this->language->get('text_order'), 'sale');
+		$this->addPage('sale/recurring', $this->language->get('text_order_recurring'), 'sale');
+		$this->addPage('sale/return', $this->language->get('text_return'), 'sale');
+		
+		$this->addMenu('sale_customer',  $this->language->get('text_customer'), 'sale');
+		$this->addPage('sale/customer', $this->language->get('text_customer'), 'sale_customer');
+		$this->addPage('sale/customer_group', $this->language->get('text_customer_group'), 'sale_customer');
+		$this->addPage('sale/custom_field', $this->language->get('text_custom_field'), 'sale_customer');
+		$this->addPage('sale/customer_ban_ip', $this->language->get('text_customer_ban_ip'), 'sale_customer');
 
-		$data['openbay_show_menu'] = $this->config->get('openbaypro_menu');
-		$data['openbay_link_extension'] = $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL');
-		$data['openbay_link_orders'] = $this->url->link('extension/openbay/orderlist', 'token=' . $this->session->data['token'], 'SSL');
-		$data['openbay_link_items'] = $this->url->link('extension/openbay/itemlist', 'token=' . $this->session->data['token'], 'SSL');
-		$data['openbay_link_ebay'] = $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL');
-		$data['openbay_link_ebay_settings'] = $this->url->link('openbay/ebay/settings', 'token=' . $this->session->data['token'], 'SSL');
-		$data['openbay_link_ebay_links'] = $this->url->link('openbay/ebay/viewitemlinks', 'token=' . $this->session->data['token'], 'SSL');
-		$data['openbay_link_ebay_orderimport'] = $this->url->link('openbay/ebay/vieworderimport', 'token=' . $this->session->data['token'], 'SSL');
-		$data['openbay_link_amazon'] = $this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], 'SSL');
-		$data['openbay_link_amazon_settings'] = $this->url->link('openbay/amazon/settings', 'token=' . $this->session->data['token'], 'SSL');
-		$data['openbay_link_amazon_links'] = $this->url->link('openbay/amazon/itemlinks', 'token=' . $this->session->data['token'], 'SSL');
-		$data['openbay_link_amazonus'] = $this->url->link('openbay/amazonus', 'token=' . $this->session->data['token'], 'SSL');
-		$data['openbay_link_amazonus_settings'] = $this->url->link('openbay/amazonus/settings', 'token=' . $this->session->data['token'], 'SSL');
-		$data['openbay_link_amazonus_links'] = $this->url->link('openbay/amazonus/itemlinks', 'token=' . $this->session->data['token'], 'SSL');
-		$data['openbay_markets'] = array(
-			'ebay' => $this->config->get('ebay_status'),
-			'amazon' => $this->config->get('amazon_status'),
-			'amazonus' => $this->config->get('amazonus_status'),
-		);
+		$this->addMenu('sale_voucher',  $this->language->get('text_voucher'), 'sale');
+		$this->addPage('sale/voucher', $this->language->get('text_voucher'), 'sale_voucher');
+		$this->addPage('sale/voucher_theme', $this->language->get('text_voucher_theme'), 'sale_voucher');
 
+		$this->addMenu('sale_paypal', $this->language->get('text_paypal'), 'sale');
+		$this->addPage('payment/pp_express/search', $this->language->get('text_paypal_search'), 'sale_paypal'); // FIXME: This doesn't appear on Acccess/Modify Permissions
+
+		// Marketing
+		$this->addMenu('marketing',  $this->language->get('text_marketing'), null, 'fa-share-alt');
+		$this->addPage('marketing/marketing', $this->language->get('text_marketing'), 'marketing');
+		$this->addPage('marketing/affiliate', $this->language->get('text_affiliate'), 'marketing');
+		$this->addPage('marketing/coupon', $this->language->get('text_coupon'), 'marketing');	
+		$this->addPage('marketing/contact', $this->language->get('text_contact'), 'marketing');
+			
+		// System
+		$this->addMenu('system',  $this->language->get('text_system'), null, 'fa-cog');
+		$this->addPage('setting/store', $this->language->get('text_setting'), 'system');
+		
+		$this->addMenu('system_design',  $this->language->get('text_design'), 'system');
+		$this->addPage('design/layout', $this->language->get('text_layout'), 'system_design');
+		$this->addPage('design/banner', $this->language->get('text_banner'), 'system_design');
+		
+		$this->addMenu('system_user',  $this->language->get('text_users'), 'system');
+		$this->addPage('user/user', $this->language->get('text_user'), 'system_user');
+		$this->addPage('user/user_permission', $this->language->get('text_user_group'), 'system_user');
+		$this->addPage('user/api', $this->language->get('text_api'), 'system_user');
+
+		$this->addMenu('system_localisation',  $this->language->get('text_localisation'), 'system');
+		$this->addPage('localisation/location', $this->language->get('text_location'), 'system_localisation');
+		$this->addPage('localisation/language', $this->language->get('text_language'), 'system_localisation');
+		$this->addPage('localisation/currency', $this->language->get('text_currency'), 'system_localisation');
+		$this->addPage('localisation/stock_status', $this->language->get('text_stock_status'), 'system_localisation');
+		$this->addPage('localisation/order_status', $this->language->get('text_order_status'), 'system_localisation');
+
+		$this->addMenu('system_localisation_return',  $this->language->get('text_return'), 'system_localisation');
+		$this->addPage('localisation/return_status', $this->language->get('text_return_status'), 'system_localisation_return');
+		$this->addPage('localisation/return_action', $this->language->get('text_return_action'), 'system_localisation_return');
+		$this->addPage('localisation/return_reason', $this->language->get('text_return_reason'), 'system_localisation_return');
+
+		$this->addPage('localisation/country', $this->language->get('text_country'), 'system_localisation');
+		$this->addPage('localisation/zone', $this->language->get('text_zone'), 'system_localisation');			
+		$this->addPage('localisation/geo_zone', $this->language->get('text_geo_zone'), 'system_localisation');
+
+		$this->addMenu('system_localisation_tax',  $this->language->get('text_tax'), 'system_localisation');
+		$this->addPage('localisation/tax_class', $this->language->get('text_tax_class'), 'system_localisation_tax');
+		$this->addPage('localisation/tax_rate', $this->language->get('text_tax_rate'), 'system_localisation_tax');
+		
+		$this->addPage('localisation/length_class', $this->language->get('text_length_class'), 'system_localisation');
+		$this->addPage('localisation/weight_class', $this->language->get('text_weight_class'), 'system_localisation');
+
+		// Tools
+		$this->addMenu('tools',  $this->language->get('text_tools'), null, 'fa-wrench');
+		$this->addPage('tool/upload', $this->language->get('text_upload'), 'tools');
+		$this->addPage('tool/backup', $this->language->get('text_backup'), 'tools');
+		$this->addPage('tool/error_log', $this->language->get('text_error_log'), 'tools');
+		
+		// Reports
+		$this->addMenu('reports',  $this->language->get('text_reports'), null, 'fa-bar-chart-o');
+		
+		$this->addMenu('reports_sale',  $this->language->get('text_sale'), 'reports');
+		$this->addPage('report/sale_order', $this->language->get('text_report_sale_order'), 'reports_sale');
+		$this->addPage('report/sale_tax', $this->language->get('text_report_sale_tax'), 'reports_sale');
+		$this->addPage('report/sale_shipping', $this->language->get('text_report_sale_shipping'), 'reports_sale');
+		$this->addPage('report/sale_return', $this->language->get('text_report_sale_return'), 'reports_sale');
+		$this->addPage('report/sale_coupon', $this->language->get('text_report_sale_coupon'), 'reports_sale');
+	
+		$this->addMenu('reports_product',  $this->language->get('text_product'), 'reports');
+		$this->addPage('report/product_viewed', $this->language->get('text_report_product_viewed'), 'reports_product');
+		$this->addPage('report/product_purchased', $this->language->get('text_report_product_purchased'), 'reports_product');
+		
+		$this->addMenu('reports_customer',  $this->language->get('text_customer'), 'reports');
+		$this->addPage('report/customer_online', $this->language->get('text_report_customer_online'), 'reports_customer');
+		$this->addPage('report/customer_activity', $this->language->get('text_report_customer_activity'), 'reports_customer');
+		$this->addPage('report/customer_order', $this->language->get('text_report_customer_order'), 'reports_customer');
+		$this->addPage('report/customer_reward', $this->language->get('text_report_customer_reward'), 'reports_customer');
+		$this->addPage('report/customer_credit', $this->language->get('text_report_customer_credit'), 'reports_customer');
+		
+		$this->addMenu('reports_marketing',  $this->language->get('text_marketing'), 'reports');
+		$this->addPage('report/marketing', $this->language->get('text_marketing'), 'reports_marketing');
+		$this->addPage('report/affiliate', $this->language->get('text_affiliate'), 'reports_marketing');
+		$this->addPage('report/affiliate_activity', $this->language->get('text_affiliate_activity'), 'reports_marketing');
+
+		// Menu Output
+		$data['menu'] = $this->getMenu();
+		
 		return $this->load->view('common/menu.tpl', $data);
+
 	}
+	
+	/*
+	*  Function to Add Menu or Sub-Menu
+	*
+	*  @param	{string}	$name - A name to identify the menu
+	*  @param	{string}	$title - Menu title
+	*  @param	{string}	$parent - Parent menu name when is a sub-menu
+	*  @param	{string}	$icon - CSS class to set icon, not used in sub-menus
+	*/
+	private function addMenu($name, $title, $parent = null, $icon = null) {
+		array_push($this->menu, array(
+			'parent' => $parent,
+			'name' => $name,
+			'title' => $title,
+			'route' => null,
+			'params' => array(),
+			'icon' => $icon
+		));
+	}
+
+	/*
+	*  Function to Add Pages
+	*
+	*  @param	{string}	$route - Page route
+	*  @param	{string}	$title - Page title
+	*  @param	{string}	$parent - Parent menu name when exists a connection
+	*  @param	{array}		$params - URL params to be passed, token is already setted
+	*/
+	private function addPage($route, $title, $parent = null, $params = array()) {
+		$params['token'] = $this->session->data['token'];
+		array_push($this->menu, array(
+			'parent' => $parent,
+			'name' => null,
+			'title' => $title,
+			'route' => $route,
+			'params' => $params,
+			'icon' => null
+		));
+	}
+	
+	private function getMenu() {
+		$this->checkPermissions();
+		$this->cleanupNodes();
+		return $this->buildList();
+	}
+
+	private function buildList($parent = null, $html = null) {
+
+		if (empty($html)) {
+			$html = PHP_EOL . '<ul id="menu">';
+			$html .= PHP_EOL . '<li id="menu-dashboard"><a href="' . $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL') . '"><i class="fa fa-dashboard fa-fw"></i> <span>' . $this->language->get('text_dashboard') . '</span></a></li>';
+		} else {
+			$html .= PHP_EOL . '<ul>';		
+		}
+		
+		foreach ($this->getChildren($parent) as $item) {
+		
+			if (!empty($item['name'])) {
+				$children = $this->getChildren($item['name']);
+				if (empty($children))
+					continue;
+
+			}
+		
+			// First level
+			if ($parent == null) {
+
+				$html .= PHP_EOL . '<li id="menu-' . $item['name'] . '"><a class="parent">';
+				$html .= '<i class="fa fa-fw ' . (empty($item['icon']) ? 'fa-circle' : $item['icon']) . '"></i> ';
+				$html .= '<span>' . $item['title'] . '</span></a>';
+				
+				if (!empty($item['name']))
+					$html = $this->buildList($item['name'], $html);
+				
+				$html .= '</li>';
+			
+			// Next levels
+			} else {
+
+				$html .= PHP_EOL . '<li><a ';
+				$html .= empty($item['route']) ? 'class="parent">' : 'href="' . $this->url->link($item['route'], $this->buildParams($item['params']), 'SSL') . '">';
+				$html .= $item['title'] . '</a>';
+				
+				if (!empty($item['name']))
+					$html = $this->buildList($item['name'], $html);
+				
+				$html .= '</li>';
+
+			}		
+
+		}
+		
+		$html .= PHP_EOL .'</ul>' . PHP_EOL;	
+		
+		return $html;
+	}
+	
+	private function getChildren($parent) {
+		$output = array();
+		foreach ($this->menu as $key => $item) {
+			if($item['parent'] == $parent)
+				$output[$key] = $item;		
+		}		
+		return $output;
+	}
+	
+	private function checkPermissions() {
+		foreach ($this->menu as $key => $item) {
+			if (empty($item['route']) || $item['route'] == 'common/dashboard')
+				continue;
+			if ($this->user->hasPermission('access', $item['route']))
+				continue;
+			unset($this->menu[$key]);
+		}
+	}
+
+	private function cleanupNodes($parent = null) {
+		foreach($this->getChildren($parent) as $key => $item) {
+			if (!empty($item['name'])) {
+				$result = $this->cleanupNodes($item['name']);
+				if (empty($result))
+					unset($this->menu[$key]);
+			}
+		}
+		return count($this->getChildren($parent));
+	}
+
+	private function buildParams($params) {
+		foreach($params as $key => $value) {
+			$params[$key] = "$key=$value";
+		}
+		return implode('&amp;', $params);
+	}
+	
 }

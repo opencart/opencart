@@ -229,6 +229,10 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$data['etsy_item_id'] = $links[0]['etsy_item_id'];
 		$data['product_id'] = $this->request->get['product_id'];
 
+		$setting['state'] = array('active', 'inactive', 'draft');
+
+		$data['setting'] = $setting;
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

@@ -219,7 +219,7 @@ final class Openbay {
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
 		$language = new Language($order_info['language_directory']);
-		$language->load($order_info['language_filename']);
+		$language->load('default');
 		$language->load('mail/order');
 
 		$order_status = $this->db->query("SELECT `name` FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "' LIMIT 1")->row['name'];

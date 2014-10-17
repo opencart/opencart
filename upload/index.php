@@ -178,7 +178,7 @@ $config->set('config_language', $languages[$code]['code']);
 
 // Language
 $language = new Language($languages[$code]['directory']);
-$language->load($languages[$code]['filename']);
+$language->load('deault');
 $registry->set('language', $language);
 
 // Document

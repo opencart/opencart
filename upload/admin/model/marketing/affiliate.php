@@ -273,4 +273,14 @@ class ModelMarketingAffiliate extends Model {
 
 		return $query->row['total'];
 	}
+	
+	public function getTotalLoginAttempts($email) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "affiliate_login` WHERE `email` = '" . $this->db->escape($email) . "'");
+
+		return $query->row;
+	}	
+
+	public function deleteLoginAttempts($email) {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "affiliate_login` WHERE `email` = '" . $this->db->escape($email) . "'");
+	}	
 }

@@ -174,11 +174,37 @@ class ControllerExtensionModification extends Controller {
 								}
 
 								foreach ($operations as $operation) {
+									$error = $operation->getAttribute('error');
+									
+									if (!$error) {
+										$error = '*';
+									}
+									
+									//skip|log|abort
+									
+									// Ignoreif
+									$ignoreif = $operation->getElementsByTagName('ignoreif')->item(0);
+									
+									if ($ignoreif) {
+										if ($ignoreif->item(0)->getAttribute('regex') != 'true') {
+											if (strpos($modification[$file], $ignoreif->item(0)->textContent) !== false) {
+												continue;
+											}												
+										} else {
+											if (preg_match($ignoreif->item(0)->textContent, $modification[$file])) {
+												continue;
+											}
+										}
+									}
+									
 									// Search and replace
 									if ($operation->getElementsByTagName('search')->item(0)->getAttribute('regex') != 'true') {
+										// Search
 										$search = $operation->getElementsByTagName('search')->item(0)->textContent;
 										$trim = $operation->getElementsByTagName('search')->item(0)->getAttribute('trim');
 										$index = $operation->getElementsByTagName('search')->item(0)->getAttribute('index');
+										
+										// Add
 										$add = $operation->getElementsByTagName('add')->item(0)->textContent;
 										$position = $operation->getElementsByTagName('add')->item(0)->getAttribute('position');
 										$offset = $operation->getElementsByTagName('add')->item(0)->getAttribute('offset');
@@ -199,7 +225,7 @@ class ControllerExtensionModification extends Controller {
 										}
 										
 										// Get all the matches
-										$i = 0;
+										$i = 1;
 										
 										$lines = explode("\n", $modification[$key]);
 
@@ -244,6 +270,26 @@ class ControllerExtensionModification extends Controller {
 												
 												$found = true;										
 											}
+											
+											$skip_text = ($operation_node_error == 'skip' || $operation_node_error == 'log') ? '(SKIPPED)' : '(ABORTING MOD)';
+											
+											if ($operation_node_error == 'log' || $operation_node_error) {
+												$log[] = "Modification::refresh - SEARCH NOT FOUND $skip_text:";
+												$log[] = "  modification id = '$modification_id'";
+												$log[] = "  file name = '".$file_node->getAttribute('name')."'";
+												$log[] = "  search = '$search_node_value'";
+												$log[] = "";
+											}
+			
+											if ($operation_node_error == 'abort') {
+												return; // skip this XML file
+											}
+											
+											
+											
+											
+											
+																						
 										}
 										
 										if (!$found) {
@@ -251,11 +297,11 @@ class ControllerExtensionModification extends Controller {
 										}
 										
 										$modification[$key] = implode("\n", $lines);
-									} else {
+									} else {									
 										$search = $operation->getElementsByTagName('search')->item(0)->textContent;
-										$replace = $operation->getElementsByTagName('add')->item(0)->textContent;
 										$limit = $operation->getElementsByTagName('search')->item(0)->getAttribute('limit');
-
+										$replace = $operation->getElementsByTagName('add')->item(0)->textContent;
+										
 										// Limit
 										if (!$limit) {
 											$limit = -1;

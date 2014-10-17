@@ -4,7 +4,6 @@ class ControllerCommonMenu extends Controller {
 		$this->load->language('common/menu');
 
 		$data['text_affiliate'] = $this->language->get('text_affiliate');
-		$data['text_affiliate_activity'] = $this->language->get('text_affiliate_activity');
 		$data['text_api'] = $this->language->get('text_api');
 		$data['text_attribute'] = $this->language->get('text_attribute');
 		$data['text_attribute_group'] = $this->language->get('text_attribute_group');
@@ -56,6 +55,7 @@ class ControllerCommonMenu extends Controller {
 		$data['text_report_sale_shipping'] = $this->language->get('text_report_sale_shipping');
 		$data['text_report_sale_return'] = $this->language->get('text_report_sale_return');
 		$data['text_report_sale_coupon'] = $this->language->get('text_report_sale_coupon');
+		$data['text_report_sale_return'] = $this->language->get('text_report_sale_return');
 		$data['text_report_product_viewed'] = $this->language->get('text_report_product_viewed');
 		$data['text_report_product_purchased'] = $this->language->get('text_report_product_purchased');
 		$data['text_report_customer_activity'] = $this->language->get('text_report_customer_activity');
@@ -63,9 +63,9 @@ class ControllerCommonMenu extends Controller {
 		$data['text_report_customer_order'] = $this->language->get('text_report_customer_order');
 		$data['text_report_customer_reward'] = $this->language->get('text_report_customer_reward');
 		$data['text_report_customer_credit'] = $this->language->get('text_report_customer_credit');
-		$data['text_report_sale_return'] = $this->language->get('text_report_sale_return');
-		$data['text_report_product_viewed'] = $this->language->get('text_report_product_viewed');
 		$data['text_report_customer_order'] = $this->language->get('text_report_customer_order');
+		$data['text_report_affiliate'] = $this->language->get('text_report_affiliate');
+		$data['text_report_affiliate_activity'] = $this->language->get('text_report_affiliate_activity');
 		$data['text_review'] = $this->language->get('text_review');
 		$data['text_return'] = $this->language->get('text_return');
 		$data['text_return_action'] = $this->language->get('text_return_action');

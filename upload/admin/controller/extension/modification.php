@@ -111,7 +111,7 @@ class ControllerExtensionModification extends Controller {
 
 			foreach ($results as $result) {
 				if ($result['status']) {
-					$xml[] = $result['code'];
+					$xml[] = $result['xml'];
 				}
 			}
 

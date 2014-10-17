@@ -122,7 +122,8 @@ class ControllerExtensionModification extends Controller {
 				$dom->preserveWhiteSpace = false;
 				$dom->loadXml($xml);
 
-				$previous = array();
+				// Wipe the past modification store in the backup array
+				$backup = array();
 
 				// Log
 				$log[] = 'MOD: ' . $dom->getElementsByTagName('name')->item(0)->textContent;
@@ -176,17 +177,13 @@ class ControllerExtensionModification extends Controller {
 									$log[] = 'FILE: ' . $key;
 								}
 								
-								// Set the a backup of the modification code in case we need to use it if an abort attribute is used.
-								if (!isset($revert[$key])) {
-									$backup[$key] = $modification[$key];
+								// Set the a recovery of the modification code in case we need to use it if an abort attribute is used.
+								if (!isset($recovery[$key])) {
+									$recovery[$key] = $modification[$key];
 								}
 								
 								foreach ($operations as $operation) {
 									$error = $operation->getAttribute('error');
-									
-									if (!$error) {
-										$error = '*';
-									}
 									
 									// Ignoreif
 									$ignoreif = $operation->getElementsByTagName('ignoreif')->item(0);
@@ -202,6 +199,8 @@ class ControllerExtensionModification extends Controller {
 											}
 										}
 									}
+									
+									$status = false;
 									
 									// Search and replace
 									if ($operation->getElementsByTagName('search')->item(0)->getAttribute('regex') != 'true') {
@@ -228,8 +227,6 @@ class ControllerExtensionModification extends Controller {
 										
 										// Log
 										$log[] = 'CODE: ' . $search;
-										
-										$found = false;
 										
 										// Turn the code that we are going to change into an array.
 										$add = explode("\n", $add);
@@ -280,27 +277,7 @@ class ControllerExtensionModification extends Controller {
 												// Log
 												$log[] = 'LINE: ' . $line_id;
 												
-												$found = true;										
-											}
-										}
-										
-										if (!$found) {
-											// Log
-											$log[] = 'NOT FOUND!';
-
-											// Skip current operation
-											if ($error == 'skip') {
-												break;
-											}
-											
-											// Abort applying this mod completely.
-											if ($error == 'abort') {
-												$modification = array_merge($modification, $revert);
-												
-												// Log
-												$log[] = 'ABORTING!';
-											
-												break 4;
+												$status = true;										
 											}
 										}
 										
@@ -331,13 +308,33 @@ class ControllerExtensionModification extends Controller {
 											for ($i = 0; $i < count($match[0]); $i++) {
 												$log[] = 'LINE: ' . (substr_count(substr($modification[$key], 0, $match[0][$i][1]), "\n") + 1);
 											}
-										} else {
-											$log[] = 'NOT FOUND!';
+											
+											$status = true;
 										}
 
 										// Make the modification
 										$modification[$key] = preg_replace($search, $replace, $modification[$key], $limit);
 									}
+									
+									if (!$status) {
+										// Log
+										$log[] = 'NOT FOUND!';
+
+										// Skip current operation
+										if ($error == 'skip') {
+											break;
+										}
+										
+										// Abort applying this modification completely.
+										if ($error == 'abort') {
+											$modification = array_merge($modification, $recovery);
+											
+											// Log
+											$log[] = 'ABORTING!';
+										
+											break 4;
+										}
+									}									
 								}
 							}
 						}

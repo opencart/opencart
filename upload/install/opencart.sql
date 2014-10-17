@@ -1523,7 +1523,6 @@ CREATE TABLE IF NOT EXISTS `oc_language` (
   `locale` varchar(255) NOT NULL,
   `image` varchar(64) NOT NULL,
   `directory` varchar(32) NOT NULL,
-  `filename` varchar(64) NOT NULL,
   `sort_order` int(3) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`language_id`),

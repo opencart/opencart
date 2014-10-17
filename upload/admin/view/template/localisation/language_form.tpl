@@ -70,15 +70,6 @@
               <?php } ?>
             </div>
           </div>
-          <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-filename"><span data-toggle="tooltip" title="<?php echo $help_filename; ?>"><?php echo $entry_filename; ?></span></label>
-            <div class="col-sm-10">
-              <input type="text" name="filename" value="<?php echo $filename; ?>" placeholder="<?php echo $entry_filename; ?>" id="input-filename" class="form-control" />
-              <?php if ($error_filename) { ?>
-              <div class="text-danger"><?php echo $error_filename; ?></div>
-              <?php } ?>
-            </div>
-          </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><span data-toggle="tooltip" title="<?php echo $help_status; ?>"><?php echo $entry_status; ?></span></label>
             <div class="col-sm-10">

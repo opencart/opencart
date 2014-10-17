@@ -1765,6 +1765,7 @@ CREATE TABLE IF NOT EXISTS `oc_marketing` (
 
 CREATE TABLE IF NOT EXISTS `oc_modification` (
   `modification_id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` varchar(64) NOT NULL,
   `name` varchar(64) NOT NULL,
   `author` varchar(64) NOT NULL,
   `version` varchar(32) NOT NULL,

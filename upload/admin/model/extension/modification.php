@@ -1,7 +1,7 @@
 <?php
 class ModelExtensionModification extends Model {
 	public function addModification($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "modification SET name = '" . $this->db->escape($data['name']) . "', author = '" . $this->db->escape($data['author']) . "', version = '" . $this->db->escape($data['version']) . "', link = '" . $this->db->escape($data['link']) . "', code = '" . $this->db->escape($data['code']) . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "modification SET id = '" . $this->db->escape($data['id']) . "', name = '" . $this->db->escape($data['name']) . "', author = '" . $this->db->escape($data['author']) . "', version = '" . $this->db->escape($data['version']) . "', link = '" . $this->db->escape($data['link']) . "', code = '" . $this->db->escape($data['code']) . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
 	}
 
 	public function deleteModification($modification_id) {
@@ -67,4 +67,10 @@ class ModelExtensionModification extends Model {
 
 		return $query->row['total'];
 	}
+	
+	public function getTotalModificationsById($id) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "modification WHERE id = '" . $this->db->escape($data['id']) . "'");
+
+		return $query->row['total'];
+	}	
 }

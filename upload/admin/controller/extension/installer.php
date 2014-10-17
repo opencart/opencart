@@ -414,13 +414,28 @@ class ControllerExtensionInstaller extends Controller {
 				try {
 					$dom = new DOMDocument('1.0', 'UTF-8');
 					$dom->loadXml($xml);
-
+					
 					$name = $dom->getElementsByTagName('name')->item(0);
 
 					if ($name) {
 						$name = $name->nodeValue;
 					} else {
 						$name = '';
+					}
+					
+					$code = $dom->getElementsByTagName('code')->item(0);
+
+					if ($code) {
+						$code = $code->nodeValue;
+						
+						// Check to see if the modification is alreayd installed or not.
+						$modification_info = $this->model_extension_modification->getModificationByCode($code);
+						
+						if ($modification_info) {
+							$json['error'] = sprintf($this->language->get('error_exists'), $modification_info['name']);
+						}
+					} else {
+						$json['error'] = $this->language->get('error_code');
 					}
 
 					$author = $dom->getElementsByTagName('author')->item(0);
@@ -448,15 +463,18 @@ class ControllerExtensionInstaller extends Controller {
 					}
 
 					$modification_data = array(
-						'name'       => $name,
-						'author'     => $author,
-						'version'    => $version,
-						'link'       => $link,
-						'code'       => $xml,
-						'status'     => 1
+						'name'    => $name,
+						'code'    => $code,
+						'author'  => $author,
+						'version' => $version,
+						'link'    => $link,
+						'xml'     => $xml,
+						'status'  => 1
 					);
-
-					$this->model_extension_modification->addModification($modification_data);
+					
+					if (!$json) {
+						$this->model_extension_modification->addModification($modification_data);
+					}
 				} catch(Exception $exception) {
 					$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 				}

@@ -307,7 +307,13 @@ class ControllerExtensionInstaller extends Controller {
 
 							if (is_dir($file)) {
 								$list = ftp_nlist($connection, substr($destination, 0, strrpos($destination, '/')));
-
+								
+								$position = strpos($destination, '/');
+								
+								if ($position !== false) {
+									$destination = substr($destination, $position + 1);
+								}
+								
 								if (!in_array($destination, $list)) {
 									if (!ftp_mkdir($connection, $destination)) {
 										$json['error'] = sprintf($this->language->get('error_ftp_directory'), $destination);

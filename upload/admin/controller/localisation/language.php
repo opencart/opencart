@@ -272,7 +272,6 @@ class ControllerLocalisationLanguage extends Controller {
 		$data['entry_locale'] = $this->language->get('entry_locale');
 		$data['entry_image'] = $this->language->get('entry_image');
 		$data['entry_directory'] = $this->language->get('entry_directory');
-		$data['entry_filename'] = $this->language->get('entry_filename');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$data['entry_status'] = $this->language->get('entry_status');
 
@@ -280,7 +279,6 @@ class ControllerLocalisationLanguage extends Controller {
 		$data['help_locale'] = $this->language->get('help_locale');
 		$data['help_image'] = $this->language->get('help_image');
 		$data['help_directory'] = $this->language->get('help_directory');
-		$data['help_filename'] = $this->language->get('help_filename');
 		$data['help_status'] = $this->language->get('help_status');
 
 		$data['button_save'] = $this->language->get('button_save');
@@ -406,14 +404,6 @@ class ControllerLocalisationLanguage extends Controller {
 			$data['directory'] = '';
 		}
 
-		if (isset($this->request->post['filename'])) {
-			$data['filename'] = $this->request->post['filename'];
-		} elseif (!empty($language_info)) {
-			$data['filename'] = $language_info['filename'];
-		} else {
-			$data['filename'] = '';
-		}
-
 		if (isset($this->request->post['sort_order'])) {
 			$data['sort_order'] = $this->request->post['sort_order'];
 		} elseif (!empty($language_info)) {
@@ -456,10 +446,6 @@ class ControllerLocalisationLanguage extends Controller {
 
 		if (!$this->request->post['directory']) {
 			$this->error['directory'] = $this->language->get('error_directory');
-		}
-
-		if (!$this->request->post['filename']) {
-			$this->error['filename'] = $this->language->get('error_filename');
 		}
 
 		if ((utf8_strlen($this->request->post['image']) < 3) || (utf8_strlen($this->request->post['image']) > 32)) {

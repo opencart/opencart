@@ -600,6 +600,15 @@
                   </div>
                 </div>
                 <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-login-attempts"><span data-toggle="tooltip" title="<?php echo $help_login_attempts; ?>"><?php echo $entry_login_attempts; ?></span></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_login_attempts" value="<?php echo $config_login_attempts; ?>" placeholder="<?php echo $entry_login_attempts; ?>" id="input-login-attempts" class="form-control" />
+                    <?php if ($error_login_attempts) { ?>
+                    <div class="text-danger"><?php echo $error_login_attempts; ?></div>
+                    <?php } ?>                  
+                  </div>
+                </div>                
+                <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-account"><span data-toggle="tooltip" title="<?php echo $help_account; ?>"><?php echo $entry_account; ?></span></label>
                   <div class="col-sm-10">
                     <select name="config_account_id" id="input-account" class="form-control">

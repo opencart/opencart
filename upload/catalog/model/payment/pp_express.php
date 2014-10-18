@@ -115,7 +115,7 @@ class ModelPaymentPPExpress extends Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "paypal_order` SET
 			`order_id` = '" . (int)$order_data['order_id'] . "',
 			`date_added` = NOW(),
-			`modified` = NOW(),
+			`date_modified` = NOW(),
 			`capture_status` = '" . $this->db->escape($order_data['capture_status']) . "',
 			`currency_code` = '" . $this->db->escape($order_data['currency_code']) . "',
 			`total` = '" . (float)$order_data['total'] . "',

@@ -375,11 +375,7 @@
             <legend><?php echo $text_developer; ?></legend>
             <p><?php echo $text_developer_description; ?></p>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="button-clear-data"><?php echo $entry_empty_data; ?></label>
-              <div class="col-sm-10"> <a class="btn btn-primary" id="button-clear-data"><?php echo $button_clear; ?></a> </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="button-clear-data"><?php echo $entry_developer_locks; ?></label>
+              <label class="col-sm-2 control-label" for="button-clear-locks"><?php echo $entry_developer_locks; ?></label>
               <div class="col-sm-10"> <a class="btn btn-primary" id="button-clear-locks"><?php echo $button_clear; ?></a> </div>
             </div>
             <div class="form-group">
@@ -483,34 +479,6 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-    $('#button-clear-data').bind('click', function() {
-      var pass = prompt("<?php echo $entry_password_prompt; ?>", "");
-
-      if (pass != '') {
-        $.ajax({
-          url: 'index.php?route=openbay/ebay/devClear&token=<?php echo $token; ?>',
-          type: 'post',
-          dataType: 'json',
-          data: 'pass=' + pass,
-          beforeSend: function() {
-            $('#button-clear-data').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>');
-          },
-          success: function(json) {
-              setTimeout(function() {
-                alert(json.msg);
-                $('#button-clear-data').empty().html('<?php echo $button_clear; ?>');
-              }, 500);
-          },
-          error: function (xhr, ajaxOptions, thrownError) {
-            if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
-          }
-        });
-      } else {
-        alert('<?php echo $text_action_warning; ?>');
-        $('#button-clear-data').empty().html('<?php echo $button_clear; ?>');
-      }
-    });
-
     $('#button-clear-locks').bind('click', function() {
       $.ajax({
         url: 'index.php?route=openbay/ebay/deleteAllLocks&token=<?php echo $token; ?>',

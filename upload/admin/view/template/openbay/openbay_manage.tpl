@@ -113,16 +113,20 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="button-clear-faq"><span data-toggle="tooltip" title="<?php echo $help_clear_faq; ?>"><?php echo $text_clear_faq; ?></span></label>
             <div class="col-sm-10">
-              <button class="btn btn-primary" id="button-clear-faq"><?php echo $button_faq_clear; ?></button>
+              <button class="btn btn-primary" id="button-clear-faq"><?php echo $button_clear; ?></button>
             </div>
           </div>
-        </div>
-        <div class="tab-pane" id="tab-patch">
           <div class="form-group">
             <label class="col-sm-2 control-label" for="button-patch"><span data-toggle="tooltip" title="<?php echo $help_patch; ?>"><?php echo $text_patch; ?></span></label>
             <div class="col-sm-10">
               <button class="btn btn-primary" id="button-patch"><?php echo $button_patch; ?></button>
             </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="tab-developer">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="button-clear-data"><?php echo $entry_empty_data; ?></label>
+            <div class="col-sm-10"> <a class="btn btn-primary" id="button-clear-data"><?php echo $button_clear; ?></a> </div>
           </div>
         </div>
       </div>
@@ -234,6 +238,36 @@
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });
+  });
+
+  $('#button-clear-data').bind('click', function(e) {
+    e.preventDefault();
+
+    var pass = prompt("<?php echo $entry_password_prompt; ?>", "");
+
+    if (pass != '') {
+      $.ajax({
+        url: 'index.php?route=extension/openbay/purge&token=<?php echo $token; ?>',
+        type: 'post',
+        dataType: 'json',
+        data: 'pass=' + pass,
+        beforeSend: function() {
+          $('#button-clear-data').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+        },
+        success: function(json) {
+          setTimeout(function() {
+            alert(json.msg);
+            $('#button-clear-data').empty().html('<?php echo $button_clear; ?>');
+          }, 500);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
+        }
+      });
+    } else {
+      alert('<?php echo $text_action_warning; ?>');
+      $('#button-clear-data').empty().html('<?php echo $button_clear; ?>');
+    }
   });
 
   function validateForm() {

@@ -4,7 +4,6 @@ $_['heading_title']        				= 'OpenBay Pro';
 
 // Buttons
 $_['button_retry']						= 'Retry';
-$_['button_faq_clear']					= 'Clear';
 $_['button_update']						= 'Update';
 $_['button_patch']						= 'Patch';
 $_['button_ftp_test']					= 'Test connection';
@@ -61,6 +60,8 @@ $_['entry_ftp_beta']             		= 'Use beta version';
 $_['entry_courier']						= 'Courier';
 $_['entry_courier_other']           	= 'Other courier';
 $_['entry_tracking']                	= 'Tracking #';
+$_['entry_empty_data']					= 'Empty ALL data?';
+$_['entry_password_prompt']				= 'Please enter the data wipe password';
 
 // Error
 $_['error_username']             		= 'FTP username required';
@@ -87,3 +88,4 @@ $_['help_ftp_pasv']                    	= 'Change your FTP connection to passive
 $_['help_ftp_beta']             		= 'Caution! The beta version may not work correctly';
 $_['help_patch']						= 'If you update your files through FTP you need to run the patch to complete the update';
 $_['help_clear_faq']					= 'Show all of the help notifications again';
+$_['help_empty_data']					= 'This can cause serious damage, do not use it if you do not know what it does!';

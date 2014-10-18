@@ -656,61 +656,6 @@ class ControllerOpenbayEbay extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function devClear() {
-		if ($this->request->post['pass'] == '') {
-			$json = array('msg' => 'Password needed');
-		} else {
-			if ($this->request->post['pass'] != $this->config->get('ebay_secret')) {
-				$json = array('msg' => 'Wrong password');
-			} else {
-				/*
-				  $this->db->query("TRUNCATE `" . DB_PREFIX . "order`");
-				  $this->db->query("TRUNCATE `" . DB_PREFIX . "order_history`");
-				  $this->db->query("TRUNCATE `" . DB_PREFIX . "order_option`");
-				  $this->db->query("TRUNCATE `" . DB_PREFIX . "order_product`");
-				  $this->db->query("TRUNCATE `" . DB_PREFIX . "order_total`");
-				  $this->db->query("TRUNCATE `" . DB_PREFIX . "customer`");
-				  $this->db->query("TRUNCATE `" . DB_PREFIX . "customer_transaction`");
-				  $this->db->query("TRUNCATE `" . DB_PREFIX . "address`");
-				  $this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_transaction`");
-				  $this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_order`");
-				  $this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_order_lock`");
-				 */
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "manufacturer`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "manufacturer_to_store`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "attribute`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "attribute_description`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "attribute_group`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "attribute_group_description`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_listing`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "category`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "category_description`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "category_to_store`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "product`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "product_to_store`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "product_description`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "product_attribute`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "product_option`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "product_option_value`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "product_image`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "product_to_category`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "option`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "option_description`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "option_value`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "option_value_description`");
-
-				if ($this->openbay->addonLoad('openstock')) {
-					$this->db->query("TRUNCATE `" . DB_PREFIX . "product_option_relation`");
-				}
-
-				$json = array('msg' => 'Data cleared');
-			}
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
 	public function subscription() {
 		$data = $this->load->language('openbay/ebay_subscription');
 

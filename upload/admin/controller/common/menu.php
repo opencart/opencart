@@ -97,6 +97,7 @@ class ControllerCommonMenu extends Controller {
 		$data['text_openbay_orders'] = $this->language->get('text_openbay_orders');
 		$data['text_openbay_items'] = $this->language->get('text_openbay_items');
 		$data['text_openbay_ebay'] = $this->language->get('text_openbay_ebay');
+		$data['text_openbay_etsy'] = $this->language->get('text_openbay_etsy');
 		$data['text_openbay_amazon'] = $this->language->get('text_openbay_amazon');
 		$data['text_openbay_amazonus'] = $this->language->get('text_openbay_amazonus');
 		$data['text_openbay_settings'] = $this->language->get('text_openbay_settings');
@@ -185,6 +186,9 @@ class ControllerCommonMenu extends Controller {
 		$data['openbay_link_ebay'] = $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL');
 		$data['openbay_link_ebay_settings'] = $this->url->link('openbay/ebay/settings', 'token=' . $this->session->data['token'], 'SSL');
 		$data['openbay_link_ebay_links'] = $this->url->link('openbay/ebay/viewitemlinks', 'token=' . $this->session->data['token'], 'SSL');
+		$data['openbay_link_etsy'] = $this->url->link('openbay/etsy', 'token=' . $this->session->data['token'], 'SSL');
+		$data['openbay_link_etsy_settings'] = $this->url->link('openbay/etsy/settings', 'token=' . $this->session->data['token'], 'SSL');
+		$data['openbay_link_etsy_links'] = $this->url->link('openbay/etsy_product/links', 'token=' . $this->session->data['token'], 'SSL');
 		$data['openbay_link_ebay_orderimport'] = $this->url->link('openbay/ebay/vieworderimport', 'token=' . $this->session->data['token'], 'SSL');
 		$data['openbay_link_amazon'] = $this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], 'SSL');
 		$data['openbay_link_amazon_settings'] = $this->url->link('openbay/amazon/settings', 'token=' . $this->session->data['token'], 'SSL');
@@ -196,6 +200,7 @@ class ControllerCommonMenu extends Controller {
 			'ebay' => $this->config->get('ebay_status'),
 			'amazon' => $this->config->get('amazon_status'),
 			'amazonus' => $this->config->get('amazonus_status'),
+			'etsy' => $this->config->get('etsy_status'),
 		);
 
 		return $this->load->view('common/menu.tpl', $data);

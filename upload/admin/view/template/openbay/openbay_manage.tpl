@@ -13,7 +13,7 @@
       <ul class="nav nav-tabs">
         <li class="active"><a href="#tab-update" data-toggle="tab"><?php echo $tab_update; ?></a></li>
         <li><a href="#tab-setting" data-toggle="tab"><?php echo $tab_setting; ?></a></li>
-        <li><a href="#tab-patch" data-toggle="tab"><?php echo $tab_patch; ?></a></li>
+        <li><a href="#tab-developer" data-toggle="tab"><?php echo $tab_developer; ?></a></li>
       </ul>
       <div class="tab-content">
         <div class="tab-pane active" id="tab-update">
@@ -98,6 +98,12 @@
               <div class="btn btn-primary" style="display:none;" id="ftp-update-module-loading"><i class="fa fa-cog fa-lg fa-spin"></i></div>
             </div>
           </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="button-patch"><span data-toggle="tooltip" title="<?php echo $help_patch; ?>"><?php echo $text_patch; ?></span></label>
+            <div class="col-sm-10">
+              <button class="btn btn-primary" id="button-patch"><?php echo $button_patch; ?></button>
+            </div>
+          </div>
         </div>
         <div class="tab-pane" id="tab-setting">
           <div class="form-group">
@@ -114,12 +120,6 @@
             <label class="col-sm-2 control-label" for="button-clear-faq"><span data-toggle="tooltip" title="<?php echo $help_clear_faq; ?>"><?php echo $text_clear_faq; ?></span></label>
             <div class="col-sm-10">
               <button class="btn btn-primary" id="button-clear-faq"><?php echo $button_clear; ?></button>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="button-patch"><span data-toggle="tooltip" title="<?php echo $help_patch; ?>"><?php echo $text_patch; ?></span></label>
-            <div class="col-sm-10">
-              <button class="btn btn-primary" id="button-patch"><?php echo $button_patch; ?></button>
             </div>
           </div>
         </div>

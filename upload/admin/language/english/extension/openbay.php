@@ -12,7 +12,7 @@ $_['button_faq']						= 'View FAQ topic';
 // Tab
 $_['tab_setting']						= 'Settings';
 $_['tab_update']						= 'Updates';
-$_['tab_patch']							= 'Patch';
+$_['tab_developer']						= 'Developer';
 
 // Text
 $_['text_success']         				= 'Success: Settings have been saved';

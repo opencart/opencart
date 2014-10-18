@@ -32,7 +32,6 @@ $_['text_getting_messages']     		= 'Getting OpenBay Pro messages';
 $_['text_complete']     				= 'Complete';
 $_['text_test_connection']              = 'Test FTP connection';
 $_['text_run_update']           		= 'Run update';
-$_['text_patch']            			= 'Post update patch';
 $_['text_patch_complete']           	= 'Patch has been applied';
 $_['text_connection_ok']				= 'Connected to server OK. OpenCart folders found';
 $_['text_updated']						= 'Module has been updated (v.%s)';
@@ -50,6 +49,7 @@ $_['column_status']        				= 'Status';
 $_['column_action']        				= 'Action';
 
 // Entry
+$_['entry_patch']            			= 'Manual update patch';
 $_['entry_ftp_username']				= 'FTP Username';
 $_['entry_ftp_password']				= 'FTP Password';
 $_['entry_ftp_server']					= 'FTP server address';
@@ -60,7 +60,7 @@ $_['entry_ftp_beta']             		= 'Use beta version';
 $_['entry_courier']						= 'Courier';
 $_['entry_courier_other']           	= 'Other courier';
 $_['entry_tracking']                	= 'Tracking #';
-$_['entry_empty_data']					= 'Empty ALL data?';
+$_['entry_empty_data']					= 'Empty store data?';
 $_['entry_password_prompt']				= 'Please enter the data wipe password';
 
 // Error
@@ -86,6 +86,6 @@ $_['help_ftp_root']           			= '(No trailing slash e.g. httpdocs/www)';
 $_['help_ftp_admin']               		= 'If you have changed your admin directory update it to the new location';
 $_['help_ftp_pasv']                    	= 'Change your FTP connection to passive mode';
 $_['help_ftp_beta']             		= 'Caution! The beta version may not work correctly';
-$_['help_patch']						= 'If you update your files through FTP you need to run the patch to complete the update';
+$_['help_patch']						= 'If you updated your files directly through FTP (not using the update system above) you need to run the patch to complete the update';
 $_['help_clear_faq']					= 'Show all of the help notifications again';
 $_['help_empty_data']					= 'This can cause serious damage, do not use it if you do not know what it does!';

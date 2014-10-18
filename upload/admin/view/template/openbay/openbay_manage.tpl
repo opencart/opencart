@@ -99,7 +99,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="button-patch"><span data-toggle="tooltip" title="<?php echo $help_patch; ?>"><?php echo $text_patch; ?></span></label>
+            <label class="col-sm-2 control-label" for="button-patch"><span data-toggle="tooltip" title="<?php echo $help_patch; ?>"><?php echo $entry_patch; ?></span></label>
             <div class="col-sm-10">
               <button class="btn btn-primary" id="button-patch"><?php echo $button_patch; ?></button>
             </div>
@@ -125,7 +125,7 @@
         </div>
         <div class="tab-pane" id="tab-developer">
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="button-clear-data"><?php echo $entry_empty_data; ?></label>
+            <label class="col-sm-2 control-label" for="button-clear-data"><span data-toggle="tooltip" title="<?php echo $help_empty_data; ?>"><?php echo $entry_empty_data; ?></span></label>
             <div class="col-sm-10"> <a class="btn btn-primary" id="button-clear-data"><?php echo $button_clear; ?></a> </div>
           </div>
         </div>

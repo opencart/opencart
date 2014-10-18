@@ -1721,20 +1721,32 @@ class ControllerExtensionOpenbay extends Controller {
 	public function purge() {
 		/**
 		 * This is a function that is very dangerous
-		 * It should ONLY be called if you know what it does
-		 * Only developers should use this!!
+		 * Only developers should use this if you need to!!
 		 * You need this code: **135** (includes stars)
+		 *
+		 * ACTIONS HERE CANNOT BE UNDONE WITHOUT A BACKUP
+		 *
+		 * !! IMPORTANT !!
+		 * This section will by default comment out the database delete actions
+		 * If you want to use them, uncomment.
+		 * When you are finished, ensure you comment them back out!
 		 */
 
+		$this->log->write('User is trying to wipe system data');
+
 		if ($this->request->post['pass'] != '**135**') {
+			$this->log->write('User failed password validation');
 			$json = array('msg' => 'Password wrong, check the source code for the password! This is so you know what this feature does.');
 		} else {
+			$this->log->write('User passed validation');
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "order`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "order_history`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "order_option`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "order_product`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "order_total`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "customer`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "customer_activity`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "customer_ban_ip`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "customer_transaction`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "address`");
 
@@ -1794,7 +1806,7 @@ class ControllerExtensionOpenbay extends Controller {
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "product_option_relation`");
 			}
 			*/
-
+			$this->log->write('Data cleared');
 			$json = array('msg' => 'Data cleared');
 		}
 

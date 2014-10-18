@@ -10,7 +10,6 @@ class ControllerOpenbayEtsy extends Controller {
 
 		if (!isset($body['action']) || !isset($body['auth'])) {
 			$this->openbay->etsy->log('etsy/inbound - action or auth data not set');
-			http_response_code(400);
 			return;
 		}
 
@@ -22,7 +21,6 @@ class ControllerOpenbayEtsy extends Controller {
 
 		if ($incoming_token !== $token || $incoming_secret !== $secret) {
 			$this->openbay->etsy->log('etsy/inbound - Auth failed: ' . $incoming_token . '/' . $incoming_secret);
-			http_response_code(401);
 			return;
 		}
 
@@ -33,7 +31,6 @@ class ControllerOpenbayEtsy extends Controller {
 
 			if (!$decrypted) {
 				$this->openbay->etsy->log('etsy/inbound Failed to decrypt data');
-				http_response_code(401);
 				return;
 			}
 

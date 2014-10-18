@@ -22,7 +22,6 @@ class ModelLocalisationLanguage extends Model {
 					'locale'      => $result['locale'],
 					'image'       => $result['image'],
 					'directory'   => $result['directory'],
-					'filename'    => $result['filename'],
 					'sort_order'  => $result['sort_order'],
 					'status'      => $result['status']
 				);

@@ -164,11 +164,9 @@ class ModelCheckoutOrder extends Model {
 
 			if ($language_info) {
 				$language_code = $language_info['code'];
-				$language_filename = $language_info['filename'];
 				$language_directory = $language_info['directory'];
 			} else {
 				$language_code = '';
-				$language_filename = '';
 				$language_directory = '';
 			}
 
@@ -230,7 +228,6 @@ class ModelCheckoutOrder extends Model {
 				'commission'              => $order_query->row['commission'],
 				'language_id'             => $order_query->row['language_id'],
 				'language_code'           => $language_code,
-				'language_filename'       => $language_filename,
 				'language_directory'      => $language_directory,
 				'currency_id'             => $order_query->row['currency_id'],
 				'currency_code'           => $order_query->row['currency_code'],
@@ -391,7 +388,7 @@ class ModelCheckoutOrder extends Model {
 
 				// Load the language for any mails that might be required to be sent out
 				$language = new Language($order_info['language_directory']);
-				$language->load($order_info['language_filename']);
+				$language->load('default');
 				$language->load('mail/order');
 
 				$order_status_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "' AND language_id = '" . (int)$order_info['language_id'] . "'");
@@ -773,7 +770,7 @@ class ModelCheckoutOrder extends Model {
 			// If order status is not 0 then send update text email
 			if ($order_info['order_status_id'] && $order_status_id) {
 				$language = new Language($order_info['language_directory']);
-				$language->load($order_info['language_filename']);
+				$language->load('default');
 				$language->load('mail/order');
 
 				$subject = sprintf($language->get('text_update_subject'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);

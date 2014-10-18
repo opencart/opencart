@@ -1300,6 +1300,28 @@ class ControllerSaleOrder extends Controller {
 			$data['shipping_zone_code'] = $order_info['shipping_zone_code'];
 			$data['shipping_country'] = $order_info['shipping_country'];
 
+			// Custom fields
+			$data['shipping_custom_field'] = $order_info['shipping_custom_field'];
+			$data['payment_custom_field'] = $order_info['payment_custom_field'];
+			$data['account_custom_field'] = $order_info['custom_field'];
+			
+			$this->load->model('sale/custom_field');
+
+			$data['custom_fields'] = array();
+
+			$custom_fields = $this->model_sale_custom_field->getCustomFields();
+
+			foreach ($custom_fields as $custom_field) {
+				$data['custom_fields'][] = array(
+					'custom_field_id'    => $custom_field['custom_field_id'],
+					'custom_field_value' => $this->model_sale_custom_field->getCustomFieldValues($custom_field['custom_field_id']),
+					'name'               => $custom_field['name'],
+					'value'              => $custom_field['value'],
+					'type'               => $custom_field['type'],
+					'location'           => $custom_field['location']
+				);
+			}
+			
 			$this->load->model('tool/upload');
 
 			$data['products'] = array();

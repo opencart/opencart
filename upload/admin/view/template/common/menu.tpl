@@ -182,8 +182,8 @@
       <li><a class="parent"><?php echo $text_marketing; ?></a>
         <ul>
           <li><a href="<?php echo $report_marketing; ?>"><?php echo $text_marketing; ?></a></li>
-          <li><a href="<?php echo $report_affiliate; ?>"><?php echo $text_affiliate; ?></a></li>
-          <li><a href="<?php echo $report_affiliate_activity; ?>"><?php echo $text_affiliate_activity; ?></a></li>
+          <li><a href="<?php echo $report_affiliate; ?>"><?php echo $text_report_affiliate; ?></a></li>
+          <li><a href="<?php echo $report_affiliate_activity; ?>"><?php echo $text_report_affiliate_activity; ?></a></li>
         </ul>
       </li>
     </ul>

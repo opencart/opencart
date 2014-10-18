@@ -72,6 +72,7 @@
               <form class="form-horizontal">
                 <div id="review"></div>
                 <h2><?php echo $text_write; ?></h2>
+                <?php if ($review_guest) { ?>
                 <div class="form-group required">
                   <div class="col-sm-12">
                     <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
@@ -114,6 +115,9 @@
                     <button type="button" id="button-review" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_continue; ?></button>
                   </div>
                 </div>
+                <?php } else { ?>
+                <?php echo $text_login; ?>
+                <?php } ?>
               </form>
             </div>
             <?php } ?>

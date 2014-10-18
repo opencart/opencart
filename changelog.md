@@ -13,6 +13,7 @@
 * Pagination closing tag fix #1933 (https://github.com/opencart/opencart/commit/fe4bb21f280087852ad77061d9f5d3b76e6d3bca)
 * FTP settings variable correction #1930 (https://github.com/opencart/opencart/commit/17e450971396ecfa2e93eb513b79c7f0fdb6c38b)
 * Fixed Secure Trading image in gateway list.
+* Fixed missing review_guest check in product.tpl
 
 #### Changes
 * Changed DB connection error response during install when using mysqli to use native message from mysqli

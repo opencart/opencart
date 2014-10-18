@@ -428,7 +428,7 @@ class ControllerExtensionInstaller extends Controller {
 					if ($code) {
 						$code = $code->nodeValue;
 						
-						// Check to see if the modification is alreayd installed or not.
+						// Check to see if the modification is already installed or not.
 						$modification_info = $this->model_extension_modification->getModificationByCode($code);
 						
 						if ($modification_info) {

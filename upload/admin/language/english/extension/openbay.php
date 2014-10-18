@@ -42,6 +42,7 @@ $_['text_install_success']              = 'Marketplace has been installed';
 $_['text_uninstall_success']            = 'Marketplace has been removed';
 $_['text_title_messages']               = 'Messages &amp; notifications';
 $_['text_marketplace_shipped']			= 'The order status will be updated to shipped on the marketplace';
+$_['text_action_warning']				= 'This action is dangerous so is password protected.';
 
 // Column
 $_['column_name']          				= 'Plugin name';

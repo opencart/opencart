@@ -209,7 +209,7 @@
         alert('<?php echo $text_clear_faq_complete; ?>');
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        $('#button-clear-faq').empty().html('<?php echo $button_faq_clear; ?>');
+        $('#button-clear-faq').empty().html('<?php echo $button_clear; ?>');
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });

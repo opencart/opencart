@@ -67,11 +67,15 @@ class ControllerCommonSeoUrl extends Controller {
 			if (isset($this->request->get['route'])) {
 				return new Action($this->request->get['route']);
 			}
-		} elseif (isset($this->request->get['route'])) {
-			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE query = '" . $this->request->get['route'] . "'");
+		} elseif (isset($this->request->get['route']) && $this->config->get('config_seo_url')) {
+			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE query = '" . $this->db->escape($this->request->get['route']) . "'");
 			
 			if ($query->num_rows) {
-				header('Location:/' . $query->row['keyword'], true, 301);
+				if (!$this->request->server['HTTPS']) {
+					header('Location:' . HTTP_SERVER . $query->row['keyword'], true, 301);
+				} else {
+					header('Location:' . HTTPS_SERVER . $query->row['keyword'], true, 301);
+				}
 			}
 		}
 	}
@@ -112,7 +116,7 @@ class ControllerCommonSeoUrl extends Controller {
 
 					unset($data[$key]);
 				} else  {
-					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = '" .$data['route'] . "'");
+					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = '" . $this->db->escape($data['route']) . "'");
 
 					if ($query->num_rows) {
 						$url .= '/' . $query->row['keyword'];

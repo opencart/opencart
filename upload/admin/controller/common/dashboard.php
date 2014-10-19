@@ -12,7 +12,6 @@ class ControllerCommonDashboard extends Controller {
 		$data['text_activity'] = $this->language->get('text_activity');
 		$data['text_recent'] = $this->language->get('text_recent');
 
-		
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -46,6 +45,13 @@ class ControllerCommonDashboard extends Controller {
 		$data['recent'] = $this->load->controller('dashboard/recent');
 		$data['footer'] = $this->load->controller('common/footer');
 
+		// Run currency update
+		if ($this->config->get('config_currency_auto')) {
+			$this->load->model('localisation/currency');
+
+			$this->model_localisation_currency->refresh();
+		}
+			
 		$this->response->setOutput($this->load->view('common/dashboard.tpl', $data));
 	}
 }

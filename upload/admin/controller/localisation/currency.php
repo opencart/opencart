@@ -109,7 +109,39 @@ class ControllerLocalisationCurrency extends Controller {
 
 		$this->getList();
 	}
+	
+	public function refresh() {
+		$this->load->language('localisation/currency');
 
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('localisation/currency');
+
+		if ($this->validateRefresh()) {
+			$this->model_localisation_currency->refresh(true);		
+			
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$url = '';
+
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+
+			$this->response->redirect($this->url->link('localisation/currency', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+		}
+
+		$this->getList();
+	}
+	
 	protected function getList() {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
@@ -157,6 +189,7 @@ class ControllerLocalisationCurrency extends Controller {
 		
 		$data['insert'] = $this->url->link('localisation/currency/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('localisation/currency/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['refresh'] = $this->url->link('localisation/currency/refresh', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['currencies'] = array();
 
@@ -197,6 +230,7 @@ class ControllerLocalisationCurrency extends Controller {
 		$data['button_insert'] = $this->language->get('button_insert');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
+		$data['button_currency'] = $this->language->get('button_currency');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -455,4 +489,12 @@ class ControllerLocalisationCurrency extends Controller {
 
 		return !$this->error;
 	}
+	
+	protected function validateRefresh() {
+		if (!$this->user->hasPermission('modify', 'localisation/currency')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		return !$this->error;
+	}	
 }

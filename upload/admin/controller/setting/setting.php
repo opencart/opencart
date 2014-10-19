@@ -15,7 +15,7 @@ class ControllerSettingSetting extends Controller {
 			if ($this->config->get('config_currency_auto')) {
 				$this->load->model('localisation/currency');
 
-				$this->model_localisation_currency->updateCurrencies();
+				$this->model_localisation_currency->refresh();
 			}
 
 			$this->session->data['success'] = $this->language->get('text_success');

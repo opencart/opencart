@@ -19,6 +19,16 @@ function getURLVar(key) {
 		} else {
 			return '';
 		}
+	} else {
+		var query = String(document.location.pathname).split('/');
+		if (query.pop() == 'cart') value['route'] = 'checkout/cart';
+		if (query.pop() == 'checkout') value['route'] = 'checkout/checkout';
+		
+		if (value[key]) {
+			return value[key];
+		} else {
+			return '';
+		}
 	}
 }
 

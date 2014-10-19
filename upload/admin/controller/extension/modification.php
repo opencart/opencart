@@ -166,7 +166,7 @@ class ControllerExtensionModification extends Controller {
 									$key = 'system/' . substr($file, strlen(DIR_SYSTEM));
 								}
 								
-								// If file contents is not already in the modifcation array we need to load it.
+								// If file contents is not already in the modification array we need to load it.
 								if (!isset($modification[$key])) {
 									$content = file_get_contents($file);
 

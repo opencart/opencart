@@ -39,6 +39,7 @@ class ControllerSaleOrder extends Controller {
 				curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 				curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
 				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 				curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 				curl_setopt($curl, CURLOPT_URL, HTTPS_CATALOG . 'index.php?route=api/login');
@@ -91,6 +92,7 @@ class ControllerSaleOrder extends Controller {
 				curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 				curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
 				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 				curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 				curl_setopt($curl, CURLOPT_URL, HTTPS_CATALOG . 'index.php?route=api/login');
@@ -143,6 +145,7 @@ class ControllerSaleOrder extends Controller {
 				curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 				curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
 				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 				curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 				curl_setopt($curl, CURLOPT_URL, HTTPS_CATALOG . 'index.php?route=api/login');
@@ -177,6 +180,7 @@ class ControllerSaleOrder extends Controller {
 			curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 			curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 			curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($curl, CURLOPT_URL, HTTPS_CATALOG . 'index.php?route=api/order/delete&order_id=' . $this->request->get['order_id']);
@@ -781,6 +785,7 @@ class ControllerSaleOrder extends Controller {
 					curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 					curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
 					curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+					curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 					curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 					curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 					curl_setopt($curl, CURLOPT_URL, HTTPS_CATALOG . 'index.php?route=api/cart/add');
@@ -812,6 +817,7 @@ class ControllerSaleOrder extends Controller {
 					curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 					curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
 					curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+					curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 					curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 					curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 					curl_setopt($curl, CURLOPT_URL, HTTPS_CATALOG . 'index.php?route=api/voucher/add');
@@ -1413,6 +1419,7 @@ class ControllerSaleOrder extends Controller {
 					curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 					curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
 					curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+					curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 					curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 					curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 					curl_setopt($curl, CURLOPT_URL, HTTPS_CATALOG . 'index.php?route=api/login');
@@ -2385,6 +2392,7 @@ class ControllerSaleOrder extends Controller {
 			curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 			curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 			curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($curl, CURLOPT_URL, $url . 'index.php?route=' . $this->request->get['api'] . ($url_data ? '&' . http_build_query($url_data) : ''));

@@ -98,7 +98,7 @@ $_['button_payment']                = 'Apply Payment Method';
 $_['button_coupon']                 = 'Apply Coupon';
 $_['button_voucher']                = 'Apply Voucher';
 $_['button_reward']                 = 'Apply Points';
-
+$_['button_currency']               = 'Refresh Currency Values';
 
 // Tab
 $_['tab_address']                   = 'Address';

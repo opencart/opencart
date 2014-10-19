@@ -123,8 +123,13 @@ class ControllerExtensionModification extends Controller {
 				$dom->loadXml($xml);
 
 				// Wipe the past modification store in the backup array
-				$backup = array();
-
+				$recovery = array();
+				
+				// Set the a recovery of the modification code in case we need to use it if an abort attribute is used.
+				if (isset($modification)) {
+					$recovery = $modification;
+				}
+								
 				// Log
 				$log[] = 'MOD: ' . $dom->getElementsByTagName('name')->item(0)->textContent;
 
@@ -166,7 +171,7 @@ class ControllerExtensionModification extends Controller {
 									$key = 'system/' . substr($file, strlen(DIR_SYSTEM));
 								}
 								
-								// If file contents is not already in the modifcation array we need to load it.
+								// If file contents is not already in the modification array we need to load it.
 								if (!isset($modification[$key])) {
 									$content = file_get_contents($file);
 
@@ -175,11 +180,6 @@ class ControllerExtensionModification extends Controller {
 
 									// Log
 									$log[] = 'FILE: ' . $key;
-								}
-								
-								// Set the a recovery of the modification code in case we need to use it if an abort attribute is used.
-								if (!isset($recovery[$key])) {
-									$recovery[$key] = $modification[$key];
 								}
 								
 								foreach ($operations as $operation) {
@@ -264,7 +264,7 @@ class ControllerExtensionModification extends Controller {
 												switch ($position) {
 													default:
 													case 'replace':
-														array_splice($lines, $line_id, count($add) + $offset, $add);
+														array_splice($lines, $line_id + $offset, count($add) + abs($offset), $add);
 														break;
 													case 'before':
 														array_splice($lines, $line_id - $offset, 0, $add);
@@ -327,7 +327,7 @@ class ControllerExtensionModification extends Controller {
 										
 										// Abort applying this modification completely.
 										if ($error == 'abort') {
-											$modification = array_merge($modification, $recovery);
+											$modification = $recovery;
 											
 											// Log
 											$log[] = 'ABORTING!';

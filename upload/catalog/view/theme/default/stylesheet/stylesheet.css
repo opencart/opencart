@@ -531,7 +531,7 @@ footer h5 {
 @media (min-width: 767px) {
 .product-list .product-thumb .image {
 	float: left;
-	padding: 15px;
+	padding: 0 15px;
 }
 }
 .product-thumb h4 {

@@ -310,7 +310,7 @@
                         <label class="col-sm-2 control-label" for="input-safe"><?php echo $entry_safe; ?></label>
                         <div class="col-sm-10">
                           <select name="safe" id="input-safe" class="form-control">
-                            <?php if ($status) { ?>
+                            <?php if ($safe) { ?>
                             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                             <option value="0"><?php echo $text_disabled; ?></option>
                             <?php } else { ?>

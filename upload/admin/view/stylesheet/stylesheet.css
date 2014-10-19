@@ -623,6 +623,9 @@ border-color: #dfebd5;
 	padding: 5px 8px;
 	background-color: #3DA9E3;
 }
+.jqvmap-label {
+	z-index: 999;
+}
 #column-left.active #stats {
 	display: block;
 } 

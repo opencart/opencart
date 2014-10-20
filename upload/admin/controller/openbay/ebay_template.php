@@ -24,9 +24,11 @@ class ControllerOpenbayEbayTemplate extends Controller {
 			$data['success'] = '';
 		}
 
-		$data['insert']  = $this->url->link('openbay/ebay_template/add', 'token=' . $this->session->data['token'], 'SSL');
+		$data['insert'] = $this->url->link('openbay/ebay_template/add', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->link('openbay/ebay_template/listAll', 'token=' . $this->session->data['token'], 'SSL');
+
 		$data['templates'] = $this->model_openbay_ebay_template->getAll();
-		$data['token']    = $this->session->data['token'];
+		$data['token'] = $this->session->data['token'];
 
 		$data['breadcrumbs'] = array();
 

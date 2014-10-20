@@ -7,7 +7,7 @@ class Mem {
 	public function __construct($expire) {
 		$this->expire = $expire;
 
-		$this->cache = new Memcache();
+		$this->cache = new \Memcache();
 		$this->cache->pconnect(CACHE_HOSTNAME, CACHE_PORT);
 	}
 

@@ -198,7 +198,7 @@ class ControllerCommonMenu extends Controller {
 		$data['openbay_link_amazonus_links'] = $this->url->link('openbay/amazonus/itemlinks', 'token=' . $this->session->data['token'], 'SSL');
 		$data['openbay_markets'] = array(
 			'ebay' => $this->config->get('ebay_status'),
-			'amazon' => $this->config->get('amazon_status'),
+			'amazon' => $this->config->get('openbay_amazon_status'),
 			'amazonus' => $this->config->get('amazonus_status'),
 			'etsy' => $this->config->get('etsy_status'),
 		);

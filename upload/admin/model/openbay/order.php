@@ -9,7 +9,7 @@ class ModelOpenbayOrder extends Model {
 			$sql .= " JOIN (SELECT NULL AS order_id) eo ";
 		}
 
-		if ($this->config->get('amazon_status')) {
+		if ($this->config->get('openbay_amazon_status')) {
 			$sql .= " LEFT JOIN " . DB_PREFIX . "amazon_order ao ON o.order_id = ao.order_id ";
 		} else {
 			$sql .= " JOIN (SELECT NULL AS order_id) ao ";
@@ -63,7 +63,7 @@ class ModelOpenbayOrder extends Model {
 			$sql .= " JOIN (SELECT NULL AS order_id) eo ";
 		}
 
-		if ($this->config->get('amazon_status')) {
+		if ($this->config->get('openbay_amazon_status')) {
 			$sql .= " LEFT JOIN " . DB_PREFIX . "amazon_order ao ON ao.order_id = o.order_id ";
 		} else {
 			$sql .= " JOIN (SELECT NULL AS order_id) ao ";
@@ -149,7 +149,7 @@ class ModelOpenbayOrder extends Model {
 			$sql .= " JOIN (SELECT NULL AS order_id) eo ";
 		}
 
-		if ($this->config->get('amazon_status')) {
+		if ($this->config->get('openbay_amazon_status')) {
 			$sql .= " LEFT JOIN " . DB_PREFIX . "amazon_order ao ON ao.order_id = o.order_id ";
 		} else {
 			$sql .= " JOIN (SELECT NULL AS order_id) ao ";

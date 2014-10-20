@@ -396,7 +396,7 @@ class ControllerExtensionOpenbay extends Controller {
 			}
 		}
 
-		if ($this->config->get('amazon_status') == 1) {
+		if ($this->config->get('openbay_amazon_status') == 1) {
 			$data['order_info'] = $this->openbay->amazon->getOrder($this->request->get['order_id']);
 
 			if ($data['order_info']) {
@@ -440,7 +440,7 @@ class ControllerExtensionOpenbay extends Controller {
 			}
 		}
 
-		if ($this->config->get('amazon_status') == 1 && $this->openbay->amazon->getOrder($this->request->get['order_id']) !== false) {
+		if ($this->config->get('openbay_amazon_status') == 1 && $this->openbay->amazon->getOrder($this->request->get['order_id']) !== false) {
 			if ($this->config->get('openbay_amazon_order_status_shipped') == $this->request->get['status_id']) {
 				if (!empty($this->request->post['courier_other'])) {
 					$this->openbay->amazon->updateOrder($this->request->get['order_id'], 'shipped', $this->request->post['courier_other'], false, $this->request->post['tracking_no']);
@@ -647,7 +647,7 @@ class ControllerExtensionOpenbay extends Controller {
 			);
 		}
 
-		if ($this->config->get('amazon_status')) {
+		if ($this->config->get('openbay_amazon_status')) {
 			$data['channels'][] = array(
 				'module' => 'amazon',
 				'title' => $this->language->get('text_amazon'),
@@ -820,7 +820,7 @@ class ControllerExtensionOpenbay extends Controller {
 				$data['market_options']['ebay']['carriers'] = $this->openbay->ebay->getCarriers();
 			}
 
-			if ($this->config->get('amazon_status') == 1) {
+			if ($this->config->get('openbay_amazon_status') == 1) {
 				$data['market_options']['amazon']['carriers'] = $this->openbay->amazon->getCarriers();
 				$data['market_options']['amazon']['default_carrier'] = $this->config->get('openbay_amazon_default_carrier');
 			}
@@ -936,7 +936,7 @@ class ControllerExtensionOpenbay extends Controller {
 		}
 
 		//Amazon EU
-		if ($this->config->get('amazon_status') == 1) {
+		if ($this->config->get('openbay_amazon_status') == 1) {
 			$orders = array();
 
 			foreach ($this->request->post['order_id'] as $order_id) {
@@ -1238,7 +1238,7 @@ class ControllerExtensionOpenbay extends Controller {
 			'href'      => $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, 'SSL'),
 		);
 
-		if ($this->config->get('amazon_status')) {
+		if ($this->config->get('openbay_amazon_status')) {
 			$data['link_amazon_eu_bulk'] = $this->url->link('openbay/amazon/bulkListProducts', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
 			$data['link_amazon_eu_bulk'] = '';
@@ -1326,7 +1326,7 @@ class ControllerExtensionOpenbay extends Controller {
 			return;
 		}
 
-		if ($this->config->get('amazon_status') != '1' && $filter['filter_market_name'] == 'amazon') {
+		if ($this->config->get('openbay_amazon_status') != '1' && $filter['filter_market_name'] == 'amazon') {
 			$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], 'SSL'));
 			return;
 		}
@@ -1343,7 +1343,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$data['marketplace_statuses'] = array(
 			'ebay' => $this->config->get('ebay_status'),
-			'amazon' => $this->config->get('amazon_status'),
+			'amazon' => $this->config->get('openbay_amazon_status'),
 			'amazonus' => $this->config->get('amazonus_status'),
 			'etsy' => $this->config->get('etsy_status'),
 		);
@@ -1405,7 +1405,7 @@ class ControllerExtensionOpenbay extends Controller {
 				}
 			}
 
-			if ($this->config->get('amazon_status') == '1') {
+			if ($this->config->get('openbay_amazon_status') == '1') {
 				$this->load->model('openbay/amazon');
 				$amazon_status = $this->model_openbay_amazon->getProductStatus($result['product_id']);
 

@@ -306,7 +306,7 @@ class ControllerOpenbayAmazon extends Controller {
 			'Refurbished' => $this->language->get('text_refurbished'),
 		);
 
-		$data['amazon_status'] = isset($settings['amazon_status']) ? $settings['amazon_status'] : '';
+		$data['openbay_amazon_status'] = isset($settings['openbay_amazon_status']) ? $settings['openbay_amazon_status'] : '';
 		$data['openbay_amazon_token'] = isset($settings['openbay_amazon_token']) ? $settings['openbay_amazon_token'] : '';
 		$data['openbay_amazon_enc_string1'] = isset($settings['openbay_amazon_enc_string1']) ? $settings['openbay_amazon_enc_string1'] : '';
 		$data['openbay_amazon_enc_string2'] = isset($settings['openbay_amazon_enc_string2']) ? $settings['openbay_amazon_enc_string2'] : '';

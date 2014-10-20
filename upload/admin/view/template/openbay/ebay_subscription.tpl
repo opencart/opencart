@@ -10,7 +10,7 @@
       <div class="pull-right">
         <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $button_back; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
       </div>
-      <h1 class="panel-title"><i class="fa fa-user fa-lg"></i> <?php echo $text_heading; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-user fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <div class="row">

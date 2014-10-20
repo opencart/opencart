@@ -118,11 +118,22 @@ $('#button-search').on('click', function() {
 $('#button-upload').on('click', function() {
 	$('#form-upload').remove();
 	
-	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="width: 0px; height: 0px; overflow: hidden;"><input type="file" name="file" /></form>');
 
 	$('#form-upload input[name=\'file\']').trigger('click');
-	
+
+/*
+$input[0].attachEvent('onpropertychange', function() { 
+    userChoseFile($input);
+});
+*/
+	$("#form-upload input[name=\'file\']").attr("onchange", "alert('I changed')");
+
 	$('#form-upload input[name=\'file\']').on('change', function() {
+		//alert('hi');
+		
+
+			
 		$.ajax({
 			url: 'index.php?route=common/filemanager/upload&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>',
 			type: 'post',		

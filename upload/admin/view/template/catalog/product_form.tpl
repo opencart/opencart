@@ -791,11 +791,11 @@
                           <span class="input-group-btn">
                           <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
                           </span></div></td>
-                      <td class="text-left"><div class="input-group date">
+                      <td class="text-left row"><div class="col-md-6"><div class="input-group date">
                           <input type="text" name="product_special[<?php echo $special_row; ?>][date_end]" value="<?php echo $product_special['date_end']; ?>" placeholder="<?php echo $entry_date_end; ?>" data-format="YYYY-MM-DD" class="form-control" />
                           <span class="input-group-btn">
                           <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
-                          </span></div></td>
+                          </span></div></div></td>
                       <td class="text-left"><button type="button" onclick="$('#special-row<?php echo $special_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                     </tr>
                     <?php $special_row++; ?>

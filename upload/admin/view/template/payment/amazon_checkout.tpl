@@ -81,11 +81,11 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-pending-status"><?php echo $entry_pending_status; ?></label>
+            <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
             <div class="col-sm-10">
-              <select name="amazon_checkout_pending_status" id="input-pendingt-status" class="form-control">
+              <select name="amazon_checkout_order_status_id" id="input-order-status" class="form-control">
                 <?php foreach($order_statuses as $order_status) { ?>
-                <?php if ($order_status['order_status_id'] == $amazon_checkout_pending_status) { ?>
+                <?php if ($order_status['order_status_id'] == $amazon_checkout_order_status_id) { ?>
                 <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                 <?php } else { ?>
                 <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
@@ -176,7 +176,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-total"><?php echo $entry_total; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="amazon_checkout_total" value="<?php echo $amazon_checkout_total; ?>" placeholder="<?php echo $text_total; ?>" id="input-total" class="form-control" />
+              <input type="text" name="amazon_checkout_total" value="<?php echo $amazon_checkout_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
             </div>
           </div>
           <div class="form-group">

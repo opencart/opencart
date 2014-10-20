@@ -23,24 +23,16 @@ function getURLVar(key) {
 }
 
 $(document).ready(function() {
-	
 	// Adding the clear Fix
 	cols1 = $('#column-right, #column-left').length;
-        if (cols1 == 2) {
-			
-
-			$('#content .product-layout:nth-child(2n+2)').after('<div class="clearfix visible-md visible-sm"></div>');
-		} else if (cols1 == 1) {
-			
-			$('#content .product-layout:nth-child(3n+3)').after('<div class="clearfix visible-lg"></div>');
-			
-			
-		} else {
-			
-
-			$('#content .product-layout:nth-child(4n+4)').after('<div class="clearfix"></div>');
-		}
 	
+	if (cols1 == 2) {
+		$('#content .product-layout:nth-child(2n+2)').after('<div class="clearfix visible-md visible-sm"></div>');
+	} else if (cols1 == 1) {
+		$('#content .product-layout:nth-child(3n+3)').after('<div class="clearfix visible-lg"></div>');
+	} else {
+		$('#content .product-layout:nth-child(4n+4)').after('<div class="clearfix"></div>');
+	}
 	
 	// Highlight any found errors
 	$('.text-danger').each(function() {
@@ -118,16 +110,10 @@ $(document).ready(function() {
 
 		if (cols == 2) {
 			$('#content .product-layout').attr('class', 'product-layout product-grid col-lg-6 col-md-6 col-sm-12 col-xs-12');
-
-		
 		} else if (cols == 1) {
 			$('#content .product-layout').attr('class', 'product-layout product-grid col-lg-4 col-md-4 col-sm-6 col-xs-12');
-
-		
 		} else {
 			$('#content .product-layout').attr('class', 'product-layout product-grid col-lg-3 col-md-3 col-sm-6 col-xs-12');
-
-		
 		}
 
 		 localStorage.setItem('display', 'grid');

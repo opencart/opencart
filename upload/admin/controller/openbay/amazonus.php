@@ -305,7 +305,7 @@ class ControllerOpenbayAmazonus extends Controller {
 			'Refurbished' => $this->language->get('text_refurbished'),
 		);
 
-		$data['is_enabled'] = isset($settings['amazonus_status']) ? $settings['amazonus_status'] : '';
+		$data['is_enabled'] = isset($settings['openbay_amazonus_status']) ? $settings['openbay_amazonus_status'] : '';
 		$data['openbay_amazonus_token'] = isset($settings['openbay_amazonus_token']) ? $settings['openbay_amazonus_token'] : '';
 		$data['openbay_amazonus_enc_string1'] = isset($settings['openbay_amazonus_enc_string1']) ? $settings['openbay_amazonus_enc_string1'] : '';
 		$data['openbay_amazonus_enc_string2'] = isset($settings['openbay_amazonus_enc_string2']) ? $settings['openbay_amazonus_enc_string2'] : '';

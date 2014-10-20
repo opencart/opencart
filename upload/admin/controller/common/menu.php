@@ -199,7 +199,7 @@ class ControllerCommonMenu extends Controller {
 		$data['openbay_markets'] = array(
 			'ebay' => $this->config->get('ebay_status'),
 			'amazon' => $this->config->get('openbay_amazon_status'),
-			'amazonus' => $this->config->get('amazonus_status'),
+			'amazonus' => $this->config->get('openbay_amazonus_status'),
 			'etsy' => $this->config->get('etsy_status'),
 		);
 

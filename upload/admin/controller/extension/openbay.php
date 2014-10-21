@@ -1053,6 +1053,23 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text'      => $this->language->get('text_home'),
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' 		=> $this->language->get('text_openbay'),
+			'href' 		=> $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text'      => $this->language->get('text_manage_items'),
+			'href'      => $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, 'SSL'),
+		);
+
 		$this->load->model('catalog/product');
 		$this->load->model('catalog/category');
 		$this->load->model('catalog/manufacturer');
@@ -1220,23 +1237,6 @@ class ControllerExtensionOpenbay extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' 		=> $this->language->get('text_openbay'),
-			'href' 		=> $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_manage_items'),
-			'href'      => $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-		);
 
 		if ($this->config->get('openbay_amazon_status')) {
 			$data['link_amazon_eu_bulk'] = $this->url->link('openbay/amazon/bulkListProducts', 'token=' . $this->session->data['token'] . $url, 'SSL');

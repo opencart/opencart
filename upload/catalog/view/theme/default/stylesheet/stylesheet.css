@@ -531,7 +531,7 @@ footer h5 {
 @media (min-width: 767px) {
 .product-list .product-thumb .image {
 	float: left;
-	padding: 15px;
+	padding: 0 15px;
 }
 }
 .product-thumb h4 {
@@ -704,15 +704,15 @@ h2.price {
 
 @media (min-width: 768px) {
     #column-left  .product-layout .col-md-3{
-       width: 100%
+       width: 100%;
     }
-    #column-left + #content .product-layout .col-md-3{
-       width: 50%
+    #column-left + #content .product-layout .col-md-3 {
+       width: 50%;
     }
     #column-left + #content + #column-right .product-layout .col-md-3{
-       width: 100%
+       width: 100%;
     }
     #content + #column-right .product-layout .col-md-3{
-       width: 100%
+       width: 100%;
     }
 }

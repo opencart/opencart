@@ -118,45 +118,53 @@ $('#button-search').on('click', function() {
 $('#button-upload').on('click', function() {
 	$('#form-upload').remove();
 	
-	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
-
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload"><input type="file" name="file" value="" /></form>');
+	
+	//$('#form-upload').reset();
+	
+	// onsubmit="return false;"
+	
 	$('#form-upload input[name=\'file\']').trigger('click');
 	
-	$('#form-upload input[name=\'file\']').on('change', function() {
-		$.ajax({
-			url: 'index.php?route=common/filemanager/upload&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>',
-			type: 'post',		
-			dataType: 'json',
-			data: new FormData($(this).parent()[0]),
-			cache: false,
-			contentType: false,
-			processData: false,		
-			beforeSend: function() {
-				$('#button-upload i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
-				$('#button-upload').prop('disabled', true);
-			},
-			complete: function() {
-				$('#button-upload i').replaceWith('<i class="fa fa-upload"></i>');
-				$('#button-upload').prop('disabled', false);
-			},
-			success: function(json) {
-				if (json['error']) {
-					alert(json['error']);
-				}
-				
-				if (json['success']) {
-					alert(json['success']);
-					
-					$('#button-refresh').trigger('click');
-				}
-			},			
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
+	$('#form-upload input[name=\'file\']').on('change', function(e) {
+		alert('hi');
 	});
+	
+	return false;
 });
-
+/*
+function upload() {
+	$.ajax({
+		url: 'index.php?route=common/filemanager/upload&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>',
+		type: 'post',		
+		dataType: 'json',
+		data: new FormData($('#form-upload')[0]),
+		cache: false,
+		contentType: false,
+		processData: false,		
+		beforeSend: function() {
+			$('#button-upload').prop('disabled', true);
+		},
+		complete: function() {
+			$('#button-upload').prop('disabled', false);
+		},
+		success: function(json) {
+			if (json['error']) {
+				alert(json['error']);
+			}
+			
+			if (json['success']) {
+				alert(json['success']);
+				
+				$('#button-refresh').trigger('click');
+			}
+		},			
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});	
+}
+*/
 $('#button-folder').popover({
 	html: true,
 	placement: 'bottom',
@@ -180,11 +188,9 @@ $('#button-folder').on('shown.bs.popover', function() {
 			dataType: 'json',
 			data: 'folder=' + encodeURIComponent($('input[name=\'folder\']').val()),
 			beforeSend: function() {
-				$('#button-create i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 				$('#button-create').prop('disabled', true);
 			},
 			complete: function() {
-				$('#button-create i').replaceWith('<i class="fa fa-plus-circle"></i>');
 				$('#button-create').prop('disabled', false);
 			},
 			success: function(json) {
@@ -213,11 +219,9 @@ $('#modal-image #button-delete').on('click', function(e) {
 			dataType: 'json',
 			data: $('input[name^=\'path\']:checked'),
 			beforeSend: function() {
-				$('#button-delete i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 				$('#button-delete').prop('disabled', true);
 			},	
 			complete: function() {
-				$('#button-delete i').replaceWith('<i class="fa fa-trash-o"></i>');
 				$('#button-delete').prop('disabled', false);
 			},		
 			success: function(json) {

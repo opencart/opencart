@@ -652,3 +652,6 @@ border-color: #dfebd5;
 	height: 3px;
 	margin-bottom: 0;
 }
+.jqvmap-label {
+	z-index: 999;
+}

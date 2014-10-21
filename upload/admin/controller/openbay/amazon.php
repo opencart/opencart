@@ -256,7 +256,7 @@ class ControllerOpenbayAmazon extends Controller {
 
 			$this->model_openbay_amazon->scheduleOrders($settings);
 
-			$this->session->data['success'] = $this->language->get('text_setttings_updated');
+			$this->session->data['success'] = $this->language->get('text_settings_updated');
 			$this->response->redirect($this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], 'SSL'));
 			return;
 		}

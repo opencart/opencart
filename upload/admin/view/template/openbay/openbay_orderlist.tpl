@@ -22,7 +22,12 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
-    <form action="<?php echo $link_update; ?>" method="post" id="order-update-form">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> <?php echo $heading_title; ?></h3>
+      </div>
+      <div class="panel-body">
+        <form action="<?php echo $link_update; ?>" method="post" id="order-update-form">
       <div class="container-fluid">
         <div class="pull-right">
           <select name="change_order_status_id">
@@ -132,6 +137,8 @@
         </div>
       </div>
     </form>
+      </div>
+    </div>
   </div>
 </div>
 <script type="text/javascript"><!--
@@ -165,19 +172,19 @@
 
     location = url;
   }
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
   $(document).ready(function() {
 	  $('.date').datepicker({dateFormat: 'yy-mm-dd'});
   });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
   $('#form input').keydown(function(e) {
     if (e.keyCode == 13) {
       filter();
     }
   });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
     $.widget('custom.catcomplete', $.ui.autocomplete, {
         _renderMenu: function(ul, items) {
@@ -218,5 +225,5 @@
             return false;
         }
     });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

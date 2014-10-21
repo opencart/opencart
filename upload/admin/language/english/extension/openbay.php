@@ -15,6 +15,7 @@ $_['tab_update']						= 'Updates';
 $_['tab_developer']						= 'Developer';
 
 // Text
+$_['text_dashboard']         			= 'Dashboard';
 $_['text_success']         				= 'Success: Settings have been saved';
 $_['text_products']          			= 'Items';
 $_['text_orders']          				= 'Orders';

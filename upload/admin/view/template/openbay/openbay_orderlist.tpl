@@ -24,18 +24,20 @@
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> <?php echo $heading_title; ?></h3>
+        <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> <?php echo $text_list; ?></h3>
       </div>
       <div class="panel-body">
         <form action="<?php echo $link_update; ?>" method="post" id="order-update-form">
           <div class="well">
-            <div class="row pull-right">
-              <select name="change_order_status_id" class="form-control">
-                <?php foreach ($order_statuses as $order_status) { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                <?php } ?>
-              </select>
-              <a data-toggle="tooltip" title="<?php echo $button_status; ?>" class="btn btn-primary" onclick="$('#order-update-form').submit();"><i class="fa fa-plus-circle"></i></a> </div>
+            <div class="row">
+              <div class="pull-right">
+                <select name="change_order_status_id" class="form-control">
+                  <?php foreach ($order_statuses as $order_status) { ?>
+                  <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                  <?php } ?>
+                </select>
+                <a data-toggle="tooltip" title="<?php echo $button_status; ?>" class="btn btn-primary" onclick="$('#order-update-form').submit();"><i class="fa fa-plus-circle"></i></a>
+              </div>
             </div>
           </div>
           <div class="table-responsive">
@@ -92,7 +94,7 @@
                       <?php } ?>
                       <?php } ?>
                     </select></td>
-                  <td align="text-left"><select name="filter_channel">
+                  <td align="text-left"><select name="filter_channel" class="form-control">
                       <option value=""></option>
                       <?php foreach ($channels as $channel) { ?>
                       <?php if ($channel['module'] == $filter_channel) { ?>
@@ -102,7 +104,14 @@
                       <?php } ?>
                       <?php } ?>
                     </select></td>
-                  <td><input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" size="12" class="form-control" /></td>
+                  <td>
+                    <div class="input-group date">
+                      <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $entry_date_added; ?>" data-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                      </span>
+                    </div>
+                  </td>
                   <td></td>
                   <td align="right"><a onclick="filter();" class="btn btn-primary"><?php echo $button_filter; ?></a></td>
                 </tr>

@@ -391,8 +391,10 @@
               <label class="col-sm-2 control-label" for="entry-duration"><span data-toggle="tooltip" data-container="#tab-setup" title="<?php echo $help_duration; ?>"><?php echo $entry_duration; ?></span></label>
               <div class="col-sm-10">
                 <select name="ebay_duration" id="entry-duration" class="form-control">
-                  <?php foreach ($durations as $key => $duration) { ?>
-                  <?php echo'<option value="'.$key.'"'.($key == $ebay_duration ? ' selected=selected' : '').'>'.$duration.'</option>'; ?>
+                  <?php if (!empty($durations)) { ?>
+                    <?php foreach ($durations as $key => $duration) { ?>
+                      <?php echo'<option value="'.$key.'"'.($key == $ebay_duration ? ' selected=selected' : '').'>'.$duration.'</option>'; ?>
+                    <?php } ?>
                   <?php } ?>
                 </select>
               </div>
@@ -401,8 +403,10 @@
               <label class="col-sm-2 control-label" for="entry-measurement"><span data-toggle="tooltip" data-container="#tab-setup" title="<?php echo $help_measurement; ?>"><?php echo $entry_measurement; ?></span></label>
               <div class="col-sm-10">
                 <select name="ebay_measurement" id="entry-measurement" class="form-control">
-                  <?php foreach ($measurement_types as $key => $type) { ?>
-                  <?php echo'<option value="'.$key.'"'.($key == $ebay_measurement ? ' selected=selected' : '').'>'.$type.'</option>'; ?>
+                  <?php if (!empty($measurement_types)) { ?>
+                    <?php foreach ($measurement_types as $key => $type) { ?>
+                      <?php echo'<option value="'.$key.'"'.($key == $ebay_measurement ? ' selected=selected' : '').'>'.$type.'</option>'; ?>
+                    <?php } ?>
                   <?php } ?>
                 </select>
               </div>

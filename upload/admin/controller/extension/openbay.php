@@ -719,6 +719,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$data['sort_date_added'] = $this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'] . '&sort=o.date_added' . $url, 'SSL');
 		$data['sort_channel'] = $this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'] . '&sort=channel' . $url, 'SSL');
 		$data['link_update'] = $this->url->link('extension/openbay/orderListUpdate', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['cancel'] = $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL');
 
 		$url = '';
 

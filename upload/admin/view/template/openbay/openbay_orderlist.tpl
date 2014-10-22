@@ -50,7 +50,7 @@
                   <option value="0"><?php echo $text_missing; ?></option>
                   <?php } ?>
                   <?php foreach ($order_statuses as $order_status) { ?>
-                  <?php if ($order_status['order_status_id'] == $filter_order_status) { ?>
+                  <?php if ($order_status['order_status_id'] == $filter_order_status_id) { ?>
                   <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                   <?php } else { ?>
                   <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>

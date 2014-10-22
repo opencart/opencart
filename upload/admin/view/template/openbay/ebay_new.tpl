@@ -26,7 +26,7 @@
           <li><a href="#tab-listing-feature" data-toggle="tab"><?php echo $tab_feature; ?></a></li>
           <li><a href="#tab-listing-catalog" data-toggle="tab"><?php echo $tab_ebay_catalog; ?></a></li>
           <li><a href="#tab-listing-description" data-toggle="tab"><?php echo $tab_description; ?></a></li>
-          <li><a href="#tab-listing-images" data-toggle="tab"><?php echo $tab_images; ?></a></li>
+          <li><a href="#tab-listing-images" data-toggle="tab"><?php echo $tab_image; ?></a></li>
           <li><a href="#tab-listing-price" data-toggle="tab"><?php echo $tab_price; ?></a></li>
           <li><a href="#tab-listing-payment" data-toggle="tab"><?php echo $tab_payment; ?></a></li>
           <li><a href="#tab-listing-shipping" data-toggle="tab"><?php echo $tab_shipping; ?></a></li>

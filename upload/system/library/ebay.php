@@ -984,6 +984,8 @@ final class Ebay {
 				$header_response = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 				curl_close($ch);
 
+				$this->log($header_response);
+
 				if ($header_response == 200) {
 					$img_used = $img_large;
 				} else {
@@ -995,6 +997,7 @@ final class Ebay {
 				if ($handle !== false) {
 					if (!@copy($img_used, $img['image_new'])) {
 						$this->log('getImages() - FAILED COPY: ' . $img_used);
+						$this->log(print_r(error_get_last(), true));
 					} else {
 						$this->log('getImages() - Copy OK : ' . $img_used);
 					}

@@ -1354,7 +1354,7 @@ class ControllerOpenbayEbay extends Controller {
 
 				$data['no_image'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
-				$weight_parts = explode(' . ', $product_info['weight']);
+				$weight_parts = explode('.', $product_info['weight']);
 				$product_info['weight_major'] = $weight_parts[0];
 				$product_info['weight_minor'] = $weight_parts[1];
 

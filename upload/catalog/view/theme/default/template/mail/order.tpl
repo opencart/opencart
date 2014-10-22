@@ -36,7 +36,7 @@
       </tr>
     </tbody>
   </table>
-  <?php if ($comment) { ?>
+  <?php if ($instruction) { ?>
   <table style="border-collapse: collapse; width: 100%; border-top: 1px solid #DDDDDD; border-left: 1px solid #DDDDDD; margin-bottom: 20px;">
     <thead>
       <tr>
@@ -45,7 +45,7 @@
     </thead>
     <tbody>
       <tr>
-        <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;"><?php echo $comment; ?></td>
+        <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;"><?php echo $instruction; ?></td>
       </tr>
     </tbody>
   </table>
@@ -111,6 +111,20 @@
       <?php } ?>
     </tfoot>
   </table>
+  <?php if ($comment) { ?>
+  <table style="border-collapse: collapse; width: 100%; border-top: 1px solid #DDDDDD; border-left: 1px solid #DDDDDD; margin-bottom: 20px;">
+    <thead>
+      <tr>
+        <td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; background-color: #EFEFEF; font-weight: bold; text-align: left; padding: 7px; color: #222222;"><?php echo $text_comment; ?></td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;"><?php echo $comment; ?></td>
+      </tr>
+    </tbody>
+  </table>
+  <?php } ?>
   <p style="margin-top: 0px; margin-bottom: 20px;"><?php echo $text_footer; ?></p>
 </div>
 </body>

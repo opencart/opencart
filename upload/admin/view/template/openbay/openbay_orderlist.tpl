@@ -92,7 +92,7 @@
         <div class="well">
           <div class="row">
             <div class="col-sm-12">
-              <form class="form-inline" role="form">
+              <form class="form-inline pull-right" role="form">
                 <div class="form-group">
                   <div class="input-group">
                     <select name="change_order_status_id" class="form-control">
@@ -109,7 +109,7 @@
         </div>
         <form action="<?php echo $link_update; ?>" method="post" id="order-update-form">
           <div class="table-responsive">
-          <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover">
             <thead>
               <tr>
                 <th width="1"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></th>
@@ -167,7 +167,7 @@
               <?php } ?>
             </tbody>
           </table>
-        </div>
+          </div>
         </form>
         <div class="row">
           <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>

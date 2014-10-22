@@ -282,18 +282,28 @@
                 <?php if (!empty($product['product_images'])) { ?>
                   <div class="table-responsive">
                     <table id="images" class="table table-striped table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <td class="text-center"><?php echo $column_thumb; ?></td>
+                          <td class="text-center"><?php echo $column_img_size; ?></td>
+                          <td class="text-center"><?php echo $column_template_image; ?></td>
+                          <td class="text-center"><?php echo $column_ebay_image; ?></td>
+                          <td class="text-center"><?php echo $column_main_ebay_image; ?></td>
+                        </tr>
+                      </thead>
                       <tbody>
                       <?php $i = 0; ?>
                       <?php foreach($product['product_images'] as $img) { ?>
                         <tr>
-                          <td class="text-left"><img src="<?php echo $img['preview']; ?>" class="img-thumbnail" /></td>
-                          <td class="text-left">
-                            <?php echo $img['width']; ?> x <?php echo $img['height']; ?>
+                          <td class="text-center"><img src="<?php echo $img['preview']; ?>" class="img-thumbnail" /></td>
+                          <td class="text-center">
                             <?php if ($img['width'] < 500 && $img['height'] < 500) { ?>
-                              <p><div class="warning" style="width:180px;"><?php echo $lang_ebay_imagesize; ?></div></p>
+                              <span class="label label-danger" data-toggle="tooltip" data-original-title="<?php echo $error_ebay_imagesize; ?>"><?php echo $img['width']; ?> x <?php echo $img['height']; ?></span>
+                            <?php } else { ?>
+                              <span class="label label-success" data-toggle="tooltip" data-original-title="<?php echo $text_ebay_imagesize_ok; ?>"><?php echo $img['width']; ?> x <?php echo $img['height']; ?></span>
                             <?php } ?>
                           </td>
-                          <td class="text-right"><input type="checkbox" id="imgUrl<?php echo $i; ?>" name="img_tpl[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" class="checkboxTemplateImage" /> <?php echo $text_template_image; ?></td>
+                          <td class="text-center"><input type="checkbox" id="imgUrl<?php echo $i; ?>" name="img_tpl[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" class="checkboxTemplateImage" /></td>
                           <td class="text-center">
                             <input type="hidden" name="img[<?php echo $i; ?>]" value="null" />
                             <?php if ($img['width'] >= 500 || $img['height'] >= 500) { ?>
@@ -303,10 +313,8 @@
                             <?php } ?>
                           </td>
                           <td class="text-center">
-                            <input type="radio" name="main_image"<?php echo (($i == 0) ? ' checked' : ''); ?> value="<?php echo $i; ?>" id="image-radio-<?php echo $i; ?>" <?php echo ( ($i == 0) ? '' : 'disabled="disabled"'); ?> /> <?php echo $text_main_image_ebay; ?>
+                            <input type="radio" name="main_image"<?php echo (($i == 0) ? ' checked' : ''); ?> value="<?php echo $i; ?>" id="image-radio-<?php echo $i; ?>" <?php echo ( ($i == 0) ? '' : 'disabled="disabled"'); ?> />
                           </td>
-                          <td class="text-center"></td>
-                          <td class="text-center"></td>
                         </tr>
                         <?php $i++; ?>
                       <?php } ?>

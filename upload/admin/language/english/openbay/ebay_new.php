@@ -26,8 +26,6 @@ $_['text_category_checking']        = 'Checking eBay category requirements, plea
 $_['text_features_help']        	= 'Entering specifics about your item will help buyers narrow down the exact item they need. It may also improve the performance of the product and eBay may score its best match value higher.';
 $_['text_images_text_1']            = 'eBay images will be uploaded to eBay. Supersize and Gallery plus are also listing enhancements that may cost more to list.';
 $_['text_images_text_2']            = 'Template images will be added to your listing description and hosted from your web site, these are free. (Your listing template must have the {gallery} tag)';
-$_['text_template_image']           = 'Template image';
-$_['text_main_image_ebay']          = 'Main eBay image';
 $_['text_image_ebay']               = 'eBay image';
 $_['text_images_none']              = 'You have no images for this product, you must add images before you can list';
 $_['text_width']      				= 'Width';
@@ -86,6 +84,7 @@ $_['text_stock_reserved']           = ' will be reserved';
 $_['text_insert']           		= 'Add new eBay listing';
 $_['text_price_ex_tax']           	= 'Excluding tax';
 $_['text_price_inc_tax']          	= 'Including tax';
+$_['text_ebay_imagesize_ok']        = 'The image size is good, it can be used on eBay';
 
 // Column
 $_['column_stock_total']      		= 'In stock';
@@ -96,6 +95,11 @@ $_['column_price_inc_tax']          = 'Including tax';
 $_['column_stock_col_comb']         = 'Combination';
 $_['column_price']          		= 'Price';
 $_['column_stock_col_enabled']      = 'Enabled';
+$_['column_thumb']      			= 'Image';
+$_['column_img_size']      			= 'Size';
+$_['column_template_image']         = 'Template image';
+$_['column_ebay_image']         	= 'eBay image';
+$_['column_main_ebay_image']        = 'Main eBay image';
 
 // Entry
 $_['entry_shop_category']           = 'Shop Category';
@@ -176,3 +180,4 @@ $_['error_listing_duration']      	= 'Select a listing duration, select category
 $_['error_image_size']          	= 'Ensure that you have a gallery and thumb image size';
 $_['error_no_images']            	= 'Listing must have at least 1 image uploaded to eBay';
 $_['error_main_image']           	= 'You need to choose a main eBay image from your selection of eBay images';
+$_['error_ebay_imagesize']          = 'Image must be at least 500px on 1 side to use on eBay';

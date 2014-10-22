@@ -5,7 +5,7 @@ $_['heading_title']     = 'Shipping';
 // Text
 $_['text_success_install']      = 'Success: %s has been installed!';
 $_['text_success_uninstall']    = 'Success: %s has been uninstalled!';
-$_['text_list']         		= 'Shipping List';
+$_['text_list']                 = 'Shipping List';
 
 // Column
 $_['column_name']       = 'Shipping Method';
@@ -15,5 +15,5 @@ $_['column_action']     = 'Action';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify shipping!';
-$_['error_install']  	= 'Warning: An error occurred while installing %s!';
-$_['error_uninstall']  	= 'Warning: An error occurred while unistalling %s!';
+$_['error_install']     = 'Warning: An error occurred while installing %s!';
+$_['error_uninstall']   = 'Warning: An error occurred while unistalling %s!';

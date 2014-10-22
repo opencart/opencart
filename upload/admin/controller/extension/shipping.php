@@ -27,12 +27,12 @@ class ControllerExtensionShipping extends Controller {
 			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'shipping/' . $this->request->get['extension']);
 			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'shipping/' . $this->request->get['extension']);
 
-			// Call install method if it exsits
-			$this->load->controller('shipping/' . $this->request->get['extension'] . '/install');
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'));
+			// Call install method if it exist
+			if(!$this->load->controller('shipping/' . $this->request->get['extension'] . '/install')){
+				$this->session->data['success'] = sprintf($this->language->get('text_success_install'), $this->request->get['extension_name']);
+			} else { 
+				$this->error['warning'] =  sprintf($this->language->get('error_install'), $this->request->get['extension_name']);
+			}
 		}
 
 		$this->getList();
@@ -51,13 +51,13 @@ class ControllerExtensionShipping extends Controller {
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
-
-			// Call uninstall method if it exsits
-			$this->load->controller('shipping/' . $this->request->get['extension'] . '/uninstall');
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$this->response->redirect($this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'));
+			
+			// Call uninstall method if it exist
+			if(!$this->load->controller('shipping/' . $this->request->get['extension'] . '/uninstall')){
+				$this->session->data['success'] = sprintf($this->language->get('text_success_uninstall'), $this->request->get['extension_name']);
+			} else { 
+				$this->error['warning'] =  sprintf($this->language->get('error_uninstall'), $this->request->get['extension_name']);
+			}
 		}
 
 		$this->getList();
@@ -93,13 +93,13 @@ class ControllerExtensionShipping extends Controller {
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
+			unset($this->error['warning']);
 		} else {
 			$data['error_warning'] = '';
 		}
 
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
-
 			unset($this->session->data['success']);
 		} else {
 			$data['success'] = '';
@@ -131,8 +131,8 @@ class ControllerExtensionShipping extends Controller {
 					'name'       => $this->language->get('heading_title'),
 					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'install'    => $this->url->link('extension/shipping/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
-					'uninstall'  => $this->url->link('extension/shipping/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
+					'install'    => $this->url->link('extension/shipping/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension . '&extension_name=' . $this->language->get('heading_title'), 'SSL'),
+					'uninstall'  => $this->url->link('extension/shipping/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension . '&extension_name=' . $this->language->get('heading_title'), 'SSL'),
 					'installed'  => in_array($extension, $extensions),
 					'edit'       => $this->url->link('shipping/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL')
 				);

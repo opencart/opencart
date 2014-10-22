@@ -606,20 +606,6 @@ class ControllerExtensionOpenbay extends Controller {
 		$results = $this->model_openbay_order->getOrders($filter);
 
 		foreach ($results as $result) {
-			$action = array();
-
-			$action[] = array(
-				'text' => $this->language->get('text_view'),
-				'href' => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL')
-			);
-
-			if (strtotime($result['date_added']) > strtotime('-' . (int)$this->config->get('config_order_edit') . ' day')) {
-				$action[] = array(
-					'text' => $this->language->get('text_edit'),
-					'href' => $this->url->link('sale/order/update', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL')
-				);
-			}
-
 			$channel = $this->language->get('text_' . $result['channel']);
 
 			$data['orders'][] = array(
@@ -628,7 +614,7 @@ class ControllerExtensionOpenbay extends Controller {
 				'status'        => $result['status'],
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'selected'      => isset($this->request->post['selected']) && in_array($result['order_id'], $this->request->post['selected']),
-				'action'        => $action,
+				'view'          => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL'),
 				'channel'       => $channel,
 			);
 		}

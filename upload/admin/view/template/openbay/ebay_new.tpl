@@ -267,13 +267,6 @@
                   <input type="checkbox" name="gallery_plus" value="1" id="gallery_plus" />
                 </div>
               </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $entry_gallery_select_all; ?></label>
-                <div class="col-sm-10">
-                  <p><input type="checkbox" name="allTemplateImages" value="1" id="allTemplateImages" style="margin-top:2px;" /> - <?php echo $text_template_images; ?></p>
-                  <p><input type="checkbox" name="allEbayImages" value="1" id="allEbayImages" style="margin-top:2px;" /> - <?php echo $text_ebay_images; ?></p>
-                </div>
-              </div>
               <div class="alert alert-info">
                 <p>* <?php echo $text_images_text_1; ?></p>
                 <p>* <?php echo $text_images_text_2; ?></p>
@@ -286,13 +279,13 @@
                         <tr>
                           <td class="text-center"><?php echo $column_thumb; ?></td>
                           <td class="text-center"><?php echo $column_img_size; ?></td>
-                          <td class="text-center"><?php echo $column_template_image; ?></td>
-                          <td class="text-center"><?php echo $column_ebay_image; ?></td>
+                          <td class="text-center"><?php echo $column_template_image; ?> <input type="checkbox" name="all_template_images" value="1" id="check-all-template-images" style="margin-top:2px;" /></td>
+                          <td class="text-center"><?php echo $column_ebay_image; ?> <input type="checkbox" name="all_ebay_images" value="1" id="check-all-ebay-images" style="margin-top:2px;" /></td>
                           <td class="text-center"><?php echo $column_main_ebay_image; ?></td>
                         </tr>
                       </thead>
                       <tbody>
-                      <?php $i = 0; ?>
+                      <?php $i = 0; $i_valid = null; ?>
                       <?php foreach($product['product_images'] as $img) { ?>
                         <tr>
                           <td class="text-center"><img src="<?php echo $img['preview']; ?>" class="img-thumbnail" /></td>
@@ -300,10 +293,11 @@
                             <?php if ($img['width'] < 500 && $img['height'] < 500) { ?>
                               <span class="label label-danger" data-toggle="tooltip" data-original-title="<?php echo $error_ebay_imagesize; ?>"><?php echo $img['width']; ?> x <?php echo $img['height']; ?></span>
                             <?php } else { ?>
+                              <?php if ($i_valid == null) { $i_valid = $i; }
                               <span class="label label-success" data-toggle="tooltip" data-original-title="<?php echo $text_ebay_imagesize_ok; ?>"><?php echo $img['width']; ?> x <?php echo $img['height']; ?></span>
                             <?php } ?>
                           </td>
-                          <td class="text-center"><input type="checkbox" id="imgUrl<?php echo $i; ?>" name="img_tpl[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" class="checkboxTemplateImage" /></td>
+                          <td class="text-center"><input type="checkbox" id="imgUrl<?php echo $i; ?>" name="img_tpl[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" class="check-template-image" /></td>
                           <td class="text-center">
                             <input type="hidden" name="img[<?php echo $i; ?>]" value="null" />
                             <?php if ($img['width'] >= 500 || $img['height'] >= 500) { ?>
@@ -313,7 +307,11 @@
                             <?php } ?>
                           </td>
                           <td class="text-center">
-                            <input type="radio" name="main_image"<?php echo (($i == 0) ? ' checked' : ''); ?> value="<?php echo $i; ?>" id="image-radio-<?php echo $i; ?>" <?php echo ( ($i == 0) ? '' : 'disabled="disabled"'); ?> />
+                            <?php if ($img['width'] >= 500 || $img['height'] >= 500) { ?>
+                              <input type="radio" name="main_image"<?php echo (($i_valid != null) && ($i == $i_valid) ? ' checked' : ''); ?> value="<?php echo $i; ?>" id="image-radio-<?php echo $i; ?>" <?php echo ( ($i == 0) ? '' : 'disabled="disabled"'); ?> />
+                            <?php } else { ?>
+                              -
+                            <?php } ?>
                           </td>
                         </tr>
                         <?php $i++; ?>
@@ -1815,16 +1813,16 @@
     }
   });
 
-  $('#allTemplateImages').bind('change', function() {
-    if ($('#allTemplateImages').is(':checked')) {
-      $('.checkboxTemplateImage').prop('checked', 'checked');
+  $('#check-all-template-images').bind('change', function() {
+    if ($('#check-all-template-images').is(':checked')) {
+      $('.check-template-image').prop('checked', 'checked');
     } else {
-      $('.checkboxTemplateImage').removeAttr('checked');
+      $('.check-template-image').removeAttr('checked');
     }
   });
 
-  $('#allEbayImages').bind('change', function() {
-    if ($('#allEbayImages').is(':checked')) {
+  $('#check-all-ebay-images').bind('change', function() {
+    if ($('#check-all-ebay-images').is(':checked')) {
       $('.checkboxEbayImage').prop('checked', 'checked');
     } else {
       $('.checkboxEbayImage').removeAttr('checked');
@@ -1914,12 +1912,12 @@
 
                   if (data.data.ebay_img_ebay == 1) {
                       $('.checkboxEbayImage').prop('checked', true);
-                      $('#allEbayImages').prop('checked', true);
+                      $('#check-all-ebay-images').prop('checked', true);
                   }
 
                   if (data.data.ebay_img_template == 1) {
-                      $('.checkboxTemplateImage').prop('checked', true);
-                      $('#allTemplateImages').prop('checked', true);
+                      $('.check-template-image').prop('checked', true);
+                      $('#check-all-template-images').prop('checked', true);
                   }
 
                   if ($.inArray('ebay_template_id', data.data)) {

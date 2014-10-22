@@ -119,7 +119,6 @@ $_['entry_image_gallery']           = 'Gallery image size';
 $_['entry_image_thumb']             = 'Thumb image size';
 $_['entry_images_supersize']        = 'Supersize images';
 $_['entry_images_gallery_plus']     = 'Gallery plus';
-$_['entry_gallery_select_all']      = 'Tick the box to select all of your images at once';
 $_['text_stock_matrix']             = 'Stock matrix';
 $_['entry_qty']                     = 'Quantity to list';
 $_['entry_price']             		= 'Price';

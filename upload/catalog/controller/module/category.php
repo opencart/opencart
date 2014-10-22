@@ -32,27 +32,22 @@ class ControllerModuleCategory extends Controller {
 		$categories = $this->model_catalog_category->getCategories(0);
 
 		foreach ($categories as $category) {
-			$total = $this->model_catalog_product->getTotalProducts(array('filter_category_id' => $category['category_id']));
+			$total = $this->config->get('config_product_count') ? $this->model_catalog_product->getTotalProducts(array('filter_category_id' => $category['category_id'])) : 0;
 
 			$children_data = array();
 
-			$children = $this->model_catalog_category->getCategories($category['category_id']);
+			if ($category['category_id'] == $this->data['category_id']) {
+				$children = $this->model_catalog_category->getCategories($category['category_id']);
 
-			foreach ($children as $child) {
-				$data = array(
-					'filter_category_id'  => $child['category_id'],
-					'filter_sub_category' => true
-				);
+				foreach($children as $child) {
+					$data = array('filter_category_id' => $child['category_id'], 'filter_sub_category' => true);
 
-				$product_total = $this->config->get('config_product_count') ? $this->model_catalog_product->getTotalProducts($data) : 0;
+					$product_total = $this->config->get('config_product_count') ? $this->model_catalog_product->getTotalProducts($data) : 0;
 
-				$total += $product_total;
+					$total += $product_total;
 
-				$children_data[] = array(
-					'category_id' => $child['category_id'],
-					'name'        => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $product_total . ')' : ''),
-					'href'        => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])
-				);
+					$children_data[] = array('category_id' => $child['category_id'], 'name' => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $product_total . ')' : ''), 'href' => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id']));
+				}
 			}
 
 			$this->data['categories'][] = array(

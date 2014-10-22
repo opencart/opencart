@@ -366,6 +366,9 @@ class ControllerProductManufacturer extends Controller {
 				$this->response->setOutput($this->load->view('default/template/product/manufacturer_info.tpl', $data));
 			}
 		} else {
+			$this->document->addStyle('catalog/view/javascript/jquery/flexslider/flexslider.css');
+			$this->document->addScript('catalog/view/javascript/jquery/flexslider/jquery.flexslider-min.js');
+		
 			$url = '';
 
 			if (isset($this->request->get['manufacturer_id'])) {

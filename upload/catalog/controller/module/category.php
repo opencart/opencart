@@ -32,7 +32,7 @@ class ControllerModuleCategory extends Controller {
 		$categories = $this->model_catalog_category->getCategories(0);
 
 		foreach ($categories as $category) {
-			$total = $this->model_catalog_product->getTotalProducts(array('filter_category_id' => $category['category_id']));
+			$total = $this->config->get('config_product_count') ? $this->model_catalog_product->getTotalProducts(array('filter_category_id' => $category['category_id'])) : 0;
 
 			$children_data = array();
 

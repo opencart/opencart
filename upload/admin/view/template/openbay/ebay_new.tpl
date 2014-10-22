@@ -19,7 +19,7 @@
     <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_insert; ?></h3>
       </div>
       <div class="panel-body" id="page-listing">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
@@ -369,7 +369,7 @@
             <div id="tab-listing-price" class="tab-pane">
               <div class="well well-lg">
                 <div class="row">
-                  <label class="col-sm-2 control-label"><?php echo $text_profile_load; ?><br /><span id="profile-generic-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
+                  <label class="col-sm-2 control-label"><?php echo $entry_profile_load; ?><br /><span id="profile-generic-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
                   <div class="col-sm-10">
                     <div class="input-group">
                       <span class="input-group-addon" id="profile-generic-icon"><i class="fa fa-lg fa-file-text"></i></span>
@@ -567,7 +567,7 @@
             <div id="tab-listing-shipping" class="tab-pane">
               <div class="well well-lg">
                 <div class="row">
-                  <label class="col-sm-2 control-label"><?php echo $text_profile_load; ?><br /><span id="profile-shipping-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
+                  <label class="col-sm-2 control-label"><?php echo $entry_profile_load; ?><br /><span id="profile-shipping-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
                   <div class="col-sm-10">
                     <div class="input-group">
                       <span class="input-group-addon" id="profile-shipping-icon"><i class="fa fa-lg fa-file-text"></i></span>
@@ -838,7 +838,7 @@
             <div id="tab-listing-returns" class="tab-pane">
               <div class="well well-lg">
                 <div class="row">
-                  <label class="col-sm-2 control-label"><?php echo $text_profile_load; ?><br /><span id="profile-returns-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
+                  <label class="col-sm-2 control-label"><?php echo $entry_profile_load; ?><br /><span id="profile-returns-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
                   <div class="col-sm-10">
                     <div class="input-group">
                       <span class="input-group-addon" id="profile-return-icon"><i class="fa fa-lg fa-file-text"></i></span>

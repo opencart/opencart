@@ -83,6 +83,9 @@ $_['text_shipping_first']           = 'First item';
 $_['text_shipping_add']             = 'Additional items';
 $_['text_shipping_service']         = 'Service';
 $_['text_stock_reserved']           = ' will be reserved';
+$_['text_insert']           		= 'Add new eBay listing';
+$_['text_price_ex_tax']           	= 'Excluding tax';
+$_['text_price_inc_tax']          	= 'Including tax';
 
 // Column
 $_['column_stock_total']      		= 'In stock';

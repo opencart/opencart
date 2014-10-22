@@ -315,7 +315,7 @@ class ControllerProductProduct extends Controller {
 				$data['special'] = false;
 			}
 
-			if ($this->config->get('config_tax')) {
+			if ($this->config->get('config_tax') == 1) {
 				$data['tax'] = $this->currency->format((float)$product_info['special'] ? $product_info['special'] : $product_info['price']);
 			} else {
 				$data['tax'] = false;
@@ -415,7 +415,7 @@ class ControllerProductProduct extends Controller {
 					$special = false;
 				}
 
-				if ($this->config->get('config_tax')) {
+				if ($this->config->get('config_tax') == 1) {
 					$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price']);
 				} else {
 					$tax = false;

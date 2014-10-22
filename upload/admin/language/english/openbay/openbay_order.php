@@ -32,3 +32,4 @@ $_['entry_carrier']             = 'Carrier';
 $_['entry_tracking_no']         = 'Tracking';
 $_['entry_other']               = 'Other';
 $_['entry_date_added']          = 'Date Added';
+$_['entry_order_channel']       = 'Order channel';

@@ -280,35 +280,41 @@
               </div>
               <div class="row">
                 <?php if (!empty($product['product_images'])) { ?>
-                  <?php $i = 0; ?>
-                  <?php foreach($product['product_images'] as $img) { ?>
-                    <div class="col-sm-3">
-                      <div class="well">
-                        <div class="row">
-                          <div class="col-sm-12 text-center"><img src="<?php echo $img['preview']; ?>" class="img-thumbnail" /></div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-12 text-center"><input type="checkbox" id="imgUrl<?php echo $i; ?>" name="img_tpl[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" class="checkboxTemplateImage" /> <?php echo $text_template_image; ?></div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-12 text-center">
+                  <div class="table-responsive">
+                    <table id="images" class="table table-striped table-bordered table-hover">
+                      <tbody>
+                      <?php $i = 0; ?>
+                      <?php foreach($product['product_images'] as $img) { ?>
+                        <tr>
+                          <td class="text-left"><img src="<?php echo $img['preview']; ?>" class="img-thumbnail" /></td>
+                          <td class="text-left">
+                            <?php echo $img['width']; ?> x <?php echo $img['height']; ?>
+                            <?php if ($img['width'] < 500 && $img['height'] < 500) { ?>
+                              <p><div class="warning" style="width:180px;"><?php echo $lang_ebay_imagesize; ?></div></p>
+                            <?php } ?>
+                          </td>
+                          <td class="text-right"><input type="checkbox" id="imgUrl<?php echo $i; ?>" name="img_tpl[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" class="checkboxTemplateImage" /> <?php echo $text_template_image; ?></td>
+                          <td class="text-center">
                             <input type="hidden" name="img[<?php echo $i; ?>]" value="null" />
-                            <input type="checkbox" class="checkboxEbayImage" onchange="toggleRad(<?php echo $i; ?>);" id="image-checkbox-<?php echo $i; ?>" name="img[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" <?php echo ( ($i == 0) ? 'checked="checked" ' : ''); ?> /> <?php echo $text_image_ebay; ?>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-12 text-center">
+                            <?php if ($img['width'] >= 500 || $img['height'] >= 500) { ?>
+                              <input type="checkbox" class="checkboxEbayImage" onchange="toggleRad(<?php echo $i; ?>);" id="image-checkbox-<?php echo $i; ?>" name="img[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" <?php echo ( ($i == 0) ? 'checked="checked" ' : ''); ?> /> <?php echo $text_image_ebay; ?>
+                            <?php } else { ?>
+                              -
+                            <?php } ?>
+                          </td>
+                          <td class="text-center">
                             <input type="radio" name="main_image"<?php echo (($i == 0) ? ' checked' : ''); ?> value="<?php echo $i; ?>" id="image-radio-<?php echo $i; ?>" <?php echo ( ($i == 0) ? '' : 'disabled="disabled"'); ?> /> <?php echo $text_main_image_ebay; ?>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <?php $i++; ?>
-                  <?php } ?>
-                <?php } else { ?>
-                  <div class="col-sm-2">
-                    <div class="alert alert-danger"><?php echo $text_images_none; ?></div>
+                          </td>
+                          <td class="text-center"></td>
+                          <td class="text-center"></td>
+                        </tr>
+                        <?php $i++; ?>
+                      <?php } ?>
+                      </tbody>
+                    </table>
                   </div>
+                <?php } else { ?>
+                    <div class="alert alert-danger"><?php echo $text_images_none; ?></div>
                 <?php } ?>
               </div>
 

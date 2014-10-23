@@ -680,28 +680,7 @@ h2.price {
 
 
 
-.flexslider .slides img {
-	width: inherit;
-}
-.flexslider.carousel .slides img {
-	width: auto;
-}
-.slides {
-	padding: 0;
-	margin:0;
-	list-style: none;
-}
-.slides li {
-	text-align: center;
-}
-.slides li img {
-	text-align: center;
-}
-.flex-direction-nav a:before {
-	line-height: 40px;
-}
 /* fixed colum left + content + right*/
-
 @media (min-width: 768px) {
     #column-left  .product-layout .col-md-3{
        width: 100%;
@@ -716,3 +695,74 @@ h2.price {
        width: 100%;
     }
 }
+
+.carousel {
+	margin: 0 0 60px; 
+	background: #fff; 
+	border: 4px solid #fff; 
+	position: relative; 
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px; 
+	-o-border-radius: 4px; 
+	border-radius: 4px; 
+	-webkit-box-shadow: 0 1px 4px rgba(0,0,0,.2); 
+	-moz-box-shadow: 0 1px 4px rgba(0,0,0,.2); 
+	-o-box-shadow: 0 1px 4px rgba(0,0,0,.2); 
+	box-shadow: 0 1px 4px rgba(0,0,0,.2); 
+	zoom: 1;
+}
+
+.carousel .left {
+	background: none;
+	left: -50px;
+}
+
+.carousel .right {
+	background: none;
+	right: -50px; 
+	text-align: right;
+}
+
+.carousel:hover .left { 
+	opacity: 0.7; 
+	left: 10px; 
+}
+
+.carousel:hover .right { 
+	opacity: 0.7; 
+	right: 10px; 
+}
+
+.carousel-control {
+	text-decoration:none; 
+	display: block; 
+	width: 40px; 
+	height: 40px; 
+	margin: -20px 0 0; 
+	position: absolute; 
+	top: 50%; 
+	z-index: 10; 
+	overflow: hidden; 
+	opacity: 0; 
+	cursor: pointer; 
+	color: rgba(0,0,0,0.8); 
+	text-shadow: 1px 1px 0 rgba(255,255,255,0.3); 
+	-webkit-transition: all .3s ease; 
+	-moz-transition: all .3s ease; 
+	transition: all .3s ease;
+}
+
+.carousel-control i {
+	font-size: 40px;	
+}
+.carousel-indicators i {
+
+}
+	
+/*
+.carousel-control {width: 100%; position: absolute; bottom: -40px; text-align: center;}
+.carousel-control li {margin: 0 6px; display: inline-block; zoom: 1; *display: inline;}
+.carousel-control li a {width: 11px; height: 11px; display: block; background: #666; background: rgba(0,0,0,0.5); cursor: pointer; text-indent: -9999px; -webkit-border-radius: 20px; -moz-border-radius: 20px; -o-border-radius: 20px; border-radius: 20px; -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.3); -moz-box-shadow: inset 0 0 3px rgba(0,0,0,0.3); -o-box-shadow: inset 0 0 3px rgba(0,0,0,0.3); box-shadow: inset 0 0 3px rgba(0,0,0,0.3); }
+.carousel-control li a:hover { background: #333; background: rgba(0,0,0,0.7); }
+.carousel-control li a.flex-active { background: #000; background: rgba(0,0,0,0.9); cursor: default; }
+*/

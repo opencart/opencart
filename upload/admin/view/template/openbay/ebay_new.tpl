@@ -293,7 +293,7 @@
                             <?php if ($img['width'] < 500 && $img['height'] < 500) { ?>
                               <span class="label label-danger" data-toggle="tooltip" data-original-title="<?php echo $error_ebay_imagesize; ?>"><?php echo $img['width']; ?> x <?php echo $img['height']; ?></span>
                             <?php } else { ?>
-                              <?php if ($i_valid == null) { $i_valid = $i; }
+                              <?php if ($i_valid == null) { $i_valid = $i; } ?>
                               <span class="label label-success" data-toggle="tooltip" data-original-title="<?php echo $text_ebay_imagesize_ok; ?>"><?php echo $img['width']; ?> x <?php echo $img['height']; ?></span>
                             <?php } ?>
                           </td>

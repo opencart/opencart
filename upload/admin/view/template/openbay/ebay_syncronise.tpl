@@ -13,12 +13,13 @@
     </div>
   </div>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
   <?php } ?>
   <div class="container-fluid">
     <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_sync; ?></h3>
+      </div>
       <div class="panel-body">
         <?php if ($validation == true) { ?>
           <p><?php echo $text_sync_desc; ?></p>

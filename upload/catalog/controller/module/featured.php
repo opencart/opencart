@@ -47,7 +47,7 @@ class ControllerModuleFeatured extends Controller {
 					$special = false;
 				}
 
-				if ($this->config->get('config_tax')) {
+				if ($this->config->get('config_tax') == 1) {
 					$tax = $this->currency->format((float)$product_info['special'] ? $product_info['special'] : $product_info['price']);
 				} else {
 					$tax = false;

@@ -1,13 +1,13 @@
-<?php 
-class ControllerProductCategory extends Controller {  
-	public function index() { 
+<?php
+class ControllerProductCategory extends Controller {
+	public function index() {
 		$this->language->load('product/category');
 
 		$this->load->model('catalog/category');
 
 		$this->load->model('catalog/product');
 
-		$this->load->model('tool/image'); 
+		$this->load->model('tool/image');
 
 		if (isset($this->request->get['filter'])) {
 			$filter = $this->request->get['filter'];
@@ -29,9 +29,9 @@ class ControllerProductCategory extends Controller {
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
-		} else { 
+		} else {
 			$page = 1;
-		}	
+		}
 
 		if (isset($this->request->get['limit'])) {
 			$limit = $this->request->get['limit'];
@@ -52,11 +52,11 @@ class ControllerProductCategory extends Controller {
 
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
-			}	
+			}
 
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
-			}	
+			}
 
 			if (isset($this->request->get['limit'])) {
 				$url .= '&limit=' . $this->request->get['limit'];
@@ -100,7 +100,7 @@ class ControllerProductCategory extends Controller {
 			$this->data['heading_title'] = $category_info['name'];
 
 			$this->data['text_refine'] = $this->language->get('text_refine');
-			$this->data['text_empty'] = $this->language->get('text_empty');			
+			$this->data['text_empty'] = $this->language->get('text_empty');
 			$this->data['text_quantity'] = $this->language->get('text_quantity');
 			$this->data['text_manufacturer'] = $this->language->get('text_manufacturer');
 			$this->data['text_model'] = $this->language->get('text_model');
@@ -119,16 +119,16 @@ class ControllerProductCategory extends Controller {
 			$this->data['button_compare'] = $this->language->get('button_compare');
 			$this->data['button_continue'] = $this->language->get('button_continue');
 
-			// Set the last category breadcrumb		
+			// Set the last category breadcrumb
 			$url = '';
 
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
-			}	
+			}
 
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
-			}	
+			}
 
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
@@ -157,15 +157,15 @@ class ControllerProductCategory extends Controller {
 
 			if (isset($this->request->get['filter'])) {
 				$url .= '&filter=' . $this->request->get['filter'];
-			}	
+			}
 
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
-			}	
+			}
 
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
-			}	
+			}
 
 			if (isset($this->request->get['limit'])) {
 				$url .= '&limit=' . $this->request->get['limit'];
@@ -181,10 +181,8 @@ class ControllerProductCategory extends Controller {
 					'filter_sub_category' => true
 				);
 
-				$product_total = $this->model_catalog_product->getTotalProducts($data);				
-
 				$this->data['categories'][] = array(
-					'name'  => $result['name'] . ($this->config->get('config_product_count') ? ' (' . $product_total . ')' : ''),
+					'name'  => $result['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($data) . ')' : ''),
 					'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $result['category_id'] . $url)
 				);
 			}
@@ -193,14 +191,14 @@ class ControllerProductCategory extends Controller {
 
 			$data = array(
 				'filter_category_id' => $category_id,
-				'filter_filter'      => $filter, 
+				'filter_filter'      => $filter,
 				'sort'               => $sort,
 				'order'              => $order,
 				'start'              => ($page - 1) * $limit,
 				'limit'              => $limit
 			);
 
-			$product_total = $this->model_catalog_product->getTotalProducts($data); 
+			$product_total = $this->model_catalog_product->getTotalProducts($data);
 
 			$results = $this->model_catalog_product->getProducts($data);
 
@@ -221,13 +219,13 @@ class ControllerProductCategory extends Controller {
 					$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')));
 				} else {
 					$special = false;
-				}	
+				}
 
 				if ($this->config->get('config_tax')) {
 					$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price']);
 				} else {
 					$tax = false;
-				}				
+				}
 
 				if ($this->config->get('config_review_status')) {
 					$rating = (int)$result['rating'];
@@ -283,20 +281,20 @@ class ControllerProductCategory extends Controller {
 				'text'  => $this->language->get('text_price_asc'),
 				'value' => 'p.price-ASC',
 				'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.price&order=ASC' . $url)
-			); 
+			);
 
 			$this->data['sorts'][] = array(
 				'text'  => $this->language->get('text_price_desc'),
 				'value' => 'p.price-DESC',
 				'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=p.price&order=DESC' . $url)
-			); 
+			);
 
 			if ($this->config->get('config_review_status')) {
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_rating_desc'),
 					'value' => 'rating-DESC',
 					'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '&sort=rating&order=DESC' . $url)
-				); 
+				);
 
 				$this->data['sorts'][] = array(
 					'text'  => $this->language->get('text_rating_asc'),
@@ -325,7 +323,7 @@ class ControllerProductCategory extends Controller {
 
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
-			}	
+			}
 
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
@@ -353,7 +351,7 @@ class ControllerProductCategory extends Controller {
 
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
-			}	
+			}
 
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
@@ -393,7 +391,7 @@ class ControllerProductCategory extends Controller {
 				'common/header'
 			);
 
-			$this->response->setOutput($this->render());										
+			$this->response->setOutput($this->render());
 		} else {
 			$url = '';
 
@@ -407,7 +405,7 @@ class ControllerProductCategory extends Controller {
 
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
-			}	
+			}
 
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];

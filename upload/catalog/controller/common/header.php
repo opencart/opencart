@@ -1,4 +1,4 @@
-<?php   
+<?php
 class ControllerCommonHeader extends Controller {
 	protected function index() {
 		$this->data['title'] = $this->document->getTitle();
@@ -20,7 +20,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['base'] = $server;
 		$this->data['description'] = $this->document->getDescription();
 		$this->data['keywords'] = $this->document->getKeywords();
-		$this->data['links'] = $this->document->getLinks();	 
+		$this->data['links'] = $this->document->getLinks();
 		$this->data['styles'] = $this->document->getStyles();
 		$this->data['scripts'] = $this->document->getScripts();
 		$this->data['lang'] = $this->language->get('code');
@@ -38,7 +38,7 @@ class ControllerCommonHeader extends Controller {
 			$this->data['logo'] = $server . 'image/' . $this->config->get('config_logo');
 		} else {
 			$this->data['logo'] = '';
-		}		
+		}
 
 		$this->language->load('common/header');
 
@@ -88,7 +88,7 @@ class ControllerCommonHeader extends Controller {
 			}
 		}
 
-		// Search		
+		// Search
 		if (isset($this->request->get['search'])) {
 			$this->data['search'] = $this->request->get['search'];
 		} else {
@@ -117,12 +117,10 @@ class ControllerCommonHeader extends Controller {
 						'filter_sub_category' => true
 					);
 
-					$product_total = $this->model_catalog_product->getTotalProducts($data);
-
 					$children_data[] = array(
-						'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $product_total . ')' : ''),
+						'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($data) . ')' : ''),
 						'href'  => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])
-					);						
+					);
 				}
 
 				// Level 1
@@ -148,6 +146,6 @@ class ControllerCommonHeader extends Controller {
 		}
 
 		$this->render();
-	} 	
+	}
 }
 ?>

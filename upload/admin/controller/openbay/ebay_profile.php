@@ -148,6 +148,9 @@ class ControllerOpenbayEbayProfile extends Controller {
 		$profile_info = array();
 		if (isset($this->request->get['ebay_profile_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$profile_info = $this->model_openbay_ebay_profile->get($this->request->get['ebay_profile_id']);
+			$data['text_manage'] = $this->language->get('text_edit');
+		} else {
+			$data['text_manage'] = $this->language->get('text_add');
 		}
 
 		if (isset($this->request->post['type'])) {

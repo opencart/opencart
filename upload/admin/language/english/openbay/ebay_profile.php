@@ -69,6 +69,8 @@ $_['text_confirm_delete']       		= 'Are you sure you want to delete the profile
 $_['text_width']      					= 'Width';
 $_['text_height']      					= 'Height';
 $_['text_px']      						= 'px';
+$_['text_add']      					= 'Add profile';
+$_['text_edit']      					= 'Edit profile';
 
 //General profile
 $_['text_general_private']      		= 'List items as private auction';

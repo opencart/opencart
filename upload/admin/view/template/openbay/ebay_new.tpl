@@ -293,7 +293,7 @@
                             <?php if ($img['width'] < 500 && $img['height'] < 500) { ?>
                               <span class="label label-danger" data-toggle="tooltip" data-original-title="<?php echo $error_ebay_imagesize; ?>"><?php echo $img['width']; ?> x <?php echo $img['height']; ?></span>
                             <?php } else { ?>
-                              <?php if ($i_valid == null) { $i_valid = $i; } ?>
+                              <?php if ($i_valid === null) { $i_valid = $i; } ?>
                               <span class="label label-success" data-toggle="tooltip" data-original-title="<?php echo $text_ebay_imagesize_ok; ?>"><?php echo $img['width']; ?> x <?php echo $img['height']; ?></span>
                             <?php } ?>
                           </td>
@@ -301,14 +301,14 @@
                           <td class="text-center">
                             <input type="hidden" name="img[<?php echo $i; ?>]" value="null" />
                             <?php if ($img['width'] >= 500 || $img['height'] >= 500) { ?>
-                              <input type="checkbox" class="checkboxEbayImage" onchange="toggleRad(<?php echo $i; ?>);" id="image-checkbox-<?php echo $i; ?>" name="img[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" <?php echo ( ($i == 0) ? 'checked="checked" ' : ''); ?> /> <?php echo $text_image_ebay; ?>
+                              <input type="checkbox" class="checkboxEbayImage" onchange="toggleRad(<?php echo $i; ?>);" id="image-checkbox-<?php echo $i; ?>" name="img[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" <?php echo ( ($i == 0) ? 'checked="checked" ' : ''); ?> />
                             <?php } else { ?>
                               -
                             <?php } ?>
                           </td>
                           <td class="text-center">
                             <?php if ($img['width'] >= 500 || $img['height'] >= 500) { ?>
-                              <input type="radio" name="main_image"<?php echo (($i_valid != null) && ($i == $i_valid) ? ' checked' : ''); ?> value="<?php echo $i; ?>" id="image-radio-<?php echo $i; ?>" <?php echo ( ($i == 0) ? '' : 'disabled="disabled"'); ?> />
+                              <input type="radio" name="main_image"<?php echo (($i_valid !== null) && ($i == $i_valid) ? ' checked' : ''); ?> value="<?php echo $i; ?>" id="image-radio-<?php echo $i; ?>" <?php echo ( ($i == 0) ? '' : 'disabled="disabled"'); ?> />
                             <?php } else { ?>
                               -
                             <?php } ?>

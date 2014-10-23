@@ -50,6 +50,7 @@ $_['text_returns_costs']        		= 'Return Shipping costs';
 $_['text_returns_costs_b']      		= 'Buyer pays';
 $_['text_returns_costs_s']      		= 'Seller pays';
 $_['text_returns_restock']      		= 'Restocking Fee';
+$_['text_list']           				= 'Profile list';
 
 //Template profile
 $_['text_template_choose']      		= 'Default template';

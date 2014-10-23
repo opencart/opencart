@@ -232,7 +232,7 @@ class ControllerProductSearch extends Controller {
 					$special = false;
 				}
 
-				if ($this->config->get('config_tax')) {
+				if ($this->config->get('config_tax') == 1) {
 					$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price']);
 				} else {
 					$tax = false;

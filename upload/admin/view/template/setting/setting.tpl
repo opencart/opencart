@@ -139,27 +139,38 @@
               </div>
               <?php } ?>
             </div>
-            <div class="tab-pane" id="tab-store">
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-meta-title"><?php echo $entry_meta_title; ?></label>
-                <div class="col-sm-10">
-                  <input type="text" name="config_meta_title" value="<?php echo $config_meta_title; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title" class="form-control" />
-                  <?php if ($error_meta_title) { ?>
-                  <div class="text-danger"><?php echo $error_meta_title; ?></div>
-                  <?php } ?>
+            <div class="tab-pane" id="tab-store">              
+              <ul class="nav nav-tabs" id="language">
+                <?php foreach ($languages as $language) { ?>
+                <li><a href="#language<?php echo $language['language_id']; ?>" data-toggle="tab"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a></li>
+                <?php } ?>
+              </ul>
+              <div class="tab-content">
+                <?php foreach ($languages as $language) { ?>
+                <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
+                  <div class="form-group required">
+                    <label class="col-sm-2 control-label" for="input-meta-title<?php echo $language['language_id']; ?>"><?php echo $entry_meta_title; ?></label>
+                    <div class="col-sm-10">
+                      <input type="text" name="config_meta_tag[<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($config_meta_tag[$language['language_id']]['title']) ? $config_meta_tag[$language['language_id']]['title'] : ''; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title<?php echo $language['language_id']; ?>" class="form-control" />
+                      <?php if (isset($error_meta_title[$language['language_id']])) { ?>
+                      <div class="text-danger"><?php echo $error_meta_title[$language['language_id']]; ?></div>
+                      <?php } ?>
+                    </div>
+                  </div>
+                  <div class="form-group required">
+                    <label class="col-sm-2 control-label" for="input-meta-description<?php echo $language['language_id']; ?>"><?php echo $entry_meta_description; ?></label>
+                    <div class="col-sm-10">
+                      <textarea name="config_meta_tag[<?php echo $language['language_id']; ?>][description]" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($config_meta_tag[$language['language_id']]['description']) ? $config_meta_tag[$language['language_id']]['description'] : ''; ?></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group required">
+                    <label class="col-sm-2 control-label" for="input-meta-keyword<?php echo $language['language_id']; ?>"><?php echo $entry_meta_keyword; ?></label>
+                    <div class="col-sm-10">
+                      <input type="text" name="config_meta_tag[<?php echo $language['language_id']; ?>][keyword]" value="<?php echo isset($config_meta_tag[$language['language_id']]['keyword']) ? $config_meta_tag[$language['language_id']]['keyword'] : ''; ?>" placeholder="<?php echo $entry_meta_keyword; ?>" data-role="tagsinput" id="input-meta-keyword<?php echo $language['language_id']; ?>" class="form-control" />
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-meta-description"><?php echo $entry_meta_description; ?></label>
-                <div class="col-sm-10">
-                  <textarea name="config_meta_description" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description" class="form-control"><?php echo $config_meta_description; ?></textarea>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-meta-keyword"><?php echo $entry_meta_keyword; ?></label>
-                <div class="col-sm-10">
-                  <textarea name="config_meta_keyword" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta-keyword" class="form-control"><?php echo $config_meta_keyword; ?></textarea>
-                </div>
+                <?php } ?>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-template"><?php echo $entry_template; ?></label>
@@ -1588,7 +1599,10 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript"><!--
+<script type="text/javascript"><!--
+
+$('#language a:first').tab('show');
+
 $('select[name=\'config_template\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=setting/setting/template&token=<?php echo $token; ?>&template=' + encodeURIComponent(this.value),

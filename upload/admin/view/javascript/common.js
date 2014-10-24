@@ -184,7 +184,55 @@ $(document).ready(function() {
 	$(document).ajaxStop(function() {
 		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 	});	
+	
+	/*
+	// Upload
+	$(document).delegate('button[data-toggle=\'upload\']', 'click', function(e) {	
+		$('#form-upload').remove();
+		
+		$('body').prepend('<form enctype="multipart/form-data" id="form-upload"><input type="file" name="file" onchange="upload();" /></form>');
+		// onsubmit="return false;"
+		$('#form-upload input[name=\'file\']').trigger('click');
+		
+		$('#form-upload').on('submit', function(e) {
+			alert('hi');
+		});
+		
+		$.ajax({
+			url: $(this).attr('data-url'),
+			type: 'post',		
+			dataType: 'json',
+			data: new FormData($('#form-upload')[0]),
+			cache: false,
+			contentType: false,
+			processData: false,		
+			beforeSend: function() {
+				$('#button-upload').prop('disabled', true);
+			},
+			complete: function() {
+				$('#button-upload').prop('disabled', false);
+			},
+			success: function(json) {
+				if (json['error']) {
+					alert(json['error']);
+				}
+				
+				if (json['success']) {
+					alert(json['success']);
+					
+					$('#button-refresh').trigger('click');
+				}
+			},			
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});		
+	
+	});	
+	*/
 });
+
+
 
 // Autocomplete */
 (function($) {

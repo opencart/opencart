@@ -118,53 +118,51 @@ $('#button-search').on('click', function() {
 $('#button-upload').on('click', function() {
 	$('#form-upload').remove();
 	
-	$('body').prepend('<form enctype="multipart/form-data" id="form-upload"><input type="file" name="file" value="" /></form>');
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload"><input type="file" name="file" value="" onchange="$(\'#test\').click();" /><input type="submit" id="test" /></form>');
 	
-	//$('#form-upload').reset();
+	$('#form-upload input[name=\'file\']').trigger('click');	
 	
-	// onsubmit="return false;"
-	
-	$('#form-upload input[name=\'file\']').trigger('click');
-	
-	$('#form-upload input[name=\'file\']').on('change', function(e) {
+	$('#test').on('click', function(e) {
+		e.preventDefault();
+		return false;
 		alert('hi');
+		/*
+		$.ajax({
+			url: 'index.php?route=common/filemanager/upload&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>',
+			type: 'post',		
+			dataType: 'json',
+			data: new FormData($(this)[0]),
+			cache: false,
+			contentType: false,
+			processData: false,		
+			beforeSend: function() {
+				$('#button-upload').prop('disabled', true);
+			},
+			complete: function() {
+				$('#button-upload').prop('disabled', false);
+			},
+			success: function(json) {
+				if (json['error']) {
+					alert(json['error']);
+				}
+				
+				if (json['success']) {
+					alert(json['success']);
+					
+					$('#button-refresh').trigger('click');
+				}
+			},			
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});	
+		*/
 	});
 	
-	return false;
 });
-/*
 function upload() {
-	$.ajax({
-		url: 'index.php?route=common/filemanager/upload&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>',
-		type: 'post',		
-		dataType: 'json',
-		data: new FormData($('#form-upload')[0]),
-		cache: false,
-		contentType: false,
-		processData: false,		
-		beforeSend: function() {
-			$('#button-upload').prop('disabled', true);
-		},
-		complete: function() {
-			$('#button-upload').prop('disabled', false);
-		},
-		success: function(json) {
-			if (json['error']) {
-				alert(json['error']);
-			}
-			
-			if (json['success']) {
-				alert(json['success']);
-				
-				$('#button-refresh').trigger('click');
-			}
-		},			
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});	
+	alert('hi');
 }
-*/
 $('#button-folder').popover({
 	html: true,
 	placement: 'bottom',

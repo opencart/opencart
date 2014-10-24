@@ -346,7 +346,7 @@
     if (request_data != '') {
       $('#form').attr('action', 'index.php?route=openbay/ebay/createBulk&token=<?php echo $token; ?>').submit();
     } else {
-      $('#bulk-buttons').before('<div class="alert alert-danger"><?php echo $error_select_items; ?></div>');
+      alert('<?php echo $error_select_items; ?>');
     }
   });
 //--></script>

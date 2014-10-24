@@ -19,7 +19,7 @@
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_profile_action; ?></h3>
+      <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
     </div>
     <div class="panel-body">
       <div class="well">
@@ -34,7 +34,7 @@
                       <option value="<?php echo $key; ?>"><?php echo $val['name']; ?></option>
                     <?php } ?>
                   </select>
-                  <a data-toggle="tooltip" title="<?php echo $button_filter; ?>" class="btn btn-primary input-group-addon" onclick="$('#add-profile-form').submit();"><i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?></a>
+                  <a data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn btn-primary input-group-addon" onclick="$('#add-profile-form').submit();"><i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?></a>
                 </div>
               </div>
             </form>

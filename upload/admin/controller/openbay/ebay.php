@@ -1359,8 +1359,8 @@ class ControllerOpenbayEbay extends Controller {
 				$data['no_image'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
 				$weight_parts = explode('.', $product_info['weight']);
-				$product_info['weight_major'] = $weight_parts[0];
-				$product_info['weight_minor'] = $weight_parts[1];
+				$product_info['weight_major'] = (int)$weight_parts[0];
+				$product_info['weight_minor'] = (int)substr($weight_parts[1], 0, 3);
 
 				$data['product'] = $product_info;
 
@@ -1402,10 +1402,13 @@ class ControllerOpenbayEbay extends Controller {
 
 				$data['breadcrumbs'][] = array(
 					'href'      => $this->url->link('openbay/ebay/createBulk', 'token=' . $this->session->data['token'], 'SSL'),
-					'text'      => $this->language->get('text_page_title'),
+					'text'      => $this->language->get('heading_title'),
 				);
 
 				$data['error_warning'] = array();
+
+				$data['cancel'] = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], 'SSL');
+				$data['image_directory'] = DIR_IMAGE;
 
 				$active_list = $this->model_openbay_ebay->getLiveListingArray();
 
@@ -1543,7 +1546,7 @@ class ControllerOpenbayEbay extends Controller {
 					$data['error_fail']['plan'] = sprintf($this->language->get('text_bulk_plan_error'), $this->url->link('openbay/ebay/subscription', 'token=' . $this->session->data['token'], 'SSL'));
 				}
 
-				$this->document->setTitle($data['text_page_title']);
+				$this->document->setTitle($data['heading_title']);
 				$this->document->addScript('view/javascript/openbay/js/faq.js');
 				$this->document->addScript('view/javascript/openbay/js/openbay.js');
 
@@ -1580,6 +1583,11 @@ class ControllerOpenbayEbay extends Controller {
 					} else {
 						$data['template_html'] = '';
 					}
+
+					// set shipping data
+					$data['national'] = $data['data']['national'];
+					$data['international'] = $data['data']['international'];
+					unset($data['data']);
 
 					if (!empty($data['img_tpl'])) {
 						$tmp_gallery_array = array();
@@ -1639,9 +1647,13 @@ class ControllerOpenbayEbay extends Controller {
 				$payments_accepted          = $this->config->get('ebay_payment_types');
 				$product_info               = $this->model_catalog_product->getProduct($post['product_id']);
 
+				// set shipping data
+				$data['national'] = $profile_shipping['data']['national'];
+				$data['international'] = $profile_shipping['data']['international'];
+
 				$query = $this->db->query("SELECT DISTINCT *, pd.name AS name, p.image, m.name AS manufacturer, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, p.sort_order FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id) WHERE p.product_id = '" . (int)$post['product_id'] . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
-				$data['product_info'] = $query->row;
+				$data['product_info'] 		= $query->row;
 
 				$data['description']        = $product_info['description'];
 				$data['name']               = $post['title'];
@@ -1798,6 +1810,11 @@ class ControllerOpenbayEbay extends Controller {
 				$data['template_html'] = '';
 			}
 
+			// set shipping data
+			$data['national'] = $data['data']['national'];
+			$data['international'] = $data['data']['international'];
+			unset($data['data']);
+
 			if (!empty($data['img_tpl'])) {
 				$tmp_gallery_array = array();
 				$tmp_thumbnail_array = array();
@@ -1849,6 +1866,10 @@ class ControllerOpenbayEbay extends Controller {
 				$payments                   = $this->model_openbay_ebay->getPaymentTypes();
 				$payments_accepted           = $this->config->get('ebay_payment_types');
 				$product_info               = $this->model_catalog_product->getProduct($post['product_id']);
+
+				// set shipping data
+				$data['national'] = $profile_shipping['data']['national'];
+				$data['international'] = $profile_shipping['data']['international'];
 
 				$query = $this->db->query("SELECT DISTINCT *, pd.name AS name, p.image, m.name AS manufacturer, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, p.sort_order FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id) WHERE p.product_id = '" . (int)$post['product_id'] . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 

@@ -301,7 +301,7 @@
                           <td class="text-center">
                             <input type="hidden" name="img[<?php echo $i; ?>]" value="null" />
                             <?php if ($img['width'] >= 500 || $img['height'] >= 500) { ?>
-                              <input type="checkbox" class="checkboxEbayImage" onchange="toggleRad(<?php echo $i; ?>);" id="image-checkbox-<?php echo $i; ?>" name="img[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" <?php echo ( ($i == 0) ? 'checked="checked" ' : ''); ?> />
+                              <input type="checkbox" class="checkbox-ebay-image" onchange="toggleRad(<?php echo $i; ?>);" id="image-checkbox-<?php echo $i; ?>" name="img[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" <?php echo ( ($i == 0) ? 'checked="checked" ' : ''); ?> />
                             <?php } else { ?>
                               -
                             <?php } ?>
@@ -959,10 +959,7 @@
         </div>
       </div>
       <div class="panel-body" style="display: none;" id="page-complete">
-        <div class="alert alert-success">
-          <h5><?php echo $text_created_title; ?></h5>
-          <p><?php echo $text_created_msg; ?>: <span id="item-number"></span></p>
-        </div>
+        <div class="alert alert-success"><?php echo $text_created_msg; ?>: <span id="item-number"></span></div>
         <div class="well">
           <div class="row">
             <div class="col-sm-6 text-left">
@@ -1435,15 +1432,19 @@
             $('#location').val(data.data.location);
             $('#postcode').val(data.data.postcode);
             $('#dispatch_time').val(data.data.dispatch_time);
-            $('#national-handling-fee').val(data.data.national.calculated.handling_fee);
-            $('#international-handling-fee').val(data.data.international.calculated.handling_fee);
+            if (typeof(data.data.national.calculated) != "undefined") {
+              $('#national-handling-fee').val(data.data.national.calculated.handling_fee);
+            }
+            if (typeof(data.data.international.calculated) != "undefined") {
+              $('#international-handling-fee').val(data.data.international.calculated.handling_fee);
+            }
+            if (typeof data.data.country !== undefined && data.data.country) {
+              $('#country').val(data.data.country);
+            }
             if (data.data.get_it_fast == 1) {
               $('#get_it_fast').prop('checked', true);
             } else {
               $('#get_it_fast').prop('checked', false);
-            }
-            if (typeof data.data.country !== undefined && data.data.country) {
-              $('#country').val(data.data.country);
             }
             $('#options-national-flat').html(data.html.national_flat);
             $('#options-international-flat').html(data.html.international_flat);
@@ -1556,9 +1557,11 @@
     var err = 0;
     $('.listing-error').remove();
 
-    if ($('.checkboxEbayImage:checked').length > 0) {
+    if ($('.checkbox-ebay-image:checked').length > 0) {
       var main_image = $('[name=main_image]:checked').val();
-      if (!$('#image-checkbox-'+main_image).attr('checked')) {
+      var check_main_selected = '#image-checkbox-' + main_image.toString();
+
+      if (!$(check_main_selected).is(':checked')) {
         $('#page-listing').prepend('<div class="alert alert-warning listing-error"><?php echo $error_main_image; ?></div>');
         err = 1;
       }
@@ -1572,120 +1575,120 @@
       err = 1;
     }
 
-        if ($('#auction_duration').val() == '') {
+    if ($('#auction_duration').val() == '') {
+        err = 1;
+        alert('<?php echo $error_duration; ?>');
+    }
+
+    if ($('#gallery_height').val() == '' || $('#gallery_width').val() == '' || $('#thumb_height').val() == '' || $('#thumb_width').val() == '') {
+        err = 1;
+        alert('<?php echo $error_image_size; ?>');
+    }
+
+    if ($('#sku').val() == '') {
+        err = 1;
+        alert('<?php echo $error_sku; ?>');
+    }
+
+    if ($('#name').val() == '') {
+        err = 1;
+        alert('<?php echo $error_name; ?>');
+    }
+
+    if ($('#name').val().length > 75) {
+        err = 1;
+        alert('<?php echo $error_name_length; ?>');
+    }
+
+    if ($('#location').val() == '' && $('#postcode').val() == '') {
+        err = 1;
+        alert('<?php echo $error_item_location; ?>');
+    }
+
+    if ($('#dispatch_time').val() == '') {
+        err = 1;
+        alert('<?php echo $error_dispatch_time; ?>');
+    }
+
+    if ($('#count_national').val() == 0) {
+        err = 1;
+        alert('<?php echo $error_shipping_national; ?>');
+    }
+
+    if ($('#duration-input').val() == '') {
+        err = 1;
+        alert('<?php echo $error_listing_duration; ?>');
+    }
+
+    <?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])) { ?>
+        var hasOptions = "yes";
+    <?php } else { ?>
+        var hasOptions = "no";
+
+        if ($('#qty').val() < 1) {
             err = 1;
-            alert('<?php echo $error_duration; ?>');
+            alert('<?php echo $error_stock; ?>');
         }
+    <?php } ?>
 
-        if ($('#gallery_height').val() == '' || $('#gallery_width').val() == '' || $('#thumb_height').val() == '' || $('#thumb_width').val() == '') {
-            err = 1;
-            alert('<?php echo $error_image_size; ?>');
-        }
+    if (err == 0) {
+        $.ajax({
+            type:'POST',
+            dataType: 'json',
+            url: 'index.php?route=openbay/ebay/verify&token=<?php echo $token; ?>&options='+hasOptions,
+            data: $("#form").serialize(),
+            beforeSend: function() {
+              $('#button-save').hide();
+              $('#button-preview').hide();
+              $('#listing-fee-container').hide();
+              $('#button-verify').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+            },
+            success: function(data) {
+                if (data.error != true) {
+                    $('#page-listing').hide();
 
-        if ($('#sku').val() == '') {
-            err = 1;
-            alert('<?php echo $error_sku; ?>');
-        }
-
-        if ($('#name').val() == '') {
-            err = 1;
-            alert('<?php echo $error_name; ?>');
-        }
-
-        if ($('#name').val() == '') {
-            err = 1;
-            alert('<?php echo $error_name_length; ?>');
-        }
-
-        if ($('#location').val() == '' && $('#postcode').val() == '') {
-            err = 1;
-            alert('<?php echo $error_item_location; ?>');
-        }
-
-        if ($('#dispatch_time').val() == '') {
-            err = 1;
-            alert('<?php echo $error_dispatch_time; ?>');
-        }
-
-        if ($('#count_national').val() == 0) {
-            err = 1;
-            alert('<?php echo $error_shipping_national; ?>');
-        }
-
-        if ($('#duration-input').val() == '') {
-            err = 1;
-            alert('<?php echo $error_listing_duration; ?>');
-        }
-
-        <?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])) { ?>
-            var hasOptions = "yes";
-        <?php } else { ?>
-            var hasOptions = "no";
-
-            if ($('#qty').val() < 1) {
-                err = 1;
-                alert('<?php echo $error_stock; ?>');
-            }
-        <?php } ?>
-
-        if (err == 0) {
-            $.ajax({
-                type:'POST',
-                dataType: 'json',
-                url: 'index.php?route=openbay/ebay/verify&token=<?php echo $token; ?>&options='+hasOptions,
-                data: $("#form").serialize(),
-                beforeSend: function() {
-                  $('#button-save').hide();
-                  $('#button-preview').hide();
-                  $('#listing-fee-container').hide();
-                  $('#button-verify').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
-                },
-                success: function(data) {
-                    if (data.error != true) {
-                        $('#page-listing').hide();
-
-                        if (data.data.Errors) {
-                          data.Errors = $.makeArray(data.Errors);
-                          $.each(data.data.Errors, function(key, val) {
-                            $('#page-review').prepend('<div class="alert alert-danger">'+val+'</div>');
-                          });
-                        }
-
-                        if (data.data.Ack != 'Failure') {
-                          var fee_total = parseFloat(0.00);
-                          var currency = '';
-                          var html = '';
-
-                          data.data.Fees = $.makeArray(data.data.Fees);
-
-                          $.each(data.data.Fees, function(key, val) {
-                            if (val.Fee != 0.0 && val.Name != 'ListingFee') {
-                              fee_total = fee_total + parseFloat(val.Fee);
-                            }
-                            currency = val.Cur;
-                          });
-                          html += '<h5><?php echo $text_review_costs; ?>: '+currency+' '+fee_total.toFixed(2)+'</h5>';
-
-                          $('#listing-fee-container').html(html).show();
-                          $('#button-preview').attr('href', data.data.link).show();
-                          $('#button-save').show();
-                        }
-
-                        $('#page-review').show();
-                    } else {
-                        alert(data.msg);
+                    if (data.data.Errors) {
+                      data.Errors = $.makeArray(data.Errors);
+                      $.each(data.data.Errors, function(key, val) {
+                        $('#page-review').prepend('<div class="alert alert-danger">'+val+'</div>');
+                      });
                     }
-                },
-                complete: function () {
-                  $('#button-verify').empty().html('<?php echo $text_verify; ?>').removeAttr('disabled');
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
-              }
-            });
-        } else {
-          return;
-        }
+
+                    if (data.data.Ack != 'Failure') {
+                      var fee_total = parseFloat(0.00);
+                      var currency = '';
+                      var html = '';
+
+                      data.data.Fees = $.makeArray(data.data.Fees);
+
+                      $.each(data.data.Fees, function(key, val) {
+                        if (val.Fee != 0.0 && val.Name != 'ListingFee') {
+                          fee_total = fee_total + parseFloat(val.Fee);
+                        }
+                        currency = val.Cur;
+                      });
+                      html += '<h5><?php echo $text_review_costs; ?>: '+currency+' '+fee_total.toFixed(2)+'</h5>';
+
+                      $('#listing-fee-container').html(html).show();
+                      $('#button-preview').attr('href', data.data.link).show();
+                      $('#button-save').show();
+                    }
+
+                    $('#page-review').show();
+                } else {
+                    alert(data.msg);
+                }
+            },
+            complete: function () {
+              $('#button-verify').empty().html('<?php echo $text_verify; ?>').removeAttr('disabled');
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
+          }
+        });
+    } else {
+      return;
+    }
     });
 
   $('#button-save').bind('click', function() {
@@ -1823,9 +1826,9 @@
 
   $('#check-all-ebay-images').bind('change', function() {
     if ($('#check-all-ebay-images').is(':checked')) {
-      $('.checkboxEbayImage').prop('checked', 'checked');
+      $('.checkbox-ebay-image').prop('checked', 'checked');
     } else {
-      $('.checkboxEbayImage').removeAttr('checked');
+      $('.checkbox-ebay-image').removeAttr('checked');
     }
   });
 
@@ -1911,7 +1914,7 @@
                   }
 
                   if (data.data.ebay_img_ebay == 1) {
-                      $('.checkboxEbayImage').prop('checked', true);
+                      $('.checkbox-ebay-image').prop('checked', true);
                       $('#check-all-ebay-images').prop('checked', true);
                   }
 

@@ -23,7 +23,7 @@
         <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_manage; ?></h3>
       </div>
       <div class="panel-body">
-        <form action="<?php echo $btn_save; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
           <input type="hidden" name="type" value="<?php echo $type; ?>" />
           <input type="hidden" name="ebay_profile_id" value="<?php echo $ebay_profile_id; ?>" />
           <ul class="nav nav-tabs">

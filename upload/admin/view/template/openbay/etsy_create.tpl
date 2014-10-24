@@ -2,18 +2,26 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"> <a data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default" id="btn-cancel"><i class="fa fa-reply"></i></a> </div>
+      <div class="pull-right">
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default" id="btn-cancel"><i class="fa fa-reply"></i></a>
+      </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+          <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
         <?php } ?>
       </ul>
     </div>
   </div>
-  <div class="container-fluid" id="page-listing">
+  <div class="container-fluid">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_create; ?></h3>
+      </div>
+      <div class="panel-body">
+        <div id="page-listing">
     <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
     <?php } ?>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
       <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>"/>
@@ -35,7 +43,7 @@
                     <select name="top_category" id="input-category" class="form-control">
                       <option id="category-default"><?php echo $text_option; ?></option>
                       <?php foreach ($setting['top_categories'] as $value) { ?>
-                      <option value="<?php echo $value['category_name']; ?>"><?php echo $value['long_name']; ?></option>
+                        <option value="<?php echo $value['category_name']; ?>"><?php echo $value['long_name']; ?></option>
                       <?php } ?>
                     </select>
                   </div>
@@ -64,9 +72,9 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-description"><?php echo $entry_description; ?></label>
+            <label class="col-sm-2 control-label" for="input-description"><span data-toggle="tooltip" data-container="#tab-listing-general" title="<?php echo $help_description; ?>"><?php echo $entry_description; ?></span></label>
             <div class="col-sm-10">
-              <textarea name="description" placeholder="<?php echo $entry_description; ?>" id="input-description" class="form-control"><?php echo $product['description']; ?></textarea>
+              <textarea name="description" placeholder="<?php echo $entry_description; ?>" id="input-description" class="form-control"><?php echo $product['description_raw']; ?></textarea>
             </div>
           </div>
           <div class="form-group required">
@@ -265,14 +273,17 @@
       </div>
     </form>
   </div>
-  <div class="container-fluid" id="page-listing-success" style="display:none;">
-    <div class="well">
-      <div class="row">
-        <div class="col-sm-12">
-          <h3><?php echo $text_created; ?></h3>
-          <p><?php echo $text_listing_id; ?>: <span id="listing-id"></span></p>
-          <ul class="list-group" id="listing-image-status">
-          </ul>
+        <div id="page-listing-success" style="display:none;">
+          <div class="well">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3><?php echo $text_created; ?></h3>
+                <p><?php echo $text_listing_id; ?>: <span id="listing-id"></span></p>
+                <ul class="list-group" id="listing-image-status">
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

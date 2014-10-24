@@ -62,7 +62,6 @@ $_['text_review_costs_total']       = 'Total eBay fees';
 $_['text_review_edit']              = 'Edit';
 $_['text_preview']             	 	= 'Preview description';
 $_['text_verify']             	 	= 'Verify';
-$_['text_created_title']            = 'Listing created';
 $_['text_created_msg']              = 'Your eBay listing has been created. The eBay item number is';
 $_['text_option_images']            = 'Variation images';
 $_['text_option_images_grp']        = 'Choose option group';

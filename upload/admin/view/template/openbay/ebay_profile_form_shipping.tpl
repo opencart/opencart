@@ -23,7 +23,7 @@
         <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_manage; ?></h3>
       </div>
       <div class="panel-body">
-        <form action="<?php echo $btn_save; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
         <input type="hidden" name="type" value="<?php echo $type; ?>" />
         <input type="hidden" name="ebay_profile_id" value="<?php echo $ebay_profile_id; ?>" />
         <ul class="nav nav-tabs">
@@ -134,6 +134,7 @@
               </div>
             </div>
 
+            <?php if ($setting['shipping_types']['calculated'] == 1) { ?>
             <div id="national-container-calculated" style="display:none;" class="shipping-national-container">
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $text_shipping_handling_nat; ?></label>
@@ -161,7 +162,9 @@
                 </div>
               </div>
             </div>
+            <?php } ?>
 
+            <?php if ($setting['shipping_types']['freight'] == 1) { ?>
             <div id="national-container-freight" style="display:none;" class="shipping-national-container">
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $text_shipping_in_desc; ?></label>
@@ -171,6 +174,7 @@
                 </div>
               </div>
             </div>
+            <?php } ?>
 
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_shipping_type_int; ?></label>
@@ -206,35 +210,37 @@
               </div>
             </div>
 
-            <div id="international-container-calculated" style="display:none;" class="shipping-international-container">
-              <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $text_shipping_handling_nat; ?></label>
-                <div class="col-sm-10">
-                  <input type="text" name="data[international][calculated][handling_fee]" id="national-handling-fee" class="form-control" value="<?php echo $data['international']['calculated']['handling_fee']; ?>" />
+            <?php if ($setting['shipping_types']['calculated'] == 1) { ?>
+              <div id="international-container-calculated" style="display:none;" class="shipping-international-container">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><?php echo $text_shipping_handling_nat; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="data[international][calculated][handling_fee]" id="international-handling-fee" class="form-control" value="<?php echo $data['international']['calculated']['handling_fee']; ?>" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <div class="row">
+                      <div class="col-sm-12 text-right">
+                        <p><label class="control-label text-right"><?php echo $text_shipping_intnat; ?></label></p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12 text-right">
+                        <p><a class="btn btn-primary" onclick="addShipping('international', 'calculated');" id="add-international-calculated"><i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?></a></p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-12" id="options-international-calculated">
+                        <?php echo $html_international_calculated; ?>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="form-group">
-                <div class="col-sm-2">
-                  <div class="row">
-                    <div class="col-sm-12 text-right">
-                      <p><label class="control-label text-right"><?php echo $text_shipping_intnat; ?></label></p>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-12 text-right">
-                      <p><a class="btn btn-primary" onclick="addShipping('international', 'calculated');" id="add-international-calculated"><i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?></a></p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-10">
-                  <div class="row">
-                    <div class="col-sm-12" id="options-international-calculated">
-                      <?php echo $html_international_calculated; ?>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <?php } ?>
           </div>
         </div>
       </form>

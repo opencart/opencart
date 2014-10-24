@@ -58,7 +58,7 @@
             </div>
           </div>
         </div>
-        <table class="table">
+        <table class="table table-bordered table-hover">
           <thead>
             <tr>
               <th class="text-left"></th>
@@ -89,7 +89,7 @@
       </div>
       <div class="panel-body">
         <p><?php echo $text_text_linked_desc; ?></p>
-        <table class="table">
+        <table class="table table-bordered table-hover">
           <thead>
             <tr>
               <th class="text-left"><?php echo $column_product; ?></th>

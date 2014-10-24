@@ -25,7 +25,7 @@
             <h1 class="panel-title"><i class="fa fa-user"></i> <?php echo $text_current_plan; ?></h1>
           </div>
           <div class="panel-body">
-            <table class="table">
+            <table class="table table-bordered table-hover">
               <tbody>
                 <tr>
                   <td class="text-right"><b><?php echo $text_merchantid;?>:</b></td>
@@ -82,7 +82,7 @@
             <h1 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_available_plans; ?></h1>
           </div>
           <div class="panel-body">
-            <table class="table">
+            <table class="table table-bordered table-hover">
               <thead>
                 <tr>
                   <td class="text-right"><?php echo $column_name; ?></td>

@@ -17,4 +17,20 @@ $('#carousel<?php echo $module; ?>').flexslider({
 	minItems: 2,
     maxItems: 4
 });
+
+$(window).on('resize', function() {
+	setTimeout(function() {
+		$('#carousel<?php echo $module; ?>').data('flexslider').resize();
+	}, 1000);
+});
+--></script>
+
+
+<script type="text/javascript"><!--
+$('#carousel<?php echo $module; ?> .carousel-indicators li:first, #carousel<?php echo $module; ?> .item:first').addClass('active');
+
+$('#carousel<?php echo $module; ?>').carousel({
+	interval: 2000,
+	wrap: true
+});
 --></script>

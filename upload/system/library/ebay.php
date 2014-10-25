@@ -1374,7 +1374,7 @@ final class Ebay {
 				$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'measurement_types' LIMIT 1");
 
 				if ($qry->num_rows > 0) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "measurement_types` SET `data` = '" . $this->db->escape(serialize($response['measurement_types'])) . "', `last_updated`  = now() WHERE `key` = 'measurement_types' LIMIT 1");
+					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['measurement_types'])) . "', `last_updated`  = now() WHERE `key` = 'measurement_types' LIMIT 1");
 					$this->log('Updated measurement_types info in to ebay_setting_option table');
 				} else {
 					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'measurement_types', `data` = '" . $this->db->escape(serialize($response['measurement_types'])) . "', `last_updated`  = now()");

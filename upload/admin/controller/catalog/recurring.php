@@ -532,7 +532,7 @@ class ControllerCatalogRecurring extends Controller {
 		$this->load->model('catalog/product');
 
 		foreach ($this->request->post['selected'] as $recurring_id) {
-			$product_total = $this->model_catalog_product->getTotalProductsByRcurringId($recurring_id);
+			$product_total = $this->model_catalog_product->getTotalProductsByProfileId($recurring_id);
 
 			if ($product_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_product'), $product_total);

@@ -1,12 +1,12 @@
 <?php
 // Heading
-$_['heading_title']			  = 'Moneybookers';
+$_['heading_title']			  = 'Skrill';
 
 // Text
 $_['text_payment']			  = 'Payment';
-$_['text_success']			  = 'Success: You have modified the Moneybookers details.';
-$_['text_edit']               = 'Edit Moneybookers';
-$_['text_moneybookers']		  = '<a href="https://www.moneybookers.com/partners/?p=OpenCart" target="_blank"><img src="view/image/payment/moneybookers.png" alt="Moneybookers" title="Moneybookers" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_success']			  = 'Success: You have modified the Skrill details.';
+$_['text_edit']               = 'Edit Skrill';
+$_['text_Skrill']	     	  = '<a href="https://www.moneybookers.com/partners/?p=OpenCart" target="_blank"><img src="view/image/payment/moneybookers.png" alt="Skrill" title="Skrill" style="border: 1px solid #EEEEEE;" /></a>';
 
 // Entry
 $_['entry_email']			  = 'E-Mail';
@@ -25,5 +25,5 @@ $_['entry_sort_order']		  = 'Sort Order';
 $_['help_total']			  = 'The checkout total the order must reach before this payment method becomes active.';
 
 // Error
-$_['error_permission']		  = 'Warning: You do not have permission to modify Moneybookers!';
+$_['error_permission']		  = 'Warning: You do not have permission to modify Skrill!';
 $_['error_email']			  = 'E-Mail Required!';

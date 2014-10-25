@@ -14,8 +14,8 @@
     </div>
   </div>
   <div class="container-fluid">
-    <?php if (isset($error['error_warning'])) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error['error_warning']; ?>
+    <?php if ($error_warning) { ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <?php } ?>
@@ -29,8 +29,8 @@
             <label class="col-sm-2 control-label" for="entry-vender"><span data-toggle="tooltip" title="<?php echo $help_vendor; ?>"><?php echo $entry_vendor; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="pp_payflow_iframe_vendor" value="<?php echo $pp_payflow_iframe_vendor; ?>" placeholder="<?php echo $entry_vendor; ?>" id="entry-vender" class="form-control"/>
-              <?php if (isset($error['vendor'])) { ?>
-              <div class="text-danger"><?php echo $error['vendor']; ?></div>
+              <?php if ($error_vendor) { ?>
+              <div class="text-danger"><?php echo $error_vendor; ?></div>
               <?php } ?>
             </div>
           </div>
@@ -38,8 +38,8 @@
             <label class="col-sm-2 control-label" for="entry-user"><span data-toggle="tooltip" title="<?php echo $help_user; ?>"><?php echo $entry_user; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="pp_payflow_iframe_user" value="<?php echo $pp_payflow_iframe_user; ?>" placeholder="<?php echo $entry_user; ?>" id="entry-user" class="form-control"/>
-              <?php if (isset($error['user'])) { ?>
-              <div class="text-danger"><?php echo $error['user']; ?></div>
+              <?php if ($error_user) { ?>
+              <div class="text-danger"><?php echo $error_user; ?></div>
               <?php } ?>
             </div>
           </div>
@@ -47,8 +47,8 @@
             <label class="col-sm-2 control-label" for="entry-password"><span data-toggle="tooltip" title="<?php echo $help_password; ?>"><?php echo $entry_password; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="pp_payflow_iframe_password" value="<?php echo $pp_payflow_iframe_password; ?>" placeholder="<?php echo $entry_password; ?>" id="entry-password" class="form-control"/>
-              <?php if (isset($error['password'])) { ?>
-              <div class="text-danger"><?php echo $error['password']; ?></div>
+              <?php if ($error_password) { ?>
+              <div class="text-danger"><?php echo $error_password; ?></div>
               <?php } ?>
             </div>
           </div>
@@ -56,8 +56,8 @@
             <label class="col-sm-2 control-label" for="entry-partner"><span data-toggle="tooltip" title="<?php echo $help_partner; ?>"><?php echo $entry_partner; ?></span></label>
             <div class="col-sm-10">
               <input type="text" name="pp_payflow_iframe_partner" value="<?php echo $pp_payflow_iframe_partner; ?>" placeholder="<?php echo $entry_partner; ?>" id="entry-partner" class="form-control"/>
-              <?php if (isset($error['partner'])) { ?>
-              <div class="text-danger"><?php echo $error['partner']; ?></div>
+              <?php if ($error_partner) { ?>
+              <div class="text-danger"><?php echo $error_partner; ?></div>
               <?php } ?>
             </div>
           </div>
@@ -175,7 +175,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label"><?php echo $entry_cancel_url; ?></label>
             <div class="col-sm-10">
-              <div class="input-group"> <span class="input-group-addon"><i class="fa fa-link"></i></span>
+              <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
                 <input type="text" value="<?php echo $cancel_url ?>" class="form-control" />
               </div>
             </div>
@@ -183,7 +183,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label"><?php echo $entry_error_url; ?></label>
             <div class="col-sm-10">
-              <div class="input-group"> <span class="input-group-addon"><i class="fa fa-link"></i></span>
+              <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
                 <input type="text" value="<?php echo $error_url ?>" class="form-control" />
               </div>
             </div>
@@ -191,7 +191,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label"><?php echo $entry_return_url; ?></label>
             <div class="col-sm-10">
-              <div class="input-group"> <span class="input-group-addon"><i class="fa fa-link"></i></span>
+              <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
                 <input type="text" value="<?php echo $return_url ?>" class="form-control" />
               </div>
             </div>
@@ -199,7 +199,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label"><?php echo $entry_post_url; ?></label>
             <div class="col-sm-10">
-              <div class="input-group"> <span class="input-group-addon"><i class="fa fa-link"></i></span>
+              <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
                 <input type="text" value="<?php echo $post_url ?>" class="form-control" />
               </div>
             </div>

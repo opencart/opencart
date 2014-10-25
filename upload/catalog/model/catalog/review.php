@@ -33,7 +33,7 @@ class ModelCatalogReview extends Model {
 			$emails = explode(',', $this->config->get('config_mail_alert'));
 
 			foreach ($emails as $email) {
-				if ($email && preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $email)) {
+				if ($email && preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $email)) {
 					$mail->setTo($email);
 					$mail->send();
 				}

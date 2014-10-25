@@ -72,21 +72,13 @@ class ControllerPaymentRealexRemote extends Controller {
 		$data['help_card_data_status'] = $this->language->get('help_card_data_status');
 		$data['help_notification'] = $this->language->get('help_notification');
 
+		$data['tab_api'] = $this->language->get('tab_api');
 		$data['tab_account'] = $this->language->get('tab_account');
-		$data['tab_sub_account'] = $this->language->get('tab_sub_account');
 		$data['tab_order_status'] = $this->language->get('tab_order_status');
 		$data['tab_payment'] = $this->language->get('tab_payment');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
-
-		$this->load->model('localisation/order_status');
-
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-
-		$this->load->model('localisation/geo_zone');
-
-		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -150,6 +142,10 @@ class ControllerPaymentRealexRemote extends Controller {
 			$data['realex_remote_geo_zone_id'] = $this->config->get('realex_remote_geo_zone_id');
 		}
 
+		$this->load->model('localisation/geo_zone');
+
+		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+		
 		if (isset($this->request->post['realex_remote_total'])) {
 			$data['realex_remote_total'] = $this->request->post['realex_remote_total'];
 		} else {
@@ -245,6 +241,10 @@ class ControllerPaymentRealexRemote extends Controller {
 		} else {
 			$data['realex_remote_order_status_decline_bank_id'] = $this->config->get('realex_remote_order_status_decline_bank_id');
 		}
+		
+		$this->load->model('localisation/order_status');
+
+		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -448,10 +448,6 @@ class ControllerPaymentRealexRemote extends Controller {
 			$this->error['error_secret'] = $this->language->get('error_secret');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 }

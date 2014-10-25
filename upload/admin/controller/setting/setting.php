@@ -15,7 +15,7 @@ class ControllerSettingSetting extends Controller {
 			if ($this->config->get('config_currency_auto')) {
 				$this->load->model('localisation/currency');
 
-				$this->model_localisation_currency->updateCurrencies();
+				$this->model_localisation_currency->refresh();
 			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -84,6 +84,7 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$data['entry_customer_group_display'] = $this->language->get('entry_customer_group_display');
 		$data['entry_customer_price'] = $this->language->get('entry_customer_price');
+		$data['entry_login_attempts'] = $this->language->get('entry_login_attempts');
 		$data['entry_account'] = $this->language->get('entry_account');
 		$data['entry_account_mail'] = $this->language->get('entry_account_mail');
 		$data['entry_invoice_prefix'] = $this->language->get('entry_invoice_prefix');
@@ -174,6 +175,7 @@ class ControllerSettingSetting extends Controller {
 		$data['help_customer_group'] = $this->language->get('help_customer_group');
 		$data['help_customer_group_display'] = $this->language->get('help_customer_group_display');
 		$data['help_customer_price'] = $this->language->get('help_customer_price');
+		$data['help_login_attempts'] = $this->language->get('help_login_attempts');		
 		$data['help_account'] = $this->language->get('help_account');
 		$data['help_account_mail'] = $this->language->get('help_account_mail');
 		$data['help_api'] = $this->language->get('help_api');
@@ -284,13 +286,19 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['error_zone'] = '';
 		}
-
+	
 		if (isset($this->error['customer_group_display'])) {
 			$data['error_customer_group_display'] = $this->error['customer_group_display'];
 		} else {
 			$data['error_customer_group_display'] = '';
 		}
-
+		
+		if (isset($this->error['login_attempts'])) {
+			$data['error_login_attempts'] = $this->error['login_attempts'];
+		} else {
+			$data['error_login_attempts'] = '';
+		}	
+		
 		if (isset($this->error['voucher_min'])) {
 			$data['error_voucher_min'] = $this->error['voucher_min'];
 		} else {
@@ -510,7 +518,7 @@ class ControllerSettingSetting extends Controller {
 		} elseif ($this->config->get('config_image') && is_file(DIR_IMAGE . $this->config->get('config_image'))) {
 			$data['thumb'] = $this->model_tool_image->resize($this->config->get('config_image'), 100, 100);
 		} else {
-			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);;
+			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
@@ -750,7 +758,15 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_customer_price'] = $this->config->get('config_customer_price');
 		}
-
+		
+		if (isset($this->request->post['config_login_attempts'])) {
+			$data['config_login_attempts'] = $this->request->post['config_login_attempts'];
+		} elseif ($this->config->has('config_login_attempts')) {
+			$data['config_login_attempts'] = $this->config->get('config_login_attempts');
+		} else {
+			$data['config_login_attempts'] = 5;
+		}
+		
 		if (isset($this->request->post['config_account_id'])) {
 			$data['config_account_id'] = $this->request->post['config_account_id'];
 		} else {
@@ -1271,7 +1287,7 @@ class ControllerSettingSetting extends Controller {
 			$this->error['address'] = $this->language->get('error_address');
 		}
 
-		if ((utf8_strlen($this->request->post['config_email']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['config_email'])) {
+		if ((utf8_strlen($this->request->post['config_email']) > 96) || !preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['config_email'])) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 
@@ -1282,11 +1298,15 @@ class ControllerSettingSetting extends Controller {
 		if (!$this->request->post['config_meta_title']) {
 			$this->error['meta_title'] = $this->language->get('error_meta_title');
 		}
-
+		
 		if (!empty($this->request->post['config_customer_group_display']) && !in_array($this->request->post['config_customer_group_id'], $this->request->post['config_customer_group_display'])) {
 			$this->error['customer_group_display'] = $this->language->get('error_customer_group_display');
 		}
-
+		
+		if ($this->request->post['config_login_attempts'] < 1) {
+			$this->error['login_attempts'] = $this->language->get('error_login_attempts');
+		}
+		
 		if (!$this->request->post['config_voucher_min']) {
 			$this->error['voucher_min'] = $this->language->get('error_voucher_min');
 		}

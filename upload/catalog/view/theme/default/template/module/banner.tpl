@@ -1,19 +1,21 @@
-<div id="carousel<?php echo $module; ?>" class="flexslider">
-  <ul class="slides">
+<div id="banner<?php echo $module; ?>" class="carousel fade" data-ride="carousel">
+  <div class="carousel-inner">
     <?php foreach ($banners as $banner) { ?>
-    <?php if ($banner['link']) { ?>
-    <li><a href="<?php echo $banner['link']; ?>"><img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" class="img-responsive" /></a></li>
-    <?php } else { ?>
-    <li><img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" class="img-responsive" /></li>
+    <div class="item">
+      <?php if ($banner['link']) { ?>
+      <a href="<?php echo $banner['link']; ?>"><img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" class="img-responsive" /></a>
+      <?php } else { ?>
+      <img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" class="img-responsive" />
+      <?php } ?>
+    </div>
     <?php } ?>
-    <?php } ?>
-  </ul>
+  </div>
 </div>
 <script type="text/javascript"><!--
-$('banner<?php echo $module; ?>').flexslider({
-	animation: 'slide',
-	animationLoop: true,
-	itemWidth: 1,
-	itemMargin: 5
+$('#banner<?php echo $module; ?> .item:first').addClass('active');
+
+$('#banner<?php echo $module; ?>').carousel({
+	interval: 2000,
+	wrap: true
 });
 --></script>

@@ -31,7 +31,7 @@ $_['help_airsure_rate_1']                    = 'Example: 5:10.00,7:12.00 Weight:
 $_['help_airsure_insurance_1']               = 'Enter values upto 5,2 decimal places. (12345.67) Example: 34:0,100:1,250:2.25 - Insurance cover for cart values upto 34 would cost 0.00 extra, those values more than 100 and upto 250 will cost 2.25 extra. Do not enter currency symbols.<br /><br />These rates will only be applied to the below countries:<br />AD, AT, BE, CH, DE, DK, ES, FO, FI, FR, IE, IS, LI, LU, MC, NL, PT, SE';
 $_['help_airsure_rate_2']                    = 'Example: 5:10.00,7:12.00 Weight:Cost,Weight:Cost, etc..<br /><br />These rates will only be applied to the below countries:<br />BR, CA, HK, MY, NZ, SG, US';
 $_['help_airsure_insurance_2']               = 'Enter values upto 5,2 decimal places. (12345.67) Example: 34:0,100:1,250:2.25 - Insurance cover for cart values upto 34 would cost 0.00 extra, those values more than 100 and upto 250 will cost 2.25 extra. Do not enter currency symbols.<br /><br />These rates will only be applied to the below countries:<br />BR, CA, HK, MY, NZ, SG, US';
-$_['help_display_weight']                    = 'Do you want to display the shipping weight? (e.g. Delivery Weight : 2.7674 Kg\'s)';
+$_['help_display_weight']                    = 'Do you want to display the shipping weight? (e.g. Delivery Weight : 2.7674 kg)';
 $_['help_display_insurance']                 = 'Do you want to display the shipping insurance? (e.g. Insured upto &pound;500)';
 
 // Tab

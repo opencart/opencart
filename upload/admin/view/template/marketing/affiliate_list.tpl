@@ -90,7 +90,7 @@
             </div>
           </div>
         </div>
-        <form action="" method="post" enctype="multipart/form-data" id="form-affiliate">
+        <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-affiliate">
           <div class="table-responsive">
             <table class="table table-bordered table-hover">
               <thead>
@@ -134,11 +134,16 @@
                   <td class="text-right"><?php echo $affiliate['balance']; ?></td>
                   <td class="text-left"><?php echo $affiliate['status']; ?></td>
                   <td class="text-left"><?php echo $affiliate['date_added']; ?></td>
-                  <td class="text-right"><?php if (!$affiliate['approved']) { ; ?>
+                  <td class="text-right"><?php if (!$affiliate['approve']) { ; ?>
                     <a href="<?php echo $affiliate['approve']; ?>" data-toggle="tooltip" title="<?php echo $button_approve; ?>" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i></a>
                     <?php } else { ?>
                     <button type="button" class="btn btn-success" disabled><i class="fa fa-thumbs-o-up"></i></button>
                     <?php } ?>
+                    <?php if ($affiliate['unlock']) { ; ?>
+                    <a href="<?php echo $affiliate['unlock']; ?>" data-toggle="tooltip" title="<?php echo $button_unlock; ?>" class="btn btn-warning"><i class="fa fa-unlock"></i></a>
+                    <?php } else { ?>
+                    <button type="button" class="btn btn-warning" disabled><i class="fa fa-unlock"></i></button>
+                    <?php } ?>                   
                     <a href="<?php echo $affiliate['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 <?php } ?>

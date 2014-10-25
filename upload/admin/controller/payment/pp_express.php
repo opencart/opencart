@@ -11,8 +11,6 @@ class ControllerPaymentPPExpress extends Controller {
 		$this->load->model('extension/extension');
 		$this->load->model('payment/pp_express');
 
-		$this->error = array();
-
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			unset($this->request->post['pp_express_module']);
 
@@ -21,8 +19,6 @@ class ControllerPaymentPPExpress extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
-		} else {
-			$data['error'] = @$this->error;
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -63,12 +59,10 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['entry_reversed_status'] = $this->language->get('entry_reversed_status');
 		$data['entry_voided_status'] = $this->language->get('entry_voided_status');
 		$data['entry_currency'] = $this->language->get('entry_currency');
-
 		$data['entry_recurring_cancellation'] = $this->language->get('entry_recurring_cancellation');
 		$data['entry_display_checkout'] = $this->language->get('entry_display_checkout');
 		$data['entry_allow_notes'] = $this->language->get('entry_allow_notes');
 		$data['entry_logo'] = $this->language->get('entry_logo');
-
 		$data['entry_border_colour'] = $this->language->get('entry_border_colour');
 		$data['entry_header_colour'] = $this->language->get('entry_header_colour');
 		$data['entry_page_colour'] = $this->language->get('entry_page_colour');
@@ -79,12 +73,40 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['help_currency'] = $this->language->get('help_currency');
 		$data['help_logo'] = $this->language->get('help_logo');
 		$data['help_colour'] = $this->language->get('help_colour');
-
+		
+		$data['button_save'] = $this->language->get('button_save');
+		$data['button_cancel'] = $this->language->get('button_cancel');
+		$data['button_search'] = $this->language->get('button_search');
+		
+		$data['tab_api'] = $this->language->get('tab_api');
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_order_status'] = $this->language->get('tab_order_status');
-		$data['tab_api_details'] = $this->language->get('tab_api_details');
-		$data['tab_customise'] = $this->language->get('tab_customise');
+		$data['tab_checkout'] = $this->language->get('tab_checkout');
+		
+		if (isset($this->error['warning'])) {
+			$data['error_warning'] = $this->error['warning'];
+		} else {
+			$data['error_warning'] = '';
+		}
+		
+		if (isset($this->error['username'])) {
+			$data['error_username'] = $this->error['username'];
+		} else {
+			$data['error_username'] = '';
+		}
 
+		if (isset($this->error['password'])) {
+			$data['error_password'] = $this->error['password'];
+		} else {
+			$data['error_password'] = '';
+		}
+
+		if (isset($this->error['signature'])) {
+			$data['error_signature'] = $this->error['signature'];
+		} else {
+			$data['error_signature'] = '';
+		}
+				
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -102,7 +124,6 @@ class ControllerPaymentPPExpress extends Controller {
 			'href' => $this->url->link('payment/pp_express', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
-		//button actions
 		$data['action'] = $this->url->link('payment/pp_express', 'token=' . $this->session->data['token'], 'SSL');
 		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
 		$data['search'] = $this->url->link('payment/pp_express/search', 'token=' . $this->session->data['token'], 'SSL');
@@ -247,17 +268,15 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$this->load->model('tool/image');
 
-		$logo = $this->config->get('pp_express_logo');
-
-		if (isset($this->request->post['pp_express_logo']) && file_exists(DIR_IMAGE . $this->request->post['pp_express_logo'])) {
+		if (isset($this->request->post['pp_express_logo']) && is_file(DIR_IMAGE . $this->request->post['pp_express_logo'])) {
 			$data['thumb'] = $this->model_tool_image->resize($this->request->post['pp_express_logo'], 750, 90);
-		} elseif (($logo != '') && file_exists(DIR_IMAGE . $logo)) {
-			$data['thumb'] = $this->model_tool_image->resize($logo, 750, 90);
+		} elseif (is_file(DIR_IMAGE . $this->config->get('pp_express_logo'))) {
+			$data['thumb'] = $this->model_tool_image->resize($this->config->get('pp_express_logo'), 750, 90);
 		} else {
 			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 750, 90);
 		}
 
-		$data['no_image'] = $this->model_tool_image->resize('no_image.png', 750, 90);
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 750, 90);
 
 		if (isset($this->request->post['pp_express_geo_zone_id'])) {
 			$data['pp_express_geo_zone_id'] = $this->request->post['pp_express_geo_zone_id'];
@@ -303,23 +322,19 @@ class ControllerPaymentPPExpress extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (empty($this->request->post['pp_express_username'])) {
+		if (!$this->request->post['pp_express_username']) {
 			$this->error['username'] = $this->language->get('error_username');
 		}
 
-		if (empty($this->request->post['pp_express_password'])) {
+		if (!$this->request->post['pp_express_password']) {
 			$this->error['password'] = $this->language->get('error_password');
 		}
 
-		if (empty($this->request->post['pp_express_signature'])) {
+		if (!$this->request->post['pp_express_signature']) {
 			$this->error['signature'] = $this->language->get('error_signature');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 
 	public function resend() {

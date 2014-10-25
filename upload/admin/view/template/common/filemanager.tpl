@@ -55,9 +55,8 @@ $('a.thumbnail').on('click', function(e) {
 	
 	<?php if ($target) { ?>
 	$('#<?php echo $target; ?>').attr('value', $(this).parent().find('input').attr('value'));
-	<?php } ?>
-	
-	var range, sel = window.getSelection(); 
+	<?php } else { ?>
+	var range, sel = document.getSelection(); 
 	
 	if (sel.rangeCount) { 
 		var img = document.createElement('img');
@@ -66,7 +65,8 @@ $('a.thumbnail').on('click', function(e) {
 		range = sel.getRangeAt(0); 
 		range.insertNode(img); 
 	}
-	
+	<?php } ?>
+
 	$('#modal-image').modal('hide');
 });
 
@@ -118,25 +118,27 @@ $('#button-search').on('click', function() {
 $('#button-upload').on('click', function() {
 	$('#form-upload').remove();
 	
-	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
-
-	$('#form-upload input[name=\'file\']').trigger('click');
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload"><input type="file" name="file" value="" onchange="$(\'#test\').click();" /><input type="submit" id="test" /></form>');
 	
-	$('#form-upload input[name=\'file\']').on('change', function() {
+	$('#form-upload input[name=\'file\']').trigger('click');	
+	
+	$('#test').on('click', function(e) {
+		e.preventDefault();
+		return false;
+		alert('hi');
+		/*
 		$.ajax({
 			url: 'index.php?route=common/filemanager/upload&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>',
 			type: 'post',		
 			dataType: 'json',
-			data: new FormData($(this).parent()[0]),
+			data: new FormData($(this)[0]),
 			cache: false,
 			contentType: false,
 			processData: false,		
 			beforeSend: function() {
-				$('#button-upload i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 				$('#button-upload').prop('disabled', true);
 			},
 			complete: function() {
-				$('#button-upload i').replaceWith('<i class="fa fa-upload"></i>');
 				$('#button-upload').prop('disabled', false);
 			},
 			success: function(json) {
@@ -153,10 +155,14 @@ $('#button-upload').on('click', function() {
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
-		});
+		});	
+		*/
 	});
+	
 });
-
+function upload() {
+	alert('hi');
+}
 $('#button-folder').popover({
 	html: true,
 	placement: 'bottom',
@@ -180,11 +186,9 @@ $('#button-folder').on('shown.bs.popover', function() {
 			dataType: 'json',
 			data: 'folder=' + encodeURIComponent($('input[name=\'folder\']').val()),
 			beforeSend: function() {
-				$('#button-create i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 				$('#button-create').prop('disabled', true);
 			},
 			complete: function() {
-				$('#button-create i').replaceWith('<i class="fa fa-plus-circle"></i>');
 				$('#button-create').prop('disabled', false);
 			},
 			success: function(json) {
@@ -213,11 +217,9 @@ $('#modal-image #button-delete').on('click', function(e) {
 			dataType: 'json',
 			data: $('input[name^=\'path\']:checked'),
 			beforeSend: function() {
-				$('#button-delete i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 				$('#button-delete').prop('disabled', true);
 			},	
 			complete: function() {
-				$('#button-delete i').replaceWith('<i class="fa fa-trash-o"></i>');
 				$('#button-delete').prop('disabled', false);
 			},		
 			success: function(json) {

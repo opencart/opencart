@@ -518,10 +518,6 @@ class ControllerPaymentFirstdataRemote extends Controller {
 			$this->error['error_ca'] = $this->language->get('error_ca');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 }

@@ -143,7 +143,7 @@ class ControllerCheckoutRegister extends Controller {
 				$json['error']['lastname'] = $this->language->get('error_lastname');
 			}
 
-			if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email'])) {
+			if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['email'])) {
 				$json['error']['email'] = $this->language->get('error_email');
 			}
 
@@ -218,6 +218,9 @@ class ControllerCheckoutRegister extends Controller {
 
 		if (!$json) {
 			$customer_id = $this->model_account_customer->addCustomer($this->request->post);
+			
+			// Clear any previous login attempts for unregistered accounts.
+			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
 
 			$this->session->data['account'] = 'register';
 

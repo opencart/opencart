@@ -106,6 +106,8 @@ $(document).ready(function() {
 	$(document).delegate('button[data-toggle=\'image\']', 'click', function() {
 		$('#modal-image').remove();
 		
+		$(this).parents('.note-editor').find('.note-editable').focus();
+				
 		$.ajax({
 			url: 'index.php?route=common/filemanager&token=' + getURLVar('token'),
 			dataType: 'html',
@@ -139,7 +141,7 @@ $(document).ready(function() {
 				return '<button type="button" id="button-image" class="btn btn-primary"><i class="fa fa-pencil"></i></button> <button type="button" id="button-clear" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>';
 			}
 		});
-	
+		
 		$(element).popover('toggle');		
 	
 		$('#button-image').on('click', function() {
@@ -182,7 +184,55 @@ $(document).ready(function() {
 	$(document).ajaxStop(function() {
 		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 	});	
+	
+	/*
+	// Upload
+	$(document).delegate('button[data-toggle=\'upload\']', 'click', function(e) {	
+		$('#form-upload').remove();
+		
+		$('body').prepend('<form enctype="multipart/form-data" id="form-upload"><input type="file" name="file" onchange="upload();" /></form>');
+		// onsubmit="return false;"
+		$('#form-upload input[name=\'file\']').trigger('click');
+		
+		$('#form-upload').on('submit', function(e) {
+			alert('hi');
+		});
+		
+		$.ajax({
+			url: $(this).attr('data-url'),
+			type: 'post',		
+			dataType: 'json',
+			data: new FormData($('#form-upload')[0]),
+			cache: false,
+			contentType: false,
+			processData: false,		
+			beforeSend: function() {
+				$('#button-upload').prop('disabled', true);
+			},
+			complete: function() {
+				$('#button-upload').prop('disabled', false);
+			},
+			success: function(json) {
+				if (json['error']) {
+					alert(json['error']);
+				}
+				
+				if (json['success']) {
+					alert(json['success']);
+					
+					$('#button-refresh').trigger('click');
+				}
+			},			
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});		
+	
+	});	
+	*/
 });
+
+
 
 // Autocomplete */
 (function($) {

@@ -55,7 +55,7 @@ class ControllerPaymentPPStandard extends Controller {
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		$data['tab_general'] = $this->language->get('tab_general');
-		$data['tab_status'] = $this->language->get('tab_status');
+		$data['tab_order_status'] = $this->language->get('tab_order_status');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

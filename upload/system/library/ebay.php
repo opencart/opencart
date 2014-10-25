@@ -1006,9 +1006,9 @@ final class Ebay {
 				}
 
 				if ($img['imgcount'] == 0) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `image` = 'data/" . $img['name'] . "' WHERE `product_id` = '" . (int)$img['product_id'] . "' LIMIT 1");
+					$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `image` = 'catalog/" . $img['name'] . "' WHERE `product_id` = '" . (int)$img['product_id'] . "' LIMIT 1");
 				} else {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "product_image` SET `product_id` = '" . (int)$img['product_id'] . "', `image` = 'data/" . $this->db->escape($img['name']) . "', `sort_order` = '" . (int)$img['imgcount'] . "'");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "product_image` SET `product_id` = '" . (int)$img['product_id'] . "', `image` = 'catalog/" . $this->db->escape($img['name']) . "', `sort_order` = '" . (int)$img['imgcount'] . "'");
 				}
 
 				$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_image_import` WHERE `id` = '" . (int)$img['id'] . "' LIMIT 1");

@@ -334,7 +334,7 @@ class ModelOpenbayEbayProduct extends Model {
 					foreach ($item['pictures'] as $img) {
 						if (!empty($img)) {
 							$name = rand(500000, 1000000000);
-							$this->addImage($img, DIR_IMAGE . 'data/' . $name . '.jpg', $name . '.jpg', $product_id, $img_count);
+							$this->addImage($img, DIR_IMAGE . 'catalog/' . $name . '.jpg', $name . '.jpg', $product_id, $img_count);
 							$img_count++;
 						}
 					}

@@ -1,6 +1,6 @@
 <?php
 // Headings
-$_['heading_title']      		= 'Create new Etsy listing';
+$_['heading_title']      		= 'New listing';
 $_['text_openbay']          	= 'OpenBay Pro';
 $_['text_etsy']             	= 'Etsy';
 
@@ -18,6 +18,7 @@ $_['text_created']  			= 'Your listing has been created';
 $_['text_listing_id']  			= 'Listing ID';
 $_['text_img_upload']  			= 'Uploading image';
 $_['text_img_upload_done']  	= 'Uploaded image';
+$_['text_create']  				= 'Create a new Etsy listing';
 
 // Entry
 $_['entry_title']      			= 'Product title';
@@ -44,6 +45,9 @@ $_['entry_shop']  				= 'Shop section';
 $_['entry_is_custom']  			= 'Can it be customised?';
 $_['entry_image']  				= 'Main image';
 $_['entry_image_other']			= 'Other images';
+
+// Help
+$_['help_description']			= 'All HTML has been removed from your description as it is not supported on Etsy';
 
 // Errors
 $_['error_no_shipping']  		= 'You have not setup any shipping profiles!';

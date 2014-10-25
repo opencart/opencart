@@ -68,6 +68,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		}
 
 		$data['product'] = $product_info;
+		$data['product']['description_raw'] = trim(strip_tags(html_entity_decode($data['product']['description'], ENT_QUOTES, 'UTF-8')));
 
 		$setting = array();
 
@@ -426,6 +427,8 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$this->load->model('openbay/etsy_product');
 
 		$data = $this->load->language('openbay/etsy_links');
+
+		$data['cancel']   = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], 'SSL');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');

@@ -1,6 +1,6 @@
 <?php
 //Heading
-$_['text_page_title']               = 'Bulk listing';
+$_['heading_title']               	= 'New listings';
 $_['text_ebay']               		= 'eBay';
 $_['text_openbay']               	= 'Openbay Pro';
 
@@ -15,6 +15,7 @@ $_['text_catalog']                  = 'Select catalog';
 $_['text_catalog_search']           = 'Search catalog';
 $_['text_search_term']           	= 'Search term';
 $_['text_close']           			= 'Close';
+$_['text_bulk']           			= 'Create new listings in bulk';
 
 //Form options / text
 $_['text_pixels']                   = 'Pixels';

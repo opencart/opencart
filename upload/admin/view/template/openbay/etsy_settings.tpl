@@ -4,7 +4,8 @@
     <div class="container-fluid">
       <div class="pull-right">
         <button type="submit" form="form-etsy-settings" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary" onclick="validateForm(); return false;"><i class="fa fa-check-circle"></i></button>
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
+      </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -15,18 +16,21 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
     <?php } ?>
     <?php if ($account_info != false) { ?>
-    <?php if ($account_info['header_code'] == 200) { ?>
-    <div class="alert alert-success"><i class="fa fa-check"></i> <?php echo $text_account_ok; ?></div>
-    <?php } else { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_account_info; ?> (<?php echo $account_info['header_code']; ?>)</div>
+      <?php if ($account_info['header_code'] == 200) { ?>
+        <div class="alert alert-success"><i class="fa fa-check"></i> <?php echo $text_account_ok; ?></div>
+      <?php } else { ?>
+        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_account_info; ?> (<?php echo $account_info['header_code']; ?>)</div>
+      <?php } ?>
     <?php } ?>
-    <?php } ?>
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-etsy-settings" class="form-horizontal">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_edit; ?></h3>
+      </div>
+      <div class="panel-body">
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-etsy-settings" class="form-horizontal">
       <ul class="nav nav-tabs">
         <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_api_info; ?></a></li>
       </ul>
@@ -120,6 +124,8 @@
         </div>
       </div>
     </form>
+      </div>
+    </div>
   </div>
 </div>
 <script type="text/javascript"><!--

@@ -1,6 +1,6 @@
 <?php
 // Headings
-$_['heading_title']        		= 'Etsy settings';
+$_['heading_title']        		= 'Marketplace settings';
 $_['text_openbay']              = 'OpenBay Pro';
 $_['text_etsy']                 = 'Etsy';
 
@@ -17,6 +17,7 @@ $_['text_complete']    			= 'Complete';
 $_['text_failed']    			= 'Failed';
 $_['text_orders_imported']    	= 'Order pull has been requested';
 $_['text_api_status']           = 'API connection';
+$_['text_edit']           		= 'Edit Etsy settings';
 
 // Entry
 $_['entry_import_def_id']       = 'Import default status (unpaid):';

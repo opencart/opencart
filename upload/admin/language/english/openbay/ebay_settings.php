@@ -42,6 +42,7 @@ $_['text_create_date_0']            = 'When added to OpenCart';
 $_['text_create_date_1']            = 'When created on eBay';
 $_['text_obp_detail_update']        = 'Update your store URL &amp; contact email';
 $_['text_success']					= 'Your settings have been saved';
+$_['text_edit']						= 'Edit eBay settings';
 
 // Entry
 $_['entry_status']					= 'Status';

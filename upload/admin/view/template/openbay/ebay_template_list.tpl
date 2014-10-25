@@ -21,6 +21,9 @@
       <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
     <?php } ?>
     <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
+      </div>
       <div class="panel-body">
       <table class="table table-bordered table-hover">
         <thead>

@@ -172,7 +172,7 @@ class ControllerExtensionInstaller extends Controller {
 							}
 
 							// Compare catalog files
-							$file = DIR_CATALOG . substr($zip_name, 7);
+							$file = DIR_CATALOG . substr($zip_name, 15);
 
 							if (is_file($file) && substr($zip_name, 0, 15) == 'upload/catalog/') {
 								$json['overwrite'][] = substr($zip_name, 7);

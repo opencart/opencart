@@ -118,51 +118,49 @@ $('#button-search').on('click', function() {
 $('#button-upload').on('click', function() {
 	$('#form-upload').remove();
 	
-	$('body').prepend('<form enctype="multipart/form-data" id="form-upload"><input type="file" name="file" value="" onchange="$(\'#test\').click();" /><input type="submit" id="test" /></form>');
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" value="" /></form>');
 	
-	$('#form-upload input[name=\'file\']').trigger('click');	
+	$('#form-upload input[name=\'file\']').trigger('click');
 	
-	$('#test').on('click', function(e) {
-		e.preventDefault();
-		return false;
-		alert('hi');
-		/*
-		$.ajax({
-			url: 'index.php?route=common/filemanager/upload&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>',
-			type: 'post',		
-			dataType: 'json',
-			data: new FormData($(this)[0]),
-			cache: false,
-			contentType: false,
-			processData: false,		
-			beforeSend: function() {
-				$('#button-upload').prop('disabled', true);
-			},
-			complete: function() {
-				$('#button-upload').prop('disabled', false);
-			},
-			success: function(json) {
-				if (json['error']) {
-					alert(json['error']);
-				}
-				
-				if (json['success']) {
-					alert(json['success']);
+	timer = setInterval(function() {
+		if ($('#form-upload input[name=\'file\']').val() != '') {
+			clearInterval(timer);
+			
+			$.ajax({
+				url: 'index.php?route=common/filemanager/upload&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>',
+				type: 'post',		
+				dataType: 'json',
+				data: new FormData($('#form-upload')[0]),
+				cache: false,
+				contentType: false,
+				processData: false,		
+				beforeSend: function() {
+					$('#button-upload i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+					$('#button-upload').prop('disabled', true);
+				},
+				complete: function() {
+					$('#button-upload i').replaceWith('<i class="fa fa-upload"></i>');
+					$('#button-upload').prop('disabled', false);
+				},
+				success: function(json) {
+					if (json['error']) {
+						alert(json['error']);
+					}
 					
-					$('#button-refresh').trigger('click');
+					if (json['success']) {
+						alert(json['success']);
+						
+						$('#button-refresh').trigger('click');
+					}
+				},			
+				error: function(xhr, ajaxOptions, thrownError) {
+					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 				}
-			},			
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});	
-		*/
-	});
-	
+			});	
+		}
+	}, 500);
 });
-function upload() {
-	alert('hi');
-}
+
 $('#button-folder').popover({
 	html: true,
 	placement: 'bottom',

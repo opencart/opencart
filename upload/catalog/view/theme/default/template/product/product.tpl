@@ -72,7 +72,10 @@
               <form class="form-horizontal">
                 <div id="review"></div>
                 <h2><?php echo $text_write; ?></h2>
+<<<<<<< HEAD
+=======
                 <?php if ($review_guest) { ?>
+>>>>>>> upstream/master
                 <div class="form-group required">
                   <div class="col-sm-12">
                     <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
@@ -115,9 +118,12 @@
                     <button type="button" id="button-review" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_continue; ?></button>
                   </div>
                 </div>
+<<<<<<< HEAD
+=======
                 <?php } else { ?>
                 <?php echo $text_login; ?>
                 <?php } ?>
+>>>>>>> upstream/master
               </form>
             </div>
             <?php } ?>
@@ -602,4 +608,8 @@ $(document).ready(function() {
 	});
 });
 //--></script> 
+<<<<<<< HEAD
 <?php echo $footer; ?>
+=======
+<?php echo $footer; ?>
+>>>>>>> upstream/master

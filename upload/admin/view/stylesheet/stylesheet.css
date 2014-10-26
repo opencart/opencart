@@ -86,6 +86,28 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	min-height: 0px;
 	padding: 0;
 }
+
+/* Header Alerts */
+
+ul.dropdown-menu-right  > li > a {
+  	display: block;
+  	overflow: auto;
+	margin: 0;
+	padding-top: 5px;
+	padding-left: 10px;
+	padding-bottom: 5px;
+	padding-right: 0;
+  	position: relative;
+}	
+
+ul.dropdown-menu-right  span.label {
+	position: absolute;
+  	top:50%;
+  	right:0;
+  	transform:translate(-50%,-50%);
+}
+
+
 /* Mobile */
 @media (max-width: 767px) {
 #header .navbar-header {

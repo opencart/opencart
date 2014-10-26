@@ -687,6 +687,7 @@ class ModelCheckoutOrder extends Model {
 
 					// HTML Mail
 					$data['text_greeting'] = $language->get('text_new_received');
+					
 					if ($comment) {
 						if ($order_info['comment']) {
 							$data['comment'] = nl2br($comment) . '<br/><br/>' . $order_info['comment'];

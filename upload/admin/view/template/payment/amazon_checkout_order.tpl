@@ -69,37 +69,41 @@ $('#button-upload').on('click', function() {
 
 	$('#form-upload input[name=\'file\']').trigger('click');
 	
-	$('#form-upload input[name=\'file\']').on('change', function() {
-		$.ajax({
-			url: 'index.php?route=payment/amazon_checkout/uploadOrderAdjustment&token=<?php echo $token; ?>',
-			type: 'post',
-			dataType: 'json',
-			data: new FormData($(this).parent()[0]),
-			cache: false,
-			contentType: false,
-			processData: false,	
-			beforeSend: function() {
-				$('#button-upload').button('loading');
-			},
-			complete: function() {
-				$('#button-upload').button('reset');
-			},
-			success: function(json) {
-				$('#button-upload').attr('disabled', false);
-
-				if (json['success']) {
-					alert(json['success']);
-
-					$.get('index.php?route=payment/amazon_checkout/addSubmission&order_id=<?php echo $order_id ?>&submission_id=' + json['submission_id'] + '&token=<?php echo $token; ?>');
+	timer = setInterval(function() {
+		if ($('#form-upload input[name=\'file\']').val() != '') {
+			clearInterval(timer);
+			
+			$.ajax({
+				url: 'index.php?route=payment/amazon_checkout/uploadOrderAdjustment&token=<?php echo $token; ?>',
+				type: 'post',
+				dataType: 'json',
+				data: new FormData($('#form-upload')[0]),
+				cache: false,
+				contentType: false,
+				processData: false,	
+				beforeSend: function() {
+					$('#button-upload').button('loading');
+				},
+				complete: function() {
+					$('#button-upload').button('reset');
+				},
+				success: function(json) {
+					$('#button-upload').attr('disabled', false);
+	
+					if (json['success']) {
+						alert(json['success']);
+	
+						$.get('index.php?route=payment/amazon_checkout/addSubmission&order_id=<?php echo $order_id ?>&submission_id=' + json['submission_id'] + '&token=<?php echo $token; ?>');
+					}
+	
+					if (json['error']) {
+						alert(json['error']);
+					}
+	
+					$('.loading').remove();	
 				}
-
-				if (json['error']) {
-					alert(json['error']);
-				}
-
-				$('.loading').remove();	
-			}
-		});
-	});
+			});
+		}
+	}, 500);
 });
 //--></script>

@@ -1,19 +1,25 @@
 <?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
+<div class="page-header">
+  <div class="container-fluid">
+    <div class="pull-right">
+      <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
+    </div>
+    <h1><?php echo $heading_title; ?></h1>
+    <ul class="breadcrumb">
+      <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+      <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+      <?php } ?>
+    </ul>
+  </div>
+</div>
+<div class="container-fluid">
   <?php foreach($error_warning as $warning) { ?>
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $warning; ?></div>
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <div class="pull-right">
-        <a onclick="confirmAction('<?php echo $cancel; ?>');" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
-      </div>
-      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_page_title; ?></h1>
+      <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_bulk; ?></h3>
     </div>
     <div class="panel-body" id="page-listing">
       <?php if (!isset($error_fail)) { ?>
@@ -74,12 +80,17 @@
                           <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                               <div class="modal-body">
-                                <div class="panel panel-default">
-                                  <div class="panel-heading">
-                                    <div class="text-right"><a onclick="overlayHide();" class="btn pull-right" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="fa fa-times"></i></a></div>
+                                <div class="page-header">
+                                  <div class="container-fluid">
+                                    <div class="pull-right">
+                                      <a onclick="overlayHide();" class="btn btn-default" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="fa fa-reply"></i></a>
+                                    </div>
                                     <h1 class="panel-title"><?php echo $text_category; ?></h1>
                                   </div>
-                                  <div class="panel-body">
+                                </div>
+                                <div class="container-fluid">
+                                  <div class="panel panel-default">
+                                    <div class="panel-body">
                                     <div class="well">
                                       <div class="row">
                                         <div class="form-group">
@@ -131,6 +142,7 @@
                                       </div>
                                     </div>
                                   </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -141,28 +153,34 @@
                           <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                               <div class="modal-body">
-                                <div class="panel panel-default">
-                                  <div class="panel-heading">
-                                    <div class="text-right"><a onclick="overlayHide();" class="btn pull-right" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="fa fa-times"></i></a></div>
+                                <div class="page-header">
+                                  <div class="container-fluid">
+                                    <div class="pull-right">
+                                      <a onclick="overlayHide();" class="btn btn-default" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="fa fa-reply"></i></a>
+                                    </div>
                                     <h1 class="panel-title"><?php echo $text_catalog_search; ?></h1>
                                   </div>
-                                  <div class="panel-body">
-                                    <div class="well">
-                                      <div class="row">
-                                        <div class="form-group">
-                                          <label class="col-sm-2 control-label"><?php echo $text_search_term; ?></label>
-                                          <div class="col-sm-10">
-                                            <input type="text" name="catalog_search" id="catalog_search_<?php echo $i; ?>" value="" class="form-control"/>
+                                </div>
+                                <div class="container-fluid">
+                                  <div class="panel panel-default">
+                                    <div class="panel-body">
+                                      <div class="well">
+                                        <div class="row">
+                                          <div class="form-group">
+                                            <label class="col-sm-2 control-label"><?php echo $text_search_term; ?></label>
+                                            <div class="col-sm-10">
+                                              <input type="text" name="catalog_search" id="catalog_search_<?php echo $i; ?>" value="" class="form-control"/>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="row">
+                                          <div class="col-sm-12 text-right">
+                                            <a onclick="searchEbayCatalog('<?php echo $i; ?>');" class="btn btn-primary" id="button-catalog-search-<?php echo $i; ?>"><?php echo $text_search; ?></a>
                                           </div>
                                         </div>
                                       </div>
-                                      <div class="row">
-                                        <div class="col-sm-12 text-right">
-                                          <a onclick="searchEbayCatalog('<?php echo $i; ?>');" class="btn btn-primary" id="button-catalog-search-<?php echo $i; ?>"><?php echo $text_search; ?></a>
-                                        </div>
-                                      </div>
+                                      <div id="catalog-results-<?php echo $i; ?>" style="display:none;"></div>
                                     </div>
-                                    <div id="catalog-results-<?php echo $i; ?>" style="display:none;"></div>
                                   </div>
                                 </div>
                               </div>
@@ -174,12 +192,17 @@
                           <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                               <div class="modal-body">
-                                <div class="panel panel-default">
-                                  <div class="panel-heading">
-                                    <div class="text-right"><a onclick="overlayHide();" class="btn pull-right" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="fa fa-times"></i></a></div>
+                                <div class="page-header">
+                                  <div class="container-fluid">
+                                    <div class="pull-right">
+                                      <a onclick="overlayHide();" class="btn btn-default" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="fa fa-reply"></i></a>
+                                    </div>
                                     <h1 class="panel-title"><?php echo $text_profile; ?></h1>
                                   </div>
-                                  <div class="panel-body">
+                                </div>
+                                <div class="container-fluid">
+                                  <div class="panel panel-default">
+                                    <div class="panel-body">
                                     <div class="well">
                                       <div class="form-group">
                                         <label class="col-sm-2 control-label"><?php echo $text_profile_theme; ?></label>
@@ -214,6 +237,7 @@
                                         </div>
                                       </div>
                                     </div>
+                                  </div>
                                   </div>
                                 </div>
                               </div>
@@ -267,8 +291,8 @@
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-body">
-                <div class="progress progress-striped active">
-                  <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="loading-bar"></div>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="loading-bar"></div>
                 </div>
                 <p class="text-center"><?php echo $text_preparing0; ?> <span id="ajax-count-complete-display">0</span> <?php echo $text_preparing1; ?> <span id="ajax-count-total-display">0</span> <?php echo $text_preparing2; ?> </p>
               </div>
@@ -367,7 +391,7 @@
       modifier = 100 / total;
       current = parseFloat(modifier * count1);
 
-      $('#loading-bar').css('width', current+'%');
+      $('#loading-bar').css('width', current + '%');
 
       if (count == 0) {
           overlayHide();
@@ -384,7 +408,7 @@
       $('#total-items').val($('#total-items').val()-1);
 
       if ($('.listingBox').length == 1) {
-          window.location = "index.php?route=extension/openbay/itemList&token=<?php echo $token; ?>";
+          window.location = "index.php?route=extension/openbay/items&token=<?php echo $token; ?>";
       } else {
           $('#activeItems').text($('#total-items').val());
       }
@@ -575,16 +599,21 @@
 
                   if (data.data.Recommendations.NameRecommendation) {
                     htmlInj = '';
-                    htmlInj += '<div class="panel panel-default">';
-                      htmlInj += '<div class="panel-heading">';
-                        htmlInj += '<div class="pull-right"><a onclick="overlayHide();" class="btn btn-default" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="fa fa-times"></i></a></div>';
+                    htmlInj += '<div class="page-header">';
+                      htmlInj += '<div class="container-fluid">';
+                        htmlInj += '<div class="pull-right">';
+                          htmlInj += '<a onclick="overlayHide();" class="btn btn-default" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="fa fa-reply"></i></a>';
+                        htmlInj += '</div>';
                         htmlInj += '<h1 class="panel-title"><?php echo $text_features; ?></h1>';
                       htmlInj += '</div>';
-                      htmlInj += '<div class="panel-body">';
-                        htmlInj += '<div class="well">';
-                          htmlInj += '<div class="row">';
-                            data.data.Recommendations.NameRecommendation = $.makeArray(data.data.Recommendations.NameRecommendation);
-                            $.each(data.data.Recommendations.NameRecommendation, function(key, val) {
+                    htmlInj += '</div>';
+                    htmlInj += '<div class="container-fluid">';
+                      htmlInj += '<div class="panel panel-default">';
+                        htmlInj += '<div class="panel-body">';
+                          htmlInj += '<div class="well">';
+                            htmlInj += '<div class="row">';
+                              data.data.Recommendations.NameRecommendation = $.makeArray(data.data.Recommendations.NameRecommendation);
+                              $.each(data.data.Recommendations.NameRecommendation, function(key, val) {
                               htmlInj2 = '';
                               htmlInj += '<div class="row form-group">';
 
@@ -635,6 +664,7 @@
                               specificCount++;
                               htmlInj += '</div>';
                             });
+                            htmlInj += '</div>';
                           htmlInj += '</div>';
                         htmlInj += '</div>';
                       htmlInj += '</div>';

@@ -2,158 +2,158 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
+      <div class="pull-right">
+        <?php if ($link_amazon_eu_bulk) { ?>
+          <a class="btn btn-primary" href="<?php echo $link_amazon_eu_bulk; ?>"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_amazon_eu_bulk; ?></a>
+        <?php } ?>
+        <?php if ($link_amazon_us_bulk) { ?>
+          <a class="btn btn-primary" href="<?php echo $link_amazon_us_bulk; ?>"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_amazon_us_bulk ?></a>
+        <?php } ?>
+        <?php  if ($link_ebay_bulk) { ?>
+          <a class="btn btn-primary" id="button-ebay-bulk"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_ebay_bulk; ?></a>
+        <?php } ?>
+      </div>
       <h1><?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
     <?php } ?>
     <?php if ($success) { ?>
-    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
+      <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
     <?php } ?>
-
-    <?php if ($link_amazon_eu_bulk || $link_amazon_us_bulk || $link_ebay_bulk) { ?>
-      <div class="well" id="bulk-buttons">
-        <div class="row">
-          <div class="col-sm-12 text-right">
-            <?php if ($link_amazon_eu_bulk) { ?>
-            <a class="btn btn-primary" href="<?php echo $link_amazon_eu_bulk; ?>"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_amazon_eu_bulk; ?></a>
-            <?php } ?>
-            <?php if ($link_amazon_us_bulk) { ?>
-            <a class="btn btn-primary" href="<?php echo $link_amazon_us_bulk; ?>"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_amazon_us_bulk ?></a>
-            <?php } ?>
-            <?php  if ($link_ebay_bulk) { ?>
-            <a class="btn btn-primary" id="button-ebay-bulk"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_ebay_bulk; ?></a>
-            <?php } ?>
-          </div>
-        </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
       </div>
-    <?php } ?>
-    <div class="well">
-      <div class="row">
-        <div class="col-sm-4">
-          <div class="form-group">
-            <label class="control-label" for="filter_name"><?php echo $entry_title; ?></label>
-            <input type="text" name="filter_name" value="<?php echo $filter_name; ?>" placeholder="<?php echo $entry_title; ?>" id="filter_name" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="filter_model"><?php echo $entry_model; ?></label>
-            <input type="text" name="filter_model" value="<?php echo $filter_model; ?>" placeholder="<?php echo $entry_model; ?>" id="filter_model" class="form-control" />
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="filter_manufacturer"><?php echo $entry_manufacturer; ?></label>
-            <select name="filter_manufacturer" id="filter_manufacturer" class="form-control">
-              <option value=""></option>
-              <?php foreach($manufacturer_list as $man) { ?>
-              <option value="<?php echo $man['manufacturer_id']; ?>"<?php echo ($filter_manufacturer == $man["manufacturer_id"] ? " selected" : ""); ?>><?php echo $man['name']; ?></option>
-              <?php } ?>
-            </select>
+      <div class="panel-body">
+        <div class="well">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label" for="filter_name"><?php echo $entry_title; ?></label>
+                <input type="text" name="filter_name" value="<?php echo $filter_name; ?>" placeholder="<?php echo $entry_title; ?>" id="filter_name" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="filter_model"><?php echo $entry_model; ?></label>
+                <input type="text" name="filter_model" value="<?php echo $filter_model; ?>" placeholder="<?php echo $entry_model; ?>" id="filter_model" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="filter_manufacturer"><?php echo $entry_manufacturer; ?></label>
+                <select name="filter_manufacturer" id="filter_manufacturer" class="form-control">
+                  <option value=""></option>
+                  <?php foreach($manufacturer_list as $man) { ?>
+                  <option value="<?php echo $man['manufacturer_id']; ?>"<?php echo ($filter_manufacturer == $man["manufacturer_id"] ? " selected" : ""); ?>><?php echo $man['name']; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label" for="filter_marketplace"><?php echo $entry_status_marketplace; ?></label>
+                <select name="filter_marketplace" id="filter_marketplace" class="form-control">
+                  <option value="all" <?php echo (!isset($filter_marketplace) || $filter_marketplace == 'all' ? ' selected' : ''); ?>><?php echo $text_status_all; ?></option>
+                  <?php if ($marketplace_statuses['ebay']) { ?>
+                  <option value="ebay_active" <?php echo ($filter_marketplace == 'ebay_active' ? ' selected' : ''); ?>><?php echo $text_status_ebay_active; ?></option>
+                  <option value="ebay_inactive" <?php echo ($filter_marketplace == 'ebay_inactive' ? ' selected' : ''); ?>><?php echo $text_status_ebay_inactive; ?></option>
+                  <?php } ?>
+                  <?php if ($marketplace_statuses['amazon']) { ?>
+                  <option value="amazon_saved" <?php echo ($filter_marketplace == 'amazon_saved' ? ' selected' : ''); ?>><?php echo $text_status_amazoneu_saved; ?></option>
+                  <option value="amazon_uploaded" <?php echo ($filter_marketplace == 'amazon_uploaded' ? ' selected' : ''); ?>><?php echo $text_status_amazoneu_processing; ?></option>
+                  <option value="amazon_ok" <?php echo ($filter_marketplace == 'amazon_ok' ? ' selected' : ''); ?>><?php echo $text_status_amazoneu_active; ?></option>
+                  <option value="amazon_unlisted" <?php echo ($filter_marketplace == 'amazon_unlisted' ? ' selected' : ''); ?>><?php echo $text_status_amazoneu_notlisted; ?></option>
+                  <option value="amazon_error" <?php echo ($filter_marketplace == 'amazon_error' ? ' selected' : ''); ?>><?php echo $text_status_amazoneu_failed; ?></option>
+                  <option value="amazon_linked" <?php echo ($filter_marketplace == 'amazon_linked' ? ' selected' : ''); ?>><?php echo $text_status_amazoneu_linked; ?></option>
+                  <option value="amazon_not_linked" <?php echo ($filter_marketplace == 'amazon_not_linked' ? ' selected' : ''); ?>><?php echo $text_status_amazoneu_notlinked; ?></option>
+                  <?php } ?>
+                  <?php if ($marketplace_statuses['amazonus']) { ?>
+                  <option value="amazonus_saved" <?php echo ($filter_marketplace == 'amazonus_saved' ? ' selected' : ''); ?>><?php echo $text_status_amazonus_saved; ?></option>
+                  <option value="amazonus_uploaded" <?php echo ($filter_marketplace == 'amazonus_uploaded' ? ' selected' : ''); ?>><?php echo $text_status_amazonus_processing; ?></option>
+                  <option value="amazonus_ok" <?php echo ($filter_marketplace == 'amazonus_ok' ? ' selected' : ''); ?>><?php echo $text_status_amazonus_active; ?></option>
+                  <option value="amazonus_unlisted" <?php echo ($filter_marketplace == 'amazonus_unlisted' ? ' selected' : ''); ?>><?php echo $text_status_amazonus_notlisted; ?></option>
+                  <option value="amazonus_error" <?php echo ($filter_marketplace == 'amazonus_error' ? ' selected' : ''); ?>><?php echo $text_status_amazonus_failed; ?></option>
+                  <option value="amazonus_linked" <?php echo ($filter_marketplace == 'amazonus_linked' ? ' selected' : ''); ?>><?php echo $text_status_amazonus_linked; ?></option>
+                  <option value="amazonus_not_linked" <?php echo ($filter_marketplace == 'amazonus_not_linked' ? ' selected' : ''); ?>><?php echo $text_status_amazonus_notlinked; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="control-label"><?php echo $entry_status; ?></label>
+                <select name="filter_status" class="form-control">
+                  <option value="*"></option>
+                  <?php if ($filter_status) { ?>
+                  <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_enabled; ?></option>
+                  <?php } ?>
+                  <?php if (($filter_status !== null) && !$filter_status) { ?>
+                  <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                  <?php } else { ?>
+                  <option value="0"><?php echo $text_disabled; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="filter_category"><?php echo $entry_category; ?></label>
+                <select name="filter_category" id="filter_category" class="form-control">
+                  <option value=""></option>
+                  <option value="none"><?php echo $text_category_missing; ?></option>
+                  <?php foreach($category_list as $cat) { ?>
+                  <option value="<?php echo $cat['category_id']; ?>"<?php echo ($filter_category == $cat["category_id"] ? " selected" : ""); ?>><?php echo $cat['name']; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <label class="control-label"><?php echo $entry_stock_range; ?></label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <input type="text" name="filter_quantity" value="<?php echo $filter_quantity; ?>" class="form-control" placeholder="<?php echo $text_min; ?>" id="input-quantity" />
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" name="filter_quantity_to" value="<?php echo $filter_quantity_to; ?>"  class="form-control" placeholder="<?php echo $text_max; ?>" id="input-quantity-to" />
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <label class="control-label"><?php echo $entry_populated; ?></label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <label class="control-label"><?php echo $entry_sku; ?></label>
+                  </div>
+                  <div class="col-sm-3">
+                    <input type="checkbox" name="filter_sku" id="filter_sku" value="1" <?php if ($filter_sku == 1) { echo 'checked="checked" ';} ?>/>
+                  </div>
+                  <div class="col-sm-3">
+                    <label class="control-label"><?php echo $entry_description; ?></label>
+                  </div>
+                  <div class="col-sm-3">
+                    <input type="checkbox" name="filter_desc" id="filter_desc" value="1" <?php if ($filter_desc == 1) { echo 'checked="checked" ';} ?>/>
+                  </div>
+                </div>
+              </div>
+              <a onclick="filter();" class="btn btn-primary pull-right" data-toggle="tooltip" title="<?php echo $button_filter; ?>"><i class="fa fa-search"></i> <?php echo $button_filter; ?></a>
+            </div>
           </div>
         </div>
-        <div class="col-sm-4">
-          <div class="form-group">
-            <label class="control-label" for="filter_marketplace"><?php echo $entry_status_marketplace; ?></label>
-            <select name="filter_marketplace" id="filter_marketplace" class="form-control">
-              <option value="all" <?php echo (!isset($filter_marketplace) || $filter_marketplace == 'all' ? ' selected' : ''); ?>><?php echo $text_status_all; ?></option>
-              <?php if ($marketplace_statuses['ebay']) { ?>
-              <option value="ebay_active" <?php echo ($filter_marketplace == 'ebay_active' ? ' selected' : ''); ?>><?php echo $text_status_ebay_active; ?></option>
-              <option value="ebay_inactive" <?php echo ($filter_marketplace == 'ebay_inactive' ? ' selected' : ''); ?>><?php echo $text_status_ebay_inactive; ?></option>
-              <?php } ?>
-              <?php if ($marketplace_statuses['amazon']) { ?>
-              <option value="amazon_saved" <?php echo ($filter_marketplace == 'amazon_saved' ? ' selected' : ''); ?>><?php echo $text_status_amazoneu_saved; ?></option>
-              <option value="amazon_uploaded" <?php echo ($filter_marketplace == 'amazon_uploaded' ? ' selected' : ''); ?>><?php echo $text_status_amazoneu_processing; ?></option>
-              <option value="amazon_ok" <?php echo ($filter_marketplace == 'amazon_ok' ? ' selected' : ''); ?>><?php echo $text_status_amazoneu_active; ?></option>
-              <option value="amazon_unlisted" <?php echo ($filter_marketplace == 'amazon_unlisted' ? ' selected' : ''); ?>><?php echo $text_status_amazoneu_notlisted; ?></option>
-              <option value="amazon_error" <?php echo ($filter_marketplace == 'amazon_error' ? ' selected' : ''); ?>><?php echo $text_status_amazoneu_failed; ?></option>
-              <option value="amazon_linked" <?php echo ($filter_marketplace == 'amazon_linked' ? ' selected' : ''); ?>><?php echo $text_status_amazoneu_linked; ?></option>
-              <option value="amazon_not_linked" <?php echo ($filter_marketplace == 'amazon_not_linked' ? ' selected' : ''); ?>><?php echo $text_status_amazoneu_notlinked; ?></option>
-              <?php } ?>
-              <?php if ($marketplace_statuses['amazonus']) { ?>
-              <option value="amazonus_saved" <?php echo ($filter_marketplace == 'amazonus_saved' ? ' selected' : ''); ?>><?php echo $text_status_amazonus_saved; ?></option>
-              <option value="amazonus_uploaded" <?php echo ($filter_marketplace == 'amazonus_uploaded' ? ' selected' : ''); ?>><?php echo $text_status_amazonus_processing; ?></option>
-              <option value="amazonus_ok" <?php echo ($filter_marketplace == 'amazonus_ok' ? ' selected' : ''); ?>><?php echo $text_status_amazonus_active; ?></option>
-              <option value="amazonus_unlisted" <?php echo ($filter_marketplace == 'amazonus_unlisted' ? ' selected' : ''); ?>><?php echo $text_status_amazonus_notlisted; ?></option>
-              <option value="amazonus_error" <?php echo ($filter_marketplace == 'amazonus_error' ? ' selected' : ''); ?>><?php echo $text_status_amazonus_failed; ?></option>
-              <option value="amazonus_linked" <?php echo ($filter_marketplace == 'amazonus_linked' ? ' selected' : ''); ?>><?php echo $text_status_amazonus_linked; ?></option>
-              <option value="amazonus_not_linked" <?php echo ($filter_marketplace == 'amazonus_not_linked' ? ' selected' : ''); ?>><?php echo $text_status_amazonus_notlinked; ?></option>
-              <?php } ?>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="control-label"><?php echo $entry_status; ?></label>
-            <select name="filter_status" class="form-control">
-              <option value="*"></option>
-              <?php if ($filter_status) { ?>
-              <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-              <?php } else { ?>
-              <option value="1"><?php echo $text_enabled; ?></option>
-              <?php } ?>
-              <?php if (($filter_status !== null) && !$filter_status) { ?>
-              <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-              <?php } else { ?>
-              <option value="0"><?php echo $text_disabled; ?></option>
-              <?php } ?>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="control-label" for="filter_category"><?php echo $entry_category; ?></label>
-            <select name="filter_category" id="filter_category" class="form-control">
-              <option value=""></option>
-              <option value="none"><?php echo $text_category_missing; ?></option>
-              <?php foreach($category_list as $cat) { ?>
-              <option value="<?php echo $cat['category_id']; ?>"<?php echo ($filter_category == $cat["category_id"] ? " selected" : ""); ?>><?php echo $cat['name']; ?></option>
-              <?php } ?>
-            </select>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-sm-12">
-                <label class="control-label"><?php echo $entry_stock_range; ?></label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-6">
-                <input type="text" name="filter_quantity" value="<?php echo $filter_quantity; ?>" class="form-control" placeholder="<?php echo $text_min; ?>" id="input-quantity" />
-              </div>
-              <div class="col-sm-6">
-                <input type="text" name="filter_quantity_to" value="<?php echo $filter_quantity_to; ?>"  class="form-control" placeholder="<?php echo $text_max; ?>" id="input-quantity-to" />
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="row">
-              <div class="col-sm-12">
-                <label class="control-label"><?php echo $entry_populated; ?></label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-3">
-                <label class="control-label"><?php echo $entry_sku; ?></label>
-              </div>
-              <div class="col-sm-3">
-                <input type="checkbox" name="filter_sku" id="filter_sku" value="1" <?php if ($filter_sku == 1) { echo 'checked="checked" ';} ?>/>
-              </div>
-              <div class="col-sm-3">
-                <label class="control-label"><?php echo $entry_description; ?></label>
-              </div>
-              <div class="col-sm-3">
-                <input type="checkbox" name="filter_desc" id="filter_desc" value="1" <?php if ($filter_desc == 1) { echo 'checked="checked" ';} ?>/>
-              </div>
-            </div>
-          </div>
-          <a onclick="filter();" class="btn btn-primary pull-right" data-toggle="tooltip" title="<?php echo $button_filter; ?>"><i class="fa fa-filter"></i></a>
-        </div>
-      </div>
-    </div>
-    <form method="post" id="form">
-        <table class="table">
+        <form method="post" id="form">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover">
           <thead>
             <tr>
               <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
@@ -251,16 +251,19 @@
             <?php } ?>
           </tbody>
         </table>
-      </form>
-    <div class="row">
-      <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
-      <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+          </div>
+        </form>
+        <div class="row">
+          <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+          <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
   function filter() {
-      url = 'index.php?route=extension/openbay/itemList&token=<?php echo $token; ?>';
+      url = 'index.php?route=extension/openbay/items&token=<?php echo $token; ?>';
 
       var filter_name = $('input[name=\'filter_name\']').val();
 
@@ -343,7 +346,7 @@
     if (request_data != '') {
       $('#form').attr('action', 'index.php?route=openbay/ebay/createBulk&token=<?php echo $token; ?>').submit();
     } else {
-      $('#bulk-buttons').before('<div class="alert alert-danger"><?php echo $error_select_items; ?></div>');
+      alert('<?php echo $error_select_items; ?>');
     }
   });
 //--></script>

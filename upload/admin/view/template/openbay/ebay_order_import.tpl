@@ -1,16 +1,20 @@
 <?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right"><a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $button_back; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1><?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <div class="pull-right">
-        <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $button_back; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
-      </div>
-      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_heading; ?></h1>
+      <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_pull; ?></h3>
     </div>
     <div class="panel-body">
       <?php if ($validation === true) { ?>
@@ -24,9 +28,7 @@
           </div>
         </form>
       <?php }else{ ?>
-        <div class="alert alert-danger">
-          <i class="fa fa-exclamation-circle"></i> <?php echo $error_validation; ?>
-        </div>
+        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_validation; ?></div>
       <?php } ?>
     </div>
   </div>

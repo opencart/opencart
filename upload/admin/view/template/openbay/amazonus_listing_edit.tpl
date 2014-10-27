@@ -33,7 +33,7 @@
       </div>
     </div>
     <?php } ?>
-    <table class="table">
+    <table class="table table-bordered table-hover">
       <thead>
         <tr>
           <th class="text-left"><?php echo $column_name; ?></th>

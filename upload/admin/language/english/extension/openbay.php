@@ -4,7 +4,6 @@ $_['heading_title']        				= 'OpenBay Pro';
 
 // Buttons
 $_['button_retry']						= 'Retry';
-$_['button_faq_clear']					= 'Clear';
 $_['button_update']						= 'Update';
 $_['button_patch']						= 'Patch';
 $_['button_ftp_test']					= 'Test connection';
@@ -13,9 +12,10 @@ $_['button_faq']						= 'View FAQ topic';
 // Tab
 $_['tab_setting']						= 'Settings';
 $_['tab_update']						= 'Updates';
-$_['tab_patch']							= 'Patch';
+$_['tab_developer']						= 'Developer';
 
 // Text
+$_['text_dashboard']         			= 'Dashboard';
 $_['text_success']         				= 'Success: Settings have been saved';
 $_['text_products']          			= 'Items';
 $_['text_orders']          				= 'Orders';
@@ -33,7 +33,6 @@ $_['text_getting_messages']     		= 'Getting OpenBay Pro messages';
 $_['text_complete']     				= 'Complete';
 $_['text_test_connection']              = 'Test FTP connection';
 $_['text_run_update']           		= 'Run update';
-$_['text_patch']            			= 'Post update patch';
 $_['text_patch_complete']           	= 'Patch has been applied';
 $_['text_connection_ok']				= 'Connected to server OK. OpenCart folders found';
 $_['text_updated']						= 'Module has been updated (v.%s)';
@@ -44,6 +43,7 @@ $_['text_install_success']              = 'Marketplace has been installed';
 $_['text_uninstall_success']            = 'Marketplace has been removed';
 $_['text_title_messages']               = 'Messages &amp; notifications';
 $_['text_marketplace_shipped']			= 'The order status will be updated to shipped on the marketplace';
+$_['text_action_warning']				= 'This action is dangerous so is password protected.';
 
 // Column
 $_['column_name']          				= 'Plugin name';
@@ -51,6 +51,7 @@ $_['column_status']        				= 'Status';
 $_['column_action']        				= 'Action';
 
 // Entry
+$_['entry_patch']            			= 'Manual update patch';
 $_['entry_ftp_username']				= 'FTP Username';
 $_['entry_ftp_password']				= 'FTP Password';
 $_['entry_ftp_server']					= 'FTP server address';
@@ -61,6 +62,8 @@ $_['entry_ftp_beta']             		= 'Use beta version';
 $_['entry_courier']						= 'Courier';
 $_['entry_courier_other']           	= 'Other courier';
 $_['entry_tracking']                	= 'Tracking #';
+$_['entry_empty_data']					= 'Empty store data?';
+$_['entry_password_prompt']				= 'Please enter the data wipe password';
 
 // Error
 $_['error_username']             		= 'FTP username required';
@@ -85,5 +88,6 @@ $_['help_ftp_root']           			= '(No trailing slash e.g. httpdocs/www)';
 $_['help_ftp_admin']               		= 'If you have changed your admin directory update it to the new location';
 $_['help_ftp_pasv']                    	= 'Change your FTP connection to passive mode';
 $_['help_ftp_beta']             		= 'Caution! The beta version may not work correctly';
-$_['help_patch']						= 'If you update your files through FTP you need to run the patch to complete the update';
+$_['help_patch']						= 'If you updated your files directly through FTP (not using the update system above) you need to run the patch to complete the update';
 $_['help_clear_faq']					= 'Show all of the help notifications again';
+$_['help_empty_data']					= 'This can cause serious damage, do not use it if you do not know what it does!';

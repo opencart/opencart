@@ -13,42 +13,49 @@
   </div>
   <div class="container-fluid">
     <?php if ($validation === true) { ?>
-    <?php if ($image_import > 0){ ?>
-    <div class="alert alert-danger"> <i class="fa fa-exclamation-circle"></i> <?php echo $image_import; ?> <?php echo $text_import_images_msg1; ?> <a href="<?php echo $image_import_link; ?>" target="_blank"><?php echo $text_import_images_msg2; ?></a> <?php echo $text_import_images_msg3; ?> </div>
-    <?php } ?>
-    <?php if ($maintenance == 1){ ?>
-    <div class="alert alert-danger"> <i class="fa fa-exclamation-circle"></i> <?php echo $error_maintenance; ?> </div>
-    <?php } ?>
-    <p><?php echo $text_sync_import_line1; ?></p>
-    <p><?php echo $text_sync_import_line3; ?></p>
-    <div class="attention"><?php echo $text_sync_server_size; ?> <strong><?php echo ini_get('post_max_size'); ?></strong> </div>
-    <div class="attention"><?php echo $text_sync_memory_size; ?> <strong><?php echo ini_get('memory_limit'); ?></strong> </div>
-    <form id="form-ebay-import" class="form-horizontal">
-      <div class="form-group">
-        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_import_categories; ?>"><?php echo $entry_import_categories; ?></span></label>
-        <div class="col-sm-10">
-          <input type="checkbox" name="import_categories" id="import_categories" value="1" />
+      <?php if ($image_import > 0){ ?>
+      <div class="alert alert-danger"> <i class="fa fa-exclamation-circle"></i> <?php echo $image_import; ?> <?php echo $text_import_images_msg1; ?> <a href="<?php echo $image_import_link; ?>" target="_blank"><?php echo $text_import_images_msg2; ?></a> <?php echo $text_import_images_msg3; ?> </div>
+      <?php } ?>
+      <?php if ($maintenance == 1){ ?>
+      <div class="alert alert-danger"> <i class="fa fa-exclamation-circle"></i> <?php echo $error_maintenance; ?> </div>
+      <?php } ?>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h3>
+        </div>
+        <div class="panel-body">
+          <p><?php echo $text_sync_import_line1; ?></p>
+          <p><?php echo $text_sync_import_line3; ?></p>
+          <div class="attention"><?php echo $text_sync_server_size; ?> <strong><?php echo ini_get('post_max_size'); ?></strong> </div>
+          <div class="attention"><?php echo $text_sync_memory_size; ?> <strong><?php echo ini_get('memory_limit'); ?></strong> </div>
+          <form id="form-ebay-import" class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_import_categories; ?>"><?php echo $entry_import_categories; ?></span></label>
+              <div class="col-sm-10">
+                <input type="checkbox" name="import_categories" id="import_categories" value="1" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_import_description; ?>"><?php echo $entry_import_description; ?></span></label>
+              <div class="col-sm-10">
+                <input type="checkbox" name="import_description" id="import-description" value="1" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_import_item_advanced; ?>"><?php echo $entry_import_item_advanced; ?></span></label>
+              <div class="col-sm-10">
+                <input type="checkbox" name="import_advanced" id="import_advanced" value="1" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="button-import"><?php echo $entry_import; ?></label>
+              <div class="col-sm-10"> <a class="btn btn-primary" id="button-import"><?php echo $button_import; ?></a> </div>
+            </div>
+          </form>
         </div>
       </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_import_description; ?>"><?php echo $entry_import_description; ?></span></label>
-        <div class="col-sm-10">
-          <input type="checkbox" name="import_description" id="import-description" value="1" />
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_import_item_advanced; ?>"><?php echo $entry_import_item_advanced; ?></span></label>
-        <div class="col-sm-10">
-          <input type="checkbox" name="import_advanced" id="import_advanced" value="1" />
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label" for="button-import"><?php echo $entry_import; ?></label>
-        <div class="col-sm-10"> <a class="btn btn-primary" id="button-import"><?php echo $button_import; ?></a> </div>
-      </div>
-    </form>
     <?php }else{ ?>
-    <div class="alert alert-danger"> <i class="fa fa-exclamation-circle"></i> <?php echo $error_validation; ?> </div>
+      <div class="alert alert-danger"> <i class="fa fa-exclamation-circle"></i> <?php echo $error_validation; ?> </div>
     <?php } ?>
   </div>
 </div>
@@ -73,7 +80,7 @@
         type: 'post',
         dataType: 'json',
         success: function(json) {
-          $('#button-import').empty().removeClass('btn-primary').addClass('btn-success').html('<?php echo $text_complete; ?>');
+          $('#button-import').empty().removeClass('btn-primary').addClass('btn-success').html('<?php echo $button_complete; ?>');
           alert('<?php echo $text_import_notify; ?>');
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -85,5 +92,5 @@
       return 0;
     }
   });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

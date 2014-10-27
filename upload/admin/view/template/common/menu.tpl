@@ -62,6 +62,15 @@
             </ul>
           </li>
           <?php } ?>
+          <?php if ($openbay_markets['etsy'] == 1) { ?>
+          <li><a class="parent"><?php echo $text_openbay_etsy; ?></a>
+            <ul>
+              <li><a href="<?php echo $openbay_link_etsy; ?>"><?php echo $text_openbay_dashboard; ?></a></li>
+              <li><a href="<?php echo $openbay_link_etsy_settings; ?>"><?php echo $text_openbay_settings; ?></a></li>
+              <li><a href="<?php echo $openbay_link_etsy_links; ?>"><?php echo $text_openbay_links; ?></a></li>
+            </ul>
+          </li>
+          <?php } ?>
         </ul>
       </li>
       <?php } ?>

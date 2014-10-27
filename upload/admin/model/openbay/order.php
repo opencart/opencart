@@ -9,13 +9,13 @@ class ModelOpenbayOrder extends Model {
 			$sql .= " JOIN (SELECT NULL AS order_id) eo ";
 		}
 
-		if ($this->config->get('amazon_status')) {
+		if ($this->config->get('openbay_amazon_status')) {
 			$sql .= " LEFT JOIN " . DB_PREFIX . "amazon_order ao ON o.order_id = ao.order_id ";
 		} else {
 			$sql .= " JOIN (SELECT NULL AS order_id) ao ";
 		}
 
-		if ($this->config->get('amazonus_status')) {
+		if ($this->config->get('openbay_amazonus_status')) {
 			$sql .= " LEFT JOIN " . DB_PREFIX . "amazonus_order auso ON o.order_id = auso.order_id ";
 		} else {
 			$sql .= " JOIN (SELECT NULL AS order_id) auso ";
@@ -63,19 +63,19 @@ class ModelOpenbayOrder extends Model {
 			$sql .= " JOIN (SELECT NULL AS order_id) eo ";
 		}
 
-		if ($this->config->get('amazon_status')) {
+		if ($this->config->get('openbay_amazon_status')) {
 			$sql .= " LEFT JOIN " . DB_PREFIX . "amazon_order ao ON ao.order_id = o.order_id ";
 		} else {
 			$sql .= " JOIN (SELECT NULL AS order_id) ao ";
 		}
 
-		if ($this->config->get('amazonus_status')) {
+		if ($this->config->get('openbay_amazonus_status')) {
 			$sql .= " LEFT JOIN " . DB_PREFIX . "amazonus_order auso ON auso.order_id = o.order_id ";
 		} else {
 			$sql .= " JOIN (SELECT NULL AS order_id) auso ";
 		}
 
-		if ($this->config->get('amazonus_status')) {
+		if ($this->config->get('openbay_amazonus_status')) {
 			$sql .= " LEFT JOIN " . DB_PREFIX . "etsy_order eto ON eto.order_id = o.order_id ";
 		} else {
 			$sql .= " JOIN (SELECT NULL AS order_id) eto ";
@@ -149,13 +149,13 @@ class ModelOpenbayOrder extends Model {
 			$sql .= " JOIN (SELECT NULL AS order_id) eo ";
 		}
 
-		if ($this->config->get('amazon_status')) {
+		if ($this->config->get('openbay_amazon_status')) {
 			$sql .= " LEFT JOIN " . DB_PREFIX . "amazon_order ao ON ao.order_id = o.order_id ";
 		} else {
 			$sql .= " JOIN (SELECT NULL AS order_id) ao ";
 		}
 
-		if ($this->config->get('amazonus_status')) {
+		if ($this->config->get('openbay_amazonus_status')) {
 			$sql .= " LEFT JOIN " . DB_PREFIX . "amazonus_order auso ON auso.order_id = o.order_id ";
 		} else {
 			$sql .= " JOIN (SELECT NULL AS order_id) auso ";

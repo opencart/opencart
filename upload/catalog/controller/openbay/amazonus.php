@@ -1,7 +1,7 @@
 <?php
 class ControllerOpenbayAmazonus extends Controller {
 	public function order() {
-		if ($this->config->get('amazonus_status') != '1') {
+		if ($this->config->get('openbay_amazonus_status') != '1') {
 			return;
 		}
 
@@ -314,7 +314,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function listing() {
-		if ($this->config->get('amazonus_status') != '1') {
+		if ($this->config->get('openbay_amazonus_status') != '1') {
 			return;
 		}
 
@@ -359,7 +359,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function listingReport() {
-		if ($this->config->get('amazonus_status') != '1') {
+		if ($this->config->get('openbay_amazonus_status') != '1') {
 			return;
 		}
 
@@ -409,7 +409,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function product() {
-		if ($this->config->get('amazonus_status') != '1') {
+		if ($this->config->get('openbay_amazonus_status') != '1') {
 			$this->response->setOutput("disabled");
 			return;
 		}
@@ -486,7 +486,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function search() {
-		if ($this->config->get('amazonus_status') != '1') {
+		if ($this->config->get('openbay_amazonus_status') != '1') {
 			return;
 		}
 
@@ -519,7 +519,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function dev() {
-		if ($this->config->get('amazonus_status') != '1') {
+		if ($this->config->get('openbay_amazonus_status') != '1') {
 			$this->response->setOutput("error 001");
 			return;
 		}

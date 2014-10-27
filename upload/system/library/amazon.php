@@ -108,7 +108,7 @@ class Amazon {
 	}
 
 	public function addOrder($order_id) {
-		if ($this->config->get('amazon_status') != 1) {
+		if ($this->config->get('openbay_amazon_status') != 1) {
 			return;
 		}
 
@@ -180,7 +180,7 @@ class Amazon {
 
 	public function bulkUpdateOrders($orders) {
 		// Is the module enabled and called from admin?
-		if ($this->config->get('amazon_status') != 1 || !defined('HTTPS_CATALOG')) {
+		if ($this->config->get('openbay_amazon_status') != 1 || !defined('HTTPS_CATALOG')) {
 			return;
 		}
 		$this->load->model('openbay/amazon');
@@ -233,7 +233,7 @@ class Amazon {
 
 	public function updateOrder($order_id, $order_status_string, $courier_id = '', $courier_from_list = true, $tracking_no = '') {
 
-		if ($this->config->get('amazon_status') != 1) {
+		if ($this->config->get('openbay_amazon_status') != 1) {
 			return;
 		}
 
@@ -415,7 +415,7 @@ class Amazon {
 	}
 
 	public function validate(){
-		if($this->config->get('amazon_status') != 0 &&
+		if($this->config->get('openbay_amazon_status') != 0 &&
 			$this->config->get('openbay_amazon_token') != '' &&
 			$this->config->get('openbay_amazon_enc_string1') != '' &&
 			$this->config->get('openbay_amazon_enc_string2') != ''){

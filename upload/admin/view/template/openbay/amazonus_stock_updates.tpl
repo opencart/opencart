@@ -31,7 +31,7 @@
         <div class="col-sm-2 text-right"> <a onclick="filter();" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_filter; ?>"><i class="fa fa-filter"></i></a> </div>
       </div>
     </div>
-    <table class="table">
+    <table class="table table-bordered table-hover">
       <thead>
         <tr>
           <th class="text-left"><?php echo $column_ref; ?></th>
@@ -61,7 +61,7 @@
         </tr>
         <?php } ?>
           </tr>
-        
+
         <?php } ?>
       </tbody>
     </table>
@@ -84,13 +84,13 @@ function filter() {
   }
   location = url;
 }
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $(document).ready(function() {
   $('#date-start').datepicker({dateFormat: 'yy-mm-dd'});
   $('#date-end').datepicker({dateFormat: 'yy-mm-dd'});
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
   pickTime: false
@@ -104,5 +104,5 @@ $('.datetime').datetimepicker({
 $('.time').datetimepicker({
   pickDate: false
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

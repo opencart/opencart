@@ -4,7 +4,8 @@
     <div class="container-fluid">
       <div class="pull-right">
         <button type="submit" form="form-openbay" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary" onclick="validateForm(); return false;"><i class="fa fa-save"></i></button>
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
+      </div>
       <h1><?php echo $heading_title; ?></h1>
     </div>
   </div>
@@ -13,7 +14,7 @@
       <ul class="nav nav-tabs">
         <li class="active"><a href="#tab-update" data-toggle="tab"><?php echo $tab_update; ?></a></li>
         <li><a href="#tab-setting" data-toggle="tab"><?php echo $tab_setting; ?></a></li>
-        <li><a href="#tab-patch" data-toggle="tab"><?php echo $tab_patch; ?></a></li>
+        <li><a href="#tab-developer" data-toggle="tab"><?php echo $tab_developer; ?></a></li>
       </ul>
       <div class="tab-content">
         <div class="tab-pane active" id="tab-update">
@@ -98,6 +99,12 @@
               <div class="btn btn-primary" style="display:none;" id="ftp-update-module-loading"><i class="fa fa-cog fa-lg fa-spin"></i></div>
             </div>
           </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="button-patch"><span data-toggle="tooltip" title="<?php echo $help_patch; ?>"><?php echo $entry_patch; ?></span></label>
+            <div class="col-sm-10">
+              <button class="btn btn-primary" id="button-patch"><?php echo $button_patch; ?></button>
+            </div>
+          </div>
         </div>
         <div class="tab-pane" id="tab-setting">
           <div class="form-group">
@@ -113,16 +120,14 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="button-clear-faq"><span data-toggle="tooltip" title="<?php echo $help_clear_faq; ?>"><?php echo $text_clear_faq; ?></span></label>
             <div class="col-sm-10">
-              <button class="btn btn-primary" id="button-clear-faq"><?php echo $button_faq_clear; ?></button>
+              <button class="btn btn-primary" id="button-clear-faq"><?php echo $button_clear; ?></button>
             </div>
           </div>
         </div>
-        <div class="tab-pane" id="tab-patch">
+        <div class="tab-pane" id="tab-developer">
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="button-patch"><span data-toggle="tooltip" title="<?php echo $help_patch; ?>"><?php echo $text_patch; ?></span></label>
-            <div class="col-sm-10">
-              <button class="btn btn-primary" id="button-patch"><?php echo $button_patch; ?></button>
-            </div>
+            <label class="col-sm-2 control-label" for="button-clear-data"><span data-toggle="tooltip" title="<?php echo $help_empty_data; ?>"><?php echo $entry_empty_data; ?></span></label>
+            <div class="col-sm-10"> <a class="btn btn-primary" id="button-clear-data"><?php echo $button_clear; ?></a> </div>
           </div>
         </div>
       </div>
@@ -141,7 +146,7 @@
     e.preventDefault();
 
     $.ajax({
-      url: 'index.php?route=extension/openbay/ftptestconnection&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/updatetest&token=<?php echo $token; ?>',
       type: 'post',
       data: $('.ftp-setting').serialize(),
       dataType: 'json',
@@ -171,7 +176,7 @@
     e.preventDefault();
 
     $.ajax({
-      url: 'index.php?route=extension/openbay/runpatch&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/patch&token=<?php echo $token; ?>',
       type: 'post',
       dataType: 'json',
       beforeSend: function() {
@@ -205,17 +210,17 @@
         alert('<?php echo $text_clear_faq_complete; ?>');
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        $('#button-clear-faq').empty().html('<?php echo $text_clear; ?>');
+        $('#button-clear-faq').empty().html('<?php echo $button_clear; ?>');
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });
   });
 
-  $('#ftp-update-module').bind('click', function() {
+  $('#ftp-update-module').bind('click', function(e) {
     e.preventDefault();
 
     $.ajax({
-      url: 'index.php?route=extension/openbay/ftpupdatemodule&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/update&token=<?php echo $token; ?>',
       type: 'post',
       data: $('.ftp-setting').serialize(),
       dataType: 'json',
@@ -234,6 +239,36 @@
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });
+  });
+
+  $('#button-clear-data').bind('click', function(e) {
+    e.preventDefault();
+
+    var pass = prompt("<?php echo $entry_password_prompt; ?>", "");
+
+    if (pass != '') {
+      $.ajax({
+        url: 'index.php?route=extension/openbay/purge&token=<?php echo $token; ?>',
+        type: 'post',
+        dataType: 'json',
+        data: 'pass=' + pass,
+        beforeSend: function() {
+          $('#button-clear-data').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+        },
+        success: function(json) {
+          setTimeout(function() {
+            alert(json.msg);
+            $('#button-clear-data').empty().html('<?php echo $button_clear; ?>');
+          }, 500);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
+        }
+      });
+    } else {
+      alert('<?php echo $text_action_warning; ?>');
+      $('#button-clear-data').empty().html('<?php echo $button_clear; ?>');
+    }
   });
 
   function validateForm() {

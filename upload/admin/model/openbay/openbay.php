@@ -1,6 +1,6 @@
 <?php
 class ModelOpenbayOpenbay extends Model {
-	private $url = 'http://account.openbaypro.com/';
+	private $url = 'https://account.openbaypro.com/';
 
 	public function setUrl($url) {
 		$this->url = $url;
@@ -301,7 +301,17 @@ class ModelOpenbayOpenbay extends Model {
 
 	public function version() {
 		$data = $this->call('update/getStableVersion/');
-		return $data;
+
+		if ($this->lasterror == true) {
+			$data = array(
+				'error' => true,
+				'msg' => $this->lastmsg . ' (' . VERSION . ')',
+			);
+
+			return $data;
+		} else {
+			return $data;
+		}
 	}
 
 	public function faqGet($route) {
@@ -381,9 +391,7 @@ class ModelOpenbayOpenbay extends Model {
 		}
 
 		$data = array(
-			'token' => '',
 			'language' => $this->config->get('openbay_language'),
-			'secret' => '',
 			'server' => 1,
 			'domain' => $domain,
 			'openbay_version' => (int)$this->config->get('openbay_version'),

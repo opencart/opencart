@@ -120,10 +120,14 @@
         success: function (json) {
           $('#openbay-version-loading').hide();
 
-          if (version < json.version) {
-            $('#openbay-version').removeClass('attention').addClass('alert-warning').append('<i class="fa fa-warning"></i> <?php echo $text_version_current; ?> v.' + version + ', <?php echo $text_version_available; ?> v.' + json.version);
+          if (json.error) {
+            $('#openbay-version').removeClass('attention').addClass('alert-warning').append(json.msg);
           } else {
-            $('#openbay-version').removeClass('attention').addClass('alert-success').append('<i class="fa fa-check"></i> <?php echo $text_version_latest; ?> (v.' + version + ')');
+            if (version < json.version) {
+              $('#openbay-version').removeClass('attention').addClass('alert-warning').append('<i class="fa fa-warning"></i> <?php echo $text_version_current; ?> v.' + version + ', <?php echo $text_version_available; ?> v.' + json.version);
+            } else {
+              $('#openbay-version').removeClass('attention').addClass('alert-success').append('<i class="fa fa-check"></i> <?php echo $text_version_latest; ?> (v.' + version + ')');
+            }
           }
         },
         failure: function () {

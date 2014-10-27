@@ -25,6 +25,7 @@
 * Added check for compression size #1772
 * Update moment.js #1896
 * Updated Authorize.net affiliate link to correct OpenCart promotion page for users to get special offer.
+* Added check for current category before getting child data to improve speed.
 
 #### Added
 * Check for URL alias #1915 (https://github.com/opencart/opencart/commit/69d6252f4157faf207e3db0504de20b34eab58ef)

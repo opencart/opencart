@@ -390,7 +390,7 @@ class ControllerProductManufacturer extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_error'),
-				'href' => $this->url->link('product/category', $url)
+				'href' => $this->url->link('product/manufacturer/info', $url)
 			);
 
 			$this->document->setTitle($this->language->get('text_error'));

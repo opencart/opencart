@@ -687,6 +687,7 @@ class ModelCheckoutOrder extends Model {
 
 					// HTML Mail
 					$data['text_greeting'] = $language->get('text_new_received');
+					
 					if ($comment) {
 						if ($order_info['comment']) {
 							$data['comment'] = nl2br($comment) . '<br/><br/>' . $order_info['comment'];
@@ -770,7 +771,7 @@ class ModelCheckoutOrder extends Model {
 					$emails = explode(',', $this->config->get('config_mail_alert'));
 
 					foreach ($emails as $email) {
-						if ($email && preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $email)) {
+						if ($email && preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $email)) {
 							$mail->setTo($email);
 							$mail->send();
 						}

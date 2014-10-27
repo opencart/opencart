@@ -294,7 +294,7 @@ final class Openbay {
 		$emails = explode(',', $this->config->get('config_alert_emails'));
 
 		foreach ($emails as $email) {
-			if ($email && preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $email)) {
+			if ($email && preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $email)) {
 				$mail->setTo($email);
 				$mail->send();
 			}

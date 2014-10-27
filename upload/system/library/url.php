@@ -1,6 +1,7 @@
 <?php
 class Url {
 	private $domain;
+	private $ssl;
 	private $rewrite = array();
 
 	public function __construct($domain, $ssl = '') {

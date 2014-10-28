@@ -127,7 +127,7 @@ class ControllerPaymentPPStandard extends Controller {
 			} else {
 				$curl = curl_init('https://www.sandbox.paypal.com/cgi-bin/webscr');
 			}
-
+			curl_setopt($curl, CURLOPT_HTTPHEADER, array('Connection: Close', 'User-Agent: OpenCart_2.0_PFP'));
 			curl_setopt($curl, CURLOPT_POST, true);
 			curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);

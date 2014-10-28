@@ -22,6 +22,7 @@ $_['text_item_activated']     	= 'The item has been activated in Etsy';
 $_['text_confirm_end']          = 'Are you sure you want to remove the listing?';
 $_['text_confirm_deactivate']   = 'Are you sure you want to deactivate the listing?';
 $_['text_confirm_activate']     = 'Are you sure you want to activate the listing?';
+$_['text_listings']     		= 'Manage your Etsy listings';
 
 // Columns
 $_['column_listing_id']			= 'Etsy ID';

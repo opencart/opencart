@@ -35,7 +35,7 @@
       </div>
     </div>
     <form id="bulk-list-form" class="form-horizontal">
-      <table class="table">
+      <table class="table table-bordered table-hover">
         <thead>
           <tr>
             <th class="text-center"><input type="checkbox"/></th>
@@ -247,5 +247,5 @@ $('#button-search').bind('click', function(e) {
     $('#bulk-list-form').prepend('<div class="alert alert-danger"><?php echo $error_select_items; ?></div>');
   }
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

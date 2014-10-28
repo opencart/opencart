@@ -1,22 +1,30 @@
 <?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-      <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
-  <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="page-header">
+    <div class="container-fluid">
       <div class="pull-right">
         <a data-toggle="tooltip" title="<?php echo $button_refresh; ?>" class="btn btn-default" onclick="loadUsage();"><i class="fa fa-cog fa-lg"></i></a>
         <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $button_back; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
       </div>
-      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $heading_title; ?></h1>
+      <h1><?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
-    <div class="panel-body">
-      <h4><div class="btn btn-primary" id="load_usage_loading"><i class="fa fa-cog fa-lg fa-spin"></i></div></h4>
-      <div id="usageTable" class="displayNone"></div>
+  </div>
+  <div class="container-fluid">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_usage; ?></h3>
+      </div>
+      <div class="panel-body">
+        <h4><div class="btn btn-primary" id="load_usage_loading"><i class="fa fa-cog fa-lg fa-spin"></i></div></h4>
+        <div id="usageTable" class="displayNone"></div>
+      </div>
     </div>
+  </div>
 </div>
 
 <script type="text/javascript"><!--

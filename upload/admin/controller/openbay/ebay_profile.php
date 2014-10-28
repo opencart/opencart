@@ -148,6 +148,11 @@ class ControllerOpenbayEbayProfile extends Controller {
 		$profile_info = array();
 		if (isset($this->request->get['ebay_profile_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$profile_info = $this->model_openbay_ebay_profile->get($this->request->get['ebay_profile_id']);
+			$data['text_manage'] = $this->language->get('text_edit');
+			$data['action'] = $this->url->link('openbay/ebay_profile/edit', 'token=' . $this->session->data['token'], 'SSL');
+		} else {
+			$data['action'] = $this->url->link('openbay/ebay_profile/add', 'token=' . $this->session->data['token'], 'SSL');
+			$data['text_manage'] = $this->language->get('text_add');
 		}
 
 		if (isset($this->request->post['type'])) {
@@ -265,6 +270,8 @@ class ControllerOpenbayEbayProfile extends Controller {
 			$data['html_national_calculated']         	= $this->load->view('openbay/ebay_profile_shipping_national_calculated.tpl', $data);
 			$data['html_international_calculated']		= $this->load->view('openbay/ebay_profile_shipping_international_calculated.tpl', $data);
 		}
+
+		$data['cancel'] = $this->url->link('openbay/ebay_profile/profileAll', 'token=' . $this->session->data['token'], 'SSL');
 
 		$this->document->setTitle($data['heading_title']);
 

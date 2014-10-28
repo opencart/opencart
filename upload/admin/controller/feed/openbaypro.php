@@ -21,7 +21,7 @@ class ControllerFeedOpenbaypro extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('feed/openbaypro', 'token=' . $this->session->data['token'], 'SSL'),
+			'href'      => $this->url->link('feed/openbay', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
 		$data['cancel'] = $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL');
@@ -58,8 +58,8 @@ class ControllerFeedOpenbaypro extends Controller {
 		$this->model_setting_setting->editSetting('openbaypro', $settings);
 
 		// register the event triggers
-		$this->model_tool_event->addEvent('openbaypro', 'post.admin.delete.product', 'extension/openbay/eventDeleteProduct');
-		$this->model_tool_event->addEvent('openbaypro', 'post.admin.edit.product', 'extension/openbay/eventEditProduct');
+		$this->model_tool_event->addEvent('openbay', 'post.admin.delete.product', 'extension/openbay/eventDeleteProduct');
+		$this->model_tool_event->addEvent('openbay', 'post.admin.edit.product', 'extension/openbay/eventEditProduct');
 	}
 
 	public function uninstall() {
@@ -72,6 +72,6 @@ class ControllerFeedOpenbaypro extends Controller {
 		$this->model_setting_setting->editSetting('openbaypro', $settings);
 
 		// delete the event triggers
-		$this->model_tool_event->deleteEvent('openbaypro');
+		$this->model_tool_event->deleteEvent('openbay');
 	}
 }

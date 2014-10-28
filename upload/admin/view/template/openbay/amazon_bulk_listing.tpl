@@ -35,7 +35,7 @@
       </div>
     </div>
     <form id="bulk-list-form" class="form-horizontal">
-      <table class="table">
+      <table class="table table-bordered table-hover">
         <thead>
           <tr>
             <th class="text-center"><input type="checkbox"/></th>

@@ -41,7 +41,7 @@ class ModelOpenbayEbay extends Model{
 {postcode}
 {country}';
 
-		$this->model_setting_setting->editSetting('openbay', $value);
+		$this->model_setting_setting->editSetting('ebay', $value);
 
 		$this->db->query("
 					CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_category` (

@@ -14,7 +14,7 @@
   <div class="container-fluid">
     <div class="alert alert-warning"><?php echo $text_confirm_change_text; ?>: <strong><?php echo $status_mapped[$change_order_status_id]; ?></strong></div>
     <form action="<?php echo $link_complete; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
-      <table class="table">
+      <table class="table table-bordered table-hover">
         <thead>
           <tr>
             <td class="text-center"><?php echo $column_order_id; ?></td>
@@ -105,7 +105,7 @@
         </tr>
         <?php } ?>
           </tbody>
-        
+
       </table>
     </form>
     <div class="pull-right"> <a onclick="validate();" class="btn btn-primary"><?php echo $button_update; ?></a> </div>
@@ -166,5 +166,5 @@
       return false;
     }
   }
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

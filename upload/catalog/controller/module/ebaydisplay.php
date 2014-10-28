@@ -1,42 +1,39 @@
 <?php
 class ControllerModuleEbaydisplay extends Controller {
 	public function index($setting) {
-		$this->language->load('module/ebaydisplay');
-		$this->load->model('tool/image');
-		$this->load->model('openbay/ebay_product');
+		if ($this->config->get('ebay_status') == 1) {
+			$this->language->load('module/ebaydisplay');
+			$this->load->model('tool/image');
+			$this->load->model('openbay/ebay_product');
 
-		$data['heading_title'] = $this->language->get('heading_title');
+			$data['heading_title'] = $this->language->get('heading_title');
 
-		$data['products'] = array();
+			$data['products'] = array();
 
-		$products = $this->cache->get('ebaydisplay.' . md5(serialize($setting)));
+			$products = $this->cache->get('ebaydisplay.' . md5(serialize($setting)));
 
-		if(!$products){
-			$products = $this->model_openbay_ebay_product->getDisplayProducts();
-			$this->cache->set('ebaydisplay.' . md5(serialize($setting)), $products);
-		}
-
-		foreach ($products['products'] as $product) {
-			if(isset($product['pictures'][0])){
-				$image = $this->model_openbay_ebay_product->resize($product['pictures'][0], $setting['width'], $setting['height']);
-			}else{
-				$image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
+			if (!$products) {
+				$products = $this->model_openbay_ebay_product->getDisplayProducts();
+				$this->cache->set('ebaydisplay.' . md5(serialize($setting)), $products);
 			}
 
-			$data['products'][] = array(
-				'thumb'   	 => $image,
-				'name'    	 => base64_decode($product['Title']),
-				'price'   	 => $this->currency->format($product['priceGross']),
-				'href'    	 => (string)$product['link'],
-			);
-		}
+			foreach($products['products'] as $product) {
+				if (isset($product['pictures'][0])) {
+					$image = $this->model_openbay_ebay_product->resize($product['pictures'][0], $setting['width'], $setting['height']);
+				} else {
+					$image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
+				}
 
-		$data['tracking_pixel'] = $products['tracking_pixel'];
+				$data['products'][] = array('thumb' => $image, 'name' => base64_decode($product['Title']), 'price' => $this->currency->format($product['priceGross']), 'href' => (string)$product['link'],);
+			}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/ebaydisplay.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/module/ebaydisplay.tpl', $data);
-		} else {
-			return $this->load->view('default/template/module/ebaydisplay.tpl', $data);
+			$data['tracking_pixel'] = $products['tracking_pixel'];
+
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/ebaydisplay.tpl')) {
+				return $this->load->view($this->config->get('config_template') . '/template/module/ebaydisplay.tpl', $data);
+			} else {
+				return $this->load->view('default/template/module/ebaydisplay.tpl', $data);
+			}
 		}
 	}
 }

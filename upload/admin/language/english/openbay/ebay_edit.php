@@ -11,6 +11,7 @@ $_['text_error_loading']            = 'There was an error getting the informatio
 $_['text_saved']                    = 'Listing has been saved';
 $_['text_alert_removed']            = 'The listing has been unlinked';
 $_['text_alert_ended']              = 'The listing has been ended on eBay';
+$_['text_listing_info']             = 'Listing information';
 
 // Buttons
 $_['button_view']					= 'View listing';

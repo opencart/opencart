@@ -27,7 +27,7 @@
             </div>
           </div>
         </div>
-        <table class="table">
+        <table class="table table-bordered table-hover">
           <thead id="table-head-1">
           <tr>
             <th class="text-center" colspan="3"><h4><?php echo $text_new_link; ?></h4></th>
@@ -55,7 +55,7 @@
           </tr>
           </tbody>
         </table>
-        <table class="table">
+        <table class="table table-bordered table-hover">
           <thead>
           <tr>
             <th class="text-center" colspan="6"><h4><?php echo $text_linked_items; ?></h4></th>

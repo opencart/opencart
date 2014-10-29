@@ -611,7 +611,7 @@ class ModelCheckoutOrder extends Model {
 
 					if ($comment && $notify) {
 						$text .= $language->get('text_new_instruction') . "\n\n";
-						$text .= $comment . "\n\n";
+						$text .= strip_tags($comment) . "\n\n";
 					}
 
 					// Products

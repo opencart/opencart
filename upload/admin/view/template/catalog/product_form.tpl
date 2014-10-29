@@ -765,7 +765,7 @@
                     <tr>
                       <td class="text-left"><?php echo $entry_customer_group; ?></td>
                       <td class="text-right"><?php echo $entry_priority; ?></td>
-                      <td class="text-right"><?php echo $entry_price; ?></td>
+                      <td style="width:80px" class="text-right"><?php echo $entry_price; ?></td>
                       <td class="text-left"><?php echo $entry_date_start; ?></td>
                       <td class="text-left"><?php echo $entry_date_end; ?></td>
                       <td></td>

@@ -1,7 +1,13 @@
 <?php
 class ModelOpenbayEtsyProduct extends Model{
 	public function getStatus($product_id) {
-		return 0;
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "etsy_listing` WHERE `product_id` = '" . (int)$product_id . "' AND `status` = 1 LIMIT 1");
+
+		if ($query->num_rows == 0) {
+			return 0;
+		} else {
+			return 1;
+		}
 	}
 
 	public function totalLinked() {

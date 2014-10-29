@@ -1,64 +1,75 @@
 <?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
-  <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="page-header">
+    <div class="container-fluid">
       <div class="pull-right">
-        <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $button_back; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
-      <h1 class="panel-title"><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $heading_title; ?></h1>
+        <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $button_back; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
+      </div>
+      <h1><?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
-    <div class="panel-body">
-      <div class="row">
-        <div class="col-md-12">
-          <p><?php echo $text_use_desc; ?></p>
-          <div id="selling-limits" class="alert alert-warning" style="display:none;"></div>
-        </div>
+  </div>
+  <div class="container-fluid">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_summary; ?></h3>
       </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="panel panel-default dsr-table">
-            <div class="panel-heading">
-              <h1 class="panel-title"><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $text_report_30; ?></h1>
-            </div>
-            <div class="panel-body">
-              <table class="table" id="dsr-table-30">
-                <thead>
+      <div class="panel-body">
+
+        <div class="row">
+          <div class="col-md-12">
+            <p><?php echo $text_use_desc; ?></p>
+            <div id="selling-limits" class="alert alert-warning" style="display:none;"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="panel panel-default dsr-table">
+              <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $text_report_30; ?></h3>
+              </div>
+              <div class="panel-body">
+                <table class="table" id="dsr-table-30">
+                  <thead>
                   <tr>
                     <th></th>
                     <th class="text-center"><?php echo $text_score; ?></th>
                     <th class="text-center"><?php echo $text_count; ?></th>
                   </tr>
-                </thead>
-              </table>
+                  </thead>
+                </table>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-md-4">
-          <div class="panel panel-default dsr-table">
-            <div class="panel-heading">
-              <h1 class="panel-title"><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $text_report_52; ?></h1>
-            </div>
-            <div class="panel-body">
-              <table class="table" id="dsr-table-52">
-                <thead>
+          <div class="col-md-6">
+            <div class="panel panel-default dsr-table">
+              <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $text_report_52; ?></h3>
+              </div>
+              <div class="panel-body">
+                <table class="table" id="dsr-table-52">
+                  <thead>
                   <tr>
                     <th></th>
                     <th class="text-center"><?php echo $text_score; ?></th>
                     <th class="text-center"><?php echo $text_count; ?></th>
                   </tr>
-                </thead>
-              </table>
+                  </thead>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <p><a class="btn btn-primary" id="load-usage"><?php echo $button_refresh; ?></a></p>
+        <div class="well">
+          <div class="row">
+            <div class="col-sm-12 text-right">
+              <a class="btn btn-primary" id="load-usage"><i class="fa fa-cog fa-lg fa-spin"></i></a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -78,7 +89,7 @@
         $('.data-row').remove();
       },
       success: function(json) {
-          $('#load-usage').empty().html('<?php echo $text_load; ?>').removeAttr('disabled');
+          $('#load-usage').empty().html('<i class="fa fa-refresh"></i> <?php echo $button_refresh; ?>').removeAttr('disabled');
 
           if (json.data.summary.QuantityLimitRemaining != ''){
               var limitHtml = '';

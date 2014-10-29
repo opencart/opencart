@@ -56,7 +56,7 @@
       <div class="well"> <?php echo $text_not_in_catalog; ?><a href="<?php echo $url_advanced; ?>" id="create_new" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_new; ?></a> </div>
     </div>
     <div class="panel-body" id="search-result-container" style="display:none;">
-      <table class="table">
+      <table class="table table-bordered table-hover">
         <thead>
           <tr>
             <th class="text-center"><?php echo $column_image ?></th>
@@ -353,7 +353,7 @@
         $('form input[name="marketplace"]').val($(this).val());
     });
 });
-</script> 
+</script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
   pickTime: false
@@ -367,5 +367,5 @@ $('.datetime').datetimepicker({
 $('.time').datetimepicker({
   pickDate: false
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

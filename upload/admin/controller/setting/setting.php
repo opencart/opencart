@@ -445,6 +445,11 @@ class ControllerSettingSetting extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_stores'),
+			'href' => $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL')
+		);
+
+		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('setting/setting', 'token=' . $this->session->data['token'], 'SSL')
 		);

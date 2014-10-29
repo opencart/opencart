@@ -2,18 +2,26 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"> <a data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default" id="btn-cancel"><i class="fa fa-reply"></i></a> </div>
+      <div class="pull-right">
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default" id="btn-cancel"><i class="fa fa-reply"></i></a>
+      </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+          <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
         <?php } ?>
       </ul>
     </div>
   </div>
-  <div class="container-fluid" id="page-listing">
+  <div class="container-fluid">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_create; ?></h3>
+      </div>
+      <div class="panel-body">
+        <div id="page-listing">
     <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
     <?php } ?>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
       <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>"/>
@@ -21,7 +29,7 @@
       <ul class="nav nav-tabs">
         <li class="active"><a href="#tab-listing-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
         <li><a href="#tab-listing-additional" data-toggle="tab"><?php echo $tab_additional; ?></a></li>
-        <li><a href="#tab-images" data-toggle="tab"><?php echo $tab_images; ?></a></li>
+        <li><a href="#tab-images" data-toggle="tab"><?php echo $tab_image; ?></a></li>
       </ul>
       <div class="tab-content">
         <div id="tab-listing-general" class="tab-pane active">
@@ -35,7 +43,7 @@
                     <select name="top_category" id="input-category" class="form-control">
                       <option id="category-default"><?php echo $text_option; ?></option>
                       <?php foreach ($setting['top_categories'] as $value) { ?>
-                      <option value="<?php echo $value['category_name']; ?>"><?php echo $value['long_name']; ?></option>
+                        <option value="<?php echo $value['category_name']; ?>"><?php echo $value['long_name']; ?></option>
                       <?php } ?>
                     </select>
                   </div>
@@ -64,9 +72,9 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-description"><?php echo $entry_description; ?></label>
+            <label class="col-sm-2 control-label" for="input-description"><span data-toggle="tooltip" data-container="#tab-listing-general" title="<?php echo $help_description; ?>"><?php echo $entry_description; ?></span></label>
             <div class="col-sm-10">
-              <textarea name="description" placeholder="<?php echo $entry_description; ?>" id="input-description" class="form-control"><?php echo $product['description']; ?></textarea>
+              <textarea name="description" placeholder="<?php echo $entry_description; ?>" id="input-description" class="form-control"><?php echo $product['description_raw']; ?></textarea>
             </div>
           </div>
           <div class="form-group required">
@@ -120,34 +128,6 @@
               <select name="shipping_template_id" id="input-shipping" class="form-control" disabled="disabled">
               </select>
             </div>
-          </div>
-        </div>
-        <div id="tab-images" class="tab-pane">
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_image; ?></label>
-            <div class="col-sm-10"><a id="thumb-image" class="img-thumbnail"><img src="<?php echo $placeholder; ?>" alt="" title="" /></a>
-              <input type="hidden" name="image" value="<?php echo $product['image_url']; ?>" id="input-image" />
-            </div>
-          </div>
-          <div class="table-responsive">
-            <table id="images" class="table table-striped table-bordered table-hover">
-              <thead>
-                <tr>
-                  <td class="text-right" style="width: 1px;"></td>
-                  <td class="text-left"><?php echo $entry_image_other; ?></td>
-                </tr>
-              </thead>
-              <tbody>
-                <?php $image_row = 0; ?>
-                <?php foreach ($product['product_images'] as $product_image) { ?>
-                <tr>
-                  <td class="text-left"><input type="checkbox" name="product_image[<?php echo $image_row; ?>][image_url]" value="<?php echo $product_image['image_url']; ?>" class="product-image" checked="checked" /></td>
-                  <td class="text-left"><a href="" class="img-thumbnail"><img src="<?php echo $product_image['thumb']; ?>" alt="" title="" /></a></td>
-                </tr>
-                <?php $image_row++; ?>
-                <?php } ?>
-              </tbody>
-            </table>
           </div>
         </div>
         <div id="tab-listing-additional" class="tab-pane">
@@ -255,6 +235,36 @@
             </div>
           </div>
         </div>
+        <div id="tab-images" class="tab-pane">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_image; ?></label>
+            <div class="col-sm-10"><a id="thumb-image" class="img-thumbnail"><img src="<?php echo $product['thumb']; ?>" alt="" title="" /></a>
+              <input type="hidden" name="image" value="<?php echo $product['image_url']; ?>" id="input-image" />
+            </div>
+          </div>
+          <?php if (!empty($product['product_images'])) { ?>
+          <div class="table-responsive">
+            <table id="images" class="table table-striped table-bordered table-hover">
+              <thead>
+              <tr>
+                <td class="text-right" style="width: 1px;"></td>
+                <td class="text-left"><?php echo $entry_image_other; ?></td>
+              </tr>
+              </thead>
+              <tbody>
+              <?php $image_row = 0; ?>
+              <?php foreach ($product['product_images'] as $product_image) { ?>
+              <tr>
+                <td class="text-left"><input type="checkbox" name="product_image[<?php echo $image_row; ?>][image_url]" value="<?php echo $product_image['image_url']; ?>" class="product-image" checked="checked" /></td>
+                <td class="text-left"><a href="" class="img-thumbnail"><img src="<?php echo $product_image['thumb']; ?>" alt="" title="" /></a></td>
+              </tr>
+              <?php $image_row++; ?>
+              <?php } ?>
+              </tbody>
+            </table>
+          </div>
+          <?php } ?>
+        </div>
         <div class="well">
           <div class="row">
             <div class="col-sm-12"> <a class="btn btn-primary pull-right" id="button-submit" onclick="submitForm();"><span><?php echo $button_submit; ?></span></a> </div>
@@ -263,14 +273,17 @@
       </div>
     </form>
   </div>
-  <div class="container-fluid" id="page-listing-success" style="display:none;">
-    <div class="well">
-      <div class="row">
-        <div class="col-sm-12">
-          <h3><?php echo $text_created; ?></h3>
-          <p><?php echo $text_listing_id; ?>: <span id="listing-id"></span></p>
-          <ul class="list-group" id="listing-image-status">
-          </ul>
+        <div id="page-listing-success" style="display:none;">
+          <div class="well">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3><?php echo $text_created; ?></h3>
+                <p><?php echo $text_listing_id; ?>: <span id="listing-id"></span></p>
+                <ul class="list-group" id="listing-image-status">
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -281,7 +294,7 @@
 
   function submitForm() {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/createSubmit&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_product/createsubmit&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#button-submit').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },
@@ -332,7 +345,7 @@
 
   function uploadImage(listing_id, url, id) {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/addImage&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_product/addimage&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#listing-image-status').append('<li class="list-group-item list-group-item-info" id="image-upload-status-'+id+'"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_img_upload; ?> '+id+'</li>');
       },
@@ -378,7 +391,7 @@
 
   $('#input-category').on('change', function() {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/getSubCategory&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_product/getsubcategory&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#input-category').attr('disabled','disabled');
         $('#input-sub-category').empty();
@@ -414,7 +427,7 @@
     var sub_tag = $(this).val();
 
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/getSubSubCategory&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_product/getsubsubcategory&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#input-category').attr('disabled','disabled');
         $('#input-sub-category').attr('disabled','disabled');
@@ -461,7 +474,7 @@
 
   function getCategory(tag) {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_product/getCategory&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_product/getcategory&token=<?php echo $token; ?>',
       beforeSend: function(){ },
       type: 'post',
       data: {'tag' : tag},
@@ -482,7 +495,7 @@
 
   function getShippingProfiles() {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_shipping/getAll&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_shipping/getall&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#shipping-loading').show();
       },
@@ -508,7 +521,7 @@
 
   function getShopSection() {
     $.ajax({
-      url: 'index.php?route=openbay/etsy_shop/getSections&token=<?php echo $token; ?>',
+      url: 'index.php?route=openbay/etsy_shop/getsections&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#shop-section-loading').show();
       },
@@ -537,5 +550,5 @@
     getShopSection();
   });
 
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

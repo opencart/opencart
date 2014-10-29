@@ -17,11 +17,14 @@
     </div>
     <?php } ?>
     <?php if (!empty($error)) { ?>
-    <?php foreach($error as $error_message) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_message; ?></div>
-    <?php } ?>
+      <?php foreach($error as $error_message) { ?>
+        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_message; ?></div>
+      <?php } ?>
     <?php } ?>
     <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> <?php echo $text_dashboard; ?></h3>
+      </div>
       <div class="panel-body">
         <div class="row">
           <div class="col-md-6">

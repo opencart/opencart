@@ -1,6 +1,6 @@
 <?php
 class ModelOpenbayAmazonusPatch extends Model {
-	public function runPatch($manual = true) {
+	public function patch($manual = true) {
 		$this->load->model('setting/setting');
 
 		$settings = $this->model_setting_setting->getSetting('openbay_amazonus');

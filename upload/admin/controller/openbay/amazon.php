@@ -256,7 +256,7 @@ class ControllerOpenbayAmazon extends Controller {
 
 			$this->model_openbay_amazon->scheduleOrders($settings);
 
-			$this->session->data['success'] = $this->language->get('text_setttings_updated');
+			$this->session->data['success'] = $this->language->get('text_settings_updated');
 			$this->response->redirect($this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], 'SSL'));
 			return;
 		}
@@ -306,7 +306,7 @@ class ControllerOpenbayAmazon extends Controller {
 			'Refurbished' => $this->language->get('text_refurbished'),
 		);
 
-		$data['amazon_status'] = isset($settings['amazon_status']) ? $settings['amazon_status'] : '';
+		$data['openbay_amazon_status'] = isset($settings['openbay_amazon_status']) ? $settings['openbay_amazon_status'] : '';
 		$data['openbay_amazon_token'] = isset($settings['openbay_amazon_token']) ? $settings['openbay_amazon_token'] : '';
 		$data['openbay_amazon_enc_string1'] = isset($settings['openbay_amazon_enc_string1']) ? $settings['openbay_amazon_enc_string1'] : '';
 		$data['openbay_amazon_enc_string2'] = isset($settings['openbay_amazon_enc_string2']) ? $settings['openbay_amazon_enc_string2'] : '';
@@ -657,7 +657,7 @@ class ControllerOpenbayAmazon extends Controller {
 
 				$key = '';
 
-				$id_types = array('isbn', 'upc', 'ean', 'jan');
+				$id_types = array('isbn', 'upc', 'ean', 'jan', 'sku');
 
 				foreach ($id_types as $id_type) {
 					if (!empty($product[$id_type])) {

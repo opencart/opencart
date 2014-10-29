@@ -23,6 +23,7 @@ $_['entry_import']						= 'Import eBay items';
 
 // Buttons
 $_['button_import']						= 'Import';
+$_['button_complete']					= 'Complete';
 
 // Help
 $_['help_import_item_advanced']        	= 'Will take up to 10 times longer to import items. Imports weights, sizes, ISBN and more if available';

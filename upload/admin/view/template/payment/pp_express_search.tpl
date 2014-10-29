@@ -24,7 +24,7 @@
               <label class="col-sm-2 control-label"><?php echo $entry_date_start; ?></label>
               <div class="col-sm-10">
                 <div class="input-group date">
-                  <input type="text" name="date_start" value="<?php echo $date_start; ?>" placeholder="<?php echo $text_format; ?>: yy-mm-dd" data-format="YYYY-MM-DD" class="form-control" />
+                  <input type="text" name="date_start" value="<?php echo $date_start; ?>" placeholder="<?php echo $text_format; ?>: yy-mm-dd" data-date-format="YYYY-MM-DD" class="form-control" />
                   <span class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </span></div>
@@ -34,7 +34,7 @@
               <label class="col-sm-2 control-label"><?php echo $entry_date_end; ?></label>
               <div class="col-sm-10">
                 <div class="input-group date">
-                  <input type="text" name="date_end" value="<?php echo $date_end; ?>" placeholder="<?php echo $text_format; ?>: yy-mm-dd" data-format="YYYY-MM-DD" class="form-control" />
+                  <input type="text" name="date_end" value="<?php echo $date_end; ?>" placeholder="<?php echo $text_format; ?>: yy-mm-dd" data-date-format="YYYY-MM-DD" class="form-control" />
                   <span class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </span></div>

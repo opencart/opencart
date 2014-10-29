@@ -753,7 +753,8 @@ h2.price {
 }
 
 .carousel-control i {
-	font-size: 40px;	
+	font-size: 40px;
+	color: #000;	
 }
 .carousel-indicators i {
 

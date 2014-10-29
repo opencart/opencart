@@ -20,11 +20,11 @@ $_['column_date_modified'] = '更改日期';
 $_['column_action']        = '管理';
 
 // Entry
-$_['entry_name']           = '税种：';
-$_['entry_rate']           = '税率：';
-$_['entry_type']           = '类型：';
-$_['entry_customer_group'] = '客户组：';
-$_['entry_geo_zone']       = '区域：';
+$_['entry_name']           = '税种';
+$_['entry_rate']           = '税率';
+$_['entry_type']           = '类型';
+$_['entry_customer_group'] = '客户组';
+$_['entry_geo_zone']       = '区域';
 
 // Error
 $_['error_permission']  = '警告： 您没有权限更改税类！';

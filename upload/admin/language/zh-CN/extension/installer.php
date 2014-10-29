@@ -13,9 +13,9 @@ $_['text_remove']          = '删除临时文件！';
 $_['text_clear']           = '成功：你已清除所有临时文件！';
 
 // Entry
-$_['entry_upload']         = '上传文件：';
-$_['entry_overwrite']      = '将被覆盖的文件：';
-$_['entry_progress']       = '进展：';
+$_['entry_upload']         = '上传文件';
+$_['entry_overwrite']      = '将被覆盖的文件';
+$_['entry_progress']       = '进展';
 
 // Help
 $_['help_upload']          = '需要一个Zip或XML格式的修改文件。';
@@ -27,7 +27,10 @@ $_['error_upload']         = '文件无法上传！';
 $_['error_filetype']       = '无效的文件类型！';
 $_['error_file']           = '文件找不到！';
 $_['error_unzip']          = 'zip文件无法打开！';
+$_['error_code']           = '修改的ID代码必须唯一！';
+$_['error_exists']         = '修改的 %s 和你要上传的ID代码相同！';
 $_['error_directory']      = '要上传的文件目录找不到！';
+$_['error_ftp_status']     = 'FTP需要设置为可用';
 $_['error_ftp_connection'] = '无法连接到 %s:%s';
 $_['error_ftp_login']      = '无法登录为 %s';
 $_['error_ftp_root']       = '无法设置根目录为 %s';

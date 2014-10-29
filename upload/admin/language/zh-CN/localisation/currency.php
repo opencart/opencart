@@ -16,13 +16,13 @@ $_['column_date_modified'] = '最近更新';
 $_['column_action']        = '管理';
 
 // Entry
-$_['entry_title']          = '货币名称：';
-$_['entry_code']           = '代码：';
-$_['entry_value']          = '汇率：';
-$_['entry_symbol_left']    = '左符号：';
-$_['entry_symbol_right']   = '右符号：';
-$_['entry_decimal_place']  = '小数位：';
-$_['entry_status']         = '状态：';
+$_['entry_title']          = '货币名称';
+$_['entry_code']           = '代码';
+$_['entry_value']          = '汇率';
+$_['entry_symbol_left']    = '左符号';
+$_['entry_symbol_right']   = '右符号';
+$_['entry_decimal_place']  = '小数位';
+$_['entry_status']         = '状态';
 
 // Help
 $_['help_code']            = '如果这是您的默认货币请不要改变。</br>必须是有效的 <a href="http://www.xe.com/iso4217.php" target="_blank">ISO 代码</a>。';

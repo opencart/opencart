@@ -14,8 +14,8 @@ $_['column_sort_order'] = '排序';
 $_['column_action']     = '管理';
 
 // Entry
-$_['entry_name']        = '属性组名称：';
-$_['entry_sort_order']  = '排序：';
+$_['entry_name']        = '属性组名称';
+$_['entry_sort_order']  = '排序';
 
 // Error
 $_['error_permission']  = '警告：您没有权限修改属性组！';

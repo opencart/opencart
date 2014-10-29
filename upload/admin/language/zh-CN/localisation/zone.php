@@ -15,10 +15,10 @@ $_['column_country']         = '国家名称';
 $_['column_action']          = '管理';
 
 // Entry
-$_['entry_status']           = '地区状态：';
-$_['entry_name']             = '地区名称：';
-$_['entry_code']             = '地区代码：';
-$_['entry_country']          = '所属国家：';
+$_['entry_status']           = '地区状态';
+$_['entry_name']             = '地区名称';
+$_['entry_code']             = '地区代码';
+$_['entry_country']          = '所属国家';
 
 // Error
 $_['error_permission']       = '警告： 您没有权限更改地区设置';

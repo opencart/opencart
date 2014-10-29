@@ -14,10 +14,10 @@ $_['column_description'] = '描述';
 $_['column_action']      = '管理';
 
 // Entry
-$_['entry_name']         = '区域群组名称：';
-$_['entry_description']  = '描述：';
-$_['entry_country']      = '国家：';
-$_['entry_zone']         = '区域/省/市：';
+$_['entry_name']         = '区域群组名称';
+$_['entry_description']  = '描述';
+$_['entry_country']      = '国家';
+$_['entry_zone']         = '区域/省/市';
 
 // Error
 $_['error_permission']   = '警告： 您没有权限更改区域群组！';

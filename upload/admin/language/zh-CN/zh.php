@@ -1,10 +1,7 @@
 <?php
-
 // Locale
 $_['code']                    = 'zh-CN';
-$_['charset']                 = 'utf-8';
 $_['direction']               = 'ltr';
-$_['locale']                  = 'zh,zh-hk,zh-tw,zh-cn,chinese';
 $_['date_format_short']       = 'Y-m-d';
 $_['date_format_long']        = 'Y F dS l';
 $_['time_format']             = 'h:i:s A';
@@ -29,11 +26,7 @@ $_['text_loading']                  = '载入中...';
 $_['text_no_results']         = '没有结果！';
 $_['text_confirm']            = '你确定吗？';
 $_['text_home']               = '首页';
-$_['text_confirm']                  = '删除/卸载无法复原！你确定要这么做吗？';
 
-$_['text_separator']          = ' &gt; ';
-$_['text_edit']               = '编辑';
-$_['text_view']               = '查看';
 // Button
 $_['button_insert']			= '新增';
 $_['button_delete']			= '删除';
@@ -96,17 +89,20 @@ $_['button_search']                 = '搜索';
 $_['button_view']                   = '显示';
 $_['button_install']                = '安装';
 $_['button_uninstall']              = '卸载';
+$_['button_login']                  = '登录店铺';
+$_['button_unlock']                 = '解锁账号';
 $_['button_link']                   = '链接';
 $_['button_shipping']               = '使用配送方式';
 $_['button_payment']                = '使用付款方法';
 $_['button_coupon']                 = '使用优惠券';
 $_['button_voucher']                = '使用礼券';
 $_['button_reward']                 = '使用积分';
+$_['button_currency']               = '刷新币种';
+
 // Tab
 $_['tab_address']             = '地址';
 $_['tab_admin']               = '管理';
 $_['tab_attribute']           = '属性';
-$_['tab_coupon_history']      = '折扣券历史';
 $_['tab_customer']            = '客户资料';
 $_['tab_data']                = '基本信息';
 $_['tab_design']              = '设计';
@@ -139,10 +135,6 @@ $_['tab_marketing']   = '营销推广';
 $_['tab_online']                    = '在线客户';
 $_['tab_activity']                  = '最近的活动';
 $_['tab_recurring']                 = '分期付款';
-$_['tab_price']                     = '金额';
-$_['tab_order']               = '订单详情';
-$_['tab_return']              = '退换详细';
-$_['tab_return_history']      = '退换历史';
 
 // Error
 $_['error_exception']               = '错误代码(%s): %s 在 %s 第 %s行';

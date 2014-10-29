@@ -15,9 +15,9 @@ $_['column_value']     = '值';
 $_['column_action']    = '管理';
 
 // Entry
-$_['entry_title']      = '重量标题：';
-$_['entry_unit']       = '重量单位：';
-$_['entry_value']      = '值：';
+$_['entry_title']      = '重量标题';
+$_['entry_unit']       = '重量单位';
+$_['entry_value']      = '值';
 
 // Help
 $_['help_value']       = '如果这是你的默认重量单位，请将其设置为1.00000。';

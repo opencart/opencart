@@ -11,8 +11,8 @@ $_['text_customer_forgotten']      = '<a href="customer_id=%d">%s</a> 请求一�
 $_['text_customer_login']          = '<a href="customer_id=%d">%s</a> 登录。';
 $_['text_customer_password']       = '<a href="customer_id=%d">%s</a> 更新了自己的账号密码。';
 $_['text_customer_register']       = '<a href="customer_id=%d">%s</a> 注册一个新帐户。';
-$_['text_customer_return_account'] = '<a href="customer_id=%d">%s</a> 提交一个商品的退换。';
-$_['text_customer_return_guest']   = '%s 提交一个商品的退换。';
+$_['text_customer_return_account'] = '<a href="customer_id=%d">%s</a> 提交一个商品的<a href="return_id=%d">退换 </a>。';
+$_['text_customer_return_guest']  = '%s 提交一个商品的<a href="return_id=%d">退换</a>。';
 $_['text_customer_order_account']  = '<a href="customer_id=%d">%s</a> 创建了一个 <a href="order_id=%d">新订单</a>。';
 $_['text_customer_order_guest']    = '%s 创建了一个 <a href="order_id=%d">新订单</a>。';
 $_['text_affiliate_edit']          = '<a href="affiliate_id=%d">%s</a> 更新其账户细节。';

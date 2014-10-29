@@ -8,8 +8,8 @@ $_['text_login']     = '请输入您的登录信息。';
 $_['text_forgotten'] = '忘记密码';
 
 // Entry
-$_['entry_username'] = '商店管理员：';
-$_['entry_password'] = '安全密码：';
+$_['entry_username'] = '商店管理员';
+$_['entry_password'] = '安全密码';
 
 // Button
 $_['button_login']   = '登录';

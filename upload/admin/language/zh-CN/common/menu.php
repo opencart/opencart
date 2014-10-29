@@ -1,7 +1,6 @@
 <?php
 // Text
 $_['text_affiliate']                   = '联盟会员';
-$_['text_affiliate_activity']          = '联盟动态';
 $_['text_api']                         = 'API';
 $_['text_attribute']                   = '商品属性';
 $_['text_attribute_group']             = '属性组';
@@ -30,7 +29,7 @@ $_['text_language']                    = '语言设置';
 $_['text_layout']                      = '布局';
 $_['text_localisation']                = '参数设置';
 $_['text_location']                    = '店铺地址';
-$_['text_contact']                     = 'Mail';
+$_['text_contact']                     = '邮件';
 $_['text_marketing']                   = '市场营销';
 $_['text_modification']                = '扩展配置';
 $_['text_manufacturer']                = '品牌管理';
@@ -55,7 +54,9 @@ $_['text_report_customer_online']      = '在线客户统计';
 $_['text_report_customer_order']       = '客户订单统计';
 $_['text_report_customer_reward']      = '奖励积分统计';
 $_['text_report_customer_credit']      = '客户信用统计';
+$_['text_report_affiliate']            = '联盟会员';
 $_['text_report_affiliate_commission'] = '联盟佣金统计';
+$_['text_report_affiliate_activity']   = '联盟动态';
 $_['text_review']                      = '商品评论';
 $_['text_return']                      = '商品退换';
 $_['text_return_action']               = '退换管理';
@@ -89,6 +90,7 @@ $_['text_openbay_items']               = '商品管理';
 $_['text_openbay_ebay']                = 'eBay';
 $_['text_openbay_amazon']              = 'Amazon (EU)';
 $_['text_openbay_amazonus']            = 'Amazon (US)';
+$_['text_openbay_etsy']                = 'Etsy';
 $_['text_openbay_settings']            = '设定';
 $_['text_openbay_links']               = '商品连结';
 $_['text_openbay_report_price']        = '价格列表';

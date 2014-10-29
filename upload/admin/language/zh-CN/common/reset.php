@@ -8,8 +8,8 @@ $_['text_password']  = '请输入您的新密码。';
 $_['text_success']   = '成功：您的密码已更新成功！';
 
 // Entry
-$_['entry_password'] = '密码：';
-$_['entry_confirm']  = '密码确认：';
+$_['entry_password'] = '密码';
+$_['entry_confirm']  = '密码确认';
 
 // Error
 $_['error_password'] = '密码必须在5至20个字符之间！';

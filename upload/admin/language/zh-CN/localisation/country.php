@@ -15,13 +15,12 @@ $_['column_iso_code_3']      = 'ISO 代码 (3)';
 $_['column_action']          = '管理';
 
 // Entry
-$_['entry_status']           = '国家状态：';
-$_['entry_name']             = '国家名称：';
-$_['entry_iso_code_2']       = 'ISO 代码 (2)：';
-$_['entry_iso_code_3']       = 'ISO 代码 (3)：';
-$_['entry_address_format']   = '地址格式：';
-$_['entry_postcode_required']= '邮编必填：';
-$_['entry_status']           = '状态：';
+$_['entry_name']             = '国家名称';
+$_['entry_iso_code_2']       = 'ISO 代码 (2)';
+$_['entry_iso_code_3']       = 'ISO 代码 (3)';
+$_['entry_address_format']   = '地址格式';
+$_['entry_postcode_required']= '邮编必填';
+$_['entry_status']           = '状态';
 
 // Help
 $_['help_address_format']     = '姓氏 = {firstname}<br />
@@ -34,7 +33,6 @@ $_['help_address_format']     = '姓氏 = {firstname}<br />
 国家地区 = {zone}<br />
 地区代码 = {zone_code}<br />
 国家 = {country}';
-
 
 // Error
 $_['error_permission']       = '警告： 您没有权限更改国家设置！';

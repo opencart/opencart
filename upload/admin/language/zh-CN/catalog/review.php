@@ -17,14 +17,12 @@ $_['column_date_added'] = '评论日期';
 $_['column_action']     = '评论管理';
 
 // Entry
-$_['entry_product']     = '&nbsp;&nbsp;商品分类：';
-$_['entry_author']      = '评论作者：';
-$_['entry_rating']      = '&nbsp;&nbsp;商品评级：';
-$_['entry_status']      = '&nbsp;&nbsp;评论状态：';
-$_['entry_text']        = '评论内容：';
+$_['entry_product']     = '&nbsp;&nbsp;商品分类';
+$_['entry_author']      = '评论作者';
+$_['entry_rating']      = '&nbsp;&nbsp;商品评级';
+$_['entry_status']      = '&nbsp;&nbsp;评论状态';
+$_['entry_text']        = '评论内容';
 $_['entry_date_added']  = '评论日期';
-$_['entry_good']        = '好评';
-$_['entry_bad']         = '差评';
 
 // Help
 $_['help_product']      = '(自动完成)';

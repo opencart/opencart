@@ -5,8 +5,6 @@ $_['heading_title']      = '支付管理';
 // Text
 $_['text_success']      = '成功：您已修改支付管理！';
 $_['text_list']         = '支付清单';
-$_['text_install']       = '安装';
-$_['text_uninstall']     = '卸载';
 
 // Column
 $_['column_name']        = '支付方式';

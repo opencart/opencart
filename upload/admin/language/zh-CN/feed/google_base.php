@@ -5,7 +5,8 @@ $_['heading_title']    = 'Google Base';
 // Text 
 $_['text_feed']        = '插件扩展';
 $_['text_success']     = '成功： 您已变更Google Base资料！';
-$_['text_list']        = 'Layout List';
+$_['text_list']        = '布局清单';
+$_['text_edit']        = '编辑Google Base';
 
 // Entry
 $_['entry_status']     = '状态：';

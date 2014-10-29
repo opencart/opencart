@@ -18,12 +18,12 @@ $_['column_name']       = '布局名称';
 $_['column_action']     = '管理';
 
 // Entry
-$_['entry_name']        = '布局名称：';
-$_['entry_store']       = '商店：';
-$_['entry_route']       = '路径：';
-$_['entry_module']        = '模块：';
-$_['entry_position']       = '显示位置：';
-$_['entry_sort_order']    = '排序：';
+$_['entry_name']        = '布局名称';
+$_['entry_store']       = '商店';
+$_['entry_route']       = '路径';
+$_['entry_module']        = '模块';
+$_['entry_position']       = '显示位置';
+$_['entry_sort_order']    = '排序';
 
 // Error
 $_['error_permission']  = '警告： 您没有权限修改布局！';

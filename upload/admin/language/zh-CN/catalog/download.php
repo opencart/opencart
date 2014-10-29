@@ -12,20 +12,16 @@ $_['text_upload']      = '文件已经成功上传！';
 // Column
 $_['column_name']      = '下载名称';
 $_['column_date_added'] = '添加日期';
-$_['column_remaining'] = '剩余下载次数';
 $_['column_action']    = '管理';
 
 // Entry
-$_['entry_name']       = '下载名称：';
-$_['entry_filename']   = '文件名称：';
-$_['entry_mask']       = 'Mask:';
-$_['entry_remaining']  = '剩余下载次数：';
-$_['entry_update']     = '发送给老客户：';
+$_['entry_name']       = '下载名称';
+$_['entry_filename']   = '文件名称';
+$_['entry_mask']       = 'Mask';
 
 // Help
 $_['help_filename']     = '您可以通过上传按钮上传或使用FTP上传。';
 $_['help_mask']         = '更新以前曾订购过此产品者。';
-
 
 // Error
 $_['error_permission'] = '警告： 您没有权限更改下载设置！';

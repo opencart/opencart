@@ -73,7 +73,7 @@ class ControllerExtensionTotal extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('extension/total', 'token=' . $this->session->data['token'], 'SSL')
 		);
 			
 		$data['heading_title'] = $this->language->get('heading_title');

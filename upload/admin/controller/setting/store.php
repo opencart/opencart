@@ -550,12 +550,28 @@ class ControllerSettingStore extends Controller {
 			$data['config_location'] = array();
 		}
 
-		if (isset($this->request->post['config_meta_tag'])) {
-			$data['config_meta_tag'] = $this->request->post['config_meta_tag'];
-		} elseif (isset($store_info['config_meta_tag'])) {
-			$data['config_meta_tag'] = $store_info['config_meta_tag'];
+		if (isset($this->request->post['config_meta_title'])) {
+			$data['config_meta_title'] = $this->request->post['config_meta_title'];
+		} elseif (isset($store_info['config_meta_title'])) {
+			$data['config_meta_title'] = $store_info['config_meta_title'];
 		} else {
-			$data['config_meta_tag'] = '';
+			$data['config_meta_title'] = '';
+		}
+
+		if (isset($this->request->post['config_meta_description'])) {
+			$data['config_meta_description'] = $this->request->post['config_meta_description'];
+		} elseif (isset($store_info['config_meta_description'])) {
+			$data['config_meta_description'] = $store_info['config_meta_description'];
+		} else {
+			$data['config_meta_description'] = '';
+		}
+
+		if (isset($this->request->post['config_meta_keyword'])) {
+			$data['config_meta_keyword'] = $this->request->post['config_meta_keyword'];
+		} elseif (isset($store_info['config_meta_keyword'])) {
+			$data['config_meta_keyword'] = $store_info['config_meta_keyword'];
+		} else {
+			$data['config_meta_keyword'] = '';
 		}
 
 		if (isset($this->request->post['config_layout_id'])) {
@@ -1000,10 +1016,8 @@ class ControllerSettingStore extends Controller {
 			$this->error['telephone'] = $this->language->get('error_telephone');
 		}
 
-		foreach ($this->request->post['config_meta_tag'] as $language_id => $value) {
-			if (!$value['title']) {
-				$this->error['meta_title'][$language_id] = $this->language->get('error_meta_title');
-			}
+		if (!$this->request->post['config_meta_title']) {
+			$this->error['meta_title'] = $this->language->get('error_meta_title');
 		}
 
 		if (!empty($this->request->post['config_customer_group_display']) && !in_array($this->request->post['config_customer_group_id'], $this->request->post['config_customer_group_display'])) {

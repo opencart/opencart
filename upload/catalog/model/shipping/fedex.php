@@ -171,8 +171,22 @@ class ModelShippingFedex extends Model {
 						if ($this->config->get('fedex_display_time')) {
 							$title .= ' (' . $this->language->get('text_eta') . ' ' . date($this->language->get('date_format_short') . ' ' . $this->language->get('time_format'), strtotime($rate_reply_detail->getElementsByTagName('DeliveryTimestamp')->item(0)->nodeValue)) . ')';
 						}
+						//in FEDEX rate type "ACCOUNT", there will be one ShipmentRateDetail per RatedShipmentDetails.
+                        			//in FEDEX rate type "LIST", there will be two: one that matches LIST an
+                        			//one that matches ACCOUNT, with the discounted rates.
 
-						$total_net_charge = $rate_reply_detail->getElementsByTagName('RatedShipmentDetails')->item(0)->getElementsByTagName('ShipmentRateDetail')->item(0)->getElementsByTagName('TotalNetCharge')->item(0);
+                        			$rated_shipment_details = $rate_reply_detail->getElementsByTagName('RatedShipmentDetails');
+
+                        			foreach ($rated_shipment_details as $rated_shipment_detail) {
+                            				$shipment_rate_detail = $rated_shipment_detail->getElementsByTagName('ShipmentRateDetail')->item(0);
+                            				//can be XXX_LIST_XXX or XXX_ACCOUNT_XXX or 'INCENTIVE'
+                            				$shipment_rate_detail_type = explode("_",$shipment_rate_detail->getElementsByTagName('RateType')->item(0)->nodeValue);
+                            				if (count($shipment_rate_detail_type) == 3 &&
+                                				$shipment_rate_detail_type[1] == $this->config->get('fedex_rate_type')) {
+                                				$total_net_charge = $shipment_rate_detail->getElementsByTagName('TotalNetCharge')->item(0);
+                                				break;
+                            				}
+                        			}
 
 						$cost = $total_net_charge->getElementsByTagName('Amount')->item(0)->nodeValue;
 

@@ -804,7 +804,7 @@ class ModelCheckoutOrder extends Model {
 
 				if ($notify && $comment) {
 					$message .= $language->get('text_update_comment') . "\n\n";
-					$message .= $comment . "\n\n";
+					$message .= strip_tags($comment) . "\n\n";
 				}
 
 				$message .= $language->get('text_update_footer');

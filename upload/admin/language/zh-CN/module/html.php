@@ -14,3 +14,4 @@ $_['entry_status']      = '状态';
 
 // Error
 $_['error_permission']  = '警告：您没有权限修改HTML内容模块！';
+$_['error_module']      = '警告：模块是必须的！';

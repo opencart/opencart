@@ -1,10 +1,10 @@
 <?php
 // Heading
-$_['heading_title']        = 'Mail';
+$_['heading_title']        = '邮件';
 
 // Text
 $_['text_success']         = '您的邮件已成功发送！';
-$_['text_sent']            = '您的邮件已成功发送给%s的受助到%s！';
+$_['text_sent']            = 'Your message has been successfully sent to %s of %s recipients!';
 $_['text_list']            = '布局一览';
 $_['text_default']         = '默认';
 $_['text_newsletter']      = '所有资讯的订户';

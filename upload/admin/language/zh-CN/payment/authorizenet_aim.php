@@ -8,7 +8,6 @@ $_['text_success']       = '成功：您已修改Authorize.Net（AIM）帐户细
 $_['text_edit']                     = '编辑 Authorize.Net (AIM)';
 $_['text_test']          = '测试';
 $_['text_live']          = 'Live';
-$_['text_dev']           = 'Dev';
 $_['text_authorization'] = '授权';
 $_['text_capture']       = '捕获';
 $_['text_authorizenet_aim']			= '<a onclick="window.open(\'http://reseller.authorize.net/application/?id=5561103\');"><img src="view/image/payment/authorizenet.png" alt="Authorize.Net" title="Authorize.Net" style="border: 1px solid #EEEEEE;" /></a>';

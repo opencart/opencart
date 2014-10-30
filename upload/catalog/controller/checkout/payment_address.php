@@ -112,8 +112,6 @@ class ControllerCheckoutPaymentAddress extends Controller {
 
 				if (!$json) {
 					// Default Payment Address
-					$this->load->model('account/address');
-
 					$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->request->post['address_id']);
 
 					unset($this->session->data['payment_method']);

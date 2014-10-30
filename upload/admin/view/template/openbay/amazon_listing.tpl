@@ -144,14 +144,14 @@
                   <label class="col-sm-2 control-label" for="sale_price"><?php echo $entry_sale_date; ?></label>
                   <div class="col-sm-3">
                     <div class="input-group date">
-                      <input type="text" class="form-control" id="sale_from" data-format="YYYY-MM-DD" placeholder="<?php echo $entry_from; ?>" name="sale_from">
+                      <input type="text" class="form-control" id="sale_from" data-date-format="YYYY-MM-DD" placeholder="<?php echo $entry_from; ?>" name="sale_from">
                       <span class="input-group-btn">
                       <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
                       </span> </div>
                   </div>
                   <div class="col-sm-3">
                     <div class="input-group date">
-                      <input type="text" class="form-control" id="sale_to" data-format="YYYY-MM-DD" placeholder="<?php echo $entry_to; ?>" name="sale_to">
+                      <input type="text" class="form-control" id="sale_to" data-date-format="YYYY-MM-DD" placeholder="<?php echo $entry_to; ?>" name="sale_to">
                       <span class="input-group-btn">
                       <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
                       </span> </div>
@@ -161,7 +161,7 @@
                   <label class="col-sm-2 control-label" for="start_selling"><?php echo $entry_start_selling; ?></label>
                   <div class="col-sm-3">
                     <div class="input-group date">
-                      <input type="text" class="form-control" id="start_selling" data-format="YYYY-MM-DD" placeholder="<?php echo $entry_start_selling; ?>" name="start_selling">
+                      <input type="text" class="form-control" id="start_selling" data-date-format="YYYY-MM-DD" placeholder="<?php echo $entry_start_selling; ?>" name="start_selling">
                       <span class="input-group-btn">
                       <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
                       </span> </div>
@@ -171,7 +171,7 @@
                   <label class="col-sm-2 control-label" for="input-date-restock"><?php echo $entry_restock_date; ?></label>
                   <div class="col-sm-3">
                     <div class="input-group date">
-                      <input type="text" class="form-control" id="input-date-restock" data-format="YYYY-MM-DD" placeholder="<?php echo $entry_restock_date; ?>" name="restock_date">
+                      <input type="text" class="form-control" id="input-date-restock" data-date-format="YYYY-MM-DD" placeholder="<?php echo $entry_restock_date; ?>" name="restock_date">
                       <span class="input-group-btn">
                       <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
                       </span> </div>

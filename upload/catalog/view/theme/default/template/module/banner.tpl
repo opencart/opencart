@@ -1,4 +1,4 @@
-<div id="banner<?php echo $module; ?>" class="carousel fade" data-ride="carousel">
+<div id="banner<?php echo $module; ?>" class="carousel" data-ride="carousel">
   <div class="carousel-inner">
     <?php foreach ($banners as $banner) { ?>
     <div class="item">

@@ -44,7 +44,6 @@
               <tr>
                 <td class="text-left">#</td>
                 <td class="text-left"><?php echo $entry_banner; ?></td>
-                <td class="text-left"><?php echo $entry_limit; ?></td>
                 <td class="text-left"><?php echo $entry_scroll; ?></td>
                 <td class="text-left"><?php echo $entry_image; ?></td>
                 <td></td>
@@ -64,7 +63,6 @@
                     <?php } ?>
                     <?php } ?>
                   </select></td>
-                <td class="text-left"><input type="text" name="carousel_module[<?php echo $carousel_module['key']; ?>][limit]" value="<?php echo $carousel_module['limit']; ?>" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>
                 <td class="text-left"><input type="text" name="carousel_module[<?php echo $carousel_module['key']; ?>][scroll]" value="<?php echo $carousel_module['scroll']; ?>" placeholder="<?php echo $entry_scroll; ?>" class="form-control" /></td>
                 <td class="text-left"><input type="text" name="carousel_module[<?php echo $carousel_module['key']; ?>][width]" value="<?php echo $carousel_module['width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
                   <input type="text" name="carousel_module[<?php echo $carousel_module['key']; ?>][height]" value="<?php echo $carousel_module['height']; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
@@ -98,7 +96,6 @@ function addModule() {
 	html += '    <option value="<?php echo $banner['banner_id']; ?>"><?php echo addslashes($banner['name']); ?></option>';
 	<?php } ?>
 	html += '  </select></td>';	
-	html += '  <td class="text-left"><input type="text" name="carousel_module[' + token + '][limit]" value="5" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>';
 	html += '  <td class="text-left"><input type="text" name="carousel_module[' + token + '][scroll]" value="3" placeholder="<?php echo $entry_scroll; ?>" class="form-control" /></td>';
 	html += '  <td class="text-left"><input type="text" name="carousel_module[' + token + '][width]" value="80" placeholder="<?php echo $entry_width; ?>" class="form-control" /> <input type="text" name="carousel_module[' + token + '][height]" placeholder="<?php echo $entry_height; ?>" value="80" class="form-control" /></td>'; 
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + token + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';

@@ -8,10 +8,6 @@ class ControllerModuleSlideshow extends Controller {
 		
 		$this->document->addStyle('catalog/view/javascript/jquery/flexslider/flexslider.css');
 		$this->document->addScript('catalog/view/javascript/jquery/flexslider/jquery.flexslider-min.js');
-		
-		$data['width'] = $setting['width'];
-		$data['height'] = $setting['height'];
-		$data['direction'] = 
 
 		$data['banners'] = array();
 

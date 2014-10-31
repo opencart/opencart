@@ -394,6 +394,12 @@ class ControllerSettingStore extends Controller {
 			$data['error_product_description_length'] = '';
 		}
 
+		if (!isset($this->request->get['store_id'])) {
+			$data['action'] = $this->url->link('setting/store/add', 'token=' . $this->session->data['token'], 'SSL');
+		} else {
+			$data['action'] = $this->url->link('setting/store/edit', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], 'SSL');
+		}
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -408,7 +414,7 @@ class ControllerSettingStore extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_settings'),
-			'href' => $this->url->link('setting/store/edit', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], 'SSL')
+			'href' => $data['action']
 		);
 
 		if (isset($this->session->data['success'])) {
@@ -417,12 +423,6 @@ class ControllerSettingStore extends Controller {
 			unset($this->session->data['success']);
 		} else {
 			$data['success'] = '';
-		}
-
-		if (!isset($this->request->get['store_id'])) {
-			$data['action'] = $this->url->link('setting/store/add', 'token=' . $this->session->data['token'], 'SSL');
-		} else {
-			$data['action'] = $this->url->link('setting/store/edit', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], 'SSL');
 		}
 
 		$data['cancel'] = $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL');

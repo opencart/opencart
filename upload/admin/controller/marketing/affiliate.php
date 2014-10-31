@@ -398,6 +398,7 @@ class ControllerMarketingAffiliate extends Controller {
 				$approve = '';
 			}			
 			
+			$this->load->model('sale/customer');
 			$login_info = $this->model_sale_customer->getTotalLoginAttempts($result['email']);
 			
 			if ($login_info && $login_info['total'] > $this->config->get('config_login_attempts')) {

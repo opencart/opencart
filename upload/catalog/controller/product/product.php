@@ -229,6 +229,12 @@ class ControllerProductProduct extends Controller {
 			$data['text_select'] = $this->language->get('text_select');
 			$data['text_manufacturer'] = $this->language->get('text_manufacturer');
 			$data['text_model'] = $this->language->get('text_model');
+			$data['text_sku'] = $this->language->get('text_sku');
+			$data['text_upc'] = $this->language->get('text_upc');
+			$data['text_ean'] = $this->language->get('text_ean');
+			$data['text_jan'] = $this->language->get('text_jan');
+			$data['text_isbn'] = $this->language->get('text_isbn');
+			$data['text_mpn'] = $this->language->get('text_mpn');
 			$data['text_reward'] = $this->language->get('text_reward');
 			$data['text_points'] = $this->language->get('text_points');
 			$data['text_stock'] = $this->language->get('text_stock');
@@ -436,7 +442,13 @@ class ControllerProductProduct extends Controller {
 					'special'     => $special,
 					'tax'         => $tax,
 					'rating'      => $rating,
-					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id']),
+					'sku'         => $result['sku'],
+					'upc'         => $result['upc'],
+					'ean'         => $result['ean'],
+					'jan'         => $result['jan'],
+					'isbn'        => $result['isbn'],
+					'mpn'         => $result['mpn']
 				);
 			}
 

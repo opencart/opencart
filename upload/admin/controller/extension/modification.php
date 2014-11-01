@@ -153,9 +153,9 @@ class ControllerExtensionModification extends Controller {
 					$search_node_value = ($search_node_trim=='true') ? trim($search_node->nodeValue) : $search_node->nodeValue;
 
 					$add_node = $operation_node->getElementsByTagName('add')->item(0);
-					$add_node_position = ($search_node->getAttribute('position')) ? $search_node->getAttribute('position') : 'replace';
-					$add_node_offset = ($search_node->getAttribute('offset')) ? $search_node->getAttribute('offset') : '0';
-					$add_node_trim = ($add_node->getAttribute('trim')=='false') ? 'false' : 'true';
+					$add_node_position = ($add_node->getAttribute('position')) ? $add_node->getAttribute('position') : 'replace';
+					$add_node_offset = ($add_node->getAttribute('offset')) ? $add_node->getAttribute('offset') : '0';
+					$add_node_trim = ($add_node->getAttribute('trim')=='true') ? 'true' : 'false';
 					$add_node_value = ($add_node_trim=='true') ? trim($add_node->nodeValue) : $add_node->nodeValue;
 
 					$index_count = 0;

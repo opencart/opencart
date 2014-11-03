@@ -294,7 +294,7 @@ class ControllerCheckoutCart extends Controller {
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
 		if ($product_info) {
-			if (isset($this->request->post['quantity'])) {
+			if (!empty($this->request->post['quantity'])) {
 				$quantity = (int)$this->request->post['quantity'];
 			} else {
 				$quantity = 1;

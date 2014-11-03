@@ -51,6 +51,232 @@ class ControllerExtensionModification extends Controller {
 		$this->getList();
 	}
 
+	protected function ocmodGetIndexes( $search_node_index ) {
+		if ($search_node_index) {
+			$tmp = explode(',', $search_node_index);
+			foreach ($tmp as $k => $v) {
+				if (!is_int($v)) {
+					unset($k);
+				}
+			}
+			$tmp = array_unique($tmp);
+			return empty($tmp) ? false : $tmp;
+		} else {
+			return false;
+		}
+	}
+
+	protected function ocmodGetFileKey( $file ) {
+		// Get the key to be used for the modification cache filename.
+		$key = '';
+		if (substr($file, 0, strlen(DIR_CATALOG)) == DIR_CATALOG) {
+			$key = 'catalog/' . substr($file, strlen(DIR_CATALOG));
+		}
+		if (substr($file, 0, strlen(DIR_APPLICATION)) == DIR_APPLICATION) {
+			$key = 'admin/' . substr($file, strlen(DIR_APPLICATION));
+		}
+		if (substr($file, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {
+			$key = 'system/' . substr($file, strlen(DIR_SYSTEM));
+		}
+		return $key;
+	}
+
+	protected function ocmodWrite( DOMDocument $dom, &$modification, &$original, &$log ) {
+		$modification_node = $dom->getElementsByTagName('modification')->item(0);
+		$file_nodes = $modification_node->getElementsByTagName('file');
+		$modification_name = $modification_node->getElementsByTagName('name')->item(0)->nodeValue;
+
+		$log[] = "Modification::refresh - Processing '". $modification_name ."'";
+		$log[] = "";
+
+		foreach ($file_nodes as $file_node) {
+
+			$file_node_path = $file_node->getAttribute('path');
+			$files = false;
+			$path = '';
+
+			if (substr($file_node_path, 0, 7) == 'catalog') {
+				$path = DIR_CATALOG . substr($file_node_path, 8);
+			} else if (substr($file_node_path, 0, 5) == 'admin') {
+				$path = DIR_APPLICATION . substr($file_node_path, 6);
+			} else if (substr($file_node_path, 0, 6) == 'system') {
+				$path = DIR_SYSTEM . substr($file_node_path, 7);
+			}
+			if ($path) {
+				$files = glob($path, GLOB_BRACE);
+			}
+			if ($files===false) {
+				$files = array();
+			}
+
+			$operation_nodes = $file_node->getElementsByTagName('operation');
+
+			foreach ($files as $file) {
+				$key = $this->ocmodGetFileKey( $file );
+				if ($key=='') {
+					$log[] = "Modification::refresh - UNABLE TO GENERATE FILE KEY:";
+					$log[] = "  modification name = '$modification_name'";
+					$log[] = "  file name = '$file'";
+					$log[] = "";
+					continue;
+				}
+				if (!isset($modification[$key])) {
+					$modification[$key] = preg_replace('~\r?\n~', "\n", file_get_contents($file));
+					$original[$key] = $modification[$key];
+				}
+
+				foreach ($operation_nodes as $operation_node) {
+					$operation_node_error = $operation_node->getAttribute('error');
+					if (($operation_node_error != 'skip') && ($operation_node_error != 'log')) {
+						$operation_node_error = 'abort';
+					}
+
+					$ignoreif_node = $operation_node->getElementsByTagName('ignoreif')->item(0);
+					if ($ignoreif_node) {
+						$ignoreif_node_regex = $ignoreif_node->getAttribute('regex');
+						$ignoreif_node_value = trim( $ignoreif_node_value->nodeValue );
+						if ($ignoreif_node_regex == 'true') {
+							if (preg_match($ignoreif_node_value, $modification[$file])) {
+								continue;
+							}
+						} else {
+							if (strpos($tmp, $ignoreif_node_value) !== false) {
+								continue;
+							}
+						}
+					}
+
+					$search_node = $operation_node->getElementsByTagName('search')->item(0);
+					$search_node_indexes = $this->ocmodGetIndexes( $search_node->getAttribute('index') );
+					$search_node_regex = ($search_node->getAttribute('regex')) ? $search_node->getAttribute('regex') : 'false';
+					$search_node_trim = ($search_node->getAttribute('trim')=='false') ? 'false' : 'true';
+					$search_node_value = ($search_node_trim=='true') ? trim($search_node->nodeValue) : $search_node->nodeValue;
+
+					$add_node = $operation_node->getElementsByTagName('add')->item(0);
+					$add_node_position = ($add_node->getAttribute('position')) ? $add_node->getAttribute('position') : 'replace';
+					$add_node_offset = ($add_node->getAttribute('offset')) ? $add_node->getAttribute('offset') : '0';
+					$add_node_trim = ($add_node->getAttribute('trim')=='true') ? 'true' : 'false';
+					$add_node_value = ($add_node_trim=='true') ? trim($add_node->nodeValue) : $add_node->nodeValue;
+
+					$index_count = 0;
+					$tmp = explode("\n",$modification[$key]);
+					$line_max = count($tmp)-1;
+
+					// apply the next search and add operation to the file content
+					switch ($add_node_position) {
+						case 'top':
+							$tmp[(int)$add_node_offset] = $add_node_value . $tmp[(int)$add_node_offset];
+							break;
+						case 'bottom':
+							$offset = $line_max - (int)$add_node_offset;
+							if ($offset < 0) {
+								$tmp[-1] = $add_node_value;
+							} else {
+								$tmp[$offset] .= $add_node_value;;
+							}
+							break;
+						default:
+							$changed = false;
+							foreach ($tmp as $line_num => $line) {
+								if (strlen($search_node_value) == 0) {
+									if ($operation_node_error == 'log' || $operation_node_error == 'abort') {
+										$log[] = "Modification::refresh - EMPTY SEARCH CONTENT ERROR:";
+										$log[] = "  modification name = '$modification_name'";
+										$log[] = "  file name = '$file'";
+										$log[] = "";
+									}
+									break;
+								}
+								
+								if ($search_node_regex == 'true') {
+									$pos = @preg_match($search_node_value, $line);
+									if ($pos === false) {
+										if ($operation_node_error == 'log' || $operation_node_error == 'abort') {
+											$log[] = "Modification::refresh - INVALID REGEX ERROR:";
+											$log[] = "  modification name = '$modification_name'";
+											$log[] = "  file name = '$file'";
+											$log[] = "  search = '$search_node_value'";
+											$log[] = "";
+										}
+										continue 2; // continue with next operation_node
+									} elseif ($pos == 0) {
+										$pos = false;
+									}
+								} else {
+									$pos = strpos($line, $search_node_value);
+								}
+
+								if ($pos !== false) {
+									$index_count++;
+									$changed = true;
+
+									if (!$search_node_indexes || ($search_node_indexes && in_array($index_count, $search_node_indexes))) {
+										switch ($add_node_position) {
+											case 'before':
+												$offset = ($line_num - $add_node_offset < 0) ? -1 : $line_num - $add_node_offset;
+												$tmp[$offset] = empty($tmp[$offset]) ? $add_node_value : $add_node_value . "\n" . $tmp[$offset];
+												break;
+											case 'after':
+												$offset = ($line_num + $add_node_offset > $line_max) ? $line_max : $line_num + $add_node_offset;
+												$tmp[$offset] = $tmp[$offset] . "\n" . $add_node_value;
+												break;
+											case 'ibefore':
+												$tmp[$line_num] = str_replace($search_node_value, $add_node_value . $search_node_value, $line);
+												break;
+											case 'iafter':
+												$tmp[$line_num] = str_replace($search_node_value, $search_node_value . $add_node_value, $line);
+												break;
+											default:
+												if (!empty($add_node_offset)) {
+													for ($i = 1; $i <= $add_node_offset; $i++) {
+														if (isset($tmp[$line_num + $i])) {
+															$tmp[$line_num + $i] = '';
+														}
+													}
+												}
+												if ($search_node_regex == 'true') {
+													$tmp[$line_num] = preg_replace( $search_node_value, $add_node_value, $line);
+												} else {
+													$tmp[$line_num] = str_replace( $search_node_value, $add_node_value, $line);
+												}
+												break;
+										}
+									}
+								}
+							}
+
+							if (!$changed) {
+								$skip_text = ($operation_node_error == 'skip' || $operation_node_error == 'log') ? '(SKIPPED)' : '(ABORTING MOD)';
+								if ($operation_node_error == 'log' || $operation_node_error) {
+									$log[] = "Modification::refresh - SEARCH NOT FOUND $skip_text:";
+									$log[] = "  modification name = '$modification_name'";
+									$log[] = "  file name = '$file'";
+									$log[] = "  search = '$search_node_value'";
+									$log[] = "";
+								}
+
+								if ($operation_node_error == 'abort') {
+									return; // skip this XML file
+								}
+							}
+							break;
+					}
+
+					ksort($tmp);
+
+					$modification[$key] = implode("\n", $tmp);
+
+				} // $operation_nodes
+			} // $files
+		} // $file_nodes
+
+		$log[] = "Modification::refresh - Done '". $modification_name ."'";
+		$log[] = '----------------------------------------------------------------';
+		$log[] = "";
+
+	}
+
+
 	public function refresh() {
 		$this->load->language('extension/modification');
 
@@ -122,227 +348,8 @@ class ControllerExtensionModification extends Controller {
 				$dom->preserveWhiteSpace = false;
 				$dom->loadXml($xml);
 
-				// Wipe the past modification store in the backup array
-				$recovery = array();
-				
-				// Set the a recovery of the modification code in case we need to use it if an abort attribute is used.
-				if (isset($modification)) {
-					$recovery = $modification;
-				}
-								
-				// Log
-				$log[] = 'MOD: ' . $dom->getElementsByTagName('name')->item(0)->textContent;
+				$this->ocmodWrite( $dom, $modification, $original, $log );
 
-				$files = $dom->getElementsByTagName('modification')->item(0)->getElementsByTagName('file');
-
-				foreach ($files as $file) {
-					$operations = $file->getElementsByTagName('operation');
-
-					$path = '';
-
-					// Get the full path of the files that are going to be used for modification
-					if (substr($file->getAttribute('path'), 0, 7) == 'catalog') {
-						$path = DIR_CATALOG . str_replace('../', '', substr($file->getAttribute('path'), 8));
-					}
-
-					if (substr($file->getAttribute('path'), 0, 5) == 'admin') {
-						$path = DIR_APPLICATION . str_replace('../', '', substr($file->getAttribute('path'), 6));
-					}
-
-					if (substr($file->getAttribute('path'), 0, 6) == 'system') {
-						$path = DIR_SYSTEM . str_replace('../', '', substr($file->getAttribute('path'), 7));
-					}
-
-					if ($path) {
-						$files = glob($path, GLOB_BRACE);
-
-						if ($files) {
-							foreach ($files as $file) {
-								// Get the key to be used for the modification cache filename.
-								if (substr($file, 0, strlen(DIR_CATALOG)) == DIR_CATALOG) {
-									$key = 'catalog/' . substr($file, strlen(DIR_CATALOG));
-								}
-
-								if (substr($file, 0, strlen(DIR_APPLICATION)) == DIR_APPLICATION) {
-									$key = 'admin/' . substr($file, strlen(DIR_APPLICATION));
-								}
-
-								if (substr($file, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {
-									$key = 'system/' . substr($file, strlen(DIR_SYSTEM));
-								}
-								
-								// If file contents is not already in the modification array we need to load it.
-								if (!isset($modification[$key])) {
-									$content = file_get_contents($file);
-
-									$modification[$key] = preg_replace('~\r?\n~', "\n", $content);
-									$original[$key] = preg_replace('~\r?\n~', "\n", $content);
-
-									// Log
-									$log[] = 'FILE: ' . $key;
-								}
-								
-								foreach ($operations as $operation) {
-									$error = $operation->getAttribute('error');
-									
-									// Ignoreif
-									$ignoreif = $operation->getElementsByTagName('ignoreif')->item(0);
-									
-									if ($ignoreif) {
-										if ($ignoreif->item(0)->getAttribute('regex') != 'true') {
-											if (strpos($modification[$file], $ignoreif->item(0)->textContent) !== false) {
-												continue;
-											}												
-										} else {
-											if (preg_match($ignoreif->item(0)->textContent, $modification[$file])) {
-												continue;
-											}
-										}
-									}
-									
-									$status = false;
-									
-									// Search and replace
-									if ($operation->getElementsByTagName('search')->item(0)->getAttribute('regex') != 'true') {
-										// Search
-										$search = $operation->getElementsByTagName('search')->item(0)->textContent;
-										$trim = $operation->getElementsByTagName('search')->item(0)->getAttribute('trim');
-										$index = $operation->getElementsByTagName('search')->item(0)->getAttribute('index');
-										
-										// Trim line if no trim attribute is set or is set to true.
-										if (!$trim || $trim == 'true') {
-											$search = trim($search);
-										}
-																				
-										// Add
-										$add = $operation->getElementsByTagName('add')->item(0)->textContent;
-										$trim = $operation->getElementsByTagName('add')->item(0)->getAttribute('trim');
-										$position = $operation->getElementsByTagName('add')->item(0)->getAttribute('position');
-										$offset = $operation->getElementsByTagName('add')->item(0)->getAttribute('offset');										
-
-										// Trim line if is set to true.
-										if ($trim == 'true') {
-											$add = trim($add);
-										}
-										
-										// Log
-										$log[] = 'CODE: ' . $search;
-										
-										// Turn the code that we are going to change into an array.
-										$add = explode("\n", $add);
-
-										// Check if using indexes
-										if ($index !== '') {
-											$indexes = explode(',', $index);
-										} else {
-											$indexes = array();
-										}
-										
-										// Get all the matches
-										$j = 0;
-										
-										$lines = explode("\n", $modification[$key]);
-
-										for ($i = 0; $i < count($lines); $i++) {
-											// Status
-											$match = false;
-											
-											// Check to see if the line matches the search code.
-											if (stripos($lines[$i], $search) !== false) {
-												// If indexes are not used then just set the found status to true.
-												if (!$indexes) {
-													$match = true;
-												} elseif (in_array($j, $indexes)) {
-													$match = true;
-												}
-												
-												$j++;
-											}
-											
-											// Now for replacing or adding to the matched elements
-											if ($match) {
-												switch ($position) {
-													default:
-													case 'replace':
-														array_splice($lines, $i + $offset, count($add) + abs($offset), $add);
-														break;
-													case 'before':
-														array_splice($lines, $i - $offset, 0, $add);
-														break;
-													case 'after':
-														array_splice($lines, ($i + 1) + $offset, 0, $add);
-														break;
-												}
-												
-												// Log
-												$log[] = 'LINE: ' . $i;
-												
-												$status = true;										
-											}
-										}
-										
-										$modification[$key] = implode("\n", $lines);
-									} else {									
-										$search = $operation->getElementsByTagName('search')->item(0)->textContent;
-										$limit = $operation->getElementsByTagName('search')->item(0)->getAttribute('limit');
-										$replace = $operation->getElementsByTagName('add')->item(0)->textContent;
-										
-										// Limit
-										if (!$limit) {
-											$limit = -1;
-										}
-
-										// Log
-										$match = array();
-
-										preg_match_all($search, $modification[$key], $match, PREG_OFFSET_CAPTURE);
-
-										// Remove part of the the result if a limit is set.
-										if ($limit > 0) {
-											$match[0] = array_slice($match[0], 0, $limit);
-										}
-
-										if ($match[0]) {
-											$log[] = 'REGEX: ' . $search;
-
-											for ($i = 0; $i < count($match[0]); $i++) {
-												$log[] = 'LINE: ' . (substr_count(substr($modification[$key], 0, $match[0][$i][1]), "\n") + 1);
-											}
-											
-											$status = true;
-										}
-
-										// Make the modification
-										$modification[$key] = preg_replace($search, $replace, $modification[$key], $limit);
-									}
-									
-									if (!$status) {
-										// Log
-										$log[] = 'NOT FOUND!';
-
-										// Skip current operation
-										if ($error == 'skip') {
-											break;
-										}
-										
-										// Abort applying this modification completely.
-										if ($error == 'abort') {
-											$modification = $recovery;
-											
-											// Log
-											$log[] = 'ABORTING!';
-										
-											break 4;
-										}
-									}									
-								}
-							}
-						}
-					}
-
-					// Log
-					$log[] = '----------------------------------------------------------------';
-				}
 			}
 
 			// Log
@@ -358,7 +365,7 @@ class ControllerExtensionModification extends Controller {
 					$directories = explode('/', dirname($key));
 
 					foreach ($directories as $directory) {
-						$path = $path . '/' . $directory;
+						$path = ($path=='') ? $directory : $path . '/' . $directory;
 
 						if (!is_dir(DIR_MODIFICATION . $path)) {
 							@mkdir(DIR_MODIFICATION . $path, 0777);

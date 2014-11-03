@@ -44,6 +44,19 @@
 .owl-controls .owl-buttons div{
 	cursor: pointer;
 }
+.owl-controls .owl-buttons div {
+  position: absolute;
+}
+ 
+.owl-controls .owl-buttons .owl-prev{
+  left: 10px;
+  top: 50%; 
+}
+ 
+.owl-controls .owl-buttons .owl-next{
+  right: 10px;
+  top: 50%;
+}
 .owl-controls {
 	-webkit-user-select: none;
 	-khtml-user-select: none;

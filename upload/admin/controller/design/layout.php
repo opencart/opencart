@@ -379,20 +379,20 @@ class ControllerDesignLayout extends Controller {
 				
 				foreach (array_keys($modules) as $key) {
 					$module_data[] = array(
-						'name' => $this->language->get('heading_title') . ' ' . $i++,
+						'name' => strip_tags($this->language->get('heading_title')) . ' ' . $i++,
 						'code' => $code . '.' . $key
 					);
 				}
 			} else {
 				$module_data[] = array(
-					'name' => $this->language->get('heading_title'),
+					'name' => strip_tags($this->language->get('heading_title')),
 					'code' => $code
 				);
 			}
 			
 			if ($module_data) {
 				$data['modules'][] = array(
-					'name'   => $this->language->get('heading_title'),
+					'name'   => strip_tags($this->language->get('heading_title')),
 					'module' => $module_data
 				);
 			}

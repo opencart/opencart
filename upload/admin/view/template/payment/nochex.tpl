@@ -28,7 +28,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="nochex_email" value="<?php echo $nochex_email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" />
+              <input type="text" name="nochex_email" value="<?php echo $nochex_email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
               <?php if ($error_email) { ?>
               <div class="text-danger"><?php echo $error_email; ?></div>
               <?php } ?>

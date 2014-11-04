@@ -2,6 +2,8 @@
 class ControllerStep1 extends Controller {
 	public function index() {
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+			@copy( DIR_OPENCART . 'config-dist.php', DIR_OPENCART . 'config.php' );
+			@copy( DIR_OPENCART . 'admin/config-dist.php', DIR_OPENCART . 'admin/config.php' );
 			$this->response->redirect($this->url->link('step_2'));
 		}
 

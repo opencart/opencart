@@ -11,7 +11,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'openbay/amazon_product');
 		$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'openbay/amazon_product');
 
-		$this->model_openbay_amazon->install();
+		$this->model_openbay_amazon->install(); 
 	}
 
 	public function uninstall() {  

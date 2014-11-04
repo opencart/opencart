@@ -102,6 +102,12 @@ class ControllerProductCategory extends Controller {
 			$data['text_quantity'] = $this->language->get('text_quantity');
 			$data['text_manufacturer'] = $this->language->get('text_manufacturer');
 			$data['text_model'] = $this->language->get('text_model');
+			$data['text_sku'] = $this->language->get('text_sku');
+			$data['text_upc'] = $this->language->get('text_upc');
+			$data['text_ean'] = $this->language->get('text_ean');
+			$data['text_jan'] = $this->language->get('text_jan');
+			$data['text_isbn'] = $this->language->get('text_isbn');
+			$data['text_mpn'] = $this->language->get('text_mpn');
 			$data['text_price'] = $this->language->get('text_price');
 			$data['text_tax'] = $this->language->get('text_tax');
 			$data['text_points'] = $this->language->get('text_points');
@@ -220,7 +226,14 @@ class ControllerProductCategory extends Controller {
 					'special'     => $special,
 					'tax'         => $tax,
 					'rating'      => $result['rating'],
-					'href'        => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url)
+					'href'        => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url),
+					'model'       => $result['model'],
+					'sku'         => $result['sku'],
+					'upc'         => $result['upc'],
+					'ean'         => $result['ean'],
+					'jan'         => $result['jan'],
+					'isbn'        => $result['isbn'],
+					'mpn'         => $result['mpn']
 				);
 			}
 

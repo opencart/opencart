@@ -229,6 +229,12 @@ class ControllerProductProduct extends Controller {
 			$data['text_select'] = $this->language->get('text_select');
 			$data['text_manufacturer'] = $this->language->get('text_manufacturer');
 			$data['text_model'] = $this->language->get('text_model');
+			$data['text_sku'] = $this->language->get('text_sku');
+			$data['text_upc'] = $this->language->get('text_upc');
+			$data['text_ean'] = $this->language->get('text_ean');
+			$data['text_jan'] = $this->language->get('text_jan');
+			$data['text_isbn'] = $this->language->get('text_isbn');
+			$data['text_mpn'] = $this->language->get('text_mpn');
 			$data['text_reward'] = $this->language->get('text_reward');
 			$data['text_points'] = $this->language->get('text_points');
 			$data['text_stock'] = $this->language->get('text_stock');
@@ -269,6 +275,12 @@ class ControllerProductProduct extends Controller {
 			$data['model'] = $product_info['model'];
 			$data['reward'] = $product_info['reward'];
 			$data['points'] = $product_info['points'];
+			$data['sku'] = $product_info['sku'];
+			$data['upc'] = $product_info['upc'];
+			$data['ean'] = $product_info['ean'];
+			$data['jan'] = $product_info['jan'];
+			$data['isbn'] = $product_info['isbn'];
+			$data['mpn'] = $product_info['mpn'];
 
 			if ($product_info['quantity'] <= 0) {
 				$data['stock'] = $product_info['stock_status'];

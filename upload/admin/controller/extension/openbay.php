@@ -297,6 +297,35 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function updateV2() {
+		$this->load->model('openbay/openbay');
+
+		// set base var
+		$web_root = preg_replace('/system\/$/', '', DIR_SYSTEM);
+
+		if (!isset($this->request->post['stage'])) {
+			$stage = 'check_update';
+		} else {
+			$stage = $this->request->post['stage'];
+		}
+
+		switch ($stage) {
+			case 'check_update':
+				$response = $this->model_openbay_openbay->updateV2Test();
+
+				$this->response->addHeader('Content-Type: application/json');
+				$this->response->setOutput(json_encode($response));
+				break;
+			case 'get_files':
+				$response = $this->model_openbay_openbay->updateV2Files();
+
+				$this->response->addHeader('Content-Type: application/json');
+				$this->response->setOutput(json_encode($response));
+				break;
+			default;
+		}
+	}
+
 	public function patch() {
 		$this->load->model('openbay/ebay_patch');
 		$this->load->model('openbay/amazon_patch');

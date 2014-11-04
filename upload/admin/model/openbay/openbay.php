@@ -1,6 +1,94 @@
 <?php
 class ModelOpenbayOpenbay extends Model {
 	private $url = 'https://account.openbaypro.com/';
+	private $error;
+
+	public function updateV2Test() {
+		$web_root = preg_replace('/system\/$/', '', DIR_SYSTEM);
+
+		if (!function_exists("exception_error_handler")) {
+			function exception_error_handler($errno, $errstr, $errfile, $errline ) {
+				throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+			}
+		}
+
+		set_error_handler('exception_error_handler');
+
+		// check for mkdir enabled
+		if (!function_exists('mkdir')) {
+			$this->error[] = 'PHP mkdir function is disabled, contact your host';
+		}
+
+		// create a tmp folder
+		try {
+			mkdir($web_root . '/system/tmp');
+		} catch(ErrorException $ex) {
+			$this->error[] = $ex->getMessage();
+		}
+
+		// create tmp file
+		try {
+			$tmp_file = fopen($web_root . '/system/tmp/test_file.php', 'w');
+		} catch(ErrorException $ex) {
+			$this->error[] = $ex->getMessage();
+		}
+
+		// open and write over tmp file
+		try {
+			$output  = '<?php' . "\n";
+			$output  .= '$test = \'12345\';' . "\n";
+			$output  .= 'echo $test;' . "\n";
+
+			fwrite($tmp_file, $output);
+			fclose($tmp_file);
+		} catch(ErrorException $ex) {
+			$this->error[] = $ex->getMessage();
+		}
+
+		// remove tmp file
+		try {
+			unlink($web_root . '/system/tmp/test_file.php');
+		} catch(ErrorException $ex) {
+			$this->error[] = $ex->getMessage();
+		}
+
+		// delete tmp folder
+		try {
+			rmdir($web_root . '/system/tmp');
+		} catch(ErrorException $ex) {
+			$this->error[] = $ex->getMessage();
+		}
+
+		// reset to the OC error handler
+		restore_error_handler();
+
+		sleep(2);
+
+		if (!$this->error) {
+			return array('error' => false, 'response' => '');
+		} else {
+			return array('error' => true, 'response' => $this->error);
+		}
+	}
+
+	public function updateV2Files() {
+		$current_version = $this->config->get('openbay_version');
+
+		$beta = 1;
+
+		$send = array('version' => $current_version, 'ocversion' => VERSION, 'beta' => $beta);
+
+		$files = $this->call('update/getList/', $send);
+
+		if ($this->lasterror == true) {
+			$updatelog = $this->lastmsg;
+			return array('connection' => true, 'msg' => $this->lastmsg);
+		} else {
+			foreach ($files['asset']['file'] as $file) {
+
+			}
+		}
+	}
 
 	public function setUrl($url) {
 		$this->url = $url;

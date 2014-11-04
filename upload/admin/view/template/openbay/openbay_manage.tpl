@@ -13,6 +13,7 @@
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-openbay" class="form-horizontal">
       <ul class="nav nav-tabs">
         <li class="active"><a href="#tab-update" data-toggle="tab"><?php echo $tab_update; ?></a></li>
+        <li><a href="#tab-update-v2" data-toggle="tab">Update v2</a></li>
         <li><a href="#tab-setting" data-toggle="tab"><?php echo $tab_setting; ?></a></li>
         <li><a href="#tab-developer" data-toggle="tab"><?php echo $tab_developer; ?></a></li>
       </ul>
@@ -104,6 +105,20 @@
             <div class="col-sm-10">
               <button class="btn btn-primary" id="button-patch"><?php echo $button_patch; ?></button>
             </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="tab-update-v2">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="update-v2"><span data-toggle="tooltip" title="<?php echo $help_patch; ?>"><?php echo $entry_patch; ?></span></label>
+            <div class="col-sm-10">
+              <button class="btn btn-primary" id="update-v2">Update</button>
+            </div>
+          </div>
+          <div class="well">
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="loading-bar"></div>
+            </div>
+            <p class="text-center"></p>
           </div>
         </div>
         <div class="tab-pane" id="tab-setting">
@@ -270,6 +285,25 @@
       $('#button-clear-data').empty().html('<?php echo $button_clear; ?>');
     }
   });
+
+$('#update-v2').bind('click', function(e) {
+  e.preventDefault();
+
+  $.ajax({
+    url: 'index.php?route=extension/openbay/updatev2&stage=check_update&token=<?php echo $token; ?>',
+    type: 'post',
+    dataType: 'json',
+    beforeSend: function() {
+      $('#update-v2').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+    },
+    success: function(json) {
+      $('#update-v2').empty().html('Update');
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+      if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
+    }
+  });
+});
 
   function validateForm() {
     $('#form-openbay').submit();

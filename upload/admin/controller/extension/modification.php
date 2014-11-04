@@ -232,31 +232,31 @@ class ControllerExtensionModification extends Controller {
 										$add = explode("\n", $add);
 
 										// Check if using indexes
-										if ($index) {
+										if ($index !== '') {
 											$indexes = explode(',', $index);
 										} else {
 											$indexes = array();
 										}
 										
 										// Get all the matches
-										$i = 0;
+										$j = 0;
 										
 										$lines = explode("\n", $modification[$key]);
 
-										foreach ($lines as $line_id => $line) {
+										for ($i = 0; $i < count($lines); $i++) {
 											// Status
 											$match = false;
 											
 											// Check to see if the line matches the search code.
-											if (stripos($line, $search) !== false) {
+											if (stripos($lines[$i], $search) !== false) {
 												// If indexes are not used then just set the found status to true.
 												if (!$indexes) {
 													$match = true;
-												} elseif (in_array($i, $indexes)) {
+												} elseif (in_array($j, $indexes)) {
 													$match = true;
 												}
 												
-												$i++;
+												$j++;
 											}
 											
 											// Now for replacing or adding to the matched elements
@@ -264,18 +264,18 @@ class ControllerExtensionModification extends Controller {
 												switch ($position) {
 													default:
 													case 'replace':
-														array_splice($lines, $line_id + $offset, count($add) + abs($offset), $add);
+														array_splice($lines, $i + $offset, count($add) + abs($offset), $add);
 														break;
 													case 'before':
-														array_splice($lines, $line_id - $offset, 0, $add);
+														array_splice($lines, $i - $offset, 0, $add);
 														break;
 													case 'after':
-														array_splice($lines, ($line_id + 1) + $offset, 0, $add);
+														array_splice($lines, ($i + 1) + $offset, 0, $add);
 														break;
 												}
 												
 												// Log
-												$log[] = 'LINE: ' . $line_id;
+												$log[] = 'LINE: ' . $i;
 												
 												$status = true;										
 											}

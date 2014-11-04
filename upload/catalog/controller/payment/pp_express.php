@@ -1273,13 +1273,29 @@ class ControllerPaymentPPExpress extends Controller {
 		$max_amount = min($max_amount * 1.25, 10000);
 		$max_amount = $this->currency->format($max_amount, $this->currency->getCode(), '', false);
 
+		if ($this->cart->hasShipping()) {
+			$shipping = 0;
+			$data_shipping = array(
+				'PAYMENTREQUEST_0_SHIPTONAME'				=> html_entity_decode($order_info['shipping_firstname'] . ' ' . $order_info['shipping_lastname'], ENT_QUOTES, 'UTF-8'),
+				'PAYMENTREQUEST_0_SHIPTOSTREET'				=> html_entity_decode($order_info['shipping_address_1'], ENT_QUOTES, 'UTF-8'),
+				'PAYMENTREQUEST_0_SHIPTOSTREET2'			=> html_entity_decode($order_info['shipping_address_2'], ENT_QUOTES, 'UTF-8'),
+				'PAYMENTREQUEST_0_SHIPTOCITY'				=> html_entity_decode($order_info['shipping_city'], ENT_QUOTES, 'UTF-8'),
+				'PAYMENTREQUEST_0_SHIPTOSTATE'				=> html_entity_decode($order_info['shipping_zone'], ENT_QUOTES, 'UTF-8'),
+				'PAYMENTREQUEST_0_SHIPTOZIP'				=> html_entity_decode($order_info['shipping_postcode'], ENT_QUOTES, 'UTF-8'),
+				'PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE'		=> $order_info['shipping_iso_code_2']
+			);
+		} else {
+			$shipping = 1;
+			$data_shipping = array();
+		}
+
 		$data = array(
 			'METHOD'             => 'SetExpressCheckout',
 			'MAXAMT'             => $max_amount,
 			'RETURNURL'          => $this->url->link('payment/pp_express/checkoutReturn', '', 'SSL'),
 			'CANCELURL'          => $this->url->link('checkout/checkout', '', 'SSL'),
 			'REQCONFIRMSHIPPING' => 0,
-			'NOSHIPPING'         => 1,
+			'NOSHIPPING'         => $shipping,
 			'LOCALECODE'         => 'EN',
 			'LANDINGPAGE'        => 'Login',
 			'HDRIMG'             => $this->model_tool_image->resize($this->config->get('pp_express_logo'), 790, 90),
@@ -1287,6 +1303,8 @@ class ControllerPaymentPPExpress extends Controller {
 			'CHANNELTYPE'        => 'Merchant',
 			'ALLOWNOTE'          => $this->config->get('pp_express_allow_note')
 		);
+
+		$data = array_merge($data, $data_shipping);
 
 		if (isset($this->session->data['pp_login']['seamless']['access_token']) && (isset($this->session->data['pp_login']['seamless']['customer_id']) && $this->session->data['pp_login']['seamless']['customer_id'] == $this->customer->getId()) && $this->config->get('pp_login_seamless')) {
 			$data['IDENTITYACCESSTOKEN'] = $this->session->data['pp_login']['seamless']['access_token'];

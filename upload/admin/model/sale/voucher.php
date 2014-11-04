@@ -175,10 +175,6 @@ class ModelSaleVoucher extends Model {
 		return $query->row['total'];
 	}
 
-	public function addVoucherHistory($voucher_id, $order_id, $customer_id, $value) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "voucher_history SET voucher_id = '" . (int)$voucher_id . "', order_id = '" . (int)$order_id . "', customer_id = '" . (int)$customer_id . "', amount = '" . (float)$order_total['value'] . "', date_added = NOW()");
-	}
-
 	public function getVoucherHistories($voucher_id, $start = 0, $limit = 10) {
 		if ($start < 0) {
 			$start = 0;

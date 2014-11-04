@@ -65,7 +65,7 @@
           <label class="control-label" for="input-sort"><?php echo $text_sort; ?></label>
         </div>
         <div class="col-md-3 text-right">
-          <select id="input-sort" class="form-control col-sm-3" onchange="location = this.value;">
+          <select id="input-sort" class="form-control" onchange="location = this.value;">
             <?php foreach ($sorts as $sorts) { ?>
             <?php if ($sorts['value'] == $sort . '-' . $order) { ?>
             <option value="<?php echo $sorts['href']; ?>" selected="selected"><?php echo $sorts['text']; ?></option>

@@ -14,7 +14,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->model_openbay_amazon->install();
 	}
 
-	public function uninstall() { 
+	public function uninstall() {  
 		$this->load->model('openbay/amazon');
 		$this->load->model('setting/setting');
 		$this->load->model('extension/extension');

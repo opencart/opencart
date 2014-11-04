@@ -108,17 +108,20 @@
           </div>
         </div>
         <div class="tab-pane" id="tab-update-v2">
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="update-v2"><span data-toggle="tooltip" title="<?php echo $help_patch; ?>"><?php echo $entry_patch; ?></span></label>
-            <div class="col-sm-10">
-              <button class="btn btn-primary" id="update-v2">Update</button>
-            </div>
-          </div>
+
           <div class="well">
-            <div class="progress">
-              <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="loading-bar"></div>
+            <div class="form-group" id="update-v2-box">
+              <label class="col-sm-2 control-label" for="update-v2"><span data-toggle="tooltip" title="Beta version">Update software</span></label>
+              <div class="col-sm-10">
+                <button class="btn btn-primary" id="update-v2">Update</button>
+              </div>
             </div>
-            <p class="text-center"></p>
+            <div id="update-v2-progress" style="display:none;">
+              <div class="progress">
+                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="loading-bar"></div>
+              </div>
+              <p class="text-center" id="update-text"></p>
+            </div>
           </div>
         </div>
         <div class="tab-pane" id="tab-setting">
@@ -290,20 +293,119 @@ $('#update-v2').bind('click', function(e) {
   e.preventDefault();
 
   $.ajax({
-    url: 'index.php?route=extension/openbay/updatev2&stage=check_update&token=<?php echo $token; ?>',
+    url: 'index.php?route=extension/openbay/updatev2&stage=check_server&token=<?php echo $token; ?>',
     type: 'post',
     dataType: 'json',
     beforeSend: function() {
-      $('#update-v2').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+      $('#update-v2-box').hide();
+      $('#update-v2-progress').fadeIn();
+      $('#update-text').text('Checking server requirements');
+      $('#loading-bar').css('width', '5%');
     },
     success: function(json) {
-      $('#update-v2').empty().html('Update');
+      if (json.error == 1) {
+        updateError(json.response);
+      } else {
+        $.ajax({
+          url: 'index.php?route=extension/openbay/updatev2&stage=check_version&token=<?php echo $token; ?>',
+          type: 'post',
+          dataType: 'json',
+          beforeSend: function() {
+            $('#update-text').text('Checking for newer version');
+            $('#loading-bar').css('width', '10%');
+          },
+          success: function(json) {
+            if (json.error == 1) {
+              updateError(json.response);
+            } else {
+              $.ajax({
+                url: 'index.php?route=extension/openbay/updatev2&stage=download&token=<?php echo $token; ?>',
+                type: 'post',
+                dataType: 'json',
+                beforeSend: function() {
+                  $('#update-text').text('Downloading update files - version ' + json.response);
+                  $('#loading-bar').css('width', '20%');
+                },
+                success: function(json) {
+                  if (json.error == 1) {
+                    updateError(json.response);
+                  } else {
+                    $.ajax({
+                      url: 'index.php?route=extension/openbay/updatev2&stage=extract&token=<?php echo $token; ?>',
+                      type: 'post',
+                      dataType: 'json',
+                      beforeSend: function() {
+                        $('#update-text').text('Extracting files');
+                        $('#loading-bar').css('width', '50%');
+                      },
+                      success: function(json) {
+                        if (json.error == 1) {
+                          updateError(json.response);
+                        } else {
+                          $('#update-text').text('Done');
+                          $('#loading-bar').css('width', '100%');
+
+
+
+                          //$('#update-v2-progress').hide();
+                          //$('#update-v2-box').fadeIn();
+                        }
+                        return json;
+                      },
+                      error: function (xhr, ajaxOptions, thrownError) {
+                        if (xhr.status != 0) {
+                          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                        }
+                      }
+                    });
+
+
+
+                    //$('#update-v2-progress').hide();
+                    //$('#update-v2-box').fadeIn();
+                  }
+                  return json;
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                  if (xhr.status != 0) {
+                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                  }
+                }
+              });
+
+
+
+
+              //$('#update-v2-progress').hide();
+              //$('#update-v2-box').fadeIn();
+            }
+            return json;
+          },
+          error: function (xhr, ajaxOptions, thrownError) {
+            if (xhr.status != 0) {
+              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+          }
+        });
+      }
+      return json;
     },
     error: function (xhr, ajaxOptions, thrownError) {
-      if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
+      if (xhr.status != 0) {
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
     }
   });
+
+
 });
+
+function updateError(errors) {
+  alert('error');
+
+  $('#update-v2-progress').hide();
+  $('#update-v2-box').fadeIn();
+}
 
   function validateForm() {
     $('#form-openbay').submit();

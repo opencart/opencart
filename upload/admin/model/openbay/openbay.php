@@ -20,15 +20,17 @@ class ModelOpenbayOpenbay extends Model {
 		}
 
 		// create a tmp folder
-		try {
-			mkdir($web_root . '/system/tmp');
-		} catch(ErrorException $ex) {
-			$this->error[] = $ex->getMessage();
+		if (!is_dir($web_root . '/system/download/tmp')) {
+			try {
+				mkdir($web_root . '/system/download/tmp');
+			} catch(ErrorException $ex) {
+				$this->error[] = $ex->getMessage();
+			}
 		}
 
 		// create tmp file
 		try {
-			$tmp_file = fopen($web_root . '/system/tmp/test_file.php', 'w');
+			$tmp_file = fopen($web_root . '/system/download/tmp/test_file.php', 'w+');
 		} catch(ErrorException $ex) {
 			$this->error[] = $ex->getMessage();
 		}
@@ -45,16 +47,18 @@ class ModelOpenbayOpenbay extends Model {
 			$this->error[] = $ex->getMessage();
 		}
 
+		// try and read the file
+
 		// remove tmp file
 		try {
-			unlink($web_root . '/system/tmp/test_file.php');
+			unlink($web_root . '/system/download/tmp/test_file.php');
 		} catch(ErrorException $ex) {
 			$this->error[] = $ex->getMessage();
 		}
 
 		// delete tmp folder
 		try {
-			rmdir($web_root . '/system/tmp');
+			rmdir($web_root . '/system/download/tmp');
 		} catch(ErrorException $ex) {
 			$this->error[] = $ex->getMessage();
 		}
@@ -62,31 +66,79 @@ class ModelOpenbayOpenbay extends Model {
 		// reset to the OC error handler
 		restore_error_handler();
 
-		sleep(2);
-
 		if (!$this->error) {
-			return array('error' => false, 'response' => '');
+			return array('error' => 0, 'response' => '');
 		} else {
-			return array('error' => true, 'response' => $this->error);
+			return array('error' => 1, 'response' => $this->error);
 		}
 	}
 
-	public function updateV2Files() {
+	public function updateV2CheckVersion() {
 		$current_version = $this->config->get('openbay_version');
-
 		$beta = 1;
 
-		$send = array('version' => $current_version, 'ocversion' => VERSION, 'beta' => $beta);
-
-		$files = $this->call('update/getList/', $send);
+		$data = $this->call('update/getStableVersion/');
 
 		if ($this->lasterror == true) {
-			$updatelog = $this->lastmsg;
-			return array('connection' => true, 'msg' => $this->lastmsg);
+			return array('error' => 1, 'response' => $this->lastmsg . ' (' . VERSION . ')');
 		} else {
-			foreach ($files['asset']['file'] as $file) {
-
+			if ($data['version'] > $current_version) {
+				return array('error' => 0, 'response' => $data['version']);
+			} else {
+				return array('error' => 1, 'response' => 'You are already up to date (' . $current_version . ')');
 			}
+		}
+	}
+
+	public function updateV2Download() {
+		$web_root = preg_replace('/system\/$/', '', DIR_SYSTEM);
+
+		$local_file = $web_root . 'system/download/openbaypro_update.zip';
+		$handle = fopen($local_file,"w+");
+
+		$post = array(
+			'version' => 2,
+			'beta' => 1,
+		);
+
+		$defaults = array(
+			CURLOPT_POST => 1,
+			CURLOPT_HEADER => 0,
+			CURLOPT_URL => $this->url . 'update/download/',
+			CURLOPT_USERAGENT => 'OpenBay Pro update script',
+			CURLOPT_FRESH_CONNECT => 1,
+			CURLOPT_RETURNTRANSFER => 1,
+			CURLOPT_FORBID_REUSE => 1,
+			CURLOPT_TIMEOUT => 0,
+			CURLOPT_SSL_VERIFYPEER => 0,
+			CURLOPT_SSL_VERIFYHOST => 0,
+			CURLOPT_POSTFIELDS => http_build_query($post, '', "&"),
+			CURLOPT_FILE => $handle
+		);
+
+		$ch = curl_init();
+		curl_setopt_array($ch, $defaults);
+		curl_exec($ch);
+
+		$curl_error = curl_error ($ch);
+
+		curl_close($ch);
+
+		return array('error' => 0, 'response' => $curl_error);
+	}
+
+	public function updateV2Extract() {
+		$web_root = preg_replace('/system\/$/', '', DIR_SYSTEM);
+
+		$zip = new ZipArchive();
+
+		if ($zip->open($web_root . 'system/download/openbaypro_update.zip')) {
+			$zip->extractTo($web_root);
+			$zip->close();
+
+			return array('error' => 0, 'response' => '');
+		} else {
+			return array('error' => 1, 'response' => 'Unable to extract update files');
 		}
 	}
 

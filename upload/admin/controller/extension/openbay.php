@@ -303,24 +303,42 @@ class ControllerExtensionOpenbay extends Controller {
 		// set base var
 		$web_root = preg_replace('/system\/$/', '', DIR_SYSTEM);
 
-		if (!isset($this->request->post['stage'])) {
-			$stage = 'check_update';
+		if (!isset($this->request->get['stage'])) {
+			$stage = 'check_server';
 		} else {
-			$stage = $this->request->post['stage'];
+			$stage = $this->request->get['stage'];
 		}
 
 		switch ($stage) {
-			case 'check_update':
+			case 'check_server': // step 1
 				$response = $this->model_openbay_openbay->updateV2Test();
 
 				$this->response->addHeader('Content-Type: application/json');
 				$this->response->setOutput(json_encode($response));
 				break;
-			case 'get_files':
-				$response = $this->model_openbay_openbay->updateV2Files();
+			case 'check_version': // step 2
+				$response = $this->model_openbay_openbay->updateV2CheckVersion();
 
 				$this->response->addHeader('Content-Type: application/json');
 				$this->response->setOutput(json_encode($response));
+				break;
+			case 'download': // step 3
+				$response = $this->model_openbay_openbay->updateV2Download();
+
+				$this->response->addHeader('Content-Type: application/json');
+				$this->response->setOutput(json_encode($response));
+				break;
+			case 'extract': // step 4
+				$response = $this->model_openbay_openbay->updateV2Extract();
+
+				$this->response->addHeader('Content-Type: application/json');
+				$this->response->setOutput(json_encode($response));
+				break;
+			case 'remove': // step 5 - remove any files no longer needed
+				//$response = $this->model_openbay_openbay->updateV2Extract();
+
+				//$this->response->addHeader('Content-Type: application/json');
+				//$this->response->setOutput(json_encode($response));
 				break;
 			default;
 		}

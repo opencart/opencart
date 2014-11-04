@@ -20,6 +20,7 @@ final class Ebay {
 		$this->lastmsg = '';
 
 		$this->load->library('log');
+		
 		$this->logger = new Log('ebaylog.log');
 	}
 

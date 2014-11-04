@@ -175,7 +175,7 @@
                         <?php } ?>
                       </ul>
                     </div>
-                    <?php if ($customer['unlock']) { ; ?>
+                    <?php if ($customer['unlock']) { ?>
                     <a href="<?php echo $customer['unlock']; ?>" data-toggle="tooltip" title="<?php echo $button_unlock; ?>" class="btn btn-warning"><i class="fa fa-unlock"></i></a>
                     <?php } else { ?>
                     <button type="button" class="btn btn-warning" disabled><i class="fa fa-unlock"></i></button>

@@ -98,7 +98,7 @@ class ModelOpenbayOpenbay extends Model {
 				return array('error' => 0, 'response' => $data['version'], 'percent_complete' => 20, 'status_message' => $this->language->get('text_downloading'));
 			} else {
 				$this->openbay->log('Check version - already latest');
-				return array('error' => 1, 'response' => 'You are already up to date (' . $current_version . ')');
+				return array('error' => 1, 'response' => $this->language->get('text_version_ok') . $current_version);
 			}
 		}
 	}

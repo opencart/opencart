@@ -103,11 +103,11 @@
                   <div class="col-sm-8">
                     <select name="openbay_ftp_pasv" id="ftp-pasv" class="form-control ftp-setting">
                       <?php if ($openbay_ftp_pasv) { ?>
-                      <option value="1" selected="selected"><?php echo $text_yes; ?></option>
-                      <option value="0"><?php echo $text_no; ?></option>
+                        <option value="1" selected="selected"><?php echo $text_yes; ?></option>
+                        <option value="0"><?php echo $text_no; ?></option>
                       <?php } else { ?>
-                      <option value="1"><?php echo $text_yes; ?></option>
-                      <option value="0" selected="selected"><?php echo $text_no; ?></option>
+                        <option value="1"><?php echo $text_yes; ?></option>
+                        <option value="0" selected="selected"><?php echo $text_no; ?></option>
                       <?php } ?>
                     </select>
                   </div>
@@ -330,7 +330,7 @@
     $('#update-error').hide();
     $('#update-v2-box').hide();
     $('#update-v2-progress').fadeIn();
-    $('#update-text').text('Checking server requirements');
+    $('#update-text').text('<?php echo $text_check_server; ?>');
     $('#loading-bar').css('width', '5%');
 
     var beta = $('#update-v2-beta :selected').val();

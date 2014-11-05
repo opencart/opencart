@@ -55,6 +55,10 @@ class ModelOpenbayEtsy extends Model{
 		$this->model_tool_event->deleteEvent('openbaypro_etsy');
 	}
 
+	public function patch($manual = true) {
+
+	}
+
 	public function verifyAccount() {
 		if ($this->openbay->etsy->validate() == true) {
 			return $this->openbay->etsy->call('account/info', 'GET');

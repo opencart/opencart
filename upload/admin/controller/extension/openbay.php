@@ -352,23 +352,23 @@ class ControllerExtensionOpenbay extends Controller {
 				break;
 			case 'run_patch':
 				if ($this->config->get('ebay_status') == 1) {
-					$this->load->model('openbay/ebay_patch');
-					$this->model_openbay_ebay_patch->patch(false);
+					$this->load->model('openbay/ebay');
+					$this->model_openbay_ebay->patch(false);
 				}
 
 				if ($this->config->get('amazon_status') == 1) {
-					$this->load->model('openbay/amazon_patch');
-					$this->model_openbay_amazon_patch->patch(false);
+					$this->load->model('openbay/amazon');
+					$this->model_openbay_amazon->patch(false);
 				}
 
 				if ($this->config->get('amazonus_status') == 1) {
-					$this->load->model('openbay/amazonus_patch');
-					$this->model_openbay_amazonus_patch->patch(false);
+					$this->load->model('openbay/amazonus');
+					$this->model_openbay_amazonus->patch(false);
 				}
 
 				if ($this->config->get('etsy_status') == 1) {
-					$this->load->model('openbay/etsy_patch');
-					$this->model_openbay_etsy_patch->patch(false);
+					$this->load->model('openbay/etsy');
+					$this->model_openbay_etsy->patch(false);
 				}
 
 				$response = array('error' => 0, 'response' => '', 'percent_complete' => 90, 'status_message' => 'Running patch files');
@@ -389,17 +389,17 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function patch() {
-		$this->load->model('openbay/ebay_patch');
-		$this->load->model('openbay/amazon_patch');
-		$this->load->model('openbay/amazonus_patch');
+		$this->load->model('openbay/ebay');
+		$this->load->model('openbay/amazon');
+		$this->load->model('openbay/amazonus');
 		$this->load->model('extension/extension');
 		$this->load->model('setting/setting');
 		$this->load->model('user/user_group');
 		$this->load->model('openbay/version');
 
-		$this->model_openbay_ebay_patch->patch();
-		$this->model_openbay_amazon_patch->patch();
-		$this->model_openbay_amazonus_patch->patch();
+		$this->model_openbay_ebay->patch();
+		$this->model_openbay_amazon->patch();
+		$this->model_openbay_amazonus->patch();
 
 		$openbay = $this->model_setting_setting->getSetting('openbay');
 		$openbay['openbay_version'] = (int)$this->model_openbay_version->version();

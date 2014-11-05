@@ -320,7 +320,7 @@
 
   function updateCheckServer(beta) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/updatev2&stage=check_server&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/updatev2&stage=check_server&token=<?php echo $token; ?>&beta=' + beta,
       type: 'post',
       dataType: 'json',
       beforeSend: function() { },
@@ -343,7 +343,7 @@
 
   function updateCheckVersion(beta) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/updatev2&stage=check_version&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/updatev2&stage=check_version&token=<?php echo $token; ?>&beta=' + beta,
       type: 'post',
       dataType: 'json',
       beforeSend: function() { },
@@ -366,7 +366,7 @@
 
   function updateDownload(beta) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/updatev2&stage=download&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/updatev2&stage=download&token=<?php echo $token; ?>&beta=' + beta,
       type: 'post',
       dataType: 'json',
       beforeSend: function() { },
@@ -389,7 +389,7 @@
 
   function updateExtract(beta) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/updatev2&stage=extract&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/updatev2&stage=extract&token=<?php echo $token; ?>&beta=' + beta,
       type: 'post',
       dataType: 'json',
       beforeSend: function() { },
@@ -412,7 +412,7 @@
 
   function updatePatch(beta) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/updatev2&stage=run_patch&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/updatev2&stage=run_patch&token=<?php echo $token; ?>&beta=' + beta,
       type: 'post',
       dataType: 'json',
       beforeSend: function() { },
@@ -435,7 +435,7 @@
 
   function updateVersion(beta) {
     $.ajax({
-      url: 'index.php?route=extension/openbay/updatev2&stage=update_version&token=<?php echo $token; ?>',
+      url: 'index.php?route=extension/openbay/updatev2&stage=update_version&token=<?php echo $token; ?>&beta=' + beta,
       type: 'post',
       dataType: 'json',
       beforeSend: function() { },

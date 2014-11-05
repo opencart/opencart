@@ -12,6 +12,9 @@ $_['button_faq']						= 'View FAQ topic';
 // Tab
 $_['tab_setting']						= 'Settings';
 $_['tab_update']						= 'Updates';
+$_['tab_update_v1']						= 'Easy updater';
+$_['tab_update_v2']						= 'Legacy updater';
+$_['tab_patch']							= 'Legacy updater';
 $_['tab_developer']						= 'Developer';
 
 // Text
@@ -64,6 +67,7 @@ $_['entry_courier_other']           	= 'Other courier';
 $_['entry_tracking']                	= 'Tracking #';
 $_['entry_empty_data']					= 'Empty store data?';
 $_['entry_password_prompt']				= 'Please enter the data wipe password';
+$_['entry_update']						= 'Easy 1 click update';
 
 // Error
 $_['error_username']             		= 'FTP username required';
@@ -91,3 +95,4 @@ $_['help_ftp_beta']             		= 'Caution! The beta version may not work corr
 $_['help_patch']						= 'If you updated your files directly through FTP (not using the update system above) you need to run the patch to complete the update';
 $_['help_clear_faq']					= 'Show all of the help notifications again';
 $_['help_empty_data']					= 'This can cause serious damage, do not use it if you do not know what it does!';
+$_['help_easy_update']					= 'Click update to install the latest version of OpenBay Pro automatically';

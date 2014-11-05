@@ -171,7 +171,7 @@ class ModelOpenbayOpenbay extends Model {
 			$settings = $this->model_setting_setting->getSetting('openbay');
 			$settings['openbay_version'] = $data['version'];
 			$this->model_setting_setting->editSetting('openbay', $settings);
-			return array('error' => 0, 'response' => '', 'percent_complete' => 100, 'status_message' => 'Update complete');
+			return array('error' => 0, 'response' => $data['version'], 'percent_complete' => 100, 'status_message' => 'Update complete, installed version is ' . $data['version']);
 		}
 	}
 

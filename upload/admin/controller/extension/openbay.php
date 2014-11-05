@@ -1004,6 +1004,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 	public function orderListComplete() {
 		$this->load->model('sale/order');
+		$this->load->model('openbay/openbay');
 		$this->load->model('localisation/order_status');
 
 		$data = $this->load->language('extension/openbay_order');
@@ -1107,13 +1108,28 @@ class ControllerExtensionOpenbay extends Controller {
 				}
 			}
 
+			if ($this->config->get('etsy_status') == 1 && $this->request->post['channel'][$order_id] == 'Etsy') {
+				$linked_order = $this->openbay->etsy->orderFind($order_id);
+
+				if ($linked_order != false) {
+					if ($this->config->get('etsy_order_status_paid') == $this->request->get['status_id']) {
+						$response = $this->openbay->etsy->orderUpdatePaid($linked_order['receipt_id'], "true");
+					}
+
+					if ($this->config->get('etsy_order_status_shipped') == $this->request->get['status_id']) {
+						$response = $this->openbay->etsy->orderUpdateShipped($linked_order['receipt_id'], "true");
+					}
+				}
+			}
+
 			$data = array(
+				'append' => 0,
 				'notify' => $this->request->post['notify'][$order_id],
 				'order_status_id' => $this->request->post['order_status_id'],
 				'comment' => $this->request->post['comments'][$order_id],
 			);
 
-			$this->model_sale_order->addOrderHistory($order_id, $data);
+			$this->model_openbay_openbay->addOrderHistory($order_id, $data);
 			$i++;
 		}
 

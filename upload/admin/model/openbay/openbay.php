@@ -907,4 +907,45 @@ class ModelOpenbayOpenbay extends Model {
 
 		return $query->rows;
 	}
+
+	public function addOrderHistory($order_id, $data, $store_id = 0) {
+		$json = array();
+
+		$this->load->model('setting/store');
+
+		$store_info = $this->model_setting_store->getStore($store_id);
+
+		if ($store_info) {
+			$url = $store_info['ssl'];
+		} else {
+			$url = HTTPS_CATALOG;
+		}
+
+		if (isset($this->session->data['cookie']) && isset($this->request->get['api'])) {
+			$curl = curl_init();
+
+			// Set SSL if required
+			if (substr($url, 0, 5) == 'https') {
+				curl_setopt($curl, CURLOPT_PORT, 443);
+			}
+
+			curl_setopt($curl, CURLOPT_HEADER, false);
+			curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+			curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($curl, CURLOPT_URL, $url . 'index.php?route=api/order/history&order_id=' . $order_id);
+			curl_setopt($curl, CURLOPT_POST, true);
+			curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+			curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->session->data['cookie'] . ';');
+
+			$json = curl_exec($curl);
+
+			curl_close($curl);
+		}
+
+		return $json;
+	}
 }

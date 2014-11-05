@@ -882,7 +882,7 @@ class ControllerExtensionOpenbay extends Controller {
 		if (!isset($this->request->post['selected']) || empty($this->request->post['selected'])) {
 			$this->session->data['error'] = $data['text_no_orders'];
 			$this->response->redirect($this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'], 'SSL'));
-		}else{
+		} else {
 			$this->load->model('openbay/order');
 			$this->load->language('sale/order');
 

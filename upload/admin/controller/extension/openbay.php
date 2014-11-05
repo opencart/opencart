@@ -377,6 +377,8 @@ class ControllerExtensionOpenbay extends Controller {
 				$this->response->setOutput(json_encode($response));
 				break;
 			case 'update_version':
+				$this->load->model('setting/setting');
+
 				$response = $this->model_openbay_openbay->updateV2UpdateVersion($beta);
 
 				$this->response->addHeader('Content-Type: application/json');

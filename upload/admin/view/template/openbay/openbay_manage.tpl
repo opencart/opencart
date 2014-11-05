@@ -112,10 +112,18 @@
             <div class="col-sm-6">
               <div class="well">
                 <div class="alert alert-danger" id="update-error" style="display:none;"></div>
-                <div class="form-group" id="update-v2-box">
-                  <label class="col-sm-2 control-label" for="update-v2"><span data-toggle="tooltip" title="Beta version">Update software</span></label>
-                  <div class="col-sm-10">
-                    <button class="btn btn-primary" id="update-v2">Update</button>
+                <div id="update-v2-box">
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Use beta version</label>
+                    <div class="col-sm-10">
+                      <input type="checkbox" id="update-v2-beta" value="1" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label" for="update-v2"><span data-toggle="tooltip" title="Beta version">Update software</span></label>
+                    <div class="col-sm-10">
+                      <button class="btn btn-primary" id="update-v2">Update</button>
+                    </div>
                   </div>
                 </div>
                 <div id="update-v2-progress" style="display:none;">
@@ -301,10 +309,16 @@
     $('#update-text').text('Checking server requirements');
     $('#loading-bar').css('width', '5%');
 
+    var beta = 0;
+
+    if ($('#update-v2-beta').is(':checked')) {
+      beta = 1;
+    }
+
     updateCheckServer();
   });
 
-  function updateCheckServer() {
+  function updateCheckServer(beta) {
     $.ajax({
       url: 'index.php?route=extension/openbay/updatev2&stage=check_server&token=<?php echo $token; ?>',
       type: 'post',
@@ -316,7 +330,7 @@
         } else {
           $('#update-text').text(json.status_message);
           $('#loading-bar').css('width', json.percent_complete + '%');
-          updateCheckVersion();
+          updateCheckVersion(beta);
         }
       },
       error: function (xhr, ajaxOptions, thrownError) {
@@ -327,7 +341,7 @@
     });
   }
 
-  function updateCheckVersion() {
+  function updateCheckVersion(beta) {
     $.ajax({
       url: 'index.php?route=extension/openbay/updatev2&stage=check_version&token=<?php echo $token; ?>',
       type: 'post',
@@ -339,7 +353,7 @@
         } else {
           $('#update-text').text(json.status_message);
           $('#loading-bar').css('width', json.percent_complete + '%');
-          updateDownload();
+          updateDownload(beta);
         }
       },
       error: function (xhr, ajaxOptions, thrownError) {
@@ -350,7 +364,7 @@
     });
   }
 
-  function updateDownload() {
+  function updateDownload(beta) {
     $.ajax({
       url: 'index.php?route=extension/openbay/updatev2&stage=download&token=<?php echo $token; ?>',
       type: 'post',
@@ -362,7 +376,7 @@
         } else {
           $('#update-text').text(json.status_message);
           $('#loading-bar').css('width', json.percent_complete + '%');
-          updateExtract();
+          updateExtract(beta);
         }
       },
       error: function (xhr, ajaxOptions, thrownError) {
@@ -373,7 +387,7 @@
     });
   }
 
-  function updateExtract() {
+  function updateExtract(beta) {
     $.ajax({
       url: 'index.php?route=extension/openbay/updatev2&stage=extract&token=<?php echo $token; ?>',
       type: 'post',
@@ -385,7 +399,7 @@
         } else {
           $('#update-text').text(json.status_message);
           $('#loading-bar').css('width', json.percent_complete + '%');
-          updatePatch();
+          updatePatch(beta);
         }
       },
       error: function (xhr, ajaxOptions, thrownError) {
@@ -396,7 +410,7 @@
     });
   }
 
-  function updatePatch() {
+  function updatePatch(beta) {
     $.ajax({
       url: 'index.php?route=extension/openbay/updatev2&stage=run_patch&token=<?php echo $token; ?>',
       type: 'post',
@@ -408,7 +422,7 @@
         } else {
           $('#update-text').text(json.status_message);
           $('#loading-bar').css('width', json.percent_complete + '%');
-          updateVersion();
+          updateVersion(beta);
         }
       },
       error: function (xhr, ajaxOptions, thrownError) {
@@ -419,7 +433,7 @@
     });
   }
 
-  function updateVersion() {
+  function updateVersion(beta) {
     $.ajax({
       url: 'index.php?route=extension/openbay/updatev2&stage=update_version&token=<?php echo $token; ?>',
       type: 'post',

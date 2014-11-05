@@ -353,11 +353,6 @@ class ControllerExtensionOpenbay extends Controller {
 			case 'run_patch':
 				$markets = $this->openbay->getInstalledMarkets();
 
-				echo '<pre>';
-				print_r($markets);
-				echo '</pre>';
-				die();
-
 				foreach ($markets as $market_code) {
 					$this->load->model('openbay/' . $market_code . '_patch');
 					$patch_method = 'model_openbay_' . $market_code . '_patch';

@@ -351,22 +351,22 @@ class ControllerExtensionOpenbay extends Controller {
 				//$this->response->setOutput(json_encode($response));
 				break;
 			case 'run_patch':
-				if ($this->config->get['ebay_status'] == 1) {
+				if ($this->config->get('ebay_status') == 1) {
 					$this->load->model('openbay/ebay_patch');
 					$this->model_openbay_ebay_patch->patch(false);
 				}
 
-				if ($this->config->get['amazon_status'] == 1) {
+				if ($this->config->get('amazon_status') == 1) {
 					$this->load->model('openbay/amazon_patch');
 					$this->model_openbay_amazon_patch->patch(false);
 				}
 
-				if ($this->config->get['amazonus_status'] == 1) {
+				if ($this->config->get('amazonus_status') == 1) {
 					$this->load->model('openbay/amazonus_patch');
 					$this->model_openbay_amazonus_patch->patch(false);
 				}
 
-				if ($this->config->get['etsy_status'] == 1) {
+				if ($this->config->get('etsy_status') == 1) {
 					$this->load->model('openbay/etsy_patch');
 					$this->model_openbay_etsy_patch->patch(false);
 				}

@@ -43,10 +43,4 @@ class ModelAccountCustomField extends Model {
 
 		return $custom_field_data;
 	}
-
-	public function getCustomFieldValue($custom_field_value_id) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custom_field_value cfv LEFT JOIN " . DB_PREFIX . "custom_field_value_description cfvd ON (cfv.custom_field_value_id = cfvd.custom_field_value_id) WHERE cfv.custom_field_id = '" . (int)$custom_field['custom_field_id'] . "' AND cfvd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY cfv.sort_order ASC");
-
-		return $query->row;
-	}
 }

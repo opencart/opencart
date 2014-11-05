@@ -461,7 +461,7 @@ class ControllerSaleCustomer extends Controller {
 		$results = $this->model_sale_customer->getCustomers($filter_data);
 
 		foreach ($results as $result) {
-			if ($result['approved']) {
+			if (!$result['approved']) {
 				$approve = $this->url->link('sale/customer/approve', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'] . $url, 'SSL');
 			} else {
 				$approve = '';

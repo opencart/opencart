@@ -202,6 +202,12 @@ class ControllerExtensionOpenbay extends Controller {
 			}
 		}
 
+		if (isset($this->request->post['update_v2_beta'])) {
+			$data['update_v2_beta'] = $this->request->post['update_v2_beta'];
+		} else {
+			$data['update_v2_beta'] = $this->config->get('update_v2_beta');
+		}
+
 		if (isset($this->request->post['openbay_ftp_username'])) {
 			$data['openbay_ftp_username'] = $this->request->post['openbay_ftp_username'];
 		} else {

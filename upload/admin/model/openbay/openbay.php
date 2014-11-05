@@ -921,7 +921,7 @@ class ModelOpenbayOpenbay extends Model {
 			$url = HTTPS_CATALOG;
 		}
 
-		if (isset($this->session->data['cookie']) && isset($this->request->get['api'])) {
+		if (isset($this->session->data['cookie'])) {
 			$curl = curl_init();
 
 			// Set SSL if required

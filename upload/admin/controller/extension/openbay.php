@@ -309,28 +309,38 @@ class ControllerExtensionOpenbay extends Controller {
 			$stage = $this->request->get['stage'];
 		}
 
+		if (!isset($this->request->get['beta']) || $this->request->get['beta'] == 0) {
+			$beta = 0;
+		} else {
+			$beta = 1;
+		}
+
 		switch ($stage) {
 			case 'check_server': // step 1
 				$response = $this->model_openbay_openbay->updateV2Test();
 
+				sleep(1);
 				$this->response->addHeader('Content-Type: application/json');
 				$this->response->setOutput(json_encode($response));
 				break;
 			case 'check_version': // step 2
-				$response = $this->model_openbay_openbay->updateV2CheckVersion();
+				$response = $this->model_openbay_openbay->updateV2CheckVersion($beta);
 
+				sleep(1);
 				$this->response->addHeader('Content-Type: application/json');
 				$this->response->setOutput(json_encode($response));
 				break;
 			case 'download': // step 3
 				$response = $this->model_openbay_openbay->updateV2Download();
 
+				sleep(1);
 				$this->response->addHeader('Content-Type: application/json');
 				$this->response->setOutput(json_encode($response));
 				break;
 			case 'extract': // step 4
 				$response = $this->model_openbay_openbay->updateV2Extract();
 
+				sleep(1);
 				$this->response->addHeader('Content-Type: application/json');
 				$this->response->setOutput(json_encode($response));
 				break;
@@ -341,17 +351,29 @@ class ControllerExtensionOpenbay extends Controller {
 				//$this->response->setOutput(json_encode($response));
 				break;
 			case 'run_patch':
-				$this->load->model('openbay/ebay_patch');
-				$this->model_openbay_ebay_patch->patch(false);
-				$this->load->model('openbay/amazon_patch');
-				$this->model_openbay_amazon_patch->patch(false);
-				$this->load->model('openbay/amazonus_patch');
-				$this->model_openbay_amazonus_patch->patch(false);
-				$this->load->model('openbay/etsy_patch');
-				$this->model_openbay_amazonus_patch->patch(false);
+				$markets = $this->openbay->getInstalledMarkets();
+
+				echo '<pre>';
+				print_r($markets);
+				echo '</pre>';
+				die();
+
+				foreach ($markets as $market_code) {
+					$this->load->model('openbay/' . $market_code . '_patch');
+					$patch_method = 'model_openbay_' . $market_code . '_patch';
+					$this->{$patch_method}->patch(false);
+				}
+
+				$response = array('error' => 0, 'response' => '', 'percent_complete' => 50, 'status_message' => 'Running patch files');
+
+				$this->response->addHeader('Content-Type: application/json');
+				$this->response->setOutput(json_encode($response));
 				break;
 			case 'update_version':
+				$response = $this->model_openbay_openbay->updateV2UpdateVersion($beta);
 
+				$this->response->addHeader('Content-Type: application/json');
+				$this->response->setOutput(json_encode($response));
 				break;
 			default;
 		}

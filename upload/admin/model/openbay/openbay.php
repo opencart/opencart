@@ -67,15 +67,14 @@ class ModelOpenbayOpenbay extends Model {
 		restore_error_handler();
 
 		if (!$this->error) {
-			return array('error' => 0, 'response' => '');
+			return array('error' => 0, 'response' => '', 'percent_complete' => 10, 'status_message' => 'Checking for newer version');
 		} else {
 			return array('error' => 1, 'response' => $this->error);
 		}
 	}
 
-	public function updateV2CheckVersion() {
+	public function updateV2CheckVersion($beta = 0) {
 		$current_version = $this->config->get('openbay_version');
-		$beta = 1;
 
 		$data = $this->call('update/getStableVersion/');
 
@@ -83,7 +82,7 @@ class ModelOpenbayOpenbay extends Model {
 			return array('error' => 1, 'response' => $this->lastmsg . ' (' . VERSION . ')');
 		} else {
 			if ($data['version'] > $current_version) {
-				return array('error' => 0, 'response' => $data['version']);
+				return array('error' => 0, 'response' => $data['version'], 'percent_complete' => 20, 'status_message' => 'Downloading update files');
 			} else {
 				return array('error' => 1, 'response' => 'You are already up to date (' . $current_version . ')');
 			}
@@ -124,7 +123,7 @@ class ModelOpenbayOpenbay extends Model {
 
 		curl_close($ch);
 
-		return array('error' => 0, 'response' => $curl_error);
+		return array('error' => 0, 'response' => $curl_error, 'percent_complete' => 50, 'status_message' => 'Extracting files');
 	}
 
 	public function updateV2Extract() {
@@ -136,9 +135,22 @@ class ModelOpenbayOpenbay extends Model {
 			$zip->extractTo($web_root);
 			$zip->close();
 
-			return array('error' => 0, 'response' => '');
+			return array('error' => 0, 'response' => '', 'percent_complete' => 80, 'status_message' => 'Running patch files');
 		} else {
 			return array('error' => 1, 'response' => 'Unable to extract update files');
+		}
+	}
+
+	public function updateV2UpdateVersion($beta = 0) {
+		$data = $this->call('update/getStableVersion/');
+
+		if ($this->lasterror == true) {
+			return array('error' => 1, 'response' => $this->lastmsg . ' (' . VERSION . ')');
+		} else {
+			$settings = $this->model_setting_setting->getSetting('openbay');
+			$settings['openbay_version'] = $data['version'];
+			$this->model_setting_setting->editSetting('openbay', $settings);
+			return array('error' => 0, 'response' => '', 'percent_complete' => 100, 'status_message' => 'Update complete');
 		}
 	}
 

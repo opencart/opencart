@@ -105,6 +105,10 @@ final class Openbay {
 		}
 	}
 
+	public function getInstalledMarkets() {
+		return $this->installed_markets;
+	}
+
 	public function putStockUpdateBulk($product_id_array, $end_inactive = false) {
 		/**
 		 * putStockUpdateBulk

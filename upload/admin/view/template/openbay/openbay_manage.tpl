@@ -315,7 +315,7 @@
       beta = 1;
     }
 
-    updateCheckServer();
+    updateCheckServer(beta);
   });
 
   function updateCheckServer(beta) {

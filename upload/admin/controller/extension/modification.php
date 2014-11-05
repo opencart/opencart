@@ -271,7 +271,6 @@ class ControllerExtensionModification extends Controller {
 												switch ($position) {
 													default:
 													case 'replace':
-													echo $line_id;
 														if ($offset < 0) {
 															array_splice($lines, $line_id + $offset, count($add) + abs($offset), $add);
 														} else {

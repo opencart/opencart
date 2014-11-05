@@ -4,6 +4,8 @@ class ModelOpenbayOpenbay extends Model {
 	private $error;
 
 	public function updateV2Test() {
+		$this->openbay->log('Starting update test');
+
 		$web_root = preg_replace('/system\/$/', '', DIR_SYSTEM);
 
 		if (!function_exists("exception_error_handler")) {
@@ -66,9 +68,13 @@ class ModelOpenbayOpenbay extends Model {
 		// reset to the OC error handler
 		restore_error_handler();
 
+		$this->openbay->log('Finished update test');
+
 		if (!$this->error) {
+			$this->openbay->log('Finished update test - no errors');
 			return array('error' => 0, 'response' => '', 'percent_complete' => 10, 'status_message' => 'Checking for newer version');
 		} else {
+			$this->openbay->log('Finished update test - errors: ' . print_r($this->error));
 			return array('error' => 1, 'response' => $this->error);
 		}
 	}
@@ -76,22 +82,30 @@ class ModelOpenbayOpenbay extends Model {
 	public function updateV2CheckVersion($beta = 0) {
 		$current_version = $this->config->get('openbay_version');
 
+		$this->openbay->log('Start check version, beta: ' . $beta . ', current: ' . $current_version);
+
 		$post = array('version' => 2, 'beta' => $beta);
 
 		$data = $this->call('update/version/', $post);
 
 		if ($this->lasterror == true) {
+			$this->openbay->log('Check version error: ' . $this->lastmsg);
+
 			return array('error' => 1, 'response' => $this->lastmsg . ' (' . VERSION . ')');
 		} else {
 			if ($data['version'] > $current_version) {
+				$this->openbay->log('Check version new available: ' . $data['version']);
 				return array('error' => 0, 'response' => $data['version'], 'percent_complete' => 20, 'status_message' => 'Downloading update files');
 			} else {
+				$this->openbay->log('Check version - already latest');
 				return array('error' => 1, 'response' => 'You are already up to date (' . $current_version . ')');
 			}
 		}
 	}
 
 	public function updateV2Download($beta = 0) {
+		$this->openbay->log('Downloading');
+
 		$web_root = preg_replace('/system\/$/', '', DIR_SYSTEM);
 
 		$local_file = $web_root . 'system/download/openbaypro_update.zip';
@@ -120,6 +134,8 @@ class ModelOpenbayOpenbay extends Model {
 
 		$curl_error = curl_error ($ch);
 
+		$this->openbay->log('Download errors: ' . $curl_error);
+
 		curl_close($ch);
 
 		return array('error' => 0, 'response' => $curl_error, 'percent_complete' => 50, 'status_message' => 'Extracting files');
@@ -136,17 +152,20 @@ class ModelOpenbayOpenbay extends Model {
 
 			return array('error' => 0, 'response' => '', 'percent_complete' => 80, 'status_message' => 'Running patch files');
 		} else {
+			$this->openbay->log('Unable to extract update files');
+
 			return array('error' => 1, 'response' => 'Unable to extract update files');
 		}
 	}
 
 	public function updateV2UpdateVersion($beta = 0) {
-
 		$post = array('version' => 2, 'beta' => $beta);
 
 		$data = $this->call('update/version/', $post);
 
 		if ($this->lasterror == true) {
+			$this->openbay->log('Update version: ' . $this->lastmsg);
+
 			return array('error' => 1, 'response' => $this->lastmsg . ' (' . VERSION . ')');
 		} else {
 			$settings = $this->model_setting_setting->getSetting('openbay');

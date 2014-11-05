@@ -127,10 +127,10 @@
                   </div>
                 </div>
                 <div id="update-v2-progress" style="display:none;">
-                  <div class="progress">
-                    <div class="progress-bar progress-bar-striped active progress-bar-info" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="loading-bar"></div>
+                  <div class="progress" style="height:50px;">
+                    <div class="progress-bar progress-bar-striped active progress-bar-info" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 0%;" id="loading-bar"></div>
                   </div>
-                  <p class="text-center" id="update-text"></p>
+                  <h4 class="text-center" id="update-text"></h4>
                 </div>
               </div>
             </div>

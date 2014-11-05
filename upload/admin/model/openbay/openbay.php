@@ -76,7 +76,9 @@ class ModelOpenbayOpenbay extends Model {
 	public function updateV2CheckVersion($beta = 0) {
 		$current_version = $this->config->get('openbay_version');
 
-		$data = $this->call('update/getStableVersion/');
+		$post = array('version' => 2, 'beta' => $beta);
+
+		$data = $this->call('update/version/', $post);
 
 		if ($this->lasterror == true) {
 			return array('error' => 1, 'response' => $this->lastmsg . ' (' . VERSION . ')');
@@ -89,16 +91,13 @@ class ModelOpenbayOpenbay extends Model {
 		}
 	}
 
-	public function updateV2Download() {
+	public function updateV2Download($beta = 0) {
 		$web_root = preg_replace('/system\/$/', '', DIR_SYSTEM);
 
 		$local_file = $web_root . 'system/download/openbaypro_update.zip';
 		$handle = fopen($local_file,"w+");
 
-		$post = array(
-			'version' => 2,
-			'beta' => 1,
-		);
+		$post = array('version' => 2, 'beta' => $beta);
 
 		$defaults = array(
 			CURLOPT_POST => 1,
@@ -142,7 +141,10 @@ class ModelOpenbayOpenbay extends Model {
 	}
 
 	public function updateV2UpdateVersion($beta = 0) {
-		$data = $this->call('update/getStableVersion/');
+
+		$post = array('version' => 2, 'beta' => $beta);
+
+		$data = $this->call('update/version/', $post);
 
 		if ($this->lasterror == true) {
 			return array('error' => 1, 'response' => $this->lastmsg . ' (' . VERSION . ')');

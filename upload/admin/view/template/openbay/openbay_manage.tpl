@@ -28,7 +28,7 @@
           <ul id="update-tabs" class="nav nav-tabs">
             <li class="active"><a href="#tab-update-v2" data-toggle="tab"><?php echo $tab_update_v1; ?></a></li>
             <li><a href="#tab-update-v1" data-toggle="tab"><?php echo $tab_update_v1; ?></a></li>
-            <li><a href="#tab-update-patch" data-toggle="tab"><?php echgo $tab_patch; ?></a></li>
+            <li><a href="#tab-update-patch" data-toggle="tab"><?php echo $tab_patch; ?></a></li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-update-v2">

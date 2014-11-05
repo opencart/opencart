@@ -39,14 +39,9 @@
                   <div class="form-group">
                     <label class="col-sm-3 control-label" for="update-v2-beta"><span data-toggle="tooltip" title="<?php echo $help_ftp_beta; ?>"><?php echo $entry_ftp_beta; ?></span></label>
                     <div class="col-sm-8">
-                      <select name="update_v2_beta" id="update-v2-beta" class="form-control">
-                        <?php if ($update_v2_beta) { ?>
-                        <option value="1" selected="selected"><?php echo $text_yes; ?></option>
-                        <option value="0"><?php echo $text_no; ?></option>
-                        <?php } else { ?>
+                      <select id="update-v2-beta" class="form-control">
                         <option value="1"><?php echo $text_yes; ?></option>
                         <option value="0" selected="selected"><?php echo $text_no; ?></option>
-                        <?php } ?>
                       </select>
                     </div>
                   </div>

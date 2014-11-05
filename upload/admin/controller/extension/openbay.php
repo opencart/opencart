@@ -351,15 +351,27 @@ class ControllerExtensionOpenbay extends Controller {
 				//$this->response->setOutput(json_encode($response));
 				break;
 			case 'run_patch':
-				$markets = $this->openbay->getInstalledMarkets();
-
-				foreach ($markets as $market_code) {
-					$this->load->model('openbay/' . $market_code . '_patch');
-					$patch_method = 'model_openbay_' . $market_code . '_patch';
-					$this->{$patch_method}->patch(false);
+				if ($this->config->get['ebay_status'] == 1) {
+					$this->load->model('openbay/ebay_patch');
+					$this->model_openbay_ebay_patch->patch(false);
 				}
 
-				$response = array('error' => 0, 'response' => '', 'percent_complete' => 50, 'status_message' => 'Running patch files');
+				if ($this->config->get['amazon_status'] == 1) {
+					$this->load->model('openbay/amazon_patch');
+					$this->model_openbay_amazon_patch->patch(false);
+				}
+
+				if ($this->config->get['amazonus_status'] == 1) {
+					$this->load->model('openbay/amazonus_patch');
+					$this->model_openbay_amazonus_patch->patch(false);
+				}
+
+				if ($this->config->get['etsy_status'] == 1) {
+					$this->load->model('openbay/etsy_patch');
+					$this->model_openbay_etsy_patch->patch(false);
+				}
+
+				$response = array('error' => 0, 'response' => '', 'percent_complete' => 90, 'status_message' => 'Running patch files');
 
 				$this->response->addHeader('Content-Type: application/json');
 				$this->response->setOutput(json_encode($response));

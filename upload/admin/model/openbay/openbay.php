@@ -18,7 +18,7 @@ class ModelOpenbayOpenbay extends Model {
 
 		// check for mkdir enabled
 		if (!function_exists('mkdir')) {
-			$this->error[] = 'PHP mkdir function is disabled, contact your host';
+			$this->error[] = $this->language->get('error_mkdir');
 		}
 
 		// create a tmp folder
@@ -72,7 +72,7 @@ class ModelOpenbayOpenbay extends Model {
 
 		if (!$this->error) {
 			$this->openbay->log('Finished update test - no errors');
-			return array('error' => 0, 'response' => '', 'percent_complete' => 10, 'status_message' => 'Checking for newer version');
+			return array('error' => 0, 'response' => '', 'percent_complete' => 10, 'status_message' => $this->language->get('text_check_new'));
 		} else {
 			$this->openbay->log('Finished update test - errors: ' . print_r($this->error));
 			return array('error' => 1, 'response' => $this->error);
@@ -95,7 +95,7 @@ class ModelOpenbayOpenbay extends Model {
 		} else {
 			if ($data['version'] > $current_version) {
 				$this->openbay->log('Check version new available: ' . $data['version']);
-				return array('error' => 0, 'response' => $data['version'], 'percent_complete' => 20, 'status_message' => 'Downloading update files');
+				return array('error' => 0, 'response' => $data['version'], 'percent_complete' => 20, 'status_message' => $this->language->get('text_downloading'));
 			} else {
 				$this->openbay->log('Check version - already latest');
 				return array('error' => 1, 'response' => 'You are already up to date (' . $current_version . ')');
@@ -138,7 +138,7 @@ class ModelOpenbayOpenbay extends Model {
 
 		curl_close($ch);
 
-		return array('error' => 0, 'response' => $curl_error, 'percent_complete' => 50, 'status_message' => 'Extracting files');
+		return array('error' => 0, 'response' => $curl_error, 'percent_complete' => 50, 'status_message' => $this->language->get('text_extracting'));
 	}
 
 	public function updateV2Extract() {
@@ -150,11 +150,11 @@ class ModelOpenbayOpenbay extends Model {
 			$zip->extractTo($web_root);
 			$zip->close();
 
-			return array('error' => 0, 'response' => '', 'percent_complete' => 80, 'status_message' => 'Running patch files');
+			return array('error' => 0, 'response' => '', 'percent_complete' => 80, 'status_message' => $this->language->get('text_running_patch'));
 		} else {
 			$this->openbay->log('Unable to extract update files');
 
-			return array('error' => 1, 'response' => 'Unable to extract update files');
+			return array('error' => 1, 'response' => $this->language->get('text_fail_patch'));
 		}
 	}
 
@@ -171,7 +171,7 @@ class ModelOpenbayOpenbay extends Model {
 			$settings = $this->model_setting_setting->getSetting('openbay');
 			$settings['openbay_version'] = $data['version'];
 			$this->model_setting_setting->editSetting('openbay', $settings);
-			return array('error' => 0, 'response' => $data['version'], 'percent_complete' => 100, 'status_message' => 'Update complete, installed version is ' . $data['version']);
+			return array('error' => 0, 'response' => $data['version'], 'percent_complete' => 100, 'status_message' => $this->language->get('text_updated_ok') . $data['version']);
 		}
 	}
 

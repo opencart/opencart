@@ -11,10 +11,10 @@ $_['button_faq']						= 'View FAQ topic';
 
 // Tab
 $_['tab_setting']						= 'Settings';
-$_['tab_update']						= 'Updates';
+$_['tab_update']						= 'Software updates';
 $_['tab_update_v1']						= 'Easy updater';
 $_['tab_update_v2']						= 'Legacy updater';
-$_['tab_patch']							= 'Legacy updater';
+$_['tab_patch']							= 'Patch';
 $_['tab_developer']						= 'Developer';
 
 // Text
@@ -39,7 +39,8 @@ $_['text_run_update']           		= 'Run update';
 $_['text_patch_complete']           	= 'Patch has been applied';
 $_['text_connection_ok']				= 'Connected to server OK. OpenCart folders found';
 $_['text_updated']						= 'Module has been updated (v.%s)';
-$_['text_update_description']			= "The update tool will make changes to your shop's file system. Make sure you have a backup before using this tool.";
+$_['text_update_description']			= "The update tool will make changes to your shop file system. Make sure you have a complete file and database backup before updating.";
+$_['text_patch_description']			= 'If you uploaded the update files manually, you need to run the patch to complete the update';
 $_['text_clear_faq']                    = 'Clear hidden FAQ popups';
 $_['text_clear_faq_complete']           = 'Notifications will now show again';
 $_['text_install_success']              = 'Marketplace has been installed';
@@ -47,6 +48,12 @@ $_['text_uninstall_success']            = 'Marketplace has been removed';
 $_['text_title_messages']               = 'Messages &amp; notifications';
 $_['text_marketplace_shipped']			= 'The order status will be updated to shipped on the marketplace';
 $_['text_action_warning']				= 'This action is dangerous so is password protected.';
+$_['text_check_new']					= 'Checking for newer version';
+$_['text_downloading']					= 'Downloading update files';
+$_['text_extracting']					= 'Extracting files';
+$_['text_running_patch']				= 'Running patch files';
+$_['text_fail_patch']					= 'Unable to extract update files';
+$_['text_updated_ok']					= 'Update complete, installed version is ';
 
 // Column
 $_['column_name']          				= 'Plugin name';
@@ -83,6 +90,7 @@ $_['error_tracking_id_format']			= 'Your tracking ID cannot contain the characte
 $_['error_tracking_courier']			= 'You must select a courier if you want to add a tracking ID';
 $_['error_tracking_custom']				= 'Please leave courier field empty if you want to use custom courier';
 $_['error_permission']					= 'You do not have permission to modify the OpenBay Pro extension';
+$_['error_mkdir']						= 'PHP mkdir function is disabled, contact your host';
 
 // Help
 $_['help_ftp_username']           		= 'Use the FTP username from your host';
@@ -92,7 +100,7 @@ $_['help_ftp_root']           			= '(No trailing slash e.g. httpdocs/www)';
 $_['help_ftp_admin']               		= 'If you have changed your admin directory update it to the new location';
 $_['help_ftp_pasv']                    	= 'Change your FTP connection to passive mode';
 $_['help_ftp_beta']             		= 'Caution! The beta version may not work correctly';
-$_['help_patch']						= 'If you updated your files directly through FTP (not using the update system above) you need to run the patch to complete the update';
 $_['help_clear_faq']					= 'Show all of the help notifications again';
 $_['help_empty_data']					= 'This can cause serious damage, do not use it if you do not know what it does!';
 $_['help_easy_update']					= 'Click update to install the latest version of OpenBay Pro automatically';
+$_['help_patch']						= 'Click to run the patch scripts';

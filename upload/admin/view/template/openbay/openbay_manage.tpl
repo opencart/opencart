@@ -24,14 +24,15 @@
 
           <input type="hidden" name="openbay_version" value="<?php echo $openbay_version; ?>" />
           <input type="hidden" name="openbay_menu" value="<?php echo $openbay_menu; ?>" />
-          <p><?php echo $text_update_description; ?></p>
+
           <ul id="update-tabs" class="nav nav-tabs">
             <li class="active"><a href="#tab-update-v2" data-toggle="tab"><?php echo $tab_update_v1; ?></a></li>
-            <li><a href="#tab-update-v1" data-toggle="tab"><?php echo $tab_update_v1; ?></a></li>
+            <li><a href="#tab-update-v1" data-toggle="tab"><?php echo $tab_update_v2; ?></a></li>
             <li><a href="#tab-update-patch" data-toggle="tab"><?php echo $tab_patch; ?></a></li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-update-v2">
+              <p><?php echo $text_update_description; ?></p>
               <div class="well">
                 <div class="alert alert-danger" id="update-error" style="display:none;"></div>
                 <div id="update-v2-box">
@@ -65,6 +66,7 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-update-v1">
+              <p><?php echo $text_update_description; ?></p>
               <div class="well">
                 <div class="form-group">
                   <label class="col-sm-3 control-label" for="ftp-username"><span data-toggle="tooltip" title="<?php echo $help_ftp_username; ?>"><?php echo $entry_ftp_username; ?></span></label>
@@ -141,6 +143,7 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-update-patch">
+              <p><?php echo $text_patch_description; ?></p>
               <div class="well">
                 <div class="form-group">
                   <label class="col-sm-3 control-label" for="button-patch"><span data-toggle="tooltip" title="<?php echo $help_patch; ?>"><?php echo $entry_patch; ?></span></label>
@@ -153,27 +156,31 @@
           </div>
         </div>
         <div class="tab-pane" id="tab-setting">
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-language"><?php echo $text_language; ?></label>
-            <div class="col-sm-10">
-              <select name="openbay_language" id="input-language" class="form-control">
-                <?php foreach ($languages as $key => $language) { ?>
-                  <option value="<?php echo $key; ?>" <?php if ($key == $openbay_language) { echo'selected="selected"'; } ?>><?php echo $language; ?></option>
-                <?php } ?>
-              </select>
+          <div class="well">
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-language"><?php echo $text_language; ?></label>
+              <div class="col-sm-10">
+                <select name="openbay_language" id="input-language" class="form-control">
+                  <?php foreach ($languages as $key => $language) { ?>
+                    <option value="<?php echo $key; ?>" <?php if ($key == $openbay_language) { echo'selected="selected"'; } ?>><?php echo $language; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="button-clear-faq"><span data-toggle="tooltip" title="<?php echo $help_clear_faq; ?>"><?php echo $text_clear_faq; ?></span></label>
-            <div class="col-sm-10">
-              <button class="btn btn-primary" id="button-clear-faq"><?php echo $button_clear; ?></button>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="button-clear-faq"><span data-toggle="tooltip" title="<?php echo $help_clear_faq; ?>"><?php echo $text_clear_faq; ?></span></label>
+              <div class="col-sm-10">
+                <button class="btn btn-primary" id="button-clear-faq"><?php echo $button_clear; ?></button>
+              </div>
             </div>
           </div>
         </div>
         <div class="tab-pane" id="tab-developer">
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="button-clear-data"><span data-toggle="tooltip" title="<?php echo $help_empty_data; ?>"><?php echo $entry_empty_data; ?></span></label>
-            <div class="col-sm-10"> <a class="btn btn-primary" id="button-clear-data"><?php echo $button_clear; ?></a> </div>
+          <div class="well">
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="button-clear-data"><span data-toggle="tooltip" title="<?php echo $help_empty_data; ?>"><?php echo $entry_empty_data; ?></span></label>
+              <div class="col-sm-10"> <a class="btn btn-primary" id="button-clear-data"><?php echo $button_clear; ?></a> </div>
+            </div>
           </div>
         </div>
       </div>
@@ -320,6 +327,7 @@
   $('#update-v2').bind('click', function(e) {
     e.preventDefault();
 
+    $('#update-error').hide();
     $('#update-v2-box').hide();
     $('#update-v2-progress').fadeIn();
     $('#update-text').text('Checking server requirements');
@@ -361,7 +369,9 @@
       beforeSend: function() { },
       success: function(json) {
         if (json.error == 1) {
-          updateError(json.response);
+          $('#update-error').removeClass('alert-danger').addClass('alert-info').html('<i class="fa fa-check"></i> ' + json.response).show();
+          $('#update-v2-progress').hide();
+          $('#update-v2-box').fadeIn();
         } else {
           $('#update-text').text(json.status_message);
           $('#loading-bar').css('width', json.percent_complete + '%');

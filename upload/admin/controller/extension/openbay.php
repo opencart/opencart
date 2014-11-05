@@ -300,6 +300,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 	public function updateV2() {
 		$this->load->model('openbay/openbay');
+		$this->load->language('extension/openbay');
 
 		// set base var
 		$web_root = preg_replace('/system\/$/', '', DIR_SYSTEM);

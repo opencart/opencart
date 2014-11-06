@@ -14,6 +14,7 @@
 * Used correct admin setting to check if product count should be done on a category REF: #1828
 * Changed response message to hide sensitive DB connection data on failure. REF: 3fff5226d9c48f8f4c948bc2c27a5c91f8dba1a2
 * Fixed category count to be called only when count is turned on
+* Added formatting to number format in pp express to ensure no comma is added for items over 1000 #2216
 
 #### Changes
 * Removed duplicate DELETE SQL query for product attributes REF: #1379

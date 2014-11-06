@@ -53,9 +53,10 @@ $_['text_downloading']					= 'Downloading update files';
 $_['text_extracting']					= 'Extracting files';
 $_['text_running_patch']				= 'Running patch files';
 $_['text_fail_patch']					= 'Unable to extract update files';
-$_['text_updated_ok']					= 'Update complete, installed version is ';
+$_['text_updated_ok']					= 'Update complete, installed version is now ';
 $_['text_check_server']					= 'Checking server requirements';
 $_['text_version_ok']					= 'Software is already up to date, installed version is ';
+$_['text_remove_files']					= 'Removing files no longer required';
 
 // Column
 $_['column_name']          				= 'Plugin name';
@@ -93,6 +94,7 @@ $_['error_tracking_courier']			= 'You must select a courier if you want to add a
 $_['error_tracking_custom']				= 'Please leave courier field empty if you want to use custom courier';
 $_['error_permission']					= 'You do not have permission to modify the OpenBay Pro extension';
 $_['error_mkdir']						= 'PHP mkdir function is disabled, contact your host';
+$_['error_file_delete']					= 'Unable to remove these files, you should delete them manually';
 
 // Help
 $_['help_ftp_username']           		= 'Use the FTP username from your host';

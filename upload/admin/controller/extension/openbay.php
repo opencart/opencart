@@ -347,12 +347,12 @@ class ControllerExtensionOpenbay extends Controller {
 				$this->response->setOutput(json_encode($response));
 				break;
 			case 'remove': // step 5 - remove any files no longer needed
-				//$response = $this->model_openbay_openbay->updateV2Extract();
+				$response = $this->model_openbay_openbay->updateV2Remove();
 
-				//$this->response->addHeader('Content-Type: application/json');
-				//$this->response->setOutput(json_encode($response));
+				$this->response->addHeader('Content-Type: application/json');
+				$this->response->setOutput(json_encode($response));
 				break;
-			case 'run_patch':
+			case 'run_patch': // step 6 - run any db updates or other patch files
 				if ($this->config->get('ebay_status') == 1) {
 					$this->load->model('openbay/ebay');
 					$this->model_openbay_ebay->patch(false);
@@ -378,7 +378,7 @@ class ControllerExtensionOpenbay extends Controller {
 				$this->response->addHeader('Content-Type: application/json');
 				$this->response->setOutput(json_encode($response));
 				break;
-			case 'update_version':
+			case 'update_version': // step 7 - update the version number
 				$this->load->model('setting/setting');
 
 				$response = $this->model_openbay_openbay->updateV2UpdateVersion($beta);

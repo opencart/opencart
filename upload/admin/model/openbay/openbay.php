@@ -74,7 +74,7 @@ class ModelOpenbayOpenbay extends Model {
 
 		if (!$this->error) {
 			$this->openbay->log('Finished update test - no errors');
-			return array('error' => 0, 'response' => '', 'percent_complete' => 10, 'status_message' => $this->language->get('text_check_new'));
+			return array('error' => 0, 'response' => '', 'percent_complete' => 20, 'status_message' => $this->language->get('text_check_new'));
 		} else {
 			$this->openbay->log('Finished update test - errors: ' . print_r($this->error));
 			return array('error' => 1, 'response' => $this->error);
@@ -97,7 +97,7 @@ class ModelOpenbayOpenbay extends Model {
 		} else {
 			if ($data['version'] > $current_version) {
 				$this->openbay->log('Check version new available: ' . $data['version']);
-				return array('error' => 0, 'response' => $data['version'], 'percent_complete' => 20, 'status_message' => $this->language->get('text_downloading'));
+				return array('error' => 0, 'response' => $data['version'], 'percent_complete' => 40, 'status_message' => $this->language->get('text_downloading'));
 			} else {
 				$this->openbay->log('Check version - already latest');
 				return array('error' => 1, 'response' => $this->language->get('text_version_ok') . $current_version);
@@ -140,7 +140,7 @@ class ModelOpenbayOpenbay extends Model {
 
 		curl_close($ch);
 
-		return array('error' => 0, 'response' => $curl_error, 'percent_complete' => 50, 'status_message' => $this->language->get('text_extracting'));
+		return array('error' => 0, 'response' => $curl_error, 'percent_complete' => 60, 'status_message' => $this->language->get('text_extracting'));
 	}
 
 	public function updateV2Extract() {
@@ -176,9 +176,62 @@ class ModelOpenbayOpenbay extends Model {
 		restore_error_handler();
 
 		if (!$this->error) {
-			return array('error' => 0, 'response' => '', 'percent_complete' => 80, 'status_message' => $this->language->get('text_running_patch'));
+			return array('error' => 0, 'response' => '', 'percent_complete' => 80, 'status_message' => $this->language->get('text_remove_files'));
 		} else {
 			return array('error' => 1, 'response' => $this->error);
+		}
+	}
+
+	public function updateV2Remove($beta = 0) {
+		$this->error = array();
+
+		$web_root = preg_replace('/system\/$/', '', DIR_SYSTEM);
+
+		if (!function_exists("exception_error_handler")) {
+			function exception_error_handler($errno, $errstr, $errfile, $errline ) {
+				throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+			}
+		}
+
+		$this->openbay->log('Get files to remove, beta: ' . $beta);
+
+		$post = array('beta' => $beta);
+
+		$files = $this->call('update/getRemoveList/', $post);
+
+		$this->openbay->log("Remove Files: " . print_r($files, 1));
+
+		if (!empty($files['asset']) && is_array($files['asset'])) {
+			foreach($files['asset'] as $file) {
+				$filename = $web_root . implode('/', $file['locations']['location']) . '/' . $file['name'];
+
+				if (file_exists($filename)) {
+					try {
+						unlink($filename);
+					} catch(ErrorException $ex) {
+						$this->openbay->log('Unable to remove file: ' . $filename . ', ' . $ex->getMessage());
+						$this->error[] = $filename;
+					}
+				}
+			}
+		}
+
+		// reset to the OC error handler
+		restore_error_handler();
+
+		if (!$this->error) {
+			return array('error' => 0, 'response' => '', 'percent_complete' => 90, 'status_message' => $this->language->get('text_running_patch'));
+		} else {
+			$response_error = '<p>' . $this->language->get('error_file_delete') . '</p>';
+			$response_error .= '<ul>';
+
+			foreach($this->error as $error_file) {
+				$response_error .= '<li>' . $error_file . '</li>';
+			}
+
+			$response_error .= '</ul>';
+
+			return array('error' => 1, 'response' => $response_error, 'percent_complete' => 90, 'status_message' => $this->language->get('text_running_patch'));
 		}
 	}
 

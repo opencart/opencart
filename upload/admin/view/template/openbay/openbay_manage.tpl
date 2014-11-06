@@ -416,8 +416,31 @@
         } else {
           $('#update-text').text(json.status_message);
           $('#loading-bar').css('width', json.percent_complete + '%');
-          updatePatch(beta);
+          updateRemove(beta);
         }
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        if (xhr.status != 0) {
+          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+      }
+    });
+  }
+
+  function updateRemove(beta) {
+    $.ajax({
+      url: 'index.php?route=extension/openbay/updatev2&stage=remove&token=<?php echo $token; ?>&beta=' + beta,
+      type: 'post',
+      dataType: 'json',
+      beforeSend: function() { },
+      success: function(json) {
+        if (json.error == 1) {
+          $('#update-v2-progress').prepend('<div class="alert alert-warning">' + json.response + '</div>');
+        }
+
+        $('#update-text').text(json.status_message);
+        $('#loading-bar').css('width', json.percent_complete + '%');
+        updatePatch(beta);
       },
       error: function (xhr, ajaxOptions, thrownError) {
         if (xhr.status != 0) {

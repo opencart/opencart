@@ -1112,11 +1112,11 @@ class ControllerExtensionOpenbay extends Controller {
 				$linked_order = $this->openbay->etsy->orderFind($order_id);
 
 				if ($linked_order != false) {
-					if ($this->config->get('etsy_order_status_paid') == $this->request->get['status_id']) {
+					if ($this->config->get('etsy_order_status_paid') == $this->request->post['order_status_id']) {
 						$response = $this->openbay->etsy->orderUpdatePaid($linked_order['receipt_id'], "true");
 					}
 
-					if ($this->config->get('etsy_order_status_shipped') == $this->request->get['status_id']) {
+					if ($this->config->get('etsy_order_status_shipped') == $this->request->post['order_status_id']) {
 						$response = $this->openbay->etsy->orderUpdateShipped($linked_order['receipt_id'], "true");
 					}
 				}

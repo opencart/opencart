@@ -126,13 +126,6 @@ class ControllerOpenbayEbay extends Controller {
 		}
 		$data['currency_list'] = $this->model_localisation_currency->getCurrencies();
 
-		if (isset($this->request->post['ebay_def_customer_grp'])) {
-			$data['ebay_def_customer_grp'] = $this->request->post['ebay_def_customer_grp'];
-		} else {
-			$data['ebay_def_customer_grp'] = $this->config->get('ebay_def_customer_grp');
-		}
-		$data['customer_grp_list'] = $this->model_sale_customer_group->getCustomerGroups();
-
 		$data['token'] = $this->session->data['token'];
 
 		if (isset($this->error['warning'])) {

@@ -68,10 +68,8 @@ class ModelOpenbayEbayOpenbay extends Model{
 			/* if we have these details then we have the rest of the delivery info */
 			if (!empty($order->address->name) && !empty($order->address->street1)) {
 				$this->openbay->ebay->log('User info found');
-				if ($this->model_openbay_ebay_order->hasUser($order_id) == false) {
-					$user       = $this->handleUserAccount($order);
-					/* update if the user details have not been assigned to the order */
-					$this->updateOrderWithConfirmedData($order_id, $order, $user);
+				if ($this->model_openbay_ebay_order->hasAddress($order_id) == false) {
+					$this->updateOrderWithConfirmedData($order_id, $order);
 					$this->openbay->ebay->log('Order ID: ' . $order_id . ' -> Updated with user info');
 				}
 			} else {
@@ -139,10 +137,8 @@ class ModelOpenbayEbayOpenbay extends Model{
 				/* check user details to see if we have now been passed the user info, if we have these details then we have the rest of the delivery info */
 				if (!empty($order->address->name) && !empty($order->address->street1)) {
 					$this->openbay->ebay->log('User info found . ');
-					if ($this->model_openbay_ebay_order->hasUser($order_id) == false) {
-						$user = $this->handleUserAccount($order);
-						/* update if the user details have not been assigned to the order */
-						$this->updateOrderWithConfirmedData($order_id, $order, $user);
+					if ($this->model_openbay_ebay_order->hasAddress($order_id) == false) {
+						$this->updateOrderWithConfirmedData($order_id, $order);
 						$this->openbay->ebay->log('Order ID: ' . $order_id . ' -> Updated with user info . ');
 					}
 				} else {
@@ -393,10 +389,31 @@ class ModelOpenbayEbayOpenbay extends Model{
 		return $order_id;
 	}
 
-	private function updateOrderWithConfirmedData($order_id, $order, $user) {
+	private function updateOrderWithConfirmedData($order_id, $order) {
 		$this->load->model('localisation/currency');
 		$this->load->model('catalog/product');
 		$totals_language = $this->language->load('openbay/ebay_order');
+
+		$name_parts     = $this->openbay->splitName((string)$order->address->name);
+		$user           = array();
+		$user['fname']  = $name_parts['firstname'];
+		$user['lname']  = $name_parts['surname'];
+
+		/** get the iso2 code from the data and pull out the correct country for the details. */
+		if (!empty($order->address->iso2)) {
+			$country_qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `iso_code_2` = '" . $this->db->escape($order->address->iso2) . "'");
+		}
+
+		if (!empty($country_qry->num_rows)) {
+			$user['country']      = $country_qry->row['name'];
+			$user['country_id']   = $country_qry->row['country_id'];
+		} else {
+			$user['country']      = (string)$order->address->iso2;
+			$user['country_id']   = '';
+		}
+
+		$user['email']  = (string)$order->user->email;
+		$user['id']     = $this->openbay->getUserByEmail($user['email']);
 
 		$currency           = $this->model_localisation_currency->getCurrencyByCode($this->config->get('openbay_def_currency'));
 		$address_format     = $this->model_openbay_ebay_order->getCountryAddressFormat((string)$order->address->iso2);
@@ -421,7 +438,6 @@ class ModelOpenbayEbayOpenbay extends Model{
 			UPDATE `" . DB_PREFIX . "order`
 			SET
 			   `customer_id`              = '" . (int)$user['id'] . "',
-			   `customer_group_id`        = '" . (int)$this->config->get('openbay_def_customer_grp') . "',
 			   `firstname`                = '" . $this->db->escape($user['fname']) . "',
 			   `lastname`                 = '" . $this->db->escape($user['lname']) . "',
 			   `email`                    = '" . $this->db->escape($order->user->email) . "',
@@ -546,54 +562,6 @@ class ModelOpenbayEbayOpenbay extends Model{
 		foreach ($data['totals'] as $total) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "order_total` SET `order_id` = '" . (int)$order_id . "', `code` = '" . $this->db->escape($total['code']) . "', `title` = '" . $this->db->escape($total['title']) . "', `value` = '" . (double)$total['value'] . "', `sort_order` = '" . (int)$total['sort_order'] . "'");
 		}
-	}
-
-	private function handleUserAccount($order) {
-		$name_parts     = $this->openbay->splitName((string)$order->address->name);
-		$user           = array();
-		$user['fname']  = $name_parts['firstname'];
-		$user['lname']  = $name_parts['surname'];
-
-		/** get the iso2 code from the data and pull out the correct country for the details. */
-		if (!empty($order->address->iso2)) {
-			$country_qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `iso_code_2` = '" . $this->db->escape($order->address->iso2) . "'");
-		}
-
-		if (!empty($country_qry->num_rows)) {
-			$user['country']      = $country_qry->row['name'];
-			$user['country_id']   = $country_qry->row['country_id'];
-		} else {
-			$user['country']      = (string)$order->address->iso2;
-			$user['country_id']   = '';
-		}
-
-		$user['email']  = (string)$order->user->email;
-		$user['id']     = $this->openbay->getUserByEmail($user['email']);
-
-		if ($user['id'] != false) {
-			$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET
-								`firstname`             = '" . $this->db->escape($name_parts['firstname']) . "',
-								`lastname`              = '" . $this->db->escape($name_parts['surname']) . "',
-								`telephone`             = '" . $this->db->escape(str_replace(array(' ', '+', '-'), '', $order->address->phone)) . "',
-								`status`                = '1'
-							 WHERE `customer_id`        = '" . (int)$user['id'] . "'");
-		} else {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "customer` SET
-								`store_id`              = '" . (int)$this->config->get('config_store_id') . "',
-								`firstname`             = '" . $this->db->escape($name_parts['firstname']) . "',
-								`lastname`              = '" . $this->db->escape($name_parts['surname']) . "',
-								`email`                 = '" . $this->db->escape($user['email']) . "',
-								`telephone`             = '" . $this->db->escape(str_replace(array(' ', '+', '-'), '', $order->address->phone)) . "',
-								`password`              = '" . $this->db->escape(md5($order->user->userid)) . "',
-								`newsletter`            = '0',
-								`customer_group_id`     = '" . (int)$this->config->get('openbay_def_customer_grp') . "',
-								`approved`              = '1',
-								`status`                = '1',
-								`date_added`            = NOW()");
-			$user['id'] = $this->db->getLastId();
-		}
-
-		return $user;
 	}
 
 	private function externalApplicationNotify($order_id) {

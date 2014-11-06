@@ -178,8 +178,9 @@ class ModelOpenbayEbayOrder extends Model{
 		return $status;
 	}
 
-	public function hasUser($order_id) {
-		$query = $this->db->query("SELECT `customer_id` FROM `" . DB_PREFIX . "order` WHERE `order_id` = '" . (int)$order_id . "'");
+	public function hasAddress($order_id) {
+		// check if the first name, address 1 and country are set
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE `order_id` = '" . (int)$order_id . "' AND `payment_firstname` != '' AND `payment_address_1` != '' AND `payment_country` != ''");
 
 		if ($query->num_rows == 0 || (isset($query->row['customer_id']) && $query->row['customer_id'] == 0)) {
 			return false;
@@ -249,9 +250,8 @@ class ModelOpenbayEbayOrder extends Model{
 	}
 
 	public function confirm($order_id, $order_status_id, $comment = '') {
-
-		$order_info     = $this->model_checkout_order->getOrder($order_id);
-		$notify         = $this->config->get('openbaypro_confirm_notify');
+		$order_info = $this->model_checkout_order->getOrder($order_id);
+		$notify = $this->config->get('openbaypro_confirm_notify');
 
 		if ($order_info && !$order_info['order_status_id']) {
 			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");

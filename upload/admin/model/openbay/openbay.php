@@ -4,6 +4,8 @@ class ModelOpenbayOpenbay extends Model {
 	private $error;
 
 	public function updateV2Test() {
+		$this->error = array();
+
 		$this->openbay->log('Starting update test');
 
 		$web_root = preg_replace('/system\/$/', '', DIR_SYSTEM);
@@ -142,19 +144,41 @@ class ModelOpenbayOpenbay extends Model {
 	}
 
 	public function updateV2Extract() {
+		$this->error = array();
+
 		$web_root = preg_replace('/system\/$/', '', DIR_SYSTEM);
 
-		$zip = new ZipArchive();
+		if (!function_exists("exception_error_handler")) {
+			function exception_error_handler($errno, $errstr, $errfile, $errline ) {
+				throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+			}
+		}
 
-		if ($zip->open($web_root . 'system/download/openbaypro_update.zip')) {
-			$zip->extractTo($web_root);
-			$zip->close();
+		set_error_handler('exception_error_handler');
 
+		try {
+			$zip = new ZipArchive();
+
+			if ($zip->open($web_root . 'system/download/openbaypro_update.zip')) {
+				$zip->extractTo($web_root);
+				$zip->close();
+			} else {
+				$this->openbay->log('Unable to extract update files');
+
+				$this->error[] = $this->language->get('text_fail_patch');
+			}
+		} catch(ErrorException $ex) {
+			$this->openbay->log('Unable to extract update files');
+			$this->error[] = $ex->getMessage();
+		}
+
+		// reset to the OC error handler
+		restore_error_handler();
+
+		if (!$this->error) {
 			return array('error' => 0, 'response' => '', 'percent_complete' => 80, 'status_message' => $this->language->get('text_running_patch'));
 		} else {
-			$this->openbay->log('Unable to extract update files');
-
-			return array('error' => 1, 'response' => $this->language->get('text_fail_patch'));
+			return array('error' => 1, 'response' => $this->error);
 		}
 	}
 

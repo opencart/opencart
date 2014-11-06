@@ -1007,7 +1007,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->load->model('openbay/openbay');
 		$this->load->model('localisation/order_status');
 
-		$data = $this->load->language('extension/openbay_order');
+		$data = $this->load->language('openbay/openbay_order');
 
 		$order_statuses = $this->model_localisation_order_status->getOrderStatuses();
 		$status_mapped = array();

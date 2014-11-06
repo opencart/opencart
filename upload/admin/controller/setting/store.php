@@ -406,6 +406,11 @@ class ControllerSettingStore extends Controller {
 			'href' => $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_settings'),
+			'href' => $this->url->link('setting/store/edit', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], 'SSL')
+		);
+
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
 

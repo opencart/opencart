@@ -1,6 +1,6 @@
 # OpenCart 2.0 change log
 
-## v2.0.0.1 (Pending)
+## v2.0.1.0 (Pending - changed from 2.0.0.1)
 #### Bugs fixed
 * Changed namespace issues in DB driver files.
 * Added missing text_edit string in the settings area.
@@ -30,3 +30,4 @@
 
 #### Added
 * Check for URL alias #1915 (https://github.com/opencart/opencart/commit/69d6252f4157faf207e3db0504de20b34eab58ef)
+* Latest OpenBay Pro release.

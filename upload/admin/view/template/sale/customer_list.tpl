@@ -98,7 +98,7 @@
               <div class="form-group">
                 <label class="control-label" for="input-date-added"><?php echo $entry_date_added; ?></label>
                 <div class="input-group date">
-                  <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $entry_date_added; ?>" data-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
+                  <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $entry_date_added; ?>" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
                   <span class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </span></div>
@@ -161,7 +161,7 @@
                   <td class="text-left"><?php echo $customer['status']; ?></td>
                   <td class="text-left"><?php echo $customer['ip']; ?></td>
                   <td class="text-left"><?php echo $customer['date_added']; ?></td>
-                  <td class="text-right"><?php if ($customer['approve']) { ; ?>
+                  <td class="text-right"><?php if ($customer['approve']) { ?>
                     <a href="<?php echo $customer['approve']; ?>" data-toggle="tooltip" title="<?php echo $button_approve; ?>" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i></a>
                     <?php } else { ?>
                     <button type="button" class="btn btn-success" disabled><i class="fa fa-thumbs-o-up"></i></button>
@@ -175,7 +175,7 @@
                         <?php } ?>
                       </ul>
                     </div>
-                    <?php if ($customer['unlock']) { ; ?>
+                    <?php if ($customer['unlock']) { ?>
                     <a href="<?php echo $customer['unlock']; ?>" data-toggle="tooltip" title="<?php echo $button_unlock; ?>" class="btn btn-warning"><i class="fa fa-unlock"></i></a>
                     <?php } else { ?>
                     <button type="button" class="btn btn-warning" disabled><i class="fa fa-unlock"></i></button>

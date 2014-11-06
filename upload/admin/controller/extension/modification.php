@@ -105,6 +105,13 @@ class ControllerExtensionModification extends Controller {
 
 			// Load the default modification XML
 			$xml[] = file_get_contents(DIR_SYSTEM . 'modification.xml');
+			
+			// This is purly for developers so they can run mods directly and have them run without upload sfter each change.
+			$files = glob(DIR_SYSTEM . '*.ocmod.xml');
+
+			foreach ($files as $file) {
+				$xml[] = file_get_contents($file);
+			}
 
 			// Get the default modification file
 			$results = $this->model_extension_modification->getModifications();
@@ -232,7 +239,7 @@ class ControllerExtensionModification extends Controller {
 										$add = explode("\n", $add);
 
 										// Check if using indexes
-										if ($index) {
+										if ($index !== '') {
 											$indexes = explode(',', $index);
 										} else {
 											$indexes = array();
@@ -264,7 +271,11 @@ class ControllerExtensionModification extends Controller {
 												switch ($position) {
 													default:
 													case 'replace':
-														array_splice($lines, $line_id + $offset, count($add) + abs($offset), $add);
+														if ($offset < 0) {
+															array_splice($lines, $line_id + $offset, count($add) + abs($offset), $add);
+														} else {
+															array_splice($lines, $line_id, count($add) + abs($offset), $add);
+														}
 														break;
 													case 'before':
 														array_splice($lines, $line_id - $offset, 0, $add);

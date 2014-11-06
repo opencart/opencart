@@ -16,14 +16,14 @@
       <div class="row">
         <div class="col-sm-5">
           <div class="input-group date">
-            <input type="text" class="form-control" id="input-date-start" data-format="YYYY-MM-DD" placeholder="<?php echo $entry_date_start; ?>" value="<?php echo $date_start; ?>" name="filter_date_start">
+            <input type="text" class="form-control" id="input-date-start" data-date-format="YYYY-MM-DD" placeholder="<?php echo $entry_date_start; ?>" value="<?php echo $date_start; ?>" name="filter_date_start">
             <span class="input-group-btn">
             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
             </span> </div>
         </div>
         <div class="col-sm-5">
           <div class="input-group date">
-            <input type="text" class="form-control" id="input-date-end" data-format="YYYY-MM-DD" placeholder="<?php echo $entry_date_end; ?>" value="<?php echo $date_end; ?>" name="filter_date_end">
+            <input type="text" class="form-control" id="input-date-end" data-date-format="YYYY-MM-DD" placeholder="<?php echo $entry_date_end; ?>" value="<?php echo $date_end; ?>" name="filter_date_end">
             <span class="input-group-btn">
             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
             </span> </div>

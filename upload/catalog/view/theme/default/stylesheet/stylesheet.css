@@ -696,7 +696,7 @@ h2.price {
     }
 }
 
-.carousel {
+.owl-carousel {
 	margin: 0 0 60px; 
 	background: #fff; 
 	border: 4px solid #fff; 
@@ -712,54 +712,44 @@ h2.price {
 	zoom: 1;
 }
 
-.carousel .left {
+.owl-buttons {
+	
+}
+.owl-controls .owl-prev {
 	background: none;
 	left: -50px;
 }
-
-.carousel .right {
+.owl-controls .owl-next {
 	background: none;
 	right: -50px; 
 	text-align: right;
 }
 
-.carousel:hover .left { 
+.owl-controls:hover .owl-prev { 
 	opacity: 0.7; 
 	left: 10px; 
 }
 
-.carousel:hover .right { 
+.owl-controls:hover .owl-next { 
 	opacity: 0.7; 
 	right: 10px; 
 }
 
-.carousel-control {
-	text-decoration:none; 
-	display: block; 
-	width: 40px; 
-	height: 40px; 
-	margin: -20px 0 0; 
-	position: absolute; 
-	top: 50%; 
-	z-index: 10; 
-	overflow: hidden; 
-	opacity: 0; 
-	cursor: pointer; 
-	color: rgba(0,0,0,0.8); 
-	text-shadow: 1px 1px 0 rgba(255,255,255,0.3); 
-	-webkit-transition: all .3s ease; 
-	-moz-transition: all .3s ease; 
-	transition: all .3s ease;
+.owl-controls i {	
+	font-size: 40px;
 }
 
-.carousel-control i {
-	font-size: 40px;	
+.owl-page {
+	color: #000;
 }
-.carousel-indicators i {
 
+.owl-controls {
+	overflow: show;
+	width: 100%;
+	height: 100%;
 }
-	
 /*
+
 .carousel-control {width: 100%; position: absolute; bottom: -40px; text-align: center;}
 .carousel-control li {margin: 0 6px; display: inline-block; zoom: 1; *display: inline;}
 .carousel-control li a {width: 11px; height: 11px; display: block; background: #666; background: rgba(0,0,0,0.5); cursor: pointer; text-indent: -9999px; -webkit-border-radius: 20px; -moz-border-radius: 20px; -o-border-radius: 20px; border-radius: 20px; -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.3); -moz-box-shadow: inset 0 0 3px rgba(0,0,0,0.3); -o-box-shadow: inset 0 0 3px rgba(0,0,0,0.3); box-shadow: inset 0 0 3px rgba(0,0,0,0.3); }

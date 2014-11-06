@@ -14,6 +14,7 @@
 * FTP settings variable correction #1930 (https://github.com/opencart/opencart/commit/17e450971396ecfa2e93eb513b79c7f0fdb6c38b)
 * Fixed Secure Trading image in gateway list.
 * Fixed missing review_guest check in product.tpl
+* Added formatting to number format in pp express to ensure no comma is added for items over 1000 #2216
 
 #### Changes
 * Changed DB connection error response during install when using mysqli to use native message from mysqli

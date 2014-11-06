@@ -322,15 +322,19 @@
   $('#update-v2').bind('click', function(e) {
     e.preventDefault();
 
-    $('#update-error').hide();
-    $('#update-v2-box').hide();
-    $('#update-v2-progress').fadeIn();
-    $('#update-text').text('<?php echo $text_check_server; ?>');
-    $('#loading-bar').css('width', '5%');
+    var text_confirm = confirm('<?php echo $text_confirm_backup; ?>');
 
-    var beta = $('#update-v2-beta :selected').val();
+    if (text_confirm == true) {
+      $('#update-error').hide();
+      $('#update-v2-box').hide();
+      $('#update-v2-progress').fadeIn();
+      $('#update-text').text('<?php echo $text_check_server; ?>');
+      $('#loading-bar').css('width', '5%');
 
-    updateCheckServer(beta);
+      var beta = $('#update-v2-beta :selected').val();
+
+      updateCheckServer(beta);
+    }
   });
 
   function updateCheckServer(beta) {

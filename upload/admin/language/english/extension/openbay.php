@@ -57,6 +57,7 @@ $_['text_updated_ok']					= 'Update complete, installed version is now ';
 $_['text_check_server']					= 'Checking server requirements';
 $_['text_version_ok']					= 'Software is already up to date, installed version is ';
 $_['text_remove_files']					= 'Removing files no longer required';
+$_['text_confirm_backup']				= 'Ensure that you have a full backup before continuing';
 
 // Column
 $_['column_name']          				= 'Plugin name';

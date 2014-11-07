@@ -1,7 +1,7 @@
 <?php
 class ModelCatalogReview extends Model {
 	public function addReview($data) {
-		$this->event->trigger('pre.admin.add.review', $data);
+		$this->event->trigger('pre.review.add', $data);
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['author']) . "', product_id = '" . (int)$data['product_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
 
@@ -9,29 +9,29 @@ class ModelCatalogReview extends Model {
 
 		$this->cache->delete('product');
 
-		$this->event->trigger('post.admin.add.review', $review_id);
+		$this->event->trigger('post.review.add', $review_id);
 
 		return $review_id;
 	}
 
 	public function editReview($review_id, $data) {
-		$this->event->trigger('pre.admin.edit.review', $data);
+		$this->event->trigger('pre.review.edit', $data);
 
 		$this->db->query("UPDATE " . DB_PREFIX . "review SET author = '" . $this->db->escape($data['author']) . "', product_id = '" . (int)$data['product_id'] . "', text = '" . $this->db->escape(strip_tags($data['text'])) . "', rating = '" . (int)$data['rating'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE review_id = '" . (int)$review_id . "'");
 
 		$this->cache->delete('product');
 
-		$this->event->trigger('post.admin.edit.review', $review_id);
+		$this->event->trigger('post.review.edit', $review_id);
 	}
 
 	public function deleteReview($review_id) {
-		$this->event->trigger('pre.admin.delete.review', $review_id);
+		$this->event->trigger('pre.review.delete', $review_id);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "review WHERE review_id = '" . (int)$review_id . "'");
 
 		$this->cache->delete('product');
 
-		$this->event->trigger('post.admin.delete.review', $review_id);
+		$this->event->trigger('post.review.delete', $review_id);
 	}
 
 	public function getReview($review_id) {

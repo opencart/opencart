@@ -29,7 +29,7 @@ class ModelToolBackup extends Model {
 	}
 
 	public function backup($tables) {
-		$this->event->trigger('pre.admin.backup', $tables);
+		$this->event->trigger('pre.backup', $tables);
 
 		$output = '';
 
@@ -77,7 +77,7 @@ class ModelToolBackup extends Model {
 			}
 		}
 
-		$this->event->trigger('post.admin.backup');
+		$this->event->trigger('post.backup');
 
 		return $output;
 	}

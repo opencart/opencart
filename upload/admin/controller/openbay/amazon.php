@@ -4,7 +4,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->load->model('openbay/amazon');
 		$this->load->model('setting/setting');
 		$this->load->model('extension/extension');
-		$this->load->model('tool/event');
+		$this->load->model('extension/event');
 
 		$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'openbay/amazon_listing');
 		$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'openbay/amazon_listing');
@@ -18,7 +18,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->load->model('openbay/amazon');
 		$this->load->model('setting/setting');
 		$this->load->model('extension/extension');
-		$this->load->model('tool/event');
+		$this->load->model('extension/event');
 
 		$this->model_openbay_amazon->uninstall();
 		$this->model_extension_extension->uninstall('openbay', $this->request->get['extension']);
@@ -119,6 +119,7 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$xml = $this->openbay->amazon->getStockUpdatesStatus($request_arg);
 		$xml_object = simplexml_load_string($xml);
+		
 		$data['table_data'] = array();
 
 		if ($xml_object !== false) {

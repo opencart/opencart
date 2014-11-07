@@ -5,7 +5,7 @@ class ControllerOpenbayEbay extends Controller {
 		$this->load->model('openbay/ebay');
 		$this->load->model('setting/setting');
 		$this->load->model('extension/extension');
-		$this->load->model('tool/event');
+		$this->load->model('extension/event');
 
 		$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'openbay/ebay_profile');
 		$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'openbay/ebay_profile');
@@ -19,7 +19,7 @@ class ControllerOpenbayEbay extends Controller {
 		$this->load->model('openbay/ebay');
 		$this->load->model('setting/setting');
 		$this->load->model('extension/extension');
-		$this->load->model('tool/event');
+		$this->load->model('extension/event');
 
 		$this->model_openbay_ebay->uninstall();
 		$this->model_extension_extension->uninstall('openbay', $this->request->get['extension']);

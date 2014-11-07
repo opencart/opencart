@@ -607,9 +607,9 @@ h2.price {
 }
 
 @media (max-width: 768px) {
-.product-list .product-thumb .button-group {
-	border-left: none;
-}
+	.product-list .product-thumb .button-group {
+		border-left: none;
+	}
 }
 .product-thumb .button-group button {
 	width: 60%;
@@ -634,14 +634,14 @@ h2.price {
 	cursor: pointer;
 }
 @media (max-width: 1200px) {
-.product-thumb .button-group button, .product-thumb .button-group button + button {
-	width: 33.33%;
-}
+	.product-thumb .button-group button, .product-thumb .button-group button + button {
+		width: 33.33%;
+	}
 }
 @media (max-width: 767px) {
-.product-thumb .button-group button, .product-thumb .button-group button + button {
-	width: 33.33%;
-}
+	.product-thumb .button-group button, .product-thumb .button-group button + button {
+		width: 33.33%;
+	}
 }
 
 
@@ -677,9 +677,6 @@ h2.price {
 	margin-left: 20px;
 }
 
-
-
-
 /* fixed colum left + content + right*/
 @media (min-width: 768px) {
     #column-left  .product-layout .col-md-3{
@@ -695,64 +692,3 @@ h2.price {
        width: 100%;
     }
 }
-
-.owl-carousel {
-	margin: 0 0 60px; 
-	background: #fff; 
-	border: 4px solid #fff; 
-	position: relative; 
-	-webkit-border-radius: 4px; 
-	-moz-border-radius: 4px; 
-	-o-border-radius: 4px; 
-	border-radius: 4px; 
-	-webkit-box-shadow: 0 1px 4px rgba(0,0,0,.2); 
-	-moz-box-shadow: 0 1px 4px rgba(0,0,0,.2); 
-	-o-box-shadow: 0 1px 4px rgba(0,0,0,.2); 
-	box-shadow: 0 1px 4px rgba(0,0,0,.2); 
-	zoom: 1;
-}
-
-.owl-buttons {
-	
-}
-.owl-controls .owl-prev {
-	background: none;
-	left: -50px;
-}
-.owl-controls .owl-next {
-	background: none;
-	right: -50px; 
-	text-align: right;
-}
-
-.owl-controls:hover .owl-prev { 
-	opacity: 0.7; 
-	left: 10px; 
-}
-
-.owl-controls:hover .owl-next { 
-	opacity: 0.7; 
-	right: 10px; 
-}
-
-.owl-controls i {	
-	font-size: 40px;
-}
-
-.owl-page {
-	color: #000;
-}
-
-.owl-controls {
-	overflow: show;
-	width: 100%;
-	height: 100%;
-}
-/*
-
-.carousel-control {width: 100%; position: absolute; bottom: -40px; text-align: center;}
-.carousel-control li {margin: 0 6px; display: inline-block; zoom: 1; *display: inline;}
-.carousel-control li a {width: 11px; height: 11px; display: block; background: #666; background: rgba(0,0,0,0.5); cursor: pointer; text-indent: -9999px; -webkit-border-radius: 20px; -moz-border-radius: 20px; -o-border-radius: 20px; border-radius: 20px; -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.3); -moz-box-shadow: inset 0 0 3px rgba(0,0,0,0.3); -o-box-shadow: inset 0 0 3px rgba(0,0,0,0.3); box-shadow: inset 0 0 3px rgba(0,0,0,0.3); }
-.carousel-control li a:hover { background: #333; background: rgba(0,0,0,0.7); }
-.carousel-control li a.flex-active { background: #000; background: rgba(0,0,0,0.9); cursor: default; }
-*/

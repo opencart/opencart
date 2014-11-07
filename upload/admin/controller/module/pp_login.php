@@ -315,14 +315,14 @@ class ControllerModulePPLogin extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('tool/event');
+		$this->load->model('extension/event');
 
-		$this->model_tool_event->addEvent('pp_login', 'post.customer.logout', 'module/pp_login/logout');
+		$this->model_extension_event->addEvent('pp_login', 'post.customer.logout', 'module/pp_login/logout');
 	}
 
 	public function uninstall() {
-		$this->load->model('tool/event');
+		$this->load->model('extension/event');
 
-		$this->model_tool_event->deleteEvent('pp_login');
+		$this->model_extension_event->deleteEvent('pp_login');
 	}
 }

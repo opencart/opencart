@@ -90,7 +90,7 @@ $('input[name=\'product\']').autocomplete({
 	'source': function(request, response) {
 	//	var test = $('input[name=\'product\']');
 		
-		alert($(this).attr('name'));
+		alert(this.element.attr('name'));
 		
 		$.ajax({
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),

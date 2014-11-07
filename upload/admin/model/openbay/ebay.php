@@ -219,7 +219,7 @@ class ModelOpenbayEbay extends Model{
 				) ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
 
 		// register the event triggers
-		$this->model_tool_event->addEvent('openbaypro_ebay', 'post.order.add', 'openbay/ebay/eventAddOrder');
+		$this->model_extension_event->addEvent('openbaypro_ebay', 'post.order.add', 'openbay/ebay/eventAddOrder');
 	}
 
 	public function uninstall() {
@@ -235,7 +235,7 @@ class ModelOpenbayEbay extends Model{
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_profile`;");
 
 		// remove the event triggers
-		$this->model_tool_event->deleteEvent('openbaypro_ebay');
+		$this->model_extension_event->deleteEvent('openbaypro_ebay');
 	}
 
 	public function totalLinked() {

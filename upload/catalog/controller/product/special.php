@@ -82,7 +82,8 @@ class ControllerProductSpecial extends Controller {
 		$data['button_list'] = $this->language->get('button_list');
 		$data['button_grid'] = $this->language->get('button_grid');
 		$data['button_continue'] = $this->language->get('button_continue');
-
+		$data['continue'] = $this->language->get('continue');
+		
 		$data['compare'] = $this->url->link('product/compare');
 
 		$data['products'] = array();

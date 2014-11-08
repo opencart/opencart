@@ -16,8 +16,15 @@ class ControllerModuleFeatured extends Controller {
 		$this->load->model('tool/image');
 
 		$data['products'] = array();
-
-		$products = explode(',', $this->config->get('featured_product'));
+		
+		if ($this->config->has('featured_module')) {
+			$modules = $this->config->get('featured_module');
+		} else {
+			$modules = array();
+		}
+		foreach ($modules as $key => $module) {
+			$products = explode(',', $module['product']);
+		}
 
 		if (empty($setting['limit'])) {
 			$setting['limit'] = 4;

@@ -39,6 +39,46 @@
               </select>
             </div>
           </div>
+          <script type="text/javascript"><!--
+          function enableAutocomplete(token) {
+            $('input[name=\'product' + token + '\']').autocomplete({
+              'source': function(request, response) {
+                $.ajax({
+                  url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+                  dataType: 'json',      
+                  success: function(json) {
+                    response($.map(json, function(item) {
+                      return {
+                        label: item['name'],
+                        value: item['product_id']
+                      }
+                    }));
+                  }
+                });
+              },
+              'select': function(item) {
+                $('#product-item' + token + '-' + item['value']).remove();
+                $('#product-list' + token).append('<div id="product-item' + token + '-' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" value="' + item['value'] + '" /></div>');  
+            
+                data = $.map($('#product-list' + token + ' input'), function(element) {
+                return $(element).attr('value');
+                });
+              
+                $('input[name=\'featured_module[' + token + '][product]\']').val(data.join());  
+              }  
+            });
+          
+            $('#product-list' + token).delegate('.fa-minus-circle', 'click', function() {
+              $(this).parent().remove();
+            
+              data = $.map($('#product-list' + token + ' input'), function(element) {
+                return $(element).attr('value');
+              });
+            
+              $('input[name=\'featured_module[' + token + '][product]\']').val(data.join());  
+            });
+          }
+          //--></script> 
           <table id="module" class="table table-striped table-bordered table-hover">
             <thead>
               <tr>
@@ -54,15 +94,20 @@
               <?php foreach ($featured_modules as $featured_module) { ?>
               <tr id="module-row<?php echo $featured_module['key']; ?>">
                 <td class="text-right"><?php echo $module_row; ?></td>
-                <td class="text-left"><input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product<?php echo $featured_module['key']; ?>" class="form-control" />
-                  <div class="well well-sm" style="height: 150px; overflow: auto;">
+                <td class="text-left"><input type="text" name="product<?php echo $featured_module['key']; ?>" value="" placeholder="<?php echo $entry_product; ?>" id="input-product<?php echo $featured_module['key']; ?>" class="form-control" />
+                  <div id="product-list<?php echo $featured_module['key']; ?>" class="well well-sm" style="height: 150px; overflow: auto;">
+                    <?php $products = ''; ?>
                     <?php foreach ($featured_module['product'] as $product) { ?>
-                    <div><i class="fa fa-minus-circle"></i> <?php echo $product['name']; ?>
+                    <?php 
+                      if ($products == ''){ $products = $product['product_id']; }
+                      else { $products .= ',' . $product['product_id']; }
+                    ?>
+                    <div id="product-item<?php echo $featured_module['key']; ?>-<?php echo $product['product_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product['name']; ?>
                       <input type="hidden" value="<?php echo $product['product_id']; ?>" />
                     </div>
                     <?php } ?>
                   </div>
-                  <input type="hidden" name="featured_module[<?php echo $featured_module['key']; ?>][product]" value="<?php echo $product['product']; ?>" /></td>
+                  <input type="hidden" name="featured_module[<?php echo $featured_module['key']; ?>][product]" value="<?php echo $products; ?>" /></td>
                 <td class="text-left"><input type="text" name="featured_module[<?php echo $featured_module['key']; ?>][limit]" value="<?php echo $featured_module['limit']; ?>" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>
                 <td class="text-left"><input type="text" name="featured_module[<?php echo $featured_module['key']; ?>][width]" value="<?php echo $featured_module['width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
                   <input type="text" name="featured_module[<?php echo $featured_module['key']; ?>][height]" value="<?php echo $featured_module['height']; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
@@ -70,6 +115,9 @@
                   <div class="text-danger"><?php echo $error_image[$featured_module['key']]; ?></div>
                   <?php } ?></td>
                 <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $featured_module['key']; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                <script type="text/javascript"><!--
+      enableAutocomplete('<?php echo $featured_module['key']; ?>');
+                //--></script>        
               </tr>
               <?php $module_row++; ?>
               <?php } ?>
@@ -85,64 +133,25 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript"><!--
-$('input[name=\'product\']').autocomplete({
-	'source': function(request, response) {
-	//	var test = $('input[name=\'product\']');
-		
-		alert(this.element.attr('name'));
-		
-		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-			dataType: 'json',			
-			success: function(json) {
-				response($.map(json, function(item) {
-					return {
-						label: item['name'],
-						value: item['product_id']
-					}
-				}));
-			}
-		});
-	},
-	'select': function(item) {
-		alert($(test).data('name'));
-		
-		$(this).parent().find('input[value=\'' + item['value'] + '\']').parent().remove();
-		
-		$(this).parent().find('.well').append('<div><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" value="' + item['value'] + '" /></div>');	
-
-		data = $.map($(this).parent().find('.well input'), function(element) {
-			//return $(element).attr('value');
-		});
-		
-		$(this).parent().find('input[name^=\'featured_product\']').attr('value', data.join());	
-	}	
-});
-
-$('#featured-product').delegate('.fa-minus-circle', 'click', function() {
-	$(this).parent().remove();
-
-	data = $.map($('#featured-product input'), function(element) {
-		return $(element).attr('value');
-	});
-					
-	$('input[name=\'featured_product\']').attr('value', data.join());	
-});
-//--></script> 
+ 
   <script type="text/javascript"><!--
 function addModule() {
-	var token = Math.random().toString(36).substr(2);
-			
-	html  = '<tr id="module-row' + token + '">';
-	html += '  <td class="text-right">' + ($('tbody tr').length + 1) + '</td>';
-	
-	html += '  <td class="text-left"><input type="text" name="featured_module[' + token + '][limit]" value="5" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><input type="text" name="featured_module[' + token + '][width]" value="200" placeholder="<?php echo $entry_width; ?>" class="form-control" /> <input type="text" name="featured_module[' + token + '][height]" value="200" placeholder="<?php echo $entry_height; ?>" class="form-control" /></td>';	
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + token + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
-	html += '</tr>';
-	
-	$('#module tbody').append(html);
+  var token = Math.random().toString(36).substr(2);
+      
+  html  = '<tr id="module-row' + token + '">';
+  html += '  <td class="text-right">' + ($('tbody tr').length + 1) + '</td>';
+  html += '  <td class="text-left"><input type="text" name="product' + token +'" value="" placeholder="<?php echo $entry_product; ?>" id="input-product' + token + '" class="form-control" />';
+    html += '    <div id="product-list' + token + '" class="well well-sm" style="height: 150px; overflow: auto;"> </div>';
+    html += '      <input type="hidden" name="featured_module[' + token + '][product]" value="" /></td>';
+  html += '  <td class="text-left"><input type="text" name="featured_module[' + token + '][limit]" value="5" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>';
+  html += '  <td class="text-left"><input type="text" name="featured_module[' + token + '][width]" value="200" placeholder="<?php echo $entry_width; ?>" class="form-control" /> <input type="text" name="featured_module[' + token + '][height]" value="200" placeholder="<?php echo $entry_height; ?>" class="form-control" /></td>';  
+  html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + token + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+  html += '</tr>';
+  
+  $('#module tbody').append(html);
+ 
+ enableAutocomplete(token); 
+ 
 }
 //--></script></div>
 <?php echo $footer; ?>

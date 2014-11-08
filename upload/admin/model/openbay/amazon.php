@@ -82,7 +82,7 @@ class ModelOpenbayAmazon extends Model {
 			) DEFAULT COLLATE=utf8_general_ci;");
 
 		// add the event triggers
-		$this->model_tool_event->addEvent('openbaypro_amazon', 'post.order.add', 'openbay/amazon/eventAddOrder');
+		$this->model_extension_event->addEvent('openbaypro_amazon', 'post.order.add', 'openbay/amazon/eventAddOrder');
 	}
 
 	public function uninstall() {

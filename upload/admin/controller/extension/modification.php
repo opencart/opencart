@@ -105,6 +105,13 @@ class ControllerExtensionModification extends Controller {
 
 			// Load the default modification XML
 			$xml[] = file_get_contents(DIR_SYSTEM . 'modification.xml');
+			
+			// This is purly for developers so they can run mods directly and have them run without upload sfter each change.
+			$files = glob(DIR_SYSTEM . '*.ocmod.xml');
+
+			foreach ($files as $file) {
+				$xml[] = file_get_contents($file);
+			}
 
 			// Get the default modification file
 			$results = $this->model_extension_modification->getModifications();
@@ -239,24 +246,24 @@ class ControllerExtensionModification extends Controller {
 										}
 										
 										// Get all the matches
-										$j = 0;
+										$i = 0;
 										
 										$lines = explode("\n", $modification[$key]);
 
-										for ($i = 0; $i < count($lines); $i++) {
+										foreach ($lines as $line_id => $line) {
 											// Status
 											$match = false;
 											
 											// Check to see if the line matches the search code.
-											if (stripos($lines[$i], $search) !== false) {
+											if (stripos($line, $search) !== false) {
 												// If indexes are not used then just set the found status to true.
 												if (!$indexes) {
 													$match = true;
-												} elseif (in_array($j, $indexes)) {
+												} elseif (in_array($i, $indexes)) {
 													$match = true;
 												}
 												
-												$j++;
+												$i++;
 											}
 											
 											// Now for replacing or adding to the matched elements
@@ -264,18 +271,22 @@ class ControllerExtensionModification extends Controller {
 												switch ($position) {
 													default:
 													case 'replace':
-														array_splice($lines, $i + $offset, count($add) + abs($offset), $add);
+														if ($offset < 0) {
+															array_splice($lines, $line_id + $offset, count($add) + abs($offset), $add);
+														} else {
+															array_splice($lines, $line_id, count($add) + abs($offset), $add);
+														}
 														break;
 													case 'before':
-														array_splice($lines, $i - $offset, 0, $add);
+														array_splice($lines, $line_id - $offset, 0, $add);
 														break;
 													case 'after':
-														array_splice($lines, ($i + 1) + $offset, 0, $add);
+														array_splice($lines, ($line_id + 1) + $offset, 0, $add);
 														break;
 												}
 												
 												// Log
-												$log[] = 'LINE: ' . $i;
+												$log[] = 'LINE: ' . $line_id;
 												
 												$status = true;										
 											}

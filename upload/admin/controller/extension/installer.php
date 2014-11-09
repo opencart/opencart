@@ -133,7 +133,8 @@ class ControllerExtensionInstaller extends Controller {
 							'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/ftp', 'token=' . $this->session->data['token'], 'SSL')),
 							'path' => $path
 						);
-
+						
+						// Send make and array of actions to carry out
 						while ($entry = zip_read($zip)) {
 							$zip_name = zip_entry_name($entry);
 
@@ -307,12 +308,6 @@ class ControllerExtensionInstaller extends Controller {
 
 							if (is_dir($file)) {
 								$list = ftp_nlist($connection, substr($destination, 0, strrpos($destination, '/')));
-								
-								echo substr($destination, 0, strrpos($destination, '/'));
-								
-								print_r($list);
-								
-								//array_walk($list, 'basename');
 								
 								if (!in_array($destination, $list)) {
 									if (!ftp_mkdir($connection, $destination)) {

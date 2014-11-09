@@ -272,9 +272,9 @@ class ControllerExtensionModification extends Controller {
 													default:
 													case 'replace':
 														if ($offset < 0) {
-															array_splice($lines, $line_id + $offset, count($add) + abs($offset), $add);
+															array_splice($lines, $line_id + $offset, abs($offset), $add);
 														} else {
-															array_splice($lines, $line_id, count($add) + abs($offset), $add);
+															array_splice($lines, $line_id, $offset, $add);
 														}
 														break;
 													case 'before':

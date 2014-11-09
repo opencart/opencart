@@ -274,7 +274,7 @@ class ControllerExtensionModification extends Controller {
 														if ($offset < 0) {
 															array_splice($lines, $line_id + $offset, abs($offset), $add);
 														} else {
-															array_splice($lines, $line_id, $offset, $add);
+															array_splice($lines, $line_id, $offset + 1, $add);
 														}
 														break;
 													case 'before':

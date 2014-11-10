@@ -87,10 +87,8 @@
   </div>
   <script type="text/javascript"><!--
 $('input[name=\'product\']').autocomplete({
-	'source': function(request, response) {
-	//	var test = $('input[name=\'product\']');$().attr('name')
-		
-		alert($(this).data('autocomplete'));
+	source: function(request, response) {
+		//alert($(this.element).attr('name'));
 		
 		$.ajax({
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
@@ -105,18 +103,16 @@ $('input[name=\'product\']').autocomplete({
 			}
 		});
 	},
-	'select': function(item) {
-		alert($(test).data('name'));
-		
+	select: function(item) {
 		$(this).parent().find('input[value=\'' + item['value'] + '\']').parent().remove();
 		
 		$(this).parent().find('.well').append('<div><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" value="' + item['value'] + '" /></div>');	
 
 		data = $.map($(this).parent().find('.well input'), function(element) {
-			//return $(element).attr('value');
+			return $(element).attr('value');
 		});
 		
-		$(this).parent().find('input[name^=\'featured_product\']').attr('value', data.join());	
+		$(this).parent().find('input[name^=\'featured_product\']').attr('value', data.join());
 	}	
 });
 

@@ -94,9 +94,7 @@ class ControllerModuleFeatured extends Controller {
 			$product_data = array();
 			
 			if (isset($module['product'])) {
-				$products = explode(',', $module['product']);
-				
-				foreach ($products as $product_id) {
+				foreach ($module['product'] as $product_id) {
 					$product_info = $this->model_catalog_product->getProduct($product_id);
 		
 					if ($product_info) {

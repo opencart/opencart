@@ -327,7 +327,7 @@ $(document).delegate('.agree', 'click', function(e) {
 	});
 });
 
-/* Autocomplete */
+// Autocomplete */
 (function($) {
 	$.fn.autocomplete = function(option) {
 		return this.each(function() {
@@ -338,16 +338,19 @@ $(document).delegate('.agree', 'click', function(e) {
 	
 			$(this).attr('autocomplete', 'off');
 			
+			// Focus
 			$(this).on('focus', function() {
 				this.request();
 			});
 			
+			// Blur
 			$(this).on('blur', function() {
 				setTimeout(function(object) {
 					object.hide();
 				}, 200, this);				
 			});
 			
+			// Keydown
 			$(this).on('keydown', function() {
 				switch(event.keyCode) {
 					case 27: // escape

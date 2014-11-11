@@ -173,7 +173,7 @@ function addModule() {
     html += '    <option value="column_left"><?php echo $text_column_left; ?></option>';
     html += '    <option value="column_right"><?php echo $text_column_right; ?></option>';
     html += '  </select></td>';
-	html += '  <td class="text-left"><input type="text" name="layout_module[' + module_row + '][sort_order]" value="0" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
+	html += '  <td class="text-left"><input type="text" name="layout_module[' + module_row + '][sort_order]" value="' + (module_row+1) + '" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + module_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 	

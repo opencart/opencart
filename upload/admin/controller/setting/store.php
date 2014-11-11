@@ -515,11 +515,11 @@ class ControllerSettingStore extends Controller {
 		}
 
 		if (isset($this->request->post['config_image'])) {
-			$data['image'] = $this->request->post['config_image'];
+			$data['config_image'] = $this->request->post['config_image'];
 		} elseif (isset($store_info['config_image'])) {
-			$data['image'] = $store_info['config_image'];
+			$data['config_image'] = $store_info['config_image'];
 		} else {
-			$data['image'] = '';
+			$data['config_image'] = '';
 		}
 
 		$this->load->model('tool/image');

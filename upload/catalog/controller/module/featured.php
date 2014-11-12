@@ -17,13 +17,11 @@ class ControllerModuleFeatured extends Controller {
 
 		$data['products'] = array();
 
-		$products = explode(',', $this->config->get('featured_product'));
-
-		if (empty($setting['limit'])) {
+		if (!$setting['limit']) {
 			$setting['limit'] = 4;
 		}
 
-		$products = array_slice($products, 0, (int)$setting['limit']);
+		$products = array_slice($setting['product'], 0, (int)$setting['limit']);
 
 		foreach ($products as $product_id) {
 			$product_info = $this->model_catalog_product->getProduct($product_id);

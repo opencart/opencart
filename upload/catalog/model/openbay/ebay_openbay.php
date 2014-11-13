@@ -50,7 +50,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 
 		$order_id = $this->model_openbay_ebay_order->find($order->smpId);
 
-		$created_hours = (int)$this->config->get('openbaypro_created_hours');
+		$created_hours = (int)$this->config->get('ebay_created_hours');
 		if ($created_hours == 0 || $created_hours == '') {
 			$created_hours = 24;
 		}
@@ -83,7 +83,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 				$this->model_openbay_ebay_order->update($order_id, $this->default_paid_id);
 				$this->model_openbay_ebay_order->updatePaymentDetails($order_id, $order);
 
-				if ($this->config->get('openbaypro_stock_allocate') == 1) {
+				if ($this->config->get('ebay_stock_allocate') == 1) {
 					$this->openbay->ebay->log('Stock allocation is set to allocate stock when an order is paid');
 					$this->model_openbay_ebay_order->addOrderLines($order, $order_id);
 					$this->externalApplicationNotify($order_id);
@@ -156,7 +156,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 					$this->openbay->ebay->log('Order ID: ' . $order_id . ' -> Paid');
 					$order_status_id = $this->default_paid_id;
 
-					if ($this->config->get('openbaypro_stock_allocate') == 1) {
+					if ($this->config->get('ebay_stock_allocate') == 1) {
 						$this->openbay->ebay->log('Stock allocation is set to allocate stock when an order is paid');
 						$this->model_openbay_ebay_order->addOrderLines($order, $order_id);
 						$this->externalApplicationNotify($order_id);
@@ -193,13 +193,13 @@ class ModelOpenbayEbayOpenbay extends Model{
 				}
 
 				// Admin Alert Mail
-				if ($this->config->get('openbaypro_confirmadmin_notify') == 1) {
+				if ($this->config->get('ebay_confirmadmin_notify') == 1) {
 					$this->openbay->newOrderAdminNotify($order_id, $order_status_id);
 				}
 			}
 		}
 
-		if ($this->config->get('openbaypro_stock_allocate') == 0) {
+		if ($this->config->get('ebay_stock_allocate') == 0) {
 			$this->openbay->ebay->log('Stock allocation is set to allocate stock when an item is bought');
 			$this->model_openbay_ebay_order->addOrderLines($order, $order_id);
 			$this->externalApplicationNotify($order_id);
@@ -224,11 +224,11 @@ class ModelOpenbayEbayOpenbay extends Model{
 		$this->load->model('localisation/currency');
 		$this->load->model('catalog/product');
 
-		$currency = $this->model_localisation_currency->getCurrencyByCode($this->config->get('openbay_def_currency'));
+		$currency = $this->model_localisation_currency->getCurrencyByCode($this->config->get('ebay_def_currency'));
 
-		if ($this->config->get('openbaypro_create_date') == 1) {
+		if ($this->config->get('ebay_create_date') == 1) {
 			$created_date_obj = new DateTime((string)$order->order->created);
-			$offset = ($this->config->get('openbaypro_time_offset') != '') ? (int)$this->config->get('openbaypro_time_offset') : (int)0;
+			$offset = ($this->config->get('ebay_time_offset') != '') ? (int)$this->config->get('ebay_time_offset') : (int)0;
 			$created_date_obj->modify($offset . ' hour');
 			$created_date = $created_date_obj->format('Y-m-d H:i:s');
 		} else {
@@ -415,14 +415,14 @@ class ModelOpenbayEbayOpenbay extends Model{
 		$user['email']  = (string)$order->user->email;
 		$user['id']     = $this->openbay->getUserByEmail($user['email']);
 
-		$currency           = $this->model_localisation_currency->getCurrencyByCode($this->config->get('openbay_def_currency'));
+		$currency           = $this->model_localisation_currency->getCurrencyByCode($this->config->get('ebay_def_currency'));
 		$address_format     = $this->model_openbay_ebay_order->getCountryAddressFormat((string)$order->address->iso2);
 
 		//try to get zone id - this will only work if the zone name and country id exist in the DB.
 		$zone_id = $this->openbay->getZoneId($order->address->state, $user['country_id']);
 
 		if (empty($address_format)) {
-			$address_format = (string)$this->config->get('openbay_default_addressformat');
+			$address_format = (string)$this->config->get('ebay_default_addressformat');
 		}
 
 		//try to get the friendly name for the shipping service

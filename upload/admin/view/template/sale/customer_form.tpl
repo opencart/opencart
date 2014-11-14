@@ -886,7 +886,7 @@ function country(element, index, zone_id) {
 
 				html = '<option value=""><?php echo $text_select; ?></option>';
 
-				if (json['zone']) {
+				if (json['zone'] != '') {
 					for (i = 0; i < json['zone'].length; i++) {
 						html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 

@@ -32,8 +32,8 @@
             <td class="text-right"><?php echo $column_action; ?></td>
           </tr>
         </thead>
-        <?php foreach ($products as $product) { ?>
         <tbody id="wishlist-row<?php echo $product['product_id']; ?>">
+        <?php foreach ($products as $product) { ?>
           <tr>
             <td class="text-center"><?php if ($product['thumb']) { ?>
               <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>

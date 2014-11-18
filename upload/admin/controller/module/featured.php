@@ -11,7 +11,7 @@ class ControllerModuleFeatured extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('featured', $this->request->post);
-
+			
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
@@ -72,22 +72,6 @@ class ControllerModuleFeatured extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 
-		if (isset($this->request->post['featured_status'])) {
-			$data['featured_status'] = $this->request->post['featured_status'];
-		} else {
-			$data['featured_status'] = $this->config->get('featured_status');
-		}
-		
-		$this->load->model('catalog/product');
-					
-		if (isset($this->request->post['featured_module'])) {
-			$modules = $this->request->post['featured_module'];
-		} elseif ($this->config->has('featured_module')) {
-			$modules = $this->config->get('featured_module');
-		} else {
-			$modules = array();
-		}
-		
 		$data['featured_modules'] = array();
 		
 		foreach ($modules as $key => $module) {
@@ -105,15 +89,38 @@ class ControllerModuleFeatured extends Controller {
 					}
 				}
 			}
-			
-			$data['featured_modules'][] = array(
-				'key'     => $key,
-				'product' => $product_data,
-				'limit'   => $module['limit'],
-				'width'   => $module['width'],
-				'height'  => $module['height']
-			);
 		}
+
+
+
+		if (isset($this->request->post['product'   => $product_data,
+		} else {
+			$data['featured_status'] = $this->config->get('featured_status');
+		}
+		
+		if (isset($this->request->post['limit'     => $module['limit'],
+		
+		
+		
+				'width'     => $module['width'],
+				'height'    => $module['height']
+
+		if (isset($this->request->post['featured_status'])) {
+			$data['featured_status'] = $this->request->post['featured_status'];
+		} else {
+			$data['featured_status'] = $this->config->get('featured_status');
+		}
+		
+		if (isset($this->request->post['featured_status'])) {
+			$data['featured_status'] = $this->request->post['featured_status'];
+		} else {
+			$data['featured_status'] = $this->config->get('featured_status');
+		}
+		
+		$this->load->model('catalog/product');
+		
+		
+
 				
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

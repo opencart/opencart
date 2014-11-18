@@ -9,9 +9,38 @@ class ControllerExtensionModule extends Controller {
 
 		$this->load->model('extension/extension');
 
+		$this->load->model('extension/module');
+
 		$this->getList();
 	}
+	
+	public function add() {
+		$this->load->language('extension/module');
 
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('extension/module');
+		$this->load->model('extension/module');
+
+		if ($this->validate()) {
+			$this->model_extension_module->addModule('module', $this->request->get['extension']);
+
+			$this->load->model('user/user_group');
+
+			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'module/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'module/' . $this->request->get['extension']);
+
+			// Call install method if it exsits
+			$this->load->controller('module/' . $this->request->get['extension'] . '/install');
+
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
+		}
+
+		$this->getList();		
+	}
+		
 	public function install() {
 		$this->load->language('extension/module');
 
@@ -62,7 +91,7 @@ class ControllerExtensionModule extends Controller {
 
 		$this->getList();
 	}
-
+	
 	public function getList() {
 		$data['breadcrumbs'] = array();
 
@@ -77,7 +106,8 @@ class ControllerExtensionModule extends Controller {
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_add'] = $this->language->get('text_add');
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
@@ -85,7 +115,11 @@ class ControllerExtensionModule extends Controller {
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_action'] = $this->language->get('column_action');
-
+		
+		$data['entry_name'] = $this->language->get('entry_name');
+		$data['entry_code'] = $this->language->get('entry_code');
+		
+		$data['button_module_add'] = $this->language->get('button_module_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_install'] = $this->language->get('button_install');
 		$data['button_uninstall'] = $this->language->get('button_uninstall');
@@ -104,6 +138,18 @@ class ControllerExtensionModule extends Controller {
 			$data['success'] = '';
 		}
 
+		if (isset($this->request->post['name'])) {
+			$data['name'] = $this->request->post['name'];
+		} else {
+			$data['name'] = '';
+		}	
+			
+		if (isset($this->request->post['code'])) {
+			$data['code'] = $this->request->post['code'];
+		} else {
+			$data['code'] = '';
+		}	
+		
 		$this->load->model('extension/extension');
 
 		$extensions = $this->model_extension_extension->getInstalled('module');
@@ -126,12 +172,26 @@ class ControllerExtensionModule extends Controller {
 
 				$this->load->language('module/' . $extension);
 
+				$i = 1;
+				
+				$module_data = array();
+				
+				$modules = $this->model_extension_module->getModules($extension);
+
+				foreach ($modules as $module) {
+					$module_data[] = array(
+						'name' => ' --- ' . $this->language->get('heading_title') . ' ' . $i,
+						'edit' => $this->url->link('module/' . $extension . '', 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], 'SSL')
+					);		
+				}
+
 				$data['extensions'][] = array(
 					'name'      => $this->language->get('heading_title'),
+					'code'      => $extension,
+					'module'    => $modules,
 					'install'   => $this->url->link('extension/module/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
 					'uninstall' => $this->url->link('extension/module/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
-					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('module/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL')
+					'installed' => in_array($extension, $extensions)
 				);
 			}
 		}

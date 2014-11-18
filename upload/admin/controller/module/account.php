@@ -58,7 +58,7 @@ class ControllerModuleAccount extends Controller {
 		if (isset($this->request->post['account_status'])) {
 			$data['account_status'] = $this->request->post['account_status'];
 		} else {
-			$data['account_status'] = $this->config->get('account_status');
+			$data['account_status'] = $this->config->get('account_' . $module_id . '_status');
 		}
 		
 		$data['header'] = $this->load->controller('common/header');

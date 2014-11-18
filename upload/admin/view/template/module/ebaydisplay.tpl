@@ -101,14 +101,14 @@
             </tr>
           </thead>
           <tbody>
-          <?php $module_row = 1; ?>
+          <?php $module_row = 0; ?>
           <?php foreach ($ebaydisplay_modules as $module) { ?>
-            <tr id="module-row<?php echo $module['key']; ?>">
+            <tr id="module-row<?php echo $module_row; ?>">
               <td class="text-right"><?php echo $module_row; ?></td>
-              <td class="text-left"><input type="text" name="ebaydisplay_module[<?php echo $module['key']; ?>][limit]" value="<?php echo $module['limit']; ?>" size="1" class="form-control" /></td>
+              <td class="text-left"><input type="text" name="ebaydisplay_module[<?php echo $module_row; ?>][limit]" value="<?php echo $module['limit']; ?>" size="1" class="form-control" /></td>
               <td class="text-left">
-                <input type="text" name="ebaydisplay_module[<?php echo $module['key']; ?>][width]" value="<?php echo $module['width']; ?>" size="3" class="form-control" />
-                <input type="text" name="ebaydisplay_module[<?php echo $module['key']; ?>][height]" value="<?php echo $module['height']; ?>" size="3" class="form-control"/>
+                <input type="text" name="ebaydisplay_module[<?php echo $module_row; ?>][width]" value="<?php echo $module['width']; ?>" size="3" class="form-control" />
+                <input type="text" name="ebaydisplay_module[<?php echo $module_row; ?>][height]" value="<?php echo $module['height']; ?>" size="3" class="form-control"/>
                 <?php if (isset($error_image[$module_row])) { ?>
                 <span class="error"><?php echo $error_image[$module_row]; ?></span>
                 <?php } ?>
@@ -134,13 +134,11 @@
     var module_row = <?php echo $module_row; ?>;
 
     function addModule() {
-      var token = Math.random().toString(36).substr(2);
-
-      html  = '<tr id="module-row' + token + '">';
+      html  = '<tr id="module-row' + module_row + '">';
       html += '  <td class="text-right">' + ($('tbody tr').length + 1) + '</td>';
-      html += '  <td class="text-left"><input type="text" name="ebaydisplay_module[' + token + '][limit]" value="5" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>';
-      html += '  <td class="text-left"><input type="text" name="ebaydisplay_module[' + token + '][width]" value="200" placeholder="<?php echo $entry_width; ?>" class="form-control" /> <input type="text" name="ebaydisplay_module[' + token + '][height]" value="200" placeholder="<?php echo $entry_height; ?>" class="form-control" /></td>';
-      html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + token + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+      html += '  <td class="text-left"><input type="text" name="ebaydisplay_module[' + module_row + '][limit]" value="5" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>';
+      html += '  <td class="text-left"><input type="text" name="ebaydisplay_module[' + module_row + '][width]" value="200" placeholder="<?php echo $entry_width; ?>" class="form-control" /> <input type="text" name="ebaydisplay_module[' + module_row + '][height]" value="200" placeholder="<?php echo $entry_height; ?>" class="form-control" /></td>';
+      html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + module_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
       html += '</tr>';
 
       $('#module tbody').append(html);

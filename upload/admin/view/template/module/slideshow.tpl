@@ -49,11 +49,11 @@
               </tr>
             </thead>
             <tbody>
-              <?php $module_row = 1; ?>
+              <?php $module_row = 0; ?>
               <?php foreach ($slideshow_modules as $slideshow_module) { ?>
-              <tr id="module-row<?php echo $slideshow_module['key']; ?>">
+              <tr id="module-row<?php echo $module_row; ?>">
                 <td class="text-right"><?php echo $module_row; ?></td>
-                <td class="text-left"><select name="slideshow_module[<?php echo $slideshow_module['key']; ?>][banner_id]" class="form-control">
+                <td class="text-left"><select name="slideshow_module[<?php echo $module_row; ?>][banner_id]" class="form-control">
                     <?php foreach ($banners as $banner) { ?>
                     <?php if ($banner['banner_id'] == $slideshow_module['banner_id']) { ?>
                     <option value="<?php echo $banner['banner_id']; ?>" selected="selected"><?php echo $banner['name']; ?></option>
@@ -62,12 +62,12 @@
                     <?php } ?>
                     <?php } ?>
                   </select></td>
-                <td class="text-left"><input type="text" name="slideshow_module[<?php echo $slideshow_module['key']; ?>][width]" value="<?php echo $slideshow_module['width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
-                  <input type="text" name="slideshow_module[<?php echo $slideshow_module['key']; ?>][height]" value="<?php echo $slideshow_module['height']; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
-                  <?php if (isset($error_dimension[$slideshow_module['key']])) { ?>
-                  <div class="text-danger"><?php echo $error_dimension[$slideshow_module['key']]; ?></div>
+                <td class="text-left"><input type="text" name="slideshow_module[<?php echo $module_row; ?>][width]" value="<?php echo $slideshow_module['width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
+                  <input type="text" name="slideshow_module[<?php echo $module_row; ?>][height]" value="<?php echo $slideshow_module['height']; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                  <?php if (isset($error_dimension[$module_row])) { ?>
+                  <div class="text-danger"><?php echo $error_dimension[$module_row]; ?></div>
                   <?php } ?></td>
-                <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $slideshow_module['key']; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $module_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
               </tr>
               <?php $module_row++; ?>
               <?php } ?>
@@ -84,18 +84,18 @@
     </div>
   </div>
   <script type="text/javascript"><!--
+  var module_row = <?php echo $module_row; ?>;
+    
 function addModule() {	
-	var token = Math.random().toString(36).substr(2);
-
-	html  = '<tr id="module-row' + token + '">';
+	html  = '<tr id="module-row' + module_row + '">';
 	html += '  <td class="text-right">' + ($('tbody tr').length + 1) + '</td>';
-	html += '  <td class="text-left"><select name="slideshow_module[' + token + '][banner_id]" class="form-control">';
+	html += '  <td class="text-left"><select name="slideshow_module[' + module_row + '][banner_id]" class="form-control">';
 	<?php foreach ($banners as $banner) { ?>
 	html += '    <option value="<?php echo $banner['banner_id']; ?>"><?php echo addslashes($banner['name']); ?></option>';
 	<?php } ?>
 	html += '  </select></td>';
-	html += '  <td class="text-left"><input type="text" name="slideshow_module[' + token + '][width]" value="" placeholder="<?php echo $entry_width; ?>" class="form-control" /> <input type="text" name="slideshow_module[' + token + '][height]" value="" placeholder="<?php echo $entry_height; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + token + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '  <td class="text-left"><input type="text" name="slideshow_module[' + module_row + '][width]" value="" placeholder="<?php echo $entry_width; ?>" class="form-control" /> <input type="text" name="slideshow_module[' + module_row + '][height]" value="" placeholder="<?php echo $entry_height; ?>" class="form-control" /></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + module_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 	
 	$('#module tbody').append(html);

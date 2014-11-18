@@ -99,7 +99,7 @@ class ControllerSettingStore extends Controller {
 			'href' => $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
-		$data['insert'] = $this->url->link('setting/store/add', 'token=' . $this->session->data['token'], 'SSL');
+		$data['add'] = $this->url->link('setting/store/add', 'token=' . $this->session->data['token'], 'SSL');
 		$data['delete'] = $this->url->link('setting/store/delete', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['stores'] = array();
@@ -134,7 +134,7 @@ class ControllerSettingStore extends Controller {
 		$data['column_url'] = $this->language->get('column_url');
 		$data['column_action'] = $this->language->get('column_action');
 
-		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 

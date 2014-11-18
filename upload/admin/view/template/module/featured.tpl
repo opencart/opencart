@@ -50,25 +50,25 @@
               </tr>
             </thead>
             <tbody>
-              <?php $module_row = 1; ?>
+              <?php $module_row = 0; ?>
               <?php foreach ($featured_modules as $featured_module) { ?>
-              <tr id="module-row<?php echo $featured_module['key']; ?>">
-                <td class="text-right"><?php echo $module_row; ?> <input type="hidden" name="key" value="<?php echo $featured_module['key']; ?>" /></td>
+              <tr id="module-row<?php echo $module_row; ?>">
+                <td class="text-right"><?php echo $module_row; ?> <input type="hidden" name="featured_module[<?php echo $module_row; ?>][module_id]" value="<?php echo $featured_module['module_id']; ?>" /></td>
                 <td class="text-left"><input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" class="form-control" />
                   <div class="well well-sm" style="height: 150px; overflow: auto;">
                     <?php foreach ($featured_module['product'] as $product) { ?>
                     <div><i class="fa fa-minus-circle"></i> <?php echo $product['name']; ?>
-                      <input type="hidden" name="featured_module[<?php echo $featured_module['key']; ?>][product][]" value="<?php echo $product['product_id']; ?>" />
+                      <input type="hidden" name="featured_module[<?php echo $module_row; ?>][product][]" value="<?php echo $product['product_id']; ?>" />
                     </div>
                     <?php } ?>
                   </div></td>
-                <td class="text-left"><input type="text" name="featured_module[<?php echo $featured_module['key']; ?>][limit]" value="<?php echo $featured_module['limit']; ?>" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>
-                <td class="text-left"><input type="text" name="featured_module[<?php echo $featured_module['key']; ?>][width]" value="<?php echo $featured_module['width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
-                  <input type="text" name="featured_module[<?php echo $featured_module['key']; ?>][height]" value="<?php echo $featured_module['height']; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
-                  <?php if (isset($error_image[$featured_module['key']])) { ?>
-                  <div class="text-danger"><?php echo $error_image[$featured_module['key']]; ?></div>
+                <td class="text-left"><input type="text" name="featured_module[<?php echo $module_row; ?>][limit]" value="<?php echo $featured_module['limit']; ?>" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>
+                <td class="text-left"><input type="text" name="featured_module[<?php echo $module_row; ?>][width]" value="<?php echo $featured_module['width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
+                  <input type="text" name="featured_module[<?php echo $module_row; ?>][height]" value="<?php echo $featured_module['height']; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                  <?php if (isset($error_image[$module_row])) { ?>
+                  <div class="text-danger"><?php echo $error_image[$module_row]; ?></div>
                   <?php } ?></td>
-                <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $featured_module['key']; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $module_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
               </tr>
               <?php $module_row++; ?>
               <?php } ?>
@@ -85,27 +85,27 @@
     </div>
   </div>
   <script type="text/javascript"><!--
+  var module_row = <?php echo $module_row; ?>;
+  
 function addModule() {
-	var token = Math.random().toString(36).substr(2);
-			
-	html  = '<tr id="module-row' + token + '">';
-	html += '  <td class="text-right">' + ($('tbody tr').length + 1) + '<input type="hidden" name="key" value="' + token + '" /></td>';
+	html  = '<tr id="module-row' + module_row + '">';
+	html += '  <td class="text-right">' + ($('tbody tr').length + 1) + '<input type="hidden" name="module_id" value="" /></td>';
 	html += '  <td class="text-left"><input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" class="form-control" /><div class="well well-sm" style="height: 150px; overflow: auto;"></div></td>';	
-	html += '  <td class="text-left"><input type="text" name="featured_module[' + token + '][limit]" value="5" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><input type="text" name="featured_module[' + token + '][width]" value="200" placeholder="<?php echo $entry_width; ?>" class="form-control" /> <input type="text" name="featured_module[' + token + '][height]" value="200" placeholder="<?php echo $entry_height; ?>" class="form-control" /></td>';	
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + token + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '  <td class="text-left"><input type="text" name="featured_module[' + module_row + '][limit]" value="5" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>';
+	html += '  <td class="text-left"><input type="text" name="featured_module[' + module_row + '][width]" value="200" placeholder="<?php echo $entry_width; ?>" class="form-control" /> <input type="text" name="featured_module[' + module_row + '][height]" value="200" placeholder="<?php echo $entry_height; ?>" class="form-control" /></td>';	
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + module_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 	
 	$('#module tbody').append(html);
 	
-	productautocomplete(token);
+	productautocomplete(module_row);
 }
 
 $('#module').delegate('.well .fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 
-function productautocomplete(token) {
+function productautocomplete(module_row) {
 	$('input[name=\'product\']').autocomplete({
 		source: function(request, response) {
 			$.ajax({

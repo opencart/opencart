@@ -34,7 +34,7 @@
                       <option value="<?php echo $key; ?>"><?php echo $val['name']; ?></option>
                     <?php } ?>
                   </select>
-                  <a data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn btn-primary input-group-addon" onclick="$('#add-profile-form').submit();"><i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?></a>
+                  <a data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-primary input-group-addon" onclick="$('#add-profile-form').submit();"><i class="fa fa-plus-circle"></i> <?php echo $button_add; ?></a>
                 </div>
               </div>
             </form>

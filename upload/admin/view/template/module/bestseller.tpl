@@ -49,17 +49,17 @@
               </tr>
             </thead>
             <tbody>
-              <?php $module_row = 1; ?>
+              <?php $module_row = 0; ?>
               <?php foreach ($bestseller_modules as $bestseller_module) { ?>
-              <tr id="module-row<?php echo $bestseller_module['key']; ?>">
+              <tr id="module-row<?php echo $module_row; ?>">
                 <td class="text-right"><?php echo $module_row; ?></td>
-                <td class="text-left"><input type="text" name="bestseller_module[<?php echo $bestseller_module['key']; ?>][limit]" value="<?php echo $bestseller_module['limit']; ?>" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>
-                <td class="text-left"><input type="text" name="bestseller_module[<?php echo $bestseller_module['key']; ?>][width]" value="<?php echo $bestseller_module['width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
-                  <input type="text" name="bestseller_module[<?php echo $bestseller_module['key']; ?>][height]" value="<?php echo $bestseller_module['height']; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
-                  <?php if (isset($error_image[$bestseller_module['key']])) { ?>
-                  <div class="text-danger"><?php echo $error_image[$bestseller_module['key']]; ?></div>
+                <td class="text-left"><input type="text" name="bestseller_module[<?php echo $module_row; ?>][limit]" value="<?php echo $bestseller_module['limit']; ?>" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>
+                <td class="text-left"><input type="text" name="bestseller_module[<?php echo $module_row; ?>][width]" value="<?php echo $bestseller_module['width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
+                  <input type="text" name="bestseller_module[<?php echo $module_row; ?>][height]" value="<?php echo $bestseller_module['height']; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                  <?php if (isset($error_image[$module_row])) { ?>
+                  <div class="text-danger"><?php echo $error_image[$module_row]; ?></div>
                   <?php } ?></td>
-                <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $bestseller_module['key']; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $module_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
               </tr>
               <?php $module_row++; ?>
               <?php } ?>
@@ -76,14 +76,14 @@
     </div>
   </div>
   <script type="text/javascript"><!--
+  var module_row = <?php echo $module_row; ?>;
+    
 function addModule() {
-	var token = Math.random().toString(36).substr(2);
-	
-	html  = '<tr id="module-row' + token + '">';
+	html  = '<tr id="module-row' + module_row + '">';
 	html += '  <td class="text-right">' + ($('tbody tr').length + 1) + '</td>';
-	html += '  <td class="text-left"><input type="text" name="bestseller_module[' + token + '][limit]" value="5" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><input type="text" name="bestseller_module[' + token + '][width]" value="200" placeholder="<?php echo $entry_width; ?>" class="form-control" /> <input type="text" name="bestseller_module[' + token + '][height]" value="200" placeholder="<?php echo $entry_height; ?>" class="form-control" /></td>'; 
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + token + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '  <td class="text-left"><input type="text" name="bestseller_module[' + module_row + '][limit]" value="5" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>';
+	html += '  <td class="text-left"><input type="text" name="bestseller_module[' + module_row + '][width]" value="200" placeholder="<?php echo $entry_width; ?>" class="form-control" /> <input type="text" name="bestseller_module[' + module_row + '][height]" value="200" placeholder="<?php echo $entry_height; ?>" class="form-control" /></td>'; 
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + module_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 	
 	$('#module tbody').append(html);

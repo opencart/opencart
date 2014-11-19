@@ -51,10 +51,16 @@ class ControllerModuleEbaydisplay extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		if (isset($this->error['image'])) {
-			$data['error_image'] = $this->error['image'];
+		if (isset($this->error['width'])) {
+			$data['error_width'] = $this->error['width'];
 		} else {
-			$data['error_image'] = array();
+			$data['error_width'] = '';
+		}
+		
+		if (isset($this->error['height'])) {
+			$data['error_height'] = $this->error['height'];
+		} else {
+			$data['error_height'] = '';
 		}
 
 		$data['breadcrumbs'] = array();
@@ -92,49 +98,62 @@ class ControllerModuleEbaydisplay extends Controller {
 			$data['username'] = '';
 		}
 		
-		if (isset($this->request->post['username'])) {
-			$data['username'] = $this->request->post['username'];
-		} elseif ($this->config->get('username')) {
-			$data['username'] = $this->config->get('ebaydisplay_module_username');
-		}else{
-			$data['username'] = '';
+		if (isset($this->request->post['keywords'])) {
+			$data['keywords'] = $this->request->post['keywords'];
+		} elseif (!empty($module_info)) {
+			$data['keywords'] = $module_info['keywords'];
+		} else {
+			$data['keywords'] = '';
 		}
-		if (isset($this->request->post['ebaydisplay_module_keywords'])) {
-			$data['ebaydisplay_module_keywords'] = $this->request->post['ebaydisplay_module_keywords'];
-		} elseif ($this->config->get('ebaydisplay_module_keywords')) {
-			$data['ebaydisplay_module_keywords'] = $this->config->get('ebaydisplay_module_keywords');
-		}else{
-			$data['ebaydisplay_module_keywords'] = '';
+		
+		if (isset($this->request->post['description'])) {
+			$data['description'] = $this->request->post['description'];
+		} elseif (!empty($module_info)) {
+			$data['description'] = $module_info['description'];
+		} else {
+			$data['description'] = '';
 		}
-		if (isset($this->request->post['ebaydisplay_module_description'])) {
-			$data['ebaydisplay_module_description'] = $this->request->post['ebaydisplay_module_description'];
-		} elseif ($this->config->get('ebaydisplay_module_description')) {
-			$data['ebaydisplay_module_description'] = $this->config->get('ebaydisplay_module_description');
-		}else{
-			$data['ebaydisplay_module_description'] = 0;
+		
+		if (isset($this->request->post['limit'])) {
+			$data['limit'] = $this->request->post['limit'];
+		} elseif (!empty($module_info)) {
+			$data['limit'] = $module_info['limit'];
+		} else {
+			$data['limit'] = 10;
 		}
-		if (isset($this->request->post['ebaydisplay_module_limit'])) {
-			$data['ebaydisplay_module_limit'] = $this->request->post['ebaydisplay_module_limit'];
-		} elseif ($this->config->get('ebaydisplay_module_limit')) {
-			$data['ebaydisplay_module_limit'] = $this->config->get('ebaydisplay_module_limit');
-		}else{
-			$data['ebaydisplay_module_limit'] = 10;
-		}
-		if (isset($this->request->post['ebaydisplay_module_sort'])) {
-			$data['ebaydisplay_module_sort'] = $this->request->post['ebaydisplay_module_sort'];
-		} elseif ($this->config->get('ebaydisplay_module_sort')) {
-			$data['ebaydisplay_module_sort'] = $this->config->get('ebaydisplay_module_sort');
-		}else{
-			$data['ebaydisplay_module_sort'] = 'StartTimeNewest';
-		}
-		if (isset($this->request->post['ebaydisplay_module_site'])) {
-			$data['ebaydisplay_module_site'] = $this->request->post['ebaydisplay_module_site'];
-		} elseif ($this->config->get('ebaydisplay_module_sort')) {
-			$data['ebaydisplay_module_site'] = $this->config->get('ebaydisplay_module_site');
-		}else{
-			$data['ebaydisplay_module_site'] = 3;
-		}
+			
+		if (isset($this->request->post['width'])) {
+			$data['width'] = $this->request->post['width'];
+		} elseif (!empty($module_info)) {
+			$data['width'] = $module_info['width'];
+		} else {
+			$data['width'] = '';
+		}	
+			
+		if (isset($this->request->post['height'])) {
+			$data['height'] = $this->request->post['height'];
+		} elseif (!empty($module_info)) {
+			$data['height'] = $module_info['height'];
+		} else {
+			$data['height'] = '';
+		}	
+		
+		if (isset($this->request->post['sort'])) {
+			$data['sort'] = $this->request->post['sort'];
+		} elseif (!empty($module_info)) {
+			$data['sort'] = $module_info['sort'];
+		} else {
+			$data['sort'] = 'StartTimeNewest';
+		}	
 
+		if (isset($this->request->post['site'])) {
+			$data['site'] = $this->request->post['site'];
+		} elseif (!empty($module_info)) {
+			$data['site'] = $module_info['site'];
+		} else {
+			$data['site'] = '';
+		}
+		
 		$data['ebay_sites'] = array(
 			0   => 'USA',
 			3   => 'UK',
@@ -156,29 +175,16 @@ class ControllerModuleEbaydisplay extends Controller {
 		} else {
 			$data['ebaydisplay_status'] = $this->config->get('ebaydisplay_status');
 		}
-
-		if (isset($this->request->post['ebaydisplay_module'])) {
-			$modules = $this->request->post['ebaydisplay_module'];
-		} elseif ($this->config->has('ebaydisplay_module')) {
-			$modules = $this->config->get('ebaydisplay_module');
+		
+		if (isset($this->request->post['status'])) {
+			$data['status'] = $this->request->post['status'];
+		} elseif (!empty($module_info)) {
+			$data['status'] = $module_info['status'];
 		} else {
-			$modules = array();
-		}
-
-		$data['ebaydisplay_modules'] = array();
-
-		foreach ($modules as $key => $module) {
-			$data['ebaydisplay_modules'][] = array(
-				'key'    => $key,
-				'limit'  => $module['limit'],
-				'width'  => $module['width'],
-				'height' => $module['height']
-			);
-		}
-
-		if ($this->config->get('ebay_status') != 1) {
+			$data['status'] = '';
+			
 			$data['error_warning'] = $this->language->get('error_openbay');
-		}
+		}		
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -192,8 +198,13 @@ class ControllerModuleEbaydisplay extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
+		if (!$this->request->post['width']) {
+			$this->error['width'] = $this->language->get('error_width');
+		}
 		
-		
+		if (!$this->request->post['height']) {
+			$this->error['height'] = $this->language->get('error_height');
+		}		
 
 		return !$this->error;
 	}

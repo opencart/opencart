@@ -2,7 +2,8 @@
 class ControllerModuleEbaydisplay extends Controller {
 	public function index($setting) {
 		if ($this->config->get('ebay_status') == 1) {
-			$this->language->load('module/ebaydisplay');
+			$this->language->load('module/ebay');
+			
 			$this->load->model('tool/image');
 			$this->load->model('openbay/ebay_product');
 
@@ -14,6 +15,7 @@ class ControllerModuleEbaydisplay extends Controller {
 
 			if (!$products) {
 				$products = $this->model_openbay_ebay_product->getDisplayProducts();
+				
 				$this->cache->set('ebaydisplay.' . md5(serialize($setting)), $products);
 			}
 
@@ -24,15 +26,20 @@ class ControllerModuleEbaydisplay extends Controller {
 					$image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
 				}
 
-				$data['products'][] = array('thumb' => $image, 'name' => base64_decode($product['Title']), 'price' => $this->currency->format($product['priceGross']), 'href' => (string)$product['link'],);
+				$data['products'][] = array(
+					'thumb' => $image, 
+					'name'  => base64_decode($product['Title']), 
+					'price' => $this->currency->format($product['priceGross']), 
+					'href' => (string)$product['link']
+				);
 			}
 
 			$data['tracking_pixel'] = $products['tracking_pixel'];
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/ebaydisplay.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/module/ebaydisplay.tpl', $data);
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/ebay.tpl')) {
+				return $this->load->view($this->config->get('config_template') . '/template/module/ebay.tpl', $data);
 			} else {
-				return $this->load->view('default/template/module/ebaydisplay.tpl', $data);
+				return $this->load->view('default/template/module/ebay.tpl', $data);
 			}
 		}
 	}

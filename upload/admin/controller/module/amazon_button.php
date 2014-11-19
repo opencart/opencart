@@ -79,14 +79,6 @@ class ControllerModuleAmazonButton extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['width']) {
-			$this->error['width'] = $this->language->get('error_width');
-		}
-		
-		if (!$this->request->post['height']) {
-			$this->error['height'] = $this->language->get('error_height');
-		}
-
 		return !$this->error;
 	}
 }

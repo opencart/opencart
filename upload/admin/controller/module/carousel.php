@@ -24,7 +24,6 @@ class ControllerModuleCarousel extends Controller {
 		$data['text_disabled'] = $this->language->get('text_disabled');
 
 		$data['entry_banner'] = $this->language->get('entry_banner');
-		$data['entry_scroll'] = $this->language->get('entry_scroll');
 		$data['entry_width'] = $this->language->get('entry_width');
 		$data['entry_height'] = $this->language->get('entry_height');
 		$data['entry_status'] = $this->language->get('entry_status');
@@ -86,21 +85,13 @@ class ControllerModuleCarousel extends Controller {
 		$this->load->model('design/banner');
 
 		$data['banners'] = $this->model_design_banner->getBanners();
-	
-		if (isset($this->request->post['scroll'])) {
-			$data['scroll'] = $this->request->post['scroll'];
-		} elseif (!empty($module_info)) {
-			$data['scroll'] = $module_info['scroll'];
-		} else {
-			$data['scroll'] = '';
-		}
 				
 		if (isset($this->request->post['width'])) {
 			$data['width'] = $this->request->post['width'];
 		} elseif (!empty($module_info)) {
 			$data['width'] = $module_info['width'];
 		} else {
-			$data['width'] = '';
+			$data['width'] = 130;
 		}	
 			
 		if (isset($this->request->post['height'])) {
@@ -108,7 +99,7 @@ class ControllerModuleCarousel extends Controller {
 		} elseif (!empty($module_info)) {
 			$data['height'] = $module_info['height'];
 		} else {
-			$data['height'] = '';
+			$data['height'] = 100;
 		}	
 				
 		if (isset($this->request->post['status'])) {

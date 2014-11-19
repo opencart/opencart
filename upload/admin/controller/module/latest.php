@@ -81,7 +81,7 @@ class ControllerModuleLatest extends Controller {
 		} elseif (!empty($module_info)) {
 			$data['limit'] = $module_info['limit'];
 		} else {
-			$data['limit'] = '';
+			$data['limit'] = 5;
 		}	
 				
 		if (isset($this->request->post['width'])) {
@@ -89,7 +89,7 @@ class ControllerModuleLatest extends Controller {
 		} elseif (!empty($module_info)) {
 			$data['width'] = $module_info['width'];
 		} else {
-			$data['width'] = '';
+			$data['width'] = 200;
 		}	
 			
 		if (isset($this->request->post['height'])) {
@@ -97,7 +97,7 @@ class ControllerModuleLatest extends Controller {
 		} elseif (!empty($module_info)) {
 			$data['height'] = $module_info['height'];
 		} else {
-			$data['height'] = '';
+			$data['height'] = 200;
 		}		
 		
 		if (isset($this->request->post['status'])) {

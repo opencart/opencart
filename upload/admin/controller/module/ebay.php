@@ -1,9 +1,9 @@
 <?php
-class ControllerModuleEbaydisplay extends Controller {
+class ControllerModuleEbay extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/ebaydisplay');
+		$this->load->language('module/ebay');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -15,7 +15,7 @@ class ControllerModuleEbaydisplay extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->cache->delete('ebaydisplay');
+			$this->cache->delete('ebay');
 
 			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
 		}
@@ -23,16 +23,16 @@ class ControllerModuleEbaydisplay extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_edit'] = $this->language->get('text_edit');
+		$data['text_register'] = $this->language->get('text_register');
+		$data['text_about'] = $this->language->get('text_about');
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
-		$data['text_start_newest'] = $this->language->get('text_start_newest');
-		$data['text_start_random'] = $this->language->get('text_start_random');
-		$data['text_about'] = $this->language->get('text_about');
+		$data['text_latest'] = $this->language->get('text_latest');
+		$data['text_random'] = $this->language->get('text_random');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 
 		$data['entry_limit'] = $this->language->get('entry_limit');
-		$data['entry_image'] = $this->language->get('entry_image');
 		$data['entry_width'] = $this->language->get('entry_width');
 		$data['entry_height'] = $this->language->get('entry_height');
 		$data['entry_username'] = $this->language->get('entry_username');
@@ -66,21 +66,21 @@ class ControllerModuleEbaydisplay extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_module'),
-			'href'      => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_module'),
+			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('module/ebaydisplay', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL'),
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('module/ebay', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL'),
 		);
 
-		$data['action'] = $this->url->link('module/ebaydisplay', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL');
+		$data['action'] = $this->url->link('module/ebay', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL');
 		
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 		
@@ -119,7 +119,7 @@ class ControllerModuleEbaydisplay extends Controller {
 		} elseif (!empty($module_info)) {
 			$data['limit'] = $module_info['limit'];
 		} else {
-			$data['limit'] = 10;
+			$data['limit'] = 5;
 		}
 			
 		if (isset($this->request->post['width'])) {
@@ -127,7 +127,7 @@ class ControllerModuleEbaydisplay extends Controller {
 		} elseif (!empty($module_info)) {
 			$data['width'] = $module_info['width'];
 		} else {
-			$data['width'] = '';
+			$data['width'] = 200;
 		}	
 			
 		if (isset($this->request->post['height'])) {
@@ -135,7 +135,7 @@ class ControllerModuleEbaydisplay extends Controller {
 		} elseif (!empty($module_info)) {
 			$data['height'] = $module_info['height'];
 		} else {
-			$data['height'] = '';
+			$data['height'] = 200;
 		}	
 		
 		if (isset($this->request->post['sort'])) {
@@ -154,27 +154,67 @@ class ControllerModuleEbaydisplay extends Controller {
 			$data['site'] = '';
 		}
 		
-		$data['ebay_sites'] = array(
-			0   => 'USA',
-			3   => 'UK',
-			15  => 'Australia',
-			2   => 'Canada (English)',
-			71  => 'France',
-			77  => 'Germany',
-			101 => 'Italy',
-			186 => 'Spain',
-			205 => 'Ireland',
-			16  => 'Austria',
-			146 => 'Netherlands',
-			23  => 'Belgium (French)',
-			123 => 'Belgium (Dutch)',
+		$data['ebay_sites'] = array();
+		
+		$data['ebay_sites'][] = array(
+			'text'  => 'USA',
+			'value' => 0
 		);
 
-		if (isset($this->request->post['ebaydisplay_status'])) {
-			$data['ebaydisplay_status'] = $this->request->post['ebaydisplay_status'];
-		} else {
-			$data['ebaydisplay_status'] = $this->config->get('ebaydisplay_status');
-		}
+		$data['ebay_sites'][] = array(
+			'text'  => 'UK',
+			'value' => 3
+		);
+		$data['ebay_sites'][] = array(
+			'text'  => 'Australia',
+			'value' => 15
+		);
+		
+		$data['ebay_sites'][] = array(
+			'text'  => 'Canada (English)',
+			'value' => 2
+		);
+		
+		$data['ebay_sites'][] = array(
+			'text'  => 'France',
+			'value' => 71
+		);
+		$data['ebay_sites'][] = array(
+			'text'  => 'Germany',
+			'value' => 77
+		);
+		$data['ebay_sites'][] = array(
+			'text'  => 'Italy',
+			'value' => 101
+		);
+		$data['ebay_sites'][] = array(
+			'text'  => 'Spain',
+			'value' => 186
+		);
+		$data['ebay_sites'][] = array(
+			'text'  => 'Ireland',
+			'value' => 205
+		);
+		
+		$data['ebay_sites'][] = array(
+			'text'  => 'Austria',
+			'value' => 16
+		);
+		
+		$data['ebay_sites'][] = array(
+			'text'  => 'Netherlands',
+			'value' => 146
+		);	
+		
+		$data['ebay_sites'][] = array(
+			'text'  => 'Belgium (French)',
+			'value' => 23
+		);	
+		
+		$data['ebay_sites'][] = array(
+			'text'  => 'Belgium (Dutch)',
+			'value' => 123
+		);	
 		
 		if (isset($this->request->post['status'])) {
 			$data['status'] = $this->request->post['status'];
@@ -182,19 +222,17 @@ class ControllerModuleEbaydisplay extends Controller {
 			$data['status'] = $module_info['status'];
 		} else {
 			$data['status'] = '';
-			
-			$data['error_warning'] = $this->language->get('error_openbay');
 		}		
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/ebaydisplay.tpl', $data));
+		$this->response->setOutput($this->load->view('module/ebay.tpl', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'module/ebaydisplay')) {
+		if (!$this->user->hasPermission('modify', 'module/ebay')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		

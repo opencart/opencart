@@ -24,12 +24,12 @@
         <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_edit; ?></h3>
       </div>
       <div class="panel-body">
-        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-amazon-checkout-layout" class="form-horizontal">
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-amazon-button" class="form-horizontal">
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
             <div class="col-sm-10">
-              <select name="amazon_button_status" id="input-status" class="form-control">
-                <?php if ($amazon_button_status) { ?>
+              <select name="status" id="input-status" class="form-control">
+                <?php if ($status) { ?>
                 <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                 <option value="0"><?php echo $text_disabled; ?></option>
                 <?php } else { ?>

@@ -321,11 +321,11 @@ class ControllerModulePPLogin extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['pp_login_client_id']) {
+		if (!$this->request->post['client_id']) {
 			$this->error['client_id'] = $this->language->get('error_client_id');
 		}
 
-		if (!$this->request->post['pp_login_secret']) {
+		if (!$this->request->post['secret']) {
 			$this->error['secret'] = $this->language->get('error_secret');
 		}
 

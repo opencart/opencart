@@ -3,7 +3,7 @@ class ControllerModuleSpecial extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/account');
+		$this->load->language('module/special');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -40,10 +40,16 @@ class ControllerModuleSpecial extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		if (isset($this->error['image'])) {
-			$data['error_image'] = $this->error['image'];
+		if (isset($this->error['width'])) {
+			$data['error_width'] = $this->error['width'];
 		} else {
-			$data['error_image'] = array();
+			$data['error_width'] = '';
+		}
+		
+		if (isset($this->error['height'])) {
+			$data['error_height'] = $this->error['height'];
+		} else {
+			$data['error_height'] = '';
 		}
 
 		$data['breadcrumbs'] = array();
@@ -76,7 +82,7 @@ class ControllerModuleSpecial extends Controller {
 		} elseif (!empty($module_info)) {
 			$data['limit'] = $module_info['limit'];
 		} else {
-			$data['limit'] = '';
+			$data['limit'] = 5;
 		}	
 
 		if (isset($this->request->post['width'])) {
@@ -84,7 +90,7 @@ class ControllerModuleSpecial extends Controller {
 		} elseif (!empty($module_info)) {
 			$data['width'] = $module_info['width'];
 		} else {
-			$data['width'] = '';
+			$data['width'] = 200;
 		}	
 			
 		if (isset($this->request->post['height'])) {
@@ -92,7 +98,7 @@ class ControllerModuleSpecial extends Controller {
 		} elseif (!empty($module_info)) {
 			$data['height'] = $module_info['height'];
 		} else {
-			$data['height'] = '';
+			$data['height'] = 200;
 		}
 		
 		if (isset($this->request->post['status'])) {

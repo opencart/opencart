@@ -1789,6 +1789,20 @@ CREATE TABLE IF NOT EXISTS `oc_module` (
   PRIMARY KEY (`module_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `oc_module`
+--
+
+INSERT INTO `oc_module` (`module_id`, `name`, `code`, `setting`) VALUES
+(2, 'Account', 'account', 'a:1:{s:6:"status";s:1:"1";}'),
+(5, 'Carousel - Home Page', 'carousel', 'a:4:{s:9:"banner_id";s:1:"8";s:5:"width";s:3:"130";s:6:"height";s:3:"100";s:6:"status";s:1:"1";}'),
+(6, 'Featured - Home Page', 'featured', 'a:5:{s:7:"product";a:4:{i:0;s:2:"43";i:1;s:2:"40";i:2;s:2:"42";i:3;s:2:"30";}s:5:"limit";s:1:"5";s:5:"width";s:3:"200";s:6:"height";s:3:"200";s:6:"status";s:1:"1";}'),
+(7, 'Category', 'category', 'a:1:{s:6:"status";s:1:"1";}'),
+(8, 'Banner - Category', 'banner', 'a:4:{s:9:"banner_id";s:1:"6";s:5:"width";s:3:"182";s:6:"height";s:3:"182";s:6:"status";s:1:"1";}'),
+(10, 'Slideshow - Home Page', 'slideshow', 'a:4:{s:9:"banner_id";s:1:"7";s:5:"width";s:4:"1140";s:6:"height";s:3:"380";s:6:"status";s:1:"1";}'),
+(11, 'Affiliate', 'affiliate', 'a:1:{s:6:"status";s:1:"1";}'),
+(18, 'Featured', 'featured', 'a:5:{s:7:"product";a:2:{i:0;s:2:"30";i:1;s:2:"28";}s:5:"limit";s:1:"5";s:5:"width";s:3:"200";s:6:"height";s:3:"200";s:6:"status";s:1:"1";}');
+
 -- --------------------------------------------------------
 
 --

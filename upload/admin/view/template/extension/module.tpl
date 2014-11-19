@@ -2,6 +2,9 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
+      <div class="pull-right">
+        <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-module').submit() : false;"><i class="fa fa-trash-o"></i></button>
+      </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -29,20 +32,11 @@
         <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_add; ?></h3>
       </div>
       <div class="panel-body">
-        <form action="<?php echo $add; ?>" method="post" enctype="multipart/form-data" id="form-bestseller" class="form-horizontal">
-          <div class="form-group required">
-            <label class="col-sm-2 control-label"><?php echo $entry_name; ?></label>
-            <div class="col-sm-10">
-              <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
-              <?php if ($error_name) { ?>
-              <div class="text-danger"><?php echo $error_name; ?></div>
-              <?php } ?>
-            </div>
-          </div>
+        <form action="<?php echo $add; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-module"><?php echo $entry_code; ?></label>
+            <label class="col-sm-2 control-label" for="input-code"><?php echo $entry_code; ?></label>
             <div class="col-sm-10">
-              <select name="code" id="input-module" class="form-control">
+              <select name="code" id="input-code" class="form-control">
                 <?php foreach ($modules as $module) { ?>
                 <?php if ($module['code'] == $code) { ?>
                 <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
@@ -51,6 +45,23 @@
                 <?php } ?>
                 <?php } ?>
               </select>
+              <?php if ($error_code) { ?>
+              <div class="text-danger"><?php echo $error_code; ?></div>
+              <?php } ?>
+            </div>
+          </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
+              <?php if ($error_name) { ?>
+              <div class="text-danger"><?php echo $error_name; ?></div>
+              <?php } ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> <?php echo $button_module_add; ?></button>
             </div>
           </div>
         </form>
@@ -61,7 +72,7 @@
         <h3 class="panel-title"><i class="fa fa-puzzle-piece"></i> <?php echo $text_list; ?></h3>
       </div>
       <div class="panel-body">
-        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-bestseller" class="form-horizontal">
+        <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-module" class="form-horizontal">
           <div class="table-responsive">
             <table class="table table-bordered table-hover">
               <thead>
@@ -75,32 +86,23 @@
                 <?php if ($extensions) { ?>
                 <?php foreach ($extensions as $extension) { ?>
                 <tr>
-                  <td colspan="3"><?php echo $extension['name']; ?></td>
+                  <td colspan="3"><strong><?php echo $extension['name']; ?></strong></td>
                 </tr>
                 <?php foreach ($extension['module'] as $module) { ?>
                 <tr>
-                  <td class="text-center"><?php if (in_array($attribute['attribute_id'], $selected)) { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $attribute['attribute_id']; ?>" checked="checked" />
+                  <td class="text-center"><?php if (in_array($module['module_id'], $selected)) { ?>
+                    <input type="checkbox" name="selected[]" value="<?php echo $module['module_id']; ?>" checked="checked" />
                     <?php } else { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $attribute['attribute_id']; ?>" />
+                    <input type="checkbox" name="selected[]" value="<?php echo $module['module_id']; ?>" />
                     <?php } ?></td>
                   <td class="text-left"><?php echo $module['name']; ?></td>
-                  <td class="text-right"><?php if (!$extension['installed']) { ?>
-                    <a href="<?php echo $extension['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
-                    <?php } else { ?>
-                    <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $extension['uninstall']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
-                    <?php } ?>
-                    <?php if ($extension['installed']) { ?>
-                    <a href="<?php echo $extension['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
-                    <?php } else { ?>
-                    <button type="button" class="btn btn-primary" disabled="disabled"><i class="fa fa-pencil"></i></button>
-                    <?php } ?></td>
+                  <td class="text-right"><a href="<?php echo $module['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 <?php } ?>
                 <?php } ?>
                 <?php } else { ?>
                 <tr>
-                  <td class="text-center" colspan="2"><?php echo $text_no_results; ?></td>
+                  <td class="text-center" colspan="3"><?php echo $text_no_results; ?></td>
                 </tr>
                 <?php } ?>
               </tbody>

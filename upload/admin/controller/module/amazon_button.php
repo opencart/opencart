@@ -1,14 +1,14 @@
 <?php
 class ControllerModuleAmazonButton extends Controller {
 	public function index() {
-		$this->language->load('module/amazon_button');
+		$this->load->language('module/amazon_button');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
-		$this->load->model('setting/setting');
+		$this->load->model('extension/module');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('amazon_button', $this->request->post);
+			$this->model_extension_module->editModule($this->request->get['module_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -36,7 +36,7 @@ class ControllerModuleAmazonButton extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -46,17 +46,23 @@ class ControllerModuleAmazonButton extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/amazon_button', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('module/amazon_button', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL')
 		);
 
-		$data['action'] = $this->url->link('module/amazon_button', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('module/amazon_button', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL');
 		
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 		
-		if (isset($this->request->post['amazon_button_status'])) {
-			$data['amazon_button_status'] = $this->request->post['amazon_button_status'];
+		if (isset($this->request->get['module_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+			$module_info = $this->model_extension_module->getModule($this->request->get['module_id']);
+		}
+				
+		if (isset($this->request->post['status'])) {
+			$data['status'] = $this->request->post['status'];
+		} elseif (!empty($module_info)) {
+			$data['status'] = $module_info['status'];
 		} else {
-			$data['amazon_button_status'] = $this->config->get('amazon_button_status');
+			$data['status'] = '';
 		}
 		
 		$data['header'] = $this->load->controller('common/header');
@@ -71,12 +77,8 @@ class ControllerModuleAmazonButton extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (isset($this->request->post['banner_module'])) {
-			foreach ($this->request->post['banner_module'] as $key => $value) {
-				if (!$value['width'] || !$value['height']) {
-					$this->error['dimension'][$key] = $this->language->get('error_dimension');
-				}
-			}
+		if (!$this->request->post['width'] || !$this->request->post['height']) {
+			$this->error['dimension'][$key] = $this->language->get('error_dimension');
 		}
 
 		return !$this->error;

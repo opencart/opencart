@@ -10,7 +10,7 @@ class ControllerModuleBanner extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('banner', $this->request->post);
+			$this->model_extension_module->editModule($this->request->get['module_id'], $this->request->post);
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -67,34 +67,41 @@ class ControllerModuleBanner extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 		
-		if (isset($this->request->post['banner_status'])) {
-			$data['banner_status'] = $this->request->post['banner_status'];
+		if (isset($this->request->post['banner_id'])) {
+			$data['banner_id'] = $this->request->post['banner_id'];
+		} elseif (!empty($module_info)) {
+			$data['banner_id'] = $module_info['banner_id'];
 		} else {
-			$data['banner_status'] = $this->config->get('banner_status');
+			$data['banner_id'] = '';
 		}
 		
-		if (isset($this->request->post['banner_module'])) {
-			$modules = $this->request->post['banner_module'];
-		} elseif ($this->config->has('banner_module')) {
-			$modules = $this->config->get('banner_module');
-		} else {
-			$modules = array();
-		}
-		
-		$data['banner_modules'] = array();
-		
-		foreach ($modules as $key => $module) {
-			$data['banner_modules'][] = array(
-				'key'       => $key,
-				'banner_id' => $module['banner_id'],
-				'width'     => $module['width'],
-				'height'    => $module['height']
-			);
-		}
-
 		$this->load->model('design/banner');
 
 		$data['banners'] = $this->model_design_banner->getBanners();
+		
+		if (isset($this->request->post['width'])) {
+			$data['width'] = $this->request->post['width'];
+		} elseif (!empty($module_info)) {
+			$data['width'] = $module_info['width'];
+		} else {
+			$data['width'] = '';
+		}	
+			
+		if (isset($this->request->post['height'])) {
+			$data['height'] = $this->request->post['height'];
+		} elseif (!empty($module_info)) {
+			$data['height'] = $module_info['height'];
+		} else {
+			$data['height'] = '';
+		}			
+		
+		if (isset($this->request->post['status'])) {
+			$data['status'] = $this->request->post['status'];
+		} elseif (!empty($module_info)) {
+			$data['status'] = $module_info['status'];
+		} else {
+			$data['status'] = '';
+		}
 		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -108,8 +115,6 @@ class ControllerModuleBanner extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (isset($this->request->post['banner_module'])) {
-			foreach ($this->request->post['banner_module'] as $key => $value) {
 				if (!$value['width'] || !$value['height']) {
 					$this->error['dimension'][$key] = $this->language->get('error_dimension');
 				}

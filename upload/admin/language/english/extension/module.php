@@ -12,5 +12,11 @@ $_['text_list']        = 'Module List';
 $_['column_name']      = 'Module Name';
 $_['column_action']    = 'Action';
 
+// Entry
+$_['entry_code']       = 'Module';
+$_['entry_name']       = 'Module Name';
+
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify modules!';
+$_['error_name']       = 'Module Name must be between 3 and 64 characters!';
+$_['error_code']       = 'Extension required!';

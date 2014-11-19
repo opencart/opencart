@@ -409,7 +409,7 @@ class ControllerLocalisationLanguage extends Controller {
 		} elseif (!empty($language_info)) {
 			$data['sort_order'] = $language_info['sort_order'];
 		} else {
-			$data['sort_order'] = '';
+			$data['sort_order'] = 1;
 		}
 
 		if (isset($this->request->post['status'])) {
@@ -417,7 +417,7 @@ class ControllerLocalisationLanguage extends Controller {
 		} elseif (!empty($language_info)) {
 			$data['status'] = $language_info['status'];
 		} else {
-			$data['status'] = 1;
+			$data['status'] = true;
 		}
 
 		$data['header'] = $this->load->controller('common/header');

@@ -932,7 +932,7 @@ class ControllerSaleCustomer extends Controller {
 		} elseif (!empty($customer_info)) {
 			$data['status'] = $customer_info['status'];
 		} else {
-			$data['status'] = 1;
+			$data['status'] = true;
 		}
 
 		if (isset($this->request->post['safe'])) {

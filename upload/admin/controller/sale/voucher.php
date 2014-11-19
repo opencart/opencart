@@ -464,7 +464,7 @@ class ControllerSaleVoucher extends Controller {
 		} elseif (!empty($voucher_info)) {
 			$data['status'] = $voucher_info['status'];
 		} else {
-			$data['status'] = 1;
+			$data['status'] = true;
 		}
 
 		$data['header'] = $this->load->controller('common/header');

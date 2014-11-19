@@ -75,13 +75,7 @@ class ControllerModuleBestSeller extends Controller {
 			$data['bestseller_status'] = $this->config->get('bestseller_status');
 		}
 		
-		if (isset($this->request->post['bestseller_module'])) {
-			$modules = $this->request->post['bestseller_module'];
-		} elseif ($this->config->has('bestseller_module')) {
-			$modules = $this->config->get('bestseller_module');
-		} else {
-			$modules = array();
-		}
+
 		
 		$data['bestseller_modules'] = array();
 		

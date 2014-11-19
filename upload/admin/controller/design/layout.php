@@ -361,41 +361,23 @@ class ControllerDesignLayout extends Controller {
 		
 		$this->load->model('extension/module');
 		
-		$data['modules'] = array();
+		$data['extensions'] = array();
 		
 		// Get a list of installed modules
-		$modules = $this->model_extension_module->getModule('module');
+		$modules = $this->model_extension_module->getModules();
 				
 		// Add all the modules which have multiple settings for each module
 		foreach ($modules as $module) {
 			$this->load->language('module/' . $module['code']);
 		
-			$i = 1;
-			
-			$module_data = array();
-			
-			if ($this->config->has($module['code'] . '_module')) {
-				$modules = $this->config->get($code . '_module');
-				
-				foreach (array_keys($modules) as $key) {
-					$module_data[] = array(
-						'name' => strip_tags($this->language->get('heading_title')) . ' ' . $i++,
-						'code' => $code . '.' . $key
-					);
-				}
-			} else {
-				$module_data[] = array(
-					'name' => strip_tags($this->language->get('heading_title')),
-					'code' => $code
-				);
-			}
-			
-			if ($module_data) {
-				$data['modules'][] = array(
-					'name'   => strip_tags($this->language->get('heading_title')),
-					'module' => $module_data
-				);
-			}
+			if (!isset($data['extensions'][$module['code']])) {
+				$data['extensions'][$module['code']]['name'] = $this->language->get('heading_title');
+			}		
+		
+			$data['extensions'][$module['code']]['module'][] = array(
+				'module_id' => $module['module_id'],
+				'name'      => $module['name']
+			);
 		}
 		
 		$data['header'] = $this->load->controller('common/header');

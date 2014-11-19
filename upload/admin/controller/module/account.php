@@ -7,10 +7,10 @@ class ControllerModuleAccount extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/setting');
+		$this->load->model('extension/module');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('account', $this->request->post);
+			$this->model_extension_module->editModule($this->request->get['module_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -48,17 +48,23 @@ class ControllerModuleAccount extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/account', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('module/account', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL')
 		);
 
-		$data['action'] = $this->url->link('module/account', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('module/account', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL');
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
-		if (isset($this->request->post['account_status'])) {
-			$data['account_status'] = $this->request->post['account_status'];
+		if (isset($this->request->get['module_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+			$module_info = $this->model_extension_module->getModule($this->request->get['module_id']);
+		}
+
+		if (isset($this->request->post['status'])) {
+			$data['status'] = $this->request->post['status'];
+		} elseif (!empty($module_info)) {
+			$data['status'] = $module_info['status'];
 		} else {
-			$data['account_status'] = $this->config->get('account_' . $module_id . '_status');
+			$data['status'] = '';
 		}
 		
 		$data['header'] = $this->load->controller('common/header');

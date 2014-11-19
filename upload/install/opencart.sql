@@ -1574,7 +1574,7 @@ INSERT INTO `oc_layout` (`layout_id`, `name`) VALUES
 CREATE TABLE IF NOT EXISTS `oc_layout_module` (
   `layout_module_id` int(11) NOT NULL AUTO_INCREMENT,
   `layout_id` int(11) NOT NULL,
-  `code` varchar(64) NOT NULL,
+  `module_id` int(11) NOT NULL,
   `position` varchar(14) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`layout_module_id`)
@@ -1584,16 +1584,17 @@ CREATE TABLE IF NOT EXISTS `oc_layout_module` (
 -- Dumping data for table `oc_layout_module`
 --
 
-INSERT INTO `oc_layout_module` (`layout_module_id`, `layout_id`, `code`, `position`, `sort_order`) VALUES
-(14, 1, 'featured.0', 'content_top', 1),
-(2, 4, 'carousel.0', 'content_top', 0),
-(3, 4, 'banner.0', 'content_top', 1),
-(19, 3, 'slideshow.pol3h8iif8j2lnmi', 'column_left', 1),
-(13, 1, 'slideshow.0', 'content_top', 0),
-(8, 6, 'account', 'column_right', 0),
-(20, 5, 'category', 'column_left', 2),
-(15, 1, 'carousel.0', 'content_bottom', 0),
-(18, 3, 'category', 'column_left', 0);
+INSERT INTO `oc_layout_module` (`layout_module_id`, `layout_id`, `module_id`, `position`, `sort_order`) VALUES
+(2, 4, 0, 'content_top', 0),
+(3, 4, 0, 'content_top', 1),
+(35, 6, 2, 'column_right', 0),
+(20, 5, 0, 'column_left', 2),
+(37, 10, 11, 'column_right', 0),
+(38, 3, 7, 'column_left', 0),
+(40, 1, 10, 'content_top', 0),
+(39, 3, 8, 'column_left', 1),
+(41, 1, 6, 'content_top', 1),
+(42, 1, 5, 'content_top', 2);
 
 -- --------------------------------------------------------
 
@@ -1773,6 +1774,19 @@ CREATE TABLE IF NOT EXISTS `oc_modification` (
   `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`modification_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- ----------------------------------------------------------
+
+-- Table structure for table `oc_module`
+--
+
+CREATE TABLE IF NOT EXISTS `oc_module` (
+  `module_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL,
+  `code` varchar(32) NOT NULL,
+  `setting` text NOT NULL,
+  PRIMARY KEY (`module_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------

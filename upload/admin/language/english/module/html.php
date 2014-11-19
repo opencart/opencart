@@ -8,10 +8,9 @@ $_['text_success']      = 'Success: You have modified HTML Content module!';
 $_['text_edit']         = 'Edit HTML Content Module';
 
 // Entry
-$_['entry_heading']     = 'Heading Title';
-$_['entry_description'] = 'Content';
+$_['entry_title']       = 'Heading Title';
+$_['entry_description'] = 'Description';
 $_['entry_status']      = 'Status';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify HTML Content module!';
-$_['error_module']      = 'Warning: Module required!';

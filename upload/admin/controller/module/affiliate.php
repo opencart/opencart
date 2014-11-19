@@ -1,5 +1,7 @@
 <?php
 class ControllerModuleAffiliate extends Controller {
+	private $error = array();
+	
 	public function index() {
 		$this->load->language('module/affiliate');
 
@@ -46,7 +48,7 @@ class ControllerModuleAffiliate extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/affiliate', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('module/affiliate', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL')
 		);
 
 		$data['action'] = $this->url->link('module/affiliate', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL');

@@ -1,5 +1,7 @@
 <?php
 class ControllerModuleAmazonButton extends Controller {
+	private $error = array();
+	
 	public function index() {
 		$this->load->language('module/amazon_button');
 
@@ -77,8 +79,12 @@ class ControllerModuleAmazonButton extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['width'] || !$this->request->post['height']) {
-			$this->error['dimension'][$key] = $this->language->get('error_dimension');
+		if (!$this->request->post['width']) {
+			$this->error['width'] = $this->language->get('error_width');
+		}
+		
+		if (!$this->request->post['height']) {
+			$this->error['height'] = $this->language->get('error_height');
 		}
 
 		return !$this->error;

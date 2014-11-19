@@ -113,5 +113,10 @@
     </div>
     </form>
   </div>
+  <script type="text/javascript"><!--
+$('#input-code').on('change', function() {
+	$('#input-name').attr('value', $(this).find(':selected').text());
+});
+  //--></script>
 </div>
 <?php echo $footer; ?>

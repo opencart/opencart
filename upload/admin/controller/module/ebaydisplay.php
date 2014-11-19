@@ -8,10 +8,10 @@ class ControllerModuleEbaydisplay extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
 
-		$this->load->model('setting/setting');
+		$this->load->model('extension/module');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('ebaydisplay', $this->request->post);
+			$this->model_extension_module->editModule($this->request->get['module_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -44,9 +44,7 @@ class ControllerModuleEbaydisplay extends Controller {
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_module_add'] = $this->language->get('button_module_add');
-		$data['button_remove'] = $this->language->get('button_remove');
-
+		
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -73,28 +71,33 @@ class ControllerModuleEbaydisplay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('module/ebaydisplay', 'token=' . $this->session->data['token'], 'SSL'),
+			'href'      => $this->url->link('module/ebaydisplay', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL'),
 		);
 
-		$data['action'] = $this->url->link('module/ebaydisplay', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('module/ebaydisplay', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL');
+		
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
-		$data['token'] = $this->session->data['token'];
-
-		$data['modules'] = array();
-
-		if (isset($this->request->post['ebaydisplay_module'])) {
-			$data['modules'] = $this->request->post['ebaydisplay_module'];
-		} elseif ($this->config->get('ebaydisplay_module')) {
-			$data['modules'] = $this->config->get('ebaydisplay_module');
-		}else{
-			$data['modules'] = array();
+		
+		if (isset($this->request->get['module_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+			$module_info = $this->model_extension_module->getModule($this->request->get['module_id']);
 		}
-		if (isset($this->request->post['ebaydisplay_module_username'])) {
-			$data['ebaydisplay_module_username'] = $this->request->post['ebaydisplay_module_username'];
-		} elseif ($this->config->get('ebaydisplay_module_username')) {
-			$data['ebaydisplay_module_username'] = $this->config->get('ebaydisplay_module_username');
+				
+		$data['token'] = $this->session->data['token'];
+		
+		if (isset($this->request->post['username'])) {
+			$data['username'] = $this->request->post['username'];
+		} elseif (!empty($module_info)) {
+			$data['username'] = $module_info['username'];
+		} else {
+			$data['username'] = '';
+		}
+		
+		if (isset($this->request->post['username'])) {
+			$data['username'] = $this->request->post['username'];
+		} elseif ($this->config->get('username')) {
+			$data['username'] = $this->config->get('ebaydisplay_module_username');
 		}else{
-			$data['ebaydisplay_module_username'] = '';
+			$data['username'] = '';
 		}
 		if (isset($this->request->post['ebaydisplay_module_keywords'])) {
 			$data['ebaydisplay_module_keywords'] = $this->request->post['ebaydisplay_module_keywords'];
@@ -133,12 +136,12 @@ class ControllerModuleEbaydisplay extends Controller {
 		}
 
 		$data['ebay_sites'] = array(
-			0 => 'USA',
-			3 => 'UK',
-			15 => 'Australia',
-			2 => 'Canada (English)',
-			71 => 'France',
-			77 => 'Germany',
+			0   => 'USA',
+			3   => 'UK',
+			15  => 'Australia',
+			2   => 'Canada (English)',
+			71  => 'France',
+			77  => 'Germany',
 			101 => 'Italy',
 			186 => 'Spain',
 			205 => 'Ireland',
@@ -188,6 +191,9 @@ class ControllerModuleEbaydisplay extends Controller {
 		if (!$this->user->hasPermission('modify', 'module/ebaydisplay')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
+		
+		
+		
 
 		return !$this->error;
 	}

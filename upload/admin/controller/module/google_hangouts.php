@@ -7,10 +7,10 @@ class ControllerModuleGoogleHangouts extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/setting');
+		$this->load->model('extension/module');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('google_hangouts', $this->request->post);
+			$this->model_extension_module->editModule($this->request->get['module_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -57,23 +57,31 @@ class ControllerModuleGoogleHangouts extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/google_hangouts', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('module/google_hangouts', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL')
 		);
 
-		$data['action'] = $this->url->link('module/google_hangouts', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('module/google_hangouts', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL');
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
-
-		if (isset($this->request->post['google_hangouts_code'])) {
-			$data['google_hangouts_code'] = $this->request->post['google_hangouts_code'];
-		} else {
-			$data['google_hangouts_code'] = $this->config->get('google_hangouts_code');
+		
+		if (isset($this->request->get['module_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+			$module_info = $this->model_extension_module->getModule($this->request->get['module_id']);
 		}
 		
-		if (isset($this->request->post['google_hangouts_status'])) {
-			$data['google_hangouts_status'] = $this->request->post['google_hangouts_status'];
+		if (isset($this->request->post['code'])) {
+			$data['code'] = $this->request->post['code'];
+		} elseif (!empty($module_info)) {
+			$data['code'] = $module_info['code'];
 		} else {
-			$data['google_hangouts_status'] = $this->config->get('google_hangouts_status');
+			$data['code'] = '';
+		}
+				
+		if (isset($this->request->post['status'])) {
+			$data['status'] = $this->request->post['status'];
+		} elseif (!empty($module_info)) {
+			$data['status'] = $module_info['status'];
+		} else {
+			$data['status'] = '';
 		}
 		
 		$data['header'] = $this->load->controller('common/header');
@@ -88,7 +96,7 @@ class ControllerModuleGoogleHangouts extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['google_hangouts_code']) {
+		if (!$this->request->post['code']) {
 			$this->error['code'] = $this->language->get('error_code');
 		}
 

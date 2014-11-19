@@ -25,5 +25,6 @@ $_['entry_status']   	= 'Status';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify module eBay display!';
-$_['error_image']       = 'Image width &amp; height dimensions required!';
+$_['error_width']       = 'Width required!';
+$_['error_height']      = 'Height required!';
 $_['error_openbay']     = 'You need to register and enable OpenBay Pro for eBay!';

@@ -9,12 +9,11 @@ $_['text_edit']        = 'Edit Slideshow Module';
 
 // Entry
 $_['entry_banner']     = 'Banner';
-$_['entry_dimension']  = 'Dimension (W x H) and Resize Type';
 $_['entry_width']      = 'Width';
 $_['entry_height']     = 'Height';
 $_['entry_status']     = 'Status';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify slideshow module!';
-$_['error_module']     = 'Warning: Module required!';
-$_['error_dimension']  = 'Width &amp; Height dimensions required!';
+$_['error_width']      = 'Width required!';
+$_['error_height']     = 'Height required!';

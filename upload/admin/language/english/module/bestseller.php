@@ -16,5 +16,5 @@ $_['entry_status']     = 'Status';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify bestsellers module!';
-$_['error_module']     = 'Warning: Module required!';
-$_['error_image']      = 'Image width &amp; height dimensions required!';
+$_['error_width']      = 'Width required!';
+$_['error_height']     = 'Height required!';

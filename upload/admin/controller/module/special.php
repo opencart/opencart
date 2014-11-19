@@ -3,14 +3,14 @@ class ControllerModuleSpecial extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/special');
+		$this->load->language('module/account');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/setting');
+		$this->load->model('extension/module');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('special', $this->request->post);
+			$this->model_extension_module->editModule($this->request->get['module_id'], $this->request->post);
 
 			$this->cache->delete('product');
 
@@ -33,8 +33,6 @@ class ControllerModuleSpecial extends Controller {
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_module_add'] = $this->language->get('button_module_add');
-		$data['button_remove'] = $this->language->get('button_remove');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -62,36 +60,47 @@ class ControllerModuleSpecial extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/special', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('module/special', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL')
 		);
 
-		$data['action'] = $this->url->link('module/special', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('module/special', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL');
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 		
-		if (isset($this->request->post['special_status'])) {
-			$data['special_status'] = $this->request->post['special_status'];
-		} else {
-			$data['special_status'] = $this->config->get('special_status');
-		}
-
-		if (isset($this->request->post['special_module'])) {
-			$modules = $this->request->post['special_module'];
-		} elseif ($this->config->has('special_module')) {
-			$modules = $this->config->get('special_module');
-		} else {
-			$modules = array();
+		if (isset($this->request->get['module_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+			$module_info = $this->model_extension_module->getModule($this->request->get['module_id']);
 		}
 				
-		$data['special_modules'] = array();
+		if (isset($this->request->post['limit'])) {
+			$data['limit'] = $this->request->post['limit'];
+		} elseif (!empty($module_info)) {
+			$data['limit'] = $module_info['limit'];
+		} else {
+			$data['limit'] = '';
+		}	
+
+		if (isset($this->request->post['width'])) {
+			$data['width'] = $this->request->post['width'];
+		} elseif (!empty($module_info)) {
+			$data['width'] = $module_info['width'];
+		} else {
+			$data['width'] = '';
+		}	
+			
+		if (isset($this->request->post['height'])) {
+			$data['height'] = $this->request->post['height'];
+		} elseif (!empty($module_info)) {
+			$data['height'] = $module_info['height'];
+		} else {
+			$data['height'] = '';
+		}
 		
-		foreach ($modules as $key => $module) {
-			$data['special_modules'][] = array(
-				'key'    => $key,
-				'limit'  => $module['limit'],
-				'width'  => $module['width'],
-				'height' => $module['height']
-			);
+		if (isset($this->request->post['status'])) {
+			$data['status'] = $this->request->post['status'];
+		} elseif (!empty($module_info)) {
+			$data['status'] = $module_info['status'];
+		} else {
+			$data['status'] = '';
 		}
 		
 		$data['header'] = $this->load->controller('common/header');
@@ -106,14 +115,12 @@ class ControllerModuleSpecial extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (isset($this->request->post['special_module'])) {
-			foreach ($this->request->post['special_module'] as $key => $value) {
-				if (!$value['width'] || !$value['height']) {
-					$this->error['image'][$key] = $this->language->get('error_image');
-				}
-			}
-		} else {
-			$this->error['warning'] = $this->language->get('error_module');
+		if (!$this->request->post['width']) {
+			$this->error['width'] = $this->language->get('error_width');
+		}
+		
+		if (!$this->request->post['height']) {
+			$this->error['height'] = $this->language->get('error_height');
 		}
 
 		return !$this->error;

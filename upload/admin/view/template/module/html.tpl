@@ -25,11 +25,36 @@
       </div>
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-html" class="form-horizontal">
+          <div class="tab-pane">
+            <ul class="nav nav-tabs" id="language">
+              <?php foreach ($languages as $language) { ?>
+              <li><a href="#language<?php echo $language['language_id']; ?>" data-toggle="tab"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a></li>
+              <?php } ?>
+            </ul>
+            <div class="tab-content">
+              <?php foreach ($languages as $language) { ?>
+              <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-title<?php echo $language['language_id']; ?>"><?php echo $entry_title; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="module_description[<?php echo $language['language_id']; ?>][title]" placeholder="<?php echo $entry_title; ?>" id="input-heading<?php echo $language['language_id']; ?>" value="<?php echo isset($module_description[$language['language_id']]['title']) ? $module_description[$language['language_id']]['title'] : ''; ?>" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-description<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
+                  <div class="col-sm-10">
+                    <textarea name="module_description[<?php echo $language['language_id']; ?>][description]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($module_description[$language['language_id']]['description']) ? $module_description[$language['language_id']]['description'] : ''; ?></textarea>
+                  </div>
+                </div>
+              </div>
+              <?php } ?>
+            </div>
+          </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
             <div class="col-sm-10">
-              <select name="html_status" id="input-status" class="form-control">
-                <?php if ($html_status) { ?>
+              <select name="status" id="input-status" class="form-control">
+                <?php if ($status) { ?>
                 <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                 <option value="0"><?php echo $text_disabled; ?></option>
                 <?php } else { ?>
@@ -39,118 +64,16 @@
               </select>
             </div>
           </div>
-          <div class="row">
-            <div class="col-sm-2">
-              <ul class="nav nav-pills nav-stacked" id="module">
-                <?php $module_row = 0; ?>
-                <?php foreach ($html_modules as $html_module) { ?>
-                <li><a href="#tab-module<?php echo $module_row; ?>" data-toggle="tab"><i class="fa fa-minus-circle" onclick="$('a[href=\'#tab-module<?php echo $module_row; ?>\']').parent().remove(); $('#tab-module<?php echo $module_row; ?>').remove(); $('#module a:first').tab('show');"></i> <?php echo $tab_module . ' ' . $module_row; ?></a></li>
-                <?php $module_row++; ?>
-                <?php } ?>
-                <li id="module-add"><a onclick="addModule();"><i class="fa fa-plus-circle"></i> <?php echo $button_module_add; ?></a></li>
-              </ul>
-            </div>
-            <div class="col-sm-10">
-              <div class="tab-content">
-                <?php $module_row = 0; ?>
-                <?php foreach ($html_modules as $html_module) { ?>
-                <div class="tab-pane" id="tab-module<?php echo $module_row; ?>">
-                  <ul class="nav nav-tabs" id="language<?php echo $module_row; ?>">
-                    <?php foreach ($languages as $language) { ?>
-                    <li><a href="#tab-module<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>" data-toggle="tab"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a></li>
-                    <?php } ?>
-                  </ul>
-                  <div class="tab-content">
-                    <?php foreach ($languages as $language) { ?>
-                    <div class="tab-pane" id="tab-module<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>">
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-heading<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>"><?php echo $entry_heading; ?></label>
-                        <div class="col-sm-10">
-                          <input type="text" name="html_module[<?php echo $module_row; ?>][heading][<?php echo $language['language_id']; ?>]" placeholder="<?php echo $entry_heading; ?>" id="input-heading<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>" value="<?php echo isset($html_module['heading'][$language['language_id']]) ? $html_module['heading'][$language['language_id']] : ''; ?>" class="form-control" />
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-description<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
-                        <div class="col-sm-10">
-                          <textarea name="html_module[<?php echo $module_row; ?>][description][<?php echo $language['language_id']; ?>]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($html_module['description'][$language['language_id']]) ? $html_module['description'][$language['language_id']] : ''; ?></textarea>
-                        </div>
-                      </div>
-                    </div>
-                    <?php } ?>
-                  </div>
-                </div>
-                <?php $module_row++; ?>
-                <?php } ?>
-              </div>
-            </div>
-          </div>
         </form>
       </div>
     </div>
   </div>
   <script type="text/javascript"><!--
-<?php $module_row = 0; ?>
-<?php foreach ($html_modules as $html_module) { ?>
 <?php foreach ($languages as $language) { ?>
-$('#input-description<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>').summernote({
-	height: 300
-});
-<?php } ?>
-<?php $module_row++; ?>
+$('#input-description<?php echo $language['language_id']; ?>').summernote({height: 300});
 <?php } ?>
 //--></script> 
   <script type="text/javascript"><!--
-  var module_row = <?php echo $module_row; ?>;
-  
-function addModule() {
-	html  = '<div class="tab-pane" id="tab-module' + module_row + '">';
-	html += '  <ul class="nav nav-tabs" id="language' + module_row + '">';
-    <?php foreach ($languages as $language) { ?>
-    html += '    <li><a href="#tab-module' + module_row + '-language<?php echo $language['language_id']; ?>" data-toggle="tab"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a></li>';
-    <?php } ?>
-	html += '  </ul>';
-
-	html += '  <div class="tab-content">';
-
-	<?php foreach ($languages as $language) { ?>
-	html += '    <div class="tab-pane" id="tab-module' + module_row + '-language<?php echo $language['language_id']; ?>">';
-	html += '      <div class="form-group">';
-	html += '        <label class="col-sm-2 control-label" for="input-heading' + module_row + '-language<?php echo $language['language_id']; ?>"><?php echo $entry_heading; ?></label>';
-	html += '        <div class="col-sm-10"><input type="text" name="html_module[' + module_row + '][heading][<?php echo $language['language_id']; ?>]" placeholder="<?php echo $entry_heading; ?>" id="input-heading' + module_row + '-language<?php echo $language['language_id']; ?>" value="" class="form-control"/></div>';
-	html += '      </div>';
-	html += '      <div class="form-group">';
-	html += '        <label class="col-sm-2 control-label" for="input-description' + module_row + '-language<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>';
-	html += '        <div class="col-sm-10"><textarea name="html_module[' + module_row + '][description][<?php echo $language['language_id']; ?>]" placeholder="<?php echo $entry_description; ?>" id="input-description' + module_row + '-language<?php echo $language['language_id']; ?>"></textarea></div>';
-	html += '      </div>';
-	html += '    </div>';
-	<?php } ?>
-
-	html += '  </div>';
-	html += '</div>';
-
-	$('.tab-content:first-child').prepend(html);
-
-	<?php foreach ($languages as $language) { ?>
-	$('#input-description' + module_row + '-language<?php echo $language['language_id']; ?>').summernote({
-		height: 300
-	});
-	<?php } ?>
-
-	$('#module-add').before('<li><a href="#tab-module' + module_row + '" data-toggle="tab"><i class="fa fa-minus-circle" onclick="$(\'a[href=\\\'#tab-module' + module_row + '\\\']\').parent().remove(); $(\'#tab-module' + module_row + '\').remove(); $(\'#module a:first\').tab(\'show\');"></i> <?php echo $tab_module; ?> ' + module_row + '</a></li>');
-
-	$('#module a[href=\'#tab-module' + module_row + '\']').tab('show');
-
-	$('#language' + module_row + ' li:first-child a').tab('show');
-
-	module_row++;
-}
-//--></script> 
-  <script type="text/javascript"><!--
-$('#module li:first-child a').tab('show');
-<?php $module_row = 0; ?>
-<?php foreach ($html_modules as $html_module) { ?>
-$('#language<?php echo $module_row; ?> li:first-child a').tab('show');
-<?php $module_row++; ?>
-<?php } ?>
+$('#language a:first').tab('show');
 //--></script></div>
 <?php echo $footer; ?>

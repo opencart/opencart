@@ -674,6 +674,8 @@ class ControllerSaleCustomer extends Controller {
 		$data['text_form'] = !isset($this->request->get['customer_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
+		$data['text_yes'] = $this->language->get('text_yes');
+		$data['text_no'] = $this->language->get('text_no');		
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -689,8 +691,9 @@ class ControllerSaleCustomer extends Controller {
 		$data['entry_password'] = $this->language->get('entry_password');
 		$data['entry_confirm'] = $this->language->get('entry_confirm');
 		$data['entry_newsletter'] = $this->language->get('entry_newsletter');
-		$data['entry_safe'] = $this->language->get('entry_safe');
 		$data['entry_status'] = $this->language->get('entry_status');
+		$data['entry_approved'] = $this->language->get('entry_approved');
+		$data['entry_safe'] = $this->language->get('entry_safe');
 		$data['entry_company'] = $this->language->get('entry_company');
 		$data['entry_address_1'] = $this->language->get('entry_address_1');
 		$data['entry_address_2'] = $this->language->get('entry_address_2');
@@ -934,7 +937,15 @@ class ControllerSaleCustomer extends Controller {
 		} else {
 			$data['status'] = true;
 		}
-
+		
+		if (isset($this->request->post['approved'])) {
+			$data['approved'] = $this->request->post['approved'];
+		} elseif (!empty($customer_info)) {
+			$data['approved'] = $customer_info['approved'];
+		} else {
+			$data['approved'] = true;
+		}
+		
 		if (isset($this->request->post['safe'])) {
 			$data['safe'] = $this->request->post['safe'];
 		} elseif (!empty($customer_info)) {

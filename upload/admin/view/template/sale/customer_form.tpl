@@ -307,15 +307,29 @@
                         </div>
                       </div>
                       <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-approved"><?php echo $entry_approved; ?></label>
+                        <div class="col-sm-10">
+                          <select name="approved" id="input-approved" class="form-control">
+                            <?php if ($approved) { ?>
+                            <option value="1" selected="selected"><?php echo $text_yes; ?></option>
+                            <option value="0"><?php echo $text_no; ?></option>
+                            <?php } else { ?>
+                            <option value="1"><?php echo $text_yes; ?></option>
+                            <option value="0" selected="selected"><?php echo $text_no; ?></option>
+                            <?php } ?>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-safe"><?php echo $entry_safe; ?></label>
                         <div class="col-sm-10">
                           <select name="safe" id="input-safe" class="form-control">
                             <?php if ($safe) { ?>
-                            <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                            <option value="0"><?php echo $text_disabled; ?></option>
+                            <option value="1" selected="selected"><?php echo $textyes; ?></option>
+                            <option value="0"><?php echo $text_no; ?></option>
                             <?php } else { ?>
-                            <option value="1"><?php echo $text_enabled; ?></option>
-                            <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                            <option value="1"><?php echo $text_yes; ?></option>
+                            <option value="0" selected="selected"><?php echo $text_no; ?></option>
                             <?php } ?>
                           </select>
                         </div>

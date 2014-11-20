@@ -73,3 +73,6 @@
 
 #### Added
 * New checks during install to check for iconv function or mbstring extension as used by UTF8 helper [**view**](https://github.com/opencart/opencart/commit/8f4a58899e5ca0316b3e3be49a1171ccf3b0db26)
+
+
+Add by tupv

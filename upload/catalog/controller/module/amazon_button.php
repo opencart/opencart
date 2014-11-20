@@ -3,8 +3,7 @@ class ControllerModuleAmazonButton extends Controller {
 	public function index($setting) {
 		$allowed_ips = $this->config->get('amazon_checkout_allowed_ips');
 
-		if ((empty($allowed_ips) || in_array($this->request->server['REMOTE_ADDR'], $allowed_ips)) && $this->cart->hasProducts() && (!isset($this->session->data['vouchers']) || empty($this->session->data['vouchers'])) && !$this->cart->hasRecurringProducts()) {
-
+		if ($this->config->get('amazon_checkout_status') && (empty($allowed_ips) || in_array($this->request->server['REMOTE_ADDR'], $allowed_ips)) && $this->cart->hasProducts() && (!isset($this->session->data['vouchers']) || empty($this->session->data['vouchers'])) && !$this->cart->hasRecurringProducts()) {
 			if ($this->config->get('amazon_checkout_mode') == 'sandbox') {
 				if ($this->config->get('amazon_checkout_marketplace') == 'uk') {
 					$amazon_payment_js = 'https://static-eu.payments-amazon.com/cba/js/gb/sandbox/PaymentWidgets.js';

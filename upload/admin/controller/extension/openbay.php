@@ -18,8 +18,8 @@ class ControllerExtensionOpenbay extends Controller {
 
 			$this->load->model('user/user_group');
 
-			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'openbay/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'openbay/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'openbay/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'openbay/' . $this->request->get['extension']);
 
 			require_once(DIR_APPLICATION . 'controller/openbay/' . $this->request->get['extension'] . '.php');
 
@@ -319,8 +319,8 @@ class ControllerExtensionOpenbay extends Controller {
 
 		if (!in_array('openbay', $installed_modules)) {
 			$this->model_extension_extension->install('feed', 'openbay');
-			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'feed/openbay');
-			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'feed/openbay');
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'feed/openbay');
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'feed/openbay');
 		}
 
 		sleep(1);

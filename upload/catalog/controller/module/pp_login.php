@@ -1,36 +1,36 @@
 <?php
 class ControllerModulePPLogin extends Controller {
-	public function index() {
-		if ($this->config->get('pp_login_status') && !$this->customer->isLogged()) {
-			$data['pp_login_client_id'] = $this->config->get('pp_login_client_id');
-			$data['pp_login_return_url'] = $this->url->link('module/pp_login/login', '', 'SSL');
+	public function index($setting) {
+		if (!$this->customer->isLogged()) {
+			$data['client_id'] = $setting['client_id'];
+			$data['return_url'] = $this->url->link('module/pp_login/login', '', 'SSL');
 
-			if ($this->config->get('pp_login_sandbox')) {
-				$data['pp_login_sandbox'] = 'sandbox';
+			if ($setting['sandbox']) {
+				$data['sandbox'] = 'sandbox';
 			} else {
-				$data['pp_login_sandbox'] = '';
+				$data['sandbox'] = '';
 			}
 
-			if ($this->config->get('pp_login_button_colour') == 'grey') {
-				$data['pp_login_button_colour'] = 'neutral';
+			if ($setting['button_colour'] == 'grey') {
+				$data['button_colour'] = 'neutral';
 			} else {
-				$data['pp_login_button_colour'] = '';
+				$data['button_colour'] = '';
 			}
 
-			$pp_login_locale = $this->config->get('pp_login_locale');
+			$locale = $setting['locale'];
 
 			$this->load->model('localisation/language');
 
 			$languages = $this->model_localisation_language->getLanguages();
 
 			foreach ($languages as $language) {
-				if ($language['status'] && ($language['code'] == $this->session->data['language']) && isset($pp_login_locale[$language['language_id']])) {
-					$data['pp_login_locale'] = $pp_login_locale[$language['language_id']];
+				if ($language['status'] && ($language['code'] == $this->session->data['language']) && isset($locale[$language['language_id']])) {
+					$data['locale'] = $locale[$language['language_id']];
 				}
 			}
 
-			if (!isset($data['pp_login_locale'])) {
-				$data['pp_login_locale'] = 'en-gb';
+			if (!isset($data['locale'])) {
+				$data['locale'] = 'en-gb';
 			}
 
 			$scopes = array(
@@ -40,11 +40,11 @@ class ControllerModulePPLogin extends Controller {
 				'phone'
 			);
 
-			if ($this->config->get('pp_login_seamless')) {
+			if ($this->config->get('seamless')) {
 				$scopes[] = 'https://uri.paypal.com/services/expresscheckout';
 			}
 
-			$data['pp_login_scopes'] = implode(' ', $scopes);
+			$data['scopes'] = implode(' ', $scopes);
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/pp_login.tpl')) {
 				return $this->load->view($this->config->get('config_template') . '/template/module/pp_login.tpl', $data);

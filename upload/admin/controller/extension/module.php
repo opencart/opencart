@@ -21,13 +21,14 @@ class ControllerExtensionModule extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_extension_module->addModule($this->request->post);
-			//$this->load->controller('module/' . $this->request->get['extension'] . '/install');
-			// Add permissions
-			//$this->load->model('user/user_group');
 			
-			//$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'module/' . $this->request->post['code']);
-			//$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'module/' . $this->request->post['code']);
-			//$this->load->model('user/user_group');
+			$this->load->controller('module/' . $this->request->post['code'] . '/install');
+			
+			// Add permissions
+			$this->load->model('user/user_group');
+			
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'module/' . $this->request->post['code']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'module/' . $this->request->post['code']);
 		
 			$this->session->data['success'] = $this->language->get('text_success');
 

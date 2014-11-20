@@ -118,7 +118,7 @@
             <div class="col-sm-10">
               <?php foreach ($languages as $language) { ?>
               <div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
-                <select name="locale[<?php echo $language['language_id']; ?>]" class="form-control">
+                <select name="locale" class="form-control">
                   <?php foreach ($locales as $locale) { ?>
                   <?php if (isset($pp_login_locale[$language['language_id']]) && $pp_login_locale[$language['language_id']] == $locale['value']) { ?>
                   <option value="<?php echo $locale['value']; ?>" selected="selected"><?php echo $locale['text']; ?></option>

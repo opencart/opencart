@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleEbaydisplay extends Controller {
+class ControllerModuleEbay extends Controller {
 	public function index($setting) {
 		if ($this->config->get('ebay_status') == 1) {
 			$this->language->load('module/ebay');
@@ -11,12 +11,12 @@ class ControllerModuleEbaydisplay extends Controller {
 
 			$data['products'] = array();
 
-			$products = $this->cache->get('ebaydisplay.' . md5(serialize($setting)));
+			$products = $this->cache->get('ebay.' . md5(serialize($setting)));
 
 			if (!$products) {
 				$products = $this->model_openbay_ebay_product->getDisplayProducts();
 				
-				$this->cache->set('ebaydisplay.' . md5(serialize($setting)), $products);
+				$this->cache->set('ebay.' . md5(serialize($setting)), $products);
 			}
 
 			foreach($products['products'] as $product) {

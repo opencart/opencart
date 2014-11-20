@@ -1,5 +1,7 @@
 <?php
 class ControllerModulePPLogin extends Controller {
+	private $error = array();
+
 	public function index($setting) {
 		if (!$this->customer->isLogged()) {
 			$data['client_id'] = $setting['client_id'];
@@ -82,42 +84,10 @@ class ControllerModulePPLogin extends Controller {
 
 			if ($customer_info) {
 				if ($this->validate($user->email)) {
-					unset($this->session->data['guest']);
-
-					// Default Shipping Address
-					$this->load->model('account/address');
-
-					if ($this->config->get('config_tax_customer') == 'payment') {
-						$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
-					}
-
-					if ($this->config->get('config_tax_customer') == 'shipping') {
-						$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
-					}
-
-					// Add to activity log
-					$this->load->model('account/activity');
-
-					$activity_data = array(
-						'customer_id' => $this->customer->getId(),
-						'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-					);
-
-					$this->model_account_activity->addActivity('login', $activity_data);
-
-					if ($this->config->get('pp_login_seamless')) {
-						$this->session->data['pp_login']['seamless']['customer_id'] = $this->customer->getId();
-						$this->session->data['pp_login']['seamless']['access_token'] = $tokens->access_token;
-					} else {
-						if (isset($this->session->data['pp_login']['seamless'])) {
-							unset($this->session->data['pp_login']['seamless']);
-						}
-					}
-
-					$this->model_module_pp_login->log('Customer logged in - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
-					echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/account', '', 'SSL') . '"; window.close();</script>';
+					$this->completeLogin($$customer_info['customer_id'], $customer_info['email'], $tokens->access_token);
 				} else {
 					$this->model_module_pp_login->log('Could not login to - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
+                    echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/login', '', 'SSL') . '"; window.close();</script>';
 				}
 			} else {
 				$country = $this->db->query("SELECT `country_id` FROM `" . DB_PREFIX . "country` WHERE iso_code_2 = '" . $this->db->escape($user->address->country) . "'");
@@ -165,42 +135,10 @@ class ControllerModulePPLogin extends Controller {
 				$this->model_module_pp_login->log('Customer ID date_added: ' . $customer_id);
 
 				if ($this->validate($user->email)) {
-					unset($this->session->data['guest']);
-
-					// Default Shipping Address
-					$this->load->model('account/address');
-
-					if ($this->config->get('config_tax_customer') == 'payment') {
-						$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
-					}
-
-					if ($this->config->get('config_tax_customer') == 'shipping') {
-						$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
-					}
-
-					// Add to activity log
-					$this->load->model('account/activity');
-
-					$activity_data = array(
-						'customer_id' => $this->customer->getId(),
-						'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
-					);
-
-					$this->model_account_activity->addActivity('login', $activity_data);
-
-					if ($this->config->get('pp_login_seamless')) {
-						$this->session->data['pp_login']['seamless']['customer_id'] = $this->customer->getId();
-						$this->session->data['pp_login']['seamless']['access_token'] = $tokens->access_token;
-					} else {
-						if (isset($this->session->data['pp_login']['seamless'])) {
-							unset($this->session->data['pp_login']['seamless']);
-						}
-					}
-
-					$this->model_module_pp_login->log('Customer logged in - ID: ' . $customer_id . ', Email: ' . $user->email);
-					echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/account', '', 'SSL') . '"; window.close();</script>';
+					$this->completeLogin($customer_id, $user->email, $tokens->access_token);
 				} else {
 					$this->model_module_pp_login->log('Could not login to - ID: ' . $customer_id . ', Email: ' . $user->email);
+					echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/login', '', 'SSL') . '"; window.close();</script>';
 				}
 			}
 		}
@@ -212,15 +150,66 @@ class ControllerModulePPLogin extends Controller {
 		}
 	}
 
+    protected function completeLogin($customer_id, $email, $access_token) {
+        unset($this->session->data['guest']);
+
+        // Default Shipping Address
+        $this->load->model('account/address');
+
+        if ($this->config->get('config_tax_customer') == 'payment') {
+            $this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+        }
+
+        if ($this->config->get('config_tax_customer') == 'shipping') {
+            $this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+        }
+
+        // Add to activity log
+        $this->load->model('account/activity');
+
+        $activity_data = array(
+            'customer_id' => $this->customer->getId(),
+            'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+        );
+
+        $this->model_account_activity->addActivity('login', $activity_data);
+
+        if ($this->config->get('pp_login_seamless')) {
+            $this->session->data['pp_login']['seamless']['customer_id'] = $this->customer->getId();
+            $this->session->data['pp_login']['seamless']['access_token'] = $access_token;
+        } else {
+            if (isset($this->session->data['pp_login']['seamless'])) {
+                unset($this->session->data['pp_login']['seamless']);
+            }
+        }
+
+        $this->model_module_pp_login->log('Customer logged in - ID: ' . $customer_id . ', Email: ' . $email);
+        echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/account', '', 'SSL') . '"; window.close();</script>';
+    }
+
 	protected function validate($email) {
-		if (!$this->customer->login($email, '', true)) {
-			$this->error['warning'] = $this->language->get('error_login');
+		// Check how many login attempts have been made.
+		$login_info = $this->model_account_customer->getLoginAttempts($email);
+
+		if ($login_info && ($login_info['total'] > $this->config->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
+			$this->error['warning'] = $this->language->get('error_attempts');
 		}
 
+		// Check if customer has been approved.
 		$customer_info = $this->model_account_customer->getCustomerByEmail($email);
 
 		if ($customer_info && !$customer_info['approved']) {
 			$this->error['warning'] = $this->language->get('error_approved');
+		}
+
+		if (!$this->error) {
+			if (!$this->customer->login($email, '', true)) {
+				$this->error['warning'] = $this->language->get('error_login');
+
+				$this->model_account_customer->addLoginAttempt($email);
+			} else {
+				$this->model_account_customer->deleteLoginAttempts($email);
+			}
 		}
 
 		return !$this->error;

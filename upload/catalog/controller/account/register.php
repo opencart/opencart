@@ -290,7 +290,7 @@ class ControllerAccountRegister extends Controller {
 				$address_custom_field = array();
 			}			
 			
-			$data['register_custom_field'] = array_merge($account_custom_field, $address_custom_field);
+			$data['register_custom_field'] = $account_custom_field + $address_custom_field;
 		} else {
 			$data['register_custom_field'] = array();
 		}

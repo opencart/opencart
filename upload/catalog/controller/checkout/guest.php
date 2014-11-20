@@ -136,8 +136,6 @@ class ControllerCheckoutGuest extends Controller {
 		$data['custom_fields'] = $this->model_account_custom_field->getCustomFields();
 
 		if (isset($this->session->data['guest']['custom_field'])) {
-			$data['guest_custom_field'] = array();
-			
 			if (isset($this->session->data['guest']['custom_field'])) {
 				$guest_custom_field_ = $this->session->data['guest']['custom_field'];
 			} else {
@@ -145,12 +143,12 @@ class ControllerCheckoutGuest extends Controller {
 			}
 			
 			if (isset($this->session->data['payment_address']['custom_field'])) {
-				$payment_address_custom_field = $this->session->data['payment_address']['custom_field'];
+				$address_custom_field = $this->session->data['payment_address']['custom_field'];
 			} else {
-				$payment_address_custom_field = array();
+				$address_custom_field = array();
 			}
 						
-			$data['guest_custom_field'] = array_merge($guest_custom_field, $payment_address_custom_field);
+			$data['guest_custom_field'] = $guest_custom_field + $address_custom_field;
 		} else {
 			$data['guest_custom_field'] = array();
 		}

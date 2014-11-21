@@ -25,6 +25,9 @@
           <?php } ?>
           <li><a href="#tab-product" data-toggle="tab"><?php echo $tab_product; ?></a></li>
           <li><a href="#tab-history" data-toggle="tab"><?php echo $tab_history; ?></a></li>
+          <?php if ($payment_action) { ?>
+          <li><a href="#tab-action" data-toggle="tab"><?php echo $tab_action; ?></a></li>
+          <?php } ?>
           <?php if ($maxmind_id) { ?>
           <li><a href="#tab-fraud" data-toggle="tab"><?php echo $tab_fraud; ?></a></li>
           <?php } ?>
@@ -81,6 +84,12 @@
               <tr>
                 <td><?php echo $text_fax; ?></td>
                 <td><?php echo $fax; ?></td>
+              </tr>
+              <?php } ?>
+              <?php foreach ($account_custom_fields as $custom_field) { ?>
+              <tr>
+                <td><?php echo $custom_field['name']; ?>:</td>
+                <td><?php echo $custom_field['value']; ?></td>
               </tr>
               <?php } ?>
               <tr>
@@ -157,78 +166,6 @@
                 <td><?php echo $text_date_modified; ?></td>
                 <td><?php echo $date_modified; ?></td>
               </tr>
-              <!-- Begin Account Custom Fields -->
-              <?php foreach ($custom_fields as $custom_field) { ?>
-                <?php if ($custom_field['location'] == 'account') { ?>
-                  <?php if ($custom_field['type'] == 'select') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td>
-                    <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
-                      <?php if (isset($account_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $account_custom_field['value']) { ?>
-                        <?php echo $custom_field_value['name']; ?><br>
-                      <?php } ?>
-                    <?php } ?>
-                    </td>
-                    </tr>
-                  <?php } ?>
-                  <?php if ($custom_field['type'] == 'radio') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td>
-                    <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
-                      <?php if (isset($account_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $account_custom_field[$custom_field['custom_field_id']]) { ?>
-                        <?php echo $custom_field_value['name']; ?><br>
-                      <?php } ?>
-                    <?php } ?>
-                    </td>
-                    </tr>
-                  <?php } ?>
-                  <?php if ($custom_field['type'] == 'checkbox') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td>
-                    <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
-                      <?php if (isset($account_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $account_custom_field['value'])) { ?>
-                      <?php echo $custom_field_value['name']; ?><br>
-                      <?php } ?>
-                    <?php } ?>
-                    </td>
-                    </tr>
-                  <?php } ?>
-                  <?php if ($custom_field['type'] == 'text') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td><?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></td>
-                    </tr>
-                  <?php } ?>
-                  <?php if ($custom_field['type'] == 'textarea') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td><textarea name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" rows="5" placeholder="<?php echo $custom_field['name']; ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control"><?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></textarea></td>
-                    </tr>
-                  <?php } ?>
-                  <?php if ($custom_field['type'] == 'date') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td><?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></td>
-                    </tr>
-                  <?php } ?>
-                  <?php if ($custom_field['type'] == 'time') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td><?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></td>
-                    </tr>
-                  <?php } ?>
-                  <?php if ($custom_field['type'] == 'datetime') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td><?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></td>
-                    </tr>
-                  <?php } ?>
-                <?php } ?>
-              <?php } ?>
-              <!-- END Account Custom Fields -->
             </table>
           </div>
           <div class="tab-pane" id="tab-payment">
@@ -281,84 +218,18 @@
                 <td><?php echo $text_country; ?></td>
                 <td><?php echo $payment_country; ?></td>
               </tr>
+              <?php foreach ($payment_custom_fields as $custom_field) { ?>
+              <tr>
+                <td><?php echo $custom_field['name']; ?>:</td>
+                <td><?php echo $custom_field['value']; ?></td>
+              </tr>
+              <?php } ?>
               <tr>
                 <td><?php echo $text_payment_method; ?></td>
                 <td><?php echo $payment_method; ?></td>
               </tr>
-              <!-- Begin Payment Custom Fields -->
-              <?php foreach ($custom_fields as $custom_field) { ?>
-                <?php if ($custom_field['location'] == 'address') { ?>
-                  <?php if ($custom_field['type'] == 'select') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td>
-                    <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
-                      <?php if (isset($payment_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $payment_custom_field['value']) { ?>
-                        <?php echo $custom_field_value['name']; ?><br>
-                      <?php } ?>
-                    <?php } ?>
-                    </td>
-                    </tr>
-                  <?php } ?>
-                  <?php if ($custom_field['type'] == 'radio') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td>
-                    <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
-                      <?php if (isset($payment_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $payment_custom_field[$custom_field['custom_field_id']]) { ?>
-                        <?php echo $custom_field_value['name']; ?><br>
-                      <?php } ?>
-                    <?php } ?>
-                    </td>
-                    </tr>
-                  <?php } ?>
-                  <?php if ($custom_field['type'] == 'checkbox') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td>
-                    <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
-                      <?php if (isset($payment_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $payment_custom_field['value'])) { ?>
-                      <?php echo $custom_field_value['name']; ?><br>
-                      <?php } ?>
-                    <?php } ?>
-                    </td>
-                    </tr>
-                  <?php } ?>
-                  <?php if ($custom_field['type'] == 'text') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td><?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></td>
-                    </tr>
-                  <?php } ?>
-                  <?php if ($custom_field['type'] == 'textarea') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td><textarea name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" rows="5" placeholder="<?php echo $custom_field['name']; ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control"><?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></textarea></td>
-                    </tr>
-                  <?php } ?>
-                  <?php if ($custom_field['type'] == 'date') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td><?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></td>
-                    </tr>
-                  <?php } ?>
-                  <?php if ($custom_field['type'] == 'time') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td><?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></td>
-                    </tr>
-                  <?php } ?>
-                  <?php if ($custom_field['type'] == 'datetime') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td><?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></td>
-                    </tr>
-                  <?php } ?>
-                <?php } ?>
-              <?php } ?>
-              <!-- END Payment Custom Fields -->
             </table>
-            <?php echo $payment_action; ?></div>
+          </div>
           <?php if ($shipping_method) { ?>
           <div class="tab-pane" id="tab-shipping">
             <table class="table table-bordered">
@@ -410,84 +281,18 @@
                 <td><?php echo $text_country; ?></td>
                 <td><?php echo $shipping_country; ?></td>
               </tr>
+              <?php foreach ($shipping_custom_fields as $custom_field) { ?>
+              <tr>
+                <td><?php echo $custom_field['name']; ?>:</td>
+                <td><?php echo $custom_field['value']; ?></td>
+              </tr>
+              <?php } ?>
               <?php if ($shipping_method) { ?>
               <tr>
                 <td><?php echo $text_shipping_method; ?></td>
                 <td><?php echo $shipping_method; ?></td>
               </tr>
               <?php } ?>
-              <!-- Begin Shipping Custom Fields -->
-              <?php foreach ($custom_fields as $custom_field) { ?>
-                <?php if ($custom_field['location'] == 'address') { ?>
-                  <?php if ($custom_field['type'] == 'select') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td>
-                    <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
-                      <?php if (isset($shipping_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $shipping_custom_field['value']) { ?>
-                        <?php echo $custom_field_value['name']; ?><br>
-                      <?php } ?>
-                    <?php } ?>
-                    </td>
-                    </tr>
-                  <?php } ?>
-                  <?php if ($custom_field['type'] == 'radio') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td>
-                    <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
-                      <?php if (isset($shipping_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $shipping_custom_field[$custom_field['custom_field_id']]) { ?>
-                        <?php echo $custom_field_value['name']; ?><br>
-                      <?php } ?>
-                    <?php } ?>
-                    </td>
-                    </tr>
-                  <?php } ?>
-                  <?php if ($custom_field['type'] == 'checkbox') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td>
-                    <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
-                      <?php if (isset($shipping_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $shipping_custom_field['value'])) { ?>
-                      <?php echo $custom_field_value['name']; ?><br>
-                      <?php } ?>
-                    <?php } ?>
-                    </td>
-                    </tr>
-                  <?php } ?>
-                  <?php if ($custom_field['type'] == 'text') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td><?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></td>
-                    </tr>
-                  <?php } ?>
-                  <?php if ($custom_field['type'] == 'textarea') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td><textarea name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" rows="5" placeholder="<?php echo $custom_field['name']; ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control"><?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></textarea></td>
-                    </tr>
-                  <?php } ?>
-                  <?php if ($custom_field['type'] == 'date') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td><?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></td>
-                    </tr>
-                  <?php } ?>
-                  <?php if ($custom_field['type'] == 'time') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td><?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></td>
-                    </tr>
-                  <?php } ?>
-                  <?php if ($custom_field['type'] == 'datetime') { ?>
-                    <tr>
-                    <td><?php echo $custom_field['name']; ?></td>
-                    <td><?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></td>
-                    </tr>
-                  <?php } ?>
-                <?php } ?>
-              <?php } ?>
-              <!-- END Shipping Custom Fields -->
             </table>
           </div>
           <?php } ?>
@@ -576,6 +381,9 @@
               </div>
             </fieldset>
           </div>
+          <?php if ($payment_action) { ?>
+          <div class="tab-pane" id="tab-action"> <?php echo $payment_action; ?> </div>
+          <?php } ?>
           <?php if ($maxmind_id) { ?>
           <div class="tab-pane" id="tab-fraud">
             <table class="table table-bordered">

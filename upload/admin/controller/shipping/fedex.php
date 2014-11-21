@@ -51,11 +51,17 @@ class ControllerShippingFedex extends Controller {
 		$data['entry_postcode'] = $this->language->get('entry_postcode');
 		$data['entry_test'] = $this->language->get('entry_test');
 		$data['entry_service'] = $this->language->get('entry_service');
+		$data['entry_dimension'] = $this->language->get('entry_dimension');
+		$data['entry_length_class'] = $this->language->get('entry_length_class');
+		$data['entry_length'] = $this->language->get('entry_length');
+		$data['entry_width'] = $this->language->get('entry_width');
+		$data['entry_height'] = $this->language->get('entry_height');
 		$data['entry_dropoff_type'] = $this->language->get('entry_dropoff_type');
 		$data['entry_packaging_type'] = $this->language->get('entry_packaging_type');
 		$data['entry_rate_type'] = $this->language->get('entry_rate_type');
 		$data['entry_display_time'] = $this->language->get('entry_display_time');
 		$data['entry_display_weight'] = $this->language->get('entry_display_weight');
+		$data['entry_weight_class'] = $this->language->get('entry_weight_class');
 		$data['entry_weight_class'] = $this->language->get('entry_weight_class');
 		$data['entry_tax_class'] = $this->language->get('entry_tax_class');
 		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
@@ -63,6 +69,7 @@ class ControllerShippingFedex extends Controller {
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
 		$data['help_display_time'] = $this->language->get('help_display_time');
+		$data['help_length_class'] = $this->language->get('help_length_class');
 		$data['help_display_weight'] = $this->language->get('help_display_weight');
 		$data['help_weight_class'] = $this->language->get('help_weight_class');
 
@@ -104,7 +111,19 @@ class ControllerShippingFedex extends Controller {
 		} else {
 			$data['error_postcode'] = '';
 		}
-
+		
+		if (isset($this->error['postcode'])) {
+			$data['error_postcode'] = $this->error['postcode'];
+		} else {
+			$data['error_postcode'] = '';
+		}
+		
+		if (isset($this->error['dimension'])) {
+			$data['error_dimension'] = $this->error['dimension'];
+		} else {
+			$data['error_dimension'] = '';
+		}
+		
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -276,7 +295,36 @@ class ControllerShippingFedex extends Controller {
 			'text'  => $this->language->get('text_standard_overnight'),
 			'value' => 'STANDARD_OVERNIGHT'
 		);
+		
+		
+		if (isset($this->request->post['fedex_length'])) {
+			$data['fedex_length'] = $this->request->post['fedex_length'];
+		} else {
+			$data['fedex_length'] = $this->config->get('fedex_length');
+		}
+		
+		if (isset($this->request->post['fedex_width'])) {
+			$data['fedex_width'] = $this->request->post['fedex_width'];
+		} else {
+			$data['fedex_width'] = $this->config->get('fedex_width');
+		}
+		
+		if (isset($this->request->post['fedex_height'])) {
+			$data['fedex_height'] = $this->request->post['fedex_height'];
+		} else {
+			$data['fedex_height'] = $this->config->get('fedex_height');
+		}
+		
+		if (isset($this->request->post['fedex_length_class_id'])) {
+			$data['fedex_length_class_id'] = $this->request->post['fedex_length_class_id'];
+		} else {
+			$data['fedex_length_class_id'] = $this->config->get('fedex_length_class_id');
+		}
 
+		$this->load->model('localisation/length_class');
+
+		$data['length_classes'] = $this->model_localisation_length_class->getLengthClasses();
+		
 		if (isset($this->request->post['fedex_dropoff_type'])) {
 			$data['fedex_dropoff_type'] = $this->request->post['fedex_dropoff_type'];
 		} else {
@@ -386,6 +434,10 @@ class ControllerShippingFedex extends Controller {
 		if (!$this->request->post['fedex_postcode']) {
 			$this->error['postcode'] = $this->language->get('error_postcode');
 		}
+		
+		if (!$this->request->post['fedex_length'] || !$this->request->post['fedex_width'] || !$this->request->post['fedex_width']) {
+			$this->error['dimension'] = $this->language->get('error_dimension');
+		}		
 
 		return !$this->error;
 	}

@@ -155,7 +155,7 @@ class ControllerSaleVoucher extends Controller {
 			'href' => $this->url->link('sale/voucher', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$data['insert'] = $this->url->link('sale/voucher/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['add'] = $this->url->link('sale/voucher/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('sale/voucher/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['vouchers'] = array();
@@ -200,7 +200,7 @@ class ControllerSaleVoucher extends Controller {
 		$data['column_date_added'] = $this->language->get('column_date_added');
 		$data['column_action'] = $this->language->get('column_action');
 
-		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 		$data['button_send'] = $this->language->get('button_send');
@@ -464,7 +464,7 @@ class ControllerSaleVoucher extends Controller {
 		} elseif (!empty($voucher_info)) {
 			$data['status'] = $voucher_info['status'];
 		} else {
-			$data['status'] = 1;
+			$data['status'] = true;
 		}
 
 		$data['header'] = $this->load->controller('common/header');

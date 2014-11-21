@@ -26,10 +26,34 @@
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-bestseller" class="form-horizontal">
           <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-limit"><?php echo $entry_limit; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="limit" value="<?php echo $limit; ?>" placeholder="<?php echo $entry_limit; ?>" id="input-limit" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-width"><?php echo $entry_width; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="width" value="<?php echo $width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-width" class="form-control" />
+              <?php if ($error_width) { ?>
+              <div class="text-danger"><?php echo $error_width; ?></div>
+              <?php } ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-height"><?php echo $entry_height; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="height" value="<?php echo $height; ?>" placeholder="<?php echo $entry_height; ?>" id="input-height" class="form-control" />
+              <?php if ($error_height) { ?>
+              <div class="text-danger"><?php echo $error_height; ?></div>
+              <?php } ?>
+            </div>
+          </div>
+          <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
             <div class="col-sm-10">
-              <select name="bestseller_status" id="input-status" class="form-control">
-                <?php if ($bestseller_status) { ?>
+              <select name="status" id="input-status" class="form-control">
+                <?php if ($status) { ?>
                 <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                 <option value="0"><?php echo $text_disabled; ?></option>
                 <?php } else { ?>
@@ -38,55 +62,10 @@
                 <?php } ?>
               </select>
             </div>
-          </div>        
-          <table id="module" class="table table-striped table-bordered table-hover">
-            <thead>
-              <tr>
-                <td class="text-right">#</td>
-                <td class="text-left"><?php echo $entry_limit; ?></td>
-                <td class="text-left"><?php echo $entry_image; ?></td>
-                <td></td>
-              </tr>
-            </thead>
-            <tbody>
-              <?php $module_row = 1; ?>
-              <?php foreach ($bestseller_modules as $bestseller_module) { ?>
-              <tr id="module-row<?php echo $bestseller_module['key']; ?>">
-                <td class="text-right"><?php echo $module_row; ?></td>
-                <td class="text-left"><input type="text" name="bestseller_module[<?php echo $bestseller_module['key']; ?>][limit]" value="<?php echo $bestseller_module['limit']; ?>" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>
-                <td class="text-left"><input type="text" name="bestseller_module[<?php echo $bestseller_module['key']; ?>][width]" value="<?php echo $bestseller_module['width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
-                  <input type="text" name="bestseller_module[<?php echo $bestseller_module['key']; ?>][height]" value="<?php echo $bestseller_module['height']; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
-                  <?php if (isset($error_image[$bestseller_module['key']])) { ?>
-                  <div class="text-danger"><?php echo $error_image[$bestseller_module['key']]; ?></div>
-                  <?php } ?></td>
-                <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $bestseller_module['key']; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
-              </tr>
-              <?php $module_row++; ?>
-              <?php } ?>
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colspan="3"></td>
-                <td class="text-left"><button type="button" onclick="addModule();" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
-              </tr>
-            </tfoot>
-          </table>
+          </div>
         </form>
       </div>
     </div>
   </div>
-  <script type="text/javascript"><!--
-function addModule() {
-	var token = Math.random().toString(36).substr(2);
-	
-	html  = '<tr id="module-row' + token + '">';
-	html += '  <td class="text-right">' + ($('tbody tr').length + 1) + '</td>';
-	html += '  <td class="text-left"><input type="text" name="bestseller_module[' + token + '][limit]" value="5" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><input type="text" name="bestseller_module[' + token + '][width]" value="200" placeholder="<?php echo $entry_width; ?>" class="form-control" /> <input type="text" name="bestseller_module[' + token + '][height]" value="200" placeholder="<?php echo $entry_height; ?>" class="form-control" /></td>'; 
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + token + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
-	html += '</tr>';
-	
-	$('#module tbody').append(html);
-}
-//--></script></div>
+</div>
 <?php echo $footer; ?>

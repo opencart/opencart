@@ -28,7 +28,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="entry-client_id"><?php echo $entry_client_id; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="pp_login_client_id" value="<?php echo $pp_login_client_id; ?>" placeholder="<?php echo $entry_client_id; ?>" id="entry-client_id" class="form-control"/>
+              <input type="text" name="client_id" value="<?php echo $client_id; ?>" placeholder="<?php echo $entry_client_id; ?>" id="entry-client_id" class="form-control"/>
               <?php if ($error_client_id) { ?>
               <div class="text-danger"><?php echo $error_client_id; ?></div>
               <?php } ?>
@@ -37,7 +37,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="entry-secret"><?php echo $entry_secret; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="pp_login_secret" value="<?php echo $pp_login_secret; ?>" placeholder="<?php echo $entry_secret; ?>" id="entry-secret" class="form-control"/>
+              <input type="text" name="secret" value="<?php echo $secret; ?>" placeholder="<?php echo $entry_secret; ?>" id="entry-secret" class="form-control"/>
               <?php if ($error_secret) { ?>
               <div class="text-danger"><?php echo $error_secret; ?></div>
               <?php } ?>
@@ -46,8 +46,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="entry-sandbox"><span data-toggle="tooltip" title="<?php echo $help_sandbox; ?>"><?php echo $entry_sandbox; ?></span></label>
             <div class="col-sm-10">
-              <select name="pp_login_sandbox" id="entry-sandbox" class="form-control">
-                <?php if ($pp_login_sandbox) { ?>
+              <select name="sandbox" id="entry-sandbox" class="form-control">
+                <?php if ($sandbox) { ?>
                 <option value="1" selected="selected"><?php echo $text_yes; ?></option>
                 <option value="0"><?php echo $text_no; ?></option>
                 <?php } else { ?>
@@ -60,8 +60,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-loggin"><span data-toggle="tooltip" title="<?php echo $help_debug_logging; ?>"><?php echo $entry_debug; ?></span></label>
             <div class="col-sm-10">
-              <select name="pp_login_debug" id="input-logging" class="form-control">
-                <?php if ($pp_login_debug) { ?>
+              <select name="debug" id="input-logging" class="form-control">
+                <?php if ($debug) { ?>
                 <option value="1" selected="selected"><?php echo $text_yes; ?></option>
                 <option value="0"><?php echo $text_no; ?></option>
                 <?php } else { ?>
@@ -74,7 +74,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-customer-group"><span data-toggle="tooltip" title="<?php echo $help_customer_group; ?>"><?php echo $entry_customer_group; ?></span></label>
             <div class="col-sm-10">
-              <select name="pp_login_customer_group_id" id="input-customer-group" class="form-control">
+              <select name="customer_group_id" id="input-customer-group" class="form-control">
                 <?php foreach ($customer_groups as $customer_group) { ?>
                 <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
                 <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
@@ -88,8 +88,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-button_colour"><?php echo $entry_button; ?></label>
             <div class="col-sm-10">
-              <select name="pp_login_button_colour" id="input-button_colour" class="form-control">
-                <?php if ($pp_login_button_colour == 'blue') { ?>
+              <select name="button_colour" id="input-button_colour" class="form-control">
+                <?php if ($button_colour == 'blue') { ?>
                 <option value="blue" selected="selected"><?php echo $text_button_blue; ?></option>
                 <option value="grey"><?php echo $text_button_grey; ?></option>
                 <?php } else { ?>
@@ -102,8 +102,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-seamless"><span data-toggle="tooltip" title="<?php echo $help_seamless; ?>"><?php echo $entry_seamless; ?></span></label>
             <div class="col-sm-10">
-              <select name="pp_login_seamless" id="input-logging" class="form-control">
-                <?php if ($pp_login_seamless) { ?>
+              <select name="seamless" id="input-logging" class="form-control">
+                <?php if ($seamless) { ?>
                 <option value="1" selected="selected"><?php echo $text_yes; ?></option>
                 <option value="0"><?php echo $text_no; ?></option>
                 <?php } else { ?>
@@ -118,7 +118,7 @@
             <div class="col-sm-10">
               <?php foreach ($languages as $language) { ?>
               <div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
-                <select name="pp_login_locale[<?php echo $language['language_id']; ?>]" class="form-control">
+                <select name="locale" class="form-control">
                   <?php foreach ($locales as $locale) { ?>
                   <?php if (isset($pp_login_locale[$language['language_id']]) && $pp_login_locale[$language['language_id']] == $locale['value']) { ?>
                   <option value="<?php echo $locale['value']; ?>" selected="selected"><?php echo $locale['text']; ?></option>
@@ -134,14 +134,14 @@
           <div class="form-group">
             <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_return_url; ?>"><?php echo $entry_return_url; ?></span></label>
             <div class="col-sm-10">
-              <input type="text" readonly="readonly" id="return-url" value="<?php echo $pp_login_return_url; ?>" class="form-control" />
+              <input type="text" readonly="readonly" id="return-url" value="<?php echo $return_url; ?>" class="form-control" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
             <div class="col-sm-10">
-              <select name="pp_login_status" id="input-status" class="form-control">
-                <?php if ($pp_login_status) { ?>
+              <select name="status" id="input-status" class="form-control">
+                <?php if ($status) { ?>
                 <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                 <option value="0"><?php echo $text_disabled; ?></option>
                 <?php } else { ?>

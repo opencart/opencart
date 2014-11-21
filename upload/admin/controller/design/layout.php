@@ -155,7 +155,7 @@ class ControllerDesignLayout extends Controller {
 			'href' => $this->url->link('design/layout', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 		
-		$data['insert'] = $this->url->link('design/layout/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['add'] = $this->url->link('design/layout/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('design/layout/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['layouts'] = array();
@@ -188,7 +188,7 @@ class ControllerDesignLayout extends Controller {
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_action'] = $this->language->get('column_action');
 
-		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 
@@ -359,43 +359,25 @@ class ControllerDesignLayout extends Controller {
 			$data['layout_modules'] = array();
 		}
 		
-		$this->load->model('extension/extension');
+		$this->load->model('extension/module');
 		
-		$data['modules'] = array();
+		$data['extensions'] = array();
 		
 		// Get a list of installed modules
-		$extensions = $this->model_extension_extension->getInstalled('module');
+		$modules = $this->model_extension_module->getModules();
 				
 		// Add all the modules which have multiple settings for each module
-		foreach ($extensions as $code) {
-			$this->load->language('module/' . $code);
+		foreach ($modules as $module) {
+			$this->load->language('module/' . $module['code']);
 		
-			$i = 1;
-			
-			$module_data = array();
-			
-			if ($this->config->has($code . '_module')) {
-				$modules = $this->config->get($code . '_module');
-				
-				foreach (array_keys($modules) as $key) {
-					$module_data[] = array(
-						'name' => strip_tags($this->language->get('heading_title')) . ' ' . $i++,
-						'code' => $code . '.' . $key
-					);
-				}
-			} else {
-				$module_data[] = array(
-					'name' => strip_tags($this->language->get('heading_title')),
-					'code' => $code
-				);
-			}
-			
-			if ($module_data) {
-				$data['modules'][] = array(
-					'name'   => strip_tags($this->language->get('heading_title')),
-					'module' => $module_data
-				);
-			}
+			if (!isset($data['extensions'][$module['code']])) {
+				$data['extensions'][$module['code']]['name'] = $this->language->get('heading_title');
+			}		
+		
+			$data['extensions'][$module['code']]['module'][] = array(
+				'module_id' => $module['module_id'],
+				'name'      => $module['name']
+			);
 		}
 		
 		$data['header'] = $this->load->controller('common/header');

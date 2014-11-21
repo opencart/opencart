@@ -29,20 +29,20 @@
             <label class="col-sm-2 control-label"><?php echo $entry_admin; ?></label>
             <div class="col-sm-10">
               <label class="radio-inline">
-                <?php if ($store_admin) { ?>
-                <input type="radio" name="store_admin" value="1" checked="checked" />
+                <?php if ($admin) { ?>
+                <input type="radio" name="admin" value="1" checked="checked" />
                 <?php echo $text_yes; ?>
                 <?php } else { ?>
-                <input type="radio" name="store_admin" value="1" />
+                <input type="radio" name="admin" value="1" />
                 <?php echo $text_yes; ?>
                 <?php } ?>
               </label>
               <label class="radio-inline">
-                <?php if (!$store_admin) { ?>
-                <input type="radio" name="store_admin" value="0" checked="checked" />
+                <?php if (!$admin) { ?>
+                <input type="radio" name="admin" value="0" checked="checked" />
                 <?php echo $text_no; ?>
                 <?php } else { ?>
-                <input type="radio" name="store_admin" value="0" />
+                <input type="radio" name="admin" value="0" />
                 <?php echo $text_no; ?>
                 <?php } ?>
               </label>
@@ -51,8 +51,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
             <div class="col-sm-10">
-              <select name="store_status" id="input-status" class="form-control">
-                <?php if ($store_status) { ?>
+              <select name="status" id="input-status" class="form-control">
+                <?php if ($status) { ?>
                 <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                 <option value="0"><?php echo $text_disabled; ?></option>
                 <?php } else { ?>

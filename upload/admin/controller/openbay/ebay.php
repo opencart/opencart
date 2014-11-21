@@ -7,10 +7,10 @@ class ControllerOpenbayEbay extends Controller {
 		$this->load->model('extension/extension');
 		$this->load->model('extension/event');
 
-		$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'openbay/ebay_profile');
-		$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'openbay/ebay_profile');
-		$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'openbay/ebay_template');
-		$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'openbay/ebay_template');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'openbay/ebay_profile');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'openbay/ebay_profile');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'openbay/ebay_template');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'openbay/ebay_template');
 
 		$this->model_openbay_ebay->install();
 	}

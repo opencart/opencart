@@ -136,7 +136,19 @@ class ControllerCheckoutGuest extends Controller {
 		$data['custom_fields'] = $this->model_account_custom_field->getCustomFields();
 
 		if (isset($this->session->data['guest']['custom_field'])) {
-			$data['guest_custom_field'] = $this->session->data['guest']['custom_field'] + $this->session->data['payment_address']['custom_field'];
+			if (isset($this->session->data['guest']['custom_field'])) {
+				$guest_custom_field_ = $this->session->data['guest']['custom_field'];
+			} else {
+				$guest_custom_field = array();
+			}
+			
+			if (isset($this->session->data['payment_address']['custom_field'])) {
+				$address_custom_field = $this->session->data['payment_address']['custom_field'];
+			} else {
+				$address_custom_field = array();
+			}
+						
+			$data['guest_custom_field'] = $guest_custom_field + $address_custom_field;
 		} else {
 			$data['guest_custom_field'] = array();
 		}

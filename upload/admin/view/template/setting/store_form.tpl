@@ -115,7 +115,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_image; ?></label>
                 <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $thumb; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
-                  <input type="hidden" name="image" value="<?php echo $image; ?>" id="input-image" />
+                  <input type="hidden" name="config_image" value="<?php echo $config_image; ?>" id="input-image" />
                 </div>
               </div>
               <div class="form-group">
@@ -788,13 +788,13 @@ $('select[name=\'config_country_id\']').on('change', function() {
 
 			if (json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
-          html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-
+					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+					
 					if (json['zone'][i]['zone_id'] == '<?php echo $config_zone_id; ?>') {
-            html += ' selected="selected"';
-          }
-
-          html += '>' + json['zone'][i]['name'] + '</option>';
+						html += ' selected="selected"';
+					}
+					
+					html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
 				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';

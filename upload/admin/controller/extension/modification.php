@@ -235,9 +235,6 @@ class ControllerExtensionModification extends Controller {
 										// Log
 										$log[] = 'CODE: ' . $search;
 										
-										// Turn the code that we are going to change into an array.
-										$add = explode("\n", $add);
-
 										// Check if using indexes
 										if ($index !== '') {
 											$indexes = explode(',', $index);
@@ -272,16 +269,16 @@ class ControllerExtensionModification extends Controller {
 													default:
 													case 'replace':
 														if ($offset < 0) {
-															array_splice($lines, $line_id + $offset, count($add) + abs($offset), $add);
+															array_splice($lines, $line_id + $offset, abs($offset), array(str_replace($search, $add, $line)));
 														} else {
-															array_splice($lines, $line_id, count($add) + abs($offset), $add);
+															array_splice($lines, $line_id, $offset + 1, array(str_replace($search, $add, $line)));
 														}
 														break;
 													case 'before':
-														array_splice($lines, $line_id - $offset, 0, $add);
+														array_splice($lines, $line_id - $offset, 0, explode("\n", $add));
 														break;
 													case 'after':
-														array_splice($lines, ($line_id + 1) + $offset, 0, $add);
+														array_splice($lines, ($line_id + 1) + $offset, 0, explode("\n", $add));
 														break;
 												}
 												
@@ -350,10 +347,10 @@ class ControllerExtensionModification extends Controller {
 							}
 						}
 					}
-
-					// Log
-					$log[] = '----------------------------------------------------------------';
 				}
+				
+				// Log
+				$log[] = '----------------------------------------------------------------';				
 			}
 
 			// Log

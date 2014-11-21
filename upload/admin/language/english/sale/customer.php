@@ -35,6 +35,7 @@ $_['entry_telephone']       = 'Telephone';
 $_['entry_fax']             = 'Fax';
 $_['entry_newsletter']      = 'Newsletter';
 $_['entry_status']          = 'Status';
+$_['entry_approved']        = 'Approved';
 $_['entry_safe']            = 'Safe';
 $_['entry_password']        = 'Password';
 $_['entry_confirm']         = 'Confirm';

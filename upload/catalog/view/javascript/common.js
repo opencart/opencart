@@ -182,6 +182,8 @@ var cart = {
 
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
 					location = 'index.php?route=checkout/cart';
+				} else if (window.location.pathname == '/checkout' || window.location.pathname == '/cart') {
+					location = 'cart';
 				} else {
 					$('#cart > ul').load('index.php?route=common/cart/info ul li');
 				}
@@ -204,6 +206,8 @@ var cart = {
 
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
 					location = 'index.php?route=checkout/cart';
+				} else if (window.location.pathname == '/checkout' || window.location.pathname == '/cart') {
+					location = 'cart';
 				} else {
 					$('#cart > ul').load('index.php?route=common/cart/info ul li');
 				}
@@ -233,6 +237,8 @@ var voucher = {
 
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
 					location = 'index.php?route=checkout/cart';
+				} else if (window.location.pathname == '/checkout' || window.location.pathname == '/cart') {
+					location = 'cart';
 				} else {
 					$('#cart > ul').load('index.php?route=common/cart/info ul li');
 				}

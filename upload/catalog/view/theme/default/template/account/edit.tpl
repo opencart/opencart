@@ -281,7 +281,7 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 					if (json['success']) {
 						alert(json['success']);
 						
-						$(node).parent().find('input').attr('value', json['file']);
+						$(node).parent().find('input').attr('value', json['code']);
 					}
 				},			
 				error: function(xhr, ajaxOptions, thrownError) {

@@ -1,12 +1,12 @@
 <?php
 class ModelOpenbayEbayOpenbay extends Model{
 	public function importOrders($data) {
-		$this->default_shipped_id         = $this->config->get('EBAY_DEF_SHIPPED_ID');
-		$this->default_paid_id            = $this->config->get('EBAY_DEF_PAID_ID');
-		$this->default_refunded_id        = $this->config->get('EBAY_DEF_REFUNDED_ID');
-		$this->default_pending_id         = $this->config->get('EBAY_DEF_IMPORT_ID');
+		$this->default_shipped_id         = $this->config->get('ebay_status_shipped_id');
+		$this->default_paid_id            = $this->config->get('ebay_status_paid_id');
+		$this->default_refunded_id        = $this->config->get('ebay_status_refunded_id');
+		$this->default_pending_id         = $this->config->get('ebay_status_import_id');
 
-		$this->default_part_refunded_id   = $this->config->get('EBAY_DEF_PARTIAL_REFUND_ID');
+		$this->default_part_refunded_id   = $this->config->get('ebay_status_partial_refund_id');
 		if ($this->default_part_refunded_id == null) {
 			$this->default_part_refunded_id = $this->default_paid_id;
 		}
@@ -292,7 +292,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 				$total_net = $price * $qty;
 				$this->openbay->ebay->log('create() - Total net price: ' . $total_net);
 
-				$tax = number_format((double)$txn->item->tax->item, 4, ' . ', '');
+				$tax = number_format((double)$txn->item->tax->item, 4, '.', '');
 				$this->openbay->ebay->log('create() - Tax: ' . $tax);
 			} else {
 				//use the store pre-set tax-rate for everything
@@ -304,7 +304,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 				$total_net = $price_net * $qty;
 				$this->openbay->ebay->log('create() - Total net price: ' . $total_net);
 
-				$tax = number_format(($price - $price_net), 4, ' . ', '');
+				$tax = number_format(($price - $price_net), 4, '.', '');
 				$this->openbay->ebay->log('create() - Tax: ' . $tax);
 			}
 
@@ -499,7 +499,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 				$line_net     = $item_net * $qty;
 				$line_tax     = $item_tax * $qty;
 
-				$total_tax   += number_format($line_tax, 4, ' . ', '');
+				$total_tax   += number_format($line_tax, 4, '.', '');
 				$total_net   += $line_net;
 			}
 		}
@@ -508,31 +508,31 @@ class ModelOpenbayEbayOpenbay extends Model{
 			$discount_net    = (double)$order->order->discount;
 			$shipping_net    = (double)$order->shipping->cost;
 
-			$tax = number_format($total_tax, 4, ' . ', '');
+			$tax = number_format($total_tax, 4, '.', '');
 		} else {
 			$discount_net    = (double)$order->order->discount / $this->tax;
 			$discount_tax    = (double)$order->order->discount - $discount_net;
 			$shipping_net    = (double)$order->shipping->cost / $this->tax;
 			$shipping_tax    = (double)$order->shipping->cost - $shipping_net;
 
-			$tax = number_format($shipping_tax + $total_tax + $discount_tax, 4, ' . ', '');
+			$tax = number_format($shipping_tax + $total_tax + $discount_tax, 4, '.', '');
 		}
 
-		$totals = number_format((double)$total_net + (double)$shipping_net + (double)$tax + (double)$discount_net, 4, ' . ', '');
+		$totals = number_format((double)$total_net + (double)$shipping_net + (double)$tax + (double)$discount_net, 4, '.', '');
 
 		$data = array();
 
 		$data['totals'][0] = array(
 			'code'          => 'sub_total',
 			'title'         => $totals_language['text_total_sub'],
-			'value'         => number_format((double)$total_net, 4, ' . ', ''),
+			'value'         => number_format((double)$total_net, 4, '.', ''),
 			'sort_order'    => '1'
 		);
 
 		$data['totals'][1] = array(
 			'code'          => 'shipping',
 			'title'         => $totals_language['text_total_shipping'],
-			'value'         => number_format((double)$shipping_net, 4, ' . ', ''),
+			'value'         => number_format((double)$shipping_net, 4, '.', ''),
 			'sort_order'    => '3'
 		);
 
@@ -540,7 +540,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 			$data['totals'][2] = array(
 				'code'          => 'coupon',
 				'title'         => $totals_language['text_total_discount'],
-				'value'         => number_format((double)$discount_net, 4, ' . ', ''),
+				'value'         => number_format((double)$discount_net, 4, '.', ''),
 				'sort_order'    => '4'
 			);
 		}
@@ -548,7 +548,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 		$data['totals'][3] = array(
 			'code'          => 'tax',
 			'title'         => $totals_language['text_total_tax'],
-			'value'         => number_format((double)$tax, 3, ' . ', ''),
+			'value'         => number_format((double)$tax, 3, '.', ''),
 			'sort_order'    => '5'
 		);
 

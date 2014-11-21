@@ -448,7 +448,7 @@ class ModelOpenbayEbay extends Model{
 	}
 
 	public function getCategory($parent) {
-		$this->load->language('openbay/ebay');
+		$this->load->language('openbay/ebay_new');
 
 		$json = array();
 

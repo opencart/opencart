@@ -34,7 +34,7 @@
             <li><a href="#tab-advanced" data-toggle="tab"><?php echo $tab_advanced; ?></a></li>
           </ul>
           <div class="tab-content">
-            <div class="tab-pane active" id="tab-account">
+            <div class="tab-pane active" id="tab-api">
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-merchant-id"><?php echo $entry_merchant_id; ?></label>
                 <div class="col-sm-10">

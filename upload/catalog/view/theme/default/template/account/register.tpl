@@ -138,7 +138,7 @@
               <div>
                 <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                 <div class="checkbox">
-                  <?php if (isset($register_custom_field[$custom_field['custom_field_id']]) && in_array($register_custom_field_value['custom_field_value_id'], $register_custom_field[$custom_field['custom_field_id']])) { ?>
+                  <?php if (isset($register_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $register_custom_field[$custom_field['custom_field_id']])) { ?>
                   <label>
                     <input type="checkbox" name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
                     <?php echo $custom_field_value['name']; ?></label>
@@ -361,7 +361,7 @@
               <div>
                 <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                 <div class="checkbox">
-                  <?php if (isset($register_custom_field[$custom_field['custom_field_id']]) && in_array($register_custom_field_value['custom_field_value_id'], $register_custom_field[$custom_field['custom_field_id']])) { ?>
+                  <?php if (isset($register_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $register_custom_field[$custom_field['custom_field_id']])) { ?>
                   <label>
                     <input type="checkbox" name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
                     <?php echo $custom_field_value['name']; ?></label>

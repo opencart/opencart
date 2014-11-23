@@ -15,7 +15,7 @@ class ControllerAffiliatePayment extends Controller {
 
 		$this->load->model('affiliate/affiliate');
 
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+		if ($this->request->isPost()) {
 			$this->model_affiliate_affiliate->editPayment($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');

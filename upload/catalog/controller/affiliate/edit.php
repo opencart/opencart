@@ -15,7 +15,7 @@ class ControllerAffiliateEdit extends Controller {
 
 		$this->load->model('affiliate/affiliate');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if ($this->request->isPost() && $this->validate()) {
 			$this->model_affiliate_affiliate->editAffiliate($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');

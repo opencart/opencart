@@ -19,7 +19,7 @@ class ControllerExtensionModule extends Controller {
 
 		$this->load->model('extension/module');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_extension_module->addModule($this->request->post);
 			
 			$this->load->controller('module/' . $this->request->post['code'] . '/install');

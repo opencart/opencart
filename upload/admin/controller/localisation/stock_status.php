@@ -19,7 +19,7 @@ class ControllerLocalisationStockStatus extends Controller {
 
 		$this->load->model('localisation/stock_status');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_localisation_stock_status->addStockStatus($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerLocalisationStockStatus extends Controller {
 
 		$this->load->model('localisation/stock_status');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_localisation_stock_status->editStockStatus($this->request->get['stock_status_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');

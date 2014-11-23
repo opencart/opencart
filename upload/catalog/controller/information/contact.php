@@ -7,7 +7,7 @@ class ControllerInformationContact extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if ($this->request->isPost() && $this->validate()) {
 			unset($this->session->data['captcha']);
 
 			$mail = new Mail($this->config->get('config_mail'));

@@ -19,7 +19,7 @@ class ControllerSaleVoucher extends Controller {
 
 		$this->load->model('sale/voucher');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_sale_voucher->addVoucher($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerSaleVoucher extends Controller {
 
 		$this->load->model('sale/voucher');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_sale_voucher->editVoucher($this->request->get['voucher_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');

@@ -10,7 +10,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 
 		$this->load->model('setting/setting');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if ($this->request->isPost() && $this->validate()) {
 			$status = false;
 
 			foreach ($this->request->post['klarna_account'] as $klarna_account) {

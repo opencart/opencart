@@ -110,7 +110,7 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 		$data['variation'] = $variation;
 		$data['errors'] = array();
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$data_array = $this->request->post;
 
 			$this->model_openbay_amazonus->saveProduct($product_id, $data_array);

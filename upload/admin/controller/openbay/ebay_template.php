@@ -127,7 +127,7 @@ class ControllerOpenbayEbayTemplate extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		if (isset($this->request->get['template_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['template_id']) && !$this->request->isPost()) {
 			$template_info = $this->model_openbay_ebay_template->get($this->request->get['template_id']);
 			$data['text_manage'] = $this->language->get('text_edit');
 		} else {

@@ -19,7 +19,7 @@ class ControllerLocalisationTaxClass extends Controller {
 
 		$this->load->model('localisation/tax_class');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_localisation_tax_class->addTaxClass($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerLocalisationTaxClass extends Controller {
 
 		$this->load->model('localisation/tax_class');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_localisation_tax_class->editTaxClass($this->request->get['tax_class_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -327,7 +327,7 @@ class ControllerLocalisationTaxClass extends Controller {
 
 		$data['cancel'] = $this->url->link('localisation/tax_class', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['tax_class_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['tax_class_id']) && !$this->request->isPost()) {
 			$tax_class_info = $this->model_localisation_tax_class->getTaxClass($this->request->get['tax_class_id']);
 		}
 

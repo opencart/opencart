@@ -54,7 +54,7 @@ class ControllerAccountLogin extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if ($this->request->isPost() && $this->validate()) {
 			unset($this->session->data['guest']);
 
 			// Default Shipping Address

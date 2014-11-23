@@ -11,7 +11,7 @@ class ControllerAccountNewsletter extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+		if ($this->request->isPost()) {
 			$this->load->model('account/customer');
 
 			$this->model_account_customer->editNewsletter($this->request->post['newsletter']);

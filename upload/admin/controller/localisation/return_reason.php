@@ -19,7 +19,7 @@ class ControllerLocalisationReturnReason extends Controller {
 
 		$this->load->model('localisation/return_reason');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_localisation_return_reason->addReturnReason($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerLocalisationReturnReason extends Controller {
 
 		$this->load->model('localisation/return_reason');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_localisation_return_reason->editReturnReason($this->request->get['return_reason_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');

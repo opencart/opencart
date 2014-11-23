@@ -17,7 +17,7 @@ class ControllerAccountRegister extends Controller {
 
 		$this->load->model('account/customer');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if ($this->request->isPost() && $this->validate()) {
 			$this->model_account_customer->addCustomer($this->request->post);
 			
 			// Clear any previous login attempts for unregistered accounts.

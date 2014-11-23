@@ -10,7 +10,7 @@ class ControllerPaymentBluepayredirect extends Controller {
 
 		$this->load->model('setting/setting');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if ($this->request->isPost() && $this->validate()) {
 			$this->model_setting_setting->editSetting('bluepay_redirect', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');

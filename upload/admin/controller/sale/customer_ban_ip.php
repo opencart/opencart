@@ -19,7 +19,7 @@ class ControllerSaleCustomerBanIp extends Controller {
 
 		$this->load->model('sale/customer_ban_ip');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_sale_customer_ban_ip->addCustomerBanIp($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerSaleCustomerBanIp extends Controller {
 
 		$this->load->model('sale/customer_ban_ip');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_sale_customer_ban_ip->editCustomerBanIp($this->request->get['customer_ban_ip_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -315,7 +315,7 @@ class ControllerSaleCustomerBanIp extends Controller {
 
 		$data['cancel'] = $this->url->link('sale/customer_ban_ip', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['customer_ban_ip_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['customer_ban_ip_id']) && !$this->request->isPost()) {
 			$customer_ban_ip_info = $this->model_sale_customer_ban_ip->getCustomerBanIp($this->request->get['customer_ban_ip_id']);
 		}
 

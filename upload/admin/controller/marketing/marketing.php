@@ -19,7 +19,7 @@ class ControllerMarketingMarketing extends Controller {
 
 		$this->load->model('marketing/marketing');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_marketing_marketing->addMarketing($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -63,7 +63,7 @@ class ControllerMarketingMarketing extends Controller {
 
 		$this->load->model('marketing/marketing');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_marketing_marketing->editMarketing($this->request->get['marketing_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -454,7 +454,7 @@ class ControllerMarketingMarketing extends Controller {
 
 		$data['cancel'] = $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['marketing_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['marketing_id']) && !$this->request->isPost()) {
 			$marketing_info = $this->model_marketing_marketing->getMarketing($this->request->get['marketing_id']);
 		}
 

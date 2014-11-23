@@ -13,7 +13,7 @@ class ControllerAccountPassword extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if ($this->request->isPost() && $this->validate()) {
 			$this->load->model('account/customer');
 
 			$this->model_account_customer->editPassword($this->customer->getEmail(), $this->request->post['password']);

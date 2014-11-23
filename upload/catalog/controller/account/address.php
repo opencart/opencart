@@ -35,7 +35,7 @@ class ControllerAccountAddress extends Controller {
 
 		$this->load->model('account/address');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_account_address->addAddress($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_add');
@@ -73,7 +73,7 @@ class ControllerAccountAddress extends Controller {
 
 		$this->load->model('account/address');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_account_address->editAddress($this->request->get['address_id'], $this->request->post);
 
 			// Default Shipping Address
@@ -368,7 +368,7 @@ class ControllerAccountAddress extends Controller {
 			$data['action'] = $this->url->link('account/address/edit', 'address_id=' . $this->request->get['address_id'], 'SSL');
 		}
 
-		if (isset($this->request->get['address_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['address_id']) && !$this->request->isPost()) {
 			$address_info = $this->model_account_address->getAddress($this->request->get['address_id']);
 		}
 

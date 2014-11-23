@@ -243,7 +243,7 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$settings = $this->model_setting_setting->getSetting('openbay_amazon');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if ($this->request->isPost() && $this->validate()) {
 			if (!isset($this->request->post['openbay_amazon_orders_marketplace_ids'])) {
 				$this->request->post['openbay_amazon_orders_marketplace_ids'] = array();
 			}

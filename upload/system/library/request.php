@@ -28,4 +28,13 @@ class Request {
 
 		return $data;
 	}
+
+	/**
+	 * Check if request is a POST request
+	 *
+	 * @return boolean
+	 */
+	public function isPost() {
+		return $this->server['REQUEST_METHOD'] === 'POST';
+	}
 }

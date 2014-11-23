@@ -19,7 +19,7 @@ class ControllerCatalogInformation extends Controller {
 
 		$this->load->model('catalog/information');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_catalog_information->addInformation($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerCatalogInformation extends Controller {
 
 		$this->load->model('catalog/information');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_catalog_information->editInformation($this->request->get['information_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -353,7 +353,7 @@ class ControllerCatalogInformation extends Controller {
 
 		$data['cancel'] = $this->url->link('catalog/information', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['information_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['information_id']) && !$this->request->isPost()) {
 			$information_info = $this->model_catalog_information->getInformation($this->request->get['information_id']);
 		}
 

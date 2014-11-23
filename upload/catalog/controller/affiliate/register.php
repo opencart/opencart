@@ -13,7 +13,7 @@ class ControllerAffiliateRegister extends Controller {
 
 		$this->load->model('affiliate/affiliate');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if ($this->request->isPost() && $this->validate()) {
 			$affiliate_id = $this->model_affiliate_affiliate->addAffiliate($this->request->post);
 
 			// Clear any previous login attempts in not registered.

@@ -19,7 +19,7 @@ class ControllerLocalisationLocation extends Controller {
 
 		$this->load->model('localisation/location');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_localisation_location->addLocation($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerLocalisationLocation extends Controller {
 
 		$this->load->model('localisation/location');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_localisation_location->editLocation($this->request->get['location_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -342,7 +342,7 @@ class ControllerLocalisationLocation extends Controller {
 
 		$data['cancel'] = $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['location_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['location_id']) && !$this->request->isPost()) {
 			$location_info = $this->model_localisation_location->getLocation($this->request->get['location_id']);
 		}
 

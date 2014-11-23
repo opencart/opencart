@@ -8,7 +8,7 @@ class ControllerPaymentSecureTradingPp extends Controller {
 		$this->load->model('localisation/order_status');
 		$this->load->language('payment/securetrading_pp');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if ($this->request->isPost() && $this->validate()) {
 			$this->request->post['securetrading_pp_site_reference'] = trim($this->request->post['securetrading_pp_site_reference']);
 
 			$this->model_setting_setting->editSetting('securetrading_pp', $this->request->post);

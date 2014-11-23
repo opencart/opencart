@@ -19,7 +19,7 @@ class ControllerCatalogRecurring extends Controller {
 
 		$this->load->model('catalog/recurring');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_catalog_recurring->addRecurring($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerCatalogRecurring extends Controller {
 
 		$this->load->model('catalog/recurring');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_catalog_recurring->editRecurring($this->request->get['recurring_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -367,7 +367,7 @@ class ControllerCatalogRecurring extends Controller {
 
 		$data['cancel'] = $this->url->link('catalog/recurring', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['recurring_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['recurring_id']) && !$this->request->isPost()) {
 			$recurring_info = $this->model_catalog_recurring->getRecurring($this->request->get['recurring_id']);
 		}
 

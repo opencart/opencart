@@ -19,7 +19,7 @@ class ControllerCatalogOption extends Controller {
 
 		$this->load->model('catalog/option');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_catalog_option->addOption($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerCatalogOption extends Controller {
 
 		$this->load->model('catalog/option');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_catalog_option->editOption($this->request->get['option_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -339,7 +339,7 @@ class ControllerCatalogOption extends Controller {
 
 		$data['cancel'] = $this->url->link('catalog/option', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['option_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['option_id']) && !$this->request->isPost()) {
 			$option_info = $this->model_catalog_option->getOption($this->request->get['option_id']);
 		}
 

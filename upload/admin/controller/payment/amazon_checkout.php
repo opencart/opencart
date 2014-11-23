@@ -13,7 +13,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 		$this->load->library('cba');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if ($this->request->isPost() && $this->validate()) {
 			$this->request->post['amazon_checkout_access_key'] = $this->request->post['amazon_checkout_access_key'];
 			$this->request->post['amazon_checkout_access_secret'] = $this->request->post['amazon_checkout_access_secret'];
 			$this->request->post['amazon_checkout_merchant_id'] = $this->request->post['amazon_checkout_merchant_id'];

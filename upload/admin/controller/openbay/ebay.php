@@ -86,7 +86,7 @@ class ControllerOpenbayEbay extends Controller {
 		$this->load->model('localisation/order_status');
 		$this->load->model('sale/customer_group');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
+		if ($this->request->isPost() && ($this->validate())) {
 			$this->model_setting_setting->editSetting('ebay', $this->request->post);
 			$this->session->data['success'] = $this->language->get('text_success');
 			$this->response->redirect($this->url->link('openbay/ebay&token=' . $this->session->data['token']));
@@ -1568,7 +1568,7 @@ class ControllerOpenbayEbay extends Controller {
 		$this->load->model('openbay/ebay_template');
 		$this->load->model('catalog/product');
 
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+		if ($this->request->isPost()) {
 			if ($this->checkConfig() == true) {
 				$this->model_openbay_ebay->logCategoryUsed($this->request->post['finalCat']);
 
@@ -1632,7 +1632,7 @@ class ControllerOpenbayEbay extends Controller {
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
 
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+		if ($this->request->isPost()) {
 			if ($this->checkConfig() == true) {
 				$post = $this->request->post;
 				$data = array();
@@ -1853,7 +1853,7 @@ class ControllerOpenbayEbay extends Controller {
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
 
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+		if ($this->request->isPost()) {
 			if ($this->checkConfig() == true) {
 				$post = $this->request->post;
 				$data = array();

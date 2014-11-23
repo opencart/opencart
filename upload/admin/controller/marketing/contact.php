@@ -71,7 +71,7 @@ class ControllerMarketingContact extends Controller {
 
 		$json = array();
 
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+		if ($this->request->isPost()) {
 			if (!$this->user->hasPermission('modify', 'marketing/contact')) {
 				$json['error']['warning'] = $this->language->get('error_permission');
 			}

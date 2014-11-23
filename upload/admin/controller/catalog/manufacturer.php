@@ -19,7 +19,7 @@ class ControllerCatalogManufacturer extends Controller {
 
 		$this->load->model('catalog/manufacturer');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_catalog_manufacturer->addManufacturer($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerCatalogManufacturer extends Controller {
 
 		$this->load->model('catalog/manufacturer');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_catalog_manufacturer->editManufacturer($this->request->get['manufacturer_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -333,7 +333,7 @@ class ControllerCatalogManufacturer extends Controller {
 
 		$data['cancel'] = $this->url->link('catalog/manufacturer', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['manufacturer_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['manufacturer_id']) && !$this->request->isPost()) {
 			$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($this->request->get['manufacturer_id']);
 		}
 

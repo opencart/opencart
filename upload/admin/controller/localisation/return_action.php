@@ -19,7 +19,7 @@ class ControllerLocalisationReturnAction extends Controller {
 
 		$this->load->model('localisation/return_action');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_localisation_return_action->addReturnAction($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerLocalisationReturnAction extends Controller {
 
 		$this->load->model('localisation/return_action');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_localisation_return_action->editReturnAction($this->request->get['return_action_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');

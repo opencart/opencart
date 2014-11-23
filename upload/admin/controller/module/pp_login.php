@@ -5,12 +5,12 @@ class ControllerModulePPLogin extends Controller {
 	public function index() {
 		$this->language->load('module/pp_login');
 
+		$this->load->model('setting/setting');
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('extension/module');
-
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_extension_module->editModule($this->request->get['module_id'], $this->request->post);
+			$this->model_setting_setting->editSetting('pp_login', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -47,6 +47,8 @@ class ControllerModulePPLogin extends Controller {
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
+		$data['button_module_add'] = $this->language->get('button_module_add');
+		$data['button_remove'] = $this->language->get('button_remove');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -80,77 +82,61 @@ class ControllerModulePPLogin extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/pp_login', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL')
+			'href' => $this->url->link('module/pp_login', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
-		$data['action'] = $this->url->link('module/pp_login', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], 'SSL');
+		$data['action'] = $this->url->link('module/pp_login', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
-		
-		if (isset($this->request->get['module_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-			$module_info = $this->model_extension_module->getModule($this->request->get['module_id']);
-		}
-	
-		if (isset($this->request->post['client_id'])) {
-			$data['client_id'] = $this->request->post['client_id'];
-		} elseif (!empty($module_info)) {
-			$data['client_id'] = $module_info['client_id'];
-		} else {
-			$data['client_id'] = '';
-		}	
 
-		if (isset($this->request->post['secret'])) {
-			$data['secret'] = $this->request->post['secret'];
-		} elseif (!empty($module_info)) {
-			$data['secret'] = $module_info['secret'];
+		if (isset($this->request->post['pp_login_client_id'])) {
+			$data['pp_login_client_id'] = $this->request->post['pp_login_client_id'];
 		} else {
-			$data['secret'] = '';
+			$data['pp_login_client_id'] = $this->config->get('pp_login_client_id');
 		}
-		
-		if (isset($this->request->post['sandbox'])) {
-			$data['sandbox'] = $this->request->post['sandbox'];
-		} elseif (!empty($module_info)) {
-			$data['sandbox'] = $module_info['sandbox'];
-		} else {
-			$data['sandbox'] = '';
-		}		
 
-		if (isset($this->request->post['debug'])) {
-			$data['debug'] = $this->request->post['debug'];
-		} elseif (!empty($module_info)) {
-			$data['debug'] = $module_info['debug'];
+		if (isset($this->request->post['pp_login_secret'])) {
+			$data['pp_login_secret'] = $this->request->post['pp_login_secret'];
 		} else {
-			$data['debug'] = '';
-		}	
-		
-		if (isset($this->request->post['customer_group_id'])) {
-			$data['customer_group_id'] = $this->request->post['customer_group_id'];
-		} elseif (!empty($module_info)) {
-			$data['customer_group_id'] = $module_info['customer_group_id'];
+			$data['pp_login_secret'] = $this->config->get('pp_login_secret');
+		}
+
+		if (isset($this->request->post['pp_login_sandbox'])) {
+			$data['pp_login_sandbox'] = $this->request->post['pp_login_sandbox'];
 		} else {
-			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
-		}	
-		
+			$data['pp_login_sandbox'] = $this->config->get('pp_login_sandbox');
+		}
+
+		if (isset($this->request->post['pp_login_debug'])) {
+			$data['pp_login_debug'] = $this->request->post['pp_login_debug'];
+		} else {
+			$data['pp_login_debug'] = $this->config->get('pp_login_debug');
+		}
+
 		$this->load->model('sale/customer_group');
 
 		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
 
-		if (isset($this->request->post['button_colour'])) {
-			$data['button_colour'] = $this->request->post['button_colour'];
-		} elseif (!empty($module_info)) {
-			$data['button_colour'] = $module_info['button_colour'];
+		if (isset($this->request->post['pp_login_customer_group_id'])) {
+			$data['pp_login_customer_group_id'] = $this->request->post['pp_login_customer_group_id'];
 		} else {
-			$data['button_colour'] = '';
-		}	
-		
-		if (isset($this->request->post['seamless'])) {
-			$data['seamless'] = $this->request->post['seamless'];
-		} elseif (!empty($module_info)) {
-			$data['seamless'] = $module_info['seamless'];
-		} else {
-			$data['seamless'] = '';
+			$data['pp_login_customer_group_id'] = $this->config->get('pp_login_customer_group_id');
 		}
-		
+
+		if (isset($this->request->post['pp_login_button_colour'])) {
+			$data['pp_login_button_colour'] = $this->request->post['pp_login_button_colour'];
+		} elseif ($this->config->get('pp_login_button_colour')) {
+			$data['pp_login_button_colour'] = $this->config->get('pp_login_button_colour');
+		} else {
+			$data['pp_login_button_colour'] = 'blue';
+		}
+
+		if (isset($this->request->post['pp_login_seamless'])) {
+			$data['pp_login_seamless'] = $this->request->post['pp_login_seamless'];
+		} else {
+			$data['pp_login_seamless'] = $this->config->get('pp_login_seamless');
+		}
+
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
@@ -290,25 +276,21 @@ class ControllerModulePPLogin extends Controller {
 			'value' => 'tr-tr',
 			'text'  => 'Turkish'
 		);
-		
-		if (isset($this->request->post['locale'])) {
-			$data['locale'] = $this->request->post['locale'];
-		} elseif (!empty($module_info)) {
-			$data['locale'] = $module_info['locale'];
+
+		if (isset($this->request->post['pp_login_locale'])) {
+			$data['pp_login_locale'] = $this->request->post['pp_login_locale'];
 		} else {
-			$data['locale'] = '';
+			$data['pp_login_locale'] = $this->config->get('pp_login_locale');
 		}
 
-		$data['return_url'] = HTTPS_CATALOG . 'index.php?route=module/pp_login/login';
+		$data['pp_login_return_url'] = HTTPS_CATALOG . 'index.php?route=module/pp_login/login';
 
-		if (isset($this->request->post['status'])) {
-			$data['status'] = $this->request->post['status'];
-		} elseif (!empty($module_info)) {
-			$data['status'] = $module_info['status'];
+		if (isset($this->request->post['pp_login_status'])) {
+			$data['pp_login_status'] = $this->request->post['pp_login_status'];
 		} else {
-			$data['status'] = '';
+			$data['pp_login_status'] = $this->config->get('pp_login_status');
 		}
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -321,11 +303,11 @@ class ControllerModulePPLogin extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		if (!$this->request->post['client_id']) {
+		if (!$this->request->post['pp_login_client_id']) {
 			$this->error['client_id'] = $this->language->get('error_client_id');
 		}
 
-		if (!$this->request->post['secret']) {
+		if (!$this->request->post['pp_login_secret']) {
 			$this->error['secret'] = $this->language->get('error_secret');
 		}
 

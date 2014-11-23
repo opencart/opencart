@@ -26,6 +26,15 @@
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-special" class="form-horizontal">
           <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
+              <?php if ($error_name) { ?>
+              <div class="text-danger"><?php echo $error_name; ?></div>
+              <?php } ?>
+            </div>
+          </div>
+          <div class="form-group">
             <label class="col-sm-2 control-label" for="input-limit"><?php echo $entry_limit; ?></label>
             <div class="col-sm-10">
               <input type="text" name="limit" value="<?php echo $limit; ?>" placeholder="<?php echo $entry_limit; ?>" id="input-limit" class="form-control" />

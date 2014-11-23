@@ -82,17 +82,25 @@
               <?php $module_row = 0; ?>
               <?php foreach ($layout_modules as $layout_module) { ?>
               <tr id="module-row<?php echo $module_row; ?>">
-                <td class="text-left"><select name="layout_module[<?php echo $module_row; ?>][module_id]" class="form-control">
+                <td class="text-left"><select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control">
                     <?php foreach ($extensions as $extension) { ?>
+                    <?php if (!$extension['module']) { ?>
+                    <?php if ($extension['code'] == $layout_module['code']) { ?>
+                    <option value="<?php echo $extension['code']; ?>" selected="selected"><?php echo $extension['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
+                    <?php } ?>
+                    <?php } else { ?>
                     <optgroup label="<?php echo $extension['name']; ?>">
                     <?php foreach ($extension['module'] as $module) { ?>
-                    <?php if ($module['module_id'] == $layout_module['module_id']) { ?>
-                    <option value="<?php echo $module['module_id']; ?>" selected="selected"><?php echo $module['name']; ?></option>
+                    <?php if ($module['code'] == $layout_module['code']) { ?>
+                    <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
                     <?php } else { ?>
-                    <option value="<?php echo $module['module_id']; ?>"><?php echo $module['name']; ?></option>
+                    <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>
                     <?php } ?>
                     <?php } ?>
                     </optgroup>
+                    <?php } ?>
                     <?php } ?>
                   </select></td>
                 <td class="text-left"><select name="layout_module[<?php echo $module_row; ?>][position]" class="form-control">
@@ -158,13 +166,17 @@ var module_row = <?php echo $module_row; ?>;
 
 function addModule() {
 	html  = '<tr id="module-row' + module_row + '">';
-	html += '  <td class="text-left"><select name="layout_module[' + module_row + '][module_id]" class="form-control">';
-	<?php foreach ($extensions as $extension) { ?>
-    html += '    <optgroup label="<?php echo addslashes($extension['name']); ?>">';
-    <?php foreach ($extension['module'] as $module) { ?>
-	html += '      <option value="<?php echo $module['module_id']; ?>"><?php echo addslashes($module['name']); ?></option>';
+	html += '  <td class="text-left"><select name="layout_module[' + module_row + '][code]" class="form-control">';
+	<?php foreach ($extensions as $extension) { ?>    
+	<?php if (!$extension['module']) { ?>
+	html += '    <option value="<?php echo $extension['code']; ?>"><?php echo addslashes($extension['name']); ?></option>';
+	<?php } else { ?>
+	html += '    <optgroup label="<?php echo addslashes($extension['name']); ?>">';
+	<?php foreach ($extension['module'] as $module) { ?>
+	html += '      <option value="<?php echo $module['code']; ?>"><?php echo addslashes($module['name']); ?></option>';
 	<?php } ?>
 	html += '    </optgroup>';
+	<?php } ?>
 	<?php } ?>
     html += '  </select></td>'; 
 	html += '  <td class="text-left"><select name="layout_module[' + module_row + '][position]" class="form-control">';

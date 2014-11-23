@@ -1574,7 +1574,7 @@ INSERT INTO `oc_layout` (`layout_id`, `name`) VALUES
 CREATE TABLE IF NOT EXISTS `oc_layout_module` (
   `layout_module_id` int(11) NOT NULL AUTO_INCREMENT,
   `layout_id` int(11) NOT NULL,
-  `module_id` int(11) NOT NULL,
+  `code` varchar(64) NOT NULL,
   `position` varchar(14) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`layout_module_id`)
@@ -2979,7 +2979,7 @@ CREATE TABLE IF NOT EXISTS `oc_review` (
 CREATE TABLE IF NOT EXISTS `oc_setting` (
   `setting_id` int(11) NOT NULL AUTO_INCREMENT,
   `store_id` int(11) NOT NULL DEFAULT '0',
-  `group` varchar(32) NOT NULL,
+  `code` varchar(32) NOT NULL,
   `key` varchar(64) NOT NULL,
   `value` text NOT NULL,
   `serialized` tinyint(1) NOT NULL,
@@ -2990,7 +2990,7 @@ CREATE TABLE IF NOT EXISTS `oc_setting` (
 -- Dumping data for table `oc_setting`
 --
 
-INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `serialized`) VALUES
+INSERT INTO `oc_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `serialized`) VALUES
 (1, 0, 'shipping', 'shipping_sort_order', '3', 0),
 (2, 0, 'sub_total', 'sub_total_sort_order', '1', 0),
 (3, 0, 'sub_total', 'sub_total_status', '1', 0),

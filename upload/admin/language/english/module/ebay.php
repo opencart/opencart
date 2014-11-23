@@ -13,6 +13,7 @@ $_['text_latest']       = 'Latest';
 $_['text_random']       = 'Random';
 
 // Entry
+$_['entry_name']        = 'Module Name';
 $_['entry_username']    = 'eBay username';
 $_['entry_keywords']    = 'Search Keywords';
 $_['entry_description'] = 'Include Description Search';
@@ -26,5 +27,6 @@ $_['entry_status']   	= 'Status';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify module eBay!';
+$_['error_name']        = 'Module Name must be between 3 and 64 characters!';
 $_['error_width']       = 'Width required!';
 $_['error_height']      = 'Height required!';

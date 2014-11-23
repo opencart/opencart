@@ -19,7 +19,7 @@ class ControllerUserApi extends Controller {
 
 		$this->load->model('user/api');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_user_api->addApi($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerUserApi extends Controller {
 
 		$this->load->model('user/api');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_user_api->editApi($this->request->get['api_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -330,7 +330,7 @@ class ControllerUserApi extends Controller {
 
 		$data['cancel'] = $this->url->link('user/api', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['api_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['api_id']) && !$this->request->isPost()) {
 			$api_info = $this->model_user_api->getApi($this->request->get['api_id']);
 		}
 

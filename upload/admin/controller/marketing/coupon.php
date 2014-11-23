@@ -19,7 +19,7 @@ class ControllerMarketingCoupon extends Controller {
 
 		$this->load->model('marketing/coupon');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_marketing_coupon->addCoupon($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerMarketingCoupon extends Controller {
 
 		$this->load->model('marketing/coupon');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_marketing_coupon->editCoupon($this->request->get['coupon_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');

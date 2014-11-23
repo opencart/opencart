@@ -9,7 +9,7 @@ class ControllerModuleSlideshow extends Controller {
 
 		$this->load->model('extension/module');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if ($this->request->isPost() && $this->validate()) {
 			if (!isset($this->request->get['module_id'])) {
 				$this->model_extension_module->addModule('slideshow', $this->request->post);
 			} else {
@@ -93,7 +93,7 @@ class ControllerModuleSlideshow extends Controller {
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 		
-		if (isset($this->request->get['module_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['module_id']) && !$this->request->isPost()) {
 			$module_info = $this->model_extension_module->getModule($this->request->get['module_id']);
 		}
 		

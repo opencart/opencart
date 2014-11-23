@@ -19,7 +19,7 @@ class ControllerSaleCustomField extends Controller {
 
 		$this->load->model('sale/custom_field');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_sale_custom_field->addCustomField($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerSaleCustomField extends Controller {
 
 		$this->load->model('sale/custom_field');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_sale_custom_field->editCustomField($this->request->get['custom_field_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -392,7 +392,7 @@ class ControllerSaleCustomField extends Controller {
 
 		$data['cancel'] = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['custom_field_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['custom_field_id']) && !$this->request->isPost()) {
 			$custom_field_info = $this->model_sale_custom_field->getCustomField($this->request->get['custom_field_id']);
 		}
 

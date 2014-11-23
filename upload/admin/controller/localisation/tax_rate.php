@@ -19,7 +19,7 @@ class ControllerLocalisationTaxRate extends Controller {
 
 		$this->load->model('localisation/tax_rate');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_localisation_tax_rate->addTaxRate($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerLocalisationTaxRate extends Controller {
 
 		$this->load->model('localisation/tax_rate');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_localisation_tax_rate->editTaxRate($this->request->get['tax_rate_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -339,7 +339,7 @@ class ControllerLocalisationTaxRate extends Controller {
 
 		$data['cancel'] = $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['tax_rate_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['tax_rate_id']) && !$this->request->isPost()) {
 			$tax_rate_info = $this->model_localisation_tax_rate->getTaxRate($this->request->get['tax_rate_id']);
 		}
 

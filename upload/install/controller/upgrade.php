@@ -3,7 +3,7 @@ class ControllerUpgrade extends Controller {
 	private $error = array();
 
 	public function index() {
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if ($this->request->isPost() && $this->validate()) {
 			$this->load->model('upgrade');
 
 			$this->model_upgrade->mysql();

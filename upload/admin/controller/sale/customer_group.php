@@ -19,7 +19,7 @@ class ControllerSaleCustomerGroup extends Controller {
 
 		$this->load->model('sale/customer_group');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_sale_customer_group->addCustomerGroup($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -51,7 +51,7 @@ class ControllerSaleCustomerGroup extends Controller {
 
 		$this->load->model('sale/customer_group');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_sale_customer_group->editCustomerGroup($this->request->get['customer_group_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -322,7 +322,7 @@ class ControllerSaleCustomerGroup extends Controller {
 
 		$data['cancel'] = $this->url->link('sale/customer_group', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['customer_group_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['customer_group_id']) && !$this->request->isPost()) {
 			$customer_group_info = $this->model_sale_customer_group->getCustomerGroup($this->request->get['customer_group_id']);
 		}
 

@@ -26,7 +26,7 @@ class ControllerCommonReset extends Controller {
 
 			$this->document->setTitle($this->language->get('heading_title'));
 
-			if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			if ($this->request->isPost() && $this->validate()) {
 				$this->model_user_user->editPassword($user_info['user_id'], $this->request->post['password']);
 
 				$this->session->data['success'] = $this->language->get('text_success');

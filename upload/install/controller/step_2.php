@@ -3,7 +3,7 @@ class ControllerStep2 extends Controller {
 	private $error = array();
 
 	public function index() {
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+		if ($this->request->isPost() && $this->validate()) {
 			$this->response->redirect($this->url->link('step_3'));
 		}
 

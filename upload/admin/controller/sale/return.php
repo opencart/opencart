@@ -19,7 +19,7 @@ class ControllerSaleReturn extends Controller {
 
 		$this->load->model('sale/return');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_sale_return->addReturn($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -83,7 +83,7 @@ class ControllerSaleReturn extends Controller {
 
 		$this->load->model('sale/return');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+		if ($this->request->isPost() && $this->validateForm()) {
 			$this->model_sale_return->editReturn($this->request->get['return_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -714,7 +714,7 @@ class ControllerSaleReturn extends Controller {
 
 		$data['cancel'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		if (isset($this->request->get['return_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
+		if (isset($this->request->get['return_id']) && !$this->request->isPost()) {
 			$return_info = $this->model_sale_return->getReturn($this->request->get['return_id']);
 		}
 
@@ -933,7 +933,7 @@ class ControllerSaleReturn extends Controller {
 
 		$this->load->model('sale/return');
 
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+		if ($this->request->isPost()) {
 			if (!$this->user->hasPermission('modify', 'sale/return')) {
 				$data['error'] = $this->language->get('error_permission');
 			}

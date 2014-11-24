@@ -84,7 +84,7 @@ class ControllerModulePPLogin extends Controller {
 
 			if ($customer_info) {
 				if ($this->validate($user->email)) {
-					$this->completeLogin($$customer_info['customer_id'], $customer_info['email'], $tokens->access_token);
+					$this->completeLogin($customer_info['customer_id'], $customer_info['email'], $tokens->access_token);
 				} else {
 					$this->model_module_pp_login->log('Could not login to - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
 					echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/login', '', 'SSL') . '"; window.close();</script>';

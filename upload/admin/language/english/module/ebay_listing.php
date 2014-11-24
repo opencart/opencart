@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']     = 'eBay';
+$_['heading_title']     = 'eBay Listing';
 
 // Text
 $_['text_module']       = 'Modules';

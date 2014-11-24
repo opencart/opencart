@@ -1,6 +1,6 @@
 <?php
-class ControllerModuleEbay extends Controller {
-	public function index($setting) {
+class ControllerModuleEbayListing extends Controller {
+	public function index() {
 		if ($this->config->get('ebay_status') == 1) {
 			$this->language->load('module/ebay');
 			
@@ -21,9 +21,9 @@ class ControllerModuleEbay extends Controller {
 
 			foreach($products['products'] as $product) {
 				if (isset($product['pictures'][0])) {
-					$image = $this->model_openbay_ebay_product->resize($product['pictures'][0], $setting['width'], $setting['height']);
+					$image = $this->model_openbay_ebay_product->resize($product['pictures'][0], $this->config->get('ebay_listing_width'), $this->config->get('ebay_listing_height'));
 				} else {
-					$image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
+					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('ebay_listing_width'), $this->config->get('ebay_listing_height'));
 				}
 
 				$data['products'][] = array(

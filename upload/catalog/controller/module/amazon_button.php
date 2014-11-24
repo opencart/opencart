@@ -3,9 +3,16 @@ class ControllerModuleAmazonButton extends Controller {
 	public function index($setting) {
 		static $module = 0;
 		
-		$allowed_ips = $this->config->get('amazon_checkout_allowed_ips');
-
-		if ($this->config->get('amazon_checkout_status') && (empty($allowed_ips) || in_array($this->request->server['REMOTE_ADDR'], $allowed_ips)) && $this->cart->hasProducts() && (!isset($this->session->data['vouchers']) || empty($this->session->data['vouchers'])) && !$this->cart->hasRecurringProducts()) {
+		$status = $this->config->get('amazon_checkout_status');
+		
+		if ($this->config->get('amazon_checkout_allowed_ips') && !in_array($this->request->server['REMOTE_ADDR'], $this->config->get('amazon_checkout_allowed_ips'))) {
+			$status = false;
+			
+		} elseif (!$this->cart->hasProducts() || !empty($this->session->data['vouchers']) || $this->cart->hasRecurringProducts()) {
+			$status = false;
+		}		
+		
+		if ($status) {			
 			if ($this->config->get('amazon_checkout_mode') == 'sandbox') {
 				if ($this->config->get('amazon_checkout_marketplace') == 'uk') {
 					$this->document->addScript('https://static-eu.payments-amazon.com/cba/js/gb/sandbox/PaymentWidgets.js');
@@ -19,10 +26,10 @@ class ControllerModuleAmazonButton extends Controller {
 					$this->document->addScript('https://static-eu.payments-amazon.com/cba/js/de/PaymentWidgets.js');
 				}
 			}
-
-			$data['amazon_checkout'] = $this->url->link('payment/amazon_checkout/address', '', 'SSL');
-			$data['amazon_checkout_status'] = true;
+			
 			$data['merchant_id'] = $this->config->get('amazon_checkout_merchant_id');
+			
+			$data['amazon_checkout'] = $this->url->link('payment/amazon_checkout/address', '', 'SSL');
 			
 			$data['button_colour'] = $this->config->get('amazon_checkout_button_colour');
 			$data['button_background'] = $this->config->get('amazon_checkout_button_background');

@@ -11,12 +11,12 @@ class ControllerModuleEbayListing extends Controller {
 
 			$data['products'] = array();
 
-			$products = $this->cache->get('ebay.' . md5(serialize($products)));
+			$products = $this->cache->get('ebay_listing.' . md5(serialize($products)));
 
 			if (!$products) {
 				$products = $this->model_openbay_ebay_product->getDisplayProducts();
 				
-				$this->cache->set('ebay.' . md5(serialize($products)), $products);
+				$this->cache->set('ebay_listing.' . md5(serialize($products)), $products);
 			}
 
 			foreach($products['products'] as $product) {

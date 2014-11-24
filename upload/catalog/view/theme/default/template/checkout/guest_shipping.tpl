@@ -240,7 +240,7 @@ $('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on(
 					$(node).button('reset');
 				},
 				success: function(json) {
-					$('.text-danger').remove();
+					$(node).parent().find('.text-danger').remove();
 					
 					if (json['error']) {
 						$(node).parent().find('input[name^=\'custom_field\']').after('<div class="text-danger">' + json['error'] + '</div>');

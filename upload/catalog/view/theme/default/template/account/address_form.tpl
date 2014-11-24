@@ -331,7 +331,7 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 					$(node).button('reset');
 				},
 				success: function(json) {
-					$('.text-danger').remove();
+					$(node).parent().find('.text-danger').remove();
 					
 					if (json['error']) {
 						$(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');

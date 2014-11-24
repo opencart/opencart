@@ -59,7 +59,11 @@
                 </tr>
                 <?php foreach ($extension['module'] as $module) { ?>
                 <tr>
-                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                  <td style="width: 1px;" class="text-center"><?php if (in_array($module['module_id'], $selected)) { ?>
+                    <input type="checkbox" name="selected[]" value="<?php echo $module['module_id']; ?>" checked="checked" />
+                    <?php } else { ?>
+                    <input type="checkbox" name="selected[]" value="<?php echo $module['module_id']; ?>" />
+                    <?php } ?></td>
                   <td class="text-left"><?php echo $module['name']; ?></td>
                   <td class="text-right"><a href="<?php echo $module['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
@@ -78,10 +82,5 @@
     </div>
     </form>
   </div>
-  <script type="text/javascript"><!--
-$('#input-code').on('change', function() {
-	$('#input-name').attr('value', $(this).find(':selected').text());
-});
-  //--></script> 
 </div>
 <?php echo $footer; ?>

@@ -21,6 +21,7 @@ class ControllerModuleAmazonButton extends Controller {
 			$data['amazon_checkout'] = $this->url->link('payment/amazon_checkout/address', '', 'SSL');
 			$data['amazon_checkout_status'] = true;
 			$data['merchant_id'] = $this->config->get('amazon_checkout_merchant_id');
+			
 			$data['button_colour'] = $this->config->get('amazon_checkout_button_colour');
 			$data['button_background'] = $this->config->get('amazon_checkout_button_background');
 			$data['button_size'] = $this->config->get('amazon_checkout_button_size');

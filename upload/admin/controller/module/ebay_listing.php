@@ -93,36 +93,43 @@ class ControllerModuleEbay extends Controller {
 		if (isset($this->request->post['ebay_keywords'])) {
 			$data['ebay_keywords'] = $this->request->post['ebay_keywords'];
 		} else {
-			$data['ebay_keywords'] = '';
+			$data['ebay_keywords'] = $this->config->get('ebay_keywords');
 		}
 		
 		if (isset($this->request->post['ebay_description'])) {
 			$data['ebay_description'] = $this->request->post['ebay_description'];
 		} else {
-			$data['ebay_description'] = '';
+			$data['ebay_description'] = $this->config->get('ebay_description');
 		}
 		
 		if (isset($this->request->post['ebay_limit'])) {
 			$data['ebay_limit'] = $this->request->post['ebay_limit'];
-		
+		} elseif ($this->config->has('ebay_limit')) {
+			$data['ebay_limit'] = $this->config->get('ebay_limit');
 		} else {
 			$data['ebay_limit'] = 5;
 		}
 			
 		if (isset($this->request->post['ebay_width'])) {
 			$data['ebay_width'] = $this->request->post['width'];
+		} elseif ($this->config->has('ebay_width')) {
+			$data['ebay_width'] = $this->config->get('ebay_width');		
 		} else {
 			$data['ebay_width'] = 200;
 		}	
 			
-		if (isset($this->request->post['height'])) {
-			$data['height'] = $this->request->post['height'];
+		if (isset($this->request->post['ebay_height'])) {
+			$data['ebay_height'] = $this->request->post['ebay_height'];
+		} elseif ($this->config->has('ebay_height')) {
+			$data['ebay_height'] = $this->config->get('ebay_height');		
 		} else {
-			$data['height'] = 200;
+			$data['ebay_height'] = 200;
 		}	
 		
 		if (isset($this->request->post['ebay_sort'])) {
 			$data['ebay_sort'] = $this->request->post['ebay_sort'];
+		} elseif ($this->config->has('ebay_sort')) {
+			$data['ebay_sort'] = $this->config->get('ebay_sort');		
 		} else {
 			$data['ebay_sort'] = 'StartTimeNewest';
 		}	
@@ -130,7 +137,7 @@ class ControllerModuleEbay extends Controller {
 		if (isset($this->request->post['ebay_site'])) {
 			$data['ebay_site'] = $this->request->post['ebay_site'];
 		} else {
-			$data['ebay_site'] = '';
+			$data['ebay_site'] = $this->config->get('ebay_site');	
 		}
 		
 		$data['sites'] = array();

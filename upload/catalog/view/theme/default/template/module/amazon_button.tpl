@@ -15,10 +15,12 @@
 			size: '<?php echo $button_size; ?>',
 		},
 		onAuthorize: function(widget) {
+			var redirect = '<?php echo html_entity_decode($amazon_checkout); ?>';
+			
 			if (redirect.indexOf('?') == -1) {
-				window.location = '<?php echo html_entity_decode($amazon_checkout); ?>?contract_id=' + widget.getPurchaseContractId();
+				window.location = redirect + '?contract_id=' + widget.getPurchaseContractId();
 			} else {
-				window.location = '<?php echo html_entity_decode($amazon_checkout); ?>&contract_id=' + widget.getPurchaseContractId();
+				window.location = redirect + '&contract_id=' + widget.getPurchaseContractId();
 			}
 		}
 	}).render('AmazonCheckoutWidgetModule<?php echo $layout_id; ?>-<?php echo $position; ?>');

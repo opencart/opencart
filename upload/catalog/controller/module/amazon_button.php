@@ -1,6 +1,8 @@
 <?php
 class ControllerModuleAmazonButton extends Controller {
 	public function index($setting) {
+		static $module = 0;
+		
 		$allowed_ips = $this->config->get('amazon_checkout_allowed_ips');
 
 		if ($this->config->get('amazon_checkout_status') && (empty($allowed_ips) || in_array($this->request->server['REMOTE_ADDR'], $allowed_ips)) && $this->cart->hasProducts() && (!isset($this->session->data['vouchers']) || empty($this->session->data['vouchers'])) && !$this->cart->hasRecurringProducts()) {
@@ -26,8 +28,9 @@ class ControllerModuleAmazonButton extends Controller {
 			$data['button_background'] = $this->config->get('amazon_checkout_button_background');
 			$data['button_size'] = $this->config->get('amazon_checkout_button_size');
 
-			$data['layout_id'] = $setting['layout_id'];
-			$data['position'] = $setting['position'];
+			$data['align'] = $setting['align'];
+
+			$data['module'] = $module++;
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/amazon_button.tpl')) {
 				return $this->load->view($this->config->get('config_template') . '/template/module/amazon_button.tpl', $data);

@@ -526,12 +526,12 @@ class ControllerExtensionInstaller extends Controller {
 			// Get a list of files ready to upload
 			$files = array();
 
-			$path = array($directory . '*');
+			$path = array($directory . '{,.}*');
 
 			while (count($path) != 0) {
 				$next = array_shift($path);
 
-				foreach (glob($next) as $file) {
+				foreach (glob($next, GLOB_BRACE) as $file) {
 					if (is_dir($file)) {
 						$path[] = $file . '/*';
 					}
@@ -577,23 +577,21 @@ class ControllerExtensionInstaller extends Controller {
 				// Get a list of files ready to upload
 				$files = array();
 
-				$path = array($directory . '*');
+				$path = array($directory . '/*');
 
 				while (count($path) != 0) {
 					$next = array_shift($path);
 
-					foreach (glob($next) as $file) {
-						if (basename($file) == '.csscomb.json') {
-						echo $file;
-						
-						}
+					foreach (glob($next, GLOB_BRACE) as $file) {
 						if (is_dir($file)) {
-							$path[] = $file . '/*';
+							$path[] = $file . '/{*,.*}';
 						}
 
 						$files[] = $file;
 					}
 				}
+
+				print_r($files);
 
 				rsort($files);
 

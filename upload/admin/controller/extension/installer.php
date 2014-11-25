@@ -526,14 +526,17 @@ class ControllerExtensionInstaller extends Controller {
 			// Get a list of files ready to upload
 			$files = array();
 
-			$path = array($directory . '{,.}*');
+			$path = array($directory);
 
 			while (count($path) != 0) {
 				$next = array_shift($path);
 
-				foreach (glob($next, GLOB_BRACE) as $file) {
+				// We have to use scandir function because glob will not pick up dot files.
+				foreach (array_diff(scandir($next, SCANDIR_SORT_ASCENDING), array('.', '..')) as $file) {
+					$file = $next . '/' . $file;
+					
 					if (is_dir($file)) {
-						$path[] = $file . '/*';
+						$path[] = $file;
 					}
 
 					$files[] = $file;
@@ -577,21 +580,22 @@ class ControllerExtensionInstaller extends Controller {
 				// Get a list of files ready to upload
 				$files = array();
 
-				$path = array($directory . '/*');
+				$path = array($directory);
 
 				while (count($path) != 0) {
 					$next = array_shift($path);
-
-					foreach (glob($next, GLOB_BRACE) as $file) {
+					
+					// We have to use scandir function because glob will not pick up dot files.
+					foreach (array_diff(scandir($next, SCANDIR_SORT_ASCENDING), array('.', '..')) as $file) {
+						$file = $next . '/' . $file;
+						
 						if (is_dir($file)) {
-							$path[] = $file . '/{*,.*}';
+							$path[] = $file;
 						}
 
 						$files[] = $file;
 					}
 				}
-
-				print_r($files);
 
 				rsort($files);
 

@@ -532,7 +532,7 @@ class ControllerExtensionInstaller extends Controller {
 				$next = array_shift($path);
 
 				// We have to use scandir function because glob will not pick up dot files.
-				foreach (array_diff(scandir($next, SCANDIR_SORT_ASCENDING), array('.', '..')) as $file) {
+				foreach (array_diff(scandir($next), array('.', '..')) as $file) {
 					$file = $next . '/' . $file;
 					
 					if (is_dir($file)) {
@@ -586,7 +586,7 @@ class ControllerExtensionInstaller extends Controller {
 					$next = array_shift($path);
 					
 					// We have to use scandir function because glob will not pick up dot files.
-					foreach (array_diff(scandir($next, SCANDIR_SORT_ASCENDING), array('.', '..')) as $file) {
+					foreach (array_diff(scandir($next), array('.', '..')) as $file) {
 						$file = $next . '/' . $file;
 						
 						if (is_dir($file)) {

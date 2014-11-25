@@ -28,7 +28,7 @@ $_['text_confirm']                  = 'Are you sure?';
 $_['text_home']                     = 'Home';
 
 // Button
-$_['button_insert']                 = 'Add New';
+$_['button_add']                    = 'Add New';
 $_['button_delete']                 = 'Delete';
 $_['button_save']                   = 'Save';
 $_['button_cancel']                 = 'Cancel';

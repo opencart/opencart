@@ -17,7 +17,13 @@ class ModelCheckoutVoucher extends Model {
 
 		if ($voucher_query->num_rows) {
 			if ($voucher_query->row['order_id']) {
-				$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE order_id = '" . (int)$voucher_query->row['order_id'] . "' AND order_status_id = '" . (int)$this->config->get('config_complete_status_id') . "'");
+				$implode = array();
+	
+				foreach ($this->config->get('config_complete_status') as $order_status_id) {
+					$implode[] = "'" . (int)$order_status_id . "'";
+				}
+				
+				$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE order_id = '" . (int)$voucher_query->row['order_id'] . "' AND order_status_id IN(" . implode(",", $implode) . ")");
 
 				if (!$order_query->num_rows) {
 					$status = false;

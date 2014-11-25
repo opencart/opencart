@@ -57,35 +57,27 @@ class ModelUserUserGroup extends Model {
 		return $query->row['total'];
 	}
 
-	public function addPermission($user_id, $type, $route) {
-		$user_query = $this->db->query("SELECT DISTINCT user_group_id FROM " . DB_PREFIX . "user WHERE user_id = '" . (int)$user_id . "'");
+	public function addPermission($user_group_id, $type, $route) {
+		$user_group_query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_group_id . "'");
 
-		if ($user_query->num_rows) {
-			$user_group_query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
+		if ($user_group_query->num_rows) {
+			$data = unserialize($user_group_query->row['permission']);
 
-			if ($user_group_query->num_rows) {
-				$data = unserialize($user_group_query->row['permission']);
+			$data[$type][] = $route;
 
-				$data[$type][] = $route;
-
-				$this->db->query("UPDATE " . DB_PREFIX . "user_group SET permission = '" . $this->db->escape(serialize($data)) . "' WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
-			}
+			$this->db->query("UPDATE " . DB_PREFIX . "user_group SET permission = '" . $this->db->escape(serialize($data)) . "' WHERE user_group_id = '" . (int)$user_group_id . "'");
 		}
 	}
 
-	public function removePermission($user_id, $type, $route) {
-		$user_query = $this->db->query("SELECT DISTINCT user_group_id FROM " . DB_PREFIX . "user WHERE user_id = '" . (int)$user_id . "'");
+	public function removePermission($user_group_id, $type, $route) {
+		$user_group_query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_group_id . "'");
 
-		if ($user_query->num_rows) {
-			$user_group_query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
+		if ($user_group_query->num_rows) {
+			$data = unserialize($user_group_query->row['permission']);
 
-			if ($user_group_query->num_rows) {
-				$data = unserialize($user_group_query->row['permission']);
+			$data[$type] = array_diff($data[$type], array($route));
 
-				$data[$type] = array_diff($data[$type], array($route));
-
-				$this->db->query("UPDATE " . DB_PREFIX . "user_group SET permission = '" . $this->db->escape(serialize($data)) . "' WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
-			}
+			$this->db->query("UPDATE " . DB_PREFIX . "user_group SET permission = '" . $this->db->escape(serialize($data)) . "' WHERE user_group_id = '" . (int)$user_group_id . "'");
 		}
 	}
 }

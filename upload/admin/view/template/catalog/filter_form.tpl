@@ -94,7 +94,7 @@ function addFilterRow() {
     html += '  </div>';
 	<?php } ?>
 	html += '  </td>';
-	html += '  <td class="text-right"><input type="text" name="filter[' + filter_row + '][sort_order]" value="' + (filter_row+1) + '" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" /></td>';
+	html += '  <td class="text-right"><input type="text" name="filter[' + filter_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" /></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#filter-row' + filter_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';	
 	

@@ -243,7 +243,7 @@ class ControllerAccountAddress extends Controller {
 			);
 		}
 
-		$data['insert'] = $this->url->link('account/address/add', '', 'SSL');
+		$data['add'] = $this->url->link('account/address/add', '', 'SSL');
 		$data['back'] = $this->url->link('account/account', '', 'SSL');
 
 		$data['column_left'] = $this->load->controller('common/column_left');

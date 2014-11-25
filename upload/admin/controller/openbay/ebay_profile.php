@@ -24,7 +24,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 			$data['success'] = '';
 		}
 
-		$data['insert'] = $this->url->link('openbay/ebay_profile/add', 'token=' . $this->session->data['token'], 'SSL');
+		$data['add'] = $this->url->link('openbay/ebay_profile/add', 'token=' . $this->session->data['token'], 'SSL');
 		$data['types'] = $this->model_openbay_ebay_profile->getTypes();
 		$data['profiles'] = $this->model_openbay_ebay_profile->getAll();
 		$data['token'] = $this->session->data['token'];

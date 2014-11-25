@@ -18,8 +18,8 @@ class ControllerExtensionOpenbay extends Controller {
 
 			$this->load->model('user/user_group');
 
-			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'openbay/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'openbay/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'openbay/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'openbay/' . $this->request->get['extension']);
 
 			require_once(DIR_APPLICATION . 'controller/openbay/' . $this->request->get['extension'] . '.php');
 
@@ -319,8 +319,8 @@ class ControllerExtensionOpenbay extends Controller {
 
 		if (!in_array('openbay', $installed_modules)) {
 			$this->model_extension_extension->install('feed', 'openbay');
-			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'feed/openbay');
-			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'feed/openbay');
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'feed/openbay');
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'feed/openbay');
 		}
 
 		sleep(1);
@@ -1378,7 +1378,7 @@ class ControllerExtensionOpenbay extends Controller {
 				if (!array_key_exists($result['product_id'], $active_list)) {
 					$markets[] = array(
 						'name'      => $this->language->get('text_ebay'),
-						'text'      => $this->language->get('button_insert'),
+						'text'      => $this->language->get('button_add'),
 						'href'      => $this->url->link('openbay/ebay/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
 						'status'	=> 0
 					);
@@ -1420,7 +1420,7 @@ class ControllerExtensionOpenbay extends Controller {
 				} else {
 					$markets[] = array(
 						'name'      => $this->language->get('text_amazon'),
-						'text'      => $this->language->get('button_insert'),
+						'text'      => $this->language->get('button_add'),
 						'href'      => $this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
 						'status'	=> 0
 					);
@@ -1455,7 +1455,7 @@ class ControllerExtensionOpenbay extends Controller {
 				} else {
 					$markets[] = array(
 						'name'      => $this->language->get('text_amazonus'),
-						'text'      => $this->language->get('button_insert'),
+						'text'      => $this->language->get('button_add'),
 						'href'      => $this->url->link('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
 						'status'	=> 0
 					);
@@ -1470,7 +1470,7 @@ class ControllerExtensionOpenbay extends Controller {
 				if ($status == 0) {
 					$markets[] = array(
 						'name'      => $this->language->get('text_etsy'),
-						'text'      => $this->language->get('button_insert'),
+						'text'      => $this->language->get('button_add'),
 						'href'      => $this->url->link('openbay/etsy_product/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
 						'status'	=> 0
 					);

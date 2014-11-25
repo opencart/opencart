@@ -83,9 +83,16 @@
               <?php foreach ($layout_modules as $layout_module) { ?>
               <tr id="module-row<?php echo $module_row; ?>">
                 <td class="text-left"><select name="layout_module[<?php echo $module_row; ?>][code]" class="form-control">
-                    <?php foreach ($modules as $module) { ?>
-                    <optgroup label="<?php echo $module['name']; ?>">
-                    <?php foreach ($module['module'] as $module) { ?>
+                    <?php foreach ($extensions as $extension) { ?>
+                    <?php if (!$extension['module']) { ?>
+                    <?php if ($extension['code'] == $layout_module['code']) { ?>
+                    <option value="<?php echo $extension['code']; ?>" selected="selected"><?php echo $extension['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $extension['code']; ?>"><?php echo $extension['name']; ?></option>
+                    <?php } ?>
+                    <?php } else { ?>
+                    <optgroup label="<?php echo $extension['name']; ?>">
+                    <?php foreach ($extension['module'] as $module) { ?>
                     <?php if ($module['code'] == $layout_module['code']) { ?>
                     <option value="<?php echo $module['code']; ?>" selected="selected"><?php echo $module['name']; ?></option>
                     <?php } else { ?>
@@ -93,6 +100,7 @@
                     <?php } ?>
                     <?php } ?>
                     </optgroup>
+                    <?php } ?>
                     <?php } ?>
                   </select></td>
                 <td class="text-left"><select name="layout_module[<?php echo $module_row; ?>][position]" class="form-control">
@@ -159,12 +167,16 @@ var module_row = <?php echo $module_row; ?>;
 function addModule() {
 	html  = '<tr id="module-row' + module_row + '">';
 	html += '  <td class="text-left"><select name="layout_module[' + module_row + '][code]" class="form-control">';
-	<?php foreach ($modules as $module) { ?>
-    html += '    <optgroup label="<?php echo $module['name']; ?>">';
-    <?php foreach ($module['module'] as $module) { ?>
+	<?php foreach ($extensions as $extension) { ?>    
+	<?php if (!$extension['module']) { ?>
+	html += '    <option value="<?php echo $extension['code']; ?>"><?php echo addslashes($extension['name']); ?></option>';
+	<?php } else { ?>
+	html += '    <optgroup label="<?php echo addslashes($extension['name']); ?>">';
+	<?php foreach ($extension['module'] as $module) { ?>
 	html += '      <option value="<?php echo $module['code']; ?>"><?php echo addslashes($module['name']); ?></option>';
 	<?php } ?>
 	html += '    </optgroup>';
+	<?php } ?>
 	<?php } ?>
     html += '  </select></td>'; 
 	html += '  <td class="text-left"><select name="layout_module[' + module_row + '][position]" class="form-control">';
@@ -173,7 +185,7 @@ function addModule() {
     html += '    <option value="column_left"><?php echo $text_column_left; ?></option>';
     html += '    <option value="column_right"><?php echo $text_column_right; ?></option>';
     html += '  </select></td>';
-	html += '  <td class="text-left"><input type="text" name="layout_module[' + module_row + '][sort_order]" value="' + (module_row+1) + '" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
+	html += '  <td class="text-left"><input type="text" name="layout_module[' + module_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + module_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 	

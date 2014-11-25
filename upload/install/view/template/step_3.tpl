@@ -43,9 +43,9 @@
                 <?php } ?>
                 <?php if ($pgsql) { ?>
                 <?php if ($db_driver == 'pgsql') { ?>
-                <option value="pgsql" selected="selected"><?php echo $text_mpdo; ?></option>
+                <option value="pgsql" selected="selected"><?php echo $text_pgsql; ?></option>
                 <?php } else { ?>
-                <option value="pgsql"><?php echo $text_mpdo; ?></option>
+                <option value="pgsql"><?php echo $text_pgsql; ?></option>
                 <?php } ?>
                 <?php } ?>                
               </select>

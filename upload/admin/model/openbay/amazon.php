@@ -98,7 +98,7 @@ class ModelOpenbayAmazon extends Model {
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_product_search`");
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_listing_report`");
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `group` = 'openbay_amazon'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = 'openbay_amazon'");
 
 		// remove the event triggers
 		$this->model_extension_event->deleteEvent('openbaypro_amazon');

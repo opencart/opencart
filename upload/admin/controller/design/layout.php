@@ -383,13 +383,13 @@ class ControllerDesignLayout extends Controller {
 				);
 			}
 			
-			//if ($this->config->get($code . '_status')) {
+			if ($this->config->has($code . '_status') || $module_data) {
 				$data['extensions'][] = array(
 					'name'   => $this->language->get('heading_title'),
 					'code'   => $code,
 					'module' => $module_data
 				);
-			//}
+			}
 		}
 		
 		$data['header'] = $this->load->controller('common/header');

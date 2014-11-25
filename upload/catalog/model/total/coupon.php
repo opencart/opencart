@@ -76,8 +76,8 @@ class ModelTotalCoupon extends Model {
 				}
 
 				// If discount greater than total
-				if ($discount_total > $total) {
-					$discount_total = $total;
+				if ($discount_total > $sub_total) {
+					$discount_total = $sub_total;
 				}
 
 				$total_data[] = array(

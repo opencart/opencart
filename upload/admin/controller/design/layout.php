@@ -378,7 +378,7 @@ class ControllerDesignLayout extends Controller {
 			
 			foreach ($modules as $module) {
 				$module_data[] = array(
-					'name' => $module['name'],
+					'name' => $this->language->get('heading_title') . ' - ' . $module['name'],
 					'code' => $code . '.' .  $module['module_id']
 				);
 			}

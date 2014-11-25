@@ -2,9 +2,6 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right">
-        <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-module').submit() : false;"><i class="fa fa-trash-o"></i></button>
-      </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -37,7 +34,7 @@
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <td colspan="2" class="text-left"><?php echo $column_name; ?></td>
+                  <td class="text-left"><?php echo $column_name; ?></td>
                   <td class="text-right"><?php echo $column_action; ?></td>
                 </tr>
               </thead>
@@ -45,7 +42,7 @@
                 <?php if ($extensions) { ?>
                 <?php foreach ($extensions as $extension) { ?>
                 <tr>
-                  <td colspan="2"><?php echo $extension['name']; ?></td>
+                  <td><?php echo $extension['name']; ?></td>
                   <td class="text-right"><?php if (!$extension['installed']) { ?>
                     <a href="<?php echo $extension['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
                     <?php } else { ?>
@@ -59,13 +56,8 @@
                 </tr>
                 <?php foreach ($extension['module'] as $module) { ?>
                 <tr>
-                  <td style="width: 1px;" class="text-center"><?php if (in_array($module['module_id'], $selected)) { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $module['module_id']; ?>" checked="checked" />
-                    <?php } else { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $module['module_id']; ?>" />
-                    <?php } ?></td>
                   <td class="text-left"><?php echo $module['name']; ?></td>
-                  <td class="text-right"><a href="<?php echo $module['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                  <td class="text-right"><a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $module['delete']; ?>' : false;" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger"><i class="fa fa-trash-o"></i></a> <a href="<?php echo $module['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 <?php } ?>
                 <?php } ?>

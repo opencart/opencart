@@ -36,6 +36,8 @@ class ControllerApiCustomer extends Controller {
 
 				if (!$customer_info) {
 					$json['error']['warning'] = $this->language->get('error_customer');
+				} else {
+					$this->customer->login($customer_info['email'], '', true);
 				}
 			}
 

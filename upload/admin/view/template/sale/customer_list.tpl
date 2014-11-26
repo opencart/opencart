@@ -82,7 +82,7 @@
                   <?php } else { ?>
                   <option value="1"><?php echo $text_yes; ?></option>
                   <?php } ?>
-                  <?php if (($filter_approved !== null) && !$filter_approved) { ?>
+                  <?php if (!$filter_approved) { ?>
                   <option value="0" selected="selected"><?php echo $text_no; ?></option>
                   <?php } else { ?>
                   <option value="0"><?php echo $text_no; ?></option>

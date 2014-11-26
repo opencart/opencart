@@ -138,7 +138,7 @@
               <div>
                 <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                 <div class="checkbox">
-                  <?php if (isset($register_custom_field[$custom_field['custom_field_id']]) && in_array($register_custom_field_value['custom_field_value_id'], $register_custom_field[$custom_field['custom_field_id']])) { ?>
+                  <?php if (isset($register_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $register_custom_field[$custom_field['custom_field_id']])) { ?>
                   <label>
                     <input type="checkbox" name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
                     <?php echo $custom_field_value['name']; ?></label>
@@ -361,7 +361,7 @@
               <div>
                 <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                 <div class="checkbox">
-                  <?php if (isset($register_custom_field[$custom_field['custom_field_id']]) && in_array($register_custom_field_value['custom_field_value_id'], $register_custom_field[$custom_field['custom_field_id']])) { ?>
+                  <?php if (isset($register_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $register_custom_field[$custom_field['custom_field_id']])) { ?>
                   <label>
                     <input type="checkbox" name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
                     <?php echo $custom_field_value['name']; ?></label>
@@ -615,7 +615,7 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 					$(node).button('reset');
 				},
 				success: function(json) {
-					$('.text-danger').remove();
+					$(node).parent().find('.text-danger').remove();
 					
 					if (json['error']) {
 						$(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
@@ -623,8 +623,8 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 	
 					if (json['success']) {
 						alert(json['success']);
-	
-						$(node).parent().find('input').attr('value', json['file']);
+
+						$(node).parent().find('input').attr('value', json['code']);
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {
@@ -669,16 +669,16 @@ $('select[name=\'country_id\']').on('change', function() {
 			
 			html = '<option value=""><?php echo $text_select; ?></option>';
 			
-			if (json['zone']) {
+			if (json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
 					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-				
+					
 					if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
 						html += ' selected="selected"';
 					}
-			
-				html += '>' + json['zone'][i]['name'] + '</option>';
-			}
+				
+					html += '>' + json['zone'][i]['name'] + '</option>';
+				}
 			} else {
 				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
 			}

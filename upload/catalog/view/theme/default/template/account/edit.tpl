@@ -272,7 +272,7 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 					$(node).button('reset');			
 				},		
 				success: function(json) {
-					$('.text-danger').remove();
+					$(node).parent().find('.text-danger').remove();
 					
 					if (json['error']) {
 						$(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
@@ -281,7 +281,7 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 					if (json['success']) {
 						alert(json['success']);
 						
-						$(node).parent().find('input').attr('value', json['file']);
+						$(node).parent().find('input').attr('value', json['code']);
 					}
 				},			
 				error: function(xhr, ajaxOptions, thrownError) {

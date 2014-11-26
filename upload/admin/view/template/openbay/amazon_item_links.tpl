@@ -50,7 +50,7 @@
               <input id="new-amazon-sku" type="text" class="form-control" autocomplete="off">
             </td>
             <td class="text-center">
-              <a class="btn btn-primary" id="add-new-button" onclick="addNewLinkAutocomplete()" data-toggle="tooltip" data-original-title="<?php echo $button_insert; ?>"><i class="fa fa-plus-circle"></i></a>
+              <a class="btn btn-primary" id="add-new-button" onclick="addNewLinkAutocomplete()" data-toggle="tooltip" data-original-title="<?php echo $button_add; ?>"><i class="fa fa-plus-circle"></i></a>
             </td>
           </tr>
         </tbody>
@@ -152,12 +152,12 @@
                     rows += '<input class="form-control amazon_sku_' + json[i]['product_id'] + '_' + json[i]['var'] + '"  type="text">';
                   rows += '</div>';
                   rows += '<div class="col-sm-4 form-group">';
-                    rows += '<a class="btn btn-primary" onclick="addNewSkuField(' + json[i]['product_id'] + ', \'' + json[i]['var'] + '\')" data-toggle="tooltip" data-original-title="<?php echo $button_insert; ?>"><i class="fa fa-plus-circle"></i></a>';
+                    rows += '<a class="btn btn-primary" onclick="addNewSkuField(' + json[i]['product_id'] + ', \'' + json[i]['var'] + '\')" data-toggle="tooltip" data-original-title="<?php echo $button_add; ?>"><i class="fa fa-plus-circle"></i></a>';
                   rows += '</div>';
                 rows += '</div>';
               rows += '</div>';
             rows += '</td>';
-            rows += '<td class="text-center"><a class="btn btn-primary" onclick="addNewLink(this, \'' + json[i]['product_id'] + '\', \'' + json[i]['var'] + '\')" data-toggle="tooltip" data-original-title="<?php echo $button_insert; ?>"><i class="fa fa-plus-circle"></i></a></td>';
+            rows += '<td class="text-center"><a class="btn btn-primary" onclick="addNewLink(this, \'' + json[i]['product_id'] + '\', \'' + json[i]['var'] + '\')" data-toggle="tooltip" data-original-title="<?php echo $button_add; ?>"><i class="fa fa-plus-circle"></i></a></td>';
           rows += '</tr>';
         }
 

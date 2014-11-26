@@ -1,7 +1,7 @@
 <?php
 class ModelSaleCustomer extends Model {
 	public function addCustomer($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET customer_group_id = '" . (int)$data['customer_group_id'] . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? serialize($data['custom_field']) : '') . "', newsletter = '" . (int)$data['newsletter'] . "', salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "', status = '" . (int)$data['status'] . "', safe = '" . (int)$data['safe'] . "', date_added = NOW()");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET customer_group_id = '" . (int)$data['customer_group_id'] . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? serialize($data['custom_field']) : '') . "', newsletter = '" . (int)$data['newsletter'] . "', salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "', status = '" . (int)$data['status'] . "', approved = '" . (int)$data['approved'] . "', safe = '" . (int)$data['safe'] . "', date_added = NOW()");
 
 		$customer_id = $this->db->getLastId();
 
@@ -23,7 +23,7 @@ class ModelSaleCustomer extends Model {
 			$data['custom_field'] = array();
 		}
 
-		$this->db->query("UPDATE " . DB_PREFIX . "customer SET customer_group_id = '" . (int)$data['customer_group_id'] . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? serialize($data['custom_field']) : '') . "', newsletter = '" . (int)$data['newsletter'] . "', status = '" . (int)$data['status'] . "', safe = '" . (int)$data['safe'] . "' WHERE customer_id = '" . (int)$customer_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "customer SET customer_group_id = '" . (int)$data['customer_group_id'] . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? serialize($data['custom_field']) : '') . "', newsletter = '" . (int)$data['newsletter'] . "', status = '" . (int)$data['status'] . "', approved = '" . (int)$data['approved'] . "', safe = '" . (int)$data['safe'] . "' WHERE customer_id = '" . (int)$customer_id . "'");
 
 		if ($data['password']) {
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "' WHERE customer_id = '" . (int)$customer_id . "'");
@@ -85,7 +85,7 @@ class ModelSaleCustomer extends Model {
 			$implode[] = "c.email LIKE '" . $this->db->escape($data['filter_email']) . "%'";
 		}
 
-		if (isset($data['filter_newsletter']) && $data['filter_newsletter'] !== null) {
+		if (isset($data['filter_newsletter']) && !is_null($data['filter_newsletter'])) {
 			$implode[] = "c.newsletter = '" . (int)$data['filter_newsletter'] . "'";
 		}
 
@@ -97,11 +97,11 @@ class ModelSaleCustomer extends Model {
 			$implode[] = "c.customer_id IN (SELECT customer_id FROM " . DB_PREFIX . "customer_ip WHERE ip = '" . $this->db->escape($data['filter_ip']) . "')";
 		}
 
-		if (isset($data['filter_status']) && $data['filter_status'] !== null) {
+		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
 			$implode[] = "c.status = '" . (int)$data['filter_status'] . "'";
 		}
 
-		if (isset($data['filter_approved']) && $data['filter_approved'] !== null) {
+		if (isset($data['filter_approved']) && !is_null($data['filter_approved'])) {
 			$implode[] = "c.approved = '" . (int)$data['filter_approved'] . "'";
 		}
 
@@ -269,7 +269,7 @@ class ModelSaleCustomer extends Model {
 			$implode[] = "email LIKE '" . $this->db->escape($data['filter_email']) . "%'";
 		}
 
-		if (isset($data['filter_newsletter']) && $data['filter_newsletter'] !== null) {
+		if (isset($data['filter_newsletter']) && !is_null($data['filter_newsletter'])) {
 			$implode[] = "newsletter = '" . (int)$data['filter_newsletter'] . "'";
 		}
 
@@ -281,11 +281,11 @@ class ModelSaleCustomer extends Model {
 			$implode[] = "customer_id IN (SELECT customer_id FROM " . DB_PREFIX . "customer_ip WHERE ip = '" . $this->db->escape($data['filter_ip']) . "')";
 		}
 
-		if (isset($data['filter_status']) && $data['filter_status'] !== null) {
+		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
 			$implode[] = "status = '" . (int)$data['filter_status'] . "'";
 		}
 
-		if (isset($data['filter_approved']) && $data['filter_approved'] !== null) {
+		if (isset($data['filter_approved']) && !is_null($data['filter_approved'])) {
 			$implode[] = "approved = '" . (int)$data['filter_approved'] . "'";
 		}
 

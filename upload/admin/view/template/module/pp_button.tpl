@@ -28,8 +28,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
             <div class="col-sm-10">
-              <select name="pp_button_status" id="input-status" class="form-control">
-                <?php if ($pp_button_status) { ?>
+              <select name="status" id="input-status" class="form-control">
+                <?php if ($status) { ?>
                 <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                 <option value="0"><?php echo $text_disabled; ?></option>
                 <?php } else { ?>

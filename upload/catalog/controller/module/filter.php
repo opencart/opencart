@@ -1,6 +1,6 @@
 <?php
 class ControllerModuleFilter extends Controller {
-	public function index($setting) {
+	public function index() {
 		if (isset($this->request->get['path'])) {
 			$parts = explode('_', (string)$this->request->get['path']);
 		} else {

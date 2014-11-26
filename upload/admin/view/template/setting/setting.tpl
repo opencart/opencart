@@ -1630,13 +1630,13 @@ $('select[name=\'config_country_id\']').on('change', function() {
 
 			if (json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
-          html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+          			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 
 					if (json['zone'][i]['zone_id'] == '<?php echo $config_zone_id; ?>') {
-            html += ' selected="selected"';
-          }
+            			html += ' selected="selected"';
+					}
 
-          html += '>' + json['zone'][i]['name'] + '</option>';
+					html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
 				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';

@@ -261,7 +261,7 @@ $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('c
 					$(node).button('reset');
 				},
 				success: function(json) {
-					$('.text-danger').remove();
+					$(node).parent().find('.text-danger').remove();;
 					
 					if (json['error']) {
 						$(node).parent().find('input[name^=\'custom_field\']').after('<div class="text-danger">' + json['error'] + '</div>');
@@ -317,7 +317,7 @@ $('#collapse-payment-address select[name=\'country_id\']').on('change', function
 
 			html = '<option value=""><?php echo $text_select; ?></option>';
 
-			if (json['zone']) {
+			if (json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
 					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 

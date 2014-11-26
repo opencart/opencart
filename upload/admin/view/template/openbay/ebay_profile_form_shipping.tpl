@@ -122,7 +122,7 @@
                   </div>
                   <div class="row">
                     <div class="col-sm-12 text-right">
-                      <p><a class="btn btn-primary" onclick="addShipping('national', 'flat');" id="add-national-flat"><i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?></a></p>
+                      <p><a class="btn btn-primary" onclick="addShipping('national', 'flat');" id="add-national-flat"><i class="fa fa-plus-circle"></i> <?php echo $button_add; ?></a></p>
                     </div>
                   </div>
                 </div>
@@ -151,7 +151,7 @@
                   </div>
                   <div class="row">
                     <div class="col-sm-12 text-right">
-                      <p><a class="btn btn-primary" onclick="addShipping('national', 'calculated');" id="add-national-calculated"><i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?></a></p>
+                      <p><a class="btn btn-primary" onclick="addShipping('national', 'calculated');" id="add-national-calculated"><i class="fa fa-plus-circle"></i> <?php echo $button_add; ?></a></p>
                     </div>
                   </div>
                 </div>
@@ -196,7 +196,7 @@
                   </div>
                   <div class="row">
                     <div class="col-sm-12 text-right">
-                      <p><a class="btn btn-primary" onclick="addShipping('international', 'flat');" id="add-international-flat"><i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?></a></p>
+                      <p><a class="btn btn-primary" onclick="addShipping('international', 'flat');" id="add-international-flat"><i class="fa fa-plus-circle"></i> <?php echo $button_add; ?></a></p>
                     </div>
                   </div>
                 </div>
@@ -227,7 +227,7 @@
                     </div>
                     <div class="row">
                       <div class="col-sm-12 text-right">
-                        <p><a class="btn btn-primary" onclick="addShipping('international', 'calculated');" id="add-international-calculated"><i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?></a></p>
+                        <p><a class="btn btn-primary" onclick="addShipping('international', 'calculated');" id="add-international-calculated"><i class="fa fa-plus-circle"></i> <?php echo $button_add; ?></a></p>
                       </div>
                     </div>
                   </div>
@@ -349,10 +349,10 @@
         html += '</div>';
 
         $('#options-' + id + '-' + type).append(html);
-        $('#add-' + id + '-' + type).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?>').removeAttr('disabled');
+        $('#add-' + id + '-' + type).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $button_add; ?>').removeAttr('disabled');
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        $('#add-shipping-'+id).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?>').removeAttr('disabled');
+        $('#add-shipping-'+id).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $button_add; ?>').removeAttr('disabled');
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });

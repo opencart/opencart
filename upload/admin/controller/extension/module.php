@@ -21,6 +21,8 @@ class ControllerExtensionModule extends Controller {
 
 		$this->load->model('extension/extension');
 
+		$this->load->model('extension/module');
+
 		if ($this->validate()) {
 			$this->model_extension_extension->install('module', $this->request->get['extension']);
 
@@ -47,8 +49,12 @@ class ControllerExtensionModule extends Controller {
 
 		$this->load->model('extension/extension');
 
+		$this->load->model('extension/module');
+
 		if ($this->validate()) {
 			$this->model_extension_extension->uninstall('module', $this->request->get['extension']);
+
+			$this->model_extension_module->deleteModulesByCode($this->request->get['extension']);
 
 			$this->load->model('setting/setting');
 
@@ -61,6 +67,8 @@ class ControllerExtensionModule extends Controller {
 
 			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
 		}	
+		
+		$this->getList();
 	}
 	
 	public function delete() {
@@ -68,12 +76,12 @@ class ControllerExtensionModule extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
+		$this->load->model('extension/extension');
+
 		$this->load->model('extension/module');
 
-		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $module_id) {
-				$this->model_extension_module->deleteModuleByCode($module_id);
-			}
+		if (isset($this->request->get['module_id']) && $this->validateDelete()) {
+			$this->model_extension_module->deleteModule($this->request->get['module_id']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -156,8 +164,9 @@ class ControllerExtensionModule extends Controller {
 				foreach ($modules as $module) {
 					$module_data[] = array(
 						'module_id' => $module['module_id'],
-						'name'      => $module['name'],
-						'edit'      => $this->url->link('module/' . $extension, 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], 'SSL')
+						'name'      => $this->language->get('heading_title') . ' &gt; ' . $module['name'],
+						'edit'      => $this->url->link('module/' . $extension, 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], 'SSL'),
+						'delete'    => $this->url->link('extension/module/delete', 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], 'SSL')
 					);
 				}
 
@@ -172,6 +181,12 @@ class ControllerExtensionModule extends Controller {
 			}
 		}
 		
+		if (isset($this->request->post['selected'])) {
+			$data['selected'] = (array)$this->request->post['selected'];
+		} else {
+			$data['selected'] = array();
+		}
+				
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

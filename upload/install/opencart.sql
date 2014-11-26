@@ -1584,17 +1584,17 @@ CREATE TABLE IF NOT EXISTS `oc_layout_module` (
 -- Dumping data for table `oc_layout_module`
 --
 
-INSERT INTO `oc_layout_module` (`layout_module_id`, `layout_id`, `module_id`, `position`, `sort_order`) VALUES
-(2, 4, 0, 'content_top', 0),
-(3, 4, 0, 'content_top', 1),
-(35, 6, 2, 'column_right', 0),
-(20, 5, 0, 'column_left', 2),
-(37, 10, 11, 'column_right', 0),
-(38, 3, 7, 'column_left', 0),
-(40, 1, 10, 'content_top', 0),
-(39, 3, 8, 'column_left', 1),
-(41, 1, 6, 'content_top', 1),
-(42, 1, 5, 'content_top', 2);
+INSERT INTO `oc_layout_module` (`layout_module_id`, `layout_id`, `code`, `position`, `sort_order`) VALUES
+(2, 4, '0', 'content_top', 0),
+(3, 4, '0', 'content_top', 1),
+(20, 5, '0', 'column_left', 2),
+(69, 10, 'affiliate', 'column_right', 1),
+(68, 6, 'account', 'column_right', 1),
+(67, 1, 'carousel.29', 'content_top', 3),
+(66, 1, 'slideshow.27', 'content_top', 1),
+(65, 1, 'featured.28', 'content_top', 2),
+(72, 3, 'account', 'column_left', 1),
+(73, 3, 'banner.30', 'column_left', 2);
 
 -- --------------------------------------------------------
 
@@ -1794,14 +1794,10 @@ CREATE TABLE IF NOT EXISTS `oc_module` (
 --
 
 INSERT INTO `oc_module` (`module_id`, `name`, `code`, `setting`) VALUES
-(2, 'Account', 'account', 'a:1:{s:6:"status";s:1:"1";}'),
-(5, 'Carousel - Home Page', 'carousel', 'a:4:{s:9:"banner_id";s:1:"8";s:5:"width";s:3:"130";s:6:"height";s:3:"100";s:6:"status";s:1:"1";}'),
-(6, 'Featured - Home Page', 'featured', 'a:5:{s:7:"product";a:4:{i:0;s:2:"43";i:1;s:2:"40";i:2;s:2:"42";i:3;s:2:"30";}s:5:"limit";s:1:"5";s:5:"width";s:3:"200";s:6:"height";s:3:"200";s:6:"status";s:1:"1";}'),
-(7, 'Category', 'category', 'a:1:{s:6:"status";s:1:"1";}'),
-(8, 'Banner - Category', 'banner', 'a:4:{s:9:"banner_id";s:1:"6";s:5:"width";s:3:"182";s:6:"height";s:3:"182";s:6:"status";s:1:"1";}'),
-(10, 'Slideshow - Home Page', 'slideshow', 'a:4:{s:9:"banner_id";s:1:"7";s:5:"width";s:4:"1140";s:6:"height";s:3:"380";s:6:"status";s:1:"1";}'),
-(11, 'Affiliate', 'affiliate', 'a:1:{s:6:"status";s:1:"1";}'),
-(18, 'Featured', 'featured', 'a:5:{s:7:"product";a:2:{i:0;s:2:"30";i:1;s:2:"28";}s:5:"limit";s:1:"5";s:5:"width";s:3:"200";s:6:"height";s:3:"200";s:6:"status";s:1:"1";}');
+(30, 'Category', 'banner', 'a:5:{s:4:"name";s:17:"Banner - Category";s:9:"banner_id";s:1:"6";s:5:"width";s:3:"300";s:6:"height";s:3:"300";s:6:"status";s:1:"1";}'),
+(29, 'Home Page', 'carousel', 'a:5:{s:4:"name";s:20:"Carousel - Home Page";s:9:"banner_id";s:1:"8";s:5:"width";s:3:"130";s:6:"height";s:3:"100";s:6:"status";s:1:"1";}'),
+(28, 'Home Page', 'featured', 'a:6:{s:4:"name";s:20:"Featured - Home Page";s:7:"product";a:4:{i:0;s:2:"43";i:1;s:2:"40";i:2;s:2:"42";i:3;s:2:"30";}s:5:"limit";s:1:"4";s:5:"width";s:3:"200";s:6:"height";s:3:"200";s:6:"status";s:1:"1";}'),
+(27, 'Home Page', 'slideshow', 'a:5:{s:4:"name";s:21:"Slideshow - Home Page";s:9:"banner_id";s:1:"7";s:5:"width";s:4:"1140";s:6:"height";s:3:"380";s:6:"status";s:1:"1";}');
 
 -- --------------------------------------------------------
 
@@ -3012,10 +3008,6 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (35, 0, 'flat', 'flat_status', '1', 0),
 (36, 0, 'flat', 'flat_geo_zone_id', '0', 0),
 (37, 0, 'flat', 'flat_tax_class_id', '9', 0),
-(169, 0, 'carousel', 'carousel_status', '1', 0),
-(170, 0, 'carousel', 'carousel_module', 'a:1:{i:0;a:5:{s:9:"banner_id";s:1:"8";s:5:"limit";s:2:"10";s:6:"scroll";s:1:"3";s:5:"width";s:3:"130";s:6:"height";s:3:"100";}}', 1),
-(156, 0, 'featured', 'featured_status', '1', 0),
-(155, 0, 'featured', 'featured_product', '43,40,42,30', 0),
 (41, 0, 'flat', 'flat_cost', '5.00', 0),
 (42, 0, 'credit', 'credit_sort_order', '7', 0),
 (43, 0, 'credit', 'credit_status', '1', 0),
@@ -3023,6 +3015,7 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (54, 0, 'reward', 'reward_status', '1', 0),
 (146, 0, 'category', 'category_status', '1', 0),
 (158, 0, 'account', 'account_status', '1', 0),
+(159, 0, 'affiliate', 'affiliate_status', '1', 0),
 (267, 0, 'config', 'config_robots', 'abot\r\ndbot\r\nebot\r\nhbot\r\nkbot\r\nlbot\r\nmbot\r\nnbot\r\nobot\r\npbot\r\nrbot\r\nsbot\r\ntbot\r\nvbot\r\nybot\r\nzbot\r\nbot.\r\nbot/\r\n_bot\r\n.bot\r\n/bot\r\n-bot\r\n:bot\r\n(bot\r\ncrawl\r\nslurp\r\nspider\r\nseek\r\naccoona\r\nacoon\r\nadressendeutschland\r\nah-ha.com\r\nahoy\r\naltavista\r\nananzi\r\nanthill\r\nappie\r\narachnophilia\r\narale\r\naraneo\r\naranha\r\narchitext\r\naretha\r\narks\r\nasterias\r\natlocal\r\natn\r\natomz\r\naugurfind\r\nbackrub\r\nbannana_bot\r\nbaypup\r\nbdfetch\r\nbig brother\r\nbiglotron\r\nbjaaland\r\nblackwidow\r\nblaiz\r\nblog\r\nblo.\r\nbloodhound\r\nboitho\r\nbooch\r\nbradley\r\nbutterfly\r\ncalif\r\ncassandra\r\nccubee\r\ncfetch\r\ncharlotte\r\nchurl\r\ncienciaficcion\r\ncmc\r\ncollective\r\ncomagent\r\ncombine\r\ncomputingsite\r\ncsci\r\ncurl\r\ncusco\r\ndaumoa\r\ndeepindex\r\ndelorie\r\ndepspid\r\ndeweb\r\ndie blinde kuh\r\ndigger\r\nditto\r\ndmoz\r\ndocomo\r\ndownload express\r\ndtaagent\r\ndwcp\r\nebiness\r\nebingbong\r\ne-collector\r\nejupiter\r\nemacs-w3 search engine\r\nesther\r\nevliya celebi\r\nezresult\r\nfalcon\r\nfelix ide\r\nferret\r\nfetchrover\r\nfido\r\nfindlinks\r\nfireball\r\nfish search\r\nfouineur\r\nfunnelweb\r\ngazz\r\ngcreep\r\ngenieknows\r\ngetterroboplus\r\ngeturl\r\nglx\r\ngoforit\r\ngolem\r\ngrabber\r\ngrapnel\r\ngralon\r\ngriffon\r\ngromit\r\ngrub\r\ngulliver\r\nhamahakki\r\nharvest\r\nhavindex\r\nhelix\r\nheritrix\r\nhku www octopus\r\nhomerweb\r\nhtdig\r\nhtml index\r\nhtml_analyzer\r\nhtmlgobble\r\nhubater\r\nhyper-decontextualizer\r\nia_archiver\r\nibm_planetwide\r\nichiro\r\niconsurf\r\niltrovatore\r\nimage.kapsi.net\r\nimagelock\r\nincywincy\r\nindexer\r\ninfobee\r\ninformant\r\ningrid\r\ninktomisearch.com\r\ninspector web\r\nintelliagent\r\ninternet shinchakubin\r\nip3000\r\niron33\r\nisraeli-search\r\nivia\r\njack\r\njakarta\r\njavabee\r\njetbot\r\njumpstation\r\nkatipo\r\nkdd-explorer\r\nkilroy\r\nknowledge\r\nkototoi\r\nkretrieve\r\nlabelgrabber\r\nlachesis\r\nlarbin\r\nlegs\r\nlibwww\r\nlinkalarm\r\nlink validator\r\nlinkscan\r\nlockon\r\nlwp\r\nlycos\r\nmagpie\r\nmantraagent\r\nmapoftheinternet\r\nmarvin/\r\nmattie\r\nmediafox\r\nmediapartners\r\nmercator\r\nmerzscope\r\nmicrosoft url control\r\nminirank\r\nmiva\r\nmj12\r\nmnogosearch\r\nmoget\r\nmonster\r\nmoose\r\nmotor\r\nmultitext\r\nmuncher\r\nmuscatferret\r\nmwd.search\r\nmyweb\r\nnajdi\r\nnameprotect\r\nnationaldirectory\r\nnazilla\r\nncsa beta\r\nnec-meshexplorer\r\nnederland.zoek\r\nnetcarta webmap engine\r\nnetmechanic\r\nnetresearchserver\r\nnetscoop\r\nnewscan-online\r\nnhse\r\nnokia6682/\r\nnomad\r\nnoyona\r\nnutch\r\nnzexplorer\r\nobjectssearch\r\noccam\r\nomni\r\nopen text\r\nopenfind\r\nopenintelligencedata\r\norb search\r\nosis-project\r\npack rat\r\npageboy\r\npagebull\r\npage_verifier\r\npanscient\r\nparasite\r\npartnersite\r\npatric\r\npear.\r\npegasus\r\nperegrinator\r\npgp key agent\r\nphantom\r\nphpdig\r\npicosearch\r\npiltdownman\r\npimptrain\r\npinpoint\r\npioneer\r\npiranha\r\nplumtreewebaccessor\r\npogodak\r\npoirot\r\npompos\r\npoppelsdorf\r\npoppi\r\npopular iconoclast\r\npsycheclone\r\npublisher\r\npython\r\nrambler\r\nraven search\r\nroach\r\nroad runner\r\nroadhouse\r\nrobbie\r\nrobofox\r\nrobozilla\r\nrules\r\nsalty\r\nsbider\r\nscooter\r\nscoutjet\r\nscrubby\r\nsearch.\r\nsearchprocess\r\nsemanticdiscovery\r\nsenrigan\r\nsg-scout\r\nshai''hulud\r\nshark\r\nshopwiki\r\nsidewinder\r\nsift\r\nsilk\r\nsimmany\r\nsite searcher\r\nsite valet\r\nsitetech-rover\r\nskymob.com\r\nsleek\r\nsmartwit\r\nsna-\r\nsnappy\r\nsnooper\r\nsohu\r\nspeedfind\r\nsphere\r\nsphider\r\nspinner\r\nspyder\r\nsteeler/\r\nsuke\r\nsuntek\r\nsupersnooper\r\nsurfnomore\r\nsven\r\nsygol\r\nszukacz\r\ntach black widow\r\ntarantula\r\ntempleton\r\n/teoma\r\nt-h-u-n-d-e-r-s-t-o-n-e\r\ntheophrastus\r\ntitan\r\ntitin\r\ntkwww\r\ntoutatis\r\nt-rex\r\ntutorgig\r\ntwiceler\r\ntwisted\r\nucsd\r\nudmsearch\r\nurl check\r\nupdated\r\nvagabondo\r\nvalkyrie\r\nverticrawl\r\nvictoria\r\nvision-search\r\nvolcano\r\nvoyager/\r\nvoyager-hc\r\nw3c_validator\r\nw3m2\r\nw3mir\r\nwalker\r\nwallpaper\r\nwanderer\r\nwauuu\r\nwavefire\r\nweb core\r\nweb hopper\r\nweb wombat\r\nwebbandit\r\nwebcatcher\r\nwebcopy\r\nwebfoot\r\nweblayers\r\nweblinker\r\nweblog monitor\r\nwebmirror\r\nwebmonkey\r\nwebquest\r\nwebreaper\r\nwebsitepulse\r\nwebsnarf\r\nwebstolperer\r\nwebvac\r\nwebwalk\r\nwebwatch\r\nwebwombat\r\nwebzinger\r\nwhizbang\r\nwhowhere\r\nwild ferret\r\nworldlight\r\nwwwc\r\nwwwster\r\nxenu\r\nxget\r\nxift\r\nxirq\r\nyandex\r\nyanga\r\nyeti\r\nyodao\r\nzao\r\nzippp\r\nzyborg', 0),
 (266, 0, 'config', 'config_shared', '0', 0),
 (265, 0, 'config', 'config_secure', '0', 0),
@@ -3036,10 +3029,6 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (103, 0, 'free_checkout', 'free_checkout_status', '1', 0),
 (104, 0, 'free_checkout', 'free_checkout_order_status_id', '1', 0),
 (259, 0, 'config', 'config_mail', 'a:7:{s:8:"protocol";s:4:"mail";s:9:"parameter";s:0:"";s:13:"smtp_hostname";s:0:"";s:13:"smtp_username";s:0:"";s:13:"smtp_password";s:0:"";s:9:"smtp_port";s:0:"";s:12:"smtp_timeout";s:0:"";}', 1),
-(157, 0, 'featured', 'featured_module', 'a:1:{s:16:"u06jtwl7kwy4lsor";a:4:{s:7:"product";a:4:{i:0;s:2:"44";i:1;s:2:"40";i:2;s:2:"42";i:3;s:2:"30";}s:5:"limit";s:1:"4";s:5:"width";s:3:"200";s:6:"height";s:3:"200";}}', 1),
-(165, 0, 'slideshow', 'slideshow_status', '1', 0),
-(166, 0, 'slideshow', 'slideshow_module', 'a:2:{i:0;a:3:{s:9:"banner_id";s:1:"7";s:5:"width";s:4:"1140";s:6:"height";s:3:"380";}s:16:"pol3h8iif8j2lnmi";a:3:{s:9:"banner_id";s:1:"6";s:5:"width";s:3:"300";s:6:"height";s:3:"300";}}', 1),
-(109, 0, 'banner', 'banner_module', 'a:1:{i:0;a:8:{s:9:"banner_id";s:1:"6";s:5:"width";s:3:"182";s:6:"height";s:3:"182";s:11:"resize_type";s:7:"default";s:9:"layout_id";s:1:"3";s:8:"position";s:11:"column_left";s:6:"status";s:1:"1";s:10:"sort_order";s:1:"3";}}', 1),
 (258, 0, 'config', 'config_ftp_status', '0', 0),
 (257, 0, 'config', 'config_ftp_root', '', 0),
 (256, 0, 'config', 'config_ftp_password', '', 0),
@@ -4997,45 +4986,6 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (1425, 96, 'Tsuen Wan New Territories', 'NTW', 1),
 (1426, 96, 'Tuen Mun New Territories', 'NTM', 1),
 (1427, 96, 'Yuen Long New Territories', 'NYL', 1),
-(1428, 97, 'Bacs-Kiskun', 'BK', 1),
-(1429, 97, 'Baranya', 'BA', 1),
-(1430, 97, 'Bekes', 'BE', 1),
-(1431, 97, 'Bekescsaba', 'BS', 1),
-(1432, 97, 'Borsod-Abauj-Zemplen', 'BZ', 1),
-(1433, 97, 'Budapest', 'BU', 1),
-(1434, 97, 'Csongrad', 'CS', 1),
-(1435, 97, 'Debrecen', 'DE', 1),
-(1436, 97, 'Dunaujvaros', 'DU', 1),
-(1437, 97, 'Eger', 'EG', 1),
-(1438, 97, 'Fejer', 'FE', 1),
-(1439, 97, 'Gyor', 'GY', 1),
-(1440, 97, 'Gyor-Moson-Sopron', 'GM', 1),
-(1441, 97, 'Hajdu-Bihar', 'HB', 1),
-(1442, 97, 'Heves', 'HE', 1),
-(1443, 97, 'Hodmezovasarhely', 'HO', 1),
-(1444, 97, 'Jasz-Nagykun-Szolnok', 'JN', 1),
-(1445, 97, 'Kaposvar', 'KA', 1),
-(1446, 97, 'Kecskemet', 'KE', 1),
-(1447, 97, 'Komarom-Esztergom', 'KO', 1),
-(1448, 97, 'Miskolc', 'MI', 1),
-(1449, 97, 'Nagykanizsa', 'NA', 1),
-(1450, 97, 'Nograd', 'NO', 1),
-(1451, 97, 'Nyiregyhaza', 'NY', 1),
-(1452, 97, 'Pecs', 'PE', 1),
-(1453, 97, 'Pest', 'PS', 1),
-(1454, 97, 'Somogy', 'SO', 1),
-(1455, 97, 'Sopron', 'SP', 1),
-(1456, 97, 'Szabolcs-Szatmar-Bereg', 'SS', 1),
-(1457, 97, 'Szeged', 'SZ', 1),
-(1458, 97, 'Szekesfehervar', 'SE', 1),
-(1459, 97, 'Szolnok', 'SL', 1),
-(1460, 97, 'Szombathely', 'SM', 1),
-(1461, 97, 'Tatabanya', 'TA', 1),
-(1462, 97, 'Tolna', 'TO', 1),
-(1463, 97, 'Vas', 'VA', 1),
-(1464, 97, 'Veszprem', 'VE', 1),
-(1465, 97, 'Zala', 'ZA', 1),
-(1466, 97, 'Zalaegerszeg', 'ZZ', 1),
 (1467, 98, 'Austurland', 'AL', 1),
 (1468, 98, 'Hofuoborgarsvaeoi', 'HF', 1),
 (1469, 98, 'Norourland eystra', 'NE', 1),

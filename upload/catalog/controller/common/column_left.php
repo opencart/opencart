@@ -51,7 +51,7 @@ class ControllerCommonColumnLeft extends Controller {
 			if (isset($part[0]) && $this->config->get($part[0] . '_status')) {
 				$data['modules'][] = $this->load->controller('module/' . $part[0]);
 			}
-			
+						
 			if (isset($part[1])) {
 				$setting_info = $this->model_extension_module->getModule($part[1]);
 				

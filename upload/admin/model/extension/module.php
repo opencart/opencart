@@ -10,7 +10,7 @@ class ModelExtensionModule extends Model {
 
 	public function deleteModule($module_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "module` WHERE `module_id` = '" . (int)$module_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_module` WHERE `module_id` = '" . (int)$module_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_module` WHERE `code` LIKE '%." . (int)$module_id . "'");
 	}
 		
 	public function getModule($module_id) {
@@ -37,6 +37,6 @@ class ModelExtensionModule extends Model {
 	
 	public function deleteModulesByCode($code) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "module` WHERE `code` = '" . $this->db->escape($code) . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_module` WHERE `code` = '" . $this->db->escape($code . '%') . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "layout_module` WHERE `code` LIKE '" . $this->db->escape($code . '.%') . "'");
 	}	
 }

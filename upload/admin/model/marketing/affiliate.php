@@ -63,11 +63,11 @@ class ModelMarketingAffiliate extends Model {
 			$implode[] = "a.code = '" . $this->db->escape($data['filter_code']) . "'";
 		}
 
-		if (!empty($data['filter_status'])) {
+		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
 			$implode[] = "a.status = '" . (int)$data['filter_status'] . "'";
 		}
 
-		if (!empty($data['filter_approved'])) {
+		if (isset($data['filter_approved']) && !is_null($data['filter_approved'])) {
 			$implode[] = "a.approved = '" . (int)$data['filter_approved'] . "'";
 		}
 
@@ -166,11 +166,11 @@ class ModelMarketingAffiliate extends Model {
 			$implode[] = "LCASE(email) = '" . $this->db->escape(utf8_strtolower($data['filter_email'])) . "'";
 		}
 
-		if (!empty($data['filter_status'])) {
+		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
 			$implode[] = "status = '" . (int)$data['filter_status'] . "'";
 		}
 
-		if (!empty($data['filter_approved'])) {
+		if (isset($data['filter_approved']) && !is_null($data['filter_approved'])) {
 			$implode[] = "approved = '" . (int)$data['filter_approved'] . "'";
 		}
 

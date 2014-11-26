@@ -51,7 +51,7 @@ class ModelCatalogReview extends Model {
 			$sql .= " AND r.author LIKE '" . $this->db->escape($data['filter_author']) . "%'";
 		}
 
-		if (!empty($data['filter_status'])) {
+		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
 			$sql .= " AND r.status = '" . (int)$data['filter_status'] . "'";
 		}
 

@@ -62,7 +62,7 @@
                   <?php } else { ?>
                   <option value="1"><?php echo $text_enabled; ?></option>
                   <?php } ?>
-                  <?php if (($filter_status !== null) && !$filter_status) { ?>
+                  <?php if (!$filter_status && !is_null($filter_status)) { ?>
                   <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                   <?php } else { ?>
                   <option value="0"><?php echo $text_disabled; ?></option>

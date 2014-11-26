@@ -13,10 +13,25 @@ final class Openbay {
 			$class = ucfirst($market);
 			$this->{$market} = new $class($registry);
 		}
+
+		$this->logger = new Log('openbay.log');
 	}
 
 	public function __get($name) {
 		return $this->registry->get($name);
+	}
+
+	public function log($data, $write = true) {
+		if ($this->logging == 1) {
+			if (function_exists('getmypid')) {
+				$process_id = getmypid();
+				$data = $process_id . ' - ' . $data;
+			}
+
+			if ($write == true) {
+				$this->logger->write($data);
+			}
+		}
 	}
 
 	public function encrypt($msg, $k, $base64 = false) {
@@ -103,6 +118,10 @@ final class Openbay {
 		foreach ($query->rows as $result) {
 			$this->installed_markets[] = $result['code'];
 		}
+	}
+
+	public function getInstalledMarkets() {
+		return $this->installed_markets;
 	}
 
 	public function putStockUpdateBulk($product_id_array, $end_inactive = false) {

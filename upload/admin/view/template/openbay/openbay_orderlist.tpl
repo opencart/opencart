@@ -91,25 +91,23 @@
             </div>
           </div>
         </div>
+        <form action="<?php echo $link_update; ?>" method="post" id="order-update-form">
         <div class="well">
           <div class="row">
             <div class="col-sm-12">
-              <form class="form-inline pull-right" role="form">
-                <div class="form-group">
-                  <div class="input-group">
-                    <select name="change_order_status_id" class="form-control">
-                      <?php foreach ($order_statuses as $order_status) { ?>
-                        <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                      <?php } ?>
-                    </select>
-                    <a data-toggle="tooltip" title="<?php echo $button_filter; ?>" class="btn btn-primary input-group-addon" onclick="$('#order-update-form').submit();"><i class="fa fa-plus-circle"></i> <?php echo $button_status; ?></a>
-                  </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <select name="change_order_status_id" class="form-control">
+                    <?php foreach ($order_statuses as $order_status) { ?>
+                      <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <?php } ?>
+                  </select>
+                  <a data-toggle="tooltip" title="<?php echo $button_filter; ?>" class="btn btn-primary input-group-addon" onclick="$('#order-update-form').submit();"><i class="fa fa-plus-circle"></i> <?php echo $button_status; ?></a>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         </div>
-        <form action="<?php echo $link_update; ?>" method="post" id="order-update-form">
           <div class="table-responsive">
             <table class="table table-bordered table-hover">
             <thead>

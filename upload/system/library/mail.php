@@ -20,7 +20,9 @@ class Mail {
 
 	public function __construct($config = array()) {
 		foreach ($config as $key => $value) {
-			$this->$key = $value;
+			if ($value) {
+				$this->$key = $value;
+			}
 		}
 	}
 

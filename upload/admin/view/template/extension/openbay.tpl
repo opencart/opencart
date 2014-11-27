@@ -107,7 +107,7 @@
     </div>
   </div>
   <script type="text/javascript"><!--
-  function getVersion() {
+  function version() {
     var version = '<?php echo $openbay_version; ?>';
 
     $('#openbay-version').empty().html('<div id="openbay-version-loading"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_version_check; ?></div>');
@@ -120,14 +120,18 @@
         success: function (json) {
           $('#openbay-version-loading').hide();
 
-          if (version < json.version) {
-            $('#openbay-version').removeClass('attention').addClass('alert-warning').append('<i class="fa fa-warning"></i> <?php echo $text_version_current; ?> v.' + version + ', <?php echo $text_version_available; ?> v.' + json.version);
+          if (json.error) {
+            $('#openbay-version').removeClass('attention').addClass('alert-warning').append(json.msg);
           } else {
-            $('#openbay-version').removeClass('attention').addClass('alert-success').append('<i class="fa fa-check"></i> <?php echo $text_version_latest; ?> (v.' + version + ')');
+            if (version < json.version) {
+              $('#openbay-version').removeClass('attention').addClass('alert-warning').append('<i class="fa fa-warning"></i> <?php echo $text_version_current; ?> v.' + version + ', <?php echo $text_version_available; ?> v.' + json.version);
+            } else {
+              $('#openbay-version').removeClass('attention').addClass('alert-success').append('<i class="fa fa-check"></i> <?php echo $text_version_latest; ?> (v.' + version + ')');
+            }
           }
         },
         failure: function () {
-          $('#openbay-version').html('<?php echo $error_failed; ?><strong><span onclick="getVersion();"><?php echo $button_retry; ?></span></strong>');
+          $('#openbay-version').html('<?php echo $error_failed; ?><strong><span onclick="version();"><?php echo $button_retry; ?></span></strong>');
         },
         error: function (xhr, ajaxOptions, thrownError) {
           if (xhr.status != 0) {
@@ -166,7 +170,7 @@
   }
 
   $(document).ready(function () {
-    getVersion();
+    version();
     getNotifications();
   });
 //--></script></div>

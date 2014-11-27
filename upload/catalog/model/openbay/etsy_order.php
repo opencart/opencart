@@ -31,7 +31,11 @@ class ModelOpenbayEtsyOrder extends Model {
 
 						// shipped status changed?
 						if ($order->shipped != $etsy_order['shipped']) {
-							$this->updateShipped($order_id, $order->shipped);
+							if ($order->paid == 1) {
+								$this->updateShipped($order_id, $order->shipped);
+							} else {
+								$this->updateShipped($order_id, 0);
+							}
 						}
 
 						$this->lockDelete($order_id);
@@ -42,11 +46,11 @@ class ModelOpenbayEtsyOrder extends Model {
 					// is paid?
 					if ($order->paid == 1) {
 						$this->updatePaid($order_id, $order->paid);
-					}
 
-					// is shipped?
-					if ($order->shipped == 1) {
-						$this->updateShipped($order_id, $order->shipped);
+						// is shipped?
+						if ($order->shipped == 1) {
+							$this->updateShipped($order_id, $order->shipped);
+						}
 					}
 
 					$this->openbay->etsy->log('Created new order: ' . $order_id);

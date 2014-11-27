@@ -732,7 +732,7 @@ class ControllerExtensionModification extends Controller {
 		$file = DIR_LOGS . 'ocmod.log';
 
 		if (file_exists($file)) {
-			$data['log'] = file_get_contents($file, FILE_USE_INCLUDE_PATH, null);
+			$data['log'] = htmlentities(file_get_contents($file, FILE_USE_INCLUDE_PATH, null));
 		} else {
 			$data['log'] = '';
 		}

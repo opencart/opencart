@@ -114,7 +114,7 @@ class ControllerModuleLatest extends Controller {
 			$data['limit'] = 5;
 		}	
 				
-		if (isset($this->request->post[$this->request->get['module_id']]['width'])) {
+		if (isset($this->request->post['width'])) {
 			$data['width'] = $this->request->post['width'];
 		} elseif (!empty($module_info)) {
 			$data['width'] = $module_info['width'];

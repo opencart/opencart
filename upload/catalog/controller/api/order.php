@@ -351,7 +351,7 @@ class ControllerApiOrder extends Controller {
 				}
 
 				// Payment Method
-				if (!isset($this->session->data['payment_method'])) {
+				if (!isset($this->request->post['payment_method'])) {
 					$json['error'] = $this->language->get('error_payment_method');
 				}
 
@@ -430,14 +430,15 @@ class ControllerApiOrder extends Controller {
 					$order_data['payment_address_format'] = $this->session->data['payment_address']['address_format'];
 					$order_data['payment_custom_field'] = $this->session->data['payment_address']['custom_field'];
 
-					if (isset($this->session->data['payment_method']['title'])) {
-						$order_data['payment_method'] = $this->session->data['payment_method']['title'];
+
+					if (isset($this->session->data['payment_methods'][$this->request->post['payment_method']]['title'])) {
+						$order_data['payment_method'] = $this->session->data['payment_methods'][$this->request->post['payment_method']]['title'];
 					} else {
 						$order_data['payment_method'] = '';
 					}
 
-					if (isset($this->session->data['payment_method']['code'])) {
-						$order_data['payment_code'] = $this->session->data['payment_method']['code'];
+					if (isset($this->session->data['payment_methods'][$this->request->post['payment_method']]['code'])) {
+						$order_data['payment_code'] = $this->session->data['payment_methods'][$this->request->post['payment_method']]['code'];
 					} else {
 						$order_data['payment_code'] = '';
 					}

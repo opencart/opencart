@@ -750,7 +750,7 @@ class ControllerSaleOrder extends Controller {
 			$products = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
 
 			foreach ($products as $product) {
-				$data['products'][] = array(
+				$data['order_products'][] = array(
 					'product_id' => $product['product_id'],
 					'name'       => $product['name'],
 					'model'      => $product['model'],
@@ -763,7 +763,7 @@ class ControllerSaleOrder extends Controller {
 			}
 
 			// Add vouchers to the API
-			$data['vouchers'] = $this->model_sale_order->getOrderVouchers($this->request->get['order_id']);
+			$data['order_vouchers'] = $this->model_sale_order->getOrderVouchers($this->request->get['order_id']);
 
 			$data['coupon'] = '';
 			$data['voucher'] = '';

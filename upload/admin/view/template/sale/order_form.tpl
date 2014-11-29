@@ -237,10 +237,61 @@
                     </tr>
                   </thead>
                   <tbody id="cart">
+                    <?php if ($products || $vouchers) { ?>
+                    <?php $product_row = 0; ?>
+                    <?php foreach ($products as $product) { ?>
+                    <tr id="product-row<?php echo $product_row; ?>">
+                      <td class="text-left"><?php echo $product['name']; ?><br />
+                        <input type="hidden" name="product[<?php echo $product_row; ?>][product_id]" value="<?php echo $product['product_id']; ?>" />
+                        <?php foreach ($product['option'] as $option) { ?>
+                        - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
+                        <?php if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'image') { ?>
+                        <input type="hidden" name="product[<?php echo $product_row; ?>][option][<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['product_option_value_id']; ?>" />
+                        <?php } ?>
+                        <?php if ($option['type'] == 'checkbox') { ?>
+                        <input type="hidden" name="product[<?php echo $product_row; ?>][option][<?php echo $option['product_option_id']; ?>][]" value="<?php echo $option['product_option_value_id']; ?>" />
+                        <?php } ?>
+                        <?php if ($option['type'] == 'text' || $option['type'] == 'textarea' || $option['type'] == 'file' || $option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') { ?>
+                        <input type="hidden" name="product[<?php echo $product_row; ?>][option][<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" />
+                        <?php } ?>
+                        <?php } ?></td>
+                      <td class="text-left"><?php echo $product['model']; ?></td>
+                      <td class="text-right"><?php echo $product['quantity']; ?>
+                        <input type="hidden" name="product[<?php echo $product_row; ?>][quantity]" value="<?php echo $product['quantity']; ?>" /></td>
+                      <td class="text-right"></td>
+                      <td class="text-right"></td>
+                      <td class="text-center"></td>
+                    </tr>
+                    <?php $product_row++; ?>
+                    <?php } ?>
+                    <?php $voucher_row = 0; ?>
+                    <?php foreach ($vouchers as $voucher) { ?>
+                    <tr id="voucher-row<?php echo $voucher_row; ?>">
+                      <td class="text-left"><?php echo $order_voucher['description']; ?>
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][voucher_id]" value="<?php echo $voucher['voucher_id']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][description]" value="<?php echo $voucher['description']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][code]" value="<?php echo $voucher['code']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][from_name]" value="<?php echo $voucher['from_name']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][from_email]" value="<?php echo $voucher['from_email']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][to_name]" value="<?php echo $voucher['to_name']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][to_email]" value="<?php echo $voucher['to_email']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][voucher_theme_id]" value="<?php echo $voucher['voucher_theme_id']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][message]" value="<?php echo $voucher['message']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][amount]" value="<?php echo $voucher['amount']; ?>" /></td>
+                      <td class="text-left"></td>
+                      <td class="text-right">1</td>
+                      <td class="text-right"></td>
+                      <td class="text-right"></td>
+                      <td class="text-center"></td>
+                    </tr>
+                    <?php $voucher_row++; ?>
+                    <?php } ?>
+                    <?php } else { ?>
                     <tr>
                       <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
                     </tr>
                   </tbody>
+                  <?php } ?>
                 </table>
               </div>
               <ul class="nav nav-tabs nav-justified">
@@ -894,7 +945,7 @@ $('#button-refresh').on('click', function() {
 		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/products&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		dataType: 'json',
 		success: function(json) {
-			$('.alert, .text-danger').remove();
+			$('.alert-danger, .text-danger').remove();
 			
 			// Check for errors
 			if (json['error']) {
@@ -1035,7 +1086,7 @@ $('#button-refresh').on('click', function() {
 				html += '</tr>';	
 			}
 						
-			$('#total').html(html);			
+			$('#total').html(html);
 		},	
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -1188,9 +1239,57 @@ $('#button-customer').on('click', function() {
 				// Highlight any found errors
 				$('.text-danger').parentsUntil('.form-group').parent().addClass('has-error');
 			} else {
+				$.ajax({
+					url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/add&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+					type: 'post',
+					data: $('#cart input[name^=\'product\'][type=\'text\'], #cart input[name^=\'product\'][type=\'hidden\'], #cart input[name^=\'product\'][type=\'radio\']:checked, #cart input[name^=\'product\'][type=\'checkbox\']:checked, #cart select[name^=\'product\'], #cart textarea[name^=\'product\']'),
+					dataType: 'json',
+					beforeSend: function() {
+						$('#button-product-add').button('loading');
+					},
+					complete: function() {
+						$('#button-product-add').button('reset');
+					},
+					success: function(json) {
+						$('.alert, .text-danger').remove();
+						$('.form-group').removeClass('has-error');
+					
+						if (json['error'] && json['error']['warning']) {
+							$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+						}
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				});		
+					
+				$.ajax({
+					url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/voucher/add&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+					type: 'post',
+					data: $('#cart input[name^=\'voucher\'][type=\'text\'], #cart input[name^=\'voucher\'][type=\'hidden\'], #cart input[name^=\'voucher\'][type=\'radio\']:checked, #cart input[name^=\'voucher\'][type=\'checkbox\']:checked, #cart select[name^=\'voucher\'], #cart textarea[name^=\'voucher\']'),
+					dataType: 'json',
+					beforeSend: function() {
+						$('#button-voucher-add').button('loading');
+					},
+					complete: function() {
+						$('#button-voucher-add').button('reset');
+					},
+					success: function(json) {
+						$('.alert, .text-danger').remove();
+						$('.form-group').removeClass('has-error');
+					
+						if (json['error'] && json['error']['warning']) {
+							$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+						}
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				});	
+
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
-				
+								
 				$('a[href=\'#tab-cart\']').tab('show');
 			}
 		},
@@ -1200,7 +1299,7 @@ $('#button-customer').on('click', function() {
 	});	
 });
 				
-$('input[name=\'product\']').autocomplete({
+$('#tab-product input[name=\'product\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
@@ -1219,8 +1318,8 @@ $('input[name=\'product\']').autocomplete({
 		});
 	},
 	'select': function(item) {
-		$('input[name=\'product\']').val(item['label']);
-		$('input[name=\'product_id\']').val(item['value']);
+		$('#tab-product input[name=\'product\']').val(item['label']);
+		$('#tab-product input[name=\'product_id\']').val(item['value']);
 		
 		if (item['option'] != '') {
  			html  = '<fieldset>';
@@ -1361,14 +1460,14 @@ $('input[name=\'product\']').autocomplete({
 				if (option['type'] == 'datetime') {
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
-					html += '  <div class="col-sm-10"><div class="input-group datetime"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="YYYY-MM-DD HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
+					html += '  <div class="col-sm-3"><div class="input-group datetime"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="YYYY-MM-DD HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
 					html += '</div>';					
 				}
 				
 				if (option['type'] == 'time') {
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
-					html += '  <div class="col-sm-10"><div class="input-group time"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
+					html += '  <div class="col-sm-3"><div class="input-group time"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
 					html += '</div>';					
 				}
 			}
@@ -1399,7 +1498,7 @@ $('#button-product-add').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/add&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
-		data: $('#tab-product input[type=\'text\'], #tab-product input[type=\'hidden\'], #tab-product input[type=\'radio\']:checked, #tab-product input[type=\'checkbox\']:checked, #tab-product select, #tab-product textarea'),
+		data: $('#tab-product input[name=\'product_id\'], #tab-product input[name=\'quantity\'], #tab-product input[name^=\'option\'][type=\'text\'], #tab-product input[name^=\'option\'][type=\'hidden\'], #tab-product input[name^=\'option\'][type=\'radio\']:checked, #tab-product input[name^=\'option\'][type=\'checkbox\']:checked, #tab-product select[name^=\'option\'], #tab-product textarea[name^=\'option\']'),
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-product-add').button('loading');
@@ -1931,7 +2030,7 @@ $('#button-shipping-method').on('click', function() {
 			}
 			
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -1968,7 +2067,7 @@ $('#button-payment-method').on('click', function() {
 			}
 			
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2005,7 +2104,7 @@ $('#button-coupon').on('click', function() {
 			}
 			
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2042,7 +2141,7 @@ $('#button-voucher').on('click', function() {
 			}
 			
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2079,7 +2178,7 @@ $('#button-reward').on('click', function() {
 			}
 			
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');

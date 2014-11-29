@@ -16,6 +16,7 @@
 * Fixed missing review_guest check in product.tpl
 * Added formatting to number format in pp express to ensure no comma is added for items over 1000 #2216
 * Fixed issue that allows for unapproved logins with Log in With PayPal
+* Changed missing image link in catalog recurring list template. Changed to button.
 
 #### Changes
 * Changed DB connection error response during install when using mysqli to use native message from mysqli

@@ -238,6 +238,14 @@ class ModelOpenbayEbay extends Model{
 		$this->model_extension_event->deleteEvent('openbaypro_ebay');
 	}
 
+	public function patch($manual = true) {
+		$this->load->model('setting/setting');
+
+		$this->openbay->ebay->updateSettings();
+
+		return true;
+	}
+
 	public function totalLinked() {
 		$sql = "SELECT COUNT(DISTINCT p.product_id) AS total
 				FROM `" . DB_PREFIX . "ebay_listing` `el`
@@ -440,7 +448,7 @@ class ModelOpenbayEbay extends Model{
 	}
 
 	public function getCategory($parent) {
-		$this->load->language('openbay/ebay');
+		$this->load->language('openbay/ebay_new');
 
 		$json = array();
 

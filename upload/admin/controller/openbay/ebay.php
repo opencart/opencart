@@ -126,13 +126,6 @@ class ControllerOpenbayEbay extends Controller {
 		}
 		$data['currency_list'] = $this->model_localisation_currency->getCurrencies();
 
-		if (isset($this->request->post['ebay_def_customer_grp'])) {
-			$data['ebay_def_customer_grp'] = $this->request->post['ebay_def_customer_grp'];
-		} else {
-			$data['ebay_def_customer_grp'] = $this->config->get('ebay_def_customer_grp');
-		}
-		$data['customer_grp_list'] = $this->model_sale_customer_group->getCustomerGroups();
-
 		$data['token'] = $this->session->data['token'];
 
 		if (isset($this->error['warning'])) {
@@ -1291,7 +1284,7 @@ class ControllerOpenbayEbay extends Controller {
 				$product_info['product_images'] = array();
 
 				if (!empty($product_info['image'])) {
-					$img_info = getimagesize(HTTPS_CATALOG . 'image/' . $product_info['image']);
+					$img_info = getimagesize(DIR_IMAGE . $product_info['image']);
 
 					$product_info['product_images'][] = array(
 						'image' => $product_info['image'],
@@ -1304,7 +1297,7 @@ class ControllerOpenbayEbay extends Controller {
 
 				foreach ($product_images as $product_image) {
 					if ($product_image['image'] && file_exists(DIR_IMAGE . $product_image['image'])) {
-						$img_info = getimagesize(HTTPS_CATALOG . 'image/' . $product_image['image']);
+						$img_info = getimagesize(DIR_IMAGE . $product_image['image']);
 
 						$product_info['product_images'][] = array(
 							'image' => $product_image['image'],

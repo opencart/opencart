@@ -8,6 +8,20 @@ class ControllerApiCart extends Controller {
 		if (!isset($this->session->data['api_id'])) {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		} else {
+			if (isset($this->request->post['product'])) {
+				$this->cart->clear();
+				
+				foreach ($this->request->post['product'] as $product) {
+					if (isset($product['option'])) {
+						$option = $product['option'];
+					} else {
+						$option = array();
+					}
+					
+					$this->cart->add($product['product_id'], $product['quantity'], $option);
+				}
+			}
+			
 			if (isset($this->request->post['product_id'])) {
 				$this->load->model('catalog/product');
 
@@ -26,13 +40,11 @@ class ControllerApiCart extends Controller {
 						$option = array();
 					}
 
-					if (!isset($this->request->post['override']) || !$this->request->post['override']) {
-						$product_options = $this->model_catalog_product->getProductOptions($this->request->post['product_id']);
+					$product_options = $this->model_catalog_product->getProductOptions($this->request->post['product_id']);
 
-						foreach ($product_options as $product_option) {
-							if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
-								$json['error']['option'][$product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
-							}
+					foreach ($product_options as $product_option) {
+						if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
+							$json['error']['option'][$product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
 						}
 					}
 

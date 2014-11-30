@@ -1,6 +1,6 @@
 # OpenCart 2.0 change log
 
-## v2.0.1.0 (Pending - changed from 2.0.0.1)
+## v2.0.1.0 (Release date: 30.11.2014)
 #### Bugs fixed
 * Changed namespace issues in DB driver files.
 * Added missing text_edit string in the settings area.

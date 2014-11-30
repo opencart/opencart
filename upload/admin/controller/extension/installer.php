@@ -259,11 +259,6 @@ class ControllerExtensionInstaller extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 		
-		// Check FTP status
-		if (!$this->config->get('config_ftp_status')) {
-			$json['error'] = $this->language->get('error_ftp_status');
-		}
-
 		$directory = DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/upload/';
 
 		if (!is_dir($directory)) {
@@ -288,68 +283,83 @@ class ControllerExtensionInstaller extends Controller {
 				}
 			}
 
-			// Connect to the site via FTP
-			$connection = ftp_connect($this->config->get('config_ftp_hostname'), $this->config->get('config_ftp_port'));
+			if ($this->config->get('config_ftp_status')) {
+				// Connect to the site via FTP
+				$connection = ftp_connect($this->config->get('config_ftp_hostname'), $this->config->get('config_ftp_port'));
 
-			if ($connection) {
-				$login = ftp_login($connection, $this->config->get('config_ftp_username'), $this->config->get('config_ftp_password'));
-
-				if ($login) {
-					if ($this->config->get('config_ftp_root')) {
-						$root = ftp_chdir($connection, $this->config->get('config_ftp_root'));
-					} else {
-						$root = ftp_chdir($connection, '/');
-					}
-
-					if ($root) {
-						foreach ($files as $file) {
-							$destination = substr($file, strlen($directory));
-							
-							// Upload everything in the upload directory
-							// Many people rename their admin folder for security purposes which I believe should be an option during installation just like setting the db prefix.
-							// the following code would allow you to change the name of the following directories and any extensions installed will still go to the right directory.
-							if (substr($destination, 0, 5) == 'admin') {
-								$destination = basename(DIR_APPLICATION) . substr($destination, 5);
-							}
-							
-							if (substr($destination, 0, 7) == 'catalog') {
-								$destination = basename(DIR_CATALOG) . substr($destination, 7);
-							}
-							
-							if (substr($destination, 0, 5) == 'image') {
-								$destination = basename(DIR_IMAGE) . substr($destination, 5);
-							}
-							
-							if (substr($destination, 0, 6) == 'system') {
-								$destination = basename(DIR_SYSTEM) . substr($destination, 6);
-							}
-							
-							if (is_dir($file)) {
-								$list = ftp_nlist($connection, substr($destination, 0, strrpos($destination, '/')));
+				if ($connection) {
+					$login = ftp_login($connection, $this->config->get('config_ftp_username'), $this->config->get('config_ftp_password'));
+	
+					if ($login) {
+						if ($this->config->get('config_ftp_root')) {
+							$root = ftp_chdir($connection, $this->config->get('config_ftp_root'));
+						} else {
+							$root = ftp_chdir($connection, '/');
+						}
+	
+						if ($root) {
+							foreach ($files as $file) {
+								$destination = substr($file, strlen($directory));
 								
-								if (!in_array($destination, $list)) {
-									if (!ftp_mkdir($connection, $destination)) {
-										$json['error'] = sprintf($this->language->get('error_ftp_directory'), $destination);
+								// Upload everything in the upload directory
+								// Many people rename their admin folder for security purposes which I believe should be an option during installation just like setting the db prefix.
+								// the following code would allow you to change the name of the following directories and any extensions installed will still go to the right directory.
+								if (substr($destination, 0, 5) == 'admin') {
+									$destination = basename(DIR_APPLICATION) . substr($destination, 5);
+								}
+								
+								if (substr($destination, 0, 7) == 'catalog') {
+									$destination = basename(DIR_CATALOG) . substr($destination, 7);
+								}
+								
+								if (substr($destination, 0, 5) == 'image') {
+									$destination = basename(DIR_IMAGE) . substr($destination, 5);
+								}
+								
+								if (substr($destination, 0, 6) == 'system') {
+									$destination = basename(DIR_SYSTEM) . substr($destination, 6);
+								}
+								
+								if (is_dir($file)) {
+									$list = ftp_nlist($connection, substr($destination, 0, strrpos($destination, '/')));
+									
+									if (!in_array($destination, $list)) {
+										if (!ftp_mkdir($connection, $destination)) {
+											$json['error'] = sprintf($this->language->get('error_ftp_directory'), $destination);
+										}
+									}
+								}
+	
+								if (is_file($file)) {
+									if (!ftp_put($connection, $destination, $file, FTP_BINARY)) {
+										$json['error'] = sprintf($this->language->get('error_ftp_file'), $file);
 									}
 								}
 							}
-
-							if (is_file($file)) {
-								if (!ftp_put($connection, $destination, $file, FTP_BINARY)) {
-									$json['error'] = sprintf($this->language->get('error_ftp_file'), $file);
-								}
-							}
+						} else {
+							$json['error'] = sprintf($this->language->get('error_ftp_root'), $root);
 						}
 					} else {
-						$json['error'] = sprintf($this->language->get('error_ftp_root'), $root);
+						$json['error'] = sprintf($this->language->get('error_ftp_login'), $this->config->get('config_ftp_username'));
 					}
+	
+					ftp_close($connection);
 				} else {
-					$json['error'] = sprintf($this->language->get('error_ftp_login'), $this->config->get('config_ftp_username'));
+					$json['error'] = sprintf($this->language->get('error_ftp_connection'), $this->config->get('config_ftp_hostname'), $this->config->get('config_ftp_port'));
 				}
-
-				ftp_close($connection);
 			} else {
-				$json['error'] = sprintf($this->language->get('error_ftp_connection'), $this->config->get('config_ftp_hostname'), $this->config->get('config_ftp_port'));
+				foreach ($files as $file) {
+					$destination = substr($file, strlen($directory));
+					$rpatch = str_replace('/catalog', '', DIR_CATALOG) . $destination;
+					if (is_dir($file)) {
+						if (!file_exists($rpatch)) {
+							mkdir($rpatch, 0755);
+						}
+					}
+					if (is_file($file)) {
+						copy($file, $rpatch);
+					}
+				}
 			}
 		}
 

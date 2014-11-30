@@ -237,13 +237,13 @@
                     </tr>
                   </thead>
                   <tbody id="cart">
-                    <?php if ($products || $vouchers) { ?>
+                    <?php if ($order_products || $order_vouchers) { ?>
                     <?php $product_row = 0; ?>
-                    <?php foreach ($products as $product) { ?>
-                    <tr id="product-row<?php echo $product_row; ?>">
-                      <td class="text-left"><?php echo $product['name']; ?><br />
-                        <input type="hidden" name="product[<?php echo $product_row; ?>][product_id]" value="<?php echo $product['product_id']; ?>" />
-                        <?php foreach ($product['option'] as $option) { ?>
+                    <?php foreach ($order_products as $order_product) { ?>
+                    <tr>
+                      <td class="text-left"><?php echo $order_product['name']; ?><br />
+                        <input type="hidden" name="product[<?php echo $product_row; ?>][product_id]" value="<?php echo $order_product['product_id']; ?>" />
+                        <?php foreach ($order_product['option'] as $option) { ?>
                         - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
                         <?php if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'image') { ?>
                         <input type="hidden" name="product[<?php echo $product_row; ?>][option][<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['product_option_value_id']; ?>" />
@@ -255,9 +255,9 @@
                         <input type="hidden" name="product[<?php echo $product_row; ?>][option][<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" />
                         <?php } ?>
                         <?php } ?></td>
-                      <td class="text-left"><?php echo $product['model']; ?></td>
-                      <td class="text-right"><?php echo $product['quantity']; ?>
-                        <input type="hidden" name="product[<?php echo $product_row; ?>][quantity]" value="<?php echo $product['quantity']; ?>" /></td>
+                      <td class="text-left"><?php echo $order_product['model']; ?></td>
+                      <td class="text-right"><?php echo $order_product['quantity']; ?>
+                        <input type="hidden" name="product[<?php echo $product_row; ?>][quantity]" value="<?php echo $order_product['quantity']; ?>" /></td>
                       <td class="text-right"></td>
                       <td class="text-right"></td>
                       <td class="text-center"></td>
@@ -265,19 +265,19 @@
                     <?php $product_row++; ?>
                     <?php } ?>
                     <?php $voucher_row = 0; ?>
-                    <?php foreach ($vouchers as $voucher) { ?>
-                    <tr id="voucher-row<?php echo $voucher_row; ?>">
+                    <?php foreach ($order_vouchers as $order_voucher) { ?>
+                    <tr>
                       <td class="text-left"><?php echo $order_voucher['description']; ?>
-                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][voucher_id]" value="<?php echo $voucher['voucher_id']; ?>" />
-                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][description]" value="<?php echo $voucher['description']; ?>" />
-                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][code]" value="<?php echo $voucher['code']; ?>" />
-                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][from_name]" value="<?php echo $voucher['from_name']; ?>" />
-                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][from_email]" value="<?php echo $voucher['from_email']; ?>" />
-                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][to_name]" value="<?php echo $voucher['to_name']; ?>" />
-                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][to_email]" value="<?php echo $voucher['to_email']; ?>" />
-                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][voucher_theme_id]" value="<?php echo $voucher['voucher_theme_id']; ?>" />
-                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][message]" value="<?php echo $voucher['message']; ?>" />
-                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][amount]" value="<?php echo $voucher['amount']; ?>" /></td>
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][voucher_id]" value="<?php echo $order_voucher['voucher_id']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][description]" value="<?php echo $order_voucher['description']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][code]" value="<?php echo $order_voucher['code']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][from_name]" value="<?php echo $order_voucher['from_name']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][from_email]" value="<?php echo $order_voucher['from_email']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][to_name]" value="<?php echo $order_voucher['to_name']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][to_email]" value="<?php echo $order_voucher['to_email']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][voucher_theme_id]" value="<?php echo $order_voucher['voucher_theme_id']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][message]" value="<?php echo $order_voucher['message']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][amount]" value="<?php echo $order_voucher['amount']; ?>" /></td>
                       <td class="text-left"></td>
                       <td class="text-right">1</td>
                       <td class="text-right"></td>
@@ -974,17 +974,31 @@ $('#button-refresh').on('click', function() {
 					
 					html += '<tr>';
 					html += '  <td class="text-left">' + product['name'] + ' ' + (!product['stock'] ? '<span class="text-danger">***</span>' : '') + '<br />';
+					html += '  <input type="hidden" name="product[' + i + '][product_id]" value="' + product['product_id'] + '" />';
 					
 					if (product['option']) {
 						for (j = 0; j < product['option'].length; j++) {
-							html += '  - <small>' + product['option'][j]['name'] + ': ' + product['option'][j]['value'] + '</small><br />';
+							option = product['option'][j];
+							
+							html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
+							
+							if (option['type'] == 'select' || option['type'] == 'radio' || option['type'] == 'image') {
+								html += '<input type="hidden" name="product[' + i + '][option][' + option['product_option_id'] + ']" value="' + option['product_option_value_id'] + '" />';
+							}
+							
+							if (option['type'] == 'checkbox') {
+								html += '<input type="hidden" name="product[' + i + '][option][' + option['product_option_id'] + '][]" value="' + option['product_option_value_id'] + '" />';
+							}
+							
+							if (option['type'] == 'text' || option['type'] == 'textarea' || option['type'] == 'file' || option['type'] == 'date' || option['type'] == 'datetime' || option['type'] == 'time') {
+								html += '<input type="hidden" name="product[' + i + '][option][' + option['product_option_id'] + ']" value="' + option['value'] + '" />';
+							}
 						}
 					}
 					
 					html += '</td>';
-					
 					html += '  <td class="text-left">' + product['model'] + '</td>';
-					html += '  <td class="text-right">' + product['quantity'] + '</td>';
+					html += '  <td class="text-right">' + product['quantity'] + '<input type="hidden" name="product[' + i + '][quantity]" value="' + product['quantity'] + '" /></td>';
 					html += '  <td class="text-right">' + product['price'] + '</td>';
 					html += '  <td class="text-right">' + product['total'] + '</td>';
 					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + product['key'] + '" data-toggle="tooltip" title="<?php echo $button_remove; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
@@ -1006,11 +1020,21 @@ $('#button-refresh').on('click', function() {
 			}
 					
 			if (json['vouchers']) {
-				 for (i in json['vouchers']) {
+				for (i in json['vouchers']) {
 					voucher = json['vouchers'][i];
-					 
+					
 					html += '<tr>';
-					html += '  <td class="text-left">' + voucher['description'] + '</td>';
+					html += '  <td class="text-left">' + voucher['description'];
+                    html += '    <input type="hidden" name="voucher[' + i + '][code]" value="' + voucher['code'] + '" />';
+					html += '    <input type="hidden" name="voucher[' + i + '][description]" value="' + voucher['description'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][from_name]" value="' + voucher['from_name'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][from_email]" value="' + voucher['from_email'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][to_name]" value="' + voucher['to_name'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][to_email]" value="' + voucher['to_email'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][voucher_theme_id]" value="' + voucher['voucher_theme_id'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][message]" value="' + voucher['message'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][amount]" value="' + voucher['amount'] + '" />';
+					html += '  </td>';
 					html += '  <td class="text-left"></td>';
 					html += '  <td class="text-right">1</td>';
 					html += '  <td class="text-right">' + voucher['amount'] + '</td>';

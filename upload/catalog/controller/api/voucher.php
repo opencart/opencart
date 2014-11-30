@@ -63,19 +63,19 @@ class ControllerApiVoucher extends Controller {
 				$this->session->data['vouchers'] = array();
 				
 				foreach ($this->request->post['voucher'] as $voucher) {
-					$code = mt_rand();
-					
-					$this->session->data['vouchers'][$code] = array(
-						'code'             => $code,
-						'description'      => sprintf($this->language->get('text_for'), $this->currency->format($this->currency->convert($voucher['amount'], $this->currency->getCode(), $this->config->get('config_currency'))), $voucher['to_name']),
-						'to_name'          => $voucher['to_name'],
-						'to_email'         => $voucher['to_email'],
-						'from_name'        => $voucher['from_name'],
-						'from_email'       => $voucher['from_email'],
-						'voucher_theme_id' => $voucher['voucher_theme_id'],
-						'message'          => $voucher['message'],
-						'amount'           => $this->currency->convert($voucher['amount'], $this->currency->getCode(), $this->config->get('config_currency'))
-					);
+					if (isset($voucher['code']) && isset($voucher['to_name']) && isset($voucher['to_email']) && isset($voucher['from_name']) && isset($voucher['from_email']) && isset($voucher['voucher_theme_id']) && isset($voucher['message']) && isset($voucher['amount'])) {
+						$this->session->data['vouchers'][$voucher['code']] = array(
+							'code'             => $voucher['code'],
+							'description'      => sprintf($this->language->get('text_for'), $this->currency->format($this->currency->convert($voucher['amount'], $this->currency->getCode(), $this->config->get('config_currency'))), $voucher['to_name']),
+							'to_name'          => $voucher['to_name'],
+							'to_email'         => $voucher['to_email'],
+							'from_name'        => $voucher['from_name'],
+							'from_email'       => $voucher['from_email'],
+							'voucher_theme_id' => $voucher['voucher_theme_id'],
+							'message'          => $voucher['message'],
+							'amount'           => $this->currency->convert($voucher['amount'], $this->currency->getCode(), $this->config->get('config_currency'))
+						);
+					}
 				}
 			}
 			

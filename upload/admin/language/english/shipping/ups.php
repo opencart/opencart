@@ -76,7 +76,6 @@ $_['entry_dimension']			   = 'Dimensions (L x W x H)';
 $_['entry_length']                 = 'Length';
 $_['entry_height']                 = 'Height';
 $_['entry_width']                  = 'Width';
-$_['entry_height']                 = 'Height';
 $_['entry_tax_class']              = 'Tax Class';
 $_['entry_geo_zone']               = 'Geo Zone';
 $_['entry_status']                 = 'Status';

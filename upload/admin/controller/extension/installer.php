@@ -303,21 +303,27 @@ class ControllerExtensionInstaller extends Controller {
 
 					if ($root) {
 						foreach ($files as $file) {
+							$destination = substr($file, strlen($directory));
+							
 							// Upload everything in the upload directory
 							// Many people rename their admin folder for security purposes which I believe should be an option during installation just like setting the db prefix.
 							// the following code would allow you to change the name of the following directories and any extensions installed will still go to the right directory.
-							if (substr($file, strlen($directory), 5) == 'admin') {
-								$destination = DIR_APPLICATION . '/' . substr($file, strlen($directory . 'admin'));
-							} elseif (substr($file, strlen($directory), 7) == 'catalog'){
-								$destination = DIR_CATALOG . '/' . substr($file, strlen($directory . 'catalog'));
-							} else if(substr($file, strlen($directory),5) == 'image'){
-								$destination = DIR_IMAGE . '/' . substr($file, strlen($directory . 'image'));
-							} else if(substr($file, strlen($directory),6) == 'system'){
-								$destination = DIR_SYSTEM . '/' . substr($file, strlen($directory . 'system'));
-							} else {
-								$destination = $root . substr($file, strlen($directory));
+							if (substr($destination, 0, 5) == 'admin') {
+								$destination = basename(DIR_APPLICATION) . substr($destination, 5);
 							}
-
+							
+							if (substr($destination, 0, 7) == 'catalog') {
+								$destination = basename(DIR_CATALOG) . substr($destination, 7);
+							}
+							
+							if (substr($destination, 0, 5) == 'image') {
+								$destination = basename(DIR_IMAGE) . substr($destination, 5);
+							}
+							
+							if (substr($destination, 0, 6) == 'system') {
+								$destination = basename(DIR_SYSTEM) . substr($destination, 6);
+							}
+							
 							if (is_dir($file)) {
 								$list = ftp_nlist($connection, substr($destination, 0, strrpos($destination, '/')));
 								

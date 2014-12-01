@@ -156,7 +156,7 @@
       <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
       <div class="col-sm-10">
         <button type="button" id="button-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
-        <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="" />
+        <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
       </div>
     </div>
     <?php } ?>
@@ -270,7 +270,7 @@ $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('c
 					if (json['success']) {
 						alert(json['success']);
 	
-						$(node).parent().find('input[name^=\'custom_field\']').attr('value', json['file']);
+						$(node).parent().find('input[name^=\'custom_field\']').attr('value', json['code']);
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {

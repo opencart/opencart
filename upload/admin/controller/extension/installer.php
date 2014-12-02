@@ -326,7 +326,7 @@ class ControllerExtensionInstaller extends Controller {
 							
 							if (is_dir($file)) {
 								$list = ftp_nlist($connection, substr($destination, 0, strrpos($destination, '/')));
-                                $destination = substr($destination, strrpos($destination, '/') + 1);
+                                				$destination = substr($destination, strrpos($destination, '/') + 1);
 								
 								if (!in_array($destination, $list)) {
 									if (!ftp_mkdir($connection, $destination)) {

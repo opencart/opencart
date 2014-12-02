@@ -113,6 +113,7 @@ div.required .control-label:before {
 }
 #top .btn-link strong {
 	font-size: 14px;
+        line-height: 14px;
 }
 #top-links {
 	padding-top: 6px;

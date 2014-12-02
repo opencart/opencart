@@ -327,7 +327,7 @@ class ControllerExtensionInstaller extends Controller {
 							if (is_dir($file)) {
 								$list = ftp_nlist($connection, substr($destination, 0, strrpos($destination, '/')));
 								
-								// Basename all the directories because on some servers they dont return the fulll paths.
+								// Basename all the directories because on some servers they don't return the fulll paths.
 								$list_data = array();
 								
 								foreach ($list as $list) {

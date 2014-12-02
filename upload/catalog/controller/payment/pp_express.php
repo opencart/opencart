@@ -1293,6 +1293,21 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$data = array_merge($data, $this->model_payment_pp_express->paymentRequestInfo());
 
+	        // Add shipping if required.
+	        if ($this->cart->hasShipping()) {
+	            $data = array_merge($data, array(
+	                'NOSHIPPING' => 0,
+	                'ADDROVERRIDE' => 1,
+	                'PAYMENTREQUEST_0_SHIPTONAME' => html_entity_decode($order_info['shipping_firstname'] . ' ' . $order_info['shipping_lastname'], ENT_QUOTES, 'UTF-8'),
+	                'PAYMENTREQUEST_0_SHIPTOSTREET' => html_entity_decode($order_info['shipping_address_1'], ENT_QUOTES, 'UTF-8'),
+	                'PAYMENTREQUEST_0_SHIPTOSTREET2' => html_entity_decode($order_info['shipping_address_2'], ENT_QUOTES, 'UTF-8'),
+	                'PAYMENTREQUEST_0_SHIPTOCITY' => html_entity_decode($order_info['shipping_city'], ENT_QUOTES, 'UTF-8'),
+	                'PAYMENTREQUEST_0_SHIPTOSTATE' => html_entity_decode($order_info['shipping_zone'], ENT_QUOTES, 'UTF-8'),
+	                'PAYMENTREQUEST_0_SHIPTOZIP' => html_entity_decode($order_info['shipping_postcode'], ENT_QUOTES, 'UTF-8'),
+	                'PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE' => $order_info['shipping_iso_code_2']
+	            ));
+	        }
+
 		$result = $this->model_payment_pp_express->call($data);
 
 		/**

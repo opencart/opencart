@@ -1595,7 +1595,7 @@ INSERT INTO `oc_layout_module` (`layout_module_id`, `layout_id`, `code`, `positi
 (67, 1, 'carousel.29', 'content_top', 3),
 (66, 1, 'slideshow.27', 'content_top', 1),
 (65, 1, 'featured.28', 'content_top', 2),
-(72, 3, 'account', 'column_left', 1),
+(72, 3, 'category', 'column_left', 1),
 (73, 3, 'banner.30', 'column_left', 2);
 
 -- --------------------------------------------------------

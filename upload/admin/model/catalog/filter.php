@@ -23,9 +23,9 @@ class ModelCatalogFilter extends Model {
 			}
 		}
 
-		$this->event->trigger('post.admin.filter.add', $filter_id);
+		$this->event->trigger('post.admin.filter.add', $filter_group_id);
 
-		return $filter_id;
+		return $filter_group_id;
 	}
 
 	public function editFilter($filter_group_id, $data) {

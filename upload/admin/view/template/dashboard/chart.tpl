@@ -29,6 +29,7 @@ $('#range a').on('click', function(e) {
 		url: 'index.php?route=dashboard/chart/chart&token=<?php echo $token; ?>&range=' + $(this).attr('href'),
 		dataType: 'json',
 		success: function(json) {
+                        if (typeof json['order'] == 'undefined') { return false; }
 			var option = {	
 				shadowSize: 0,
 				colors: ['#9FD5F1', '#1065D2'],

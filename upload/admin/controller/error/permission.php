@@ -52,9 +52,27 @@ class ControllerErrorPermission extends Controller {
 				'error/permission'
 			);
 
-			if (!in_array($route, $ignore) && !$this->user->hasPermission('access', $route)) {
+			$ajax = array(
+                                'dashboard/chart',
+                                'dashboard/map'
+			);
+
+			if (!in_array($route, $ignore) && !in_array($route, $ajax) && !$this->user->hasPermission('access', $route)) {
 				return new Action('error/permission');
 			}
+                        
+			if (in_array($route, $ajax) && !$this->user->hasPermission('access', $route)) {
+				return new Action('error/permission/json');
+			}
+                        
 		}
+	}
+	public function json() {
+		$this->load->language('error/permission');
+                
+		$json['error'] = $this->language->get('text_permission');
+                
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

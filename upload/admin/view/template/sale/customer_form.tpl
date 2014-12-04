@@ -325,7 +325,7 @@
                         <div class="col-sm-10">
                           <select name="safe" id="input-safe" class="form-control">
                             <?php if ($safe) { ?>
-                            <option value="1" selected="selected"><?php echo $textyes; ?></option>
+                            <option value="1" selected="selected"><?php echo $text_yes; ?></option>
                             <option value="0"><?php echo $text_no; ?></option>
                             <?php } else { ?>
                             <option value="1"><?php echo $text_yes; ?></option>

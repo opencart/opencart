@@ -87,6 +87,7 @@ class ControllerStep2 extends Controller {
 		$data['cache'] = DIR_SYSTEM . 'cache';
 		$data['logs'] = DIR_SYSTEM . 'logs';
 		$data['download'] = DIR_SYSTEM . 'download';
+		$data['download'] = DIR_SYSTEM . 'modification';
 		$data['upload'] = DIR_SYSTEM . 'upload';
 		$data['image'] = DIR_OPENCART . 'image';
 		$data['image_cache'] = DIR_OPENCART . 'image/cache';

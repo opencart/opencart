@@ -304,17 +304,6 @@ class ModelPaymentPPExpress extends Model {
 		return $data;
 	}
 
-	public function isMobile() {
-		/*
-		 * This will check the user agent and "try" to match if it is a mobile device
-		 */
-		if (preg_match("/Mobile|Android|BlackBerry|iPhone|Windows Phone/", $this->request->server['HTTP_USER_AGENT'])) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	public function getTransactionRow($transaction_id) {
 		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "paypal_order_transaction` `pt` LEFT JOIN `" . DB_PREFIX . "paypal_order` `po` ON `pt`.`paypal_order_id` = `po`.`paypal_order_id`  WHERE `pt`.`transaction_id` = '" . $this->db->escape($transaction_id) . "' LIMIT 1");
 

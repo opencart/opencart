@@ -392,7 +392,7 @@ class ControllerMarketingAffiliate extends Controller {
 		$results = $this->model_marketing_affiliate->getAffiliates($filter_data);
 
 		foreach ($results as $result) {
-			if ($result['approved']) {
+			if (!$result['approved']) {
 				$approve = $this->url->link('marketing/affiliate/approve', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, 'SSL');
 			} else {
 				$approve = '';

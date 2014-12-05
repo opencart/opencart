@@ -193,7 +193,7 @@ class ControllerExtensionModification extends Controller {
 									$error = $operation->getAttribute('error');
 									
 									// Ignoreif
-									$ignoreif = $operation->getElementsByTagName('ignoreif')->item(0);
+									$ignoreif = $operation->getElementsByTagName('ignoreif');
 									
 									if ($ignoreif) {
 										if ($ignoreif->getAttribute('regex') != 'true') {

@@ -197,11 +197,11 @@ class ControllerExtensionModification extends Controller {
 									
 									if ($ignoreif) {
 										if ($ignoreif->getAttribute('regex') != 'true') {
-											if (strpos($modification[$file], $ignoreif->textContent) !== false) {
+											if (strpos($modification[$key], $ignoreif->textContent) !== false) {
 												continue;
 											}												
 										} else {
-											if (preg_match($ignoreif->textContent, $modification[$file])) {
+											if (preg_match($ignoreif->textContent, $modification[$key])) {
 												continue;
 											}
 										}

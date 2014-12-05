@@ -109,10 +109,12 @@ class ControllerExtensionModification extends Controller {
 			// This is purly for developers so they can run mods directly and have them run without upload sfter each change.
 			$files = glob(DIR_SYSTEM . '*.ocmod.xml');
 
-			foreach ($files as $file) {
-				$xml[] = file_get_contents($file);
+			if ($files) {
+				foreach ($files as $file) {
+					$xml[] = file_get_contents($file);
+				}
 			}
-
+			
 			// Get the default modification file
 			$results = $this->model_extension_modification->getModifications();
 

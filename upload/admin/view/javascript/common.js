@@ -210,7 +210,7 @@ $(document).ready(function() {
 			});
 			
 			// Keydown
-			$(this).on('keydown', function() {
+			$(this).on('keydown', function(event) {
 				switch(event.keyCode) {
 					case 27: // escape
 						this.hide();

@@ -167,6 +167,11 @@ div.required .control-label:before {
 #cart .dropdown-menu {
 	min-width: 100%;
 }
+	@media (max-width: 478px) {
+		#cart .dropdown-menu {
+			width: 100%;
+		}
+	}
 #cart .dropdown-menu table {
 	margin-bottom: 10px;
 }
@@ -174,6 +179,11 @@ div.required .control-label:before {
 	min-width: 427px;
 	padding: 0 10px;
 }
+	@media (max-width: 478px) {
+		#cart .dropdown-menu li > div {
+			min-width: 100%;
+		}
+	}
 #cart .dropdown-menu li p {
 	margin: 20px 0;
 }

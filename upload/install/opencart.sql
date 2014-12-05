@@ -3365,8 +3365,7 @@ INSERT INTO `oc_url_alias` (`url_alias_id`, `query`, `keyword`) VALUES
 (832, 'manufacturer_id=10', 'sony'),
 (841, 'information_id=6', 'delivery'),
 (842, 'information_id=3', 'privacy'),
-(843, 'information_id=5', 'terms'),
-(845, 'common/home', '');
+(843, 'information_id=5', 'terms');
 
 -- --------------------------------------------------------
 

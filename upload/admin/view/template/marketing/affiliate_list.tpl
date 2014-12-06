@@ -134,7 +134,7 @@
                   <td class="text-right"><?php echo $affiliate['balance']; ?></td>
                   <td class="text-left"><?php echo $affiliate['status']; ?></td>
                   <td class="text-left"><?php echo $affiliate['date_added']; ?></td>
-                  <td class="text-right"><?php if (!$affiliate['approve']) { ; ?>
+                  <td class="text-right"><?php if ($affiliate['approve']) { ; ?>
                     <a href="<?php echo $affiliate['approve']; ?>" data-toggle="tooltip" title="<?php echo $button_approve; ?>" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i></a>
                     <?php } else { ?>
                     <button type="button" class="btn btn-success" disabled><i class="fa fa-thumbs-o-up"></i></button>

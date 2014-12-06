@@ -109,10 +109,12 @@ class ControllerExtensionModification extends Controller {
 			// This is purly for developers so they can run mods directly and have them run without upload sfter each change.
 			$files = glob(DIR_SYSTEM . '*.ocmod.xml');
 
-			foreach ($files as $file) {
-				$xml[] = file_get_contents($file);
+			if ($files) {
+				foreach ($files as $file) {
+					$xml[] = file_get_contents($file);
+				}
 			}
-
+			
 			// Get the default modification file
 			$results = $this->model_extension_modification->getModifications();
 
@@ -196,12 +198,12 @@ class ControllerExtensionModification extends Controller {
 									$ignoreif = $operation->getElementsByTagName('ignoreif')->item(0);
 									
 									if ($ignoreif) {
-										if ($ignoreif->item(0)->getAttribute('regex') != 'true') {
-											if (strpos($modification[$file], $ignoreif->item(0)->textContent) !== false) {
+										if ($ignoreif->getAttribute('regex') != 'true') {
+											if (strpos($modification[$key], $ignoreif->textContent) !== false) {
 												continue;
 											}												
 										} else {
-											if (preg_match($ignoreif->item(0)->textContent, $modification[$file])) {
+											if (preg_match($ignoreif->textContent, $modification[$key])) {
 												continue;
 											}
 										}
@@ -226,6 +228,10 @@ class ControllerExtensionModification extends Controller {
 										$trim = $operation->getElementsByTagName('add')->item(0)->getAttribute('trim');
 										$position = $operation->getElementsByTagName('add')->item(0)->getAttribute('position');
 										$offset = $operation->getElementsByTagName('add')->item(0)->getAttribute('offset');										
+										
+										if ($offset == '') {
+                                            $offset = 0;
+                                        }
 
 										// Trim line if is set to true.
 										if ($trim == 'true') {
@@ -247,7 +253,9 @@ class ControllerExtensionModification extends Controller {
 										
 										$lines = explode("\n", $modification[$key]);
 
-										foreach ($lines as $line_id => $line) {
+										for ($line_id = 0; $line_id < count($lines); $line_id++) {
+											$line = $lines[$line_id];
+											
 											// Status
 											$match = false;
 											
@@ -269,13 +277,19 @@ class ControllerExtensionModification extends Controller {
 													default:
 													case 'replace':
 														if ($offset < 0) {
-															array_splice($lines, $line_id + $offset, abs($offset), array(str_replace($search, $add, $line)));
+															array_splice($lines, $line_id + $offset, abs($offset) + 1, array(str_replace($search, $add, $line)));
+															
+															$line_id -= $offset;
 														} else {
 															array_splice($lines, $line_id, $offset + 1, array(str_replace($search, $add, $line)));
 														}
 														break;
 													case 'before':
-														array_splice($lines, $line_id - $offset, 0, explode("\n", $add));
+														$new_lines = explode("\n", $add);
+														
+														array_splice($lines, $line_id - $offset, 0, $new_lines);
+														
+														$line_id += count($new_lines);
 														break;
 													case 'after':
 														array_splice($lines, ($line_id + 1) + $offset, 0, explode("\n", $add));

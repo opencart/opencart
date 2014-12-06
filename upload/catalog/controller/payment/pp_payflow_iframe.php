@@ -117,8 +117,11 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		$this->load->model('payment/pp_payflow_iframe');
 		$this->load->model('checkout/order');
 
-		$this->model_payment_pp_payflow_iframe->log('POST: ' . print_r($this->request->post, 1));
-
+		if ($this->config->get('pp_pro_iframe_debug')) {
+			$log = new Log('pp_pro_iframe.log');
+			$log->write('POST: ' . print_r($this->request->post, 1));
+		}
+						
 		$order_id = $this->model_payment_pp_payflow_iframe->getOrderId($this->request->post['SECURETOKENID']);
 
 		if ($order_id) {

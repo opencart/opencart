@@ -1,5 +1,7 @@
 # OpenCart 2.0 change log
 
+## v2.0.1.1 (Release date: 06.12.2014)
+
 ## v2.0.1.0 (Release date: 30.11.2014)
 #### Bugs fixed
 * Changed namespace issues in DB driver files.

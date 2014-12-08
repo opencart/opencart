@@ -130,6 +130,9 @@ class ControllerExtensionModification extends Controller {
 				$dom = new DOMDocument('1.0', 'UTF-8');
 				$dom->preserveWhiteSpace = false;
 				$dom->loadXml($xml);
+				
+				// Log
+				$log[] = 'MOD: ' . $dom->getElementsByTagName('name')->item(0)->textContent;
 
 				// Wipe the past modification store in the backup array
 				$recovery = array();
@@ -138,9 +141,6 @@ class ControllerExtensionModification extends Controller {
 				if (isset($modification)) {
 					$recovery = $modification;
 				}
-								
-				// Log
-				$log[] = 'MOD: ' . $dom->getElementsByTagName('name')->item(0)->textContent;
 
 				$files = $dom->getElementsByTagName('modification')->item(0)->getElementsByTagName('file');
 

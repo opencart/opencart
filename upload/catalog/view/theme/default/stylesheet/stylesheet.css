@@ -4,6 +4,7 @@ body {
 	color: #666;
 	font-size: 12px;
 	line-height: 20px;
+	width: 100%;
 }
 h1, h2, h3, h4, h5, h6 {
 	color: #444;
@@ -690,7 +691,7 @@ h2.price {
 
 /* fixed colum left + content + right*/
 @media (min-width: 768px) {
-    #column-left  .product-layout .col-md-3{
+    #column-left  .product-layout .col-md-3 {
        width: 100%;
     }
     #column-left + #content .product-layout .col-md-3 {

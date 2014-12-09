@@ -30,7 +30,7 @@ class ModelCatalogRecurring extends Model {
 		$this->event->trigger('post.admin.recurring.edit', $recurring_id);
 	}
 
-	public function copyProfile($recurring_id) {
+	public function copyRecurring($recurring_id) {
 		$data = $this->getRecurring($recurring_id);
 
 		$data['recurring_description'] = $this->getRecurringDescription($recurring_id);

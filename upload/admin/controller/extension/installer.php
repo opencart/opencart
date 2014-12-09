@@ -303,13 +303,38 @@ class ControllerExtensionInstaller extends Controller {
 
 					if ($root) {
 						foreach ($files as $file) {
-							// Upload everything in the upload directory
 							$destination = substr($file, strlen($directory));
-
+							
+							// Upload everything in the upload directory
+							// Many people rename their admin folder for security purposes which I believe should be an option during installation just like setting the db prefix.
+							// the following code would allow you to change the name of the following directories and any extensions installed will still go to the right directory.
+							if (substr($destination, 0, 5) == 'admin') {
+								$destination = basename(DIR_APPLICATION) . substr($destination, 5);
+							}
+							
+							if (substr($destination, 0, 7) == 'catalog') {
+								$destination = basename(DIR_CATALOG) . substr($destination, 7);
+							}
+							
+							if (substr($destination, 0, 5) == 'image') {
+								$destination = basename(DIR_IMAGE) . substr($destination, 5);
+							}
+							
+							if (substr($destination, 0, 6) == 'system') {
+								$destination = basename(DIR_SYSTEM) . substr($destination, 6);
+							}
+							
 							if (is_dir($file)) {
 								$list = ftp_nlist($connection, substr($destination, 0, strrpos($destination, '/')));
 								
-								if (!in_array($destination, $list)) {
+								// Basename all the directories because on some servers they don't return the fulll paths.
+								$list_data = array();
+								
+								foreach ($list as $list) {
+									$list_data[] = basename($list);
+								}
+																
+								if (!in_array(basename($destination), $list_data)) {
 									if (!ftp_mkdir($connection, $destination)) {
 										$json['error'] = sprintf($this->language->get('error_ftp_directory'), $destination);
 									}

@@ -1563,7 +1563,9 @@ INSERT INTO `oc_layout` (`layout_id`, `name`) VALUES
 (8, 'Contact'),
 (9, 'Sitemap'),
 (10, 'Affiliate'),
-(11, 'Information');
+(11, 'Information'),
+(12, 'Compare'),
+(13, 'Search');
 
 -- --------------------------------------------------------
 
@@ -1593,7 +1595,7 @@ INSERT INTO `oc_layout_module` (`layout_module_id`, `layout_id`, `code`, `positi
 (67, 1, 'carousel.29', 'content_top', 3),
 (66, 1, 'slideshow.27', 'content_top', 1),
 (65, 1, 'featured.28', 'content_top', 2),
-(72, 3, 'account', 'column_left', 1),
+(72, 3, 'category', 'column_left', 1),
 (73, 3, 'banner.30', 'column_left', 2);
 
 -- --------------------------------------------------------
@@ -1625,7 +1627,9 @@ INSERT INTO `oc_layout_route` (`layout_route_id`, `layout_id`, `store_id`, `rout
 (31, 8, 0, 'information/contact'),
 (32, 9, 0, 'information/sitemap'),
 (34, 4, 0, ''),
-(45, 5, 0, 'product/manufacturer');
+(45, 5, 0, 'product/manufacturer'),
+(52, 12, 0, 'product/compare'),
+(53, 13, 0, 'product/search');
 
 -- --------------------------------------------------------
 
@@ -3361,36 +3365,7 @@ INSERT INTO `oc_url_alias` (`url_alias_id`, `query`, `keyword`) VALUES
 (832, 'manufacturer_id=10', 'sony'),
 (841, 'information_id=6', 'delivery'),
 (842, 'information_id=3', 'privacy'),
-(843, 'information_id=5', 'terms'),
-(845, 'common/home', ''),
-(846, 'information/contact', 'contact-us'),
-(847, 'information/sitemap', 'sitemap'),
-(848, 'product/special', 'specials'),
-(849, 'product/manufacturer', 'brands'),
-(850, 'product/compare', 'compare-products'),
-(851, 'product/search', 'search'),
-(852, 'checkout/cart', 'cart'),
-(853, 'checkout/checkout', 'checkout'),
-(854, 'account/login', 'login'),
-(855, 'account/logout', 'logout'),
-(856, 'account/voucher', 'vouchers'),
-(857, 'account/wishlist', 'wishlist'),
-(858, 'account/account', 'my-account'),
-(859, 'account/order', 'order-history'),
-(860, 'account/newsletter', 'newsletter'),
-(861, 'account/return/add', 'return-add'),
-(862, 'account/forgotten', 'forgot-password'),
-(863, 'account/download', 'downloads'),
-(864, 'account/return', 'returns'),
-(865, 'account/transaction', 'transactions'),
-(866, 'account/register', 'create-account'),
-(867, 'account/recurring', 'recurring'),
-(868, 'account/address', 'address-book'),
-(869, 'account/reward', 'reward-points'),
-(870, 'affiliate/forgotten', 'affiliate-forgot-password'),
-(871, 'affiliate/register', 'create-affiliate-account'),
-(872, 'affiliate/login', 'affiliate-login'),
-(873, 'affiliate/account', 'affiliates');
+(843, 'information_id=5', 'terms');
 
 -- --------------------------------------------------------
 

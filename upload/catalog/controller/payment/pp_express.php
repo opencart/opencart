@@ -426,8 +426,8 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['column_price'] = $this->language->get('column_price');
 		$data['column_total'] = $this->language->get('column_total');
 
-		$data['button_shipping'] = $this->language->get('express_button_shipping');
-		$data['button_confirm'] = $this->language->get('express_button_confirm');
+		$data['button_shipping'] = $this->language->get('button_express_shipping');
+		$data['button_confirm'] = $this->language->get('button_express_confirm');
 
 		if (isset($this->request->post['next'])) {
 			$data['next'] = $this->request->post['next'];
@@ -510,7 +510,7 @@ class ControllerPaymentPPExpress extends Controller {
 				if ($product['recurring']['duration']) {
 					$recurring_description .= sprintf($this->language->get('text_payment_description'), $recurring_price, $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
 				} else {
-					$recurring_description .= sprintf($this->language->get('text_payment_until_canceled_description'), $recurring_price, $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
+					$recurring_description .= sprintf($this->language->get('text_payment_cancel'), $recurring_price, $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
 				}
 			}
 

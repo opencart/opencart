@@ -108,10 +108,16 @@ class ControllerPaymentPPProIframe extends Controller {
 			$response = curl_exec($curl);
 
 			if (curl_errno($curl)) {
-				$this->model_payment_pp_pro_iframe->log('pp_pro_iframe :: CURL failed ' . curl_error($curl) . '(' . curl_errno($curl) . ')');
+				if ($this->config->get('pp_pro_iframe_debug')) {
+					$log = new Log('pp_pro_iframe.log');
+					$log->write('pp_pro_iframe :: CURL failed ' . curl_error($curl) . '(' . curl_errno($curl) . ')');
+				}				
 			} else {
-				$this->model_payment_pp_pro_iframe->log('pp_pro_iframe :: IPN REQUEST: ' . $request);
-				$this->model_payment_pp_pro_iframe->log('pp_pro_iframe :: IPN RESPONSE: ' . $response);
+				if ($this->config->get('pp_pro_iframe_debug')) {
+					$log = new Log('pp_pro_iframe.log');
+					$log->write('pp_pro_iframe :: IPN REQUEST: ' . $request);
+					$log->write('pp_pro_iframe :: IPN RESPONSE: ' . $response);
+				}				
 
 				if ((strcmp($response, 'VERIFIED') == 0 || strcmp($response, 'UNVERIFIED') == 0) && isset($this->request->post['payment_status'])) {
 					$order_status_id = $this->config->get('pp_pro_iframe_canceled_reversal_status_id');
@@ -285,9 +291,12 @@ class ControllerPaymentPPProIframe extends Controller {
 		$response_data = array();
 
 		parse_str($response, $response_data);
-
-		$this->model_payment_pp_pro_iframe->log(print_r(serialize($response_data), 1));
-
+		
+		if ($this->config->get('pp_pro_iframe_debug')) {
+			$log = new Log('pp_pro_iframe.log');
+			$log->write(print_r(serialize($response_data), 1));
+		}
+		
 		curl_close($curl);
 
 		if (!$response || !isset($response_data['HOSTEDBUTTONID'])) {

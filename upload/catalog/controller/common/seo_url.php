@@ -44,7 +44,6 @@ class ControllerCommonSeoUrl extends Controller {
 					if ($query->row['query'] && $url[0] != 'information_id' && $url[0] != 'manufacturer_id' && $url[0] != 'category_id' && $url[0] != 'product_id') {
 						$this->request->get['route'] = $query->row['query'];
 					}
-					
 				} else {
 					$this->request->get['route'] = 'error/not_found';
 
@@ -105,14 +104,6 @@ class ControllerCommonSeoUrl extends Controller {
 					}
 
 					unset($data[$key]);
-				} else  {
-					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = '" .$data['route'] . "'");
-
-					if ($query->num_rows && $query->row['keyword']) {
-						$url .= '/' . $query->row['keyword'];
-
-						unset($data[$key]);
-					}
 				}
 			}
 		}

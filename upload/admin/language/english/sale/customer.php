@@ -52,7 +52,6 @@ $_['entry_description']     = 'Description';
 $_['entry_amount']          = 'Amount';
 $_['entry_points']          = 'Points';
 $_['entry_name']            = 'Customer Name';
-$_['entry_approved']        = 'Approved';
 $_['entry_ip']              = 'IP';
 $_['entry_date_added']      = 'Date Added';
 

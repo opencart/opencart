@@ -278,24 +278,20 @@
     var pass = confirm("<?php echo $text_confirm; ?>");
 
     if (pass == true) {
-      var id = $('#item-id').val();
-
-      if (id !== '') {
-        $.ajax({
-          type: 'GET',
-          url: 'index.php?route=openbay/ebay/removeItemLink&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>',
-          dataType: 'json',
-          success: function () {
-            alert('<?php echo $text_alert_removed; ?>');
-            window.location = 'index.php?route=extension/openbay/items&token=<?php echo $token; ?>';
-          },
-          error: function (xhr, ajaxOptions, thrownError) {
-            if (xhr.status != 0) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
+      $.ajax({
+        type: 'GET',
+        url: 'index.php?route=openbay/ebay/removeItemLink&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>',
+        dataType: 'json',
+        success: function () {
+          alert('<?php echo $text_alert_removed; ?>');
+          window.location = 'index.php?route=extension/openbay/items&token=<?php echo $token; ?>';
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          if (xhr.status != 0) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
           }
-        });
-      }
+        }
+      });
     }
   });
 

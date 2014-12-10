@@ -2,24 +2,24 @@
 class ControllerModulePPLogin extends Controller {
 	private $error = array();
 
-	public function index($setting) {
+	public function index() {
 		if (!$this->customer->isLogged()) {
-			$data['client_id'] = $setting['client_id'];
+			$data['client_id'] = $this->config->get('pp_login_client_id');
 			$data['return_url'] = $this->url->link('module/pp_login/login', '', 'SSL');
 
-			if ($setting['sandbox']) {
+			if ($this->config->get('pp_login_sandbox')) {
 				$data['sandbox'] = 'sandbox';
 			} else {
 				$data['sandbox'] = '';
 			}
 
-			if ($setting['button_colour'] == 'grey') {
+			if ($this->config->get('pp_login_button_colour') == 'grey') {
 				$data['button_colour'] = 'neutral';
 			} else {
 				$data['button_colour'] = '';
 			}
 
-			$locale = $setting['locale'];
+			$locale = $this->config->get('pp_login_locale');
 
 			$this->load->model('localisation/language');
 
@@ -42,7 +42,7 @@ class ControllerModulePPLogin extends Controller {
 				'phone'
 			);
 
-			if ($this->config->get('seamless')) {
+			if ($this->config->get('pp_login_seamless')) {
 				$scopes[] = 'https://uri.paypal.com/services/expresscheckout';
 			}
 
@@ -84,7 +84,7 @@ class ControllerModulePPLogin extends Controller {
 
 			if ($customer_info) {
 				if ($this->validate($user->email)) {
-					$this->completeLogin($$customer_info['customer_id'], $customer_info['email'], $tokens->access_token);
+					$this->completeLogin($customer_info['customer_id'], $customer_info['email'], $tokens->access_token);
 				} else {
 					$this->model_module_pp_login->log('Could not login to - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
 					echo '<script type="text/javascript">window.opener.location = "' . $this->url->link('account/login', '', 'SSL') . '"; window.close();</script>';

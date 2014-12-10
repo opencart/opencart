@@ -137,7 +137,7 @@ class ControllerCheckoutGuest extends Controller {
 
 		if (isset($this->session->data['guest']['custom_field'])) {
 			if (isset($this->session->data['guest']['custom_field'])) {
-				$guest_custom_field_ = $this->session->data['guest']['custom_field'];
+				$guest_custom_field = $this->session->data['guest']['custom_field'];
 			} else {
 				$guest_custom_field = array();
 			}

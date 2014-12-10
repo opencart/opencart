@@ -38,16 +38,26 @@ class ControllerCommonColumnLeft extends Controller {
 		if (!$layout_id) {
 			$layout_id = $this->config->get('config_layout_id');
 		}
-
+		
+		$this->load->model('extension/module');
+		
 		$data['modules'] = array();
 
 		$modules = $this->model_design_layout->getLayoutModules($layout_id, 'column_left');
 
 		foreach ($modules as $module) {
-			$setting = unserialize($module['setting']);
+			$part = explode('.', $module['code']);
 			
-			if (!empty($setting['status'])) { 
-				$data['modules'][] = $this->load->controller('module/' . $module['code'], $setting);
+			if (isset($part[0]) && $this->config->get($part[0] . '_status')) {
+				$data['modules'][] = $this->load->controller('module/' . $part[0]);
+			}
+						
+			if (isset($part[1])) {
+				$setting_info = $this->model_extension_module->getModule($part[1]);
+				
+				if ($setting_info && $setting_info['status']) {
+					$data['modules'][] = $this->load->controller('module/' . $part[0], $setting_info);
+				}
 			}
 		}
 

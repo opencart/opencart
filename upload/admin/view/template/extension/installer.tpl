@@ -144,7 +144,7 @@ function next() {
 				if (json['error']) {
 					$('#progress-bar').addClass('progress-bar-danger');
 					$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-					$('.button-clear').prop('disabled', false);
+					$('#button-clear').prop('disabled', false);
 				} 
 				
 				if (json['success']) {

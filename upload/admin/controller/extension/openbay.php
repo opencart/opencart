@@ -1798,6 +1798,10 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->response->setOutput($this->load->view('openbay/openbay_itemlist.tpl', $data));
 	}
 
+	public function itemlist() {
+		$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], 'SSL'));
+	}
+
 	public function eventDeleteProduct($product_id) {
 		foreach ($this->openbay->installed_markets as $market) {
 			if ($this->config->get($market . '_status') == 1) {

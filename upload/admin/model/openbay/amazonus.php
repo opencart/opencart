@@ -96,7 +96,7 @@ class ModelOpenbayAmazonus extends Model {
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_product_search`");
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_listing_report`");
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `group` = 'openbay_amazonus'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = 'openbay_amazonus'");
 
 		// remove the event triggers
 		$this->model_extension_event->deleteEvent('openbaypro_amazonus');

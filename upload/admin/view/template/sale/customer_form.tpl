@@ -325,7 +325,7 @@
                         <div class="col-sm-10">
                           <select name="safe" id="input-safe" class="form-control">
                             <?php if ($safe) { ?>
-                            <option value="1" selected="selected"><?php echo $textyes; ?></option>
+                            <option value="1" selected="selected"><?php echo $text_yes; ?></option>
                             <option value="0"><?php echo $text_no; ?></option>
                             <?php } else { ?>
                             <option value="1"><?php echo $text_yes; ?></option>
@@ -1124,7 +1124,7 @@ $('#content').delegate('button[id^=\'button-custom-field\'], button[id^=\'button
 					$(node).button('reset');
 				},		
 				success: function(json) {
-					$('.text-danger').remove();
+					$(node).parent().find('.text-danger').remove();
 					
 					if (json['error']) {
 						$(node).parent().find('input[type=\'hidden\']').after('<div class="text-danger">' + json['error'] + '</div>');

@@ -1,6 +1,6 @@
 <?php
-class ControllerModuleEbay extends Controller {
-	public function index($setting) {
+class ControllerModuleEbayListing extends Controller {
+	public function index() {
 		if ($this->config->get('ebay_status') == 1) {
 			$this->language->load('module/ebay');
 			
@@ -11,19 +11,19 @@ class ControllerModuleEbay extends Controller {
 
 			$data['products'] = array();
 
-			$products = $this->cache->get('ebay.' . md5(serialize($setting)));
+			$products = $this->cache->get('ebay_listing.' . md5(serialize($products)));
 
 			if (!$products) {
 				$products = $this->model_openbay_ebay_product->getDisplayProducts();
 				
-				$this->cache->set('ebay.' . md5(serialize($setting)), $products);
+				$this->cache->set('ebay_listing.' . md5(serialize($products)), $products);
 			}
 
 			foreach($products['products'] as $product) {
 				if (isset($product['pictures'][0])) {
-					$image = $this->model_openbay_ebay_product->resize($product['pictures'][0], $setting['width'], $setting['height']);
+					$image = $this->model_openbay_ebay_product->resize($product['pictures'][0], $this->config->get('ebay_listing_width'), $this->config->get('ebay_listing_height'));
 				} else {
-					$image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
+					$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('ebay_listing_width'), $this->config->get('ebay_listing_height'));
 				}
 
 				$data['products'][] = array(

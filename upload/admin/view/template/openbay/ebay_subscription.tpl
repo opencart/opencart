@@ -40,7 +40,6 @@
               <div class="panel-body">
                 <table id="openbay-plans" class="table"></table>
                 <p><?php echo $text_subscription_avail1; ?></p>
-                <p><?php echo $text_subscription_avail2; ?></p>
               </div>
             </div>
           </div>

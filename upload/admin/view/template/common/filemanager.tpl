@@ -209,7 +209,7 @@ $('#button-folder').on('shown.bs.popover', function() {
 	});	
 });
 
-$('#button-delete').on('click', function(e) {
+$('#modal-image #button-delete').on('click', function(e) {
 	if (confirm('<?php echo $text_confirm; ?>')) {
 		$.ajax({
 			url: 'index.php?route=common/filemanager/delete&token=<?php echo $token; ?>',
@@ -237,6 +237,8 @@ $('#button-delete').on('click', function(e) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
-	}
+	}else{
+            console.log('not confirmed?');
+        }
 });
 //--></script>

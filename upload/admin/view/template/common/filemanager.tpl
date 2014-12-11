@@ -237,8 +237,6 @@ $('#modal-image #button-delete').on('click', function(e) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
-	}else{
-            console.log('not confirmed?');
-        }
+	}
 });
 //--></script>

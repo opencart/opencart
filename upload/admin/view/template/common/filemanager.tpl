@@ -84,14 +84,16 @@ $('.pagination a').on('click', function(e) {
 
 $('#button-parent').on('click', function(e) {
 	e.preventDefault();
-	
+	$('#button-parent').tooltip('destroy');
 	$('#modal-image').load($(this).attr('href'));
 });
 
 $('#button-refresh').on('click', function(e) {
 	e.preventDefault();
-	
+        var target = e.target;
+	$('#button-refresh').tooltip('destroy');
 	$('#modal-image').load($(this).attr('href'));
+        
 });
 
 $('#button-search').on('click', function() {
@@ -207,7 +209,7 @@ $('#button-folder').on('shown.bs.popover', function() {
 	});	
 });
 
-$('#modal-image #button-delete').on('click', function(e) {
+$('#button-delete').on('click', function(e) {
 	if (confirm('<?php echo $text_confirm; ?>')) {
 		$.ajax({
 			url: 'index.php?route=common/filemanager/delete&token=<?php echo $token; ?>',

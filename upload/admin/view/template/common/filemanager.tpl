@@ -90,7 +90,6 @@ $('#button-parent').on('click', function(e) {
 
 $('#button-refresh').on('click', function(e) {
 	e.preventDefault();
-        var target = e.target;
 	$('#button-refresh').tooltip('destroy');
 	$('#modal-image').load($(this).attr('href'));
         

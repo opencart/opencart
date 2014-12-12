@@ -128,12 +128,14 @@ class ControllerExtensionInstaller extends Controller {
 						);
 
 						// FTP
+                                                /*
 						$json['step'][] = array(
 							'text' => $this->language->get('text_ftp'),
 							'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/ftp', 'token=' . $this->session->data['token'], 'SSL')),
 							'path' => $path
 						);
-						
+						*/
+                                                
 						// Send make and array of actions to carry out
 						while ($entry = zip_read($zip)) {
 							$zip_name = zip_entry_name($entry);

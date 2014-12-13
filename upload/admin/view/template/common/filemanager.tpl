@@ -84,14 +84,15 @@ $('.pagination a').on('click', function(e) {
 
 $('#button-parent').on('click', function(e) {
 	e.preventDefault();
-	
+	$('#button-parent').tooltip('destroy');
 	$('#modal-image').load($(this).attr('href'));
 });
 
 $('#button-refresh').on('click', function(e) {
 	e.preventDefault();
-	
+	$('#button-refresh').tooltip('destroy');
 	$('#modal-image').load($(this).attr('href'));
+        
 });
 
 $('#button-search').on('click', function() {

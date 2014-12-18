@@ -41,4 +41,9 @@ class ModelShippingFree extends Model {
 
 		return $method_data;
 	}
+
+	function disableOthers(){
+		
+		return $this->config->get('free_disable_other_shipping');
+	}
 }

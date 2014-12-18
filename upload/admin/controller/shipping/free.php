@@ -91,6 +91,12 @@ class ControllerShippingFree extends Controller {
 			$data['free_sort_order'] = $this->config->get('free_sort_order');
 		}
 
+		if (isset($this->request->post['free_disable_other_shipping'])) {
+			$data['free_disable_other_shipping'] = $this->request->post['free_disable_other_shipping'];
+		} else {
+			$data['free_disable_other_shipping'] = $this->config->get('free_disable_other_shipping');
+		}
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

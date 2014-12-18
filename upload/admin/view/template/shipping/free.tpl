@@ -66,6 +66,20 @@
               <input type="text" name="free_sort_order" value="<?php echo $free_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
             </div>
           </div>
+          <div class="form-group">
+          	<label class="col-sm-2 control-label" for="input-disable-other-shipping"><?php echo $entry_disable_other_shipping; ?></label>
+            	<div class="col-sm-10">
+            		<div class="checkbox">
+            			<label>
+            			<?php if($free_disable_other_shipping) { ?>
+            				<input type="checkbox" checked="checked" value="1" name="free_disable_other_shipping" placeholder="<?php echo $entry_disable_other_shipping; ?>" id="input-disable-other-shipping" class="form-control">
+            			<?php } else { ?>
+									<input type="checkbox" value="1" name="free_disable_other_shipping" placeholder="<?php echo $entry_disable_other_shipping; ?>" id="input-disable-other-shipping" class="form-control">            	
+            		<?php }?>
+            		</label>
+            		</div>
+            	</div>
+          </div>
         </form>
       </div>
     </div>

@@ -34,6 +34,7 @@ class ControllerShippingFree extends Controller {
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
+		$data['entry_disable_other_shipping'] = $this->language->get('entry_disable_other_shipping');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -88,6 +89,12 @@ class ControllerShippingFree extends Controller {
 			$data['free_sort_order'] = $this->request->post['free_sort_order'];
 		} else {
 			$data['free_sort_order'] = $this->config->get('free_sort_order');
+		}
+
+		if (isset($this->request->post['free_disable_other_shipping'])) {
+			$data['free_disable_other_shipping'] = $this->request->post['free_disable_other_shipping'];
+		} else {
+			$data['free_disable_other_shipping'] = $this->config->get('free_disable_other_shipping');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

@@ -18,3 +18,5 @@ $_['help_total']       = 'Sub-Total amount needed before the free shipping modul
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify free shipping!';
+
+$_['entry_disable_other_shipping'] = 'Disable Other Shipping Methods';

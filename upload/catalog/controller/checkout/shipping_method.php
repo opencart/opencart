@@ -9,21 +9,37 @@ class ControllerCheckoutShippingMethod extends Controller {
 
 			$this->load->model('extension/extension');
 
-			$results = $this->model_extension_extension->getExtensions('shipping');
-
-			foreach ($results as $result) {
-				if ($this->config->get($result['code'] . '_status')) {
-					$this->load->model('shipping/' . $result['code']);
-
-					$quote = $this->{'model_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);
-
-					if ($quote) {
-						$method_data[$result['code']] = array(
+			$this->load->model('shipping/free');
+			$quote = $this->model_shipping_free->getQuote($this->session->data['shipping_address']);
+				
+			if($this->config->get('free_status') && $this->model_shipping_free->disableOthers() && $quote) {
+				
+				if ($quote) {
+					$method_data['free'] = array(
 							'title'      => $quote['title'],
 							'quote'      => $quote['quote'],
 							'sort_order' => $quote['sort_order'],
 							'error'      => $quote['error']
-						);
+					);
+				}
+			} else {
+			
+				$results = $this->model_extension_extension->getExtensions('shipping');
+				
+				foreach ($results as $result) {
+					if ($this->config->get($result['code'] . '_status')) {
+						$this->load->model('shipping/' . $result['code']);
+				
+						$quote = $this->{'model_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']);
+				
+						if ($quote) {
+							$method_data[$result['code']] = array(
+									'title'      => $quote['title'],
+									'quote'      => $quote['quote'],
+									'sort_order' => $quote['sort_order'],
+									'error'      => $quote['error']
+							);
+						}
 					}
 				}
 			}

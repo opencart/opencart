@@ -34,6 +34,7 @@ class ControllerShippingFree extends Controller {
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
+		$data['entry_disable_other_shipping'] = $this->language->get('entry_disable_other_shipping');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

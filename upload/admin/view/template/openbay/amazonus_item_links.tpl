@@ -1,4 +1,4 @@
-<?php echo $header; ?><?php echo $menu; ?>
+<?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
   <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>

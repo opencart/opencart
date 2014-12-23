@@ -24,4 +24,4 @@ $_['column_quantity'] 				= "Quantity";
 $_['column_combination'] 			= "Combination";
 
 // Error
-$_['error_bulk_link_permission'] 	= 'Bulk linking is not allowed on your plan, please upgrade';
+$_['error_bulk_link_permission'] 	= 'Bulk linking is not available on your plan, please upgrade to use this feature.';

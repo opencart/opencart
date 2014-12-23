@@ -13,7 +13,7 @@
   </div>
   <div class="container-fluid">
     <?php if ($bulk_linking_status) { ?>
-    <div class="alert alert-info"><?php echo $text_load_listings ?></div>
+    <div class="alert alert-info"><?php echo $text_load_listings; ?></div>
     <div class="well">
       <div class="row">
         <div class="col-sm-12">

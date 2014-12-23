@@ -90,7 +90,7 @@
       </div>
     </form>
     <?php } else { ?>
-    <div class="warning"><?php echo $error_bulk_link_permission ?></div>
+    <div class="warning"><?php echo $error_bulk_link_permission; ?></div>
     <?php } ?>
   </div>
 </div>

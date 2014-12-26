@@ -155,7 +155,7 @@ class ControllerLocalisationLanguage extends Controller {
 			'href' => $this->url->link('localisation/language', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$data['insert'] = $this->url->link('localisation/language/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['add'] = $this->url->link('localisation/language/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('localisation/language/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['languages'] = array();
@@ -192,7 +192,7 @@ class ControllerLocalisationLanguage extends Controller {
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
 		$data['column_action'] = $this->language->get('column_action');
 
-		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 
@@ -409,7 +409,7 @@ class ControllerLocalisationLanguage extends Controller {
 		} elseif (!empty($language_info)) {
 			$data['sort_order'] = $language_info['sort_order'];
 		} else {
-			$data['sort_order'] = '';
+			$data['sort_order'] = 1;
 		}
 
 		if (isset($this->request->post['status'])) {
@@ -417,7 +417,7 @@ class ControllerLocalisationLanguage extends Controller {
 		} elseif (!empty($language_info)) {
 			$data['status'] = $language_info['status'];
 		} else {
-			$data['status'] = 1;
+			$data['status'] = true;
 		}
 
 		$data['header'] = $this->load->controller('common/header');

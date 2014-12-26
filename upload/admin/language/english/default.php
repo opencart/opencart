@@ -28,7 +28,7 @@ $_['text_confirm']                  = 'Are you sure?';
 $_['text_home']                     = 'Home';
 
 // Button
-$_['button_insert']                 = 'Add New';
+$_['button_add']                    = 'Add New';
 $_['button_delete']                 = 'Delete';
 $_['button_save']                   = 'Save';
 $_['button_cancel']                 = 'Cancel';
@@ -135,6 +135,7 @@ $_['tab_marketing']                 = 'Marketing';
 $_['tab_online']                    = 'People Online';
 $_['tab_activity']                  = 'Recent Activity';
 $_['tab_recurring']                 = 'Recurring';
+$_['tab_action']                    = 'Action';
 
 // Error
 $_['error_exception']               = 'Error Code(%s): %s in %s on line %s';

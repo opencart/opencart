@@ -630,7 +630,7 @@
                                   <?php } ?>
                                 </select>
                                 <input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][weight]" value="<?php echo $product_option_value['weight']; ?>" placeholder="<?php echo $entry_weight; ?>" class="form-control" /></td>
-                              <td class="text-left"><button type="button" onclick="$('#option-value-row<?php echo $option_value_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                              <td class="text-left"><button type="button" onclick="$(this).tooltip('destroy');$('#option-value-row<?php echo $option_value_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                             </tr>
                             <?php $option_value_row++; ?>
                             <?php } ?>
@@ -669,11 +669,11 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php $recurring_count = 0; ?>
+                    <?php $recurring_row = 0; ?>
                     <?php foreach ($product_recurrings as $product_recurring) { ?>
-                    <?php $recurring_count++; ?>
-                    <tr id="recurring-row<?php echo $recurring_count; ?>">
-                      <td class="text-left"><select name="product_recurrings[<?php echo $recurring_count; ?>][recurring_id]" class="form-control">
+                    
+                    <tr id="recurring-row<?php echo $recurring_row; ?>">
+                      <td class="text-left"><select name="product_recurrings[<?php echo $recurring_row; ?>][recurring_id]" class="form-control">
                           <?php foreach ($recurrings as $recurring) { ?>
                           <?php if ($recurring['recurring_id'] == $product_recurring['recurring_id']) { ?>
                           <option value="<?php echo $recurring['recurring_id']; ?>" selected="selected"><?php echo $recurring['name']; ?></option>
@@ -682,7 +682,7 @@
                           <?php } ?>
                           <?php } ?>
                         </select></td>
-                      <td class="text-left"><select name="product_recurrings[<?php echo $recurring_count; ?>][customer_group_id]" class="form-control">
+                      <td class="text-left"><select name="product_recurrings[<?php echo $recurring_row; ?>][customer_group_id]" class="form-control">
                           <?php foreach ($customer_groups as $customer_group) { ?>
                           <?php if ($customer_group['customer_group_id'] == $product_recurring['customer_group_id']) { ?>
                           <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
@@ -691,8 +691,9 @@
                           <?php } ?>
                           <?php } ?>
                         </select></td>
-                      <td class="text-left"><button type="button" onclick="$('#recurring-row<?php echo $recurring_count; ?>').remove()" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                      <td class="text-left"><button type="button" onclick="$('#recurring-row<?php echo $recurring_row; ?>').remove()" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                     </tr>
+                    <?php $recurring_row++; ?>
                     <?php } ?>
                   </tbody>
                   <tfoot>
@@ -1275,11 +1276,12 @@ function addOptionValue(option_row) {
 	html += '    <option value="-">-</option>';
 	html += '  </select>';
 	html += '  <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][weight]" value="" placeholder="<?php echo $entry_weight; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#option-value-row' + option_value_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(this).tooltip(\'destroy\');$(\'#option-value-row' + option_value_row + '\').remove();" data-toggle="tooltip" rel="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 	
 	$('#option-value' + option_row + ' tbody').append(html);
-
+        $('[rel=tooltip]').tooltip();
+        
 	option_value_row++;
 }
 //--></script> 
@@ -1352,29 +1354,29 @@ function addImage() {
 }
 //--></script> 
   <script type="text/javascript"><!--
-var recurring_count = <?php echo $recurring_count; ?>;
+var recurring_row = <?php echo $recurring_row; ?>;
 
 function addRecurring() {
-	recurring_count++;
+	recurring_row++;
 	
 	html  = '';
-	html += '<tr id="recurring-row' + recurring_count + '">';
+	html += '<tr id="recurring-row' + recurring_row + '">';
 	html += '  <td class="left">';
-	html += '    <select name="product_recurrings[' + recurring_count + '][recurring_id]" class="form-control">>';
+	html += '    <select name="product_recurrings[' + recurring_row + '][recurring_id]" class="form-control">>';
 	<?php foreach ($recurrings as $recurring) { ?>
 	html += '      <option value="<?php echo $recurring['recurring_id']; ?>"><?php echo $recurring['name']; ?></option>';
 	<?php } ?>
 	html += '    </select>';
 	html += '  </td>';
 	html += '  <td class="left">';
-	html += '    <select name="product_recurrings[' + recurring_count + '][customer_group_id]" class="form-control">>';
+	html += '    <select name="product_recurrings[' + recurring_row + '][customer_group_id]" class="form-control">>';
 	<?php foreach ($customer_groups as $customer_group) { ?>
 	html += '      <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>';
 	<?php } ?>
 	html += '    <select>';
 	html += '  </td>';
 	html += '  <td class="left">';
-	html += '    <a onclick="$(\'#recurring-row' + recurring_count + '\').remove()" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>';
+	html += '    <a onclick="$(\'#recurring-row' + recurring_row + '\').remove()" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>';
 	html += '  </td>';
 	html += '</tr>';
 	

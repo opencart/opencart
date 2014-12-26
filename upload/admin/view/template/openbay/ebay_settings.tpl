@@ -156,16 +156,6 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="entry-customer-group"><?php echo $entry_customer_group; ?></label>
-                <div class="col-sm-10">
-                  <select name="ebay_def_customer_grp" id="entry-customer-group" class="form-control">
-                    <?php foreach ($customer_grp_list as $customer_grp) { ?>
-                    <?php echo '<option value="'.$customer_grp['customer_group_id'].'"'.($ebay_def_customer_grp == $customer_grp['customer_group_id'] ? ' selected="selected"' : '').'>'.$customer_grp['name'].'</option>'; ?>
-                    <?php } ?>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
                 <label class="col-sm-2 control-label" for="entry-stock-allocate"><span data-toggle="tooltip" data-container="#tab-setup" title="<?php echo $help_stock_allocate; ?>"><?php echo $entry_stock_allocate; ?></span></label>
                 <div class="col-sm-10">
                   <select name="ebay_stock_allocate" id="entry-stock-allocate" class="form-control">

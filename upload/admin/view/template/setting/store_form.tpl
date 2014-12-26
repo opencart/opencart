@@ -115,19 +115,19 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_image; ?></label>
                 <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $thumb; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
-                  <input type="hidden" name="image" value="<?php echo $image; ?>" id="input-image" />
+                  <input type="hidden" name="config_image" value="<?php echo $config_image; ?>" id="input-image" />
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-open"><span data-toggle="tooltip" title="<?php echo $help_open; ?>"><?php echo $entry_open; ?></span></label>
                 <div class="col-sm-10">
-                  <textarea name="open" rows="5" placeholder="<?php echo $entry_open; ?>" id="input-open" class="form-control"><?php echo $open; ?></textarea>
+                  <textarea name="config_open" rows="5" placeholder="<?php echo $entry_open; ?>" id="input-open" class="form-control"><?php echo $config_open; ?></textarea>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-comment"><span data-toggle="tooltip" title="<?php echo $help_comment; ?>"><?php echo $entry_comment; ?></span></label>
                 <div class="col-sm-10">
-                  <textarea name="comment" rows="5" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="form-control"><?php echo $comment; ?></textarea>
+                  <textarea name="config_comment" rows="5" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="form-control"><?php echo $config_comment; ?></textarea>
                 </div>
               </div>
               <?php if ($locations) { ?>
@@ -788,13 +788,13 @@ $('select[name=\'config_country_id\']').on('change', function() {
 
 			if (json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
-          html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-
+					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+					
 					if (json['zone'][i]['zone_id'] == '<?php echo $config_zone_id; ?>') {
-            html += ' selected="selected"';
-          }
-
-          html += '>' + json['zone'][i]['name'] + '</option>';
+						html += ' selected="selected"';
+					}
+					
+					html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
 				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';

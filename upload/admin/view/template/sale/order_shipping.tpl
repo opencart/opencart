@@ -4,10 +4,10 @@
 <meta charset="UTF-8" />
 <title><?php echo $title; ?></title>
 <base href="<?php echo $base; ?>" />
-<link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />
+<link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="all" />
 <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.min.js"></script>
 <link href="view/javascript/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
-<link type="text/css" href="view/stylesheet/stylesheet.css" rel="stylesheet" media="screen" />
+<link type="text/css" href="view/stylesheet/stylesheet.css" rel="stylesheet" media="all" />
 </head>
 <body>
 <div class="container">

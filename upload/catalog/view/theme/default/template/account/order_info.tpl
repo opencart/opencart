@@ -33,7 +33,7 @@
         </thead>
         <tbody>
           <tr>
-            <td class="text-left"><?php if ($invoice_no) { ?>
+            <td class="text-left" style="width: 50%;"><?php if ($invoice_no) { ?>
               <b><?php echo $text_invoice_no; ?></b> <?php echo $invoice_no; ?><br />
               <?php } ?>
               <b><?php echo $text_order_id; ?></b> #<?php echo $order_id; ?><br />
@@ -50,7 +50,7 @@
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <td class="text-left"><?php echo $text_payment_address; ?></td>
+            <td class="text-left" style="width: 50%;"><?php echo $text_payment_address; ?></td>
             <?php if ($shipping_address) { ?>
             <td class="text-left"><?php echo $text_shipping_address; ?></td>
             <?php } ?>

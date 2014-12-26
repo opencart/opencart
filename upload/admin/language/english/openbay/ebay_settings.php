@@ -55,7 +55,6 @@ $_['entry_relist_items']			= 'Relist when back in stock?';
 $_['entry_disable_soldout']			= 'Disable product when no stock?';
 $_['entry_debug']					= 'Enable logging';
 $_['entry_currency']				= 'Default currency';
-$_['entry_customer_group']			= 'Customer group';
 $_['entry_stock_allocate']			= 'Allocate stock';
 $_['entry_created_hours']			= 'New order age limit';
 $_['entry_developer_locks']			= 'Remove order locks?';

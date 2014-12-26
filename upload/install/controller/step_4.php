@@ -14,7 +14,6 @@ class ControllerStep4 extends Controller {
 		$data['text_forget'] = $this->language->get('text_forget');
 		$data['text_shop'] = $this->language->get('text_shop');
 		$data['text_login'] = $this->language->get('text_login');
-
 		$data['text_loading'] = $this->language->get('text_loading');
 		$data['text_store'] = $this->language->get('text_store');
 		$data['text_mail_list'] = $this->language->get('text_mail_list');

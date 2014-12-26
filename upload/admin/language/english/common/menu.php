@@ -55,7 +55,6 @@ $_['text_report_customer_order']       = 'Orders';
 $_['text_report_customer_reward']      = 'Reward Points';
 $_['text_report_customer_credit']      = 'Credit';
 $_['text_report_affiliate']            = 'Affiliates';
-$_['text_report_affiliate']            = 'Commission';
 $_['text_report_affiliate_activity']   = 'Affiliate Activity';
 $_['text_review']                      = 'Reviews';
 $_['text_return']                      = 'Returns';

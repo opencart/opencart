@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="<?php echo $insert; ?>" data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+      <div class="pull-right"><a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-primary"><i class="fa fa-plus"></i></a>
         <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-affiliate').submit() : false;"><i class="fa fa-trash-o"></i></button>
       </div>
       <h1><?php echo $heading_title; ?></h1>
@@ -51,7 +51,7 @@
                   <?php } else { ?>
                   <option value="1"><?php echo $text_enabled; ?></option>
                   <?php } ?>
-                  <?php if (($filter_status !== null) && !$filter_status) { ?>
+                  <?php if (!$filter_status && !is_null($filter_status)) { ?>
                   <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                   <?php } else { ?>
                   <option value="0"><?php echo $text_disabled; ?></option>
@@ -67,7 +67,7 @@
                   <?php } else { ?>
                   <option value="1"><?php echo $text_yes; ?></option>
                   <?php } ?>
-                  <?php if (($filter_approved !== null) && !$filter_approved) { ?>
+                  <?php if (!$filter_approved && !is_null($filter_approved)) { ?>
                   <option value="0" selected="selected"><?php echo $text_no; ?></option>
                   <?php } else { ?>
                   <option value="0"><?php echo $text_no; ?></option>
@@ -134,7 +134,7 @@
                   <td class="text-right"><?php echo $affiliate['balance']; ?></td>
                   <td class="text-left"><?php echo $affiliate['status']; ?></td>
                   <td class="text-left"><?php echo $affiliate['date_added']; ?></td>
-                  <td class="text-right"><?php if (!$affiliate['approve']) { ; ?>
+                  <td class="text-right"><?php if ($affiliate['approve']) { ; ?>
                     <a href="<?php echo $affiliate['approve']; ?>" data-toggle="tooltip" title="<?php echo $button_approve; ?>" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i></a>
                     <?php } else { ?>
                     <button type="button" class="btn btn-success" disabled><i class="fa fa-thumbs-o-up"></i></button>

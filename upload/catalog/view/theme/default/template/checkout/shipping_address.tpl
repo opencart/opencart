@@ -156,7 +156,7 @@
       <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
       <div class="col-sm-10">
         <button type="button" id="button-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
-        <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="" />
+        <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
       </div>
     </div>
     <?php } ?>
@@ -260,7 +260,7 @@ $('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on(
 					$(node).button('reset');
 				},
 				success: function(json) {
-					$('.text-danger').remove();
+					$(node).parent().find('.text-danger').remove();
 					
 					if (json['error']) {
 						$(node).parent().find('input[name^=\'custom_field\']').after('<div class="text-danger">' + json['error'] + '</div>');
@@ -269,7 +269,7 @@ $('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on(
 					if (json['success']) {
 						alert(json['success']);
 	
-						$(node).parent().find('input[name^=\'custom_field\']').attr('value', json['file']);
+						$(node).parent().find('input[name^=\'custom_field\']').attr('value', json['code']);
 					}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {
@@ -316,7 +316,7 @@ $('#collapse-shipping-address select[name=\'country_id\']').on('change', functio
 
 			html = '<option value=""><?php echo $text_select; ?></option>';
 
-			if (json['zone']) {
+			if (json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
 					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 

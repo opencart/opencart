@@ -1423,7 +1423,7 @@ class ControllerSettingSetting extends Controller {
 		if (is_file(DIR_IMAGE . 'templates/' . basename($this->request->get['template']) . '.png')) {
 			$this->response->setOutput($server . 'image/templates/' . basename($this->request->get['template']) . '.png');
 		} else {
-			$this->response->setOutput($server . 'image/no_image.jpg');
+			$this->response->setOutput($server . 'image/no_image.png');
 		}
 	}
 

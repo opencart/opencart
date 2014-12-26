@@ -187,7 +187,7 @@ class ControllerLocalisationCurrency extends Controller {
 			'href' => $this->url->link('localisation/currency', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 		
-		$data['insert'] = $this->url->link('localisation/currency/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['add'] = $this->url->link('localisation/currency/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('localisation/currency/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['refresh'] = $this->url->link('localisation/currency/refresh', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
@@ -227,7 +227,7 @@ class ControllerLocalisationCurrency extends Controller {
 		$data['column_date_modified'] = $this->language->get('column_date_modified');
 		$data['column_action'] = $this->language->get('column_action');
 
-		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 		$data['button_currency'] = $this->language->get('button_currency');

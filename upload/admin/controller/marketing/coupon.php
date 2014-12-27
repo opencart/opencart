@@ -155,7 +155,7 @@ class ControllerMarketingCoupon extends Controller {
 			'href' => $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$data['insert'] = $this->url->link('marketing/coupon/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['add'] = $this->url->link('marketing/coupon/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('marketing/coupon/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['coupons'] = array();
@@ -198,7 +198,7 @@ class ControllerMarketingCoupon extends Controller {
 		$data['column_status'] = $this->language->get('column_status');
 		$data['column_action'] = $this->language->get('column_action');
 
-		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 
@@ -528,7 +528,7 @@ class ControllerMarketingCoupon extends Controller {
 		} elseif (!empty($coupon_info)) {
 			$data['status'] = $coupon_info['status'];
 		} else {
-			$data['status'] = 1;
+			$data['status'] = true;
 		}
 
 		$data['header'] = $this->load->controller('common/header');

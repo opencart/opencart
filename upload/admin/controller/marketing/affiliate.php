@@ -370,7 +370,7 @@ class ControllerMarketingAffiliate extends Controller {
 		);
 
 		$data['approve'] = $this->url->link('marketing/affiliate/approve', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$data['insert'] = $this->url->link('marketing/affiliate/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['add'] = $this->url->link('marketing/affiliate/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('marketing/affiliate/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['affiliates'] = array();
@@ -392,13 +392,13 @@ class ControllerMarketingAffiliate extends Controller {
 		$results = $this->model_marketing_affiliate->getAffiliates($filter_data);
 
 		foreach ($results as $result) {
-			if ($result['approved']) {
+			if (!$result['approved']) {
 				$approve = $this->url->link('marketing/affiliate/approve', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, 'SSL');
 			} else {
 				$approve = '';
 			}			
 			
-			$login_info = $this->model_sale_customer->getTotalLoginAttempts($result['email']);
+			$login_info = $this->model_marketing_affiliate->getTotalLoginAttempts($result['email']);
 			
 			if ($login_info && $login_info['total'] > $this->config->get('config_login_attempts')) {
 				$unlock = $this->url->link('marketing/affiliate/unlock', 'token=' . $this->session->data['token'] . '&email=' . $result['email'] . $url, 'SSL');
@@ -444,7 +444,7 @@ class ControllerMarketingAffiliate extends Controller {
 		$data['entry_date_added'] = $this->language->get('entry_date_added');
 
 		$data['button_approve'] = $this->language->get('button_approve');
-		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 		$data['button_filter'] = $this->language->get('button_filter');
@@ -988,7 +988,7 @@ class ControllerMarketingAffiliate extends Controller {
 		} elseif (!empty($affiliate_info)) {
 			$data['status'] = $affiliate_info['status'];
 		} else {
-			$data['status'] = 1;
+			$data['status'] = true;
 		}
 
 		if (isset($this->request->post['password'])) {

@@ -65,57 +65,61 @@ $('#button-upload').on('click', function() {
 
 	$('#form-upload input[name=\'file\']').trigger('click');
 
-	$('#form-upload input[name=\'file\']').on('change', function() {
-		// Reset everything
-		$('.alert').remove();
-		$('#progress-bar').css('width', '0%');
-		$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');		
-		$('#progress-text').html('');
-	
-		$.ajax({
-			url: 'index.php?route=extension/installer/upload&token=<?php echo $token; ?>',
-			type: 'post',		
-			dataType: 'json',
-			data: new FormData($(this).parent()[0]),
-			cache: false,
-			contentType: false,
-			processData: false,		
-			beforeSend: function() {
-				$('#button-upload').button('loading');
-			},
-			complete: function() {
-				$('#button-upload').button('reset');
-			},
-			success: function(json) {
-				if (json['error']) {
-					$('#progress-bar').addClass('progress-bar-danger');				
-					$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-				}
-				
-				if (json['step']) {
-					step = json['step'];
-					total = step.length;
+	timer = setInterval(function() {
+		if ($('#form-upload input[name=\'file\']').val() != '') {
+			clearInterval(timer);	
+			
+			// Reset everything
+			$('.alert').remove();
+			$('#progress-bar').css('width', '0%');
+			$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');		
+			$('#progress-text').html('');
+		
+			$.ajax({
+				url: 'index.php?route=extension/installer/upload&token=<?php echo $token; ?>',
+				type: 'post',		
+				dataType: 'json',
+				data: new FormData($('#form-upload')[0]),
+				cache: false,
+				contentType: false,
+				processData: false,		
+				beforeSend: function() {
+					$('#button-upload').button('loading');
+				},
+				complete: function() {
+					$('#button-upload').button('reset');
+				},
+				success: function(json) {
+					if (json['error']) {
+						$('#progress-bar').addClass('progress-bar-danger');				
+						$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+					}
 					
-					if (json['overwrite'].length) {
-						html = '';
+					if (json['step']) {
+						step = json['step'];
+						total = step.length;
 						
-						for (i = 0; i < json['overwrite'].length; i++) {
-							html += json['overwrite'][i] + "\n";
-						}
-						
-						$('#overwrite').html(html);
-						
-						$('#button-continue').prop('disabled', false);
-					} else {
-						next();
-					}	
+						if (json['overwrite'].length) {
+							html = '';
+							
+							for (i = 0; i < json['overwrite'].length; i++) {
+								html += json['overwrite'][i] + "\n";
+							}
+							
+							$('#overwrite').html(html);
+							
+							$('#button-continue').prop('disabled', false);
+						} else {
+							next();
+						}	
+					}
+				},			
+				error: function(xhr, ajaxOptions, thrownError) {
+					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 				}
-			},			
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	});
+			});	
+		}
+	}, 500);
 });
 
 $('#button-continue').on('click', function() {
@@ -140,7 +144,7 @@ function next() {
 				if (json['error']) {
 					$('#progress-bar').addClass('progress-bar-danger');
 					$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
-					$('.button-clear').prop('disabled', false);
+					$('#button-clear').prop('disabled', false);
 				} 
 				
 				if (json['success']) {

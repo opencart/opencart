@@ -348,7 +348,7 @@ class ModelShippingUsps extends Model {
 					$firstclasses = array (
 						'First-Class Mail Parcel',
 						'First-Class Mail Large Envelope',
-						'First-Class Mail Letter',
+						'First-Class Mail Stamped Letter',
 						'First-Class Mail Postcards'
 					);
 

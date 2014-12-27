@@ -186,7 +186,7 @@
                 <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
                 <div class="col-sm-10">
                   <div class="input-group date">
-                    <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                    <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                     <span class="input-group-btn">
                     <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                     </span></div>
@@ -198,7 +198,7 @@
                 <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
                 <div class="col-sm-10">
                   <div class="input-group time">
-                    <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="HH:mm" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                    <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="HH:mm" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                     <span class="input-group-btn">
                     <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                     </span></div>
@@ -210,7 +210,7 @@
                 <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
                 <div class="col-sm-10">
                   <div class="input-group datetime">
-                    <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD HH:mm" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                    <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                     <span class="input-group-btn">
                     <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                     </span></div>
@@ -237,10 +237,61 @@
                     </tr>
                   </thead>
                   <tbody id="cart">
+                    <?php if ($order_products || $order_vouchers) { ?>
+                    <?php $product_row = 0; ?>
+                    <?php foreach ($order_products as $order_product) { ?>
+                    <tr>
+                      <td class="text-left"><?php echo $order_product['name']; ?><br />
+                        <input type="hidden" name="product[<?php echo $product_row; ?>][product_id]" value="<?php echo $order_product['product_id']; ?>" />
+                        <?php foreach ($order_product['option'] as $option) { ?>
+                        - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
+                        <?php if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'image') { ?>
+                        <input type="hidden" name="product[<?php echo $product_row; ?>][option][<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['product_option_value_id']; ?>" />
+                        <?php } ?>
+                        <?php if ($option['type'] == 'checkbox') { ?>
+                        <input type="hidden" name="product[<?php echo $product_row; ?>][option][<?php echo $option['product_option_id']; ?>][]" value="<?php echo $option['product_option_value_id']; ?>" />
+                        <?php } ?>
+                        <?php if ($option['type'] == 'text' || $option['type'] == 'textarea' || $option['type'] == 'file' || $option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') { ?>
+                        <input type="hidden" name="product[<?php echo $product_row; ?>][option][<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" />
+                        <?php } ?>
+                        <?php } ?></td>
+                      <td class="text-left"><?php echo $order_product['model']; ?></td>
+                      <td class="text-right"><?php echo $order_product['quantity']; ?>
+                        <input type="hidden" name="product[<?php echo $product_row; ?>][quantity]" value="<?php echo $order_product['quantity']; ?>" /></td>
+                      <td class="text-right"></td>
+                      <td class="text-right"></td>
+                      <td class="text-center"></td>
+                    </tr>
+                    <?php $product_row++; ?>
+                    <?php } ?>
+                    <?php $voucher_row = 0; ?>
+                    <?php foreach ($order_vouchers as $order_voucher) { ?>
+                    <tr>
+                      <td class="text-left"><?php echo $order_voucher['description']; ?>
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][voucher_id]" value="<?php echo $order_voucher['voucher_id']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][description]" value="<?php echo $order_voucher['description']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][code]" value="<?php echo $order_voucher['code']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][from_name]" value="<?php echo $order_voucher['from_name']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][from_email]" value="<?php echo $order_voucher['from_email']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][to_name]" value="<?php echo $order_voucher['to_name']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][to_email]" value="<?php echo $order_voucher['to_email']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][voucher_theme_id]" value="<?php echo $order_voucher['voucher_theme_id']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][message]" value="<?php echo $order_voucher['message']; ?>" />
+                        <input type="hidden" name="voucher[<?php echo $voucher_row; ?>][amount]" value="<?php echo $order_voucher['amount']; ?>" /></td>
+                      <td class="text-left"></td>
+                      <td class="text-right">1</td>
+                      <td class="text-right"></td>
+                      <td class="text-right"></td>
+                      <td class="text-center"></td>
+                    </tr>
+                    <?php $voucher_row++; ?>
+                    <?php } ?>
+                    <?php } else { ?>
                     <tr>
                       <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
                     </tr>
                   </tbody>
+                  <?php } ?>
                 </table>
               </div>
               <ul class="nav nav-tabs nav-justified">
@@ -504,7 +555,7 @@
                 <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
                 <div class="col-sm-10">
                   <div class="input-group date">
-                    <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                    <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                     <span class="input-group-btn">
                     <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                     </span></div>
@@ -516,7 +567,7 @@
                 <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
                 <div class="col-sm-10">
                   <div class="input-group time">
-                    <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="HH:mm" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                    <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="HH:mm" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                     <span class="input-group-btn">
                     <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                     </span></div>
@@ -528,7 +579,7 @@
                 <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
                 <div class="col-sm-10">
                   <div class="input-group datetime">
-                    <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD HH:mm" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                    <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                     <span class="input-group-btn">
                     <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                     </span></div>
@@ -715,7 +766,7 @@
                 <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
                 <div class="col-sm-10">
                   <div class="input-group date">
-                    <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                    <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                     <span class="input-group-btn">
                     <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                     </span></div>
@@ -727,7 +778,7 @@
                 <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
                 <div class="col-sm-10">
                   <div class="input-group time">
-                    <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="HH:mm" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                    <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="HH:mm" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                     <span class="input-group-btn">
                     <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                     </span></div>
@@ -739,7 +790,7 @@
                 <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
                 <div class="col-sm-10">
                   <div class="input-group datetime">
-                    <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD HH:mm" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                    <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-date-format="YYYY-MM-DD HH:mm" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                     <span class="input-group-btn">
                     <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                     </span></div>
@@ -894,7 +945,7 @@ $('#button-refresh').on('click', function() {
 		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/products&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		dataType: 'json',
 		success: function(json) {
-			$('.alert, .text-danger').remove();
+			$('.alert-danger, .text-danger').remove();
 			
 			// Check for errors
 			if (json['error']) {
@@ -923,17 +974,31 @@ $('#button-refresh').on('click', function() {
 					
 					html += '<tr>';
 					html += '  <td class="text-left">' + product['name'] + ' ' + (!product['stock'] ? '<span class="text-danger">***</span>' : '') + '<br />';
+					html += '  <input type="hidden" name="product[' + i + '][product_id]" value="' + product['product_id'] + '" />';
 					
 					if (product['option']) {
 						for (j = 0; j < product['option'].length; j++) {
-							html += '  - <small>' + product['option'][j]['name'] + ': ' + product['option'][j]['value'] + '</small><br />';
+							option = product['option'][j];
+							
+							html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
+							
+							if (option['type'] == 'select' || option['type'] == 'radio' || option['type'] == 'image') {
+								html += '<input type="hidden" name="product[' + i + '][option][' + option['product_option_id'] + ']" value="' + option['product_option_value_id'] + '" />';
+							}
+							
+							if (option['type'] == 'checkbox') {
+								html += '<input type="hidden" name="product[' + i + '][option][' + option['product_option_id'] + '][]" value="' + option['product_option_value_id'] + '" />';
+							}
+							
+							if (option['type'] == 'text' || option['type'] == 'textarea' || option['type'] == 'file' || option['type'] == 'date' || option['type'] == 'datetime' || option['type'] == 'time') {
+								html += '<input type="hidden" name="product[' + i + '][option][' + option['product_option_id'] + ']" value="' + option['value'] + '" />';
+							}
 						}
 					}
 					
 					html += '</td>';
-					
 					html += '  <td class="text-left">' + product['model'] + '</td>';
-					html += '  <td class="text-right">' + product['quantity'] + '</td>';
+					html += '  <td class="text-right">' + product['quantity'] + '<input type="hidden" name="product[' + i + '][quantity]" value="' + product['quantity'] + '" /></td>';
 					html += '  <td class="text-right">' + product['price'] + '</td>';
 					html += '  <td class="text-right">' + product['total'] + '</td>';
 					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + product['key'] + '" data-toggle="tooltip" title="<?php echo $button_remove; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
@@ -955,11 +1020,21 @@ $('#button-refresh').on('click', function() {
 			}
 					
 			if (json['vouchers']) {
-				 for (i in json['vouchers']) {
+				for (i in json['vouchers']) {
 					voucher = json['vouchers'][i];
-					 
+					
 					html += '<tr>';
-					html += '  <td class="text-left">' + voucher['description'] + '</td>';
+					html += '  <td class="text-left">' + voucher['description'];
+                    html += '    <input type="hidden" name="voucher[' + i + '][code]" value="' + voucher['code'] + '" />';
+					html += '    <input type="hidden" name="voucher[' + i + '][description]" value="' + voucher['description'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][from_name]" value="' + voucher['from_name'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][from_email]" value="' + voucher['from_email'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][to_name]" value="' + voucher['to_name'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][to_email]" value="' + voucher['to_email'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][voucher_theme_id]" value="' + voucher['voucher_theme_id'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][message]" value="' + voucher['message'] + '" />';
+                    html += '    <input type="hidden" name="voucher[' + i + '][amount]" value="' + voucher['amount'] + '" />';
+					html += '  </td>';
 					html += '  <td class="text-left"></td>';
 					html += '  <td class="text-right">1</td>';
 					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
@@ -1035,7 +1110,7 @@ $('#button-refresh').on('click', function() {
 				html += '</tr>';	
 			}
 						
-			$('#total').html(html);			
+			$('#total').html(html);
 		},	
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -1188,9 +1263,57 @@ $('#button-customer').on('click', function() {
 				// Highlight any found errors
 				$('.text-danger').parentsUntil('.form-group').parent().addClass('has-error');
 			} else {
+				$.ajax({
+					url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/add&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+					type: 'post',
+					data: $('#cart input[name^=\'product\'][type=\'text\'], #cart input[name^=\'product\'][type=\'hidden\'], #cart input[name^=\'product\'][type=\'radio\']:checked, #cart input[name^=\'product\'][type=\'checkbox\']:checked, #cart select[name^=\'product\'], #cart textarea[name^=\'product\']'),
+					dataType: 'json',
+					beforeSend: function() {
+						$('#button-product-add').button('loading');
+					},
+					complete: function() {
+						$('#button-product-add').button('reset');
+					},
+					success: function(json) {
+						$('.alert, .text-danger').remove();
+						$('.form-group').removeClass('has-error');
+					
+						if (json['error'] && json['error']['warning']) {
+							$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+						}
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				});		
+					
+				$.ajax({
+					url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/voucher/add&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+					type: 'post',
+					data: $('#cart input[name^=\'voucher\'][type=\'text\'], #cart input[name^=\'voucher\'][type=\'hidden\'], #cart input[name^=\'voucher\'][type=\'radio\']:checked, #cart input[name^=\'voucher\'][type=\'checkbox\']:checked, #cart select[name^=\'voucher\'], #cart textarea[name^=\'voucher\']'),
+					dataType: 'json',
+					beforeSend: function() {
+						$('#button-voucher-add').button('loading');
+					},
+					complete: function() {
+						$('#button-voucher-add').button('reset');
+					},
+					success: function(json) {
+						$('.alert, .text-danger').remove();
+						$('.form-group').removeClass('has-error');
+					
+						if (json['error'] && json['error']['warning']) {
+							$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+						}
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				});	
+
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
-				
+								
 				$('a[href=\'#tab-cart\']').tab('show');
 			}
 		},
@@ -1200,7 +1323,7 @@ $('#button-customer').on('click', function() {
 	});	
 });
 				
-$('input[name=\'product\']').autocomplete({
+$('#tab-product input[name=\'product\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
@@ -1219,8 +1342,8 @@ $('input[name=\'product\']').autocomplete({
 		});
 	},
 	'select': function(item) {
-		$('input[name=\'product\']').val(item['label']);
-		$('input[name=\'product_id\']').val(item['value']);
+		$('#tab-product input[name=\'product\']').val(item['label']);
+		$('#tab-product input[name=\'product_id\']').val(item['value']);
 		
 		if (item['option'] != '') {
  			html  = '<fieldset>';
@@ -1354,21 +1477,21 @@ $('input[name=\'product\']').autocomplete({
 				if (option['type'] == 'date') {
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
-					html += '  <div class="col-sm-3"><div class="input-group date"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-format="YYYY-MM-DD" id="input-option' + option['product_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
+					html += '  <div class="col-sm-3"><div class="input-group date"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="YYYY-MM-DD" id="input-option' + option['product_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
 					html += '</div>';
 				}
 				
 				if (option['type'] == 'datetime') {
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
-					html += '  <div class="col-sm-10"><div class="input-group datetime"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-format="YYYY-MM-DD HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
+					html += '  <div class="col-sm-3"><div class="input-group datetime"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="YYYY-MM-DD HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
 					html += '</div>';					
 				}
 				
 				if (option['type'] == 'time') {
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
-					html += '  <div class="col-sm-10"><div class="input-group time"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-format="HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
+					html += '  <div class="col-sm-3"><div class="input-group time"><input type="text" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" placeholder="' + option['name'] + '" data-date-format="HH:mm" id="input-option' + option['product_option_id'] + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
 					html += '</div>';					
 				}
 			}
@@ -1399,7 +1522,7 @@ $('#button-product-add').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/add&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
-		data: $('#tab-product input[type=\'text\'], #tab-product input[type=\'hidden\'], #tab-product input[type=\'radio\']:checked, #tab-product input[type=\'checkbox\']:checked, #tab-product select, #tab-product textarea'),
+		data: $('#tab-product input[name=\'product_id\'], #tab-product input[name=\'quantity\'], #tab-product input[name^=\'option\'][type=\'text\'], #tab-product input[name^=\'option\'][type=\'hidden\'], #tab-product input[name^=\'option\'][type=\'radio\']:checked, #tab-product input[name^=\'option\'][type=\'checkbox\']:checked, #tab-product select[name^=\'option\'], #tab-product textarea[name^=\'option\']'),
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-product-add').button('loading');
@@ -1604,7 +1727,7 @@ $('#tab-payment select[name=\'country_id\']').on('change', function() {
 			
 			html = '<option value=""><?php echo $text_select; ?></option>';
 
-			if (json['zone']) {
+			if (json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
         			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 	    			
@@ -1788,7 +1911,7 @@ $('#tab-shipping select[name=\'country_id\']').on('change', function() {
 			
 			html = '<option value=""><?php echo $text_select; ?></option>';
 			
-			if (json['zone']) {
+			if (json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
         			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 	    			
@@ -1931,7 +2054,7 @@ $('#button-shipping-method').on('click', function() {
 			}
 			
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -1968,7 +2091,7 @@ $('#button-payment-method').on('click', function() {
 			}
 			
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2005,7 +2128,7 @@ $('#button-coupon').on('click', function() {
 			}
 			
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2042,7 +2165,7 @@ $('#button-voucher').on('click', function() {
 			}
 			
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2079,7 +2202,7 @@ $('#button-reward').on('click', function() {
 			}
 			
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
 				// Refresh products, vouchers and totals
 				$('#button-refresh').trigger('click');
@@ -2169,41 +2292,45 @@ $('#content').delegate('button[id^=\'button-upload\'], button[id^=\'button-custo
 
 	$('#form-upload input[name=\'file\']').trigger('click');
 
-	$('#form-upload input[name=\'file\']').on('change', function() {
-		$.ajax({
-			url: 'index.php?route=tool/upload/upload&token=<?php echo $token; ?>',
-			type: 'post',		
-			dataType: 'json',
-			data: new FormData($(this).parent()[0]),
-			cache: false,
-			contentType: false,
-			processData: false,		
-			beforeSend: function() {
-				$(node).button('loading');
-			},
-			complete: function() {
-				$(node).button('reset');
-			},		
-			success: function(json) {
-				$('.text-danger').remove();
-				
-				if (json['error']) {
-					$(node).parent().find('input[type=\'hidden\']').after('<div class="text-danger">' + json['error'] + '</div>');
+	timer = setInterval(function() {
+		if ($('#form-upload input[name=\'file\']').val() != '') {
+			clearInterval(timer);
+			
+			$.ajax({
+				url: 'index.php?route=tool/upload/upload&token=<?php echo $token; ?>',
+				type: 'post',		
+				dataType: 'json',
+				data: new FormData($('#form-upload')[0]),
+				cache: false,
+				contentType: false,
+				processData: false,		
+				beforeSend: function() {
+					$(node).button('loading');
+				},
+				complete: function() {
+					$(node).button('reset');
+				},		
+				success: function(json) {
+					$(node).parent().find('.text-danger').remove();
+					
+					if (json['error']) {
+						$(node).parent().find('input[type=\'hidden\']').after('<div class="text-danger">' + json['error'] + '</div>');
+					}
+								
+					if (json['success']) {
+						alert(json['success']);
+					}
+					
+					if (json['code']) {
+						$(node).parent().find('input[type=\'hidden\']').attr('value', json['code']);
+					}
+				},			
+				error: function(xhr, ajaxOptions, thrownError) {
+					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 				}
-							
-				if (json['success']) {
-					alert(json['success']);
-				}
-				
-				if (json['code']) {
-					$(node).parent().find('input[type=\'hidden\']').attr('value', json['code']);
-				}
-			},			
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}
-		});
-	});
+			});
+		}
+	}, 500);
 });
 
 $('.date').datetimepicker({

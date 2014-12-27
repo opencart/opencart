@@ -41,7 +41,7 @@ class ModelOpenbayEbay extends Model{
 {postcode}
 {country}';
 
-		$this->model_setting_setting->editSetting('openbay', $value);
+		$this->model_setting_setting->editSetting('ebay', $value);
 
 		$this->db->query("
 					CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_category` (
@@ -219,7 +219,7 @@ class ModelOpenbayEbay extends Model{
 				) ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
 
 		// register the event triggers
-		$this->model_tool_event->addEvent('openbaypro_ebay', 'post.order.add', 'openbay/ebay/eventAddOrder');
+		$this->model_extension_event->addEvent('openbaypro_ebay', 'post.order.add', 'openbay/ebay/eventAddOrder');
 	}
 
 	public function uninstall() {
@@ -235,7 +235,15 @@ class ModelOpenbayEbay extends Model{
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_profile`;");
 
 		// remove the event triggers
-		$this->model_tool_event->deleteEvent('openbaypro_ebay');
+		$this->model_extension_event->deleteEvent('openbaypro_ebay');
+	}
+
+	public function patch($manual = true) {
+		$this->load->model('setting/setting');
+
+		$this->openbay->ebay->updateSettings();
+
+		return true;
 	}
 
 	public function totalLinked() {
@@ -440,7 +448,7 @@ class ModelOpenbayEbay extends Model{
 	}
 
 	public function getCategory($parent) {
-		$this->load->language('openbay/ebay');
+		$this->load->language('openbay/ebay_new');
 
 		$json = array();
 

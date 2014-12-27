@@ -81,7 +81,7 @@ class ModelOpenbayAmazonus extends Model {
 		");
 
 		// register the event triggers
-		$this->model_tool_event->addEvent('openbaypro_amazonus', 'post.order.add', 'openbay/amazonus/eventAddOrder');
+		$this->model_extension_event->addEvent('openbaypro_amazonus', 'post.order.add', 'openbay/amazonus/eventAddOrder');
 	}
 
 	public function uninstall() {
@@ -96,10 +96,39 @@ class ModelOpenbayAmazonus extends Model {
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_product_search`");
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_listing_report`");
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `group` = 'openbay_amazonus'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = 'openbay_amazonus'");
 
 		// remove the event triggers
-		$this->model_tool_event->deleteEvent('openbaypro_amazonus');
+		$this->model_extension_event->deleteEvent('openbaypro_amazonus');
+	}
+
+	public function patch($manual = true) {
+		$this->load->model('setting/setting');
+
+		$settings = $this->model_setting_setting->getSetting('openbay_amazonus');
+
+		if ($settings) {
+			$this->db->query("
+				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazonus_product_search` (
+					`product_id` int(11) NOT NULL,
+					`status` enum('searching','finished') NOT NULL,
+					`matches` int(11) DEFAULT NULL,
+					`data` text,
+					PRIMARY KEY (`product_id`)
+				) DEFAULT COLLATE=utf8_general_ci;");
+
+			$this->db->query("
+				CREATE TABLE IF NOT EXISTS`" . DB_PREFIX . "amazonus_listing_report` (
+					`sku` varchar(255) NOT NULL,
+					`quantity` int(10) unsigned NOT NULL,
+					`asin` varchar(255) NOT NULL,
+					`price` decimal(10,4) NOT NULL,
+					PRIMARY KEY (`sku`)
+				) DEFAULT COLLATE=utf8_general_ci;
+			");
+		}
+
+		return true;
 	}
 
 	public function scheduleOrders($data) {

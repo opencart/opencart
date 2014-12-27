@@ -17,6 +17,9 @@ $_['text_added']                    = 'New template has been added';
 $_['text_updated']                  = 'Template has been updated';
 $_['text_deleted']                  = 'Template has been deleted';
 $_['text_confirm_delete']           = 'Are you sure you want to delete the template?';
+$_['text_list']           			= 'Template list';
+$_['text_add']      				= 'Add profile';
+$_['text_edit']      				= 'Edit profile';
 
 // Error
 $_['error_name']               		= 'You must enter a template name';

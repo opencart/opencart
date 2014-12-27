@@ -437,7 +437,7 @@ class ControllerSaleCustomer extends Controller {
 			'href' => $this->url->link('sale/customer', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$data['insert'] = $this->url->link('sale/customer/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['add'] = $this->url->link('sale/customer/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('sale/customer/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['customers'] = array();
@@ -461,7 +461,7 @@ class ControllerSaleCustomer extends Controller {
 		$results = $this->model_sale_customer->getCustomers($filter_data);
 
 		foreach ($results as $result) {
-			if ($result['approved']) {
+			if (!$result['approved']) {
 				$approve = $this->url->link('sale/customer/approve', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'] . $url, 'SSL');
 			} else {
 				$approve = '';
@@ -518,7 +518,7 @@ class ControllerSaleCustomer extends Controller {
 		$data['entry_date_added'] = $this->language->get('entry_date_added');
 
 		$data['button_approve'] = $this->language->get('button_approve');
-		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 		$data['button_filter'] = $this->language->get('button_filter');
@@ -674,6 +674,8 @@ class ControllerSaleCustomer extends Controller {
 		$data['text_form'] = !isset($this->request->get['customer_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
+		$data['text_yes'] = $this->language->get('text_yes');
+		$data['text_no'] = $this->language->get('text_no');		
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -689,8 +691,9 @@ class ControllerSaleCustomer extends Controller {
 		$data['entry_password'] = $this->language->get('entry_password');
 		$data['entry_confirm'] = $this->language->get('entry_confirm');
 		$data['entry_newsletter'] = $this->language->get('entry_newsletter');
-		$data['entry_safe'] = $this->language->get('entry_safe');
 		$data['entry_status'] = $this->language->get('entry_status');
+		$data['entry_approved'] = $this->language->get('entry_approved');
+		$data['entry_safe'] = $this->language->get('entry_safe');
 		$data['entry_company'] = $this->language->get('entry_company');
 		$data['entry_address_1'] = $this->language->get('entry_address_1');
 		$data['entry_address_2'] = $this->language->get('entry_address_2');
@@ -932,9 +935,17 @@ class ControllerSaleCustomer extends Controller {
 		} elseif (!empty($customer_info)) {
 			$data['status'] = $customer_info['status'];
 		} else {
-			$data['status'] = 1;
+			$data['status'] = true;
 		}
-
+		
+		if (isset($this->request->post['approved'])) {
+			$data['approved'] = $this->request->post['approved'];
+		} elseif (!empty($customer_info)) {
+			$data['approved'] = $customer_info['approved'];
+		} else {
+			$data['approved'] = true;
+		}
+		
 		if (isset($this->request->post['safe'])) {
 			$data['safe'] = $this->request->post['safe'];
 		} elseif (!empty($customer_info)) {

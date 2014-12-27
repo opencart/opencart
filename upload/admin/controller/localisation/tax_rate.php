@@ -155,7 +155,7 @@ class ControllerLocalisationTaxRate extends Controller {
 			'href' => $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$data['insert'] = $this->url->link('localisation/tax_rate/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['add'] = $this->url->link('localisation/tax_rate/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('localisation/tax_rate/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['tax_rates'] = array();
@@ -198,7 +198,7 @@ class ControllerLocalisationTaxRate extends Controller {
 		$data['column_date_modified'] = $this->language->get('column_date_modified');
 		$data['column_action'] = $this->language->get('column_action');
 
-		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 

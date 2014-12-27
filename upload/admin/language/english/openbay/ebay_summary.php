@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']             = 'eBay summary';
+$_['heading_title']             = 'Summary';
 $_['text_openbay']              = 'OpenBay Pro';
 $_['text_ebay']                 = 'eBay';
 
@@ -20,6 +20,7 @@ $_['text_report_30']            = '30 days';
 $_['text_report_52']            = '52 weeks';
 $_['text_title_dsr']            = 'DSR reports';
 $_['text_failed']               = 'Failed to load';
+$_['text_summary']              = 'View your eBay summary';
 
 // Error
 $_['error_validation']     		= 'You need to register for your API token and enable the module.';

@@ -105,7 +105,16 @@ class ControllerExtensionModification extends Controller {
 
 			// Load the default modification XML
 			$xml[] = file_get_contents(DIR_SYSTEM . 'modification.xml');
+			
+			// This is purly for developers so they can run mods directly and have them run without upload sfter each change.
+			$files = glob(DIR_SYSTEM . '*.ocmod.xml');
 
+			if ($files) {
+				foreach ($files as $file) {
+					$xml[] = file_get_contents($file);
+				}
+			}
+			
 			// Get the default modification file
 			$results = $this->model_extension_modification->getModifications();
 
@@ -121,6 +130,9 @@ class ControllerExtensionModification extends Controller {
 				$dom = new DOMDocument('1.0', 'UTF-8');
 				$dom->preserveWhiteSpace = false;
 				$dom->loadXml($xml);
+				
+				// Log
+				$log[] = 'MOD: ' . $dom->getElementsByTagName('name')->item(0)->textContent;
 
 				// Wipe the past modification store in the backup array
 				$recovery = array();
@@ -129,9 +141,6 @@ class ControllerExtensionModification extends Controller {
 				if (isset($modification)) {
 					$recovery = $modification;
 				}
-								
-				// Log
-				$log[] = 'MOD: ' . $dom->getElementsByTagName('name')->item(0)->textContent;
 
 				$files = $dom->getElementsByTagName('modification')->item(0)->getElementsByTagName('file');
 
@@ -189,12 +198,12 @@ class ControllerExtensionModification extends Controller {
 									$ignoreif = $operation->getElementsByTagName('ignoreif')->item(0);
 									
 									if ($ignoreif) {
-										if ($ignoreif->item(0)->getAttribute('regex') != 'true') {
-											if (strpos($modification[$file], $ignoreif->item(0)->textContent) !== false) {
+										if ($ignoreif->getAttribute('regex') != 'true') {
+											if (strpos($modification[$key], $ignoreif->textContent) !== false) {
 												continue;
 											}												
 										} else {
-											if (preg_match($ignoreif->item(0)->textContent, $modification[$file])) {
+											if (preg_match($ignoreif->textContent, $modification[$key])) {
 												continue;
 											}
 										}
@@ -219,6 +228,10 @@ class ControllerExtensionModification extends Controller {
 										$trim = $operation->getElementsByTagName('add')->item(0)->getAttribute('trim');
 										$position = $operation->getElementsByTagName('add')->item(0)->getAttribute('position');
 										$offset = $operation->getElementsByTagName('add')->item(0)->getAttribute('offset');										
+										
+										if ($offset == '') {
+                                            $offset = 0;
+                                        }
 
 										// Trim line if is set to true.
 										if ($trim == 'true') {
@@ -228,11 +241,8 @@ class ControllerExtensionModification extends Controller {
 										// Log
 										$log[] = 'CODE: ' . $search;
 										
-										// Turn the code that we are going to change into an array.
-										$add = explode("\n", $add);
-
 										// Check if using indexes
-										if ($index) {
+										if ($index !== '') {
 											$indexes = explode(',', $index);
 										} else {
 											$indexes = array();
@@ -243,7 +253,9 @@ class ControllerExtensionModification extends Controller {
 										
 										$lines = explode("\n", $modification[$key]);
 
-										foreach ($lines as $line_id => $line) {
+										for ($line_id = 0; $line_id < count($lines); $line_id++) {
+											$line = $lines[$line_id];
+											
 											// Status
 											$match = false;
 											
@@ -264,13 +276,23 @@ class ControllerExtensionModification extends Controller {
 												switch ($position) {
 													default:
 													case 'replace':
-														array_splice($lines, $line_id + $offset, count($add) + abs($offset), $add);
+														if ($offset < 0) {
+															array_splice($lines, $line_id + $offset, abs($offset) + 1, array(str_replace($search, $add, $line)));
+															
+															$line_id -= $offset;
+														} else {
+															array_splice($lines, $line_id, $offset + 1, array(str_replace($search, $add, $line)));
+														}
 														break;
 													case 'before':
-														array_splice($lines, $line_id - $offset, 0, $add);
+														$new_lines = explode("\n", $add);
+														
+														array_splice($lines, $line_id - $offset, 0, $new_lines);
+														
+														$line_id += count($new_lines);
 														break;
 													case 'after':
-														array_splice($lines, ($line_id + 1) + $offset, 0, $add);
+														array_splice($lines, ($line_id + 1) + $offset, 0, explode("\n", $add));
 														break;
 												}
 												
@@ -339,10 +361,10 @@ class ControllerExtensionModification extends Controller {
 							}
 						}
 					}
-
-					// Log
-					$log[] = '----------------------------------------------------------------';
 				}
+				
+				// Log
+				$log[] = '----------------------------------------------------------------';				
 			}
 
 			// Log
@@ -724,7 +746,7 @@ class ControllerExtensionModification extends Controller {
 		$file = DIR_LOGS . 'ocmod.log';
 
 		if (file_exists($file)) {
-			$data['log'] = file_get_contents($file, FILE_USE_INCLUDE_PATH, null);
+			$data['log'] = htmlentities(file_get_contents($file, FILE_USE_INCLUDE_PATH, null));
 		} else {
 			$data['log'] = '';
 		}

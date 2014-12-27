@@ -20,7 +20,7 @@ class ModelShippingFedex extends Model {
 		if ($status) {
 			$weight = $this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->config->get('fedex_weight_class_id'));
 			$weight_code = strtoupper($this->weight->getUnit($this->config->get('fedex_weight_class_id')));
-
+			
 			$date = time();
 
 			$day = date('l', $date);
@@ -128,10 +128,10 @@ class ModelShippingFedex extends Model {
 			$xml .= '						<ns1:Value>' . $weight . '</ns1:Value>';
 			$xml .= '					</ns1:Weight>';
 			$xml .= '					<ns1:Dimensions>';
-			$xml .= '						<ns1:Length>20</ns1:Length>';
-			$xml .= '						<ns1:Width>20</ns1:Width>';
-			$xml .= '						<ns1:Height>10</ns1:Height>';
-			$xml .= '						<ns1:Units>IN</ns1:Units>';
+			$xml .= '						<ns1:Length>' . $this->config->get('fedex_length') . '</ns1:Length>';
+			$xml .= '						<ns1:Width>' . $this->config->get('fedex_width') . '</ns1:Width>';
+			$xml .= '						<ns1:Height>' . $this->config->get('fedex_height') . '</ns1:Height>';
+			$xml .= '						<ns1:Units>' . strtoupper($this->length->getUnit($this->config->get('fedex_length_class_id'))) . '</ns1:Units>';
 			$xml .= '					</ns1:Dimensions>';
 			$xml .= '				</ns1:RequestedPackageLineItems>';
 			$xml .= '			</ns1:RequestedShipment>';
@@ -172,7 +172,18 @@ class ModelShippingFedex extends Model {
 							$title .= ' (' . $this->language->get('text_eta') . ' ' . date($this->language->get('date_format_short') . ' ' . $this->language->get('time_format'), strtotime($rate_reply_detail->getElementsByTagName('DeliveryTimestamp')->item(0)->nodeValue)) . ')';
 						}
 
-						$total_net_charge = $rate_reply_detail->getElementsByTagName('RatedShipmentDetails')->item(0)->getElementsByTagName('ShipmentRateDetail')->item(0)->getElementsByTagName('TotalNetCharge')->item(0);
+						$rated_shipment_details = $rate_reply_detail->getElementsByTagName('RatedShipmentDetails');
+
+						foreach ($rated_shipment_details as $rated_shipment_detail) {
+							$shipment_rate_detail = $rated_shipment_detail->getElementsByTagName('ShipmentRateDetail')->item(0);
+							$shipment_rate_detail_type = explode('_',$shipment_rate_detail->getElementsByTagName('RateType')->item(0)->nodeValue);
+							
+							if (count($shipment_rate_detail_type) == 3 && $shipment_rate_detail_type[1] == $this->config->get('fedex_rate_type')) {
+								$total_net_charge = $shipment_rate_detail->getElementsByTagName('TotalNetCharge')->item(0);
+								
+								break;
+							}
+						}
 
 						$cost = $total_net_charge->getElementsByTagName('Amount')->item(0)->nodeValue;
 

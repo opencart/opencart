@@ -445,6 +445,11 @@ class ControllerSettingSetting extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_stores'),
+			'href' => $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL')
+		);
+
+		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('setting/setting', 'token=' . $this->session->data['token'], 'SSL')
 		);
@@ -1418,7 +1423,7 @@ class ControllerSettingSetting extends Controller {
 		if (is_file(DIR_IMAGE . 'templates/' . basename($this->request->get['template']) . '.png')) {
 			$this->response->setOutput($server . 'image/templates/' . basename($this->request->get['template']) . '.png');
 		} else {
-			$this->response->setOutput($server . 'image/no_image.jpg');
+			$this->response->setOutput($server . 'image/no_image.png');
 		}
 	}
 

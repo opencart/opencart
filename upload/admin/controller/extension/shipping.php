@@ -24,8 +24,8 @@ class ControllerExtensionShipping extends Controller {
 
 			$this->load->model('user/user_group');
 
-			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'shipping/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'shipping/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'shipping/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'shipping/' . $this->request->get['extension']);
 
 			// Call install method if it exsits
 			$this->load->controller('shipping/' . $this->request->get['extension'] . '/install');
@@ -73,7 +73,7 @@ class ControllerExtensionShipping extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL')
 		);
 				
 		$data['heading_title'] = $this->language->get('heading_title');

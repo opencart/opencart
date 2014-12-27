@@ -1,6 +1,8 @@
 # OpenCart 2.0 change log
 
-## v2.0.0.1 (Pending)
+## v2.0.1.1 (Release date: 06.12.2014)
+
+## v2.0.1.0 (Release date: 30.11.2014)
 #### Bugs fixed
 * Changed namespace issues in DB driver files.
 * Added missing text_edit string in the settings area.
@@ -14,6 +16,9 @@
 * FTP settings variable correction #1930 (https://github.com/opencart/opencart/commit/17e450971396ecfa2e93eb513b79c7f0fdb6c38b)
 * Fixed Secure Trading image in gateway list.
 * Fixed missing review_guest check in product.tpl
+* Added formatting to number format in pp express to ensure no comma is added for items over 1000 #2216
+* Fixed issue that allows for unapproved logins with Log in With PayPal
+* Changed missing image link in catalog recurring list template. Changed to button.
 
 #### Changes
 * Changed DB connection error response during install when using mysqli to use native message from mysqli
@@ -25,6 +30,9 @@
 * Added check for compression size #1772
 * Update moment.js #1896
 * Updated Authorize.net affiliate link to correct OpenCart promotion page for users to get special offer.
+* Added check for current category before getting child data to improve speed.
+* Added DB indexes to OC URL table. REF: #2120
 
 #### Added
 * Check for URL alias #1915 (https://github.com/opencart/opencart/commit/69d6252f4157faf207e3db0504de20b34eab58ef)
+* Latest OpenBay Pro release.

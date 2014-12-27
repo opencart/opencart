@@ -310,7 +310,7 @@ class ModelCheckoutOrder extends Model {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($comment) . "', date_added = NOW()");
 
 			// If current order status is not processing or complete but new status is processing or complete then commence completing the order
-			if (!in_array($order_info['order_status_id'], array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status'))) || in_array($order_status_id, array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status')))) {
+			if (!in_array($order_info['order_status_id'], array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status'))) && in_array($order_status_id, array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status')))) {
 				// Stock subtraction
 				$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
 
@@ -361,9 +361,9 @@ class ModelCheckoutOrder extends Model {
 				// Remove coupon, vouchers and reward points history
 				$this->load->model('account/order');
 
-				$order_totals = $this->model_account_order->getOrderTotals($order_id);
+				$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");
 
-				foreach ($order_totals as $order_total) {
+				foreach ($order_total_query->rows as $order_total) {
 					$this->load->model('total/' . $order_total['code']);
 
 					if (method_exists($this->{'model_total_' . $order_total['code']}, 'unconfirm')) {
@@ -586,6 +586,8 @@ class ModelCheckoutOrder extends Model {
 				}
 
 				// Order Totals
+				$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");
+
 				foreach ($order_total_query->rows as $total) {
 					$data['totals'][] = array(
 						'title' => $total['title'],
@@ -687,6 +689,7 @@ class ModelCheckoutOrder extends Model {
 
 					// HTML Mail
 					$data['text_greeting'] = $language->get('text_new_received');
+					
 					if ($comment) {
 						if ($order_info['comment']) {
 							$data['comment'] = nl2br($comment) . '<br/><br/>' . $order_info['comment'];
@@ -803,7 +806,7 @@ class ModelCheckoutOrder extends Model {
 
 				if ($notify && $comment) {
 					$message .= $language->get('text_update_comment') . "\n\n";
-					$message .= $comment . "\n\n";
+					$message .= strip_tags($comment) . "\n\n";
 				}
 
 				$message .= $language->get('text_update_footer');

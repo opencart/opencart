@@ -137,18 +137,21 @@ $(document).ready(function() {
 // Cart add remove functions
 var cart = {
 	'add': function(product_id, quantity) {
+		var $btn = $('#cart > button');
+		
 		$.ajax({
 			url: 'index.php?route=checkout/cart/add',
 			type: 'post',
 			data: 'product_id=' + product_id + '&quantity=' + (typeof(quantity) != 'undefined' ? quantity : 1),
 			dataType: 'json',
 			beforeSend: function() {
-				$('#cart > button').button('loading');
+				$btn.button('loading');
 			},
+			complete: function() {
+				$btn.button('reset');
+			},			
 			success: function(json) {
 				$('.alert, .text-danger').remove();
-
-				$('#cart > button').button('reset');
 
 				if (json['redirect']) {
 					location = json['redirect'];
@@ -156,8 +159,8 @@ var cart = {
 
 				if (json['success']) {
 					$('#content').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-
-					$('#cart-total').html(json['total']);
+					
+					$btn.html('<span id="cart-total">' + json['total'] + '</span>');
 
 					$('html, body').animate({ scrollTop: 0 }, 'slow');
 
@@ -175,9 +178,10 @@ var cart = {
 			beforeSend: function() {
 				$('#cart > button').button('loading');
 			},
-			success: function(json) {
+			complete: function() {
 				$('#cart > button').button('reset');
-
+			},			
+			success: function(json) {
 				$('#cart-total').html(json['total']);
 
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
@@ -197,10 +201,11 @@ var cart = {
 			beforeSend: function() {
 				$('#cart > button').button('loading');
 			},
-			success: function(json) {
+			complete: function() {
 				$('#cart > button').button('reset');
-
-				$('#cart-total').html(json['total']);
+			},			
+			success: function(json) {
+				$('#cart-total').html('<span id="cart-total">' + json['total'] + '</span>');
 
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
 					location = 'index.php?route=checkout/cart';

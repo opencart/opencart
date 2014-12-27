@@ -1,0 +1,10 @@
+{
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/database": "4.0.*",
+        "illuminate/validation" : "4.0.*",
+        "illuminate/translation": "4.0.*",
+        "illuminate/cache": "4.0.*",
+        "illuminate/filesystem": "4.0.*"
+    }
+}

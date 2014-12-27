@@ -1,0 +1,32 @@
+{
+    "name": "illuminate/translation",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Taylor Otwell",
+            "email": "taylorotwell@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/filesystem": "4.0.x",
+        "illuminate/support": "4.0.x",
+        "symfony/translation": "2.3.*"
+    },
+    "require-dev": {
+        "mockery/mockery": "0.7.2",
+        "phpunit/phpunit": "3.7.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Illuminate\\Translation": ""
+        }
+    },
+    "target-dir": "Illuminate/Translation",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.0-dev"
+        }
+    },
+    "minimum-stability": "dev"
+}

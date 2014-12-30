@@ -234,7 +234,7 @@ class ControllerExtensionModification extends Controller {
                                         }
 
 										// Trim line if is set to true.
-										if ($trim == 'true') {
+										if (!$trim || $trim == 'true') {
 											$add = trim($add);
 										}
 										
@@ -399,7 +399,7 @@ class ControllerExtensionModification extends Controller {
 
 			$url = '';
 
-			if (isset($this->request->get['sort'])) {
+			if (isset($this->request->get['sort'])) 
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
 

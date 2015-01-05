@@ -1240,6 +1240,23 @@ class ControllerOpenbayEbay extends Controller {
 					$data['addon']['openstock'] = true;
 					$product_info['options'] = $this->model_module_openstock->getVariants($this->request->get['product_id']);
 					$product_info['option_groups'] = $this->model_openbay_ebay_product->getProductOptions($this->request->get['product_id']);
+
+					$option_group_array = array();
+					$option_group_relation_array = array();
+
+					foreach($product_info['option_groups'] as $option_group) {
+						$child_option = array();
+
+						foreach($option_group['product_option_value'] as $group_node) {
+							$child_option[$group_node['option_value_id']] = $group_node['name'];
+							$option_group_relation_array[$group_node['product_option_value_id']] = $option_group['name'];
+						}
+
+						$option_group_array[] = array('name' => $option_group['name'], 'child' => $child_option);
+					}
+
+					$product_info['option_group_array'] = base64_encode(serialize($option_group_array));
+					$product_info['option_group_relation_array'] = base64_encode(serialize($option_group_array));
 				}
 
 				// get the product tax rate from opencart

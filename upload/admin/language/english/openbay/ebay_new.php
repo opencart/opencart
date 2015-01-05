@@ -99,6 +99,7 @@ $_['column_img_size']      			= 'Size';
 $_['column_template_image']         = 'Template image';
 $_['column_ebay_image']         	= 'eBay image';
 $_['column_main_ebay_image']        = 'Main eBay image';
+$_['column_sku']        			= 'SKU';
 
 // Entry
 $_['entry_shop_category']           = 'Shop Category';
@@ -179,3 +180,4 @@ $_['error_image_size']          	= 'Ensure that you have a gallery and thumb ima
 $_['error_no_images']            	= 'Listing must have at least 1 image uploaded to eBay';
 $_['error_main_image']           	= 'You need to choose a main eBay image from your selection of eBay images';
 $_['error_ebay_imagesize']          = 'Image must be at least 500px on 1 side to use on eBay';
+$_['error_no_sku']          		= 'No SKU found!';

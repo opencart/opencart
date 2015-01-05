@@ -45,7 +45,7 @@
                   <label class="col-sm-2 control-label"><?php echo $entry_shop_category; ?></label>
                   <div class="col-sm-10">
                     <select name="eBayStoreCatId" class="form-control">
-                      <?php foreach($product['store_cats'] as $key => $cat) { ?>
+                      <?php foreach ($product['store_cats'] as $key => $cat) { ?>
                       <option value="<?php echo $key; ?>"><?php echo $cat; ?></option>
                       <?php } ?>
                     </select>
@@ -57,7 +57,7 @@
                 <label class="col-sm-2 control-label"><?php echo $entry_category_popular; ?></label>
                 <div class="col-sm-10">
                   <p><input type="radio" name="popular" value="" id="popular_default" checked /> <strong><?php echo $text_none; ?></strong></p>
-                  <?php foreach($product['popular_cats'] as $cat) { ?>
+                  <?php foreach ($product['popular_cats'] as $cat) { ?>
                   <p><input type="radio" name="popular" value="<?php echo $cat['CategoryID']; ?>" class="popular-category" /> <?php echo $cat['breadcrumb']; ?></p>
                   <?php } ?>
                 </div>
@@ -204,7 +204,7 @@
                   <select name="template" id="template_id" class="form-control">
                     <option value="None">None</option>
                     <?php if (is_array($product['templates']) && !empty($product['templates'])) { ?>
-                    <?php foreach($product['templates'] as $template) { ?>
+                    <?php foreach ($product['templates'] as $template) { ?>
                     <?php echo '<option value="'.$template['template_id'].'">'.$template['name'].'</option>'; ?>
                     <?php } ?>
                     <?php } ?>
@@ -286,7 +286,7 @@
                       </thead>
                       <tbody>
                       <?php $i = 0; $i_valid = null; ?>
-                      <?php foreach($product['product_images'] as $img) { ?>
+                      <?php foreach ($product['product_images'] as $img) { ?>
                         <tr>
                           <td class="text-center"><img src="<?php echo $img['preview']; ?>" class="img-thumbnail" /></td>
                           <td class="text-center">
@@ -334,7 +334,7 @@
                         <td>
                             <select name="option_image_group" id="option_image_group">
                                 <option value="def"><?php echo $text_select; ?></option>
-                                <?php foreach($product['option_grp'] as $option_group) { echo'<option value="'.$option_group['option_id'].'">'.$option_group['name'].'</option>'; } ?>
+                                <?php foreach ($product['option_groups'] as $option_group) { echo '<option value="'.$option_group['option_id'].'">'.$option_group['name'].'</option>'; } ?>
                             </select>
                             <input type="hidden" id="option-image-group-name" name="option-image-group-name" value="" />
                         </td>
@@ -342,10 +342,10 @@
                     <tr class="option-group-img-tr displayNone">
                         <td><?php echo $text_option_images_choice; ?></td>
                         <td>
-                            <?php foreach($product['option_grp'] as $option_group) { ?>
+                            <?php foreach ($product['option_groups'] as $option_group) { ?>
                                 <div id="option-group-img-<?php echo $option_group['option_id']; ?>" class="option-group-img">
                                     <table class="form">
-                                        <?php foreach($option_group['product_option_value'] as $option_group_choice) { ?>
+                                        <?php foreach ($option_group['product_option_value'] as $option_group_choice) { ?>
                                             <tr>
                                                 <td>
                                                     <h4><?php echo $option_group_choice['name']; ?></h4>
@@ -387,7 +387,7 @@
                       <span class="input-group-addon" id="profile-generic-icon"><i class="fa fa-lg fa-file-text"></i></span>
                       <select name="profile_generic" id="profile-generic-input" class="form-control">
                         <option value="def"><?php echo $text_select; ?></option>
-                        <?php if (is_array($product['profiles_generic'])) { foreach($product['profiles_generic'] as $profile) { ?>
+                        <?php if (is_array($product['profiles_generic'])) { foreach ($product['profiles_generic'] as $profile) { ?>
                         <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
                         <?php } }?>
                       </select>
@@ -395,89 +395,67 @@
                   </div>
                 </div>
               </div>
-
-  <!-- OPENSTOCK CHANGES START @TODO -->
-
               <?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])) { ?>
-                <table class="form">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><?php echo $text_stock_matrix; ?></label>
+                  <div class="col-sm-10">
+                    <table class="table table-striped table-bordered table-hover">
+                      <thead>
                         <tr>
-                            <td><?php echo $text_stock_matrix; ?></td>
-                            <td>
-                                <table class="list m0">
-                                    <thead>
-                                        <tr>
-                                            <td class="center"><?php echo $column_stock_total; ?></td>
-                                            <td class="center"><?php echo $column_stock_col_qty; ?></td>
-                                            <td class="center"><?php echo $column_stock_col_qty_reserve; ?></td>
-                                            <td class="left"><?php echo $column_stock_col_comb; ?></td>
-                                            <td class="left"><?php echo $column_price_ex_tax; ?></td>
-                                            <td class="left"><?php echo $column_price_inc_tax; ?></td>
-                                            <td class="center"><?php echo $column_stock_col_enabled; ?></td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php $t = array(); ?>
-                                    <?php $t_rel = array(); ?>
+                          <td><?php echo $column_sku; ?></td>
+                          <td><?php echo $column_stock_total; ?></td>
+                          <td><?php echo $column_stock_col_qty; ?></td>
+                          <td><?php echo $column_stock_col_qty_reserve; ?></td>
+                          <td><?php echo $column_stock_col_comb; ?></td>
+                          <td><?php echo $column_price_ex_tax; ?></td>
+                          <td><?php echo $column_price_inc_tax; ?></td>
+                          <td><?php echo $column_stock_col_enabled; ?></td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <input type="hidden" name="optGroupArray" value="<?php echo $product['option_group_array']; ?>" />
+                        <input type="hidden" name="optGroupRelArray" value="<?php echo $product['option_group_relation_array']; ?>" />
+
   <?php
-                                    foreach($product['option_grp'] as $key => $grp) {
-                                        $t_tmp = array();
-                                        foreach($grp['product_option_value'] as $grp_node) {
-                                            $t_tmp[$grp_node['option_value_id']] = $grp_node['name'];
+                        $option_count = 0;
+                        foreach ($product['options'] as $option) {
+                          if ($option_count == 0) {
+                            echo '<input type="hidden" name="optArray" value="'.  base64_encode(serialize($option['option_values'])) . '" />';
+                          }
 
-                                            $t_rel[$grp_node['product_option_value_id']] = $grp['name'];
-                                        }
-                                        $t[] = array('name' => $grp['name'], 'child' => $t_tmp);
-                                    }
+                          echo '<input type="hidden" name="opt[' . $option_count . '][sku]" value="' . $option['sku'] . '" />';
+                          echo '<input type="hidden" name="opt[' . $option_count . '][active]" value="' . ($option['active'] == 1 ? 1 : 0) . '" />';
+                          echo '<input type="hidden" name="varPriceExCount" class="varPriceExCount" value="' . $option_count . '" />';
 
-                                    echo'<input type="hidden" name="optGroupArray" value="'.  base64_encode(serialize($t)).'" />';
-                                    echo'<input type="hidden" name="optGroupRelArray" value="'.  base64_encode(serialize($t_rel)).'" />';
+                          echo '<tr>';
+                            echo '<td>' . (empty($option['sku']) ? '<span class="label label-danger">' . $error_no_sku . '</span>' : $option['sku']) . '</td>';
+                            echo '<td>' . ($option['stock'] <= 1 ? '<span class="label label-danger">' . $option['stock'] . '</span>' : '<span class="label label-success">' . $option['stock'] . '</span>') . '</td>';
+                            echo '<td><input class="form-control" id="qty_' . $option_count . '" type="text" name="opt[' . $option_count . '][qty]" value="' . $option['stock'] . '" onkeyup="updateReserveMessage(' . $option_count . ', ' . $option['stock'] . ');" /></td>';
+                            echo '<td id="qty_reserve_' . $option_count . '">0</td>';
+                            echo '<td>' . $option['combination'] . '</td>';
+                            echo '<td><input class="form-control" id="varPriceEx_' . $option_count . '" onkeyup="updateVarPriceFromEx(' . $option_count . ');" type="text" name="opt[' . $option_count . '][priceex]" value="' . number_format(($option['price'] == 0 ? $product['price'] : $option['price']), 2, '.', '').'" /></td>';
+                            echo '<td><input class="form-control varPriceInc" id="varPriceInc_' . $option_count . '" onkeyup="updateVarPriceFromInc(' . $option_count . ');"  type="text" name="opt[' . $option_count . '][price]" value="0" /></td>';
+                            echo '<td>' . ($option['active'] == 0 ? '<span class="label label-danger">' . $text_no . '</span>' : '<span class="label label-success">' . $text_yes . '</span>') . '</td>';
+                          echo '</tr>';
 
-                                        $v = 0;
-                                        foreach($product['options'] as $option) {
-                                            if ($v == 0) {
-                                                //create a php version of the opt array to use on server side
-                                                echo'<input type="hidden" name="optArray" value="'.  base64_encode(serialize($option['opts'])).'" />';
-                                            }
-
-                                            echo'<input type="hidden" name="opt['.$v.'][sku]" value="'.$option['sku'].'" />';
-
-                                            echo'<input type="hidden" name="opt['.$v.'][active]" value="';
-                                            if ($option['active'] == 1) {  echo '1'; } else { echo '0'; }
-                                            echo '" />';
-
-                                            if ($option['price'] == 0) {
-                                                $option['price'] = $product['price'];
-                                            }
-
-                                            echo'<tr>';
-                                                echo'<input type="hidden" name="varPriceExCount" class="varPriceExCount" value="'.$v.'" />';
-                                                echo'<td class="center width50">'.$option['stock'].'</td>';
-                                                echo'<td class="center width50"><input id="qty_'.$v.'" type="text" name="opt['.$v.'][qty]" value="'.$option['stock'].'" onkeyup="updateReserveMessage('.$v.', '.$option['stock'].');" class="width50 text-center"/></td>';
-                                                echo'<td class="center width50" id="qty_reserve_'.$v.'">0</td>';
-                                                echo'<td class="left">'.$option['combi'].'</td>';
-                                                echo'<td class="left width100"><input id="varPriceEx_'.$v.'" onkeyup="updateVarPriceFromEx('.$v.');" type="text" name="opt['.$v.'][priceex]" value="'.number_format($option['price'], 2, '.', '').'" style="width:80px;" /></td>';
-                                                echo'<td class="left width100"><input class="varPriceInc" id="varPriceInc_'.$v.'" onkeyup="updateVarPriceFromInc('.$v.');"  type="text" name="opt['.$v.'][price]" value="0" style="width:80px;" /></td>';
-                                                echo'<td class="center width100"'; if ($option['active'] != 1) { echo' style="background-color: #CC9933;"';} echo'>'; if ($option['active'] == 1) { echo $text_yes; } else { echo $text_no; } echo '</td>';
-                                            echo'</tr>';
-
-                                            echo'<tr><td colspan="4" class="optSpecifics" id="optSpecifics'.$v.'">';
-
-                                            echo'</td></tr>';
-                                            $v++;
-                                        }
+                          //echo '<tr><td colspan="8" id="optSpecifics' . $option_count . '"></td></tr>';
+                          $option_count++;
+                        }
     ?>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><?php echo $entry_tax_inc; ?></td>
-                            <td><input type="text" name="tax" id="taxRate" onkeyup="updateVarPrice();" value="<?php echo $product['defaults']['tax']; ?>" class="textRight width50" /> %</td>
-                        </tr>
-                </table>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><?php echo $entry_tax_inc; ?></label>
+                  <div class="col-sm-10">
+                    <div class="input-group col-xs-2">
+                      <input type="text" name="tax" value="<?php echo $product['defaults']['tax']; ?>" id="taxRate" class="form-control text-right" onkeyup="updateVarPrice();" />
+                      <span class="input-group-addon">%</span>
+                    </div>
+                  </div>
+                </div>
               <?php } else { ?>
-  <!-- OPENSTOCK CHANGES FINSISH @TODO -->
-
                 <div class="form-group">
                   <label class="col-sm-2 control-label"><?php echo $entry_qty; ?></label>
                   <div class="col-sm-10">
@@ -521,12 +499,13 @@
                 </div>
               <?php } ?>
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $entry_private; ?></label>
+                <label class="col-sm-2 control-label">
+                  <span title="" data-toggle="tooltip" data-original-title="<?php echo $help_private; ?>"><?php echo $entry_private; ?></span>
+                </label>
                 <div class="col-sm-10">
                   <span class="help-block">
                     <input type="hidden" name="private_listing" value="0" />
                     <input type="checkbox" name="private_listing" value="1" id="private_listing" />
-                     - <?php echo $help_private; ?>
                   </span>
                 </div>
               </div>
@@ -537,14 +516,14 @@
                 <label class="col-sm-2 control-label"><?php echo $entry_imediate_payment; ?></label>
                 <div class="col-sm-10">
                   <input type="hidden" name="ebay_payment_immediate" value="0" />
-                  <input type="checkbox" name="ebay_payment_immediate" value="1" id="ebay_payment_immediate" <?php if ($product['defaults']['ebay_payment_immediate'] != 1) { echo'checked '; } ?> />
+                  <input type="checkbox" name="ebay_payment_immediate" value="1" id="ebay_payment_immediate" <?php if ($product['defaults']['ebay_payment_immediate'] != 1) { echo 'checked '; } ?> />
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_payment; ?></label>
                 <div class="col-sm-10">
                   <?php $paypal = false; ?>
-                  <?php foreach($product['payments'] as $payment) { ?>
+                  <?php foreach ($product['payments'] as $payment) { ?>
                     <?php if ($payment['ebay_name'] == 'PayPal') { ?>
                       <?php $paypal = true; ?>
                     <?php } else { ?>
@@ -585,7 +564,7 @@
                       <span class="input-group-addon" id="profile-shipping-icon"><i class="fa fa-lg fa-file-text"></i></span>
                       <select name="profile_shipping" id="profile-shipping-input" class="form-control">
                         <option value="def"><?php echo $text_select; ?></option>
-                        <?php if (is_array($product['profiles_shipping'])) { foreach($product['profiles_shipping'] as $profile) { ?>
+                        <?php if (is_array($product['profiles_shipping'])) { foreach ($product['profiles_shipping'] as $profile) { ?>
                           <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
                         <?php } }?>
                       </select>
@@ -611,7 +590,7 @@
                 <label class="col-sm-2 control-label"><?php echo $entry_despatch_country; ?></label>
                 <div class="col-sm-10">
                   <select name="country" id="country" class="form-control">
-                    <?php foreach($setting['countries'] as $country) { ?>
+                    <?php foreach ($setting['countries'] as $country) { ?>
                     <option value="<?php echo $country['code'];?>"><?php echo $country['name'];?></option>
                     <?php } ?>
                   </select>
@@ -622,7 +601,7 @@
                 <label class="col-sm-2 control-label"><?php echo $entry_despatch_time; ?></label>
                 <div class="col-sm-10">
                   <select name="dispatch_time" id="dispatch_time" class="form-control">
-                    <?php foreach($setting['dispatch_times'] as $dis) { ?>
+                    <?php foreach ($setting['dispatch_times'] as $dis) { ?>
                     <option value="<?php echo $dis['DispatchTimeMax'];?>"><?php echo $dis['Description'];?></option>
                     <?php } ?>
                   </select>
@@ -856,7 +835,7 @@
                       <span class="input-group-addon" id="profile-return-icon"><i class="fa fa-lg fa-file-text"></i></span>
                       <select name="profile_return" id="profile-return-input" class="form-control">
                         <option value="def"><?php echo $text_select; ?></option>
-                        <?php if (is_array($product['profiles_returns'])) { foreach($product['profiles_returns'] as $profile) { ?>
+                        <?php if (is_array($product['profiles_returns'])) { foreach ($product['profiles_returns'] as $profile) { ?>
                         <option value="<?php echo $profile['ebay_profile_id']; ?>"><?php echo $profile['name']; ?></option>
                         <?php } } ?>
                       </select>
@@ -869,7 +848,7 @@
                   <label class="col-sm-2 control-label"><?php echo $text_return_accepted; ?></label>
                   <div class="col-sm-10">
                     <select name="returns_accepted" id="returns_accepted" class="form-control">
-                      <?php foreach($setting['returns']['accepted'] as $v) { ?>
+                      <?php foreach ($setting['returns']['accepted'] as $v) { ?>
                       <option value="<?php echo $v['ReturnsAcceptedOption']; ?>"><?php echo $v['Description']; ?></option>
                       <?php } ?>
                     </select>
@@ -881,7 +860,7 @@
                   <label class="col-sm-2 control-label"><?php echo $text_return_days; ?></label>
                   <div class="col-sm-10">
                     <select name="returns_within" id="returns_within" class="form-control">
-                      <?php foreach($setting['returns']['within'] as $v) { ?>
+                      <?php foreach ($setting['returns']['within'] as $v) { ?>
                       <option value="<?php echo $v['ReturnsWithinOption']; ?>"><?php echo $v['Description']; ?></option>
                       <?php } ?>
                     </select>
@@ -893,7 +872,7 @@
                   <label class="col-sm-2 control-label"><?php echo $text_return_scosts; ?></label>
                   <div class="col-sm-10">
                     <select name="returns_shipping" id="returns_shipping" class="form-control">
-                      <?php foreach($setting['returns']['paidby'] as $v) { ?>
+                      <?php foreach ($setting['returns']['paidby'] as $v) { ?>
                       <option value="<?php echo $v['ShippingCostPaidByOption']; ?>"><?php echo $v['Description']; ?></option>
                       <?php } ?>
                     </select>
@@ -905,7 +884,7 @@
                   <label class="col-sm-2 control-label"><?php echo $text_return_type; ?></label>
                   <div class="col-sm-10">
                     <select name="returns_option" id="returns_option" class="form-control">
-                      <?php foreach($setting['returns']['refund'] as $v) { ?>
+                      <?php foreach ($setting['returns']['refund'] as $v) { ?>
                       <option value="<?php echo $v['RefundOption']; ?>"><?php echo $v['Description']; ?></option>
                       <?php } ?>
                     </select>
@@ -925,7 +904,7 @@
                   <label class="col-sm-2 control-label"><?php echo $text_return_restock; ?></label>
                   <div class="col-sm-10">
                     <select name="returns_restocking_fee" id="returns_restocking_fee" class="form-control">
-                      <?php foreach($setting['returns']['restocking_fee'] as $v) { ?>
+                      <?php foreach ($setting['returns']['restocking_fee'] as $v) { ?>
                       <option value="<?php echo $v['RestockingFeeValueOption']; ?>"><?php echo $v['Description']; ?></option>
                       <?php } ?>
                     </select>
@@ -1507,7 +1486,7 @@
         html += '<input type="checkbox" name="data[' + id + '][' + type + '][shipto][' + count + '][]" value="Worldwide" />';
         html += ' <?php echo $text_shipping_worldwide; ?>';
         html += '</label>';
-      <?php foreach($data['shipping_international_zones'] as $zone) { ?>
+      <?php foreach ($data['shipping_international_zones'] as $zone) { ?>
           html += '<label class="checkbox-inline">';
           html += '<input type="checkbox" name="data[' + id + '][' + type + '][shipto][' + count + '][]" value="<?php echo $zone['shipping_location']; ?>" />';
           html += ' <?php echo $zone['description']; ?>';
@@ -1692,7 +1671,7 @@
     });
 
   $('#button-save').bind('click', function() {
-      var hasOptions = "<?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])) { echo'yes'; } else { echo 'no'; }?>";
+      var hasOptions = "<?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])) { echo 'yes'; } else { echo 'no'; }?>";
 
       $.ajax({
         type:'POST',

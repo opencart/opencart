@@ -74,11 +74,11 @@ class ModelShippingRoyalMail extends Model {
 			}
 
 			// 1st Class Recorded
-			if ($this->config->get('royal_mail_1st_class_recorded_status') && $address['iso_code_2'] == 'GB') {
+			if ($this->config->get('royal_mail_1st_class_signed_status') && $address['iso_code_2'] == 'GB') {
 				$cost = 0;
 				$insurance = 0;
 
-				$rates = explode(',', $this->config->get('royal_mail_1st_class_recorded_rate'));
+				$rates = explode(',', $this->config->get('royal_mail_1st_class_signed_rate'));
 
 				foreach ($rates as $rate) {
 					$data = explode(':', $rate);
@@ -92,7 +92,7 @@ class ModelShippingRoyalMail extends Model {
 					}
 				}
 
-				$rates = explode(',', $this->config->get('royal_mail_1st_class_recorded_insurance'));
+				$rates = explode(',', $this->config->get('royal_mail_1st_class_signed_insurance'));
 
 				foreach ($rates as $rate) {
 					$data = explode(':', $rate);
@@ -163,11 +163,11 @@ class ModelShippingRoyalMail extends Model {
 			}
 
 			// 2nd Class Recorded
-			if ($this->config->get('royal_mail_2nd_class_recorded_status') && $address['iso_code_2'] == 'GB') {
+			if ($this->config->get('royal_mail_2nd_class_signed_status') && $address['iso_code_2'] == 'GB') {
 				$cost = 0;
 				$insurance = 0;
 
-				$rates = explode(',', $this->config->get('royal_mail_2nd_class_recorded_rate'));
+				$rates = explode(',', $this->config->get('royal_mail_2nd_class_signed_rate'));
 
 				foreach ($rates as $rate) {
 					$data = explode(':', $rate);
@@ -433,15 +433,15 @@ class ModelShippingRoyalMail extends Model {
 			}
 
 			// Airmail
-			if ($this->config->get('royal_mail_airmail_status') && $address['iso_code_2'] != 'GB') {
+			if ($this->config->get('royal_mail_international_standard_status') && $address['iso_code_2'] != 'GB') {
 				$cost = 0;
 
 				$countries = explode(',', 'AL,AD,AM,AT,AZ,BY,BE,BA,BG,HR,CY,CZ,DK,EE,FO,FI,FR,GE,DE,GI,GR,GL,HU,IS,IE,IT,KZ,KG,LV,LI,LT,LU,MK,MT,MD,MC,NL,NO,PL,PT,RO,RU,SM,SK,SI,ES,SE,CH,TJ,TR,TM,UA,UZ,VA');
 
 				if (in_array($address['iso_code_2'], $countries)) {
-					$rates = explode(',', $this->config->get('royal_mail_airmail_rate_1'));
+					$rates = explode(',', $this->config->get('royal_mail_international_standard_rate_1'));
 				} else {
-					$rates = explode(',', $this->config->get('royal_mail_airmail_rate_2'));
+					$rates = explode(',', $this->config->get('royal_mail_international_standard_rate_2'));
 				}
 
 				foreach ($rates as $rate) {

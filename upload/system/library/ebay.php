@@ -598,7 +598,7 @@ final class Ebay {
 
 		$openstock = false;
 		if ($this->openbay->addonLoad('openstock') == true) {
-			$this->load->model('openstock/openstock');
+			$this->load->model('module/openstock');
 			$openstock = true;
 		}
 
@@ -633,7 +633,7 @@ final class Ebay {
 		//loop through ended listings, if back in stock and not multi var - relist it
 		foreach ($linked_ended_items as $item) {
 			if ($openstock == true) {
-				$options = $this->model_openstock_openstock->getProductOptionStocks($item['productId']);
+				$options = $this->model_module_openstock->getProductOptionStocks($item['productId']);
 			} else {
 				$options = array();
 			}
@@ -679,7 +679,7 @@ final class Ebay {
 				} else {
 					//get any options that are set for this product
 					if ($openstock == true) {
-						$options = $this->model_openstock_openstock->getProductOptionStocks($item['productId']);
+						$options = $this->model_module_openstock->getProductOptionStocks($item['productId']);
 					} else {
 						$options = array();
 					}
@@ -757,9 +757,9 @@ final class Ebay {
 				$variant_data = array();
 				$this->load->model('tool/image');
 				$this->load->model('catalog/product');
-				$this->load->model('openstock/openstock');
+				$this->load->model('module/openstock');
 
-				$variants = $this->model_openstock_openstock->getProductOptionStocks($product_id);
+				$variants = $this->model_module_openstock->getProductOptionStocks($product_id);
 				$groups = $this->openbay->getProductOptions($product_id);
 				$variant_data['groups']  = array();
 				$variant_data['related'] = array();

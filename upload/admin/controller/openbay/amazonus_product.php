@@ -191,8 +191,8 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 		$data['no_image'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
 		if ($this->openbay->addonLoad('openstock')) {
-			$this->load->model('openstock/openstock');
-			$data['options'] = $this->model_openstock_openstock->getProductOptionStocks($product_id);
+			$this->load->model('module/openstock');
+			$data['options'] = $this->model_module_openstock->getProductOptionStocks($product_id);
 		} else {
 			$data['options'] = array();
 		}
@@ -452,8 +452,8 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 
 		if ($var !== '' && $this->openbay->addonLoad('openstock')) {
 			$this->load->model('tool/image');
-			$this->load->model('openstock/openstock');
-			$option_stocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);
+			$this->load->model('module/openstock');
+			$option_stocks = $this->model_module_openstock->getProductOptionStocks($product_id);
 
 			$option = null;
 			foreach ($option_stocks as $option_iterator) {

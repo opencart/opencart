@@ -1156,7 +1156,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->load->model('tool/image');
 
 		if ($this->openbay->addonLoad('openstock')) {
-			$this->load->model('openstock/openstock');
+			$this->load->model('module/openstock');
 			$openstock_installed = true;
 		} else {
 			$openstock_installed = false;
@@ -1610,8 +1610,8 @@ class ControllerExtensionOpenbay extends Controller {
 				'selected'   => isset($this->request->post['selected']) && in_array($result['product_id'], $this->request->post['selected']),
 				'edit'       => $edit,
 				'has_option' => $openstock_installed ? $result['has_option'] : 0,
-				'vCount'     => $openstock_installed ? $this->model_openstock_openstock->countVariation($result['product_id']) : '',
-				'vsCount'    => $openstock_installed ? $this->model_openstock_openstock->countVariationStock($result['product_id']) : '',
+				'vCount'     => $openstock_installed ? $this->model_module_openstock->countVariation($result['product_id']) : '',
+				'vsCount'    => $openstock_installed ? $this->model_module_openstock->countVariationStock($result['product_id']) : '',
 			);
 		}
 

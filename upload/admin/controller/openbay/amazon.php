@@ -11,10 +11,10 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'openbay/amazon_product');
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'openbay/amazon_product');
 
-		$this->model_openbay_amazon->install(); 
+		$this->model_openbay_amazon->install();
 	}
 
-	public function uninstall() {  
+	public function uninstall() {
 		$this->load->model('openbay/amazon');
 		$this->load->model('setting/setting');
 		$this->load->model('extension/extension');
@@ -119,7 +119,7 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$xml = $this->openbay->amazon->getStockUpdatesStatus($request_arg);
 		$xml_object = simplexml_load_string($xml);
-		
+
 		$data['table_data'] = array();
 
 		if ($xml_object !== false) {
@@ -473,9 +473,9 @@ class ControllerOpenbayAmazon extends Controller {
 	public function getOpenstockOptionsAjax() {
 		$json = array();
 		if ($this->openbay->addonLoad('openstock') && isset($this->request->get['product_id'])) {
-			$this->load->model('openstock/openstock');
+			$this->load->model('module/openstock');
 			$this->load->model('tool/image');
-			$json = $this->model_openstock_openstock->getProductOptionStocks($this->request->get['product_id']);
+			$json = $this->model_module_openstock->getProductOptionStocks($this->request->get['product_id']);
 		}
 		if (empty($json)) {
 			$json = false;
@@ -500,8 +500,8 @@ class ControllerOpenbayAmazon extends Controller {
 			if ($var != '' && $this->openbay->addonLoad('openstock')) {
 				$logger->write('Using openStock');
 				$this->load->model('tool/image');
-				$this->load->model('openstock/openstock');
-				$option_stocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);
+				$this->load->model('module/openstock');
+				$option_stocks = $this->model_module_openstock->getProductOptionStocks($product_id);
 				$quantity_data = array();
 				foreach($option_stocks as $option_stock) {
 					if (isset($option_stock['var']) && $option_stock['var'] == $var) {

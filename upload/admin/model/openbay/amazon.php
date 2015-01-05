@@ -426,11 +426,11 @@ class ModelOpenbayAmazon extends Model {
 
 		$this->load->library('amazon');
 		if ($this->openbay->addonLoad('openstock')) {
-			$this->load->model('openstock/openstock');
+			$this->load->model('module/openstock');
 			$this->load->model('tool/image');
 			$rows_with_var = array();
 			foreach($rows as $row) {
-				$stock_opts = $this->model_openstock_openstock->getProductOptionStocks($row['product_id']);
+				$stock_opts = $this->model_module_openstock->getProductOptionStocks($row['product_id']);
 				foreach($stock_opts as $opt) {
 					if ($opt['var'] == $row['var']) {
 						$row['combi'] = $opt['combi'];
@@ -458,11 +458,11 @@ class ModelOpenbayAmazon extends Model {
 				AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'")->rows;
 
 			$result = array();
-			$this->load->model('openstock/openstock');
+			$this->load->model('module/openstock');
 			$this->load->model('tool/image');
 			foreach($rows as $row) {
 				if ($row['has_option'] == 1) {
-					$stock_opts = $this->model_openstock_openstock->getProductOptionStocks($row['product_id']);
+					$stock_opts = $this->model_module_openstock->getProductOptionStocks($row['product_id']);
 					foreach($stock_opts as $opt) {
 						if ($this->productLinkExists($row['product_id'], $opt['var'])) {
 							continue;
@@ -571,8 +571,8 @@ class ModelOpenbayAmazon extends Model {
 
 		if ($var !== '' && $this->openbay->addonLoad('openstock')) {
 			$this->load->model('tool/image');
-			$this->load->model('openstock/openstock');
-			$option_stocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);
+			$this->load->model('module/openstock');
+			$option_stocks = $this->model_module_openstock->getProductOptionStocks($product_id);
 
 			$option = null;
 			foreach ($option_stocks as $option_iterator) {

@@ -26,7 +26,7 @@ class ModelOpenbayEbayProduct extends Model {
 
 		if ($this->openbay->addonLoad('openstock')) {
 			$openstock = true;
-			$this->load->model('openstock/openstock');
+			$this->load->model('module/openstock');
 		} else {
 			$openstock = false;
 			$this->openbay->ebay->log('Openstock module not found');
@@ -510,7 +510,7 @@ class ModelOpenbayEbayProduct extends Model {
 	private function updateVariantListing($product_id, $item_id) {
 		$variant_data = array();
 
-		$variants = $this->model_openstock_openstock->getProductOptionStocks($product_id);
+		$variants = $this->model_module_openstock->getProductOptionStocks($product_id);
 		$groups = $this->model_catalog_product->getProductOptions($product_id);
 
 		$variant_data['groups']  = array();

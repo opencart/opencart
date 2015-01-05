@@ -471,9 +471,9 @@ class ControllerOpenbayAmazonus extends Controller {
 	public function getOpenstockOptionsAjax() {
 		$json = array();
 		if ($this->openbay->addonLoad('openstock') && isset($this->request->get['product_id'])) {
-			$this->load->model('openstock/openstock');
+			$this->load->model('module/openstock');
 			$this->load->model('tool/image');
-			$json = $this->model_openstock_openstock->getProductOptionStocks($this->request->get['product_id']);
+			$json = $this->model_module_openstock->getProductOptionStocks($this->request->get['product_id']);
 		}
 		if (empty($json)) {
 			$json = false;
@@ -503,8 +503,8 @@ class ControllerOpenbayAmazonus extends Controller {
 		if ($var != '' && $this->openbay->addonLoad('openstock')) {
 			$logger->write('Using openStock');
 			$this->load->model('tool/image');
-			$this->load->model('openstock/openstock');
-			$option_stocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);
+			$this->load->model('module/openstock');
+			$option_stocks = $this->model_module_openstock->getProductOptionStocks($product_id);
 			$quantity_data = array();
 			foreach($option_stocks as $option_stock) {
 				if (isset($option_stock['var']) && $option_stock['var'] == $var) {

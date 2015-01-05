@@ -439,7 +439,7 @@
                                                 echo'<input type="hidden" name="optArray" value="'.  base64_encode(serialize($option['opts'])).'" />';
                                             }
 
-                                            echo'<input type="hidden" name="opt['.$v.'][sku]" value="'.$option['var'].'" />';
+                                            echo'<input type="hidden" name="opt['.$v.'][sku]" value="'.$option['sku'].'" />';
 
                                             echo'<input type="hidden" name="opt['.$v.'][active]" value="';
                                             if ($option['active'] == 1) {  echo '1'; } else { echo '0'; }

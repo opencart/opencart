@@ -1054,23 +1054,23 @@ class ControllerOpenbayEbay extends Controller {
 			$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
 
 			if ($this->openbay->addonLoad('openstock') && $product_info['has_option'] == 1) {
-				$this->load->model('openstock/openstock');
+				$this->load->model('module/openstock');
 				$data['addon']['openstock'] = true;
-				$product_info['options'] = $this->model_openstock_openstock->getProductOptionStocks($this->request->get['product_id']);
-				$product_info['option_grp'] = $this->model_openbay_ebay_product->getProductOptions($this->request->get['product_id']);
+				$product_info['options'] = $this->model_module_openstock->getProductOptionStocks($this->request->get['product_id']);
+				$product_info['option_groups'] = $this->model_openbay_ebay_product->getProductOptions($this->request->get['product_id']);
 
 				$t = array();
 				$t_rel = array();
 
-				foreach($product_info['option_grp'] as $grp) {
+				foreach($product_info['option_groups'] as $group) {
 					$t_tmp = array();
 
-					foreach($grp['product_option_value'] as $grp_node) {
-						$t_tmp[$grp_node['option_value_id']] = $grp_node['name'];
-						$t_rel[$grp_node['product_option_value_id']] = $grp['name'];
+					foreach($group['product_option_value'] as $group_node) {
+						$t_tmp[$group_node['option_value_id']] = $group_node['name'];
+						$t_rel[$group_node['product_option_value_id']] = $group['name'];
 					}
 
-					$t[] = array('name' => $grp['name'], 'child' => $t_tmp);
+					$t[] = array('name' => $group['name'], 'child' => $t_tmp);
 				}
 
 				if (!isset($listings['variations']['Variation'][1])) {
@@ -1236,10 +1236,10 @@ class ControllerOpenbayEbay extends Controller {
 				$data['setting'] = $setting;
 
 				if ($this->openbay->addonLoad('openstock') && $product_info['has_option'] == 1) {
-					$this->load->model('openstock/openstock');
+					$this->load->model('module/openstock');
 					$data['addon']['openstock'] = true;
-					$product_info['options'] = $this->model_openstock_openstock->getProductOptionStocks($this->request->get['product_id']);
-					$product_info['option_grp'] = $this->model_openbay_ebay_product->getProductOptions($this->request->get['product_id']);
+					$product_info['options'] = $this->model_module_openstock->getVariants($this->request->get['product_id']);
+					$product_info['option_groups'] = $this->model_openbay_ebay_product->getProductOptions($this->request->get['product_id']);
 				}
 
 				// get the product tax rate from opencart

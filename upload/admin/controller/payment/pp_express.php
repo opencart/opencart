@@ -254,6 +254,18 @@ class ControllerPaymentPPExpress extends Controller {
 			$data['pp_express_logo'] = $this->config->get('pp_express_logo');
 		}
 
+		$this->load->model('tool/image');
+
+		if (isset($this->request->post['pp_express_logo']) && is_file(DIR_IMAGE . $this->request->post['pp_express_logo'])) {
+			$data['thumb'] = $this->model_tool_image->resize($this->request->post['pp_express_logo'], 100, 100);
+		} elseif (is_file(DIR_IMAGE . $this->config->get('pp_express_logo'))) {
+			$data['thumb'] = $this->model_tool_image->resize($this->config->get('pp_express_logo'), 100, 100);
+		} else {
+			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+		}
+
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+
 		if (isset($this->request->post['pp_express_page_colour'])) {
 			$data['pp_express_page_colour'] = str_replace('#', '', $this->request->post['pp_express_page_colour']);
 		} else {
@@ -265,19 +277,7 @@ class ControllerPaymentPPExpress extends Controller {
 		} else {
 			$data['pp_express_recurring_cancel_status'] = $this->config->get('pp_express_recurring_cancel_status');
 		}
-
-		$this->load->model('tool/image');
-
-		if (isset($this->request->post['pp_express_logo']) && is_file(DIR_IMAGE . $this->request->post['pp_express_logo'])) {
-			$data['thumb'] = $this->model_tool_image->resize($this->request->post['pp_express_logo'], 750, 90);
-		} elseif (is_file(DIR_IMAGE . $this->config->get('pp_express_logo'))) {
-			$data['thumb'] = $this->model_tool_image->resize($this->config->get('pp_express_logo'), 750, 90);
-		} else {
-			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 750, 90);
-		}
-
-		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 750, 90);
-
+		
 		if (isset($this->request->post['pp_express_geo_zone_id'])) {
 			$data['pp_express_geo_zone_id'] = $this->request->post['pp_express_geo_zone_id'];
 		} else {

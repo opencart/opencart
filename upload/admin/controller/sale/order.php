@@ -1179,7 +1179,9 @@ class ControllerSaleOrder extends Controller {
 			
 			$data['account_custom_field'] = $order_info['custom_field'];
 		
-		
+			// Uploaded files			
+			$this->load->model('tool/upload');
+				
 			// Custom Fields
 			$this->load->model('sale/custom_field');
 			
@@ -1287,9 +1289,6 @@ class ControllerSaleOrder extends Controller {
 			$data['payment_zone'] = $order_info['payment_zone'];
 			$data['payment_zone_code'] = $order_info['payment_zone_code'];
 			$data['payment_country'] = $order_info['payment_country'];
-			
-			// Uploaded files			
-			$this->load->model('tool/upload');
 
 			// Custom fields
 			$data['payment_custom_fields'] = array();

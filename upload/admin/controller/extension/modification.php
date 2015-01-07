@@ -292,7 +292,11 @@ class ControllerExtensionModification extends Controller {
 														$line_id += count($new_lines);
 														break;
 													case 'after':
-														array_splice($lines, ($line_id + 1) + $offset, 0, explode("\n", $add));
+														$new_lines = explode("\n", $add);
+
+														array_splice($lines, ($line_id + 1) + $offset, 0, $new_lines);
+
+														$line_id += count($new_lines);
 														break;
 												}
 												

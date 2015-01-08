@@ -267,7 +267,7 @@ class ControllerPaymentGlobalpay extends Controller {
 		}
 
 		if (empty($data['globalpay_live_url'])) {
-			$data['globalpay_live_url'] = 'https://hpp.globalpaypayments.com/pay';
+			$data['globalpay_live_url'] = 'https://hpp.globaliris.com/pay';
 		}
 
 		if (isset($this->request->post['globalpay_demo_url'])) {
@@ -277,7 +277,7 @@ class ControllerPaymentGlobalpay extends Controller {
 		}
 
 		if (empty($data['globalpay_demo_url'])) {
-			$data['globalpay_demo_url'] = 'https://hpp.sandbox.globalpaypayments.com/pay';
+			$data['globalpay_demo_url'] = 'https://hpp.sandbox.globaliris.com/pay';
 		}
 
 		$data['header'] = $this->load->controller('common/header');

@@ -423,6 +423,15 @@
                             echo '<input type="hidden" name="optArray" value="'.  base64_encode(serialize($option['option_values'])) . '" />';
                           }
 
+                          $keys = array();
+
+                          foreach ($option['variant_values'] as $variant_value) {
+                            $keys[] = $variant_value['product_option_value_id'];
+                          }
+
+                          $key = implode(':', $keys);
+
+                          echo '<input type="hidden" name="opt[' . $option_count . '][key]" value="' . $key . '" />';
                           echo '<input type="hidden" name="opt[' . $option_count . '][sku]" value="' . $option['sku'] . '" />';
                           echo '<input type="hidden" name="opt[' . $option_count . '][active]" value="' . ($option['active'] == 1 ? 1 : 0) . '" />';
                           echo '<input type="hidden" name="varPriceExCount" class="varPriceExCount" value="' . $option_count . '" />';

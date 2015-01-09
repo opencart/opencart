@@ -575,7 +575,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 		/* send the new order notification to openbay so the other markets can update the stock */
 		/* @todo */
 		/* improve this to update when products are subtracted, NOT just when they are paid */
-		$this->openbay->addOrder($order_id);
+		$this->event->trigger('post.order.add', $order_id);
 	}
 
 	public function outputLog() {

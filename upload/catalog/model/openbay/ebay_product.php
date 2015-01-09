@@ -493,10 +493,9 @@ class ModelOpenbayEbayProduct extends Model {
 
 	private function createProductVariant($data) {
 		$this->db->query("
-			INSERT INTO `" . DB_PREFIX . "product_option_relation`
+			INSERT INTO `" . DB_PREFIX . "product_option_variant`
 			SET
 				`product_id`    = '" . (int)$data['product_id'] . "',
-				`var`           = '" . $this->db->escape($data['var']) . "',
 				`stock`         = '" . (int)$data['stock'] . "',
 				`sku`           = '" . $this->db->escape($data['sku']) . "',
 				`active`        = '1',

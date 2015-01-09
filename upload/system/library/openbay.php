@@ -334,7 +334,7 @@ final class Openbay {
 
 	public function getProductModelNumber($product_id, $sku = null) {
 		if($sku != null) {
-			$qry = $this->db->query("SELECT `sku` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($sku) . "'");
+			$qry = $this->db->query("SELECT `sku` FROM `" . DB_PREFIX . "product_option_variant` WHERE `product_id` = '" . (int)$product_id . "' AND `sku` = '" . $this->db->escape($sku) . "'");
 
 			if($qry->num_rows > 0) {
 				return $qry->row['sku'];

@@ -531,7 +531,7 @@ class ModelOpenbayEbayOrder extends Model{
 		$item_id = $this->openbay->ebay->getEbayItemId($product_id);
 
 		if ($this->openbay->addonLoad('openstock') && !empty($sku)) {
-			$this->db->query("UPDATE `" . DB_PREFIX . "product_option_relation` SET `stock` = (`stock` " . $this->db->escape((string)$symbol) . " " . (int)$qty . ") WHERE `var` = '" . (string)$sku . "' AND `product_id` = '" . (int)$product_id . "' AND `subtract` = '1'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "product_option_variant` SET `stock` = (`stock` " . $this->db->escape((string)$symbol) . " " . (int)$qty . ") WHERE `sku` = '" . (string)$sku . "' AND `product_id` = '" . (int)$product_id . "' AND `subtract` = '1'");
 
 			$stock = $this->openbay->ebay->getProductStockLevel($product_id, $sku);
 

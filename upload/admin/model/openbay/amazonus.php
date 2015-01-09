@@ -102,13 +102,14 @@ class ModelOpenbayAmazonus extends Model {
 		$this->model_extension_event->deleteEvent('openbaypro_amazonus');
 	}
 
-	public function patch($manual = true) {
-		$this->load->model('setting/setting');
+	public function patch() {
+		if ($this->config->get('amazonus_status') == 1) {
+			$this->load->model('setting/setting');
 
-		$settings = $this->model_setting_setting->getSetting('openbay_amazonus');
+			$settings = $this->model_setting_setting->getSetting('openbay_amazonus');
 
-		if ($settings) {
-			$this->db->query("
+			if ($settings) {
+				$this->db->query("
 				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazonus_product_search` (
 					`product_id` int(11) NOT NULL,
 					`status` enum('searching','finished') NOT NULL,
@@ -117,7 +118,7 @@ class ModelOpenbayAmazonus extends Model {
 					PRIMARY KEY (`product_id`)
 				) DEFAULT COLLATE=utf8_general_ci;");
 
-			$this->db->query("
+				$this->db->query("
 				CREATE TABLE IF NOT EXISTS`" . DB_PREFIX . "amazonus_listing_report` (
 					`sku` varchar(255) NOT NULL,
 					`quantity` int(10) unsigned NOT NULL,
@@ -126,9 +127,10 @@ class ModelOpenbayAmazonus extends Model {
 					PRIMARY KEY (`sku`)
 				) DEFAULT COLLATE=utf8_general_ci;
 			");
-		}
+			}
 
-		return true;
+			return true;
+		}
 	}
 
 	public function scheduleOrders($data) {

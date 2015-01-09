@@ -58,8 +58,13 @@ class ControllerFeedOpenbaypro extends Controller {
 		$this->model_setting_setting->editSetting('openbaypro', $settings);
 
 		// register the event triggers
-		$this->model_extension_event->addEvent('openbay', 'post.product.delete', 'extension/openbay/eventDeleteProduct');
-		$this->model_extension_event->addEvent('openbay', 'post.product.edit', 'extension/openbay/eventEditProduct');
+		if (version_compare(VERSION, '2.0.1', '>=')) {
+			$this->model_extension_event->addEvent('openbay', 'post.admin.product.delete', 'extension/openbay/eventDeleteProduct');
+			$this->model_extension_event->addEvent('openbay', 'post.admin.product.edit', 'extension/openbay/eventEditProduct');
+		} else {
+			$this->model_extension_event->addEvent('openbay', 'post.product.delete', 'extension/openbay/eventDeleteProduct');
+			$this->model_extension_event->addEvent('openbay', 'post.product.edit', 'extension/openbay/eventEditProduct');
+		}
 	}
 
 	public function uninstall() {

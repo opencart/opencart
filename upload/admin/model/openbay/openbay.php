@@ -3,6 +3,20 @@ class ModelOpenbayOpenbay extends Model {
 	private $url = 'https://account.openbaypro.com/';
 	private $error;
 
+	public function patch() {
+		/**
+		 * Fix to update event names on versions later than 2.0.1 due to the change.
+		 */
+		if (version_compare(VERSION, '2.0.1', '>=')) {
+			$this->load->model('extension/event');
+
+			$this->model_extension_event->deleteEvent('openbay');
+
+			$this->model_extension_event->addEvent('openbay', 'post.admin.product.delete', 'extension/openbay/eventDeleteProduct');
+			$this->model_extension_event->addEvent('openbay', 'post.admin.product.edit', 'extension/openbay/eventEditProduct');
+		}
+	}
+
 	public function updateV2Test() {
 		$this->error = array();
 
@@ -455,12 +469,15 @@ class ModelOpenbayOpenbay extends Model {
 					/**
 					 * Run the patch files
 					 */
-					$this->load->model('openbay/ebay_patch');
-					$this->model_openbay_ebay_patch->patch(false);
-					$this->load->model('openbay/amazon_patch');
-					$this->model_openbay_amazon_patch->patch(false);
-					$this->load->model('openbay/amazonus_patch');
-					$this->model_openbay_amazonus_patch->patch(false);
+					$this->patch(false);
+					$this->load->model('openbay/ebay');
+					$this->model_openbay_ebay->patch();
+					$this->load->model('openbay/amazon');
+					$this->model_openbay_amazon->patch();
+					$this->load->model('openbay/amazonus');
+					$this->model_openbay_amazonus->patch();
+					$this->load->model('openbay/etsy');
+					$this->model_openbay_etsy->patch();
 
 					/**
 					 * File remove operation (clean up old files)

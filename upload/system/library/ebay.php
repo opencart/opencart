@@ -334,7 +334,7 @@ final class Ebay {
 				$this->log('ebaySaleStockReduce() - Send item ID: "' . $product_id . '", Stock: "' . $query->row['quantity'] . '" to decideEbayStockAction()');
 				$this->decideEbayStockAction($product_id, $query->row['quantity'], $query->row['subtract']);
 			} else {
-				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($sku) . "' LIMIT 1");
+				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option_variant` WHERE `product_id` = '" . (int)$product_id . "' AND `sku` = '" . $this->db->escape($sku) . "' LIMIT 1");
 				$this->log('ebaySaleStockReduce() - Send item ID: ' . $product_id . ', VAR: ' . $sku . ', passing ' . $query->row['stock'] . ' to decideEbayStockAction()');
 				$this->decideEbayStockAction($product_id, $query->row['stock'], $query->row['subtract'], $sku);
 			}
@@ -509,7 +509,7 @@ final class Ebay {
 	}
 
 	public function disableVariant($product_id, $sku) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "product_option_relation` SET `active` = 0 WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($sku) . "' LIMIT 1");
+		$this->db->query("UPDATE `" . DB_PREFIX . "product_option_variant` SET `active` = 0 WHERE `product_id` = '" . (int)$product_id . "' AND `sku` = '" . $this->db->escape($sku) . "' LIMIT 1");
 	}
 
 	public function putStockUpdate($item_id, $stock, $sku = null) {
@@ -741,7 +741,7 @@ final class Ebay {
 
 			return array('quantity' => (int)$qry->row['quantity'], 'status' => ($qry->row['status']));
 		} else {
-			$qry = $this->db->query("SELECT `stock`, `active` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($sku) . "' LIMIT 1");
+			$qry = $this->db->query("SELECT `stock`, `active` FROM `" . DB_PREFIX . "product_option_variant` WHERE `product_id` = '" . (int)$product_id . "' AND `sku` = '" . $this->db->escape($sku) . "' LIMIT 1");
 
 			return array('quantity' => (int)$qry->row['stock'], 'status' => ($qry->row['active']));
 		}
@@ -1047,7 +1047,7 @@ final class Ebay {
 	public function addReserve($data, $item_id, $variant) {
 		if ($variant == 1) {
 			foreach ($data['opt'] as $variation) {
-				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$data['product_id'] . "' AND `var` = '" . $this->db->escape($variation['sku']) . "' LIMIT 1");
+				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option_variant` WHERE `product_id` = '" . (int)$data['product_id'] . "' AND `sku` = '" . $this->db->escape($variation['sku']) . "' LIMIT 1");
 
 				if ($query->row['stock'] != $variation['qty']) {
 					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_stock_reserve` SET `product_id` = '" . (int)$data['product_id'] . "', `item_id` = '" . $this->db->escape($item_id) . "', `variant_id` = '" . $this->db->escape($variation['sku']) . "', `reserve` = '" . (int)$variation['qty'] . "'");

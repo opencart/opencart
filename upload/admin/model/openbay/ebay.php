@@ -238,12 +238,14 @@ class ModelOpenbayEbay extends Model{
 		$this->model_extension_event->deleteEvent('openbaypro_ebay');
 	}
 
-	public function patch($manual = true) {
-		$this->load->model('setting/setting');
+	public function patch() {
+		if ($this->config->get('ebay_status') == 1) {
+			$this->load->model('setting/setting');
 
-		$this->openbay->ebay->updateSettings();
+			$this->openbay->ebay->updateSettings();
 
-		return true;
+			return true;
+		}
 	}
 
 	public function totalLinked() {

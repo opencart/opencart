@@ -1256,7 +1256,7 @@ class ControllerOpenbayEbay extends Controller {
 					}
 
 					$product_info['option_group_array'] = base64_encode(serialize($option_group_array));
-					$product_info['option_group_relation_array'] = base64_encode(serialize($option_group_array));
+					$product_info['option_group_relation_array'] = base64_encode(serialize($option_group_relation_array));
 				}
 
 				// get the product tax rate from opencart

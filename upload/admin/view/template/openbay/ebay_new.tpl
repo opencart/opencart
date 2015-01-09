@@ -409,7 +409,6 @@
                           <td><?php echo $column_stock_col_comb; ?></td>
                           <td><?php echo $column_price_ex_tax; ?></td>
                           <td><?php echo $column_price_inc_tax; ?></td>
-                          <td><?php echo $column_stock_col_enabled; ?></td>
                         </tr>
                       </thead>
                       <tbody>
@@ -436,7 +435,7 @@
                           echo '<input type="hidden" name="opt[' . $option_count . '][active]" value="' . ($option['active'] == 1 ? 1 : 0) . '" />';
                           echo '<input type="hidden" name="varPriceExCount" class="varPriceExCount" value="' . $option_count . '" />';
 
-                          echo '<tr>';
+                          echo '<tr ' . (empty($option['sku']) || $option['stock'] < 1 ? 'class="warning"' : 'class="success"') . '>';
                             echo '<td>' . (empty($option['sku']) ? '<span class="label label-danger">' . $error_no_sku . '</span>' : $option['sku']) . '</td>';
                             echo '<td>' . ($option['stock'] <= 1 ? '<span class="label label-danger">' . $option['stock'] . '</span>' : '<span class="label label-success">' . $option['stock'] . '</span>') . '</td>';
                             echo '<td><input class="form-control" id="qty_' . $option_count . '" type="text" name="opt[' . $option_count . '][qty]" value="' . $option['stock'] . '" onkeyup="updateReserveMessage(' . $option_count . ', ' . $option['stock'] . ');" /></td>';
@@ -444,10 +443,9 @@
                             echo '<td>' . $option['combination'] . '</td>';
                             echo '<td><input class="form-control" id="varPriceEx_' . $option_count . '" onkeyup="updateVarPriceFromEx(' . $option_count . ');" type="text" name="opt[' . $option_count . '][priceex]" value="' . number_format(($option['price'] == 0 ? $product['price'] : $option['price']), 2, '.', '').'" /></td>';
                             echo '<td><input class="form-control varPriceInc" id="varPriceInc_' . $option_count . '" onkeyup="updateVarPriceFromInc(' . $option_count . ');"  type="text" name="opt[' . $option_count . '][price]" value="0" /></td>';
-                            echo '<td>' . ($option['active'] == 0 ? '<span class="label label-danger">' . $text_no . '</span>' : '<span class="label label-success">' . $text_yes . '</span>') . '</td>';
                           echo '</tr>';
 
-                          //echo '<tr><td colspan="8" id="optSpecifics' . $option_count . '"></td></tr>';
+                          //echo '<tr><td colspan="7" id="option-specifics-' . $option_count . '"></td></tr>';
                           $option_count++;
                         }
     ?>
@@ -1030,7 +1028,7 @@
 
                   $('#suggested_default').bind('click', function() {
                     $('#category-selections-row').show();
-                    $('#showFeatureDiv').hide();
+                    $('#show-feature-element').hide();
                     $('#product-catalog-container').hide();
                     $('#feature-content').empty();
                     $('#specifics').empty();
@@ -1062,7 +1060,7 @@
     }
 
   function loadCategories(level, skip) {
-        $('#showFeatureDiv').hide();
+        $('#show-feature-element').hide();
         $('#product-catalog-container').hide();
         $('#feature-content').empty();
         $('#specifics').empty();
@@ -1286,13 +1284,13 @@
             beforeSend: function() {
                 $('#feature-content').show();
                 $('#feature-loading').show();
-                $('#showFeatureDiv').show();
-                $('#showFeatureDivPreload').hide();
+                $('#show-feature-element').show();
+                $('#show-feature-element-preload').hide();
             },
             success: function(data) {
                 if (data.error == false) {
                     $('#feature-content').empty();
-                    $('.optSpecifics').empty().hide();
+                    $('.option-specifics-').empty().hide();
 
                     var htmlInj = '';
                     var htmlInj2 = '';
@@ -1790,7 +1788,7 @@
 
   $('#popular_default').click(function() {
     $('#category-selections-row').show();
-    $('#showFeatureDiv').hide();
+    $('#show-feature-element').hide();
     $('#product-catalog-container').hide();
     $('#feature-content').empty();
     $('#specifics').empty();

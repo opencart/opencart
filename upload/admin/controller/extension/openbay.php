@@ -353,25 +353,19 @@ class ControllerExtensionOpenbay extends Controller {
 				$this->response->setOutput(json_encode($response));
 				break;
 			case 'run_patch': // step 6 - run any db updates or other patch files
-				if ($this->config->get('ebay_status') == 1) {
-					$this->load->model('openbay/ebay');
-					$this->model_openbay_ebay->patch(false);
-				}
+				$this->model_openbay_openbay->patch();
 
-				if ($this->config->get('amazon_status') == 1) {
-					$this->load->model('openbay/amazon');
-					$this->model_openbay_amazon->patch(false);
-				}
+				$this->load->model('openbay/ebay');
+				$this->model_openbay_ebay->patch();
 
-				if ($this->config->get('amazonus_status') == 1) {
-					$this->load->model('openbay/amazonus');
-					$this->model_openbay_amazonus->patch(false);
-				}
+				$this->load->model('openbay/amazon');
+				$this->model_openbay_amazon->patch();
 
-				if ($this->config->get('etsy_status') == 1) {
-					$this->load->model('openbay/etsy');
-					$this->model_openbay_etsy->patch(false);
-				}
+				$this->load->model('openbay/amazonus');
+				$this->model_openbay_amazonus->patch();
+
+				$this->load->model('openbay/etsy');
+				$this->model_openbay_etsy->patch();
 
 				$response = array('error' => 0, 'response' => '', 'percent_complete' => 90, 'status_message' => 'Running patch files');
 
@@ -391,17 +385,21 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function patch() {
+		$this->load->model('openbay/openbay');
 		$this->load->model('openbay/ebay');
 		$this->load->model('openbay/amazon');
 		$this->load->model('openbay/amazonus');
+		$this->load->model('openbay/etsy');
 		$this->load->model('extension/extension');
 		$this->load->model('setting/setting');
 		$this->load->model('user/user_group');
 		$this->load->model('openbay/version');
 
+		$this->model_openbay_openbay->patch();
 		$this->model_openbay_ebay->patch();
 		$this->model_openbay_amazon->patch();
 		$this->model_openbay_amazonus->patch();
+		$this->model_openbay_etsy->patch();
 
 		$openbay = $this->model_setting_setting->getSetting('openbay');
 		$openbay['openbay_version'] = (int)$this->model_openbay_version->version();
@@ -1811,6 +1809,7 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function eventEditProduct() {
+		die('yes');
 		foreach ($this->openbay->installed_markets as $market) {
 			if ($this->config->get($market . '_status') == 1) {
 				$this->openbay->{$market}->productUpdateListen($this->request->get['product_id'], $this->request->post);

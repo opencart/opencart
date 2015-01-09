@@ -403,14 +403,14 @@ class ModelShippingRoyalMail extends Model {
 				}
 
 				if ((float)$cost) {
-					$title = $this->language->get('text_airmail');
+					$title = $this->language->get('text_international_standard');
 
 					if ($this->config->get('royal_mail_display_weight')) {
 						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 
-					$quote_data['airmail'] = array(
-						'code'         => 'royal_mail.airmail',
+					$quote_data['international_standard'] = array(
+						'code'         => 'royal_mail.international_standard',
 						'title'        => $title,
 						'cost'         => $cost,
 						'tax_class_id' => $this->config->get('royal_mail_tax_class_id'),
@@ -497,7 +497,7 @@ class ModelShippingRoyalMail extends Model {
 				}
 
 				$countries = explode(',', 'BR,CA,HK,MY,NZ,SG,US');
-
+ 
 				if (in_array($address['iso_code_2'], $countries)) {
 					$rates = explode(',', $this->config->get('royal_mail_international_tracked_rate_2'));
 				}

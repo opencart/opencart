@@ -26,14 +26,16 @@ class ControllerShippingRoyalMail extends Controller {
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
+		$data['text_eu'] = $this->language->get('text_eu');
+		$data['text_non_eu'] = $this->language->get('text_non_eu');
+		$data['text_zone_1'] = $this->language->get('text_zone_1');
+		$data['text_zone_2'] = $this->language->get('text_zone_2');
 		
 		$data['entry_rate'] = $this->language->get('entry_rate');
 		$data['entry_rate_eu'] = $this->language->get('entry_rate_eu');
 		$data['entry_rate_non_eu'] = $this->language->get('entry_rate_non_eu');
 		$data['entry_rate_zone_1'] = $this->language->get('entry_rate_zone_1');
 		$data['entry_rate_zone_2'] = $this->language->get('entry_rate_zone_2');
-		
-		
 		$data['entry_insurance'] = $this->language->get('entry_insurance');
 		$data['entry_display_weight'] = $this->language->get('entry_display_weight');
 		$data['entry_display_insurance'] = $this->language->get('entry_display_insurance');
@@ -45,18 +47,6 @@ class ControllerShippingRoyalMail extends Controller {
 
 		$data['help_rate'] = $this->language->get('help_rate');
 		$data['help_insurance'] = $this->language->get('help_insurance');
-		$data['help_international_signed_eu_rate'] = $this->language->get('help_international_signed_rate_1');
-		$data['help_international_signed_insurance_1'] = $this->language->get('help_international_signed_insurance_1');
-		$data['help_international_signed_rate_2'] = $this->language->get('help_international_signed_rate_2');
-		$data['help_international_signed_insurance_2'] = $this->language->get('help_international_signed_insurance_2');
-		
-		$data['help_airmail_rate_1'] = $this->language->get('help_airmail_rate_1');
-		$data['help_airmail_rate_2'] = $this->language->get('help_airmail_rate_2');
-		
-		$data['help_airsure_rate_1'] = $this->language->get('help_airsure_rate_1');
-		$data['help_airsure_insurance_1'] = $this->language->get('help_airsure_insurance_1');
-		$data['help_airsure_rate_2'] = $this->language->get('help_airsure_rate_2');
-		$data['help_airsure_insurance_2'] = $this->language->get('help_airsure_insurance_2');
 		$data['help_display_weight'] = $this->language->get('help_display_weight');
 		$data['help_display_insurance'] = $this->language->get('help_display_insurance');
 
@@ -76,7 +66,6 @@ class ControllerShippingRoyalMail extends Controller {
 		$data['tab_international_tracked'] = $this->language->get('tab_international_tracked');
 		$data['tab_international_signed'] = $this->language->get('tab_international_signed');
 		$data['tab_international_economy'] = $this->language->get('tab_international_economy');
-
 
 		if (isset($this->error['warning']))  {
 			$data['error_warning'] = $this->error['warning'];
@@ -274,7 +263,16 @@ class ControllerShippingRoyalMail extends Controller {
 		} else {
 			$data['royal_mail_international_standard_eu_rate'] = '0.01:0.97,0.02:0.97,0.06:1.47,0.1:3.20,0.25:3.70,0.5:5.15,0.75:6.60,1.25:9.50,1.5:10.95,1.75:12.40,2:13.85';
 		}
-		
+
+		if (isset($this->request->post['royal_mail_international_standard_eu_insurance'])) {
+			$data['royal_mail_international_standard_eu_insurance'] = $this->request->post['royal_mail_international_standard_eu_insurance'];
+		} elseif ($this->config->has('royal_mail_international_standard_eu_insurance')) {
+			$data['royal_mail_international_standard_eu_insurance'] = $this->config->get('royal_mail_international_standard_eu_insurance');
+		} else {
+			$data['royal_mail_international_standard_eu_insurance'] = '0:20';
+		}
+				
+						
 		if (isset($this->request->post['royal_mail_international_standard_zone_1_rate'])) {
 			$data['royal_mail_international_standard_zone_1_rate'] = $this->request->post['royal_mail_international_standard_zone_1_rate'];
 		} elseif ($this->config->has('royal_mail_international_standard_zone_1_rate')) {
@@ -308,7 +306,7 @@ class ControllerShippingRoyalMail extends Controller {
 		
 		if (isset($this->request->post['royal_mail_international_tracked_signed_eu_insurance'])) {
 			$data['royal_mail_international_tracked_signed_eu_insurance'] = $this->request->post['royal_mail_international_tracked_signed_eu_insurance'];
-		} elseif ($this->config->has('royal_mail_international_tracked_signed_insurance_1')) {
+		} elseif ($this->config->has('royal_mail_international_tracked_signed_eu_insurance')) {
 			$data['royal_mail_international_tracked_signed_eu_insurance'] = $this->config->get('royal_mail_international_tracked_signed_eu_insurance');
 		} else {
 			$data['royal_mail_international_tracked_signed_eu_insurance'] = '0:50';
@@ -489,6 +487,8 @@ class ControllerShippingRoyalMail extends Controller {
 		} else {
 			$data['royal_mail_international_signed_status'] = $this->config->get('royal_mail_international_signed_status');
 		}
+		
+		
 		
 		// International Economy
 		if (isset($this->request->post['royal_mail_international_economy_rate'])) {

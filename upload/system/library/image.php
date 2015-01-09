@@ -69,6 +69,8 @@ class Image {
 			$scale = $scale_w;
 		} elseif ($default == 'h') {
 			$scale = $scale_h;
+		} elseif ($default == 'max') {
+			$scale = max($scale_w, $scale_h);
 		} else {
 			$scale = min($scale_w, $scale_h);
 		}

@@ -38,29 +38,15 @@ class ModelShippingRoyalMail extends Model {
 					}
 				}
 
-				$rates = explode(',', $this->config->get('royal_mail_special_delivery_500_insurance'));
-
-				foreach ($rates as $rate) {
-					$data = explode(':', $rate);
-
-					if ($data[0] >= $sub_total) {
-						if (isset($data[1])) {
-							$insurance = $data[1];
-						}
-
-						break;
-					}
-				}
-
 				if ((float)$cost) {
-					$title = $this->language->get('text_special_delivery_500');
+					$title = $this->language->get('text_special_delivery');
 
 					if ($this->config->get('royal_mail_display_weight')) {
 						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 
-					if ($this->config->get('royal_mail_display_insurance') && (float)$insurance) {
-						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format($insurance) . ')';
+					if ($this->config->get('royal_mail_display_insurance')) {
+						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format(500) . ')';
 					}
 
 					$quote_data['special_delivery_500'] = array(
@@ -92,29 +78,16 @@ class ModelShippingRoyalMail extends Model {
 					}
 				}
 
-				$rates = explode(',', $this->config->get('royal_mail_special_delivery_1000_insurance'));
-
-				foreach ($rates as $rate) {
-					$data = explode(':', $rate);
-
-					if ($data[0] >= $sub_total) {
-						if (isset($data[1])) {
-							$insurance = $data[1];
-						}
-
-						break;
-					}
-				}
-
 				if ((float)$cost) {
-					$title = $this->language->get('text_special_delivery_1000');
+					$title = $this->language->get('text_special_delivery');
 
 					if ($this->config->get('royal_mail_display_weight')) {
 						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 
-					if ($this->config->get('royal_mail_display_insurance') && (float)$insurance) {
-						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format($insurance) . ')';
+					if ($this->config->get('royal_mail_display_insurance')) {
+						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format(1000) . ')';
+						
 					}
 
 					$quote_data['special_delivery_1000'] = array(
@@ -146,29 +119,15 @@ class ModelShippingRoyalMail extends Model {
 					}
 				}
 
-				$rates = explode(',', $this->config->get('royal_mail_special_delivery_2500_insurance'));
-
-				foreach ($rates as $rate) {
-					$data = explode(':', $rate);
-
-					if ($data[0] >= $sub_total) {
-						if (isset($data[1])) {
-							$insurance = $data[1];
-						}
-
-						break;
-					}
-				}
-
 				if ((float)$cost) {
-					$title = $this->language->get('text_special_delivery_2500');
+					$title = $this->language->get('text_special_delivery');
 
 					if ($this->config->get('royal_mail_display_weight')) {
 						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 					}
 
-					if ($this->config->get('royal_mail_display_insurance') && (float)$insurance) {
-						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format($insurance) . ')';
+					if ($this->config->get('royal_mail_display_insurance')) {
+						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format(2500) . ')';
 					}
 
 					$quote_data['special_delivery_2500'] = array(
@@ -200,29 +159,11 @@ class ModelShippingRoyalMail extends Model {
 					}
 				}
 
-				$rates = explode(',', $this->config->get('royal_mail_1st_class_signed_insurance'));
-
-				foreach ($rates as $rate) {
-					$data = explode(':', $rate);
-
-					if ($data[0] >= $sub_total) {
-						if (isset($data[1])) {
-							$insurance = $data[1];
-						}
-
-						break;
-					}
-				}
-
 				if ((float)$cost) {
 					$title = $this->language->get('text_1st_class_signed');
 
 					if ($this->config->get('royal_mail_display_weight')) {
 						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
-					}
-
-					if ($this->config->get('royal_mail_display_insurance') && (float)$insurance) {
-						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format($insurance) . ')';
 					}
 
 					$quote_data['1st_class_signed'] = array(
@@ -254,29 +195,11 @@ class ModelShippingRoyalMail extends Model {
 					}
 				}
 
-				$rates = explode(',', '39:0');
-
-				foreach ($rates as $rate) {
-					$data = explode(':', $rate);
-
-					if ($data[0] >= $sub_total) {
-						if (isset($data[1])) {
-							$insurance = $data[1];
-						}
-
-						break;
-					}
-				}
-
 				if ((float)$cost) {
 					$title = $this->language->get('text_2nd_class_signed');
 
 					if ($this->config->get('royal_mail_display_weight')) {
 						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
-					}
-
-					if ($this->config->get('royal_mail_display_insurance') && (float)$insurance) {
-						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format($insurance) . ')';
 					}
 
 					$quote_data['2nd_class_signed'] = array(
@@ -308,29 +231,11 @@ class ModelShippingRoyalMail extends Model {
 					}
 				}
 
-				$rates = explode(',', $this->config->get('royal_mail_1st_class_standard_insurance'));
-
-				foreach ($rates as $rate) {
-					$data = explode(':', $rate);
-
-					if ($data[0] >= $sub_total) {
-						if (isset($data[1])) {
-							$insurance = $data[1];
-						}
-
-						break;
-					}
-				}
-
 				if ((float)$cost) {
 					$title = $this->language->get('text_1st_class_standard');
 
 					if ($this->config->get('royal_mail_display_weight')) {
 						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
-					}
-
-					if ($this->config->get('royal_mail_display_insurance') && (float)$insurance) {
-						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format($insurance) . ')';
 					}
 
 					$quote_data['1st_class_standard'] = array(
@@ -444,33 +349,11 @@ class ModelShippingRoyalMail extends Model {
 					}
 				}
 
-				if (in_array($address['iso_code_2'], $countries)) {
-					$rates = explode(',', $this->config->get('royal_mail_international_tracked_signed_insurance_1'));
-				} else {
-					$rates = explode(',', $this->config->get('royal_mail_international_tracked_signed_insurance_2'));
-				}
-
-				foreach ($rates as $rate) {
-					$data = explode(':', $rate);
-
-					if ($data[0] >= $sub_total) {
-						if (isset($data[1])) {
-							$insurance = $data[1];
-						}
-
-						break;
-					}
-				}
-
 				if ((float)$cost) {
 					$title = $this->language->get('text_international_tracked_signed');
 
 					if ($this->config->get('royal_mail_display_weight')) {
 						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
-					}
-
-					if ($this->config->get('royal_mail_display_insurance') && (float)$insurance) {
-						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format($insurance) . ')';
 					}
 
 					$quote_data['international_tracked_signed'] = array(
@@ -514,41 +397,11 @@ class ModelShippingRoyalMail extends Model {
 					}
 				}
 
-				$rates = array();
-
-				$countries = explode(',', 'AD,AT,BE,CH,DE,DK,ES,FO,FI,FR,IE,IS,LI,LU,MC,NL,PT,SE');
-
-				if (in_array($address['iso_code_2'], $countries)) {
-					$rates = explode(',', $this->config->get('royal_mail_international_tracked_insurance_1'));
-				}
-
-				$countries = explode(',', 'BR,CA,HK,MY,NZ,SG,US');
-
-				if (in_array($address['iso_code_2'], $countries)) {
-					$rates = explode(',', $this->config->get('royal_mail_international_tracked_insurance_2'));
-				}
-
-				foreach ($rates as $rate) {
-					$data = explode(':', $rate);
-
-					if ($data[0] >= $sub_total) {
-						if (isset($data[1])) {
-							$insurance = $data[1];
-						}
-
-						break;
-					}
-				}
-
 				if ((float)$cost) {
 					$title = $this->language->get('text_international_tracked');
 
 					if ($this->config->get('royal_mail_display_weight')) {
 						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
-					}
-
-					if ($this->config->get('royal_mail_display_insurance') && (float)$insurance) {
-						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format($insurance) . ')';
 					}
 
 					$quote_data['international_tracked'] = array(
@@ -586,33 +439,11 @@ class ModelShippingRoyalMail extends Model {
 					}
 				}
 
-				if (in_array($address['iso_code_2'], $countries)) {
-					$rates = explode(',', $this->config->get('royal_mail_international_signed_insurance_1'));
-				} else {
-					$rates = explode(',', $this->config->get('royal_mail_international_signed_insurance_2'));
-				}
-
-				foreach ($rates as $rate) {
-					$data = explode(':', $rate);
-
-					if ($data[0] >= $sub_total) {
-						if (isset($data[1])) {
-							$insurance = $data[1];
-						}
-
-						break;
-					}
-				}
-
 				if ((float)$cost) {
 					$title = $this->language->get('text_international_signed');
 
 					if ($this->config->get('royal_mail_display_weight')) {
 						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
-					}
-
-					if ($this->config->get('royal_mail_display_insurance') && (float)$insurance) {
-						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format($insurance) . ')';
 					}
 
 					$quote_data['international_signed'] = array(
@@ -649,10 +480,6 @@ class ModelShippingRoyalMail extends Model {
 
 					if ($this->config->get('royal_mail_display_weight')) {
 						$title .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
-					}
-
-					if ($this->config->get('royal_mail_display_insurance') && (float)$insurance) {
-						$title .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format($insurance) . ')';
 					}
 
 					$quote_data['surface'] = array(

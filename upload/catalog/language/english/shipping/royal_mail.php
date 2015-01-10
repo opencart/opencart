@@ -3,9 +3,7 @@
 $_['text_title']                        = 'Royal Mail';
 $_['text_weight']                       = 'Weight:';
 $_['text_insurance']                    = 'Insured upto:';
-$_['text_special_delivery_500']         = 'Special Delivery Next Day (&pound;500)';
-$_['text_special_delivery_1000']        = 'Special Delivery Next Day (&pound;1000)';
-$_['text_special_delivery_2500']        = 'Special Delivery Next Day (&pound;2500)';
+$_['text_special_delivery']             = 'Special Delivery Next Day';
 $_['text_1st_class_signed']             = 'First Class Signed Post';
 $_['text_2nd_class_signed']             = 'Second Class Signed Post';
 $_['text_1st_class_standard']           = 'First Class Standard Post';

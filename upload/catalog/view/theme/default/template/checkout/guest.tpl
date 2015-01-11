@@ -323,17 +323,18 @@
 <script type="text/javascript"><!--
 // Sort the custom fields
 $('#account .form-group[data-sort]').detach().each(function() {
-	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#account .form-group').length) {
-		$('#account .form-group').eq($(this).attr('data-sort')).before(this);
-	} 
-	
-	if ($(this).attr('data-sort') > $('#account .form-group').length) {
-		$('#account .form-group:last').after(this);
-	}
-		
-	if ($(this).attr('data-sort') < -$('#account .form-group').length) {
-		$('#account .form-group:first').before(this);
-	}
+    var $items = $('#account .form-group').filter(function() {return $(this).css('display') != 'none'});
+    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $items.length) {
+        $items.eq($(this).attr('data-sort')).before(this);
+    }
+
+    if ($(this).attr('data-sort') > $items.length) {
+        $items.last().after(this);
+    }
+
+    if ($(this).attr('data-sort') < -$items.length) {
+        $items.first().before(this);
+    }
 });
 
 $('#address .form-group[data-sort]').detach().each(function() {

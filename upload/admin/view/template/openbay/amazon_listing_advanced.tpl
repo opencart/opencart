@@ -20,7 +20,7 @@
     <div class="alert alert-danger">
       <ul>
         <?php foreach ($errors as $listing_error) { ?>
-        <li><i class="fa fa-exclamation-circle"></i> <?php echo $listing_error ?></li>
+        <li><i class="fa fa-exclamation-circle"></i> <?php echo $listing_error['message']; ?></li>
         <?php } ?>
       </ul>
     </div>

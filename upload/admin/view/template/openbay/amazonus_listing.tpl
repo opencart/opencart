@@ -1,14 +1,14 @@
 <?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right"> <a href="<?php echo $url_return; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
       <h1><?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
   </div>
   <div class="container-fluid">
@@ -35,21 +35,6 @@
           </div>
           <div class="col-md-1">
             <div class="form-group"> <a id="search-submit" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_search; ?>"><i class="fa fa-search"></i></a> </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <?php foreach ($marketplaces as $id => $name) {?>
-              <label class="radio-inline">
-                <?php if ($default_marketplace == $id) { ?>
-                <input type="radio" name="marketplace" id="marketplace_<?php echo $id ?>" value="<?php echo $id ?>" checked="checked" />
-                <?php } else { ?>
-                <input type="radio" name="marketplace" id="marketplace_<?php echo $id ?>" value="<?php echo $id ?>" />
-                <?php } ?>
-                <?php echo $name ?> </label>
-              <?php } ?>
-            </div>
           </div>
         </div>
       </div>

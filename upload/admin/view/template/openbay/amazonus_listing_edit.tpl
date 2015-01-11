@@ -49,7 +49,7 @@
         <tr>
           <td class="text-left"><?php echo $link['product_name']; ?></td>
           <td class="text-left"><?php echo $link['model']; ?></td>
-          <td class="text-left"><?php echo $link['combi']; ?></td>
+          <td class="text-left"><?php echo $link['combination']; ?></td>
           <td class="text-left"><?php echo $link['sku']; ?></td>
           <td class="text-left"><?php echo $link['amazon_sku']; ?></td>
         </tr>

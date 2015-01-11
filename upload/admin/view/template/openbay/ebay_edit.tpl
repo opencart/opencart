@@ -169,7 +169,7 @@
 
                                 html +='<tr>';
                                 html +='<input type="hidden" name="varPriceExCount" class="varPriceExCount" value="'+i+'" />';
-                                html +='<td class="text-center">'+v.local.var+'</td>';
+                                html +='<td class="text-center">'+v.local.sku+'</td>';
                                 html +='<td class="text-center">'+v.local.stock+'</td>';
                                 html +='<td class="text-center">'+v.ebay.Quantity+'</td>';
                                 html +='<td class="text-center"><input type="text" name="opt['+i+'][reserve]" value="'+v.local.reserve+'" class="text-center form-control" /></td>';
@@ -187,12 +187,12 @@
                                 $('#variantMatrixInactive').show();
 
                                 $.each(data.data.variant.data.optionsinactive, function( k, v ) {
-                                    $('#matrix-active').append('<input type="hidden" name="opt['+i+'][sku]" value="'+v.local.var+'" />');
+                                    $('#matrix-active').append('<input type="hidden" name="opt['+i+'][sku]" value="'+v.local.sku+'" />');
                                     html = '';
 
                                     html +='<tr>';
                                     html +='<input type="hidden" name="varPriceExCount" class="varPriceExCount" value="'+i+'" />';
-                                    html +='<td class="text-center">'+ v.local.var+ '</td>';
+                                    html +='<td class="text-center">'+ v.local.sku+ '</td>';
                                     html +='<td class="text-center">'+ v.local.stock+ '</td>';
                                     html +='<td class="text-center"><input type="text" name="opt['+i+'][reserve]" value="'+v.local.reserve+'" class="text-center form-control"/></td>';
                                     html +='<td class="text-left">'+v.local.combi+'</td>';

@@ -310,7 +310,7 @@ class ModelOpenbayEbay extends Model{
 				$data[$row['ebay_item_id']]['options'] = 0;
 
 				if ((isset($row['has_option']) && $row['has_option'] == 1) && $this->openbay->addonLoad('openstock')) {
-					$data[$row['ebay_item_id']]['options'] = $this->model_module_openstock->getProductOptionStocks((int)$row['product_id']);
+					$data[$row['ebay_item_id']]['options'] = $this->model_module_openstock->getVariants((int)$row['product_id']);
 				}
 
 				//get the allocated stock - items that have been bought but not assigned to an order
@@ -658,7 +658,7 @@ class ModelOpenbayEbay extends Model{
 			if ($this->openbay->addonLoad('openstock')) {
 				$this->load->model('module/openstock');
 				$this->load->model('tool/image');
-				$variant = $this->model_module_openstock->getProductOptionStocks((int)$id);
+				$variant = $this->model_module_openstock->getVariants((int)$id);
 			} else {
 				$variant = 0;
 			}
@@ -747,7 +747,7 @@ class ModelOpenbayEbay extends Model{
 			$this->load->model('module/openstock');
 
 			//get the options list for this product
-			$opts = $this->model_module_openstock->getProductOptionStocks($product_id);
+			$opts = $this->model_module_openstock->getVariants($product_id);
 			reset($opts);
 			$variant_data['option_list'] = base64_encode(serialize($opts[key($opts)]['opts']));
 

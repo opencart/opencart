@@ -424,10 +424,10 @@ class ModelOpenbayAmazon extends Model {
 			$this->load->model('tool/image');
 			$rows_with_var = array();
 			foreach($rows as $row) {
-				$stock_opts = $this->model_module_openstock->getProductOptionStocks($row['product_id']);
+				$stock_opts = $this->model_module_openstock->getVariants($row['product_id']);
 				foreach($stock_opts as $opt) {
-					if ($opt['var'] == $row['var']) {
-						$row['combi'] = $opt['combi'];
+					if ($opt['sku'] == $row['sku']) {
+						$row['combination'] = $opt['combination'];
 						$row['sku'] = $opt['sku'];
 						break;
 					}
@@ -456,18 +456,17 @@ class ModelOpenbayAmazon extends Model {
 			$this->load->model('tool/image');
 			foreach($rows as $row) {
 				if ($row['has_option'] == 1) {
-					$stock_opts = $this->model_module_openstock->getProductOptionStocks($row['product_id']);
+					$stock_opts = $this->model_module_openstock->getVariants($row['product_id']);
 					foreach($stock_opts as $opt) {
-						if ($this->productLinkExists($row['product_id'], $opt['var'])) {
+						if ($this->productLinkExists($row['product_id'], $opt['sku'])) {
 							continue;
 						}
-						$row['var'] = $opt['var'];
-						$row['combi'] = $opt['combi'];
+						$row['combination'] = $opt['combination'];
 						$row['sku'] = $opt['sku'];
 						$result[] = $row;
 					}
 				} else {
-					if (!$this->productLinkExists($row['product_id'], $row['var'])) {
+					if (!$this->productLinkExists($row['product_id'], $row['sku'])) {
 						$result[] = $row;
 					}
 				}
@@ -566,11 +565,11 @@ class ModelOpenbayAmazon extends Model {
 		if ($var !== '' && $this->openbay->addonLoad('openstock')) {
 			$this->load->model('tool/image');
 			$this->load->model('module/openstock');
-			$option_stocks = $this->model_module_openstock->getProductOptionStocks($product_id);
+			$option_stocks = $this->model_module_openstock->getVariants($product_id);
 
 			$option = null;
 			foreach ($option_stocks as $option_iterator) {
-				if ($option_iterator['var'] === $var) {
+				if ($option_iterator['sku'] === $var) {
 					$option = $option_iterator;
 					break;
 				}
@@ -692,7 +691,7 @@ class ModelOpenbayAmazon extends Model {
 				  ) AS 'combination'
 				FROM " . DB_PREFIX . "amazon_listing_report alr
 				LEFT JOIN (
-				  SELECT p.product_id, if (por.product_id IS NULL, p.sku, por.sku) AS 'sku', if (por.product_id IS NULL, NULL, por.var) AS 'var', if (por.product_id IS NULL, p.quantity, por.stock) AS 'quantity'
+				  SELECT p.product_id, if (por.product_id IS NULL, p.sku, por.sku) AS 'sku', if (por.product_id IS NULL, NULL, por.var) AS 'sku', if (por.product_id IS NULL, p.quantity, por.stock) AS 'quantity'
 				  FROM " . DB_PREFIX . "product p
 				  LEFT JOIN " . DB_PREFIX . "product_option_relation por USING(product_id)
 				) AS oc_sku ON alr.sku = oc_sku.sku
@@ -706,7 +705,7 @@ class ModelOpenbayAmazon extends Model {
 				SELECT alr.sku AS 'amazon_sku', alr.quantity AS 'amazon_quantity', alr.asin, alr.price AS 'amazon_price', oc_sku.product_id, pd.name, oc_sku.sku, oc_sku.var, oc_sku.quantity, '' AS combination
 				FROM " . DB_PREFIX . "amazon_listing_report alr
 				LEFT JOIN (
-					SELECT p.product_id, p.sku, NULL AS 'var', p.quantity
+					SELECT p.product_id, p.sku, NULL AS 'sku', p.quantity
 					FROM " . DB_PREFIX . "product p
 				) AS oc_sku ON alr.sku = oc_sku.sku
 				LEFT JOIN " . DB_PREFIX . "amazon_product_link apl ON (oc_sku.var IS NULL AND oc_sku.product_id = apl.product_id) OR (oc_sku.var IS NOT NULL AND oc_sku.product_id = apl.product_id AND oc_sku.var = apl.var)
@@ -737,7 +736,7 @@ class ModelOpenbayAmazon extends Model {
 				  ) AS 'combination'
 				FROM " . DB_PREFIX . "amazon_listing_report alr
 				LEFT JOIN (
-				  SELECT p.product_id, if (por.product_id IS NULL, p.sku, por.sku) AS 'sku', if (por.product_id IS NULL, NULL, por.var) AS 'var', if (por.product_id IS NULL, p.quantity, por.stock) AS 'quantity'
+				  SELECT p.product_id, if (por.product_id IS NULL, p.sku, por.sku) AS 'sku', if (por.product_id IS NULL, NULL, por.var) AS 'sku', if (por.product_id IS NULL, p.quantity, por.stock) AS 'quantity'
 				  FROM " . DB_PREFIX . "product p
 				  LEFT JOIN " . DB_PREFIX . "product_option_relation por USING(product_id)
 				) AS oc_sku ON alr.sku = oc_sku.sku
@@ -751,7 +750,7 @@ class ModelOpenbayAmazon extends Model {
 				SELECT alr.sku AS 'amazon_sku', alr.quantity AS 'amazon_quantity', alr.asin, alr.price AS 'amazon_price', oc_sku.product_id, pd.name, oc_sku.sku, oc_sku.var, oc_sku.quantity, '' AS combination
 				FROM " . DB_PREFIX . "amazon_listing_report alr
 				LEFT JOIN (
-					SELECT p.product_id, p.sku, NULL AS 'var', p.quantity
+					SELECT p.product_id, p.sku, NULL AS 'sku', p.quantity
 					FROM " . DB_PREFIX . "product p
 				) AS oc_sku ON alr.sku = oc_sku.sku
 				LEFT JOIN " . DB_PREFIX . "amazon_product_link apl ON (oc_sku.var IS NULL AND oc_sku.product_id = apl.product_id) OR (oc_sku.var IS NOT NULL AND oc_sku.product_id = apl.product_id AND oc_sku.var = apl.var)
@@ -766,7 +765,7 @@ class ModelOpenbayAmazon extends Model {
 				'product_id' => $row['product_id'],
 				'name' => $row['name'],
 				'sku' => $row['sku'],
-				'var' => $row['var'],
+				'sku' => $row['sku'],
 				'quantity' => $row['quantity'],
 				'amazon_sku' => $row['amazon_sku'],
 				'amazon_quantity' => $row['amazon_quantity'],

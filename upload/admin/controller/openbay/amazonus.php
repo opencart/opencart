@@ -440,14 +440,14 @@ class ControllerOpenbayAmazonus extends Controller {
 				'product_name' => $saved_product['product_name'],
 				'product_model' => $saved_product['product_model'],
 				'product_sku' => $saved_product['product_sku'],
-				'amazonus_sku' => $saved_product['amazonus_sku'],
+				'amazon_sku' => $saved_product['amazonus_sku'],
 				'var' => $saved_product['var'],
-				'edit_link' => $this->url->link('openbay/amazonus_product', 'token=' . $this->session->data['token'] . '&product_id=' . $saved_product['product_id'] . '&var=' . $saved_product['var'], 'SSL'),
+				'edit_link' => $this->url->link('openbay/amazonus_product', 'token=' . $this->session->data['token'] . '&product_id=' . $saved_product['product_id'] . '&sku=' . $saved_product['var'], 'SSL'),
 			);
 		}
 
-		$data['deleteSavedAjax'] = $this->url->link('openbay/amazonus/deleteSavedAjax', 'token=' . $this->session->data['token'], 'SSL');
-		$data['uploadSavedAjax'] = $this->url->link('openbay/amazonus_product/uploadSavedAjax', 'token=' . $this->session->data['token'], 'SSL');
+		$data['delete_saved'] = $this->url->link('openbay/amazon_product/deleteSaved', 'token=' . $this->session->data['token'], 'SSL');
+		$data['upload_saved'] = $this->url->link('openbay/amazonus_product/uploadSaved', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -473,7 +473,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		if ($this->openbay->addonLoad('openstock') && isset($this->request->get['product_id'])) {
 			$this->load->model('module/openstock');
 			$this->load->model('tool/image');
-			$json = $this->model_module_openstock->getProductOptionStocks($this->request->get['product_id']);
+			$json = $this->model_module_openstock->getVariants($this->request->get['product_id']);
 		}
 		if (empty($json)) {
 			$json = false;
@@ -487,7 +487,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		if (isset($this->request->get['product_id']) && isset($this->request->get['amazonus_sku'])) {
 			$amazonus_sku = $this->request->get['amazonus_sku'];
 			$product_id = $this->request->get['product_id'];
-			$var = isset($this->request->get['var']) ? $this->request->get['var'] : '';
+			$var = isset($this->request->get['sku']) ? $this->request->get['sku'] : '';
 		} else {
 			$this->response->addHeader('Content-Type: application/json');
 			$this->response->setOutput(json_encode('error'));
@@ -504,10 +504,10 @@ class ControllerOpenbayAmazonus extends Controller {
 			$logger->write('Using openStock');
 			$this->load->model('tool/image');
 			$this->load->model('module/openstock');
-			$option_stocks = $this->model_module_openstock->getProductOptionStocks($product_id);
+			$option_stocks = $this->model_module_openstock->getVariants($product_id);
 			$quantity_data = array();
 			foreach($option_stocks as $option_stock) {
-				if (isset($option_stock['var']) && $option_stock['var'] == $var) {
+				if (isset($option_stock['sku']) && $option_stock['sku'] == $var) {
 					$quantity_data[$amazonus_sku] = $option_stock['stock'];
 					break;
 				}
@@ -561,15 +561,6 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($unlinkedProducts));
-	}
-
-	public function deleteSavedAjax() {
-		if (!isset($this->request->get['product_id']) || !isset($this->request->get['var'])) {
-			return;
-		}
-
-		$this->load->model('openbay/amazonus');
-		$this->model_openbay_amazonus->deleteSaved($this->request->get['product_id'], $this->request->get['var']);
 	}
 
 	public function doBulkList() {
@@ -903,7 +894,7 @@ class ControllerOpenbayAmazonus extends Controller {
 				'quantity' => $result['quantity'],
 				'combination' => $result['combination'],
 				'product_id' => $result['product_id'],
-				'var' => $result['var'],
+				'sku' => $result['sku'],
 				'href_product' => $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'], 'SSL'),
 			);
 		}
@@ -971,7 +962,7 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		if (!empty($links)) {
 			foreach ($links as $link) {
-				$this->model_openbay_amazonus->linkProduct($link['amazon_sku'], $link['product_id'], $link['var']);
+				$this->model_openbay_amazonus->linkProduct($link['amazon_sku'], $link['product_id'], $link['sku']);
 			}
 
 			$this->model_openbay_amazonus->updateAmazonSkusQuantities($amazon_skus);

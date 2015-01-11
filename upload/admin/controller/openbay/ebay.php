@@ -1056,7 +1056,7 @@ class ControllerOpenbayEbay extends Controller {
 			if ($this->openbay->addonLoad('openstock') && $product_info['has_option'] == 1) {
 				$this->load->model('module/openstock');
 				$data['addon']['openstock'] = true;
-				$product_info['options'] = $this->model_module_openstock->getProductOptionStocks($this->request->get['product_id']);
+				$product_info['options'] = $this->model_module_openstock->getVariants($this->request->get['product_id']);
 				$product_info['option_groups'] = $this->model_openbay_ebay_product->getProductOptions($this->request->get['product_id']);
 
 				$t = array();
@@ -1079,11 +1079,11 @@ class ControllerOpenbayEbay extends Controller {
 
 				foreach($product_info['options'] as $option) {
 					$option['base64'] = base64_encode(serialize($option['opts']));
-					$option_reserve = $this->openbay->ebay->getReserve($this->request->get['product_id'], $item_id, $option['var']);
+					$option_reserve = $this->openbay->ebay->getReserve($this->request->get['product_id'], $item_id, $option['sku']);
 					if ($option_reserve == false) {
 						$option['reserve'] = 0;
 					} else {
-						$option['reserve']  = $this->openbay->ebay->getReserve($this->request->get['product_id'], $item_id, $option['var']);
+						$option['reserve']  = $this->openbay->ebay->getReserve($this->request->get['product_id'], $item_id, $option['sku']);
 					}
 
 					$ebay_listing = '';
@@ -1092,7 +1092,7 @@ class ControllerOpenbayEbay extends Controller {
 
 						$sku = (isset($listing['SKU']) ? $listing['SKU'] : '');
 
-						if ($sku != '' && $sku == $option['var']) {
+						if ($sku != '' && $sku == $option['sku']) {
 							$listing['StartPrice'] = number_format($listing['StartPrice'], 2, '.', '');
 							$listing['Quantity'] = $listing['Quantity'] - $listing['SellingStatus']['QuantitySold'];
 
@@ -1100,7 +1100,7 @@ class ControllerOpenbayEbay extends Controller {
 						}
 					}
 
-					$options[] = array('ebay' => $ebay_listing, 'local' => $option, 'var' => $option['var']);
+					$options[] = array('ebay' => $ebay_listing, 'local' => $option, 'sku' => $option['sku']);
 				}
 
 				//unset variants that dont appear on eBay

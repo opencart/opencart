@@ -76,7 +76,7 @@
               <td class="text-left"><?php echo $product['combination'] ?></td>
               <input type="hidden" name="link[<?php echo $row ?>][amazon_sku]" value="<?php echo $product['amazon_sku'] ?>"/>
               <input type="hidden" name="link[<?php echo $row ?>][product_id]" value="<?php echo $product['product_id'] ?>"/>
-              <input type="hidden" name="link[<?php echo $row ?>][var]" value="<?php echo $product['var'] ?>"/>
+              <input type="hidden" name="link[<?php echo $row ?>][sku]" value="<?php echo $product['sku'] ?>"/>
             </tr>
             <?php } ?>
           </tbody>

@@ -509,7 +509,7 @@ class ModelOpenbayEbayProduct extends Model {
 	private function updateVariantListing($product_id, $item_id) {
 		$variant_data = array();
 
-		$variants = $this->model_module_openstock->getProductOptionStocks($product_id);
+		$variants = $this->model_module_openstock->getVariants($product_id);
 		$groups = $this->model_catalog_product->getProductOptions($product_id);
 
 		$variant_data['groups']  = array();

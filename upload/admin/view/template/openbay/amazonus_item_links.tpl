@@ -93,7 +93,7 @@ function loadLinks() {
         rows += '<tr>';
         rows += '<td class="text-left">' + json[i]['product_name'] + '</td>';
         rows += '<td class="text-left">' + json[i]['model'] + '</td>';
-        rows += '<td class="text-left">' + json[i]['combi'] + '</td>';
+        rows += '<td class="text-left">' + json[i]['combination'] + '</td>';
         rows += '<td class="text-left">' + json[i]['sku'] + '</td>';
         rows += '<td class="text-left">' + json[i]['amazon_sku'] + '</td>';
         rows += '<td class="text-center"><a data-toggle="tooltip" data-original-title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="removeLink(this, \'' + json[i]['amazon_sku'] + '\');"><i class="fa fa-times-circle"></i></a></td>';
@@ -140,24 +140,24 @@ $('#button-load').bind('click', function(e) {
 
       var rows = '';
       for (i in json) {
-        rows += '<tr id="product_row_' + json[i]['product_id'] + '_' + json[i]['var'] + '">';
+        rows += '<tr id="product_row_' + json[i]['product_id'] + '_' + json[i]['sku'] + '">';
         rows += '<td class="text-left">' + json[i]['product_name'] + '</td>';
         rows += '<td class="text-left">' + json[i]['model'] + '</td>';
-        rows += '<td class="text-left">' + json[i]['combi'] + '</td>';
+        rows += '<td class="text-left">' + json[i]['combination'] + '</td>';
         rows += '<td class="text-left">' + json[i]['sku'] + '</td>';
         rows += '<td class="text-left">';
-        rows += '<div class="amazon_sku_div_' + json[i]['product_id'] + '_' + json[i]['var'] + '">';
+        rows += '<div class="amazon_sku_div_' + json[i]['product_id'] + '_' + json[i]['sku'] + '">';
         rows += '<div class="row">';
         rows += '<div class="col-sm-8 form-group">';
-        rows += '<input class="form-control amazon_sku_' + json[i]['product_id'] + '_' + json[i]['var'] + '"  type="text">';
+        rows += '<input class="form-control amazon_sku_' + json[i]['product_id'] + '_' + json[i]['sku'] + '"  type="text">';
         rows += '</div>';
         rows += '<div class="col-sm-4 form-group">';
-        rows += '<a class="btn btn-primary" onclick="addNewSkuField(' + json[i]['product_id'] + ', \'' + json[i]['var'] + '\')" data-toggle="tooltip" data-original-title="<?php echo $button_add; ?>"><i class="fa fa-plus-circle"></i></a>';
+        rows += '<a class="btn btn-primary" onclick="addNewSkuField(' + json[i]['product_id'] + ', \'' + json[i]['sku'] + '\')" data-toggle="tooltip" data-original-title="<?php echo $button_add; ?>"><i class="fa fa-plus-circle"></i></a>';
         rows += '</div>';
         rows += '</div>';
         rows += '</div>';
         rows += '</td>';
-        rows += '<td class="text-center"><a class="btn btn-primary" onclick="addNewLink(this, \'' + json[i]['product_id'] + '\', \'' + json[i]['var'] + '\')" data-toggle="tooltip" data-original-title="<?php echo $button_add; ?>"><i class="fa fa-plus-circle"></i></a></td>';
+        rows += '<td class="text-center"><a class="btn btn-primary" onclick="addNewLink(this, \'' + json[i]['product_id'] + '\', \'' + json[i]['sku'] + '\')" data-toggle="tooltip" data-original-title="<?php echo $button_add; ?>"><i class="fa fa-plus-circle"></i></a></td>';
         rows += '</tr>';
       }
 
@@ -321,7 +321,7 @@ function openstockCheck(product_id) {
 
       var optionHtml = '<select id="openstock-option-selector"><option value=""/>';
       for (var i in data) {
-        optionHtml += '<option value="' + data[i]['var'] + '">' + data[i]['combi'] + '</option>';
+        optionHtml += '<option value="' + data[i]['sku'] + '">' + data[i]['combination'] + '</option>';
       }
       optionHtml += '</select>';
       $('#new-product').after(optionHtml);

@@ -125,7 +125,7 @@
             <td class="text-center"><i class="fa fa-times-circle text-danger"></i></td>
             <?php } else { ?>
             <td class="text-center">-</td>
-            <td class="text-center"><?php foreach ($item['options'] as $option) { echo $option['stock'] .' x ' . $option['combi'] . '<br />'; } ?></td>
+            <td class="text-center"><?php foreach ($item['options'] as $option) { echo $option['stock'] .' x ' . $option['combination'] . '<br />'; } ?></td>
             <td id="text-qty-<?php echo $id; ?>" class="text-center"></td>
             <td class="text-center" align="center"><i class="fa fa-check-circle text-success"></i></td>
             <?php } ?>

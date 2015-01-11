@@ -40,9 +40,12 @@
         <tr>
           <td class="text-left"><?php echo $saved_product['product_name']; ?></td>
           <td class="text-left"><?php echo $saved_product['product_model']; ?></td>
-          <td class="text-center"><?php echo $saved_product['product_sku']; ?></td>
+          <td class="text-center"><?php echo $saved_product['var']; ?></td>
           <td class="text-center"><?php echo $saved_product['amazon_sku']; ?></td>
-          <td class="text-right"><a class="btn btn-primary" href="<?php echo $saved_product['edit_link']; ?>" data-toggle="tooltip" data-original-title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a> <a class="btn btn-danger" onclick="removeSaved('<?php echo $saved_product['product_id']; ?>', '<?php echo $saved_product['var']; ?>', this)" data-toggle="tooltip" data-original-title="<?php echo $button_remove; ?>"><i class="fa fa-times-circle"></i></a></td>
+          <td class="text-right">
+            <a class="btn btn-primary" href="<?php echo $saved_product['edit_link']; ?>" data-toggle="tooltip" data-original-title="<?php echo $button_edit; ?>"><i class="fa fa-pencil"></i></a>
+            <a class="btn btn-danger" onclick="removeSaved('<?php echo $saved_product['product_id']; ?>', '<?php echo $saved_product['var']; ?>', this)" data-toggle="tooltip" data-original-title="<?php echo $button_remove; ?>"><i class="fa fa-times-circle"></i></a>
+          </td>
         </tr>
         <?php } ?>
         <?php } else { ?>
@@ -60,7 +63,7 @@
       return;
     }
     $.ajax({
-      url: '<?php echo html_entity_decode($deleteSavedAjax); ?>',
+      url: '<?php echo html_entity_decode($delete_saved); ?>',
       type: 'get',
       data: 'product_id=' + id + '&var=' + option_var,
       beforeSend: function () {
@@ -79,7 +82,7 @@
     e.preventDefault();
 
     $.ajax({
-      url: '<?php echo html_entity_decode($uploadSavedAjax); ?>',
+      url: '<?php echo html_entity_decode($upload_saved); ?>',
       dataType: 'json',
       beforeSend: function () {
         $('#upload_button').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');

@@ -452,7 +452,7 @@ class ModelOpenbayEbayOrder extends Model{
 				} else {
 					$html = $this->load->view('default/template/mail/order.tpl', $data);
 				}
-				
+
 				// Text Mail
 				$text  = sprintf($language->get('text_new_greeting'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8')) . "\n\n";
 				$text .= $language->get('text_new_order_id') . ' ' . $order_id . "\n";

@@ -57,7 +57,7 @@ class ControllerMarketingContact extends Controller {
 
 		$this->load->model('sale/customer_group');
 
-		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups(0);
+		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

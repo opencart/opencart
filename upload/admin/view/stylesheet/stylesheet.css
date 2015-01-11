@@ -51,11 +51,9 @@ h1, h2, h3, h4, h5, h6, p {
 	color: #BBBBBB;
 	padding: 0 5px;	
 }
-
 a:hover, a:focus {
 	text-decoration: none;
 }
-
 /* fix for bootstrap hidden and visible */
 span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: inline;

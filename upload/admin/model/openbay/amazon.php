@@ -200,14 +200,6 @@ class ModelOpenbayAmazon extends Model {
 
 		$marketplaces = isset($data_array['marketplace_ids']) ? serialize($data_array['marketplace_ids']) : serialize(array());
 
-		foreach($data_array['fields'] as $key => $field) {
-			if ($field['accepted']['type'] == 'image') {
-				if (!empty($field['value'])) {
-					$data_array['fields'][$key]['value'] = HTTPS_CATALOG . 'image/' . $field['value'];
-				}
-			}
-		}
-
 		$data_encoded = json_encode(array('fields' => $data_array['fields']));
 
 		$this->db->query("

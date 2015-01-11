@@ -169,7 +169,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			$this->error['quantity'] = sprintf($this->language->get('error_stock_max'), $data['quantity']);
 		}
 
-		if (count($data['product_image']) > 4) {
+		if (isset($data['product_image']) && count($data['product_image']) > 4) {
 			$this->error['images'] = sprintf($this->language->get('error_image_max'), count($data['product_image'])+1);
 		}
 

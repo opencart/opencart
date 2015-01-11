@@ -1809,7 +1809,6 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function eventEditProduct() {
-		die('yes');
 		foreach ($this->openbay->installed_markets as $market) {
 			if ($this->config->get($market . '_status') == 1) {
 				$this->openbay->{$market}->productUpdateListen($this->request->get['product_id'], $this->request->post);

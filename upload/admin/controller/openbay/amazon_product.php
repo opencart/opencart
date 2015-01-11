@@ -157,7 +157,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 		$data['listing_name'] = $product_info['name'] . " : " . $product_info['model'];
 		$data['listing_sku'] = $product_info['sku'];
-		$data['listing_url'] = $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL');
+		$data['listing_url'] = $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL');
 
 		if ($listing_saved) {
 			$data['edit_product_category'] = $saved_listing_data['category'];
@@ -194,7 +194,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 
 		if ($this->openbay->addonLoad('openstock')) {
 			$this->load->model('module/openstock');
-			$data['options'] = $this->model_module_openstock->getProductOptionStocks($product_id);
+			$data['options'] = $this->model_module_openstock->getVariants($product_id);
 		} else {
 			$data['options'] = array();
 		}

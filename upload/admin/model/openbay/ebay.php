@@ -749,11 +749,6 @@ class ModelOpenbayEbay extends Model{
 			//get the options list for this product
 			$options = $this->model_module_openstock->getVariants($product_id);
 
-			echo '<pre>';
-			print_r($options);
-			echo '</pre>';
-			die();
-
 			reset($options);
 			$variant_data['option_list'] = base64_encode(serialize($options[key($option_values)]['opts']));
 

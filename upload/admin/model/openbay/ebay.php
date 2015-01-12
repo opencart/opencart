@@ -597,7 +597,13 @@ class ModelOpenbayEbay extends Model{
 			$this->openbay->ebay->createLink($data['product_id'], $response['ItemID'], $variant);
 			$this->openbay->ebay->addReserve($data, $response['ItemID'], $variant);
 
-			$data2['data']['viewLink']  = html_entity_decode($this->config->get('ebay_itm_link') . $response['ItemID']);
+			$item_link = $this->config->get('ebay_itm_link');
+
+			if (!empty($item_link)) {
+				$data2['data']['view_link']  = html_entity_decode($this->config->get('ebay_itm_link') . $response['ItemID']);
+			} else {
+				$data2['data']['view_link']  = '';
+			}
 		} else {
 			$data2['error']             = false;
 			$data2['msg']               = 'ok';
@@ -741,9 +747,15 @@ class ModelOpenbayEbay extends Model{
 			$this->load->model('module/openstock');
 
 			//get the options list for this product
-			$opts = $this->model_module_openstock->getVariants($product_id);
-			reset($opts);
-			$variant_data['option_list'] = base64_encode(serialize($opts[key($opts)]['opts']));
+			$options = $this->model_module_openstock->getVariants($product_id);
+
+			echo '<pre>';
+			print_r($options);
+			echo '</pre>';
+			die();
+
+			reset($options);
+			$variant_data['option_list'] = base64_encode(serialize($options[key($option_values)]['opts']));
 
 			$variant_data['groups']      = $data['optGroupArray'];
 			$variant_data['related']     = $data['optGroupRelArray'];

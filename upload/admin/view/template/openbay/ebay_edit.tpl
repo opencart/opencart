@@ -49,25 +49,25 @@
             <div class="form-group stdMatrix">
               <label class="col-sm-2 control-label" for="qty-instock"><?php echo $entry_stock_store; ?></label>
               <div class="col-sm-2">
-                <input type="text" name="qty_instock" id="qty-instock" class="form-control" disabled="disabled" />
-                <span class="help-block"><?php echo $help_stock_store; ?></span> </div>
+              <input type="text" name="qty_instock" id="qty-instock" class="form-control" disabled="disabled" />
+              <span class="help-block"><?php echo $help_stock_store; ?></span> </div>
             </div>
             <div class="form-group stdMatrix">
               <label class="col-sm-2 control-label" for="qty-listed"><?php echo $entry_stock_listed; ?></label>
               <div class="col-sm-2">
-                <input type="text" name="qty_listed" id="qty-listed" class="form-control" disabled="disabled" />
-                <span class="help-block"><?php echo $help_stock_listed; ?></span> </div>
+              <input type="text" name="qty_listed" id="qty-listed" class="form-control" disabled="disabled" />
+              <span class="help-block"><?php echo $help_stock_listed; ?></span> </div>
             </div>
             <div class="form-group stdMatrix">
               <label class="col-sm-2 control-label"><?php echo $entry_stock_reserve; ?></label>
               <div class="col-sm-2">
-                <input type="text" name="qty_reserve" value="0" id="qty-reserve" class="form-control" onkeyup="updateReserveMessage();" />
-                <span class="help-block"><?php echo $help_stock_reserve; ?></span> </div>
+              <input type="text" name="qty_reserve" value="0" id="qty-reserve" class="form-control" onkeyup="updateReserveMessage();" />
+              <span class="help-block"><?php echo $help_stock_reserve; ?></span> </div>
             </div>
             <div class="form-group" id="variantMatrix">
               <label class="col-sm-2 control-label"><?php echo $entry_stock_matrix_active; ?></label>
               <div class="col-sm-10">
-                <table class="table table-bordered table-hover">
+                <table class="table table-striped table-bordered table-hover">
                   <thead>
                     <tr>
                       <td class="text-center"><?php echo $column_sku; ?></td>
@@ -80,18 +80,17 @@
                     </tr>
                   </thead>
                   <tbody id="matrix-active">
-                  <input type="hidden" name="variant" value="1" />
-                  <input type="hidden" name="optGroupArray" value="" id="optGroupArray" />
-                  <input type="hidden" name="optGroupRelArray" value="" id="optGroupRelArray" />
-                    </tbody>
-
+                    <input type="hidden" name="variant" value="1" />
+                    <input type="hidden" name="optGroupArray" value="" id="optGroupArray" />
+                    <input type="hidden" name="optGroupRelArray" value="" id="optGroupRelArray" />
+                  </tbody>
                 </table>
               </div>
             </div>
             <div class="form-group" id="variantMatrixInactive" style="display:none;">
               <label class="col-sm-2 control-label"><?php echo $entry_stock_matrix_inactive; ?></label>
               <div class="col-sm-10">
-                <table class="table table-bordered table-hover">
+                <table class="table table-striped table-bordered table-hover">
                   <thead>
                     <tr>
                       <th class="text-center"><?php echo $column_sku; ?></th>
@@ -167,16 +166,28 @@
 
                                 $('#matrix-active').append('<input type="hidden" name="opt['+i+'][sku]" value="'+v.ebay.SKU+'" />');
 
-                                html +='<tr>';
-                                html +='<input type="hidden" name="varPriceExCount" class="varPriceExCount" value="'+i+'" />';
-                                html +='<td class="text-center">'+v.local.sku+'</td>';
-                                html +='<td class="text-center">'+v.local.stock+'</td>';
-                                html +='<td class="text-center">'+v.ebay.Quantity+'</td>';
-                                html +='<td class="text-center"><input type="text" name="opt['+i+'][reserve]" value="'+v.local.reserve+'" class="text-center form-control" /></td>';
-                                html +='<td class="text-left">'+v.local.combi+'</td>';
-                                html +='<td class="text-left"><input type="text" name="opt['+i+'][price]" value="'+v.ebay.StartPrice+'" value="0" class="text-center form-control" /></td>';
-                                html +='<td class="text-left"><input type="hidden" name="opt['+i+'][active]" value="0" /><input type="checkbox" name="opt['+i+'][active]" value="1" checked="checked" /></td>';
-                                html +='</tr>';
+                                html += '<tr class="success">';
+                                html += '<input type="hidden" name="varPriceExCount" class="varPriceExCount" value="'+i+'" />';
+                                html += '<td class="text-center">';
+                                  if (v.local.sku == '') {
+                                    html += '<span class="label label-danger"><?php echo $error_no_sku; ?></span>';
+                                  } else {
+                                    html += v.local.sku;
+                                  }
+                                html += '</td>';
+                                html += '<td class="text-center">';
+                                  if (v.local.stock < 1) {
+                                    html += '<span class="label label-danger">' + v.local.stock + '</span>';
+                                  } else {
+                                    html += v.local.stock;
+                                  }
+                                html += '</td>';
+                                html += '<td class="text-center">'+v.ebay.Quantity+'</td>';
+                                html += '<td class="text-center"><input type="text" name="opt['+i+'][reserve]" value="'+v.local.reserve+'" class="text-center form-control" /></td>';
+                                html += '<td class="text-left">'+v.local.combination+'</td>';
+                                html += '<td class="text-left"><input type="text" name="opt['+i+'][price]" value="'+v.ebay.StartPrice+'" value="0" class="text-center form-control" /></td>';
+                                html += '<td class="text-center"><input type="hidden" name="opt['+i+'][active]" value="0" /><input type="checkbox" name="opt['+i+'][active]" value="1" checked="checked" /></td>';
+                                html += '</tr>';
 
                                 $('#matrix-active').append(html);
 
@@ -185,30 +196,38 @@
 
                             if (data.data.variant.data.optionsinactive != false){
                                 $('#variantMatrixInactive').show();
-
                                 $.each(data.data.variant.data.optionsinactive, function( k, v ) {
                                     $('#matrix-active').append('<input type="hidden" name="opt['+i+'][sku]" value="'+v.local.sku+'" />');
                                     html = '';
-
-                                    html +='<tr>';
-                                    html +='<input type="hidden" name="varPriceExCount" class="varPriceExCount" value="'+i+'" />';
-                                    html +='<td class="text-center">'+ v.local.sku+ '</td>';
-                                    html +='<td class="text-center">'+ v.local.stock+ '</td>';
-                                    html +='<td class="text-center"><input type="text" name="opt['+i+'][reserve]" value="'+v.local.reserve+'" class="text-center form-control"/></td>';
-                                    html +='<td class="text-left">'+v.local.combi+'</td>';
-                                    html +='<td class="text-left"><input type="text" name="opt['+i+'][price]" value="'+ v.local.price+'" value="0" class="text-center form-control" /></td>';
-                                    html +='<td class="text-left"><input type="hidden" name="opt['+i+'][active]" value="0" /><input type="checkbox" name="opt['+i+'][active]" value="1" /></td>';
-                                    html +='</tr>';
+                                    html += '<tr class="warning">';
+                                    html += '<input type="hidden" name="varPriceExCount" class="varPriceExCount" value="'+i+'" />';
+                                    html += '<td class="text-center">';
+                                      if (v.local.sku == '') {
+                                        html += '<span class="label label-danger"><?php echo $error_no_sku; ?></span>';
+                                      } else {
+                                        html += v.local.sku;
+                                      }
+                                    html += '</td>';
+                                    html += '<td class="text-center">';
+                                    if (v.local.stock < 1) {
+                                      html += '<span class="label label-danger">' + v.local.stock + '</span>';
+                                    } else {
+                                      html += v.local.stock;
+                                    }
+                                    html += '</td>';
+                                    html += '<td class="text-center"><input type="text" name="opt['+i+'][reserve]" value="'+v.local.reserve+'" class="text-center form-control"/></td>';
+                                    html += '<td class="text-left">'+v.local.combination+'</td>';
+                                    html += '<td class="text-left"><input type="text" name="opt['+i+'][price]" value="'+ v.local.price+'" value="0" class="text-center form-control" /></td>';
+                                    html += '<td class="text-center"><input type="hidden" name="opt['+i+'][active]" value="0" /><input type="checkbox" name="opt['+i+'][active]" value="1" /></td>';
+                                    html += '</tr>';
 
                                     $('#matrix-inactive').append(html);
 
                                     i++;
                                 });
                             }
-
                         }else{
                             $('#variantMatrix').remove();
-
                             $('#price').val(data.data.listing.price);
                             $('#qty-instock').val(data.data.stock.quantity);
                             $('#qty_local').val(data.data.stock.quantity);
@@ -273,7 +292,6 @@
         }
     });
     });
-
   $('#button-remove-link').on('click', function () {
     var pass = confirm("<?php echo $text_confirm; ?>");
 
@@ -294,7 +312,6 @@
       });
     }
   });
-
   $('#button-end-item').on('click', function () {
     var pass = confirm("<?php echo $text_confirm; ?>");
 
@@ -304,7 +321,7 @@
       if (id !== '') {
         $.ajax({
           type: 'GET',
-          url: 'index.php?route=openbay/ebay/endItem&token=<?php echo $token; ?>&id=' + id,
+          url: 'index.php?route=openbay/ebay/endItem&token=<?php echo $token; ?>&id= ' + id,
           dataType: 'json',
           success: function (data) {
             if (data.error == true) {

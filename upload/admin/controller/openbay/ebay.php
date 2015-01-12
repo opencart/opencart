@@ -1078,7 +1078,7 @@ class ControllerOpenbayEbay extends Controller {
 				}
 
 				foreach($product_info['options'] as $option) {
-					$option['base64'] = base64_encode(serialize($option['opts']));
+					$option['base64'] = base64_encode(serialize($option['option_values']));
 					$option_reserve = $this->openbay->ebay->getReserve($this->request->get['product_id'], $item_id, $option['sku']);
 					if ($option_reserve == false) {
 						$option['reserve'] = 0;

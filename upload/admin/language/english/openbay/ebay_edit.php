@@ -46,3 +46,4 @@ $_['help_stock_reserve']			= 'This is the maximum level of stock on eBay (0 = no
 // Error
 $_['error_ended']					= 'The linked listing has ended, you are unable to edit it. You should remove the link.';
 $_['error_reserve']					= 'You cannot set the reserve higher than the local stock';
+$_['error_no_sku']          		= 'No SKU found!';

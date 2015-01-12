@@ -404,7 +404,7 @@ class ModelOpenbayAmazon extends Model {
 	}
 
 	public function getProductLinks($product_id = 'all') {
-		$query = "SELECT `apl`.`amazon_sku`, `apl`.`product_id`, `pd`.`name` as `product_name`, `p`.`model`, `p`.`sku`, `apl`.`var`, '' as `combi`
+		$query = "SELECT `apl`.`amazon_sku`, `apl`.`product_id`, `pd`.`name` as `product_name`, `p`.`model`, `p`.`sku`, `apl`.`var`, '' as `combination`
 			FROM `" . DB_PREFIX . "amazon_product_link` as `apl`
 			LEFT JOIN `" . DB_PREFIX . "product_description` as `pd`
 			ON `apl`.`product_id` = `pd`.`product_id`
@@ -445,7 +445,7 @@ class ModelOpenbayAmazon extends Model {
 		if ($this->openbay->addonLoad('openstock')) {
 
 			$rows = $this->db->query("
-				SELECT `p`.`product_id`, `p`.`model`, `p`.`sku`, `pd`.`name` as `product_name`, '' as `var`, '' as `combi`, `p`.`has_option`
+				SELECT `p`.`product_id`, `p`.`model`, `p`.`sku`, `pd`.`name` as `product_name`, '' as `var`, '' as `combination`, `p`.`has_option`
 				FROM `" . DB_PREFIX . "product` as `p`
 				LEFT JOIN `" . DB_PREFIX . "product_description` as `pd`
 				ON `p`.`product_id` = `pd`.`product_id`
@@ -473,7 +473,7 @@ class ModelOpenbayAmazon extends Model {
 			}
 		} else {
 			$result = $this->db->query("
-				SELECT `p`.`product_id`, `p`.`model`, `p`.`sku`, `pd`.`name` as `product_name`, '' as `var`, '' as `combi`
+				SELECT `p`.`product_id`, `p`.`model`, `p`.`sku`, `pd`.`name` as `product_name`, '' as `var`, '' as `combination`
 				FROM `" . DB_PREFIX . "product` as `p`
 				LEFT JOIN `" . DB_PREFIX . "product_description` as `pd`
 				ON `p`.`product_id` = `pd`.`product_id`

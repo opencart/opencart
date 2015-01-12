@@ -29,7 +29,7 @@ $_['entry_stock_matrix_active']		= 'Stock matrix (active)';
 $_['entry_stock_matrix_inactive']	= 'Stock matrix (inactive)';
 
 // Column
-$_['column_sku']					= 'Var code / SKU';
+$_['column_sku']					= 'SKU';
 $_['column_stock_listed']			= 'Listed';
 $_['column_stock_reserve']			= 'Reserve';
 $_['column_stock_total']			= 'In stock';

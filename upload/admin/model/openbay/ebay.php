@@ -749,8 +749,7 @@ class ModelOpenbayEbay extends Model{
 			//get the options list for this product
 			$options = $this->model_module_openstock->getVariants($product_id);
 
-			reset($options);
-			$variant_data['option_list'] = base64_encode(serialize($options[key($option_values)]['option_values']));
+			$variant_data['option_list'] = base64_encode(serialize($options[key($options)]['option_values']));
 
 			$variant_data['groups']      = $data['optGroupArray'];
 			$variant_data['related']     = $data['optGroupRelArray'];
@@ -785,10 +784,16 @@ class ModelOpenbayEbay extends Model{
 					}
 				}
 
-				$variant_data['opt'][$k]['sku']     = $opt['sku'];
-				$variant_data['opt'][$k]['qty']     = $stock['quantity'];
-				$variant_data['opt'][$k]['price']   = number_format($opt['price'], 2, '.', '');
-				$variant_data['opt'][$k]['active']  = $opt['active'];
+				$variant_data['opt'][$k]['sku']     	= $opt['sku'];
+				$variant_data['opt'][$k]['qty']     	= $stock['quantity'];
+				$variant_data['opt'][$k]['price']   	= number_format($opt['price'], 2, '.', '');
+				$variant_data['opt'][$k]['active']  	= $opt['active'];
+
+				$variant_option_values = $this->model_module_openstock->getVariant($opt['product_option_variant_id']);
+
+				foreach ($variant_option_values as $variant_option_value) {
+					$variant_data['opt'][$k]['specifics'][] = array('name' => $variant_option_value['option_name'], 'value' => $variant_option_value['option_value_name']);
+				}
 			}
 
 			$this->openbay->ebay->log('editSave() - Debug - ' . serialize($variant_data));

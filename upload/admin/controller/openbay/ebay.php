@@ -1100,14 +1100,14 @@ class ControllerOpenbayEbay extends Controller {
 						}
 					}
 
-					$options[] = array('ebay' => $ebay_listing, 'local' => $option, 'sku' => $option['sku']);
+					$options[] = array('ebay' => $ebay_listing, 'local' => $option, 'sku' => $option['sku'], 'product_option_variant_id' => $option['product_option_variant_id']);
 				}
 
 				//unset variants that dont appear on eBay
-				$notlive = array();
+				$options_inactive = array();
 				foreach($options as $k => $option) {
 					if (empty($option['ebay'])) {
-						$notlive[] = $options[$k];
+						$options_inactive[] = $options[$k];
 						unset($options[$k]);
 					}
 				}
@@ -1115,20 +1115,18 @@ class ControllerOpenbayEbay extends Controller {
 				$variant = array(
 					'variant' => 1,
 					'data' => array(
-						'grp_info' => array(
-							'optGroupArray' => base64_encode(serialize($t)),
-							'optGroupRelArray' => base64_encode(serialize($t_rel)),
+						'group_information' => array(
+							'option_groups' => base64_encode(serialize($t)),
+							'option_group_relationship' => base64_encode(serialize($t_rel)),
 						),
 						'options' => $options,
-						'optionsinactive' => $notlive
+						'options_inactive' => $options_inactive
 					)
 				);
 
 			} else {
 				$variant = array('variant' => 0, 'data' => '');
 			}
-
-			$data['product'] = $product_info;
 
 			if ($reserve == false) {
 				$reserve = 0;
@@ -1138,7 +1136,8 @@ class ControllerOpenbayEbay extends Controller {
 				'listing'   => $listings,
 				'stock'     => $stock,
 				'reserve'   => $reserve,
-				'variant'   => $variant
+				'variant'   => $variant,
+				'product'	=> $product_info
 			);
 
 			if (!empty($listings)) {

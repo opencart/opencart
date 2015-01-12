@@ -778,35 +778,43 @@ final class Ebay {
 				$stock = false;
 
 				foreach ($variants as $option) {
-					if ($option['stock'] > 0 || $stock == true) {
-						$stock = true;
-					}
-
-					if ($v == 0) {
-						//create a php version of the option element array to use on server side
-						$variant_data['option_list'] = base64_encode(serialize($option['option_values']));
-					}
-
-					// PRODUCT RESERVE LEVELS FOR VARIANT ITEMS (DOES NOT PASS THROUGH NORMAL SYSTEM)
-					$reserve = $this->getReserve($product_id, $item_id, $option['var']);
-					if ($reserve != false) {
-						$this->log('productUpdateListen() / Variant (' . $option['var'] . ') - Reserve stock: ' . $reserve);
-
-						if ($option['stock'] > $reserve) {
-							$this->log('putStockUpdate() - Stock (' . $option['stock'] . ') is larger than reserve (' . $reserve . '), setting level to reserve');
-							$option['stock'] = $reserve;
+					if (!empty($option['sku'])) {
+						if ($option['stock'] > 0 || $stock == true) {
+							$stock = true;
 						}
+
+						if ($v == 0) {
+							//create a php version of the option element array to use on server side
+							$variant_data['option_list'] = base64_encode(serialize($option['option_values']));
+						}
+
+						// PRODUCT RESERVE LEVELS FOR VARIANT ITEMS (DOES NOT PASS THROUGH NORMAL SYSTEM)
+						$reserve = $this->getReserve($product_id, $item_id, $option['sku']);
+						if ($reserve != false) {
+							$this->log('productUpdateListen() / Variant (' . $option['sku'] . ') - Reserve stock: ' . $reserve);
+
+							if ($option['stock'] > $reserve) {
+								$this->log('putStockUpdate() - Stock (' . $option['stock'] . ') is larger than reserve (' . $reserve . '), setting level to reserve');
+								$option['stock'] = $reserve;
+							}
+						}
+
+						$variant_data['opt'][$v]['sku'] = $option['sku'];
+						$variant_data['opt'][$v]['qty'] = $option['stock'];
+						$variant_data['opt'][$v]['active'] = 0;
+
+						if ($option['active'] == 1) {
+							$variant_data['opt'][$v]['active'] = 1;
+						}
+
+						$variant_option_values = $this->model_module_openstock->getVariant($option['product_option_variant_id']);
+
+						foreach($variant_option_values as $variant_option_value) {
+							$variant_data['opt'][$v]['specifics'][] = array('name' => $variant_option_value['option_name'], 'value' => $variant_option_value['option_value_name']);
+						}
+
+						$v++;
 					}
-
-					$variant_data['opt'][$v]['sku']     = $option['var'];
-					$variant_data['opt'][$v]['qty']     = $option['stock'];
-					$variant_data['opt'][$v]['active']  = 0;
-
-					if ($option['active'] == 1) {
-						$variant_data['opt'][$v]['active'] = 1;
-					}
-
-					$v++;
 				}
 
 				$variant_data['groups'] = base64_encode(serialize($variant_data['groups']));
@@ -814,14 +822,16 @@ final class Ebay {
 				$variant_data['id'] = $item_id;
 
 				//send to the api to process
-				if ($stock == true) {
-					$this->log('productUpdateListen() - Sending to API');
-					$response = $this->call('item/reviseStockVariants', $variant_data);
-					return $response;
-				} else {
-					$this->log('productUpdateListen() - Ending item');
+				if (!empty($variant_data['opt'])) {
+					if ($stock == true) {
+						$this->log('productUpdateListen() - Sending to API');
+						$response = $this->call('item/reviseStockVariants', $variant_data);
 
-					$this->endItem($item_id);
+						return $response;
+					} else {
+						$this->log('productUpdateListen() - Ending item');
+						$this->endItem($item_id);
+					}
 				}
 			} else {
 				$this->decideEbayStockAction($product_id, $data['quantity'], $data['subtract']);

@@ -81,8 +81,8 @@
                   </thead>
                   <tbody id="matrix-active">
                     <input type="hidden" name="variant" value="1" />
-                    <input type="hidden" name="optGroupArray" value="" id="optGroupArray" />
-                    <input type="hidden" name="optGroupRelArray" value="" id="optGroupRelArray" />
+                    <input type="hidden" name="optGroupArray" value="" id="option-groups" />
+                    <input type="hidden" name="optGroupRelArray" value="" id="option-group-relationship" />
                   </tbody>
                 </table>
               </div>
@@ -113,6 +113,7 @@
                 <a class="btn btn-danger" id="button-end-item"><i class="fa fa-minus-circle"></i> <?php echo $button_end; ?></a>
                 <a class="btn btn-danger" id="button-remove-link"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></a>
                 <a class="btn btn-primary" href="<?php echo $view_link; ?>" target="_BLANK" data-toggle="tooltip" title="<?php echo $button_view; ?>"><i class="fa fa-external-link"></i></a>
+                <a class="btn btn-primary" id="button-edit-item" data-toggle="tooltip" title="<?php echo $button_edit; ?>" style="display:none;"><i class="fa fa-pencil"></i></a>
                 <a class="btn btn-primary" id="button-save" data-toggle="tooltip" title="<?php echo $button_save; ?>"><i class="fa fa-save"></i></a>
               </div>
             </div>
@@ -155,8 +156,8 @@
 
                         if (data.data.variant.variant == 1){
                             $('.stdMatrix').remove();
-                            $('#optGroupArray').val(data.data.variant.data.grp_info.optGroupArray);
-                            $('#optGroupRelArray').val(data.data.variant.data.grp_info.optGroupRelArray);
+                            $('#option-groups').val(data.data.variant.data.group_information.option_groups);
+                            $('#option-group-relationship').val(data.data.variant.data.group_information.option_group_relationship);
 
                             var i = 0;
                             var html = '';
@@ -164,10 +165,11 @@
                             $.each(data.data.variant.data.options, function( k, v ) {
                                 html = '';
 
-                                $('#matrix-active').append('<input type="hidden" name="opt['+i+'][sku]" value="'+v.ebay.SKU+'" />');
+                                $('#matrix-active').append('<input type="hidden" name="opt[' + i + '][sku]" value="' + v.ebay.SKU + '" />');
 
                                 html += '<tr class="success">';
-                                html += '<input type="hidden" name="varPriceExCount" class="varPriceExCount" value="'+i+'" />';
+                                html += '<input type="hidden" name="varPriceExCount" class="varPriceExCount" value="' + i + '" />';
+                                html += '<input type="hidden" name="opt[' + i + '][product_option_variant_id]" value="' + v.product_option_variant_id + '" />';
                                 html += '<td class="text-center">';
                                   if (v.local.sku == '') {
                                     html += '<span class="label label-danger"><?php echo $error_no_sku; ?></span>';
@@ -182,11 +184,11 @@
                                     html += v.local.stock;
                                   }
                                 html += '</td>';
-                                html += '<td class="text-center">'+v.ebay.Quantity+'</td>';
-                                html += '<td class="text-center"><input type="text" name="opt['+i+'][reserve]" value="'+v.local.reserve+'" class="text-center form-control" /></td>';
-                                html += '<td class="text-left">'+v.local.combination+'</td>';
-                                html += '<td class="text-left"><input type="text" name="opt['+i+'][price]" value="'+v.ebay.StartPrice+'" value="0" class="text-center form-control" /></td>';
-                                html += '<td class="text-center"><input type="hidden" name="opt['+i+'][active]" value="0" /><input type="checkbox" name="opt['+i+'][active]" value="1" checked="checked" /></td>';
+                                html += '<td class="text-center">' + v.ebay.Quantity + '</td>';
+                                html += '<td class="text-center"><input type="text" name="opt[' + i + '][reserve]" value="' + v.local.reserve + '" class="text-center form-control" /></td>';
+                                html += '<td class="text-left">' + v.local.combination + '</td>';
+                                html += '<td class="text-left"><input type="text" name="opt[' + i + '][price]" value="' + v.ebay.StartPrice + '" value="0" class="text-center form-control" /></td>';
+                                html += '<td class="text-center"><input type="hidden" name="opt[' + i + '][active]" value="0" /><input type="checkbox" name="opt[' + i + '][active]" value="1" checked="checked" /></td>';
                                 html += '</tr>';
 
                                 $('#matrix-active').append(html);
@@ -194,13 +196,14 @@
                                 i++;
                             });
 
-                            if (data.data.variant.data.optionsinactive != false){
+                            if (data.data.variant.data.options_inactive != false){
                                 $('#variantMatrixInactive').show();
-                                $.each(data.data.variant.data.optionsinactive, function( k, v ) {
-                                    $('#matrix-active').append('<input type="hidden" name="opt['+i+'][sku]" value="'+v.local.sku+'" />');
+                                $.each(data.data.variant.data.options_inactive, function( k, v ) {
+                                    $('#matrix-active').append('<input type="hidden" name="opt[' + i + '][sku]" value="' + v.local.sku + '" />');
                                     html = '';
                                     html += '<tr class="warning">';
-                                    html += '<input type="hidden" name="varPriceExCount" class="varPriceExCount" value="'+i+'" />';
+                                    html += '<input type="hidden" name="varPriceExCount" class="varPriceExCount" value="' + i + '" />';
+                                    html += '<input type="hidden" name="opt[' + i + '][product_option_variant_id]" value="' + v.product_option_variant_id + '" />';
                                     html += '<td class="text-center">';
                                       if (v.local.sku == '') {
                                         html += '<span class="label label-danger"><?php echo $error_no_sku; ?></span>';
@@ -215,10 +218,14 @@
                                       html += v.local.stock;
                                     }
                                     html += '</td>';
-                                    html += '<td class="text-center"><input type="text" name="opt['+i+'][reserve]" value="'+v.local.reserve+'" class="text-center form-control"/></td>';
-                                    html += '<td class="text-left">'+v.local.combination+'</td>';
-                                    html += '<td class="text-left"><input type="text" name="opt['+i+'][price]" value="'+ v.local.price+'" value="0" class="text-center form-control" /></td>';
-                                    html += '<td class="text-center"><input type="hidden" name="opt['+i+'][active]" value="0" /><input type="checkbox" name="opt['+i+'][active]" value="1" /></td>';
+                                    html += '<td class="text-center"><input type="text" name="opt[' + i + '][reserve]" value="' + v.local.reserve + '" class="text-center form-control"/></td>';
+                                    html += '<td class="text-left">' + v.local.combination + '</td>';
+                                    if (v.local.price == 0) {
+                                      html += '<td class="text-left"><input type="text" name="opt[' + i + '][price]" value="' + parseFloat(data.data.product.price).toFixed(2) + '" value="0" class="text-center form-control" /></td>';
+                                    } else {
+                                      html += '<td class="text-left"><input type="text" name="opt[' + i + '][price]" value="' + v.local.price + '" value="0" class="text-center form-control" /></td>';
+                                    }
+                                    html += '<td class="text-center"><input type="hidden" name="opt[' + i + '][active]" value="0" /><input type="checkbox" name="opt[' + i + '][active]" value="1" /></td>';
                                     html += '</tr>';
 
                                     $('#matrix-inactive').append(html);
@@ -269,17 +276,19 @@
 
           if (data.Errors){
               if (data.Errors.ShortMessage){
-                  $('#error_box').append('<p class="m3">'+data.Errors.LongMessage+'</p>');
+                  $('#error_box').append('<p class="m3">' + data.Errors.LongMessage + '</p>');
               }else{
                   $.each(data.Errors, function(key,val){
-                      $('#error_box').append('<p class="m3">'+val.LongMessage+'</p>');
+                      $('#error_box').append('<p class="m3">' + val.LongMessage + '</p>');
                   });
               }
               $('#error_box').fadeIn('slow');
           }
 
           if (data.Ack !== 'Failure'){
-              $('#form-success').fadeIn('slow');
+            $('#form-success').fadeIn('slow');
+            $('#button-save').hide();
+            $('#button-edit-item').show();
           }
 
           $('#form').hide();
@@ -340,7 +349,9 @@
       }
     }
   });
-
+  $('#button-edit-item').on('click', function () {
+    window.location.href = window.location.href;
+  });
   $(document).ready(function() {
     load();
   });

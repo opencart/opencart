@@ -531,7 +531,7 @@ class ModelOpenbayEbayProduct extends Model {
 		foreach ($variants as $option) {
 			if ($v == 0) {
 				//create a php version of the option element array to use on server side
-				$variant_data['option_list'] = base64_encode(serialize($option['opts']));
+				$variant_data['option_list'] = base64_encode(serialize($option['option_values']));
 			}
 
 			$variant_data['opt'][$v]['sku']     = $option['var'];

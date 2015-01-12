@@ -750,7 +750,7 @@ class ModelOpenbayEbay extends Model{
 			$options = $this->model_module_openstock->getVariants($product_id);
 
 			reset($options);
-			$variant_data['option_list'] = base64_encode(serialize($options[key($option_values)]['opts']));
+			$variant_data['option_list'] = base64_encode(serialize($options[key($option_values)]['option_values']));
 
 			$variant_data['groups']      = $data['optGroupArray'];
 			$variant_data['related']     = $data['optGroupRelArray'];

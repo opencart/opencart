@@ -330,7 +330,6 @@
                   </div>
                 </div>
                 <div class="tab-pane" id="tab-international-standard">
-                  <div class="alert alert-info"><?php echo $text_eu; ?></div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-standard-eu-rate"><span data-toggle="tooltip" title="<?php echo $help_rate; ?>"><?php echo $entry_rate_eu; ?></span></label>
                     <div class="col-sm-10">
@@ -365,6 +364,7 @@
                   </div>
                 </div>
                 <div class="tab-pane" id="tab-international-tracked-signed">
+                  <div class="alert alert-info"><?php echo $text_tracked_signed; ?></div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-tracked-signed-eu-rate"><span data-toggle="tooltip" title="<?php echo $help_rate; ?>"><?php echo $entry_rate_eu; ?></span></label>
                     <div class="col-sm-10">

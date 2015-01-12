@@ -390,10 +390,10 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$data['cancel'] = $this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['add_item_link_ajax'] = $this->url->link('openbay/amazon/addItemLinkAjax', 'token=' . $this->session->data['token'], 'SSL');
-		$data['remove_item_link_ajax'] = $this->url->link('openbay/amazon/removeItemLinkAjax', 'token=' . $this->session->data['token'], 'SSL');
-		$data['get_item_links_ajax'] = $this->url->link('openbay/amazon/getItemLinksAjax', 'token=' . $this->session->data['token'], 'SSL');
-		$data['get_unlinked_items_ajax'] = $this->url->link('openbay/amazon/getUnlinkedItemsAjax', 'token=' . $this->session->data['token'], 'SSL');
+		$data['add_item_link_ajax'] = $this->url->link('openbay/amazon/addLink', 'token=' . $this->session->data['token'], 'SSL');
+		$data['remove_item_link_ajax'] = $this->url->link('openbay/amazon/deleteLink', 'token=' . $this->session->data['token'], 'SSL');
+		$data['get_item_links_ajax'] = $this->url->link('openbay/amazon/getLinks', 'token=' . $this->session->data['token'], 'SSL');
+		$data['get_unlinked_items_ajax'] = $this->url->link('openbay/amazon/getUnlinked', 'token=' . $this->session->data['token'], 'SSL');
 		$data['get_openstock_options_ajax'] = $this->url->link('openbay/amazon/getOpenstockOptionsAjax', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['header'] = $this->load->controller('common/header');
@@ -485,15 +485,16 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function addItemLinkAjax() {
+	public function addLink() {
 		if (isset($this->request->get['product_id']) && isset($this->request->get['amazon_sku'])) {
 			$this->load->model('openbay/amazon');
 
 			$amazon_sku = $this->request->get['amazon_sku'];
 			$product_id = $this->request->get['product_id'];
-			$var = isset($this->request->get['sku']) ? $this->request->get['sku'] : '';
+			$var = isset($this->request->get['var']) ? $this->request->get['var'] : '';
 
 			$this->model_openbay_amazon->linkProduct($amazon_sku, $product_id, $var);
+
 			$logger = new Log('amazon_stocks.log');
 			$logger->write('addItemLink() called for product id: ' . $product_id . ', amazon sku: ' . $amazon_sku . ', var: ' . $var);
 
@@ -502,13 +503,16 @@ class ControllerOpenbayAmazon extends Controller {
 				$this->load->model('tool/image');
 				$this->load->model('module/openstock');
 				$option_stocks = $this->model_module_openstock->getVariants($product_id);
+
 				$quantity_data = array();
+
 				foreach($option_stocks as $option_stock) {
 					if (isset($option_stock['sku']) && $option_stock['sku'] == $var) {
 						$quantity_data[$amazon_sku] = $option_stock['stock'];
 						break;
 					}
 				}
+
 				if (!empty($quantity_data)) {
 					$logger->write('Updating quantities with data: ' . print_r($quantity_data, true));
 					$this->openbay->amazon->updateQuantities($quantity_data);
@@ -528,7 +532,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->response->setOutput($json);
 	}
 
-	public function removeItemLinkAjax() {
+	public function deleteLink() {
 		if (isset($this->request->get['amazon_sku'])) {
 			$this->load->model('openbay/amazon');
 
@@ -545,7 +549,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->response->setOutput($json);
 	}
 
-	public function getItemLinksAjax() {
+	public function getLinks() {
 		$this->load->model('openbay/amazon');
 		$this->load->model('catalog/product');
 
@@ -555,7 +559,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->response->setOutput($json);
 	}
 
-	public function getUnlinkedItemsAjax() {
+	public function getUnlinked() {
 		$this->load->model('openbay/amazon');
 		$this->load->model('catalog/product');
 

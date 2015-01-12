@@ -503,8 +503,7 @@ class ModelOpenbayEbay extends Model{
 	}
 
 	public function getShippingLocations() {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "ebay_shipping_location` WHERE `shipping_location` != 'None' AND `shipping_location` != 'Worldwide'";
-		$qry = $this->db->query($sql);
+		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_shipping_location` WHERE `shipping_location` != 'None' AND `shipping_location` != 'Worldwide'");
 
 		if ($qry->num_rows) {
 			$json = array();

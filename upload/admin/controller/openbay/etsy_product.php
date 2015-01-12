@@ -111,6 +111,12 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			$data['error_warning'] = '';
 		}
 
+		if ($this->openbay->addonLoad('openstock') && $product_info['has_option'] == 1) {
+			$data['error_variant'] = $this->language->get('error_variant');
+		} else {
+			$data['error_variant'] = '';
+		}
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

@@ -1228,14 +1228,14 @@ final class Ebay {
 					$this->db->query("
 						INSERT INTO `" . DB_PREFIX . "ebay_shipping` SET
 							`description`               = '" . $this->db->escape((string)$service['Description']) . "',
-							`InternationalService`      = '" . $this->db->escape($service['InternationalService']) . "',
+							`InternationalService`      = '" . (int)$service['InternationalService'] . "',
 							`ShippingService`           = '" . $this->db->escape((string)$service['ShippingService']) . "' ,
 							`ShippingServiceID`         = '" . (int)$service['ShippingServiceID'] . "',
 							`ServiceType`               = '" . $this->db->escape(strtolower(implode(',', $service['ServiceType']))) . "' ,
-							`ValidForSellingFlow`       = '" . $this->db->escape((string)$service['ValidForSellingFlow']) . "',
+							`ValidForSellingFlow`       = '" . (int)$service['ValidForSellingFlow'] . "',
 							`ShippingCategory`          = '" . $this->db->escape((string)$service['ShippingCategory']) . "' ,
-							`ShippingTimeMin`           = '" . $min . "',
-							`ShippingTimeMax`           = '" . $max . "'
+							`ShippingTimeMin`           = '" . (int)$min . "',
+							`ShippingTimeMax`           = '" . (int)$max . "'
 					");
 				}
 				$this->log('Populated ebay_shipping table');

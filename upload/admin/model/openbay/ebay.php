@@ -488,14 +488,13 @@ class ModelOpenbayEbay extends Model{
 		return $response;
 	}
 
-	public function getShippingService($loc, $type) {
-		$json   = array();
-		$sql    = "SELECT * FROM `" . DB_PREFIX . "ebay_shipping` WHERE `InternationalService` = '" . $loc . "' AND `ValidForSellingFlow` = '1' AND `ServiceType` LIKE '%" . $this->db->escape($type) . "%'";
-		$qry    = $this->db->query($sql);
+	public function getShippingService($international, $type) {
+		$json = array();
+		$result = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_shipping` WHERE `InternationalService` = '" . (int)$international . "' AND `ValidForSellingFlow` = '1' AND `ServiceType` LIKE '%" . $this->db->escape($type) . "%'");
 
-		if ($qry->num_rows) {
+		if ($result->num_rows) {
 			$json['service'] = array();
-			foreach ($qry->rows as $row) {
+			foreach ($result->rows as $row) {
 				$json['service'][$row['ShippingService']] = $row;
 			}
 		}
@@ -516,11 +515,6 @@ class ModelOpenbayEbay extends Model{
 		} else {
 			return false;
 		}
-	}
-
-	public function getShippingServiceName($loc, $id) {
-		$qry = $this->db->query("SELECT `description` FROM `" . DB_PREFIX . "ebay_shipping` WHERE `ShippingService` = '" . $this->db->escape($id) . "'");
-		return $qry->row['description'];
 	}
 
 	public function getEbayCategorySpecifics($category_id) {

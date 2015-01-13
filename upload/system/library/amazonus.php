@@ -124,7 +124,7 @@ class Amazonus {
 				$amazon_sku_rows = $this->getLinkedSkus($product_id, $variant['sku']);
 
 				foreach($amazon_sku_rows as $amazon_sku_row) {
-					$quantity_data[$amazon_sku_row['amazon_sku']] = $variant['stock'];
+					$quantity_data[$amazon_sku_row['amazonus_sku']] = $variant['stock'];
 				}
 			}
 

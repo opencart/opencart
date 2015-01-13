@@ -116,6 +116,12 @@ final class Openbay {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "extension WHERE `type` = 'openbay'");
 
 		foreach ($query->rows as $result) {
+			if ($result['code'] == 'amazon') {
+				$result['code'] = 'openbay_amazon';
+			}
+			if ($result['code'] == 'amazonus') {
+				$result['code'] = 'openbay_amazonus';
+			}
 			$this->installed_markets[] = $result['code'];
 		}
 	}

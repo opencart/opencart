@@ -103,7 +103,7 @@ class ModelOpenbayAmazonus extends Model {
 	}
 
 	public function patch() {
-		if ($this->config->get('amazonus_status') == 1) {
+		if ($this->config->get('openbay_amazonus_status') == 1) {
 			$this->load->model('setting/setting');
 
 			$settings = $this->model_setting_setting->getSetting('openbay_amazonus');

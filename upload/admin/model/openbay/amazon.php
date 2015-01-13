@@ -105,7 +105,7 @@ class ModelOpenbayAmazon extends Model {
 	}
 
 	public function patch() {
-		if ($this->config->get('amazon_status') == 1) {
+		if ($this->config->get('openbay_amazon_status') == 1) {
 			/*
 			 * Manual flag to true is set when the user runs the patch method manually
 			 * false is when the module is updated using the update system

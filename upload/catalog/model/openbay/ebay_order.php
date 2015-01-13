@@ -622,11 +622,11 @@ class ModelOpenbayEbayOrder extends Model{
 
 			// loop over products
 			foreach($order_products as $order_product) {
-				$product = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$order_product['product_id'] . "' LIMIT 1")->row;
+				$product = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$order_product['product_id'] . "' LIMIT 1")->row;
 
 				if ($this->openbay->addonLoad('openstock') && (isset($product['has_option']) && $product['has_option'] == 1)) {
 
-					
+
 					/**
 					 *
 					if ($this->openbay->addonLoad('openstock') == true) {

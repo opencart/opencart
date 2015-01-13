@@ -469,80 +469,90 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function getVariants() {
-		$json = array();
+		$variants = array();
+
 		if ($this->openbay->addonLoad('openstock') && isset($this->request->get['product_id'])) {
 			$this->load->model('module/openstock');
 			$this->load->model('tool/image');
-			$json = $this->model_module_openstock->getVariants($this->request->get['product_id']);
+			$variants = $this->model_module_openstock->getVariants($this->request->get['product_id']);
 		}
-		if (empty($json)) {
-			$json = false;
+
+		if (empty($variants)) {
+			$variants = false;
+		} else {
+			foreach ($variants as $key => $variant) {
+				if ($variant['sku'] == '') {
+					unset($variants[$key]);
+				}
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->setOutput(json_encode($variants));
 	}
 
 	public function addLink() {
-		if (isset($this->request->get['product_id']) && isset($this->request->get['amazonus_sku'])) {
-			$amazonus_sku = $this->request->get['amazonus_sku'];
+		if (isset($this->request->get['product_id']) && isset($this->request->get['amazon_sku'])) {
+			$this->load->model('openbay/amazonus');
+
+			$amazon_sku = $this->request->get['amazon_sku'];
 			$product_id = $this->request->get['product_id'];
 			$var = isset($this->request->get['var']) ? $this->request->get['var'] : '';
-		} else {
-			$this->response->addHeader('Content-Type: application/json');
-			$this->response->setOutput(json_encode('error'));
-			return;
-		}
 
-		$this->load->model('openbay/amazonus');
-		$this->model_openbay_amazonus->linkProduct($amazonus_sku, $product_id, $var);
+			$this->model_openbay_amazonus->linkProduct($amazon_sku, $product_id, $var);
 
-		$logger = new Log('amazonus_stocks.log');
-		$logger->write('addItemLink() called for product id: ' . $product_id . ', amazonus sku: ' . $amazonus_sku . ', var: ' . $var);
+			$logger = new Log('amazonus_stocks.log');
+			$logger->write('addItemLink() called for product id: ' . $product_id . ', amazon sku: ' . $amazon_sku . ', var: ' . $var);
 
-		if ($var != '' && $this->openbay->addonLoad('openstock')) {
-			$logger->write('Using openStock');
-			$this->load->model('tool/image');
-			$this->load->model('module/openstock');
-			$option_stocks = $this->model_module_openstock->getVariants($product_id);
-			$quantity_data = array();
+			if ($var != '' && $this->openbay->addonLoad('openstock')) {
+				$logger->write('Using openStock');
+				$this->load->model('tool/image');
+				$this->load->model('module/openstock');
+				$option_stocks = $this->model_module_openstock->getVariants($product_id);
 
-			foreach($option_stocks as $option_stock) {
-				if (isset($option_stock['sku']) && $option_stock['sku'] == $var) {
-					$quantity_data[$amazonus_sku] = $option_stock['stock'];
-					break;
+				$quantity_data = array();
+
+				foreach($option_stocks as $option_stock) {
+					if (isset($option_stock['sku']) && $option_stock['sku'] == $var) {
+						$quantity_data[$amazon_sku] = $option_stock['stock'];
+						break;
+					}
 				}
+
+				if (!empty($quantity_data)) {
+					$logger->write('Updating quantities with data: ' . print_r($quantity_data, true));
+					$this->openbay->amazonus->updateQuantities($quantity_data);
+				} else {
+					$logger->write('No quantity data will be posted . ');
+				}
+			} else {
+				$this->openbay->amazonus->putStockUpdateBulk(array($product_id));
 			}
 
-			if (!empty($quantity_data)) {
-				$logger->write('Updating quantities with data: ' . print_r($quantity_data, true));
-				$this->openbay->amazonus->updateQuantities($quantity_data);
-			} else {
-				$logger->write('No quantity data will be posted . ');
-			}
+			$json = json_encode('ok');
 		} else {
-			$this->openbay->amazonus->putStockUpdateBulk(array($product_id));
+			$json = json_encode('error');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode('ok'));
-		$logger->write('addItemLink() exiting');
+		$this->response->setOutput($json);
 	}
 
 	public function deleteLink() {
-		if (isset($this->request->get['amazonus_sku'])) {
-			$amazonus_sku = $this->request->get['amazonus_sku'];
-		} else {
-			$this->response->addHeader('Content-Type: application/json');
-			$this->response->setOutput(json_encode('error'));
-			return;
-		}
-		$this->load->model('openbay/amazonus');
+		if (isset($this->request->get['amazon_sku'])) {
+			$this->load->model('openbay/amazonus');
 
-		$this->model_openbay_amazonus->removeProductLink($amazonus_sku);
+			$amazon_sku = $this->request->get['amazon_sku'];
+
+			$this->model_openbay_amazonus->removeProductLink($amazon_sku);
+
+			$json = json_encode('ok');
+		} else {
+			$json = json_encode('error');
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode('ok'));
+		$this->response->setOutput($json);
 	}
 
 	public function getLinks() {

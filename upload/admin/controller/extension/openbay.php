@@ -1802,7 +1802,15 @@ class ControllerExtensionOpenbay extends Controller {
 
 	public function eventDeleteProduct($product_id) {
 		foreach ($this->openbay->installed_markets as $market) {
-			if ($this->config->get($market . '_status') == 1) {
+			if ($market == 'amazon') {
+				$status = $this->config->get('openbay_amazon_status');
+			} elseif ($market == 'amazonus') {
+				$status = $this->config->get('openbay_amazon_status');
+			} else {
+				$status = $this->config->get($market . '_status');
+			}
+
+			if ($status == 1) {
 				$this->openbay->{$market}->deleteProduct($product_id);
 			}
 		}
@@ -1810,7 +1818,15 @@ class ControllerExtensionOpenbay extends Controller {
 
 	public function eventEditProduct() {
 		foreach ($this->openbay->installed_markets as $market) {
-			if ($this->config->get($market . '_status') == 1) {
+			if ($market == 'amazon') {
+				$status = $this->config->get('openbay_amazon_status');
+			} elseif ($market == 'amazonus') {
+				$status = $this->config->get('openbay_amazon_status');
+			} else {
+				$status = $this->config->get($market . '_status');
+			}
+
+			if ($status == 1) {
 				$this->openbay->{$market}->productUpdateListen($this->request->get['product_id'], $this->request->post);
 			}
 		}

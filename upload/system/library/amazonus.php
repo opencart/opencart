@@ -120,7 +120,7 @@ class Amazonus {
 
 			$quantity_data = array();
 
-			foreach ($variants as $variant) {
+			foreach ($data['variant'] as $variant) {
 				$amazon_sku_rows = $this->getLinkedSkus($product_id, $variant['sku']);
 
 				foreach($amazon_sku_rows as $amazon_sku_row) {

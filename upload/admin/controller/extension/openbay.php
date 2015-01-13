@@ -1827,6 +1827,7 @@ class ControllerExtensionOpenbay extends Controller {
 			}
 
 			if ($status == 1) {
+				// get the new stock level from post data and build array of [variant id] => stock and pass as 2nd param
 				$this->openbay->{$market}->productUpdateListen($this->request->get['product_id'], $this->request->post);
 			}
 		}

@@ -104,7 +104,7 @@ function loadLinks() {
           rows += '<td class="text-left">' + json[i]['combination'] + '</td>';
         }
 
-        rows += '<td class="text-left">' + json[i]['amazon_sku'] + '</td>';
+        rows += '<td class="text-left">' + json[i]['amazonus_sku'] + '</td>';
         rows += '<td class="text-center"><a data-toggle="tooltip" data-original-title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="removeLink(this, \'' + json[i]['amazon_sku'] + '\');"><i class="fa fa-times-circle"></i></a></td>';
         rows += '</tr>';
       }

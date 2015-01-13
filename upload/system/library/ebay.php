@@ -434,28 +434,6 @@ final class Ebay {
 		}
 	}
 
-	public function addOrder($order_id) {
-		$this->log('addOrder() - Order id:' . $order_id . ' passed');
-		if (!$this->isEbayOrder($order_id)) {
-			if ($this->openbay->addonLoad('openstock') == true) {
-				$this->log('addOrder() - Loop over products (with OpenStock)');
-
-				$os_array = $this->osProducts($order_id);
-
-				foreach ($os_array as $pass) {
-					$this->ebaySaleStockReduce((int)$pass['pid'], (string)$pass['var']);
-				}
-			} else {
-				$order_product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
-
-				$this->log('addOrder() - Loop over products (no OpenStock)');
-				foreach ($order_product_query->rows as $product) {
-					$this->ebaySaleStockReduce((int)$product['product_id']);
-				}
-			}
-		}
-	}
-
 	private function osProducts($order_id) {
 		$this->log('osProducts() - Getting products from');
 		$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");

@@ -428,4 +428,14 @@ final class Openbay {
 
 		return $product_option_data;
 	}
+
+	public function getOrderProducts($order_id) {
+		$order_products = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
+
+		if($order_products->num_rows > 0) {
+			return $order_products->rows;
+		} else {
+			return array();
+		}
+	}
 }

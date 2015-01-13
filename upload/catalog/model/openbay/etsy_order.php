@@ -265,4 +265,14 @@ class ModelOpenbayEtsyOrder extends Model {
 
 		return $order_id;
 	}
+
+	public function addOrder($order_id) {
+		if(!$this->openbay->etsy->orderFind($order_id)) {
+			$order_products = $this->openbay->getOrderProducts($order_id);
+
+			foreach ($order_products as $order_product) {
+				$this->openbay->etsy->productUpdateListen($order_product['product_id'], array());
+			}
+		}
+	}
 }

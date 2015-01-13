@@ -578,6 +578,10 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function eventAddOrder($order_id) {
-		$this->openbay->amazon->addOrder($order_id);
+		if (!empty($order_id)) {
+			$this->load->model('openbay/amazon_order');
+
+			$this->model_openbay_amazon_order->addOrder($order_id);
+		}
 	}
 }

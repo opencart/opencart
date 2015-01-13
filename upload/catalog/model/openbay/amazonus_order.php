@@ -200,4 +200,22 @@ class ModelOpenbayAmazonusOrder extends Model {
 
 		return $options;
 	}
+
+	public function addOrder($order_id) {
+		if ($this->config->get('openbay_amazonus_status') != 1) {
+			return;
+		}
+
+		$this->load->library('log');
+		$logger = new Log('amazonus_stocks.log');
+		$logger->write('addOrder() called with order id: ' . $order_id);
+
+		$order_products = $this->openbay->getOrderProducts($order_id);
+
+		foreach($order_products as $order_product) {
+			$this->openbay->amazonus->productUpdateListen($order_product);
+		}
+
+		$logger->write('addOrder() exiting');
+	}
 }

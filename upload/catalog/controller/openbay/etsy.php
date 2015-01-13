@@ -59,6 +59,10 @@ class ControllerOpenbayEtsy extends Controller {
 	}
 
 	public function eventAddOrder($order_id) {
-		$this->openbay->etsy->addOrder($order_id);
+		if (!empty($order_id)) {
+			$this->load->model('openbay/etsy_order');
+
+			$this->model_openbay_etsy_order->addOrder($order_id);
+		}
 	}
 }

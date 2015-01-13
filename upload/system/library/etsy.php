@@ -285,18 +285,6 @@ final class Etsy {
 		}
 	}
 
-	public function addOrder($order_id) {
-		if(!$this->orderFind($order_id)) {
-			$query = $this->db->query("SELECT `p`.`product_id` FROM `" . DB_PREFIX . "order_product` `op` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `op`.`product_id` = `p`.`product_id` WHERE `op`.`order_id` = '" . (int)$order_id . "'");
-
-			if($query->num_rows > 0) {
-				foreach ($query->rows as $product) {
-					$this->productUpdateListen((int)$product['product_id'], array());
-				}
-			}
-		}
-	}
-
 	public function orderDelete($order_id) {
 		if(!$this->orderFind($order_id)) {
 			$query = $this->db->query("SELECT `p`.`product_id` FROM `" . DB_PREFIX . "order_product` `op` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `op`.`product_id` = `p`.`product_id` WHERE `op`.`order_id` = '" . (int)$order_id . "'");

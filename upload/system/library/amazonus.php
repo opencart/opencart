@@ -151,12 +151,12 @@ class Amazonus {
 			$logger->write('addOrder() exiting');
 		}
 	}
-	
+
 	public function productUpdateListen($product_id, $data) {
 		$logger = new Log('amazon_stocks.log');
 		$logger->write('productUpdateListen called for product id: ' . $product_id);
 
-		$product = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "product` WHERE `p`.`product_id` = '" . (int)$product_id . "' LIMIT 1")->row;
+		$product = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "' LIMIT 1")->row;
 
 		if ($this->openbay->addonLoad('openstock') && (isset($product['has_option']) && $product['has_option'] == 1)) {
 			$logger->write('openStock found installed and product has options.');

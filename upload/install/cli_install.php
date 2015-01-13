@@ -202,6 +202,7 @@ function write_config_files($options) {
 	$output .= 'define(\'DIR_IMAGE\', \'' . DIR_OPENCART . 'image/\');' . "\n";
 	$output .= 'define(\'DIR_CACHE\', \'' . DIR_OPENCART . 'system/cache/\');' . "\n";
 	$output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_OPENCART . 'system/download/\');' . "\n";
+	$output .= 'define(\'DIR_UPLOAD\', \'' . DIR_OPENCART . 'system/upload/\');' . "\n";
 	$output .= 'define(\'DIR_MODIFICATION\', \'' . DIR_OPENCART . 'system/modification/\');' . "\n";
 	$output .= 'define(\'DIR_LOGS\', \'' . DIR_OPENCART . 'system/logs/\');' . "\n\n";
 

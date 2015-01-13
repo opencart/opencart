@@ -429,10 +429,12 @@ class ModelOpenbayAmazon extends Model {
 			foreach ($product_links as $key => $product_link) {
 				$variants = $this->model_module_openstock->getVariants($product_link['product_id']);
 
-				foreach($variants as $variant) {
-					if ($variant['sku'] == $product_link['sku']) {
-						$product_links[$key]['combination'] = $variant['combination'];
-						break;
+				if (!empty($variants)) {
+					foreach($variants as $variant) {
+						if ($variant['sku'] == $product_link['var']) {
+							$product_links[$key]['combination'] = $variant['combination'];
+							break;
+						}
 					}
 				}
 			}

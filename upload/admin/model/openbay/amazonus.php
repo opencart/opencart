@@ -405,27 +405,30 @@ class ModelOpenbayAmazonus extends Model {
 			$query .= "WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 		}
 
-		$rows = $this->db->query($query)->rows;
+		$product_links = $this->db->query($query)->rows;
 
-		$this->load->library('amazonus');
+		$this->load->library('amazon');
+
 		if ($this->openbay->addonLoad('openstock')) {
 			$this->load->model('module/openstock');
 			$this->load->model('tool/image');
-			$rows_with_var = array();
-			foreach($rows as $row) {
-				$stock_opts = $this->model_module_openstock->getVariants($row['product_id']);
-				foreach($stock_opts as $opt) {
-					if ($opt['sku'] == $row['sku']) {
-						$row['combination'] = $opt['combination'];
-						$row['sku'] = $opt['sku'];
-						break;
+
+			foreach ($product_links as $key => $product_link) {
+				$variants = $this->model_module_openstock->getVariants($product_link['product_id']);
+
+				if (!empty($variants)) {
+					foreach($variants as $variant) {
+						if ($variant['sku'] == $product_link['var']) {
+							$product_links[$key]['combination'] = $variant['combination'];
+							break;
+						}
 					}
 				}
-				$rows_with_var[] = $row;
 			}
-			return $rows_with_var;
+
+			return $product_links;
 		} else {
-			return $rows;
+			return $product_links;
 		}
 	}
 

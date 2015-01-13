@@ -335,7 +335,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 		$data['text_has_saved_listings'] = $this->language->get('text_has_saved_listings');
 		$data['button_create_new_listing'] = $this->language->get('button_create_new_listing');
 		$data['button_remove_links'] = $this->language->get('button_remove_links');
-		$data['button_return'] = $this->language->get('button_return');
+		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_saved_listings'] = $this->language->get('button_saved_listings');
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_model'] = $this->language->get('column_model');

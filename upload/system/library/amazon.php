@@ -156,25 +156,33 @@ class Amazon {
 		$logger = new Log('amazon_stocks.log');
 		$logger->write('productUpdateListen called for product id: ' . $product_id);
 
-		if ($this->openbay->addonLoad('openstock') && (isset($data['has_option']) && $data['has_option'] == 1)) {
+		$product = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "product` WHERE `p`.`product_id` = '" . (int)$product_id . "' LIMIT 1")->row;
+
+		if ($this->openbay->addonLoad('openstock') && (isset($product['has_option']) && $product['has_option'] == 1)) {
 			$logger->write('openStock found installed and product has options.');
+
+			$variants = $this->model_module_openstock->getVariants($product_id);
+
 			$quantity_data = array();
-			foreach($data['product_option_stock'] as $opt_stock) {
-				$amazon_sku_rows = $this->getLinkedSkus($product_id, $opt_stock['var']);
+
+			foreach ($variants as $variant) {
+				$amazon_sku_rows = $this->getLinkedSkus($product_id, $variant['var']);
+
 				foreach($amazon_sku_rows as $amazon_sku_row) {
-					$quantity_data[$amazon_sku_row['amazon_sku']] = $opt_stock['stock'];
+					$quantity_data[$amazon_sku_row['amazon_sku']] = $variant['stock'];
 				}
 			}
+
 			if(!empty($quantity_data)) {
 				$logger->write('Updating quantities with data: ' . print_r($quantity_data, true));
 				$this->updateQuantities($quantity_data);
 			} else {
 				$logger->write('No quantity data need to be posted.');
 			}
-
 		} else {
 			$this->putStockUpdateBulk(array($product_id));
 		}
+
 		$logger->write('productUpdateListen() exiting');
 	}
 

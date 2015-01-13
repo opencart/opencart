@@ -405,7 +405,7 @@ class ModelOpenbayAmazon extends Model {
 
 	public function getProductLinks($product_id = 'all') {
 		$query = "
-			SELECT `apl`.`amazon_sku`, `apl`.`product_id`, `pd`.`name` as `product_name`, `p`.`model`, `p`.`sku`, `apl`.`var`, '' as `combination`
+			SELECT `apl`.`product_id`, `pd`.`name` as `product_name`, `p`.`model`, `apl`.`amazon_sku`, `p`.`sku`, `apl`.`var`, '' as `combination`
 			FROM `" . DB_PREFIX . "amazon_product_link` as `apl`
 			LEFT JOIN `" . DB_PREFIX . "product_description` as `pd`
 			ON `apl`.`product_id` = `pd`.`product_id`
@@ -418,7 +418,7 @@ class ModelOpenbayAmazon extends Model {
 			$query .= "WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 		}
 
-		$rows = $this->db->query($query)->rows;
+		$product_links = $this->db->query($query)->rows;
 
 		$this->load->library('amazon');
 
@@ -426,40 +426,20 @@ class ModelOpenbayAmazon extends Model {
 			$this->load->model('module/openstock');
 			$this->load->model('tool/image');
 
-			$rows_with_var = array();
-
-			foreach ($rows as $row) {
-				$variants = $this->model_module_openstock->getVariants($row['product_id']);
+			foreach ($product_links as $key => $product_link) {
+				$variants = $this->model_module_openstock->getVariants($product_link['product_id']);
 
 				foreach($variants as $variant) {
-					if ($variant['sku'] == $row['sku']) {
-						$row['combination'] = $variant['combination'];
-						$row['sku'] = $variant['sku'];
+					if ($variant['sku'] == $product_link['sku']) {
+						$product_links[$key]['combination'] = $variant['combination'];
 						break;
 					}
 				}
-				$rows_with_var[] = $row;
 			}
-			return $rows_with_var;
 
-			// name
-			// model number
-
-			// sku nmber
-
-
-			// variat combi
-			// variant sku
-
-
-			// amazn sku
-
-
-
-
-
+			return $product_links;
 		} else {
-			return $rows;
+			return $product_links;
 		}
 	}
 

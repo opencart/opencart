@@ -35,29 +35,31 @@
     <?php } ?>
     <table class="table table-bordered table-hover">
       <thead>
-        <tr>
-          <th class="text-left"><?php echo $column_name; ?></th>
-          <th class="text-left"><?php echo $column_model; ?></th>
-          <th class="text-left"><?php echo $column_combination; ?></th>
-          <th class="text-left"><?php echo $column_sku; ?></th>
-          <th class="text-left"><?php echo $column_amazon_sku; ?></th>
-        </tr>
+      <tr>
+        <th class="text-left"><?php echo $column_name; ?></th>
+        <th class="text-left"><?php echo $column_sku; ?></th>
+        <th class="text-left"><?php echo $column_model; ?></th>
+        <th class="text-left"><?php echo $column_combination; ?></th>
+        <th class="text-left"><?php echo $column_sku_variant; ?></th>
+        <th class="text-left"><?php echo $column_amazon_sku; ?></th>
+      </tr>
       </thead>
       <tbody>
         <?php if (!empty($product_links)) { ?>
-        <?php foreach ($product_links as $link) { ?>
-        <tr>
-          <td class="text-left"><?php echo $link['product_name']; ?></td>
-          <td class="text-left"><?php echo $link['model']; ?></td>
-          <td class="text-left"><?php echo $link['combination']; ?></td>
-          <td class="text-left"><?php echo $link['sku']; ?></td>
-          <td class="text-left"><?php echo $link['amazon_sku']; ?></td>
-        </tr>
-        <?php } ?>
-        <?php } else { ?>
-        <tr>
-          <td colspan="5" class="text-center"><?php echo $text_no_results; ?></td>
-        </tr>
+          <?php foreach ($product_links as $link) { ?>
+            <tr>
+              <td class="text-left"><?php echo $link['product_name']; ?></td>
+              <td class="text-left"><?php echo $link['sku']; ?></td>
+              <td class="text-left"><?php echo $link['model']; ?></td>
+              <td class="text-left"><?php echo $link['combination']; ?></td>
+              <td class="text-left"><?php echo $link['var']; ?></td>
+              <td class="text-left"><?php echo $link['amazon_sku']; ?></td>
+            </tr>
+            <?php } ?>
+          <?php } else { ?>
+            <tr>
+              <td colspan="6" class="text-center"><?php echo $text_no_results; ?></td>
+            </tr>
         <?php } ?>
       </tbody>
     </table>

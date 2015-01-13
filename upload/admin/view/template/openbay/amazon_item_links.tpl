@@ -57,15 +57,16 @@
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <th class="text-center" colspan="6"><h4><?php echo $text_linked_items; ?></h4></th>
+            <th class="text-center" colspan="7"><h4><?php echo $text_linked_items; ?></h4></th>
           </tr>
         </thead>
         <thead>
           <tr>
             <th><?php echo $text_name; ?></th>
+            <th><?php echo $text_sku; ?></th>
             <th><?php echo $text_model; ?></th>
             <th><?php echo $text_combination; ?></th>
-            <th><?php echo $text_sku; ?></th>
+            <th><?php echo $text_sku_variant; ?></th>
             <th><?php echo $text_amazon_sku; ?></th>
             <th class="text-center"><?php echo $text_action; ?></th>
           </tr>
@@ -91,9 +92,10 @@
         for (i in json) {
           rows += '<tr>';
           rows += '<td class="text-left">' + json[i]['product_name'] + '</td>';
+          rows += '<td class="text-left">' + json[i]['sku'] + '</td>';
           rows += '<td class="text-left">' + json[i]['model'] + '</td>';
           rows += '<td class="text-left">' + json[i]['combination'] + '</td>';
-          rows += '<td class="text-left">' + json[i]['sku'] + '</td>';
+          rows += '<td class="text-left">' + json[i]['var'] + '</td>';
           rows += '<td class="text-left">' + json[i]['amazon_sku'] + '</td>';
           rows += '<td class="text-center"><a data-toggle="tooltip" data-original-title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="removeLink(this, \'' + json[i]['amazon_sku'] + '\');"><i class="fa fa-times-circle"></i></a></td>';
           rows += '</tr>';

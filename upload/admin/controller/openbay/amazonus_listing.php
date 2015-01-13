@@ -342,6 +342,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 		$data['column_combination'] = $this->language->get('column_combination');
 		$data['column_sku'] = $this->language->get('column_sku');
 		$data['column_amazon_sku'] = $this->language->get('column_amazon_sku');
+		$data['column_sku_variant'] = $this->language->get('column_sku_variant');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

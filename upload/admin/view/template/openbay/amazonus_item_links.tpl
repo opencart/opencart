@@ -63,9 +63,9 @@
           <thead>
           <tr>
             <th><?php echo $text_name; ?></th>
+            <th><?php echo $text_sku; ?></th>
             <th><?php echo $text_model; ?></th>
             <th><?php echo $text_combination; ?></th>
-            <th><?php echo $text_sku; ?></th>
             <th><?php echo $text_amazon_sku; ?></th>
             <th class="text-center"><?php echo $text_action; ?></th>
           </tr>
@@ -91,9 +91,19 @@ function loadLinks() {
       for (i in json) {
         rows += '<tr>';
         rows += '<td class="text-left">' + json[i]['product_name'] + '</td>';
+        if (json[i]['var'] != '') {
+          rows += '<td class="text-left">' + json[i]['var'] + '</td>';
+        } else {
+          rows += '<td class="text-left">' + json[i]['sku'] + '</td>';
+        }
         rows += '<td class="text-left">' + json[i]['model'] + '</td>';
-        rows += '<td class="text-left">' + json[i]['combination'] + '</td>';
-        rows += '<td class="text-left">' + json[i]['sku'] + '</td>';
+
+        if (typeof json[i]['combination'] == 'undefined') {
+          rows += '<td class="text-left">-</td>';
+        } else {
+          rows += '<td class="text-left">' + json[i]['combination'] + '</td>';
+        }
+
         rows += '<td class="text-left">' + json[i]['amazon_sku'] + '</td>';
         rows += '<td class="text-center"><a data-toggle="tooltip" data-original-title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="removeLink(this, \'' + json[i]['amazon_sku'] + '\');"><i class="fa fa-times-circle"></i></a></td>';
         rows += '</tr>';
@@ -110,7 +120,7 @@ $('#button-load').bind('click', function(e) {
   e.preventDefault();
 
   $.ajax({
-    url: '<?php echo html_entity_decode($get_unlinked_items_ajax); ?>',
+    url: '<?php echo html_entity_decode($link_get_unlinked_items); ?>',
     type: 'get',
     dataType: 'json',
     beforeSend: function () {
@@ -170,7 +180,7 @@ $('#button-load').bind('click', function(e) {
 
 function addLink(button, product_id, amazon_sku, variation) {
   $.ajax({
-    url: '<?php echo html_entity_decode($add_item_link_ajax); ?>',
+    url: '<?php echo html_entity_decode($link_add_item); ?>',
     type: 'get',
     dataType: 'json',
     async: 'false',
@@ -192,7 +202,7 @@ function addLink(button, product_id, amazon_sku, variation) {
 
 function removeLink(button, amazon_sku) {
   $.ajax({
-    url: '<?php echo html_entity_decode($remove_item_link_ajax); ?>',
+    url: '<?php echo html_entity_decode($link_remove_item); ?>',
     type: 'get',
     dataType: 'json',
     data: 'amazon_sku=' + encodeURIComponent(amazon_sku),
@@ -270,8 +280,8 @@ function addNewLinkAutocomplete() {
   var product_id = $('#new-product-id').val();
   var amazon_sku = $('#new-amazon-sku').val();
   var variation = '';
-  if ($('#openstock-option-selector').length != 0) {
-    variation = $('#openstock-option-selector').val();
+  if ($('#variant-option-selector').length != 0) {
+    variation = $('#variant-option-selector').val();
   }
 
   addLink('#add-new-button', product_id, amazon_sku, variation);
@@ -280,7 +290,7 @@ function addNewLinkAutocomplete() {
   $('#new-amazon-sku').val('');
   $('#new-product-id').val('');
   $('#new-product-id').attr('label', '');
-  $('#openstock-option-selector').remove();
+  $('.variant-option-selector').remove();
 }
 
 $('#new-product').autocomplete({
@@ -308,21 +318,21 @@ $('#new-product').autocomplete({
 
 function openstockCheck(product_id) {
   $.ajax({
-    url: '<?php echo html_entity_decode($get_openstock_options_ajax); ?>',
+    url: '<?php echo html_entity_decode($link_get_variants); ?>',
     dataType: 'json',
     type: 'get',
     data: 'product_id=' + product_id,
     success: function (data) {
       if (!data) {
-        $("#openstock-option-selector").remove();
+        $(".variant-option-selector").remove();
         return;
       }
 
-      var optionHtml = '<select id="openstock-option-selector" class="form-control"><option value=""/>';
+      var optionHtml = '<div class="form-group variant-option-selector" style="margin-top:5px;"><select id="variant-option-selector" class="form-control variant-option-selector"><option value=""/>';
       for (var i in data) {
         optionHtml += '<option value="' + data[i]['sku'] + '">' + data[i]['combination'] + '</option>';
       }
-      optionHtml += '</select>';
+      optionHtml += '</select></div>';
       $('#new-product').after(optionHtml);
     },
     error: function (xhr, ajaxOptions, thrownError) {

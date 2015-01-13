@@ -390,11 +390,11 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$data['cancel'] = $this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['add_item_link_ajax'] = $this->url->link('openbay/amazon/addLink', 'token=' . $this->session->data['token'], 'SSL');
-		$data['remove_item_link_ajax'] = $this->url->link('openbay/amazon/deleteLink', 'token=' . $this->session->data['token'], 'SSL');
+		$data['link_add_item'] = $this->url->link('openbay/amazon/addLink', 'token=' . $this->session->data['token'], 'SSL');
+		$data['link_remove_item'] = $this->url->link('openbay/amazon/deleteLink', 'token=' . $this->session->data['token'], 'SSL');
 		$data['link_get_items'] = $this->url->link('openbay/amazon/getLinks', 'token=' . $this->session->data['token'], 'SSL');
-		$data['get_unlinked_items_ajax'] = $this->url->link('openbay/amazon/getUnlinked', 'token=' . $this->session->data['token'], 'SSL');
-		$data['get_openstock_options_ajax'] = $this->url->link('openbay/amazon/getOpenstockOptionsAjax', 'token=' . $this->session->data['token'], 'SSL');
+		$data['link_get_unlinked_items'] = $this->url->link('openbay/amazon/getUnlinked', 'token=' . $this->session->data['token'], 'SSL');
+		$data['link_get_variants'] = $this->url->link('openbay/amazon/getVariants', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -470,19 +470,27 @@ class ControllerOpenbayAmazon extends Controller {
 		return false;
 	}
 
-	public function getOpenstockOptionsAjax() {
-		$json = array();
+	public function getVariants() {
+		$variants = array();
+
 		if ($this->openbay->addonLoad('openstock') && isset($this->request->get['product_id'])) {
 			$this->load->model('module/openstock');
 			$this->load->model('tool/image');
-			$json = $this->model_module_openstock->getVariants($this->request->get['product_id']);
+			$variants = $this->model_module_openstock->getVariants($this->request->get['product_id']);
 		}
-		if (empty($json)) {
-			$json = false;
+
+		if (empty($variants)) {
+			$variants = false;
+		} else {
+			foreach ($variants as $key => $variant) {
+				if ($variant['sku'] == '') {
+					unset($variants[$key]);
+				}
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+		$this->response->setOutput(json_encode($variants));
 	}
 
 	public function addLink() {

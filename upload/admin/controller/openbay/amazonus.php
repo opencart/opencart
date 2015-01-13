@@ -390,7 +390,7 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$data['add_item_link_ajax'] = $this->url->link('openbay/amazonus/addLink', 'token=' . $this->session->data['token'], 'SSL');
 		$data['remove_item_link_ajax'] = $this->url->link('openbay/amazonus/deleteLink', 'token=' . $this->session->data['token'], 'SSL');
-		$data['get_item_links_ajax'] = $this->url->link('openbay/amazonus/getLinks', 'token=' . $this->session->data['token'], 'SSL');
+		$data['link_get_items'] = $this->url->link('openbay/amazonus/getLinks', 'token=' . $this->session->data['token'], 'SSL');
 		$data['get_unlinked_items_ajax'] = $this->url->link('openbay/amazonus/getUnlinked', 'token=' . $this->session->data['token'], 'SSL');
 		$data['get_openstock_options_ajax'] = $this->url->link('openbay/amazonus/getOpenstockOptionsAjax', 'token=' . $this->session->data['token'], 'SSL');
 

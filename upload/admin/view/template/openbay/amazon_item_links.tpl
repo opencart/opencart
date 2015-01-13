@@ -82,7 +82,7 @@
 
   function loadLinks() {
     $.ajax({
-      url: '<?php echo html_entity_decode($get_item_links_ajax); ?>',
+      url: '<?php echo html_entity_decode($link_get_items); ?>',
       type: 'get',
       dataType: 'json',
       data: 'product_id=' + encodeURIComponent($('#new-product-id').val()) + '&amazon_sku=' + encodeURIComponent($('#new-amazon-sku').val()),

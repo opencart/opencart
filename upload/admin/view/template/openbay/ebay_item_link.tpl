@@ -104,37 +104,37 @@
             </tr>
           </thead>
           <tr>
-            <td class="text-left" colspan="8" id="checking-linked-items"><a class="btn btn-primary" id="load-usage"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_text_loading_items; ?></a></td>
+            <td class="text-left" colspan="9" id="checking-linked-items"><a class="btn btn-primary" id="load-usage"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_text_loading_items; ?></a></td>
           </tr>
           <tbody style="display:none;" id="show-linked-items">
             <?php foreach ($linked_items as $id => $item) { ?>
-          <input type="hidden" name="ebay_qty_<?php echo $id; ?>" value="" id="ebay-qty-<?php echo $id; ?>" />
-          <input type="hidden" name="store_qty_<?php echo $id; ?>" value="<?php echo $item['qty']; ?>" id="store-qty-<?php echo $id; ?>" />
-          <input type="hidden" name="reserve_qty_<?php echo $id; ?>" value="<?php echo $item['reserve']; ?>" id="reserve-qty-<?php echo $id; ?>" />
-          <input type="hidden" name="item_id[]" id="item-id-<?php echo $id; ?>" value="<?php echo $id; ?>" class="item-id"  />
-          <input type="hidden" name="product_id[]" id="product-id-<?php echo $id; ?>" value="<?php echo $item['product_id']; ?>" />
-          <input type="hidden" name="options" id="options-<?php echo $id; ?>" value="<?php echo (int)$item['options']; ?>" />
-          <tr id="row-<?php echo $id; ?>">
-            <td class="text-left"><a href="<?php echo $item['link_edit']; ?>" target="_BLANK"><?php echo $item['name']; ?></a></td>
-            <td class="text-center"><a href="<?php echo $item['link_ebay']; ?>" target="_BLANK"><?php echo $id; ?></a></td>
-            <?php if ($item['options'] == 0) { ?>
-            <td class="text-center"><?php echo $item['allocated']; ?></td>
-            <td class="text-center"><?php echo $item['qty']; ?></td>
-            <td class="text-center"><?php echo $item['reserve']; ?></td>
-            <td id="text-qty-<?php echo $id; ?>" class="text-center"></td>
-            <td class="text-center"><i class="fa fa-times-circle text-danger"></i></td>
-            <?php } else { ?>
-            <td class="text-center">-</td>
-            <td class="text-center"><?php foreach ($item['options'] as $option) { echo $option['stock'] .' x ' . $option['combination'] . '<br />'; } ?></td>
-            <td id="text-qty-<?php echo $id; ?>" class="text-center"></td>
-            <td class="text-center" align="center"><i class="fa fa-check-circle text-success"></i></td>
+              <input type="hidden" name="ebay_qty_<?php echo $id; ?>" value="" id="ebay-qty-<?php echo $id; ?>" />
+              <input type="hidden" name="store_qty_<?php echo $id; ?>" value="<?php echo $item['qty']; ?>" id="store-qty-<?php echo $id; ?>" />
+              <input type="hidden" name="reserve_qty_<?php echo $id; ?>" value="<?php echo $item['reserve']; ?>" id="reserve-qty-<?php echo $id; ?>" />
+              <input type="hidden" name="item_id[]" id="item-id-<?php echo $id; ?>" value="<?php echo $id; ?>" class="item-id"  />
+              <input type="hidden" name="product_id[]" id="product-id-<?php echo $id; ?>" value="<?php echo $item['product_id']; ?>" />
+              <input type="hidden" name="options" id="options-<?php echo $id; ?>" value="<?php echo (int)$item['options']; ?>" />
+              <tr id="row-<?php echo $id; ?>">
+                <td class="text-left"><a href="<?php echo $item['link_edit']; ?>" target="_BLANK"><?php echo $item['name']; ?></a></td>
+                <td class="text-center"><a href="<?php echo $item['link_ebay']; ?>" target="_BLANK"><?php echo $id; ?></a></td>
+                <?php if ($item['options'] == 0) { ?>
+                  <td class="text-center"><?php echo $item['allocated']; ?></td>
+                  <td class="text-center"><?php echo $item['qty']; ?></td>
+                  <td class="text-center"><?php echo $item['reserve']; ?></td>
+                  <td id="text-qty-<?php echo $id; ?>" class="text-center"></td>
+                  <td class="text-center"><span class="label label-danger"><?php echo $text_no; ?></span></td>
+                <?php } else { ?>
+                  <td class="text-center">-</td>
+                  <td class="text-center"><?php foreach ($item['options'] as $option) { echo $option['stock'] .' x ' . $option['combination'] . '<br />'; } ?></td>
+                  <td></td>
+                  <td id="text-qty-<?php echo $id; ?>" class="text-center"></td>
+                  <td class="text-center" align="center"><span class="label label-success"><?php echo $text_yes; ?></span></td>
+                <?php } ?>
+                <td class="text-center" id="text-status-<?php echo $id; ?>"></td>
+                <td class="text-center" id="text-buttons-<?php echo $id; ?>"></td>
+              </tr>
             <?php } ?>
-            <td class="text-center" id="text-status-<?php echo $id; ?>"></td>
-            <td class="text-center" id="text-buttons-<?php echo $id; ?>"></td>
-          </tr>
-          <?php } ?>
-            </tbody>
-
+          </tbody>
         </table>
         <div class="pagination"><?php echo $pagination; ?></div>
       </div>
@@ -152,7 +152,7 @@
             if (json.data == '') {
               $('#checking-linked-items').hide();
               $('.pagination').hide();
-              $('#show-linked-items').html('<tr><td colspan="8" class="text-center"><?php echo $error_no_listings; ?></td></tr>').show();
+              $('#show-linked-items').html('<tr><td colspan="9" class="text-center"><?php echo $error_no_listings; ?></td></tr>').show();
             } else {
               $.each (json.data, function(key, val) {
                 key                 = String(key);
@@ -361,7 +361,7 @@
                 html_inj += '<td class="text-center"><span id="l-'+key+'-allocated"></span><input type="hidden" id="l-'+key+'-allocatedinput" /><input type="hidden" id="l-'+key+'-subtractinput" /></td>';
                 html_inj += '<td class="text-center"><span id="l-'+key+'-qtyebay">'+val.qty+'</span><input type="hidden" id="l-'+key+'-qtyebayinput" value="'+val.qty+'" /></td>';
                 html_inj += '<input type="hidden" name="variants" id="l-'+key+'-variants" value="0" />';
-                html_inj += '<td class="text-center"><img title="" alt="" src="view/image/delete.png" style="margin-top:3px;"></td>';
+                html_inj += '<td class="text-center"><span class="label label-danger"><?php echo $text_no; ?></span></td>';
             } else {
                 html_inj += '<td class="text-center"><span id="l-'+key+'-qty"></span></td>';
                 html_inj += '<td class="text-center">-</td>';
@@ -375,7 +375,7 @@
                 });
                 html_inj += '</td>';
                 html_inj += '<input type="hidden" name="variants" id="l-'+key+'-variants" value="1" />';
-                html_inj += '<td class="text-center"><img title="Success" alt="Success" src="view/image/success.png" style="margin-top:3px;"></td>';
+                html_inj += '<td class="text-center"><span class="label label-success"><?php echo $text_yes; ?></span></td>';
             }
             html_inj += '<td class="text-center"><a class="btn btn-primary" style="display:none;" onclick="saveListingLink('+key+'); return false;" id="l-'+key+'-save-button"><span><?php echo $button_save; ?></span></a></td>';
             html_inj += '</tr>';

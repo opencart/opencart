@@ -1,0 +1,23 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch is up-to-date with 'origin/master'.
+#
+# Changes to be committed:
+#	modified:   upload/admin/controller/design/layout.php
+#	modified:   upload/admin/language/english/design/layout.php
+#	modified:   upload/admin/view/template/design/layout_form.tpl
+#	modified:   upload/catalog/controller/common/footer.php
+#	modified:   upload/catalog/controller/common/header.php
+#	modified:   upload/catalog/view/javascript/common.js
+#	modified:   upload/catalog/view/theme/default/template/common/footer.tpl
+#	modified:   upload/catalog/view/theme/default/template/common/header.tpl
+#
+# Untracked files:
+#	upload/catalog/controller/common/footer_top.php
+#	upload/catalog/controller/common/header_bottom.php
+#	upload/catalog/view/theme/default/template/common/footer_top.tpl
+#	upload/catalog/view/theme/default/template/common/header_bottom.tpl
+#
+

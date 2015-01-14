@@ -1,3 +1,6 @@
+<div id="footer-top">
+	<div class="container"><?php echo $footer_top; ?></div>
+</div>
 <footer>
   <div class="container">
     <div class="row">

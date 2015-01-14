@@ -117,3 +117,6 @@
   </nav>
 </div>
 <?php } ?>
+<div id="header-bottom">
+	<div class="container"><?php echo $header_bottom; ?></div>
+</div>

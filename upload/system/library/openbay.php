@@ -438,4 +438,20 @@ final class Openbay {
 			return array();
 		}
 	}
+
+	public function getOrderProductVariant($order_id, $product_id, $order_product_id) {
+		$this->load->model('module/openstock');
+
+		$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$order_product_id . "'");
+
+		if ($order_option_query->num_rows) {
+			$options = array();
+
+			foreach ($order_option_query->rows as $option) {
+				$options[] = $option['product_option_value_id'];
+			}
+
+			return $this->model_module_openstock->getVariantByOptionValues($options, $product_id);
+		}
+	}
 }

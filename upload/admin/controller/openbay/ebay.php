@@ -616,7 +616,7 @@ class ControllerOpenbayEbay extends Controller {
 		$json = array();
 
 		if ($product['subtract'] == 1) {
-			$this->openbay->ebay->productUpdateListen($this->request->get['product_id'], $product);
+			$this->openbay->ebay->productUpdateListen($this->request->get['product_id']);
 
 			$json['error'] = false;
 			$json['msg'] = 'ok';

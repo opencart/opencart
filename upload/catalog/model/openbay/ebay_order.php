@@ -616,33 +616,17 @@ class ModelOpenbayEbayOrder extends Model{
 	public function addOrder($order_id) {
 		$this->log('addOrder() - Order id:' . $order_id . ' passed');
 		if (!$this->openbay->ebay->isEbayOrder($order_id)) {
-
-			// get the order products
 			$order_products = $this->openbay->getOrderProducts($order_id);
 
-			// loop over products
 			foreach($order_products as $order_product) {
 				$product = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$order_product['product_id'] . "' LIMIT 1")->row;
 
 				if ($this->openbay->addonLoad('openstock') && (isset($product['has_option']) && $product['has_option'] == 1)) {
+					$order_product_variant = $this->openbay->getOrderProductVariant($order_id, $order_product['product_id'], $order_product['order_product_id']);
 
-
-					/**
-					 *
-					if ($this->openbay->addonLoad('openstock') == true) {
-					$this->log('addOrder() - Loop over products (with OpenStock)');
-
-					$os_array = $this->openbay->ebay->osProducts($order_id);
-
-					foreach ($os_array as $pass) {
-					$this->ebaySaleStockReduce((int)$pass['pid'], (string)$pass['var']);
+					if (isset($order_product_variant['sku']) && $order_product_variant['sku'] != '') {
+						$this->ebaySaleStockReduce((int)$order_product['product_id'], (string)$order_product_variant['sku']);
 					}
-					}
-					 */
-
-
-
-
 				} else {
 					$this->ebaySaleStockReduce($order_product['product_id']);
 				}

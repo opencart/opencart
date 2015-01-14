@@ -131,7 +131,7 @@
                   <td class="text-center" align="center"><span class="label label-success"><?php echo $text_yes; ?></span></td>
                 <?php } ?>
                 <td class="text-center" id="text-status-<?php echo $id; ?>"></td>
-                <td class="text-center" id="text-buttons-<?php echo $id; ?>"></td>
+                <td class="text-center"><div class="pull-right" id="text-buttons-<?php echo $id; ?>"></div></td>
               </tr>
             <?php } ?>
           </tbody>
@@ -317,11 +317,11 @@
                   $('#' + element_id + '-subtractinput').val(data.subtract);
                   $('#' + element_id + '-save-button').show();
               } else {
-                  var injHtml = '';
+                  var html_inj = '';
                   $.each (data.variant, function(key, val) {
-                      injHtml += val.stock + ' x ' + val.combi + '<br />';
+                    html_inj += val.stock + ' x ' + val.combination + '<br />';
                   });
-                  $('#' + element_id + '-qty').html(injHtml);
+                  $('#' + element_id + '-qty').html(html_inj);
                   $('#' + element_id + '-save-button').show();
               }
           }

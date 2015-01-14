@@ -107,7 +107,7 @@ class Amazonus {
 		return $this->url;
 	}
 
-	public function productUpdateListen($product_id, $data) {
+	public function productUpdateListen($product_id, $data = array()) {
 		$logger = new Log('amazon_stocks.log');
 		$logger->write('productUpdateListen (' . $product_id . ')');
 
@@ -118,7 +118,14 @@ class Amazonus {
 
 			$quantity_data = array();
 
-			foreach ($data['variant'] as $variant) {
+			// check if post data['variant'], if not then call db to get variants
+			if (!isset($data['variant'])) {
+				$variants = $this->model_module_openstock->getVariants($product_id);
+			} else {
+				$variants = $data['variant'];
+			}
+
+			foreach ($variants as $variant) {
 				$amazon_sku_rows = $this->getLinkedSkus($product_id, $variant['sku']);
 
 				foreach($amazon_sku_rows as $amazon_sku_row) {

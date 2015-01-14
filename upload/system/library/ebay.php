@@ -725,7 +725,50 @@ final class Ebay {
 		}
 	}
 
-	public function productUpdateListen($product_id, $data) {
+	public function productUpdateListen($product_id, $data = array()) {
+		$this->log('productUpdateListen(' . $product_id . ')');
+
+		// is the item linked to ebay, if not check if it was linked (to relist it)
+		$item_id = $this->getEbayItemId($product_id);
+		if ($item_id != false) {
+			if ($this->openbay->addonLoad('openstock') && (isset($data['has_option']) && $data['has_option'] == 1)) {
+
+
+
+				
+			} else {
+
+
+
+
+			}
+		} else {
+			$old_item_id = $this->getEndedEbayItemId($product_id);
+			$this->log('productUpdateListen(' . $product_id . ') - Standard item. Old ID: ' . $old_item_id);
+
+			if ($old_item_id != false) {
+				if ($this->openbay->addonLoad('openstock') && (isset($data['has_option']) && $data['has_option'] == 1)) {
+					$this->log('productUpdateListen(' . $product_id . ') - multi variant items relist not supported');
+					/**
+					 * resereved for multi variant products can be relisted automatically.
+					 */
+				} else {
+					$this->log('productUpdateListen(' . $product_id . ') - Normal, stock(' . $data['quantity'] . ') > 0');
+					if ($data['quantity'] > 0) {
+						if ($this->config->get('ebay_relistitems') == 1) {
+							$this->relistItem($old_item_id, $product_id, $data['quantity']);
+						}
+					}
+				}
+			} else {
+				$this->log('productUpdateListen() - stoping, nothing found');
+			}
+		}
+
+
+
+
+
 		$this->log('productUpdateListen()');
 		//check if there is an active item link
 		$item_id = $this->getEbayItemId($product_id);

@@ -114,6 +114,7 @@ class Amazonus {
 		$product = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "' LIMIT 1")->row;
 
 		if ($this->openbay->addonLoad('openstock') && (isset($product['has_option']) && $product['has_option'] == 1)) {
+			$this->load->model('module/openstock');
 			$logger->write('Variant item');
 
 			$quantity_data = array();

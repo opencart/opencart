@@ -4,7 +4,7 @@ class ControllerOpenbayEbay extends Controller {
 		if (!empty($order_id)) {
 			$this->load->model('openbay/ebay_order');
 
-			$this->openbay->ebay->addOrder($order_id);
+			$this->model_openbay_ebay_order->addOrder($order_id);
 		}
 	}
 }

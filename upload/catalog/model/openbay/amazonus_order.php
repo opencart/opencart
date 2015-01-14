@@ -213,7 +213,7 @@ class ModelOpenbayAmazonusOrder extends Model {
 		$order_products = $this->openbay->getOrderProducts($order_id);
 
 		foreach($order_products as $order_product) {
-			$this->openbay->amazonus->productUpdateListen($order_product);
+			$this->openbay->amazonus->productUpdateListen($order_product['product_id']);
 		}
 
 		$logger->write('addOrder() exiting');

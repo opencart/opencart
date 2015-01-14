@@ -271,7 +271,7 @@ class ModelOpenbayEtsyOrder extends Model {
 			$order_products = $this->openbay->getOrderProducts($order_id);
 
 			foreach ($order_products as $order_product) {
-				$this->openbay->etsy->productUpdateListen($order_product['product_id'], array());
+				$this->openbay->etsy->productUpdateListen($order_product['product_id']);
 			}
 		}
 	}

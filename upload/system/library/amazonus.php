@@ -109,7 +109,7 @@ class Amazonus {
 
 	public function productUpdateListen($product_id, $data = array()) {
 		$logger = new Log('amazon_stocks.log');
-		$logger->write('productUpdateListen (' . $product_id . ')');
+		$logger->write('productUpdateListen (' . (int)$product_id . ')');
 
 		$product = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "' LIMIT 1")->row;
 

@@ -237,7 +237,7 @@ final class Etsy {
 		}
 	}
 
-	public function productUpdateListen($product_id, $data) {
+	public function productUpdateListen($product_id, $data = array()) {
 		$this->log('productUpdateListen() - ' . $product_id);
 
 		$links = $this->getLinks($product_id, 1);
@@ -291,7 +291,7 @@ final class Etsy {
 
 			if($query->num_rows > 0) {
 				foreach ($query->rows as $product) {
-					$this->productUpdateListen((int)$product['product_id'], array());
+					$this->productUpdateListen((int)$product['product_id']);
 				}
 			}
 		}

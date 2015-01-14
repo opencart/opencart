@@ -227,7 +227,6 @@ final class Ebay {
 		$this->log('deleteProduct() - ID: ' . $product_id);
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_listing` WHERE `product_id` = '" . (int)$product_id . "'");
-
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_stock_reserve` WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 

@@ -226,7 +226,7 @@ final class Etsy {
 	}
 
 	public function deleteProduct($product_id) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "etsy_listing` WHERE `product_id` = '" . $this->db->escape($product_id) . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "etsy_listing` WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
 	public function deleteLink($etsy_listing_id = null, $etsy_item_id = null) {

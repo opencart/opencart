@@ -351,7 +351,7 @@ class Amazonus {
 	}
 
 	public function deleteProduct($product_id){
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `product_id` = '" . $this->db->escape($product_id) . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
 	public function orderDelete($order_id){

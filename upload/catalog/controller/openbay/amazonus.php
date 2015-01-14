@@ -580,11 +580,11 @@ class ControllerOpenbayAmazonus extends Controller {
 		}
 	}
 
-	public function eventAddOrder($order_id) {
+	public function eventAddOrderHistory($order_id) {
 		if (!empty($order_id)) {
 			$this->load->model('openbay/amazonus_order');
 
-			$this->model_openbay_amazonus_order->addOrder($order_id);
+			$this->model_openbay_amazonus_order->addOrderHistory($order_id);
 		}
 	}
 }

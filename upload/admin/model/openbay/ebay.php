@@ -219,7 +219,7 @@ class ModelOpenbayEbay extends Model{
 				) ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
 
 		// register the event triggers
-		$this->model_extension_event->addEvent('openbaypro_ebay', 'post.order.add', 'openbay/ebay/eventAddOrder');
+		$this->model_extension_event->addEvent('openbaypro_ebay', 'post.order.history.add', 'openbay/ebay/eventAddOrderHistory');
 	}
 
 	public function uninstall() {
@@ -243,6 +243,12 @@ class ModelOpenbayEbay extends Model{
 			$this->load->model('setting/setting');
 
 			$this->openbay->ebay->updateSettings();
+
+			//remove the current events
+			$this->model_extension_event->deleteEvent('openbaypro_ebay');
+
+			//re-add the correct events
+			$this->model_extension_event->addEvent('openbaypro_ebay', 'post.order.history.add', 'openbay/ebay/eventAddOrderHistory');
 
 			return true;
 		}

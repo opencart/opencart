@@ -266,7 +266,7 @@ class ModelOpenbayEtsyOrder extends Model {
 		return $order_id;
 	}
 
-	public function addOrder($order_id) {
+	public function addOrderHistory($order_id) {
 		if(!$this->openbay->etsy->orderFind($order_id)) {
 			$order_products = $this->openbay->getOrderProducts($order_id);
 

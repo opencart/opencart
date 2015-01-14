@@ -613,8 +613,8 @@ class ModelOpenbayEbayOrder extends Model{
 		}
 	}
 
-	public function addOrder($order_id) {
-		$this->openbay->ebay->log('addOrder() - Order id:' . $order_id . ' passed');
+	public function addOrderHistory($order_id) {
+		$this->openbay->ebay->log('addOrderHistory() - Order id:' . $order_id . ' passed');
 		if (!$this->openbay->ebay->isEbayOrder($order_id)) {
 			$order_products = $this->openbay->getOrderProducts($order_id);
 
@@ -625,10 +625,10 @@ class ModelOpenbayEbayOrder extends Model{
 					$order_product_variant = $this->openbay->getOrderProductVariant($order_id, $order_product['product_id'], $order_product['order_product_id']);
 
 					if (isset($order_product_variant['sku']) && $order_product_variant['sku'] != '') {
-						$this->ebaySaleStockReduce((int)$order_product['product_id'], (string)$order_product_variant['sku']);
+						$this->openbay->ebay->ebaySaleStockReduce((int)$order_product['product_id'], (string)$order_product_variant['sku']);
 					}
 				} else {
-					$this->ebaySaleStockReduce($order_product['product_id']);
+					$this->openbay->ebay->ebaySaleStockReduce($order_product['product_id']);
 				}
 			}
 		}

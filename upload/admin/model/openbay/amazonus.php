@@ -81,7 +81,7 @@ class ModelOpenbayAmazonus extends Model {
 		");
 
 		// register the event triggers
-		$this->model_extension_event->addEvent('openbaypro_amazonus', 'post.order.add', 'openbay/amazonus/eventAddOrder');
+		$this->model_extension_event->addEvent('openbaypro_amazonus', 'post.order.history.add', 'openbay/amazonus/eventAddOrderHistory');
 	}
 
 	public function uninstall() {
@@ -125,9 +125,14 @@ class ModelOpenbayAmazonus extends Model {
 					`asin` varchar(255) NOT NULL,
 					`price` decimal(10,4) NOT NULL,
 					PRIMARY KEY (`sku`)
-				) DEFAULT COLLATE=utf8_general_ci;
-			");
+				) DEFAULT COLLATE=utf8_general_ci;");
 			}
+
+			//remove the current events
+			$this->model_extension_event->deleteEvent('openbaypro_amazonus');
+
+			//re-add the correct events
+			$this->model_extension_event->addEvent('openbaypro_amazonus', 'post.order.history.add', 'openbay/amazonus/eventAddOrderHistory');
 
 			return true;
 		}

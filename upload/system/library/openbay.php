@@ -284,7 +284,7 @@ final class Openbay {
 		$text .= $language->get('text_new_order_total') . "\n";
 
 		foreach ($order_total_query->rows as $total) {
-			$text .= $total['title'] . ': ' . html_entity_decode($total['text'], ENT_NOQUOTES, 'UTF-8') . "\n";
+			$text .= $total['title'] . ': ' . html_entity_decode($this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
 		}
 
 		$text .= "\n";

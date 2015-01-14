@@ -262,9 +262,6 @@ class ModelOpenbayEbayOrder extends Model{
 
 				$this->cache->delete('product');
 
-				// Downloads
-				$order_download_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_download` WHERE `order_id` = '" . (int)$order_id . "'");
-
 				// Order Totals
 				$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = '" . (int)$order_id . "' ORDER BY `sort_order` ASC");
 
@@ -286,6 +283,8 @@ class ModelOpenbayEbayOrder extends Model{
 				$order_status = '';
 				if ($order_status_query->num_rows) {
 					$order_status = $order_status_query->row['name'];
+				} else {
+					$order_status = '';
 				}
 
 				$subject = sprintf($language->get('text_new_subject'), $order_info['store_name'], $order_id);
@@ -306,6 +305,7 @@ class ModelOpenbayEbayOrder extends Model{
 				$data['text_email'] = $language->get('text_new_email');
 				$data['text_telephone'] = $language->get('text_new_telephone');
 				$data['text_ip'] = $language->get('text_new_ip');
+				$data['text_order_status'] = $language->get('text_new_order_status');
 				$data['text_payment_address'] = $language->get('text_new_payment_address');
 				$data['text_shipping_address'] = $language->get('text_new_shipping_address');
 				$data['text_product'] = $language->get('text_new_product');
@@ -327,11 +327,7 @@ class ModelOpenbayEbayOrder extends Model{
 				$data['customer_id'] = $order_info['customer_id'];
 				$data['link'] = $order_info['store_url'] . 'index.php?route=account/order/info&order_id=' . $order_id;
 
-				if ($order_download_query->num_rows) {
-					$data['download'] = $order_info['store_url'] . 'index.php?route=account/download';
-				} else {
-					$data['download'] = '';
-				}
+				$data['download'] = '';
 
 				$data['order_id'] = $order_id;
 				$data['date_added'] = date($language->get('date_format_short'), strtotime($order_info['date_added']));
@@ -340,6 +336,7 @@ class ModelOpenbayEbayOrder extends Model{
 				$data['email'] = $order_info['email'];
 				$data['telephone'] = $order_info['telephone'];
 				$data['ip'] = $order_info['ip'];
+				$data['order_status'] = $order_status;
 
 				$data['comment'] = '';
 				if ($comment && $notify) {
@@ -445,7 +442,12 @@ class ModelOpenbayEbayOrder extends Model{
 
 				$data['vouchers'] = array();
 
-				$data['totals'] = $order_total_query->rows;
+				foreach ($order_total_query->rows as $total) {
+					$data['totals'][] = array(
+						'title' => $total['title'],
+						'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']),
+					);
+				}
 
 				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mail/order.tpl')) {
 					$html = $this->load->view($this->config->get('config_template') . '/template/mail/order.tpl', $data);
@@ -482,7 +484,7 @@ class ModelOpenbayEbayOrder extends Model{
 				$text .= $language->get('text_new_order_total') . "\n";
 
 				foreach ($order_total_query->rows as $total) {
-					$text .= $total['title'] . ': ' . html_entity_decode($total['text'], ENT_NOQUOTES, 'UTF-8') . "\n";
+					$text .= $total['title'] . ': ' . html_entity_decode($this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
 				}
 
 				$text .= "\n";
@@ -490,11 +492,6 @@ class ModelOpenbayEbayOrder extends Model{
 				if ($order_info['customer_id']) {
 					$text .= $language->get('text_new_link') . "\n";
 					$text .= $order_info['store_url'] . 'index.php?route=account/order/info&order_id=' . $order_id . "\n\n";
-				}
-
-				if ($order_download_query->num_rows) {
-					$text .= $language->get('text_new_download') . "\n";
-					$text .= $order_info['store_url'] . 'index.php?route=account/download' . "\n\n";
 				}
 
 				if ($order_info['comment']) {

@@ -116,8 +116,6 @@ class Amazonus {
 		if ($this->openbay->addonLoad('openstock') && (isset($product['has_option']) && $product['has_option'] == 1)) {
 			$logger->write('Variant item');
 
-			$variants = $this->model_module_openstock->getVariants($product_id);
-
 			$quantity_data = array();
 
 			foreach ($data['variant'] as $variant) {

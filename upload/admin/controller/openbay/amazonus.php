@@ -90,9 +90,8 @@ class ControllerOpenbayAmazonus extends Controller {
 		);
 		$data['breadcrumbs'][] = array(
 			'href'      => $this->url->link('openbay/amazonus', 'token=' . $this->session->data['token'], 'SSL'),
-			'text'      => $this->language->get('text_dashboard'),
+			'text'      => $this->language->get('text_amazon'),
 		);
-
 		$data['breadcrumbs'][] = array(
 			'href'      => $this->url->link('openbay/amazonus/stockUpdates', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('heading_title'),
@@ -129,13 +128,13 @@ class ControllerOpenbayAmazonus extends Controller {
 					'date_updated' => (string)$update_node->date_updated,
 					'status' => (string)$update_node->status,
 					);
-				$data = array();
+				$data_items = array();
 				foreach($update_node->data->product as $product_node) {
-					$data[] = array('sku' => (string)$product_node->sku,
+					$data_items[] = array('sku' => (string)$product_node->sku,
 						'stock' => (int)$product_node->stock
 						);
 				}
-				$row['data'] = $data;
+				$row['data'] = $data_items;
 				$table_data[(int)$update_node->ref] = $row;
 			}
 

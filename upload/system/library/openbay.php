@@ -284,7 +284,7 @@ final class Openbay {
 		$text .= $language->get('text_new_order_total') . "\n";
 
 		foreach ($order_total_query->rows as $total) {
-			$text .= $total['title'] . ': ' . html_entity_decode($total['text'], ENT_NOQUOTES, 'UTF-8') . "\n";
+			$text .= $total['title'] . ': ' . html_entity_decode($this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
 		}
 
 		$text .= "\n";
@@ -430,12 +430,28 @@ final class Openbay {
 	}
 
 	public function getOrderProducts($order_id) {
-		$order_products = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
+		$order_products = $this->db->query("SELECT `product_id`, `order_product_id` FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
 
 		if($order_products->num_rows > 0) {
 			return $order_products->rows;
 		} else {
 			return array();
+		}
+	}
+
+	public function getOrderProductVariant($order_id, $product_id, $order_product_id) {
+		$this->load->model('module/openstock');
+
+		$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$order_product_id . "'");
+
+		if ($order_option_query->num_rows) {
+			$options = array();
+
+			foreach ($order_option_query->rows as $option) {
+				$options[] = $option['product_option_value_id'];
+			}
+
+			return $this->model_module_openstock->getVariantByOptionValues($options, $product_id);
 		}
 	}
 }

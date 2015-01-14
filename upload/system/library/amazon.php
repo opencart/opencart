@@ -114,6 +114,7 @@ class Amazon {
 		$product = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "' LIMIT 1")->row;
 
 		if ($this->openbay->addonLoad('openstock') && (isset($product['has_option']) && $product['has_option'] == 1)) {
+			$this->load->model('module/openstock');
 			$logger->write('Variant item');
 
 			$quantity_data = array();
@@ -350,7 +351,7 @@ class Amazon {
 	}
 
 	public function deleteProduct($product_id){
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "amazon_product_link` WHERE `product_id` = '" . $this->db->escape($product_id) . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "amazon_product_link` WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
 	public function orderDelete($order_id){

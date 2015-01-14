@@ -109,11 +109,12 @@ class Amazonus {
 
 	public function productUpdateListen($product_id, $data = array()) {
 		$logger = new Log('amazon_stocks.log');
-		$logger->write('productUpdateListen (' . $product_id . ')');
+		$logger->write('productUpdateListen (' . (int)$product_id . ')');
 
 		$product = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "' LIMIT 1")->row;
 
 		if ($this->openbay->addonLoad('openstock') && (isset($product['has_option']) && $product['has_option'] == 1)) {
+			$this->load->model('module/openstock');
 			$logger->write('Variant item');
 
 			$quantity_data = array();
@@ -350,7 +351,7 @@ class Amazonus {
 	}
 
 	public function deleteProduct($product_id){
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `product_id` = '" . $this->db->escape($product_id) . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
 	public function orderDelete($order_id){

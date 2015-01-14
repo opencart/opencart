@@ -227,7 +227,6 @@ final class Ebay {
 		$this->log('deleteProduct() - ID: ' . $product_id);
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_listing` WHERE `product_id` = '" . (int)$product_id . "'");
-
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_stock_reserve` WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
@@ -432,44 +431,6 @@ final class Ebay {
 			$this->log('isEbayOrder() - No');
 			return false;
 		}
-	}
-
-	private function osProducts($order_id) {
-		$this->log('osProducts() - Getting products from');
-		$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
-
-		$response = array();
-		foreach ($order_product_query->rows as $order_product) {
-			$product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product WHERE `product_id` = '" . (int)$order_product['product_id'] . "' LIMIT 1");
-
-			if (isset($product_query->row['has_option']) && ($product_query->row['has_option'] == 1)) {
-				$product_option_query = $this->db->query("
-					SELECT `oo`.`product_option_value_id`
-					FROM `" . DB_PREFIX . "order_option` `oo`
-						LEFT JOIN `" . DB_PREFIX . "product_option_value` `pov` ON (`pov`.`product_option_value_id` = `oo`.`product_option_value_id`)
-						LEFT JOIN `" . DB_PREFIX . "option` `o` ON (`o`.`option_id` = `pov`.`option_id`)
-					WHERE `oo`.`order_product_id` = '" . (int)$order_product['order_product_id'] . "'
-					AND `oo`.`order_id` = '" . (int)$order_id . "'
-					AND ((`o`.`type` = 'radio') OR (`o`.`type` = 'select') OR (`o`.`type` = 'image'))
-					ORDER BY `oo`.`order_option_id`
-					ASC");
-
-				if ($product_option_query->num_rows != 0) {
-					$product_options = array();
-					foreach ($product_option_query->rows as $product_option_row) {
-						$product_options[] = $product_option_row['product_option_value_id'];
-					}
-
-					$var = implode(':', $product_options);
-
-					$response[] = array('pid' => $order_product['product_id'], 'qty' => $order_product['quantity'], 'var' => $var);
-				}
-			} else {
-				$response[] = array('pid' => $order_product['product_id'], 'qty' => $order_product['quantity'], 'var' => null);
-			}
-		}
-
-		return $response;
 	}
 
 	public function getEbayActiveListings() {
@@ -728,59 +689,28 @@ final class Ebay {
 	public function productUpdateListen($product_id, $data = array()) {
 		$this->log('productUpdateListen(' . $product_id . ')');
 
-		// is the item linked to ebay, if not check if it was linked (to relist it)
 		$item_id = $this->getEbayItemId($product_id);
+
+		$product = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "' LIMIT 1")->row;
+
 		if ($item_id != false) {
-			if ($this->openbay->addonLoad('openstock') && (isset($data['has_option']) && $data['has_option'] == 1)) {
+			$this->log('productUpdateListen(' . $product_id . ') - listing found (' . $item_id . ')');
 
-
-
-				
-			} else {
-
-
-
-
-			}
-		} else {
-			$old_item_id = $this->getEndedEbayItemId($product_id);
-			$this->log('productUpdateListen(' . $product_id . ') - Standard item. Old ID: ' . $old_item_id);
-
-			if ($old_item_id != false) {
-				if ($this->openbay->addonLoad('openstock') && (isset($data['has_option']) && $data['has_option'] == 1)) {
-					$this->log('productUpdateListen(' . $product_id . ') - multi variant items relist not supported');
-					/**
-					 * resereved for multi variant products can be relisted automatically.
-					 */
-				} else {
-					$this->log('productUpdateListen(' . $product_id . ') - Normal, stock(' . $data['quantity'] . ') > 0');
-					if ($data['quantity'] > 0) {
-						if ($this->config->get('ebay_relistitems') == 1) {
-							$this->relistItem($old_item_id, $product_id, $data['quantity']);
-						}
-					}
-				}
-			} else {
-				$this->log('productUpdateListen() - stoping, nothing found');
-			}
-		}
-
-
-
-
-
-		$this->log('productUpdateListen()');
-		//check if there is an active item link
-		$item_id = $this->getEbayItemId($product_id);
-		if ($item_id != false) {
-			//if so update stock or end item (based on qty)
-			if ($this->openbay->addonLoad('openstock') && (isset($data['has_option']) && $data['has_option'] == 1)) {
-				$variant_data = array();
+			if ($this->openbay->addonLoad('openstock') && (isset($product['has_option']) && $product['has_option'] == 1)) {
+				$this->load->model('module/openstock');
 				$this->load->model('tool/image');
 				$this->load->model('catalog/product');
-				$this->load->model('module/openstock');
 
-				$variants = $this->model_module_openstock->getVariants($product_id);
+				$this->log('productUpdateListen(' . $product_id . ') - Variant');
+
+				if (!isset($data['variant'])) {
+					$variants = $this->model_module_openstock->getVariants($product_id);
+				} else {
+					$variants = $data['variant'];
+				}
+
+				$variant_data = array();
+
 				$groups = $this->openbay->getProductOptions($product_id);
 				$variant_data['groups']  = array();
 				$variant_data['related'] = array();
@@ -805,7 +735,6 @@ final class Ebay {
 						}
 
 						if ($v == 0) {
-							//create a php version of the option element array to use on server side
 							$variant_data['option_list'] = base64_encode(serialize($option['option_values']));
 						}
 
@@ -855,31 +784,32 @@ final class Ebay {
 					}
 				}
 			} else {
-				$this->decideEbayStockAction($product_id, $data['quantity'], $data['subtract']);
+				$this->log('productUpdateListen(' . $product_id . ') - Not a variant');
+
+				$this->decideEbayStockAction($product_id, $product['quantity'], $product['subtract']);
+
 				return array('msg' => 'ok', 'error' => false);
 			}
 		} else {
-			//if not, is there an old link?
 			$old_item_id = $this->getEndedEbayItemId($product_id);
-			$this->log('productUpdateListen() - Got item: ' . $old_item_id);
+			$this->log('productUpdateListen(' . $product_id . ') - Standard item. Old ID: ' . $old_item_id);
+
 			if ($old_item_id != false) {
-				//yes, check if its a multi variant listing
-				if ($this->openbay->addonLoad('openstock') && (isset($data['has_option']) && $data['has_option'] == 1)) {
-					//yes, mutli variant listing
-					$this->log('productUpdateListen() - multi variant items relist not supported');
+				if ($this->openbay->addonLoad('openstock') && (isset($product['has_option']) && $product['has_option'] == 1)) {
+					$this->log('productUpdateListen(' . $product_id . ') - multi variant items relist not supported');
+					/**
+					 * reserved for multi variant products can be relisted automatically.
+					 */
 				} else {
-					$this->log('productUpdateListen() - Normal item, checking stock(' . $data['quantity'] . ') > 0');
-					//no, its a normal item, is there now stock?
-					if ($data['quantity'] > 0) {
-						//yes, is relist setting yes?
+					$this->log('productUpdateListen(' . $product_id . ') - Normal, stock(' . $product['quantity'] . ') > 0');
+					if ($product['quantity'] > 0) {
 						if ($this->config->get('ebay_relistitems') == 1) {
-							//relist item with new stock
-							$this->relistItem($old_item_id, $product_id, $data['quantity']);
+							$this->relistItem($old_item_id, $product_id, $product['quantity']);
 						}
 					}
 				}
 			} else {
-				$this->log('productUpdateListen() - no active or previous item ids');
+				$this->log('productUpdateListen() - stoping, nothing found');
 			}
 		}
 	}

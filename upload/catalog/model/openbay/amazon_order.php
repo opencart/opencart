@@ -200,7 +200,7 @@ class ModelOpenbayAmazonOrder extends Model {
 		return $options;
 	}
 
-	public function addOrder($order_id) {
+	public function addOrderHistory($order_id) {
 		if ($this->config->get('openbay_amazon_status') != 1) {
 			return;
 		}

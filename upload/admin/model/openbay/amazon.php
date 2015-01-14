@@ -82,7 +82,7 @@ class ModelOpenbayAmazon extends Model {
 			) DEFAULT COLLATE=utf8_general_ci;");
 
 		// add the event triggers
-		$this->model_extension_event->addEvent('openbaypro_amazon', 'post.order.add', 'openbay/amazon/eventAddOrder');
+		$this->model_extension_event->addEvent('openbaypro_amazon', 'post.order.history.add', 'openbay/amazon/eventAddOrderHistory');
 	}
 
 	public function uninstall() {
@@ -141,6 +141,12 @@ class ModelOpenbayAmazon extends Model {
 
 				$this->model_setting_setting->editSetting('openbay_amazon', $settings);
 			}
+
+			//remove the current events
+			$this->model_extension_event->deleteEvent('openbaypro_amazon');
+
+			//re-add the correct events
+			$this->model_extension_event->addEvent('openbaypro_amazon', 'post.order.history.add', 'openbay/amazon/eventAddOrderHistory');
 
 			return true;
 		}

@@ -86,7 +86,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 				if ($this->config->get('ebay_stock_allocate') == 1) {
 					$this->openbay->ebay->log('Stock allocation is set to allocate stock when an order is paid');
 					$this->model_openbay_ebay_order->addOrderLines($order, $order_id);
-					$this->externalApplicationNotify($order_id);
+					$this->event->trigger('post.order.history.add', $order_id);
 				}
 
 				$this->openbay->ebay->log('Order ID: ' . $order_id . ' -> Paid');
@@ -95,6 +95,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 				$this->model_openbay_ebay_order->update($order_id, $this->default_refunded_id);
 				$this->model_openbay_ebay_order->cancel($order_id);
 				$this->openbay->ebay->log('Order ID: ' . $order_id . ' -> Refunded');
+				$this->event->trigger('post.order.history.add', $order_id);
 			} elseif ($order->payment->status == 'Part-Refunded' && ($order_loaded['order_status_id'] != $this->default_part_refunded_id) && in_array($this->default_paid_id, $order_history)) {
 				$this->model_openbay_ebay_order->update($order_id, $this->default_part_refunded_id);
 				$this->openbay->ebay->log('Order ID: ' . $order_id . ' -> Part Refunded');
@@ -158,8 +159,8 @@ class ModelOpenbayEbayOpenbay extends Model{
 
 					if ($this->config->get('ebay_stock_allocate') == 1) {
 						$this->openbay->ebay->log('Stock allocation is set to allocate stock when an order is paid');
+
 						$this->model_openbay_ebay_order->addOrderLines($order, $order_id);
-						$this->externalApplicationNotify($order_id);
 					}
 				}
 
@@ -168,6 +169,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 					$this->model_openbay_ebay_order->update($order_id, $this->default_refunded_id);
 					$this->model_openbay_ebay_order->cancel($order_id);
 					$this->openbay->ebay->log('Order ID: ' . $order_id . ' -> Refunded');
+					$this->event->trigger('post.order.history.add', $order_id);
 					$order_status_id = $this->default_refunded_id;
 				}
 
@@ -197,12 +199,12 @@ class ModelOpenbayEbayOpenbay extends Model{
 					$this->openbay->newOrderAdminNotify($order_id, $order_status_id);
 				}
 			}
-		}
 
-		if ($this->config->get('ebay_stock_allocate') == 0) {
-			$this->openbay->ebay->log('Stock allocation is set to allocate stock when an item is bought');
-			$this->model_openbay_ebay_order->addOrderLines($order, $order_id);
-			$this->externalApplicationNotify($order_id);
+			if ($this->config->get('ebay_stock_allocate') == 0) {
+				$this->openbay->ebay->log('Stock allocation is set to allocate stock when an item is bought');
+				$this->model_openbay_ebay_order->addOrderLines($order, $order_id);
+				$this->event->trigger('post.order.history.add', $order_id);
+			}
 		}
 
 		if (!empty($order->cancelled)) {
@@ -562,20 +564,6 @@ class ModelOpenbayEbayOpenbay extends Model{
 		foreach ($data['totals'] as $total) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "order_total` SET `order_id` = '" . (int)$order_id . "', `code` = '" . $this->db->escape($total['code']) . "', `title` = '" . $this->db->escape($total['title']) . "', `value` = '" . (double)$total['value'] . "', `sort_order` = '" . (int)$total['sort_order'] . "'");
 		}
-	}
-
-	private function externalApplicationNotify($order_id) {
-		/* This is used by the Mosaic Fullfilment solutions @ www.mosaic-fs.co.uk */
-		if ($this->openbay->addonLoad('mosaic') && !$this->mosaic->isOrderAdded($order_id)) {
-			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `shipping_code` = 'ebay.STD' WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
-			$this->mosaic->sendOrder($order_id, 'PP', '');
-			$this->openbay->ebay->log('Mosaic module has been notified about order ID: ' . $order_id);
-		}
-
-		/* send the new order notification to openbay so the other markets can update the stock */
-		/* @todo */
-		/* improve this to update when products are subtracted, NOT just when they are paid */
-		$this->event->trigger('post.order.add', $order_id);
 	}
 
 	public function outputLog() {

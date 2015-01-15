@@ -157,8 +157,6 @@
                     </div>
                   </div>
                 </div>
-                
-                
                 <div class="tab-pane" id="tab-special-delivery-500">
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-special-delivery-500-rate"><span data-toggle="tooltip" title="<?php echo $help_rate; ?>"><?php echo $entry_rate; ?></span></label>
@@ -187,8 +185,6 @@
                     </div>
                   </div>
                 </div>
-                
-                
                 <div class="tab-pane" id="tab-special-delivery-1000">
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-special-delivery-1000-rate"><span data-toggle="tooltip" title="<?php echo $help_rate; ?>"><?php echo $entry_rate; ?></span></label>
@@ -245,19 +241,11 @@
                     </div>
                   </div>
                 </div>
-                
-                
                 <div class="tab-pane" id="tab-1st-class-signed">
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-1st-class-signed-rate"><span data-toggle="tooltip" title="<?php echo $help_rate; ?>"><?php echo $entry_rate; ?></span></label>
                     <div class="col-sm-10">
                       <textarea name="royal_mail_1st_class_signed_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-1st-class-signed-rate" class="form-control"><?php echo $royal_mail_1st_class_signed_rate; ?></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-1st-class-signed-insurance"><span data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><?php echo $entry_insurance; ?></span></label>
-                    <div class="col-sm-10">
-                      <textarea name="royal_mail_1st_class_signed_insurance" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-1st-class-signed-insurance" class="form-control"><?php echo $royal_mail_1st_class_signed_insurance; ?></textarea>
                     </div>
                   </div>
                   <div class="form-group">
@@ -274,19 +262,12 @@
                       </select>
                     </div>
                   </div>
-                </div>                
-                
+                </div>
                 <div class="tab-pane" id="tab-2nd-class-signed">
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-2nd-class-signed-rate"><span data-toggle="tooltip" title="<?php echo $help_rate; ?>"><?php echo $entry_rate; ?></span></label>
                     <div class="col-sm-10">
                       <textarea name="royal_mail_2nd_class_signed_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-2nd-class-signed-rate" class="form-control"><?php echo $royal_mail_2nd_class_signed_rate; ?></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-2nd-class-signed-insurance"><span data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><?php echo $entry_insurance; ?></span></label>
-                    <div class="col-sm-10">
-                      <textarea name="royal_mail_2nd_class_signed_insurance" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-2nd-class-signed-insurance" class="form-control"s><?php echo $royal_mail_2nd_class_signed_insurance; ?></textarea>
                     </div>
                   </div>
                   <div class="form-group">
@@ -304,18 +285,11 @@
                     </div>
                   </div>
                 </div>
-                
                 <div class="tab-pane" id="tab-1st-class-standard">
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-1st-class-standard-rate"><span data-toggle="tooltip" title="<?php echo $help_rate; ?>"><?php echo $entry_rate; ?></span></label>
                     <div class="col-sm-10">
                       <textarea name="royal_mail_1st_class_standard_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-1st-class-standard-rate" class="form-control"><?php echo $royal_mail_1st_class_standard_rate; ?></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-1st-class-standard-insurance"><span data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><?php echo $entry_insurance; ?></span></label>
-                    <div class="col-sm-10">
-                      <textarea name="royal_mail_1st_class_standard_insurance" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-1st-class-standard-insurance" class="form-control"><?php echo $royal_mail_1st_class_standard_insurance; ?></textarea>
                     </div>
                   </div>
                   <div class="form-group">
@@ -333,22 +307,13 @@
                     </div>
                   </div>
                 </div>
-
-
-
                 <div class="tab-pane" id="tab-2nd-class-standard">
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-2nd-class-standard-rate"><span data-toggle="tooltip" title="<?php echo $help_rate; ?>"><?php echo $entry_rate_eu; ?></span></label>
+                    <label class="col-sm-2 control-label" for="input-2nd-class-standard-rate"><span data-toggle="tooltip" title="<?php echo $help_rate; ?>"><?php echo $entry_rate; ?></span></label>
                     <div class="col-sm-10">
                       <textarea name="royal_mail_2nd_class_standard_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-2nd-class-standard-rate" class="form-control"><?php echo $royal_mail_2nd_class_standard_rate; ?></textarea>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-2nd-class-standard-insurance"><span data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><?php echo $entry_insurance; ?></span></label>
-                    <div class="col-sm-10">
-                      <textarea name="royal_mail_2nd_class_standard_insurance" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-2nd-class-standard-insurance" class="form-control"><?php echo $royal_mail_2nd_class_standard_insurance; ?></textarea>
-                    </div>
-                  </div>                  
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-2nd-class-standard-status"><?php echo $entry_status; ?></label>
                     <div class="col-sm-10">
@@ -364,29 +329,25 @@
                     </div>
                   </div>
                 </div>
-                
-                
                 <div class="tab-pane" id="tab-international-standard">
-                  <div class="alert alert-info"></div>
-                
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-international-standard-eu-rate"><span data-toggle="tooltip" title="<?php echo $help_international_standard_eu; ?>"><?php echo $entry_rate_eu; ?></span></label>
+                    <label class="col-sm-2 control-label" for="input-international-standard-eu-rate"><span data-toggle="tooltip" title="<?php echo $help_rate; ?>"><?php echo $entry_rate_eu; ?></span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_standard_eu_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-international-standard-eu-rate" class="form-control"><?php echo $royal_mail_international_standard_eu_rate; ?></textarea>
+                      <textarea name="royal_mail_international_standard_eu_rate" rows="5" placeholder="<?php echo $entry_rate_eu; ?>" id="input-international-standard-eu-rate" class="form-control"><?php echo $royal_mail_international_standard_eu_rate; ?></textarea>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-international-standard-zone-1-rate"><span data-toggle="tooltip" data-html="true" title="<?php echo htmlspecialchars($help_international_standard_zone_1); ?>"><?php echo $entry_rate_zone_1; ?></span></label>
+                    <label class="col-sm-2 control-label" for="input-international-standard-zone-1-rate"><span data-toggle="tooltip" data-html="true" title="<?php echo $help_rate; ?>"><?php echo $entry_rate_zone_1; ?></span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_standard_zone_1_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-international-standard-zone-1-rate" class="form-control"><?php echo $royal_mail_international_standard_zone_1_rate; ?></textarea>
+                      <textarea name="royal_mail_international_standard_zone_1_rate" rows="5" placeholder="<?php echo $entry_rate_zone_1; ?>" id="input-international-standard-zone-1-rate" class="form-control"><?php echo $royal_mail_international_standard_zone_1_rate; ?></textarea>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-international-standard-zone-2-rate"><span data-toggle="tooltip" title="<?php echo $help_international_standard_zone_2; ?>"><?php echo $entry_rate_zone_2; ?></span></label>
+                    <label class="col-sm-2 control-label" for="input-international-standard-zone-2-rate"><span data-toggle="tooltip" title="<?php echo $help_rate; ?>"><?php echo $entry_rate_zone_2; ?></span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_standard_zone_2_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-international-standard-zone-2-rate" class="form-control"><?php echo $royal_mail_international_standard_zone_2_rate; ?></textarea>
+                      <textarea name="royal_mail_international_standard_zone_2_rate" rows="5" placeholder="<?php echo $entry_rate_zone_2; ?>" id="input-international-standard-zone-2-rate" class="form-control"><?php echo $royal_mail_international_standard_zone_2_rate; ?></textarea>
                     </div>
-                  </div>
+                  </div>             
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-standard-status"><?php echo $entry_status; ?></label>
                     <div class="col-sm-10">
@@ -402,29 +363,26 @@
                     </div>
                   </div>
                 </div>
-                
-                
-                
-                
                 <div class="tab-pane" id="tab-international-tracked-signed">
+                  <div class="alert alert-info"><?php echo $text_tracked_signed; ?></div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-international-tracked-signed-eu-rate"><span data-toggle="tooltip" title="<?php echo $help_international_tracked_signed_eu; ?>"><?php echo $entry_rate_eu; ?></span></label>
+                    <label class="col-sm-2 control-label" for="input-international-tracked-signed-eu-rate"><span data-toggle="tooltip" title="<?php echo $help_rate; ?>"><?php echo $entry_rate_eu; ?></span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_tracked_signed_eu_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-international-tracked-signed-eu-rate" class="form-control"><?php echo $royal_mail_international_tracked_signed_eu_rate; ?></textarea>
+                      <textarea name="royal_mail_international_tracked_signed_eu_rate" rows="5" placeholder="<?php echo $entry_rate_eu; ?>" id="input-international-tracked-signed-eu-rate" class="form-control"><?php echo $royal_mail_international_tracked_signed_eu_rate; ?></textarea>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-international-tracked-signed-zone-1-rate"><span data-toggle="tooltip" data-html="true" title="<?php echo htmlspecialchars($help_international_tracked_signed_zone_1); ?>"><?php echo $entry_rate_zone_1; ?></span></label>
+                    <label class="col-sm-2 control-label" for="input-international-tracked-signed-zone-1-rate"><span data-toggle="tooltip" data-html="true" title="<?php echo $help_rate; ?>"><?php echo $entry_rate_zone_1; ?></span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_tracked_signed_zone_1_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-international-standard-zone-1-rate" class="form-control"><?php echo $royal_mail_international_tracked_signed_zone_1_rate; ?></textarea>
+                      <textarea name="royal_mail_international_tracked_signed_zone_1_rate" rows="5" placeholder="<?php echo $entry_rate_zone_1; ?>" id="input-international-standard-zone-1-rate" class="form-control"><?php echo $royal_mail_international_tracked_signed_zone_1_rate; ?></textarea>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-international-tracked-signed-zone-2-rate"><span data-toggle="tooltip" title="<?php echo $help_international_tracked_signed_zone_2; ?>"><?php echo $entry_rate_zone_2; ?></span></label>
+                    <label class="col-sm-2 control-label" for="input-international-tracked-signed-zone-2-rate"><span data-toggle="tooltip" title="<?php echo $help_rate; ?>"><?php echo $entry_rate_zone_2; ?></span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_tracked_signed_zone_2_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-international-tracked-signed-zone-2-rate" class="form-control"><?php echo $royal_mail_international_tracked_signed_zone_2_rate; ?></textarea>
+                      <textarea name="royal_mail_international_tracked_signed_zone_2_rate" rows="5" placeholder="<?php echo $entry_rate_zone_2; ?>" id="input-international-tracked-signed-zone-2-rate" class="form-control"><?php echo $royal_mail_international_tracked_signed_zone_2_rate; ?></textarea>
                     </div>
-                  </div>
+                  </div>                     
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-tracked-signed-status"><?php echo $entry_status; ?></label>
                     <div class="col-sm-10">
@@ -439,41 +397,33 @@
                       </select>
                     </div>
                   </div>
-                </div>               
-                
-                
-                
-                
+                </div>
                 <div class="tab-pane" id="tab-international-tracked">
+                  <div class="alert alert-info"><?php echo $text_tracked; ?></div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-international-tracked-eu"><span data-toggle="tooltip" data-html="true" title="<?php echo htmlspecialchars($help_international_tracked_eu); ?>"><?php echo $entry_rate; ?></span></label>
+                    <label class="col-sm-2 control-label" for="input-international-tracked-eu-rate"><span data-toggle="tooltip" data-html="true" title="<?php echo $help_rate; ?>"><?php echo $entry_rate_eu; ?></span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_tracked_eu" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-international-tracked-eu" class="form-control"><?php echo $royal_mail_international_tracked_eu; ?></textarea>
+                      <textarea name="royal_mail_international_tracked_eu_rate" rows="5" placeholder="<?php echo $entry_rate_eu; ?>" id="input-international-tracked-eu-rate" class="form-control"><?php echo $royal_mail_international_tracked_eu_rate; ?></textarea>
                     </div>
                   </div>
-                  
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-international-tracked-non-eu"><span data-toggle="tooltip" data-html="true" title="<?php echo htmlspecialchars($help_international_tracked_non_eu); ?>"><?php echo $entry_rate; ?></span></label>
+                    <label class="col-sm-2 control-label" for="input-international-tracked-non-eu-rate"><span data-toggle="tooltip" data-html="true" title="<?php echo $help_rate; ?>"><?php echo $entry_rate_non_eu; ?></span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_tracked_non_eu" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-international-tracked-non-eu" class="form-control"><?php echo $royal_mail_international_tracked_non_eu; ?></textarea>
+                      <textarea name="royal_mail_international_tracked_non_eu_rate" rows="5" placeholder="<?php echo $entry_rate_non_eu; ?>" id="input-international-tracked-non-eu-rate" class="form-control"><?php echo $royal_mail_international_tracked_non_eu_rate; ?></textarea>
                     </div>
                   </div>
-                                                    
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-international-tracked-zone-1"><span data-toggle="tooltip" data-html="true" title="<?php echo htmlspecialchars($help_international_tracked_zone_1); ?>"><?php echo $entry_rate; ?></span></label>
+                    <label class="col-sm-2 control-label" for="input-international-tracked-zone-1-rate"><span data-toggle="tooltip" data-html="true" title="<?php echo $help_rate; ?>"><?php echo $entry_rate_zone_1; ?></span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_tracked_zone_1" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-international-tracked-zone-1" class="form-control"><?php echo $royal_mail_international_tracked_zone_1; ?></textarea>
+                      <textarea name="royal_mail_international_tracked_zone_1_rate" rows="5" placeholder="<?php echo $entry_rate_zone_1; ?>" id="input-international-tracked-zone-1-rate" class="form-control"><?php echo $royal_mail_international_tracked_zone_1_rate; ?></textarea>
                     </div>
                   </div>
-                  
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-international-tracked-zone-2"><span data-toggle="tooltip" data-html="true" title="<?php echo htmlspecialchars($help_international_tracked_zone_2); ?>"><?php echo $entry_rate; ?></span></label>
+                    <label class="col-sm-2 control-label" for="input-international-tracked-zone-2-rate"><span data-toggle="tooltip" data-html="true" title="<?php echo $help_rate; ?>"><?php echo $entry_rate_zone_2; ?></span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_tracked_zone_2" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-international-tracked-zone-2" class="form-control"><?php echo $royal_mail_international_tracked_zone_2; ?></textarea>
+                      <textarea name="royal_mail_international_tracked_zone_2_rate" rows="5" placeholder="<?php echo $entry_rate_zone_2; ?>" id="input-international-tracked-zone-2-rate" class="form-control"><?php echo $royal_mail_international_tracked_zone_2_rate; ?></textarea>
                     </div>
-                  </div>
-                  
-                  
+                  </div>                   
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-tracked-status"><?php echo $entry_status; ?></label>
                     <div class="col-sm-10">
@@ -489,34 +439,26 @@
                     </div>
                   </div>
                 </div>
-                
-                
-                               
-                
                 <div class="tab-pane" id="tab-international-signed">
-                  
+                  <div class="alert alert-info"><?php echo $text_signed; ?></div>
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-international-signed-eu"><span data-toggle="tooltip" title="<?php echo $help_international_signed_eu; ?>"><?php echo $entry_rate; ?></span></label>
+                    <label class="col-sm-2 control-label" for="input-international-signed-eu-rate"><span data-toggle="tooltip" title="<?php echo $help_rate; ?>"><?php echo $entry_rate_eu; ?></span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_signed_eu" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-international-signed-eu" class="form-control"><?php echo $royal_mail_international_signed_eu; ?></textarea>
-                    </div>
-                  </div>                 
-                  
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-international-signed-zone-1"><span data-toggle="tooltip" title="<?php echo $help_international_signed_zone_1; ?>"><?php echo $entry_rate; ?></span></label>
-                    <div class="col-sm-10">
-                      <textarea name="royal_mail_international_signed_zone_1" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-international-signed-zone-1" class="form-control"><?php echo $royal_mail_international_signed_zone_1; ?></textarea>
+                      <textarea name="royal_mail_international_signed_eu_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-international-signed-eu-rate" class="form-control"><?php echo $royal_mail_international_signed_eu_rate; ?></textarea>
                     </div>
                   </div>
-                  
                   <div class="form-group">
-                    <label class="col-sm-2 control-label" for="input-international-signed-zone-2"><span data-toggle="tooltip" data-html="true" title="<?php echo htmlspecialchars($help_international_signed_zone_2); ?>"><?php echo $entry_rate; ?></span></label>
+                    <label class="col-sm-2 control-label" for="input-international-signed-zone-1-rate"><span data-toggle="tooltip" title="<?php echo $help_rate; ?>"><?php echo $entry_rate_zone_1; ?></span></label>
                     <div class="col-sm-10">
-                      <textarea name="royal_mail_international_signed_zone_2" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-international-signed-zone-2" class="form-control"><?php echo $royal_mail_international_signed_zone_2; ?></textarea>
+                      <textarea name="royal_mail_international_signed_zone_1_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-international-signed-zone-1-rate" class="form-control"><?php echo $royal_mail_international_signed_zone_1_rate; ?></textarea>
                     </div>
                   </div>
-                  
-                  
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-international-signed-zone-2-rate"><span data-toggle="tooltip" data-html="true" title="<?php echo $help_rate; ?>"><?php echo $entry_rate_zone_2; ?></span></label>
+                    <div class="col-sm-10">
+                      <textarea name="royal_mail_international_signed_zone_2_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-international-signed-zone-2-rate" class="form-control"><?php echo $royal_mail_international_signed_zone_2_rate; ?></textarea>
+                    </div>
+                  </div>                   
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-signed-status"><?php echo $entry_status; ?></label>
                     <div class="col-sm-10">
@@ -532,17 +474,13 @@
                     </div>
                   </div>
                 </div>
-                
-                
-                
-
                 <div class="tab-pane" id="tab-international-economy">
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-economy-rate"><?php echo $entry_rate; ?></label>
                     <div class="col-sm-10">
                       <textarea name="royal_mail_international_economy_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-international-economy-rate" class="form-control"><?php echo $royal_mail_international_economy_rate; ?></textarea>
                     </div>
-                  </div>
+                  </div>                 
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-economy-status"><?php echo $entry_status; ?></label>
                     <div class="col-sm-10">

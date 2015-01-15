@@ -26,14 +26,15 @@ class ControllerShippingRoyalMail extends Controller {
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
+		$data['text_tracked_signed'] = $this->language->get('text_tracked_signed');
+		$data['text_tracked'] = $this->language->get('text_tracked');
+		$data['text_signed'] = $this->language->get('text_signed');
 		
 		$data['entry_rate'] = $this->language->get('entry_rate');
 		$data['entry_rate_eu'] = $this->language->get('entry_rate_eu');
 		$data['entry_rate_non_eu'] = $this->language->get('entry_rate_non_eu');
 		$data['entry_rate_zone_1'] = $this->language->get('entry_rate_zone_1');
 		$data['entry_rate_zone_2'] = $this->language->get('entry_rate_zone_2');
-		
-		
 		$data['entry_insurance'] = $this->language->get('entry_insurance');
 		$data['entry_display_weight'] = $this->language->get('entry_display_weight');
 		$data['entry_display_insurance'] = $this->language->get('entry_display_insurance');
@@ -45,18 +46,6 @@ class ControllerShippingRoyalMail extends Controller {
 
 		$data['help_rate'] = $this->language->get('help_rate');
 		$data['help_insurance'] = $this->language->get('help_insurance');
-		$data['help_international_signed_eu_rate'] = $this->language->get('help_international_signed_rate_1');
-		$data['help_international_signed_insurance_1'] = $this->language->get('help_international_signed_insurance_1');
-		$data['help_international_signed_rate_2'] = $this->language->get('help_international_signed_rate_2');
-		$data['help_international_signed_insurance_2'] = $this->language->get('help_international_signed_insurance_2');
-		
-		$data['help_airmail_rate_1'] = $this->language->get('help_airmail_rate_1');
-		$data['help_airmail_rate_2'] = $this->language->get('help_airmail_rate_2');
-		
-		$data['help_airsure_rate_1'] = $this->language->get('help_airsure_rate_1');
-		$data['help_airsure_insurance_1'] = $this->language->get('help_airsure_insurance_1');
-		$data['help_airsure_rate_2'] = $this->language->get('help_airsure_rate_2');
-		$data['help_airsure_insurance_2'] = $this->language->get('help_airsure_insurance_2');
 		$data['help_display_weight'] = $this->language->get('help_display_weight');
 		$data['help_display_insurance'] = $this->language->get('help_display_insurance');
 
@@ -76,7 +65,6 @@ class ControllerShippingRoyalMail extends Controller {
 		$data['tab_international_tracked'] = $this->language->get('tab_international_tracked');
 		$data['tab_international_signed'] = $this->language->get('tab_international_signed');
 		$data['tab_international_economy'] = $this->language->get('tab_international_economy');
-
 
 		if (isset($this->error['warning']))  {
 			$data['error_warning'] = $this->error['warning'];
@@ -183,14 +171,6 @@ class ControllerShippingRoyalMail extends Controller {
 			$data['royal_mail_1st_class_signed_rate'] = '0.1:2.03,0.25:2.34,0.5:2.75,0.75:3.48,1:6.75,2:10.00,5:16.95,10:23.00,20:34.50';
 		}
 
-		if (isset($this->request->post['royal_mail_1st_class_signed_insurance'])) {
-			$data['royal_mail_1st_class_signed_insurance'] = $this->request->post['royal_mail_1st_class_signed_insurance'];
-		} elseif ($this->config->has('royal_mail_1st_class_signed_insurance')) {
-			$data['royal_mail_1st_class_signed_insurance'] = $this->config->get('royal_mail_1st_class_signed_insurance');
-		} else {
-			$data['royal_mail_1st_class_signed_insurance'] = '0:50.00';
-		}
-
 		if (isset($this->request->post['royal_mail_1st_class_signed_status'])) {
 			$data['royal_mail_1st_class_signed_status'] = $this->request->post['royal_mail_1st_class_signed_status'];
 		} else {
@@ -204,14 +184,6 @@ class ControllerShippingRoyalMail extends Controller {
 			$data['royal_mail_2nd_class_signed_rate'] = $this->config->get('royal_mail_2nd_class_signed_rate');
 		} else {
 			$data['royal_mail_2nd_class_signed_rate'] = '0.1:1.83,0.25:2.27,0.5:2.58,0.75:3.11,1:6.30,2:9.10,5:14.85,10:21.35,20:29.65';
-		}
-
-		if (isset($this->request->post['royal_mail_2nd_class_signed_insurance'])) {
-			$data['royal_mail_2nd_class_signed_insurance'] = $this->request->post['royal_mail_2nd_class_signed_insurance'];
-		} elseif ($this->config->has('royal_mail_2nd_class_signed_insurance')) {
-			$data['royal_mail_2nd_class_signed_insurance'] = $this->config->get('royal_mail_2nd_class_signed_insurance');
-		} else {
-			$data['royal_mail_2nd_class_signed_insurance'] = '0:50.00';
 		}
 
 		if (isset($this->request->post['royal_mail_2nd_class_signed_status'])) {
@@ -229,14 +201,6 @@ class ControllerShippingRoyalMail extends Controller {
 			$data['royal_mail_1st_class_standard_rate'] = '0.1:0.93,0.25:1.24,0.5:1.65,0.75:2.38,1:5.65,2:8.90,5:15.85,10:21.90,20:33.40';
 		}
 
-		if (isset($this->request->post['royal_mail_1st_class_standard_insurance'])) {
-			$data['royal_mail_1st_class_standard_insurance'] = $this->request->post['royal_mail_1st_class_standard_insurance'];
-		} elseif ($this->config->has('royal_mail_1st_class_standard_insurance')) {
-			$data['royal_mail_1st_class_standard_insurance'] = $this->config->get('royal_mail_1st_class_standard_insurance');
-		} else {
-			$data['royal_mail_1st_class_standard_insurance'] = '0:20.00';
-		}
-
 		if (isset($this->request->post['royal_mail_1st_class_standard_status'])) {
 			$data['royal_mail_1st_class_standard_status'] = $this->request->post['royal_mail_1st_class_standard_status'];
 		} else {
@@ -252,14 +216,6 @@ class ControllerShippingRoyalMail extends Controller {
 			$data['royal_mail_2nd_class_standard_rate'] = '0.1:0.73,.25:1.17,.5:1.48,.75:2.01,1:5.20,2:8.00,5:13.75,10:20.25,20:28.55';
 		}
 
-		if (isset($this->request->post['royal_mail_2nd_class_standard_insurance'])) {
-			$data['royal_mail_2nd_class_standard_insurance'] = $this->request->post['royal_mail_2nd_class_standard_insurance'];
-		} elseif ($this->config->has('royal_mail_2nd_class_standard_insurance')) {
-			$data['royal_mail_2nd_class_standard_insurance'] = $this->config->get('royal_mail_2nd_class_standard_insurance');
-		} else {
-			$data['royal_mail_2nd_class_standard_insurance'] = '0:20.00';
-		}
-
 		if (isset($this->request->post['royal_mail_2nd_class_standard_status'])) {
 			$data['royal_mail_2nd_class_standard_status'] = $this->request->post['royal_mail_2nd_class_standard_status'];
 		} else {
@@ -273,8 +229,8 @@ class ControllerShippingRoyalMail extends Controller {
 			$data['royal_mail_international_standard_eu_rate'] = $this->config->get('royal_mail_international_standard_eu_rate');
 		} else {
 			$data['royal_mail_international_standard_eu_rate'] = '0.01:0.97,0.02:0.97,0.06:1.47,0.1:3.20,0.25:3.70,0.5:5.15,0.75:6.60,1.25:9.50,1.5:10.95,1.75:12.40,2:13.85';
-		}
-		
+		}				
+						
 		if (isset($this->request->post['royal_mail_international_standard_zone_1_rate'])) {
 			$data['royal_mail_international_standard_zone_1_rate'] = $this->request->post['royal_mail_international_standard_zone_1_rate'];
 		} elseif ($this->config->has('royal_mail_international_standard_zone_1_rate')) {
@@ -305,14 +261,6 @@ class ControllerShippingRoyalMail extends Controller {
 		} else {
 			$data['royal_mail_international_tracked_signed_eu_rate'] = '0.02:5.97,0.06:6.47,0.1:8.20,0.25:8.70,0.50:10.15,0.75:11.60,1:13.05,1.25:14.50,1.5:15.95,1.75:17.40,2:18.85';
 		}
-		
-		if (isset($this->request->post['royal_mail_international_tracked_signed_eu_insurance'])) {
-			$data['royal_mail_international_tracked_signed_eu_insurance'] = $this->request->post['royal_mail_international_tracked_signed_eu_insurance'];
-		} elseif ($this->config->has('royal_mail_international_tracked_signed_insurance_1')) {
-			$data['royal_mail_international_tracked_signed_eu_insurance'] = $this->config->get('royal_mail_international_tracked_signed_eu_insurance');
-		} else {
-			$data['royal_mail_international_tracked_signed_eu_insurance'] = '0:50';
-		}
 				
 		if (isset($this->request->post['royal_mail_international_tracked_signed_zone_1_rate'])) {
 			$data['royal_mail_international_tracked_signed_zone_1_rate'] = $this->request->post['royal_mail_international_tracked_signed_zone_1_rate'];
@@ -321,14 +269,6 @@ class ControllerShippingRoyalMail extends Controller {
 		} else {
 			$data['royal_mail_international_tracked_signed_zone_1_rate'] = '0.02:6.28,0.06:7.15,0.1:8.80,0.25:9.75,0.5:12.45,0.75:15.15,1:17.85,1.25:20.55,1.5:23.25,1.75:25.95,2:28.65';
 		}
-
-		if (isset($this->request->post['royal_mail_international_tracked_signed_zone_1_insurance'])) {
-			$data['royal_mail_international_tracked_signed_zone_1_insurance'] = $this->request->post['royal_mail_international_tracked_signed_zone_1_insurance'];
-		} elseif ($this->config->has('royal_mail_international_tracked_signed_zone_1_insurance')) {
-			$data['royal_mail_international_tracked_signed_zone_1_insurance'] = $this->config->get('royal_mail_international_tracked_signed_zone_1_insurance');
-		} else {
-			$data['royal_mail_international_tracked_signed_zone_1_insurance'] = '0:50';
-		}
 		
 		if (isset($this->request->post['royal_mail_international_tracked_signed_zone_2_rate'])) {
 			$data['royal_mail_international_tracked_signed_zone_2_rate'] = $this->request->post['royal_mail_international_tracked_signed_zone_2_rate'];
@@ -336,14 +276,6 @@ class ControllerShippingRoyalMail extends Controller {
 			$data['royal_mail_international_tracked_signed_zone_2_rate'] = $this->config->get('royal_mail_international_tracked_signed_zone_2_rate');
 		} else {
 			$data['royal_mail_international_tracked_signed_zone_2_rate'] = '0.02:6.28,0.06:7.15,0.1:9.00,0.25:10.05,0.5:12.90,0.75:15.75,1:18.60,1.25:21.45,1.5:24.30,1.75:27.15,2:30.00';
-		}
-
-		if (isset($this->request->post['royal_mail_international_tracked_signed_zone_2_insurance'])) {
-			$data['royal_mail_international_tracked_signed_zone_2_insurance'] = $this->request->post['royal_mail_international_tracked_signed_zone_2_insurance'];
-		} elseif ($this->config->has('royal_mail_international_tracked_signed_zone_2_insurance')) {
-			$data['royal_mail_international_tracked_signed_zone_2_insurance'] = $this->config->get('royal_mail_international_tracked_signed_zone_2_insurance');
-		} else {
-			$data['royal_mail_international_tracked_signed_zone_2_insurance'] = '0:50';
 		}
 
 		if (isset($this->request->post['royal_mail_international_tracked_signed_status'])) {
@@ -362,14 +294,6 @@ class ControllerShippingRoyalMail extends Controller {
 			$data['royal_mail_international_tracked_eu_rate'] = '0.02:7.16,0.06:7.76,0.1:9.84,0.25:10.44,0.5:12.18,0.75:13.92,1:15.66,1.25:17.40,1.5:19.14,1.75:20.88,2:22.62';
 		}
 		
-		if (isset($this->request->post['royal_mail_international_tracked_eu_insurance'])) {
-			$data['royal_mail_international_tracked_eu_insurance'] = $this->request->post['royal_mail_international_tracked_eu_insurance'];
-		} elseif ($this->config->has('royal_mail_international_tracked_eu_insurance')) {
-			$data['royal_mail_international_tracked_eu_insurance'] = $this->config->get('royal_mail_international_tracked_eu_insurance');
-		} else {
-			$data['royal_mail_international_tracked_eu_insurance'] = '0:50';
-		}		
-		
 		// International Tracked
 		// Non Europe
 		if (isset($this->request->post['royal_mail_international_tracked_non_eu_rate'])) {
@@ -379,14 +303,6 @@ class ControllerShippingRoyalMail extends Controller {
 		} else {
 			$data['royal_mail_international_tracked_non_eu_rate'] = '0.02:5.97,0.06:6.47,0.1:8.20,0.25:8.70,0.5:10.15,0.75:11.60,1:13.05,1.25:14.50,1.5:15.95,1.75:17.40,2:18.85';
 		}
-		
-		if (isset($this->request->post['royal_mail_international_tracked_non_eu_insurance'])) {
-			$data['royal_mail_international_tracked_non_eu_insurance'] = $this->request->post['royal_mail_international_tracked_non_eu_insurance'];
-		} elseif ($this->config->has('royal_mail_international_tracked_insurance_1')) {
-			$data['royal_mail_international_tracked_non_eu_insurance'] = $this->config->get('royal_mail_international_tracked_non_eu_insurance');
-		} else {
-			$data['royal_mail_international_tracked_non_eu_insurance'] = '0:50';
-		}		
 		
 		// International Tracked
 		// World Zones 1				
@@ -398,14 +314,6 @@ class ControllerShippingRoyalMail extends Controller {
 			$data['royal_mail_international_tracked_zone_1_rate'] = '0.02:5.97,0.06:6.47,0.1:8.80,0.25:9.75,0.5:12.45,0.75:15.15,1:17.85,1.25:20.55,1.5:23.25,1.75:25.95,2:28.65';
 		}
 		
-		if (isset($this->request->post['royal_mail_international_tracked_zone_1_insurance'])) {
-			$data['royal_mail_international_tracked_zone_1_insurance'] = $this->request->post['royal_mail_international_tracked_zone_1_insurance'];
-		} elseif ($this->config->has('royal_mail_international_tracked_zone_1_insurance')) {
-			$data['royal_mail_international_tracked_zone_1_insurance'] = $this->config->get('royal_mail_international_tracked_zone_1_insurance');
-		} else {
-			$data['royal_mail_international_tracked_zone_1_insurance'] = '0:50';
-		}		
-		
 		// International Tracked
 		// World Zones 2	
 		if (isset($this->request->post['royal_mail_international_tracked_zone_2_rate'])) {
@@ -414,14 +322,6 @@ class ControllerShippingRoyalMail extends Controller {
 			$data['royal_mail_international_tracked_zone_2_rate'] = $this->config->get('royal_mail_international_tracked_zone_2_rate');
 		} else {
 			$data['royal_mail_international_tracked_zone_2_rate'] = '0.02:6.28,0.06:7.15,0.1:9.00,0.25:10.05,0.5:12.90,0.75:15.75,1:18.60,1.25:21.45,1.5:24.30,1.75:27.15,2:30.00';
-		}
-
-		if (isset($this->request->post['royal_mail_international_tracked_zone_2_insurance'])) {
-			$data['royal_mail_international_tracked_zone_2_insurance'] = $this->request->post['royal_mail_international_tracked_zone_2_insurance'];
-		} elseif ($this->config->has('royal_mail_international_tracked_zone_2_insurance')) {
-			$data['royal_mail_international_tracked_zone_2_insurance'] = $this->config->get('royal_mail_international_tracked_zone_2_insurance');
-		} else {
-			$data['royal_mail_international_tracked_zone_2_insurance'] = '0:50';
 		}
 
 		if (isset($this->request->post['royal_mail_international_tracked_status'])) {
@@ -440,14 +340,6 @@ class ControllerShippingRoyalMail extends Controller {
 			$data['royal_mail_international_signed_eu_rate'] = '0.02:5.97,0.06:6.47,0.1:8.20,0.25:8.70,0.5:10.15,0.75:11.60,1:13.05,1.25:14.50,1.5:15.95,1.75:17.40,2:18.85';
 		}
 
-		if (isset($this->request->post['royal_mail_international_signed_eu_insurance'])) {
-			$data['royal_mail_international_signed_eu_insurance'] = $this->request->post['royal_mail_international_signed_eu_insurance'];
-		} elseif ($this->config->has('royal_mail_international_signed_eu_insurance')) {
-			$data['royal_mail_international_signed_eu_insurance'] = $this->config->get('royal_mail_international_signed_eu_insurance');
-		} else {
-			$data['royal_mail_international_signed_eu_insurance'] = '39:0,250:2.20';
-		}
-
 		// International Signed
 		// World Zones 1
 		if (isset($this->request->post['royal_mail_international_signed_zone_1_rate'])) {
@@ -458,14 +350,6 @@ class ControllerShippingRoyalMail extends Controller {
 			$data['royal_mail_international_signed_zone_1_rate'] = '0.02:6.28,0.06:7.15,0.1:8.80,0.25:9.75,0.5:12.45,0.75:15.15,1:17.85,1.25:20.55,1.5:23.25,1.75:25.95,2:28.65';
 		}
 
-		if (isset($this->request->post['royal_mail_international_signed_zone_1_insurance'])) {
-			$data['royal_mail_international_signed_zone_1_insurance'] = $this->request->post['royal_mail_international_signed_zone_1_insurance'];
-		} elseif ($this->config->has('royal_mail_international_signed_zone_1_insurance')) {
-			$data['royal_mail_international_signed_zone_1_insurance'] = $this->config->get('royal_mail_international_signed_zone_1_insurance');
-		} else {
-			$data['royal_mail_international_signed_zone_1_insurance'] = '39:0,250:2.20';
-		}
-
 		// International Signed
 		// World Zones 2
 		if (isset($this->request->post['royal_mail_international_signed_zone_2_rate'])) {
@@ -474,14 +358,6 @@ class ControllerShippingRoyalMail extends Controller {
 			$data['royal_mail_international_signed_zone_2_rate'] = $this->config->get('royal_mail_international_signed_zone_2_rate');
 		} else {
 			$data['royal_mail_international_signed_zone_2_rate'] = '0.02:6.28,0.06:7.15,0.1:9.00,0.25:10.05,0.5:12.90,0.75:15.75,1:18.60,1.25:21.45,1.5:24.30,1.75:27.15,2:30.00';
-		}
-
-		if (isset($this->request->post['royal_mail_international_signed_zone_2_insurance'])) {
-			$data['royal_mail_international_signed_zone_2_insurance'] = $this->request->post['royal_mail_international_signed_zone_2_insurance'];
-		} elseif ($this->config->has('royal_mail_international_signed_zone_2_insurance')) {
-			$data['royal_mail_international_signed_zone_2_insurance'] = $this->config->get('royal_mail_international_signed_zone_2_insurance');
-		} else {
-			$data['royal_mail_international_signed_zone_2_insurance'] = '39:0,250:2.20';
 		}
 
 		if (isset($this->request->post['royal_mail_international_signed_status'])) {

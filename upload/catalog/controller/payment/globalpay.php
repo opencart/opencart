@@ -80,6 +80,8 @@ class ControllerPaymentGlobalpay extends Controller {
 			$data['shipping_country'] = $order_info['payment_iso_code_2'];
 		}
 
+		$data['response_url'] = HTTPS_SERVER . 'index.php?route=payment/globalpay/notify';
+
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/globalpay.tpl')) {
 			return $this->load->view($this->config->get('config_template') . '/template/payment/globalpay.tpl', $data);
 		} else {

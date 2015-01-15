@@ -1163,7 +1163,7 @@ final class Ebay {
 				$this->db->query("TRUNCATE TABLE `" . DB_PREFIX . "ebay_shipping`");
 				$this->log('Emptied ebay_shipping table');
 				foreach ($response['shipping_service'] as $service) {
-					if (!empty($service['InternationalService']) && $service['InternationalService'] == 1) {
+					if (!empty($service['InternationalService']) && $service['InternationalService'] == 'true') {
 						$service['InternationalService'] = 1;
 					} else {
 						$service['InternationalService'] = 0;

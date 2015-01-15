@@ -33,9 +33,15 @@ class ModelOpenbayEbayProduct extends Model {
 		}
 
 		$categories     = array();
-		$data['data']   = unserialize(gzuncompress(stripslashes(base64_decode(strtr($data['data'], '-_,', '+/=')))));
-		$new_data        = base64_decode($data['data']);
-		$options		= json_decode($data['options'], 1);
+		//$data['data']   = unserialize(gzuncompress(stripslashes(base64_decode(strtr($data['data'], '-_,', '+/=')))));
+		//$new_data        = base64_decode($data['data']);
+
+		//$data['data']   = unserialize(gzuncompress(stripslashes(base64_decode(strtr($data['data'], '-_,', '+/=')))));
+		//$options		= json_decode($data['options'], 1);
+
+
+		$options		= $data['options'];
+		$new_data		= $data['data'];
 
 		unset($data['data']);
 
@@ -280,13 +286,7 @@ class ModelOpenbayEbayProduct extends Model {
 					}
 				}
 
-				$sql = " INSERT INTO `" . DB_PREFIX . "product_description` SET
-						`product_id`            = '" . (int)$product_id . "',
-						`language_id`           = '" . (int)$this->config->get('config_language_id') . "',
-						`name`                  = '" . $this->db->escape(htmlspecialchars(base64_decode($item['Title']), ENT_COMPAT, 'UTF-8')) . "',
-						`description`           = '" . $this->db->escape(htmlspecialchars(utf8_encode($item['Description']), ENT_COMPAT, 'UTF-8')) . "'";
-
-				$this->db->query($sql);
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "product_description` SET `product_id` = '" . (int)$product_id . "', `language_id` = '" . (int)$this->config->get('config_language_id') . "', `name` = '" . $this->db->escape(htmlspecialchars(base64_decode($item['Title']), ENT_COMPAT, 'UTF-8')) . "', `description` = '" . $this->db->escape(htmlspecialchars(utf8_encode($item['Description']), ENT_COMPAT, 'UTF-8')) . "'");
 				$this->openbay->ebay->log('Product description done');
 
 				//Insert product store link
@@ -362,53 +362,41 @@ class ModelOpenbayEbayProduct extends Model {
 	}
 
 	private function createVariants($product_id, $data) {
-		foreach ($data['variation']['vars'] as $variant) {
-			$vars           = array();
-			$s              = '';
-
+		foreach ($data['variation']['vars'] as $variant_id => $variant) {
 			foreach ($variant['opt'] as $k_opt => $v_opt) {
-				$name       = base64_decode($k_opt);
-				$value      = $v_opt;
+				$name = base64_decode($k_opt);
+				$value = $v_opt;
 
-				$option     = $this->getOption($name);
-				$opt        = $this->getOptionValue($value, $option['id']);
+				$option = $this->getOption($name);
+				$option_value = $this->getOptionValue($value, $option['id']);
 
-				//lookup product option rel table, insert if needed
-				$product_option_id          = $this->getProductOption($product_id, $option['id']);
-				$product_option_value_id    = $this->getProductOptionValue($product_id, $option['id'], $opt['id'], $product_option_id);
-
-				$this->openbay->ebay->log('Option data: ' . serialize($option));
-
-				$s          = $option['sort'];
-				$vars[$s]   = $product_option_value_id;
+				$product_option_id = $this->getProductOption($product_id, $option['id']);
+				$product_option_value_id = $this->getProductOptionValue($product_id, $option['id'], $option_value['id'], $product_option_id);
+				$data['variation']['vars'][$variant_id]['product_option_values'][] = $product_option_value_id;
 			}
 
-			//$this->openbay->ebay->log('Unsorted: ' . serialize($vars));
-
-			//sort the array to the natural sort order
-			ksort($vars);
-
-			//$this->openbay->ebay->log('Sorted: ' . serialize($vars));
-
-			//remove the key from the array to pass to implode
-			$vars2 = array();
-			foreach ($vars as $k=>$v)
-			{
-				$vars2[] = $v;
-			}
-
-			//implode the values
-			$vars = implode(':', $vars2);
-
-			//$this->openbay->ebay->log('Vars: ' . $vars);
-
-			//create the variant
-			$this->createProductVariant(array('var' => $vars, 'price' => $variant['price'], 'stock' => $variant['qty'], 'product_id' => $product_id, 'sku' => $variant['sku']));
+			$this->db->query("UPDATE `" . DB_PREFIX . "product_option_value` SET subtract = '0', price = '0.000', quantity = '0' WHERE product_id = '" . (int)$product_id . "'");
 		}
 
-		$this->updateVariantListing($product_id, $data['ItemID']);
+		$all_variants = $this->model_module_openstock->calculateVariants($product_id);
+		foreach ($all_variants as $new_variant) {
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option_variant` SET `product_id` = '" . (int)$product_id . "', `sku` = '', `stock` = '0', `active` = '0', `subtract` = '1', `price` = '0.00', `image` = '', `weight` = '0.00'");
 
-		//$this->openbay->ebay->log('Item variant stuff done. . ');
+			$variant_id = $this->db->getLastId();
+
+			$i = 1;
+			foreach ($new_variant as $new_variant_value) {
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option_variant_value` SET `product_option_variant_id` = '" . (int)$variant_id . "', `product_option_value_id` = '" . (int)$new_variant_value . "', `product_id` = '" . (int)$product_id . "', `sort_order` = '" . (int)$i++ . "'");
+			}
+		}
+
+		foreach ($data['variation']['vars'] as $variant_id => $variant) {
+			$variant_row = $this->model_module_openstock->getVariantByOptionValues($variant['product_option_values'], $product_id);
+
+			if (!empty($variant_row)) {
+				$this->db->query("UPDATE `" . DB_PREFIX . "product_option_variant` SET `product_id` = '" . (int)$product_id . "', `sku` = '" . $this->db->escape($variant['sku']) . "', `stock` = '" . (int)$variant['qty'] . "', `active` = 1, `price` = '" . (float)$variant['price'] . "' WHERE `product_option_variant_id` = '" . (int)$variant_row['product_option_variant_id'] . "'");
+			}
+		}
 	}
 
 	private function getOption($name) {
@@ -491,17 +479,8 @@ class ModelOpenbayEbayProduct extends Model {
 		}
 	}
 
-	private function createProductVariant($data) {
-		$this->db->query("
-			INSERT INTO `" . DB_PREFIX . "product_option_variant`
-			SET
-				`product_id`    = '" . (int)$data['product_id'] . "',
-				`stock`         = '" . (int)$data['stock'] . "',
-				`sku`           = '" . $this->db->escape($data['sku']) . "',
-				`active`        = '1',
-				`subtract`      = '1',
-				`price`         = '" . (double)$data['price'] . "'
-		");
+	private function createProductVariant($price, $quantity, $product_id, $sku) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "product_option_variant` SET `product_id` = '" . (int)$product_id . "', `stock` = '" . (int)$quantity . "', `sku` = '" . $this->db->escape($sku) . "', `active` = '1', `subtract` = '1', `price` = '" . (double)$price . "'");
 
 		return array('id' => $this->db->getLastId());
 	}

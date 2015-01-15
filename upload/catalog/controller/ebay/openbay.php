@@ -106,6 +106,19 @@ class ControllerEbayOpenbay extends Controller {
 		}
 	}
 
+	public function importTest() {
+		$this->load->model('openbay/ebay_product');
+
+		$import = file_get_contents('./import.cache');
+		$import 	= strtr($import, '-_,', '+/=');
+		$import 	= base64_decode($import);
+		//$import   	= unserialize($import);
+
+		$data = ['data' => $import, 'options' => ['cat' => 1]];
+
+		$this->model_openbay_ebay_product->importItems($data);
+	}
+
 	public function ping() {
 		$post_size   = ini_get('post_max_size');
 		$post_size   = (int)str_replace(array('M','m','Mb','MB'), '', $post_size);

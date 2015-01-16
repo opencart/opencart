@@ -4,7 +4,7 @@ class ControllerOpenbayEtsy extends Controller {
 		if ($this->config->get('etsy_status') != '1') {
 			$this->openbay->etsy->log('etsy/inbound - module inactive (503)');
 			http_response_code(503);
-			die();
+			exit();
 		}
 
 		$body = $this->request->post;
@@ -12,7 +12,7 @@ class ControllerOpenbayEtsy extends Controller {
 		if (!isset($body['action']) || !isset($body['auth'])) {
 			$this->openbay->etsy->log('etsy/inbound - action or auth data not set (401)');
 			http_response_code(401);
-			die();
+			exit();
 		}
 
 		$incoming_token = isset($body['auth']['token']) ? $body['auth']['token'] : '';
@@ -21,7 +21,7 @@ class ControllerOpenbayEtsy extends Controller {
 		if ($incoming_token !== $this->config->get('etsy_token') || $incoming_secret !== $this->config->get('etsy_enc1')) {
 			$this->openbay->etsy->log('etsy/inbound - Auth failed (401): ' . $incoming_token . '/' . $incoming_secret);
 			http_response_code(401);
-			die();
+			exit();
 		}
 
 		$data = array();
@@ -32,13 +32,11 @@ class ControllerOpenbayEtsy extends Controller {
 			if (!$decrypted) {
 				$this->openbay->etsy->log('etsy/inbound Failed to decrypt data');
 				http_response_code(400);
-				die();
+				exit();
 			}
 
 			$data = json_decode($decrypted);
 		}
-
-		//$this->openbay->etsy->log(print_r($data, true));
 
 		switch ($body['action']) {
 			case 'orders':

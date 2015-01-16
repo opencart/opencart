@@ -163,8 +163,6 @@ class ModelOpenbayEbayProduct extends Model {
 			$this->openbay->ebay->log('Categories set not to be created');
 		}
 
-		$img_count = 0;
-
 		$current = $this->openbay->ebay->getLiveListingArray();
 
 		foreach ($new_data_1 as $item) {

@@ -37,7 +37,7 @@
             <th class="text-center" colspan="3"><?php echo $text_local ?></th>
           </tr>
           <tr>
-            <th class="text-center"><input type="checkbox" class="master-checkbox" value="1"/></th>
+            <th class="text-center"><input type="checkbox" id="master-checkbox" value="1"/></th>
             <th class="text-left"><?php echo $column_asin ?></th>
             <th class="text-left"><?php echo $column_sku ?></th>
             <th class="text-center"><?php echo $column_quantity ?></th>
@@ -56,7 +56,7 @@
             <td class="text-center"> - </td>
             <?php } else { ?>
           <tr class="success">
-            <td class="text-center"><input type="checkbox" class="link-checkbox link-checkbox-market master-checkbox"/></td>
+            <td class="text-center"><input type="checkbox" class="link-checkbox link-checkbox-market"/></td>
             <?php } ?>
 
             <td class="text-left"><a href="<?php echo $product['href_amazon'] ?>" target="_blank"><?php echo $product['asin'] ?></a></td>
@@ -121,7 +121,7 @@
     return false;
   });
 
-  $('.master-checkbox').click(function () {
+  $('#master-checkbox').click(function () {
     if ($(this).is(':checked')) {
       $('.link-checkbox-market').attr('checked', 'checked');
     } else {

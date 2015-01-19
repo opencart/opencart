@@ -966,7 +966,7 @@ class ControllerOpenbayAmazon extends Controller {
 				'quantity' => $result['quantity'],
 				'combination' => $result['combination'],
 				'product_id' => $result['product_id'],
-				'sku' => $result['sku'],
+				'var' => $result['var'],
 				'href_product' => $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'], 'SSL'),
 			);
 		}

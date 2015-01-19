@@ -112,6 +112,9 @@
       },
       error: function(xhr, ajaxOptions, thrownError) {
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
+      },
+      complete: function() {
+        $('#button-load-listings').empty().removeAttr('disabled').html('<?php echo $button_load ?>');
       }
     });
 

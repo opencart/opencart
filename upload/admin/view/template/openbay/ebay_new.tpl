@@ -324,58 +324,56 @@
                 <?php } ?>
               </div>
 
-  <!-- OPENSTOCK CHANGES START @TODO -->
               <?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])) { ?>
                 <h2><?php echo $text_option_images; ?></h2>
                 <p><?php echo $text_option_description; ?></p>
-                <table class="form">
-                    <tr>
-                        <td><?php echo $text_option_images_grp; ?></td>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $text_option_images_grp; ?></label>
+                <div class="col-sm-10">
+                  <select name="option_image_group" id="option_image_group" class="form-control">
+                    <option value="def"><?php echo $text_select; ?></option>
+                    <?php foreach ($product['option_groups'] as $option_group) { echo '<option value="'.$option_group['option_id'].'">'.$option_group['name'].'</option>'; } ?>
+                  </select>
+                  <input type="hidden" id="option-image-group-name" name="option_image_group_name" value=""/>
+                </div>
+              </div>
+              <div class="form-group option-group-img-tr" style="display:none;">
+                <label class="col-sm-2 control-label"><?php echo $text_option_images_choice; ?></label>
+                <div class="col-sm-10">
+                  <?php foreach ($product['option_groups'] as $option_group) { ?>
+                  <div id="option-group-img-<?php echo $option_group['option_id']; ?>" class="option-group-img">
+                    <div class="table-responsive">
+                      <table class="table table-striped table-bordered table-hover">
+                      <?php foreach ($option_group['product_option_value'] as $option_group_choice) { ?>
+                      <tr>
+                        <td><?php echo $option_group_choice['name']; ?></td>
                         <td>
-                            <select name="option_image_group" id="option_image_group">
-                                <option value="def"><?php echo $text_select; ?></option>
-                                <?php foreach ($product['option_groups'] as $option_group) { echo '<option value="'.$option_group['option_id'].'">'.$option_group['name'].'</option>'; } ?>
-                            </select>
-                            <input type="hidden" id="option-image-group-name" name="option-image-group-name" value="" />
+                          <input type="hidden" name="option_image[<?php echo $option_group['option_id']; ?>][<?php echo $option_group_choice['product_option_value_id']; ?>][name]" value="<?php echo $option_group_choice['name']; ?>"/>
+                          <a onclick="addVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>);" class="btn btn-primary"><span><?php echo $text_add; ?></span></a>
                         </td>
-                    </tr>
-                    <tr class="option-group-img-tr displayNone">
-                        <td><?php echo $text_option_images_choice; ?></td>
                         <td>
-                            <?php foreach ($product['option_groups'] as $option_group) { ?>
-                                <div id="option-group-img-<?php echo $option_group['option_id']; ?>" class="option-group-img">
-                                    <table class="form">
-                                        <?php foreach ($option_group['product_option_value'] as $option_group_choice) { ?>
-                                            <tr>
-                                                <td>
-                                                    <h4><?php echo $option_group_choice['name']; ?></h4>
-                                                    <input type="hidden" name="option_image[<?php echo $option_group['option_id']; ?>][<?php echo $option_group_choice['product_option_value_id']; ?>][name]" value="<?php echo $option_group_choice['name']; ?>" />
-                                                    <div class="buttons">
-                                                        <a onclick="addVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>);" class="button cursor"><span><?php echo $text_add; ?></span></a>
-                                                    </div>
-                                                </td>
-                                                <td class="center" id="option_images_<?php echo $option_group_choice['product_option_value_id']; ?>">
-                                                    <?php $x = 0; if (!empty($option_group_choice['image_thumb']) && ($option_group_choice['image'] != 'no_image.jpg')) { $x++; ?>
-                                                        <div class="border p10 mBottom10 width100 left floatLeft mRight10" id="option_image_<?php echo $option_group['option_id']; ?>_<?php echo $option_group_choice['product_option_value_id']; ?>_<?php echo $x; ?>">
-                                                            <img src="<?php echo $option_group_choice['image_thumb']; ?>" />
-                                                            <input type="hidden" name="option_image[<?php echo $option_group['option_id']; ?>][<?php echo $option_group_choice['product_option_value_id']; ?>][images][]" value="<?php echo $option_group_choice['image']; ?>" />
-                                                            <p class="text-center"><a class="cursor" onclick="removeVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>, <?php echo $x; ?>);"><?php echo $button_remove; ?></a></p>
-                                                        </div>
-                                                    <?php } ?>
-                                                    <div style="clear:both"></div>
-                                                    <input type="hidden" name="option_image_count_<?php echo $option_group['option_id']; ?>" id="option_image_count_<?php echo $option_group['option_id']; ?>" value="<?php echo $x; ?>" />
-                                                </td>
-                                            </tr>
-                                        <?php } ?>
-                                    </table>
-                                </div>
+                          <table class="table table-striped table-bordered table-hover" id="option_images_<?php echo $option_group_choice['product_option_value_id']; ?>">
+                            <?php $x = 0; if (!empty($option_group_choice['image_thumb']) && ($option_group_choice['image'] != 'no_image.jpg')) { $x++; ?>
+                            <tr>
+                              <td id="option_image_<?php echo $option_group['option_id']; ?>_<?php echo $option_group_choice['product_option_value_id']; ?>_<?php echo $x; ?>">
+                                <img src="<?php echo $option_group_choice['image_thumb']; ?>"/>
+                                <input type="hidden" name="option_image[<?php echo $option_group['option_id']; ?>][<?php echo $option_group_choice['product_option_value_id']; ?>][images][]" value="<?php echo $option_group_choice['image']; ?>"/>
+                              </td>
+                              <td><button type="button" onclick="removeVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>, <?php echo $x; ?>);" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                            </tr>
                             <?php } ?>
+                            <input type="hidden" name="option_image_count_<?php echo $option_group['option_id']; ?>" id="option_image_count_<?php echo $option_group['option_id']; ?>" value="<?php echo $x; ?>"/>
+                          </table>
                         </td>
-                    </tr>
-                </table>
+                      </tr>
+                      <?php } ?>
+                    </table>
+                  </div>
+                  </div>
+                  <?php } ?>
+                </div>
+              </div>
               <?php } ?>
-  <!-- OPENSTOCK CHANGES FINSISH @TODO -->
-
             </div>
 
             <div id="tab-listing-price" class="tab-pane">
@@ -423,14 +421,11 @@
                           }
 
                           $keys = array();
-
                           foreach ($option['variant_values'] as $variant_value) {
                             $keys[] = $variant_value['product_option_value_id'];
                           }
 
-                          $key = implode(':', $keys);
-
-                          echo '<input type="hidden" name="opt[' . $option_count . '][key]" value="' . $key . '" />';
+                          echo '<input type="hidden" name="opt[' . $option_count . '][key]" value="' . implode(':', $keys) . '" />';
                           echo '<input type="hidden" name="opt[' . $option_count . '][sku]" value="' . $option['sku'] . '" />';
                           echo '<input type="hidden" name="opt[' . $option_count . '][active]" value="' . ($option['active'] == 1 ? 1 : 0) . '" />';
                           echo '<input type="hidden" name="varPriceExCount" class="varPriceExCount" value="' . $option_count . '" />';
@@ -447,8 +442,7 @@
 
                           //echo '<tr><td colspan="7" id="option-specifics-' . $option_count . '"></td></tr>';
                           $option_count++;
-                        }
-    ?>
+                        } ?>
                       </tbody>
                     </table>
                   </div>
@@ -1971,15 +1965,20 @@
       $('#option_image_count_'+grp_id).val(count);
 
       var html = '';
-      html += '<div class="border p10 mBottom10 width100 left floatLeft mRight10" id="option_image_'+grp_id+'_'+id+'_'+count+'">';
-          html += '<img src="<?php echo $no_image; ?>" id="option_image_img_'+grp_id+'_'+id+'_'+count+'" />';
-          html += '<input type="hidden" name="option_image['+grp_id+']['+id+'][images][]" id="option_image_input_'+grp_id+'_'+id+'_'+count+'" value="" />';
-          html += '<p class="text-center"><a class="cursor" onclick="removeVariationImage('+grp_id+','+id+','+count+');"><?php echo $button_remove; ?></a></p>';
-      html += '</div>';
+
+      html += '<tr id="option_image_'+grp_id+'_'+id+'_'+count+'">';
+        html += '<td>';
+          html += '<a href="" id="thumb-image' + count + '" data-toggle="image" class="img-thumbnail">';
+            html += '<img src="<?php echo $no_image; ?>"/>';
+          html += '</a>';
+          html += '<input type="hidden" name="option_image['+grp_id+']['+id+'][images][]" id="input-image' + count + '" value="" />';
+        html += '</td>';
+        html += '<td>';
+          html += '<button type="button" onclick="removeVariationImage('+grp_id+', '+id+', '+count+');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>';
+        html += '</td>';
+      html += '</tr>';
 
       $('#option_images_'+id).append(html);
-
-      image_upload('option_image_input_'+grp_id+'_'+id+'_'+count, 'option_image_img_'+grp_id+'_'+id+'_'+count,'option_image_'+grp_id+'_'+id+'_'+count,'option_image_input_'+grp_id+'_'+id+'_'+count);
   }
 
   function confirmAction(url) {

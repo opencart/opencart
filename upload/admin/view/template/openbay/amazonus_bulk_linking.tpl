@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"> <a href="<?php echo $href_return; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
+      <div class="pull-right"> <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -20,13 +20,13 @@
           <?php if ($marketplace_processing) { ?>
           <div class="pull-right"> <a class="btn btn-primary" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_loading; ?></a> </div>
           <?php } else { ?>
-          <div class="pull-right"> <a id="button-load-listings" class="btn btn-primary" href="<?php echo $marketplaces[$marketplace_code]['href_load_listings'] ?>"><?php echo $button_load ?></a> </div>
+          <div class="pull-right"> <a id="button-load-listings" class="btn btn-primary" href="<?php echo $link_load_listings; ?>"><?php echo $button_load ?></a> </div>
           <?php } ?>
         </div>
       </div>
     </div>
     <form id="bulk-link-form" class="form-horizontal">
-      <div id="text-<?php echo $marketplace_code; ?>">
+      <div id="text-market">
         <?php if (!$marketplace_processing) { ?>
         <?php if ($unlinked_products) { ?>
         <table class="table table-bordered table-hover">
@@ -37,7 +37,7 @@
             <th class="text-center" colspan="3"><?php echo $text_local ?></th>
           </tr>
           <tr>
-            <th class="text-center"><input type="checkbox" class="master-checkbox" value="<?php echo $marketplace['code'] ?>"/></th>
+            <th class="text-center"><input type="checkbox" class="master-checkbox" value="1"/></th>
             <th class="text-left"><?php echo $column_asin ?></th>
             <th class="text-left"><?php echo $column_sku ?></th>
             <th class="text-center"><?php echo $column_quantity ?></th>
@@ -56,7 +56,7 @@
             <td class="text-center"> - </td>
             <?php } else { ?>
           <tr class="success">
-            <td class="text-center"><input type="checkbox" class="link-checkbox link-checkbox-<?php echo $marketplace['code'] ?> master-checkbox"/></td>
+            <td class="text-center"><input type="checkbox" class="link-checkbox link-checkbox-market master-checkbox"/></td>
             <?php } ?>
 
             <td class="text-left"><a href="<?php echo $product['href_amazon'] ?>" target="_blank"><?php echo $product['asin'] ?></a></td>
@@ -119,11 +119,10 @@
   });
 
   $('.master-checkbox').click(function () {
-    var marketplace = $(this).val();
     if ($(this).is(':checked')) {
-      $('.link-checkbox-' + marketplace).attr('checked', 'checked');
+      $('.link-checkbox-market').attr('checked', 'checked');
     } else {
-      $('.link-checkbox-' + marketplace).removeAttr('checked');
+      $('.link-checkbox-market').removeAttr('checked');
     }
   });
 
@@ -131,7 +130,7 @@
     e.preventDefault();
 
     $.ajax({
-      url: '<?php echo html_entity_decode($href_do_bulk_linking) ?>',
+      url: '<?php echo html_entity_decode($link_do_listings); ?>',
       dataType: 'json',
       type: 'POST',
       data: $('.link-checkbox:checked').parent().siblings('input[type="hidden"]').serialize(),
@@ -146,10 +145,6 @@
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });
-  });
-
-  $('#marketplace-select').bind('change', function() {
-    location = $('#marketplace-select').val();
   });
   //--></script></div>
 <?php echo $footer; ?>

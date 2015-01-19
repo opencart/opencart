@@ -646,7 +646,7 @@ class ModelOpenbayAmazonus extends Model {
 				SELECT apl.amazon_sku, if (por.product_id IS NULL, p.quantity, por.stock) AS 'quantity'
 				FROM " . DB_PREFIX . "amazonus_product_link apl
 				JOIN " . DB_PREFIX . "product p ON apl.product_id = p.product_id
-				LEFT JOIN " . DB_PREFIX . "product_option_relation por ON apl.product_id = por.product_id AND apl.var = por.var
+				LEFT JOIN " . DB_PREFIX . "product_option_variant por ON apl.product_id = por.product_id AND apl.var = por.sku
 				WHERE apl.amazon_sku IN (" . implode(',', $sku_array) . ")
 			")->rows;
 		} else {
@@ -670,20 +670,12 @@ class ModelOpenbayAmazonus extends Model {
 	public function getTotalUnlinkedItemsFromReport() {
 		if ($this->openbay->addonLoad('openstock')) {
 			$result = $this->db->query("
-				SELECT alr.sku AS 'amazon_sku', alr.quantity AS 'amazon_quantity', alr.asin, alr.price AS 'amazon_price', oc_sku.product_id, pd.name, oc_sku.sku, oc_sku.var, oc_sku.quantity,
-				  (
-					SELECT GROUP_CONCAT(ovd.name ORDER BY o.sort_order SEPARATOR ' > ')
-					FROM " . DB_PREFIX . "product_option_value pov
-					JOIN " . DB_PREFIX . "option_value_description ovd ON ovd.option_value_id = pov.option_value_id AND ovd.language_id = " . (int)$this->config->get('config_language_id') . "
-					JOIN `" . DB_PREFIX . "option` o ON o.option_id = pov.option_id
-					WHERE oc_sku.var LIKE CONCAT('%:', pov.product_option_value_id ,':%') OR oc_sku.var LIKE CONCAT(pov.product_option_value_id ,':%')
-					  OR oc_sku.var LIKE CONCAT('%:', pov.product_option_value_id) OR oc_sku.var LIKE pov.product_option_value_id
-				  ) AS 'combination'
+				SELECT alr.sku AS 'amazon_sku', alr.quantity AS 'amazon_quantity', alr.asin, alr.price AS 'amazon_price', oc_sku.product_id, pd.name, oc_sku.sku, oc_sku.var, oc_sku.quantity, oc_sku.pov_id
 				FROM " . DB_PREFIX . "amazonus_listing_report alr
 				LEFT JOIN (
-				  SELECT p.product_id, if (por.product_id IS NULL, p.sku, por.sku) AS 'sku', if (por.product_id IS NULL, NULL, por.var) AS 'sku', if (por.product_id IS NULL, p.quantity, por.stock) AS 'quantity'
+				  SELECT p.product_id, if (por.product_id IS NULL, p.sku, por.sku) AS 'sku', if (por.product_id IS NULL, NULL, por.sku) AS 'var', if (por.product_id IS NULL, p.quantity, por.stock) AS 'quantity', por.product_option_variant_id AS pov_id
 				  FROM " . DB_PREFIX . "product p
-				  LEFT JOIN " . DB_PREFIX . "product_option_relation por USING(product_id)
+				  LEFT JOIN " . DB_PREFIX . "product_option_variant por USING(product_id)
 				) AS oc_sku ON alr.sku = oc_sku.sku
 				LEFT JOIN " . DB_PREFIX . "amazonus_product_link apl ON (oc_sku.var IS NULL AND oc_sku.product_id = apl.product_id) OR (oc_sku.var IS NOT NULL AND oc_sku.product_id = apl.product_id AND oc_sku.var = apl.var)
 				LEFT JOIN " . DB_PREFIX . "product_description pd ON oc_sku.product_id = pd.product_id AND pd.language_id = " . (int)$this->config->get('config_language_id') . "
@@ -710,24 +702,15 @@ class ModelOpenbayAmazonus extends Model {
 	public function getUnlinkedItemsFromReport($limit = 100, $page = 1) {
 		$start = $limit * ($page - 1);
 
-		$products = array();
-
 		if ($this->openbay->addonLoad('openstock')) {
+			$this->load->model('module/openstock');
 			$rows = $this->db->query("
-				SELECT alr.sku AS 'amazon_sku', alr.quantity AS 'amazon_quantity', alr.asin, alr.price AS 'amazon_price', oc_sku.product_id, pd.name, oc_sku.sku, oc_sku.var, oc_sku.quantity,
-				  (
-					SELECT GROUP_CONCAT(ovd.name ORDER BY o.sort_order SEPARATOR ' > ')
-					FROM " . DB_PREFIX . "product_option_value pov
-					JOIN " . DB_PREFIX . "option_value_description ovd ON ovd.option_value_id = pov.option_value_id AND ovd.language_id = " . (int)$this->config->get('config_language_id') . "
-					JOIN `" . DB_PREFIX . "option` o ON o.option_id = pov.option_id
-					WHERE oc_sku.var LIKE CONCAT('%:', pov.product_option_value_id ,':%') OR oc_sku.var LIKE CONCAT(pov.product_option_value_id ,':%')
-					  OR oc_sku.var LIKE CONCAT('%:', pov.product_option_value_id) OR oc_sku.var LIKE pov.product_option_value_id
-				  ) AS 'combination'
+				SELECT alr.sku AS 'amazon_sku', alr.quantity AS 'amazon_quantity', alr.asin, alr.price AS 'amazon_price', oc_sku.product_id, pd.name, oc_sku.sku, oc_sku.var, oc_sku.quantity, oc_sku.pov_id
 				FROM " . DB_PREFIX . "amazonus_listing_report alr
 				LEFT JOIN (
-				  SELECT p.product_id, if (por.product_id IS NULL, p.sku, por.sku) AS 'sku', if (por.product_id IS NULL, NULL, por.var) AS 'sku', if (por.product_id IS NULL, p.quantity, por.stock) AS 'quantity'
+				  SELECT p.product_id, if (por.product_id IS NULL, p.sku, por.sku) AS 'sku', if (por.product_id IS NULL, NULL, por.sku) AS 'var', if (por.product_id IS NULL, p.quantity, por.stock) AS 'quantity', por.product_option_variant_id AS pov_id
 				  FROM " . DB_PREFIX . "product p
-				  LEFT JOIN " . DB_PREFIX . "product_option_relation por USING(product_id)
+				  LEFT JOIN " . DB_PREFIX . "product_option_variant por USING(product_id)
 				) AS oc_sku ON alr.sku = oc_sku.sku
 				LEFT JOIN " . DB_PREFIX . "amazonus_product_link apl ON (oc_sku.var IS NULL AND oc_sku.product_id = apl.product_id) OR (oc_sku.var IS NOT NULL AND oc_sku.product_id = apl.product_id AND oc_sku.var = apl.var)
 				LEFT JOIN " . DB_PREFIX . "product_description pd ON oc_sku.product_id = pd.product_id AND pd.language_id = " . (int)$this->config->get('config_language_id') . "
@@ -749,18 +732,30 @@ class ModelOpenbayAmazonus extends Model {
 				LIMIT " . (int)$start . "," . (int)$limit)->rows;
 		}
 
+		$products = array();
+
 		foreach ($rows as $row) {
+			$combinations = array();
+
+			if (isset($row['pov_id']) && !empty($row['pov_id'])) {
+				$variants = (isset($row['pov_id']) ? $this->model_module_openstock->getVariant($row['pov_id']) : '');
+
+				foreach ($variants as $variant) {
+					$combinations[] =  $variant['option_value_name'];
+				}
+			}
+
 			$products[] = array(
 				'product_id' => $row['product_id'],
 				'name' => $row['name'],
 				'sku' => $row['sku'],
-				'sku' => $row['sku'],
+				'var' => $row['var'],
 				'quantity' => $row['quantity'],
 				'amazon_sku' => $row['amazon_sku'],
 				'amazon_quantity' => $row['amazon_quantity'],
 				'amazon_price' => number_format($row['amazon_price'], 2, ' . ', ''),
 				'asin' => $row['asin'],
-				'combination' => $row['combination'],
+				'combination' => implode(' > ', $combinations),
 			);
 		}
 

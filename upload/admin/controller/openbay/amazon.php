@@ -949,6 +949,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$pagination->url = $this->url->link('openbay/amazon/bulklinking', 'token=' . $this->session->data['token'] . '&linked_item_page={page}&marketplace=' . $marketplace_code, 'SSL');
 
 		$data['pagination'] = $pagination->render();
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($total_linked) ? (($linked_item_page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($linked_item_page - 1) * $this->config->get('config_limit_admin')) > ($total_linked - $this->config->get('config_limit_admin'))) ? $total_linked : ((($linked_item_page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $total_linked, ceil($total_linked / $this->config->get('config_limit_admin')));
 
 		$results = $this->model_openbay_amazon->getUnlinkedItemsFromReport($marketplace_code, $linked_item_limit, $linked_item_page);
 
@@ -1031,13 +1032,13 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->load->model('openbay/amazon');
 
 		$links = array();
-		$amazon_skus = array();
+		$skus = array();
 
 		if (!empty($this->request->post['link'])) {
 			foreach ($this->request->post['link'] as $link) {
 				if (!empty($link['product_id'])) {
 					$links[] = $link;
-					$amazon_skus[] = $link['amazon_sku'];
+					$skus[] = $link['amazon_sku'];
 				}
 			}
 		}
@@ -1047,7 +1048,10 @@ class ControllerOpenbayAmazon extends Controller {
 				$this->model_openbay_amazon->linkProduct($link['amazon_sku'], $link['product_id'], $link['sku']);
 			}
 
-			//$this->model_openbay_amazon->updateAmazonSkusQuantities($amazon_skus);
+			$this->model_openbay_amazon->updateAmazonSkusQuantities($skus);
 		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode(array('ok')));
 	}
 }

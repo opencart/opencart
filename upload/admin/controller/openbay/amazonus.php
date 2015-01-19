@@ -888,6 +888,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$pagination->url = $this->url->link('openbay/amazonus/bulkLinking', 'token=' . $this->session->data['token'] . '&linked_item_page={page}', 'SSL');
 
 		$data['pagination'] = $pagination->render();
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($total_linked) ? (($linked_item_page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($linked_item_page - 1) * $this->config->get('config_limit_admin')) > ($total_linked - $this->config->get('config_limit_admin'))) ? $total_linked : ((($linked_item_page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $total_linked, ceil($total_linked / $this->config->get('config_limit_admin')));
 
 		$results = $this->model_openbay_amazonus->getUnlinkedItemsFromReport($linked_item_limit, $linked_item_page);
 
@@ -905,7 +906,7 @@ class ControllerOpenbayAmazonus extends Controller {
 				'quantity' => $result['quantity'],
 				'combination' => $result['combination'],
 				'product_id' => $result['product_id'],
-				'sku' => $result['sku'],
+				'var' => $result['sku'],
 				'href_product' => $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'], 'SSL'),
 			);
 		}
@@ -960,13 +961,13 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->load->model('openbay/amazonus');
 
 		$links = array();
-		$amazon_skus = array();
+		$skus = array();
 
 		if (!empty($this->request->post['link'])) {
 			foreach ($this->request->post['link'] as $link) {
 				if (!empty($link['product_id'])) {
 					$links[] = $link;
-					$amazon_skus[] = $link['amazon_sku'];
+					$skus[] = $link['amazon_sku'];
 				}
 			}
 		}
@@ -976,7 +977,10 @@ class ControllerOpenbayAmazonus extends Controller {
 				$this->model_openbay_amazonus->linkProduct($link['amazon_sku'], $link['product_id'], $link['sku']);
 			}
 
-			$this->model_openbay_amazonus->updateAmazonSkusQuantities($amazon_skus);
+			$this->model_openbay_amazonus->updateAmazonSkusQuantities($skus);
 		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode(array('ok')));
 	}
 }

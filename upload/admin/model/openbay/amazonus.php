@@ -368,9 +368,7 @@ class ModelOpenbayAmazonus extends Model {
 	public function linkProduct($amazonus_sku, $product_id, $var = '') {
 		$count = $this->db->query("SELECT COUNT(*) as 'count' FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `product_id` = '" . (int)$product_id . "' AND `amazonus_sku` = '" . $this->db->escape($amazonus_sku) . "' AND `var` = '" . $this->db->escape($var) . "' LIMIT 1")->row;
 		if ($count['count'] == 0) {
-			$this->db->query(
-				"INSERT INTO `" . DB_PREFIX . "amazonus_product_link`
-				SET `product_id` = '" . (int)$product_id . "', `amazonus_sku` = '" . $this->db->escape($amazonus_sku) . "', `var` = '" . $this->db->escape($var) . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "amazonus_product_link` SET `product_id` = '" . (int)$product_id . "', `amazonus_sku` = '" . $this->db->escape($amazonus_sku) . "', `var` = '" . $this->db->escape($var) . "'");
 		}
 	}
 
@@ -643,25 +641,25 @@ class ModelOpenbayAmazonus extends Model {
 
 		if ($this->openbay->addonLoad('openstock')) {
 			$rows = $this->db->query("
-				SELECT apl.amazon_sku, if (por.product_id IS NULL, p.quantity, por.stock) AS 'quantity'
+				SELECT apl.amazonus_sku, if (por.product_id IS NULL, p.quantity, por.stock) AS 'quantity'
 				FROM " . DB_PREFIX . "amazonus_product_link apl
 				JOIN " . DB_PREFIX . "product p ON apl.product_id = p.product_id
 				LEFT JOIN " . DB_PREFIX . "product_option_variant por ON apl.product_id = por.product_id AND apl.var = por.sku
-				WHERE apl.amazon_sku IN (" . implode(',', $sku_array) . ")
+				WHERE apl.amazonus_sku IN (" . implode(',', $sku_array) . ")
 			")->rows;
 		} else {
 			$rows = $this->db->query("
-				SELECT apl.amazon_sku, p.quantity
+				SELECT apl.amazonus_sku, p.quantity
 				FROM " . DB_PREFIX . "amazonus_product_link apl
 				JOIN " . DB_PREFIX . "product p ON apl.product_id = p.product_id
-				WHERE apl.amazon_sku IN (" . implode(',', $sku_array) . ")
+				WHERE apl.amazonus_sku IN (" . implode(',', $sku_array) . ")
 			")->rows;
 		}
 
 		$return = array();
 
 		foreach ($rows as $row) {
-			$return[$row['amazon_sku']] = $row['quantity'];
+			$return[$row['amazonus_sku']] = $row['quantity'];
 		}
 
 		$this->amazonus->updateQuantities($return);

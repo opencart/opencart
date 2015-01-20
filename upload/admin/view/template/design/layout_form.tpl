@@ -104,11 +104,11 @@
                     <?php } ?>
                   </select></td>
                 <td class="text-left"><select name="layout_module[<?php echo $module_row; ?>][position]" class="form-control">
-                    <?php foreach ($positions as $pisition_value => $position_title) { ?>
-                    <?php if ($layout_module['position'] == $pisition_value) { ?>
-                    <option value="<?php echo $pisition_value; ?>" selected="selected"><?php echo $position_title; ?></option>
+                    <?php foreach ($positions as $position_value => $position_title) { ?>
+                    <?php if ($layout_module['position'] == $position_value) { ?>
+                    <option value="<?php echo $position_value; ?>" selected="selected"><?php echo $position_title; ?></option>
                     <?php } else { ?>
-                    <option value="<?php echo $pisition_value; ?>"><?php echo $position_title; ?></option>
+                    <option value="<?php echo $position_value; ?>"><?php echo $position_title; ?></option>
                     <?php } ?>
                     <?php } ?>
                   </select></td>
@@ -167,8 +167,8 @@ function addModule() {
 	<?php } ?>
     html += '  </select></td>'; 
 	html += '  <td class="text-left"><select name="layout_module[' + module_row + '][position]" class="form-control">';
-    <?php foreach ($positions as $pisition_value => $position_title) { ?>
-    html += '    <option value="<?php echo $pisition_value; ?>"><?php echo $position_title; ?></option>';
+    <?php foreach ($positions as $position_value => $position_title) { ?>
+    html += '    <option value="<?php echo $position_value; ?>"><?php echo $position_title; ?></option>';
     <?php } ?>
     html += '  </select></td>';
 	html += '  <td class="text-left"><input type="text" name="layout_module[' + module_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';

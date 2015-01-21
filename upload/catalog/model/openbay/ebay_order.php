@@ -182,7 +182,7 @@ class ModelOpenbayEbayOrder extends Model{
 		// check if the first name, address 1 and country are set
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE `order_id` = '" . (int)$order_id . "' AND `payment_firstname` != '' AND `payment_address_1` != '' AND `payment_country` != ''");
 
-		if ($query->num_rows == 0 || (isset($query->row['customer_id']) && $query->row['customer_id'] == 0)) {
+		if ($query->num_rows == 0) {
 			return false;
 		} else {
 			return true;

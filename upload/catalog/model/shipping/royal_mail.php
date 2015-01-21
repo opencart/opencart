@@ -521,262 +521,94 @@ Yemen, Republic of = YE
 Zambia = ZM
 Zimbabwe = ZW
 */
-
-AF
-NA
-AL
-DZ
-AD
-AO
-AI
-AG
-AR
-AM
-AW
-XA
-AU
-AT
-AZ
-BS
-BH
-BD
-BB
-BY
-BE
-BZ
-BJ
-BM
-BT
-BO
-BX
-BA
-BW
-BR
-IO
-VG
-BN
-BG 
-BF
-BI
-KH
-CM
-CA
-XC
-CV
-KY
-CF
-CE
-TD
-CL
-CN
-CX
-CX
-CO
-KM
-CD
-CG
-CK
-CR
-HR
-CU
-CB
-CY
-CZ
-DK
-DJ
-DM
-DO
-EC
-EG
-SV
-GQ
-ER
-EE
-ET
-FK
-FO
-FJ
-FI
-FR 
-GF
-PF
-TF
-GA
-GM
-GE
-DE 
-GH
-GI
-GR 
-GL
-GD
-GP
-GT
-GN
-GW
-GY
-HT
-HN
-HK
-HU 
-IS
-IN
-ID
-IR
-IQ
-IE
-IL
-IT 
-CI
-JM
-JP
-JO
-KZ
-KE
-KI
-KV
-KW
-KG
-LA
-LV
-LB
-LS
-LR
-LY
-LI
-LT
-LU 
-MO
-MK
-MG
-YT
-MW
-MY
-MV
-ML
-MT
-MQ
-MR
-MU
-XL 
-MX
-MD
-MN
-CS
-MS
-MA
-MZ
-MM
-NA
-NR
-NP
-NL
-NC
-NZ
-NI
-NE
-NG
-NU
-KP
-NO
-OM
-PK
-PW
-PA
-PG
-PY
-PE
-PH
-PN
-PL 
-PT 
-PR
-QA
-RE
-RO
-RU
-RW
-SM
-ST
-SA
-SN
-CS
-SC
-SL
-SG
-SK 
-SI
-SB
-SO
-ZA
-KR
-SD
-ES
-LK
-SX
-SH
-KN
-LC
-SF
-VC
-SD
-SR
-SZ
-SE
-CH
-SY
-TW
-TJ
-TZ
-TH
-TP
-TG
-TK
-TO
-TT
-XT
-TN
-TR
-CP
-TM
-TC
-TV
-UG
-UA
-AE
-UY
-US
-UZ
-VU
-VA
-VE
-VN
-WF
-EH
-WS
-YE
-ZM
-ZW
-
-
-
-
-
-
-
-			$eu = explode(',', 'AL,AD,AM,AT,AZ,BY,BE,BG,XC,HR,CY,CZ,DK,EE,FO,FI,FR,GE,DE,GI,GR,GL,HU,IS,IE,IT,KZ,KV,KG,LV,LI,LT,LU,MK,MT,MD,CS,NL,NO,PL,PT,RO,RU,SM,CS,SK,SI,ES,SE,CH,TJ,TR,TM,UA,UZ,VA');
+			$europe = array(
+				'AL',
+				'AD',
+				'AM',
+				'AT',
+				'AZ',
+				'BY',
+				'BE',
+				'BG',
+				'XC',
+				'HR',
+				'CY',
+				'CZ',
+				'DK',
+				'EE',
+				'FO',
+				'FI',
+				'FR',
+				'GE',
+				'DE',
+				'GI',
+				'GR',
+				'GL',
+				'HU',
+				'IS',
+				'IE',
+				'IT',
+				'KZ',
+				'KV',
+				'KG',
+				'LV',
+				'LI',
+				'LT',
+				'LU',
+				'MK',
+				'MT',
+				'MD',
+				'CS',
+				'NL',
+				'NO',
+				'PL',
+				'PT',
+				'RO',
+				'RU',
+				'SM',
+				'CS',
+				'SK',
+				'SI',
+				'ES',
+				'SE',
+				'CH',
+				'TJ',
+				'TR',
+				'TM',
+				'UA',
+				'UZ',
+				'VA'
+			);
 			
-			$non_eu = explode(',', '
-			DK,EE,FO,FI,FR,GE,DE,GI,GR,GL,HU,IS,IE,IT,KZ,KG,LV,LI,LT,LU,MK,MT,
-			MD,MC,NL,NO,PL,PT,RO,RU,SM,SK,SI,ES,SE,CH,TJ,TR,TM,UA,UZ,VA');
+			$non_eu = explode(',', '');
 
-
-			$zone_1 = explode(',', 'AL,AD,AM,AT,AZ,BY,BE,BA,BG,HR,CY,CZ,DK,EE,FO,FI,FR,GE,DE,GI,GR,GL,HU,IS,IE,IT,KZ,KG,LV,LI,LT,LU,MK,MT,MD,MC,NL,NO,PL,PT,RO,RU,SM,SK,SI,ES,SE,CH,TJ,TR,TM,UA,UZ,VA');
+			$zone_1 = explode(',', '');
 			
-			
-			
-			
-			$zone_2 = explode(',', 'AU,IO,CX,CK,FJ,PF,TF,KI,LA,MO,NR,NC,NZ,NU,PW,PG,PN,SG,SB,TK,TO,TV,WS');
+			$zone_2 = array(
+				'AU',
+				'IO',
+				'CX',
+				'CK',
+				'FJ',
+				'PF',
+				'TF',
+				'KI',
+				'LA',
+				'MO',
+				'NR',
+				'NC',
+				'NZ',
+				'NU',
+				'PW',
+				'PG',
+				'PN',
+				'SG',
+				'SB',
+				'TK',
+				'TO',
+				'TV',
+				'WS'
+			);
 
 			// International Standard
 			if ($this->config->get('royal_mail_international_standard_status') && $address['iso_code_2'] != 'GB') {
@@ -785,7 +617,7 @@ ZW
 				$rates = array();
 				
 				// EU
-				if (in_array($address['iso_code_2'], $eu)) {
+				if (in_array($address['iso_code_2'], $europe)) {
 					$rates = explode(',', $this->config->get('royal_mail_international_standard_eu_rate'));
 				}
 				
@@ -833,13 +665,58 @@ ZW
 			}
 			
 			// International Tracked & Signed
-			if ($this->config->get('royal_mail_international_tracked_signed_status') && $address['iso_code_2'] != 'GB') {
+			$tracked_signed = array(
+				'AD', 
+				'AR',
+				'AT',
+				'BY',
+				'BE',
+				'BG',
+				'CA',
+				'KY',
+				'HR',
+				'CZ',
+				'DK',
+				'EC',
+				'FI',
+				'FR',
+				'DE',
+				'GI',
+				'GR',
+				'HK',
+				'HU',
+				'IS',
+				'IT',
+				'JP',
+				'LI',
+				'LT',
+				'LU',
+				'MT',
+				'NL',
+				'NZ',
+				'PL',
+				'PT',
+				'RO',
+				'SM',
+				'SG',
+				'SK',
+				'SI',
+				'KR',
+				'SE',
+				'CH',
+				'TH',
+				'TT',
+				'US',
+				'VA'
+			);
+			
+			if ($this->config->get('royal_mail_international_tracked_signed_status') && in_array($address['iso_code_2'], $tracked_signed)) {
 				$cost = 0;
 				
 				$rates = array();
 				
 				// EU
-				if (in_array($address['iso_code_2'], $eu)) {
+				if (in_array($address['iso_code_2'], $europe)) {
 					$rates = explode(',', $this->config->get('royal_mail_international_tracked_signed_eu_rate'));
 				}
 				
@@ -883,18 +760,54 @@ ZW
 			}
 
 			// International Tracked
-			if ($this->config->get('royal_mail_international_tracked_status') && $address['iso_code_2'] != 'GB') {
+			$tracked = array(
+				'AD',
+				'AU',
+				'AT',
+				'BE',
+				'BR',
+				'CA',
+				'XC',
+				'HR',
+				'DK',
+				'EE',
+				'FI',
+				'FR',
+				'DE',
+				'HK',
+				'HU',
+				'IS',
+				'IN',
+				'IE',
+				'LV',
+				'LI',
+				'LT',
+				'LU',
+				'MY',
+				'MT',
+				'NL',
+				'NZ',
+				'PL',
+				'PT',
+				'SG',
+				'ES',
+				'SE',
+				'CH',
+				'US'
+			);	
+					
+			if ($this->config->get('royal_mail_international_tracked_status') && in_array($address['iso_code_2'], $tracked)) {
 				$cost = 0;
 
 				$rates = array();
 
 				// EU
-				if (in_array($address['iso_code_2'], $eu)) {
+				if (in_array($address['iso_code_2'], $europe)) {
 					$rates = explode(',', $this->config->get('royal_mail_international_tracked_eu_rate'));
 				}
 				
 				// Non EU
-				if (!in_array($address['iso_code_2'], $eu) && !in_array($address['iso_code_2'], $zone_1) && !in_array($address['iso_code_2'], $zone_2)) {
+				if (!in_array($address['iso_code_2'], $europe) && !in_array($address['iso_code_2'], $zone_1) && !in_array($address['iso_code_2'], $zone_2)) {
 					$rates = explode(',', $this->config->get('royal_mail_international_tracked_non_eu_rate'));
 				}
 				
@@ -938,13 +851,208 @@ ZW
 			}
 			
 			// International Signed
-			if ($this->config->get('royal_mail_international_signed_status') && $address['iso_code_2'] != 'GB') {
+			$signed = array(
+				'AF',
+				'NA',
+				'AL',
+				'DZ',
+				'AO',
+				'AI',
+				'AG',
+				'AM',
+				'AW',
+				'XA',
+				'AU',
+				'AZ',
+				'BS',
+				'BH',
+				'BD',
+				'BB',
+				'BZ',
+				'BJ',
+				'BM',
+				'BT',
+				'BO',
+				'BX',
+				'BA',
+				'BW',
+				'BR',
+				'IO',
+				'VG',
+				'BN',
+				'BF',
+				'BI',
+				'KH',
+				'CM',
+				'XC',
+				'CV',
+				'CF',
+				'CE',
+				'TD',
+				'CL',
+				'CN',
+				'CX',
+				'CX',
+				'CO',
+				'KM',
+				'CD',
+				'CG',
+				'CK',
+				'CR',
+				'CU',
+				'CB',
+				'CY',
+				'DJ',
+				'DM',
+				'DO',
+				'EG',
+				'SV',
+				'GQ',
+				'ER',
+				'EE',
+				'ET',
+				'FK',
+				'FO',
+				'FJ',
+				'GF',
+				'PF',
+				'TF',
+				'GA',
+				'GM',
+				'GE',
+				'GH',
+				'GL',
+				'GD',
+				'GP',
+				'GT',
+				'GN',
+				'GW',
+				'GY',
+				'HT',
+				'HN',
+				'IN',
+				'ID',
+				'IR',
+				'IQ',
+				'IL',
+				'CI',
+				'JM',
+				'JO',
+				'KZ',
+				'KE',
+				'KI',
+				'KV',
+				'KW',
+				'KG',
+				'LA',
+				'LV',
+				'LB',
+				'LS',
+				'LR',
+				'LY',
+				'MO',
+				'MK',
+				'MG',
+				'YT',
+				'MW',
+				'MY',
+				'MV',
+				'ML',
+				'MQ',
+				'MR',
+				'MU',
+				'XL',
+				'MX',
+				'MD',
+				'MN',
+				'CS',
+				'MS',
+				'MA',
+				'MZ',
+				'MM',
+				'NA',
+				'NR',
+				'NP',
+				'NC',
+				'NI',
+				'NE',
+				'NG',
+				'NU',
+				'KP',
+				'NO',
+				'OM',
+				'PK',
+				'PW',
+				'PA',
+				'PG',
+				'PY',
+				'PE',
+				'PH',
+				'PN',
+				'PR',
+				'QA',
+				'RE',
+				'RU',
+				'RW',
+				'ST',
+				'SA',
+				'SN',
+				'CS',
+				'SC',
+				'SL',
+				'SB',
+				'SO',
+				'ZA',
+				'SD',
+				'ES',
+				'LK',
+				'SX',
+				'SH',
+				'KN',
+				'LC',
+				'SF',
+				'VC',
+				'SD',
+				'SR',
+				'SZ',
+				'SY',
+				'TW',
+				'TJ',
+				'TZ',
+				'TP',
+				'TG',
+				'TK',
+				'TO',
+				'XT',
+				'TN',
+				'TR',
+				'CP',
+				'TM',
+				'TC',
+				'TV',
+				'UG',
+				'UA',
+				'AE',
+				'UY',
+				'UZ',
+				'VU',
+				'VE',
+				'VN',
+				'WF',
+				'EH',
+				'WS',
+				'YE',
+				'ZM',
+				'ZW'
+			);				
+
+			if ($this->config->get('royal_mail_international_signed_status') && in_array($address['iso_code_2'], $signed)) {
 				$cost = 0;
 
 				$rates = array();
 				
 				// EU
-				if (in_array($address['iso_code_2'], $eu)) {
+				if (in_array($address['iso_code_2'], $europe)) {
 					$rates = explode(',', $this->config->get('royal_mail_international_signed_eu_rate'));
 				}
 				

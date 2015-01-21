@@ -2056,7 +2056,7 @@ class ControllerOpenbayEbay extends Controller {
 	}
 
 	public function endItem() {
-		$json = $this->openbay->ebay->endItem($this->request->get['id']);
+		$json = $this->openbay->ebay->endItem($this->request->get['item_id']);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

@@ -662,7 +662,7 @@ class ModelOpenbayAmazonus extends Model {
 			$return[$row['amazonus_sku']] = $row['quantity'];
 		}
 
-		$this->amazonus->updateQuantities($return);
+		$this->openbay->amazonus->updateQuantities($return);
 	}
 
 	public function getTotalUnlinkedItemsFromReport() {

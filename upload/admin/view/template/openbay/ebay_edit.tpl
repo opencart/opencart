@@ -23,7 +23,7 @@
         <div class="alert alert-danger" id="form-error" style="display:none;">
           <div class="row">
             <div class="col-sm-8"><?php echo $text_error_loading; ?></div>
-            <div class="col-sm-4 text-right"><a onclick="load();" class="btn btn-primary"><i class="fa fa-refresh"></i> <?php echo $button_retry; ?></a></div>
+            <div class="col-sm-4 text-right"><a id="button-load" class="btn btn-primary"><i class="fa fa-refresh"></i> <?php echo $button_retry; ?></a></div>
           </div>
         </div>
         <div class="content displayNone" id="form-main">
@@ -301,6 +301,11 @@
         }
     });
     });
+
+  $('#button-load').bind('click', function() {
+    load();
+  });
+
   $('#button-remove-link').on('click', function () {
     var pass = confirm("<?php echo $text_confirm; ?>");
 
@@ -309,6 +314,9 @@
         type: 'GET',
         url: 'index.php?route=openbay/ebay/removeItemLink&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>',
         dataType: 'json',
+        beforeSend: function(){
+          $('#button-remove-link').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        },
         success: function () {
           alert('<?php echo $text_alert_removed; ?>');
           window.location = 'index.php?route=extension/openbay/items&token=<?php echo $token; ?>';
@@ -321,17 +329,21 @@
       });
     }
   });
+
   $('#button-end-item').on('click', function () {
     var pass = confirm("<?php echo $text_confirm; ?>");
 
     if (pass == true) {
-      var id = $('#item-id').val();
+      var item_id = $('#item-id').val();
 
-      if (id !== '') {
+      if (item_id !== '') {
         $.ajax({
           type: 'GET',
-          url: 'index.php?route=openbay/ebay/endItem&token=<?php echo $token; ?>&id= ' + id,
+          url: 'index.php?route=openbay/ebay/endItem&token=<?php echo $token; ?>&item_id=' + item_id,
           dataType: 'json',
+          beforeSend: function(){
+            $('#button-end-item').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+          },
           success: function (data) {
             if (data.error == true) {
               alert(data.msg);
@@ -349,9 +361,11 @@
       }
     }
   });
+
   $('#button-edit-item').on('click', function () {
     window.location.href = window.location.href;
   });
+
   $(document).ready(function() {
     load();
   });

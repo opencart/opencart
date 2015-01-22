@@ -50,7 +50,9 @@ class ControllerCommonFileManager extends Controller {
 		$images = array_splice($images, ($page - 1) * 16, 16);
 
 		foreach ($images as $image) {
-			$name = str_split(basename($image), 14);
+			//if filename is more than 20 characters, only show first 20 characters, dot dot dot and extension
+			$initial = str_split(basename($image), 20);
+			$name = sizeof($initial)>1 ? array($initial[0].'...'.pathinfo($image, PATHINFO_EXTENSION)) : array($initial[0]);
 
 			if (is_dir($image)) {
 				$url = '';

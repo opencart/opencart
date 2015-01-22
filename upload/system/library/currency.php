@@ -99,6 +99,10 @@ class Currency {
 	}
 
 	public function convert($value, $from, $to) {
+	    if ($from === $to) {
+	        return $value;
+	    }
+	    
 		if (isset($this->currencies[$from])) {
 			$from = $this->currencies[$from]['value'];
 		} else {

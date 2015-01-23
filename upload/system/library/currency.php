@@ -50,37 +50,37 @@ class Currency {
 		if (!$currency && !$this->has($currency)) {
 		    $currency = $this->code;
 		}
-
+		
 		$decimal_place = (int)$this->currencies[$currency]['decimal_place'];
 		
 		if (!$currency_value) {
 			$currency_value = $this->currencies[$currency]['value'];
 		}
-
+		
 		$value = $currency_value ? (float)$number * $currency_value : (float)$number;
-        
-        if (!$format) {
-            return number_format(round($value, $decimal_place), $decimal_place, '.', '');
-        }
+		
+		if (!$format) {
+		    return number_format(round($value, $decimal_place), $decimal_place, '.', '');
+		}
         
 		$symbol_left   = $this->currencies[$currency]['symbol_left'];
 		$symbol_right  = $this->currencies[$currency]['symbol_right'];
 		
 		$decimal_point  = $this->language->get('decimal_point');
 		$thousand_point = $this->language->get('thousand_point');
-
+		
 		$string = '';
-
+		
 		if ($symbol_left) {
 			$string .= $symbol_left;
 		}
-
+		
 		$string .= number_format(round($value, $decimal_place), $decimal_place, $decimal_point, $thousand_point);
-
+		
 		if ($symbol_right) {
 			$string .= $symbol_right;
 		}
-
+		
 		return $string;
 	}
 

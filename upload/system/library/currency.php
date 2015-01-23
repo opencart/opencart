@@ -46,72 +46,58 @@ class Currency {
 		}
 	}
 
-	public function format($number, $currency = '', $value = '', $format = true) {
-		if ($currency && $this->has($currency)) {
-			$symbol_left   = $this->currencies[$currency]['symbol_left'];
-			$symbol_right  = $this->currencies[$currency]['symbol_right'];
-			$decimal_place = $this->currencies[$currency]['decimal_place'];
-		} else {
-			$symbol_left   = $this->currencies[$this->code]['symbol_left'];
-			$symbol_right  = $this->currencies[$this->code]['symbol_right'];
-			$decimal_place = $this->currencies[$this->code]['decimal_place'];
-
-			$currency = $this->code;
+	public function format($number, $currency = '', $currency_value = '', $format = true) {
+		if (!$currency && !$this->has($currency)) {
+		    $currency = $this->code;
 		}
-
-		if ($value) {
-			$value = $value;
-		} else {
-			$value = $this->currencies[$currency]['value'];
+		
+		$decimal_place = (int)$this->currencies[$currency]['decimal_place'];
+		
+		if (!$currency_value) {
+			$currency_value = $this->currencies[$currency]['value'];
 		}
-
-		if ($value) {
-			$value = (float)$number * $value;
-		} else {
-			$value = $number;
+		
+		$value = $currency_value ? (float)$number * $currency_value : (float)$number;
+		
+		if (!$format) {
+		    return number_format(round($value, $decimal_place), $decimal_place, '.', '');
 		}
-
+        
+		$symbol_left   = $this->currencies[$currency]['symbol_left'];
+		$symbol_right  = $this->currencies[$currency]['symbol_right'];
+		
+		$decimal_point  = $this->language->get('decimal_point');
+		$thousand_point = $this->language->get('thousand_point');
+		
 		$string = '';
-
-		if (($symbol_left) && ($format)) {
+		
+		if ($symbol_left) {
 			$string .= $symbol_left;
 		}
-
-		if ($format) {
-			$decimal_point = $this->language->get('decimal_point');
-		} else {
-			$decimal_point = '.';
-		}
-
-		if ($format) {
-			$thousand_point = $this->language->get('thousand_point');
-		} else {
-			$thousand_point = '';
-		}
-
-		$string .= number_format(round($value, (int)$decimal_place), (int)$decimal_place, $decimal_point, $thousand_point);
-
-		if (($symbol_right) && ($format)) {
+		
+		$string .= number_format(round($value, $decimal_place), $decimal_place, $decimal_point, $thousand_point);
+		
+		if ($symbol_right) {
 			$string .= $symbol_right;
 		}
-
+		
 		return $string;
 	}
 
 	public function convert($value, $from, $to) {
 		if (isset($this->currencies[$from])) {
-			$from = $this->currencies[$from]['value'];
+			$from_value = (float)$this->currencies[$from]['value'];
 		} else {
-			$from = 1;
+			$from_value = 1;
 		}
 
 		if (isset($this->currencies[$to])) {
-			$to = $this->currencies[$to]['value'];
+			$to_value = (float)$this->currencies[$to]['value'];
 		} else {
-			$to = 1;
+			$to_value = 1;
 		}
 
-		return $value * ($to / $from);
+		return $value * ($to_value / $from_value);
 	}
 
 	public function getId($currency = '') {

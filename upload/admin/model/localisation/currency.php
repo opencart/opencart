@@ -22,7 +22,7 @@ class ModelLocalisationCurrency extends Model {
 	}
 
 	public function deleteCurrency($currency_id) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "currency WHERE currency_id = '" . (int)$currency_id . "' AND code != '" . $this->db->escape($this->config->get('config_currency')) . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "currency WHERE currency_id = '" . (int)$currency_id . "'");
 
 		$this->cache->delete('currency');
 	}

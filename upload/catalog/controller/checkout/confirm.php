@@ -286,7 +286,7 @@ class ControllerCheckoutConfirm extends Controller {
 			$order_data['language_id'] = $this->config->get('config_language_id');
 			$order_data['currency_id'] = $this->currency->getId();
 			$order_data['currency_code'] = $this->currency->getCode();
-			$order_data['currency_value'] = $this->currency->getValue($this->currency->getCode());
+			$order_data['currency_value'] = $this->currency->getValue();
 			$order_data['ip'] = $this->request->server['REMOTE_ADDR'];
 
 			if (!empty($this->request->server['HTTP_X_FORWARDED_FOR'])) {

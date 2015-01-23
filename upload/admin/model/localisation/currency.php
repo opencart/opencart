@@ -11,13 +11,18 @@ class ModelLocalisationCurrency extends Model {
 	}
 
 	public function editCurrency($currency_id, $data) {
+        if ($data['code'] == $this->config->get('config_currency')) {
+            $data['status'] = 1;
+            $data['value'] = 1;
+        }
+
 		$this->db->query("UPDATE " . DB_PREFIX . "currency SET title = '" . $this->db->escape($data['title']) . "', code = '" . $this->db->escape($data['code']) . "', symbol_left = '" . $this->db->escape($data['symbol_left']) . "', symbol_right = '" . $this->db->escape($data['symbol_right']) . "', decimal_place = '" . $this->db->escape($data['decimal_place']) . "', value = '" . $this->db->escape($data['value']) . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE currency_id = '" . (int)$currency_id . "'");
 
 		$this->cache->delete('currency');
 	}
 
 	public function deleteCurrency($currency_id) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "currency WHERE currency_id = '" . (int)$currency_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "currency WHERE currency_id = '" . (int)$currency_id . "' AND code != '" . $this->db->escape($this->config->get('config_currency')) . "'");
 
 		$this->cache->delete('currency');
 	}

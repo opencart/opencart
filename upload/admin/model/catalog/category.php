@@ -1,7 +1,7 @@
 <?php
 class ModelCatalogCategory extends Model {
 	public function addCategory($data) {
-		$this->event->trigger('pre.admin.add.category', $data);
+		$this->event->trigger('pre.admin.category.add', $data);
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "category SET parent_id = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW(), date_added = NOW()");
 
@@ -53,13 +53,13 @@ class ModelCatalogCategory extends Model {
 
 		$this->cache->delete('category');
 
-		$this->event->trigger('post.admin.add.category', $category_id);
+		$this->event->trigger('post.admin.category.add', $category_id);
 
 		return $category_id;
 	}
 
 	public function editCategory($category_id, $data) {
-		$this->event->trigger('pre.admin.edit.category', $data);
+		$this->event->trigger('pre.admin.category.edit', $data);
 
 		$this->db->query("UPDATE " . DB_PREFIX . "category SET parent_id = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "', sort_order = '" . (int)$data['sort_order'] . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE category_id = '" . (int)$category_id . "'");
 
@@ -156,11 +156,11 @@ class ModelCatalogCategory extends Model {
 
 		$this->cache->delete('category');
 
-		$this->event->trigger('post.admin.edit.category', $category_id);
+		$this->event->trigger('post.admin.category.edit', $category_id);
 	}
 
 	public function deleteCategory($category_id) {
-		$this->event->trigger('pre.admin.delete.category', $category_id);
+		$this->event->trigger('pre.admin.category.delete', $category_id);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "category_path WHERE category_id = '" . (int)$category_id . "'");
 
@@ -180,7 +180,7 @@ class ModelCatalogCategory extends Model {
 
 		$this->cache->delete('category');
 
-		$this->event->trigger('post.admin.delete.category', $category_id);
+		$this->event->trigger('post.admin.category.delete', $category_id);
 	}
 
 	public function repairCategories($parent_id = 0) {

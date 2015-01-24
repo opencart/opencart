@@ -41,7 +41,7 @@
       <div id="text-<?php echo $marketplace_code; ?>">
         <?php if (!in_array($marketplace_code, $marketplaces_processing)) { ?>
         <?php if ($unlinked_products) { ?>
-        <table class="table">
+        <table class="table table-bordered table-hover">
           <thead>
             <tr>
               <th></th>

@@ -57,7 +57,7 @@ class ControllerMarketingContact extends Controller {
 
 		$this->load->model('sale/customer_group');
 
-		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups(0);
+		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -232,7 +232,7 @@ class ControllerMarketingContact extends Controller {
 					$message .= '</html>' . "\n";
 
 					foreach ($emails as $email) {
-						if (preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $email)) {
+						if (preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $email)) {
 							$mail = new Mail($this->config->get('config_mail'));
 							$mail->setTo($email);
 							$mail->setFrom($this->config->get('config_email'));

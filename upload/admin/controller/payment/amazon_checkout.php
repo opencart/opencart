@@ -61,7 +61,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$data['entry_access_secret'] = $this->language->get('entry_access_secret');
 		$data['entry_checkout_mode'] = $this->language->get('entry_checkout_mode');
 		$data['entry_marketplace'] = $this->language->get('entry_marketplace');
-		$data['entry_pending_status'] = $this->language->get('entry_pending_status');
+		$data['entry_order_status'] = $this->language->get('entry_order_status');
 		$data['entry_ready_status'] = $this->language->get('entry_ready_status');
 		$data['entry_canceled_status'] = $this->language->get('entry_canceled_status');
 		$data['entry_shipped_status'] = $this->language->get('entry_shipped_status');

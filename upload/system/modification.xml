@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <modification>
   <name>Modification Default</name>
+  <code>default</code>
   <version>1.0</version>
   <author>OpenCart Ltd</author>
   <link>http://www.opencart.com</link>

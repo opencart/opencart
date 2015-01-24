@@ -4,12 +4,12 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->load->model('openbay/amazonus');
 		$this->load->model('setting/setting');
 		$this->load->model('extension/extension');
-		$this->load->model('tool/event');
+		$this->load->model('extension/event');
 
-		$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'openbay/amazonus_listing');
-		$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'openbay/amazonus_listing');
-		$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'openbay/amazonus_product');
-		$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'openbay/amazonus_product');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'openbay/amazonus_listing');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'openbay/amazonus_listing');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'openbay/amazonus_product');
+		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'openbay/amazonus_product');
 
 		$this->model_openbay_amazonus->install();
 	}
@@ -18,7 +18,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->load->model('openbay/amazonus');
 		$this->load->model('setting/setting');
 		$this->load->model('extension/extension');
-		$this->load->model('tool/event');
+		$this->load->model('extension/event');
 
 		$this->model_openbay_amazonus->uninstall();
 		$this->model_extension_extension->uninstall('openbay', $this->request->get['extension']);
@@ -255,7 +255,7 @@ class ControllerOpenbayAmazonus extends Controller {
 
 			$this->model_openbay_amazonus->scheduleOrders($settings);
 
-			$this->session->data['success'] = $this->language->get('text_setttings_updated');
+			$this->session->data['success'] = $this->language->get('text_settings_updated');
 			$this->response->redirect($this->url->link('openbay/amazonus', 'token=' . $this->session->data['token'], 'SSL'));
 			return;
 		}
@@ -305,7 +305,7 @@ class ControllerOpenbayAmazonus extends Controller {
 			'Refurbished' => $this->language->get('text_refurbished'),
 		);
 
-		$data['is_enabled'] = isset($settings['amazonus_status']) ? $settings['amazonus_status'] : '';
+		$data['openbay_amazonus_status'] = isset($settings['openbay_amazonus_status']) ? $settings['openbay_amazonus_status'] : '';
 		$data['openbay_amazonus_token'] = isset($settings['openbay_amazonus_token']) ? $settings['openbay_amazonus_token'] : '';
 		$data['openbay_amazonus_enc_string1'] = isset($settings['openbay_amazonus_enc_string1']) ? $settings['openbay_amazonus_enc_string1'] : '';
 		$data['openbay_amazonus_enc_string2'] = isset($settings['openbay_amazonus_enc_string2']) ? $settings['openbay_amazonus_enc_string2'] : '';
@@ -655,7 +655,7 @@ class ControllerOpenbayAmazonus extends Controller {
 
 				$key = '';
 
-				$id_types = array('isbn', 'upc', 'ean', 'jan');
+				$id_types = array('isbn', 'upc', 'ean', 'jan', 'sku');
 
 				foreach ($id_types as $id_type) {
 					if (!empty($product[$id_type])) {

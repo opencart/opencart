@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <table class="table">
+    <table class="table table-bordered table-hover">
       <thead>
         <tr>
           <th><?php echo $column_name; ?></th>
@@ -104,5 +104,5 @@
       }
     });
   });
-</script> 
+</script>
 <?php echo $footer; ?>

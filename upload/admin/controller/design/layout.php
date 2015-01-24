@@ -155,7 +155,7 @@ class ControllerDesignLayout extends Controller {
 			'href' => $this->url->link('design/layout', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 		
-		$data['insert'] = $this->url->link('design/layout/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['add'] = $this->url->link('design/layout/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('design/layout/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['layouts'] = array();
@@ -188,7 +188,7 @@ class ControllerDesignLayout extends Controller {
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_action'] = $this->language->get('column_action');
 
-		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 
@@ -361,7 +361,9 @@ class ControllerDesignLayout extends Controller {
 		
 		$this->load->model('extension/extension');
 		
-		$data['modules'] = array();
+		$this->load->model('extension/module');
+		
+		$data['extensions'] = array();
 		
 		// Get a list of installed modules
 		$extensions = $this->model_extension_extension->getInstalled('module');
@@ -370,29 +372,21 @@ class ControllerDesignLayout extends Controller {
 		foreach ($extensions as $code) {
 			$this->load->language('module/' . $code);
 		
-			$i = 1;
-			
 			$module_data = array();
 			
-			if ($this->config->has($code . '_module')) {
-				$modules = $this->config->get($code . '_module');
-				
-				foreach (array_keys($modules) as $key) {
-					$module_data[] = array(
-						'name' => $this->language->get('heading_title') . ' ' . $i++,
-						'code' => $code . '.' . $key
-					);
-				}
-			} else {
+			$modules = $this->model_extension_module->getModulesByCode($code);
+			
+			foreach ($modules as $module) {
 				$module_data[] = array(
-					'name' => $this->language->get('heading_title'),
-					'code' => $code
+					'name' => $this->language->get('heading_title') . ' &gt; ' . $module['name'],
+					'code' => $code . '.' .  $module['module_id']
 				);
 			}
 			
-			if ($module_data) {
-				$data['modules'][] = array(
+			if ($this->config->has($code . '_status') || $module_data) {
+				$data['extensions'][] = array(
 					'name'   => $this->language->get('heading_title'),
+					'code'   => $code,
 					'module' => $module_data
 				);
 			}

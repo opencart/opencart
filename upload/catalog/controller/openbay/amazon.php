@@ -1,7 +1,7 @@
 <?php
 class ControllerOpenbayAmazon extends Controller {
 	public function order() {
-		if ($this->config->get('amazon_status') != '1') {
+		if ($this->config->get('openbay_amazon_status') != '1') {
 			return;
 		}
 
@@ -313,7 +313,7 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function listing() {
-		if ($this->config->get('amazon_status') != '1') {
+		if ($this->config->get('openbay_amazon_status') != '1') {
 			return;
 		}
 
@@ -358,7 +358,7 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function listingReport() {
-		if ($this->config->get('amazon_status') != '1') {
+		if ($this->config->get('openbay_amazon_status') != '1') {
 			return;
 		}
 
@@ -409,7 +409,7 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function product() {
-		if ($this->config->get('amazon_status') != '1') {
+		if ($this->config->get('openbay_amazon_status') != '1') {
 			$this->response->setOutput("disabled");
 			return;
 		}
@@ -488,7 +488,7 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function search() {
-		if ($this->config->get('amazon_status') != '1') {
+		if ($this->config->get('openbay_amazon_status') != '1') {
 			return;
 		}
 
@@ -521,7 +521,7 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function dev() {
-		if ($this->config->get('amazon_status') != '1') {
+		if ($this->config->get('openbay_amazon_status') != '1') {
 			$this->response->setOutput("error 001");
 			return;
 		}

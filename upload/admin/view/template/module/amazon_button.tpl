@@ -24,12 +24,43 @@
         <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_edit; ?></h3>
       </div>
       <div class="panel-body">
-        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-amazon-checkout-layout" class="form-horizontal">
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-amazon-button" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
+              <?php if ($error_name) { ?>
+              <div class="text-danger"><?php echo $error_name; ?></div>
+              <?php } ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-align"><?php echo $entry_align; ?></label>
+            <div class="col-sm-10">
+              <select name="align" id="input-align" class="form-control">
+                <?php if ($align == 'left') { ?>
+                <option value="left" selected="selected"><?php echo $text_left; ?></option>
+                <?php } else { ?>
+                <option value="left"><?php echo $text_left; ?></option>
+                <?php } ?>
+                <?php if ($align == 'right') { ?>
+                <option value="right" selected="selected"><?php echo $text_right; ?></option>
+                <?php } else { ?>
+                <option value="right"><?php echo $text_right; ?></option>
+                <?php } ?>
+                <?php if ($align == 'center') { ?>
+                <option value="center" selected="selected"><?php echo $text_center; ?></option>
+                <?php } else { ?>
+                <option value="center"><?php echo $text_center; ?></option>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
             <div class="col-sm-10">
-              <select name="amazon_button_status" id="input-status" class="form-control">
-                <?php if ($amazon_button_status) { ?>
+              <select name="status" id="input-status" class="form-control">
+                <?php if ($status) { ?>
                 <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                 <option value="0"><?php echo $text_disabled; ?></option>
                 <?php } else { ?>

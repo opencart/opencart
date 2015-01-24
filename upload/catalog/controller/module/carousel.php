@@ -6,15 +6,9 @@ class ControllerModuleCarousel extends Controller {
 		$this->load->model('design/banner');
 		$this->load->model('tool/image');
 		
-		$this->document->addStyle('catalog/view/javascript/jquery/flexslider/flexslider.css');
-		$this->document->addScript('catalog/view/javascript/jquery/flexslider/jquery.flexslider-min.js');
+		$this->document->addStyle('catalog/view/javascript/jquery/owl-carousel/owl.carousel.css');
+		$this->document->addScript('catalog/view/javascript/jquery/owl-carousel/owl.carousel.min.js');
 		
-		$data['width'] = $setting['width'];
-		$data['height'] = $setting['height'];
-		$data['limit'] = $setting['limit'];
-		$data['scroll'] = $setting['scroll'];
-		$data['direction'] = $this->language->get('direction');
-
 		$data['banners'] = array();
 
 		$results = $this->model_design_banner->getBanner($setting['banner_id']);

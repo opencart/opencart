@@ -25,6 +25,9 @@
           <?php } ?>
           <li><a href="#tab-product" data-toggle="tab"><?php echo $tab_product; ?></a></li>
           <li><a href="#tab-history" data-toggle="tab"><?php echo $tab_history; ?></a></li>
+          <?php if ($payment_action) { ?>
+          <li><a href="#tab-action" data-toggle="tab"><?php echo $tab_action; ?></a></li>
+          <?php } ?>
           <?php if ($maxmind_id) { ?>
           <li><a href="#tab-fraud" data-toggle="tab"><?php echo $tab_fraud; ?></a></li>
           <?php } ?>
@@ -81,6 +84,12 @@
               <tr>
                 <td><?php echo $text_fax; ?></td>
                 <td><?php echo $fax; ?></td>
+              </tr>
+              <?php } ?>
+              <?php foreach ($account_custom_fields as $custom_field) { ?>
+              <tr>
+                <td><?php echo $custom_field['name']; ?>:</td>
+                <td><?php echo $custom_field['value']; ?></td>
               </tr>
               <?php } ?>
               <tr>
@@ -209,12 +218,18 @@
                 <td><?php echo $text_country; ?></td>
                 <td><?php echo $payment_country; ?></td>
               </tr>
+              <?php foreach ($payment_custom_fields as $custom_field) { ?>
+              <tr>
+                <td><?php echo $custom_field['name']; ?>:</td>
+                <td><?php echo $custom_field['value']; ?></td>
+              </tr>
+              <?php } ?>
               <tr>
                 <td><?php echo $text_payment_method; ?></td>
                 <td><?php echo $payment_method; ?></td>
               </tr>
             </table>
-            <?php echo $payment_action; ?></div>
+          </div>
           <?php if ($shipping_method) { ?>
           <div class="tab-pane" id="tab-shipping">
             <table class="table table-bordered">
@@ -266,6 +281,12 @@
                 <td><?php echo $text_country; ?></td>
                 <td><?php echo $shipping_country; ?></td>
               </tr>
+              <?php foreach ($shipping_custom_fields as $custom_field) { ?>
+              <tr>
+                <td><?php echo $custom_field['name']; ?>:</td>
+                <td><?php echo $custom_field['value']; ?></td>
+              </tr>
+              <?php } ?>
               <?php if ($shipping_method) { ?>
               <tr>
                 <td><?php echo $text_shipping_method; ?></td>
@@ -360,6 +381,9 @@
               </div>
             </fieldset>
           </div>
+          <?php if ($payment_action) { ?>
+          <div class="tab-pane" id="tab-action"> <?php echo $payment_action; ?> </div>
+          <?php } ?>
           <?php if ($maxmind_id) { ?>
           <div class="tab-pane" id="tab-fraud">
             <table class="table table-bordered">

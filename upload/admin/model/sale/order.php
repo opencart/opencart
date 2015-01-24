@@ -72,11 +72,9 @@ class ModelSaleOrder extends Model {
 
 			if ($language_info) {
 				$language_code = $language_info['code'];
-				$language_filename = $language_info['filename'];
 				$language_directory = $language_info['directory'];
 			} else {
 				$language_code = '';
-				$language_filename = '';
 				$language_directory = '';
 			}
 
@@ -142,7 +140,6 @@ class ModelSaleOrder extends Model {
 				'commission'              => $order_query->row['commission'],
 				'language_id'             => $order_query->row['language_id'],
 				'language_code'           => $language_code,
-				'language_filename'       => $language_filename,
 				'language_directory'      => $language_directory,
 				'currency_id'             => $order_query->row['currency_id'],
 				'currency_code'           => $order_query->row['currency_code'],
@@ -340,7 +337,7 @@ class ModelSaleOrder extends Model {
 		}
 
 		if ($implode) {
-			$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE " . implode(" OR ", $implode) . "");
+			$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE " . implode(" OR ", $implode));
 
 			return $query->row['total'];
 		} else {

@@ -96,7 +96,7 @@ class ControllerApiOrder extends Controller {
 				$order_data['payment_country'] = $this->session->data['payment_address']['country'];
 				$order_data['payment_country_id'] = $this->session->data['payment_address']['country_id'];
 				$order_data['payment_address_format'] = $this->session->data['payment_address']['address_format'];
-				$order_data['payment_custom_field'] = $this->session->data['payment_address']['custom_field'];
+				$order_data['payment_custom_field'] = (isset($this->session->data['payment_address']['custom_field']) ? $this->session->data['payment_address']['custom_field'] : array());
 
 				if (isset($this->session->data['payment_method']['title'])) {
 					$order_data['payment_method'] = $this->session->data['payment_method']['title'];
@@ -124,7 +124,7 @@ class ControllerApiOrder extends Controller {
 					$order_data['shipping_country'] = $this->session->data['shipping_address']['country'];
 					$order_data['shipping_country_id'] = $this->session->data['shipping_address']['country_id'];
 					$order_data['shipping_address_format'] = $this->session->data['shipping_address']['address_format'];
-					$order_data['shipping_custom_field'] = $this->session->data['shipping_address']['custom_field'];
+					$order_data['shipping_custom_field'] = (isset($this->session->data['shipping_address']['custom_field']) ? $this->session->data['shipping_address']['custom_field'] : array());
 
 					if (isset($this->session->data['shipping_method']['title'])) {
 						$order_data['shipping_method'] = $this->session->data['shipping_method']['title'];
@@ -649,10 +649,8 @@ class ControllerApiOrder extends Controller {
 			}
 		}
 
-		print_r($json);
-
-		//$this->response->addHeader('Content-Type: application/json');
-		//$this->response->setOutput(json_encode($json));
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function history() {

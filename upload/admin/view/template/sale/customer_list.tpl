@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <div class="pull-right"><a href="<?php echo $insert; ?>" data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+      <div class="pull-right"><a href="<?php echo $add; ?>" data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-primary"><i class="fa fa-plus"></i></a>
         <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-customer').submit() : false;"><i class="fa fa-trash-o"></i></button>
       </div>
       <h1><?php echo $heading_title; ?></h1>
@@ -64,7 +64,7 @@
                   <?php } else { ?>
                   <option value="1"><?php echo $text_enabled; ?></option>
                   <?php } ?>
-                  <?php if (($filter_status !== null) && !$filter_status) { ?>
+                  <?php if (!$filter_status && !is_null($filter_status)) { ?>
                   <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                   <?php } else { ?>
                   <option value="0"><?php echo $text_disabled; ?></option>
@@ -82,7 +82,7 @@
                   <?php } else { ?>
                   <option value="1"><?php echo $text_yes; ?></option>
                   <?php } ?>
-                  <?php if (($filter_approved !== null) && !$filter_approved) { ?>
+                  <?php if (!$filter_approved && !is_null($filter_approved)) { ?>
                   <option value="0" selected="selected"><?php echo $text_no; ?></option>
                   <?php } else { ?>
                   <option value="0"><?php echo $text_no; ?></option>
@@ -98,7 +98,7 @@
               <div class="form-group">
                 <label class="control-label" for="input-date-added"><?php echo $entry_date_added; ?></label>
                 <div class="input-group date">
-                  <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $entry_date_added; ?>" data-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
+                  <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $entry_date_added; ?>" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
                   <span class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </span></div>
@@ -161,12 +161,12 @@
                   <td class="text-left"><?php echo $customer['status']; ?></td>
                   <td class="text-left"><?php echo $customer['ip']; ?></td>
                   <td class="text-left"><?php echo $customer['date_added']; ?></td>
-                  <td class="text-right"><?php if (!$customer['approved']) { ; ?>
+                  <td class="text-right"><?php if ($customer['approve']) { ?>
                     <a href="<?php echo $customer['approve']; ?>" data-toggle="tooltip" title="<?php echo $button_approve; ?>" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i></a>
                     <?php } else { ?>
                     <button type="button" class="btn btn-success" disabled><i class="fa fa-thumbs-o-up"></i></button>
                     <?php } ?>
-                    <div class="btn-group" data-toggle="tooltip" title="<?php echo $text_login; ?>">
+                    <div class="btn-group" data-toggle="tooltip" title="<?php echo $button_login; ?>">
                       <button type="button" data-toggle="dropdown" class="btn btn-info dropdown-toggle"><i class="fa fa-lock"></i></button>
                       <ul class="dropdown-menu pull-right">
                         <li><a href="index.php?route=sale/customer/login&token=<?php echo $token; ?>&customer_id=<?php echo $customer['customer_id']; ?>&store_id=0" target="_blank"><?php echo $text_default; ?></a></li>
@@ -175,6 +175,11 @@
                         <?php } ?>
                       </ul>
                     </div>
+                    <?php if ($customer['unlock']) { ?>
+                    <a href="<?php echo $customer['unlock']; ?>" data-toggle="tooltip" title="<?php echo $button_unlock; ?>" class="btn btn-warning"><i class="fa fa-unlock"></i></a>
+                    <?php } else { ?>
+                    <button type="button" class="btn btn-warning" disabled><i class="fa fa-unlock"></i></button>
+                    <?php } ?>
                     <a href="<?php echo $customer['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 <?php } ?>

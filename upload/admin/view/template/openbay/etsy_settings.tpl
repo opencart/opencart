@@ -3,8 +3,9 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-etsy-settings" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-default" onclick="validateForm(); return false;"><i class="fa fa-check-circle"></i></button>
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
+        <button type="submit" form="form-etsy-settings" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary" onclick="validateForm(); return false;"><i class="fa fa-check-circle"></i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
+      </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -15,18 +16,21 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-    </div>
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
     <?php } ?>
     <?php if ($account_info != false) { ?>
-    <?php if ($account_info['header_code'] == 200) { ?>
-    <div class="alert alert-success"><i class="fa fa-check"></i> <?php echo $text_account_ok; ?></div>
-    <?php } else { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_account_info; ?> (<?php echo $account_info['header_code']; ?>)</div>
+      <?php if ($account_info['header_code'] == 200) { ?>
+        <div class="alert alert-success"><i class="fa fa-check"></i> <?php echo $text_account_ok; ?></div>
+      <?php } else { ?>
+        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_account_info; ?> (<?php echo $account_info['header_code']; ?>)</div>
+      <?php } ?>
     <?php } ?>
-    <?php } ?>
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-etsy-settings" class="form-horizontal">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_edit; ?></h3>
+      </div>
+      <div class="panel-body">
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-etsy-settings" class="form-horizontal">
       <ul class="nav nav-tabs">
         <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_api_info; ?></a></li>
       </ul>
@@ -71,10 +75,10 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="etsy_address_format"><?php echo $entry_address_format; ?></label>
+            <label class="col-sm-2 control-label" for="etsy_address_format"><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_address_format; ?>"><?php echo $entry_address_format; ?></span></label>
             <div class="col-sm-10">
               <textarea name="etsy_address_format" class="form-control" rows="3" id="etsy_address_format"><?php echo $etsy_address_format; ?></textarea>
-              <span class="help-block"><?php echo $help_address_format; ?></span> </div>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="etsy_order_status_new"><?php echo $entry_import_def_id; ?></label>
@@ -110,12 +114,18 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="button-import"><?php echo $text_pull_orders; ?></label>
-            <div class="col-sm-10"> <a class="btn btn-primary" id="button-import"><i class="fa fa-refresh"></i> <?php echo $button_pull; ?></a> </div>
+            <label class="col-sm-2 control-label" for="button-import"><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_pull_orders; ?>"><?php echo $text_pull_orders; ?></span></label>
+            <div class="col-sm-10"> <a class="btn btn-primary" id="button-import"><i class="fa fa-refresh"></i></a> </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="button-settings"><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_sync_settings; ?>"><?php echo $text_sync_settings; ?></span></label>
+            <div class="col-sm-10"> <a class="btn btn-primary" id="button-settings"><i class="fa fa-refresh"></i></a> </div>
           </div>
         </div>
       </div>
     </form>
+      </div>
+    </div>
   </div>
 </div>
 <script type="text/javascript"><!--
@@ -150,6 +160,28 @@
       },
       error: function (xhr, ajaxOptions, thrownError) {
         $('#button-import').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>').removeAttr('disabled');
+        if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
+      }
+    });
+  });
+
+  $('#button-settings').bind('click', function() {
+    $.ajax({
+      url: 'index.php?route=openbay/etsy/settingsupdate&token=<?php echo $token; ?>',
+      beforeSend: function(){
+        $('#button-settings').removeClass('btn-success').removeClass('btn-danger').addClass('btn-primary').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+      },
+      type: 'get',
+      dataType: 'json',
+      success: function(json) {
+        if (json.header_code == 200) {
+          $('#button-settings').empty().removeClass('btn-primary').addClass('btn-success').html('<?php echo $text_complete; ?>');
+        } else {
+          $('#button-settings').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>').removeAttr('disabled');
+        }
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        $('#button-settings').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>').removeAttr('disabled');
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });

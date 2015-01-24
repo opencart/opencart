@@ -3,7 +3,7 @@ class ModelOpenbayEbayOrder extends Model{
 	public function addOrderLine($data, $order_id, $created) {
 		$order_line = $this->getOrderLine($data['txn_id'], $data['item_id']);
 
-		$created_hours = (int)$this->config->get('openbaypro_created_hours');
+		$created_hours = (int)$this->config->get('ebay_created_hours');
 		if ($created_hours == 0 || $created_hours == '') {
 			$created_hours = 24;
 		}
@@ -35,7 +35,7 @@ class ModelOpenbayEbayOrder extends Model{
 					$this->modifyStock($product_id, $data['qty'], '-', $data['sku']);
 				}
 			} else {
-				$this->openbay->ebay->log('addOrderLine() - Transaction is older than ' . $this->config->get('openbaypro_created_hours') . ' hours');
+				$this->openbay->ebay->log('addOrderLine() - Transaction is older than ' . $this->config->get('ebay_created_hours') . ' hours');
 			}
 		} else {
 			$this->openbay->ebay->log('addOrderLine() - Line existed');
@@ -178,8 +178,9 @@ class ModelOpenbayEbayOrder extends Model{
 		return $status;
 	}
 
-	public function hasUser($order_id) {
-		$query = $this->db->query("SELECT `customer_id` FROM `" . DB_PREFIX . "order` WHERE `order_id` = '" . (int)$order_id . "'");
+	public function hasAddress($order_id) {
+		// check if the first name, address 1 and country are set
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE `order_id` = '" . (int)$order_id . "' AND `payment_firstname` != '' AND `payment_address_1` != '' AND `payment_country` != ''");
 
 		if ($query->num_rows == 0 || (isset($query->row['customer_id']) && $query->row['customer_id'] == 0)) {
 			return false;
@@ -191,7 +192,7 @@ class ModelOpenbayEbayOrder extends Model{
 	public function update($order_id, $order_status_id, $comment = '') {
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
-		$notify = $this->config->get('openbaypro_update_notify');
+		$notify = $this->config->get('ebay_update_notify');
 
 		if ($order_info) {
 
@@ -200,7 +201,7 @@ class ModelOpenbayEbayOrder extends Model{
 
 			if ($notify) {
 				$language = new Language($order_info['language_directory']);
-				$language->load($order_info['language_filename']);
+				$language->load('default');
 				$language->load('mail/order');
 
 				$subject = sprintf($language->get('text_update_subject'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);
@@ -249,15 +250,14 @@ class ModelOpenbayEbayOrder extends Model{
 	}
 
 	public function confirm($order_id, $order_status_id, $comment = '') {
-
-		$order_info     = $this->model_checkout_order->getOrder($order_id);
-		$notify         = $this->config->get('openbaypro_confirm_notify');
+		$order_info = $this->model_checkout_order->getOrder($order_id);
+		$notify = $this->config->get('ebay_confirm_notify');
 
 		if ($order_info && !$order_info['order_status_id']) {
 			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
 			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($comment) . "', date_added = NOW()");
 
-			if (isset($order_info['email']) && !empty($order_info['email'])){
+			if (isset($order_info['email']) && !empty($order_info['email']) && $notify == 1){
 				$order_product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
 
 				$this->cache->delete('product');
@@ -278,7 +278,7 @@ class ModelOpenbayEbayOrder extends Model{
 
 				// Send out order confirmation mail
 				$language = new Language($order_info['language_directory']);
-				$language->load($order_info['language_filename']);
+				$language->load('default');
 				$language->load('mail/order');
 
 				$order_status_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `order_status_id` = '" . (int)$order_status_id . "' AND `language_id` = '" . (int)$order_info['language_id'] . "'");
@@ -315,7 +315,7 @@ class ModelOpenbayEbayOrder extends Model{
 				$template->data['text_total'] = $language->get('text_new_total');
 				$template->data['text_footer'] = $language->get('text_new_footer');
 
-				if ($this->config->get('openbaypro_email_brand_disable') == 1) {
+				if ($this->config->get('ebay_email_brand_disable') == 1) {
 					$template->data['text_powered'] = '';
 				} else {
 					$template->data['text_powered'] = '<a href="http://www.openbaypro.com/">OpenBay Pro - eBay and Amazon order management for OpenCart</a> . ';

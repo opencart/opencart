@@ -221,7 +221,59 @@ class ControllerMarketingAffiliate extends Controller {
 
 		$this->getList();
 	}
+	
+	public function unlock() {
+		$this->load->language('marketing/affiliate');
 
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('marketing/affiliate');
+
+		if (isset($this->request->get['email']) && $this->validateUnlock()) {
+			$this->model_marketing_affiliate->deleteLoginAttempts($this->request->get['email']);
+
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$url = '';
+
+			if (isset($this->request->get['filter_name'])) {
+				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
+			}
+
+			if (isset($this->request->get['filter_email'])) {
+				$url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
+			}
+
+			if (isset($this->request->get['filter_status'])) {
+				$url .= '&filter_status=' . $this->request->get['filter_status'];
+			}
+
+			if (isset($this->request->get['filter_approved'])) {
+				$url .= '&filter_approved=' . $this->request->get['filter_approved'];
+			}
+
+			if (isset($this->request->get['filter_date_added'])) {
+				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+			}
+
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+
+			$this->response->redirect($this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+		}
+
+		$this->getList();
+	}
+	
 	protected function getList() {
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = $this->request->get['filter_name'];
@@ -318,7 +370,7 @@ class ControllerMarketingAffiliate extends Controller {
 		);
 
 		$data['approve'] = $this->url->link('marketing/affiliate/approve', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$data['insert'] = $this->url->link('marketing/affiliate/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['add'] = $this->url->link('marketing/affiliate/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('marketing/affiliate/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['affiliates'] = array();
@@ -340,6 +392,20 @@ class ControllerMarketingAffiliate extends Controller {
 		$results = $this->model_marketing_affiliate->getAffiliates($filter_data);
 
 		foreach ($results as $result) {
+			if (!$result['approved']) {
+				$approve = $this->url->link('marketing/affiliate/approve', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, 'SSL');
+			} else {
+				$approve = '';
+			}			
+			
+			$login_info = $this->model_marketing_affiliate->getTotalLoginAttempts($result['email']);
+			
+			if ($login_info && $login_info['total'] > $this->config->get('config_login_attempts')) {
+				$unlock = $this->url->link('marketing/affiliate/unlock', 'token=' . $this->session->data['token'] . '&email=' . $result['email'] . $url, 'SSL');
+			} else {
+				$unlock = '';
+			}
+						
 			$data['affiliates'][] = array(
 				'affiliate_id' => $result['affiliate_id'],
 				'name'         => $result['name'],
@@ -347,9 +413,9 @@ class ControllerMarketingAffiliate extends Controller {
 				'balance'      => $this->currency->format($result['balance'], $this->config->get('config_currency')),
 				'status'       => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added'   => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'         => $this->url->link('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, 'SSL'),
-				'approve'      => $this->url->link('marketing/affiliate/approve', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, 'SSL'),
-				'approved'     => $result['approved']
+				'approve'      => $approve,
+				'unlock'       => $unlock,
+				'edit'         => $this->url->link('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, 'SSL')
 			);
 		}
 
@@ -378,7 +444,7 @@ class ControllerMarketingAffiliate extends Controller {
 		$data['entry_date_added'] = $this->language->get('entry_date_added');
 
 		$data['button_approve'] = $this->language->get('button_approve');
-		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 		$data['button_filter'] = $this->language->get('button_filter');
@@ -922,7 +988,7 @@ class ControllerMarketingAffiliate extends Controller {
 		} elseif (!empty($affiliate_info)) {
 			$data['status'] = $affiliate_info['status'];
 		} else {
-			$data['status'] = 1;
+			$data['status'] = true;
 		}
 
 		if (isset($this->request->post['password'])) {
@@ -957,7 +1023,7 @@ class ControllerMarketingAffiliate extends Controller {
 			$this->error['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if ((utf8_strlen($this->request->post['email']) > 96) || (!preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email']))) {
+		if ((utf8_strlen($this->request->post['email']) > 96) || (!preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['email']))) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 
@@ -966,7 +1032,7 @@ class ControllerMarketingAffiliate extends Controller {
 				$this->error['cheque'] = $this->language->get('error_cheque');
 			}
 		} elseif ($this->request->post['payment'] == 'paypal') {
-			if ((utf8_strlen($this->request->post['paypal']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['paypal'])) {
+			if ((utf8_strlen($this->request->post['paypal']) > 96) || !preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['paypal'])) {
 				$this->error['paypal'] = $this->language->get('error_paypal');
 			}
 		} elseif ($this->request->post['payment'] == 'bank') {
@@ -1051,7 +1117,15 @@ class ControllerMarketingAffiliate extends Controller {
 
 		return !$this->error;
 	}
+	
+	protected function validateUnlock() {
+		if (!$this->user->hasPermission('modify', 'marketing/affiliate')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
 
+		return !$this->error;
+	}
+	
 	public function country() {
 		$json = array();
 

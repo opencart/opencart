@@ -115,7 +115,7 @@ class ModelPaymentPPExpress extends Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "paypal_order` SET
 			`order_id` = '" . (int)$order_data['order_id'] . "',
 			`date_added` = NOW(),
-			`modified` = NOW(),
+			`date_modified` = NOW(),
 			`capture_status` = '" . $this->db->escape($order_data['capture_status']) . "',
 			`currency_code` = '" . $this->db->escape($order_data['currency_code']) . "',
 			`total` = '" . (float)$order_data['total'] . "',
@@ -179,7 +179,7 @@ class ModelPaymentPPExpress extends Model {
 			$data['L_PAYMENTREQUEST_0_NUMBER' . $i] = $item['model'];
 			$data['L_PAYMENTREQUEST_0_AMT' . $i] = $item_price;
 
-			$item_total += number_format($item_price * $item['quantity'], 2);
+			$item_total += number_format($item_price * $item['quantity'], 2, '.', '');
 
 			$data['L_PAYMENTREQUEST_0_QTY' . $i] = $item['quantity'];
 
@@ -187,7 +187,7 @@ class ModelPaymentPPExpress extends Model {
 
 			if ($this->config->get('config_cart_weight')) {
 				$weight = $this->weight->convert($item['weight'], $item['weight_class_id'], $this->config->get('config_weight_class_id'));
-				$data['L_PAYMENTREQUEST_0_ITEMWEIGHTVALUE' . $i] = number_format($weight / $item['quantity'], 2);
+				$data['L_PAYMENTREQUEST_0_ITEMWEIGHTVALUE' . $i] = number_format($weight / $item['quantity'], 2, '.', '');
 				$data['L_PAYMENTREQUEST_0_ITEMWEIGHTUNIT' . $i] = $this->weight->getUnit($this->config->get('config_weight_class_id'));
 			}
 
@@ -302,17 +302,6 @@ class ModelPaymentPPExpress extends Model {
 		}
 
 		return $data;
-	}
-
-	public function isMobile() {
-		/*
-		 * This will check the user agent and "try" to match if it is a mobile device
-		 */
-		if (preg_match("/Mobile|Android|BlackBerry|iPhone|Windows Phone/", $this->request->server['HTTP_USER_AGENT'])) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 	public function getTransactionRow($transaction_id) {

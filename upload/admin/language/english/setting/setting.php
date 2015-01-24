@@ -3,6 +3,7 @@
 $_['heading_title']                    = 'Settings';
 
 // Text
+$_['text_stores']                      = 'Stores';
 $_['text_success']                     = 'Success: You have modified settings!';
 $_['text_edit']                        = 'Edit Setting';
 $_['text_product']                     = 'Products';
@@ -60,6 +61,7 @@ $_['entry_customer_online']            = 'Customers Online';
 $_['entry_customer_group']             = 'Customer Group';
 $_['entry_customer_group_display']     = 'Customer Groups';
 $_['entry_customer_price']             = 'Login Display Prices';
+$_['entry_login_attempts']             = 'Max Login Attempts';
 $_['entry_account']                    = 'Account Terms';
 $_['entry_account_mail']               = 'New Account Alert Mail';
 $_['entry_api']                        = 'API User';
@@ -151,6 +153,7 @@ $_['help_customer_online']             = 'Track customers online via the custome
 $_['help_customer_group']              = 'Default customer group.';
 $_['help_customer_group_display']      = 'Display customer groups that new customers can select to use such as wholesale and business when signing up.';
 $_['help_customer_price']              = 'Only show prices when a customer is logged in.';
+$_['help_login_attempts']              = 'Maximum login attempts allowed before the account is locked for 1 hour. Customer and affliate accounts can be unlocked on the customer or affliate admin pages.';
 $_['help_account']                     = 'Forces people to agree to terms before an account can be created.';
 $_['help_account_mail']                = 'Send an email to the store owner when a new account is registered.';
 $_['help_invoice_prefix']              = 'Set the invoice prefix (e.g. INV-2011-00). Invoice IDs will start at 1 for each unique prefix.';
@@ -204,6 +207,7 @@ $_['error_email']                      = 'E-Mail Address does not appear to be v
 $_['error_telephone']                  = 'Telephone must be between 3 and 32 characters!';
 $_['error_meta_title']                 = 'Title must be between 3 and 32 characters!';
 $_['error_limit']       	           = 'Limit required!';
+$_['error_login_attempts']       	   = 'Login Attempts must be greater than 0!';
 $_['error_customer_group_display']     = 'You must include the default customer group if you are going to use this feature!';
 $_['error_voucher_min']                = 'Minimum voucher amount required!';
 $_['error_voucher_max']                = 'Maximum voucher amount required!';

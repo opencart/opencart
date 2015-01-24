@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '2.0.0.1b');
+define('VERSION', '2.0.1.2_rc');
 
 // Configuration
 if (is_file('config.php')) {
@@ -135,34 +135,27 @@ foreach ($query->rows as $result) {
 	$languages[$result['code']] = $result;
 }
 
-$detect = '';
-
-if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && $request->server['HTTP_ACCEPT_LANGUAGE']) {
-	$browser_languages = explode(',', $request->server['HTTP_ACCEPT_LANGUAGE']);
-
-	foreach ($browser_languages as $browser_language) {
-		foreach ($languages as $key => $value) {
-			if ($value['status']) {
-				$locale = explode(',', $value['locale']);
-
-				if (in_array($browser_language, $locale)) {
-					$detect = $key;
-
-					break 2;
-				}
-			}
-		}
-	}
-}
-
 if (isset($session->data['language']) && array_key_exists($session->data['language'], $languages) && $languages[$session->data['language']]['status']) {
 	$code = $session->data['language'];
 } elseif (isset($request->cookie['language']) && array_key_exists($request->cookie['language'], $languages) && $languages[$request->cookie['language']]['status']) {
 	$code = $request->cookie['language'];
-} elseif ($detect) {
-	$code = $detect;
 } else {
-	$code = $config->get('config_language');
+	$detect = '';
+	if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && $request->server['HTTP_ACCEPT_LANGUAGE']) {
+		$browser_languages = explode(',', $request->server['HTTP_ACCEPT_LANGUAGE']);
+		foreach ($browser_languages as $browser_language) {
+			foreach ($languages as $key => $value) {
+				if ($value['status']) {
+					$locale = explode(',', $value['locale']);
+					if (in_array($browser_language, $locale)) {
+						$detect = $key;
+						break 2;
+					}
+				}
+			}
+		}
+	}
+	$code = $detect ? $detect : $config->get('config_language');
 }
 
 if (!isset($session->data['language']) || $session->data['language'] != $code) {
@@ -178,7 +171,7 @@ $config->set('config_language', $languages[$code]['code']);
 
 // Language
 $language = new Language($languages[$code]['directory']);
-$language->load($languages[$code]['filename']);
+$language->load($languages[$code]['directory']);
 $registry->set('language', $language);
 
 // Document
@@ -191,10 +184,10 @@ $registry->set('customer', $customer);
 // Customer Group
 if ($customer->isLogged()) {
 	$config->set('config_customer_group_id', $customer->getGroupId());
-} elseif (isset($session->data['customer'])) {
+} elseif (isset($session->data['customer']) && isset($session->data['customer']['customer_group_id'])) {
 	// For API calls
 	$config->set('config_customer_group_id', $session->data['customer']['customer_group_id']);
-} elseif (isset($session->data['guest'])) {
+} elseif (isset($session->data['guest']) && isset($session->data['guest']['customer_group_id'])) {
 	$config->set('config_customer_group_id', $session->data['guest']['customer_group_id']);
 }
 

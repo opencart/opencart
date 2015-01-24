@@ -77,7 +77,7 @@
               </select>
             </div>
           </div>
-          <table class="table">
+          <table class="table table-bordered table-hover">
             <tbody class="fields_advanced">
             </tbody>
           </table>
@@ -716,5 +716,5 @@ function saveNode(id, field, text){
   $('#'+field+'_label').text(text).show();
   $('#browse-node-modal').modal('toggle');
 }
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

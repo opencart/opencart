@@ -117,10 +117,10 @@ class ControllerModulePPLogin extends Controller {
 
 		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
 
-		if (isset($this->request->post['customer_group_id'])) {
-			$data['customer_group_id'] = $this->request->post['customer_group_id'];
+		if (isset($this->request->post['pp_login_customer_group_id'])) {
+			$data['pp_login_customer_group_id'] = $this->request->post['pp_login_customer_group_id'];
 		} else {
-			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
+			$data['pp_login_customer_group_id'] = $this->config->get('pp_login_customer_group_id');
 		}
 
 		if (isset($this->request->post['pp_login_button_colour'])) {
@@ -283,7 +283,7 @@ class ControllerModulePPLogin extends Controller {
 			$data['pp_login_locale'] = $this->config->get('pp_login_locale');
 		}
 
-		$data['pp_login_return_url'] = HTTPS_CATALOG . 'index.php?route=module/pp_login/login';
+		$data['return_url'] = HTTPS_CATALOG . 'index.php?route=module/pp_login/login';
 
 		if (isset($this->request->post['pp_login_status'])) {
 			$data['pp_login_status'] = $this->request->post['pp_login_status'];
@@ -315,14 +315,14 @@ class ControllerModulePPLogin extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('tool/event');
+		$this->load->model('extension/event');
 
-		$this->model_tool_event->addEvent('pp_login', 'post.customer.logout', 'module/pp_login/logout');
+		$this->model_extension_event->addEvent('pp_login', 'post.customer.logout', 'module/pp_login/logout');
 	}
 
 	public function uninstall() {
-		$this->load->model('tool/event');
+		$this->load->model('extension/event');
 
-		$this->model_tool_event->deleteEvent('pp_login');
+		$this->model_extension_event->deleteEvent('pp_login');
 	}
 }

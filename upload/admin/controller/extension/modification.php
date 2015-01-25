@@ -280,6 +280,8 @@ class ControllerExtensionModification extends Controller {
 												switch ($position) {
 													default:
 													case 'replace':
+														$new_lines = explode("\n", $add);
+														
 														if ($offset < 0) {
 															array_splice($lines, $line_id + $offset, abs($offset) + 1, array(str_replace($search, $add, $line)));
 															
@@ -287,9 +289,6 @@ class ControllerExtensionModification extends Controller {
 														} else {
 															array_splice($lines, $line_id, $offset + 1, array(str_replace($search, $add, $line)));
 														}
-														
-														
-														
 														
 														break;
 													case 'before':

@@ -166,6 +166,10 @@ class ControllerExtensionModification extends Controller {
 						$files = glob($path, GLOB_BRACE);
 
 						if ($files) {
+							
+							
+							
+							
 							foreach ($files as $file) {
 								// Get the key to be used for the modification cache filename.
 								if (substr($file, 0, strlen(DIR_CATALOG)) == DIR_CATALOG) {
@@ -283,6 +287,10 @@ class ControllerExtensionModification extends Controller {
 														} else {
 															array_splice($lines, $line_id, $offset + 1, array(str_replace($search, $add, $line)));
 														}
+														
+														
+														
+														
 														break;
 													case 'before':
 														$new_lines = explode("\n", $add);
@@ -292,7 +300,11 @@ class ControllerExtensionModification extends Controller {
 														$line_id += count($new_lines);
 														break;
 													case 'after':
-														array_splice($lines, ($line_id + 1) + $offset, 0, explode("\n", $add));
+														$new_lines = explode("\n", $add);
+													
+														array_splice($lines, ($line_id + 1) + $offset, 0, $new_lines);
+														
+														$line_id += count($new_lines);
 														break;
 												}
 												

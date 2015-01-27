@@ -43,6 +43,8 @@ class ControllerSettingSetting extends Controller {
 		$data['text_payment'] = $this->language->get('text_payment');
 		$data['text_mail'] = $this->language->get('text_mail');
 		$data['text_smtp'] = $this->language->get('text_smtp');
+		$data['text_analytics'] = $this->language->get('text_analytics');
+		$data['text_captcha'] = $this->language->get('text_captcha');
 
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_owner'] = $this->language->get('entry_owner');
@@ -153,6 +155,8 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_error_log'] = $this->language->get('entry_error_log');
 		$data['entry_error_filename'] = $this->language->get('entry_error_filename');
 		$data['entry_google_analytics'] = $this->language->get('entry_google_analytics');
+		$data['entry_google_public'] = $this->language->get('entry_google_public');
+		$data['entry_google_analytics'] = $this->language->get('entry_google_analytics');
 
 		$data['help_geocode'] = $this->language->get('help_geocode');
 		$data['help_open'] = $this->language->get('help_open');
@@ -232,6 +236,7 @@ class ControllerSettingSetting extends Controller {
 		$data['tab_mail'] = $this->language->get('tab_mail');
 		$data['tab_fraud'] = $this->language->get('tab_fraud');
 		$data['tab_server'] = $this->language->get('tab_server');
+		$data['tab_google'] = $this->language->get('tab_google');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -1267,7 +1272,19 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_google_analytics'] = $this->config->get('config_google_analytics');
 		}
-
+		
+		if (isset($this->request->post['config_google_captcha_public'])) {
+			$data['config_google_captcha_public'] = $this->request->post['config_google_captcha_public'];
+		} else {
+			$data['config_google_captcha_public'] = $this->config->get('config_google_captcha_public');
+		}
+		
+		if (isset($this->request->post['config_google_captcha_secret'])) {
+			$data['config_google_captcha_secret'] = $this->request->post['config_google_captcha_secret'];
+		} else {
+			$data['config_google_captcha_secret'] = $this->config->get('config_google_captcha_secret');
+		}
+				
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

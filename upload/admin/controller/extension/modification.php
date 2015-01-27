@@ -142,7 +142,7 @@ class ControllerExtensionModification extends Controller {
 					$recovery = $modification;
 				}
 
-				$files = $dom->getElementsByTagName('modification')->item(0)->getElementsByTagName('file');
+				$files = explode(',', $dom->getElementsByTagName('modification')->item(0)->getElementsByTagName('file'));
 
 				foreach ($files as $file) {
 					$operations = $file->getElementsByTagName('operation');
@@ -163,13 +163,9 @@ class ControllerExtensionModification extends Controller {
 					}
 
 					if ($path) {
-						$files = glob($path, GLOB_BRACE);
+						$files = glob($path);
 
 						if ($files) {
-							
-							
-							
-							
 							foreach ($files as $file) {
 								// Get the key to be used for the modification cache filename.
 								if (substr($file, 0, strlen(DIR_CATALOG)) == DIR_CATALOG) {

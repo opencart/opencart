@@ -17,6 +17,18 @@ class ControllerSettingSetting extends Controller {
 
 				$this->model_localisation_currency->refresh();
 			}
+			
+			if (isset( $this->request->post['testing_mail'] ))
+			{
+				$mail = new Mail($this->config->get('config_mail'));
+				$mail->setTo($this->config->get('config_email'));
+				$mail->setFrom($this->config->get('config_email'));
+				$mail->setSender($this->config->get('config_name'));
+				$mail->setSubject("Test email");
+				$mail->setText(html_entity_decode("Test Email", ENT_QUOTES, 'UTF-8'));
+				$mail->send();
+				$this->response->redirect($this->url->link('setting/setting', 'token=' . $this->session->data['token'], 'SSL'));
+			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -157,7 +169,9 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_google_analytics'] = $this->language->get('entry_google_analytics');
 		$data['entry_google_public'] = $this->language->get('entry_google_public');
 		$data['entry_google_analytics'] = $this->language->get('entry_google_analytics');
-
+		$data['entry_mail_testing'] = $this->language->get('entry_mail_testing');
+		$data['help_mail_testing'] = $this->language->get('help_mail_testing');
+		
 		$data['help_geocode'] = $this->language->get('help_geocode');
 		$data['help_open'] = $this->language->get('help_open');
 		$data['help_comment'] = $this->language->get('help_comment');

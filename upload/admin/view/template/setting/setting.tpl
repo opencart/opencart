@@ -40,6 +40,7 @@
             <li><a href="#tab-mail" data-toggle="tab"><?php echo $tab_mail; ?></a></li>
             <li><a href="#tab-fraud" data-toggle="tab"><?php echo $tab_fraud; ?></a></li>
             <li><a href="#tab-server" data-toggle="tab"><?php echo $tab_server; ?></a></li>
+            <li><a href="#tab-google" data-toggle="tab"><?php echo $tab_google; ?></a></li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
@@ -605,9 +606,9 @@
                     <input type="text" name="config_login_attempts" value="<?php echo $config_login_attempts; ?>" placeholder="<?php echo $entry_login_attempts; ?>" id="input-login-attempts" class="form-control" />
                     <?php if ($error_login_attempts) { ?>
                     <div class="text-danger"><?php echo $error_login_attempts; ?></div>
-                    <?php } ?>                  
+                    <?php } ?>
                   </div>
-                </div>                
+                </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-account"><span data-toggle="tooltip" title="<?php echo $help_account; ?>"><?php echo $entry_account; ?></span></label>
                   <div class="col-sm-10">
@@ -1576,12 +1577,34 @@
                   <?php } ?>
                 </div>
               </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-google-analytics"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="<?php echo htmlspecialchars($help_google_analytics); ?>"><?php echo $entry_google_analytics; ?></span></label>
-                <div class="col-sm-10">
-                  <textarea name="config_google_analytics" rows="5" placeholder="<?php echo $entry_google_analytics; ?>" id="input-google-analytics" class="form-control"><?php echo $config_google_analytics; ?></textarea>
+            </div>
+            <div class="tab-pane" id="tab-google">
+              <fieldset>
+                <legend><?php echo $text_analytics; ?></legend>
+                <div class="alert alert-info"><?php echo $help_google_analytics; ?></div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-google-analytics"><?php echo $entry_google_analytics; ?></label>
+                  <div class="col-sm-10">
+                    <textarea name="config_google_analytics" rows="5" placeholder="<?php echo $entry_google_analytics; ?>" id="input-google-analytics" class="form-control"><?php echo $config_google_analytics; ?></textarea>
+                  </div>
                 </div>
-              </div>
+              </fieldset>
+              <fieldset>
+                <legend><?php echo $text_captcha; ?></legend>
+                <div class="alert alert-info"><?php echo $help_google_captcha; ?></div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-captcha-public"><?php echo $entry_captcha_public; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_captcha_public" value="<?php echo $config_google_captcha_public; ?>" placeholder="<?php echo $entry_captcha_public; ?>" id="input-captcha-public" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-captcha-secret"><?php echo $entry_captcha_secret; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_captcha_secret" value="<?php echo $config_google_captcha_secret; ?>" placeholder="<?php echo $entry_captcha_secret; ?>" id="input-captcha-secret" class="form-control" />
+                  </div>
+                </div>
+              </fieldset>
             </div>
           </div>
         </form>

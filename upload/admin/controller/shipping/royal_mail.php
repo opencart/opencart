@@ -26,10 +26,9 @@ class ControllerShippingRoyalMail extends Controller {
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
-		$data['text_eu'] = $this->language->get('text_eu');
-		$data['text_non_eu'] = $this->language->get('text_non_eu');
-		$data['text_zone_1'] = $this->language->get('text_zone_1');
-		$data['text_zone_2'] = $this->language->get('text_zone_2');
+		$data['text_tracked_signed'] = $this->language->get('text_tracked_signed');
+		$data['text_tracked'] = $this->language->get('text_tracked');
+		$data['text_signed'] = $this->language->get('text_signed');
 		
 		$data['entry_rate'] = $this->language->get('entry_rate');
 		$data['entry_rate_eu'] = $this->language->get('entry_rate_eu');

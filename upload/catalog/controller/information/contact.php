@@ -140,13 +140,23 @@ class ControllerInformationContact extends Controller {
 		} else {
 			$data['enquiry'] = '';
 		}
-
-		if (isset($this->request->post['captcha'])) {
-			$data['captcha'] = $this->request->post['captcha'];
-		} else {
-			$data['captcha'] = '';
+		
+		if ($this->config->get('config_google_captcha_status')) {
+			$this->document->addScript('https://www.google.com/recaptcha/api.js');
+			
+			echo file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($this->config->get('config_google_captcha_secret')) . '&response=response_string&remoteip=' . urlencode($this->request->server['REMOTE_ADDR']));
+			
+			$data['captcha'] = 'https://www.google.com/recaptcha/api/siteverify?' . urlencode($this->config->get('config_google_captcha_public'));
+			
+			$data['site_key'] = $this->config->get('config_google_captcha_public');
+			
+			if (isset($this->request->post['captcha'])) {
+				$data['captcha'] = $this->request->post['captcha'];
+			} else {
+				$data['captcha'] = '';
+			}
 		}
-
+		
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
@@ -213,8 +223,12 @@ class ControllerInformationContact extends Controller {
 			$this->error['enquiry'] = $this->language->get('error_enquiry');
 		}
 
-		if (empty($this->session->data['captcha']) || ($this->session->data['captcha'] != $this->request->post['captcha'])) {
-			$this->error['captcha'] = $this->language->get('error_captcha');
+		if ($this->config->get('config_google_captcha_status')) {
+			file_get_contents('https://www.google.com/recaptcha/api/siteverify??secret=your_secret&response=response_string&remoteip=user_ip_address');
+		
+			if (empty($this->session->data['captcha']) || ($this->session->data['captcha'] != $this->request->post['captcha'])) {
+				$this->error['captcha'] = $this->language->get('error_captcha');
+			}		
 		}
 
 		return !$this->error;

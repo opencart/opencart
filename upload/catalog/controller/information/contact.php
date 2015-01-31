@@ -47,7 +47,6 @@ class ControllerInformationContact extends Controller {
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_email'] = $this->language->get('entry_email');
 		$data['entry_enquiry'] = $this->language->get('entry_enquiry');
-		$data['entry_captcha'] = $this->language->get('entry_captcha');
 
 		$data['button_map'] = $this->language->get('button_map');
 
@@ -144,17 +143,7 @@ class ControllerInformationContact extends Controller {
 		if ($this->config->get('config_google_captcha_status')) {
 			$this->document->addScript('https://www.google.com/recaptcha/api.js');
 			
-			echo file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($this->config->get('config_google_captcha_secret')) . '&response=response_string&remoteip=' . urlencode($this->request->server['REMOTE_ADDR']));
-			
-			$data['captcha'] = 'https://www.google.com/recaptcha/api/siteverify?' . urlencode($this->config->get('config_google_captcha_public'));
-			
 			$data['site_key'] = $this->config->get('config_google_captcha_public');
-			
-			if (isset($this->request->post['captcha'])) {
-				$data['captcha'] = $this->request->post['captcha'];
-			} else {
-				$data['captcha'] = '';
-			}
 		}
 		
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -224,9 +213,11 @@ class ControllerInformationContact extends Controller {
 		}
 
 		if ($this->config->get('config_google_captcha_status')) {
-			file_get_contents('https://www.google.com/recaptcha/api/siteverify??secret=your_secret&response=response_string&remoteip=user_ip_address');
-		
-			if (empty($this->session->data['captcha']) || ($this->session->data['captcha'] != $this->request->post['captcha'])) {
+			$json = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($this->config->get('config_google_captcha_secret')) . '&response=g-recaptcha&remoteip=' . $this->request->server['REMOTE_ADDR']);
+			
+			$json = json_decode($json, true);
+				
+			if (!$json['success']) {
 				$this->error['captcha'] = $this->language->get('error_captcha');
 			}		
 		}

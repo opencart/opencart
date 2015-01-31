@@ -101,14 +101,10 @@
                     <input type="radio" name="rating" value="5" />
                     &nbsp;<?php echo $entry_good; ?></div>
                 </div>
-                <div class="form-group required">
-                  <div class="col-sm-12">
-                    <label class="control-label" for="input-captcha"><?php echo $entry_captcha; ?></label>
-                    <input type="text" name="captcha" value="" id="input-captcha" class="form-control" />
-                  </div>
-                </div>
                 <div class="form-group">
-                  <div class="col-sm-12"> <img src="index.php?route=tool/captcha" alt="" id="captcha" /> </div>
+                  <div class="col-sm-12">
+                    <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>"></div>
+                  </div>
                 </div>
                 <div class="buttons">
                   <div class="pull-right">
@@ -574,8 +570,6 @@ $('#button-review').on('click', function() {
 		},
 		complete: function() {
 			$('#button-review').button('reset');
-			$('#captcha').attr('src', 'index.php?route=tool/captcha#'+new Date().getTime());
-			$('input[name=\'captcha\']').val('');
 		},
 		success: function(json) {
 			$('.alert-success, .alert-danger').remove();
@@ -590,7 +584,6 @@ $('#button-review').on('click', function() {
 				$('input[name=\'name\']').val('');
 				$('textarea[name=\'text\']').val('');
 				$('input[name=\'rating\']:checked').prop('checked', false);
-				$('input[name=\'captcha\']').val('');
 			}
 		}
 	});
@@ -606,4 +599,4 @@ $(document).ready(function() {
 	});
 });
 //--></script> 
-<?php echo $footer; ?>
+<?php echo $footer; ?> 

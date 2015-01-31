@@ -94,7 +94,13 @@ $('#button-refresh').on('click', function(e) {
 	$('#modal-image').load($(this).attr('href'));
 });
 
-$('#button-search').on('click', function() {
+$('input[name=\'search\']').on('keydown', function(e) {
+	if (e.which == 13) {
+		$('#button-search').trigger('click');
+	}
+});
+
+$('#button-search').on('click', function(e) {
 	var url = 'index.php?route=common/filemanager&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>';
 		
 	var filter_name = $('input[name=\'search\']').val();

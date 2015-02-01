@@ -575,14 +575,6 @@ footer h5 {
 .product-thumb .rating {
 	padding-bottom: 10px;
 }
-.price-new {
-	font-weight: 600;
-}
-.price-old {
-	color: #999;
-	text-decoration: line-through;
-	margin-left: 10px;
-}
 .rating .fa-stack {
 	font-size: 8px;
 }

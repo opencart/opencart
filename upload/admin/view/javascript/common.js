@@ -155,7 +155,7 @@ $(document).ready(function() {
 					$('#button-image').prop('disabled', true);
 				},
 				complete: function() {
-					$('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
+					$('#button-image i').replaceWith('<i class="fa fa-pencil"></i>');
 					$('#button-image').prop('disabled', false);
 				},
 				success: function(html) {

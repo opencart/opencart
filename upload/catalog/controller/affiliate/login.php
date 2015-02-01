@@ -122,7 +122,7 @@ class ControllerAffiliateLogin extends Controller {
 		// Check how many login attempts have been made.
 		$login_info = $this->model_affiliate_affiliate->getLoginAttempts($this->request->post['email']);
 				
-		if ($login_info && ($login_info['total'] > $this->config->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
+		if ($login_info && ($login_info['total'] >= $this->config->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
 			$this->error['warning'] = $this->language->get('error_attempts');
 		}		
 		

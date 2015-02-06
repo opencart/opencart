@@ -782,7 +782,7 @@ class ModelCheckoutOrder extends Model {
 			}
 
 			// If order status is not 0 then send update text email
-			if ($order_info['order_status_id'] && $order_status_id) {
+			if ($order_info['order_status_id'] && $order_status_id && $notify) {
 				$language = new Language($order_info['language_directory']);
 				$language->load('default');
 				$language->load('mail/order');
@@ -804,7 +804,7 @@ class ModelCheckoutOrder extends Model {
 					$message .= $order_info['store_url'] . 'index.php?route=account/order/info&order_id=' . $order_id . "\n\n";
 				}
 
-				if ($notify && $comment) {
+				if ($comment) {
 					$message .= $language->get('text_update_comment') . "\n\n";
 					$message .= strip_tags($comment) . "\n\n";
 				}

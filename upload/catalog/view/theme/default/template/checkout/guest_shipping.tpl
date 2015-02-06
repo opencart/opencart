@@ -221,6 +221,10 @@ $('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on(
 
 	$('#form-upload input[name=\'file\']').trigger('click');
 
+	if (typeof timer != 'undefined') {
+    	clearInterval(timer);
+	}
+	
 	timer = setInterval(function() {
 		if ($('#form-upload input[name=\'file\']').val() != '') {
 			clearInterval(timer);

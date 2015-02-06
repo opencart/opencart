@@ -49,7 +49,7 @@
               <?php if (!$products[$product['product_id']]['special']) { ?>
               <?php echo $products[$product['product_id']]['price']; ?>
               <?php } else { ?>
-              <span class="price-old"><?php echo $products[$product['product_id']]['price']; ?> </span> <span class="price-new"> <?php echo $products[$product['product_id']]['special']; ?> </span>
+              <strike><?php echo $products[$product['product_id']]['price']; ?></strike> <?php echo $products[$product['product_id']]['special']; ?>
               <?php } ?>
               <?php } ?></td>
             <?php } ?>

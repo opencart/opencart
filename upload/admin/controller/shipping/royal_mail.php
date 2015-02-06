@@ -26,9 +26,6 @@ class ControllerShippingRoyalMail extends Controller {
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
-		$data['text_tracked_signed'] = $this->language->get('text_tracked_signed');
-		$data['text_tracked'] = $this->language->get('text_tracked');
-		$data['text_signed'] = $this->language->get('text_signed');
 		
 		$data['entry_rate'] = $this->language->get('entry_rate');
 		$data['entry_rate_eu'] = $this->language->get('entry_rate_eu');
@@ -48,7 +45,8 @@ class ControllerShippingRoyalMail extends Controller {
 		$data['help_insurance'] = $this->language->get('help_insurance');
 		$data['help_display_weight'] = $this->language->get('help_display_weight');
 		$data['help_display_insurance'] = $this->language->get('help_display_insurance');
-
+		$data['help_international'] = $this->language->get('help_international');
+		
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 

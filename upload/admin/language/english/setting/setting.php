@@ -19,10 +19,8 @@ $_['text_shipping']                    = 'Shipping Address';
 $_['text_payment']                     = 'Payment Address';
 $_['text_mail']                        = 'Mail';
 $_['text_smtp']                        = 'SMTP';
-$_['text_analytics']                   = 'Google Analytics';
-$_['text_analytics']                   = 'Login to your <a href="http://www.google.com/analytics/" target="_blank"><u>Google Analytics</u></a> account and after creating your website profile copy and paste the analytics code into this field.';
-$_['text_captcha']                     = 'Google reCAPTCHA';
-$_['text_captcha']                     = 'Go to <a href="https://www.google.com/recaptcha/intro/index.html" target="_blank"><u>Google reCAPTCHA page</u></a> and register your website.';
+$_['text_google_analytics']            = 'Google Analytics';
+$_['text_google_captcha']              = 'Google reCAPTCHA';
 
 // Entry
 $_['entry_name']                       = 'Store Name';
@@ -136,6 +134,7 @@ $_['entry_error_filename']             = 'Error Log Filename';
 $_['entry_google_analytics']           = 'Google Analytics Code';
 $_['entry_google_captcha_public']      = 'Site key';
 $_['entry_google_captcha_secret']      = 'Secret key';
+$_['entry_status']                     = 'Status';
 
 // Help
 $_['help_geocode']                     = 'Please enter your store location geocode manually.';
@@ -201,6 +200,8 @@ $_['help_maintenance']                 = 'Prevents customers from browsing your 
 $_['help_password']                    = 'Allow forgotten password to be used for the admin. This will be disabled automatically if the system detects a hack attempt.';
 $_['help_encryption']                  = 'Please provide a secret key that will be used to encrypt private information when processing orders.';
 $_['help_compression']                 = 'GZIP for more efficient transfer to requesting clients. Compression level must be between 0 - 9.';
+$_['help_google_analytics']            = 'Login to your <a href="http://www.google.com/analytics/" target="_blank"><u>Google Analytics</u></a> account and after creating your website profile copy and paste the analytics code into this field.';
+$_['help_google_captcha']              = 'Go to <a href="https://www.google.com/recaptcha/intro/index.html" target="_blank"><u>Google reCAPTCHA page</u></a> and register your website.';
 
 // Error
 $_['error_warning']                    = 'Warning: Please check the form carefully for errors!';

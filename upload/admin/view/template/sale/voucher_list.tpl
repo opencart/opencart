@@ -116,7 +116,7 @@ $('#button-send').on('click', function() {
 		url: 'index.php?route=sale/voucher/send&token=<?php echo $token; ?>',
 		type: 'post',
 		dataType: 'json',
-		data: $('input[name^=\'selected\']'),
+		data: $('input[name^=\'selected\']:checked'),
 		beforeSend: function() {
 			$('#button-send i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 			$('#button-send').prop('disabled', true);

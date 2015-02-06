@@ -37,7 +37,7 @@ class ControllerAffiliateForgotten extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			// Add to activity log
-			$affiliate_info = $this->model_account_affiliate->getAffiliateByEmail($this->request->post['email']);
+			$affiliate_info = $this->model_affiliate_affiliate->getAffiliateByEmail($this->request->post['email']);
 
 			if ($affiliate_info) {
 				$this->load->model('affiliate/activity');

@@ -127,8 +127,6 @@ $(document).ready(function() {
 		});	
 	});
 	
-	//var popover = 
-			
 	// Image Manager
 	$(document).delegate('a[data-toggle=\'image\']', 'click', function(e) {
 		e.preventDefault();

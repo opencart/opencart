@@ -96,8 +96,9 @@ $(document).ready(function() {
 	$('#list-view').click(function() {
 		$('#content .product-layout > .clearfix').remove();
 
-		$('#content .product-layout').attr('class', 'product-layout product-list col-xs-12');
-
+		//$('#content .product-layout').attr('class', 'product-layout product-list col-xs-12');
+		$('#content .row > .product-layout').attr('class', 'product-layout product-list col-xs-12');
+		
 		localStorage.setItem('display', 'list');
 	});
 

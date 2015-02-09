@@ -1727,7 +1727,7 @@ $('#tab-payment select[name=\'country_id\']').on('change', function() {
 			
 			html = '<option value=""><?php echo $text_select; ?></option>';
 
-			if (json['zone'] != '') {
+			if (json['zone'] && json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
         			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 	    			
@@ -1911,7 +1911,7 @@ $('#tab-shipping select[name=\'country_id\']').on('change', function() {
 			
 			html = '<option value=""><?php echo $text_select; ?></option>';
 			
-			if (json['zone'] != '') {
+			if (json['zone'] && json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
         			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 	    			

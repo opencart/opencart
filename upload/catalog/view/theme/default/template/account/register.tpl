@@ -657,7 +657,7 @@ $('.datetime').datetimepicker({
 $('select[name=\'country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=account/account/country&country_id=' + this.value,
-		dataType: 'html',
+		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
 		},

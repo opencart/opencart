@@ -18,7 +18,7 @@ class ControllerAccountRegister extends Controller {
 		$this->load->model('account/customer');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_account_customer->addCustomer($this->request->post);
+			$customer_id = $this->model_account_customer->addCustomer($this->request->post);
 			
 			// Clear any previous login attempts for unregistered accounts.
 			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
@@ -31,7 +31,7 @@ class ControllerAccountRegister extends Controller {
 			$this->load->model('account/activity');
 
 			$activity_data = array(
-				'customer_id' => $this->customer->getId(),
+				'customer_id' => $customer_id,
 				'name'        => $this->request->post['firstname'] . ' ' . $this->request->post['lastname']
 			);
 

@@ -420,7 +420,7 @@ final class Openbay {
 					'option_id'         => $product_option['option_id'],
 					'name'              => $product_option['name'],
 					'type'              => $product_option['type'],
-					'option_value'      => $product_option['option_value'],
+					'value'             => $product_option['value'],
 					'required'          => $product_option['required']
 				);
 			}

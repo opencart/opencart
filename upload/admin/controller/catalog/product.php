@@ -1102,46 +1102,22 @@ class ControllerCatalogProduct extends Controller {
 		$this->load->model('catalog/option');
 
 		if (isset($this->request->post['product_option'])) {
-			$product_options = $this->request->post['product_option'];
+			$data['product_options'] = $this->request->post['product_option'];
 		} elseif (isset($this->request->get['product_id'])) {
-			$product_options = $this->model_catalog_product->getProductOptions($this->request->get['product_id']);
+			$data['product_options'] = $this->model_catalog_product->getProductOptions($this->request->get['product_id']);
 		} else {
-			$product_options = array();
+			$data['product_options'] = array();
 		}
-
-		$data['product_options'] = array();
-
-		foreach ($product_options as $product_option) {
-			$product_option_value_data = array();
-
-			if (isset($product_option['product_option_value'])) {
-				foreach ($product_option['product_option_value'] as $product_option_value) {
-					$product_option_value_data[] = array(
-						'product_option_value_id' => $product_option_value['product_option_value_id'],
-						'option_value_id'         => $product_option_value['option_value_id'],
-						'quantity'                => $product_option_value['quantity'],
-						'subtract'                => $product_option_value['subtract'],
-						'price'                   => $product_option_value['price'],
-						'price_prefix'            => $product_option_value['price_prefix'],
-						'points'                  => $product_option_value['points'],
-						'points_prefix'           => $product_option_value['points_prefix'],
-						'weight'                  => $product_option_value['weight'],
-						'weight_prefix'           => $product_option_value['weight_prefix']
-					);
-				}
+		
+		foreach ($data['product_options'] as $n => $product_option) {
+			if (!isset($product_option['product_option_value'])) {
+				$data['product_options'][$n]['product_option_value'] = array();
 			}
-
-			$data['product_options'][] = array(
-				'product_option_id'    => $product_option['product_option_id'],
-				'product_option_value' => $product_option_value_data,
-				'option_id'            => $product_option['option_id'],
-				'name'                 => $product_option['name'],
-				'type'                 => $product_option['type'],
-				'value'                => isset($product_option['value']) ? $product_option['value'] : '',
-				'required'             => $product_option['required']
-			);
+			if (!isset($product_option['value'])) {
+				$data['product_options'][$n]['value'] = '';
+			}
 		}
-
+		
 		$data['option_values'] = array();
 
 		foreach ($data['product_options'] as $product_option) {

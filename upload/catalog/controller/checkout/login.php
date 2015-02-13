@@ -85,11 +85,11 @@ class ControllerCheckoutLogin extends Controller {
 			$this->load->model('account/address');
 
 			if ($this->config->get('config_tax_customer') == 'payment') {
-				$this->session->data['payment_addess'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+				$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 			}
 
 			if ($this->config->get('config_tax_customer') == 'shipping') {
-				$this->session->data['shipping_addess'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 			}
 
 			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');

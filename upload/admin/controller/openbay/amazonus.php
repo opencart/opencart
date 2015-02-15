@@ -757,8 +757,6 @@ class ControllerOpenbayAmazonus extends Controller {
 				$page = 1;
 			}
 
-			$data = array();
-
 			$data['start'] = ($page - 1) * $this->config->get('config_limit_admin');
 			$data['limit'] = $this->config->get('config_limit_admin');
 

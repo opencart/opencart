@@ -22,7 +22,7 @@ final class Action {
 				continue;
 			}
 
-			$file = DIR_APPLICATION . 'controller/' . str_replace(array('../', '..\\', '..'), '', $path) . '.php';
+			$file = modification(DIR_APPLICATION . 'controller/' . str_replace(array('../', '..\\', '..'), '', $path) . '.php');
 
 			if (is_file($file)) {
 				$this->file = $file;

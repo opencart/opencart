@@ -630,15 +630,19 @@ class ModelOpenbayOpenbay extends Model {
 		$error = array();
 
 		if (!function_exists('mcrypt_encrypt')) {
-			$error[] = $this->language->get('lang_error_mcrypt');
+			$error[] = $this->language->get('error_mcrypt');
 		}
 
 		if (!function_exists('mb_detect_encoding')) {
-			$error[] = $this->language->get('lang_error_mbstring');
+			$error[] = $this->language->get('error_mbstring');
 		}
 
 		if (!function_exists('ftp_connect')) {
-			$error[] = $this->language->get('lang_error_ftpconnect');
+			$error[] = $this->language->get('error_ftpconnect');
+		}
+
+		if (!ini_get('allow_url_fopen')) {
+			$error[] = $this->language->get('error_fopen');
 		}
 
 		$root_directory = preg_replace('/catalog\/$/', '', DIR_CATALOG);

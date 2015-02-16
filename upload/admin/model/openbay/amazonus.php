@@ -684,7 +684,7 @@ class ModelOpenbayAmazonus extends Model {
 				SELECT alr.sku AS 'amazon_sku', alr.quantity AS 'amazon_quantity', alr.asin, alr.price AS 'amazon_price', oc_sku.product_id, pd.name, oc_sku.sku, oc_sku.var, oc_sku.quantity, '' AS combination
 				FROM " . DB_PREFIX . "amazonus_listing_report alr
 				LEFT JOIN (
-					SELECT p.product_id, p.sku, NULL AS 'sku', p.quantity
+					SELECT p.product_id, p.sku, NULL AS 'var', p.quantity
 					FROM " . DB_PREFIX . "product p
 				) AS oc_sku ON alr.sku = oc_sku.sku
 				LEFT JOIN " . DB_PREFIX . "amazonus_product_link apl ON (oc_sku.var IS NULL AND oc_sku.product_id = apl.product_id) OR (oc_sku.var IS NOT NULL AND oc_sku.product_id = apl.product_id AND oc_sku.var = apl.var)
@@ -720,7 +720,7 @@ class ModelOpenbayAmazonus extends Model {
 				SELECT alr.sku AS 'amazon_sku', alr.quantity AS 'amazon_quantity', alr.asin, alr.price AS 'amazon_price', oc_sku.product_id, pd.name, oc_sku.sku, oc_sku.var, oc_sku.quantity, '' AS combination
 				FROM " . DB_PREFIX . "amazonus_listing_report alr
 				LEFT JOIN (
-					SELECT p.product_id, p.sku, NULL AS 'sku', p.quantity
+					SELECT p.product_id, p.sku, NULL AS 'var', p.quantity
 					FROM " . DB_PREFIX . "product p
 				) AS oc_sku ON alr.sku = oc_sku.sku
 				LEFT JOIN " . DB_PREFIX . "amazonus_product_link apl ON (oc_sku.var IS NULL AND oc_sku.product_id = apl.product_id) OR (oc_sku.var IS NOT NULL AND oc_sku.product_id = apl.product_id AND oc_sku.var = apl.var)

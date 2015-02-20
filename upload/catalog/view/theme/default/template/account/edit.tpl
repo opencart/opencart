@@ -252,7 +252,11 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
 
 	$('#form-upload input[name=\'file\']').trigger('click');
-
+	
+	if (typeof timer != 'undefined') {
+    	clearInterval(timer);
+	}
+	
 	timer = setInterval(function() {
 		if ($('#form-upload input[name=\'file\']').val() != '') {
 			clearInterval(timer);

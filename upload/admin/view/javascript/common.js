@@ -126,13 +126,17 @@ $(document).ready(function() {
 			}
 		});	
 	});
-
+	
 	// Image Manager
 	$(document).delegate('a[data-toggle=\'image\']', 'click', function(e) {
 		e.preventDefault();
-	
+		
+		$('.popover').popover('hide', function() {
+			$('.popover').remove();
+		});
+					
 		var element = this;
-	
+		
 		$(element).popover({
 			html: true,
 			placement: 'right',
@@ -142,11 +146,11 @@ $(document).ready(function() {
 			}
 		});
 		
-		$(element).popover('toggle');		
-	
+		$(element).popover('show');
+
 		$('#button-image').on('click', function() {
 			$('#modal-image').remove();
-	
+		
 			$.ajax({
 				url: 'index.php?route=common/filemanager&token=' + getURLVar('token') + '&target=' + $(element).parent().find('input').attr('id') + '&thumb=' + $(element).attr('id'),
 				dataType: 'html',
@@ -155,25 +159,29 @@ $(document).ready(function() {
 					$('#button-image').prop('disabled', true);
 				},
 				complete: function() {
-					$('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
+					$('#button-image i').replaceWith('<i class="fa fa-pencil"></i>');
 					$('#button-image').prop('disabled', false);
 				},
 				success: function(html) {
 					$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
-	
+		
 					$('#modal-image').modal('show');
 				}
 			});
-	
-			$(element).popover('hide');
-		});
-	
+			
+			$(element).popover('hide', function() {
+				$('.popover').remove();
+			});
+		});		
+		
 		$('#button-clear').on('click', function() {
 			$(element).find('img').attr('src', $(element).find('img').attr('data-placeholder'));
 			
 			$(element).parent().find('input').attr('value', '');
-	
-			$(element).popover('hide');
+			
+			$(element).popover('hide', function() {
+				$('.popover').remove();
+			});
 		});
 	});
 	
@@ -183,6 +191,19 @@ $(document).ready(function() {
 	// Makes tooltips work on ajax generated content
 	$(document).ajaxStop(function() {
 		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
+	});
+	
+	// https://github.com/opencart/opencart/issues/2595
+	$.event.special.remove = {
+		remove: function(o) {
+			if (o.handler) { 
+				o.handler.apply(this, arguments);
+			}
+		}
+	}
+	
+	$('[data-toggle=\'tooltip\']').on('remove', function() {
+		$(this).tooltip('destroy');
 	});	
 });
 

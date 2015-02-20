@@ -572,7 +572,6 @@ footer h5 {
 	min-height: 0;
 }
 }
-
 .product-thumb .rating {
 	padding-bottom: 10px;
 }
@@ -617,7 +616,6 @@ h2.price {
 .product-list .product-thumb .button-group {
 	border-left: 1px solid #ddd;
 }
-
 @media (max-width: 768px) {
 	.product-list .product-thumb .button-group {
 		border-left: none;
@@ -655,10 +653,6 @@ h2.price {
 		width: 33.33%;
 	}
 }
-
-
-
-
 .thumbnails {
 	overflow: auto;
 	clear: both;

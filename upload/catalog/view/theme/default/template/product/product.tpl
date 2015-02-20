@@ -101,14 +101,10 @@
                     <input type="radio" name="rating" value="5" />
                     &nbsp;<?php echo $entry_good; ?></div>
                 </div>
-                <div class="form-group required">
-                  <div class="col-sm-12">
-                    <label class="control-label" for="input-captcha"><?php echo $entry_captcha; ?></label>
-                    <input type="text" name="captcha" value="" id="input-captcha" class="form-control" />
-                  </div>
-                </div>
                 <div class="form-group">
-                  <div class="col-sm-12"> <img src="index.php?route=tool/captcha" alt="" id="captcha" /> </div>
+                  <div class="col-sm-12">
+                    <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>"></div>
+                  </div>
                 </div>
                 <div class="buttons">
                   <div class="pull-right">
@@ -386,7 +382,7 @@
               <?php } ?>
             </div>
             <div class="button-group">
-              <button type="button" onclick="cart.add('<?php echo $product['product_id']; ?>');"><span class="hidden-xs hidden-sm hidden-md"><?php echo $button_cart; ?></span> <i class="fa fa-shopping-cart"></i></button>
+              <button type="button" onclick="cart.add('<?php echo $product['product_id']; ?>', '<?php echo $product['minimum']; ?>');"><span class="hidden-xs hidden-sm hidden-md"><?php echo $button_cart; ?></span> <i class="fa fa-shopping-cart"></i></button>
               <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="wishlist.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
               <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="compare.add('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>
             </div>
@@ -478,7 +474,7 @@ $('#button-cart').on('click', function() {
 			if (json['success']) {
 				$('.breadcrumb').after('<div class="alert alert-success">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
-				$('#cart-total').html(json['total']);
+				$('#cart > button').html('<i class="fa fa-shopping-cart"></i> ' + json['total']);
 				
 				$('html, body').animate({ scrollTop: 0 }, 'slow');
 				
@@ -511,6 +507,10 @@ $('button[id^=\'button-upload\']').on('click', function() {
 	
 	$('#form-upload input[name=\'file\']').trigger('click');
 	
+	if (typeof timer != 'undefined') {
+    	clearInterval(timer);
+	}
+		
 	timer = setInterval(function() {
 		if ($('#form-upload input[name=\'file\']').val() != '') {
 			clearInterval(timer);
@@ -574,8 +574,6 @@ $('#button-review').on('click', function() {
 		},
 		complete: function() {
 			$('#button-review').button('reset');
-			$('#captcha').attr('src', 'index.php?route=tool/captcha#'+new Date().getTime());
-			$('input[name=\'captcha\']').val('');
 		},
 		success: function(json) {
 			$('.alert-success, .alert-danger').remove();
@@ -590,7 +588,6 @@ $('#button-review').on('click', function() {
 				$('input[name=\'name\']').val('');
 				$('textarea[name=\'text\']').val('');
 				$('input[name=\'rating\']:checked').prop('checked', false);
-				$('input[name=\'captcha\']').val('');
 			}
 		}
 	});
@@ -606,4 +603,4 @@ $(document).ready(function() {
 	});
 });
 //--></script> 
-<?php echo $footer; ?>
+<?php echo $footer; ?> 

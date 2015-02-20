@@ -295,7 +295,7 @@ class ControllerCheckoutCart extends Controller {
 			if (isset($this->request->post['quantity'])) {
 				$quantity = (int)$this->request->post['quantity'];
 			} else {
-				$quantity = 1;
+				$quantity = $product_info['minimum'] ? $product_info['minimum'] : 1;
 			}
 
 			if (isset($this->request->post['option'])) {
@@ -333,7 +333,7 @@ class ControllerCheckoutCart extends Controller {
 			}
 
 			if (!$json) {
-				$this->cart->add($this->request->post['product_id'], $this->request->post['quantity'], $option, $recurring_id);
+				$this->cart->add($this->request->post['product_id'], $quantity, $option, $recurring_id);
 
 				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('checkout/cart'));
 

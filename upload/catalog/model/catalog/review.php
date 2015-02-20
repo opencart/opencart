@@ -22,7 +22,7 @@ class ModelCatalogReview extends Model {
 			$message .= $this->db->escape(strip_tags($data['text'])) . "\n\n";
 
 			$mail = new Mail($this->config->get('config_mail'));
-			$mail->setTo(array($this->config->get('config_email')));
+			$mail->setTo($this->config->get('config_email'));
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($this->config->get('config_name'));
 			$mail->setSubject($subject);

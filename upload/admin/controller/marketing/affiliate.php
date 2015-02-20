@@ -400,7 +400,7 @@ class ControllerMarketingAffiliate extends Controller {
 			
 			$login_info = $this->model_marketing_affiliate->getTotalLoginAttempts($result['email']);
 			
-			if ($login_info && $login_info['total'] > $this->config->get('config_login_attempts')) {
+			if ($login_info && $login_info['total'] >= $this->config->get('config_login_attempts')) {
 				$unlock = $this->url->link('marketing/affiliate/unlock', 'token=' . $this->session->data['token'] . '&email=' . $result['email'] . $url, 'SSL');
 			} else {
 				$unlock = '';

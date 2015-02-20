@@ -606,7 +606,7 @@ class ControllerSaleVoucher extends Controller {
 				foreach ($vouchers as $voucher_id) {
 					$this->model_sale_voucher->sendVoucher($voucher_id);
 				}
-
+				
 				$json['success'] = $this->language->get('text_sent');
 			} else {
 				$json['error'] = $this->language->get('error_selection');

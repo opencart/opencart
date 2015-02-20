@@ -48,7 +48,6 @@ $_['entry_quantity']     = 'Quantity';
 $_['entry_reason']       = 'Reason for Return';
 $_['entry_opened']       = 'Product is opened';
 $_['entry_fault_detail'] = 'Faulty or other details';
-$_['entry_captcha']      = 'Enter the code in the box below';
 
 // Error
 $_['text_error']         = 'The returns you requested could not be found!';

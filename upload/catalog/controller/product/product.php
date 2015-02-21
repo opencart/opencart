@@ -233,6 +233,7 @@ class ControllerProductProduct extends Controller {
 			$data['text_points'] = $this->language->get('text_points');
 			$data['text_stock'] = $this->language->get('text_stock');
 			$data['text_discount'] = $this->language->get('text_discount');
+			$data['text_yousave'] = $this->language->get('text_yousave');
 			$data['text_tax'] = $this->language->get('text_tax');
 			$data['text_option'] = $this->language->get('text_option');
 			$data['text_minimum'] = sprintf($this->language->get('text_minimum'), $product_info['minimum']);
@@ -310,6 +311,8 @@ class ControllerProductProduct extends Controller {
 
 			if ((float)$product_info['special']) {
 				$data['special'] = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')));
+				$data['yousave'] = $this->currency->format($this->tax->calculate($product_info['price']-$product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')));
+				$data['yousavepercent'] = round(($product_info['price']-$product_info['special'])*100/$product_info['price'],0);
 			} else {
 				$data['special'] = false;
 			}
@@ -410,6 +413,8 @@ class ControllerProductProduct extends Controller {
 
 				if ((float)$result['special']) {
 					$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')));
+					$yousave = $this->currency->format($this->tax->calculate($result['price']-$result['special'], $result['tax_class_id'], $this->config->get('config_tax')));
+					$yousavepercent = round(($result['price']-$result['special'])*100/$result['price'],0);
 				} else {
 					$special = false;
 				}

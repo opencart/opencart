@@ -147,11 +147,13 @@
             <?php if (!$special) { ?>
             <li>
               <h2><?php echo $price; ?></h2>
+              <span class="you-save"><?php echo $text_yousave; ?> <?php echo $yousave . ' (' . $yousavepercent . '%)'; ?></span>
             </li>
             <?php } else { ?>
             <li><span style="text-decoration: line-through;"><?php echo $price; ?></span></li>
             <li>
               <h2><?php echo $special; ?></h2>
+              <span class="you-save"><?php echo $text_yousave; ?> <?php echo $yousave . ' (' . $yousavepercent . '%)'; ?></span>
             </li>
             <?php } ?>
             <?php if ($tax) { ?>

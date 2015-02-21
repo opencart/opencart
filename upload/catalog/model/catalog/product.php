@@ -1,4 +1,4 @@
-<?php
+ <?php
 class ModelCatalogProduct extends Model {
 	public function updateViewed($product_id) {
 		$this->db->query("UPDATE " . DB_PREFIX . "product SET viewed = (viewed + 1) WHERE product_id = '" . (int)$product_id . "'");
@@ -290,6 +290,60 @@ class ModelCatalogProduct extends Model {
 		}
 
 		return $product_data;
+	}
+	
+	public function getTopRatedProducts($limit) {
+		$product_data = $this->cache->get('product.toprated.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit);
+
+		if (!$product_data) {
+			$product_data = array();
+
+			$query = $this->db->query("SELECT p.product_id, AVG(r.rating) AS aggrating, COUNT(r.rating) AS totalreviews FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "review r ON (p.product_id = r.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE p.status = '1' AND r.status = '1' AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' GROUP BY r.product_id ORDER BY aggrating DESC, totalreviews DESC LIMIT " . (int)$limit);
+
+			foreach ($query->rows as $result) {
+				$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
+			}
+
+			$this->cache->set('product.toprated.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit, $product_data);
+		}
+
+		return $product_data;
+	}
+        
+	public function getMostReviewedProducts($limit) {
+		$product_data = $this->cache->get('product.mostreviewed.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit);
+
+		if (!$product_data) {
+			$product_data = array();
+
+			$query = $this->db->query("SELECT p.product_id, COUNT(r.rating) AS totrating FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "review r ON (p.product_id = r.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE p.status = '1' AND r.status = '1' AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' GROUP BY r.product_id ORDER BY totrating DESC LIMIT " . (int)$limit);
+
+			foreach ($query->rows as $result) {
+				$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
+			}
+
+			$this->cache->set('product.mostreviewed.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit, $product_data);
+		}
+
+		return $product_data;
+	}
+        
+        public function getTotResults() {						
+		$query = $this->db->query("SELECT AVG(r.`rating`) AS totrating, COUNT(r.`rating`) AS totreviews FROM `" . DB_PREFIX . "review` r, `" . DB_PREFIX . "product` p  WHERE r.`status` = 1 AND p.`product_id` = r.`product_id` AND p.`status` = 1" );
+		foreach ($query->rows as $result) {  	
+			$totrating = $result['totrating'];
+			$totreviews = $result['totreviews'];
+		}
+		return array ($totreviews,$totrating);
+	}
+        
+        public function getAggResults() {						
+		$query = $this->db->query("SELECT AVG(r.`rating`) AS overallrating, COUNT(r.`rating`) AS overallreviews FROM `" . DB_PREFIX . "review` r, `" . DB_PREFIX . "product` p  WHERE r.`status` = 1 AND p.`product_id` = r.`product_id` AND p.`status` = 1" );
+		foreach ($query->rows as $result) {  	
+			$overallrating = $result['overallrating'];
+			$overallreviews = $result['overallreviews'];
+		}
+		return array ($overallreviews,$overallrating);
 	}
 
 	public function getProductAttributes($product_id) {

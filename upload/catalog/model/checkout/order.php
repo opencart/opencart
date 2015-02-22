@@ -413,6 +413,8 @@ class ModelCheckoutOrder extends Model {
 				$subject = sprintf($language->get('text_new_subject'), $order_info['store_name'], $order_id);
 
 				// HTML Mail
+				$this->load->model('tool/image');
+				
 				$data = array();
 
 				$data['title'] = sprintf($language->get('text_new_subject'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);
@@ -541,7 +543,12 @@ class ModelCheckoutOrder extends Model {
 
 				foreach ($order_product_query->rows as $product) {
 					$option_data = array();
-
+					
+					$product_query = $this->db->query("SELECT image FROM " . DB_PREFIX . "product WHERE product_id = '" . (int)$product['product_id'] . "'");
+					foreach ($product_query->rows as $prodquery) {
+						$image = $prodquery['image'];
+						}
+					
 					$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$product['order_product_id'] . "'");
 
 					foreach ($order_option_query->rows as $option) {
@@ -566,6 +573,8 @@ class ModelCheckoutOrder extends Model {
 					$data['products'][] = array(
 						'name'     => $product['name'],
 						'model'    => $product['model'],
+						'thumb'    => $this->model_tool_image->resize($image, 60, 60),
+						'href'    => $this->url->link('product/product', 'product_id=' . $product['product_id']),
 						'option'   => $option_data,
 						'quantity' => $product['quantity'],
 						'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),

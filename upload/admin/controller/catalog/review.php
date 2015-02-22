@@ -182,19 +182,20 @@ class ControllerCatalogReview extends Controller {
 		} else {
 			$filter_date_added = null;
 		}
-
-		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
-		} else {
-			$sort = 'r.date_added';
-		}
-
+		
 		if (isset($this->request->get['order'])) {
 			$order = $this->request->get['order'];
 		} else {
 			$order = 'ASC';
 		}
-
+		
+		if (isset($this->request->get['sort'])) {
+			$sort = $this->request->get['sort'];
+		} else {
+			$sort = 'r.date_added';
+			$order = 'DESC';
+		}
+		
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
 		} else {

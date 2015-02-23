@@ -162,8 +162,9 @@ class Mail {
 				mail($to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $message, $header);
 			}
 		} elseif ($this->protocol == 'smtp') {
-			$is_tls = substr($this->smtp_hostname, 0, 3) == 'tls';
-			$hostname = $is_tls ? substr($this->smtp_hostname, 6) : $this->smtp_hostname;
+			$tls = substr($this->smtp_hostname, 0, 3) == 'tls';
+			$hostname = $tls ? substr($this->smtp_hostname, 6) : $this->smtp_hostname;
+			
 			$handle = fsockopen($hostname, $this->smtp_port, $errno, $errstr, $this->smtp_timeout);
 
 			if (!$handle) {
@@ -197,7 +198,7 @@ class Mail {
 					exit();
 				}
 
-				if ($is_tls) {
+				if ($tls) {
 					fputs($handle, 'STARTTLS' . "\r\n");
 
 					$reply = '';

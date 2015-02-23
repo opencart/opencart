@@ -4,7 +4,6 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->load->model('openbay/amazon');
 		$this->load->model('setting/setting');
 		$this->load->model('extension/extension');
-		$this->load->model('extension/event');
 
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'openbay/amazon_listing');
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'openbay/amazon_listing');
@@ -18,7 +17,6 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->load->model('openbay/amazon');
 		$this->load->model('setting/setting');
 		$this->load->model('extension/extension');
-		$this->load->model('extension/event');
 
 		$this->model_openbay_amazon->uninstall();
 		$this->model_extension_extension->uninstall('openbay', $this->request->get['extension']);

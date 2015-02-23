@@ -219,7 +219,13 @@ class ModelOpenbayEbay extends Model{
 				) ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
 
 		// register the event triggers
-		$this->model_extension_event->addEvent('openbaypro_ebay', 'post.order.history.add', 'openbay/ebay/eventAddOrderHistory');
+		if (version_compare(VERSION, '2.0.1', '>=')) {
+			$this->load->model('extension/event');
+			$this->model_extension_event->addEvent('openbaypro_ebay', 'post.order.history.add', 'openbay/ebay/eventAddOrderHistory');
+		} else {
+			$this->load->model('tool/event');
+			$this->model_tool_event->addEvent('openbaypro_ebay', 'post.order.history.add', 'openbay/ebay/eventAddOrderHistory');
+		}
 	}
 
 	public function uninstall() {
@@ -235,7 +241,13 @@ class ModelOpenbayEbay extends Model{
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_profile`;");
 
 		// remove the event triggers
-		$this->model_extension_event->deleteEvent('openbaypro_ebay');
+		if (version_compare(VERSION, '2.0.1', '>=')) {
+			$this->load->model('extension/event');
+			$this->model_extension_event->deleteEvent('openbaypro_ebay');
+		} else {
+			$this->load->model('tool/event');
+			$this->model_tool_event->deleteEvent('openbaypro_ebay');
+		}
 	}
 
 	public function patch() {

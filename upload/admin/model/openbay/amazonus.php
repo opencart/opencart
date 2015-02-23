@@ -81,7 +81,13 @@ class ModelOpenbayAmazonus extends Model {
 		");
 
 		// register the event triggers
-		$this->model_extension_event->addEvent('openbaypro_amazonus', 'post.order.history.add', 'openbay/amazonus/eventAddOrderHistory');
+		if (version_compare(VERSION, '2.0.1', '>=')) {
+			$this->load->model('extension/event');
+			$this->model_extension_event->addEvent('openbaypro_amazonus', 'post.order.history.add', 'openbay/amazonus/eventAddOrderHistory');
+		} else {
+			$this->load->model('tool/event');
+			$this->model_tool_event->addEvent('openbaypro_amazonus', 'post.order.history.add', 'openbay/amazonus/eventAddOrderHistory');
+		}
 	}
 
 	public function uninstall() {
@@ -99,7 +105,13 @@ class ModelOpenbayAmazonus extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = 'openbay_amazonus'");
 
 		// remove the event triggers
-		$this->model_extension_event->deleteEvent('openbaypro_amazonus');
+		if (version_compare(VERSION, '2.0.1', '>=')) {
+			$this->load->model('extension/event');
+			$this->model_extension_event->deleteEvent('openbaypro_amazonus');
+		} else {
+			$this->load->model('tool/event');
+			$this->model_tool_event->deleteEvent('openbaypro_amazonus');
+		}
 	}
 
 	public function patch() {

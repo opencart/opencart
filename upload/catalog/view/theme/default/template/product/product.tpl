@@ -568,7 +568,7 @@ $('#button-review').on('click', function() {
 		url: 'index.php?route=product/product/write&product_id=<?php echo $product_id; ?>',
 		type: 'post',
 		dataType: 'json',
-		data: 'name=' + encodeURIComponent($('input[name=\'name\']').val()) + '&text=' + encodeURIComponent($('textarea[name=\'text\']').val()) + '&rating=' + encodeURIComponent($('input[name=\'rating\']:checked').val() ? $('input[name=\'rating\']:checked').val() : '') + '&captcha=' + encodeURIComponent($('input[name=\'captcha\']').val()),
+		data: 'name=' + encodeURIComponent($('input[name=\'name\']').val()) + '&text=' + encodeURIComponent($('textarea[name=\'text\']').val()) + '&rating=' + encodeURIComponent($('input[name=\'rating\']:checked').val() ? $('input[name=\'rating\']:checked').val() : ''),
 		beforeSend: function() {
 			$('#button-review').button('loading');
 		},

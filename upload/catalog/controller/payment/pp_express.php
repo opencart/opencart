@@ -21,6 +21,7 @@ class ControllerPaymentPPExpress extends Controller {
 	public function express() {
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$this->log->write('No product redirect');
+			
 			$this->response->redirect($this->url->link('checkout/cart'));
 		}
 
@@ -29,6 +30,7 @@ class ControllerPaymentPPExpress extends Controller {
 			 * If the customer is already logged in
 			 */
 			$this->session->data['paypal']['guest'] = false;
+			
 			unset($this->session->data['guest']);
 		} else {
 			if ($this->config->get('config_checkout_guest') && !$this->config->get('config_customer_price') && !$this->cart->hasDownload() && !$this->cart->hasRecurringProducts()) {
@@ -43,6 +45,7 @@ class ControllerPaymentPPExpress extends Controller {
 				 * Send them to the normal checkout flow.
 				 */
 				unset($this->session->data['guest']);
+				
 				$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
 			}
 		}
@@ -141,11 +144,13 @@ class ControllerPaymentPPExpress extends Controller {
 			$this->session->data['guest']['firstname'] = trim($result['FIRSTNAME']);
 			$this->session->data['guest']['lastname'] = trim($result['LASTNAME']);
 			$this->session->data['guest']['email'] = trim($result['EMAIL']);
+			
 			if (isset($result['PHONENUM'])) {
 				$this->session->data['guest']['telephone'] = $result['PHONENUM'];
 			} else {
 				$this->session->data['guest']['telephone'] = '';
 			}
+			
 			$this->session->data['guest']['fax'] = '';
 
 			$this->session->data['guest']['payment']['firstname'] = trim($result['FIRSTNAME']);

@@ -346,6 +346,8 @@ class ControllerExtensionInstaller extends Controller {
 									$json['error'] = sprintf($this->language->get('error_ftp_file'), $file);
 								}
 							}
+
+                            @ftp_chmod($connection, 0755, $destination);
 						}
 					} else {
 						$json['error'] = sprintf($this->language->get('error_ftp_root'), $root);

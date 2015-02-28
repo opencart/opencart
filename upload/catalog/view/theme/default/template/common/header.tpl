@@ -95,8 +95,7 @@
       <ul class="nav navbar-nav">
         <?php foreach ($categories as $category) { ?>
         <?php if ($category['children']) { ?>
-        <li class="dropdown dropdown-category-id-<?php echo $category['category_id']; ?>"><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></li>
-        <?php } ?>"><a href="<?php echo $category['href']; ?>" class="dropdown-toggle" data-toggle="dropdown"><?php echo $category['name']; ?></a>
+        <li class="dropdown dropdown-category-id-<?php echo $category['category_id']; ?>"><a href="<?php echo $category['href']; ?>" class="dropdown-toggle" data-toggle="dropdown"><?php echo $category['name']; ?></a>
           <div class="dropdown-menu">
             <div class="dropdown-inner">
               <?php foreach (array_chunk($category['children'], ceil(count($category['children']) / $category['column'])) as $children) { ?>

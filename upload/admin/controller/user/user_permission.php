@@ -338,7 +338,15 @@ class ControllerUserUserPermission extends Controller {
 			'error/not_found',
 			'error/permission',
 			'common/footer',
-			'common/header'
+			'common/header',
+			'dashboard/order',
+			'dashboard/sale',
+			'dashboard/customer',
+			'dashboard/online',
+			'dashboard/map',
+			'dashboard/activity',
+			'dashboard/chart',
+			'dashboard/recent'
 		);
 
 		$data['permissions'] = array();

@@ -24,9 +24,9 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 // DIR
-define('DIR_APPLICATION', str_replace('\'', '/', realpath(dirname(__FILE__))) . '/');
-define('DIR_SYSTEM', str_replace('\'', '/', realpath(dirname(__FILE__) . '/../')) . '/system/');
-define('DIR_OPENCART', str_replace('\'', '/', realpath(DIR_APPLICATION . '../')) . '/');
+define('DIR_APPLICATION', str_replace('\\', '/', realpath(dirname(__FILE__))) . '/');
+define('DIR_SYSTEM', str_replace('\\', '/', realpath(dirname(__FILE__) . '/../')) . '/system/');
+define('DIR_OPENCART', str_replace('\\', '/', realpath(DIR_APPLICATION . '../')) . '/');
 define('DIR_DATABASE', DIR_SYSTEM . 'database/');
 define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
 define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');

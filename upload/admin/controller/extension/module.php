@@ -180,7 +180,12 @@ class ControllerExtensionModule extends Controller {
 				);
 			}
 		}
-		
+		$names = array();
+		foreach ($data['extensions'] as $key => $row)
+		{
+			$names[$key] = $row['name'];
+		}
+		array_multisort($names, SORT_ASC, $data['extensions']);
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {

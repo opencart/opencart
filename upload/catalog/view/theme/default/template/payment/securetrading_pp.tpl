@@ -37,7 +37,7 @@
         <?php if ($site_security) { ?>
         <input type="hidden" name="sitesecurity" value="g<?php echo $site_security; ?>" />
         <?php } ?>
-        
+
         <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-type"><?php echo $entry_card_type; ?></label>
             <div class="col-sm-10">

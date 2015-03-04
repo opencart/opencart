@@ -346,15 +346,15 @@ $('select[name=\'country_id\']').on('change', function() {
 			if (json['zone'] && json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
 					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-					
+
 					if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
 						html += ' selected="selected"';
 					}
 
-          			html += '>' + json['zone'][i]['name'] + '</option>';
+					html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
-				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
+				html += '<option value="0" selected="selected"><?php echo addslashes($text_none); ?></option>';
 			}
 
 			$('select[name=\'zone_id\']').html(html);

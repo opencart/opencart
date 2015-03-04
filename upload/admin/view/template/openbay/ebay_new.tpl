@@ -1256,7 +1256,7 @@
                 $('#button-catalog-search').show();
             },
             complete: function() {
-              $('#button-catalog-search').empty().removeAttr('disabled').html('<i class="fa fa-search"></i> <?php echo $button_search; ?>');
+              $('#button-catalog-search').empty().removeAttr('disabled').html('<i class="fa fa-search"></i> <?php echo addslashes($button_search); ?>');
             },
             error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }

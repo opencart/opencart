@@ -148,17 +148,17 @@ var route_row = <?php echo $route_row; ?>;
 function addRoute() {
 	html  = '<tr id="route-row' + route_row + '">';
 	html += '  <td class="text-left"><select name="layout_route[' + route_row + '][store_id]" class="form-control">';
-	html += '  <option value="0"><?php echo $text_default; ?></option>';
+	html += '  <option value="0"><?php echo addslashes($text_default); ?></option>';
 	<?php foreach ($stores as $store) { ?>
 	html += '<option value="<?php echo $store['store_id']; ?>"><?php echo addslashes($store['name']); ?></option>';
-	<?php } ?>   
+	<?php } ?>
 	html += '  </select></td>';
-	html += '  <td class="text-left"><input type="text" name="layout_route[' + route_row + '][route]" value="" placeholder="<?php echo $entry_route; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#route-row' + route_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '  <td class="text-left"><input type="text" name="layout_route[' + route_row + '][route]" value="" placeholder="<?php echo addslashes($entry_route); ?>" class="form-control" /></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#route-row' + route_row + '\').remove();" data-toggle="tooltip" title="<?php echo addslashes($button_remove); ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';
-	
+
 	$('#route tbody').append(html);
-	
+
 	route_row++;
 }
 
@@ -167,7 +167,7 @@ var module_row = <?php echo $module_row; ?>;
 function addModule() {
 	html  = '<tr id="module-row' + module_row + '">';
 	html += '  <td class="text-left"><select name="layout_module[' + module_row + '][code]" class="form-control">';
-	<?php foreach ($extensions as $extension) { ?>    
+	<?php foreach ($extensions as $extension) { ?>
 	<?php if (!$extension['module']) { ?>
 	html += '    <option value="<?php echo $extension['code']; ?>"><?php echo addslashes($extension['name']); ?></option>';
 	<?php } else { ?>
@@ -178,19 +178,19 @@ function addModule() {
 	html += '    </optgroup>';
 	<?php } ?>
 	<?php } ?>
-    html += '  </select></td>'; 
+	html += '  </select></td>';
 	html += '  <td class="text-left"><select name="layout_module[' + module_row + '][position]" class="form-control">';
-    html += '    <option value="content_top"><?php echo $text_content_top; ?></option>';
-    html += '    <option value="content_bottom"><?php echo $text_content_bottom; ?></option>';
-    html += '    <option value="column_left"><?php echo $text_column_left; ?></option>';
-    html += '    <option value="column_right"><?php echo $text_column_right; ?></option>';
-    html += '  </select></td>';
-	html += '  <td class="text-left"><input type="text" name="layout_module[' + module_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + module_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '    <option value="content_top"><?php echo addslashes($text_content_top); ?></option>';
+	html += '    <option value="content_bottom"><?php echo addslashes($text_content_bottom); ?></option>';
+	html += '    <option value="column_left"><?php echo addslashes($text_column_left); ?></option>';
+	html += '    <option value="column_right"><?php echo addslashes($text_column_right); ?></option>';
+	html += '  </select></td>';
+	html += '  <td class="text-left"><input type="text" name="layout_module[' + module_row + '][sort_order]" value="" placeholder="<?php echo addslashes($entry_sort_order); ?>" class="form-control" /></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + module_row + '\').remove();" data-toggle="tooltip" title="<?php echo addslashes($button_remove); ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';
-	
+
 	$('#module tbody').append(html);
-	
+
 	module_row++;
 }
 //--></script></div>

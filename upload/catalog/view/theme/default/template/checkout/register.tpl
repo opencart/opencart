@@ -450,7 +450,7 @@ $('#collapse-payment-address select[name=\'country_id\']').on('change', function
 				$('#collapse-payment-address input[name=\'postcode\']').parent().parent().removeClass('required');
 			}
 			
-			html = '<option value=""><?php echo $text_select; ?></option>';
+			html = '<option value=""><?php echo addslashes($text_select); ?></option>';
 			
 			if (json['zone'] && json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
@@ -463,7 +463,7 @@ $('#collapse-payment-address select[name=\'country_id\']').on('change', function
 					html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
-				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
+				html += '<option value="0" selected="selected"><?php echo addslashes($text_none); ?></option>';
 			}
 			
 			$('#collapse-payment-address select[name=\'zone_id\']').html(html);

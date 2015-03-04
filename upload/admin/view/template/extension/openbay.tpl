@@ -151,7 +151,7 @@
         url: 'index.php?route=extension/openbay/notifications&token=<?php echo $token; ?>',
         dataType: 'json',
         success: function (json) {
-          html = '<h4><i class="fa fa-info-circle"></i>  <?php echo $text_title_messages; ?></h4>';
+          html = '<h4><i class="fa fa-info-circle"></i>  <?php echo addslashes($text_title_messages); ?></h4>';
           html += '<ul>';
           $.each(json, function (key, val) {
             html += '<li>' + val + '</li>';

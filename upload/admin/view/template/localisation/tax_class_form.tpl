@@ -105,21 +105,21 @@ var tax_rule_row = <?php echo $tax_rule_row; ?>;
 function addRule() {
 	html  = '<tr id="tax-rule-row' + tax_rule_row + '">';
 	html += '  <td class="text-left"><select name="tax_rule[' + tax_rule_row + '][tax_rate_id]" class="form-control">';
-    <?php foreach ($tax_rates as $tax_rate) { ?>
-    html += '    <option value="<?php echo $tax_rate['tax_rate_id']; ?>"><?php echo addslashes($tax_rate['name']); ?></option>';
-    <?php } ?>
-    html += '  </select></td>';
+	<?php foreach ($tax_rates as $tax_rate) { ?>
+	html += '    <option value="<?php echo $tax_rate['tax_rate_id']; ?>"><?php echo addslashes($tax_rate['name']); ?></option>';
+	<?php } ?>
+	html += '  </select></td>';
 	html += '  <td class="text-left"><select name="tax_rule[' + tax_rule_row + '][based]" class="form-control">';
-    html += '    <option value="shipping"><?php echo $text_shipping; ?></option>';
-    html += '    <option value="payment"><?php echo $text_payment; ?></option>';
-    html += '    <option value="store"><?php echo $text_store; ?></option>';
-    html += '  </select></td>';
-	html += '  <td class="text-left"><input type="text" name="tax_rule[' + tax_rule_row + '][priority]" value="" placeholder="<?php echo $entry_priority; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#tax-rule-row' + tax_rule_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '    <option value="shipping"><?php echo addslashes($text_shipping); ?></option>';
+	html += '    <option value="payment"><?php echo addslashes($text_payment); ?></option>';
+	html += '    <option value="store"><?php echo addslashes($text_store); ?></option>';
+	html += '  </select></td>';
+	html += '  <td class="text-left"><input type="text" name="tax_rule[' + tax_rule_row + '][priority]" value="" placeholder="<?php echo addslashes($entry_priority); ?>" class="form-control" /></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#tax-rule-row' + tax_rule_row + '\').remove();" data-toggle="tooltip" title="<?php echo addslashes($button_remove); ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';
-	
+
 	$('#tax-rule tbody').append(html);
-	
+
 	tax_rule_row++;
 }
 //--></script></div>

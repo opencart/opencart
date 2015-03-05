@@ -1,4 +1,4 @@
-<form action="<?php echo $action; ?>" method="POST" class="form-horizontal" id="realex_form_redirect">
+<form action="<?php echo $action; ?>" method="POST" class="form-horizontal" id="globalpay_form_redirect">
   <input type=hidden name="MERCHANT_ID" value="<?php echo $merchant_id; ?>" />
   <input type=hidden name="ORDER_ID" value="<?php echo $order_id; ?>" />
   <input type=hidden name="CURRENCY" value="<?php echo $currency; ?>" >
@@ -34,6 +34,6 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function() {
-  $('#realex_form_redirect').submit();
+  $('#globalpay_form_redirect').submit();
 });
 //--></script>

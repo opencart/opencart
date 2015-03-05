@@ -1,7 +1,7 @@
 <?php
-class ControllerPaymentRealex extends Controller {
+class ControllerPaymentGlobalpay extends Controller {
 	public function index() {
-		$this->load->language('payment/realex');
+		$this->load->language('payment/globalpay');
 
 		$data['entry_cc_type'] = $this->language->get('entry_cc_type');
 
@@ -13,13 +13,13 @@ class ControllerPaymentRealex extends Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		if ($this->config->get('realex_live_demo') == 1) {
-			$data['action'] = $this->config->get('realex_live_url');
+		if ($this->config->get('globalpay_live_demo') == 1) {
+			$data['action'] = $this->config->get('globalpay_live_url');
 		} else {
-			$data['action'] = $this->config->get('realex_demo_url');
+			$data['action'] = $this->config->get('globalpay_demo_url');
 		}
 
-		if ($this->config->get('realex_card_select') == 1) {
+		if ($this->config->get('globalpay_card_select') == 1) {
 			$card_types = array(
 				'visa' => $this->language->get('text_card_visa'),
 				'mc' => $this->language->get('text_card_mc'),
@@ -31,13 +31,13 @@ class ControllerPaymentRealex extends Controller {
 
 			$data['cards'] = array();
 
-			$accounts = $this->config->get('realex_account');
+			$accounts = $this->config->get('globalpay_account');
 
 			foreach ($accounts as $card => $account) {
 				if (isset($account['enabled']) && $account['enabled'] == 1) {
 					$data['cards'][] = array(
 						'type' => $card_types[$card],
-						'account' => (isset($account['default']) && $account['default'] == 1 ? $this->config->get('realex_merchant_id') : $account['merchant_id']),
+						'account' => (isset($account['default']) && $account['default'] == 1 ? $this->config->get('globalpay_merchant_id') : $account['merchant_id']),
 					);
 				}
 			}
@@ -47,16 +47,16 @@ class ControllerPaymentRealex extends Controller {
 			$data['card_select'] = false;
 		}
 
-		if ($this->config->get('realex_auto_settle') == 0) {
+		if ($this->config->get('globalpay_auto_settle') == 0) {
 			$data['settle'] = 0;
-		} elseif ($this->config->get('realex_auto_settle') == 1) {
+		} elseif ($this->config->get('globalpay_auto_settle') == 1) {
 			$data['settle'] = 1;
-		} elseif ($this->config->get('realex_auto_settle') == 2) {
+		} elseif ($this->config->get('globalpay_auto_settle') == 2) {
 			$data['settle'] = 'MULTI';
 		}
 
-		$data['tss'] = (int)$this->config->get('realex_tss_check');
-		$data['merchant_id'] = $this->config->get('realex_merchant_id');
+		$data['tss'] = (int)$this->config->get('globalpay_tss_check');
+		$data['merchant_id'] = $this->config->get('globalpay_merchant_id');
 
 		$data['timestamp'] = strftime("%Y%m%d%H%M%S");
 		$data['order_id'] = $this->session->data['order_id'] . 'T' . $data['timestamp'] . mt_rand(1, 999);
@@ -66,7 +66,7 @@ class ControllerPaymentRealex extends Controller {
 
 		$tmp = $data['timestamp'] . '.' . $data['merchant_id'] . '.' . $data['order_id'] . '.' . $data['amount'] . '.' . $data['currency'];
 		$hash = sha1($tmp);
-		$tmp = $hash . '.' . $this->config->get('realex_secret');
+		$tmp = $hash . '.' . $this->config->get('globalpay_secret');
 		$data['hash'] = sha1($tmp);
 
 		$data['billing_code'] = filter_var($order_info['payment_postcode'], FILTER_SANITIZE_NUMBER_INT) . '|' . filter_var($order_info['payment_address_1'], FILTER_SANITIZE_NUMBER_INT);
@@ -80,24 +80,24 @@ class ControllerPaymentRealex extends Controller {
 			$data['shipping_country'] = $order_info['payment_iso_code_2'];
 		}
 
-		$data['response_url'] = HTTPS_SERVER . 'index.php?route=payment/realex/notify';
+		$data['response_url'] = HTTPS_SERVER . 'index.php?route=payment/globalpay/notify';
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/realex.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/realex.tpl', $data);
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/globalpay.tpl')) {
+			return $this->load->view($this->config->get('config_template') . '/template/payment/globalpay.tpl', $data);
 		} else {
-			return $this->load->view('default/template/payment/realex.tpl', $data);
+			return $this->load->view('default/template/payment/globalpay.tpl', $data);
 		}
 	}
 
 	public function notify() {
-		$this->load->model('payment/realex');
+		$this->load->model('payment/globalpay');
 
-		$this->model_payment_realex->logger(print_r($this->request->post, 1));
+		$this->model_payment_globalpay->logger(print_r($this->request->post, 1));
 
-		$this->load->language('payment/realex');
+		$this->load->language('payment/globalpay');
 
-		$hash = sha1($this->request->post['TIMESTAMP'] . '.' . $this->config->get('realex_merchant_id') . '.' . $this->request->post['ORDER_ID'] . '.' . $this->request->post['RESULT'] . '.' . $this->request->post['MESSAGE'] . '.' . $this->request->post['PASREF'] . '.' . $this->request->post['AUTHCODE']);
-		$tmp = $hash . '.' . $this->config->get('realex_secret');
+		$hash = sha1($this->request->post['TIMESTAMP'] . '.' . $this->config->get('globalpay_merchant_id') . '.' . $this->request->post['ORDER_ID'] . '.' . $this->request->post['RESULT'] . '.' . $this->request->post['MESSAGE'] . '.' . $this->request->post['PASREF'] . '.' . $this->request->post['AUTHCODE']);
+		$tmp = $hash . '.' . $this->config->get('globalpay_secret');
 		$hash = sha1($tmp);
 
 		//Check to see if hashes match or not
@@ -112,8 +112,8 @@ class ControllerPaymentRealex extends Controller {
 
 			$order_info = $this->model_checkout_order->getOrder($order_id);
 
-			$auto_settle = (int)$this->config->get('realex_auto_settle');
-			$tss = (int)$this->config->get('realex_tss_check');
+			$auto_settle = (int)$this->config->get('globalpay_auto_settle');
+			$tss = (int)$this->config->get('globalpay_tss_check');
 
 			$message = '<strong>' . $this->language->get('text_result') . ':</strong> ' . $this->request->post['RESULT'];
 			$message .= '<br /><strong>' . $this->language->get('text_message') . ':</strong> ' . $this->request->post['MESSAGE'];
@@ -182,60 +182,60 @@ class ControllerPaymentRealex extends Controller {
 			}
 
 			if ($this->request->post['RESULT'] == "00") {
-				$realex_order_id = $this->model_payment_realex->addOrder($order_info, $this->request->post['PASREF'], $this->request->post['AUTHCODE'], $this->request->post['ACCOUNT'], $this->request->post['ORDER_ID']);
+				$globalpay_order_id = $this->model_payment_globalpay->addOrder($order_info, $this->request->post['PASREF'], $this->request->post['AUTHCODE'], $this->request->post['ACCOUNT'], $this->request->post['ORDER_ID']);
 
 				if ($auto_settle == 1) {
-					$this->model_payment_realex->addTransaction($realex_order_id, 'payment', $order_info);
-					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('realex_order_status_success_settled_id'), $message, false);
+					$this->model_payment_globalpay->addTransaction($globalpay_order_id, 'payment', $order_info);
+					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('globalpay_order_status_success_settled_id'), $message, false);
 				} else {
-					$this->model_payment_realex->addTransaction($realex_order_id, 'auth', 0.00);
-					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('realex_order_status_success_unsettled_id'), $message, false);
+					$this->model_payment_globalpay->addTransaction($globalpay_order_id, 'auth', 0.00);
+					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('globalpay_order_status_success_unsettled_id'), $message, false);
 				}
 
 				$data['text_response'] = $this->language->get('text_success');
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/success', '', 'SSL'));
 			} elseif ($this->request->post['RESULT'] == "101") {
 				// Decline
-				$this->model_payment_realex->addHistory($order_id, $this->config->get('realex_order_status_decline_id'), $message);
+				$this->model_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_id'), $message);
 				$data['text_response'] = $this->language->get('text_decline');
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', 'SSL'));
 			} elseif ($this->request->post['RESULT'] == "102") {
 				// Referal B
-				$this->model_payment_realex->addHistory($order_id, $this->config->get('realex_order_status_decline_pending_id'), $message);
+				$this->model_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_pending_id'), $message);
 				$data['text_response'] = $this->language->get('text_decline');
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', 'SSL'));
 			} elseif ($this->request->post['RESULT'] == "103") {
 				// Referal A
-				$this->model_payment_realex->addHistory($order_id, $this->config->get('realex_order_status_decline_stolen_id'), $message);
+				$this->model_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_stolen_id'), $message);
 				$data['text_response'] = $this->language->get('text_decline');
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', 'SSL'));
 			} elseif ($this->request->post['RESULT'] == "200") {
 				// Error Connecting to Bank
-				$this->model_payment_realex->addHistory($order_id, $this->config->get('realex_order_status_decline_bank_id'), $message);
+				$this->model_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_bank_id'), $message);
 				$data['text_response'] = $this->language->get('text_bank_error');
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', 'SSL'));
 			} elseif ($this->request->post['RESULT'] == "204") {
 				// Error Connecting to Bank
-				$this->model_payment_realex->addHistory($order_id, $this->config->get('realex_order_status_decline_bank_id'), $message);
+				$this->model_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_bank_id'), $message);
 				$data['text_response'] = $this->language->get('text_bank_error');
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', 'SSL'));
 			} elseif ($this->request->post['RESULT'] == "205") {
 				// Comms Error
-				$this->model_payment_realex->addHistory($order_id, $this->config->get('realex_order_status_decline_bank_id'), $message);
+				$this->model_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_bank_id'), $message);
 				$data['text_response'] = $this->language->get('text_bank_error');
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', 'SSL'));
 			} else {
 				// Other error
-				$this->model_payment_realex->addHistory($order_id, $this->config->get('realex_order_status_decline_id'), $message);
+				$this->model_payment_globalpay->addHistory($order_id, $this->config->get('globalpay_order_status_decline_id'), $message);
 				$data['text_response'] = $this->language->get('text_generic_error');
 				$data['text_link'] = sprintf($this->language->get('text_link'), $this->url->link('checkout/checkout', '', 'SSL'));
 			}
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/realex_response.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/realex_response.tpl', $data));
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/globalpay_response.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/globalpay_response.tpl', $data));
 		} else {
-			$this->response->setOutput($this->load->view('default/template/payment/realex_response.tpl', $data));
+			$this->response->setOutput($this->load->view('default/template/payment/globalpay_response.tpl', $data));
 		}
 	}
 }

@@ -1,7 +1,7 @@
 <?php
-class ControllerPaymentRealexRemote extends Controller {
+class ControllerPaymentGlobalpayRemote extends Controller {
 	public function index() {
-		$this->load->language('payment/realex_remote');
+		$this->load->language('payment/globalpay_remote');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -16,7 +16,7 @@ class ControllerPaymentRealexRemote extends Controller {
 		$data['help_issue'] = $this->language->get('help_issue');
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
-		$accounts = $this->config->get('realex_remote_account');
+		$accounts = $this->config->get('globalpay_remote_account');
 
 		$card_types = array(
 			'visa' => $this->language->get('text_card_visa'),
@@ -58,18 +58,18 @@ class ControllerPaymentRealexRemote extends Controller {
 			);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/realex_remote.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/realex_remote.tpl', $data);
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/globalpay_remote.tpl')) {
+			return $this->load->view($this->config->get('config_template') . '/template/payment/globalpay_remote.tpl', $data);
 		} else {
-			return $this->load->view('default/template/payment/realex_remote.tpl', $data);
+			return $this->load->view('default/template/payment/globalpay_remote.tpl', $data);
 		}
 	}
 
 	public function send() {
 		$this->load->model('checkout/order');
-		$this->load->model('payment/realex_remote');
+		$this->load->model('payment/globalpay_remote');
 
-		$this->load->language('payment/realex_remote');
+		$this->load->language('payment/globalpay_remote');
 
 		if ($this->request->post['cc_number'] == '') {
 			$json['error'] = $this->language->get('error_card_number');
@@ -98,10 +98,10 @@ class ControllerPaymentRealexRemote extends Controller {
 		$amount = round($this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false)*100);
 		$currency = $order_info['currency_code'];
 
-		$accounts = $this->config->get('realex_remote_account');
+		$accounts = $this->config->get('globalpay_remote_account');
 
 		if (isset($accounts[$this->request->post['cc_type']]['default']) && $accounts[$this->request->post['cc_type']]['default'] == 1) {
-			$account = $this->config->get('realex_remote_merchant_id');
+			$account = $this->config->get('globalpay_remote_merchant_id');
 		} else {
 			$account = $accounts[$this->request->post['cc_type']]['merchant_id'];
 		}
@@ -111,11 +111,11 @@ class ControllerPaymentRealexRemote extends Controller {
 		$cavv = '';
 		$xid = '';
 
-		if ($this->config->get('realex_remote_3d') == 1) {
+		if ($this->config->get('globalpay_remote_3d') == 1) {
 			if ($this->request->post['cc_type'] == 'visa' || $this->request->post['cc_type'] == 'mc' || $this->request->post['cc_type'] == 'amex') {
-				$verify_3ds = $this->model_payment_realex_remote->checkEnrollment($account, $amount, $currency, $order_ref);
+				$verify_3ds = $this->model_payment_globalpay_remote->checkEnrollment($account, $amount, $currency, $order_ref);
 
-				$this->model_payment_realex_remote->logger('Verify 3DS result:\r\n' . print_r($verify_3ds, 1));
+				$this->model_payment_globalpay_remote->logger('Verify 3DS result:\r\n' . print_r($verify_3ds, 1));
 
 				// Proceed to 3D secure
 				if (isset($verify_3ds->result) && $verify_3ds->result == '00') {
@@ -139,7 +139,7 @@ class ControllerPaymentRealexRemote extends Controller {
 					$json['ACSURL'] = (string)$verify_3ds->url;
 					$json['MD'] = $md;
 					$json['PaReq'] = (string)$verify_3ds->pareq;
-					$json['TermUrl'] = $this->url->link('payment/realex_remote/acsReturn', '', 'SSL');
+					$json['TermUrl'] = $this->url->link('payment/globalpay_remote/acsReturn', '', 'SSL');
 
 					$this->response->addHeader('Content-Type: application/json');
 					$this->response->setOutput(json_encode($json));
@@ -161,8 +161,8 @@ class ControllerPaymentRealexRemote extends Controller {
 
 				// Unable to Verify Enrollment. No shift in liability. ECI = 7
 				if (isset($verify_3ds->result) && $verify_3ds->result == '110' && isset($verify_3ds->enrolled) && $verify_3ds->enrolled == 'U') {
-					if ($this->config->get('realex_remote_liability') != 1) {
-						$this->load->language('payment/realex_remote');
+					if ($this->config->get('globalpay_remote_liability') != 1) {
+						$this->load->language('payment/globalpay_remote');
 
 						$json['error'] = $this->language->get('error_3d_unable');
 
@@ -184,8 +184,8 @@ class ControllerPaymentRealexRemote extends Controller {
 
 				// Invalid response from Enrollment Server. No shift in liability. ECI = 7
 				if (isset($verify_3ds->result)  && $verify_3ds->result >= 500 && $verify_3ds->result < 600) {
-					if ($this->config->get('realex_remote_liability') != 1) {
-						$this->load->language('payment/realex_remote');
+					if ($this->config->get('globalpay_remote_liability') != 1) {
+						$this->load->language('payment/globalpay_remote');
 
 						$json['error'] = (string)$verify_3ds->message;
 
@@ -205,7 +205,7 @@ class ControllerPaymentRealexRemote extends Controller {
 			}
 		}
 
-		$capture_result = $this->model_payment_realex_remote->capturePayment(
+		$capture_result = $this->model_payment_globalpay_remote->capturePayment(
 			$account,
 			$amount,
 			$currency,
@@ -223,7 +223,7 @@ class ControllerPaymentRealexRemote extends Controller {
 			$xid
 		);
 
-		$this->model_payment_realex_remote->logger('Capture result:\r\n' . print_r($capture_result, 1));
+		$this->model_payment_globalpay_remote->logger('Capture result:\r\n' . print_r($capture_result, 1));
 
 		if ($capture_result->result != '00') {
 			$json['error'] = (string)$capture_result->message . ' (' . (int)$capture_result->result . ')';
@@ -238,15 +238,15 @@ class ControllerPaymentRealexRemote extends Controller {
 	public function acsReturn() {
 		if (isset($this->session->data['order_id'])) {
 			$this->load->model('checkout/order');
-			$this->load->model('payment/realex_remote');
+			$this->load->model('payment/globalpay_remote');
 
 			$post = $this->request->post;
 
 			$md = unserialize($this->encryption->decrypt($post['MD']));
 
-			$signature_result = $this->model_payment_realex_remote->enrollmentSignature($md['account'], $md['amount'], $md['currency'], $md['order_ref'], $md['cc_number'], $md['cc_expire'], $md['cc_type'], $md['cc_name'], $post['PaRes']);
+			$signature_result = $this->model_payment_globalpay_remote->enrollmentSignature($md['account'], $md['amount'], $md['currency'], $md['order_ref'], $md['cc_number'], $md['cc_expire'], $md['cc_type'], $md['cc_name'], $post['PaRes']);
 
-			$this->model_payment_realex_remote->logger('Signature result:\r\n' . print_r($signature_result, 1));
+			$this->model_payment_globalpay_remote->logger('Signature result:\r\n' . print_r($signature_result, 1));
 
 			if ($signature_result->result == '00' && (strtoupper($signature_result->threedsecure->status) == 'Y' || strtoupper($signature_result->threedsecure->status) == 'A')) {
 				if (strtoupper($signature_result->threedsecure->status) == 'Y') {
@@ -293,23 +293,23 @@ class ControllerPaymentRealexRemote extends Controller {
 					$cavv = '';
 				}
 
-				if ($this->config->get('realex_remote_liability') != 1) {
+				if ($this->config->get('globalpay_remote_liability') != 1) {
 					// this is the check for liability shift - if the merchant does not want to accept, redirect to checkout with message
-					$this->load->language('payment/realex_remote');
+					$this->load->language('payment/globalpay_remote');
 
 					$message = $this->language->get('error_3d_unsuccessful');
 					$message .= '<br /><strong>' . $this->language->get('text_eci') . ':</strong> (' . $eci . ') ' . $this->language->get('text_3d_s' . (int)$eci_ref);
 					$message .= '<br /><strong>' . $this->language->get('text_timestamp') . ':</strong> ' . (string)strftime("%Y%m%d%H%M%S");
 					$message .= '<br /><strong>' . $this->language->get('text_order_ref') . ':</strong> ' . (string)$md['order_ref'];
 
-					if ($this->config->get('realex_remote_card_data_status') == 1) {
+					if ($this->config->get('globalpay_remote_card_data_status') == 1) {
 						$message .= '<br /><strong>' . $this->language->get('entry_cc_type') . ':</strong> ' . (string)$md['cc_type'];
 						$message .= '<br /><strong>' . $this->language->get('text_last_digits') . ':</strong> ' . (string)substr($md['cc_number'], -4);
 						$message .= '<br /><strong>' . $this->language->get('entry_cc_expire_date') . ':</strong> ' . (string)$md['cc_expire'];
 						$message .= '<br /><strong>' . $this->language->get('entry_cc_name') . ':</strong> ' . (string)$md['cc_name'];
 					}
 
-					$this->model_payment_realex_remote->addHistory($md['order_id'], $this->config->get('realex_remote_order_status_decline_id'), $message);
+					$this->model_payment_globalpay_remote->addHistory($md['order_id'], $this->config->get('globalpay_remote_order_status_decline_id'), $message);
 
 					$this->session->data['error'] = $this->language->get('error_3d_unsuccessful');
 
@@ -318,7 +318,7 @@ class ControllerPaymentRealexRemote extends Controller {
 				}
 			}
 
-			$capture_result = $this->model_payment_realex_remote->capturePayment(
+			$capture_result = $this->model_payment_globalpay_remote->capturePayment(
 				$md['account'],
 				$md['amount'],
 				$md['currency'],
@@ -336,7 +336,7 @@ class ControllerPaymentRealexRemote extends Controller {
 				$xid
 			);
 
-			$this->model_payment_realex_remote->logger('Capture result:\r\n' . print_r($capture_result, 1));
+			$this->model_payment_globalpay_remote->logger('Capture result:\r\n' . print_r($capture_result, 1));
 
 			if ($capture_result->result != '00') {
 				$this->session->data['error'] = (string)$capture_result->message . ' (' . (int)$capture_result->result . ')';

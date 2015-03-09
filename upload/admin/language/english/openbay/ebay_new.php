@@ -102,6 +102,7 @@ $_['column_main_ebay_image']        = 'Main eBay image';
 $_['column_sku']        			= 'SKU';
 
 // Entry
+$_['entry_compatibility']           = 'Parts compatibility';
 $_['entry_shop_category']           = 'Shop Category';
 $_['entry_category_popular']        = 'Popular Categories';
 $_['entry_category_suggested']      = 'eBay suggested category';

@@ -76,4 +76,10 @@ class ModelOpenbayEbayProduct extends Model {
 
 		return $response;
 	}
+
+	public function getPartsCompatibilityOptions($category_id) {
+		$response = $this->openbay->ebay->call('partscompatibility/getOptions/', array('category_id' => $category_id));
+
+		return $response;
+	}
 }

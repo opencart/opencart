@@ -129,6 +129,10 @@
                   <div id="feature-content"></div>
                 </div>
               </div>
+              <div class="form-group" id="compatibility-container" style="display: none;">
+                <label class="col-sm-2 control-label"><?php echo $entry_compatibility; ?><br /><span id="compatibility-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
+                <div class="col-sm-10" id="compatibility-content" style="display: none;"></div>
+              </div>
             </div>
 
             <div id="tab-listing-catalog" class="tab-pane">
@@ -845,72 +849,72 @@
                 </div>
               </div>
               <?php if (!empty($setting['returns']['accepted'])) { ?>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label"><?php echo $text_return_accepted; ?></label>
-                  <div class="col-sm-10">
-                    <select name="returns_accepted" id="returns_accepted" class="form-control">
-                      <?php foreach ($setting['returns']['accepted'] as $v) { ?>
-                      <option value="<?php echo $v['ReturnsAcceptedOption']; ?>"><?php echo $v['Description']; ?></option>
-                      <?php } ?>
-                    </select>
-                  </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $text_return_accepted; ?></label>
+                <div class="col-sm-10">
+                  <select name="returns_accepted" id="returns_accepted" class="form-control">
+                    <?php foreach ($setting['returns']['accepted'] as $v) { ?>
+                    <option value="<?php echo $v['ReturnsAcceptedOption']; ?>"><?php echo $v['Description']; ?></option>
+                    <?php } ?>
+                  </select>
                 </div>
+              </div>
               <?php } ?>
               <?php if (!empty($setting['returns']['within'])) { ?>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label"><?php echo $text_return_days; ?></label>
-                  <div class="col-sm-10">
-                    <select name="returns_within" id="returns_within" class="form-control">
-                      <?php foreach ($setting['returns']['within'] as $v) { ?>
-                      <option value="<?php echo $v['ReturnsWithinOption']; ?>"><?php echo $v['Description']; ?></option>
-                      <?php } ?>
-                    </select>
-                  </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $text_return_days; ?></label>
+                <div class="col-sm-10">
+                  <select name="returns_within" id="returns_within" class="form-control">
+                    <?php foreach ($setting['returns']['within'] as $v) { ?>
+                    <option value="<?php echo $v['ReturnsWithinOption']; ?>"><?php echo $v['Description']; ?></option>
+                    <?php } ?>
+                  </select>
                 </div>
+              </div>
               <?php } ?>
               <?php if (!empty($setting['returns']['paidby'])) { ?>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label"><?php echo $text_return_scosts; ?></label>
-                  <div class="col-sm-10">
-                    <select name="returns_shipping" id="returns_shipping" class="form-control">
-                      <?php foreach ($setting['returns']['paidby'] as $v) { ?>
-                      <option value="<?php echo $v['ShippingCostPaidByOption']; ?>"><?php echo $v['Description']; ?></option>
-                      <?php } ?>
-                    </select>
-                  </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $text_return_scosts; ?></label>
+                <div class="col-sm-10">
+                  <select name="returns_shipping" id="returns_shipping" class="form-control">
+                    <?php foreach ($setting['returns']['paidby'] as $v) { ?>
+                    <option value="<?php echo $v['ShippingCostPaidByOption']; ?>"><?php echo $v['Description']; ?></option>
+                    <?php } ?>
+                  </select>
                 </div>
+              </div>
               <?php } ?>
               <?php if (!empty($setting['returns']['refund'])) { ?>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label"><?php echo $text_return_type; ?></label>
-                  <div class="col-sm-10">
-                    <select name="returns_option" id="returns_option" class="form-control">
-                      <?php foreach ($setting['returns']['refund'] as $v) { ?>
-                      <option value="<?php echo $v['RefundOption']; ?>"><?php echo $v['Description']; ?></option>
-                      <?php } ?>
-                    </select>
-                  </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $text_return_type; ?></label>
+                <div class="col-sm-10">
+                  <select name="returns_option" id="returns_option" class="form-control">
+                    <?php foreach ($setting['returns']['refund'] as $v) { ?>
+                    <option value="<?php echo $v['RefundOption']; ?>"><?php echo $v['Description']; ?></option>
+                    <?php } ?>
+                  </select>
                 </div>
+              </div>
               <?php } ?>
               <?php if ($setting['returns']['description'] == true) { ?>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label"><?php echo $text_return_policy; ?></label>
-                  <div class="col-sm-10">
-                    <textarea name="return_policy" class="form-control" rows="3" id="return_policy"></textarea>
-                  </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $text_return_policy; ?></label>
+                <div class="col-sm-10">
+                  <textarea name="return_policy" class="form-control" rows="3" id="return_policy"></textarea>
                 </div>
+              </div>
               <?php } ?>
               <?php if (!empty($setting['returns']['restocking_fee'])) { ?>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label"><?php echo $text_return_restock; ?></label>
-                  <div class="col-sm-10">
-                    <select name="returns_restocking_fee" id="returns_restocking_fee" class="form-control">
-                      <?php foreach ($setting['returns']['restocking_fee'] as $v) { ?>
-                      <option value="<?php echo $v['RestockingFeeValueOption']; ?>"><?php echo $v['Description']; ?></option>
-                      <?php } ?>
-                    </select>
-                  </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $text_return_restock; ?></label>
+                <div class="col-sm-10">
+                  <select name="returns_restocking_fee" id="returns_restocking_fee" class="form-control">
+                    <?php foreach ($setting['returns']['restocking_fee'] as $v) { ?>
+                    <option value="<?php echo $v['RestockingFeeValueOption']; ?>"><?php echo $v['Description']; ?></option>
+                    <?php } ?>
+                  </select>
                 </div>
+              </div>
               <?php } ?>
             </div>
 
@@ -1127,6 +1131,8 @@
         $('#condition-input').hide();
         $('#condition-loading').show();
         $('#condition-container').show();
+        $('#compatibility-content').empty();
+        $('#compatibility-container').hide();
 
         $.ajax({
             url: 'index.php?route=openbay/ebay/getCategoryFeatures&token=<?php echo $token; ?>&category='+cat,
@@ -1154,6 +1160,12 @@
                       $('#condition-loading').hide();
                       $('#condition-container').hide();
                     }
+
+                    if (data.data.item_compatibility.enabled === true) {
+                      $('#compatibility-container').show();
+                      $('#compatibility-loading').show();
+                      getCompatibilityData(cat);
+                    }
                 } else {
                     if (data.msg == null) {
                         alert('<?php echo $error_features; ?>');
@@ -1167,6 +1179,22 @@
             }
         });
     }
+
+  function getCompatibilityData(category_id) {
+    $.ajax({
+      url: 'index.php?route=openbay/ebay/getPartsCompatibilityOptions&token=<?php echo $token; ?>&category_id='+category_id,
+      type: 'GET',
+      dataType: 'json',
+      success: function(data) {
+
+        $('#compatibility-loading').hide();
+        $('#compatibility-content').show();
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
+      }
+    });
+  }
 
   $('#button-catalog-search').bind('click', function() {
         var qry = $('#catalog-search').val();

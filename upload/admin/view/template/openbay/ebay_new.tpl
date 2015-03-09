@@ -130,8 +130,8 @@
                 </div>
               </div>
               <div class="form-group" id="compatibility-container" style="display: none;">
-                <label class="col-sm-2 control-label"><?php echo $entry_compatibility; ?><br /><span id="compatibility-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
-                <div class="col-sm-10" id="compatibility-content" style="display: none;"></div>
+                <h3><?php echo $entry_compatibility; ?> <span id="compatibility-loading" style="display: none;"><i class="fa fa-cog fa-lg fa-spin"></i></span></h3>
+                <div class="col-sm-12" id="compatibility-content" style="display: none;"></div>
               </div>
             </div>
 
@@ -1164,7 +1164,7 @@
                     if (data.data.item_compatibility.enabled === true) {
                       $('#compatibility-container').show();
                       $('#compatibility-loading').show();
-                      getCompatibilityData(cat);
+                      getCompatibilityNames(cat);
                     }
                 } else {
                     if (data.msg == null) {
@@ -1180,21 +1180,59 @@
         });
     }
 
-  function getCompatibilityData(category_id) {
+  function getCompatibilityNames(category_id) {
     $.ajax({
       url: 'index.php?route=openbay/ebay/getPartsCompatibilityOptions&token=<?php echo $token; ?>&category_id='+category_id,
       type: 'GET',
       dataType: 'json',
       success: function(data) {
+        var compatibility_html = '';
+        var compatibility_option_1 = '';
+
+        $.each(data.options, function(option_key, option_value) {
+          compatibility_html += '<div class="form-group" '+(option_value.sequence != 1 ? 'style="display:none;"' : '')+'>';
+            compatibility_html += '<label class="col-sm-2 control-label pull-left">'+option_value.display_name+'</label>';
+            compatibility_html += '<div class="col-sm-8">';
+              compatibility_html += '<select name="compatibility_data['+option_value.name+']" id="compatibility_data_'+option_value.sequence+'" class="form-control compatibility-data" disabled></select>';
+            compatibility_html += '</div>';
+          compatibility_html += '</div>';
+
+          if (option_value.sequence == 1) {
+            compatibility_option_1 = option_value.name;
+          }
+        });
 
         $('#compatibility-loading').hide();
-        $('#compatibility-content').show();
+        $('#compatibility-content').html(compatibility_html).show();
+        getCompatibilityValues(category_id, compatibility_option_1);
       },
       error: function (xhr, ajaxOptions, thrownError) {
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });
   }
+
+  function getCompatibilityValues(category_id, option_name) {
+    $.ajax({
+      url: 'index.php?route=openbay/ebay/getPartsCompatibilityValues&token=<?php echo $token; ?>&category_id='+category_id+'&option_name='+option_name,
+      type: 'GET',
+      dataType: 'json',
+      success: function(data) {
+        $.each(data.options.values, function(option_key, option_value) {
+          $("input[name='compatibility_data["+option_name+"]']").append('<option>'+option_value+'</option>');
+        });
+
+        $("input[name='compatibility_data["+option_name+"]']").prop('disabled', false);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
+      }
+    });
+  }
+
+  $('#compatibility-data').bind('change', function() {
+    alert('change');
+  });
 
   $('#button-catalog-search').bind('click', function() {
         var qry = $('#catalog-search').val();

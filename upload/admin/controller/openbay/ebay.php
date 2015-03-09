@@ -2068,4 +2068,13 @@ class ControllerOpenbayEbay extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+	public function getPartsCompatibilityValues() {
+		$this->load->model('openbay/ebay_product');
+
+		$json = $this->model_openbay_ebay_product->getPartsCompatibilityValues($this->request->get['category_id'], $this->request->get['option_name']);
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 }

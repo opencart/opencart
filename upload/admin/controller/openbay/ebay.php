@@ -2076,8 +2076,8 @@ class ControllerOpenbayEbay extends Controller {
 			'category_id' => $this->request->get['category_id'],
 			'property_name' => $this->request->get['option_name'],
 			'property_filter' => array(
-				$this->request->get['property_filter_name'],
-				$this->request->get['property_filter_value'],
+				'property_filter_name' => (!empty($this->request->get['property_filter_name']) ? $this->request->get['property_filter_name'] : ''),
+				'property_filter_value' => (!empty($this->request->get['property_filter_value']) ? $this->request->get['property_filter_value'] : ''),
 			),
 		);
 

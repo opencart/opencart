@@ -1215,8 +1215,18 @@
   }
 
   function getCompatibilityValues(category_id, option_name, sequence_id) {
+    var property_filter_name = '';
+    var property_filter_value = '';
+
+    if (parseInt(sequence_id) > 1) {
+      var parent_sequence_id = parseInt(sequence_id) - parseInt(1);
+
+      property_filter_name = $('#compatibility-data-'+parent_sequence_id+'-name').val();
+      property_filter_value = $('#compatibility-data-'+parent_sequence_id).val();
+    }
+
     $.ajax({
-      url: 'index.php?route=openbay/ebay/getPartsCompatibilityValues&token=<?php echo $token; ?>&category_id='+category_id+'&option_name='+option_name,
+      url: 'index.php?route=openbay/ebay/getPartsCompatibilityValues&token=<?php echo $token; ?>&category_id='+category_id+'&option_name='+option_name+'&property_filter_name='+property_filter_name+'&property_filter_value='+property_filter_value,
       type: 'GET',
       dataType: 'json',
       before: function() {

@@ -30,6 +30,7 @@
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-listing-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
             <li><a href="#tab-listing-feature" data-toggle="tab"><?php echo $tab_feature; ?></a></li>
+            <li style="display: none;" id="listing-compatibility"><a href="#tab-listing-compatibility" data-toggle="tab"><?php echo $entry_compatibility; ?></a></li>
             <li><a href="#tab-listing-catalog" data-toggle="tab"><?php echo $tab_ebay_catalog; ?></a></li>
             <li><a href="#tab-listing-description" data-toggle="tab"><?php echo $tab_description; ?></a></li>
             <li><a href="#tab-listing-images" data-toggle="tab"><?php echo $tab_image; ?></a></li>
@@ -129,10 +130,15 @@
                   <div id="feature-content"></div>
                 </div>
               </div>
-              <div class="form-group" id="compatibility-container" style="display: none;">
-                <h3><?php echo $entry_compatibility; ?> <span id="compatibility-loading" style="display: none;"><i class="fa fa-cog fa-lg fa-spin"></i></span></h3>
-                <div class="col-sm-12" id="compatibility-content" style="display: none;"></div>
-              </div>
+            </div>
+
+            <div id="tab-listing-compatibility" class="tab-pane">
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <span id="compatibility-loading" style="display: none;"><i class="fa fa-cog fa-lg fa-spin"></i></span>
+                    <div id="compatibility-content"></div>
+                  </div>
+                </div>
             </div>
 
             <div id="tab-listing-catalog" class="tab-pane">
@@ -1132,7 +1138,7 @@
         $('#condition-loading').show();
         $('#condition-container').show();
         $('#compatibility-content').empty();
-        $('#compatibility-container').hide();
+        $('#listing-compatibility').hide();
 
         $.ajax({
             url: 'index.php?route=openbay/ebay/getCategoryFeatures&token=<?php echo $token; ?>&category='+cat,
@@ -1162,7 +1168,7 @@
                     }
 
                     if (data.data.item_compatibility.enabled === true) {
-                      $('#compatibility-container').show();
+                      $('#listing-compatibility').show();
                       $('#compatibility-loading').show();
                       getCompatibilityNames(cat);
                     }
@@ -1186,7 +1192,7 @@
       type: 'GET',
       dataType: 'json',
       success: function(data) {
-        var compatibility_html = '<input type="hidden" id="compatibility-data-count" value="data.options_count" />';
+        var compatibility_html = '<input type="hidden" id="compatibility-data-count" value="'+data.options_count+'" />';
         var compatibility_option_1 = '';
 
         $.each(data.options, function(option_key, option_value) {
@@ -1234,6 +1240,8 @@
         $('#compatibility-data-' + sequence_id + '-container').show();
       },
       success: function(data) {
+        $('#compatibility-data-' + sequence_id).append('<option disabled selected><?php echo $text_select; ?></option>');
+
         $.each(data.options.values, function(option_key, option_value) {
           $('#compatibility-data-' + sequence_id).append('<option>'+option_value+'</option>');
         });
@@ -1252,6 +1260,17 @@
     var sequence_id = $('#'+element_base_id+'-sequence').val();
     var sequence_id_count = parseInt(sequence_id) + parseInt(1);
     var option_name = $('#compatibility-data-' + sequence_id_count + '-name').val();
+
+    // get the total number of value options
+    var total_name_count = $('#compatibility-data-count').val();
+    total_name_count = parseInt(total_name_count);
+    var sequence_id_count_loop = parseInt(sequence_id_count);
+
+    // hide the ones after the one that has just been changed and empty the data
+    while (sequence_id_count_loop <= total_name_count) {
+      $('#compatibility-data-'+sequence_id_count_loop).empty().prop('disabled', true);
+      sequence_id_count_loop++;
+    }
 
     getCompatibilityValues(category_id, option_name, sequence_id_count);
   });

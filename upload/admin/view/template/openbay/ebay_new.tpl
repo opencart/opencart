@@ -1186,14 +1186,16 @@
       type: 'GET',
       dataType: 'json',
       success: function(data) {
-        var compatibility_html = '';
+        var compatibility_html = '<input type="hidden" id="compatibility-data-count" value="data.options_count" />';
         var compatibility_option_1 = '';
 
         $.each(data.options, function(option_key, option_value) {
-          compatibility_html += '<div class="form-group" '+(option_value.sequence != 1 ? 'style="display:none;"' : '')+'>';
+          compatibility_html += '<div class="form-group"  id="compatibility-data-'+option_value.sequence+'-container">';
             compatibility_html += '<label class="col-sm-2 control-label pull-left">'+option_value.display_name+'</label>';
+            compatibility_html += '<input type="hidden" id="compatibility-data-'+option_value.sequence+'-sequence" value="'+option_value.sequence+'" />';
+            compatibility_html += '<input type="hidden" id="compatibility-data-'+option_value.sequence+'-name" value="'+option_value.name+'" />';
             compatibility_html += '<div class="col-sm-8">';
-              compatibility_html += '<select name="compatibility_data['+option_value.name+']" id="compatibility_data_'+option_value.sequence+'" class="form-control compatibility-data" disabled></select>';
+              compatibility_html += '<select id="compatibility-data-'+option_value.sequence+'" class="form-control compatibility-data" disabled></select>';
             compatibility_html += '</div>';
           compatibility_html += '</div>';
 
@@ -1204,7 +1206,7 @@
 
         $('#compatibility-loading').hide();
         $('#compatibility-content').html(compatibility_html).show();
-        getCompatibilityValues(category_id, compatibility_option_1);
+        getCompatibilityValues(category_id, compatibility_option_1, 1);
       },
       error: function (xhr, ajaxOptions, thrownError) {
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
@@ -1212,17 +1214,21 @@
     });
   }
 
-  function getCompatibilityValues(category_id, option_name) {
+  function getCompatibilityValues(category_id, option_name, sequence_id) {
     $.ajax({
       url: 'index.php?route=openbay/ebay/getPartsCompatibilityValues&token=<?php echo $token; ?>&category_id='+category_id+'&option_name='+option_name,
       type: 'GET',
       dataType: 'json',
+      before: function() {
+        $('#compatibility-data-' + sequence_id).empty().prop('disabled', true).show();
+        $('#compatibility-data-' + sequence_id + '-container').show();
+      },
       success: function(data) {
         $.each(data.options.values, function(option_key, option_value) {
-          $("input[name='compatibility_data["+option_name+"]']").append('<option>'+option_value+'</option>');
+          $('#compatibility-data-' + sequence_id).append('<option>'+option_value+'</option>');
         });
 
-        $("input[name='compatibility_data["+option_name+"]']").prop('disabled', false);
+        $('#compatibility-data-' + sequence_id).prop('disabled', false);
       },
       error: function (xhr, ajaxOptions, thrownError) {
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
@@ -1230,8 +1236,14 @@
     });
   }
 
-  $('#compatibility-data').bind('change', function() {
-    alert('change');
+  $(document).on("change", '.compatibility-data', function() {
+    var category_id = $('#final-category').val();
+    var element_base_id = $(this).attr('id');
+    var sequence_id = $('#'+element_base_id+'-sequence').val();
+    var sequence_id_count = parseInt(sequence_id) + parseInt(1);
+    var option_name = $('#compatibility-data-' + sequence_id_count + '-name').val();
+
+    getCompatibilityValues(category_id, option_name, sequence_id_count);
   });
 
   $('#button-catalog-search').bind('click', function() {

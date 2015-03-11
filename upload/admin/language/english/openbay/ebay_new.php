@@ -158,6 +158,9 @@ $_['help_quantity_reserve']         = 'Enter a lower amount if you want to maint
 $_['help_price_ex_tax']        		= 'Your standard item price excluding tax. This value is not sent to eBay.';
 $_['help_price_inc_tax']       		= 'This value is sent to eBay and is the price users will pay.';
 $_['help_private']             		= 'Hide buyer user names';
+$_['help_category_suggested']       = 'The list of categories eBay has suggested based of your item title';
+$_['help_category_popular']       	= 'A list of your recently used categories';
+$_['help_shop_category']       		= 'The category where the product will be added in your eBay shop';
 
 // Error
 $_['error_choose_category']    		= 'You must choose a category';

@@ -43,19 +43,31 @@
             <div id="tab-listing-general" class="tab-pane active">
               <?php if ($product['store_cats'] != false) { ?>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label"><?php echo $entry_shop_category; ?></label>
+                  <label class="col-sm-2 control-label">
+                    <span title="" data-toggle="tooltip" data-original-title="<?php echo $help_shop_category; ?>"><?php echo $entry_shop_category; ?></span>
+                  </label>
                   <div class="col-sm-10">
-                    <select name="eBayStoreCatId" class="form-control">
-                      <?php foreach ($product['store_cats'] as $key => $cat) { ?>
-                      <option value="<?php echo $key; ?>"><?php echo $cat; ?></option>
-                      <?php } ?>
-                    </select>
+                    <div class="row form-group">
+                      <div class="col-sm-12">
+                        <div class="input-group category-select-group">
+                          <span class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                          <select name="eBayStoreCatId" class="form-control">
+                            <option disabled selected><?php echo $text_select; ?></option>
+                            <?php foreach ($product['store_cats'] as $key => $cat) { ?>
+                              <option value="<?php echo $key; ?>"><?php echo $cat; ?></option>
+                            <?php } ?>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               <?php } ?>
               <?php if (!empty($product['popular_cats'])) { ?>
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $entry_category_popular; ?></label>
+                <label class="col-sm-2 control-label">
+                  <span title="" data-toggle="tooltip" data-original-title="<?php echo $help_category_popular; ?>"><?php echo $entry_category_popular; ?></span>
+                </label>
                 <div class="col-sm-10">
                   <p><input type="radio" name="popular" value="" id="popular_default" checked /> <strong><?php echo $text_none; ?></strong></p>
                   <?php foreach ($product['popular_cats'] as $cat) { ?>
@@ -121,7 +133,9 @@
                 </div>
               </div>
               <div class="form-group" id="suggested-cats-container" style="display: none;">
-                <label class="col-sm-2 control-label"><?php echo $entry_category_suggested; ?></label>
+                <label class="col-sm-2 control-label">
+                  <span title="" data-toggle="tooltip" data-original-title="<?php echo $help_category_suggested; ?>"><?php echo $entry_category_suggested; ?></span>
+                </label>
                 <div class="col-sm-10">
                   <div id="suggested-cats"></div>
                 </div>

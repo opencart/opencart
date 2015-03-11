@@ -2072,13 +2072,23 @@ class ControllerOpenbayEbay extends Controller {
 	public function getPartsCompatibilityValues() {
 		$this->load->model('openbay/ebay_product');
 
+		$property_filter = array();
+
+		if (isset($this->request->post['filters']) && !empty($this->request->post['filters'])) {
+			$post_filters = $this->request->post['filters'];
+
+			foreach ($post_filters as $filter) {
+				$property_filter[] = array(
+					'property_filter_name' => $filter['property_filter_name'],
+					'property_filter_value' => $filter['property_filter_value'],
+				);
+			}
+		}
+
 		$filters = array(
 			'category_id' => $this->request->get['category_id'],
 			'property_name' => $this->request->get['option_name'],
-			'property_filter' => array(
-				'property_filter_name' => (!empty($this->request->get['property_filter_name']) ? $this->request->get['property_filter_name'] : ''),
-				'property_filter_value' => (!empty($this->request->get['property_filter_value']) ? $this->request->get['property_filter_value'] : ''),
-			),
+			'property_filter' => $property_filter,
 		);
 
 		$json = $this->model_openbay_ebay_product->getPartsCompatibilityValues($filters);

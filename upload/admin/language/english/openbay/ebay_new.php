@@ -84,6 +84,8 @@ $_['text_insert']           		= 'Add new eBay listing';
 $_['text_price_ex_tax']           	= 'Excluding tax';
 $_['text_price_inc_tax']          	= 'Including tax';
 $_['text_ebay_imagesize_ok']        = 'The image size is good, it can be used on eBay';
+$_['text_compatible']        		= 'Compatible options';
+$_['text_loading_compatibility']    = 'Loading compatibility options';
 
 // Column
 $_['column_stock_total']      		= 'In stock';

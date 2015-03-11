@@ -66,58 +66,90 @@
               <?php } else { ?>
               <input type="hidden" name="popular" value="" />
               <?php } ?>
-              <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $entry_category_suggested; ?><br /><span id="suggested-categories-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
-                <div class="col-sm-10">
-                  <div id="suggested-cats"></div>
-                </div>
-              </div>
               <div class="form-group" id="category-selections-row">
-                <label class="col-sm-2 control-label"><?php echo $entry_category; ?><br /><span id="category-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
+                <label class="col-sm-2 control-label"><?php echo $entry_category; ?></label>
                 <div class="col-sm-10">
                   <div class="row form-group">
                     <div class="col-sm-12">
-                      <select id="category-select-1" class="form-control" onchange="loadCategories(2);"></select>
+                      <div class="input-group category-select-group">
+                        <span id="category-select-1-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                        <select id="category-select-1" class="form-control" onchange="loadCategories(2);"></select>
+                      </div>
                     </div>
                   </div>
-                  <div class="row form-group">
+                  <div class="row form-group" id="category-select-2-container" style="display:none;">
                     <div class="col-sm-12">
-                      <select id="category-select-2" class="form-control" onchange="loadCategories(3);" style="display:none;"></select>
+                      <div class="input-group category-select-group">
+                        <span id="category-select-2-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                        <select id="category-select-2" class="form-control" onchange="loadCategories(3);"></select>
+                      </div>
                     </div>
                   </div>
-                  <div class="row form-group">
+                  <div class="row form-group" id="category-select-3-container" style="display:none;">
                     <div class="col-sm-12">
-                      <select id="category-select-3" class="form-control" onchange="loadCategories(4);" style="display:none;"></select>
+                      <div class="input-group category-select-group">
+                        <span id="category-select-3-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                        <select id="category-select-3" class="form-control" onchange="loadCategories(4);"></select>
+                      </div>
                     </div>
                   </div>
-                  <div class="row form-group">
+                  <div class="row form-group" id="category-select-4-container" style="display:none;">
                     <div class="col-sm-12">
-                      <select id="category-select-4" class="form-control" onchange="loadCategories(5);" style="display:none;"></select>
+                      <div class="input-group category-select-group">
+                        <span id="category-select-4-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                        <select id="category-select-4" class="form-control" onchange="loadCategories(5);"></select>
+                      </div>
                     </div>
                   </div>
-                  <div class="row form-group">
+                  <div class="row form-group" id="category-select-5-container" style="display:none;">
                     <div class="col-sm-12">
-                      <select id="category-select-5" class="form-control" onchange="loadCategories(6);" style="display:none;"></select>
+                      <div class="input-group category-select-group">
+                        <span id="category-select-5-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                        <select id="category-select-5" class="form-control" onchange="loadCategories(6);"></select>
+                      </div>
                     </div>
                   </div>
-                  <div class="row form-group">
+                  <div class="row form-group" id="category-select-6-container" style="display:none;">
                     <div class="col-sm-12">
-                      <select id="category-select-6" class="form-control" onchange="loadCategories(7);" style="display:none;"></select>
+                      <div class="input-group category-select-group">
+                        <span id="category-select-6-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                        <select id="category-select-6" class="form-control" onchange="loadCategories(7);"></select>
+                      </div>
                     </div>
                   </div>
                   <input type="hidden" name="finalCat" id="final-category" />
                 </div>
               </div>
-              <div class="form-group" id="condition-container" style="display: none;">
-                <label class="col-sm-2 control-label"><?php echo $entry_listing_condition; ?><br /><span id="condition-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
+              <div class="form-group" id="suggested-cats-container" style="display: none;">
+                <label class="col-sm-2 control-label"><?php echo $entry_category_suggested; ?></label>
                 <div class="col-sm-10">
-                  <select name="condition" id="condition-input" class="form-control" style="display: none;"></select>
+                  <div id="suggested-cats"></div>
+                </div>
+              </div>
+              <div class="form-group" id="condition-container" style="display: none;">
+                <label class="col-sm-2 control-label"><?php echo $entry_listing_condition; ?></label>
+                <div class="col-sm-10">
+                  <div class="row form-group">
+                    <div class="col-sm-12">
+                      <div class="input-group condition-select-group">
+                        <span id="condition-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                        <select name="condition" id="condition-input" class="form-control"></select>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="form-group" id="duration-container" style="display: none;">
-                <label class="col-sm-2 control-label"><?php echo $entry_listing_duration; ?><br /><span id="duration-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
+                <label class="col-sm-2 control-label"><?php echo $entry_listing_duration; ?></label>
                 <div class="col-sm-10">
-                  <select name="auction_duration" id="duration-input" class="form-control" style="display: none;"></select>
+                  <div class="row form-group">
+                    <div class="col-sm-12">
+                      <div class="input-group condition-select-group">
+                        <span id="duration-loading" class="input-group-addon"><i class="fa fa-angle-right fa-lg"></i></span>
+                        <select name="auction_duration" id="duration-input" class="form-control"></select>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -135,8 +167,24 @@
             <div id="tab-listing-compatibility" class="tab-pane">
                 <div class="form-group">
                   <div class="col-sm-12">
-                    <span id="compatibility-loading" style="display: none;"><i class="fa fa-cog fa-lg fa-spin"></i></span>
+                    <div class="alert alert-info" id="compatibility-loading" style="display:none;"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_loading_compatibility; ?></div>
                     <div id="compatibility-content"></div>
+                    <div id="compatibility-content-add" style="display: none;">
+                      <div class="form-group">
+                        <div class="col-sm-10 text-right">
+                          <button class="btn btn-primary" id="compatibility-button-add" data-toggle="tooltip" type="button" data-original-title="<?php echo $text_add; ?>"><i class="fa fa-plus-circle"></i></button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="compatibility-options" class="form-group" style="display:none;">
+                      <label class="col-sm-2 control-label"><?php echo $text_compatible; ?></label>
+                      <div class="col-sm-8">
+                        <div class="table-responsive">
+                          <table id="compatibility-table" class="table table-striped table-bordered table-hover"></table>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
             </div>
@@ -989,28 +1037,25 @@
             url: 'index.php?route=openbay/ebay/getSuggestedCategories&token=<?php echo $token; ?>&qry='+qry,
             type: 'GET',
             dataType: 'json',
-            beforeSend: function() {
-              $('#suggested-categories-loading').show();
-            },
             success: function(data) {
                 if (data.error == false) {
-                    $('#suggested-cats').empty();
-
-                    var htmlInj = '';
+                    var html_inj = '';
 
                         if (data.data) {
-                            htmlInj += '<p><input type="radio" name="suggested" value="" id="suggested_default" checked="checked"/> <strong><?php echo $text_none; ?></strong></p>';
+                            html_inj += '<p><input type="radio" name="suggested" value="" id="suggested_default" checked="checked"/> <strong><?php echo $text_none; ?></strong></p>';
 
                             data.data = $.makeArray(data.data);
 
                             $.each(data.data, function(key,val) {
                                 if (val.percent != 0) {
-                                    htmlInj += '<p><input type="radio" class="suggested_category" name="suggested" value="'+val.id+'" /> ('+val.percent+'% match) '+val.name+'</p>';
+                                    html_inj += '<p><input type="radio" class="suggested_category" name="suggested" value="'+val.id+'" /> ('+val.percent+'% match) '+val.name+'</p>';
                                 }
                             });
+
+                            $('#suggested-cats-container').fadeIn();
                         }
 
-                        $('#suggested-cats').html(htmlInj);
+                        $('#suggested-cats').html(html_inj);
                         $('input[name=suggested]').bind('change', function() {
 
                         if ($(this).val() != '') {
@@ -1042,8 +1087,6 @@
                 } else {
                     alert(data.msg);
                 }
-
-                $('#suggested-categories-loading').hide();
             },
             error: function (xhr, ajaxOptions, thrownError) {
               if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
@@ -1064,43 +1107,48 @@
     }
 
   function loadCategories(level, skip) {
+        level = parseInt(level);
+
         $('#show-feature-element').hide();
         $('#product-catalog-container').hide();
         $('#feature-content').empty();
         $('#specifics').empty();
+        $('.category-select-group').removeClass('has-success');
 
         if (level == 1) {
             var parent = '';
         } else {
-            var prevLevel = level - 1;
-            var parent = $('#category-select-'+prevLevel).val();
+            var previous_level = level - 1;
+            var parent = $('#category-select-' + previous_level).val();
             $('#popular_default').attr('checked', true);
         }
 
-        var countI = level;
+        var count_i = level;
 
-        while(countI <= 6) {
-            $('#category-select-'+countI).hide().empty();
-            countI++;
+        while(count_i <= 6) {
+            $('#category-select-' + count_i + '-container').hide();
+            $('#category-select-' + count_i).empty();
+            count_i++;
         }
+
+        $('#category-select-' + previous_level + '-loading').html('<i class="fa fa-check fa-lg"></i>');
+        $('#category-select-' + level).prop('disabled', true);
+        $('#category-select-' + level + '-loading').html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+        $('#category-select-' + level + '-container').show();
 
         $.ajax({
             url: 'index.php?route=openbay/ebay/getCategories&token=<?php echo $token; ?>&parent='+parent,
             type: 'POST',
             dataType: 'json',
-            beforeSend: function() {
-                $('#category-loading').show();
-            },
             success: function(data) {
                 if (data.items != null) {
-                    $('#category-select-'+level).empty();
-                    $('#category-select-'+level).append('<option value=""><?php echo $text_select; ?></option>');
+                    $('#category-select-' + level).empty().append('<option disabled selected><?php echo $text_select; ?></option>');
 
                     data.cats = $.makeArray(data.cats);
 
                     $.each(data.cats, function(key, val) {
                         if (val.CategoryID != parent) {
-                            $('#category-select-'+level).append('<option value="'+val.CategoryID+'">'+val.CategoryName+'</option>');
+                            $('#category-select-' + level).append('<option value="'+val.CategoryID+'">'+val.CategoryName+'</option>');
                         }
                     });
 
@@ -1108,19 +1156,22 @@
                         $('#final-category').val('');
                     }
 
-                    $('#category-select-'+level).show();
+                  $('#category-select-' + level + '-loading').html('<i class="fa fa-angle-right fa-lg" ></i>');
+                  $('#category-select-' + level).prop('disabled', false);
                 } else {
+                    $('#category-select-' + level + '-container').hide();
                     if (data.error) {
                         alert(data.error);
                         $('#button-verify').hide();
                         $('#content').prepend('<div class="alert alert-warning"><?php echo $error_category_sync; ?></div>');
                         $('#page-listing, .heading').hide();
                     } else {
-                        $('#final-category').val($('#category-select-'+prevLevel).val());
-                        getCategoryFeatures($('#category-select-'+prevLevel).val());
+                        $('#final-category').val($('#category-select-' + previous_level).val());
+                        //$('#category-select-' + level + '-loading').html('<i class="fa fa-check fa-lg"></i>');
+                        $('.category-select-group').addClass('has-success');
+                        getCategoryFeatures($('#category-select-'+previous_level).val());
                     }
                 }
-                $('#category-loading').hide();
             },
             error: function (xhr, ajaxOptions, thrownError) {
               if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
@@ -1131,14 +1182,18 @@
   function getCategoryFeatures(cat) {
         itemFeatures(cat);
 
-        $('#duration-input').hide();
-        $('#duration-loading').show();
         $('#duration-container').show();
-        $('#condition-input').hide();
-        $('#condition-loading').show();
-        $('#condition-container').show();
+        $('#duration-input').empty().prop('disabled', true);
+        $('.duration-select-group').removeClass('has-success');
+        $('#duration-loading').html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+
         $('#compatibility-content').empty();
         $('#listing-compatibility').hide();
+
+        $('#condition-container').show();
+        $('#condition-input').empty().prop('disabled', true);
+        $('.condition-select-group').removeClass('has-success');
+        $('#condition-loading').html('<i class="fa fa-cog fa-lg fa-spin"></i>');
 
         $.ajax({
             url: 'index.php?route=openbay/ebay/getCategoryFeatures&token=<?php echo $token; ?>&category='+cat,
@@ -1146,7 +1201,7 @@
             dataType: 'json',
             success: function(data) {
                 if (data.error == false) {
-                    var htmlInj = '';
+                    var html_inj = '';
                     listingDuration(data.data.durations);
 
                     if (data.data.maxshipping != false) {
@@ -1154,16 +1209,17 @@
                     }
 
                     if (data.data.conditions && data.data.conditions != '') {
-                        data.data.conditions = $.makeArray(data.data.conditions);
+                      data.data.conditions = $.makeArray(data.data.conditions);
 
-                        $.each(data.data.conditions, function(key, val) {
-                            htmlInj += '<option value='+val.id+'>'+val.name+'</option>';
-                        });
+                      html_inj += '<option disabled selected><?php echo $text_select; ?></option>';
 
-                        $('#condition-input').empty().html(htmlInj).show();
-                        $('#condition-loading').hide();
+                      $.each(data.data.conditions, function(key, val) {
+                          html_inj += '<option value='+val.id+'>'+val.name+'</option>';
+                      });
+
+                      $('#condition-input').empty().html(html_inj).show().prop('disabled', false);
+                      $('#condition-loading').html('<i class="fa fa-angle-right fa-lg"></i>');
                     } else {
-                      $('#condition-loading').hide();
                       $('#condition-container').hide();
                     }
 
@@ -1201,7 +1257,10 @@
             compatibility_html += '<input type="hidden" id="compatibility-data-'+option_value.sequence+'-sequence" value="'+option_value.sequence+'" />';
             compatibility_html += '<input type="hidden" id="compatibility-data-'+option_value.sequence+'-name" value="'+option_value.name+'" />';
             compatibility_html += '<div class="col-sm-8">';
-              compatibility_html += '<select id="compatibility-data-'+option_value.sequence+'" class="form-control compatibility-data" disabled></select>';
+              compatibility_html += '<div class="input-group">';
+                compatibility_html += '<span class="input-group-addon" id="compatibility-data-' + option_value.sequence + '-loading-icon"><i class="fa fa-angle-right fa-lg" ></i></span>';
+                compatibility_html += '<select id="compatibility-data-'+option_value.sequence+'" class="form-control compatibility-data" disabled></select>';
+              compatibility_html += '</div>';
             compatibility_html += '</div>';
           compatibility_html += '</div>';
 
@@ -1221,20 +1280,34 @@
   }
 
   function getCompatibilityValues(category_id, option_name, sequence_id) {
-    var property_filter_name = '';
-    var property_filter_value = '';
+    var property_filter = [];
+    var property_filter_obj = [];
 
     if (parseInt(sequence_id) > 1) {
-      var parent_sequence_id = parseInt(sequence_id) - parseInt(1);
+      var sequence_id_count_loop = parseInt(sequence_id) - parseInt(1);
 
-      property_filter_name = $('#compatibility-data-'+parent_sequence_id+'-name').val();
-      property_filter_value = $('#compatibility-data-'+parent_sequence_id).val();
+      $('#compatibility-data-' + sequence_id_count_loop + '-loading-icon').html('<i class="fa fa-check fa-lg"></i>');
+
+      // get all of the parent filter choices
+      while (sequence_id_count_loop >= 1) {
+        property_filter_obj = {
+          'property_filter_name' : $('#compatibility-data-'+sequence_id_count_loop+'-name').val(),
+          'property_filter_value' : $('#compatibility-data-'+sequence_id_count_loop).val()
+        };
+
+        property_filter.push(property_filter_obj);
+
+        sequence_id_count_loop--;
+      }
     }
 
+    $('#compatibility-data-' + sequence_id + '-loading-icon').html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+
     $.ajax({
-      url: 'index.php?route=openbay/ebay/getPartsCompatibilityValues&token=<?php echo $token; ?>&category_id='+category_id+'&option_name='+option_name+'&property_filter_name='+property_filter_name+'&property_filter_value='+property_filter_value,
-      type: 'GET',
-      dataType: 'json',
+      url: 'index.php?route=openbay/ebay/getPartsCompatibilityValues&token=<?php echo $token; ?>&category_id='+category_id+'&option_name='+option_name,
+      type: 'POST',
+      data: { "filters" : property_filter },
+      dataType: "json",
       before: function() {
         $('#compatibility-data-' + sequence_id).empty().prop('disabled', true).show();
         $('#compatibility-data-' + sequence_id + '-container').show();
@@ -1247,6 +1320,7 @@
         });
 
         $('#compatibility-data-' + sequence_id).prop('disabled', false);
+        $('#compatibility-data-' + sequence_id + '-loading-icon').html('<i class="fa fa-angle-right fa-lg" ></i>');
       },
       error: function (xhr, ajaxOptions, thrownError) {
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
@@ -1255,6 +1329,8 @@
   }
 
   $(document).on("change", '.compatibility-data', function() {
+    $('#compatibility-content-add').hide();
+
     var category_id = $('#final-category').val();
     var element_base_id = $(this).attr('id');
     var sequence_id = $('#'+element_base_id+'-sequence').val();
@@ -1272,7 +1348,39 @@
       sequence_id_count_loop++;
     }
 
-    getCompatibilityValues(category_id, option_name, sequence_id_count);
+    if (total_name_count >= sequence_id_count) {
+      getCompatibilityValues(category_id, option_name, sequence_id_count);
+    } else {
+      $('#compatibility-data-' + sequence_id_count + '-loading-icon').html('<i class="fa fa-check fa-lg"></i>');
+      // this is the final step and all options are chosen - show the add button
+      $('#compatibility-content-add').show();
+    }
+  });
+
+  var compatibility_row = 0;
+
+  $(document).on("click", '#compatibility-button-add', function() {
+    var total_name_count = $('#compatibility-data-count').val();
+    total_name_count = parseInt(total_name_count);
+
+    var sequence_id_count_loop = 1;
+    var sequence_options = [];
+    var inj_html = '';
+
+    inj_html += '<tr id="compatibility-row' + compatibility_row + '">';
+      while (sequence_id_count_loop <= total_name_count) {
+        inj_html += '<input type="hidden" name="compatibility_data[' + compatibility_row + '][' + sequence_id_count_loop + '][name]" value="' + $('#compatibility-data-' + sequence_id_count_loop).val() + '-name" />';
+        inj_html += '<input type="hidden" name="compatibility_data[' + compatibility_row + '][' + sequence_id_count_loop + '][value]" value="' + $('#compatibility-data-' + sequence_id_count_loop).val() + '" />';
+        inj_html += '<td>' + $('#compatibility-data-' + sequence_id_count_loop).val() + '</td>';
+        sequence_id_count_loop++;
+      }
+      inj_html += '<td class="text-right"><button class="btn btn-danger" title="" type="button" onclick="$(\'#compatibility-row' + compatibility_row + '\').remove();"><i class="fa fa-trash-o"></i></button></td>';
+    inj_html += '</tr>';
+
+    $('#compatibility-table').append(inj_html);
+    $('#compatibility-options').show();
+
+    compatibility_row++;
   });
 
   $('#button-catalog-search').bind('click', function() {
@@ -1352,30 +1460,29 @@
     });
 
   function listingDuration(data) {
-      var lang            = new Array();
-      var listingDefault  = "<?php echo $product['defaults']['listing_duration']; ?>";
+    var lang              = new Array();
+    var default_duration  = "<?php echo $product['defaults']['listing_duration']; ?>";
+    var html_inj          = '';
 
-      lang["Days_1"]      = '<?php echo $text_listing_1day; ?>';
-      lang["Days_3"]      = '<?php echo $text_listing_3day; ?>';
-      lang["Days_5"]      = '<?php echo $text_listing_5day; ?>';
-      lang["Days_7"]      = '<?php echo $text_listing_7day; ?>';
-      lang["Days_10"]     = '<?php echo $text_listing_10day; ?>';
-      lang["Days_30"]     = '<?php echo $text_listing_30day; ?>';
-      lang["GTC"]         = '<?php echo $text_listing_gtc; ?>';
+    lang["Days_1"]      = '<?php echo $text_listing_1day; ?>';
+    lang["Days_3"]      = '<?php echo $text_listing_3day; ?>';
+    lang["Days_5"]      = '<?php echo $text_listing_5day; ?>';
+    lang["Days_7"]      = '<?php echo $text_listing_7day; ?>';
+    lang["Days_10"]     = '<?php echo $text_listing_10day; ?>';
+    lang["Days_30"]     = '<?php echo $text_listing_30day; ?>';
+    lang["GTC"]         = '<?php echo $text_listing_gtc; ?>';
 
-      htmlInj        = '';
+    data = $.makeArray(data);
 
-      data = $.makeArray(data);
+    html_inj += '<option disabled selected><?php echo $text_select; ?></option>';
 
-      $.each(data, function(key, val) {
-        htmlInj += '<option value="'+val+'"';
-          if (val == listingDefault) { htmlInj += ' selected="selected"'; }
-        htmlInj += '>'+lang[val]+'</option>';
-      });
+    $.each(data, function(duration_key, duration_value) {
+      html_inj += '<option value="' + duration_value + '" ' + (duration_value == default_duration ? ' selected="selected"' : '') + '>'+lang[duration_value]+'</option>';
+    });
 
-      $('#duration-input').empty().html(htmlInj).show();
-      $('#duration-loading').hide();
-    }
+    $('#duration-input').empty().html(html_inj).show().prop('disabled', false);
+    $('#duration-loading').html('<i class="fa fa-angle-right fa-lg"></i>');
+  }
 
   function itemFeatures(cat) {
         $.ajax({
@@ -1393,65 +1500,65 @@
                     $('#feature-content').empty();
                     $('.option-specifics-').empty().hide();
 
-                    var htmlInj = '';
-                    var htmlInj2 = '';
+                    var html_inj = '';
+                    var html_inj2 = '';
                     var specificCount = 0;
 
                     if (data.data.Recommendations.NameRecommendation) {
                         data.data.Recommendations.NameRecommendation = $.makeArray(data.data.Recommendations.NameRecommendation);
 
                         $.each(data.data.Recommendations.NameRecommendation, function(key, val) {
-                          htmlInj2 = '';
-                          htmlInj += '<div class="form-group">';
-                          htmlInj += '<label class="col-sm-2 control-label">'+val.Name+'</label>';
-                          htmlInj += '<div class="col-sm-10">';
+                          html_inj2 = '';
+                          html_inj += '<div class="form-group">';
+                          html_inj += '<label class="col-sm-2 control-label">'+val.Name+'</label>';
+                          html_inj += '<div class="col-sm-10">';
 
                             if (("ValueRecommendation" in val) && (val.ValidationRules.MaxValues == 1)) {
-                                htmlInj2 += '<option value=""><?php echo $text_select; ?></option>';
+                                html_inj2 += '<option disabled selected><?php echo $text_select; ?></option>';
 
                                 val.ValueRecommendation = $.makeArray(val.ValueRecommendation);
 
                                 $.each(val.ValueRecommendation, function(key2, option) {
-                                    htmlInj2 += '<option value="'+option.Value+'">'+option.Value+'</option>';
+                                    html_inj2 += '<option value="'+option.Value+'">'+option.Value+'</option>';
                                 });
 
                                 if (val.ValidationRules.SelectionMode == 'FreeText') {
-                                    htmlInj2 += '<option value="Other"><?php echo $text_other; ?></option>';
+                                    html_inj2 += '<option value="Other"><?php echo $text_other; ?></option>';
                                 }
-                              htmlInj += '<div class="row">';
-                                htmlInj += '<div class="col-sm-7">';
-                                  htmlInj += '<select name="feat['+val.Name+']" class="form-control" id="spec_sel_'+specificCount+'" onchange="toggleSpecOther('+specificCount+');">'+htmlInj2+'</select>';
-                                htmlInj += '</div>';
-                                htmlInj += '<div class="col-sm-5" id="spec_'+specificCount+'_other" style="display:none;">';
-                                  htmlInj += '<input placeholder="<?php echo $text_other; ?>" type="text" name="featother['+val.Name+']" class="form-control" />';
-                                htmlInj += '</div>';
-                              htmlInj += '</div>';
+                              html_inj += '<div class="row">';
+                                html_inj += '<div class="col-sm-7">';
+                                  html_inj += '<select name="feat['+val.Name+']" class="form-control" id="spec_sel_'+specificCount+'" onchange="toggleSpecOther('+specificCount+');">'+html_inj2+'</select>';
+                                html_inj += '</div>';
+                                html_inj += '<div class="col-sm-5" id="spec_'+specificCount+'_other" style="display:none;">';
+                                  html_inj += '<input placeholder="<?php echo $text_other; ?>" type="text" name="featother['+val.Name+']" class="form-control" />';
+                                html_inj += '</div>';
+                              html_inj += '</div>';
                             }else if (("ValueRecommendation" in val) && (val.ValidationRules.MaxValues > 1)) {
                                 val.ValueRecommendation = $.makeArray(val.ValueRecommendation);
 
-                              htmlInj += '<div class="row">';
+                              html_inj += '<div class="row">';
                                 $.each(val.ValueRecommendation, function(key2, option) {
-                                  htmlInj += '<div class="col-sm-2">';
-                                    htmlInj += '<label class="checkbox-inline">';
-                                      htmlInj += '<input type="checkbox" name="feat['+val.Name+'][]" value="'+option.Value+'" /> '+option.Value;
-                                    htmlInj += '</label>';
-                                  htmlInj += '</div>';
+                                  html_inj += '<div class="col-sm-2">';
+                                    html_inj += '<label class="checkbox-inline">';
+                                      html_inj += '<input type="checkbox" name="feat['+val.Name+'][]" value="'+option.Value+'" /> '+option.Value;
+                                    html_inj += '</label>';
+                                  html_inj += '</div>';
                                 });
-                              htmlInj += '</div>';
+                              html_inj += '</div>';
                             } else {
-                              htmlInj += '<div class="row">';
-                                htmlInj += '<div class="col-sm-7">';
-                                  htmlInj += '<input type="text" name="feat['+val.Name+']" class="form-control" />';
-                                htmlInj += '</div>';
-                              htmlInj += '</div>';
+                              html_inj += '<div class="row">';
+                                html_inj += '<div class="col-sm-7">';
+                                  html_inj += '<input type="text" name="feat['+val.Name+']" class="form-control" />';
+                                html_inj += '</div>';
+                              html_inj += '</div>';
                             }
 
-                          htmlInj += '</div>';
-                          htmlInj += '</div>';
+                          html_inj += '</div>';
+                          html_inj += '</div>';
                           specificCount++;
                         });
 
-                        $('#feature-content').append(htmlInj);
+                        $('#feature-content').append(html_inj);
                     } else {
                         $('#feature-content').text('None');
                     }

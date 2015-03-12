@@ -144,6 +144,8 @@ $_['entry_shipping_in_desc']        = 'Freight info in description';
 $_['entry_shipping_type_int']       = 'International shipping type';
 $_['entry_shipping_intnat']         = 'International shipping services';
 $_['entry_shipping_handling_int']   = 'Handling fee (international)';
+$_['entry_vrm']   					= 'Vehicle Registration Mark';
+$_['entry_vin']   					= 'Vehicle Identification Number';
 
 // Tab
 $_['tab_feature']              		= 'Features';

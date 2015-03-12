@@ -121,19 +121,6 @@ class ModelPaymentWorldpay extends Model {
 			$recurring_description .= sprintf($this->language->get('text_length'), $item['recurring']['duration']);
 		}
 
-		//create new profile and set to pending status as no payment has been made yet.
-		$item['recurring_id'] = $item['recurring']['recurring_id'];
-		$item['recurring_name'] = $item['recurring']['name'];
-		$item['recurring_frequency'] = $item['recurring']['frequency'];
-		$item['recurring_cycle'] = $item['recurring']['cycle'];
-		$item['recurring_duration'] = $item['recurring']['duration'];
-		$item['recurring_price'] = $item['recurring']['price'];
-		$item['recurring_trial'] = $item['recurring']['trial'];
-		$item['recurring_trial_frequency'] = $item['recurring']['trial_frequency'];
-		$item['recurring_trial_cycle'] = $item['recurring']['trial_cycle'];
-		$item['recurring_trial_duration'] = $item['recurring']['trial_duration'];
-		$item['recurring_trial_price'] = $item['recurring']['trial_price'];
-
 		$order_recurring_id = $this->model_checkout_recurring->create($item, $this->session->data['order_id'], $recurring_description);
 		$this->model_checkout_recurring->addReference($order_recurring_id, $order_id_rand);
 

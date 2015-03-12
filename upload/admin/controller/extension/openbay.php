@@ -178,7 +178,6 @@ class ControllerExtensionOpenbay extends Controller {
 			'text' => $this->language->get('text_manage'),
 		);
 
-
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			$this->model_setting_setting->editSetting('openbay', $this->request->post);
 

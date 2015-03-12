@@ -125,7 +125,7 @@ class ModelOpenbayOpenbay extends Model {
 		$web_root = preg_replace('/system\/$/', '', DIR_SYSTEM);
 
 		$local_file = $web_root . 'system/download/openbaypro_update.zip';
-		$handle = fopen($local_file,"w+");
+		$handle = fopen($local_file, "w+");
 
 		$post = array('version' => 2, 'beta' => $beta);
 

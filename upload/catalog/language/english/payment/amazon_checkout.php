@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']				= 'Amazon Payments';
+$_['heading_title']				= 'Checkout by Amazon';
 $_['heading_address']			= 'Please choose a delivery address';
 $_['heading_payment']			= 'Please select a payment method';
 $_['heading_confirm']			= 'Order summary';
@@ -10,7 +10,7 @@ $_['text_back']					= 'Back';
 $_['text_cart']					= 'Cart';
 $_['text_confirm']				= 'Confirm';
 $_['text_continue']				= 'Continue';
-$_['text_cba']					= 'Amazon Payments';
+$_['text_cba']					= 'Checkout by Amazon';
 $_['text_enter_coupon']			= 'Enter your coupon code here. If you don\'t have one, leave it empty.';
 $_['text_coupon']				= 'Coupon';
 $_['text_tax_other']			= 'Taxes / Other handling fees';

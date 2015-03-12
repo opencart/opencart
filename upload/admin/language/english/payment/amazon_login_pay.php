@@ -4,7 +4,7 @@ $_['heading_title']                 = 'Login and Pay with Amazon';
 
 //Text
 
-$_['text_success']                  = 'Amazon Payments module has been updated';
+$_['text_success']                  = 'Login and Pay with Amazon module has been updated';
 $_['text_ipn_url']					= 'Cron Job\'s URL';
 $_['text_ipn_token']				= 'Secret Token';
 $_['text_us']						= 'US';
@@ -37,7 +37,7 @@ $_['text_amazon_details']           = 'Amazon Details';
 $_['text_amazon_order_id']          = 'Amazon Order ID';
 $_['text_upload']                   = 'Upload';
 $_['text_upload_template']          = 'Upload the filled in template by clicking on the button below. Make sure it is saved as a tab-delimited file.';
-$_['text_amazon_login_pay']         = '<a href="http://go.amazonservices.com/opencart.html" target="_blank" title="Sign-up to Login and Pay with Amazon"><img src="view/image/payment/amazon.png" alt="Amazon Payments" title="Login and Pay with Amazon" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_amazon_login_pay']         = '<a href="http://go.amazonservices.com/opencart.html" target="_blank" title="Sign-up to Login and Pay with Amazon"><img src="view/image/payment/amazon.png" alt="Login and Pay with Amazon" title="Login and Pay with Amazon" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_amazon_join']              = '<a href="http://go.amazonservices.com/opencart.html" target="_blank" title="Sign-up to Login and Pay with Amazon"><u>Sign-up to Login and Pay with Amazon</u></a>';
 $_['entry_login_pay_test']          = 'Test mode';
 $_['entry_login_pay_mode']          = 'Payment mode';

@@ -419,11 +419,6 @@ class ControllerPaymentSagepayDirect extends Controller {
 			$this->model_payment_sagepay_direct->updateCronJobRunTime();
 
 			$this->model_payment_sagepay_direct->logger('Repeat Orders: ' . print_r($orders, 1));
-
-			echo '<pre>';
-			print_r($orders);
-			echo '</pre>';
-			die();
 		}
 	}
 }

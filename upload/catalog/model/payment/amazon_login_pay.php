@@ -15,6 +15,15 @@ class ModelPaymentAmazonLoginPay extends Model {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "amazon_login_pay_order_total_tax` (`order_total_id`, `code`, `tax`) SELECT `order_total_id`, `code`, " . (float)$total['lpa_tax'] . " FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int)$order_id . " AND `code` = '" . $this->db->escape($total['code']) . "' AND `title` = '" . $this->db->escape($total['title']) . "'");
 		}
 	}
+	
+	public function getAddress() {
+		$address_paramter_data['AddressConsentToken'] = $this->session->data['access_token'];
+		$address = $this->model_payment_amazon_login_pay->offAmazon('GetOrderReferenceDetails', $address_paramter_data);
+		$xml = simplexml_load_string($address['ResponseBody']);
+		if (isset($xml->GetOrderReferenceDetailsResult->OrderReferenceDetails->Destination->PhysicalDestination)) {
+			return $xml->GetOrderReferenceDetailsResult->OrderReferenceDetails->Destination->PhysicalDestination;
+		}
+	}
 
 	public function setOrderShipping($order_id, $has_free_shipping) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "amazon_login_pay_order` SET `order_id` = '" . (int)$order_id . "', `free_shipping` = '" . (int)$has_free_shipping . "',`date_added` = now(), `modified` = now() ");

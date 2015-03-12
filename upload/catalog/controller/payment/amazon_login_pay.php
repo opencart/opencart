@@ -633,12 +633,9 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			$this->response->setOutput(json_encode($json));
 		}
 
-		$address_paramter_data['AddressConsentToken'] = $this->session->data['access_token'];
-		$address = $this->model_payment_amazon_login_pay->offAmazon('GetOrderReferenceDetails', $address_paramter_data);
-		$xml = simplexml_load_string($address['ResponseBody']);
+		$address_xml = $this->model_payment_amazon_login_pay->getAddress();
 
-		if (isset($xml->GetOrderReferenceDetailsResult->OrderReferenceDetails->Destination->PhysicalDestination)) {
-			$address_xml = $xml->GetOrderReferenceDetailsResult->OrderReferenceDetails->Destination->PhysicalDestination;
+		if (isset($address_xml)) {
 
 			$result = $this->model_payment_amazon_login_pay->getCountry((string)$address_xml->CountryCode);
 

@@ -1383,7 +1383,7 @@
 
     inj_html += '<tr id="compatibility-row' + compatibility_row + '">';
       while (sequence_id_count_loop <= total_name_count) {
-        inj_html += '<input type="hidden" name="compatibility_data[' + compatibility_row + '][' + sequence_id_count_loop + '][name]" value="' + $('#compatibility-data-' + sequence_id_count_loop).val() + '-name" />';
+        inj_html += '<input type="hidden" name="compatibility_data[' + compatibility_row + '][' + sequence_id_count_loop + '][name]" value="' + $('#compatibility-data-' + sequence_id_count_loop + '-name').val() + '" />';
         inj_html += '<input type="hidden" name="compatibility_data[' + compatibility_row + '][' + sequence_id_count_loop + '][value]" value="' + $('#compatibility-data-' + sequence_id_count_loop).val() + '" />';
         inj_html += '<td>' + $('#compatibility-data-' + sequence_id_count_loop).val() + '</td>';
         sequence_id_count_loop++;

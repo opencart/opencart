@@ -1240,7 +1240,7 @@
                       $('#condition-container').hide();
                     }
 
-                    if (data.data.item_compatibility.enabled === true) {
+                    if (data.data.item_compatibility.enabled == 1) {
                       $('#listing-compatibility').show();
                       $('#compatibility-loading').show();
                       getCompatibilityNames(cat);

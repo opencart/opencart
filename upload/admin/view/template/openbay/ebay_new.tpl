@@ -1250,7 +1250,7 @@
                     html_inj = '<div class="form-group" id="vrm-input-container">';
                     html_inj += '<label class="col-sm-2 control-label"><?php echo $entry_vrm; ?></label>';
                     html_inj += '<div class="col-sm-10">';
-                    html_inj += '<input class="form-control" type="text" size="85" value="<?php echo $entry_vrm; ?>" name="vrm">';
+                    html_inj += '<input class="form-control" type="text" size="85" placeholder="<?php echo $entry_vrm; ?>" name="vrm">';
                     html_inj += '</div>';
                     html_inj += '</div>';
                     $('#tab-listing-description').prepend(html_inj);
@@ -1260,7 +1260,7 @@
                     html_inj = '<div class="form-group" id="vin-input-container">';
                     html_inj += '<label class="col-sm-2 control-label"><?php echo $entry_vin; ?></label>';
                     html_inj += '<div class="col-sm-10">';
-                    html_inj += '<input class="form-control" type="text" size="85" value="<?php echo $entry_vin; ?>" name="vrm">';
+                    html_inj += '<input class="form-control" type="text" size="85" placeholder="<?php echo $entry_vin; ?>" name="vrm">';
                     html_inj += '</div>';
                     html_inj += '</div>';
                     $('#tab-listing-description').prepend(html_inj);

@@ -72,7 +72,6 @@ class ControllerModuleSlideshow extends Controller {
 			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
-
 		if (!isset($this->request->get['module_id'])) {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),

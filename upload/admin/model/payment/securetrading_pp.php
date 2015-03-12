@@ -1,6 +1,5 @@
 <?php
-class ModelPaymentSecureTradingPp extends Model {	
-
+class ModelPaymentSecureTradingPp extends Model {
 	public function install() {
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "securetrading_pp_order` (
@@ -193,7 +192,7 @@ class ModelPaymentSecureTradingPp extends Model {
 
 		$response = curl_exec($ch);
 
-		if ($response === False) {
+		if ($response === false) {
 			$this->log->write('Secure Trading PP CURL Error: (' . curl_errno($ch) . ') ' . curl_error($ch));
 		}
 
@@ -206,5 +205,4 @@ class ModelPaymentSecureTradingPp extends Model {
 		$log = new Log('securetrading_pp.log');
 		$log->write($message);
 	}
-
 }

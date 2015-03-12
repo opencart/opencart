@@ -1,6 +1,5 @@
 <?php
 class ModelPaymentSecureTradingWs extends Model {
-
 	public function getMethod($address, $total) {
 		$this->load->language('payment/securetrading_ws');
 
@@ -54,7 +53,7 @@ class ModelPaymentSecureTradingWs extends Model {
 
 		$response = curl_exec($ch);
 
-		if ($response === False) {
+		if ($response === false) {
 			$this->log->write('Secure Trading WS CURL Error: (' . curl_errno($ch) . ') ' . curl_error($ch));
 		}
 
@@ -128,7 +127,6 @@ class ModelPaymentSecureTradingWs extends Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "securetrading_ws_order` SET `settle_type`='" . $this->config->get('securetrading_ws_settle_status') . "', `modified` = now(), `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $amount . "' WHERE order_id = " . (int)$order_info['order_id']);
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "securetrading_ws_order_transaction` SET `securetrading_ws_order_id` = '" . (int)$securetrading_ws_order['securetrading_ws_order_id'] . "', `amount` = '" . $amount . "', type = '" . $trans_type . "',  `created` = now()");
-
 	}
 
 	public function updateOrder($order_id, $order_status_id, $comment = '', $notify = false) {
@@ -140,7 +138,7 @@ class ModelPaymentSecureTradingWs extends Model {
 	}
 
 	public function logger($message) {
-			$log = new Log('secure.log');
-			$log->write($message);
+		$log = new Log('secure.log');
+		$log->write($message);
 	}
 }

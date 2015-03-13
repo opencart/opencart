@@ -683,7 +683,7 @@ $('select[name=\'customer_group_id\']').on('change', function() {
 });
 
 $('select[name=\'customer_group_id\']').trigger('change');
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 var address_row = <?php echo $address_row; ?>;
 
@@ -692,44 +692,44 @@ function addAddress() {
 	html += '  <input type="hidden" name="address[' + address_row + '][address_id]" value="" />';
 
 	html += '  <div class="form-group required">';
-	html += '    <label class="col-sm-2 control-label" for="input-firstname' + address_row + '"><?php echo $entry_firstname; ?></label>';
-	html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][firstname]" value="" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname' + address_row + '" class="form-control" /></div>';
+	html += '    <label class="col-sm-2 control-label" for="input-firstname' + address_row + '"><?php echo addslashes($entry_firstname); ?></label>';
+	html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][firstname]" value="" placeholder="<?php echo addslashes($entry_firstname); ?>" id="input-firstname' + address_row + '" class="form-control" /></div>';
 	html += '  </div>';
 
 	html += '  <div class="form-group required">';
-	html += '    <label class="col-sm-2 control-label" for="input-lastname' + address_row + '"><?php echo $entry_lastname; ?></label>';
-	html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][lastname]" value="" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname' + address_row + '" class="form-control" /></div>';
+	html += '    <label class="col-sm-2 control-label" for="input-lastname' + address_row + '"><?php echo addslashes($entry_lastname); ?></label>';
+	html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][lastname]" value="" placeholder="<?php echo addslashes($entry_lastname); ?>" id="input-lastname' + address_row + '" class="form-control" /></div>';
 	html += '  </div>';
 
 	html += '  <div class="form-group">';
-	html += '    <label class="col-sm-2 control-label" for="input-company' + address_row + '"><?php echo $entry_company; ?></label>';
-	html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][company]" value="" placeholder="<?php echo $entry_company; ?>" id="input-company' + address_row + '" class="form-control" /></div>';
+	html += '    <label class="col-sm-2 control-label" for="input-company' + address_row + '"><?php echo addslashes($entry_company); ?></label>';
+	html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][company]" value="" placeholder="<?php echo addslashes($entry_company); ?>" id="input-company' + address_row + '" class="form-control" /></div>';
 	html += '  </div>';
 
 	html += '  <div class="form-group required">';
-	html += '    <label class="col-sm-2 control-label" for="input-address-1' + address_row + '"><?php echo $entry_address_1; ?></label>';
-	html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][address_1]" value="" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1' + address_row + '" class="form-control" /></div>';
+	html += '    <label class="col-sm-2 control-label" for="input-address-1' + address_row + '"><?php echo addslashes($entry_address_1); ?></label>';
+	html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][address_1]" value="" placeholder="<?php echo addslashes($entry_address_1); ?>" id="input-address-1' + address_row + '" class="form-control" /></div>';
 	html += '  </div>';
 
 	html += '  <div class="form-group">';
-	html += '    <label class="col-sm-2 control-label" for="input-address-2' + address_row + '"><?php echo $entry_address_2; ?></label>';
-	html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][address_2]" value="" placeholder="<?php echo $entry_address_2; ?>" id="input-address-2' + address_row + '" class="form-control" /></div>';
+	html += '    <label class="col-sm-2 control-label" for="input-address-2' + address_row + '"><?php echo addslashes($entry_address_2); ?></label>';
+	html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][address_2]" value="" placeholder="<?php echo addslashes($entry_address_2); ?>" id="input-address-2' + address_row + '" class="form-control" /></div>';
 	html += '  </div>';
 
 	html += '  <div class="form-group required">';
-	html += '    <label class="col-sm-2 control-label" for="input-city' + address_row + '"><?php echo $entry_city; ?></label>';
-	html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][city]" value="" placeholder="<?php echo $entry_city; ?>" id="input-city' + address_row + '" class="form-control" /></div>';
+	html += '    <label class="col-sm-2 control-label" for="input-city' + address_row + '"><?php echo addslashes($entry_city); ?></label>';
+	html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][city]" value="" placeholder="<?php echo addslashes($entry_city); ?>" id="input-city' + address_row + '" class="form-control" /></div>';
 	html += '  </div>';
 
 	html += '  <div class="form-group required">';
-	html += '    <label class="col-sm-2 control-label" for="input-postcode' + address_row + '"><?php echo $entry_postcode; ?></label>';
-	html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][postcode]" value="" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode' + address_row + '" class="form-control" /></div>';
+	html += '    <label class="col-sm-2 control-label" for="input-postcode' + address_row + '"><?php echo addslashes($entry_postcode); ?></label>';
+	html += '    <div class="col-sm-10"><input type="text" name="address[' + address_row + '][postcode]" value="" placeholder="<?php addslashes(echo $entry_postcode); ?>" id="input-postcode' + address_row + '" class="form-control" /></div>';
 	html += '  </div>';
 
 	html += '  <div class="form-group required">';
-	html += '    <label class="col-sm-2 control-label" for="input-country' + address_row + '"><?php echo $entry_country; ?></label>';
+	html += '    <label class="col-sm-2 control-label" for="input-country' + address_row + '"><?php echo addslashes($entry_country); ?></label>';
 	html += '    <div class="col-sm-10"><select name="address[' + address_row + '][country_id]" id="input-country' + address_row + '" onchange="country(this, \'' + address_row + '\', \'0\');" class="form-control">';
-    html += '         <option value=""><?php echo $text_select; ?></option>';
+    html += '         <option value=""><?php echo addslashes($text_select); ?></option>';
     <?php foreach ($countries as $country) { ?>
     html += '         <option value="<?php echo $country['country_id']; ?>"><?php echo addslashes($country['name']); ?></option>';
     <?php } ?>
@@ -737,8 +737,8 @@ function addAddress() {
 	html += '  </div>';
 
 	html += '  <div class="form-group required">';
-	html += '    <label class="col-sm-2 control-label" for="input-zone' + address_row + '"><?php echo $entry_zone; ?></label>';
-	html += '    <div class="col-sm-10"><select name="address[' + address_row + '][zone_id]" id="input-zone' + address_row + '" class="form-control"><option value=""><?php echo $text_none; ?></option></select></div>';
+	html += '    <label class="col-sm-2 control-label" for="input-zone' + address_row + '"><?php echo addslashes($entry_zone); ?></label>';
+	html += '    <div class="col-sm-10"><select name="address[' + address_row + '][zone_id]" id="input-zone' + address_row + '" class="form-control"><option value=""><?php echo addslashes($text_none); ?></option></select></div>';
 	html += '  </div>';
 
 	// Custom Fields
@@ -750,7 +750,7 @@ function addAddress() {
 	html += '  		<label class="col-sm-2 control-label" for="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo addslashes($custom_field['name']); ?></label>';
 	html += '  		<div class="col-sm-10">';
 	html += '  		  <select name="address[' + address_row + '][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" id="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">';
-	html += '  			<option value=""><?php echo $text_select; ?></option>';
+	html += '  			<option value=""><?php echo addslashes($text_select); ?></option>';
 
 	<?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
 	html += '  			<option value="<?php echo $custom_field_value['custom_field_value_id']; ?>"><?php echo addslashes($custom_field_value['name']); ?></option>';
@@ -813,7 +813,7 @@ function addAddress() {
 	html += '	  <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">';
 	html += '		<label class="col-sm-2 control-label"><?php echo addslashes($custom_field['name']); ?></label>';
 	html += '		<div class="col-sm-10">';
-	html += '		  <button type="button" id="button-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>';
+	html += '		  <button type="button" id="button-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>" data-loading-text="<?php echo addslashes($text_loading); ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>';
 	html += '		  <input type="hidden" name="address[' + address_row + '][<?php echo $custom_field['custom_field_id']; ?>]" value="" id="input-address' + address_row + '-custom-field<?php echo $custom_field['custom_field_id']; ?>" />';
 	html += '		</div>';
 	html += '	  </div>';
@@ -850,7 +850,7 @@ function addAddress() {
 	<?php } ?>
 
 	html += '  <div class="form-group">';
-	html += '    <label class="col-sm-2 control-label"><?php echo $entry_default; ?></label>';
+	html += '    <label class="col-sm-2 control-label"><?php echo addslashes($entry_default); ?></label>';
 	html += '    <div class="col-sm-10"><label class="radio"><input type="radio" name="address[' + address_row + '][default]" value="1" /></label></div>';
 	html += '  </div>';
 
@@ -862,26 +862,26 @@ function addAddress() {
 
 	$('select[name=\'address[' + address_row + '][country_id]\']').trigger('change');
 
-	$('#address-add').before('<li><a href="#tab-address' + address_row + '" data-toggle="tab"><i class="fa fa-minus-circle" onclick="$(\'#address a:first\').tab(\'show\'); $(\'a[href=\\\'#tab-address' + address_row + '\\\']\').parent().remove(); $(\'#tab-address' + address_row + '\').remove();"></i> <?php echo $tab_address; ?> ' + address_row + '</a></li>');
+	$('#address-add').before('<li><a href="#tab-address' + address_row + '" data-toggle="tab"><i class="fa fa-minus-circle" onclick="$(\'#address a:first\').tab(\'show\'); $(\'a[href=\\\'#tab-address' + address_row + '\\\']\').parent().remove(); $(\'#tab-address' + address_row + '\').remove();"></i> <?php echo addslashes($tab_address); ?> ' + address_row + '</a></li>');
 
 	$('#address a[href=\'#tab-address' + address_row + '\']').tab('show');
 
 	$('.date').datetimepicker({
 		pickTime: false
 	});
-	
+
 	$('.datetime').datetimepicker({
 		pickDate: true,
 		pickTime: true
 	});
-	
+
 	$('.time').datetimepicker({
 		pickDate: false
-	});	
+	});
 
 	address_row++;
 }
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 function country(element, index, zone_id) {
 	$.ajax({
@@ -900,7 +900,7 @@ function country(element, index, zone_id) {
 				$('input[name=\'address[' + index + '][postcode]\']').parent().parent().removeClass('required');
 			}
 
-			html = '<option value=""><?php echo $text_select; ?></option>';
+			html = '<option value=""><?php echo addslashes($text_select); ?></option>';
 
 			if (json['zone'] && json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
@@ -913,7 +913,7 @@ function country(element, index, zone_id) {
 					html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
-				html += '<option value="0"><?php echo $text_none; ?></option>';
+				html += '<option value="0"><?php echo addslashes($text_none); ?></option>';
 			}
 
 			$('select[name=\'address[' + index + '][zone_id]\']').html(html);
@@ -925,7 +925,7 @@ function country(element, index, zone_id) {
 }
 
 $('select[name$=\'[country_id]\']').trigger('change');
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('#history').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
@@ -958,7 +958,7 @@ $('#button-history').on('click', function(e) {
 		}
 	});
 });
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('#transaction').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
@@ -992,7 +992,7 @@ $('#button-transaction').on('click', function(e) {
 		}
 	});
 });
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('#reward').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
@@ -1061,7 +1061,7 @@ $('body').delegate('.button-ban-add', 'click', function() {
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 
-				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-danger btn-xs button-ban-remove"><i class="fa fa-minus-circle"></i> <?php echo $text_remove_ban_ip; ?></button>');
+				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-danger btn-xs button-ban-remove"><i class="fa fa-minus-circle"></i> <?php echo addslashes($text_remove_ban_ip); ?></button>');
 			}
 		}
 	});
@@ -1091,7 +1091,7 @@ $('body').delegate('.button-ban-remove', 'click', function() {
 			if (json['success']) {
 				 $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 
-				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-success btn-xs button-ban-add"><i class="fa fa-plus-circle"></i> <?php echo $text_add_ban_ip; ?></button>');
+				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-success btn-xs button-ban-add"><i class="fa fa-plus-circle"></i> <?php echo addslashes($text_add_ban_ip); ?></button>');
 			}
 		}
 	});
@@ -1099,50 +1099,50 @@ $('body').delegate('.button-ban-remove', 'click', function() {
 
 $('#content').delegate('button[id^=\'button-custom-field\'], button[id^=\'button-address\']', 'click', function() {
 	var node = this;
-	
+
 	$('#form-upload').remove();
-	
+
 	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
 
 	$('#form-upload input[name=\'file\']').trigger('click');
-	
+
 	if (typeof timer != 'undefined') {
-    	clearInterval(timer);
+		clearInterval(timer);
 	}
-	
+
 	timer = setInterval(function() {
 		if ($('#form-upload input[name=\'file\']').val() != '') {
 			clearInterval(timer);
-			
+
 			$.ajax({
 				url: 'index.php?route=tool/upload/upload&token=<?php echo $token; ?>',
-				type: 'post',		
+				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),
 				cache: false,
 				contentType: false,
-				processData: false,		
+				processData: false,
 				beforeSend: function() {
 					$(node).button('loading');
 				},
 				complete: function() {
 					$(node).button('reset');
-				},		
+				},
 				success: function(json) {
 					$(node).parent().find('.text-danger').remove();
-					
+
 					if (json['error']) {
 						$(node).parent().find('input[type=\'hidden\']').after('<div class="text-danger">' + json['error'] + '</div>');
 					}
-								
+
 					if (json['success']) {
 						alert(json['success']);
 					}
-					
+
 					if (json['code']) {
 						$(node).parent().find('input[type=\'hidden\']').attr('value', json['code']);
 					}
-				},			
+				},
 				error: function(xhr, ajaxOptions, thrownError) {
 					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 				}
@@ -1162,6 +1162,6 @@ $('.datetime').datetimepicker({
 
 $('.time').datetimepicker({
 	pickDate: false
-});	
+});
 //--></script></div>
 <?php echo $footer; ?>

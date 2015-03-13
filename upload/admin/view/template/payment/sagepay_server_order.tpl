@@ -71,7 +71,7 @@
 </table>
 <script type="text/javascript"><!--
   $("#button-void").click(function() {
-		if (confirm('<?php echo $text_confirm_void; ?>')) {
+		if (confirm('<?php echo addslashes($text_confirm_void); ?>')) {
 			$.ajax({
 				type: 'POST',
 				dataType: 'json',
@@ -91,7 +91,7 @@
 						html += '<td class="text-left">0.00</td>';
 						html += '</tr>';
 
-						$('.void_text').text('<?php echo $text_yes; ?>');
+						$('.void_text').text('<?php echo addslashes($text_yes); ?>');
 						$('#sagepay_server_transactions').append(html);
 						$('#button-release').hide();
 						$('#release_amount').hide();
@@ -111,7 +111,7 @@
 		}
 	});
 	$("#button-release").click(function() {
-		if (confirm('<?php echo $text_confirm_release; ?>')) {
+		if (confirm('<?php echo addslashes($text_confirm_release); ?>')) {
 			$.ajax({
 				type: 'POST',
 				dataType: 'json',
@@ -137,7 +137,7 @@
 
 						if (data.data.release_status == 1) {
 							$('#button-void').hide();
-							$('.release_text').text('<?php echo $text_yes; ?>');
+							$('.release_text').text('<?php echo addslashes($text_yes); ?>');
 						} else {
 							$('#button-release').show();
 							$('#release_amount').val(0.00);

@@ -69,7 +69,7 @@
 </table>
 <script type="text/javascript"><!--
   $("#button-void").click(function () {
-    if (confirm('<?php echo $text_confirm_void; ?>')) {
+    if (confirm('<?php echo addslashes($text_confirm_void); ?>')) {
       $.ajax({
         type:'POST',
         dataType: 'json',
@@ -89,7 +89,7 @@
             html += '<td class="text-left">0.00</td>';
             html += '</tr>';
 
-            $('.void_text').text('<?php echo $text_yes; ?>');
+            $('.void_text').text('<?php echo addslashes($text_yes); ?>');
             $('#realex_transactions').append(html);
             $('#button_capture').hide();
             $('#capture_amount').hide();
@@ -109,7 +109,7 @@
     }
   });
   $("#button_capture").click(function () {
-    if (confirm('<?php echo $text_confirm_capture; ?>')) {
+    if (confirm('<?php echo addslashes($text_confirm_capture); ?>')) {
       $.ajax({
         type:'POST',
         dataType: 'json',
@@ -135,7 +135,7 @@
 
             if (data.data.capture_status == 1) {
               $('#button-void').hide();
-              $('.capture_text').text('<?php echo $text_yes; ?>');
+              $('.capture_text').text('<?php echo addslashes($text_yes); ?>');
             } else {
               $('#button_capture').show();
               $('#capture_amount').val(0.00);
@@ -164,7 +164,7 @@
     }
   });
   $("#button-rebate").click(function () {
-    if (confirm('<?php echo $text_confirm_rebate ?>')) {
+    if (confirm('<?php echo addslashes($text_confirm_rebate); ?>')) {
       $.ajax({
         type:'POST',
         dataType: 'json',
@@ -189,7 +189,7 @@
             $('#realex_total_captured').text(data.data.total_captured);
 
             if (data.data.rebate_status == 1) {
-              $('.rebate_text').text('<?php echo $text_yes; ?>');
+              $('.rebate_text').text('<?php echo addslashes($text_yes); ?>');
             } else {
               $('#button-rebate').show();
               $('#rebate_amount').val(0.00).show();

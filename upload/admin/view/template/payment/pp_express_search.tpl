@@ -185,17 +185,17 @@ function doSearch() {
       } else {
         if (data.result != '') {
           html += '<thead><tr>';
-          html += '<td class="left"><?php echo $tbl_column_date; ?></td>';
-          html += '<td class="left"><?php echo $tbl_column_type; ?></td>';
-          html += '<td class="left"><?php echo $tbl_column_email; ?></td>';
-          html += '<td class="left"><?php echo $tbl_column_name; ?></td>';
-          html += '<td class="left"><?php echo $tbl_column_transid; ?></td>';
-          html += '<td class="left"><?php echo $tbl_column_status; ?></td>';
-          html += '<td class="left"><?php echo $tbl_column_currency; ?></td>';
-          html += '<td class="right"><?php echo $tbl_column_amount; ?></td>';
-          html += '<td class="right"><?php echo $tbl_column_fee; ?></td>';
-          html += '<td class="right"><?php echo $tbl_column_netamt; ?></td>';
-          html += '<td class="center"><?php echo $tbl_column_action; ?></td>';
+          html += '<td class="left"><?php echo addslashes($tbl_column_date); ?></td>';
+          html += '<td class="left"><?php echo addslashes($tbl_column_type); ?></td>';
+          html += '<td class="left"><?php echo addslashes($tbl_column_email); ?></td>';
+          html += '<td class="left"><?php echo addslashes($tbl_column_name); ?></td>';
+          html += '<td class="left"><?php echo addslashes($tbl_column_transid); ?></td>';
+          html += '<td class="left"><?php echo addslashes($tbl_column_status); ?></td>';
+          html += '<td class="left"><?php echo addslashes($tbl_column_currency); ?></td>';
+          html += '<td class="right"><?php echo addslashes($tbl_column_amount); ?></td>';
+          html += '<td class="right"><?php echo addslashes($tbl_column_fee); ?></td>';
+          html += '<td class="right"><?php echo addslashes($tbl_column_netamt); ?></td>';
+          html += '<td class="center"><?php echo addslashes($tbl_column_action); ?></td>';
           html += '</tr></thead>';
 
           $.each(data.result, function (k, v) {
@@ -218,7 +218,7 @@ function doSearch() {
               html += '<td class="right">' + v.L_FEEAMT + '</td>';
               html += '<td class="right">' + v.L_NETAMT + '</td>';
               html += '<td class="center">';
-              html += '<a href="<?php echo $view_link; ?>&transaction_id=' + v.L_TRANSACTIONID + '"><?php echo $text_view; ?></a>';
+              html += '<a href="<?php echo $view_link; ?>&transaction_id=' + v.L_TRANSACTIONID + '"><?php echo addslashes($text_view); ?></a>';
               html += '</td>';
               html += '</tr>';
             }
@@ -228,7 +228,7 @@ function doSearch() {
           $('#search_results').append(html).fadeIn();
         } else {
           $('#searching').hide();
-          $('#error').html('<i class="fa fa-exclamation-circle"></i> <?php echo $text_no_results; ?>').fadeIn();
+          $('#error').html('<i class="fa fa-exclamation-circle"></i> <?php echo addslashes($text_no_results); ?>').fadeIn();
         }
       }
     }
@@ -244,7 +244,7 @@ function editSearch() {
   $('#search_results').empty().hide();
   $('#error').empty().hide();
 }
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false

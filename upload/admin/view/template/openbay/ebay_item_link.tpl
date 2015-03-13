@@ -340,7 +340,7 @@
       },
       success: function(json) {
         if (json.data.items === null) {
-          $('#ebay-listings').append('<tr><td colspan="7"><p><?php echo $error_no_listings; ?></p></td></tr>');
+          $('#ebay-listings').append('<tr><td colspan="7"><p><?php echo addslashes($error_no_listings); ?></p></td></tr>');
         } else {
           var html_inj;
 
@@ -354,7 +354,7 @@
             html_inj += '</td>';
             html_inj += '<td class="text-left">'+key+'<input type="hidden" id="l-'+key+'_val" val="'+key+'" /></td>';
             html_inj += '<td class="text-left">'+val.name+'</td>';
-            html_inj += '<td class="text-left"><input type="text" class="product-search form-control" placeholder="<?php echo $column_product_auto; ?>" id="l-'+key+'" /><input type="hidden" id="l-'+key+'-pid" /></td>';
+            html_inj += '<td class="text-left"><input type="text" class="product-search form-control" placeholder="<?php echo addslashes($column_product_auto); ?>" id="l-'+key+'" /><input type="hidden" id="l-'+key+'-pid" /></td>';
 
             if (val.variants == 0) {
                 html_inj += '<td class="text-center"><span id="l-'+key+'-qty"></span><input type="hidden" id="l-'+key+'-qtyinput" /></td>';
@@ -377,7 +377,7 @@
                 html_inj += '<input type="hidden" name="variants" id="l-'+key+'-variants" value="1" />';
                 html_inj += '<td class="text-center"><img title="Success" alt="Success" src="view/image/success.png" style="margin-top:3px;"></td>';
             }
-            html_inj += '<td class="text-center"><a class="btn btn-primary" style="display:none;" onclick="saveListingLink('+key+'); return false;" id="l-'+key+'-save-button"><span><?php echo $button_save; ?></span></a></td>';
+            html_inj += '<td class="text-center"><a class="btn btn-primary" style="display:none;" onclick="saveListingLink('+key+'); return false;" id="l-'+key+'-save-button"><span><?php echo addslashes($button_save); ?></span></a></td>';
             html_inj += '</tr>';
 
             $('#ebay-listings').append(html_inj);
@@ -387,19 +387,19 @@
         $('#ebay-listings').show();
 
         if (json.data.more_pages == 1) {
-          $('#check-unlinked-items').empty().html('<?php echo $button_check_unlinked; ?>').removeAttr('disabled');
+          $('#check-unlinked-items').empty().html('<?php echo addslashes($button_check_unlinked); ?>').removeAttr('disabled');
         } else {
           $('#check-unlinked-items').hide();
         }
 
         if (json.data.break == 1) {
-          $('#check-unlinked-items').before('<div class="alert alert-warning"><?php echo $text_limit_reached; ?></div>');
+          $('#check-unlinked-items').before('<div class="alert alert-warning"><?php echo addslashes($text_limit_reached); ?></div>');
         }
 
         $('#unlinked-page').val(json.data.next_page);
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        $('#check-unlinked-items').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>').removeAttr('disabled');
+        $('#check-unlinked-items').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo addslashes($text_failed); ?>').removeAttr('disabled');
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });

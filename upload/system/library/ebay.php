@@ -14,7 +14,7 @@ final class Ebay {
 		$this->enc1 = $this->config->get('ebay_string1');
 		$this->enc2 = $this->config->get('ebay_string2');
 		$this->logging = $this->config->get('ebay_logging');
-		$this->tax = $this->config->get('tax');
+		$this->tax = $this->config->get('ebay_tax');
 		$this->server = 1;
 		$this->lasterror = '';
 		$this->lastmsg = '';

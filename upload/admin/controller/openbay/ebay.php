@@ -299,10 +299,10 @@ class ControllerOpenbayEbay extends Controller {
 			$data['ebay_tax_listing'] = $this->config->get('ebay_tax_listing');
 		}
 
-		if (isset($this->request->post['tax'])) {
-			$data['tax'] = $this->request->post['tax'];
+		if (isset($this->request->post['ebay_tax'])) {
+			$data['ebay_tax'] = $this->request->post['ebay_tax'];
 		} else {
-			$data['tax'] = $this->config->get('tax');
+			$data['ebay_tax'] = $this->config->get('ebay_tax');
 		}
 
 		if (isset($this->request->post['ebay_import_unpaid'])) {

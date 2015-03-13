@@ -11,7 +11,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 			$this->default_part_refunded_id = $this->default_paid_id;
 		}
 
-		$this->tax                        = ($this->config->get('tax') == '') ? '1' : (($this->config->get('tax') / 100) + 1);
+		$this->tax                        = ($this->config->get('ebay_tax') == '') ? '1' : (($this->config->get('ebay_tax') / 100) + 1);
 		$this->tax_type                   = $this->config->get('ebay_tax_listing');
 		$data                             = unserialize($data);
 

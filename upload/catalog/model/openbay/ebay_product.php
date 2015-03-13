@@ -187,7 +187,7 @@ class ModelOpenbayEbayProduct extends Model {
 					$weight_class_id = $this->weightClassExists($item['advanced']['package']['weight']['major_unit']);
 				}
 
-				$tax            = $this->config->get('tax');
+				$tax            = $this->config->get('ebay_tax');
 				$net_price      = $item['priceGross'] / (($tax / 100) + 1);
 
 				//openstock variant check

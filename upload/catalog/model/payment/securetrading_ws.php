@@ -1,6 +1,5 @@
 <?php
 class ModelPaymentSecureTradingWs extends Model {
-
 	public function getMethod($address, $total) {
 		$this->load->language('payment/securetrading_ws');
 
@@ -54,7 +53,7 @@ class ModelPaymentSecureTradingWs extends Model {
 
 		$response = curl_exec($ch);
 
-		if ($response === False) {
+		if ($response === false) {
 			$this->log->write('Secure Trading WS CURL Error: (' . curl_errno($ch) . ') ' . curl_error($ch));
 		}
 
@@ -78,10 +77,10 @@ class ModelPaymentSecureTradingWs extends Model {
 	}
 
 	public function updateReference($order_id, $transaction_reference) {
-		$this->db->query("UPDATE " . DB_PREFIX . "securetrading_ws_order SET transaction_reference = '" . $this->db->escape($transaction_reference) . "' WHERE order_id = " . (int) $order_id);
+		$this->db->query("UPDATE " . DB_PREFIX . "securetrading_ws_order SET transaction_reference = '" . $this->db->escape($transaction_reference) . "' WHERE order_id = " . (int)$order_id);
 
 		if ($this->db->countAffected() == 0) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "securetrading_ws_order SET order_id = " . (int) $order_id . ", transaction_reference = '" . $this->db->escape($transaction_reference) . "', `created` = now(), `modified` = now()");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "securetrading_ws_order SET order_id = " . (int)$order_id . ", transaction_reference = '" . $this->db->escape($transaction_reference) . "', `created` = now(), `modified` = now()");
 		}
 	}
 
@@ -128,19 +127,18 @@ class ModelPaymentSecureTradingWs extends Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "securetrading_ws_order` SET `settle_type`='" . $this->config->get('securetrading_ws_settle_status') . "', `modified` = now(), `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $amount . "' WHERE order_id = " . (int)$order_info['order_id']);
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "securetrading_ws_order_transaction` SET `securetrading_ws_order_id` = '" . (int)$securetrading_ws_order['securetrading_ws_order_id'] . "', `amount` = '" . $amount . "', type = '" . $trans_type . "',  `created` = now()");
-
 	}
 
 	public function updateOrder($order_id, $order_status_id, $comment = '', $notify = false) {
 		$this->load->model('checkout/order');
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = " . (int) $order_status_id . " WHERE order_id = "  . (int) $order_id);
+		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = " . (int)$order_status_id . " WHERE order_id = "  . (int)$order_id);
 
 		$this->model_checkout_order->update($order_id, $order_status_id, $comment, $notify);
 	}
 
 	public function logger($message) {
-			$log = new Log('secure.log');
-			$log->write($message);
+		$log = new Log('secure.log');
+		$log->write($message);
 	}
 }

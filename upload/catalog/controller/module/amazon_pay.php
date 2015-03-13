@@ -1,7 +1,5 @@
 <?php
-
 class ControllerModuleAmazonPay extends Controller {
-
 	public function index() {
 		if ($this->config->get('amazon_login_pay_status') && !empty($_SERVER['HTTPS'])) {
 			$this->load->model('payment/amazon_login_pay');
@@ -117,7 +115,6 @@ class ControllerModuleAmazonPay extends Controller {
 				$full_name = explode(' ', $user->name);
 				$last_name = array_pop($full_name);
 				$first_name = implode(' ', $full_name);
-
 
 				$data = array(
 					'customer_group_id' => (int)$customer_group_id,

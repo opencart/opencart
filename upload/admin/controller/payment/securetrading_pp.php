@@ -470,7 +470,7 @@ class ControllerPaymentSecureTradingPp extends Controller {
 
 			$this->model_payment_securetrading_pp->logger('Rebate result:\r\n' . print_r($rebate_response, 1));
 
-			if ($rebate_response !== False) {
+			if ($rebate_response !== false) {
 				$response_xml = simplexml_load_string($rebate_response);
 
 				$error_code = (string)$response_xml->response->error->code;

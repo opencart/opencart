@@ -40,7 +40,7 @@ class ModelPaymentSecureTradingPp extends Model {
 	}
 
 	public function addReference($order_id, $reference) {
-		$this->db->query("REPLACE INTO " . DB_PREFIX . "securetrading_pp_order SET order_id = " . (int) $order_id . ", transaction_reference = '" . $this->db->escape($reference) . "',  `created` = now()");
+		$this->db->query("REPLACE INTO " . DB_PREFIX . "securetrading_pp_order SET order_id = " . (int)$order_id . ", transaction_reference = '" . $this->db->escape($reference) . "', `created` = now()");
 	}
 
 	public function confirmOrder($order_id, $order_status_id, $comment = '', $notify = false) {
@@ -85,7 +85,7 @@ class ModelPaymentSecureTradingPp extends Model {
 	public function updateOrder($order_id, $order_status_id, $comment = '', $notify = false) {
 		$this->load->model('checkout/order');
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = " . (int) $order_status_id . " WHERE order_id = "  . (int) $order_id);
+		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = " . (int)$order_status_id . " WHERE order_id = " . (int)$order_id);
 
 		$this->model_checkout_order->addOrderHistory($order_id, $order_status_id, $comment, $notify);
 	}

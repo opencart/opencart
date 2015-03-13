@@ -1,7 +1,5 @@
 <?php
-
 class ControllerModuleAmazonPay extends Controller {
-
 	private $error = array();
 
 	public function index() {
@@ -79,7 +77,6 @@ class ControllerModuleAmazonPay extends Controller {
 		);
 
 		$data['action'] = $this->url->link('module/amazon_pay', 'token=' . $this->session->data['token'], 'SSL');
-
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['token'] = $this->session->data['token'];
@@ -140,7 +137,6 @@ class ControllerModuleAmazonPay extends Controller {
 		}
 	}
 
-
 	public function install() {
 		$this->load->model('tool/event');
 		$this->model_tool_event->addEvent('amazon_pay', 'post.customer.logout', 'module/amazon_pay/logout');
@@ -152,5 +148,4 @@ class ControllerModuleAmazonPay extends Controller {
 		$this->load->model('tool/event');
 		$this->model_tool_event->deleteEvent('amazon_pay');
 	}
-
 }

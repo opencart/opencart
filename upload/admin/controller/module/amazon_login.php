@@ -1,7 +1,5 @@
 <?php
-
 class ControllerModuleAmazonLogin extends Controller {
-
 	private $error = array();
 
 	public function index() {
@@ -79,7 +77,6 @@ class ControllerModuleAmazonLogin extends Controller {
 		);
 
 		$data['action'] = $this->url->link('module/amazon_login', 'token=' . $this->session->data['token'], 'SSL');
-
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['token'] = $this->session->data['token'];
@@ -142,5 +139,4 @@ class ControllerModuleAmazonLogin extends Controller {
 		$this->load->model('tool/event');
 		$this->model_tool_event->deleteEvent('amazon_login');
 	}
-
 }

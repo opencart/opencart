@@ -1,7 +1,5 @@
 <?php
-
 class ControllerPaymentWorldpay extends Controller {
-
 	private $error = array();
 
 	public function index() {
@@ -241,7 +239,6 @@ class ControllerPaymentWorldpay extends Controller {
 			$data['worldpay_entry_chargeback_reversed_status_id'] = $this->config->get('worldpay_entry_chargeback_reversed_status_id');
 		}
 
-
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -365,5 +362,4 @@ class ControllerPaymentWorldpay extends Controller {
 			return false;
 		}
 	}
-
 }

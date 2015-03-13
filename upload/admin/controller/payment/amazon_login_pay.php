@@ -1,7 +1,5 @@
 <?php
-
 class ControllerPaymentAmazonLoginPay extends Controller {
-
 	private $error = array();
 
 	public function index() {
@@ -545,12 +543,10 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			$this->error['error_curreny'] = sprintf($this->language->get('error_curreny'), $currency_code);
 		}
 
-
 		if (!$this->error) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-
 }

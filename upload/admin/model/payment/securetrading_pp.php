@@ -32,7 +32,7 @@ class ModelPaymentSecureTradingPp extends Model {
 		$this->db->query("DROP TABLE IF EXISTS " . DB_PREFIX . "securetrading_pp_order");
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "securetrading_pp_order_transaction`;");
 	}
-	
+
 	public function void($order_id) {
 		$securetrading_pp_order = $this->getOrder($order_id);
 
@@ -163,11 +163,11 @@ class ModelPaymentSecureTradingPp extends Model {
 
 		return (double)$query->row['total'];
 	}
-	
+
 	public function increaseRefundedAmount($order_id, $amount) {
-		$this->db->query("UPDATE " . DB_PREFIX . "securetrading_pp_order SET refunded = refunded + " . (double) $amount . " WHERE order_id = " . (int) $order_id);
+		$this->db->query("UPDATE " . DB_PREFIX . "securetrading_pp_order SET refunded = refunded + " . (double)$amount . " WHERE order_id = " . (int)$order_id);
 	}
-	
+
 	public function call($data) {
 		$ch = curl_init();
 
@@ -200,7 +200,7 @@ class ModelPaymentSecureTradingPp extends Model {
 
 		return $response;
 	}
-	
+
 	public function logger($message) {
 		$log = new Log('securetrading_pp.log');
 		$log->write($message);

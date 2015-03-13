@@ -77,10 +77,10 @@ class ModelPaymentSecureTradingWs extends Model {
 	}
 
 	public function updateReference($order_id, $transaction_reference) {
-		$this->db->query("UPDATE " . DB_PREFIX . "securetrading_ws_order SET transaction_reference = '" . $this->db->escape($transaction_reference) . "' WHERE order_id = " . (int) $order_id);
+		$this->db->query("UPDATE " . DB_PREFIX . "securetrading_ws_order SET transaction_reference = '" . $this->db->escape($transaction_reference) . "' WHERE order_id = " . (int)$order_id);
 
 		if ($this->db->countAffected() == 0) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "securetrading_ws_order SET order_id = " . (int) $order_id . ", transaction_reference = '" . $this->db->escape($transaction_reference) . "', `created` = now(), `modified` = now()");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "securetrading_ws_order SET order_id = " . (int)$order_id . ", transaction_reference = '" . $this->db->escape($transaction_reference) . "', `created` = now(), `modified` = now()");
 		}
 	}
 
@@ -132,7 +132,7 @@ class ModelPaymentSecureTradingWs extends Model {
 	public function updateOrder($order_id, $order_status_id, $comment = '', $notify = false) {
 		$this->load->model('checkout/order');
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = " . (int) $order_status_id . " WHERE order_id = "  . (int) $order_id);
+		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = " . (int)$order_status_id . " WHERE order_id = "  . (int)$order_id);
 
 		$this->model_checkout_order->update($order_id, $order_status_id, $comment, $notify);
 	}

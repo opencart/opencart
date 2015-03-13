@@ -1,7 +1,5 @@
 <?php
-
 class ControllerPaymentAmazonLoginPay extends Controller {
-
 	public function address() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['lpa']['error'] = $this->language->get('error_login');
@@ -31,7 +29,6 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 		$data['cart'] = $this->url->link('checkout/cart');
 		$data['text_cart'] = $this->language->get('text_cart');
-
 
 		$data['amazon_login_pay_merchant_id'] = $this->config->get('amazon_login_pay_merchant_id');
 		$data['amazon_login_pay_client_id'] = $this->config->get('amazon_login_pay_client_id');
@@ -118,13 +115,13 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 		$data['amazon_login_pay_merchant_id'] = $this->config->get('amazon_login_pay_merchant_id');
 		$data['amazon_login_pay_client_id'] = $this->config->get('amazon_login_pay_client_id');
+
 		if ($this->config->get('amazon_login_pay_test') == 'sandbox') {
 			$data['amazon_login_pay_test'] = true;
 		}
 
 		$amazon_payment_js = $this->model_payment_amazon_login_pay->getWidgetJs();
 		$this->document->addScript($amazon_payment_js);
-
 
 		if (isset($this->session->data['lpa']['AmazonOrderReferenceId'])) {
 			$data['AmazonOrderReferenceId'] = $this->session->data['lpa']['AmazonOrderReferenceId'];
@@ -259,7 +256,6 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$order_data['email'] = $this->customer->getEmail();
 		$order_data['telephone'] = $address['telephone'];
 		$order_data['fax'] = '';
-
 
 		if (isset($this->session->data['coupon'])) {
 			$this->load->model('checkout/coupon');
@@ -498,7 +494,6 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$this->load->model('checkout/coupon');
 		$this->load->model('account/order');
 		$this->load->model('payment/amazon_login_pay');
-
 
 		if (!isset($this->session->data['order_id'])) {
 			$this->response->redirect($this->url->link('common/home'));

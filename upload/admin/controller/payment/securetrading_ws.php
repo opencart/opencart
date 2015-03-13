@@ -597,7 +597,6 @@ class ControllerPaymentSecureTradingWs extends Controller {
 						$json['status'] = 1;
 						$json['message'] = $this->language->get('text_refund_issued');
 
-
 						$this->model_payment_securetrading_ws->updateRebateStatus($securetrading_ws_order['securetrading_ws_order_id'], 1);
 						$rebate_status = 1;
 						$json['msg'] = $this->language->get('text_rebate_ok_order');

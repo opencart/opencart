@@ -93,7 +93,7 @@ $('#button-confirm').bind('click', function() {
 			if (json['error']) {
 				alert(json['error']);
 			}
-			
+
 			if (json['success']) {
 				location = json['success'];
 			}

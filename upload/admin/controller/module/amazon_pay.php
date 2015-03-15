@@ -138,14 +138,12 @@ class ControllerModuleAmazonPay extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('tool/event');
-		$this->model_tool_event->addEvent('amazon_pay', 'post.customer.logout', 'module/amazon_pay/logout');
-		$this->model_tool_event->addEvent('amazon_pay', 'post.order.history.add', 'module/amazon_pay/shipped');
-
+		$this->load->model('extension/event');
+		$this->model_extension_event->addEvent('amazon_pay', 'post.customer.logout', 'module/amazon_pay/logout');
 	}
 
 	public function uninstall() {
-		$this->load->model('tool/event');
-		$this->model_tool_event->deleteEvent('amazon_pay');
+		$this->load->model('extension/event');
+		$this->model_extension_event->deleteEvent('amazon_pay');
 	}
 }

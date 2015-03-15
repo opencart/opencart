@@ -131,12 +131,12 @@ class ControllerModuleAmazonLogin extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('tool/event');
-		$this->model_tool_event->addEvent('amazon_login', 'post.customer.logout', 'module/amazon_login/logout');
+		$this->load->model('extension/event');
+		$this->model_extension_event->addEvent('amazon_login', 'post.customer.logout', 'module/amazon_login/logout');
 	}
 
 	public function uninstall() {
-		$this->load->model('tool/event');
-		$this->model_tool_event->deleteEvent('amazon_login');
+		$this->load->model('extension/event');
+		$this->model_extension_event->deleteEvent('amazon_login');
 	}
 }

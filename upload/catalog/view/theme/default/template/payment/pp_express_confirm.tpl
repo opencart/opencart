@@ -30,7 +30,7 @@
     <?php } ?>
     <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
       <h1><?php echo $heading_title; ?></h1>
-      <?php if ($coupon || $voucher || $reward || $shipping) { ?>
+      <?php if ($coupon || $voucher || $reward) { ?>
       <div class="panel-group" id="accordion"><?php echo $coupon; ?><?php echo $voucher; ?><?php echo $reward; ?></div>
       <?php } ?>
       <?php if($has_shipping) { ?>
@@ -122,7 +122,7 @@
       <?php echo $content_bottom; ?></div>
     <?php echo $column_right; ?></div>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>
 <script type="text/javascript"><!--
 $('input[name=\'shipping_method\']').change(function() {
 	$('#shipping_form').submit();
@@ -130,7 +130,7 @@ $('input[name=\'shipping_method\']').change(function() {
 
 $('input[name=\'next\']').bind('change', function() {
 	$('.cart-discounts > div').hide();
-	
+
 	$('#' + this.value).show();
 });
 //--></script>

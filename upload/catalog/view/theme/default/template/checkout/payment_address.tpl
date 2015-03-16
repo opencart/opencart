@@ -221,12 +221,12 @@ $('input[name=\'payment_address\']').on('change', function() {
 $('#collapse-payment-address .form-group[data-sort]').detach().each(function() {
 	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#collapse-payment-address .form-group').length) {
 		$('#collapse-payment-address .form-group').eq($(this).attr('data-sort')).before(this);
-	} 
-	
+	}
+
 	if ($(this).attr('data-sort') > $('#collapse-payment-address .form-group').length) {
 		$('#collapse-payment-address .form-group:last').after(this);
 	}
-		
+
 	if ($(this).attr('data-sort') < -$('#collapse-payment-address .form-group').length) {
 		$('#collapse-payment-address .form-group:first').before(this);
 	}
@@ -241,15 +241,15 @@ $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('c
 	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
 
 	$('#form-upload input[name=\'file\']').trigger('click');
-	
+
 	if (typeof timer != 'undefined') {
     	clearInterval(timer);
 	}
-	
+
 	timer = setInterval(function() {
 		if ($('#form-upload input[name=\'file\']').val() != '') {
 			clearInterval(timer);
-			
+
 			$.ajax({
 				url: 'index.php?route=tool/upload',
 				type: 'post',
@@ -266,14 +266,14 @@ $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('c
 				},
 				success: function(json) {
 					$(node).parent().find('.text-danger').remove();;
-					
+
 					if (json['error']) {
 						$(node).parent().find('input[name^=\'custom_field\']').after('<div class="text-danger">' + json['error'] + '</div>');
 					}
-	
+
 					if (json['success']) {
 						alert(json['success']);
-	
+
 						$(node).parent().find('input[name^=\'custom_field\']').attr('value', json['code']);
 					}
 				},

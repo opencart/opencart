@@ -1,7 +1,5 @@
 <?php
-
 class ControllerPaymentSecureTradingPp extends Controller {
-
 	public function index() {
 		$this->load->model('checkout/order');
 		$this->load->model('localisation/country');
@@ -173,5 +171,4 @@ class ControllerPaymentSecureTradingPp extends Controller {
 			}
 		}
 	}
-
 }

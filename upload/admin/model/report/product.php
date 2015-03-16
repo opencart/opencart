@@ -19,10 +19,10 @@ class ModelReportProduct extends Model {
 
 		return $query->rows;
 	}
-	
-    public function getTotalProductViews() {
+
+	public function getTotalProductViews() {
 		$query = $this->db->query("SELECT SUM(viewed) AS total FROM " . DB_PREFIX . "product");
-	
+
 		return $query->row['total'];
 	}
 

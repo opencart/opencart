@@ -18,7 +18,7 @@ class ControllerPaymentBluePayHosted extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -194,13 +194,13 @@ class ControllerPaymentBluePayHosted extends Controller {
 
 	public function install() {
 		$this->load->model('payment/bluepay_hosted');
-		
+
 		$this->model_payment_bluepay_hosted->install();
 	}
 
 	public function uninstall() {
 		$this->load->model('payment/bluepay_hosted');
-		
+
 		$this->model_payment_bluepay_hosted->uninstall();
 	}
 

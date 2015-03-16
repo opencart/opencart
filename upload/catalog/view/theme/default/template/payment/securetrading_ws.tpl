@@ -1,7 +1,7 @@
 <form class="form-horizontal">
   <fieldset id="payment">
     <legend><?php echo $text_card_details; ?></legend>
-    
+
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-type"><?php echo $entry_type; ?></label>
       <div class="col-sm-10">
@@ -12,14 +12,14 @@
         </select>
       </div>
     </div>
-    
+
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-number"><?php echo $entry_number; ?></label>
       <div class="col-sm-10">
         <input type="text" name="number" value="" placeholder="<?php echo $entry_number; ?>" id="input-number" class="form-control" />
       </div>
     </div>
-    
+
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-expire-date"><?php echo $entry_expire_date; ?></label>
       <div class="col-sm-3">
@@ -37,7 +37,7 @@
         </select>
       </div>
     </div>
-    
+
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-cvv2"><?php echo $entry_cvv2; ?></label>
       <div class="col-sm-10">
@@ -53,25 +53,25 @@
   </div>
 </div>
 <script type="text/javascript">
-$('#button-confirm').bind('click', function() {    
-    $.ajax({  
+$('#button-confirm').bind('click', function() {
+    $.ajax({
         url: 'index.php?route=payment/securetrading_ws/process',
         type: 'post',
         data: $('#payment :input'),
         dataType: 'json',
-    
+
     beforeSend: function() {
         $('#button-confirm').attr('disabled', true);
         $('form.form-horizontal .alert').remove();
         $('#payment').before('<div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_wait; ?></div>');
     },
-    
+
     complete: function() {
         $('#button-confirm').attr('disabled', false);
     },
     success: function(json) {
         $('form.form-horizontal .alert').remove();
-        
+
         if (json['status']) {
             if (json['redirect']) {
                 location = json['redirect'];

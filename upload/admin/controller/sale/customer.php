@@ -779,7 +779,7 @@ class ControllerSaleCustomer extends Controller {
 		if (isset($this->error['address'])) {
 			$data['error_address'] = $this->error['address'];
 		} else {
-			$data['error_address'] = '';
+			$data['error_address'] = array();
 		}
 
 		$url = '';

@@ -18,6 +18,8 @@
         <input type="hidden" name="billingpostcode" value="<?php echo $order_info['payment_postcode'] ?>" />
         <input type="hidden" name="billingcountryiso2a" value="<?php echo $payment_country['iso_code_2'] ?>" />
         <input type="hidden" name="billingemail" value="<?php echo $order_info['email'] ?>" />
+		<input type="hidden" name="customerfirstname" value="<?php echo $order_info['shipping_firstname'] ?>" />
+	    <input type="hidden" name="customerlastname" value="<?php echo $order_info['shipping_lastname'] ?>" />
         <input type="hidden" name="customerpremise" value="<?php echo $order_info['shipping_address_1'] ?>" />
         <input type="hidden" name="customerstreet" value="<?php echo $order_info['shipping_address_2'] ?>" />
         <input type="hidden" name="customertown" value="<?php echo $order_info['shipping_city'] ?>" />
@@ -37,7 +39,7 @@
         <?php if ($site_security) { ?>
         <input type="hidden" name="sitesecurity" value="g<?php echo $site_security; ?>" />
         <?php } ?>
-        
+
         <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-type"><?php echo $entry_card_type; ?></label>
             <div class="col-sm-10">

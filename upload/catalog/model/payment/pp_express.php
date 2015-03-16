@@ -14,16 +14,23 @@ class ModelPaymentPPExpress extends Model {
 	}
 
 	public function call($data) {
+
 		if ($this->config->get('pp_express_test') == 1) {
 			$api_endpoint = 'https://api-3t.sandbox.paypal.com/nvp';
+			$user = $this->config->get('pp_express_sandbox_username');
+			$password = $this->config->get('pp_express_sandbox_password');
+			$signature = $this->config->get('pp_express_sandbox_signature');
 		} else {
 			$api_endpoint = 'https://api-3t.paypal.com/nvp';
+			$user = $this->config->get('pp_express_username');
+			$password = $this->config->get('pp_express_password');
+			$signature = $this->config->get('pp_express_signature');
 		}
 
 		$settings = array(
-			'USER' => $this->config->get('pp_express_username'),
-			'PWD' => $this->config->get('pp_express_password'),
-			'SIGNATURE' => $this->config->get('pp_express_signature'),
+			'USER' => $user,
+			'PWD' => $password,
+			'SIGNATURE' => $signature,
 			'VERSION' => '109.0',
 			'BUTTONSOURCE' => 'OpenCart_2.0_EC',
 		);

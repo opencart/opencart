@@ -67,7 +67,7 @@
 </table>
 <script type="text/javascript"><!--
 $('#button-void').bind('click', function () {
-	if (confirm('<?php echo $text_confirm_void; ?>')) {
+	if (confirm('<?php echo addslashes($text_confirm_void); ?>')) {
 		$.ajax({
 			type:'post',
 			dataType: 'json',
@@ -87,7 +87,7 @@ $('#button-void').bind('click', function () {
 					html += '<td class="text-left">0.00</td>';
 					html += '</tr>';
 			
-					$('. void_text').text('<?php echo $text_yes; ?>');
+					$('. void_text').text('<?php echo addslashes($text_yes); ?>');
 					
 					$('#firstdata_transactions').append(html);
 					
@@ -111,7 +111,7 @@ $('#button-void').bind('click', function () {
 });
 
 $('#button-capture').bind('click', function () {
-	if (confirm('<?php echo $text_confirm_capture; ?>')) {
+	if (confirm('<?php echo addslashes($text_confirm_capture); ?>')) {
 		$.ajax({
 		type:'POST',
 		dataType: 'json',
@@ -137,7 +137,7 @@ $('#button-capture').bind('click', function () {
 		if (data.data.capture_status == 1) {
 		$('#button-void').hide();
 		$('#button-refund').show();
-		$(' . capture_text').text('<?php echo $text_yes; ?>');
+		$(' . capture_text').text('<?php echo addslashes($text_yes); ?>');
 		} else {
 		$('#button-capture').show();
 		}
@@ -158,7 +158,7 @@ $('#button-capture').bind('click', function () {
 });
 
 $('#button-refund').bind('click', function () {
-	if (confirm('<?php echo $text_confirm_refund; ?>')) {
+	if (confirm('<?php echo addslashes($text_confirm_refund); ?>')) {
 		$.ajax({
 		type:'POST',
 		dataType: 'json',
@@ -182,7 +182,7 @@ $('#button-refund').bind('click', function () {
 		$('#firstdata_total_captured').text(data.data.total_captured);
 		
 		if (data.data.refund_status == 1) {
-		$(' . refund_text').text('<?php echo $text_yes; ?>');
+		$(' . refund_text').text('<?php echo addslashes($text_yes); ?>');
 		} else {
 		$('#button-refund').show();
 		}

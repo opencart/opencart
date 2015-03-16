@@ -208,7 +208,7 @@
           $('#chosen-product').hide();
       },
       complete: function() {
-        $('#search-submit').empty().html('<i class="fa fa-search"></i> <?php echo $button_search; ?>').removeAttr('disabled').show();
+        $('#search-submit').empty().html('<i class="fa fa-search"></i> <?php echo addslashes($button_search); ?>').removeAttr('disabled').show();
       },
       success: function(data) {
           if (data.error){
@@ -227,8 +227,8 @@
                   html += '  <td class="text-left">' + value.name + '</td>';
                   html += '  <td class="text-center">' + value.price + '</td>';
                   html += '  <td class="text-center">';
-                  html += '    <a target="_blank" href="' + value.link + '" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_view_on_amazon ?>"><i class="fa fa-eye"></i></a>';
-                  html += '    <a onclick="' + functString + '" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $text_list ?>"><i class="fa fa-check-square"></i></a>';
+                  html += '    <a target="_blank" href="' + value.link + '" class="btn btn-primary" data-toggle="tooltip" title="<?php echo addslashes($button_view_on_amazon) ?>"><i class="fa fa-eye"></i></a>';
+                  html += '    <a onclick="' + functString + '" class="btn btn-primary" data-toggle="tooltip" title="<?php echo addslashes($text_list); ?>"><i class="fa fa-check-square"></i></a>';
                   html += '  </td>';
                   html += '</tr>';
 
@@ -239,7 +239,7 @@
                   $('#search-result-container tbody').html(html);
                   $('#search-result-container').css('opacity', 0).slideDown('slow').animate({ opacity: 1 },{ queue: false, duration: 'slow' });
               } else {
-                  $('#search-error').empty().text('<i class="fa fa-exclamation-circle"></i><?php echo $text_no_results; ?>').show();
+                  $('#search-error').empty().text('<i class="fa fa-exclamation-circle"></i><?php echo addslashes($text_no_results); ?>').show();
               }
           }
 

@@ -111,7 +111,7 @@
 		}
 	});
 	$("#button-release").click(function() {
-		if (confirm('<?php echo $text_confirm_release; ?>')) {
+		if (confirm('<?php echo addslashes($text_confirm_release); ?>')) {
 			$.ajax({
 				type: 'POST',
 				dataType: 'json',
@@ -137,7 +137,7 @@
 
 						if (data.data.release_status == 1) {
 							$('#button-void').hide();
-							$('.release_text').text('<?php echo $text_yes; ?>');
+							$('.release_text').text('<?php echo addslashes($text_yes); ?>');
 						} else {
 							$('#button-release').show();
 							$('#release_amount').val(0.00);
@@ -162,7 +162,7 @@
 		}
 	});
 	$("#button-rebate").click(function() {
-		if (confirm('<?php echo $text_confirm_rebate ?>')) {
+		if (confirm('<?php echo addslashes($text_confirm_rebate); ?>')) {
 			$.ajax({
 				type: 'POST',
 				dataType: 'json',
@@ -187,7 +187,7 @@
 						$('#bluepay_hosted_total_released').text(data.data.total_released);
 
 						if (data.data.rebate_status == 1) {
-							$('.rebate_text').text('<?php echo $text_yes; ?>');
+							$('.rebate_text').text('<?php echo addslashes($text_yes); ?>');
 						} else {
 							$('#button-rebate').show();
 							$('#rebate_amount').val(0.00).show();

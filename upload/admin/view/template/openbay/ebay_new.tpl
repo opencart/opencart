@@ -1009,7 +1009,7 @@
                     var htmlInj = '';
 
                         if (data.data) {
-                            htmlInj += '<p><input type="radio" name="suggested" value="" id="suggested_default" checked="checked"/> <strong><?php echo $text_none; ?></strong></p>';
+                            htmlInj += '<p><input type="radio" name="suggested" value="" id="suggested_default" checked="checked"/> <strong><?php echo addslashes($text_none); ?></strong></p>';
 
                             data.data = $.makeArray(data.data);
 
@@ -1104,7 +1104,7 @@
             success: function(data) {
                 if (data.items != null) {
                     $('#category-select-'+level).empty();
-                    $('#category-select-'+level).append('<option value=""><?php echo $text_select; ?></option>');
+                    $('#category-select-'+level).append('<option value=""><?php echo addslashes($text_select); ?></option>');
 
                     data.cats = $.makeArray(data.cats);
 
@@ -1123,7 +1123,7 @@
                     if (data.error) {
                         alert(data.error);
                         $('#button-verify').hide();
-                        $('#content').prepend('<div class="alert alert-warning"><?php echo $error_category_sync; ?></div>');
+                        $('#content').prepend('<div class="alert alert-warning"><?php echo addslashes($error_category_sync); ?></div>');
                         $('#page-listing, .heading').hide();
                     } else {
                         $('#final-category').val($('#category-select-'+prevLevel).val());
@@ -1176,7 +1176,7 @@
                     }
                 } else {
                     if (data.msg == null) {
-                        alert('<?php echo $error_features; ?>');
+                        alert('<?php echo addslashes($error_features); ?>');
                     } else {
                         alert(data.msg);
                     }
@@ -1193,12 +1193,12 @@
         var cat = $('#final-category').val();
 
         if (cat <= 0) {
-            alert('<?php echo $error_choose_category; ?>');
+            alert('<?php echo addslashes($error_choose_category); ?>');
             return;
         }
 
         if (qry == '') {
-            alert('<?php echo $error_search_text; ?>');
+            alert('<?php echo addslashes($error_search_text); ?>');
             return;
         }
 
@@ -1217,7 +1217,7 @@
             success: function(data) {
                 if (data.error == false) {
                     if (data.data.productSearchResult.paginationOutput.totalEntries == 0 || data.data.ack == 'Failure') {
-                        $('#product-catalog-container').before('<div class="alert alert-warning" id="catalog-search-alert"><?php echo $error_catalog_data; ?></div>');
+                        $('#product-catalog-container').before('<div class="alert alert-warning" id="catalog-search-alert"><?php echo addslashes($error_catalog_data); ?></div>');
                     } else {
                         data.data.productSearchResult.products = $.makeArray(data.data.productSearchResult.products);
 
@@ -1247,7 +1247,7 @@
                     }
                 } else {
                     if (data.msg == null) {
-                        alert('<?php echo $error_catalog_load; ?>');
+                        alert('<?php echo addslashes($error_catalog_load); ?>');
                     } else {
                         alert(data.msg);
                     }
@@ -1256,7 +1256,7 @@
                 $('#button-catalog-search').show();
             },
             complete: function() {
-              $('#button-catalog-search').empty().removeAttr('disabled').html('<i class="fa fa-search"></i> <?php echo $button_search; ?>');
+              $('#button-catalog-search').empty().removeAttr('disabled').html('<i class="fa fa-search"></i> <?php echo addslashes($button_search); ?>');
             },
             error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
@@ -1268,13 +1268,13 @@
       var lang            = new Array();
       var listingDefault  = "<?php echo $product['defaults']['listing_duration']; ?>";
 
-      lang["Days_1"]      = '<?php echo $text_listing_1day; ?>';
-      lang["Days_3"]      = '<?php echo $text_listing_3day; ?>';
-      lang["Days_5"]      = '<?php echo $text_listing_5day; ?>';
-      lang["Days_7"]      = '<?php echo $text_listing_7day; ?>';
-      lang["Days_10"]     = '<?php echo $text_listing_10day; ?>';
-      lang["Days_30"]     = '<?php echo $text_listing_30day; ?>';
-      lang["GTC"]         = '<?php echo $text_listing_gtc; ?>';
+      lang["Days_1"]      = '<?php echo addslashes($text_listing_1day); ?>';
+      lang["Days_3"]      = '<?php echo addslashes($text_listing_3day); ?>';
+      lang["Days_5"]      = '<?php echo addslashes($text_listing_5day); ?>';
+      lang["Days_7"]      = '<?php echo addslashes($text_listing_7day); ?>';
+      lang["Days_10"]     = '<?php echo addslashes($text_listing_10day); ?>';
+      lang["Days_30"]     = '<?php echo addslashes($text_listing_30day); ?>';
+      lang["GTC"]         = '<?php echo addslashes($text_listing_gtc); ?>';
 
       htmlInj        = '';
 
@@ -1320,7 +1320,7 @@
                           htmlInj += '<div class="col-sm-10">';
 
                             if (("ValueRecommendation" in val) && (val.ValidationRules.MaxValues == 1)) {
-                                htmlInj2 += '<option value=""><?php echo $text_select; ?></option>';
+                                htmlInj2 += '<option value=""><?php echo addslashes($text_select); ?></option>';
 
                                 val.ValueRecommendation = $.makeArray(val.ValueRecommendation);
 
@@ -1329,14 +1329,14 @@
                                 });
 
                                 if (val.ValidationRules.SelectionMode == 'FreeText') {
-                                    htmlInj2 += '<option value="Other"><?php echo $text_other; ?></option>';
+                                    htmlInj2 += '<option value="Other"><?php echo addslashes($text_other); ?></option>';
                                 }
                               htmlInj += '<div class="row">';
                                 htmlInj += '<div class="col-sm-7">';
                                   htmlInj += '<select name="feat['+val.Name+']" class="form-control" id="spec_sel_'+specificCount+'" onchange="toggleSpecOther('+specificCount+');">'+htmlInj2+'</select>';
                                 htmlInj += '</div>';
                                 htmlInj += '<div class="col-sm-5" id="spec_'+specificCount+'_other" style="display:none;">';
-                                  htmlInj += '<input placeholder="<?php echo $text_other; ?>" type="text" name="featother['+val.Name+']" class="form-control" />';
+                                  htmlInj += '<input placeholder="<?php echo addslashes($text_other); ?>" type="text" name="featother['+val.Name+']" class="form-control" />';
                                 htmlInj += '</div>';
                               htmlInj += '</div>';
                             }else if (("ValueRecommendation" in val) && (val.ValidationRules.MaxValues > 1)) {
@@ -1370,7 +1370,7 @@
                     }
                 } else {
                     if (data.msg == null) {
-                        alert('<?php echo $error_features; ?>');
+                        alert('<?php echo addslashes($error_features); ?>');
                     } else {
                         alert(data.msg);
                     }
@@ -1487,7 +1487,7 @@
       html += '<div class="well" id="' + id + '_' + type + '_' + count + '">';
       html += '<div class="row form-group">';
       html += '<div class="col-sm-1 text-right">';
-      html += '<label class="control-label"><?php echo $text_shipping_service; ?><label>';
+      html += '<label class="control-label"><?php echo addslashes($text_shipping_service); ?><label>';
       html += '</div>';
       html += '<div class="col-sm-11">';
       html += '<select name="data[' + id + '][' + type + '][service_id][' + count + ']" class="form-control">';
@@ -1500,17 +1500,17 @@
       if (id == 'international') {
         html += '<div class="row form-group">';
         html += '<div class="col-sm-1 text-right">';
-        html += '<label class="control-label"><?php echo $text_shipping_zones; ?></label>';
+        html += '<label class="control-label"><?php echo addslashes($text_shipping_zones); ?></label>';
         html += '</div>';
         html += '<div class="col-sm-10">';
         html += '<label class="checkbox-inline">';
         html += '<input type="checkbox" name="data[' + id + '][' + type + '][shipto][' + count + '][]" value="Worldwide" />';
-        html += ' <?php echo $text_shipping_worldwide; ?>';
+        html += ' <?php echo addslashes($text_shipping_worldwide); ?>';
         html += '</label>';
       <?php foreach($data['shipping_international_zones'] as $zone) { ?>
           html += '<label class="checkbox-inline">';
           html += '<input type="checkbox" name="data[' + id + '][' + type + '][shipto][' + count + '][]" value="<?php echo $zone['shipping_location']; ?>" />';
-          html += ' <?php echo $zone['description']; ?>';
+          html += ' <?php echo addslashes($zone['description']); ?>';
           html += '</label>';
         <?php } ?>
         html += '</div>';
@@ -1519,29 +1519,29 @@
       html += '<div class="row form-group">';
       if (type != 'calculated') {
         html += '<div class="col-sm-1 text-right">';
-        html += '<label class="control-label"><?php echo $text_shipping_first; ?></label>';
+        html += '<label class="control-label"><?php echo addslashes($text_shipping_first); ?></label>';
         html += '</div>';
         html += '<div class="col-sm-3">';
         html += '<input type="text" name="data[' + id + '][' + type + '][price][' + count + ']" class="form-control" value="0.00" class="form-control" />';
         html += '</div>';
         html += '<div class="col-sm-2 text-right">';
-        html += '<label class="control-label"><?php echo $text_shipping_add; ?></label>';
+        html += '<label class="control-label"><?php echo addslashes($text_shipping_add); ?></label>';
         html += '</div>';
         html += '<div class="col-sm-3">';
         html += '<input type="text" name="data[' + id + '][' + type + '][price_additional][' + count + ']" class="form-control" value="0.00" />';
         html += '</div>';
       }
       html += '<div class="col-sm-3 pull-right text-right">';
-      html += '<a onclick="removeShipping(\'' + id + '\',\'' + count + '\',\''+type+'\');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_delete; ?></a>';
+      html += '<a onclick="removeShipping(\'' + id + '\',\'' + count + '\',\''+type+'\');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo addslashes($button_delete); ?></a>';
       html += '</div>';
       html += '</div>';
       html += '</div>';
 
       $('#options-' + id + '-' + type).append(html);
-      $('#add-' + id + '-' + type).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $button_add; ?>').removeAttr('disabled');
+      $('#add-' + id + '-' + type).empty().html('<i class="fa fa-plus-circle"></i> <?php echo addslashes($button_add); ?>').removeAttr('disabled');
     },
     error: function (xhr, ajaxOptions, thrownError) {
-      $('#add-shipping-'+id).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $button_add; ?>').removeAttr('disabled');
+      $('#add-shipping-'+id).empty().html('<i class="fa fa-plus-circle"></i> <?php echo addslashes($button_add); ?>').removeAttr('disabled');
       if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
     }
   });
@@ -1562,62 +1562,62 @@
       var check_main_selected = '#image-checkbox-' + main_image.toString();
 
       if (!$(check_main_selected).is(':checked')) {
-        $('#page-listing').prepend('<div class="alert alert-warning listing-error"><?php echo $error_main_image; ?></div>');
+        $('#page-listing').prepend('<div class="alert alert-warning listing-error"><?php echo addslashes($error_main_image); ?></div>');
         err = 1;
       }
     } else {
-      $('#page-listing').prepend('<div class="alert alert-warning listing-error"><?php echo $error_no_images; ?></div>');
+      $('#page-listing').prepend('<div class="alert alert-warning listing-error"><?php echo addslashes($error_no_images); ?></div>');
       err = 1;
     }
 
     if ($('#final-category').val() == '') {
-      $('#page-listing').prepend('<div class="alert alert-warning listing-error"><?php echo $error_choose_category; ?></div>');
+      $('#page-listing').prepend('<div class="alert alert-warning listing-error"><?php echo addslashes($error_choose_category); ?></div>');
       err = 1;
     }
 
     if ($('#auction_duration').val() == '') {
         err = 1;
-        alert('<?php echo $error_duration; ?>');
+        alert('<?php echo addslashes($error_duration); ?>');
     }
 
     if ($('#gallery_height').val() == '' || $('#gallery_width').val() == '' || $('#thumb_height').val() == '' || $('#thumb_width').val() == '') {
         err = 1;
-        alert('<?php echo $error_image_size; ?>');
+        alert('<?php echo addslashes($error_image_size); ?>');
     }
 
     if ($('#sku').val() == '') {
         err = 1;
-        alert('<?php echo $error_sku; ?>');
+        alert('<?php echo addslashes($error_sku); ?>');
     }
 
     if ($('#name').val() == '') {
         err = 1;
-        alert('<?php echo $error_name; ?>');
+        alert('<?php echo addslashes($error_name); ?>');
     }
 
     if ($('#name').val().length > 75) {
         err = 1;
-        alert('<?php echo $error_name_length; ?>');
+        alert('<?php echo addslashes($error_name_length); ?>');
     }
 
     if ($('#location').val() == '' && $('#postcode').val() == '') {
         err = 1;
-        alert('<?php echo $error_item_location; ?>');
+        alert('<?php echo addslashes($error_item_location); ?>');
     }
 
     if ($('#dispatch_time').val() == '') {
         err = 1;
-        alert('<?php echo $error_dispatch_time; ?>');
+        alert('<?php echo addslashes($error_dispatch_time); ?>');
     }
 
     if ($('#count_national').val() == 0) {
         err = 1;
-        alert('<?php echo $error_shipping_national; ?>');
+        alert('<?php echo addslashes($error_shipping_national); ?>');
     }
 
     if ($('#duration-input').val() == '') {
         err = 1;
-        alert('<?php echo $error_listing_duration; ?>');
+        alert('<?php echo addslashes($error_listing_duration); ?>');
     }
 
     <?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])) { ?>
@@ -1627,7 +1627,7 @@
 
         if ($('#qty').val() < 1) {
             err = 1;
-            alert('<?php echo $error_stock; ?>');
+            alert('<?php echo addslashes($error_stock); ?>');
         }
     <?php } ?>
 
@@ -1667,7 +1667,7 @@
                         }
                         currency = val.Cur;
                       });
-                      html += '<h5><?php echo $text_review_costs; ?>: '+currency+' '+fee_total.toFixed(2)+'</h5>';
+                      html += '<h5><?php echo addslashes($text_review_costs); ?>: '+currency+' '+fee_total.toFixed(2)+'</h5>';
 
                       $('#listing-fee-container').html(html).show();
                       $('#button-preview').attr('href', data.data.link).show();
@@ -1680,7 +1680,7 @@
                 }
             },
             complete: function () {
-              $('#button-verify').empty().html('<?php echo $text_verify; ?>').removeAttr('disabled');
+              $('#button-verify').empty().html('<?php echo addslashes($text_verify); ?>').removeAttr('disabled');
             },
             error: function (xhr, ajaxOptions, thrownError) {
             if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
@@ -1729,7 +1729,7 @@
           $('#button-save').show();
           $('#button-save-loading').hide();
           $('#page-review').hide();
-          $('#button-save').empty().html('<?php echo $button_save; ?>').removeAttr('disabled');
+          $('#button-save').empty().html('<?php echo addslashes($button_save); ?>').removeAttr('disabled');
         },
         error: function (xhr, ajaxOptions, thrownError) {
           if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
@@ -1982,7 +1982,7 @@
       html += '<div class="border p10 mBottom10 width100 left floatLeft mRight10" id="option_image_'+grp_id+'_'+id+'_'+count+'">';
           html += '<img src="<?php echo $no_image; ?>" id="option_image_img_'+grp_id+'_'+id+'_'+count+'" />';
           html += '<input type="hidden" name="option_image['+grp_id+']['+id+'][images][]" id="option_image_input_'+grp_id+'_'+id+'_'+count+'" value="" />';
-          html += '<p class="text-center"><a class="cursor" onclick="removeVariationImage('+grp_id+','+id+','+count+');"><?php echo $button_remove; ?></a></p>';
+          html += '<p class="text-center"><a class="cursor" onclick="removeVariationImage('+grp_id+','+id+','+count+');"><?php echo addslashes($button_remove); ?></a></p>';
       html += '</div>';
 
       $('#option_images_'+id).append(html);
@@ -1991,7 +1991,7 @@
   }
 
   function confirmAction(url) {
-    if (confirm("<?php echo $text_confirm_action; ?>")) {
+    if (confirm("<?php echo addslashes($text_confirm_action); ?>")) {
       window.location = url;
     }
   }

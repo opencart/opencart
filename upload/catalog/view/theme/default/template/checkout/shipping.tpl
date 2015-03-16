@@ -79,7 +79,7 @@ $('#button-quote').on('click', function() {
 				html += '  <div class="modal-dialog">';
 				html += '    <div class="modal-content">';
 				html += '      <div class="modal-header">';
-				html += '        <h4 class="modal-title"><?php echo $text_shipping_method; ?></h4>';
+				html += '        <h4 class="modal-title"><?php echo addslashes($text_shipping_method); ?></h4>';
 				html += '      </div>';
 				html += '      <div class="modal-body">';
 
@@ -91,7 +91,7 @@ $('#button-quote').on('click', function() {
 							html += '<div class="radio">';
 							html += '  <label>';
 
-							if (json['shipping_method'][i]['quote'][j]['code'] == '<?php echo $shipping_method; ?>') {
+							if (json['shipping_method'][i]['quote'][j]['code'] == '<?php echo addslashes($shipping_method); ?>') {
 								html += '<input type="radio" name="shipping_method" value="' + json['shipping_method'][i]['quote'][j]['code'] + '" checked="checked" />';
 							} else {
 								html += '<input type="radio" name="shipping_method" value="' + json['shipping_method'][i]['quote'][j]['code'] + '" />';
@@ -106,12 +106,12 @@ $('#button-quote').on('click', function() {
 
 				html += '      </div>';
 				html += '      <div class="modal-footer">';
-				html += '        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $button_cancel; ?></button>';
+				html += '        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo addslashes($button_cancel); ?></button>';
 
 				<?php if ($shipping_method) { ?>
-				html += '        <input type="button" value="<?php echo $button_shipping; ?>" id="button-shipping" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />';
+				html += '        <input type="button" value="<?php echo addslashes($button_shipping); ?>" id="button-shipping" data-loading-text="<?php echo addslashes($text_loading); ?>" class="btn btn-primary" />';
 				<?php } else { ?>
-				html += '        <input type="button" value="<?php echo $button_shipping; ?>" id="button-shipping" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" disabled="disabled" />';
+				html += '        <input type="button" value="<?php echo addslashes($button_shipping); ?>" id="button-shipping" data-loading-text="<?php echo addslashes($text_loading); ?>" class="btn btn-primary" disabled="disabled" />';
 				<?php } ?>
 
 				html += '      </div>';
@@ -177,7 +177,7 @@ $('select[name=\'country_id\']').on('change', function() {
 				$('input[name=\'postcode\']').parent().parent().removeClass('required');
 			}
 
-			html = '<option value=""><?php echo $text_select; ?></option>';
+			html = '<option value=""><?php echo addslashes($text_select); ?></option>';
 
 			if (json['zone'] && json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
@@ -190,7 +190,7 @@ $('select[name=\'country_id\']').on('change', function() {
 					html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
-				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
+				html += '<option value="0" selected="selected"><?php echo addslashes($text_none); ?></option>';
 			}
 
 			$('select[name=\'zone_id\']').html(html);

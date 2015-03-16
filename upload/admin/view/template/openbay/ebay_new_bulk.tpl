@@ -455,12 +455,12 @@
 
                 htmlInj += '<div class="row form-group">';
                   htmlInj += '<div class="col-sm-1 text-right"><input type="radio" id="manual_use_category_'+id+'" name="suggested_'+id+'" value="" onchange="useManualCategory('+id+')" /></div>';
-                  htmlInj += '<div class="col-sm-11"><?php echo $text_category_choose; ?></div>';
+                  htmlInj += '<div class="col-sm-11"><?php echo addslashes($text_category_choose); ?></div>';
                 htmlInj += '</div>';
               } else {
                 htmlInj += '<div class="row form-group">';
                   htmlInj += '<div class="col-sm-1 text-right"><input type="radio" id="manual_use_category_'+id+'" name="suggested_'+id+'" value="" onchange="useManualCategory('+id+')" /></div>';
-                  htmlInj += '<div class="col-sm-11"><?php echo $text_category_choose; ?></div>';
+                  htmlInj += '<div class="col-sm-11"><?php echo addslashes($text_category_choose); ?></div>';
                 htmlInj += '</div>';
                 useManualCategory(id);
               }
@@ -602,9 +602,9 @@
                     htmlInj += '<div class="page-header">';
                       htmlInj += '<div class="container-fluid">';
                         htmlInj += '<div class="pull-right">';
-                          htmlInj += '<a onclick="overlayHide();" class="btn btn-default" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="fa fa-reply"></i></a>';
+                          htmlInj += '<a onclick="overlayHide();" class="btn btn-default" data-toggle="tooltip" title="<?php echo addslashes($text_close); ?>"><i class="fa fa-reply"></i></a>';
                         htmlInj += '</div>';
-                        htmlInj += '<h1 class="panel-title"><?php echo $text_features; ?></h1>';
+                        htmlInj += '<h1 class="panel-title"><?php echo addslashes($text_features); ?></h1>';
                       htmlInj += '</div>';
                     htmlInj += '</div>';
                     htmlInj += '<div class="container-fluid">';
@@ -618,7 +618,7 @@
                               htmlInj += '<div class="row form-group">';
 
                               if (("ValueRecommendation" in val) && (val.ValidationRules.MaxValues == 1)) {
-                                htmlInj2 += '<option value=""><?php echo $text_select; ?></option>';
+                                htmlInj2 += '<option value=""><?php echo addslashes($text_select); ?></option>';
 
                                 //force an array in case of single element
                                 val.ValueRecommendation = $.makeArray(val.ValueRecommendation);
@@ -628,7 +628,7 @@
                                 });
 
                                 if (val.ValidationRules.SelectionMode == 'FreeText') {
-                                    htmlInj2 += '<option value="Other"><?php echo $text_other; ?></option>';
+                                    htmlInj2 += '<option value="Other"><?php echo addslashes($text_other); ?></option>';
                                 }
 
                                 htmlInj += '<label class="col-sm-2 control-label">'+val.Name+'</label>';
@@ -706,7 +706,7 @@
     $('#catalog-results-'+id).empty().hide();
 
       if (qry == '') {
-        $('#catalog_search_'+id).before('<div class="alert alert-danger" id="catalog_search_'+id+'_error"><i class="fa fa-exclamation-circle"></i> <?php echo $text_search_text; ?></div>');
+        $('#catalog_search_'+id).before('<div class="alert alert-danger" id="catalog_search_'+id+'_error"><i class="fa fa-exclamation-circle"></i> <?php echo addslashes($text_search_text); ?></div>');
       } else {
         $.ajax({
             url: 'index.php?route=openbay/ebay/searchEbayCatalog&token=<?php echo $token; ?>',
@@ -745,20 +745,20 @@
                           $('#catalog-results-'+id).append(html).show();
                         });
                       } else {
-                        $('#catalog-results-'+id).append('<div class="alert alert-warning"><i class="fa fa-warning"></i> <?php echo $text_catalog_no_products; ?></div>').show();
+                        $('#catalog-results-'+id).append('<div class="alert alert-warning"><i class="fa fa-warning"></i> <?php echo addslashes($text_catalog_no_products); ?></div>').show();
                       }
                     } else {
                       $('#catalog-results-'+id).append('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> '+data.error_message+'</div>').show();
                     }
             },
             complete: function() {
-              $('#button-catalog-search-'+id).empty().html('<i class="fa fa-lg fa-search"></i> <?php echo $text_search; ?>').removeAttr('disabled');
+              $('#button-catalog-search-'+id).empty().html('<i class="fa fa-lg fa-search"></i> <?php echo addslashes($text_search); ?>').removeAttr('disabled');
             },
             failure: function() {
-                $('#catalog-results-'+id).append('<?php echo $text_search_failed; ?>');
+                $('#catalog-results-'+id).append('<?php echo addslashes($text_search_failed); ?>');
             },
             error: function() {
-                $('#catalog-results-'+id).append('<?php echo $text_search_failed; ?>');
+                $('#catalog-results-'+id).append('<?php echo addslashes($text_search_failed); ?>');
             }
         });
       }
@@ -810,7 +810,7 @@
           id = $(this).val();
           name = $('#title_'+$(this).val()).val();
 
-          $('#product_messages_'+id).html('<div class="alert alert-info"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_loading; ?></div>').show();
+          $('#product_messages_'+id).html('<div class="alert alert-info"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo addslashes($text_loading); ?></div>').show();
           $('.product_content_'+id).hide();
           $('#product_title_'+id).text(name).show();
 
@@ -830,7 +830,7 @@
                   var fee_total = '';
                   var currency = '';
 
-                  $('#p_row_buttons_'+data.i).prepend('<a class="btn btn-primary button-preview" target="_BLANK" href="'+data.preview+'"><?php echo $text_preview; ?></a>');
+                  $('#p_row_buttons_'+data.i).prepend('<a class="btn btn-primary button-preview" target="_BLANK" href="'+data.preview+'"><?php echo addslashes($text_preview); ?></a>');
 
                   if (data.errors) {
                     $.each(data.errors, function(k,v) {
@@ -845,7 +845,7 @@
                     currency = val.Cur;
                   });
 
-                  html += '<div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_total_fee; ?> '+currency+' '+parseFloat(fee_total).toFixed(2)+'</div>';
+                  html += '<div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo addslashes($text_total_fee); ?> '+currency+' '+parseFloat(fee_total).toFixed(2)+'</div>';
                 } else {
                     $.each(data.errors, function(k,v) {
                         html += '<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> '+v+'</div>';
@@ -856,11 +856,11 @@
               },
               failure: function() {
                   removeCount();
-                  alert('<?php echo $text_error_reverify; ?>');
+                  alert('<?php echo addslashes($text_error_reverify); ?>');
               },
               error: function() {
                   removeCount();
-                  alert('<?php echo $text_error_reverify; ?>');
+                  alert('<?php echo addslashes($text_error_reverify); ?>');
               }
           });
       });
@@ -886,7 +886,7 @@
   });
 
   $('#button-submit').bind('click', function() {
-      var confirm_box = confirm('<?php echo $text_ajax_confirm_listing; ?>');
+      var confirm_box = confirm('<?php echo addslashes($text_ajax_confirm_listing); ?>');
       if (confirm_box) {
           var id = '';
           var name = '';
@@ -921,9 +921,9 @@
                       });
                     }
 
-                    $('#p_row_buttons_'+data.i).prepend('<a class="btn btn-primary button-listing-view" href="<?php echo $listing_link; ?>'+data.itemid+'" target="_BLANK"><?php echo $button_view; ?></a>');
+                    $('#p_row_buttons_'+data.i).prepend('<a class="btn btn-primary button-listing-view" href="<?php echo $listing_link; ?>'+data.itemid+'" target="_BLANK"><?php echo addslashes($button_view); ?></a>');
 
-                    html += '<div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $text_listed; ?>'+data.itemid+'</div>';
+                    html += '<div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo addslashes($text_listed); ?>'+data.itemid+'</div>';
                   } else {
                     $.each(data.errors, function(k,v) {
                       html += '<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> '+v+'</div>';

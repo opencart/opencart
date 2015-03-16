@@ -87,7 +87,7 @@ function searchExtensions() {
         html = '<div class="col-sm-6 module">';
           html += '<a class="thumbnail pull-left" href="'+val.href+'"><img src="'+val.image+'" alt="'+val.name+'"></a>';
           html += '<h5>'+val.name+'</h5>';
-          html += '<p>'+val.price+' <a target="_BLANK" href="'+val.href+'"><?php echo $text_view; ?></a></p>';
+          html += '<p>'+val.price+' <a target="_BLANK" href="'+val.href+'"><?php echo addslashes($text_view); ?></a></p>';
           html += '<div class="clearfix"></div>';
         html += '</div>';
 
@@ -111,7 +111,7 @@ function searchLanguages() {
   $.ajax({
     url: 'index.php?route=step_4/language',
     type: 'post',
-    data: {'language' : '<?php echo $language; ?>' },
+    data: {'language' : '<?php echo addslashes($language); ?>' },
     dataType: 'json',
     beforeSend: function() {
       $('#module-language').empty().hide();
@@ -121,8 +121,8 @@ function searchLanguages() {
         html = '<div class="row">';
           html += '<div class="col-sm-12">';
             html += '<img class="img-rounded" src="'+json.extension.image+'">';
-            html += '<h3>'+json.extension.name+'<br><small><?php echo $text_downloads; ?>: '+json.extension.downloaded+', <?php echo $text_price; ?>: '+json.extension.price+'</small></h3>';
-            html += '<a class="btn btn-primary" href="'+json.extension.href+'" target="_BLANK"><?php echo $text_download; ?></a>';
+            html += '<h3>'+json.extension.name+'<br><small><?php echo addslashes($text_downloads); ?>: '+json.extension.downloaded+', <?php echo addslashes($text_price); ?>: '+json.extension.price+'</small></h3>';
+            html += '<a class="btn btn-primary" href="'+json.extension.href+'" target="_BLANK"><?php echo addslashes($text_download); ?></a>';
           html += '</div>';
         html += '</div>';
 

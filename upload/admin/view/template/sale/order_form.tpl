@@ -1001,7 +1001,7 @@ $('#button-refresh').on('click', function() {
 					html += '  <td class="text-right">' + product['quantity'] + '<input type="hidden" name="product[' + i + '][quantity]" value="' + product['quantity'] + '" /></td>';
 					html += '  <td class="text-right">' + product['price'] + '</td>';
 					html += '  <td class="text-right">' + product['total'] + '</td>';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + product['key'] + '" data-toggle="tooltip" title="<?php echo $button_remove; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + product['key'] + '" data-toggle="tooltip" title="<?php echo addslashes($button_remove); ?>" data-loading-text="<?php echo addslashes($text_loading); ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 					html += '</tr>';
 					
 					if (product['shipping'] != 0) {
@@ -1039,14 +1039,14 @@ $('#button-refresh').on('click', function() {
 					html += '  <td class="text-right">1</td>';
 					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
 					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + voucher['code'] + '" data-toggle="tooltip" title="<?php echo $button_remove; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+					html += '  <td class="text-center" style="width: 3px;"><button type="button" value="' + voucher['code'] + '" data-toggle="tooltip" title="<?php echo addslashes($button_remove); ?>" data-loading-text="<?php echo addslashes($text_loading); ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 					html += '</tr>';	
 				}
 			}
 			
 			if (json['products'] == '' && json['vouchers'] == '') {				
 				html += '<tr>';
-				html += '  <td colspan="6" class="text-center"><?php echo $text_no_results; ?></td>';
+				html += '  <td colspan="6" class="text-center"><?php echo addslashes($text_no_results); ?></td>';
 				html += '</tr>';	
 			}
 
@@ -1106,7 +1106,7 @@ $('#button-refresh').on('click', function() {
 			
 			if (!json['totals'] && !json['products'] && !json['vouchers']) {				
 				html += '<tr>';
-				html += '  <td colspan="5" class="text-center"><?php echo $text_no_results; ?></td>';
+				html += '  <td colspan="5" class="text-center"><?php echo addslashes($text_no_results); ?></td>';
 				html += '</tr>';	
 			}
 						
@@ -1128,7 +1128,7 @@ $('input[name=\'customer\']').autocomplete({
 				json.unshift({
 					customer_id: '0',
 					customer_group_id: '<?php echo $customer_group_id; ?>',						
-					name: '<?php echo $text_none; ?>',
+					name: '<?php echo addslashes($text_none); ?>',
 					customer_group: '',
 					firstname: '',
 					lastname: '',
@@ -1188,7 +1188,7 @@ $('input[name=\'customer\']').autocomplete({
 	
 		$('select[name=\'customer_group_id\']').trigger('change');
 		
-		html = '<option value="0"><?php echo $text_none; ?></option>'; 
+		html = '<option value="0"><?php echo addslashes($text_none); ?></option>'; 
 			
 		for (i in  item['address']) {
 			html += '<option value="' + item['address'][i]['address_id'] + '">' + item['address'][i]['firstname'] + ' ' + item['address'][i]['lastname'] + ', ' + item['address'][i]['address_1'] + ', ' + item['address'][i]['city'] + ', ' + item['address'][i]['country'] + '</option>';
@@ -1347,7 +1347,7 @@ $('#tab-product input[name=\'product\']').autocomplete({
 		
 		if (item['option'] != '') {
  			html  = '<fieldset>';
-            html += '  <legend><?php echo $entry_option; ?></legend>';
+            html += '  <legend><?php echo addslashes($entry_option); ?></legend>';
 			  
 			for (i = 0; i < item['option'].length; i++) {
 				option = item['option'][i];
@@ -1357,7 +1357,7 @@ $('#tab-product input[name=\'product\']').autocomplete({
 					html += '  <label class="col-sm-2 control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-10">';
 					html += '    <select name="option[' + option['product_option_id'] + ']" id="input-option' + option['product_option_id'] + '" class="form-control">';
-					html += '      <option value=""><?php echo $text_select; ?></option>';
+					html += '      <option value=""><?php echo addslashes($text_select); ?></option>';
 				
 					for (j = 0; j < option['product_option_value'].length; j++) {
 						option_value = option['product_option_value'][j];
@@ -1381,7 +1381,7 @@ $('#tab-product input[name=\'product\']').autocomplete({
 					html += '  <label class="col-sm-2 control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-10">';
 					html += '    <select name="option[' + option['product_option_id'] + ']" id="input-option' + option['product_option_id'] + '" class="form-control">';
-					html += '      <option value=""><?php echo $text_select; ?></option>';
+					html += '      <option value=""><?php echo addslashes($text_select); ?></option>';
 				
 					for (j = 0; j < option['product_option_value'].length; j++) {
 						option_value = option['product_option_value'][j];
@@ -1431,7 +1431,7 @@ $('#tab-product input[name=\'product\']').autocomplete({
 					html += '  <label class="col-sm-2 control-label" for="input-option' + option['product_option_id'] + '">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-10">';
 					html += '    <select name="option[' + option['product_option_id'] + ']" id="input-option' + option['product_option_id'] + '" class="form-control">';
-					html += '      <option value=""><?php echo $text_select; ?></option>';
+					html += '      <option value=""><?php echo addslashes($text_select); ?></option>';
 				
 					for (j = 0; j < option['product_option_value'].length; j++) {
 						option_value = option['product_option_value'][j];
@@ -1468,7 +1468,7 @@ $('#tab-product input[name=\'product\']').autocomplete({
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 control-label">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-10">';
-					html += '    <button type="button" id="button-upload' + option['product_option_id'] + '" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>';
+					html += '    <button type="button" id="button-upload' + option['product_option_id'] + '" data-loading-text="<?php echo addslashes($text_loading); ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo addslashes($button_upload); ?></button>';
 					html += '    <input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" id="input-option' + option['product_option_id'] + '" />';
 					html += '  </div>';
 					html += '</div>';
@@ -1725,7 +1725,7 @@ $('#tab-payment select[name=\'country_id\']').on('change', function() {
 				$('#tab-payment input[name=\'postcode\']').parent().parent().removeClass('required');
 			}
 			
-			html = '<option value=""><?php echo $text_select; ?></option>';
+			html = '<option value=""><?php echo addslashes($text_select); ?></option>';
 
 			if (json['zone'] && json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
@@ -1738,7 +1738,7 @@ $('#tab-payment select[name=\'country_id\']').on('change', function() {
 	    			html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
-				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
+				html += '<option value="0" selected="selected"><?php echo addslashes($text_none); ?></option>';
 			}
 			
 			$('#tab-payment select[name=\'zone_id\']').html(html);
@@ -1802,7 +1802,7 @@ $('#button-payment-address').on('click', function() {
 						if (json['error']) {
 							$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 						} else {
-							html = '<option value=""><?php echo $text_select; ?></option>';
+							html = '<option value=""><?php echo addslashes($text_select); ?></option>';
 							
 							if (json['payment_methods']) {
 								for (i in json['payment_methods']) {
@@ -1909,7 +1909,7 @@ $('#tab-shipping select[name=\'country_id\']').on('change', function() {
 				$('#tab-shipping input[name=\'postcode\']').parent().parent().removeClass('required');
 			}
 			
-			html = '<option value=""><?php echo $text_select; ?></option>';
+			html = '<option value=""><?php echo addslashes($text_select); ?></option>';
 			
 			if (json['zone'] && json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
@@ -1922,7 +1922,7 @@ $('#tab-shipping select[name=\'country_id\']').on('change', function() {
 	    			html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
-				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
+				html += '<option value="0" selected="selected"><?php echo addslashes($text_none); ?></option>';
 			}
 			
 			$('#tab-shipping select[name=\'zone_id\']').html(html);
@@ -1987,7 +1987,7 @@ $('#button-shipping-address').on('click', function() {
 							$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 						} else {
 							// Shipping Methods
-							html = '<option value=""><?php echo $text_select; ?></option>';
+							html = '<option value=""><?php echo addslashes($text_select); ?></option>';
 							
 							if (json['shipping_methods']) {
 								for (i in json['shipping_methods']) {
@@ -2223,7 +2223,7 @@ $('input[name=\'affiliate\']').autocomplete({
 			success: function(json) {
 				json.unshift({
 					affiliate_id: 0,
-					name: '<?php echo $text_none; ?>'
+					name: '<?php echo addslashes($text_none); ?>'
 				});
 								
 				response($.map(json, function(item) {

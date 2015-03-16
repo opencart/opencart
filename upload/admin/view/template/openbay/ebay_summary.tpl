@@ -89,13 +89,13 @@
         $('.data-row').remove();
       },
       success: function(json) {
-          $('#load-usage').empty().html('<i class="fa fa-refresh"></i> <?php echo $button_refresh; ?>').removeAttr('disabled');
+          $('#load-usage').empty().html('<i class="fa fa-refresh"></i> <?php echo addslashes($button_refresh); ?>').removeAttr('disabled');
 
           if (json.data.summary.QuantityLimitRemaining != ''){
               var limitHtml = '';
 
-              limitHtml += '<p><?php echo $text_ebay_limit_t1; ?> <span class="bold underline">'+json.data.summary.QuantityLimitRemaining+'</span> <?php echo $text_ebay_limit_t2; ?> <span class="underline bold">'+json.data.summary.AmountLimitRemaining+'</span></p>';
-              limitHtml += '<p><?php echo $text_ebay_limit_t3; ?></p>';
+              limitHtml += '<p><?php echo addslashes($text_ebay_limit_t1); ?> <span class="bold underline">'+json.data.summary.QuantityLimitRemaining+'</span> <?php echo addslashes($text_ebay_limit_t2); ?> <span class="underline bold">'+json.data.summary.AmountLimitRemaining+'</span></p>';
+              limitHtml += '<p><?php echo addslashes($text_ebay_limit_t3); ?></p>';
 
               $('#selling-limits').html(limitHtml).show();
           }
@@ -107,16 +107,16 @@
 
                 $.each(val.AverageRatingDetails, function(key2,val2){
                     if (val2.RatingDetail == 'ItemAsDescribed') {
-                        htmlInj += '<tr class="data-row"><td class="text-left"><?php echo $text_as_described; ?></td><td class="text-center">'+val2.Rating+'</td><td class="text-center">'+val2.RatingCount+'</td></tr>';
+                        htmlInj += '<tr class="data-row"><td class="text-left"><?php echo addslashes($text_as_described); ?></td><td class="text-center">'+val2.Rating+'</td><td class="text-center">'+val2.RatingCount+'</td></tr>';
                     }
                     if (val2.RatingDetail == 'Communication') {
-                        htmlInj += '<tr class="data-row"><td class="text-left"><?php echo $text_communication; ?></td><td class="text-center">'+val2.Rating+'</td><td class="text-center">'+val2.RatingCount+'</td></tr>';
+                        htmlInj += '<tr class="data-row"><td class="text-left"><?php echo addslashes($text_communication); ?></td><td class="text-center">'+val2.Rating+'</td><td class="text-center">'+val2.RatingCount+'</td></tr>';
                     }
                     if (val2.RatingDetail == 'ShippingTime') {
-                        htmlInj += '<tr class="data-row"><td class="text-left"><?php echo $text_shippingtime; ?></td><td class="text-center">'+val2.Rating+'</td><td class="text-center">'+val2.RatingCount+'</td></tr>';
+                        htmlInj += '<tr class="data-row"><td class="text-left"><?php echo addslashes($text_shippingtime); ?></td><td class="text-center">'+val2.Rating+'</td><td class="text-center">'+val2.RatingCount+'</td></tr>';
                     }
                     if (val2.RatingDetail == 'ShippingAndHandlingCharges') {
-                        htmlInj += '<tr class="data-row"><td class="text-left"><?php echo $text_shipping_charge; ?></td><td class="text-center">'+val2.Rating+'</td><td class="text-center">'+val2.RatingCount+'</td></tr>';
+                        htmlInj += '<tr class="data-row"><td class="text-left"><?php echo addslashes($text_shipping_charge); ?></td><td class="text-center">'+val2.Rating+'</td><td class="text-center">'+val2.RatingCount+'</td></tr>';
                     }
                 });
 
@@ -136,7 +136,7 @@
           }
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        $('#load-usage').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>').removeAttr('disabled');
+        $('#load-usage').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo addslashes($text_failed); ?>').removeAttr('disabled');
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });

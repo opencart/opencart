@@ -152,7 +152,7 @@
             if (json.data == '') {
               $('#checking-linked-items').hide();
               $('.pagination').hide();
-              $('#show-linked-items').html('<tr><td colspan="8" class="text-center"><?php echo $error_no_listings; ?></td></tr>').show();
+              $('#show-linked-items').html('<tr><td colspan="8" class="text-center"><?php echo addslashes($error_no_listings); ?></td></tr>').show();
             } else {
               $.each (json.data, function(key, val) {
                 key                 = String(key);
@@ -169,16 +169,16 @@
                     if (val.qty == store_qty || val.qty == reserve_qty) {
                       $('#text-status-'+key).text('OK');
                       $('#row-'+key+' > td').css('background-color', '#E3FFC8');
-                      $('#text-buttons-'+key).html('<a href="<?php echo $edit_url; ?>'+product_id+'" class="btn btn-primary"><span><?php echo $button_edit; ?></span></a>');
+                      $('#text-buttons-'+key).html('<a href="<?php echo addslashes($edit_url); ?>'+product_id+'" class="btn btn-primary"><span><?php echo addslashes($button_edit); ?></span></a>');
                     } else {
-                      $('#text-status-'+key).text('<?php echo $text_stock_error; ?>');
+                      $('#text-status-'+key).text('<?php echo addslashes($text_stock_error); ?>');
                       $('#row-'+key+' > td').css('background-color', '#FFD4D4');
-                      $('#text-buttons-'+key).html('<a onclick="updateLink('+key+','+val.qty+','+product_id+', '+store_qty+', '+reserve_qty+');" class="btn btn-primary"><span><?php echo $button_resync; ?></a>');
+                      $('#text-buttons-'+key).html('<a onclick="updateLink('+key+','+val.qty+','+product_id+', '+store_qty+', '+reserve_qty+');" class="btn btn-primary"><span><?php echo $addslashes(button_resync); ?></a>');
                     }
                   } else {
-                    $('#text-status-'+key).text('<?php echo $text_listing_ended; ?>');
+                    $('#text-status-'+key).text('<?php echo addslashes($text_listing_ended); ?>');
                     $('#row-'+key+' > td').css('background-color', '#FFD4D4');
-                    $('#text-buttons-'+key).html('<a onclick="removeLink('+product_id+', '+key+');" class="btn btn-danger"><i class="fa fa-minus-circle fa-lg"></i> <?php echo $button_remove_link; ?></a>');
+                    $('#text-buttons-'+key).html('<a onclick="removeLink('+product_id+', '+key+');" class="btn btn-danger"><i class="fa fa-minus-circle fa-lg"></i> <?php echo addslashes($button_remove_link); ?></a>');
                   }
                 } else {
                   $.each (val.variants, function(key1, val1) {
@@ -192,9 +192,9 @@
                   $('#text-qty-'+key).html(html_inj);
 
                   if (val.status == 0) {
-                    $('#text-status-'+key).text('<?php echo $text_listing_ended; ?>');
+                    $('#text-status-'+key).text('<?php echo addslashes($text_listing_ended); ?>');
                     $('#row-'+key+' > td').css('background-color', '#FFD4D4');
-                    $('#text-buttons-'+key).html('<a onclick="removeLink('+product_id+', '+key+');" class="btn btn-danger"><i class="fa fa-minus-circle fa-lg"></i> <?php echo $button_remove_link; ?></a>');
+                    $('#text-buttons-'+key).html('<a onclick="removeLink('+product_id+', '+key+');" class="btn btn-danger"><i class="fa fa-minus-circle fa-lg"></i> <?php echo addslashes($button_remove_link); ?></a>');
                   }
                 }
               });
@@ -204,10 +204,10 @@
             }
           },
           failure: function() {
-              $('#errorBox').text('<?php echo $error_ajax_load; ?>').fadeIn();
+              $('#errorBox').text('<?php echo addslashes($error_ajax_load); ?>').fadeIn();
           },
           error: function() {
-              $('#errorBox').text('<?php echo $error_ajax_load; ?>').fadeIn();
+              $('#errorBox').text('<?php echo addslashes($error_ajax_load); ?>').fadeIn();
           }
       });
   }
@@ -227,7 +227,7 @@
   }
 
   function updateLink(item_id, qty, product_id, store_qty, reserve_qty) {
-      var r = confirm("<?php echo $text_alert_stock_local; ?>");
+      var r = confirm("<?php echo addslashes($text_alert_stock_local); ?>");
       var button_old = $('#text-buttons-'+item_id).html();
 
       $('#text-buttons-'+item_id).html('<p class="text-center"><i class="fa fa-cog fa-lg fa-spin"></i></p>');
@@ -240,7 +240,7 @@
               success: function(json) {
                   if (json.error == false) {
                       $('#text-status-'+item_id).text('OK');
-                      $('#text-buttons-'+item_id).empty().html('<a href="<?php echo $edit_url; ?>'+product_id+'" class="btn btn-primary"><?php echo $button_edit; ?></a>');
+                      $('#text-buttons-'+item_id).empty().html('<a href="<?php echo addslashes($edit_url); ?>'+product_id+'" class="btn btn-primary"><?php echo addslashes($button_edit); ?></a>');
                       $('#row-'+item_id+' > td').css('background-color', '#E3FFC8');
                       $('#l-'+item_id+'-qty-input').val(qty);
                       $('#l-'+item_id+'-qty').val(qty);
@@ -257,11 +257,11 @@
               },
               failure: function() {
                   $('#text-buttons-'+item_id).html(button_old);
-                  alert('<?php echo $error_ajax_load; ?>');
+                  alert('<?php echo addslashes($error_ajax_load); ?>');
               },
               error: function() {
                   $('#text-buttons-'+item_id).html(button_old);
-                  alert('<?php echo $error_ajax_load; ?>');
+                  alert('<?php echo addslashes($error_ajax_load); ?>');
               }
           });
       }
@@ -274,12 +274,12 @@
       var variants        = $('#l-'+id+'-variants').val();
 
       if (product_id === '') {
-          alert('<?php echo $error_link_value; ?>');
+          alert('<?php echo addslashes($error_link_value); ?>');
           return false;
       }
 
       if (qty < 1) {
-          alert('<?php echo $error_link_no_stock; ?>');
+          alert('<?php echo addslashes($error_link_no_stock); ?>');
           return false;
       }
 
@@ -340,7 +340,7 @@
       },
       success: function(json) {
         if (json.data.items === null) {
-          $('#ebay-listings').append('<tr><td colspan="7"><p><?php echo $error_no_listings; ?></p></td></tr>');
+          $('#ebay-listings').append('<tr><td colspan="7"><p><?php echo addslashes($error_no_listings); ?></p></td></tr>');
         } else {
           var html_inj;
 
@@ -354,7 +354,7 @@
             html_inj += '</td>';
             html_inj += '<td class="text-left">'+key+'<input type="hidden" id="l-'+key+'_val" val="'+key+'" /></td>';
             html_inj += '<td class="text-left">'+val.name+'</td>';
-            html_inj += '<td class="text-left"><input type="text" class="product-search form-control" placeholder="<?php echo $column_product_auto; ?>" id="l-'+key+'" /><input type="hidden" id="l-'+key+'-pid" /></td>';
+            html_inj += '<td class="text-left"><input type="text" class="product-search form-control" placeholder="<?php echo addslashes($column_product_auto); ?>" id="l-'+key+'" /><input type="hidden" id="l-'+key+'-pid" /></td>';
 
             if (val.variants == 0) {
                 html_inj += '<td class="text-center"><span id="l-'+key+'-qty"></span><input type="hidden" id="l-'+key+'-qtyinput" /></td>';
@@ -377,7 +377,7 @@
                 html_inj += '<input type="hidden" name="variants" id="l-'+key+'-variants" value="1" />';
                 html_inj += '<td class="text-center"><img title="Success" alt="Success" src="view/image/success.png" style="margin-top:3px;"></td>';
             }
-            html_inj += '<td class="text-center"><a class="btn btn-primary" style="display:none;" onclick="saveListingLink('+key+'); return false;" id="l-'+key+'-save-button"><span><?php echo $button_save; ?></span></a></td>';
+            html_inj += '<td class="text-center"><a class="btn btn-primary" style="display:none;" onclick="saveListingLink('+key+'); return false;" id="l-'+key+'-save-button"><span><?php echo addslashes($button_save); ?></span></a></td>';
             html_inj += '</tr>';
 
             $('#ebay-listings').append(html_inj);
@@ -387,19 +387,19 @@
         $('#ebay-listings').show();
 
         if (json.data.more_pages == 1) {
-          $('#check-unlinked-items').empty().html('<?php echo $button_check_unlinked; ?>').removeAttr('disabled');
+          $('#check-unlinked-items').empty().html('<?php echo addslashes($button_check_unlinked); ?>').removeAttr('disabled');
         } else {
           $('#check-unlinked-items').hide();
         }
 
         if (json.data.break == 1) {
-          $('#check-unlinked-items').before('<div class="alert alert-warning"><?php echo $text_limit_reached; ?></div>');
+          $('#check-unlinked-items').before('<div class="alert alert-warning"><?php echo addslashes($text_limit_reached); ?></div>');
         }
 
         $('#unlinked-page').val(json.data.next_page);
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        $('#check-unlinked-items').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>').removeAttr('disabled');
+        $('#check-unlinked-items').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo addslashes($text_failed); ?>').removeAttr('disabled');
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });

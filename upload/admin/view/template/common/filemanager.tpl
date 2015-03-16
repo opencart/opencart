@@ -175,11 +175,11 @@ $('#button-folder').popover({
 	html: true,
 	placement: 'bottom',
 	trigger: 'click',
-	title: '<?php echo $entry_folder; ?>',
+	title: '<?php echo addslashes($entry_folder); ?>',
 	content: function() {
 		html  = '<div class="input-group">';
-		html += '  <input type="text" name="folder" value="" placeholder="<?php echo $entry_folder; ?>" class="form-control">';
-		html += '  <span class="input-group-btn"><button type="button" title="<?php echo $button_folder; ?>" id="button-create" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></span>';
+		html += '  <input type="text" name="folder" value="" placeholder="<?php echo addslashes($entry_folder); ?>" class="form-control">';
+		html += '  <span class="input-group-btn"><button type="button" title="<?php echo addslashes($button_folder); ?>" id="button-create" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></span>';
 		html += '</div>';
 		
 		return html;	

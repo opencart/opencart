@@ -346,7 +346,7 @@
     if (request_data != '') {
       $('#form').attr('action', 'index.php?route=openbay/ebay/createBulk&token=<?php echo $token; ?>').submit();
     } else {
-      alert('<?php echo $error_select_items; ?>');
+      alert('<?php echo addslashes($error_select_items); ?>');
     }
   });
 //--></script>

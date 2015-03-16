@@ -298,7 +298,7 @@
         html += '<div class="well" id="' + id + '_' + type + '_' + count + '">';
           html += '<div class="row form-group">';
             html += '<div class="col-sm-1 text-right">';
-              html += '<label class="control-label"><?php echo $text_shipping_service; ?><label>';
+              html += '<label class="control-label"><?php echo addslashes($text_shipping_service); ?><label>';
             html += '</div>';
             html += '<div class="col-sm-11">';
               html += '<select name="data[' + id + '][' + type + '][service_id][' + count + ']" class="form-control">';
@@ -311,17 +311,17 @@
           if (id == 'international') {
             html += '<div class="row form-group">';
               html += '<div class="col-sm-1 text-right">';
-                html += '<label class="control-label"><?php echo $text_shipping_zones; ?></label>';
+                html += '<label class="control-label"><?php echo addslashes($text_shipping_zones); ?></label>';
               html += '</div>';
               html += '<div class="col-sm-10">';
                 html += '<label class="checkbox-inline">';
                   html += '<input type="checkbox" name="data[' + id + '][' + type + '][shipto][' + count + '][]" value="Worldwide" />';
-                  html += ' <?php echo $text_shipping_worldwide; ?>';
+                  html += ' <?php echo addslashes($text_shipping_worldwide); ?>';
                 html += '</label>';
                 <?php foreach($shipping_international_zones as $zone) { ?>
                   html += '<label class="checkbox-inline">';
                     html += '<input type="checkbox" name="data[' + id + '][' + type + '][shipto][' + count + '][]" value="<?php echo $zone['shipping_location']; ?>" />';
-                    html += ' <?php echo $zone['description']; ?>';
+                    html += ' <?php echo addslashes($zone['description']); ?>';
                   html += '</label>';
                 <?php } ?>
               html += '</div>';
@@ -330,29 +330,29 @@
           html += '<div class="row form-group">';
             if (type != 'calculated') {
               html += '<div class="col-sm-1 text-right">';
-                html += '<label class="control-label"><?php echo $text_shipping_first; ?></label>';
+                html += '<label class="control-label"><?php echo addslashes($text_shipping_first); ?></label>';
               html += '</div>';
               html += '<div class="col-sm-3">';
                 html += '<input type="text" name="data[' + id + '][' + type + '][price][' + count + ']" class="form-control" value="0.00" class="form-control" />';
               html += '</div>';
               html += '<div class="col-sm-2 text-right">';
-                html += '<label class="control-label"><?php echo $text_shipping_add; ?></label>';
+                html += '<label class="control-label"><?php echo addslashes($text_shipping_add); ?></label>';
               html += '</div>';
               html += '<div class="col-sm-3">';
                 html += '<input type="text" name="data[' + id + '][' + type + '][price_additional][' + count + ']" class="form-control" value="0.00" />';
               html += '</div>';
             }
             html += '<div class="col-sm-3 pull-right text-right">';
-              html += '<a onclick="removeShipping(\'' + id + '\',\'' + count + '\',\''+type+'\');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_delete; ?></a>';
+              html += '<a onclick="removeShipping(\'' + id + '\',\'' + count + '\',\''+type+'\');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo addslashes($button_delete); ?></a>';
             html += '</div>';
           html += '</div>';
         html += '</div>';
 
         $('#options-' + id + '-' + type).append(html);
-        $('#add-' + id + '-' + type).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $button_add; ?>').removeAttr('disabled');
+        $('#add-' + id + '-' + type).empty().html('<i class="fa fa-plus-circle"></i> <?php echo addslashes($button_add); ?>').removeAttr('disabled');
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        $('#add-shipping-'+id).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $button_add; ?>').removeAttr('disabled');
+        $('#add-shipping-'+id).empty().html('<i class="fa fa-plus-circle"></i> <?php echo addslashes($button_add); ?>').removeAttr('disabled');
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });

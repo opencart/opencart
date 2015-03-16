@@ -78,7 +78,7 @@
         var amt = $('#paypal_capture_amount').val();
 
         if (amt == '' || amt == 0) {
-            alert('<?php echo $error_capture_amt; ?>');
+            alert('<?php echo addslashes($error_capture_amt); ?>');
             return false;
         } else {
             var captureComplete;
@@ -111,8 +111,8 @@
                         html += '<td class="text-left">' + data.data.pending_reason + '</td>';
                         html += '<td class="text-left">' + data.data.date_added + '</td>';
                         html += '<td class="text-left">';
-                        html += '<a href="<?php echo $view_link; ?>&transaction_id=' + data.data.transaction_id + '"><?php echo $text_view; ?></a>';
-                        html += '&nbsp;<a href="<?php echo $refund_link; ?>&transaction_id=' + data.data.transaction_id + '"><?php echo $text_refund; ?></a>';
+                        html += '<a href="<?php echo $view_link; ?>&transaction_id=' + data.data.transaction_id + '"><?php echo addslashes($text_view); ?></a>';
+                        html += '&nbsp;<a href="<?php echo $refund_link; ?>&transaction_id=' + data.data.transaction_id + '"><?php echo addslashes($text_refund); ?></a>';
                         html += '</td>';
                         html += '</tr>';
 
@@ -133,7 +133,7 @@
                         }
 
                         if (data.data.status == 1) {
-                            $('#capture_status').text('<?php echo $text_complete; ?>');
+                            $('#capture_status').text('<?php echo addslashes($text_complete); ?>');
                             $('.paypal_capture').hide();
                         }
                     }
@@ -149,7 +149,7 @@
                             html += '<td class="text-left"></td>';
                             html += '<td class="text-left"></td>';
                             html += '<td class="text-left">' + data.failed_transaction.date_added + '</td>';
-                            html += '<td class="text-left"><a onclick="resendTransaction(this); return false;" href="<?php echo $resend_link ?>&paypal_iframe_order_transaction_id=' + data.failed_transaction.paypal_iframe_order_transaction_id + '"><?php echo $text_resend ?></a></td>';
+                            html += '<td class="text-left"><a onclick="resendTransaction(this); return false;" href="<?php echo $resend_link ?>&paypal_iframe_order_transaction_id=' + data.failed_transaction.paypal_iframe_order_transaction_id + '"><?php echo addslashes($text_resend); ?></a></td>';
                             html += '/<tr>';
 
                             $('#paypal_transactions').append(html);
@@ -164,7 +164,7 @@
     }
 
     function doVoid() {
-        if (confirm('<?php echo $text_confirm_void; ?>')) {
+        if (confirm('<?php echo addslashes($text_confirm_void); ?>')) {
             $.ajax({
                 type:'POST',
                 dataType: 'json',
@@ -188,7 +188,7 @@
                         html += '</tr>';
 
                         $('#paypal_transactions').append(html);
-                        $('#capture_status').text('<?php echo $text_complete; ?>');
+                        $('#capture_status').text('<?php echo addslashes($text_complete); ?>');
                         $('.paypal_capture_live').hide();
                     }
 
@@ -231,7 +231,7 @@ function reauthorise() {
                 html += '</tr>';
 
                 $('#paypal_transactions').append(html);
-                alert('<?php echo $text_reauthorised ?>');
+                alert('<?php echo addslashes($text_reauthorised); ?>');
                 $('.loading').hide();
             }
 

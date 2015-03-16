@@ -18,7 +18,7 @@ class ControllerPaymentRealex extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -85,7 +85,7 @@ class ControllerPaymentRealex extends Controller {
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		$data['error_use_select_card'] = $this->language->get('error_use_select_card');
-		
+
 		$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=payment/realex/notify';
 
 		if (isset($this->error['warning'])) {
@@ -167,7 +167,7 @@ class ControllerPaymentRealex extends Controller {
 		} else {
 			$data['realex_geo_zone_id'] = $this->config->get('realex_geo_zone_id');
 		}
-		
+
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
@@ -289,7 +289,7 @@ class ControllerPaymentRealex extends Controller {
 
 	public function install() {
 		$this->load->model('payment/realex');
-		
+
 		$this->model_payment_realex->install();
 	}
 

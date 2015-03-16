@@ -1,7 +1,5 @@
 <?php
-
 class ControllerPaymentPPExpress extends Controller {
-
 	private $error = array();
 
 	public function index() {
@@ -1333,5 +1331,4 @@ class ControllerPaymentPPExpress extends Controller {
 
 		return $this->load->view('common/buttons.tpl', $data);
 	}
-
 }

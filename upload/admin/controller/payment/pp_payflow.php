@@ -18,7 +18,7 @@ class ControllerPaymentPPPayflow extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -50,7 +50,7 @@ class ControllerPaymentPPPayflow extends Controller {
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
-		
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -74,13 +74,13 @@ class ControllerPaymentPPPayflow extends Controller {
 		} else {
 			$data['error_password'] = '';
 		}
-		
+
 		if (isset($this->error['partner'])) {
 			$data['error_partner'] = $this->error['partner'];
 		} else {
 			$data['error_partner'] = '';
 		}
-		
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -97,11 +97,11 @@ class ControllerPaymentPPPayflow extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('payment/pp_payflow', 'token=' . $this->session->data['token'], 'SSL'),
 		);
-		
+
 		$data['action'] = $this->url->link('payment/pp_payflow', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
-		
+
 		if (isset($this->request->post['pp_payflow_vendor'])) {
 			$data['pp_payflow_vendor'] = $this->request->post['pp_payflow_vendor'];
 		} else {

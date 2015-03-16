@@ -18,7 +18,7 @@ class ControllerPaymentRealexRemote extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -145,7 +145,7 @@ class ControllerPaymentRealexRemote extends Controller {
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-		
+
 		if (isset($this->request->post['realex_remote_total'])) {
 			$data['realex_remote_total'] = $this->request->post['realex_remote_total'];
 		} else {
@@ -241,7 +241,7 @@ class ControllerPaymentRealexRemote extends Controller {
 		} else {
 			$data['realex_remote_order_status_decline_bank_id'] = $this->config->get('realex_remote_order_status_decline_bank_id');
 		}
-		
+
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();

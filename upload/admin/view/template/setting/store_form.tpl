@@ -769,7 +769,7 @@ $('select[name=\'config_template\']').on('change', function() {
 });
 
 $('select[name=\'config_template\']').trigger('change');
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('select[name=\'config_country_id\']').on('change', function() {
 	$.ajax({
@@ -787,11 +787,11 @@ $('select[name=\'config_country_id\']').on('change', function() {
 			if (json['zone'] && json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
 					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-					
+
 					if (json['zone'][i]['zone_id'] == '<?php echo $config_zone_id; ?>') {
 						html += ' selected="selected"';
 					}
-					
+
 					html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {

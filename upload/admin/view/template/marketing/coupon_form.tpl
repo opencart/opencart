@@ -214,7 +214,7 @@ $('input[name=\'product\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-			dataType: 'json',			
+			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
@@ -227,10 +227,10 @@ $('input[name=\'product\']').autocomplete({
 	},
 	'select': function(item) {
 		$('input[name=\'product\']').val('');
-		
+
 		$('#coupon-product' + item['value']).remove();
-		
-		$('#coupon-product').append('<div id="coupon-product' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="coupon_product[]" value="' + item['value'] + '" /></div>');	
+
+		$('#coupon-product').append('<div id="coupon-product' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="coupon_product[]" value="' + item['value'] + '" /></div>');
 	}
 });
 
@@ -256,11 +256,11 @@ $('input[name=\'category\']').autocomplete({
 	},
 	'select': function(item) {
 		$('input[name=\'category\']').val('');
-		
+
 		$('#coupon-category' + item['value']).remove();
-		
+
 		$('#coupon-category').append('<div id="coupon-category' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="coupon_category[]" value="' + item['value'] + '" /></div>');
-	}	
+	}
 });
 
 $('#coupon-category').delegate('.fa-minus-circle', 'click', function() {
@@ -271,9 +271,9 @@ $('#coupon-category').delegate('.fa-minus-circle', 'click', function() {
   <script type="text/javascript"><!--
 $('#history').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
-	
+
 	$('#history').load(this.href);
-});			
+});
 
 $('#history').load('index.php?route=marketing/coupon/history&token=<?php echo $token; ?>&coupon_id=<?php echo $coupon_id; ?>');
 //--></script>

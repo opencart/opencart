@@ -7,8 +7,8 @@
   </div>
 </div>
 <link type="text/css" href="view/javascript/jquery/jqvmap/jqvmap.css" rel="stylesheet" media="screen" />
-<script type="text/javascript" src="view/javascript/jquery/jqvmap/jquery.vmap.js"></script> 
-<script type="text/javascript" src="view/javascript/jquery/jqvmap/maps/jquery.vmap.world.js"></script> 
+<script type="text/javascript" src="view/javascript/jquery/jqvmap/jquery.vmap.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/jqvmap/maps/jquery.vmap.world.js"></script>
 <script type="text/javascript"><!--
 $(document).ready(function() {
 	$.ajax({
@@ -16,11 +16,11 @@ $(document).ready(function() {
 		dataType: 'json',
 		success: function(json) {
 			data = [];
-						
+
 			for (i in json) {
 				data[i] = json[i]['total'];
 			}
-					
+
 			$('#vmap').vectorMap({
 				map: 'world_en',
 				backgroundColor: '#FFFFFF',
@@ -37,11 +37,11 @@ $(document).ready(function() {
 						label.html('<strong>' + label.text() + '</strong><br />' + '<?php echo $text_order; ?> ' + json[code]['total'] + '<br />' + '<?php echo $text_sale; ?> ' + json[code]['amount']);
 					}
 				}
-			});			
+			});
 		},
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
-	});			
+	});
 });
-//--></script> 
+//--></script>

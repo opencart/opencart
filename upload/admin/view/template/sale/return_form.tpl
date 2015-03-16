@@ -236,7 +236,7 @@ $('input[name=\'customer\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
 			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-			dataType: 'json',			
+			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
@@ -246,7 +246,7 @@ $('input[name=\'customer\']').autocomplete({
 						firstname: item['firstname'],
 						lastname: item['lastname'],
 						email: item['email'],
-						telephone: item['telephone']			
+						telephone: item['telephone']
 					}
 				}));
 			}
@@ -261,13 +261,13 @@ $('input[name=\'customer\']').autocomplete({
 		$('input[name=\'telephone\']').attr('value', item['telephone']);
 	}
 });
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('input[name=\'product\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-			dataType: 'json',			
+			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
@@ -281,16 +281,16 @@ $('input[name=\'product\']').autocomplete({
 	},
 	'select': function(item) {
 		$('input[name=\'product\']').val(item['label']);
-		$('input[name=\'product_id\']').val(item['value']);	
-		$('input[name=\'model\']').val(item['model']);	
+		$('input[name=\'product_id\']').val(item['value']);
+		$('input[name=\'model\']').val(item['model']);
 	}
 });
 
 $('#history').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
-	
+
 	$('#history').load(this.href);
-});			
+});
 
 $('#history').load('index.php?route=sale/return/history&token=<?php echo $token; ?>&return_id=<?php echo $return_id; ?>');
 
@@ -303,21 +303,21 @@ $('#button-history').on('click', function(e) {
 		dataType: 'html',
 		data: 'return_status_id=' + encodeURIComponent($('select[name=\'return_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'history_comment\']').val()),
 		beforeSend: function() {
-			$('#button-history').button('loading');	
+			$('#button-history').button('loading');
 		},
 		complete: function() {
-			$('#button-history').button('reset');	
+			$('#button-history').button('reset');
 		},
 		success: function(html) {
 			$('.alert').remove();
-			
+
 			$('#history').html(html);
-			
+
 			$('textarea[name=\'history_comment\']').val('');
 		}
 	});
 });
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false

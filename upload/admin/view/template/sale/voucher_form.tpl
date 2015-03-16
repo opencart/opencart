@@ -146,34 +146,34 @@ $('#button-send').on('click', function() {
 		beforeSend: function() {
 			$('#button-send i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 			$('#button-send').prop('disabled', true);
-		},	
+		},
 		complete: function() {
 			$('#button-send i').replaceWith('<i class="fa fa-envelope"></i>');
 			$('#button-send').prop('disabled', false);
 		},
 		success: function(json) {
 			$('.alert').remove();
-			
+
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
-			
+
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i>  ' + json['success'] + '</div>');
-			}		
+			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
-	});	
+	});
 })
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('#history').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
 
 	$('#history').load(this.href);
-});			
+});
 
 $('#history').load('index.php?route=sale/voucher/history&token=<?php echo $token; ?>&voucher_id=<?php echo $voucher_id; ?>');
 //--></script>

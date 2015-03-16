@@ -212,7 +212,7 @@ $('#input-description<?php echo $language['language_id']; ?>').summernote({
 	height: 300
 });
 <?php } ?>
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('#language a:first').tab('show');
 //--></script></div>

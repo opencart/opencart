@@ -90,4 +90,4 @@
   <script type="text/javascript"><!--
 $('#country a:first').tab('show');
 //--></script></div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

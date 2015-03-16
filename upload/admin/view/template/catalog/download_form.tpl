@@ -67,45 +67,45 @@
 <script type="text/javascript"><!--
 $('#button-upload').on('click', function() {
 	$('#form-upload').remove();
-	
+
 	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
 
 	$('#form-upload input[name=\'file\']').trigger('click');
-	
+
 	if (typeof timer != 'undefined') {
     	clearInterval(timer);
 	}
-	
+
 	timer = setInterval(function() {
 		if ($('#form-upload input[name=\'file\']').val() != '') {
-			clearInterval(timer);		
-			
+			clearInterval(timer);
+
 			$.ajax({
 				url: 'index.php?route=catalog/download/upload&token=<?php echo $token; ?>',
-				type: 'post',		
+				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),
 				cache: false,
 				contentType: false,
-				processData: false,		
+				processData: false,
 				beforeSend: function() {
 					$('#button-upload').button('loading');
 				},
 				complete: function() {
 					$('#button-upload').button('reset');
-				},	
+				},
 				success: function(json) {
 					if (json['error']) {
 						alert(json['error']);
 					}
-								
+
 					if (json['success']) {
 						alert(json['success']);
-						
+
 						$('input[name=\'filename\']').attr('value', json['filename']);
 						$('input[name=\'mask\']').attr('value', json['mask']);
 					}
-				},			
+				},
 				error: function(xhr, ajaxOptions, thrownError) {
 					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 				}
@@ -113,5 +113,5 @@ $('#button-upload').on('click', function() {
 		}
 	}, 500);
 });
-//--></script></div> 
+//--></script></div>
 <?php echo $footer; ?>

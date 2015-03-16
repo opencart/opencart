@@ -587,6 +587,16 @@ class ControllerOpenbayEbay extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function getImportImages() {
+		set_time_limit(0);
+		$this->openbay->ebay->getImages();
+
+		$json = array('error' => false, 'msg' => 'OK');
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
 	public function importOrdersManual() {
 		$this->openbay->ebay->callNoResponse('order/getOrdersManual/');
 
@@ -2020,16 +2030,6 @@ class ControllerOpenbayEbay extends Controller {
 		} else {
 			$this->response->redirect($this->url->link('extension/openbay/items&token=' . $this->session->data['token']));
 		}
-	}
-
-	public function getImportImages() {
-		set_time_limit(0);
-		$this->openbay->ebay->getImages();
-
-		$json = array('error' => false, 'msg' => 'OK');
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	public function repairLinks() {

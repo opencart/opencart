@@ -928,45 +928,69 @@ final class Ebay {
 			foreach ($qry->rows as $img) {
 				$this->log('Image: ' . $img['name']);
 
-				//check if the supersize version exists
-				$img_large = str_replace(array('$_1.JPG', '$_01.JPG'), '$_57.JPG', $img['image_original']);
+				$img_large = str_replace(array('$_1.JPG', '$_01.JPG', '$_12.JPG'), '$_57.JPG', $img['image_original']);
 
-				//if not get the one supplied
-				$ch = curl_init($img_large);
-				curl_setopt($ch, CURLOPT_NOBODY, true);
-				curl_exec($ch);
-				$header_response = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-				curl_close($ch);
+				$header_response = $this->getImageInfo($img_large);
 
-				$this->log($header_response);
+				$copy_status = false;
 
 				if ($header_response == 200) {
-					$img_used = $img_large;
+					// a supersize version was found.
+					$copy_status = $this->getImageCopy($img_large, $img['image_new']);
 				} else {
-					$img_used = $img['image_original'];
-				}
+					// fall back to trying the original image
+					$header_response = $this->getImageInfo($img['image_original']);
 
-				$handle = @fopen($img_used, 'r');
-
-				if ($handle !== false) {
-					if (!@copy($img_used, $img['image_new'])) {
-						$this->log('getImages() - FAILED COPY: ' . $img_used);
-						$this->log(print_r(error_get_last(), true));
-					} else {
-						$this->log('getImages() - Copy OK : ' . $img_used);
+					if ($header_response == 200) {
+						$copy_status = $this->getImageCopy($img['image_original'], $img['image_new']);
 					}
-				} else {
-					$this->log('getImages() - URL not found : ' . $img_used);
 				}
 
-				if ($img['imgcount'] == 0) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `image` = 'catalog/" . $img['name'] . "' WHERE `product_id` = '" . (int)$img['product_id'] . "' LIMIT 1");
-				} else {
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "product_image` SET `product_id` = '" . (int)$img['product_id'] . "', `image` = 'catalog/" . $this->db->escape($img['name']) . "', `sort_order` = '" . (int)$img['imgcount'] . "'");
-				}
+				if ($copy_status == true) {
+					if ($img['imgcount'] == 0) {
+						$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `image` = 'catalog/" . $img['name'] . "' WHERE `product_id` = '" . (int)$img['product_id'] . "' LIMIT 1");
+					} else {
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "product_image` SET `product_id` = '" . (int)$img['product_id'] . "', `image` = 'catalog/" . $this->db->escape($img['name']) . "', `sort_order` = '" . (int)$img['imgcount'] . "'");
+					}
 
-				$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_image_import` WHERE `id` = '" . (int)$img['id'] . "' LIMIT 1");
+					$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_image_import` WHERE `id` = '" . (int)$img['id'] . "' LIMIT 1");
+				}
 			}
+		}
+	}
+
+	private function getImageInfo($url) {
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_NOBODY, true);
+
+		if(curl_exec($ch) === false) {
+			$this->log('Curl Error: ' . curl_error($ch));
+		}
+
+		$header_response = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+		$this->log($header_response);
+
+		curl_close($ch);
+
+		return $header_response;
+	}
+
+	private function getImageCopy($url, $new_image) {
+		$handle = @fopen($url, 'r');
+
+		if ($handle !== false) {
+			if (!@copy($url, $new_image)) {
+				$this->log('getImages() - FAILED COPY: ' . $url);
+				$this->log(print_r(error_get_last(), true));
+				return false;
+			} else {
+				$this->log('getImages() - Copy OK : ' . $url);
+				return true;
+			}
+		} else {
+			$this->log('getImages() - URL not found : ' . $url);
+			return false;
 		}
 	}
 
@@ -1029,7 +1053,6 @@ final class Ebay {
 	}
 
 	public function updateReserve($product_id, $item_id, $reserve, $sku = '', $variant = 0) {
-
 		$this->log('updateReserve() - start');
 		$this->log('updateReserve() - $product_id: ' . $product_id);
 		$this->log('updateReserve() - $item_id: ' . $item_id);

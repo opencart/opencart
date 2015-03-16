@@ -71,7 +71,7 @@ class ControllerCommonForgotten extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('common/forgotten', 'token=' . '', 'SSL')
 		);
-		
+
 		$data['action'] = $this->url->link('common/forgotten', '', 'SSL');
 
 		$data['cancel'] = $this->url->link('common/login', '', 'SSL');

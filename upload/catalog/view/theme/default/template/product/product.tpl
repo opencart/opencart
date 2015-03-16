@@ -106,7 +106,7 @@
                     <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>"></div>
                   </div>
                 </div>
-                <div class="buttons">
+                <div class="buttons clearfix">
                   <div class="pull-right">
                     <button type="button" id="button-review" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_continue; ?></button>
                   </div>

@@ -13,11 +13,16 @@ $_['text_clear']					 = 'Clear';
 $_['text_browse']					 = 'Browse';
 $_['text_image_manager']			 = 'Image manager';
 $_['text_ipn']						 = 'IPN URL';
+$_['text_paypal_join']               = 'Sign up for PayPal - save your settings first as this page will be refreshed';
+$_['text_paypal_join_sandbox']       = 'Sign up for PayPal Sandbox - save your settings first as this page will be refreshed';
 
 // Entry
 $_['entry_username']				 = 'API Username';
 $_['entry_password']				 = 'API Password';
 $_['entry_signature']				 = 'API Signature';
+$_['entry_sandbox_username']		 = 'API Sandbox Username';
+$_['entry_sandbox_password']		 = 'API Sandbox Password';
+$_['entry_sandbox_signature']		 = 'API Sandbox Signature';
 $_['entry_test']					 = 'Test (Sandbox) Mode';
 $_['entry_method']					 = 'Transaction Method';
 $_['entry_geo_zone']				 = 'Geo Zone';
@@ -63,5 +68,10 @@ $_['error_permission']				 = 'Warning: You do not have permission to modify paym
 $_['error_username']				 = 'API Username Required!';
 $_['error_password']				 = 'API Password Required!';
 $_['error_signature']				 = 'API Signature Required!';
+$_['error_sandbox_username']	 	 = 'API Sandbox Username Required!';
+$_['error_sandbox_password']		 = 'API Sandbox Password Required!';
+$_['error_sandbox_signature']		 = 'API Sandbox Signature Required!';
 $_['error_data']					 = 'Data missing from request';
 $_['error_timeout']					 = 'Request timed out';
+$_['error_api']						 = 'Paypal Authorization Error';
+$_['error_api_sandbox']				 = 'Paypal Sandbox Authorization Error';

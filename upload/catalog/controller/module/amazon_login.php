@@ -1,7 +1,5 @@
 <?php
-
 class ControllerModuleAmazonLogin extends Controller {
-
 	public function index() {
 		$this->load->model('payment/amazon_login_pay');
 
@@ -108,7 +106,6 @@ class ControllerModuleAmazonLogin extends Controller {
 				$last_name = array_pop($full_name);
 				$first_name = implode(' ', $full_name);
 
-
 				$data = array(
 					'customer_group_id' => (int)$this->config->get('config_customer_group_id'),
 					'firstname' => $first_name,
@@ -196,5 +193,4 @@ class ControllerModuleAmazonLogin extends Controller {
 			return false;
 		}
 	}
-
 }

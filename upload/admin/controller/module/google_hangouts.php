@@ -18,11 +18,11 @@ class ControllerModuleGoogleHangouts extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
-		
+
 		$data['entry_code'] = $this->language->get('entry_code');
 		$data['entry_status'] = $this->language->get('entry_status');
 
@@ -69,13 +69,13 @@ class ControllerModuleGoogleHangouts extends Controller {
 		} else {
 			$data['google_hangouts_code'] = $this->config->get('google_hangouts_code');
 		}
-		
+
 		if (isset($this->request->post['google_hangouts_status'])) {
 			$data['google_hangouts_status'] = $this->request->post['google_hangouts_status'];
 		} else {
 			$data['google_hangouts_status'] = $this->config->get('google_hangouts_status');
 		}
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

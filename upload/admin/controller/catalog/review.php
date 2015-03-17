@@ -182,20 +182,20 @@ class ControllerCatalogReview extends Controller {
 		} else {
 			$filter_date_added = null;
 		}
-		
+
 		if (isset($this->request->get['order'])) {
 			$order = $this->request->get['order'];
 		} else {
 			$order = 'ASC';
 		}
-		
+
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
 			$sort = 'r.date_added';
 			$order = 'DESC';
 		}
-		
+
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
 		} else {
@@ -231,7 +231,7 @@ class ControllerCatalogReview extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-		
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -243,7 +243,7 @@ class ControllerCatalogReview extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('catalog/review', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
-		
+
 		$data['add'] = $this->url->link('catalog/review/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('catalog/review/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
@@ -277,7 +277,7 @@ class ControllerCatalogReview extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
@@ -395,7 +395,7 @@ class ControllerCatalogReview extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_form'] = !isset($this->request->get['review_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -482,7 +482,7 @@ class ControllerCatalogReview extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('catalog/review', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
-		
+
 		if (!isset($this->request->get['review_id'])) {
 			$data['action'] = $this->url->link('catalog/review/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {

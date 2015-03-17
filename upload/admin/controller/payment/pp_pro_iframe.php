@@ -20,7 +20,7 @@ class ControllerPaymentPPProIframe extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -255,17 +255,17 @@ class ControllerPaymentPPProIframe extends Controller {
 		$this->document->setTitle($this->language->get('text_refund'));
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_refund'] = $this->language->get('text_refund');
-		
+
 		$data['entry_transaction_id'] = $this->language->get('entry_transaction_id');
 		$data['entry_full_refund'] = $this->language->get('entry_full_refund');
 		$data['entry_amount'] = $this->language->get('entry_amount');
 		$data['entry_message'] = $this->language->get('entry_message');
-		
+
 		$data['button_refund'] = $this->language->get('button_refund');
 		$data['button_cancel'] = $this->language->get('button_cancel');
-		
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -403,7 +403,7 @@ class ControllerPaymentPPProIframe extends Controller {
 							$log = new Log('pp_pro_iframe.log');
 							$log->write(json_encode($result));
 						}
-								
+
 						$this->session->data['error'] = (isset($result['L_SHORTMESSAGE0']) ? $result['L_SHORTMESSAGE0'] : 'There was an error') . (isset($result['L_LONGMESSAGE0']) ? '<br />' . $result['L_LONGMESSAGE0'] : '');
 						$this->response->redirect($this->url->link('payment/pp_pro_iframe/refund', 'token=' . $this->session->data['token'] . '&transaction_id=' . $this->request->post['transaction_id'], 'SSL'));
 					}

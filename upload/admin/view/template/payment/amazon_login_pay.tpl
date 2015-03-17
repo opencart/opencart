@@ -19,6 +19,9 @@
 		  <button type="button" class="close" data-dismiss="alert">&times;</button>
 		</div>
 	<?php } ?>
+	<div class="alert alert-info"><?php echo $text_amazon_join; ?>
+	  <button type="button" class="close" data-dismiss="alert">&times;</button>
+	</div>
 	<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-amazon-login-pay" class="form-horizontal">
 	  <div class="form-group required">
 		<label class="col-sm-2 control-label" for="amazon-login-pay-merchant-id"><?php echo $entry_merchant_id; ?></label>
@@ -226,6 +229,21 @@
 				<option value="0" selected="selected"><?php echo $text_disabled; ?></option>
 			<?php } else { ?>
 				<option value="0"><?php echo $text_disabled; ?></option>
+			<?php } ?>
+		  </select>
+		</div>
+	  </div>
+	  <div class="form-group">
+		<label class="col-sm-2 control-label" for="amazon-login-pay-declined_codes"><span data-toggle="tooltip" title="<?php echo $help_declined_codes; ?>"><?php echo $text_declined_codes; ?></span></label>
+		<div class="col-sm-10">
+		  <select name="amazon_login_pay_declined_code" id="amazon-login-pay-declined_code" class="form-control">
+			<option value=""><?php echo $text_amazon_no_declined; ?></option>
+			<?php foreach ($declined_codes as $k => $v) { ?>
+				<?php if ($amazon_login_pay_declined_code == $v) { ?>
+					<option value="<?php echo $v; ?>" selected="selected"><?php echo $v; ?></option>
+				<?php } else { ?>
+					<option value="<?php echo $v; ?>"><?php echo $v; ?></option>
+				<?php } ?>
 			<?php } ?>
 		  </select>
 		</div>

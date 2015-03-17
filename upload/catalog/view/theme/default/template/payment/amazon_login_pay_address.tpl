@@ -56,7 +56,6 @@ $(document).ready(function() {
 			sellerId: '<?php echo $amazon_login_pay_merchant_id; ?>',
 			onOrderReferenceCreate: function(orderReference) {
 				window.AmazonOrderReferenceId = orderReference.getAmazonOrderReferenceId();
-				console.log(window.AmazonOrderReferenceId);
 			},
 			onAddressSelect: function(orderReference) {
 				$('input[name="addressSelected"]').val('1');

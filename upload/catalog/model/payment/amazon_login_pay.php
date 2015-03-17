@@ -15,7 +15,7 @@ class ModelPaymentAmazonLoginPay extends Model {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "amazon_login_pay_order_total_tax` (`order_total_id`, `code`, `tax`) SELECT `order_total_id`, `code`, " . (float)$total['lpa_tax'] . " FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int)$order_id . " AND `code` = '" . $this->db->escape($total['code']) . "' AND `title` = '" . $this->db->escape($total['title']) . "'");
 		}
 	}
-	
+
 	public function getAddress() {
 		$address_paramter_data['AddressConsentToken'] = $this->session->data['access_token'];
 		$address = $this->model_payment_amazon_login_pay->offAmazon('GetOrderReferenceDetails', $address_paramter_data);
@@ -61,7 +61,7 @@ class ModelPaymentAmazonLoginPay extends Model {
 	}
 
 	public function sendOrder($order_id, $total, $currency_code) {
-		//UPDATE ORDER DETAILS
+
 		$update_paramter_data = array();
 		$update_paramter_data['OrderReferenceAttributes.OrderTotal.Amount'] = $total;
 		$update_paramter_data['OrderReferenceAttributes.OrderTotal.CurrencyCode'] = $currency_code;
@@ -72,20 +72,27 @@ class ModelPaymentAmazonLoginPay extends Model {
 		} else {
 			$update_paramter_data['OrderReferenceAttributes.OrderTotal.PlatformId'] = 'A3EIRX2USI2KJV';
 		}
-		$update_details = $this->offAmazon('SetOrderReferenceDetails', $update_paramter_data);
-		$update_details_response = $this->validateResponse('Update', $update_details);
-		if ($update_details_response['redirect']) {
-			return $update_details_response;
+
+		$address_paramter_data['AddressConsentToken'] = $this->session->data['access_token'];
+		$address = $this->offAmazon('GetOrderReferenceDetails', $address_paramter_data);
+		$address_details_response = simplexml_load_string($address['ResponseBody']);
+
+		$reason_code = (string)$address_details_response->GetOrderReferenceDetailsResult->OrderReferenceDetails->OrderReferenceStatus->ReasonCode;
+
+		if ($reason_code != 'InvalidPaymentMethod') {
+			$update_details = $this->offAmazon('SetOrderReferenceDetails', $update_paramter_data);
+			$update_details_response = $this->validateResponse('Update', $update_details);
+			if ($update_details_response['redirect']) {
+				return $update_details_response;
+			}
 		}
 
-		//CONFIRM ORDER DETAILS
 		$confirm_details = $this->offAmazon('ConfirmOrderReference');
 		$confirm_details_response = $this->validateResponse('Confirm', $confirm_details);
 		if ($confirm_details_response['redirect']) {
 			return $confirm_details_response;
 		}
 
-		//AUTHORIZE ORDER DETAILS
 		$response['capture_status'] = 0;
 		$authorize_paramter_data = array();
 		if ($this->config->get('amazon_login_pay_mode') == 'payment') {
@@ -93,9 +100,11 @@ class ModelPaymentAmazonLoginPay extends Model {
 			$authorize_paramter_data['CaptureReferenceId'] = 'capture_' . mt_rand();
 			$response['capture_status'] = 1;
 		}
-//		$authorize_paramter_data['SellerAuthorizationNote'] = '{"SandboxSimulation": {"State":"Declined", "ReasonCode":"InvalidPaymentMethod"}}';
-//		$authorize_paramter_data['SellerAuthorizationNote'] = '{"SandboxSimulation": {"State":"Declined", "ReasonCode":"AmazonRejected"}}';
-//		$authorize_paramter_data['SellerAuthorizationNote'] = '{"SandboxSimulation": {"State":"Closed", "ReasonCode":"AmazonClosed"}}';
+
+		if ($this->config->get('amazon_login_pay_declined_code')) {
+			$authorize_paramter_data['SellerAuthorizationNote'] = '{"SandboxSimulation": {"State":"Declined", "ReasonCode":"' . $this->config->get('amazon_login_pay_declined_code') . '"}}';
+		}
+
 		$authorize_paramter_data['AuthorizationAmount.Amount'] = $total;
 		$authorize_paramter_data['AuthorizationAmount.CurrencyCode'] = $currency_code;
 		$authorize_paramter_data['AuthorizationReferenceId'] = 'auth_' . mt_rand();
@@ -107,14 +116,6 @@ class ModelPaymentAmazonLoginPay extends Model {
 		}
 
 		$response['amazon_authorization_id'] = (string)$authorize_details_response->AuthorizeResult->AuthorizationDetails->AmazonAuthorizationId;
-
-//		$authorization_paramter_data['AmazonAuthorizationId'] = $response['amazon_authorization_id'];
-//		$authorization_details = $this->offAmazon('GetAuthorizationDetails', $authorization_paramter_data);
-//		$authorization_details_response = $this->validateResponse('Authorize', $authorization_details);
-//
-//		$this->logger($authorization_details_response);
-
-
 		$response['status'] = (string)$authorize_details_response->AuthorizeResult->AuthorizationDetails->AuthorizationStatus->State;
 		if (isset($authorize_details_response->AuthorizeResult->AuthorizationDetails->IdList->member)) {
 			$response['amazon_capture_id'] = (string)$authorize_details_response->AuthorizeResult->AuthorizationDetails->IdList->member;
@@ -131,8 +132,6 @@ class ModelPaymentAmazonLoginPay extends Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET  payment_firstname = '" . $this->db->escape($order['payment_firstname']) . "', payment_lastname = '" . $this->db->escape($order['payment_lastname']) . "', payment_address_1 = '" . $this->db->escape($order['payment_address_1']) . "', payment_address_2 = '" . $this->db->escape($order['payment_address_2']) . "', payment_city = '" . $this->db->escape($order['payment_city']) . "', payment_zone = '" . $this->db->escape($order['payment_zone']) . "', payment_zone_id = " . (int)$order['payment_zone_id'] . ", payment_country = '" . $this->db->escape($order['payment_country']) . "', payment_country_id = " . (int)$order['payment_country_id'] . ", payment_postcode = '" . $this->db->escape($order['payment_postcode']) . "' WHERE order_id = " . (int)$order_id);
 	}
 
-	//IPN RESPONSE
-	//START
 	public function updateStatus($amazon_id, $type, $status) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "amazon_login_pay_order_transaction` SET `status` = '" . $this->db->escape($status) . "' WHERE `amazon_" . $type . "_id` = '" . $this->db->escape($amazon_id) . "' AND `type` = '" . $this->db->escape($type) . "'");
 	}
@@ -169,8 +168,6 @@ class ModelPaymentAmazonLoginPay extends Model {
 		$this->logger(count($amazon_login_pay_order['transactions']));
 		if (count($amazon_login_pay_order['transactions']) == 1) {
 			$capture_paramter_data = array();
-//			$capture_paramter_data['SellerCaptureNote'] = '{"SandboxSimulation": {"State":"Declined", "ReasonCode":"AmazonRejected"}}';
-//			$capture_paramter_data['SellerCaptureNote'] = '{"SandboxSimulation": {"State":"Pending"}}';
 			$capture_paramter_data['AmazonOrderReferenceId'] = $amazon_login_pay_order['amazon_order_reference_id'];
 			$capture_paramter_data['AmazonAuthorizationId'] = $amazon_login_pay_order['amazon_authorization_id'];
 			$capture_paramter_data['CaptureAmount.Amount'] = $amazon_login_pay_order['total'];
@@ -182,7 +179,7 @@ class ModelPaymentAmazonLoginPay extends Model {
 			$capture_response = $this->validateResponse('Capture', $capture_details);
 			if (isset($capture_response->CaptureResult)) {
 				$response['status'] = (string)$capture_response->CaptureResult->CaptureDetails->CaptureStatus->State;
-				$response['amazon_capture_id'] = (string)$capture_response->CaptureResult->CaptureDetails->CaptureReferenceId;
+				$response['amazon_capture_id'] = (string)$capture_response->CaptureResult->CaptureDetails->AmazonCaptureId;
 				return $response;
 			}
 
@@ -236,7 +233,7 @@ class ModelPaymentAmazonLoginPay extends Model {
 				$curl_token = curl_init('https://api.sandbox.amazon.com/auth/o2/tokeninfo?access_token=' . urlencode($access_token));
 				$curl_profile = curl_init('https://api.sandbox.amazon.com/user/profile');
 			}
-		} elseif ($this->config->get('amazon_login_pay_test') == 'live') {
+		} else {
 			if ($this->config->get('amazon_login_pay_marketplace') == 'uk') {
 				$curl_token = curl_init('https://api.amazon.co.uk/auth/o2/tokeninfo?access_token=' . urlencode($access_token));
 				$curl_profile = curl_init('https://api.amazon.co.uk/user/profile');
@@ -304,14 +301,14 @@ class ModelPaymentAmazonLoginPay extends Model {
 			} else {
 				$url = 'https://mws-eu.amazonservices.com/OffAmazonPayments_Sandbox/2013-01-01/';
 			}
-		} elseif ($this->config->get('amazon_login_pay_test') == 'live') {
+		} else {
 			if ($this->config->get('amazon_login_pay_marketplace') == 'us') {
 				$url = 'https://mws.amazonservices.com/OffAmazonPayments/2013-01-01/';
 			} else {
 				$url = 'https://mws-eu.amazonservices.com/OffAmazonPayments/2013-01-01/';
 			}
 		}
-//		$this->logger($parameter_data);
+
 		$parameters = array();
 		$parameters['AWSAccessKeyId'] = $this->config->get('amazon_login_pay_access_key');
 		$parameters['Action'] = $Action;
@@ -392,9 +389,6 @@ class ModelPaymentAmazonLoginPay extends Model {
 		return str_replace('%7E', '~', rawurlencode($value));
 	}
 
-	//IPN HELPER SCRIPTS
-	//START
-
 	public function parseRawMessage($body) {
 		$snsMessage = $this->buildMessage($body);
 		$ipnMessage = $this->getField("Message", $snsMessage);
@@ -439,9 +433,6 @@ class ModelPaymentAmazonLoginPay extends Model {
 		}
 	}
 
-	//	IPN HELPER SCRIPTS
-	//	END
-
 	public function getWidgetJs() {
 		if ($this->config->get('amazon_login_pay_test') == 'sandbox') {
 			if ($this->config->get('amazon_login_pay_marketplace') == 'uk') {
@@ -451,7 +442,7 @@ class ModelPaymentAmazonLoginPay extends Model {
 			} else {
 				$amazon_payment_js = 'https://static-na.payments-amazon.com/OffAmazonPayments/us/sandbox/js/Widgets.js';
 			}
-		} elseif ($this->config->get('amazon_login_pay_test') == 'live') {
+		} else {
 			if ($this->config->get('amazon_login_pay_marketplace') == 'uk') {
 				$amazon_payment_js = 'https://static-eu.payments-amazon.com/OffAmazonPayments/uk/lpa/js/Widgets.js';
 			} elseif ($this->config->get('amazon_login_pay_marketplace') == 'de') {

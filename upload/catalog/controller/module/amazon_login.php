@@ -72,7 +72,6 @@ class ControllerModuleAmazonLogin extends Controller {
 				if ($this->validate($user->email)) {
 					unset($this->session->data['guest']);
 
-					// Default Shipping Address
 					$this->load->model('account/address');
 
 					if ($this->config->get('config_tax_customer') == 'payment') {
@@ -83,7 +82,6 @@ class ControllerModuleAmazonLogin extends Controller {
 						$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 					}
 
-					// Add to activity log
 					$this->load->model('account/activity');
 
 					$activity_data = array(
@@ -132,7 +130,6 @@ class ControllerModuleAmazonLogin extends Controller {
 				if ($this->validate($user->email)) {
 					unset($this->session->data['guest']);
 
-					// Default Shipping Address
 					$this->load->model('account/address');
 
 					if ($this->config->get('config_tax_customer') == 'payment') {
@@ -143,7 +140,6 @@ class ControllerModuleAmazonLogin extends Controller {
 						$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 					}
 
-					// Add to activity log
 					$this->load->model('account/activity');
 
 					$activity_data = array(

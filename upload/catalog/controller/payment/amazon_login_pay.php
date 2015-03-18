@@ -132,7 +132,6 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			$this->failure($this->language->get('error_process_order'));
 		}
 
-		// Validate cart has products and has stock.
 		if (!empty($this->session->data['vouchers']) || !$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$this->response->redirect($this->url->link('checkout/cart'));
 		}
@@ -145,7 +144,6 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$data['column_total'] = $this->language->get('column_total');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
-		// Validate minimum quantity requirements.
 		$products = $this->cart->getProducts();
 
 		foreach ($products as $product) {
@@ -367,7 +365,6 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 			$this->load->model('affiliate/affiliate');
 
-			// Affiliate
 			$affiliate_info = $this->model_affiliate_affiliate->getAffiliateByCode($this->request->cookie['tracking']);
 
 			if ($affiliate_info) {
@@ -378,7 +375,6 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 				$order_data['commission'] = 0;
 			}
 
-			// Marketing
 			$this->load->model('checkout/marketing');
 
 			$marketing_info = $this->model_checkout_marketing->getMarketingByCode($this->request->cookie['tracking']);

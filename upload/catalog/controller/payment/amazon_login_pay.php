@@ -132,7 +132,6 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			$this->failure($this->language->get('error_process_order'));
 		}
 
-		// Validate cart has products and has stock.
 		if (!empty($this->session->data['vouchers']) || !$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$this->response->redirect($this->url->link('checkout/cart'));
 		}
@@ -145,7 +144,6 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$data['column_total'] = $this->language->get('column_total');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
-		// Validate minimum quantity requirements.
 		$products = $this->cart->getProducts();
 
 		foreach ($products as $product) {
@@ -367,7 +365,6 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 			$this->load->model('affiliate/affiliate');
 
-			// Affiliate
 			$affiliate_info = $this->model_affiliate_affiliate->getAffiliateByCode($this->request->cookie['tracking']);
 
 			if ($affiliate_info) {
@@ -378,7 +375,6 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 				$order_data['commission'] = 0;
 			}
 
-			// Marketing
 			$this->load->model('checkout/marketing');
 
 			$marketing_info = $this->model_checkout_marketing->getMarketingByCode($this->request->cookie['tracking']);
@@ -848,12 +844,9 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 	public function ipn() {
 		$this->load->model('payment/amazon_login_pay');
-		$this->model_payment_amazon_login_pay->logger('ipn');
 		if (isset($this->request->get['token']) && $this->request->get['token'] == $this->config->get('amazon_login_pay_ipn_token')) {
-			$this->model_payment_amazon_login_pay->logger('token');
 			$body = file_get_contents('php://input');
 			if ($body) {
-				$this->model_payment_amazon_login_pay->logger('body');
 				$ipn_details_xml = $this->model_payment_amazon_login_pay->parseRawMessage($body);
 				switch ($ipn_details_xml->getName()) {
 					case 'AuthorizationNotification':

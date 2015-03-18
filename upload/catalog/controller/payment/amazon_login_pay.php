@@ -1,15 +1,16 @@
 <?php
 class ControllerPaymentAmazonLoginPay extends Controller {
-	public function address() {
-		if (!$this->customer->isLogged()) {
-			$this->session->data['lpa']['error'] = $this->language->get('error_login');
-			$this->response->redirect($this->url->link('payment/amazon_login_pay/failure', '', 'SSL'));
-		}
 
+	public function address() {
 		$this->load->language('payment/amazon_login_pay');
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('payment/amazon_login_pay');
+
+		if (!$this->customer->isLogged() || !isset($_COOKIE['amazon_Login_state_cache'])) {
+			$this->session->data['lpa']['error'] = $this->language->get('error_login');
+			$this->response->redirect($this->url->link('payment/amazon_login_pay/failure', '', 'SSL'));
+		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 		$data['heading_address'] = $this->language->get('heading_address');
@@ -29,6 +30,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 		$data['cart'] = $this->url->link('checkout/cart');
 		$data['text_cart'] = $this->language->get('text_cart');
+
 
 		$data['amazon_login_pay_merchant_id'] = $this->config->get('amazon_login_pay_merchant_id');
 		$data['amazon_login_pay_client_id'] = $this->config->get('amazon_login_pay_client_id');
@@ -55,15 +57,15 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 	}
 
 	public function paymentMethod() {
-		if (!$this->customer->isLogged()) {
-			$this->session->data['lpa']['error'] = $this->language->get('error_login');
-			$this->response->redirect($this->url->link('payment/amazon_login_pay/failure', '', 'SSL'));
-		}
-
 		$this->load->language('payment/amazon_login_pay');
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('payment/amazon_login_pay');
+
+		if (!$this->customer->isLogged() || !isset($_COOKIE['amazon_Login_state_cache'])) {
+			$this->session->data['lpa']['error'] = $this->language->get('error_login');
+			$this->response->redirect($this->url->link('payment/amazon_login_pay/failure', '', 'SSL'));
+		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 		$data['heading_payment'] = $this->language->get('heading_payment');
@@ -101,11 +103,6 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 	}
 
 	public function confirm() {
-		if (!$this->customer->isLogged()) {
-			$this->session->data['lpa']['error'] = $this->language->get('error_login');
-			$this->response->redirect($this->url->link('payment/amazon_login_pay/failure', '', 'SSL'));
-		}
-
 		$this->load->language('payment/amazon_login_pay');
 		$this->load->language('checkout/checkout');
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -113,9 +110,13 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$this->load->model('extension/extension');
 		$this->load->model('payment/amazon_login_pay');
 
+		if (!$this->customer->isLogged() || !isset($_COOKIE['amazon_Login_state_cache'])) {
+			$this->session->data['lpa']['error'] = $this->language->get('error_login');
+			$this->response->redirect($this->url->link('payment/amazon_login_pay/login_failure', '', 'SSL'));
+		}
+
 		$data['amazon_login_pay_merchant_id'] = $this->config->get('amazon_login_pay_merchant_id');
 		$data['amazon_login_pay_client_id'] = $this->config->get('amazon_login_pay_client_id');
-
 		if ($this->config->get('amazon_login_pay_test') == 'sandbox') {
 			$data['amazon_login_pay_test'] = true;
 		}
@@ -123,11 +124,11 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$amazon_payment_js = $this->model_payment_amazon_login_pay->getWidgetJs();
 		$this->document->addScript($amazon_payment_js);
 
+
 		if (isset($this->session->data['lpa']['AmazonOrderReferenceId'])) {
 			$data['AmazonOrderReferenceId'] = $this->session->data['lpa']['AmazonOrderReferenceId'];
 		} else {
-			$this->session->data['lpa']['error'] = $this->language->get('error_process_order');
-			$this->response->redirect($this->url->link('payment/amazon_login_pay/failure', '', 'SSL'));
+			$this->failure($this->language->get('error_process_order'));
 		}
 
 		// Validate cart has products and has stock.
@@ -257,6 +258,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$order_data['telephone'] = $address['telephone'];
 		$order_data['fax'] = '';
 
+
 		if (isset($this->session->data['coupon'])) {
 			$this->load->model('checkout/coupon');
 
@@ -292,8 +294,8 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$order_data['payment_method'] = $this->language->get('text_lpa');
 		$order_data['payment_code'] = 'amazon_login_pay';
 
-		$order_data['shipping_firstname'] = $this->customer->getFirstName();
-		$order_data['shipping_lastname'] = $this->customer->getLastName();
+		$order_data['shipping_firstname'] = $address['firstname'];
+		$order_data['shipping_lastname'] = $address['lastname'];
 		$order_data['shipping_company'] = $address['company'];
 		$order_data['shipping_address_1'] = $address['address_1'];
 		$order_data['shipping_address_2'] = $address['address_2'];
@@ -495,6 +497,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$this->load->model('account/order');
 		$this->load->model('payment/amazon_login_pay');
 
+
 		if (!isset($this->session->data['order_id'])) {
 			$this->response->redirect($this->url->link('common/home'));
 		}
@@ -542,8 +545,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			$total += $order_total['price'];
 		}
 		if (!isset($this->session->data['lpa']['AmazonOrderReferenceId'])) {
-			$this->session->data['lpa']['error'] = $this->language->get('error_process_order');
-			$this->response->redirect($this->url->link('payment/amazon_login_pay/failure', '', 'SSL'));
+			$this->failure($this->language->get('error_process_order'));
 		}
 
 		$total = $this->currency->format($total, $currency_code, false, false);
@@ -552,6 +554,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$this->model_payment_amazon_login_pay->logger(print_r($response, 1));
 
 		if (isset($response['redirect'])) {
+			$this->$response['redirect']($this->language->get('error_process_order'));
 			$this->session->data['lpa']['error'] = $this->language->get('error_process_order');
 			$this->response->redirect($this->url->link('payment/amazon_login_pay/' . $response['redirect'], '', 'SSL'));
 		}
@@ -575,8 +578,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 			$this->response->redirect($this->url->link('payment/amazon_login_pay/success', '', 'SSL'));
 		} else {
-			$this->session->data['lpa']['error'] = $this->language->get('error_process_order');
-			$this->response->redirect($this->url->link('payment/amazon_login_pay/failure', '', 'SSL'));
+			$this->failure($this->language->get('error_process_order'));
 		}
 	}
 
@@ -585,7 +587,19 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$this->response->redirect($this->url->link('checkout/success', '', 'SSL'));
 	}
 
-	public function failure() {
+	public function failure($error) {
+		unset($this->session->data['lpa']);
+		$this->session->data['error'] = $error;
+		$this->response->redirect($this->url->link('checkout/cart', '', 'SSL'));
+
+
+
+		unset($this->session->data['lpa']);
+		$this->session->data['error'] = $this->language->get('error_process_order');
+		$this->response->redirect($this->url->link('checkout/cart', '', 'SSL'));
+	}
+
+	public function login_failure() {
 		$this->load->language('payment/amazon_login_pay');
 		$this->document->setTitle($this->language->get('heading_title'));
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -641,7 +655,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 				$country_name = $result['name'];
 				$country_id = (int)$result['country_id'];
 
-				$zone = (string)$address_xml->StateOrProvinceCode;
+				$zone = (string)$address_xml->StateOrRegion;
 
 				$result = $this->model_payment_amazon_login_pay->getZone($zone, $country_id);
 
@@ -680,9 +694,13 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 				$address_2 = '';
 			}
 
+			$full_name = explode(' ', (string)$address_xml->Name);
+			$last_name = array_pop($full_name);
+			$first_name = implode(' ', $full_name);
+
 			$address = array(
-				'firstname' => (string)$address_xml->Name,
-				'lastname' => '',
+				'firstname' => $first_name,
+				'lastname' => $last_name,
 				'company' => '',
 				'company_id' => '',
 				'tax_id' => '',
@@ -692,7 +710,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 				'postcode' => (string)$address_xml->PostalCode,
 				'city' => (string)$address_xml->City,
 				'zone_id' => $zone_id,
-				'zone' => (string)$address_xml->StateOrProvinceCode,
+				'zone' => (string)$address_xml->StateOrRegion,
 				'zone_code' => $zone_code,
 				'country_id' => $country_id,
 				'country' => $country_name,
@@ -868,4 +886,5 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			}
 		}
 	}
+
 }

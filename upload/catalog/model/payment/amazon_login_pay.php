@@ -1,5 +1,4 @@
 <?php
-
 class ModelPaymentAmazonLoginPay extends Model {
 
 	public function getCountry($iso2) {

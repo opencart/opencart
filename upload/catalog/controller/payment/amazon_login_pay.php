@@ -1,4 +1,5 @@
 <?php
+
 class ControllerPaymentAmazonLoginPay extends Controller {
 
 	public function address() {
@@ -846,23 +847,28 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 	}
 
 	public function ipn() {
+		$this->load->model('payment/amazon_login_pay');
+		$this->model_payment_amazon_login_pay->logger('ipn');
 		if (isset($this->request->get['token']) && $this->request->get['token'] == $this->config->get('amazon_login_pay_ipn_token')) {
-			$this->load->model('payment/amazon_login_pay');
+			$this->model_payment_amazon_login_pay->logger('token');
 			$body = file_get_contents('php://input');
-			$ipn_details_xml = $this->model_payment_amazon_login_pay->parseRawMessage($body);
-			switch ($ipn_details_xml->getName()) {
-				case 'AuthorizationNotification':
-					$this->model_payment_amazon_login_pay->authorizationIpn($ipn_details_xml);
-					break;
-				case 'CaptureNotification':
-					$this->model_payment_amazon_login_pay->captureIpn($ipn_details_xml);
-					break;
-				case 'RefundNotification':
-					$this->model_payment_amazon_login_pay->refundIpn($ipn_details_xml);
-					break;
+			if ($body) {
+				$this->model_payment_amazon_login_pay->logger('body');
+				$ipn_details_xml = $this->model_payment_amazon_login_pay->parseRawMessage($body);
+				switch ($ipn_details_xml->getName()) {
+					case 'AuthorizationNotification':
+						$this->model_payment_amazon_login_pay->authorizationIpn($ipn_details_xml);
+						break;
+					case 'CaptureNotification':
+						$this->model_payment_amazon_login_pay->captureIpn($ipn_details_xml);
+						break;
+					case 'RefundNotification':
+						$this->model_payment_amazon_login_pay->refundIpn($ipn_details_xml);
+						break;
+				}
 			}
 		} else {
-			$this->model_payment_amazon_login_pay->logger(print_r('Incorrect security token', 1));
+			$this->model_payment_amazon_login_pay->logger('Incorrect security token');
 		}
 
 		$this->response->addHeader('HTTP/1.1 200 OK');

@@ -33,7 +33,7 @@
               <div class="text-danger"><?php echo $error_name; ?></div>
               <?php } ?>
             </div>
-          </div>          
+          </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-product"><?php echo $entry_product; ?></label>
             <div class="col-sm-10">
@@ -107,13 +107,13 @@ $('input[name=\'product\']').autocomplete({
 	},
 	select: function(item) {
 		$('input[name=\'product\']').val('');
-		
+
 		$('#featured-product' + item['value']).remove();
-		
-		$('#featured-product').append('<div id="featured-product' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '" /></div>');	
+
+		$('#featured-product').append('<div id="featured-product' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '" /></div>');
 	}
 });
-	
+
 $('#featured-product').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });

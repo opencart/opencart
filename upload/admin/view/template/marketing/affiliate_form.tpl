@@ -346,7 +346,7 @@ $('select[name=\'country_id\']').on('change', function() {
 			if (json['zone'] && json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
 					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-					
+
 					if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
 						html += ' selected="selected"';
 					}
@@ -366,7 +366,7 @@ $('select[name=\'country_id\']').on('change', function() {
 });
 
 $('select[name=\'country_id\']').trigger('change');
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('input[name=\'payment\']').on('change', function() {
 	$('.payment').hide();
@@ -375,7 +375,7 @@ $('input[name=\'payment\']').on('change', function() {
 });
 
 $('input[name=\'payment\']:checked').trigger('change');
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('#transaction').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
@@ -399,7 +399,7 @@ $('#button-transaction').on('click', function() {
 		},
 		success: function(html) {
 			$('.alert').remove();
-			
+
 			$('#transaction').html(html);
 
 			$('#tab-transaction input[name=\'amount\']').val('');

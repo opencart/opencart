@@ -96,23 +96,23 @@
 $('#input-message').summernote({
 	height: 300
 });
-//--></script> 
-  <script type="text/javascript"><!--	
+//--></script>
+  <script type="text/javascript"><!--
 $('select[name=\'to\']').on('change', function() {
 	$('.to').hide();
-	
+
 	$('#to-' + this.value.replace('_', '-')).show();
 });
 
 $('select[name=\'to\']').trigger('change');
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 // Customers
 $('input[name=\'customers\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
 			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-			dataType: 'json',			
+			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
@@ -125,11 +125,11 @@ $('input[name=\'customers\']').autocomplete({
 	},
 	'select': function(item) {
 		$('input[name=\'customers\']').val('');
-		
+
 		$('#customer' + item['value']).remove();
-		
-		$('#customer').append('<div id="customer' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="customer[]" value="' + item['value'] + '" /></div>');	
-	}	
+
+		$('#customer').append('<div id="customer' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="customer[]" value="' + item['value'] + '" /></div>');
+	}
 });
 
 $('#customer').delegate('.fa-minus-circle', 'click', function() {
@@ -141,7 +141,7 @@ $('input[name=\'affiliates\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
 			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-			dataType: 'json',			
+			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
@@ -154,11 +154,11 @@ $('input[name=\'affiliates\']').autocomplete({
 	},
 	'select': function(item) {
 		$('input[name=\'affiliates\']').val('');
-		
+
 		$('#affiliate' + item['value']).remove();
-		
-		$('#affiliate').append('<div id="affiliate' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="affiliate[]" value="' + item['value'] + '" /></div>');	
-	}	
+
+		$('#affiliate').append('<div id="affiliate' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="affiliate[]" value="' + item['value'] + '" /></div>');
+	}
 });
 
 $('#affiliate').delegate('.fa-minus-circle', 'click', function() {
@@ -170,7 +170,7 @@ $('input[name=\'products\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
 			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-			dataType: 'json',			
+			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
@@ -183,11 +183,11 @@ $('input[name=\'products\']').autocomplete({
 	},
 	'select': function(item) {
 		$('input[name=\'products\']').val('');
-		
+
 		$('#product' + item['value']).remove();
-		
-		$('#product').append('<div id="product' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '" /></div>');	
-	}	
+
+		$('#product').append('<div id="product' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product[]" value="' + item['value'] + '" /></div>');
+	}
 });
 
 $('#product').delegate('.fa-minus-circle', 'click', function() {
@@ -197,46 +197,46 @@ $('#product').delegate('.fa-minus-circle', 'click', function() {
 function send(url) {
 	// Summer not fix
 	$('textarea[name=\'message\']').val($('#input-message').code());
-	
+
 	$.ajax({
 		url: url,
 		type: 'post',
-		data: $('#content select, #content input, #content textarea'),		
+		data: $('#content select, #content input, #content textarea'),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-send').button('loading');	
+			$('#button-send').button('loading');
 		},
 		complete: function() {
 			$('#button-send').button('reset');
-		},				
+		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();
-			
+
 			if (json['error']) {
 				if (json['error']['warning']) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '</div>');
 				}
-				
+
 				if (json['error']['subject']) {
 					$('input[name=\'subject\']').after('<div class="text-danger">' + json['error']['subject'] + '</div>');
-				}	
-				
+				}
+
 				if (json['error']['message']) {
 					$('textarea[name=\'message\']').parent().append('<div class="text-danger">' + json['error']['message'] + '</div>');
-				}									
-			}			
-			
+				}
+			}
+
 			if (json['next']) {
 				if (json['success']) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i>  ' + json['success'] + '</div>');
-					
+
 					send(json['next']);
-				}		
+				}
 			} else {
 				if (json['success']) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
-				}					
-			}				
+				}
+			}
 		}
 	});
 }

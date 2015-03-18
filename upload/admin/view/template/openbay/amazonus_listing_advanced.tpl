@@ -708,5 +708,5 @@ function saveNode(id){
     hideGreyScreen('browseNodeForm');
 }
 
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

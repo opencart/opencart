@@ -228,7 +228,7 @@ $('select[name=\'type\']').on('change', function() {
 		$('#custom-field-value').hide();
 		$('#display-value').show();
 	}
-	
+
 	if (this.value == 'date') {
 		$('#display-value > div').html('<div class="input-group date"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="<?php echo $entry_value; ?>" data-date-format="YYYY-MM-DD" id="input-value" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div>');
 	} else if (this.value == 'time') {
@@ -240,15 +240,15 @@ $('select[name=\'type\']').on('change', function() {
 	} else {
 		$('#display-value > div').html('<input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="<?php echo $entry_value; ?>" id="input-value" class="form-control" />');
 	}
-	
+
 	$('.date').datetimepicker({
 		pickTime: false
 	});
-	
+
 	$('.time').datetimepicker({
 		pickDate: false
-	});	
-		
+	});
+
 	$('.datetime').datetimepicker({
 		pickDate: true,
 		pickTime: true
@@ -260,7 +260,7 @@ $('select[name=\'type\']').trigger('change');
 var custom_field_value_row = <?php echo $custom_field_value_row; ?>;
 
 function addCustomFieldValue() {
-	html  = '<tr id="custom-field-value-row' + custom_field_value_row + '">';	
+	html  = '<tr id="custom-field-value-row' + custom_field_value_row + '">';
     html += '  <td class="text-left" style="width: 70%;"><input type="hidden" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_id]" value="" />';
 	<?php foreach ($languages as $language) { ?>
 	html += '    <div class="input-group">';
@@ -270,10 +270,10 @@ function addCustomFieldValue() {
 	html += '  </td>';
 	html += '  <td class="text-right"><input type="text" name="custom_field_value[' + custom_field_value_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#custom-field-value-row' + custom_field_value_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
-	html += '</tr>';	
-	
+	html += '</tr>';
+
 	$('#custom-field-value tbody').append(html);
-	
+
 	custom_field_value_row++;
 }
 //--></script></div>

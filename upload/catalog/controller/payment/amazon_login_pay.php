@@ -848,12 +848,9 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 	public function ipn() {
 		$this->load->model('payment/amazon_login_pay');
-		$this->model_payment_amazon_login_pay->logger('ipn');
 		if (isset($this->request->get['token']) && $this->request->get['token'] == $this->config->get('amazon_login_pay_ipn_token')) {
-			$this->model_payment_amazon_login_pay->logger('token');
 			$body = file_get_contents('php://input');
 			if ($body) {
-				$this->model_payment_amazon_login_pay->logger('body');
 				$ipn_details_xml = $this->model_payment_amazon_login_pay->parseRawMessage($body);
 				switch ($ipn_details_xml->getName()) {
 					case 'AuthorizationNotification':

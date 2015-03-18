@@ -67,10 +67,10 @@ class ModelExtensionModification extends Model {
 
 		return $query->row['total'];
 	}
-	
+
 	public function getModificationByCode($code) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "modification WHERE code = '" . $this->db->escape($code) . "'");
 
 		return $query->row;
-	}	
+	}
 }

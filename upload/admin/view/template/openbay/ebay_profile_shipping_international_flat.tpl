@@ -5,7 +5,7 @@
       <div class="row form-group">
         <div class="col-sm-1 text-right"><label class="control-label"><?php echo $text_shipping_service; ?></label></div>
         <div class="col-sm-11">
-          <select name="data[national][flat][service_id][<?php echo $key; ?>]" class="form-control">
+          <select name="data[international][flat][service_id][<?php echo $key; ?>]" class="form-control">
             <?php foreach($data['international']['flat']['types']['service'] as $service_key => $service_type) { ?>
             <option value="<?php echo $service_key; ?>" <?php if ($service_key == $service) { echo ' selected'; } ?>><?php echo $service_type['description']; ?></option>
             <?php } ?>

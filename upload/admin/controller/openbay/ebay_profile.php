@@ -238,10 +238,10 @@ class ControllerOpenbayEbayProfile extends Controller {
 		if ($type == 0) {
 			$data['zones'] = $this->model_openbay_ebay->getShippingLocations();
 
-			$data['data']['national']['calculated']['types'] = $this->model_openbay_ebay->getShippingService('national', 'calculated');
-			$data['data']['international']['calculated']['types'] = $this->model_openbay_ebay->getShippingService('international', 'calculated');
-			$data['data']['national']['flat']['types'] = $this->model_openbay_ebay->getShippingService('national', 'flat');
-			$data['data']['international']['flat']['types'] = $this->model_openbay_ebay->getShippingService('international', 'flat');
+			$data['data']['national']['calculated']['types'] = $this->model_openbay_ebay->getShippingService(0, 'calculated');
+			$data['data']['international']['calculated']['types'] = $this->model_openbay_ebay->getShippingService(1, 'calculated');
+			$data['data']['national']['flat']['types'] = $this->model_openbay_ebay->getShippingService(0, 'flat');
+			$data['data']['international']['flat']['types'] = $this->model_openbay_ebay->getShippingService(1, 'flat');
 
 			$data['data']['national']['calculated']['count']	= isset($data['data']['national']['calculated']['service_id']) ? max(array_keys($data['data']['national']['calculated']['service_id']))+1 : 0;
 			$data['data']['national']['flat']['count']	= isset($data['data']['national']['flat']['service_id']) ? max(array_keys($data['data']['national']['flat']['service_id']))+1 : 0;
@@ -292,10 +292,10 @@ class ControllerOpenbayEbayProfile extends Controller {
 
 		if ($profile_info['type'] == 0) {
 			$data['data'] = $profile_info['data'];
-			$data['data']['national']['calculated']['types'] = $this->model_openbay_ebay->getShippingService('national', 'calculated');
-			$data['data']['international']['calculated']['types'] = $this->model_openbay_ebay->getShippingService('international', 'calculated');
-			$data['data']['national']['flat']['types'] = $this->model_openbay_ebay->getShippingService('national', 'flat');
-			$data['data']['international']['flat']['types'] = $this->model_openbay_ebay->getShippingService('international', 'flat');
+			$data['data']['national']['calculated']['types'] = $this->model_openbay_ebay->getShippingService(0, 'calculated');
+			$data['data']['international']['calculated']['types'] = $this->model_openbay_ebay->getShippingService(1, 'calculated');
+			$data['data']['national']['flat']['types'] = $this->model_openbay_ebay->getShippingService(0, 'flat');
+			$data['data']['international']['flat']['types'] = $this->model_openbay_ebay->getShippingService(1, 'flat');
 
 			$data['data']['national']['calculated']['count']	= isset($data['data']['national']['calculated']['service_id']) ? max(array_keys($data['data']['national']['calculated']['service_id']))+1 : 0;
 			$data['data']['national']['flat']['count']	= isset($data['data']['national']['flat']['service_id']) ? max(array_keys($data['data']['national']['flat']['service_id']))+1 : 0;

@@ -284,7 +284,7 @@ final class Openbay {
 		$text .= $language->get('text_new_order_total') . "\n";
 
 		foreach ($order_total_query->rows as $total) {
-			$text .= $total['title'] . ': ' . html_entity_decode($total['text'], ENT_NOQUOTES, 'UTF-8') . "\n";
+			$text .= $total['title'] . ': ' . html_entity_decode($this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
 		}
 
 		$text .= "\n";
@@ -294,14 +294,7 @@ final class Openbay {
 			$text .= $order_info['comment'] . "\n\n";
 		}
 
-		$mail = new Mail();
-		$mail->protocol = $this->config->get('config_mail_protocol');
-		$mail->parameter = $this->config->get('config_mail_parameter');
-		$mail->hostname = $this->config->get('config_smtp_host');
-		$mail->username = $this->config->get('config_smtp_username');
-		$mail->password = $this->config->get('config_smtp_password');
-		$mail->port = $this->config->get('config_smtp_port');
-		$mail->timeout = $this->config->get('config_smtp_timeout');
+		$mail = new Mail($this->config->get('config_mail'));
 		$mail->setTo($this->config->get('config_email'));
 		$mail->setFrom($this->config->get('config_email'));
 		$mail->setSender($order_info['store_name']);
@@ -334,7 +327,7 @@ final class Openbay {
 
 	public function getProductModelNumber($product_id, $sku = null) {
 		if($sku != null) {
-			$qry = $this->db->query("SELECT `sku` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($sku) . "'");
+			$qry = $this->db->query("SELECT `sku` FROM `" . DB_PREFIX . "product_option_variant` WHERE `product_id` = '" . (int)$product_id . "' AND `sku` = '" . $this->db->escape($sku) . "'");
 
 			if($qry->num_rows > 0) {
 				return $qry->row['sku'];
@@ -420,12 +413,38 @@ final class Openbay {
 					'option_id'         => $product_option['option_id'],
 					'name'              => $product_option['name'],
 					'type'              => $product_option['type'],
-					'option_value'      => $product_option['option_value'],
+					'option_value'      => $product_option['value'],
 					'required'          => $product_option['required']
 				);
 			}
 		}
 
 		return $product_option_data;
+	}
+
+	public function getOrderProducts($order_id) {
+		$order_products = $this->db->query("SELECT `product_id`, `order_product_id` FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
+
+		if($order_products->num_rows > 0) {
+			return $order_products->rows;
+		} else {
+			return array();
+		}
+	}
+
+	public function getOrderProductVariant($order_id, $product_id, $order_product_id) {
+		$this->load->model('module/openstock');
+
+		$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$order_product_id . "'");
+
+		if ($order_option_query->num_rows) {
+			$options = array();
+
+			foreach ($order_option_query->rows as $option) {
+				$options[] = $option['product_option_value_id'];
+			}
+
+			return $this->model_module_openstock->getVariantByOptionValues($options, $product_id);
+		}
 	}
 }

@@ -320,6 +320,7 @@ class ControllerOpenbayAmazonListing extends Controller {
 
 		$data['product_links'] = $this->model_openbay_amazon->getProductLinks($product_id);
 		$data['url_return']  = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, 'SSL');
+
 		if ($status == 'ok' || $status == 'linked') {
 			$data['url_create_new']  = $this->url->link('openbay/amazon_listing/createNew', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL');
 			$data['url_delete_links']  = $this->url->link('openbay/amazon_listing/deleteLinks', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL');
@@ -347,6 +348,7 @@ class ControllerOpenbayAmazonListing extends Controller {
 		$data['column_combination'] = $this->language->get('column_combination');
 		$data['column_sku'] = $this->language->get('column_sku');
 		$data['column_amazon_sku'] = $this->language->get('column_amazon_sku');
+		$data['column_sku_variant'] = $this->language->get('column_sku_variant');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 
 		$data['header'] = $this->load->controller('common/header');

@@ -23,7 +23,7 @@
         <div class="alert alert-danger" id="form-error" style="display:none;">
           <div class="row">
             <div class="col-sm-8"><?php echo $text_error_loading; ?></div>
-            <div class="col-sm-4 text-right"><a onclick="load();" class="btn btn-primary"><i class="fa fa-refresh"></i> <?php echo $button_retry; ?></a></div>
+            <div class="col-sm-4 text-right"><a id="button-load" class="btn btn-primary"><i class="fa fa-refresh"></i> <?php echo $button_retry; ?></a></div>
           </div>
         </div>
         <div class="content displayNone" id="form-main">
@@ -49,25 +49,25 @@
             <div class="form-group stdMatrix">
               <label class="col-sm-2 control-label" for="qty-instock"><?php echo $entry_stock_store; ?></label>
               <div class="col-sm-2">
-                <input type="text" name="qty_instock" id="qty-instock" class="form-control" disabled="disabled" />
-                <span class="help-block"><?php echo $help_stock_store; ?></span> </div>
+              <input type="text" name="qty_instock" id="qty-instock" class="form-control" disabled="disabled" />
+              <span class="help-block"><?php echo $help_stock_store; ?></span> </div>
             </div>
             <div class="form-group stdMatrix">
               <label class="col-sm-2 control-label" for="qty-listed"><?php echo $entry_stock_listed; ?></label>
               <div class="col-sm-2">
-                <input type="text" name="qty_listed" id="qty-listed" class="form-control" disabled="disabled" />
-                <span class="help-block"><?php echo $help_stock_listed; ?></span> </div>
+              <input type="text" name="qty_listed" id="qty-listed" class="form-control" disabled="disabled" />
+              <span class="help-block"><?php echo $help_stock_listed; ?></span> </div>
             </div>
             <div class="form-group stdMatrix">
               <label class="col-sm-2 control-label"><?php echo $entry_stock_reserve; ?></label>
               <div class="col-sm-2">
-                <input type="text" name="qty_reserve" value="0" id="qty-reserve" class="form-control" onkeyup="updateReserveMessage();" />
-                <span class="help-block"><?php echo $help_stock_reserve; ?></span> </div>
+              <input type="text" name="qty_reserve" value="0" id="qty-reserve" class="form-control" onkeyup="updateReserveMessage();" />
+              <span class="help-block"><?php echo $help_stock_reserve; ?></span> </div>
             </div>
             <div class="form-group" id="variantMatrix">
               <label class="col-sm-2 control-label"><?php echo $entry_stock_matrix_active; ?></label>
               <div class="col-sm-10">
-                <table class="table table-bordered table-hover">
+                <table class="table table-striped table-bordered table-hover">
                   <thead>
                     <tr>
                       <td class="text-center"><?php echo $column_sku; ?></td>
@@ -80,18 +80,17 @@
                     </tr>
                   </thead>
                   <tbody id="matrix-active">
-                  <input type="hidden" name="variant" value="1" />
-                  <input type="hidden" name="optGroupArray" value="" id="optGroupArray" />
-                  <input type="hidden" name="optGroupRelArray" value="" id="optGroupRelArray" />
-                    </tbody>
-
+                    <input type="hidden" name="variant" value="1" />
+                    <input type="hidden" name="optGroupArray" value="" id="option-groups" />
+                    <input type="hidden" name="optGroupRelArray" value="" id="option-group-relationship" />
+                  </tbody>
                 </table>
               </div>
             </div>
             <div class="form-group" id="variantMatrixInactive" style="display:none;">
               <label class="col-sm-2 control-label"><?php echo $entry_stock_matrix_inactive; ?></label>
               <div class="col-sm-10">
-                <table class="table table-bordered table-hover">
+                <table class="table table-striped table-bordered table-hover">
                   <thead>
                     <tr>
                       <th class="text-center"><?php echo $column_sku; ?></th>
@@ -114,6 +113,7 @@
                 <a class="btn btn-danger" id="button-end-item"><i class="fa fa-minus-circle"></i> <?php echo $button_end; ?></a>
                 <a class="btn btn-danger" id="button-remove-link"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></a>
                 <a class="btn btn-primary" href="<?php echo $view_link; ?>" target="_BLANK" data-toggle="tooltip" title="<?php echo $button_view; ?>"><i class="fa fa-external-link"></i></a>
+                <a class="btn btn-primary" id="button-edit-item" data-toggle="tooltip" title="<?php echo $button_edit; ?>" style="display:none;"><i class="fa fa-pencil"></i></a>
                 <a class="btn btn-primary" id="button-save" data-toggle="tooltip" title="<?php echo $button_save; ?>"><i class="fa fa-save"></i></a>
               </div>
             </div>
@@ -156,8 +156,8 @@
 
                         if (data.data.variant.variant == 1){
                             $('.stdMatrix').remove();
-                            $('#optGroupArray').val(data.data.variant.data.grp_info.optGroupArray);
-                            $('#optGroupRelArray').val(data.data.variant.data.grp_info.optGroupRelArray);
+                            $('#option-groups').val(data.data.variant.data.group_information.option_groups);
+                            $('#option-group-relationship').val(data.data.variant.data.group_information.option_group_relationship);
 
                             var i = 0;
                             var html = '';
@@ -165,50 +165,76 @@
                             $.each(data.data.variant.data.options, function( k, v ) {
                                 html = '';
 
-                                $('#matrix-active').append('<input type="hidden" name="opt['+i+'][sku]" value="'+v.ebay.SKU+'" />');
+                                $('#matrix-active').append('<input type="hidden" name="opt[' + i + '][sku]" value="' + v.ebay.SKU + '" />');
 
-                                html +='<tr>';
-                                html +='<input type="hidden" name="varPriceExCount" class="varPriceExCount" value="'+i+'" />';
-                                html +='<td class="text-center">'+v.local.var+'</td>';
-                                html +='<td class="text-center">'+v.local.stock+'</td>';
-                                html +='<td class="text-center">'+v.ebay.Quantity+'</td>';
-                                html +='<td class="text-center"><input type="text" name="opt['+i+'][reserve]" value="'+v.local.reserve+'" class="text-center form-control" /></td>';
-                                html +='<td class="text-left">'+v.local.combi+'</td>';
-                                html +='<td class="text-left"><input type="text" name="opt['+i+'][price]" value="'+v.ebay.StartPrice+'" value="0" class="text-center form-control" /></td>';
-                                html +='<td class="text-left"><input type="hidden" name="opt['+i+'][active]" value="0" /><input type="checkbox" name="opt['+i+'][active]" value="1" checked="checked" /></td>';
-                                html +='</tr>';
+                                html += '<tr class="success">';
+                                html += '<input type="hidden" name="varPriceExCount" class="varPriceExCount" value="' + i + '" />';
+                                html += '<input type="hidden" name="opt[' + i + '][product_option_variant_id]" value="' + v.product_option_variant_id + '" />';
+                                html += '<td class="text-center">';
+                                  if (v.local.sku == '') {
+                                    html += '<span class="label label-danger"><?php echo $error_no_sku; ?></span>';
+                                  } else {
+                                    html += v.local.sku;
+                                  }
+                                html += '</td>';
+                                html += '<td class="text-center">';
+                                  if (v.local.stock < 1) {
+                                    html += '<span class="label label-danger">' + v.local.stock + '</span>';
+                                  } else {
+                                    html += v.local.stock;
+                                  }
+                                html += '</td>';
+                                html += '<td class="text-center">' + v.ebay.Quantity + '</td>';
+                                html += '<td class="text-center"><input type="text" name="opt[' + i + '][reserve]" value="' + v.local.reserve + '" class="text-center form-control" /></td>';
+                                html += '<td class="text-left">' + v.local.combination + '</td>';
+                                html += '<td class="text-left"><input type="text" name="opt[' + i + '][price]" value="' + v.ebay.StartPrice + '" value="0" class="text-center form-control" /></td>';
+                                html += '<td class="text-center"><input type="hidden" name="opt[' + i + '][active]" value="0" /><input type="checkbox" name="opt[' + i + '][active]" value="1" checked="checked" /></td>';
+                                html += '</tr>';
 
                                 $('#matrix-active').append(html);
 
                                 i++;
                             });
 
-                            if (data.data.variant.data.optionsinactive != false){
+                            if (data.data.variant.data.options_inactive != false){
                                 $('#variantMatrixInactive').show();
-
-                                $.each(data.data.variant.data.optionsinactive, function( k, v ) {
-                                    $('#matrix-active').append('<input type="hidden" name="opt['+i+'][sku]" value="'+v.local.var+'" />');
+                                $.each(data.data.variant.data.options_inactive, function( k, v ) {
+                                    $('#matrix-active').append('<input type="hidden" name="opt[' + i + '][sku]" value="' + v.local.sku + '" />');
                                     html = '';
-
-                                    html +='<tr>';
-                                    html +='<input type="hidden" name="varPriceExCount" class="varPriceExCount" value="'+i+'" />';
-                                    html +='<td class="text-center">'+ v.local.var+ '</td>';
-                                    html +='<td class="text-center">'+ v.local.stock+ '</td>';
-                                    html +='<td class="text-center"><input type="text" name="opt['+i+'][reserve]" value="'+v.local.reserve+'" class="text-center form-control"/></td>';
-                                    html +='<td class="text-left">'+v.local.combi+'</td>';
-                                    html +='<td class="text-left"><input type="text" name="opt['+i+'][price]" value="'+ v.local.price+'" value="0" class="text-center form-control" /></td>';
-                                    html +='<td class="text-left"><input type="hidden" name="opt['+i+'][active]" value="0" /><input type="checkbox" name="opt['+i+'][active]" value="1" /></td>';
-                                    html +='</tr>';
+                                    html += '<tr class="warning">';
+                                    html += '<input type="hidden" name="varPriceExCount" class="varPriceExCount" value="' + i + '" />';
+                                    html += '<input type="hidden" name="opt[' + i + '][product_option_variant_id]" value="' + v.product_option_variant_id + '" />';
+                                    html += '<td class="text-center">';
+                                      if (v.local.sku == '') {
+                                        html += '<span class="label label-danger"><?php echo $error_no_sku; ?></span>';
+                                      } else {
+                                        html += v.local.sku;
+                                      }
+                                    html += '</td>';
+                                    html += '<td class="text-center">';
+                                    if (v.local.stock < 1) {
+                                      html += '<span class="label label-danger">' + v.local.stock + '</span>';
+                                    } else {
+                                      html += v.local.stock;
+                                    }
+                                    html += '</td>';
+                                    html += '<td class="text-center"><input type="text" name="opt[' + i + '][reserve]" value="' + v.local.reserve + '" class="text-center form-control"/></td>';
+                                    html += '<td class="text-left">' + v.local.combination + '</td>';
+                                    if (v.local.price == 0) {
+                                      html += '<td class="text-left"><input type="text" name="opt[' + i + '][price]" value="' + parseFloat(data.data.product.price).toFixed(2) + '" value="0" class="text-center form-control" /></td>';
+                                    } else {
+                                      html += '<td class="text-left"><input type="text" name="opt[' + i + '][price]" value="' + v.local.price + '" value="0" class="text-center form-control" /></td>';
+                                    }
+                                    html += '<td class="text-center"><input type="hidden" name="opt[' + i + '][active]" value="0" /><input type="checkbox" name="opt[' + i + '][active]" value="1" /></td>';
+                                    html += '</tr>';
 
                                     $('#matrix-inactive').append(html);
 
                                     i++;
                                 });
                             }
-
                         }else{
                             $('#variantMatrix').remove();
-
                             $('#price').val(data.data.listing.price);
                             $('#qty-instock').val(data.data.stock.quantity);
                             $('#qty_local').val(data.data.stock.quantity);
@@ -250,17 +276,19 @@
 
           if (data.Errors){
               if (data.Errors.ShortMessage){
-                  $('#error_box').append('<p class="m3">'+data.Errors.LongMessage+'</p>');
+                  $('#error_box').append('<p class="m3">' + data.Errors.LongMessage + '</p>');
               }else{
                   $.each(data.Errors, function(key,val){
-                      $('#error_box').append('<p class="m3">'+val.LongMessage+'</p>');
+                      $('#error_box').append('<p class="m3">' + val.LongMessage + '</p>');
                   });
               }
               $('#error_box').fadeIn('slow');
           }
 
           if (data.Ack !== 'Failure'){
-              $('#form-success').fadeIn('slow');
+            $('#form-success').fadeIn('slow');
+            $('#button-save').hide();
+            $('#button-edit-item').show();
           }
 
           $('#form').hide();
@@ -274,28 +302,31 @@
     });
     });
 
+  $('#button-load').bind('click', function() {
+    load();
+  });
+
   $('#button-remove-link').on('click', function () {
     var pass = confirm("<?php echo $text_confirm; ?>");
 
     if (pass == true) {
-      var id = $('#item-id').val();
-
-      if (id !== '') {
-        $.ajax({
-          type: 'GET',
-          url: 'index.php?route=openbay/ebay/removeItemLink&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>',
-          dataType: 'json',
-          success: function () {
-            alert('<?php echo $text_alert_removed; ?>');
-            window.location = 'index.php?route=extension/openbay/items&token=<?php echo $token; ?>';
-          },
-          error: function (xhr, ajaxOptions, thrownError) {
-            if (xhr.status != 0) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
+      $.ajax({
+        type: 'GET',
+        url: 'index.php?route=openbay/ebay/removeItemLink&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>',
+        dataType: 'json',
+        beforeSend: function(){
+          $('#button-remove-link').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        },
+        success: function () {
+          alert('<?php echo $text_alert_removed; ?>');
+          window.location = 'index.php?route=extension/openbay/items&token=<?php echo $token; ?>';
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          if (xhr.status != 0) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
           }
-        });
-      }
+        }
+      });
     }
   });
 
@@ -303,13 +334,16 @@
     var pass = confirm("<?php echo $text_confirm; ?>");
 
     if (pass == true) {
-      var id = $('#item-id').val();
+      var item_id = $('#item-id').val();
 
-      if (id !== '') {
+      if (item_id !== '') {
         $.ajax({
           type: 'GET',
-          url: 'index.php?route=openbay/ebay/endItem&token=<?php echo $token; ?>&id=' + id,
+          url: 'index.php?route=openbay/ebay/endItem&token=<?php echo $token; ?>&item_id=' + item_id,
           dataType: 'json',
+          beforeSend: function(){
+            $('#button-end-item').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+          },
           success: function (data) {
             if (data.error == true) {
               alert(data.msg);
@@ -326,6 +360,10 @@
         });
       }
     }
+  });
+
+  $('#button-edit-item').on('click', function () {
+    window.location.href = window.location.href;
   });
 
   $(document).ready(function() {

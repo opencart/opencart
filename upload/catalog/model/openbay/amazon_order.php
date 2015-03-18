@@ -199,4 +199,22 @@ class ModelOpenbayAmazonOrder extends Model {
 
 		return $options;
 	}
+
+	public function addOrderHistory($order_id) {
+		if ($this->config->get('openbay_amazon_status') != 1) {
+			return;
+		}
+
+		$this->load->library('log');
+		$logger = new Log('amazon_stocks.log');
+		$logger->write('addOrder() called with order id: ' . $order_id);
+
+		$order_products = $this->openbay->getOrderProducts($order_id);
+
+		foreach($order_products as $order_product) {
+			$this->openbay->amazon->productUpdateListen($order_product['product_id']);
+		}
+
+		$logger->write('addOrder() exiting');
+	}
 }

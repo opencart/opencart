@@ -704,3 +704,8 @@ h2.price {
 #column-right .product-layout {
 	width: 100%;
 }
+
+/* fixed mobile cart quantity input */
+.input-group .form-control[name^=quantity] {
+	min-width: 50px;
+}

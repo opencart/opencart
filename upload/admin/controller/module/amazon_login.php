@@ -1,5 +1,6 @@
 <?php
 class ControllerModuleAmazonLogin extends Controller {
+
 	private $error = array();
 
 	public function index() {
@@ -77,6 +78,7 @@ class ControllerModuleAmazonLogin extends Controller {
 		);
 
 		$data['action'] = $this->url->link('module/amazon_login', 'token=' . $this->session->data['token'], 'SSL');
+
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['token'] = $this->session->data['token'];
@@ -131,12 +133,13 @@ class ControllerModuleAmazonLogin extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('extension/event');
-		$this->model_extension_event->addEvent('amazon_login', 'post.customer.logout', 'module/amazon_login/logout');
+			$this->load->model('extension/event');
+			$this->model_extension_event->addEvent('amazon_login', 'post.customer.logout', 'module/amazon_login/logout');
 	}
 
 	public function uninstall() {
-		$this->load->model('extension/event');
-		$this->model_extension_event->deleteEvent('amazon_login');
+			$this->load->model('extension/event');
+			$this->model_extension_event->deleteEvent('amazon_login');
 	}
+
 }

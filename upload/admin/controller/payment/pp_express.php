@@ -730,6 +730,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['entry_amount'] = $this->language->get('entry_amount');
 		$data['entry_message'] = $this->language->get('entry_message');
 		$data['button_refund'] = $this->language->get('button_refund');
+		$data['text_refund'] = $this->language->get('text_refund');
 
 		$data['breadcrumbs'] = array();
 

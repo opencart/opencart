@@ -1,0 +1,7 @@
+Options +FollowSymlinks
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !^(.+)\.jpg$
+RewriteCond %{REQUEST_FILENAME} !^(.+)\.jpeg$
+RewriteCond %{REQUEST_FILENAME} !^(.+)\.png$
+RewriteCond %{REQUEST_FILENAME} !^(.+)\.gif$
+RewriteRule ^(.+)$ /404.html [NC] 

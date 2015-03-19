@@ -121,13 +121,6 @@ class ControllerModuleAmazonPay extends Controller {
 		$this->response->setOutput($this->load->view('module/amazon_pay.tpl', $data));
 	}
 
-	public function shipped() {
-		echo '<pre>';
-		print_r('$_POST');
-		echo '<br /></pre>';
-		die();
-	}
-
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'module/amazon_pay')) {
 			$this->error['warning'] = $this->language->get('error_permission');

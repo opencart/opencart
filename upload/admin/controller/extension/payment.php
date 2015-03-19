@@ -22,8 +22,8 @@ class ControllerExtensionPayment extends Controller {
 
 			$this->load->model('user/user_group');
 
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'payment/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'payment/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'payment/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'payment/' . $this->request->get['extension']);
 
 			// Call install method if it exsits
 			$this->load->controller('payment/' . $this->request->get['extension'] . '/install');

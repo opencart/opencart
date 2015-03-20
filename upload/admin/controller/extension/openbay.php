@@ -1851,6 +1851,7 @@ class ControllerExtensionOpenbay extends Controller {
 			$this->log->write('User failed password validation');
 			$json = array('msg' => 'Password wrong, check the source code for the password! This is so you know what this feature does.');
 		} else {
+			/**
 			$this->log->write('User passed validation');
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "order`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "order_history`");
@@ -1867,7 +1868,6 @@ class ControllerExtensionOpenbay extends Controller {
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_order_lock`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_transaction`");
 
-			/*
 			if ($this->config->get('ebay_status') == 1) {
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_category`");
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_category_history`");
@@ -1883,21 +1883,14 @@ class ControllerExtensionOpenbay extends Controller {
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_shipping_location_exclude`");
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_template`");
 			}
-			*/
 
-
-
-			/*
 			if ($this->config->get('etsy_status') == 1) {
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "etsy_listing`");
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "etsy_setting_option`");
 			}
-			*/
+
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "etsy_order`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "etsy_order_lock`");
-
-
-			/*
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "manufacturer`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "manufacturer_to_store`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "attribute`");
@@ -1925,6 +1918,7 @@ class ControllerExtensionOpenbay extends Controller {
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "product_option_relation`");
 			}
 			*/
+
 			$this->log->write('Data cleared');
 			$json = array('msg' => 'Data cleared');
 		}

@@ -409,7 +409,7 @@ class ModelPaymentAmazonLoginPay extends Model {
 			$log = new Log('amazon_login_pay.log');
 			$backtrace = debug_backtrace();
 			$log->write('Origin: ' . $backtrace[1]['class'] . '::' . $backtrace[1]['function']);
-			$log->write($message);
+			$log->write(print_r($message, 1));
 		}
 	}
 }

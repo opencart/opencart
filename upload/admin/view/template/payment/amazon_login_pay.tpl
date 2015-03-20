@@ -252,26 +252,6 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#button-ip-add').on('click', function () {
-      var ip = $.trim($('input[name=\'allowed-ip\']').val());
-
-      if (ip != '') {
-        var html = '';
-
-        html += '<div id="allowed-ip' + count++ + '"><i class="fa fa-minus-circle"></i> ' + ip;
-        html += '  <input type="hidden" name="amazon_login_pay_allowed_ips[]" value="' + ip + '" />';
-        html += '</div>';
-
-        $('#allowed-ips').append(html);
-      }
-
-      $('input[name="allowed-ip"]').val('');
-    });
-
-    $('#amazon-ip').delegate('.fa-minus-circle', 'click', function () {
-      $(this).parent().remove();
-    });
-
     $('input[name=\'amazon_login_pay_cron_job_token\']').on('click', function () {
       $('#cron-job-url').val('<?php echo HTTPS_CATALOG; ?>index.php?route=payment/amazon_login_pay/cron&token=' + $(this).val());
     });

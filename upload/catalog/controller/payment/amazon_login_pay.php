@@ -548,7 +548,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$total = $this->currency->format($total, $currency_code, false, false);
 
 		$response = $this->model_payment_amazon_login_pay->sendOrder($order_info['order_id'], $total, $currency_code);
-		$this->model_payment_amazon_login_pay->logger(print_r($response, 1));
+		$this->model_payment_amazon_login_pay->logger($response);
 
 		if (isset($response['redirect'])) {
 			$this->$response['redirect']($this->language->get('error_process_order'));

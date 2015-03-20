@@ -403,7 +403,7 @@ class ModelPaymentAmazonLoginPay extends Model {
 			$errorMsg = "Error with message - content is not in json format" .
 					$json_error . " " .
 					$json;
-			$this->logger(print_r($errorMsg, 1));
+			$this->logger($errorMsg);
 		}
 		return $message;
 	}
@@ -419,7 +419,7 @@ class ModelPaymentAmazonLoginPay extends Model {
 		try {
 			$xml = simplexml_load_string($notificationData);
 		} catch (Exception $ex) {
-			$this->logger(print_r("Error with ipn message - NotificationData field does not contain xml, contents: " . $notificationData, 1));
+			$this->logger($notificationData);
 		}
 		return $xml;
 	}

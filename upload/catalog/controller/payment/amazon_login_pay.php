@@ -113,7 +113,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 		if (!$this->customer->isLogged() || !isset($_COOKIE['amazon_Login_state_cache'])) {
 			$this->session->data['lpa']['error'] = $this->language->get('error_login');
-			$this->response->redirect($this->url->link('payment/amazon_login_pay/login_failure', '', 'SSL'));
+			$this->response->redirect($this->url->link('payment/amazon_login_pay/loginFailure', '', 'SSL'));
 		}
 
 		$data['amazon_login_pay_merchant_id'] = $this->config->get('amazon_login_pay_merchant_id');
@@ -596,7 +596,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$this->response->redirect($this->url->link('checkout/cart', '', 'SSL'));
 	}
 
-	public function login_failure() {
+	public function loginFailure() {
 		$this->load->language('payment/amazon_login_pay');
 		$this->document->setTitle($this->language->get('heading_title'));
 		$data['heading_title'] = $this->language->get('heading_title');

@@ -96,6 +96,11 @@ $_['error_tracking_custom']				= 'Please leave courier field empty if you want t
 $_['error_permission']					= 'You do not have permission to modify the OpenBay Pro extension';
 $_['error_mkdir']						= 'PHP mkdir function is disabled, contact your host';
 $_['error_file_delete']					= 'Unable to remove these files, you should delete them manually';
+$_['error_mcrypt']            			= 'PHP function "mcrypt_encrypt" is not enabled. Contact your hosting provider.';
+$_['error_mbstring']               		= 'PHP library "mb strings" is not enabled. Contact your hosting provider.';
+$_['error_ftpconnect']             		= 'PHP FTP functions are not enabled. Contact your hosting provider.';
+$_['error_oc_version']             		= 'Your version of OpenCart is not tested to work with this module. You may experience problems.';
+$_['error_fopen']             			= 'PHP function "fopen" is disabled by your host - you will be unable to import images when importing products';
 
 // Help
 $_['help_ftp_username']           		= 'Use the FTP username from your host';

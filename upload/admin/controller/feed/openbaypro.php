@@ -47,7 +47,6 @@ class ControllerFeedOpenbaypro extends Controller {
 
 	public function install() {
 		$this->load->model('setting/setting');
-		$this->load->model('extension/event');
 
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'extension/openbay');
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/openbay');
@@ -58,13 +57,19 @@ class ControllerFeedOpenbaypro extends Controller {
 		$this->model_setting_setting->editSetting('openbaypro', $settings);
 
 		// register the event triggers
-		$this->model_extension_event->addEvent('openbay', 'post.product.delete', 'extension/openbay/eventDeleteProduct');
-		$this->model_extension_event->addEvent('openbay', 'post.product.edit', 'extension/openbay/eventEditProduct');
+		if (version_compare(VERSION, '2.0.1', '>=')) {
+			$this->load->model('extension/event');
+			$this->model_extension_event->addEvent('openbay', 'post.admin.product.delete', 'extension/openbay/eventDeleteProduct');
+			$this->model_extension_event->addEvent('openbay', 'post.admin.product.edit', 'extension/openbay/eventEditProduct');
+		} else {
+			$this->load->model('tool/event');
+			$this->model_tool_event->addEvent('openbay', 'post.product.delete', 'extension/openbay/eventDeleteProduct');
+			$this->model_tool_event->addEvent('openbay', 'post.product.edit', 'extension/openbay/eventEditProduct');
+		}
 	}
 
 	public function uninstall() {
 		$this->load->model('setting/setting');
-		$this->load->model('extension/event');
 
 		$settings = $this->model_setting_setting->getSetting('openbaypro');
 		$settings['openbaypro_menu'] = 0;
@@ -72,6 +77,12 @@ class ControllerFeedOpenbaypro extends Controller {
 		$this->model_setting_setting->editSetting('openbaypro', $settings);
 
 		// delete the event triggers
-		$this->model_extension_event->deleteEvent('openbay');
+		if (version_compare(VERSION, '2.0.1', '>=')) {
+			$this->load->model('extension/event');
+			$this->model_extension_event->deleteEvent('openbay');
+		} else {
+			$this->load->model('tool/event');
+			$this->model_tool_event->deleteEvent('openbay');
+		}
 	}
 }

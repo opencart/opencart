@@ -226,7 +226,7 @@ final class Etsy {
 	}
 
 	public function deleteProduct($product_id) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "etsy_listing` WHERE `product_id` = '" . $this->db->escape($product_id) . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "etsy_listing` WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
 	public function deleteLink($etsy_listing_id = null, $etsy_item_id = null) {
@@ -237,7 +237,7 @@ final class Etsy {
 		}
 	}
 
-	public function productUpdateListen($product_id, $data) {
+	public function productUpdateListen($product_id, $data = array()) {
 		$this->log('productUpdateListen() - ' . $product_id);
 
 		$links = $this->getLinks($product_id, 1);
@@ -285,25 +285,13 @@ final class Etsy {
 		}
 	}
 
-	public function addOrder($order_id) {
-		if(!$this->orderFind($order_id)) {
-			$query = $this->db->query("SELECT `p`.`product_id` FROM `" . DB_PREFIX . "order_product` `op` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `op`.`product_id` = `p`.`product_id` WHERE `op`.`order_id` = '" . (int)$order_id . "'");
-
-			if($query->num_rows > 0) {
-				foreach ($query->rows as $product) {
-					$this->productUpdateListen((int)$product['product_id'], array());
-				}
-			}
-		}
-	}
-
 	public function orderDelete($order_id) {
 		if(!$this->orderFind($order_id)) {
 			$query = $this->db->query("SELECT `p`.`product_id` FROM `" . DB_PREFIX . "order_product` `op` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `op`.`product_id` = `p`.`product_id` WHERE `op`.`order_id` = '" . (int)$order_id . "'");
 
 			if($query->num_rows > 0) {
 				foreach ($query->rows as $product) {
-					$this->productUpdateListen((int)$product['product_id'], array());
+					$this->productUpdateListen((int)$product['product_id']);
 				}
 			}
 		}

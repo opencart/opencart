@@ -466,7 +466,7 @@
                 <label class="col-sm-2 control-label" for="entry-tax"><span data-toggle="tooltip" data-container="#tab-setup" title="<?php echo $help_tax; ?>"><?php echo $entry_tax; ?></span></label>
                 <div class="col-sm-10">
                   <div class="input-group col-xs-2">
-                    <input type="text" name="tax" value="<?php echo $tax;?>" id="entry-tax" class="form-control" />
+                    <input type="text" name="ebay_tax" value="<?php echo $ebay_tax;?>" id="entry-tax" class="form-control" />
                     <span class="input-group-addon">%</span> </div>
                 </div>
               </div>

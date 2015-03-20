@@ -2,7 +2,7 @@
 // Heading
 $_['heading_title']					= 'Item links';
 $_['text_openbay']					= 'OpenBay Pro';
-$_['text_amazon']					= 'Amazon EU';
+$_['text_amazon']					= 'Amazon US';
 
 // Text
 $_['text_desc1']                    = 'Linking your items will allow for stock control on your Amazon listings.';
@@ -16,8 +16,9 @@ $_['text_linked_items']             = 'Linked items';
 $_['text_unlinked_items']           = 'Unlinked items';
 $_['text_name']                     = 'Name';
 $_['text_model']                    = 'Model';
-$_['text_combination']              = 'Combination';
-$_['text_sku']                      = 'SKU';
+$_['text_combination']              = 'Variant Combination';
+$_['text_sku']                      = 'Product SKU';
+$_['text_sku_variant']              = 'Variant SKU';
 $_['text_amazon_sku']               = 'Amazon item SKU';
 
 // Button

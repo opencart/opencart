@@ -29,7 +29,7 @@ $_['entry_stock_matrix_active']		= 'Stock matrix (active)';
 $_['entry_stock_matrix_inactive']	= 'Stock matrix (inactive)';
 
 // Column
-$_['column_sku']					= 'Var code / SKU';
+$_['column_sku']					= 'SKU';
 $_['column_stock_listed']			= 'Listed';
 $_['column_stock_reserve']			= 'Reserve';
 $_['column_stock_total']			= 'In stock';
@@ -46,3 +46,4 @@ $_['help_stock_reserve']			= 'This is the maximum level of stock on eBay (0 = no
 // Error
 $_['error_ended']					= 'The linked listing has ended, you are unable to edit it. You should remove the link.';
 $_['error_reserve']					= 'You cannot set the reserve higher than the local stock';
+$_['error_no_sku']          		= 'No SKU found!';

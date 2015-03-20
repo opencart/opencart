@@ -44,18 +44,18 @@
 				<label class="col-sm-2 control-label" for="input-button-colour"><?php echo $entry_button_colour; ?></label>
 				<div class="col-sm-10">
 					<select name="amazon_pay_button_colour" id="input-button-colour" class="form-control">
-						<?php if ($amazon_pay_button_colour == 'DarkGrey') { ?>
+						<?php if ($amazon_pay_button_colour == 'DarkGray') { ?>
 							<option value="Gold" ><?php echo $text_gold_button; ?></option>
-							<option value="DarkGrey" selected="selected"><?php echo $text_darkgrey_button; ?></option>
-							<option value="LightGrey"><?php echo $text_lightgrey_button; ?></option>
-						<?php } elseif ($amazon_pay_button_colour == 'LightGrey') { ?>
+							<option value="DarkGray" selected="selected"><?php echo $text_darkgray_button; ?></option>
+							<option value="LightGray"><?php echo $text_lightgray_button; ?></option>
+						<?php } elseif ($amazon_pay_button_colour == 'LightGray') { ?>
 							<option value="Gold" ><?php echo $text_gold_button; ?></option>
-							<option value="DarkGrey"><?php echo $text_darkgrey_button; ?></option>
-							<option value="LightGrey" selected="selected"><?php echo $text_lightgrey_button; ?></option>
+							<option value="DarkGray"><?php echo $text_darkgray_button; ?></option>
+							<option value="LightGray" selected="selected"><?php echo $text_lightgray_button; ?></option>
 						<?php } else { ?>
 							<option value="Gold" selected="selected"><?php echo $text_gold_button; ?></option>
-							<option value="DarkGrey"><?php echo $text_darkgrey_button; ?></option>
-							<option value="LightGrey"><?php echo $text_lightgrey_button; ?></option>
+							<option value="DarkGray"><?php echo $text_darkgray_button; ?></option>
+							<option value="LightGray"><?php echo $text_lightgray_button; ?></option>
 						<?php } ?>
 					</select>
 				</div>

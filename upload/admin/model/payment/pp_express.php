@@ -309,7 +309,6 @@ class ModelPaymentPPExpress extends Model {
 		$request .= '&client_secret=' . $client_secret;
 		$request .= '&grant_type=client_credentials';
 
-
 		$additional_opts = array(
 			CURLOPT_USERPWD => $client_id . ':' . $client_secret,
 			CURLOPT_POST => true,
@@ -336,7 +335,6 @@ class ModelPaymentPPExpress extends Model {
 		$header[] = 'Content-Type: application/json';
 		$header[] = 'Authorization: Bearer ' . $access_token;
 		$header[] = 'PAYPAL_SERVICE_VERSION:1.2.0';
-
 
 		$additional_opts = array(
 			CURLOPT_HTTPHEADER => $header,

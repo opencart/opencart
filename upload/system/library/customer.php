@@ -20,22 +20,14 @@ class Customer {
 			$customer_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE customer_id = '" . (int)$this->session->data['customer_id'] . "' AND status = '1'");
 
 			if ($customer_query->num_rows) {
-				$this->customer_id = $customer_query->row['customer_id'];
-				$this->firstname = $customer_query->row['firstname'];
-				$this->lastname = $customer_query->row['lastname'];
-				$this->email = $customer_query->row['email'];
-				$this->telephone = $customer_query->row['telephone'];
-				$this->fax = $customer_query->row['fax'];
-				$this->newsletter = $customer_query->row['newsletter'];
-				$this->customer_group_id = $customer_query->row['customer_group_id'];
-				$this->address_id = $customer_query->row['address_id'];
+				$this->populate($customer_query->row);
 
 				$this->db->query("UPDATE " . DB_PREFIX . "customer SET cart = '" . $this->db->escape(isset($this->session->data['cart']) ? serialize($this->session->data['cart']) : '') . "', wishlist = '" . $this->db->escape(isset($this->session->data['wishlist']) ? serialize($this->session->data['wishlist']) : '') . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE customer_id = '" . (int)$this->customer_id . "'");
 
-				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_ip WHERE customer_id = '" . (int)$this->session->data['customer_id'] . "' AND ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "'");
+				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_ip WHERE customer_id = '" . (int)$this->customer_id . "' AND ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "'");
 
 				if (!$query->num_rows) {
-					$this->db->query("INSERT INTO " . DB_PREFIX . "customer_ip SET customer_id = '" . (int)$this->session->data['customer_id'] . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', date_added = NOW()");
+					$this->db->query("INSERT INTO " . DB_PREFIX . "customer_ip SET customer_id = '" . (int)$this->customer_id . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', date_added = NOW()");
 				}
 			} else {
 				$this->logout();
@@ -51,7 +43,9 @@ class Customer {
 		}
 
 		if ($customer_query->num_rows) {
-			$this->session->data['customer_id'] = $customer_query->row['customer_id'];
+			$this->populate($customer_query->row);
+
+			$this->session->data['customer_id'] = $this->customer_id;
 
 			if ($customer_query->row['cart'] && is_string($customer_query->row['cart'])) {
 				$cart = unserialize($customer_query->row['cart']);
@@ -78,17 +72,7 @@ class Customer {
 					}
 				}
 			}
-
-			$this->customer_id = $customer_query->row['customer_id'];
-			$this->firstname = $customer_query->row['firstname'];
-			$this->lastname = $customer_query->row['lastname'];
-			$this->email = $customer_query->row['email'];
-			$this->telephone = $customer_query->row['telephone'];
-			$this->fax = $customer_query->row['fax'];
-			$this->newsletter = $customer_query->row['newsletter'];
-			$this->customer_group_id = $customer_query->row['customer_group_id'];
-			$this->address_id = $customer_query->row['address_id'];
-
+			
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE customer_id = '" . (int)$this->customer_id . "'");
 
 			return true;
@@ -163,5 +147,17 @@ class Customer {
 		$query = $this->db->query("SELECT SUM(points) AS total FROM " . DB_PREFIX . "customer_reward WHERE customer_id = '" . (int)$this->customer_id . "'");
 
 		return $query->row['total'];
+	}
+	
+	private function populate($row) {
+		$this->customer_id = $row['customer_id'];
+		$this->firstname = $row['firstname'];
+		$this->lastname = $row['lastname'];
+		$this->email = $row['email'];
+		$this->telephone = $row['telephone'];
+		$this->fax = $row['fax'];
+		$this->newsletter = $row['newsletter'];
+		$this->customer_group_id = $row['customer_group_id'];
+		$this->address_id = $row['address_id'];
 	}
 }

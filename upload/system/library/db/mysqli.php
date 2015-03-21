@@ -8,6 +8,7 @@ final class MySQLi {
 
 		if ($this->link->connect_error) {
 			trigger_error('Error: Could not make a database link (' . $this->link->connect_errno . ') ' . $this->link->connect_error);
+			exit();
 		}
 
 		$this->link->set_charset("utf8");

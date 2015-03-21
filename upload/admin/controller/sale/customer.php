@@ -321,7 +321,7 @@ class ControllerSaleCustomer extends Controller {
 
 		$this->getList();
 	}
-			
+
 	protected function getList() {
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = $this->request->get['filter_name'];
@@ -465,16 +465,16 @@ class ControllerSaleCustomer extends Controller {
 				$approve = $this->url->link('sale/customer/approve', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'] . $url, 'SSL');
 			} else {
 				$approve = '';
-			}			
-			
+			}
+
 			$login_info = $this->model_sale_customer->getTotalLoginAttempts($result['email']);
-			
+
 			if ($login_info && $login_info['total'] >= $this->config->get('config_login_attempts')) {
 				$unlock = $this->url->link('sale/customer/unlock', 'token=' . $this->session->data['token'] . '&email=' . $result['email'] . $url, 'SSL');
 			} else {
 				$unlock = '';
 			}
-						
+
 			$data['customers'][] = array(
 				'customer_id'    => $result['customer_id'],
 				'name'           => $result['name'],
@@ -675,7 +675,7 @@ class ControllerSaleCustomer extends Controller {
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_yes'] = $this->language->get('text_yes');
-		$data['text_no'] = $this->language->get('text_no');		
+		$data['text_no'] = $this->language->get('text_no');
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -937,7 +937,7 @@ class ControllerSaleCustomer extends Controller {
 		} else {
 			$data['status'] = true;
 		}
-		
+
 		if (isset($this->request->post['approved'])) {
 			$data['approved'] = $this->request->post['approved'];
 		} elseif (!empty($customer_info)) {
@@ -945,7 +945,7 @@ class ControllerSaleCustomer extends Controller {
 		} else {
 			$data['approved'] = true;
 		}
-		
+
 		if (isset($this->request->post['safe'])) {
 			$data['safe'] = $this->request->post['safe'];
 		} elseif (!empty($customer_info)) {
@@ -1111,7 +1111,7 @@ class ControllerSaleCustomer extends Controller {
 
 		return !$this->error;
 	}
-	
+
 	protected function validateUnlock() {
 		if (!$this->user->hasPermission('modify', 'sale/customer')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -1119,7 +1119,7 @@ class ControllerSaleCustomer extends Controller {
 
 		return !$this->error;
 	}
-	
+
 	protected function validateHistory() {
 		if (!$this->user->hasPermission('modify', 'sale/customer')) {
 			$this->error['warning'] = $this->language->get('error_permission');

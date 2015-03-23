@@ -460,10 +460,10 @@ class ControllerProductProduct extends Controller {
 
 			if ($this->config->get('config_google_captcha_status')) {
 				$this->document->addScript('https://www.google.com/recaptcha/api.js');
-				
+
 				$data['site_key'] = $this->config->get('config_google_captcha_public');
 			}
-		
+
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');
@@ -623,13 +623,13 @@ class ControllerProductProduct extends Controller {
 			}
 
 			if ($this->config->get('config_google_captcha_status')) {
-				$json = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($this->config->get('config_google_captcha_secret')) . '&response=g-recaptcha&remoteip=' . $this->request->server['REMOTE_ADDR']);
-				
+				$json = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($this->config->get('config_google_captcha_secret')) . '&response=' . $this->request->post['g-recaptcha-response'] . '&remoteip=' . $this->request->server['REMOTE_ADDR']);
+
 				$json = json_decode($json, true);
-					
+
 				if (!$json['success']) {
 					$json['error'] = $this->language->get('error_captcha');
-				}		
+				}
 			}
 
 			unset($this->session->data['captcha']);
@@ -646,7 +646,7 @@ class ControllerProductProduct extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-	
+
 	public function getRecurringDescription() {
 		$this->language->load('product/product');
 		$this->load->model('catalog/product');

@@ -134,7 +134,7 @@ class ControllerPaymentGlobalpay extends Controller {
 				$message .= '<br /><strong>' . $this->language->get('text_avs_address') . ':</strong> ' . $this->request->post['AVSADDRESSRESULT'];
 			}
 
-			if (isset($this->request->post['ECI'])) {
+			if (isset($this->request->post['ECI']) && !empty($this->request->post['ECI'])) {
 				if ($this->request->post['ECI'] == 6 && (!isset($this->request->post['CAVV']) || empty($this->request->post['CAVV'])) && (!isset($this->request->post['XID']) || empty($this->request->post['CAVV']))) {
 					$this->request->post['ECI'] = 1;
 				}

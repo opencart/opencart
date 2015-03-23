@@ -139,13 +139,15 @@ class ControllerInformationContact extends Controller {
 		} else {
 			$data['enquiry'] = '';
 		}
-		
+
 		if ($this->config->get('config_google_captcha_status')) {
 			$this->document->addScript('https://www.google.com/recaptcha/api.js');
-			
+
 			$data['site_key'] = $this->config->get('config_google_captcha_public');
+		} else {
+			$data['site_key'] = '';
 		}
-		
+
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
@@ -213,13 +215,13 @@ class ControllerInformationContact extends Controller {
 		}
 
 		if ($this->config->get('config_google_captcha_status')) {
-			$json = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($this->config->get('config_google_captcha_secret')) . '&response=g-recaptcha&remoteip=' . $this->request->server['REMOTE_ADDR']);
-			
-			$json = json_decode($json, true);
-				
-			if (!$json['success']) {
+			$recaptcha = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($this->config->get('config_google_captcha_secret')) . '&response=' . $this->request->post['g-recaptcha-response'] . '&remoteip=' . $this->request->server['REMOTE_ADDR']);
+
+			$recaptcha = json_decode($recaptcha, true);
+
+			if (!$recaptcha['success']) {
 				$this->error['captcha'] = $this->language->get('error_captcha');
-			}		
+			}
 		}
 
 		return !$this->error;

@@ -69,14 +69,14 @@ class ControllerPaymentRealex extends Controller {
 		$tmp = $hash . '.' . $this->config->get('realex_secret');
 		$data['hash'] = sha1($tmp);
 
-		$data['billing_code'] = filter_var($order_info['payment_postcode'], FILTER_SANITIZE_NUMBER_INT) . '|' . filter_var($order_info['payment_address_1'], FILTER_SANITIZE_NUMBER_INT);
+		$data['billing_code'] = filter_var(str_replace('-', '', $order_info['payment_postcode']), FILTER_SANITIZE_NUMBER_INT) . '|' . filter_var(str_replace('-', '', $order_info['payment_address_1']), FILTER_SANITIZE_NUMBER_INT);
 		$data['payment_country'] = $order_info['payment_iso_code_2'];
 
 		if ($this->cart->hasShipping()) {
-			$data['shipping_code'] = filter_var($order_info['shipping_postcode'], FILTER_SANITIZE_NUMBER_INT) . '|' . filter_var($order_info['shipping_address_1'], FILTER_SANITIZE_NUMBER_INT);
+			$data['shipping_code'] = filter_var(str_replace('-', '', $order_info['shipping_postcode']), FILTER_SANITIZE_NUMBER_INT) . '|' . filter_var(str_replace('-', '', $order_info['shipping_address_1']), FILTER_SANITIZE_NUMBER_INT);
 			$data['shipping_country'] = $order_info['shipping_iso_code_2'];
 		} else {
-			$data['shipping_code'] = filter_var($order_info['payment_postcode'], FILTER_SANITIZE_NUMBER_INT) . '|' . filter_var($order_info['payment_address_1'], FILTER_SANITIZE_NUMBER_INT);
+			$data['shipping_code'] = filter_var(str_replace('-', '', $order_info['payment_postcode']), FILTER_SANITIZE_NUMBER_INT) . '|' . filter_var(str_replace('-', '', $order_info['payment_address_1']), FILTER_SANITIZE_NUMBER_INT);
 			$data['shipping_country'] = $order_info['payment_iso_code_2'];
 		}
 
@@ -134,7 +134,7 @@ class ControllerPaymentRealex extends Controller {
 				$message .= '<br /><strong>' . $this->language->get('text_avs_address') . ':</strong> ' . $this->request->post['AVSADDRESSRESULT'];
 			}
 
-			if (isset($this->request->post['ECI'])) {
+			if (isset($this->request->post['ECI']) && !empty($this->request->post['ECI'])) {
 				if ($this->request->post['ECI'] == 6 && (!isset($this->request->post['CAVV']) || empty($this->request->post['CAVV'])) && (!isset($this->request->post['XID']) || empty($this->request->post['CAVV']))) {
 					$this->request->post['ECI'] = 1;
 				}

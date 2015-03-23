@@ -1941,7 +1941,7 @@ class ControllerPaymentPPExpress extends Controller {
 		if (!$error) {
 			return true;
 		} else {
-			$this->session->data['error_warning'] = $this->language->get('error_voucher');;
+			$this->session->data['error_warning'] = $this->language->get('error_voucher');
 			return false;
 		}
 	}

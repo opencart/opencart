@@ -213,7 +213,7 @@ class ModelPaymentPPExpress extends Model {
 
 		if (!empty($this->session->data['vouchers'])) {
 			foreach ($this->session->data['vouchers'] as $voucher) {
-				$item_total += $this->currency->format($voucher['amount'], false, false, false);;
+				$item_total += $this->currency->format($voucher['amount'], false, false, false);
 
 				$data['L_PAYMENTREQUEST_0_DESC' . $i] = '';
 				$data['L_PAYMENTREQUEST_0_NAME' . $i] = $voucher['description'];

@@ -2421,61 +2421,69 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function api() {
-		$json = array();
+		$this->load->language('sale/order');
 
-		// Store
-		if (isset($this->request->get['store_id'])) {
-			$store_id = $this->request->get['store_id'];
-		} else {
-			$store_id = 0;
-		}
+		if ($this->validate()) {
+			// Store
+			if (isset($this->request->get['store_id'])) {
+				$store_id = $this->request->get['store_id'];
+			} else {
+				$store_id = 0;
+			}
 
-		$this->load->model('setting/store');
+			$this->load->model('setting/store');
 
-		$store_info = $this->model_setting_store->getStore($store_id);
+			$store_info = $this->model_setting_store->getStore($store_id);
 
-		if ($store_info) {
-			$url = $store_info['ssl'];
-		} else {
-			$url = HTTPS_CATALOG;
-		}
+			if ($store_info) {
+				$url = $store_info['ssl'];
+			} else {
+				$url = HTTPS_CATALOG;
+			}
 
-		if (isset($this->session->data['cookie']) && isset($this->request->get['api'])) {
-			// Include any URL perameters
-			$url_data = array();
+			if (isset($this->session->data['cookie']) && isset($this->request->get['api'])) {
+				// Include any URL perameters
+				$url_data = array();
 
-			foreach ($this->request->get as $key => $value) {
-				if ($key != 'route' && $key != 'token' && $key != 'store_id') {
-					$url_data[$key] = $value;
+				foreach($this->request->get as $key => $value) {
+					if ($key != 'route' && $key != 'token' && $key != 'store_id') {
+						$url_data[$key] = $value;
+					}
 				}
+
+				$curl = curl_init();
+
+				// Set SSL if required
+				if (substr($url, 0, 5) == 'https') {
+					curl_setopt($curl, CURLOPT_PORT, 443);
+				}
+
+				curl_setopt($curl, CURLOPT_HEADER, false);
+				curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+				curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
+				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+				curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
+				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($curl, CURLOPT_URL, $url . 'index.php?route=' . $this->request->get['api'] . ($url_data ? '&' . http_build_query($url_data) : ''));
+
+				if ($this->request->post) {
+					curl_setopt($curl, CURLOPT_POST, true);
+					curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($this->request->post));
+				}
+
+				curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->session->data['cookie'] . ';');
+
+				$json = curl_exec($curl);
+
+				curl_close($curl);
 			}
+		} else {
+			$response = array();
+			$response['error'] = $this->error;
+			unset($this->error);
 
-			$curl = curl_init();
-
-			// Set SSL if required
-			if (substr($url, 0, 5) == 'https') {
-				curl_setopt($curl, CURLOPT_PORT, 443);
-			}
-
-			curl_setopt($curl, CURLOPT_HEADER, false);
-			curl_setopt($curl, CURLINFO_HEADER_OUT, true);
-			curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($curl, CURLOPT_URL, $url . 'index.php?route=' . $this->request->get['api'] . ($url_data ? '&' . http_build_query($url_data) : ''));
-
-			if ($this->request->post) {
-				curl_setopt($curl, CURLOPT_POST, true);
-				curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($this->request->post));
-			}
-
-			curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->session->data['cookie'] . ';');
-
-			$json = curl_exec($curl);
-
-			curl_close($curl);
+			$json = json_encode($response);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

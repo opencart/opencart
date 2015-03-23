@@ -522,6 +522,8 @@ class ControllerAccountReturn extends Controller {
 			$this->document->addScript('https://www.google.com/recaptcha/api.js');
 
 			$data['site_key'] = $this->config->get('config_google_captcha_public');
+		} else {
+			$data['site_key'] = '';
 		}
 
 		if ($this->config->get('config_return_id')) {

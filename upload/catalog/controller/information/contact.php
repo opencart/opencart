@@ -144,6 +144,8 @@ class ControllerInformationContact extends Controller {
 			$this->document->addScript('https://www.google.com/recaptcha/api.js');
 
 			$data['site_key'] = $this->config->get('config_google_captcha_public');
+		} else {
+			$data['site_key'] = '';
 		}
 
 		$data['column_left'] = $this->load->controller('common/column_left');

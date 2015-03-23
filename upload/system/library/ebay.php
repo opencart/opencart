@@ -590,7 +590,6 @@ final class Ebay {
 				}
 			} else {
 				$this->log('putStockUpdateBulk() - options existed for item (' . $item['itemId'] . ') when trying to relist');
-				// @todo - support relisting of variant items, if possible with ebay!
 			}
 		}
 
@@ -858,7 +857,6 @@ final class Ebay {
 					}
 				}
 			} else {
-				// @todo return error to use here
 				$this->log('orderStatusListen() - The TXN array was empty, could not get order info to update status. ');
 			}
 		} else {

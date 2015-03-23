@@ -39,7 +39,6 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['text_paypal_join'] = $this->language->get('text_paypal_join');
 		$data['text_paypal_join_sandbox'] = $this->language->get('text_paypal_join_sandbox');
 
-
 		$data['entry_username'] = $this->language->get('entry_username');
 		$data['entry_password'] = $this->language->get('entry_password');
 		$data['entry_signature'] = $this->language->get('entry_signature');
@@ -730,6 +729,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['entry_amount'] = $this->language->get('entry_amount');
 		$data['entry_message'] = $this->language->get('entry_message');
 		$data['button_refund'] = $this->language->get('button_refund');
+		$data['text_refund'] = $this->language->get('text_refund');
 
 		$data['breadcrumbs'] = array();
 

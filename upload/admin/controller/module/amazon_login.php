@@ -31,8 +31,8 @@ class ControllerModuleAmazonLogin extends Controller {
 		$data['text_login_button'] = $this->language->get('text_login_button');
 		$data['text_a_button'] = $this->language->get('text_a_button');
 		$data['text_gold_button'] = $this->language->get('text_gold_button');
-		$data['text_darkgrey_button'] = $this->language->get('text_darkgrey_button');
-		$data['text_lightgrey_button'] = $this->language->get('text_lightgrey_button');
+		$data['text_darkgray_button'] = $this->language->get('text_darkgray_button');
+		$data['text_lightgray_button'] = $this->language->get('text_lightgray_button');
 		$data['text_small_button'] = $this->language->get('text_small_button');
 		$data['text_medium_button'] = $this->language->get('text_medium_button');
 		$data['text_large_button'] = $this->language->get('text_large_button');

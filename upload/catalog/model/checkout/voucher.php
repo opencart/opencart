@@ -5,11 +5,11 @@ class ModelCheckoutVoucher extends Model {
 
 		return $this->db->getLastId();
 	}
-	
+
 	public function disableVoucher($order_id) {
 		$this->db->query("UPDATE " . DB_PREFIX . "voucher SET status = '0' WHERE order_id = '" . (int)$order_id . "'");
 	}
-	
+
 	public function getVoucher($code) {
 		$status = true;
 
@@ -18,11 +18,11 @@ class ModelCheckoutVoucher extends Model {
 		if ($voucher_query->num_rows) {
 			if ($voucher_query->row['order_id']) {
 				$implode = array();
-	
+
 				foreach ($this->config->get('config_complete_status') as $order_status_id) {
 					$implode[] = "'" . (int)$order_status_id . "'";
 				}
-				
+
 				$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE order_id = '" . (int)$voucher_query->row['order_id'] . "' AND order_status_id IN(" . implode(",", $implode) . ")");
 
 				if (!$order_query->num_rows) {

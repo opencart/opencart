@@ -40,7 +40,7 @@ class ControllerCommonSeoUrl extends Controller {
 					if ($url[0] == 'information_id') {
 						$this->request->get['information_id'] = $url[1];
 					}
-					
+
 					if ($query->row['query'] && $url[0] != 'information_id' && $url[0] != 'manufacturer_id' && $url[0] != 'category_id' && $url[0] != 'product_id') {
 						$this->request->get['route'] = $query->row['query'];
 					}

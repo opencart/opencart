@@ -1,6 +1,5 @@
 <?php
 class ControllerModuleAmazonLogin extends Controller {
-
 	public function index() {
 		$this->load->model('payment/amazon_login_pay');
 
@@ -62,7 +61,7 @@ class ControllerModuleAmazonLogin extends Controller {
 			if (isset($user->error)) {
 				$this->model_payment_amazon_login_pay->logger($user->error . ': ' . $user->error_description);
 				$this->session->data['lpa']['error'] = $this->language->get('error_login');
-				$this->response->redirect($this->url->link('payment/amazon_login_pay/login_failure', '', 'SSL'));
+				$this->response->redirect($this->url->link('payment/amazon_login_pay/loginFailure', '', 'SSL'));
 			}
 
 			$customer_info = $this->model_account_customer->getCustomerByEmail($user->email);
@@ -94,7 +93,7 @@ class ControllerModuleAmazonLogin extends Controller {
 				} else {
 					$this->model_payment_amazon_login_pay->logger('Could not login to - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
 					$this->session->data['lpa']['error'] = $this->language->get('error_login');
-					$this->response->redirect($this->url->link('payment/amazon_login_pay/login_failure', '', 'SSL'));
+					$this->response->redirect($this->url->link('payment/amazon_login_pay/loginFailure', '', 'SSL'));
 				}
 				$this->response->redirect($this->url->link('account/account', '', 'SSL'));
 			} else {
@@ -104,7 +103,6 @@ class ControllerModuleAmazonLogin extends Controller {
 				$full_name = explode(' ', $user->name);
 				$last_name = array_pop($full_name);
 				$first_name = implode(' ', $full_name);
-
 
 				$data = array(
 					'customer_group_id' => (int)$this->config->get('config_customer_group_id'),
@@ -156,12 +154,12 @@ class ControllerModuleAmazonLogin extends Controller {
 					$this->model_payment_amazon_login_pay->logger('Could not login to - ID: ' . $customer_id . ', Email: ' . $user->email);
 
 					$this->session->data['lpa']['error'] = $this->language->get('error_login');
-					$this->response->redirect($this->url->link('payment/amazon_login_pay/login_failure', '', 'SSL'));
+					$this->response->redirect($this->url->link('payment/amazon_login_pay/loginFailure', '', 'SSL'));
 				}
 			}
 		} else {
 			$this->session->data['lpa']['error'] = $this->language->get('error_login');
-			$this->response->redirect($this->url->link('payment/amazon_login_pay/login_failure', '', 'SSL'));
+			$this->response->redirect($this->url->link('payment/amazon_login_pay/loginFailure', '', 'SSL'));
 		}
 	}
 
@@ -191,5 +189,4 @@ class ControllerModuleAmazonLogin extends Controller {
 			return false;
 		}
 	}
-
 }

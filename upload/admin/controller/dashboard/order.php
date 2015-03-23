@@ -11,7 +11,7 @@ class ControllerDashboardOrder extends Controller {
 
 		// Total Orders
 		$this->load->model('sale/order');
-		
+
 		$today = $this->model_sale_order->getTotalOrders(array('filter_date_added' => date('Y-m-d', strtotime('-1 day'))));
 
 		$yesterday = $this->model_sale_order->getTotalOrders(array('filter_date_added' => date('Y-m-d', strtotime('-2 day'))));
@@ -23,9 +23,9 @@ class ControllerDashboardOrder extends Controller {
 		} else {
 			$data['percentage'] = 0;
 		}
-		
+
 		$order_total = $this->model_sale_order->getTotalOrders();
-		
+
 		if ($order_total > 1000000000000) {
 			$data['total'] = round($order_total / 1000000000000, 1) . 'T';
 		} elseif ($order_total > 1000000000) {
@@ -33,11 +33,11 @@ class ControllerDashboardOrder extends Controller {
 		} elseif ($order_total > 1000000) {
 			$data['total'] = round($order_total / 1000000, 1) . 'M';
 		} elseif ($order_total > 1000) {
-			$data['total'] = round($order_total / 1000, 1) . 'K';						
+			$data['total'] = round($order_total / 1000, 1) . 'K';
 		} else {
 			$data['total'] = $order_total;
 		}
-				
+
 		$data['order'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL');
 
 		return $this->load->view('dashboard/order.tpl', $data);

@@ -1521,98 +1521,119 @@
     $('#duration-loading').html('<i class="fa fa-angle-right fa-lg"></i>');
   }
 
-  function itemFeatures(cat) {
-        $.ajax({
-            url: 'index.php?route=openbay/ebay/getEbayCategorySpecifics&token=<?php echo $token; ?>&category='+cat,
-            type: 'GET',
-            dataType: 'json',
-            beforeSend: function() {
-                $('#feature-content').show();
-                $('#feature-loading').show();
-                $('#show-feature-element').show();
-                $('#show-feature-element-preload').hide();
-            },
-            success: function(data) {
-                if (data.error == false) {
-                    $('#feature-content').empty();
-                    $('.option-specifics-').empty().hide();
+  function itemFeatures(category_id) {
+    $.ajax({
+      url: 'index.php?route=openbay/ebay/getEbayCategorySpecifics&token=<?php echo $token; ?>&category_id=' + category_id + '&product_id=<?php echo $product["product_id"]; ?>',
+      type: 'GET',
+      dataType: 'json',
+      beforeSend: function() {
+          $('#feature-content').show();
+          $('#feature-loading').show();
+          $('#show-feature-element').show();
+          $('#show-feature-element-preload').hide();
+      },
+      success: function(data) {
+        if (data.error == false) {
+          $('#feature-content').empty();
+          $('.option-specifics-').empty().hide();
 
-                    var html_inj = '';
-                    var html_inj2 = '';
-                    var specificCount = 0;
+          var html_inj = '';
+          var html_inj2 = '';
+          var specific_count = 0;
+          var show_other = 0;
+          var show_other_value = '';
 
-                    if (data.data.Recommendations.NameRecommendation) {
-                        data.data.Recommendations.NameRecommendation = $.makeArray(data.data.Recommendations.NameRecommendation);
-
-                        $.each(data.data.Recommendations.NameRecommendation, function(key, val) {
-                          html_inj2 = '';
-                          html_inj += '<div class="form-group">';
-                          html_inj += '<label class="col-sm-2 control-label">'+val.Name+'</label>';
-                          html_inj += '<div class="col-sm-10">';
-
-                            if (("ValueRecommendation" in val) && (val.ValidationRules.MaxValues == 1)) {
-                                html_inj2 += '<option disabled selected><?php echo $text_select; ?></option>';
-
-                                val.ValueRecommendation = $.makeArray(val.ValueRecommendation);
-
-                                $.each(val.ValueRecommendation, function(key2, option) {
-                                    html_inj2 += '<option value="'+option.Value+'">'+option.Value+'</option>';
-                                });
-
-                                if (val.ValidationRules.SelectionMode == 'FreeText') {
-                                    html_inj2 += '<option value="Other"><?php echo $text_other; ?></option>';
-                                }
-                              html_inj += '<div class="row">';
-                                html_inj += '<div class="col-sm-7">';
-                                  html_inj += '<select name="feat['+val.Name+']" class="form-control" id="spec_sel_'+specificCount+'" onchange="toggleSpecOther('+specificCount+');">'+html_inj2+'</select>';
-                                html_inj += '</div>';
-                                html_inj += '<div class="col-sm-5" id="spec_'+specificCount+'_other" style="display:none;">';
-                                  html_inj += '<input placeholder="<?php echo $text_other; ?>" type="text" name="featother['+val.Name+']" class="form-control" />';
-                                html_inj += '</div>';
-                              html_inj += '</div>';
-                            }else if (("ValueRecommendation" in val) && (val.ValidationRules.MaxValues > 1)) {
-                                val.ValueRecommendation = $.makeArray(val.ValueRecommendation);
-
-                              html_inj += '<div class="row">';
-                                $.each(val.ValueRecommendation, function(key2, option) {
-                                  html_inj += '<div class="col-sm-2">';
-                                    html_inj += '<label class="checkbox-inline">';
-                                      html_inj += '<input type="checkbox" name="feat['+val.Name+'][]" value="'+option.Value+'" /> '+option.Value;
-                                    html_inj += '</label>';
-                                  html_inj += '</div>';
-                                });
-                              html_inj += '</div>';
-                            } else {
-                              html_inj += '<div class="row">';
-                                html_inj += '<div class="col-sm-7">';
-                                  html_inj += '<input type="text" name="feat['+val.Name+']" class="form-control" />';
-                                html_inj += '</div>';
-                              html_inj += '</div>';
-                            }
-
-                          html_inj += '</div>';
-                          html_inj += '</div>';
-                          specificCount++;
-                        });
-
-                        $('#feature-content').append(html_inj);
+          if (data.data) {
+            $.each(data.data, function(option_specific_key, option_specific_value) {
+              html_inj2 = '';
+              html_inj += '<div class="form-group">';
+                html_inj += '<label class="col-sm-2 control-label">'+option_specific_value.name+'</label>';
+                html_inj += '<div class="col-sm-10">';
+                  if (("options" in option_specific_value) && (option_specific_value.validation.max_values == 1)) {
+                    // matched_value_key in option_specific_value
+                    if ("matched_value_key" in option_specific_value) {
+                      $.each(option_specific_value.options, function(option_key, option) {
+                        if (option_specific_value.matched_value_key == option_key) {
+                          html_inj2 += '<option value="' + option + '" selected>' + option + '</option>';
+                        } else {
+                          html_inj2 += '<option value="' + option + '">' + option + '</option>';
+                        }
+                      });
                     } else {
-                        $('#feature-content').text('None');
-                    }
-                } else {
-                    if (data.msg == null) {
-                        alert('<?php echo $error_features; ?>');
-                    } else {
-                        alert(data.msg);
-                    }
-                }
+                      html_inj2 += '<option disabled selected><?php echo $text_select; ?></option>';
 
-                $('#feature-loading').hide();
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-              if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
-            }
-        });
+                      $.each(option_specific_value.options, function(option_key, option) {
+                        html_inj2 += '<option value="' + option + '">' + option + '</option>';
+                      });
+                    }
+
+                    show_other = false;
+                    show_other_value = '';
+
+                    if (option_specific_value.validation.selection_mode == 'FreeText') {
+                      if (option_specific_value.unmatched_value != '') {
+                        html_inj2 += '<option value="Other" selected><?php echo $text_other; ?></option>';
+                        show_other = true;
+                        show_other_value = option_specific_value.unmatched_value;
+                      } else {
+                        html_inj2 += '<option value="Other"><?php echo $text_other; ?></option>';
+                      }
+                    }
+
+                    html_inj += '<div class="row">';
+                      html_inj += '<div class="col-sm-7">';
+                        html_inj += '<select name="feat[' + option_specific_value.name + ']" class="form-control" id="spec_sel_' + specific_count + '" onchange="toggleSpecOther(' + specific_count + ');">' + html_inj2 + '</select>';
+                      html_inj += '</div>';
+
+                        if (show_other == true) {
+                          html_inj += '<div class="col-sm-5" id="spec_' + specific_count + '_other">';
+                        } else {
+                          html_inj += '<div class="col-sm-5" id="spec_' + specific_count + '_other" style="display:none;">';
+                        }
+                        html_inj += '<input placeholder="<?php echo $text_other; ?>" type="text" name="featother[' + option_specific_value.name + ']" class="form-control" value="' + show_other_value + '"/>';
+                      html_inj += '</div>';
+                    html_inj += '</div>';
+                  } else if (("options" in option_specific_value) && (option_specific_value.validation.max_values > 1)) {
+                    html_inj += '<div class="row">';
+                      $.each(option_specific_value.options, function(option_key, option) {
+                        html_inj += '<div class="col-sm-2">';
+                          html_inj += '<label class="checkbox-inline">';
+                            html_inj += '<input type="checkbox" name="feat[' + option_specific_value.name + '][]" value="' + option + '" /> ' + option;
+                          html_inj += '</label>';
+                        html_inj += '</div>';
+                      });
+                    html_inj += '</div>';
+                  } else {
+                    html_inj += '<div class="row">';
+                      html_inj += '<div class="col-sm-7">';
+                        html_inj += '<input type="text" name="feat[' + option_specific_value.name + ']" class="form-control" value="' + option_specific_value.unmatched_value + '" />';
+                      html_inj += '</div>';
+                    html_inj += '</div>';
+                  }
+                html_inj += '</div>';
+              html_inj += '</div>';
+
+              specific_count++;
+            });
+
+            $('#feature-content').append(html_inj);
+          } else {
+            $('#feature-content').text('None');
+          }
+        } else {
+          if (data.error == null) {
+            alert('<?php echo $error_features; ?>');
+          } else {
+            alert(data.error);
+          }
+        }
+
+        $('#feature-loading').hide();
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
+      }
+    });
     }
 
   function toggleSpecOther(id) {

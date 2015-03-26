@@ -467,7 +467,7 @@ class ControllerOpenbayEbay extends Controller {
 								}
 							}
 
-							if ($preset_match_found == false) {
+							if ($preset_match_found === false) {
 								if ($name_recommendation['validation']['selection_mode'] == 'FreeText') {
 									$recommendation_data[$name_recommendation_key]['unmatched_value'] = $product_attribute['product_attribute_description'][$this->config->get('config_language_id')]['text'];
 								}

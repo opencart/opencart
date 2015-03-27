@@ -4,9 +4,9 @@ class ControllerModuleAmazonPay extends Controller {
 
 		$this->load->model('payment/amazon_login_pay');
 
-		if ($this->config->get('amazon_login_pay_status') && $this->config->get('amazon_pay_status') && !empty($_SERVER['HTTPS'])) {
-			if (!$this->customer->isLogged() && isset($_COOKIE['amazon_Login_state_cache'])) {
-				setcookie('amazon_Login_state_cache', '', time() - 4815162342);
+		if ($this->config->get('amazon_login_pay_status') && $this->config->get('amazon_pay_status') && !empty($this->request->server['HTTPS'])) {
+			if (!$this->customer->isLogged() && isset($this->request->cookie['amazon_login_state_cache'])) {
+				setcookie('amazon_login_state_cache', '', time() - 4815162342);
 			}
 
 			$amazon_payment_js = $this->model_payment_amazon_login_pay->getWidgetJs();
@@ -174,8 +174,8 @@ class ControllerModuleAmazonPay extends Controller {
 		unset($this->session->data['lpa']);
 		unset($this->session->data['access_token']);
 
-		if (isset($_COOKIE['amazon_Login_state_cache'])) {
-			setcookie('amazon_Login_state_cache', '', time() - 4815162342);
+		if (isset($this->request->cookie['amazon_login_state_cache'])) {
+			setcookie('amazon_login_state_cache', '', time() - 4815162342);
 		}
 	}
 

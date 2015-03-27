@@ -86,8 +86,8 @@ class User {
 	public function getUserName() {
 		return $this->username;
 	}
-	
+
 	public function getGroupId() {
 		return $this->user_group_id;
-	}	
+	}
 }

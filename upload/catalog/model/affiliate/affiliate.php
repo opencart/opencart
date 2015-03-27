@@ -25,12 +25,20 @@ class ModelAffiliateAffiliate extends Model {
 		$message .= $this->language->get('text_thanks') . "\n";
 		$message .= $this->config->get('config_name');
 
-		$mail = new Mail($this->config->get('config_mail'));
-		$mail->setTo(html_entity_decode($this->request->post['email'], ENT_QUOTES, 'UTF-8'));
-		$mail->setFrom(html_entity_decode($this->config->get('config_email'), ENT_QUOTES, 'UTF-8'));
-		$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-		$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
-		$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
+		$mail = new Mail();
+		$mail->protocol = $this->config->get('config_mail_protocol');
+		$mail->parameter = $this->config->get('config_mail_parameter');
+		$mail->smtp_hostname = $this->config->get('config_mail_smtp_host');
+		$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+		$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+		$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+		$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+			
+		$mail->setTo($this->request->post['email']);
+		$mail->setFrom($this->config->get('config_email'));
+		$mail->setSender($this->config->get('config_name'));
+		$mail->setSubject($subject);
+		$mail->setText($message);
 		$mail->send();
 
 		// Send to main admin email if new affiliate email is enabled
@@ -52,8 +60,8 @@ class ModelAffiliateAffiliate extends Model {
 			$message .= $this->language->get('text_telephone') . ' ' . $data['telephone'] . "\n";
 
 			$mail->setTo($this->config->get('config_email'));
-			$mail->setSubject(html_entity_decode($this->language->get('text_new_affiliate'), ENT_QUOTES, 'UTF-8'));
-			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
+			$mail->setSubject($this->language->get('text_new_affiliate'));
+			$mail->setText($message);
 			$mail->send();
 
 			// Send to additional alert emails if new affiliate email is enabled
@@ -141,12 +149,20 @@ class ModelAffiliateAffiliate extends Model {
 			$message  = sprintf($this->language->get('text_transaction_received'), $this->currency->format($amount, $this->config->get('config_currency'))) . "\n\n";
 			$message .= sprintf($this->language->get('text_transaction_total'), $this->currency->format($this->getTransactionTotal($affiliate_id), $this->config->get('config_currency')));
 
-			$mail = new Mail($this->config->get('config_mail'));
+			$mail = new Mail();
+			$mail->protocol = $this->config->get('config_mail_protocol');
+			$mail->parameter = $this->config->get('config_mail_parameter');
+			$mail->smtp_hostname = $this->config->get('config_mail_smtp_host');
+			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+			
 			$mail->setTo($affiliate_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($this->config->get('config_name'));
 			$mail->setSubject(sprintf($this->language->get('text_transaction_subject'), $this->config->get('config_name')));
-			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
+			$mail->setText($message);
 			$mail->send();
 
 			$this->event->trigger('post.affiliate.add.transaction', $affiliate_transaction_id);

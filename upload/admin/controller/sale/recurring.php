@@ -109,7 +109,7 @@ class ControllerSaleRecurring extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'href'      => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -152,7 +152,7 @@ class ControllerSaleRecurring extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 
@@ -354,7 +354,7 @@ class ControllerSaleRecurring extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+				'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 			);
 
 			$data['breadcrumbs'][] = array(

@@ -1228,7 +1228,7 @@
                     if (data.data.conditions && data.data.conditions != '') {
                       data.data.conditions = $.makeArray(data.data.conditions);
 
-                      html_inj += '<option disabled selected><?php echo $text_select; ?></option>';
+                      html_inj += '<option disabled selected></option>';
 
                       $.each(data.data.conditions, function(key, val) {
                           html_inj += '<option value='+val.id+'>'+val.name+'</option>';
@@ -1560,7 +1560,7 @@
                         }
                       });
                     } else {
-                      html_inj2 += '<option disabled selected><?php echo $text_select; ?></option>';
+                      html_inj2 += '<option disabled selected></option>';
 
                       $.each(option_specific_value.options, function(option_key, option) {
                         html_inj2 += '<option value="' + option + '">' + option + '</option>';

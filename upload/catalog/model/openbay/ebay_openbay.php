@@ -91,7 +91,6 @@ class ModelOpenbayEbayOpenbay extends Model{
 
 				$this->openbay->ebay->log('Order ID: ' . $order_id . ' -> Paid');
 			} elseif (($order->payment->status == 'Refunded' || $order->payment->status == 'Unpaid') && ($order_loaded['order_status_id'] != $this->default_refunded_id) && in_array($this->default_paid_id, $order_history)) {
-				/* @todo what happens if the order has never been paid? - need to find a cancelled in ebay flag*/
 				$this->model_openbay_ebay_order->update($order_id, $this->default_refunded_id);
 				$this->model_openbay_ebay_order->cancel($order_id);
 				$this->openbay->ebay->log('Order ID: ' . $order_id . ' -> Refunded');
@@ -112,7 +111,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 				$this->openbay->ebay->log('Paid date: ' . $order->payment->date);
 			}
 			/**
-			 * @TODO - FOLLOWING ORDER STATE TESTS REQUIRED
+			 * FOLLOWING ORDER STATE TESTS REQUIRED
 			 *
 			 * - single item order, not checked out but then marked as paid. i.e. user wants to pay by manual method such as cheque
 			 * - multi item order, same as above. Is this possible? i dont think the order will combine if checkout not done.

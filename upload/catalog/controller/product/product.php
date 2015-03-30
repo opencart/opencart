@@ -634,8 +634,6 @@ class ControllerProductProduct extends Controller {
 				}
 			}
 
-			unset($this->session->data['captcha']);
-
 			if (!isset($json['error'])) {
 				$this->load->model('catalog/review');
 

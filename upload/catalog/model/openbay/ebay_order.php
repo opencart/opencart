@@ -195,8 +195,8 @@ class ModelOpenbayEbayOrder extends Model{
 		$notify = $this->config->get('ebay_update_notify');
 
 		if ($order_info) {
-
 			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
+			
 			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($comment) . "', date_added = NOW()");
 
 			if ($notify) {
@@ -231,12 +231,20 @@ class ModelOpenbayEbayOrder extends Model{
 				$message .= "\n\n";
 				$message .= 'eBay and Amazon order management - http://www.openbaypro.com/';
 
-				$mail = new Mail($this->config->get('config_mail'));
+				$mail = new Mail();
+				$mail->protocol = $this->config->get('config_mail_protocol');
+				$mail->parameter = $this->config->get('config_mail_parameter');
+				$mail->smtp_hostname = $this->config->get('config_mail_smtp_host');
+				$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+				$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+				$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+				$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+			
 				$mail->setTo($order_info['email']);
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender($order_info['store_name']);
-				$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
-				$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
+				$mail->setSubject($subject);
+				$mail->setText($message);
 				$mail->send();
 			}
 		}
@@ -495,13 +503,21 @@ class ModelOpenbayEbayOrder extends Model{
 				$text .= $language->get('text_new_footer') . "\n\n";
 
 				if ($notify == 1) {
-					$mail = new Mail($this->config->get('config_mail'));
+					$mail = new Mail();
+					$mail->protocol = $this->config->get('config_mail_protocol');
+					$mail->parameter = $this->config->get('config_mail_parameter');
+					$mail->smtp_hostname = $this->config->get('config_mail_smtp_host');
+					$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+					$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+					$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+					$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+			
 					$mail->setTo($order_info['email']);
 					$mail->setFrom($this->config->get('config_email'));
 					$mail->setSender($order_info['store_name']);
-					$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
+					$mail->setSubject($subject);
 					$mail->setHtml($html);
-					$mail->setText(html_entity_decode($text, ENT_QUOTES, 'UTF-8'));
+					$mail->setText($text);
 					$mail->send();
 				}
 			}

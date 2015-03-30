@@ -279,8 +279,6 @@ class ControllerAccountReturn extends Controller {
 		$this->load->model('account/return');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			unset($this->session->data['captcha']);
-
 			$return_id = $this->model_account_return->addReturn($this->request->post);
 
 			// Add to activity log

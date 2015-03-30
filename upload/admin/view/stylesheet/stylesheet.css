@@ -275,6 +275,17 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	margin-right: 8px;
 }
 
+/* hide collapse when menu hidden */
+#column-left .collapse.in {
+	display: none;
+	visibility: hidden
+}
+/* show collapse when not hidden OR on hover */
+#column-left.active .collapse.in,
+#menu > li:hover > ul .collapse.in {
+	display: block;
+	visibility: visible
+}
 
 #menu li ul a {
 	padding-left: 20px;

@@ -189,12 +189,16 @@ class ControllerAccountLogin extends Controller {
 		}
 		
 		if (!$this->error) {
+			$this->event->trigger('pre.customer.login');
+			
 			if (!$this->customer->login($this->request->post['email'], $this->request->post['password'])) {
 				$this->error['warning'] = $this->language->get('error_login');
 			
 				$this->model_account_customer->addLoginAttempt($this->request->post['email']);
 			} else {
 				$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
+				
+				$this->event->trigger('post.customer.login');
 			}			
 		}
 		

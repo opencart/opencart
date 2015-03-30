@@ -11,8 +11,8 @@ Options -Indexes
 
 # Prevent Direct Access to files
 <FilesMatch "(?i)((\.tpl|\.ini|\.log|(?<!robots)\.txt))">
- Order deny,allow
- Deny from all
+  Order deny,allow
+  Deny from all
 </FilesMatch>
 
 # SEO URL Settings
@@ -27,6 +27,13 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} !.*\.(ico|gif|jpg|jpeg|png|js|css)
 RewriteRule ^([^?]*) index.php?_route_=$1 [L,QSA]
+
+# Snippet to fix Font Awesome not loading in some Firefox configurations (http://wpvkp.com/font-awesome-doesnt-display-in-firefox-maxcdn/)
+<FilesMatch ".(ttf|otf|eot|woff)$">
+  <IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+  </IfModule>
+</FilesMatch>
 
 ### Additional Settings that may need to be enabled for some servers 
 ### Uncomment the commands by removing the # sign in front of it.

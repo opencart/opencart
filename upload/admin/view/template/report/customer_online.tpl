@@ -81,19 +81,19 @@
   <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
 	url = 'index.php?route=report/customer_online&token=<?php echo $token; ?>';
-	
+
 	var filter_customer = $('input[name=\'filter_customer\']').val();
-	
+
 	if (filter_customer) {
 		url += '&filter_customer=' + encodeURIComponent(filter_customer);
 	}
-		
+
 	var filter_ip = $('input[name=\'filter_ip\']').val();
-	
+
 	if (filter_ip) {
 		url += '&filter_ip=' + encodeURIComponent(filter_ip);
 	}
-				
+
 	location = url;
 });
 //--></script></div>

@@ -244,7 +244,7 @@ function editSearch() {
   $('#search_results').empty().hide();
   $('#error').empty().hide();
 }
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false

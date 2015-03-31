@@ -138,7 +138,7 @@
                   <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" class="form-control" />
                   <?php if ($error_keyword) { ?>
                   <div class="text-danger"><?php echo $error_keyword; ?></div>
-                  <?php } ?>                
+                  <?php } ?>
                 </div>
               </div>
               <div class="form-group">
@@ -241,7 +241,7 @@ $('#input-description<?php echo $language['language_id']; ?>').summernote({
 	height: 300
 });
 <?php } ?>
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('input[name=\'path\']').autocomplete({
 	'source': function(request, response) {
@@ -268,7 +268,7 @@ $('input[name=\'path\']').autocomplete({
 		$('input[name=\'parent_id\']').val(item['value']);
 	}
 });
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('input[name=\'filter\']').autocomplete({
 	'source': function(request, response) {
@@ -297,7 +297,7 @@ $('input[name=\'filter\']').autocomplete({
 $('#category-filter').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('#language a:first').tab('show');
 //--></script></div>

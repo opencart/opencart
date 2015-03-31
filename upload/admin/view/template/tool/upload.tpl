@@ -108,28 +108,28 @@
   <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
 	url = 'index.php?route=tool/upload&token=<?php echo $token; ?>';
-	
+
 	var filter_name = $('input[name=\'filter_name\']').val();
-	
+
 	if (filter_name) {
 		url += '&filter_name=' + encodeURIComponent(filter_name);
 	}
-	
+
 	var filter_filename = $('input[name=\'filter_filename\']').val();
-	
+
 	if (filter_filename) {
 		url += '&filter_filename=' + encodeURIComponent(filter_filename);
 	}
-	
+
 	var filter_date_added = $('input[name=\'filter_date_added\']').val();
-	
+
 	if (filter_date_added) {
 		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
 	}
 
 	location = url;
 });
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false

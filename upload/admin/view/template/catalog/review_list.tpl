@@ -140,34 +140,34 @@
   <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
 	url = 'index.php?route=catalog/review&token=<?php echo $token; ?>';
-	
+
 	var filter_product = $('input[name=\'filter_product\']').val();
-	
+
 	if (filter_product) {
 		url += '&filter_product=' + encodeURIComponent(filter_product);
 	}
-	
+
 	var filter_author = $('input[name=\'filter_author\']').val();
-	
+
 	if (filter_author) {
 		url += '&filter_author=' + encodeURIComponent(filter_author);
 	}
-	
+
 	var filter_status = $('select[name=\'filter_status\']').val();
-	
+
 	if (filter_status != '*') {
-		url += '&filter_status=' + encodeURIComponent(filter_status); 
-	}		
-			
+		url += '&filter_status=' + encodeURIComponent(filter_status);
+	}
+
 	var filter_date_added = $('input[name=\'filter_date_added\']').val();
-	
+
 	if (filter_date_added) {
 		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
 	}
 
 	location = url;
 });
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false

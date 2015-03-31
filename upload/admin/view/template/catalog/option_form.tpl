@@ -164,7 +164,7 @@ $('select[name=\'type\']').trigger('change');
 var option_value_row = <?php echo $option_value_row; ?>;
 
 function addOptionValue() {
-	html  = '<tr id="option-value-row' + option_value_row + '">';	
+	html  = '<tr id="option-value-row' + option_value_row + '">';
     html += '  <td class="text-left"><input type="hidden" name="option_value[' + option_value_row + '][option_value_id]" value="" />';
 	<?php foreach ($languages as $language) { ?>
 	html += '    <div class="input-group">';
@@ -175,10 +175,10 @@ function addOptionValue() {
     html += '  <td class="text-left"><a href="" id="thumb-image' + option_value_row + '" data-toggle="image" class="img-thumbnail"><img src="<?php echo $placeholder; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a><input type="hidden" name="option_value[' + option_value_row + '][image]" value="" id="input-image' + option_value_row + '" /></td>';
 	html += '  <td class="text-right"><input type="text" name="option_value[' + option_value_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#option-value-row' + option_value_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
-	html += '</tr>';	
-	
+	html += '</tr>';
+
 	$('#option-value tbody').append(html);
-	
+
 	option_value_row++;
 }
 //--></script></div>

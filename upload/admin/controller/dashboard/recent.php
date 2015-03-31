@@ -4,9 +4,9 @@ class ControllerDashboardRecent extends Controller {
 		$this->load->language('dashboard/recent');
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_no_results'] = $this->language->get('text_no_results');
-		
+
 		$data['column_order_id'] = $this->language->get('column_order_id');
 		$data['column_customer'] = $this->language->get('column_customer');
 		$data['column_status'] = $this->language->get('column_status');
@@ -27,7 +27,7 @@ class ControllerDashboardRecent extends Controller {
 			'start' => 0,
 			'limit' => 5
 		);
-		
+
 		$results = $this->model_sale_order->getOrders($filter_data);
 
 		foreach ($results as $result) {

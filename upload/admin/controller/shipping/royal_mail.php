@@ -18,7 +18,7 @@ class ControllerShippingRoyalMail extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -26,7 +26,7 @@ class ControllerShippingRoyalMail extends Controller {
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
-		
+
 		$data['entry_rate'] = $this->language->get('entry_rate');
 		$data['entry_rate_eu'] = $this->language->get('entry_rate_eu');
 		$data['entry_rate_non_eu'] = $this->language->get('entry_rate_non_eu');
@@ -46,7 +46,7 @@ class ControllerShippingRoyalMail extends Controller {
 		$data['help_display_weight'] = $this->language->get('help_display_weight');
 		$data['help_display_insurance'] = $this->language->get('help_display_insurance');
 		$data['help_international'] = $this->language->get('help_international');
-		
+
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
@@ -122,7 +122,7 @@ class ControllerShippingRoyalMail extends Controller {
 		} else {
 			$data['royal_mail_special_delivery_1000_rate'] = '0.1:7.40,0.5:8.15,1:9.45,2:12.00,10:27.60,20:42.20';
 		}
-		
+
 		if (isset($this->request->post['royal_mail_special_delivery_1000_insurance'])) {
 			$data['royal_mail_special_delivery_1000_insurance'] = $this->request->post['royal_mail_special_delivery_1000_insurance'];
 		} elseif ($this->config->has('royal_mail_special_delivery_1000_insurance')) {
@@ -136,7 +136,7 @@ class ControllerShippingRoyalMail extends Controller {
 		} else {
 			$data['royal_mail_special_delivery_1000_status'] = $this->config->get('royal_mail_special_delivery_1000_status');
 		}
-		
+
 		// Special Delivery < 2500
 		if (isset($this->request->post['royal_mail_special_delivery_2500_rate'])) {
 			$data['royal_mail_special_delivery_2500_rate'] = $this->request->post['royal_mail_special_delivery_2500_rate'];
@@ -159,7 +159,7 @@ class ControllerShippingRoyalMail extends Controller {
 		} else {
 			$data['royal_mail_special_delivery_2500_status'] = $this->config->get('royal_mail_special_delivery_2500_status');
 		}
-		
+
 		// 1st Class Signed
 		if (isset($this->request->post['royal_mail_1st_class_signed_rate'])) {
 			$data['royal_mail_1st_class_signed_rate'] = $this->request->post['royal_mail_1st_class_signed_rate'];
@@ -227,8 +227,8 @@ class ControllerShippingRoyalMail extends Controller {
 			$data['royal_mail_international_standard_eu_rate'] = $this->config->get('royal_mail_international_standard_eu_rate');
 		} else {
 			$data['royal_mail_international_standard_eu_rate'] = '0.01:0.97,0.02:0.97,0.06:1.47,0.1:3.20,0.25:3.70,0.5:5.15,0.75:6.60,1.25:9.50,1.5:10.95,1.75:12.40,2:13.85';
-		}				
-						
+		}
+
 		if (isset($this->request->post['royal_mail_international_standard_zone_1_rate'])) {
 			$data['royal_mail_international_standard_zone_1_rate'] = $this->request->post['royal_mail_international_standard_zone_1_rate'];
 		} elseif ($this->config->has('royal_mail_international_standard_zone_1_rate')) {
@@ -259,7 +259,7 @@ class ControllerShippingRoyalMail extends Controller {
 		} else {
 			$data['royal_mail_international_tracked_signed_eu_rate'] = '0.02:5.97,0.06:6.47,0.1:8.20,0.25:8.70,0.50:10.15,0.75:11.60,1:13.05,1.25:14.50,1.5:15.95,1.75:17.40,2:18.85';
 		}
-				
+
 		if (isset($this->request->post['royal_mail_international_tracked_signed_zone_1_rate'])) {
 			$data['royal_mail_international_tracked_signed_zone_1_rate'] = $this->request->post['royal_mail_international_tracked_signed_zone_1_rate'];
 		} elseif ($this->config->has('royal_mail_international_tracked_signed_zone_1_rate')) {
@@ -267,7 +267,7 @@ class ControllerShippingRoyalMail extends Controller {
 		} else {
 			$data['royal_mail_international_tracked_signed_zone_1_rate'] = '0.02:6.28,0.06:7.15,0.1:8.80,0.25:9.75,0.5:12.45,0.75:15.15,1:17.85,1.25:20.55,1.5:23.25,1.75:25.95,2:28.65';
 		}
-		
+
 		if (isset($this->request->post['royal_mail_international_tracked_signed_zone_2_rate'])) {
 			$data['royal_mail_international_tracked_signed_zone_2_rate'] = $this->request->post['royal_mail_international_tracked_signed_zone_2_rate'];
 		} elseif ($this->config->has('royal_mail_international_tracked_signed_zone_2_rate')) {
@@ -291,7 +291,7 @@ class ControllerShippingRoyalMail extends Controller {
 		} else {
 			$data['royal_mail_international_tracked_eu_rate'] = '0.02:7.16,0.06:7.76,0.1:9.84,0.25:10.44,0.5:12.18,0.75:13.92,1:15.66,1.25:17.40,1.5:19.14,1.75:20.88,2:22.62';
 		}
-		
+
 		// International Tracked
 		// Non Europe
 		if (isset($this->request->post['royal_mail_international_tracked_non_eu_rate'])) {
@@ -301,9 +301,9 @@ class ControllerShippingRoyalMail extends Controller {
 		} else {
 			$data['royal_mail_international_tracked_non_eu_rate'] = '0.02:5.97,0.06:6.47,0.1:8.20,0.25:8.70,0.5:10.15,0.75:11.60,1:13.05,1.25:14.50,1.5:15.95,1.75:17.40,2:18.85';
 		}
-		
+
 		// International Tracked
-		// World Zones 1				
+		// World Zones 1
 		if (isset($this->request->post['royal_mail_international_tracked_zone_1_rate'])) {
 			$data['royal_mail_international_tracked_zone_1_rate'] = $this->request->post['royal_mail_international_tracked_zone_1_rate'];
 		} elseif ($this->config->has('royal_mail_international_tracked_zone_1_rate')) {
@@ -311,9 +311,9 @@ class ControllerShippingRoyalMail extends Controller {
 		} else {
 			$data['royal_mail_international_tracked_zone_1_rate'] = '0.02:5.97,0.06:6.47,0.1:8.80,0.25:9.75,0.5:12.45,0.75:15.15,1:17.85,1.25:20.55,1.5:23.25,1.75:25.95,2:28.65';
 		}
-		
+
 		// International Tracked
-		// World Zones 2	
+		// World Zones 2
 		if (isset($this->request->post['royal_mail_international_tracked_zone_2_rate'])) {
 			$data['royal_mail_international_tracked_zone_2_rate'] = $this->request->post['royal_mail_international_tracked_zone_2_rate'];
 		} elseif ($this->config->has('royal_mail_international_tracked_zone_2_rate')) {
@@ -363,7 +363,7 @@ class ControllerShippingRoyalMail extends Controller {
 		} else {
 			$data['royal_mail_international_signed_status'] = $this->config->get('royal_mail_international_signed_status');
 		}
-		
+
 		// International Economy
 		if (isset($this->request->post['royal_mail_international_economy_rate'])) {
 			$data['royal_mail_international_economy_rate'] = $this->request->post['royal_mail_international_economy_rate'];

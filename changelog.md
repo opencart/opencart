@@ -2,10 +2,11 @@
 
 ## v2.0.2.1 (Pending release)
 #### Bugs fixed
-Mail config hostname variable (https://github.com/opencart/opencart/issues/2840)
+* Mail config hostname variable (https://github.com/opencart/opencart/issues/2840)
+* Order status id INT size in install.sql (https://github.com/opencart/opencart/issues/2820)
 
 #### Changes
-Added pre & post triggers for customer logins
+* Added pre & post triggers for customer logins
 
 #### Added
 

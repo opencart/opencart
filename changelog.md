@@ -1,5 +1,14 @@
 # OpenCart 2.0 change log
 
+## v2.0.2.1 (Pending release)
+#### Bugs fixed
+mail config hostname variable (https://github.com/opencart/opencart/issues/2840)
+
+#### Changes
+
+#### Added
+
+
 ## v2.0.2.0 (Release date: 31.03.2015)
 #### Bugs fixed
 * Fix recurring profile copy button (instead of deleting them) (https://github.com/opencart/opencart/issues/2458, https://github.com/opencart/opencart/commit/be3811153da01d5db132e904adaceeb225449e6a)

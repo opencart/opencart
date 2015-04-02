@@ -4,9 +4,10 @@
 #### Bugs fixed
 * Mail config hostname variable (https://github.com/opencart/opencart/issues/2840)
 * Order status id INT size in install.sql (https://github.com/opencart/opencart/issues/2820)
+* Fix admin alert email for new customer.
 
 #### Changes
-* Added pre & post triggers for customer logins
+* Added pre & post triggers for customer log in
 
 #### Added
 

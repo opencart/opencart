@@ -111,7 +111,7 @@
     <?php if ($iso_code_3 == 'DEU') { ?>
     <div class="radio">
       <input type="checkbox" name="deu_terms" value="1" />
-      Mit der Übermittlung der für die Abwicklung des Rechnungskaufes und einer Identitäts - und Bonitätsprüfung erforderlichen 
+      Mit der Übermittlung der für die Abwicklung des Rechnungskaufes und einer Identitäts - und Bonitätsprüfung erforderlichen
       Daten an Klarna bin ich einverstanden. Meine <a href="https://online.klarna.com/consent_de.yaws" target="_blank">Einwilligung</a> kann ich jederzeit mit Wirkung für die Zukunft widerrufen.</div>
     <?php } ?>
   </fieldset>
@@ -128,16 +128,16 @@ $('#button-confirm').on('click', function() {
 		type: 'post',
 		data: $('#payment input[type=\'text\'], #payment input[type=\'checkbox\']:checked, #payment input[type=\'radio\']:checked, #payment select'),
 		dataType: 'json',
-		cache: false,		
+		cache: false,
 		beforeSend: function() {
 			$('#button-confirm').button('loading');
 		},
 		complete: function() {
 			$('#button-confirm').button('reset');
-		},		
+		},
 		success: function(json) {
 			$('.alert').remove();
-			
+
 			if (json['error']) {
 				$('#payment').before('<div class="alert alert-danger">' + json['error'] + '</div>');
 			}
@@ -148,4 +148,4 @@ $('#button-confirm').on('click', function() {
 		}
 	});
 });
-//--></script> 
+//--></script>

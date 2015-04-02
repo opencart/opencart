@@ -25,31 +25,31 @@ class Mail {
 	}
 
 	public function setTo($to) {
-		$this->to = html_entity_decode($to, ENT_QUOTES, 'UTF-8');
+		$this->to = $to;
 	}
 
 	public function setFrom($from) {
-		$this->from = html_entity_decode($from, ENT_QUOTES, 'UTF-8');
+		$this->from = $from;
 	}
 
 	public function setSender($sender) {
-		$this->sender = html_entity_decode($sender, ENT_QUOTES, 'UTF-8');
+		$this->sender = $sender;
 	}
 
 	public function setReplyTo($reply_to) {
-		$this->replyto = html_entity_decode($reply_to, ENT_QUOTES, 'UTF-8');
+		$this->replyto = $reply_to;
 	}
 
 	public function setSubject($subject) {
-		$this->subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
+		$this->subject = $subject;
 	}
 
 	public function setText($text) {
-		$this->text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
+		$this->text = $text;
 	}
 
 	public function setHtml($html) {
-		$this->html = html_entity_decode($html, ENT_QUOTES, 'UTF-8');
+		$this->html = $html;
 	}
 
 	public function addAttachment($filename) {
@@ -164,7 +164,7 @@ class Mail {
 		} elseif ($this->protocol == 'smtp') {
 			$tls = substr($this->smtp_hostname, 0, 3) == 'tls';
 			$hostname = $tls ? substr($this->smtp_hostname, 6) : $this->smtp_hostname;
-			
+
 			$handle = fsockopen($hostname, $this->smtp_port, $errno, $errstr, $this->smtp_timeout);
 
 			if (!$handle) {

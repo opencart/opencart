@@ -2,10 +2,10 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/welfordmedia/opencart-test-suite.git"
+            "url": "https://github.com/openbaypro/opencart-test-suite.git"
         }
     ],
     "require": {
-        "welfordmedia/opencart-test-suite": "dev-master"
+        "openbaypro/opencart-test-suite": "dev-master"
     }
 }

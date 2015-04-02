@@ -9,6 +9,7 @@ final class mPDO {
 			$this->pdo = new \PDO("mysql:host=" . $hostname . ";port=" . $port . ";dbname=" . $database, $username, $password, array(\PDO::ATTR_PERSISTENT => true));
 		} catch(\PDOException $e) {
 			trigger_error('Error: Could not make a database link ( ' . $e->getMessage() . '). Error Code : ' . $e->getCode() . ' <br />');
+			exit();
 		}
 
 		$this->pdo->exec("SET NAMES 'utf8'");

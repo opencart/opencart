@@ -1,5 +1,7 @@
 <?php
+
 class ControllerModuleAmazonPay extends Controller {
+
 	private $error = array();
 
 	public function index() {
@@ -30,8 +32,8 @@ class ControllerModuleAmazonPay extends Controller {
 		$data['text_pay_button'] = $this->language->get('text_pay_button');
 		$data['text_a_button'] = $this->language->get('text_a_button');
 		$data['text_gold_button'] = $this->language->get('text_gold_button');
-		$data['text_darkgrey_button'] = $this->language->get('text_darkgrey_button');
-		$data['text_lightgrey_button'] = $this->language->get('text_lightgrey_button');
+		$data['text_darkgray_button'] = $this->language->get('text_darkgray_button');
+		$data['text_lightgray_button'] = $this->language->get('text_lightgray_button');
 		$data['text_small_button'] = $this->language->get('text_small_button');
 		$data['text_medium_button'] = $this->language->get('text_medium_button');
 		$data['text_large_button'] = $this->language->get('text_large_button');
@@ -60,7 +62,7 @@ class ControllerModuleAmazonPay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
 			'separator' => false
 		);
 
@@ -77,6 +79,7 @@ class ControllerModuleAmazonPay extends Controller {
 		);
 
 		$data['action'] = $this->url->link('module/amazon_pay', 'token=' . $this->session->data['token'], 'SSL');
+
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['token'] = $this->session->data['token'];
@@ -118,13 +121,6 @@ class ControllerModuleAmazonPay extends Controller {
 		$this->response->setOutput($this->load->view('module/amazon_pay.tpl', $data));
 	}
 
-	public function shipped() {
-		echo '<pre>';
-		print_r('$_POST');
-		echo '<br /></pre>';
-		die();
-	}
-
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'module/amazon_pay')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -138,14 +134,13 @@ class ControllerModuleAmazonPay extends Controller {
 	}
 
 	public function install() {
-		$this->load->model('tool/event');
-		$this->model_tool_event->addEvent('amazon_pay', 'post.customer.logout', 'module/amazon_pay/logout');
-		$this->model_tool_event->addEvent('amazon_pay', 'post.order.history.add', 'module/amazon_pay/shipped');
-
+		$this->load->model('extension/event');
+		$this->model_extension_event->addEvent('amazon_pay', 'post.customer.logout', 'module/amazon_pay/logout');
 	}
 
 	public function uninstall() {
-		$this->load->model('tool/event');
-		$this->model_tool_event->deleteEvent('amazon_pay');
+		$this->load->model('extension/event');
+		$this->model_extension_event->deleteEvent('amazon_pay');
 	}
+
 }

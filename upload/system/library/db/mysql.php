@@ -6,10 +6,12 @@ final class MySQL {
 	public function __construct($hostname, $username, $password, $database) {
 		if (!$this->link = mysql_connect($hostname, $username, $password)) {
 			trigger_error('Error: Could not make a database link using ' . $username . '@' . $hostname);
+			exit();
 		}
 
 		if (!mysql_select_db($database, $this->link)) {
 			trigger_error('Error: Could not connect to database ' . $database);
+			exit();
 		}
 
 		mysql_query("SET NAMES 'utf8'", $this->link);

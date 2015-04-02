@@ -200,12 +200,12 @@
 $('#collapse-shipping-address .form-group[data-sort]').detach().each(function() {
 	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#collapse-shipping-address .form-group').length) {
 		$('#collapse-shipping-address .form-group').eq($(this).attr('data-sort')).before(this);
-	} 
-	
+	}
+
 	if ($(this).attr('data-sort') > $('#collapse-shipping-address .form-group').length) {
 		$('#collapse-shipping-address .form-group:last').after(this);
 	}
-		
+
 	if ($(this).attr('data-sort') < -$('#collapse-shipping-address .form-group').length) {
 		$('#collapse-shipping-address .form-group:first').before(this);
 	}
@@ -224,11 +224,11 @@ $('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on(
 	if (typeof timer != 'undefined') {
     	clearInterval(timer);
 	}
-	
+
 	timer = setInterval(function() {
 		if ($('#form-upload input[name=\'file\']').val() != '') {
 			clearInterval(timer);
-			
+
 			$.ajax({
 				url: 'index.php?route=tool/upload',
 				type: 'post',
@@ -245,14 +245,14 @@ $('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on(
 				},
 				success: function(json) {
 					$(node).parent().find('.text-danger').remove();
-					
+
 					if (json['error']) {
 						$(node).parent().find('input[name^=\'custom_field\']').after('<div class="text-danger">' + json['error'] + '</div>');
 					}
-	
+
 					if (json['success']) {
 						alert(json['success']);
-	
+
 						$(node).parent().find('input[name^=\'custom_field\']').attr('value', json['file']);
 					}
 				},
@@ -263,7 +263,7 @@ $('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on(
 		}
 	}, 500);
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false
@@ -277,7 +277,7 @@ $('.datetime').datetimepicker({
 	pickDate: true,
 	pickTime: true
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#collapse-shipping-address select[name=\'country_id\']').on('change', function() {
 	$.ajax({

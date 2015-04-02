@@ -1,10 +1,13 @@
 <?php
-
 class ControllerModuleAmazonPay extends Controller {
-
 	public function index() {
-		if ($this->config->get('amazon_login_pay_status') && !empty($_SERVER['HTTPS'])) {
-			$this->load->model('payment/amazon_login_pay');
+
+		$this->load->model('payment/amazon_login_pay');
+
+		if ($this->config->get('amazon_login_pay_status') && $this->config->get('amazon_pay_status') && !empty($this->request->server['HTTPS'])) {
+			if (!$this->customer->isLogged() && isset($this->request->cookie['amazon_login_state_cache'])) {
+				setcookie('amazon_login_state_cache', '', time() - 4815162342);
+			}
 
 			$amazon_payment_js = $this->model_payment_amazon_login_pay->getWidgetJs();
 			$this->document->addScript($amazon_payment_js);
@@ -59,12 +62,12 @@ class ControllerModuleAmazonPay extends Controller {
 			if (isset($user->error)) {
 				$this->model_payment_amazon_login_pay->logger($user->error . ': ' . $user->error_description);
 				$this->session->data['lpa']['error'] = $this->language->get('error_login');
-				$this->response->redirect($this->url->link('payment/amazon_login_pay/failure', '', 'SSL'));
+				$this->response->redirect($this->url->link('payment/amazon_login_pay/loginFailure', '', 'SSL'));
 			}
 
 			if ($this->customer->isLogged() && $this->customer->getEmail() != $user->email) {
 				$this->session->data['lpa']['error'] = sprintf($this->language->get('error_login_email'), $this->config->get('config_name'));
-				$this->response->redirect($this->url->link('payment/amazon_login_pay/failure', '', 'SSL'));
+				$this->response->redirect($this->url->link('payment/amazon_login_pay/loginFailure', '', 'SSL'));
 			} elseif ($this->customer->isLogged()) {
 				$this->model_payment_amazon_login_pay->logger('isLogged');
 				$this->response->redirect($this->url->link('payment/amazon_login_pay/address', '', 'SSL'));
@@ -77,7 +80,6 @@ class ControllerModuleAmazonPay extends Controller {
 				if ($this->validate($user->email)) {
 					unset($this->session->data['guest']);
 
-					// Default Shipping Address
 					$this->load->model('account/address');
 
 					if ($this->config->get('config_tax_customer') == 'payment') {
@@ -88,7 +90,6 @@ class ControllerModuleAmazonPay extends Controller {
 						$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 					}
 
-					// Add to activity log
 					$this->load->model('account/activity');
 
 					$activity_data = array(
@@ -101,26 +102,19 @@ class ControllerModuleAmazonPay extends Controller {
 				} else {
 					$this->model_payment_amazon_login_pay->logger('Could not login to - ID: ' . $customer_info['customer_id'] . ', Email: ' . $customer_info['email']);
 					$this->session->data['lpa']['error'] = $this->language->get('error_login');
-					$this->response->redirect($this->url->link('payment/amazon_login_pay/failure', '', 'SSL'));
+					$this->response->redirect($this->url->link('payment/amazon_login_pay/loginFailure', '', 'SSL'));
 				}
 				$this->response->redirect($this->url->link('payment/amazon_login_pay/address', '', 'SSL'));
 			} else {
 				$country_id = 0;
 				$zone_id = 0;
 
-				if ($this->config->get('amazon_pay_customer_group_id')) {
-					$customer_group_id = $this->config->get('amazon_pay_customer_group_id');
-				} else {
-					$customer_group_id = $this->config->get('config_customer_group_id');
-				}
-
 				$full_name = explode(' ', $user->name);
 				$last_name = array_pop($full_name);
 				$first_name = implode(' ', $full_name);
 
-
 				$data = array(
-					'customer_group_id' => (int)$customer_group_id,
+					'customer_group_id' => (int)$this->config->get('config_customer_group_id'),
 					'firstname' => $first_name,
 					'lastname' => $last_name,
 					'email' => $user->email,
@@ -143,7 +137,6 @@ class ControllerModuleAmazonPay extends Controller {
 				if ($this->validate($user->email)) {
 					unset($this->session->data['guest']);
 
-					// Default Shipping Address
 					$this->load->model('account/address');
 
 					if ($this->config->get('config_tax_customer') == 'payment') {
@@ -154,7 +147,6 @@ class ControllerModuleAmazonPay extends Controller {
 						$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 					}
 
-					// Add to activity log
 					$this->load->model('account/activity');
 
 					$activity_data = array(
@@ -168,13 +160,13 @@ class ControllerModuleAmazonPay extends Controller {
 				} else {
 					$this->model_payment_amazon_login_pay->logger('Could not login to - ID: ' . $customer_id . ', Email: ' . $user->email);
 					$this->session->data['lpa']['error'] = $this->language->get('error_login');
-					$this->response->redirect($this->url->link('payment/amazon_login_pay/failure', '', 'SSL'));
+					$this->response->redirect($this->url->link('payment/amazon_login_pay/loginFailure', '', 'SSL'));
 				}
 			}
 		} else {
 
 			$this->session->data['lpa']['error'] = $this->language->get('error_login');
-			$this->response->redirect($this->url->link('payment/amazon_login_pay/failure', '', 'SSL'));
+			$this->response->redirect($this->url->link('payment/amazon_login_pay/loginFailure', '', 'SSL'));
 		}
 	}
 
@@ -182,8 +174,8 @@ class ControllerModuleAmazonPay extends Controller {
 		unset($this->session->data['lpa']);
 		unset($this->session->data['access_token']);
 
-		if (isset($_COOKIE['amazon_Login_state_cache'])) {
-			setcookie('amazon_Login_state_cache', '', time() - 4815162342); // empty value and old timestamp
+		if (isset($this->request->cookie['amazon_login_state_cache'])) {
+			setcookie('amazon_login_state_cache', '', time() - 4815162342);
 		}
 	}
 
@@ -204,5 +196,4 @@ class ControllerModuleAmazonPay extends Controller {
 			return false;
 		}
 	}
-
 }

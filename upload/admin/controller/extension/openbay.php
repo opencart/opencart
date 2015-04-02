@@ -80,7 +80,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -164,7 +164,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_home'),
 		);
 
@@ -177,7 +177,6 @@ class ControllerExtensionOpenbay extends Controller {
 			'href' => $this->url->link('extension/openbay/manage', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_manage'),
 		);
-
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			$this->model_setting_setting->editSetting('openbay', $this->request->post);
@@ -353,25 +352,19 @@ class ControllerExtensionOpenbay extends Controller {
 				$this->response->setOutput(json_encode($response));
 				break;
 			case 'run_patch': // step 6 - run any db updates or other patch files
-				if ($this->config->get('ebay_status') == 1) {
-					$this->load->model('openbay/ebay');
-					$this->model_openbay_ebay->patch(false);
-				}
+				$this->model_openbay_openbay->patch();
 
-				if ($this->config->get('amazon_status') == 1) {
-					$this->load->model('openbay/amazon');
-					$this->model_openbay_amazon->patch(false);
-				}
+				$this->load->model('openbay/ebay');
+				$this->model_openbay_ebay->patch();
 
-				if ($this->config->get('amazonus_status') == 1) {
-					$this->load->model('openbay/amazonus');
-					$this->model_openbay_amazonus->patch(false);
-				}
+				$this->load->model('openbay/amazon');
+				$this->model_openbay_amazon->patch();
 
-				if ($this->config->get('etsy_status') == 1) {
-					$this->load->model('openbay/etsy');
-					$this->model_openbay_etsy->patch(false);
-				}
+				$this->load->model('openbay/amazonus');
+				$this->model_openbay_amazonus->patch();
+
+				$this->load->model('openbay/etsy');
+				$this->model_openbay_etsy->patch();
 
 				$response = array('error' => 0, 'response' => '', 'percent_complete' => 90, 'status_message' => 'Running patch files');
 
@@ -391,17 +384,21 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function patch() {
+		$this->load->model('openbay/openbay');
 		$this->load->model('openbay/ebay');
 		$this->load->model('openbay/amazon');
 		$this->load->model('openbay/amazonus');
+		$this->load->model('openbay/etsy');
 		$this->load->model('extension/extension');
 		$this->load->model('setting/setting');
 		$this->load->model('user/user_group');
 		$this->load->model('openbay/version');
 
+		$this->model_openbay_openbay->patch();
 		$this->model_openbay_ebay->patch();
 		$this->model_openbay_amazon->patch();
 		$this->model_openbay_amazonus->patch();
+		$this->model_openbay_etsy->patch();
 
 		$openbay = $this->model_setting_setting->getSetting('openbay');
 		$openbay['openbay_version'] = (int)$this->model_openbay_version->version();
@@ -667,7 +664,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'href'      => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_home'),
 		);
 
@@ -938,7 +935,7 @@ class ControllerExtensionOpenbay extends Controller {
 			$data['breadcrumbs'] = array();
 
 			$data['breadcrumbs'][] = array(
-				'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+				'href'      => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
 				'text'      => $this->language->get('text_home'),
 			);
 
@@ -1156,7 +1153,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->load->model('tool/image');
 
 		if ($this->openbay->addonLoad('openstock')) {
-			$this->load->model('openstock/openstock');
+			$this->load->model('module/openstock');
 			$openstock_installed = true;
 		} else {
 			$openstock_installed = false;
@@ -1321,7 +1318,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'href'      => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -1610,8 +1607,8 @@ class ControllerExtensionOpenbay extends Controller {
 				'selected'   => isset($this->request->post['selected']) && in_array($result['product_id'], $this->request->post['selected']),
 				'edit'       => $edit,
 				'has_option' => $openstock_installed ? $result['has_option'] : 0,
-				'vCount'     => $openstock_installed ? $this->model_openstock_openstock->countVariation($result['product_id']) : '',
-				'vsCount'    => $openstock_installed ? $this->model_openstock_openstock->countVariationStock($result['product_id']) : '',
+				'vCount'     => $openstock_installed ? $this->model_module_openstock->countVariation($result['product_id']) : '',
+				'vsCount'    => $openstock_installed ? $this->model_module_openstock->countVariationStock($result['product_id']) : '',
 			);
 		}
 
@@ -1798,9 +1795,21 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->response->setOutput($this->load->view('openbay/openbay_itemlist.tpl', $data));
 	}
 
+	public function itemlist() {
+		$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], 'SSL'));
+	}
+
 	public function eventDeleteProduct($product_id) {
 		foreach ($this->openbay->installed_markets as $market) {
-			if ($this->config->get($market . '_status') == 1) {
+			if ($market == 'amazon') {
+				$status = $this->config->get('openbay_amazon_status');
+			} elseif ($market == 'amazonus') {
+				$status = $this->config->get('openbay_amazon_status');
+			} else {
+				$status = $this->config->get($market . '_status');
+			}
+
+			if ($status == 1) {
 				$this->openbay->{$market}->deleteProduct($product_id);
 			}
 		}
@@ -1808,7 +1817,15 @@ class ControllerExtensionOpenbay extends Controller {
 
 	public function eventEditProduct() {
 		foreach ($this->openbay->installed_markets as $market) {
-			if ($this->config->get($market . '_status') == 1) {
+			if ($market == 'amazon') {
+				$status = $this->config->get('openbay_amazon_status');
+			} elseif ($market == 'amazonus') {
+				$status = $this->config->get('openbay_amazon_status');
+			} else {
+				$status = $this->config->get($market . '_status');
+			}
+
+			if ($status == 1) {
 				$this->openbay->{$market}->productUpdateListen($this->request->get['product_id'], $this->request->post);
 			}
 		}
@@ -1834,6 +1851,7 @@ class ControllerExtensionOpenbay extends Controller {
 			$this->log->write('User failed password validation');
 			$json = array('msg' => 'Password wrong, check the source code for the password! This is so you know what this feature does.');
 		} else {
+			/**
 			$this->log->write('User passed validation');
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "order`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "order_history`");
@@ -1846,35 +1864,33 @@ class ControllerExtensionOpenbay extends Controller {
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "customer_transaction`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "address`");
 
-			/*
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_order`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_order_lock`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_transaction`");
+
 			if ($this->config->get('ebay_status') == 1) {
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_category`");
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_category_history`");
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_image_import`");
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_listing`");
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_listing_pending`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_order`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_order_lock`");
+				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_stock_reserve`");
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_payment_method`");
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_profile`");
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_setting_option`");
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_shipping`");
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_shipping_location`");
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_shipping_location_exclude`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_stock_reserve`");
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_template`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_transaction`");
 			}
-			*/
-			/*
+
 			if ($this->config->get('etsy_status') == 1) {
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "etsy_listing`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "etsy_order`");
-				$this->db->query("TRUNCATE `" . DB_PREFIX . "etsy_order_lock`");
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "etsy_setting_option`");
 			}
-			*/
-			/*
+
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "etsy_order`");
+			$this->db->query("TRUNCATE `" . DB_PREFIX . "etsy_order_lock`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "manufacturer`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "manufacturer_to_store`");
 			$this->db->query("TRUNCATE `" . DB_PREFIX . "attribute`");
@@ -1902,6 +1918,7 @@ class ControllerExtensionOpenbay extends Controller {
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "product_option_relation`");
 			}
 			*/
+
 			$this->log->write('Data cleared');
 			$json = array('msg' => 'Data cleared');
 		}

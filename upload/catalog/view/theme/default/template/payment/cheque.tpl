@@ -13,7 +13,7 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-confirm').on('click', function() {
-	$.ajax({ 
+	$.ajax({
 		type: 'get',
 		url: 'index.php?route=payment/cheque/confirm',
 		cache: false,
@@ -22,10 +22,10 @@ $('#button-confirm').on('click', function() {
 		},
 		complete: function() {
 			$('#button-confirm').button('reset');
-		},		
+		},
 		success: function() {
 			location = '<?php echo $continue; ?>';
-		}		
+		}
 	});
 });
-//--></script> 
+//--></script>

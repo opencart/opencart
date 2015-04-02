@@ -1,4 +1,4 @@
-<form class="form-horizontal" action="https://secure.bluepay.com/interfaces/bp10emu" method=POST>    
+<form class="form-horizontal" action="https://secure.bluepay.com/interfaces/bp10emu" method=POST>
     <fieldset id="payment">
         <legend><?php echo $text_credit_card; ?></legend>
 		<?php if (!empty($existing_cards)) { ?>
@@ -15,13 +15,13 @@
 					</label>
 				</div>
 			</div>
-			<div id="card-existing">                
+			<div id="card-existing">
 				<div class="form-group required">
 					<label class="col-sm-2 control-label" for="Token"><?php echo $entry_cc_choice; ?></label>
 					<div class="col-sm-10">
 						<select name="RRNO" class="form-control">
 							<?php foreach ($existing_cards as $existing_card) { ?>
-								<option value="<?php echo $existing_card['token']; ?>"><?php echo $text_card_type . ' ' . $existing_card['type']; ?>, <?php echo $text_card_digits . ' ' . $existing_card['digits']; ?>, <?php echo $text_card_expiry . ' ' . $existing_card['expiry']; ?></option>   
+								<option value="<?php echo $existing_card['token']; ?>"><?php echo $text_card_type . ' ' . $existing_card['type']; ?>, <?php echo $text_card_digits . ' ' . $existing_card['digits']; ?>, <?php echo $text_card_expiry . ' ' . $existing_card['expiry']; ?></option>
 							<?php } ?>
 						</select>
 					</div>
@@ -36,7 +36,7 @@
 			<div  style="display: none" id="card-new">
 			<?php } else { ?>
 				<div id="card-new">
-				<?php } ?>                
+				<?php } ?>
                 <div class="form-group required">
                     <label class="col-sm-2 control-label" for="input-cc-number"><?php echo $entry_cc_number; ?></label>
                     <div class="col-sm-10">
@@ -73,7 +73,7 @@
 							<input id="input-cc-save" type="checkbox" name="CreateToken" value="1" />
 						</div>
 					</div>
-				<?php } ?>                
+				<?php } ?>
             </div>
         </div>
         <div class="buttons">

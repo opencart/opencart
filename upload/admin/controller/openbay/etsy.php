@@ -5,7 +5,6 @@ class ControllerOpenbayEtsy extends Controller {
 		$this->load->model('openbay/etsy');
 		$this->load->model('setting/setting');
 		$this->load->model('extension/extension');
-		$this->load->model('extension/event');
 
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'openbay/etsy_product');
 		$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'openbay/etsy_product');
@@ -21,7 +20,6 @@ class ControllerOpenbayEtsy extends Controller {
 		$this->load->model('openbay/etsy');
 		$this->load->model('setting/setting');
 		$this->load->model('extension/extension');
-		$this->load->model('extension/event');
 
 		$this->model_openbay_etsy->uninstall();
 		$this->model_extension_extension->uninstall('openbay', $this->request->get['extension']);
@@ -37,7 +35,7 @@ class ControllerOpenbayEtsy extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_home'),
 		);
 
@@ -88,7 +86,7 @@ class ControllerOpenbayEtsy extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_home'),
 		);
 

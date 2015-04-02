@@ -295,6 +295,8 @@ class ControllerOpenbayAmazonus extends Controller {
 			}
 		}
 
+		$this->event->trigger('post.order.history.add', $order_id);
+
 		$logger->write('Order ' . $amazonus_order_id . ' was added to the database (ID: ' . $order_id . ')');
 		$logger->write("Finished processing the order");
 
@@ -580,7 +582,11 @@ class ControllerOpenbayAmazonus extends Controller {
 		}
 	}
 
-	public function eventAddOrder($order_id) {
-		$this->openbay->amazonus->addOrder($order_id);
+	public function eventAddOrderHistory($order_id) {
+		if (!empty($order_id)) {
+			$this->load->model('openbay/amazonus_order');
+
+			$this->model_openbay_amazonus_order->addOrderHistory($order_id);
+		}
 	}
 }

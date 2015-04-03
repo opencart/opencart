@@ -9,6 +9,7 @@
 
 #### Changes
 * Added pre & post triggers for customer log in
+* Order modified success string changed (https://github.com/opencart/opencart/pull/2817)
 
 #### Added
 

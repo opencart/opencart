@@ -41,11 +41,7 @@ final class Action {
 
 		$method = array_shift($parts);
 
-		if ($method) {
-			$this->method = $method;
-		} else {
-			$this->method = 'index';
-		}
+		$this->method = $method ?: 'index';
 	}
 
 	public function execute($registry) {

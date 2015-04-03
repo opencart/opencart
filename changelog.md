@@ -5,9 +5,14 @@
 * Mail config hostname variable (https://github.com/opencart/opencart/issues/2840)
 * Order status id INT size in install.sql (https://github.com/opencart/opencart/issues/2820)
 * Fix admin alert email for new customer.
+* Product review fixed when error message is returned.
+* Pagination fix in sale/recurring (https://github.com/opencart/opencart/pull/2853)
 
 #### Changes
 * Added pre & post triggers for customer log in
+* Order modified success string changed (https://github.com/opencart/opencart/pull/2817)
+* Changed the PayPal Express max amount calculation to be currency specific (https://github.com/opencart/opencart/issues/2836)
+* Worldpay signup icon link changed to new URL.
 
 #### Added
 

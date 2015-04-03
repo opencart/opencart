@@ -624,12 +624,16 @@ class ControllerProductProduct extends Controller {
 				$json['error'] = $this->language->get('error_rating');
 			}
 
-			if ($this->config->get('config_google_captcha_status')) {
-				$recaptcha = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($this->config->get('config_google_captcha_secret')) . '&response=' . $this->request->post['g-recaptcha-response'] . '&remoteip=' . $this->request->server['REMOTE_ADDR']);
+			if ($this->config->get('config_google_captcha_status') && empty($json['error'])) {
+				if (isset($this->request->post['g-recaptcha-response'])) {
+					$recaptcha = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($this->config->get('config_google_captcha_secret')) . '&response=' . $this->request->post['g-recaptcha-response'] . '&remoteip=' . $this->request->server['REMOTE_ADDR']);
 
-				$recaptcha = json_decode($recaptcha, true);
+					$recaptcha = json_decode($recaptcha, true);
 
-				if (!$recaptcha['success']) {
+					if (!$recaptcha['success']) {
+						$json['error'] = $this->language->get('error_captcha');
+					}
+				} else {
 					$json['error'] = $this->language->get('error_captcha');
 				}
 			}

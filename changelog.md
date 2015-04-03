@@ -12,6 +12,7 @@
 * Added pre & post triggers for customer log in
 * Order modified success string changed (https://github.com/opencart/opencart/pull/2817)
 * Changed the PayPal Express max amount calculation to be currency specific (https://github.com/opencart/opencart/issues/2836)
+* Worldpay signup icon link changed to new URL.
 
 #### Added
 

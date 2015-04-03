@@ -64,8 +64,7 @@ class ControllerPaymentPPExpress extends Controller {
 			$shipping = 1;
 		}
 
-		$max_amount = $this->currency->convert($this->cart->getTotal(), $this->config->get('config_currency'), 'USD');
-		$max_amount = min($max_amount * 1.5, 10000);
+		$max_amount = $this->cart->getTotal() * 1.5;
 		$max_amount = $this->currency->format($max_amount, $this->currency->getCode(), '', false);
 
 		$data = array(
@@ -1274,8 +1273,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		$max_amount = $this->currency->convert($order_info['total'], $this->config->get('config_currency'), 'USD');
-		$max_amount = min($max_amount * 1.25, 10000);
+		$max_amount = $this->cart->getTotal() * 1.5;
 		$max_amount = $this->currency->format($max_amount, $this->currency->getCode(), '', false);
 
 		if ($this->cart->hasShipping()) {

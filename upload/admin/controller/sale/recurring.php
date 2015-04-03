@@ -126,8 +126,8 @@ class ControllerSaleRecurring extends Controller {
 			'filter_date_added'         => $filter_date_added,
 			'order'                     => $order,
 			'sort'                      => $sort,
-			'start'                     => ($page - 1) * $this->config->get('config_admin_limit'),
-			'limit'                     => $this->config->get('config_admin_limit'),
+			'start'                     => ($page - 1) * $this->config->get('config_limit_admin'),
+			'limit'                     => $this->config->get('config_limit_admin'),
 		);
 
 		$recurrings_total = $this->model_sale_recurring->getTotalRecurrings($filter_data);
@@ -263,7 +263,7 @@ class ControllerSaleRecurring extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $recurrings_total;
 		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_admin_limit');
+		$pagination->limit = $this->config->get('config_limit_admin');
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('sale/recurring', 'token=' . $this->session->data['token'] . '&page={page}' . $url, 'SSL');
 

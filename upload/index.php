@@ -45,7 +45,14 @@ if ($store_query->num_rows) {
 }
 
 // Settings
-$query = $db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = '0' OR store_id = '" . (int)$config->get('config_store_id') . "' ORDER BY store_id ASC");
+$settings_sql = "SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = '0'";
+
+$config_store_id = (int)$config->get('config_store_id');
+if ($config_store_id > 0) {
+    $settings_sql .= " OR store_id = '{$config_store_id}' ORDER BY store_id ASC";
+}
+
+$query = $db->query($settings_sql);
 
 foreach ($query->rows as $result) {
 	if (!$result['serialized']) {

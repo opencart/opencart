@@ -2,7 +2,7 @@
 final class Tax {
 	private $tax_rates = array();
 
-	private $initialized = null;
+	private $initialized = false;
 
 	/**
 	 * Making sure that initialize() does not overwrite setAddress() calls settings if/when called after that.

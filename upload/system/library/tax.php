@@ -4,6 +4,9 @@ final class Tax {
 
 	private $ready = null;
 
+	/**
+	 * Making sure that prepare() does not overwrite setAddress() calls settings if/when called after that.
+	 */
 	private $is_set = array();
 
 	public function __construct($registry) {

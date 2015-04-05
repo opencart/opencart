@@ -440,7 +440,7 @@ class ModelCheckoutOrder extends Model {
 				$data['text_footer'] = $language->get('text_new_footer');
 
 				$data['logo'] = $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
-				$data['store_name'] = $order_info['store_name'];
+				$data['store_name'] = html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8');
 				$data['store_url'] = $order_info['store_url'];
 				$data['customer_id'] = $order_info['customer_id'];
 				$data['link'] = $order_info['store_url'] . 'index.php?route=account/order/info&order_id=' . $order_id;

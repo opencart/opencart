@@ -131,8 +131,8 @@ class ControllerMarketingContact extends Controller {
 						break;
 					case 'customer_all':
 						$customer_data = array(
-							'start'  => ($page - 1) * 10,
-							'limit'  => 10
+							'start' => ($page - 1) * 10,
+							'limit' => 10
 						);
 
 						$email_total = $this->model_sale_customer->getTotalCustomers($customer_data);
@@ -171,8 +171,8 @@ class ControllerMarketingContact extends Controller {
 						break;
 					case 'affiliate_all':
 						$affiliate_data = array(
-							'start'  => ($page - 1) * 10,
-							'limit'  => 10
+							'start' => ($page - 1) * 10,
+							'limit' => 10
 						);
 
 						$email_total = $this->model_marketing_affiliate->getTotalAffiliates($affiliate_data);

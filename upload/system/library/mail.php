@@ -82,10 +82,6 @@ class Mail {
 			exit();
 		}
 
-		if (!$this->replyto) {
-			$this->setReplyTo($this->sender);
-		}
-
 		if (is_array($this->to)) {
 			$to = implode(',', $this->to);
 		} else {

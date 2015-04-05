@@ -156,7 +156,7 @@ class ModelSaleVoucher extends Model {
 					$data['image'] = '';
 				}
 
-				$data['store_name'] = $this->config->get('config_name');
+				$data['store_name'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 				$data['store_url'] = HTTP_CATALOG;
 				$data['message'] = nl2br($voucher_info['message']);
 

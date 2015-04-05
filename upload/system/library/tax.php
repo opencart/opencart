@@ -111,19 +111,15 @@ final class Tax {
 
 		if (isset($this->tax_rates[$tax_class_id])) {
 			foreach ($this->tax_rates[$tax_class_id] as $tax_rate) {
-				if (isset($tax_rate_data[$tax_rate['tax_rate_id']])) {
-					$amount = $tax_rate_data[$tax_rate['tax_rate_id']]['amount'];
-				} else {
-					$amount = 0;
-				}
+				$amount = 0;
 
 				if ($tax_rate['type'] == 'F') {
-					$amount += $tax_rate['rate'];
+					$amount = $tax_rate['rate'];
 				} elseif ($tax_rate['type'] == 'P') {
-					$amount += ($value / 100 * $tax_rate['rate']);
+					$amount = ($value / 100 * $tax_rate['rate']);
 				}
 
-				$tax_rate_data[$tax_rate['tax_rate_id']] = array(
+				$tax_rate_data[$tax_rate_id] = array(
 					'tax_rate_id' => $tax_rate['tax_rate_id'],
 					'name'        => $tax_rate['name'],
 					'rate'        => $tax_rate['rate'],

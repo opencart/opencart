@@ -2,7 +2,9 @@
 final class Tax {
 	private $tax_rates = array();
 
-	private $ready = array();
+	private $ready = null;
+
+	private $is_set = array();
 
 	public function __construct($registry) {
 		$this->config = $registry->get('config');
@@ -12,7 +14,11 @@ final class Tax {
 	
 	private function prepare()
 	{
-		if (empty($this->ready['shipping'])) {
+        	if ($this->ready) {
+            		return;
+        	}
+       
+		if (empty($this->is_set['shipping'])) {
 			if (isset($this->session->data['shipping_address'])) {
 				$this->setShippingAddress($this->session->data['shipping_address']['country_id'], $this->session->data['shipping_address']['zone_id']);
 			} elseif ($this->config->get('config_tax_default') == 'shipping') {
@@ -20,7 +26,7 @@ final class Tax {
 			}
 		}
 
-		if (empty($this->ready['payment'])) {
+		if (empty($this->is_set['payment'])) {
 			if (isset($this->session->data['payment_address'])) {
 				$this->setPaymentAddress($this->session->data['payment_address']['country_id'], $this->session->data['payment_address']['zone_id']);
 			} elseif ($this->config->get('config_tax_default') == 'payment') {
@@ -28,13 +34,15 @@ final class Tax {
 			}
 		}
 
-		if (empty($this->ready['store'])) {
+		if (empty($this->is_set['store'])) {
 			$this->setStoreAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 		}
+
+		$this->ready = true;
 	}
 	
 	public function setShippingAddress($country_id, $zone_id) {
-		$this->setAddress('shipping', $country_id, $zone_id);;
+		$this->setAddress('shipping', $country_id, $zone_id);
 	}
 
 	public function setPaymentAddress($country_id, $zone_id) {
@@ -58,7 +66,7 @@ final class Tax {
 			);
 		}
 
-		$this->ready[$based] = true;
+		$this->is_set[$based] = true;
 	}
 	
 	public function calculate($value, $tax_class_id, $calculate = true) {

@@ -11,7 +11,7 @@ class ControllerInformationContact extends Controller {
 			$mail = new Mail();
 			$mail->protocol = $this->config->get('config_mail_protocol');
 			$mail->parameter = $this->config->get('config_mail_parameter');
-			$mail->smtp_hostname = $this->config->get('config_mail_smtp_host');
+			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
 			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
 			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
@@ -19,7 +19,7 @@ class ControllerInformationContact extends Controller {
 			
 			$mail->setTo($this->config->get('config_email'));
 			$mail->setFrom($this->request->post['email']);
-			$mail->setSender($this->request->post['name']);
+			$mail->setSender(html_entity_decode($this->request->post['name'], ENT_QUOTES, 'UTF-8'));
 			$mail->setSubject(sprintf($this->language->get('email_subject'), $this->request->post['name']));
 			$mail->setText($this->request->post['enquiry']);
 			$mail->send();

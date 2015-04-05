@@ -119,7 +119,7 @@ class ModelSaleVoucher extends Model {
 				$mail = new Mail();
 				$mail->protocol = $this->config->get('config_mail_protocol');
 				$mail->parameter = $this->config->get('config_mail_parameter');
-				$mail->smtp_hostname = $this->config->get('config_mail_smtp_host');
+				$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 				$mail->smtp_username = $this->config->get('config_mail_smtp_username');
 				$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
 				$mail->smtp_port = $this->config->get('config_mail_smtp_port');
@@ -127,7 +127,7 @@ class ModelSaleVoucher extends Model {
 			
 				$mail->setTo($voucher_info['to_email']);
 				$mail->setFrom($this->config->get('config_email'));
-				$mail->setSender($order_info['store_name']);
+				$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
 				$mail->setSubject(sprintf($language->get('text_subject'), $voucher_info['from_name']));
 				$mail->setHtml($this->load->view('mail/voucher.tpl', $data));
 				$mail->send();
@@ -163,7 +163,7 @@ class ModelSaleVoucher extends Model {
 				$mail = new Mail();
 				$mail->protocol = $this->config->get('config_mail_protocol');
 				$mail->parameter = $this->config->get('config_mail_parameter');
-				$mail->smtp_hostname = $this->config->get('config_mail_smtp_host');
+				$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
 				$mail->smtp_username = $this->config->get('config_mail_smtp_username');
 				$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
 				$mail->smtp_port = $this->config->get('config_mail_smtp_port');
@@ -171,7 +171,7 @@ class ModelSaleVoucher extends Model {
 			
 				$mail->setTo($voucher_info['to_email']);
 				$mail->setFrom($this->config->get('config_email'));
-				$mail->setSender($this->config->get('config_name'));
+				$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 				$mail->setSubject(sprintf($this->language->get('text_subject'), $voucher_info['from_name']));
 				$mail->setHtml($this->load->view('mail/voucher.tpl', $data));
 				$mail->send();

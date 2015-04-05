@@ -3,7 +3,6 @@ class Mail {
 	protected $to;
 	protected $from;
 	protected $sender;
-	protected $replyto;
 	protected $subject;
 	protected $text;
 	protected $html;

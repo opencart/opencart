@@ -294,6 +294,7 @@ final class Openbay {
 			$text .= $order_info['comment'] . "\n\n";
 		}
 
+<<<<<<< HEAD
 		$mail = new Mail();
 		$mail->protocol = $this->config->get('config_mail_protocol');
 		$mail->parameter = $this->config->get('config_mail_parameter');
@@ -303,6 +304,21 @@ final class Openbay {
 		$mail->smtp_port = $this->config->get('config_mail_smtp_port');
 		$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 			
+=======
+		if (version_compare(VERSION, '2.0.2', '<')) {
+			$mail = new Mail($this->config->get('config_mail'));
+		} else {
+			$mail = new Mail();
+			$mail->protocol = $this->config->get('config_mail_protocol');
+			$mail->parameter = $this->config->get('config_mail_parameter');
+			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+		}
+
+>>>>>>> 96a3b110323665996ed9c0eb64fa66ae1f4beac1
 		$mail->setTo($this->config->get('config_email'));
 		$mail->setFrom($this->config->get('config_email'));
 		$mail->setSender($order_info['store_name']);

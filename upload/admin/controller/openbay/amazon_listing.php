@@ -195,7 +195,7 @@ class ControllerOpenbayAmazonListing extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_home'),
 		);
 
@@ -295,7 +295,7 @@ class ControllerOpenbayAmazonListing extends Controller {
 
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(

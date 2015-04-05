@@ -15,8 +15,8 @@ class ControllerInformationContact extends Controller {
 			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
 			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
 			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
-			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');			
-			
+			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+
 			$mail->setTo($this->config->get('config_email'));
 			$mail->setFrom($this->request->post['email']);
 			$mail->setSender(html_entity_decode($this->request->post['name'], ENT_QUOTES, 'UTF-8'));

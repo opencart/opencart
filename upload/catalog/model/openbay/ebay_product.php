@@ -205,21 +205,21 @@ class ModelOpenbayEbayProduct extends Model {
 
 				//package length
 				if (isset($item['advanced']['package']['size']['length'])) {
-					$length = $item['advanced']['package']['size']['length'];;
+					$length = $item['advanced']['package']['size']['length'];
 				} else {
 					$length = 0;
 				}
 
 				//package width
 				if (isset($item['advanced']['package']['size']['width'])) {
-					$width = $item['advanced']['package']['size']['width'];;
+					$width = $item['advanced']['package']['size']['width'];
 				} else {
 					$width = 0;
 				}
 
 				//package height
 				if (isset($item['advanced']['package']['size']['height'])) {
-					$height = $item['advanced']['package']['size']['height'];;
+					$height = $item['advanced']['package']['size']['height'];
 				} else {
 					$height = 0;
 				}

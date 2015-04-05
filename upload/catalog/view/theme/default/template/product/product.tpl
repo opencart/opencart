@@ -69,7 +69,7 @@
             <?php } ?>
             <?php if ($review_status) { ?>
             <div class="tab-pane" id="tab-review">
-              <form class="form-horizontal">
+              <form class="form-horizontal" id="form-review">
                 <div id="review"></div>
                 <h2><?php echo $text_write; ?></h2>
                 <?php if ($review_guest) { ?>
@@ -570,7 +570,7 @@ $('#button-review').on('click', function() {
 		url: 'index.php?route=product/product/write&product_id=<?php echo $product_id; ?>',
 		type: 'post',
 		dataType: 'json',
-		data: 'name=' + encodeURIComponent($('input[name=\'name\']').val()) + '&text=' + encodeURIComponent($('textarea[name=\'text\']').val()) + '&rating=' + encodeURIComponent($('input[name=\'rating\']:checked').val() ? $('input[name=\'rating\']:checked').val() : ''),
+		data: $("#form-review").serialize(),
 		beforeSend: function() {
 			$('#button-review').button('loading');
 		},

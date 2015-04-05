@@ -527,7 +527,7 @@
 
     function checkCredentials() {
         $.ajax({
-            url: 'index.php?route=openbay/ebay/verifyCreds&token=<?php echo $token; ?>',
+            url: 'index.php?route=openbay/ebay/verifycredentials&token=<?php echo $token; ?>',
             type: 'POST',
             dataType: 'json',
             data: {token: $('#ebay-token').val(), secret: $('#ebay-secret').val(), string1: $('#ebay-string1').val(), string2: $('#ebay-string2').val()},

@@ -681,7 +681,7 @@ class ModelCheckoutOrder extends Model {
 					$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
 					$mail->smtp_port = $this->config->get('config_mail_smtp_port');
 					$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-			
+
 					$mail->setTo($order_info['email']);
 					$mail->setFrom($this->config->get('config_email'));
 					$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
@@ -775,7 +775,7 @@ class ModelCheckoutOrder extends Model {
 					$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
 					$mail->smtp_port = $this->config->get('config_mail_smtp_port');
 					$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-			
+
 					$mail->setTo($this->config->get('config_email'));
 					$mail->setFrom($this->config->get('config_email'));
 					$mail->setReplyTo($order_info['email']);
@@ -835,7 +835,7 @@ class ModelCheckoutOrder extends Model {
 				$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
 				$mail->smtp_port = $this->config->get('config_mail_smtp_port');
 				$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-			
+
 				$mail->setTo($order_info['email']);
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender($order_info['store_name']);

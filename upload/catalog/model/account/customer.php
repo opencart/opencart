@@ -75,7 +75,7 @@ class ModelAccountCustomer extends Model {
 			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
 			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 			
-			$mail->setSubject($this->language->get('text_new_customer'));
+			$mail->setSubject(html_entity_decode($this->language->get('text_new_customer'), ENT_QUOTES, 'UTF-8'));
 			$mail->setText($message);
 			$mail->send();
 

@@ -245,7 +245,7 @@ class ControllerMarketingContact extends Controller {
 							$mail->setTo($email);
 							$mail->setFrom($this->config->get('config_email'));
 							$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
-							$mail->setSubject(html_entity_decode($this->request->post['subject'], 'UTF-8'));
+							$mail->setSubject(html_entity_decode($this->request->post['subject'], ENT_QUOTES, 'UTF-8'));
 							$mail->setHtml($message);
 							$mail->send();
 						}

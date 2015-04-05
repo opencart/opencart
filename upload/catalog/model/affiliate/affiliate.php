@@ -60,7 +60,7 @@ class ModelAffiliateAffiliate extends Model {
 			$message .= $this->language->get('text_telephone') . ' ' . $data['telephone'] . "\n";
 
 			$mail->setTo($this->config->get('config_email'));
-			$mail->setSubject($this->language->get('text_new_affiliate'));
+			$mail->setSubject(html_entity_decode($this->language->get('text_new_affiliate'), ENT_QUOTES, 'UTF-8'));
 			$mail->setText($message);
 			$mail->send();
 

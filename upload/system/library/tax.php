@@ -2,10 +2,10 @@
 final class Tax {
 	private $tax_rates = array();
 
-	private $ready = null;
+	private $initialized = null;
 
 	/**
-	 * Making sure that prepare() does not overwrite setAddress() calls settings if/when called after that.
+	 * Making sure that initialize() does not overwrite setAddress() calls settings if/when called after that.
 	 */
 	private $is_set = array();
 
@@ -15,8 +15,8 @@ final class Tax {
 		$this->session = $registry->get('session');
 	}
 	
-	private function prepare() {
-        	if ($this->ready) {
+	private function initialize() {
+        	if ($this->initialized) {
             		return;
         	}
 
@@ -40,7 +40,7 @@ final class Tax {
 			$this->setStoreAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 		}
 
-		$this->ready = true;
+		$this->initialized = true;
 	}
 
 	public function setShippingAddress($country_id, $zone_id) {
@@ -114,7 +114,7 @@ final class Tax {
 	}
 
 	public function getRates($value, $tax_class_id) {
-		$this->prepare();
+		$this->initialize();
 		
 		$tax_rate_data = array();
 
@@ -146,7 +146,7 @@ final class Tax {
 	}
 
 	public function has($tax_class_id) {
-		$this->prepare();
+		$this->initialize();
 		return isset($this->taxes[$tax_class_id]);
 	}
 }

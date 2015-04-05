@@ -15,12 +15,11 @@ final class Tax {
 		$this->session = $registry->get('session');
 	}
 	
-	private function prepare()
-	{
+	private function prepare() {
         	if ($this->ready) {
             		return;
         	}
-       
+
 		if (empty($this->is_set['shipping'])) {
 			if (isset($this->session->data['shipping_address'])) {
 				$this->setShippingAddress($this->session->data['shipping_address']['country_id'], $this->session->data['shipping_address']['zone_id']);
@@ -43,7 +42,7 @@ final class Tax {
 
 		$this->ready = true;
 	}
-	
+
 	public function setShippingAddress($country_id, $zone_id) {
 		$this->setAddress('shipping', $country_id, $zone_id);
 	}
@@ -71,7 +70,7 @@ final class Tax {
 
 		$this->is_set[$based] = true;
 	}
-	
+
 	public function calculate($value, $tax_class_id, $calculate = true) {
 		if ($tax_class_id && $calculate) {
 			$amount = 0;

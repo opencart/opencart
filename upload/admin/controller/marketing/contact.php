@@ -225,7 +225,7 @@ class ControllerMarketingContact extends Controller {
 
 					$message  = '<html dir="ltr" lang="en">' . "\n";
 					$message .= '  <head>' . "\n";
-					$message .= '    <title>' . $this->request->post['subject'] . '</title>' . "\n";
+					$message .= '    <title>' . html_entity_decode($this->request->post['subject'], ENT_QUOTES, 'UTF-8') . '</title>' . "\n";
 					$message .= '    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">' . "\n";
 					$message .= '  </head>' . "\n";
 					$message .= '  <body>' . html_entity_decode($this->request->post['message'], ENT_QUOTES, 'UTF-8') . '</body>' . "\n";

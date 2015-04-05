@@ -3,6 +3,7 @@ class Mail {
 	protected $to;
 	protected $from;
 	protected $sender;
+	protected $reply_to;
 	protected $subject;
 	protected $text;
 	protected $html;
@@ -24,23 +25,23 @@ class Mail {
 	}
 
 	public function setTo($to) {
-		$this->to = $to;
+		$this->to = html_entity_decode($to, ENT_QUOTES, 'UTF-8');
 	}
 
 	public function setFrom($from) {
-		$this->from = $from;
+		$this->from = html_entity_decode($from, ENT_QUOTES, 'UTF-8');
 	}
 
 	public function setSender($sender) {
-		$this->sender = $sender;
+		$this->sender = html_entity_decode($sender, ENT_QUOTES, 'UTF-8');
 	}
 
 	public function setReplyTo($reply_to) {
-		$this->replyto = $reply_to;
+		$this->reply_to = html_entity_decode($reply_to, ENT_QUOTES, 'UTF-8');
 	}
 
 	public function setSubject($subject) {
-		$this->subject = $subject;
+		$this->subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
 	}
 
 	public function setText($text) {
@@ -97,12 +98,18 @@ class Mail {
 
 		if ($this->protocol != 'mail') {
 			$header .= 'To: ' . $to . $this->newline;
-			$header .= 'Subject: ' . '=?UTF-8?B?' . base64_encode($this->subject) . '?=' . $this->newline;
+			$header .= 'Subject: =?UTF-8?B?' . base64_encode($this->subject) . '?=' . $this->newline;
 		}
 
 		$header .= 'Date: ' . date('D, d M Y H:i:s O') . $this->newline;
 		$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . $this->newline;
-		$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->replyto) . '?=' . ' <' . $this->from . '>' . $this->newline;
+		
+		if (!$this->reply_to) {
+			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . $this->newline;
+		} else {
+			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to) . '?=' . ' <' . $this->from . '>' . $this->newline;
+		}
+		
 		$header .= 'Return-Path: ' . $this->from . $this->newline;
 		$header .= 'X-Mailer: PHP/' . phpversion() . $this->newline;
 		$header .= 'Content-Type: multipart/related; boundary="' . $boundary . '"' . $this->newline . $this->newline;

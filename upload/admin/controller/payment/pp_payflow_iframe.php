@@ -18,7 +18,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -69,36 +69,36 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		} else {
 			$data['error_warning'] = '';
 		}
-		
+
 		if (isset($this->error['vendor'])) {
 			$data['error_vendor'] = $this->error['vendor'];
 		} else {
 			$data['error_vendor'] = '';
 		}
-		
+
 		if (isset($this->error['user'])) {
 			$data['error_user'] = $this->error['user'];
 		} else {
 			$data['error_user'] = '';
 		}
-		
+
 		if (isset($this->error['password'])) {
 			$data['error_password'] = $this->error['password'];
 		} else {
 			$data['error_password'] = '';
 		}
-		
+
 		if (isset($this->error['partner'])) {
 			$data['error_partner'] = $this->error['partner'];
 		} else {
 			$data['error_partner'] = '';
 		}
-		
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -110,7 +110,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('payment/pp_payflow', 'token=' . $this->session->data['token'], 'SSL'),
 		);
-		
+
 		$data['action'] = $this->url->link('payment/pp_payflow_iframe', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
@@ -158,7 +158,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		}
 
 		$this->load->model('localisation/order_status');
-		
+
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 		if (isset($this->request->post['pp_payflow_iframe_order_status_id'])) {
@@ -205,7 +205,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		$data['cancel_url'] = HTTPS_CATALOG . 'index.php?route=payment/pp_payflow_iframe/paymentcancel';
 		$data['error_url'] = HTTPS_CATALOG . 'index.php?route=payment/pp_payflow_iframe/paymenterror';
 		$data['return_url'] = HTTPS_CATALOG . 'index.php?route=payment/pp_payflow_iframe/paymentreturn';
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -215,13 +215,13 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 
 	public function install() {
 		$this->load->model('payment/pp_payflow_iframe');
-		
+
 		$this->model_payment_pp_payflow_iframe->install();
 	}
 
 	public function uninstall() {
 		$this->load->model('payment/pp_payflow_iframe');
-		
+
 		$this->model_payment_pp_payflow_iframe->uninstall();
 	}
 
@@ -239,7 +239,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+				'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 			);
 
 			$data['breadcrumbs'][] = array(

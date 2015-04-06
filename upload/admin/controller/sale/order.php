@@ -396,7 +396,7 @@ class ControllerSaleOrder extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
@@ -560,7 +560,7 @@ class ControllerSaleOrder extends Controller {
 		$this->load->model('sale/customer');
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_form'] = !isset($this->request->get['order_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_default'] = $this->language->get('text_default');
@@ -746,7 +746,7 @@ class ControllerSaleOrder extends Controller {
 
 			// Add products to the API
 			$data['products'] = array();
-			
+
 			$products = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
 
 			foreach ($products as $product) {
@@ -1152,7 +1152,7 @@ class ControllerSaleOrder extends Controller {
 				$data['invoice_no'] = '';
 			}
 
-			$data['store_name'] = $order_info['store_name'];
+			$data['store_name'] = html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8');
 			$data['store_url'] = $order_info['store_url'];
 			$data['firstname'] = $order_info['firstname'];
 			$data['lastname'] = $order_info['lastname'];
@@ -1176,15 +1176,15 @@ class ControllerSaleOrder extends Controller {
 			$data['email'] = $order_info['email'];
 			$data['telephone'] = $order_info['telephone'];
 			$data['fax'] = $order_info['fax'];
-			
+
 			$data['account_custom_field'] = $order_info['custom_field'];
-		
-			// Uploaded files			
+
+			// Uploaded files
 			$this->load->model('tool/upload');
-				
+
 			// Custom Fields
 			$this->load->model('sale/custom_field');
-			
+
 			$data['account_custom_fields'] = array();
 
 			$custom_fields = $this->model_sale_custom_field->getCustomFields();
@@ -1193,7 +1193,7 @@ class ControllerSaleOrder extends Controller {
 				if ($custom_field['location'] == 'account' && isset($order_info['custom_field'][$custom_field['custom_field_id']])) {
 					if ($custom_field['type'] == 'select' || $custom_field['type'] == 'radio') {
 						$custom_field_value_info = $this->model_sale_custom_field->getCustomFieldValue($order_info['custom_field'][$custom_field['custom_field_id']]);
-						
+
 						if ($custom_field_value_info) {
 							$data['account_custom_fields'][] = array(
 								'name'  => $custom_field['name'],
@@ -1201,27 +1201,27 @@ class ControllerSaleOrder extends Controller {
 							);
 						}
 					}
-					
+
 					if ($custom_field['type'] == 'checkbox' && is_array($order_info['custom_field'][$custom_field['custom_field_id']])) {
 						foreach ($order_info['custom_field'][$custom_field['custom_field_id']] as $custom_field_value_id) {
 							$custom_field_value_info = $this->model_sale_custom_field->getCustomFieldValue($custom_field_value_id);
-							
-							if ($custom_field_value_info) {						
+
+							if ($custom_field_value_info) {
 								$data['account_custom_fields'][] = array(
 									'name'  => $custom_field['name'],
 									'value' => $custom_field_value_info['name']
-								);	
+								);
 							}
 						}
 					}
-										
+
 					if ($custom_field['type'] == 'text' || $custom_field['type'] == 'textarea' || $custom_field['type'] == 'file' || $custom_field['type'] == 'date' || $custom_field['type'] == 'datetime' || $custom_field['type'] == 'time') {
 						$data['account_custom_fields'][] = array(
 							'name'  => $custom_field['name'],
 							'value' => $order_info['custom_field'][$custom_field['custom_field_id']]
-						);						
+						);
 					}
-					
+
 					if ($custom_field['type'] == 'file') {
 						$upload_info = $this->model_tool_upload->getUploadByCode($order_info['custom_field'][$custom_field['custom_field_id']]);
 
@@ -1229,12 +1229,12 @@ class ControllerSaleOrder extends Controller {
 							$data['account_custom_fields'][] = array(
 								'name'  => $custom_field['name'],
 								'value' => $upload_info['name']
-							);							
+							);
 						}
 					}
 				}
 			}
-			
+
 			$data['comment'] = nl2br($order_info['comment']);
 			$data['shipping_method'] = $order_info['shipping_method'];
 			$data['payment_method'] = $order_info['payment_method'];
@@ -1277,7 +1277,7 @@ class ControllerSaleOrder extends Controller {
 			$data['accept_language'] = $order_info['accept_language'];
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
 			$data['date_modified'] = date($this->language->get('date_format_short'), strtotime($order_info['date_modified']));
-			
+
 			// Payment
 			$data['payment_firstname'] = $order_info['payment_firstname'];
 			$data['payment_lastname'] = $order_info['payment_lastname'];
@@ -1297,7 +1297,7 @@ class ControllerSaleOrder extends Controller {
 				if ($custom_field['location'] == 'address' && isset($order_info['payment_custom_field'][$custom_field['custom_field_id']])) {
 					if ($custom_field['type'] == 'select' || $custom_field['type'] == 'radio') {
 						$custom_field_value_info = $this->model_sale_custom_field->getCustomFieldValue($order_info['payment_custom_field'][$custom_field['custom_field_id']]);
-						
+
 						if ($custom_field_value_info) {
 							$data['payment_custom_fields'][] = array(
 								'name'  => $custom_field['name'],
@@ -1305,27 +1305,27 @@ class ControllerSaleOrder extends Controller {
 							);
 						}
 					}
-					
+
 					if ($custom_field['type'] == 'checkbox' && is_array($order_info['payment_custom_field'][$custom_field['custom_field_id']])) {
 						foreach ($order_info['payment_custom_field'][$custom_field['custom_field_id']] as $custom_field_value_id) {
 							$custom_field_value_info = $this->model_sale_custom_field->getCustomFieldValue($custom_field_value_id);
-							
-							if ($custom_field_value_info) {						
+
+							if ($custom_field_value_info) {
 								$data['payment_custom_fields'][] = array(
 									'name'  => $custom_field['name'],
 									'value' => $custom_field_value_info['name']
-								);	
+								);
 							}
 						}
 					}
-										
+
 					if ($custom_field['type'] == 'text' || $custom_field['type'] == 'textarea' || $custom_field['type'] == 'file' || $custom_field['type'] == 'date' || $custom_field['type'] == 'datetime' || $custom_field['type'] == 'time') {
 						$data['payment_custom_fields'][] = array(
 							'name'  => $custom_field['name'],
 							'value' => $order_info['payment_custom_field'][$custom_field['custom_field_id']]
-						);						
+						);
 					}
-					
+
 					if ($custom_field['type'] == 'file') {
 						$upload_info = $this->model_tool_upload->getUploadByCode($order_info['payment_custom_field'][$custom_field['custom_field_id']]);
 
@@ -1333,12 +1333,12 @@ class ControllerSaleOrder extends Controller {
 							$data['payment_custom_fields'][] = array(
 								'name'  => $custom_field['name'],
 								'value' => $upload_info['name']
-							);							
+							);
 						}
 					}
 				}
-			}			
-			
+			}
+
 			// Shipping
 			$data['shipping_firstname'] = $order_info['shipping_firstname'];
 			$data['shipping_lastname'] = $order_info['shipping_lastname'];
@@ -1350,14 +1350,14 @@ class ControllerSaleOrder extends Controller {
 			$data['shipping_zone'] = $order_info['shipping_zone'];
 			$data['shipping_zone_code'] = $order_info['shipping_zone_code'];
 			$data['shipping_country'] = $order_info['shipping_country'];
-			
+
 			$data['shipping_custom_fields'] = array();
-			
+
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['location'] == 'address' && isset($order_info['shipping_custom_field'][$custom_field['custom_field_id']])) {
 					if ($custom_field['type'] == 'select' || $custom_field['type'] == 'radio') {
 						$custom_field_value_info = $this->model_sale_custom_field->getCustomFieldValue($order_info['shipping_custom_field'][$custom_field['custom_field_id']]);
-						
+
 						if ($custom_field_value_info) {
 							$data['shipping_custom_fields'][] = array(
 								'name'  => $custom_field['name'],
@@ -1365,27 +1365,27 @@ class ControllerSaleOrder extends Controller {
 							);
 						}
 					}
-					
+
 					if ($custom_field['type'] == 'checkbox' && is_array($order_info['shipping_custom_field'][$custom_field['custom_field_id']])) {
 						foreach ($order_info['shipping_custom_field'][$custom_field['custom_field_id']] as $custom_field_value_id) {
 							$custom_field_value_info = $this->model_sale_custom_field->getCustomFieldValue($custom_field_value_id);
-							
-							if ($custom_field_value_info) {						
+
+							if ($custom_field_value_info) {
 								$data['shipping_custom_fields'][] = array(
 									'name'  => $custom_field['name'],
 									'value' => $custom_field_value_info['name']
-								);	
+								);
 							}
 						}
 					}
-										
+
 					if ($custom_field['type'] == 'text' || $custom_field['type'] == 'textarea' || $custom_field['type'] == 'file' || $custom_field['type'] == 'date' || $custom_field['type'] == 'datetime' || $custom_field['type'] == 'time') {
 						$data['shipping_custom_fields'][] = array(
 							'name'  => $custom_field['name'],
 							'value' => $order_info['shipping_custom_field'][$custom_field['custom_field_id']]
-						);						
+						);
 					}
-					
+
 					if ($custom_field['type'] == 'file') {
 						$upload_info = $this->model_tool_upload->getUploadByCode($order_info['shipping_custom_field'][$custom_field['custom_field_id']]);
 
@@ -1393,11 +1393,11 @@ class ControllerSaleOrder extends Controller {
 							$data['shipping_custom_fields'][] = array(
 								'name'  => $custom_field['name'],
 								'value' => $upload_info['name']
-							);							
+							);
 						}
 					}
 				}
-			}				
+			}
 
 			$data['products'] = array();
 
@@ -2207,7 +2207,7 @@ class ControllerSaleOrder extends Controller {
 					'order_id'	         => $order_id,
 					'invoice_no'         => $invoice_no,
 					'date_added'         => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
-					'store_name'         => $order_info['store_name'],
+					'store_name'         => html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'),
 					'store_url'          => rtrim($order_info['store_url'], '/'),
 					'store_address'      => nl2br($store_address),
 					'store_email'        => $store_email,
@@ -2398,21 +2398,21 @@ class ControllerSaleOrder extends Controller {
 				}
 
 				$data['orders'][] = array(
-					'order_id'	         => $order_id,
-					'invoice_no'         => $invoice_no,
-					'date_added'         => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
-					'store_name'         => $order_info['store_name'],
-					'store_url'          => rtrim($order_info['store_url'], '/'),
-					'store_address'      => nl2br($store_address),
-					'store_email'        => $store_email,
-					'store_telephone'    => $store_telephone,
-					'store_fax'          => $store_fax,
-					'email'              => $order_info['email'],
-					'telephone'          => $order_info['telephone'],
-					'shipping_address'   => $shipping_address,
-					'shipping_method'    => $order_info['shipping_method'],
-					'product'            => $product_data,
-					'comment'            => nl2br($order_info['comment'])
+					'order_id'	       => $order_id,
+					'invoice_no'       => $invoice_no,
+					'date_added'       => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
+					'store_name'       => html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'),
+					'store_url'        => rtrim($order_info['store_url'], '/'),
+					'store_address'    => nl2br($store_address),
+					'store_email'      => $store_email,
+					'store_telephone'  => $store_telephone,
+					'store_fax'        => $store_fax,
+					'email'            => $order_info['email'],
+					'telephone'        => $order_info['telephone'],
+					'shipping_address' => $shipping_address,
+					'shipping_method'  => $order_info['shipping_method'],
+					'product'          => $product_data,
+					'comment'          => nl2br($order_info['comment'])
 				);
 			}
 		}
@@ -2421,61 +2421,69 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function api() {
-		$json = array();
+		$this->load->language('sale/order');
 
-		// Store
-		if (isset($this->request->get['store_id'])) {
-			$store_id = $this->request->get['store_id'];
-		} else {
-			$store_id = 0;
-		}
+		if ($this->validate()) {
+			// Store
+			if (isset($this->request->get['store_id'])) {
+				$store_id = $this->request->get['store_id'];
+			} else {
+				$store_id = 0;
+			}
 
-		$this->load->model('setting/store');
+			$this->load->model('setting/store');
 
-		$store_info = $this->model_setting_store->getStore($store_id);
+			$store_info = $this->model_setting_store->getStore($store_id);
 
-		if ($store_info) {
-			$url = $store_info['ssl'];
-		} else {
-			$url = HTTPS_CATALOG;
-		}
+			if ($store_info) {
+				$url = $store_info['ssl'];
+			} else {
+				$url = HTTPS_CATALOG;
+			}
 
-		if (isset($this->session->data['cookie']) && isset($this->request->get['api'])) {
-			// Include any URL perameters
-			$url_data = array();
+			if (isset($this->session->data['cookie']) && isset($this->request->get['api'])) {
+				// Include any URL perameters
+				$url_data = array();
 
-			foreach ($this->request->get as $key => $value) {
-				if ($key != 'route' && $key != 'token' && $key != 'store_id') {
-					$url_data[$key] = $value;
+				foreach($this->request->get as $key => $value) {
+					if ($key != 'route' && $key != 'token' && $key != 'store_id') {
+						$url_data[$key] = $value;
+					}
 				}
+
+				$curl = curl_init();
+
+				// Set SSL if required
+				if (substr($url, 0, 5) == 'https') {
+					curl_setopt($curl, CURLOPT_PORT, 443);
+				}
+
+				curl_setopt($curl, CURLOPT_HEADER, false);
+				curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+				curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
+				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+				curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
+				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($curl, CURLOPT_URL, $url . 'index.php?route=' . $this->request->get['api'] . ($url_data ? '&' . http_build_query($url_data) : ''));
+
+				if ($this->request->post) {
+					curl_setopt($curl, CURLOPT_POST, true);
+					curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($this->request->post));
+				}
+
+				curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->session->data['cookie'] . ';');
+
+				$json = curl_exec($curl);
+
+				curl_close($curl);
 			}
+		} else {
+			$response = array();
+			$response['error'] = $this->error;
+			unset($this->error);
 
-			$curl = curl_init();
-
-			// Set SSL if required
-			if (substr($url, 0, 5) == 'https') {
-				curl_setopt($curl, CURLOPT_PORT, 443);
-			}
-
-			curl_setopt($curl, CURLOPT_HEADER, false);
-			curl_setopt($curl, CURLINFO_HEADER_OUT, true);
-			curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($curl, CURLOPT_FORBID_REUSE, false);
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($curl, CURLOPT_URL, $url . 'index.php?route=' . $this->request->get['api'] . ($url_data ? '&' . http_build_query($url_data) : ''));
-
-			if ($this->request->post) {
-				curl_setopt($curl, CURLOPT_POST, true);
-				curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($this->request->post));
-			}
-
-			curl_setopt($curl, CURLOPT_COOKIE, session_name() . '=' . $this->session->data['cookie'] . ';');
-
-			$json = curl_exec($curl);
-
-			curl_close($curl);
+			$json = json_encode($response);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

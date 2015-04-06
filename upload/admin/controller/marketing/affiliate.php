@@ -221,7 +221,7 @@ class ControllerMarketingAffiliate extends Controller {
 
 		$this->getList();
 	}
-	
+
 	public function unlock() {
 		$this->load->language('marketing/affiliate');
 
@@ -273,7 +273,7 @@ class ControllerMarketingAffiliate extends Controller {
 
 		$this->getList();
 	}
-	
+
 	protected function getList() {
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = $this->request->get['filter_name'];
@@ -396,16 +396,16 @@ class ControllerMarketingAffiliate extends Controller {
 				$approve = $this->url->link('marketing/affiliate/approve', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, 'SSL');
 			} else {
 				$approve = '';
-			}			
-			
+			}
+
 			$login_info = $this->model_marketing_affiliate->getTotalLoginAttempts($result['email']);
-			
+
 			if ($login_info && $login_info['total'] >= $this->config->get('config_login_attempts')) {
 				$unlock = $this->url->link('marketing/affiliate/unlock', 'token=' . $this->session->data['token'] . '&email=' . $result['email'] . $url, 'SSL');
 			} else {
 				$unlock = '';
 			}
-						
+
 			$data['affiliates'][] = array(
 				'affiliate_id' => $result['affiliate_id'],
 				'name'         => $result['name'],
@@ -420,7 +420,7 @@ class ControllerMarketingAffiliate extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -566,7 +566,7 @@ class ControllerMarketingAffiliate extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_form'] = !isset($this->request->get['affiliate_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -1099,6 +1099,10 @@ class ControllerMarketingAffiliate extends Controller {
 			$this->error['code'] = $this->language->get('error_code');
 		}
 
+		if ($this->error && !isset($this->error['warning'])) {
+			$this->error['warning'] = $this->language->get('error_warning');
+		}
+
 		return !$this->error;
 	}
 
@@ -1117,7 +1121,7 @@ class ControllerMarketingAffiliate extends Controller {
 
 		return !$this->error;
 	}
-	
+
 	protected function validateUnlock() {
 		if (!$this->user->hasPermission('modify', 'marketing/affiliate')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -1125,7 +1129,7 @@ class ControllerMarketingAffiliate extends Controller {
 
 		return !$this->error;
 	}
-	
+
 	public function country() {
 		$json = array();
 

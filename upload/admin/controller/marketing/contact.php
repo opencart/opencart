@@ -131,8 +131,8 @@ class ControllerMarketingContact extends Controller {
 						break;
 					case 'customer_all':
 						$customer_data = array(
-							'start'  => ($page - 1) * 10,
-							'limit'  => 10
+							'start' => ($page - 1) * 10,
+							'limit' => 10
 						);
 
 						$email_total = $this->model_sale_customer->getTotalCustomers($customer_data);
@@ -171,8 +171,8 @@ class ControllerMarketingContact extends Controller {
 						break;
 					case 'affiliate_all':
 						$affiliate_data = array(
-							'start'  => ($page - 1) * 10,
-							'limit'  => 10
+							'start' => ($page - 1) * 10,
+							'limit' => 10
 						);
 
 						$email_total = $this->model_marketing_affiliate->getTotalAffiliates($affiliate_data);
@@ -233,11 +233,19 @@ class ControllerMarketingContact extends Controller {
 
 					foreach ($emails as $email) {
 						if (preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $email)) {
-							$mail = new Mail($this->config->get('config_mail'));
+							$mail = new Mail();
+							$mail->protocol = $this->config->get('config_mail_protocol');
+							$mail->parameter = $this->config->get('config_mail_parameter');
+							$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+							$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+							$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+							$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+							$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+
 							$mail->setTo($email);
 							$mail->setFrom($this->config->get('config_email'));
-							$mail->setSender($store_name);
-							$mail->setSubject($this->request->post['subject']);
+							$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
+							$mail->setSubject(html_entity_decode($this->request->post['subject'], ENT_QUOTES, 'UTF-8'));
 							$mail->setHtml($message);
 							$mail->send();
 						}

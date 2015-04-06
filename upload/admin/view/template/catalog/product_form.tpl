@@ -673,7 +673,7 @@
                     <?php foreach ($product_recurrings as $product_recurring) { ?>
                     
                     <tr id="recurring-row<?php echo $recurring_row; ?>">
-                      <td class="text-left"><select name="product_recurrings[<?php echo $recurring_row; ?>][recurring_id]" class="form-control">
+                      <td class="text-left"><select name="product_recurring[<?php echo $recurring_row; ?>][recurring_id]" class="form-control">
                           <?php foreach ($recurrings as $recurring) { ?>
                           <?php if ($recurring['recurring_id'] == $product_recurring['recurring_id']) { ?>
                           <option value="<?php echo $recurring['recurring_id']; ?>" selected="selected"><?php echo $recurring['name']; ?></option>
@@ -682,7 +682,7 @@
                           <?php } ?>
                           <?php } ?>
                         </select></td>
-                      <td class="text-left"><select name="product_recurrings[<?php echo $recurring_row; ?>][customer_group_id]" class="form-control">
+                      <td class="text-left"><select name="product_recurring[<?php echo $recurring_row; ?>][customer_group_id]" class="form-control">
                           <?php foreach ($customer_groups as $customer_group) { ?>
                           <?php if ($customer_group['customer_group_id'] == $product_recurring['customer_group_id']) { ?>
                           <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
@@ -1362,14 +1362,14 @@ function addRecurring() {
 	html  = '';
 	html += '<tr id="recurring-row' + recurring_row + '">';
 	html += '  <td class="left">';
-	html += '    <select name="product_recurrings[' + recurring_row + '][recurring_id]" class="form-control">>';
+	html += '    <select name="product_recurring[' + recurring_row + '][recurring_id]" class="form-control">>';
 	<?php foreach ($recurrings as $recurring) { ?>
 	html += '      <option value="<?php echo $recurring['recurring_id']; ?>"><?php echo $recurring['name']; ?></option>';
 	<?php } ?>
 	html += '    </select>';
 	html += '  </td>';
 	html += '  <td class="left">';
-	html += '    <select name="product_recurrings[' + recurring_row + '][customer_group_id]" class="form-control">>';
+	html += '    <select name="product_recurring[' + recurring_row + '][customer_group_id]" class="form-control">>';
 	<?php foreach ($customer_groups as $customer_group) { ?>
 	html += '      <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>';
 	<?php } ?>

@@ -11,7 +11,7 @@ new CBA.Widgets.InlineCheckoutWidget({
 	},
 	onAuthorize: function(widget) {
 		var redirect = '<?php echo html_entity_decode($amazon_checkout); ?>';
-		
+
 		if (redirect.indexOf('?') == -1) {
 			window.location = redirect + '?contract_id=' + widget.getPurchaseContractId();
 		} else {

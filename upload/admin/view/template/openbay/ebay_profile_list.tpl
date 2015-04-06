@@ -12,12 +12,14 @@
   </div>
   <div class="container-fluid">
     <?php if ($error_warning) { ?>
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
     <?php } ?>
-  <?php if ($success) { ?>
-    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
-  <?php } ?>
-  <div class="panel panel-default">
+    <?php if ($success) { ?>
+      <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
+    <?php } ?>
+  </div>
+  <div class="container-fluid">
+    <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
     </div>
@@ -25,7 +27,7 @@
       <div class="well">
         <div class="row">
           <div class="col-sm-12">
-            <form action="<?php echo $insert; ?>" method="post" id="add-profile-form" class="form-inline pull-right" role="form">
+            <form action="<?php echo $add; ?>" method="post" id="add-profile-form" class="form-inline pull-right" role="form">
               <input type="hidden" name="step1" value="1" />
               <div class="form-group">
                 <div class="input-group">
@@ -70,6 +72,7 @@
       </table>
     </div>
   </div>
+  </div>
 </div>
 <script type="text/javascript"><!--
 $(document).ready(function () {
@@ -83,5 +86,4 @@ $(document).ready(function () {
   });
 });
 //--></script>
-
 <?php echo $footer; ?>

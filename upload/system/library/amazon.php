@@ -107,75 +107,44 @@ class Amazon {
 		return $this->url;
 	}
 
-	public function addOrder($order_id) {
-		if ($this->config->get('openbay_amazon_status') != 1) {
-			return;
-		}
-
-		/* Is called from front-end? */
-		if (!defined('HTTPS_CATALOG')) {
-			$this->load->model('openbay/amazon_order');
-			$amazon_order_id = $this->model_openbay_amazon_order->getAmazonOrderId($order_id);
-
-			$this->load->library('log');
-			$logger = new Log('amazon_stocks.log');
-			$logger->write('addOrder() called with order id: ' . $order_id);
-
-			//Stock levels update
-			if ($this->openbay->addonLoad('openstock')) {
-				$logger->write('openStock found installed.');
-
-				$os_products = $this->osProducts($order_id);
-				$logger->write(print_r($os_products, true));
-				$quantity_data = array();
-				foreach ($os_products as $os_product) {
-					$amazon_sku_rows = $this->getLinkedSkus($os_product['pid'], $os_product['var']);
-					foreach($amazon_sku_rows as $amazon_sku_row) {
-						$quantity_data[$amazon_sku_row['amazon_sku']] = $os_product['qty_left'];
-					}
-				}
-				if(!empty($quantity_data)) {
-					$logger->write('Updating quantities with data: ' . print_r($quantity_data, true));
-					$this->updateQuantities($quantity_data);
-				} else {
-					$logger->write('No quantity data need to be posted.');
-				}
-			} else {
-				$ordered_products = $this->getOrderdProducts($order_id);
-				$ordered_product_ids = array();
-				foreach($ordered_products as $ordered_product) {
-					$ordered_product_ids[] = $ordered_product['product_id'];
-				}
-				$this->putStockUpdateBulk($ordered_product_ids);
-			}
-			$logger->write('addOrder() exiting');
-		}
-	}
-
-	public function productUpdateListen($product_id, $data) {
+	public function productUpdateListen($product_id, $data = array()) {
 		$logger = new Log('amazon_stocks.log');
-		$logger->write('productUpdateListen called for product id: ' . $product_id);
+		$logger->write('productUpdateListen (' . $product_id . ')');
 
-		if ($this->openbay->addonLoad('openstock') && (isset($data['has_option']) && $data['has_option'] == 1)) {
-			$logger->write('openStock found installed and product has options.');
+		$product = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "' LIMIT 1")->row;
+
+		if ($this->openbay->addonLoad('openstock') && (isset($product['has_option']) && $product['has_option'] == 1)) {
+			$this->load->model('module/openstock');
+			$logger->write('Variant item');
+
 			$quantity_data = array();
-			foreach($data['product_option_stock'] as $opt_stock) {
-				$amazon_sku_rows = $this->getLinkedSkus($product_id, $opt_stock['var']);
+
+			// check if post data['variant'], if not then call db to get variants
+			if (!isset($data['variant'])) {
+				$variants = $this->model_module_openstock->getVariants($product_id);
+			} else {
+				$variants = $data['variant'];
+			}
+
+			foreach ($variants as $variant) {
+				$amazon_sku_rows = $this->getLinkedSkus($product_id, $variant['sku']);
+
 				foreach($amazon_sku_rows as $amazon_sku_row) {
-					$quantity_data[$amazon_sku_row['amazon_sku']] = $opt_stock['stock'];
+					$quantity_data[$amazon_sku_row['amazon_sku']] = $variant['stock'];
 				}
 			}
+
 			if(!empty($quantity_data)) {
-				$logger->write('Updating quantities with data: ' . print_r($quantity_data, true));
+				$logger->write('Updating with: ' . print_r($quantity_data, true));
 				$this->updateQuantities($quantity_data);
 			} else {
-				$logger->write('No quantity data need to be posted.');
+				$logger->write('Not required.');
 			}
-
 		} else {
 			$this->putStockUpdateBulk(array($product_id));
 		}
-		$logger->write('productUpdateListen() exiting');
+
+		$logger->write('productUpdateListen() exit');
 	}
 
 	public function bulkUpdateOrders($orders) {
@@ -370,50 +339,6 @@ class Amazon {
 		return $this->db->query("SELECT `op`.`product_id`, `p`.`quantity` as `quantity_left` FROM `" . DB_PREFIX . "order_product` as `op` LEFT JOIN `" . DB_PREFIX . "product` as `p` ON `p`.`product_id` = `op`.`product_id` WHERE `op`.`order_id` = '" . (int)$order_id . "'")->rows;
 	}
 
-	public function osProducts($order_id){
-		$order_product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
-
-		$pass_array = array();
-		foreach ($order_product_query->rows as $order_product) {
-			$product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$order_product['product_id'] . "' LIMIT 1");
-
-			if (!empty($product_query->row)) {
-				if (isset($product_query->row['has_option']) && ($product_query->row['has_option'] == 1)) {
-					$product_option_query = $this->db->query("
-						SELECT `oo`.`product_option_value_id`
-						FROM `" . DB_PREFIX . "order_option` `oo`
-							LEFT JOIN `" . DB_PREFIX . "product_option_value` `pov` ON (`pov`.`product_option_value_id` = `oo`.`product_option_value_id`)
-							LEFT JOIN `" . DB_PREFIX . "option` `o` ON (`o`.`option_id` = `pov`.`option_id`)
-						WHERE `oo`.`order_product_id` = '" . (int)$order_product['order_product_id'] . "'
-						AND `oo`.`order_id` = '" . (int)$order_id . "'
-						AND ((`o`.`type` = 'radio') OR (`o`.`type` = 'select') OR (`o`.`type` = 'image'))
-						ORDER BY `oo`.`order_option_id`
-						ASC");
-
-					if ($product_option_query->num_rows != 0) {
-						$p_options = array();
-						foreach ($product_option_query->rows as $p_option_row) {
-							$p_options[] = $p_option_row['product_option_value_id'];
-						}
-
-						$var = implode(':', $p_options);
-						$quantity_left_row = $this->db->query("SELECT `stock` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$order_product['product_id'] . "' AND `var` = '" . $this->db->escape($var) . "'")->row;
-
-						if(empty($quantity_left_row)) {
-							$quantity_left_row['stock'] = 0;
-						}
-
-						$pass_array[] = array('pid' => $order_product['product_id'], 'qty_left' => $quantity_left_row['stock'], 'var' => $var);
-					}
-				} else {
-					$pass_array[] = array('pid' => $order_product['product_id'], 'qty_left' => $product_query->row['quantity'], 'var' => '');
-				}
-			}
-		}
-
-		return $pass_array;
-	}
-
 	public function validate(){
 		if($this->config->get('openbay_amazon_status') != 0 &&
 			$this->config->get('openbay_amazon_token') != '' &&
@@ -426,7 +351,7 @@ class Amazon {
 	}
 
 	public function deleteProduct($product_id){
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "amazon_product_link` WHERE `product_id` = '" . $this->db->escape($product_id) . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "amazon_product_link` WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
 	public function orderDelete($order_id){
@@ -447,31 +372,55 @@ class Amazon {
 
 	public function getCarriers() {
 		return array(
-			"Blue Package",
-			"Canada Post",
-			"City Link",
-			"DHL",
-			"DHL Global Mail",
-			"Fastway",
+			"USPS",
+			"UPS",
+			"UPSMI",
 			"FedEx",
-			"FedEx SmartPost",
+			"DHL",
+			"Fastway",
 			"GLS",
 			"GO!",
 			"Hermes Logistik Gruppe",
-			"Newgistics",
-			"NipponExpress",
-			"OSM",
-			"OnTrac",
-			"Parcelforce",
 			"Royal Mail",
-			"SagawaExpress",
-			"Streamlite",
+			"Parcelforce",
+			"City Link",
 			"TNT",
 			"Target",
-			"UPS",
-			"UPS Mail Innovations",
-			"USPS",
+			"SagawaExpress",
+			"NipponExpress",
 			"YamatoTransport",
+			"DHL Global Mail",
+			"UPS Mail Innovations",
+			"FedEx SmartPost",
+			"OSM",
+			"OnTrac",
+			"Streamlite",
+			"Newgistics",
+			"Canada Post",
+			"Blue Package",
+			"Chronopost",
+			"Deutsche Post",
+			"DPD",
+			"La Poste",
+			"Parcelnet",
+			"Poste Italiane",
+			"SDA",
+			"Smartmail",
+			"FEDEX_JP",
+			"JP_EXPRESS",
+			"NITTSU",
+			"SAGAWA",
+			"YAMATO",
+			"BlueDart",
+			"AFL/Fedex",
+			"Aramex",
+			"India Post",
+			"Professional",
+			"DTDC",
+			"Overnite Express",
+			"First Flight",
+			"Delhivery",
+			"Lasership",
 		);
 	}
 

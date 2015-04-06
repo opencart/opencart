@@ -6,16 +6,6 @@ class ModelOpenbayEtsyOrder extends Model {
 
 		$this->language->load('openbay/etsy_order');
 
-		/**
-		 * debug code to remove
-
-		$this->db->query("TRUNCATE `" . DB_PREFIX . "etsy_order`");
-		$this->db->query("TRUNCATE `" . DB_PREFIX . "order`");
-		$this->db->query("TRUNCATE `" . DB_PREFIX . "order_history`");
-		$this->db->query("TRUNCATE `" . DB_PREFIX . "order_option`");
-		$this->db->query("TRUNCATE `" . DB_PREFIX . "order_product`");
-		$this->db->query("TRUNCATE `" . DB_PREFIX . "order_total`");
-*/
 		if (!empty($orders)) {
 			foreach ($orders as $order) {
 				$etsy_order = $this->openbay->etsy->orderFind(null, $order->receipt_id);
@@ -262,7 +252,18 @@ class ModelOpenbayEtsyOrder extends Model {
 		}
 
 		$this->updateOrderStatus($order_id, $this->config->get('etsy_order_status_new'));
+		$this->event->trigger('post.order.history.add', $order_id);
 
 		return $order_id;
+	}
+
+	public function addOrderHistory($order_id) {
+		if(!$this->openbay->etsy->orderFind($order_id)) {
+			$order_products = $this->openbay->getOrderProducts($order_id);
+
+			foreach ($order_products as $order_product) {
+				$this->openbay->etsy->productUpdateListen($order_product['product_id']);
+			}
+		}
 	}
 }

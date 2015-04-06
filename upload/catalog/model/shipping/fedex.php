@@ -20,7 +20,7 @@ class ModelShippingFedex extends Model {
 		if ($status) {
 			$weight = $this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->config->get('fedex_weight_class_id'));
 			$weight_code = strtoupper($this->weight->getUnit($this->config->get('fedex_weight_class_id')));
-			
+
 			$date = time();
 
 			$day = date('l', $date);
@@ -176,11 +176,11 @@ class ModelShippingFedex extends Model {
 
 						foreach ($rated_shipment_details as $rated_shipment_detail) {
 							$shipment_rate_detail = $rated_shipment_detail->getElementsByTagName('ShipmentRateDetail')->item(0);
-							$shipment_rate_detail_type = explode('_',$shipment_rate_detail->getElementsByTagName('RateType')->item(0)->nodeValue);
-							
+							$shipment_rate_detail_type = explode('_', $shipment_rate_detail->getElementsByTagName('RateType')->item(0)->nodeValue);
+
 							if (count($shipment_rate_detail_type) == 3 && $shipment_rate_detail_type[1] == $this->config->get('fedex_rate_type')) {
 								$total_net_charge = $shipment_rate_detail->getElementsByTagName('TotalNetCharge')->item(0);
-								
+
 								break;
 							}
 						}

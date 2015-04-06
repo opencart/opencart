@@ -125,7 +125,7 @@ class ControllerSettingStore extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
@@ -167,7 +167,7 @@ class ControllerSettingStore extends Controller {
 
 	public function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_form'] = !isset($this->request->get['store_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
@@ -405,7 +405,7 @@ class ControllerSettingStore extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL')
 		);
-		
+
 		if (!isset($this->request->get['store_id'])) {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_settings'),
@@ -415,9 +415,9 @@ class ControllerSettingStore extends Controller {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_settings'),
 				'href' => $this->url->link('setting/store/edit', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], 'SSL')
-			);			
+			);
 		}
-		
+
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
 
@@ -805,9 +805,9 @@ class ControllerSettingStore extends Controller {
 		} else {
 			$data['logo'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
-		
+
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
-		
+
 		if (isset($this->request->post['config_icon'])) {
 			$data['config_icon'] = $this->request->post['config_icon'];
 		} elseif (isset($store_info['config_icon'])) {

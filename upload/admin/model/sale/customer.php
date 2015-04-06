@@ -172,19 +172,27 @@ class ModelSaleCustomer extends Model {
 				$store_url = HTTP_CATALOG . 'index.php?route=account/login';
 			}
 
-			$message  = sprintf($this->language->get('text_approve_welcome'), $store_name) . "\n\n";
+			$message  = sprintf($this->language->get('text_approve_welcome'), html_entity_decode($store_name, ENT_QUOTES, 'UTF-8')) . "\n\n";
 			$message .= $this->language->get('text_approve_login') . "\n";
 			$message .= $store_url . "\n\n";
 			$message .= $this->language->get('text_approve_services') . "\n\n";
 			$message .= $this->language->get('text_approve_thanks') . "\n";
 			$message .= $store_name;
 
-			$mail = new Mail($this->config->get('config_mail'));
+			$mail = new Mail();
+			$mail->protocol = $this->config->get('config_mail_protocol');
+			$mail->parameter = $this->config->get('config_mail_parameter');
+			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+
 			$mail->setTo($customer_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
-			$mail->setSender($store_name);
-			$mail->setSubject(sprintf($this->language->get('text_approve_subject'), $store_name));
-			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
+			$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
+			$mail->setSubject(sprintf($this->language->get('text_approve_subject'), html_entity_decode($store_name, ENT_QUOTES, 'UTF-8')));
+			$mail->setText($message);
 			$mail->send();
 		}
 	}
@@ -377,12 +385,20 @@ class ModelSaleCustomer extends Model {
 			$message  = sprintf($this->language->get('text_transaction_received'), $this->currency->format($amount, $this->config->get('config_currency'))) . "\n\n";
 			$message .= sprintf($this->language->get('text_transaction_total'), $this->currency->format($this->getTransactionTotal($customer_id)));
 
-			$mail = new Mail($this->config->get('config_mail'));
+			$mail = new Mail();
+			$mail->protocol = $this->config->get('config_mail_protocol');
+			$mail->parameter = $this->config->get('config_mail_parameter');
+			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+
 			$mail->setTo($customer_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
-			$mail->setSender($store_name);
-			$mail->setSubject(sprintf($this->language->get('text_transaction_subject'), $this->config->get('config_name')));
-			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
+			$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
+			$mail->setSubject(sprintf($this->language->get('text_transaction_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')));
+			$mail->setText($message);
 			$mail->send();
 		}
 	}
@@ -444,12 +460,20 @@ class ModelSaleCustomer extends Model {
 			$message  = sprintf($this->language->get('text_reward_received'), $points) . "\n\n";
 			$message .= sprintf($this->language->get('text_reward_total'), $this->getRewardTotal($customer_id));
 
-			$mail = new Mail($this->config->get('config_mail'));
+			$mail = new Mail();
+			$mail->protocol = $this->config->get('config_mail_protocol');
+			$mail->parameter = $this->config->get('config_mail_parameter');
+			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+
 			$mail->setTo($customer_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
-			$mail->setSender($store_name);
-			$mail->setSubject(sprintf($this->language->get('text_reward_subject'), $store_name));
-			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
+			$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
+			$mail->setSubject(sprintf($this->language->get('text_reward_subject'), html_entity_decode($store_name, ENT_QUOTES, 'UTF-8')));
+			$mail->setText($message);
 			$mail->send();
 		}
 	}
@@ -513,14 +537,14 @@ class ModelSaleCustomer extends Model {
 
 		return $query->row['total'];
 	}
-	
+
 	public function getTotalLoginAttempts($email) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_login` WHERE `email` = '" . $this->db->escape($email) . "'");
 
 		return $query->row;
-	}	
+	}
 
 	public function deleteLoginAttempts($email) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_login` WHERE `email` = '" . $this->db->escape($email) . "'");
-	}		
+	}
 }

@@ -53,7 +53,7 @@ class ModelCatalogManufacturer extends Model {
 
 		$this->cache->delete('manufacturer');
 
-		$this->event->trigger('post.admin.manufacturer.edit');
+		$this->event->trigger('post.admin.manufacturer.edit', $manufacturer_id);
 	}
 
 	public function deleteManufacturer($manufacturer_id) {

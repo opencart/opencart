@@ -20,7 +20,7 @@ class ControllerExtensionInstaller extends Controller {
 		$data['button_upload'] = $this->language->get('button_upload');
 		$data['button_clear'] = $this->language->get('button_clear');
 		$data['button_continue'] = $this->language->get('button_continue');
-		
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -32,7 +32,7 @@ class ControllerExtensionInstaller extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/installer', 'token=' . $this->session->data['token'], 'SSL')
 		);
-		
+
 		$data['token'] = $this->session->data['token'];
 
 		$directories = glob(DIR_UPLOAD . 'temp-*', GLOB_ONLYDIR);
@@ -133,7 +133,7 @@ class ControllerExtensionInstaller extends Controller {
 							'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/ftp', 'token=' . $this->session->data['token'], 'SSL')),
 							'path' => $path
 						);
-						
+
 						// Send make and array of actions to carry out
 						while ($entry = zip_read($zip)) {
 							$zip_name = zip_entry_name($entry);
@@ -258,7 +258,7 @@ class ControllerExtensionInstaller extends Controller {
 		if (!$this->user->hasPermission('modify', 'extension/installer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
-		
+
 		// Check FTP status
 		if (!$this->config->get('config_ftp_status')) {
 			$json['error'] = $this->language->get('error_ftp_status');
@@ -304,36 +304,36 @@ class ControllerExtensionInstaller extends Controller {
 					if ($root) {
 						foreach ($files as $file) {
 							$destination = substr($file, strlen($directory));
-							
+
 							// Upload everything in the upload directory
 							// Many people rename their admin folder for security purposes which I believe should be an option during installation just like setting the db prefix.
 							// the following code would allow you to change the name of the following directories and any extensions installed will still go to the right directory.
 							if (substr($destination, 0, 5) == 'admin') {
 								$destination = basename(DIR_APPLICATION) . substr($destination, 5);
 							}
-							
+
 							if (substr($destination, 0, 7) == 'catalog') {
 								$destination = basename(DIR_CATALOG) . substr($destination, 7);
 							}
-							
+
 							if (substr($destination, 0, 5) == 'image') {
 								$destination = basename(DIR_IMAGE) . substr($destination, 5);
 							}
-							
+
 							if (substr($destination, 0, 6) == 'system') {
 								$destination = basename(DIR_SYSTEM) . substr($destination, 6);
 							}
-							
+
 							if (is_dir($file)) {
 								$list = ftp_nlist($connection, substr($destination, 0, strrpos($destination, '/')));
-								
+
 								// Basename all the directories because on some servers they don't return the fulll paths.
 								$list_data = array();
-								
+
 								foreach ($list as $list) {
 									$list_data[] = basename($list);
 								}
-																
+
 								if (!in_array(basename($destination), $list_data)) {
 									if (!ftp_mkdir($connection, $destination)) {
 										$json['error'] = sprintf($this->language->get('error_ftp_directory'), $destination);
@@ -434,7 +434,7 @@ class ControllerExtensionInstaller extends Controller {
 				try {
 					$dom = new DOMDocument('1.0', 'UTF-8');
 					$dom->loadXml($xml);
-					
+
 					$name = $dom->getElementsByTagName('name')->item(0);
 
 					if ($name) {
@@ -442,15 +442,15 @@ class ControllerExtensionInstaller extends Controller {
 					} else {
 						$name = '';
 					}
-					
+
 					$code = $dom->getElementsByTagName('code')->item(0);
 
 					if ($code) {
 						$code = $code->nodeValue;
-						
+
 						// Check to see if the modification is already installed or not.
 						$modification_info = $this->model_extension_modification->getModificationByCode($code);
-						
+
 						if ($modification_info) {
 							$json['error'] = sprintf($this->language->get('error_exists'), $modification_info['name']);
 						}
@@ -491,7 +491,7 @@ class ControllerExtensionInstaller extends Controller {
 						'xml'     => $xml,
 						'status'  => 1
 					);
-					
+
 					if (!$json) {
 						$this->model_extension_modification->addModification($modification_data);
 					}
@@ -559,7 +559,7 @@ class ControllerExtensionInstaller extends Controller {
 				// We have to use scandir function because glob will not pick up dot files.
 				foreach (array_diff(scandir($next), array('.', '..')) as $file) {
 					$file = $next . '/' . $file;
-					
+
 					if (is_dir($file)) {
 						$path[] = $file;
 					}
@@ -609,11 +609,11 @@ class ControllerExtensionInstaller extends Controller {
 
 				while (count($path) != 0) {
 					$next = array_shift($path);
-					
+
 					// We have to use scandir function because glob will not pick up dot files.
 					foreach (array_diff(scandir($next), array('.', '..')) as $file) {
 						$file = $next . '/' . $file;
-						
+
 						if (is_dir($file)) {
 							$path[] = $file;
 						}

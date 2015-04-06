@@ -50,22 +50,22 @@ $('#button-confirm').bind('click', function() {
 		type: 'post',
 		data: $('#payment :input'),
 		dataType: 'json',
-		cache: false,		
+		cache: false,
 		beforeSend: function() {
 			$('#button-confirm').button('loading');
 		},
 		complete: function() {
 			$('#button-confirm').button('reset');
-		},				
+		},
 		success: function(json) {
 			if (json['error']) {
 				alert(json['error']);
 			}
-			
+
 			if (json['redirect']) {
 				location = json['redirect'];
 			}
 		}
 	});
 });
-</script> 
+</script>

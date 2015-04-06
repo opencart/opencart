@@ -127,8 +127,6 @@ $(document).ready(function() {
 		});	
 	});
 	
-	//var popover = 
-			
 	// Image Manager
 	$(document).delegate('a[data-toggle=\'image\']', 'click', function(e) {
 		e.preventDefault();
@@ -193,6 +191,19 @@ $(document).ready(function() {
 	// Makes tooltips work on ajax generated content
 	$(document).ajaxStop(function() {
 		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
+	});
+	
+	// https://github.com/opencart/opencart/issues/2595
+	$.event.special.remove = {
+		remove: function(o) {
+			if (o.handler) { 
+				o.handler.apply(this, arguments);
+			}
+		}
+	}
+	
+	$('[data-toggle=\'tooltip\']').on('remove', function() {
+		$(this).tooltip('destroy');
 	});	
 });
 

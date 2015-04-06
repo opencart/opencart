@@ -377,29 +377,28 @@ class ControllerPaymentSagepayServer extends Controller {
 		if ($str_card_type == "PAYPAL") {
 			$comment .= "Paypal address status: " . $str_address_status . "<br>";
 			$comment .= "Paypal payer status: " . $str_payer_status . "<br>";
-		} else {
-			$comment .= "Last 4 digits: " . $str_last_4_digits . "<br>";
-
-			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('sagepay_server_order_status_id'), $comment);
-
-			$this->model_payment_sagepay_server->updateOrder($order_info, $str_vps_tx_id, $str_tx_auth_no);
-
-			$this->model_payment_sagepay_server->addTransaction($transaction_info['sagepay_server_order_id'], $this->config->get('sagepay_server_transaction'), $order_info);
-
-			if (!empty($str_token)) {
-				$data = array();
-				$data['customer_id'] = $order_info['customer_id'];
-				$data['ExpiryDate'] = substr($str_expiry_date, -4, 2) . '/' . substr($str_expiry_date, 2);
-				$data['Token'] = $str_token;
-				$data['CardType'] = $str_card_type;
-				$data['Last4Digits'] = $str_last_4_digits;
-
-				$this->model_payment_sagepay_server->addCard($data);
-			}
-
-			echo "Status=OK" . $end_ln;
-			echo "RedirectURL=" . $success_page . $end_ln;
 		}
+		$comment .= "Last 4 digits: " . $str_last_4_digits . "<br>";
+
+		$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('sagepay_server_order_status_id'), $comment);
+
+		$this->model_payment_sagepay_server->updateOrder($order_info, $str_vps_tx_id, $str_tx_auth_no);
+
+		$this->model_payment_sagepay_server->addTransaction($transaction_info['sagepay_server_order_id'], $this->config->get('sagepay_server_transaction'), $order_info);
+
+		if (!empty($str_token)) {
+			$data = array();
+			$data['customer_id'] = $order_info['customer_id'];
+			$data['ExpiryDate'] = substr($str_expiry_date, -4, 2) . '/' . substr($str_expiry_date, 2);
+			$data['Token'] = $str_token;
+			$data['CardType'] = $str_card_type;
+			$data['Last4Digits'] = $str_last_4_digits;
+
+			$this->model_payment_sagepay_server->addCard($data);
+		}
+
+		echo "Status=OK" . $end_ln;
+		echo "RedirectURL=" . $success_page . $end_ln;
 	}
 
 	public function success() {

@@ -117,7 +117,7 @@ class ControllerCommonHeader extends Controller {
 			$data['stores'] = array();
 
 			$data['stores'][] = array(
-				'name' => html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'),
+				'name' => $this->config->get('config_name'),
 				'href' => HTTP_CATALOG
 			);
 
@@ -127,7 +127,7 @@ class ControllerCommonHeader extends Controller {
 
 			foreach ($results as $result) {
 				$data['stores'][] = array(
-					'name' => html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'),
+					'name' => $result['name'],
 					'href' => $result['url']
 				);
 			}

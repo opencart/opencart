@@ -106,7 +106,7 @@ class ControllerSettingStore extends Controller {
 
 		$data['stores'][] = array(
 			'store_id' => 0,
-			'name'     => html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8') . $this->language->get('text_default'),
+			'name'     => $this->config->get('config_name') . $this->language->get('text_default'),
 			'url'      => HTTP_CATALOG,
 			'edit'     => $this->url->link('setting/setting', 'token=' . $this->session->data['token'], 'SSL')
 		);
@@ -118,7 +118,7 @@ class ControllerSettingStore extends Controller {
 		foreach ($results as $result) {
 			$data['stores'][] = array(
 				'store_id' => $result['store_id'],
-				'name'     => html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'),
+				'name'     => $result['name'],
 				'url'      => $result['url'],
 				'edit'     => $this->url->link('setting/store/edit', 'token=' . $this->session->data['token'] . '&store_id=' . $result['store_id'], 'SSL')
 			);

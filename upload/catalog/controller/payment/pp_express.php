@@ -842,7 +842,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 			$data['invoice_prefix'] = $this->config->get('config_invoice_prefix');
 			$data['store_id'] = $this->config->get('config_store_id');
-			$data['store_name'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
+			$data['store_name'] = $this->config->get('config_name');
 
 			if ($data['store_id']) {
 				$data['store_url'] = $this->config->get('config_url');

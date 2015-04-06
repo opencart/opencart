@@ -20,9 +20,9 @@ class ControllerAffiliateForgotten extends Controller {
 
 			$this->model_affiliate_affiliate->editPassword($this->request->post['email'], $password);
 
-			$subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
+			$subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 
-			$message  = sprintf($this->language->get('text_greeting'), $this->config->get('config_name')) . "\n\n";
+			$message  = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')) . "\n\n";
 			$message .= $this->language->get('text_password') . "\n\n";
 			$message .= $password;
 
@@ -38,7 +38,7 @@ class ControllerAffiliateForgotten extends Controller {
 			$mail->setTo($this->request->post['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
-			$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
+			$mail->setSubject($subject);
 			$mail->setText($message);
 			$mail->send();
 

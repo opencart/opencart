@@ -177,7 +177,7 @@ class ModelSaleCustomer extends Model {
 			$message .= $store_url . "\n\n";
 			$message .= $this->language->get('text_approve_services') . "\n\n";
 			$message .= $this->language->get('text_approve_thanks') . "\n";
-			$message .= $store_name;
+			$message .= html_entity_decode($store_name, ENT_QUOTES, 'UTF-8');
 
 			$mail = new Mail();
 			$mail->protocol = $this->config->get('config_mail_protocol');

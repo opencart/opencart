@@ -410,14 +410,14 @@ class ModelCheckoutOrder extends Model {
 					$order_status = '';
 				}
 
-				$subject = sprintf($language->get('text_new_subject'), $order_info['store_name'], $order_id);
+				$subject = sprintf($language->get('text_new_subject'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);
 
 				// HTML Mail
 				$data = array();
 
-				$data['title'] = sprintf($language->get('text_new_subject'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);
+				$data['title'] = sprintf($language->get('text_new_subject'), $order_info['store_name'], $order_id);
 
-				$data['text_greeting'] = sprintf($language->get('text_new_greeting'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
+				$data['text_greeting'] = sprintf($language->get('text_new_greeting'), $order_info['store_name']);
 				$data['text_link'] = $language->get('text_new_link');
 				$data['text_download'] = $language->get('text_new_download');
 				$data['text_order_detail'] = $language->get('text_new_order_detail');
@@ -440,7 +440,7 @@ class ModelCheckoutOrder extends Model {
 				$data['text_footer'] = $language->get('text_new_footer');
 
 				$data['logo'] = $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
-				$data['store_name'] = html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8');
+				$data['store_name'] = $order_info['store_name'];
 				$data['store_url'] = $order_info['store_url'];
 				$data['customer_id'] = $order_info['customer_id'];
 				$data['link'] = $order_info['store_url'] . 'index.php?route=account/order/info&order_id=' . $order_id;

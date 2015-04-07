@@ -25,23 +25,23 @@ class Mail {
 	}
 
 	public function setTo($to) {
-		$this->to = html_entity_decode($to, ENT_QUOTES, 'UTF-8');
+		$this->to = $to;
 	}
 
 	public function setFrom($from) {
-		$this->from = html_entity_decode($from, ENT_QUOTES, 'UTF-8');
+		$this->from = $from;
 	}
 
 	public function setSender($sender) {
-		$this->sender = html_entity_decode($sender, ENT_QUOTES, 'UTF-8');
+		$this->sender = $sender;
 	}
 
 	public function setReplyTo($reply_to) {
-		$this->reply_to = html_entity_decode($reply_to, ENT_QUOTES, 'UTF-8');
+		$this->reply_to = $reply_to;
 	}
 
 	public function setSubject($subject) {
-		$this->subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
+		$this->subject = $subject;
 	}
 
 	public function setText($text) {

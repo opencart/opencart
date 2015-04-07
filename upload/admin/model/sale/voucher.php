@@ -128,7 +128,7 @@ class ModelSaleVoucher extends Model {
 				$mail->setTo($voucher_info['to_email']);
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
-				$mail->setSubject(html_entity_decode(sprintf($language->get('text_subject'), $voucher_info['from_name']), ENT_QUOTES, 'UTF-8'));
+				$mail->setSubject(sprintf($language->get('text_subject'), html_entity_decode($voucher_info['from_name'], ENT_QUOTES, 'UTF-8')));
 				$mail->setHtml($this->load->view('mail/voucher.tpl', $data));
 				$mail->send();
 

@@ -52,7 +52,7 @@ final class Tax {
 		if (!$this->initialized) {
 			$address_types = array('shipping', 'payment', 'store');
 
-			foreach ($address_types as $based ) {
+			foreach ($address_types as $based) {
 				$country_id = $this->address[$based]['country_id'];
 				$zone_id    = $this->address[$based]['zone_id'];
 

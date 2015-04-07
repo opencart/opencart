@@ -44,7 +44,7 @@ final class Tax {
 	}
 
 	private function setAddress($based, $country_id, $zone_id) {
-		$this->address[$based] = array('store', $country_id, $zone_id);
+		$this->address[$based] = array($country_id, $zone_id);
 		$this->refresh();
 	}
 	

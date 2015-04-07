@@ -43,11 +43,14 @@ final class Tax {
 			'country_id' => (int)$country_id, 
 			'zone_id'    => (int)$zone_id,
 		);
+
 		$this->refresh();
 	}
 	
 	private function initialize() {
 		if (!$this->initialized) {
+			$this->tax_rates = array();
+
 			foreach ($this->address as $based => $address) {
 				$country_id = $address['country_id'];
 				$zone_id    = $address['zone_id'];
@@ -72,8 +75,7 @@ final class Tax {
 		}
 	}
 	
-	private function refresh() {
-		$this->tax_rates = array();
+	public function refresh() {
 		$this->initialized = false;
 	}
 
@@ -125,9 +127,9 @@ final class Tax {
 		$tax_rate_data = array();
 
 		if (isset($this->tax_rates[$tax_class_id])) {
-			foreach ($this->tax_rates[$tax_class_id] as $tax_rate) {
-				if (isset($tax_rate_data[$tax_rate['tax_rate_id']])) {
-					$amount = $tax_rate_data[$tax_rate['tax_rate_id']]['amount'];
+			foreach ($this->tax_rates[$tax_class_id] as $tax_rate_id => $tax_rate) {
+				if (isset($tax_rate_data[$tax_rate_id])) {
+					$amount = $tax_rate_data[$tax_rate_id]['amount'];
 				} else {
 					$amount = 0;
 				}
@@ -138,12 +140,12 @@ final class Tax {
 					$amount += ($value / 100 * $tax_rate['rate']);
 				}
 
-				$tax_rate_data[$tax_rate['tax_rate_id']] = array(
+				$tax_rate_data[$tax_rate_id] = array(
 					'tax_rate_id' => $tax_rate['tax_rate_id'],
 					'name'        => $tax_rate['name'],
 					'rate'        => $tax_rate['rate'],
 					'type'        => $tax_rate['type'],
-					'amount'      => $amount
+					'amount'      => $amount,
 				);
 			}
 		}

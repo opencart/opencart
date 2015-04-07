@@ -9,9 +9,9 @@ class ModelAffiliateAffiliate extends Model {
 
 		$this->load->language('mail/affiliate');
 
-		$subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
+		$subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 
-		$message  = sprintf($this->language->get('text_welcome'), $this->config->get('config_name')) . "\n\n";
+		$message  = sprintf($this->language->get('text_welcome'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')) . "\n\n";
 		$message .= $this->language->get('text_approval') . "\n";
 
 		if (!$this->config->get('config_affiliate_approval')) {
@@ -23,7 +23,7 @@ class ModelAffiliateAffiliate extends Model {
 		$message .= $this->url->link('affiliate/login', '', 'SSL') . "\n\n";
 		$message .= $this->language->get('text_services') . "\n\n";
 		$message .= $this->language->get('text_thanks') . "\n";
-		$message .= $this->config->get('config_name');
+		$message .= html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 		$mail = new Mail();
 		$mail->protocol = $this->config->get('config_mail_protocol');
@@ -36,7 +36,7 @@ class ModelAffiliateAffiliate extends Model {
 
 		$mail->setTo($this->request->post['email']);
 		$mail->setFrom($this->config->get('config_email'));
-		$mail->setSender($this->config->get('config_name'));
+		$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 		$mail->setSubject($subject);
 		$mail->setText($message);
 		$mail->send();
@@ -44,7 +44,7 @@ class ModelAffiliateAffiliate extends Model {
 		// Send to main admin email if new affiliate email is enabled
 		if ($this->config->get('config_affiliate_mail')) {
 			$message  = $this->language->get('text_signup') . "\n\n";
-			$message .= $this->language->get('text_store') . ' ' . $this->config->get('config_name') . "\n";
+			$message .= $this->language->get('text_store') . ' ' . html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8') . "\n";
 			$message .= $this->language->get('text_firstname') . ' ' . $data['firstname'] . "\n";
 			$message .= $this->language->get('text_lastname') . ' ' . $data['lastname'] . "\n";
 
@@ -60,7 +60,7 @@ class ModelAffiliateAffiliate extends Model {
 			$message .= $this->language->get('text_telephone') . ' ' . $data['telephone'] . "\n";
 
 			$mail->setTo($this->config->get('config_email'));
-			$mail->setSubject($this->language->get('text_new_affiliate'));
+			$mail->setSubject(html_entity_decode($this->language->get('text_new_affiliate'), ENT_QUOTES, 'UTF-8'));
 			$mail->setText($message);
 			$mail->send();
 
@@ -160,8 +160,8 @@ class ModelAffiliateAffiliate extends Model {
 
 			$mail->setTo($affiliate_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
-			$mail->setSender($this->config->get('config_name'));
-			$mail->setSubject(sprintf($this->language->get('text_transaction_subject'), $this->config->get('config_name')));
+			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+			$mail->setSubject(sprintf($this->language->get('text_transaction_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')));
 			$mail->setText($message);
 			$mail->send();
 

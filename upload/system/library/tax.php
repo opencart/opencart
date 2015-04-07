@@ -44,7 +44,7 @@ final class Tax {
 	}
 
 	private function setAddress($based, $country_id, $zone_id) {
-		$this->address[$based] = array($country_id, $zone_id);
+		$this->address[$based] = array((int)$country_id, (int)$zone_id);
 		$this->refresh();
 	}
 	
@@ -59,12 +59,15 @@ final class Tax {
 				$tax_query = $this->db->query("SELECT tr1.tax_class_id, tr2.tax_rate_id, tr2.name, tr2.rate, tr2.type, tr1.priority FROM " . DB_PREFIX . "tax_rule tr1 LEFT JOIN " . DB_PREFIX . "tax_rate tr2 ON (tr1.tax_rate_id = tr2.tax_rate_id) INNER JOIN " . DB_PREFIX . "tax_rate_to_customer_group tr2cg ON (tr2.tax_rate_id = tr2cg.tax_rate_id) LEFT JOIN " . DB_PREFIX . "zone_to_geo_zone z2gz ON (tr2.geo_zone_id = z2gz.geo_zone_id) LEFT JOIN " . DB_PREFIX . "geo_zone gz ON (tr2.geo_zone_id = gz.geo_zone_id) WHERE tr1.based = '{$based}' AND tr2cg.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND z2gz.country_id = '" . (int)$country_id . "' AND (z2gz.zone_id = '0' OR z2gz.zone_id = '" . (int)$zone_id . "') ORDER BY tr1.priority ASC");
 
 				foreach ($tax_query->rows as $result) {
-					$this->tax_rates[$result['tax_class_id']][$result['tax_rate_id']] = array(
-						'tax_rate_id' => $result['tax_rate_id'],
+					$tax_class_id = (int)$result['tax_class_id'];
+					$tax_rate_id  = (int)$result['tax_rate_id'];
+
+					$this->tax_rates[$tax_class_id][$tax_rate_id] = array(
+						'tax_rate_id' => $tax_rate_id,
 						'name'        => $result['name'],
-						'rate'        => $result['rate'],
+						'rate'        => (float) $result['rate'],
 						'type'        => $result['type'],
-						'priority'    => $result['priority']
+						'priority'    => (int) $result['priority'],
 					);
 				}
 			}

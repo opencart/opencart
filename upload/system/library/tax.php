@@ -141,7 +141,7 @@ final class Tax {
 				}
 
 				$tax_rate_data[$tax_rate_id] = array(
-					'tax_rate_id' => $tax_rate['tax_rate_id'],
+					'tax_rate_id' => $tax_rate_id,
 					'name'        => $tax_rate['name'],
 					'rate'        => $tax_rate['rate'],
 					'type'        => $tax_rate['type'],

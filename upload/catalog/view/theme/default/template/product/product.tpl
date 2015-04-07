@@ -23,6 +23,7 @@
         <?php $class = 'col-sm-8'; ?>
         <?php } ?>
         <div class="<?php echo $class; ?>">
+          <?php // start Product Images ?>
           <?php if ($thumb || $images) { ?>
           <ul class="thumbnails">
             <?php if ($thumb) { ?>
@@ -35,6 +36,8 @@
             <?php } ?>
           </ul>
           <?php } ?>
+          <?php // end Product Images ?>
+          <?php // start Product Tabs ?>
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-description" data-toggle="tab"><?php echo $tab_description; ?></a></li>
             <?php if ($attribute_groups) { ?>
@@ -46,6 +49,7 @@
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-description"><?php echo $description; ?></div>
+            <?php // start Product Specifications ?>
             <?php if ($attribute_groups) { ?>
             <div class="tab-pane" id="tab-specification">
               <table class="table table-bordered">
@@ -67,6 +71,8 @@
               </table>
             </div>
             <?php } ?>
+            <?php // end Product Specifications ?>
+            <?php // start Product Reviews ?>
             <?php if ($review_status) { ?>
             <div class="tab-pane" id="tab-review">
               <form class="form-horizontal" id="form-review">
@@ -119,7 +125,9 @@
               </form>
             </div>
             <?php } ?>
+            <?php // end Product Reviews ?>
           </div>
+          <?php // end Product Tabs ?>
         </div>
         <?php if ($column_left && $column_right) { ?>
         <?php $class = 'col-sm-6'; ?>
@@ -341,6 +349,7 @@
           <?php } ?>
         </div>
       </div>
+      <?php // start Related Products ?>
       <?php if ($products) { ?>
       <h3><?php echo $text_related; ?></h3>
       <div class="row">
@@ -401,6 +410,8 @@
         <?php } ?>
       </div>
       <?php } ?>
+      <?php // end Related Products ?>
+      <?php // start Product Tags ?>
       <?php if ($tags) { ?>
       <p><?php echo $text_tags; ?>
         <?php for ($i = 0; $i < count($tags); $i++) { ?>
@@ -412,6 +423,7 @@
         <?php } ?>
       </p>
       <?php } ?>
+      <?php // end Product Tags ?>
       <?php echo $content_bottom; ?></div>
     <?php echo $column_right; ?></div>
 </div>

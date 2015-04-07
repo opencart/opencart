@@ -6,11 +6,6 @@ final class Tax {
 
 	private $initialized = false;
 
-	/**
-	 * Making sure that initialize() does not overwrite setAddress() calls settings if/when called after that.
-	 */
-	private $is_set = array();
-
 	public function __construct($registry) {
 		$this->config = $registry->get('config');
 		$this->db = $registry->get('db');

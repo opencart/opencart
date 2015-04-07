@@ -6,6 +6,7 @@
  * for admin to login to the store and update settings or installing modules manually for each test build.
  *
  * @todo support for modules & order totals
+ * @todo create front end demo user account from config (or re-use current selenium test account)
  */
 
 // Version
@@ -24,7 +25,7 @@ $db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 foreach ($settings as $store_id => $store_settings) {
 	$query = $db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = '" . (int)$store_id . "'");
 
-	$old_store_config = [];
+	$old_store_config = array();
 
 	foreach ($query->rows as $result) {
 		if ($result['serialized'] == 1) {
@@ -123,7 +124,7 @@ function editSetting($code, $data, $store_id = 0) {
 function getInstalledExtension($type) {
 	global $db;
 
-	$extension_data = [];
+	$extension_data = array();
 
 	$query = $db->query("SELECT * FROM " . DB_PREFIX . "extension WHERE `type` = '" . $db->escape($type) . "' ORDER BY code");
 

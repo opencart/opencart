@@ -39,7 +39,10 @@ final class Tax {
 	}
 
 	private function setAddress($based, $country_id, $zone_id) {
-		$this->address[$based] = array((int)$country_id, (int)$zone_id);
+		$this->address[$based] = array(
+			'country_id' => (int)$country_id, 
+			'zone_id'    => (int)$zone_id,
+		);
 		$this->refresh();
 	}
 	

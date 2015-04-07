@@ -2,6 +2,8 @@
 final class Tax {
 	private $tax_rates = array();
 
+	private $address = array();
+
 	private $initialized = false;
 
 	/**
@@ -13,34 +15,20 @@ final class Tax {
 		$this->config = $registry->get('config');
 		$this->db = $registry->get('db');
 		$this->session = $registry->get('session');
-	}
-	
-	private function initialize() {
-        	if ($this->initialized) {
-            		return;
-        	}
 
-		if (empty($this->is_set['shipping'])) {
-			if (isset($this->session->data['shipping_address'])) {
-				$this->setShippingAddress($this->session->data['shipping_address']['country_id'], $this->session->data['shipping_address']['zone_id']);
-			} elseif ($this->config->get('config_tax_default') == 'shipping') {
-				$this->setShippingAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
-			}
+		if (isset($this->session->data['shipping_address'])) {
+			$this->setShippingAddress($this->session->data['shipping_address']['country_id'], $this->session->data['shipping_address']['zone_id']);
+		} elseif ($this->config->get('config_tax_default') == 'shipping') {
+			$this->setShippingAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 		}
 
-		if (empty($this->is_set['payment'])) {
-			if (isset($this->session->data['payment_address'])) {
-				$this->setPaymentAddress($this->session->data['payment_address']['country_id'], $this->session->data['payment_address']['zone_id']);
-			} elseif ($this->config->get('config_tax_default') == 'payment') {
-				$this->setPaymentAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
-			}
+		if (isset($this->session->data['payment_address'])) {
+			$this->setPaymentAddress($this->session->data['payment_address']['country_id'], $this->session->data['payment_address']['zone_id']);
+		} elseif ($this->config->get('config_tax_default') == 'payment') {
+			$this->setPaymentAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 		}
 
-		if (empty($this->is_set['store'])) {
-			$this->setStoreAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
-		}
-
-		$this->initialized = true;
+		$this->setStoreAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 	}
 
 	public function setShippingAddress($country_id, $zone_id) {
@@ -56,19 +44,38 @@ final class Tax {
 	}
 
 	private function setAddress($based, $country_id, $zone_id) {
-		$tax_query = $this->db->query("SELECT tr1.tax_class_id, tr2.tax_rate_id, tr2.name, tr2.rate, tr2.type, tr1.priority FROM " . DB_PREFIX . "tax_rule tr1 LEFT JOIN " . DB_PREFIX . "tax_rate tr2 ON (tr1.tax_rate_id = tr2.tax_rate_id) INNER JOIN " . DB_PREFIX . "tax_rate_to_customer_group tr2cg ON (tr2.tax_rate_id = tr2cg.tax_rate_id) LEFT JOIN " . DB_PREFIX . "zone_to_geo_zone z2gz ON (tr2.geo_zone_id = z2gz.geo_zone_id) LEFT JOIN " . DB_PREFIX . "geo_zone gz ON (tr2.geo_zone_id = gz.geo_zone_id) WHERE tr1.based = '{$based}' AND tr2cg.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND z2gz.country_id = '" . (int)$country_id . "' AND (z2gz.zone_id = '0' OR z2gz.zone_id = '" . (int)$zone_id . "') ORDER BY tr1.priority ASC");
+		$this->address[$based] = array('store', $country_id, $zone_id);
+		$this->refresh();
+	}
+	
+	private function initialize() {
+		if (!$this->initialized) {
+			$address_types = array('shipping', 'payment', 'store');
 
-		foreach ($tax_query->rows as $result) {
-			$this->tax_rates[$result['tax_class_id']][$result['tax_rate_id']] = array(
-				'tax_rate_id' => $result['tax_rate_id'],
-				'name'        => $result['name'],
-				'rate'        => $result['rate'],
-				'type'        => $result['type'],
-				'priority'    => $result['priority']
-			);
+			foreach ($address_types as $based ) {
+				$country_id = $this->address[$based]['country_id'];
+				$zone_id    = $this->address[$based]['zone_id'];
+
+				$tax_query = $this->db->query("SELECT tr1.tax_class_id, tr2.tax_rate_id, tr2.name, tr2.rate, tr2.type, tr1.priority FROM " . DB_PREFIX . "tax_rule tr1 LEFT JOIN " . DB_PREFIX . "tax_rate tr2 ON (tr1.tax_rate_id = tr2.tax_rate_id) INNER JOIN " . DB_PREFIX . "tax_rate_to_customer_group tr2cg ON (tr2.tax_rate_id = tr2cg.tax_rate_id) LEFT JOIN " . DB_PREFIX . "zone_to_geo_zone z2gz ON (tr2.geo_zone_id = z2gz.geo_zone_id) LEFT JOIN " . DB_PREFIX . "geo_zone gz ON (tr2.geo_zone_id = gz.geo_zone_id) WHERE tr1.based = '{$based}' AND tr2cg.customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND z2gz.country_id = '" . (int)$country_id . "' AND (z2gz.zone_id = '0' OR z2gz.zone_id = '" . (int)$zone_id . "') ORDER BY tr1.priority ASC");
+
+				foreach ($tax_query->rows as $result) {
+					$this->tax_rates[$result['tax_class_id']][$result['tax_rate_id']] = array(
+						'tax_rate_id' => $result['tax_rate_id'],
+						'name'        => $result['name'],
+						'rate'        => $result['rate'],
+						'type'        => $result['type'],
+						'priority'    => $result['priority']
+					);
+				}
+			}
+
+			$this->initialized = true;
 		}
-
-		$this->is_set[$based] = true;
+	}
+	
+	private function refresh() {
+		$this->tax_rates = array();
+		$this->initialized = false;
 	}
 
 	public function calculate($value, $tax_class_id, $calculate = true) {

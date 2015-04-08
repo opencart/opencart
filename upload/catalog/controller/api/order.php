@@ -299,21 +299,21 @@ class ControllerApiOrder extends Controller {
 				} else {
 					$order_data['accept_language'] = '';
 				}
-				
+
 				$this->load->model('checkout/order');
-	
+
 				$json['order_id'] = $this->model_checkout_order->addOrder($order_data);
-	
+
 				// Set the order history
 				if (isset($this->request->post['order_status_id'])) {
 					$order_status_id = $this->request->post['order_status_id'];
 				} else {
 					$order_status_id = $this->config->get('config_order_status_id');
 				}
-	
+
 				$this->model_checkout_order->addOrderHistory($json['order_id'], $order_status_id);
-	
-				$json['success'] = $this->language->get('text_success');				
+
+				$json['success'] = $this->language->get('text_success');
 			}
 		}
 

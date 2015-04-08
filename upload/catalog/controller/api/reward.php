@@ -20,7 +20,7 @@ class ControllerApiReward extends Controller {
 					$points_total += $product['points'];
 				}
 			}
-			
+
 			if (empty($this->request->post['reward'])) {
 				$json['error'] = $this->language->get('error_reward');
 			}

@@ -410,14 +410,14 @@ class ModelCheckoutOrder extends Model {
 					$order_status = '';
 				}
 
-				$subject = sprintf($language->get('text_new_subject'), $order_info['store_name'], $order_id);
+				$subject = sprintf($language->get('text_new_subject'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);
 
 				// HTML Mail
 				$data = array();
 
-				$data['title'] = sprintf($language->get('text_new_subject'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);
+				$data['title'] = sprintf($language->get('text_new_subject'), $order_info['store_name'], $order_id);
 
-				$data['text_greeting'] = sprintf($language->get('text_new_greeting'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
+				$data['text_greeting'] = sprintf($language->get('text_new_greeting'), $order_info['store_name']);
 				$data['text_link'] = $language->get('text_new_link');
 				$data['text_download'] = $language->get('text_new_download');
 				$data['text_order_detail'] = $language->get('text_new_order_detail');
@@ -684,8 +684,8 @@ class ModelCheckoutOrder extends Model {
 
 					$mail->setTo($order_info['email']);
 					$mail->setFrom($this->config->get('config_email'));
-					$mail->setSender($order_info['store_name']);
-					$mail->setSubject($subject);
+					$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
+					$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
 					$mail->setHtml($html);
 					$mail->setText($text);
 					$mail->send();
@@ -711,6 +711,7 @@ class ModelCheckoutOrder extends Model {
 							$data['comment'] = '';
 						}
 					}
+					
 					$data['text_download'] = '';
 
 					$data['text_footer'] = '';
@@ -778,9 +779,8 @@ class ModelCheckoutOrder extends Model {
 
 					$mail->setTo($this->config->get('config_email'));
 					$mail->setFrom($this->config->get('config_email'));
-					$mail->setReplyTo($order_info['email']);
-					$mail->setSender($order_info['store_name']);
-					$mail->setSubject($subject);
+					$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
+					$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
 					$mail->setHtml($html);
 					$mail->setText($text);
 					$mail->send();
@@ -838,8 +838,8 @@ class ModelCheckoutOrder extends Model {
 
 				$mail->setTo($order_info['email']);
 				$mail->setFrom($this->config->get('config_email'));
-				$mail->setSender($order_info['store_name']);
-				$mail->setSubject($subject);
+				$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
+				$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
 				$mail->setText($message);
 				$mail->send();
 			}

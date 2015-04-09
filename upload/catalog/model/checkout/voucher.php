@@ -123,8 +123,8 @@ class ModelCheckoutVoucher extends Model {
 
 				$mail->setTo($voucher['to_email']);
 				$mail->setFrom($this->config->get('config_email'));
-				$mail->setSender($order_info['store_name']);
-				$mail->setSubject(sprintf($language->get('text_subject'), $voucher['from_name']));
+				$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
+				$mail->setSubject(html_entity_decode(sprintf($language->get('text_subject'), $voucher['from_name']), ENT_QUOTES, 'UTF-8'));
 				$mail->setHtml($html);
 				$mail->send();
 			}

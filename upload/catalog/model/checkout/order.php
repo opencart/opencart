@@ -399,7 +399,7 @@ class ModelCheckoutOrder extends Model {
 
 				// Load the language for any mails that might be required to be sent out
 				$language = new Language($order_info['language_directory']);
-				$language->load('default');
+				$language->load('english');
 				$language->load('mail/order');
 
 				$order_status_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "' AND language_id = '" . (int)$order_info['language_id'] . "'");
@@ -800,7 +800,7 @@ class ModelCheckoutOrder extends Model {
 			// If order status is not 0 then send update text email
 			if ($order_info['order_status_id'] && $order_status_id && $notify) {
 				$language = new Language($order_info['language_directory']);
-				$language->load('default');
+				$language->load('english');
 				$language->load('mail/order');
 
 				$subject = sprintf($language->get('text_update_subject'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);

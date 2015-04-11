@@ -151,7 +151,11 @@ class ModelCatalogProduct extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_attribute WHERE product_id = '" . (int)$product_id . "'");
 
 		if (!empty($data['product_attribute'])) {
+			$product_attributes = array();
 			foreach ($data['product_attribute'] as $product_attribute) {
+				$product_attributes[$product_attribute['attribute_id']] = $product_attribute;
+			}
+			foreach ($product_attributes as $product_attribute) {
 				if ($product_attribute['attribute_id']) {
 					foreach ($product_attribute['product_attribute_description'] as $language_id => $product_attribute_description) {
 						$this->db->query("INSERT INTO " . DB_PREFIX . "product_attribute SET product_id = '" . (int)$product_id . "', attribute_id = '" . (int)$product_attribute['attribute_id'] . "', language_id = '" . (int)$language_id . "', text = '" .  $this->db->escape($product_attribute_description['text']) . "'");

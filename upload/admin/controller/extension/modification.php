@@ -60,6 +60,7 @@ class ControllerExtensionModification extends Controller {
 
 		if ($this->validate()) {
 			// Just before files are deleted, if config settings say maintenance mode is off then turn it on
+			$org_maintenance = $this->config->get('config_maintenance');
 			if (!$this->config->get('config_maintenance')) {
 				$this->load->model('setting/setting');
 
@@ -413,8 +414,8 @@ class ControllerExtensionModification extends Controller {
 				}
 			}
 
-			// Just after modifications are complete, if config settings say maintenance mode is off then turn it back off.
-			if (!$this->config->get('config_maintenance')) {
+			// Just after modifications are complete, if config settings say maintenance mode is on AND is different org state, then turn it back on
+			if ($org_maintenance != $this->config->get('config_maintenance')) {
 				$this->model_setting_setting->editSettingValue('config', 'config_maintenance', false);
 			}
 

@@ -20,6 +20,7 @@ $_['entry_iso_code_2']        = 'ISO Code (2)';
 $_['entry_iso_code_3']        = 'ISO Code (3)';
 $_['entry_address_format']    = 'Address Format';
 $_['entry_postcode_required'] = 'Postcode Required';
+$_['entry_use_zones'] = 'Use/show zones';
 $_['entry_status']            = 'Status';
 
 // Help

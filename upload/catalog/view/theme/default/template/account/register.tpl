@@ -687,7 +687,6 @@ $('select[name=\'country_id\']').on('change', function() {
 			} else {
 				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
 				$('select[name=\'zone_id\']').parent().parent().hide();
-				console.log(json['zone']);
 			}
 
 			$('select[name=\'zone_id\']').html(html);

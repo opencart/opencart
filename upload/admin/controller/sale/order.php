@@ -745,7 +745,7 @@ class ControllerSaleOrder extends Controller {
 			$data['shipping_code'] = $order_info['shipping_code'];
 
 			// Add products to the API
-			$data['products'] = array();
+			$data['order_products'] = array();
 
 			$products = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
 

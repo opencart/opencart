@@ -32,7 +32,6 @@ class ControllerCheckoutSuccess extends Controller {
 			unset($this->session->data['payment_methods']);
 			unset($this->session->data['guest']);
 			unset($this->session->data['comment']);
-			unset($this->session->data['order_id']);
 			unset($this->session->data['coupon']);
 			unset($this->session->data['reward']);
 			unset($this->session->data['voucher']);
@@ -74,7 +73,12 @@ class ControllerCheckoutSuccess extends Controller {
 
 		$data['button_continue'] = $this->language->get('button_continue');
 
-		$data['continue'] = $this->url->link('common/home');
+		if (isset($this->session->data['order_id'])) {
+			$data['continue'] = $this->url->link('account/order/info', '&order_id='.$this->session->data['order_id'], 'SSL');
+			unset($this->session->data['order_id']);
+		} else {
+			$data['continue'] = $this->url->link('common/home');
+		}
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

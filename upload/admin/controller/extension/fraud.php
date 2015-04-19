@@ -122,7 +122,6 @@ class ControllerExtensionFraud extends Controller {
 
 				$this->load->language('fraud/' . $extension);
 
-
 				$data['extensions'][] = array(
 					'name'      => $this->language->get('heading_title'),
 					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),

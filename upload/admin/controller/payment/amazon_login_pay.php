@@ -310,7 +310,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$this->model_extension_event->deleteEvent('amazon_history_capture');
 	}
 
-	public function orderAction() {
+	public function action() {
 
 		if ($this->config->get('amazon_login_pay_status')) {
 

@@ -314,7 +314,7 @@ class ControllerPaymentFirstdataRemote extends Controller {
 		$this->response->setOutput($this->load->view('payment/firstdata_remote.tpl', $data));
 	}
 
-	public function orderAction() {
+	public function action() {
 		if ($this->config->get('firstdata_remote_status')) {
 			$this->load->model('payment/firstdata_remote');
 

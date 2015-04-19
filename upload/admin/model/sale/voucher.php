@@ -88,7 +88,7 @@ class ModelSaleVoucher extends Model {
 				$this->load->model('localisation/language');
 
 				$language = new Language($order_info['language_directory']);
-				$language->load('default');
+				$language->load($order_info['language_directory']);
 				$language->load('mail/voucher');
 
 				// HTML Mail

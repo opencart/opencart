@@ -672,8 +672,9 @@ $('select[name=\'country_id\']').on('change', function() {
 			}
 
 			html = '<option value=""><?php echo $text_select; ?></option>';
-
-			if (json['zone'] && json['zone'] != '') {
+			
+			if (json['zone'] && json['zone'] != '' && json['use_zones'] == '1') {
+				$('select[name=\'zone_id\']').parent().parent().show();
 				for (i = 0; i < json['zone'].length; i++) {
 					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 
@@ -685,6 +686,7 @@ $('select[name=\'country_id\']').on('change', function() {
 				}
 			} else {
 				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
+				$('select[name=\'zone_id\']').parent().parent().hide();
 			}
 
 			$('select[name=\'zone_id\']').html(html);

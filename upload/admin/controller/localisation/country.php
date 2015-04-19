@@ -276,6 +276,7 @@ class ControllerLocalisationCountry extends Controller {
 		$data['entry_iso_code_3'] = $this->language->get('entry_iso_code_3');
 		$data['entry_address_format'] = $this->language->get('entry_address_format');
 		$data['entry_postcode_required'] = $this->language->get('entry_postcode_required');
+		$data['entry_use_zones'] = $this->language->get('entry_use_zones');
 		$data['entry_status'] = $this->language->get('entry_status');
 
 		$data['help_address_format'] = $this->language->get('help_address_format');
@@ -371,6 +372,14 @@ class ControllerLocalisationCountry extends Controller {
 			$data['postcode_required'] = $country_info['postcode_required'];
 		} else {
 			$data['postcode_required'] = 0;
+		}
+
+		if (isset($this->request->post['use_zones'])) {
+			$data['use_zones'] = $this->request->post['use_zones'];
+		} elseif (!empty($country_info)) {
+			$data['use_zones'] = $country_info['use_zones'];
+		} else {
+			$data['use_zones'] = 0;
 		}
 
 		if (isset($this->request->post['status'])) {

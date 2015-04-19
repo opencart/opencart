@@ -76,6 +76,29 @@
             </div>
           </div>
           <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $entry_use_zones; ?></label>
+            <div class="col-sm-10">
+              <label class="radio-inline">
+                <?php if ($use_zones) { ?>
+                <input type="radio" name="use_zones" value="1" checked="checked" />
+                <?php echo $text_yes; ?>
+                <?php } else { ?>
+                <input type="radio" name="use_zones" value="1" />
+                <?php echo $text_yes; ?>
+                <?php } ?>
+              </label>
+              <label class="radio-inline">
+                <?php if (!$use_zones) { ?>
+                <input type="radio" name="use_zones" value="0" checked="checked" />
+                <?php echo $text_no; ?>
+                <?php } else { ?>
+                <input type="radio" name="use_zones" value="0" />
+                <?php echo $text_no; ?>
+                <?php } ?>
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
             <div class="col-sm-10">
               <select name="status" id="input-status" class="form-control">

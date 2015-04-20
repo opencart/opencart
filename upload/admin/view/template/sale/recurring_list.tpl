@@ -157,40 +157,40 @@ $('#button-filter').on('click', function() {
 	}
 
 	var filter_reference = $('input[name=\'filter_reference\']').val();
-	
+
 	if (filter_reference) {
 		url += '&filter_reference=' + encodeURIComponent(filter_reference);
 	}
 
 	var filter_customer = $('input[name=\'filter_customer\']').val();
-	
+
 	if (filter_customer) {
 		url += '&filter_customer=' + encodeURIComponent(filter_customer);
 	}
 
 	var filter_status = $('select[name=\'filter_status\']').val();
-	
+
 	if (filter_status != 0) {
 		url += '&filter_status=' + encodeURIComponent(filter_status);
 	}
-	
+
 	var filter_date_added = $('input[name=\'filter_date_added\']').val();
-	
+
 	if (filter_date_added != '') {
 		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
 	}
-		
+
 	location = url;
 });
-	
+
 $('#form input').keydown(function(e) {
 	if (e.keyCode == 13) {
 		filter();
 	}
 });
 
-$('.date').datetimepicker({ 
-	pickTime: false 
+$('.date').datetimepicker({
+	pickTime: false
 });
 //--></script> </div>
 <?php echo $footer; ?>

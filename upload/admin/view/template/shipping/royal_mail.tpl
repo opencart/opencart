@@ -347,7 +347,7 @@
                     <div class="col-sm-10">
                       <textarea name="royal_mail_international_standard_zone_2_rate" rows="5" placeholder="<?php echo $entry_rate_zone_2; ?>" id="input-international-standard-zone-2-rate" class="form-control"><?php echo $royal_mail_international_standard_zone_2_rate; ?></textarea>
                     </div>
-                  </div>             
+                  </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-standard-status"><?php echo $entry_status; ?></label>
                     <div class="col-sm-10">
@@ -382,7 +382,7 @@
                     <div class="col-sm-10">
                       <textarea name="royal_mail_international_tracked_signed_zone_2_rate" rows="5" placeholder="<?php echo $entry_rate_zone_2; ?>" id="input-international-tracked-signed-zone-2-rate" class="form-control"><?php echo $royal_mail_international_tracked_signed_zone_2_rate; ?></textarea>
                     </div>
-                  </div>                     
+                  </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-tracked-signed-status"><?php echo $entry_status; ?></label>
                     <div class="col-sm-10">
@@ -423,7 +423,7 @@
                     <div class="col-sm-10">
                       <textarea name="royal_mail_international_tracked_zone_2_rate" rows="5" placeholder="<?php echo $entry_rate_zone_2; ?>" id="input-international-tracked-zone-2-rate" class="form-control"><?php echo $royal_mail_international_tracked_zone_2_rate; ?></textarea>
                     </div>
-                  </div>                   
+                  </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-tracked-status"><?php echo $entry_status; ?></label>
                     <div class="col-sm-10">
@@ -458,7 +458,7 @@
                     <div class="col-sm-10">
                       <textarea name="royal_mail_international_signed_zone_2_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-international-signed-zone-2-rate" class="form-control"><?php echo $royal_mail_international_signed_zone_2_rate; ?></textarea>
                     </div>
-                  </div>                   
+                  </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-signed-status"><?php echo $entry_status; ?></label>
                     <div class="col-sm-10">
@@ -480,7 +480,7 @@
                     <div class="col-sm-10">
                       <textarea name="royal_mail_international_economy_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-international-economy-rate" class="form-control"><?php echo $royal_mail_international_economy_rate; ?></textarea>
                     </div>
-                  </div>                 
+                  </div>
                   <div class="form-group">
                     <label class="col-sm-2 control-label" for="input-international-economy-status"><?php echo $entry_status; ?></label>
                     <div class="col-sm-10">
@@ -504,4 +504,4 @@
     </div>
   </div>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

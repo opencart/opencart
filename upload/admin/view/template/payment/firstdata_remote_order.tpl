@@ -86,24 +86,24 @@ $('#button-void').bind('click', function () {
 					html += '<td class="text-left">void</td>';
 					html += '<td class="text-left">0.00</td>';
 					html += '</tr>';
-			
+
 					$('. void_text').text('<?php echo $text_yes; ?>');
-					
+
 					$('#firstdata_transactions').append(html);
-					
+
 					$('#button-capture').hide();
-					
+
 					if (data.msg != '') {
 						$('#firstdata_transaction_msg').empty().html('<i class="fa fa-check-circle"></i> ' + data['msg']).fadeIn();
 					}
 				}
-			
+
 				if (data['error'] == true) {
 					alert(data['msg']);
-					
+
 					$('#button-void').show();
 				}
-			
+
 				$('#img_loading_void').hide();
 			}
 		});
@@ -130,10 +130,10 @@ $('#button-capture').bind('click', function () {
 		html += '<td class="text-left">payment</td>';
 		html += '<td class="text-left">'+data.data.amount+'</td>';
 		html += '</tr>';
-		
+
 		$('#firstdata_transactions').append(html);
 		$('#firstdata_total_captured').text(data.data.total_formatted);
-		
+
 		if (data.data.capture_status == 1) {
 		$('#button-void').hide();
 		$('#button-refund').show();
@@ -141,7 +141,7 @@ $('#button-capture').bind('click', function () {
 		} else {
 		$('#button-capture').show();
 		}
-		
+
 		if (data.msg != '') {
 		$('#firstdata_transaction_msg').empty().html('<i class="fa fa-check-circle"></i> '+data.msg).fadeIn();
 		}
@@ -150,7 +150,7 @@ $('#button-capture').bind('click', function () {
 		alert(data.msg);
 		$('#button-capture').show();
 		}
-		
+
 		$('#img_loading_capture').hide();
 		}
 		});
@@ -177,16 +177,16 @@ $('#button-refund').bind('click', function () {
 		html += '<td class="text-left">refund</td>';
 		html += '<td class="text-left">'+data.data.amount+'</td>';
 		html += '</tr>';
-		
+
 		$('#firstdata_transactions').append(html);
 		$('#firstdata_total_captured').text(data.data.total_captured);
-		
+
 		if (data.data.refund_status == 1) {
 		$(' . refund_text').text('<?php echo $text_yes; ?>');
 		} else {
 		$('#button-refund').show();
 		}
-		
+
 		if (data.msg != '') {
 		$('#firstdata_transaction_msg').empty().html('<i class="fa fa-check-circle"></i> '+data.msg).fadeIn();
 		}
@@ -195,7 +195,7 @@ $('#button-refund').bind('click', function () {
 		alert(data.msg);
 		$('#button-refund').show();
 		}
-		
+
 		$('#img_loading_refund').hide();
 		}
 		});

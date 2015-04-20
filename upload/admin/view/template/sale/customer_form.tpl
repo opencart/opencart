@@ -683,7 +683,7 @@ $('select[name=\'customer_group_id\']').on('change', function() {
 });
 
 $('select[name=\'customer_group_id\']').trigger('change');
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 var address_row = <?php echo $address_row; ?>;
 
@@ -869,19 +869,19 @@ function addAddress() {
 	$('.date').datetimepicker({
 		pickTime: false
 	});
-	
+
 	$('.datetime').datetimepicker({
 		pickDate: true,
 		pickTime: true
 	});
-	
+
 	$('.time').datetimepicker({
 		pickDate: false
-	});	
+	});
 
 	address_row++;
 }
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 function country(element, index, zone_id) {
 	$.ajax({
@@ -925,7 +925,7 @@ function country(element, index, zone_id) {
 }
 
 $('select[name$=\'[country_id]\']').trigger('change');
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('#history').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
@@ -958,7 +958,7 @@ $('#button-history').on('click', function(e) {
 		}
 	});
 });
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('#transaction').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
@@ -992,7 +992,7 @@ $('#button-transaction').on('click', function(e) {
 		}
 	});
 });
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('#reward').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
@@ -1099,50 +1099,50 @@ $('body').delegate('.button-ban-remove', 'click', function() {
 
 $('#content').delegate('button[id^=\'button-custom-field\'], button[id^=\'button-address\']', 'click', function() {
 	var node = this;
-	
+
 	$('#form-upload').remove();
-	
+
 	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
 
 	$('#form-upload input[name=\'file\']').trigger('click');
-	
+
 	if (typeof timer != 'undefined') {
     	clearInterval(timer);
 	}
-	
+
 	timer = setInterval(function() {
 		if ($('#form-upload input[name=\'file\']').val() != '') {
 			clearInterval(timer);
-			
+
 			$.ajax({
 				url: 'index.php?route=tool/upload/upload&token=<?php echo $token; ?>',
-				type: 'post',		
+				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),
 				cache: false,
 				contentType: false,
-				processData: false,		
+				processData: false,
 				beforeSend: function() {
 					$(node).button('loading');
 				},
 				complete: function() {
 					$(node).button('reset');
-				},		
+				},
 				success: function(json) {
 					$(node).parent().find('.text-danger').remove();
-					
+
 					if (json['error']) {
 						$(node).parent().find('input[type=\'hidden\']').after('<div class="text-danger">' + json['error'] + '</div>');
 					}
-								
+
 					if (json['success']) {
 						alert(json['success']);
 					}
-					
+
 					if (json['code']) {
 						$(node).parent().find('input[type=\'hidden\']').attr('value', json['code']);
 					}
-				},			
+				},
 				error: function(xhr, ajaxOptions, thrownError) {
 					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 				}
@@ -1162,6 +1162,6 @@ $('.datetime').datetimepicker({
 
 $('.time').datetimepicker({
 	pickDate: false
-});	
+});
 //--></script></div>
 <?php echo $footer; ?>

@@ -77,7 +77,7 @@ class ControllerModuleBestSeller extends Controller {
 		if (!isset($this->request->get['module_id'])) {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('module/banner', 'token=' . $this->session->data['token'], 'SSL')
+				'href' => $this->url->link('module/bestseller', 'token=' . $this->session->data['token'], 'SSL')
 			);
 		} else {
 			$data['breadcrumbs'][] = array(

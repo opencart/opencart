@@ -84,6 +84,5 @@ If nobody has reported your bug, then please report it.
 An online version of this file can be found here:
 http://www.opencart.com/index.php?route=documentation/documentation&path=98
 
-
 That's It!
 OpenCart Dev Team

@@ -1220,7 +1220,7 @@ CREATE TABLE IF NOT EXISTS `oc_information_description` (
 
 INSERT INTO `oc_information_description` (`information_id`, `language_id`, `title`, `description`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
 (4, 1, 'О нас', '&lt;p&gt;\r\n	About Us&lt;/p&gt;\r\n', '', '', ''),
-(5, 1, 'Условия и Положения', '&lt;p&gt;\r\n	Terms &amp;amp; Conditions&lt;/p&gt;\r\n', '', '', ''),
+(5, 1, 'Условия и Предложения', '&lt;p&gt;\r\n	Terms &amp;amp; Conditions&lt;/p&gt;\r\n', '', '', ''),
 (3, 1, 'Политика конфиденциальности', '&lt;p&gt;\r\n	Privacy Policy&lt;/p&gt;\r\n', '', '', ''),
 (6, 1, 'Информация о доставке', '&lt;p&gt;\r\n	Delivery Information&lt;/p&gt;\r\n', '', '', '');
 

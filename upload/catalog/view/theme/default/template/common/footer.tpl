@@ -42,7 +42,7 @@
     <p><?php echo $powered; ?></p>
   </div>
 </footer>
-
+<script type="text/javascript" src="catalog/view/javascript/livesearch.js"></script>
 <!--
 OpenCart is open source software and you are free to remove the powered by OpenCart if you want, but its generally accepted practise to make a small donation.
 Please donate via PayPal to donate@opencart.com

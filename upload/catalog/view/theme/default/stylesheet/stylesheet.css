@@ -683,6 +683,16 @@ h2.price {
 	margin-left: 20px;
 }
 
+/* product page */
+#product .radio input[type="radio"],
+#product .radio-inline input[type="radio"],
+#product .checkbox input[type="checkbox"],
+#product .checkbox-inline input[type="checkbox"] {
+  margin-top: -6px \9;
+  top: 50%;
+  margin-top: -6px;
+}
+
 /* fixed colum left + content + right*/
 @media (min-width: 768px) {
     #column-left  .product-layout .col-md-3 {

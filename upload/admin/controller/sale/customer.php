@@ -910,7 +910,8 @@ class ControllerSaleCustomer extends Controller {
 				'name'               => $custom_field['name'],
 				'value'              => $custom_field['value'],
 				'type'               => $custom_field['type'],
-				'location'           => $custom_field['location']
+				'location'           => $custom_field['location'],
+				'sort_order'         => $custom_field['sort_order']
 			);
 		}
 

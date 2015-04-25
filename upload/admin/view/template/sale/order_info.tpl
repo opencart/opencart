@@ -221,7 +221,7 @@
                 <td><?php echo $payment_country; ?></td>
               </tr>
               <?php foreach ($payment_custom_fields as $custom_field) { ?>
-              <tr>
+              <tr data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
                 <td><?php echo $custom_field['name']; ?>:</td>
                 <td><?php echo $custom_field['value']; ?></td>
               </tr>
@@ -284,7 +284,7 @@
                 <td><?php echo $shipping_country; ?></td>
               </tr>
               <?php foreach ($shipping_custom_fields as $custom_field) { ?>
-              <tr>
+              <tr data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
                 <td><?php echo $custom_field['name']; ?>:</td>
                 <td><?php echo $custom_field['value']; ?></td>
               </tr>
@@ -629,5 +629,36 @@ $(document).ready(function() {
 });
 
 $('select[name="order_status_id"]').change(function(){ changeStatus(); });
+//--></script>
+
+<script type="text/javascript"><!--
+// Sort the custom fields
+$('#tab-payment tr[data-sort]').detach().each(function() {
+	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-payment tr').length) {
+		$('#tab-payment tr').eq($(this).attr('data-sort')).before(this);
+	}
+
+	if ($(this).attr('data-sort') > $('#tab-payment tr').length) {
+		$('#tab-payment tr:last').after(this);
+	}
+
+	if ($(this).attr('data-sort') < -$('#tab-payment tr').length) {
+		$('#tab-payment tr:first').before(this);
+	}
+});
+
+$('#tab-shipping tr[data-sort]').detach().each(function() {
+	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-shipping tr').length) {
+		$('#tab-shipping tr').eq($(this).attr('data-sort')).before(this);
+	}
+
+	if ($(this).attr('data-sort') > $('#tab-shipping tr').length) {
+		$('#tab-shipping tr:last').after(this);
+	}
+
+	if ($(this).attr('data-sort') < -$('#tab-shipping tr').length) {
+		$('#tab-shipping tr:first').before(this);
+	}
+});
 //--></script></div>
 <?php echo $footer; ?> 

@@ -7594,7 +7594,13 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (4221, 117, 'Zilupes novads', '0681801', 1),
 (4222, 43, 'Arica y Parinacota', 'AP', 1),
 (4223, 43, 'Los Rios', 'LR', 1),
-(4224, 220, 'Kharkivs''ka Oblast''', '63', 1);
+(4224, 220, 'Kharkivs''ka Oblast''', '63', 1),
+(4225, 118, 'Beirut', 'LB-BR', 1),
+(4226, 118, 'Bekaa', 'LB-BE', 1),
+(4227, 118, 'Mount Lebanon', 'LB-ML', 1),
+(4228, 118, 'Nabatieh', 'LB-NB', 1),
+(4229, 118, 'North', 'LB-NR', 1),
+(4230, 118, 'South', 'LB-ST', 1);
 
 -- --------------------------------------------------------
 

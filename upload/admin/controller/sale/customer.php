@@ -776,6 +776,12 @@ class ControllerSaleCustomer extends Controller {
 			$data['error_confirm'] = '';
 		}
 
+		if (isset($this->error['custom_field'])) {
+			$data['error_custom_field'] = $this->error['custom_field'];
+		} else {
+			$data['error_custom_field'] = array();
+		}
+
 		if (isset($this->error['address'])) {
 			$data['error_address'] = $this->error['address'];
 		} else {

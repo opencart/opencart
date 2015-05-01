@@ -135,18 +135,21 @@ foreach ($query->rows as $result) {
 	$languages[$result['code']] = $result;
 }
 
-if (isset($session->data['language']) && array_key_exists($session->data['language'], $languages) && $languages[$session->data['language']]['status']) {
+if (isset($session->data['language']) && array_key_exists($session->data['language'], $languages)) {
 	$code = $session->data['language'];
-} elseif (isset($request->cookie['language']) && array_key_exists($request->cookie['language'], $languages) && $languages[$request->cookie['language']]['status']) {
+} elseif (isset($request->cookie['language']) && array_key_exists($request->cookie['language'], $languages)) {
 	$code = $request->cookie['language'];
 } else {
 	$detect = '';
+	
 	if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && $request->server['HTTP_ACCEPT_LANGUAGE']) {
 		$browser_languages = explode(',', $request->server['HTTP_ACCEPT_LANGUAGE']);
+		
 		foreach ($browser_languages as $browser_language) {
 			foreach ($languages as $key => $value) {
 				if ($value['status']) {
 					$locale = explode(',', $value['locale']);
+					
 					if (in_array($browser_language, $locale)) {
 						$detect = $key;
 						break 2;
@@ -155,6 +158,7 @@ if (isset($session->data['language']) && array_key_exists($session->data['langua
 			}
 		}
 	}
+	
 	$code = $detect ? $detect : $config->get('config_language');
 }
 

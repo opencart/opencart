@@ -49,6 +49,7 @@ class ControllerCheckoutCoupon extends Controller {
 
 		if (empty($this->request->post['coupon'])) {
 			$json['error'] = $this->language->get('error_empty');
+			unset($this->session->data['coupon']);
 		} elseif ($coupon_info) {
 			$this->session->data['coupon'] = $this->request->post['coupon'];
 

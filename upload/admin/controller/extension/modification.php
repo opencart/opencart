@@ -323,9 +323,9 @@ class ControllerExtensionModification extends Controller {
 
 											$modification[$key] = implode("\n", $lines);
 										} else {
-											$search = $operation->getElementsByTagName('search')->item(0)->textContent;
+											$search = trim($operation->getElementsByTagName('search')->item(0)->textContent);
 											$limit = $operation->getElementsByTagName('search')->item(0)->getAttribute('limit');
-											$replace = $operation->getElementsByTagName('add')->item(0)->textContent;
+											$replace = trim($operation->getElementsByTagName('add')->item(0)->textContent);
 
 											// Limit
 											if (!$limit) {

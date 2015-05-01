@@ -829,6 +829,24 @@
               </div>
               <fieldset>
                 <legend><?php echo $text_order; ?></legend>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-currency"><?php echo $entry_currency; ?></label>
+                  <div class="col-sm-10">
+                    <div class="input-group">
+                      <select name="currency" id="input-currency" class="form-control">
+                        <?php foreach ($currencies as $currency) { ?>
+                        <?php if ($currency['currency_id'] == $currency_id) { ?>
+                        <option value="<?php echo $currency['currency_id']; ?>" selected="selected"><?php echo $currency['title']; ?></option>
+                        <?php } else { ?>
+                        <option value="<?php echo $currency['currency_id']; ?>"><?php echo $currency['title']; ?></option>
+                        <?php } ?>
+                        <?php } ?>
+                      </select>
+                      <span class="input-group-btn">
+                      <button type="button" id="button-currency" data-toggle="tooltip" title="<?php echo $button_currency; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                      </span></div>
+                  </div>
+                </div>
                 <div class="form-group required">
                   <label class="col-sm-2 control-label" for="input-shipping-method"><?php echo $entry_shipping_method; ?></label>
                   <div class="col-sm-10">
@@ -2351,9 +2369,8 @@ $('.time').datetimepicker({
 });	
 
 
-//--></script>
-
-<script type="text/javascript">
+//--></script> 
+  <script type="text/javascript">
 // Sort the custom fields
 $('#tab-customer .form-group[data-sort]').detach().each(function() {
 	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-customer .form-group').length) {

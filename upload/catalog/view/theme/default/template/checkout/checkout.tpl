@@ -428,6 +428,7 @@ $(document).delegate('#button-payment-address', 'click', function() {
 
 // Shipping Address
 $(document).delegate('#button-shipping-address', 'click', function() {
+	var wait_more = 0;
     $.ajax({
         url: 'index.php?route=checkout/shipping_address/save',
         type: 'post',
@@ -437,7 +438,9 @@ $(document).delegate('#button-shipping-address', 'click', function() {
 			$('#button-shipping-address').button('loading');
 	    },
         complete: function() {
-			$('#button-shipping-address').button('reset');
+			if (wait_more == 0){
+				$('#button-shipping-address').button('reset');
+				}
         },
         success: function(json) {
             $('.alert, .text-danger').remove();
@@ -462,9 +465,16 @@ $(document).delegate('#button-shipping-address', 'click', function() {
 				// Highlight any found errors
 				$('.text-danger').parent().parent().addClass('has-error');
             } else {
+				wait_more = 1;
                 $.ajax({
                     url: 'index.php?route=checkout/shipping_method',
                     dataType: 'html',
+					beforeSend: function() {
+						$('#button-shipping-address').button('loading');
+					},
+					complete: function() {
+						$('#button-shipping-address').button('reset');
+					},
                     success: function(html) {
                         $('#collapse-shipping-method .panel-body').html(html);
 
@@ -511,6 +521,7 @@ $(document).delegate('#button-shipping-address', 'click', function() {
 
 // Guest
 $(document).delegate('#button-guest', 'click', function() {
+	var wait_more = 0;
     $.ajax({
         url: 'index.php?route=checkout/guest/save',
         type: 'post',
@@ -520,7 +531,9 @@ $(document).delegate('#button-guest', 'click', function() {
        		$('#button-guest').button('loading');
 	    },
         complete: function() {
-			$('#button-guest').button('reset');
+			if (wait_more == 0){
+				$('#button-guest').button('reset');
+			}
         },
         success: function(json) {
             $('.alert, .text-danger').remove();
@@ -549,9 +562,16 @@ $(document).delegate('#button-guest', 'click', function() {
                 var shipping_address = $('#collapse-payment-address input[name=\'shipping_address\']:checked').prop('value');
 
                 if (shipping_address) {
+					wait_more = 1;
                     $.ajax({
                         url: 'index.php?route=checkout/shipping_method',
                         dataType: 'html',
+						beforeSend: function() {
+							$('#button-guest').button('loading');
+						},
+						complete: function() {
+							$('#button-guest').button('reset');
+						},
                         success: function(html) {
 							// Add the shipping address
                             $.ajax({
@@ -628,6 +648,7 @@ $(document).delegate('#button-guest', 'click', function() {
 
 // Guest Shipping
 $(document).delegate('#button-guest-shipping', 'click', function() {
+	var wait_more = 0;
     $.ajax({
         url: 'index.php?route=checkout/guest_shipping/save',
         type: 'post',
@@ -637,7 +658,9 @@ $(document).delegate('#button-guest-shipping', 'click', function() {
         	$('#button-guest-shipping').button('loading');
 		},
         complete: function() {
-			$('#button-guest-shipping').button('reset');
+			if (wait_more == 0){
+				$('#button-guest-shipping').button('reset');
+			}
         },
         success: function(json) {
             $('.alert, .text-danger').remove();
@@ -662,9 +685,16 @@ $(document).delegate('#button-guest-shipping', 'click', function() {
 				// Highlight any found errors
 				$('.text-danger').parent().addClass('has-error');
             } else {
+				wait_more = 1;
                 $.ajax({
                     url: 'index.php?route=checkout/shipping_method',
                     dataType: 'html',
+					beforeSend: function() {
+						$('#button-guest-shipping').button('loading');
+					},
+					complete: function() {
+						$('#button-guest-shipping').button('reset');
+					},
                     success: function(html) {
                         $('#collapse-shipping-method .panel-body').html(html);
 

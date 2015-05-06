@@ -290,20 +290,20 @@ class ModelCatalogProduct extends Model {
 			$data['keyword'] = '';
 			$data['status'] = '0';
 
-			$data['product_attribute'] = $this->getProductAttributes($product_id)));
-			$data['product_description'] = $this->getProductDescriptions($product_id)));
-			$data['product_discount'] = $this->getProductDiscounts($product_id)));
-			$data['product_filter'] = $this->getProductFilters($product_id)));
-			$data['product_image'] = $this->getProductImages($product_id)));
-			$data['product_option'] = $this->getProductOptions($product_id)));
-			$data['product_related'] = $this->getProductRelated($product_id)));
-			$data['product_reward'] = $this->getProductRewards($product_id)));
-			$data['product_special'] = $this->getProductSpecials($product_id)));
-			$data['product_category'] = $this->getProductCategories($product_id)));
-			$data['product_download'] = $this->getProductDownloads($product_id)));
-			$data['product_layout'] = $this->getProductLayouts($product_id)));
-			$data['product_store'] = $this->getProductStores($product_id)));
-			$data['product_recurrings'] => $this->getRecurrings($product_id)));
+			$data['product_attribute'] = $this->getProductAttributes($product_id);
+			$data['product_description'] = $this->getProductDescriptions($product_id);
+			$data['product_discount'] = $this->getProductDiscounts($product_id);
+			$data['product_filter'] = $this->getProductFilters($product_id);
+			$data['product_image'] = $this->getProductImages($product_id);
+			$data['product_option'] = $this->getProductOptions($product_id);
+			$data['product_related'] = $this->getProductRelated($product_id);
+			$data['product_reward'] = $this->getProductRewards($product_id);
+			$data['product_special'] = $this->getProductSpecials($product_id);
+			$data['product_category'] = $this->getProductCategories($product_id);
+			$data['product_download'] = $this->getProductDownloads($product_id);
+			$data['product_layout'] = $this->getProductLayouts($product_id);
+			$data['product_store'] = $this->getProductStores($product_id);
+			$data['product_recurrings'] = $this->getRecurrings($product_id);
 
 			$this->addProduct($data);
 		}

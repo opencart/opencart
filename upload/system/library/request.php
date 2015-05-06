@@ -7,12 +7,12 @@ class Request {
 	public $server = array();
 
 	public function __construct() {
-		$this->get = $this->clean($_GET);
-		$this->post = $this->clean($_POST);
-		$this->request = $this->clean($_REQUEST);
-		$this->cookie = $this->clean($_COOKIE);
-		$this->files = $this->clean($_FILES);
-		$this->server = $this->clean($_SERVER);
+		$this->get = new Bag($this->clean($_GET));
+		$this->post = new Bag($this->clean($_POST));
+		$this->request = new Bag($this->clean($_REQUEST));
+		$this->cookie = new Bag($this->clean($_COOKIE));
+		$this->files = new Bag($this->clean($_FILES));
+		$this->server = new Bag($this->clean($_SERVER));
 	}
 
 	public function clean($data) {

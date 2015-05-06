@@ -111,36 +111,23 @@ class ControllerCatalogAttribute extends Controller {
 	}
 
 	protected function getList() {
-		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
-		} else {
-			$sort = 'ad.name';
-		}
 
-		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
-		}
+		$sort = $this->request->get->get('sort', 'ad.name');
+		$order = $this->request->get->get('order', 'ASC');
+		$page = $this->request->get->get('page', 1);
 
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
+			$url .= '&sort=' . $sort;
 		}
 
 		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
+			$url .= '&order=' . $order;
 		}
 
 		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
+			$url .= '&page=' . $page;
 		}
 
 		$data['breadcrumbs'] = array();
@@ -202,13 +189,7 @@ class ControllerCatalogAttribute extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
+		$data['success'] = $this->session->pull('success', '');
 
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
@@ -225,7 +206,7 @@ class ControllerCatalogAttribute extends Controller {
 		}
 
 		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
+			$url .= '&page=' . $page;
 		}
 
 		$data['sort_name'] = $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'] . '&sort=ad.name' . $url, 'SSL');
@@ -235,11 +216,11 @@ class ControllerCatalogAttribute extends Controller {
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
+			$url .= '&sort=' . $sort;
 		}
 
 		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
+			$url .= '&order=' . $order;
 		}
 
 		$pagination = new Pagination();
@@ -398,11 +379,11 @@ class ControllerCatalogAttribute extends Controller {
 	public function autocomplete() {
 		$json = array();
 
-		if (isset($this->request->get['filter_name'])) {
+		if ($filter_name = $this->request->get->get('filter_name')) {
 			$this->load->model('catalog/attribute');
 
 			$filter_data = array(
-				'filter_name' => $this->request->get['filter_name'],
+				'filter_name' => $filter_name,
 				'start'       => 0,
 				'limit'       => 5
 			);

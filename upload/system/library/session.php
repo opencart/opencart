@@ -1,5 +1,5 @@
 <?php
-class Session {
+class Session extends Bag {
 	public $data = array();
 
 	public function __construct() {
@@ -21,5 +21,15 @@ class Session {
 
 	public function destroy() {
 		return session_destroy();
+	}
+
+	public function pull($key, $default = null) {
+		if (isset($this->data[$key]))
+		{
+			$value = $this->data[$key];
+			unset($this->data[$key]);
+			return $value;
+		}
+		return $default;
 	}
 }

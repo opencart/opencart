@@ -28,6 +28,7 @@
     <input type="hidden" name="bstate" value="<?php echo $bstate; ?>" />
     <input type="hidden" name="bcountry" value="<?php echo $bcountry; ?>" />
     <input type="hidden" name="bzip" value="<?php echo $bzip; ?>" />
+	<input type="hidden" name="email" value="<?php echo $email; ?>" />
     <input type="hidden" name="invoicenumber" value="<?php echo $version; ?>" />
 
     <?php if ($card_storage == 1) { ?>

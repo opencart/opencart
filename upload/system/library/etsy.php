@@ -128,7 +128,7 @@ final class Etsy {
 	public function settingsUpdate() {
 		$this->log('Etsy loadDataTypes() start');
 
-		$response = $this->call('data/type/getSetup', 'GET');
+		$response = $this->call('v1/etsy/data/type/getSetup/', 'GET');
 
 		foreach ($response['data'] as $key => $options) {
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "etsy_setting_option` WHERE  `key` = '" . $this->db->escape($key) . "' LIMIT 1");
@@ -190,7 +190,7 @@ final class Etsy {
 		 */
 
 		/** @var loop over linked items $response
-		$response = $this->openbay->etsy->call('v1/etsy/product/listing/'.(int)$data['listing_id'].'/image', 'POST', $data);
+		$response = $this->openbay->etsy->call('v1/etsy/product/listing/'.(int)$data['listing_id'].'/image/', 'POST', $data);
 
 		if (isset($response['data']['error'])) {
 			$this->response->setOutput(json_encode($response['data']));
@@ -206,7 +206,7 @@ final class Etsy {
 				$status = 'inactive';
 			}
 
-			$response = $this->call('product/listing/' . (int)$etsy_item_id . '/updateStock', 'POST', array('quantity' => $new_stock, 'state' => $status));
+			$response = $this->call('v1/etsy/product/listing/' . (int)$etsy_item_id . '/updateStock/', 'POST', array('quantity' => $new_stock, 'state' => $status));
 
 			if (isset($response['data']['error'])) {
 				return $response;
@@ -216,7 +216,7 @@ final class Etsy {
 		} else {
 			$this->deleteLink(null, $etsy_item_id);
 
-			$response = $this->call('product/listing/' . (int)$etsy_item_id . '/inactive', 'POST');
+			$response = $this->call('v1/etsy/product/listing/' . (int)$etsy_item_id . '/inactive/', 'POST');
 
 			if (isset($response['data']['error'])) {
 				return $response;
@@ -299,7 +299,7 @@ final class Etsy {
 	}
 
 	public function orderUpdatePaid($receipt_id, $status) {
-		$response = $this->openbay->etsy->call('v1/etsy/order/update/payment', 'POST', array('receipt_id' => $receipt_id, 'status' => $status));
+		$response = $this->openbay->etsy->call('v1/etsy/order/update/payment/', 'POST', array('receipt_id' => $receipt_id, 'status' => $status));
 
 		if (isset($response['data']['error'])) {
 			return $response;
@@ -309,7 +309,7 @@ final class Etsy {
 	}
 
 	public function orderUpdateShipped($receipt_id, $status) {
-		$response = $this->openbay->etsy->call('v1/etsy/order/update/shipping', 'POST', array('receipt_id' => $receipt_id, 'status' => $status));
+		$response = $this->openbay->etsy->call('v1/etsy/order/update/shipping/', 'POST', array('receipt_id' => $receipt_id, 'status' => $status));
 
 		if (isset($response['data']['error'])) {
 			return $response;
@@ -339,7 +339,7 @@ final class Etsy {
 	}
 
 	public function getEtsyItem($listing_id) {
-		$response = $this->openbay->etsy->call('v1/etsy/product/listing/' . $listing_id, 'GET');
+		$response = $this->openbay->etsy->call('v1/etsy/product/listing/' . $listing_id . '/', 'GET');
 
 		if (isset($response['data']['error'])) {
 			return $response;

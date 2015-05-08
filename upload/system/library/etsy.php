@@ -3,7 +3,8 @@ final class Etsy {
 	private $token;
 	private $enc1;
 	private $enc2;
-	private $url = 'http://etsy.openbaypro.com/';
+	private $url = 'http://staging.openbaypro.io/';
+	//private $url = 'http://api.openbaypro.io/';
 	private $registry;
 
 	public function __construct($registry) {
@@ -189,7 +190,7 @@ final class Etsy {
 		 */
 
 		/** @var loop over linked items $response
-		$response = $this->openbay->etsy->call('product/listing/'.(int)$data['listing_id'].'/image', 'POST', $data);
+		$response = $this->openbay->etsy->call('v1/etsy/product/listing/'.(int)$data['listing_id'].'/image', 'POST', $data);
 
 		if (isset($response['data']['error'])) {
 			$this->response->setOutput(json_encode($response['data']));
@@ -298,7 +299,7 @@ final class Etsy {
 	}
 
 	public function orderUpdatePaid($receipt_id, $status) {
-		$response = $this->openbay->etsy->call('order/update/payment', 'POST', array('receipt_id' => $receipt_id, 'status' => $status));
+		$response = $this->openbay->etsy->call('v1/etsy/order/update/payment', 'POST', array('receipt_id' => $receipt_id, 'status' => $status));
 
 		if (isset($response['data']['error'])) {
 			return $response;
@@ -308,7 +309,7 @@ final class Etsy {
 	}
 
 	public function orderUpdateShipped($receipt_id, $status) {
-		$response = $this->openbay->etsy->call('order/update/shipping', 'POST', array('receipt_id' => $receipt_id, 'status' => $status));
+		$response = $this->openbay->etsy->call('v1/etsy/order/update/shipping', 'POST', array('receipt_id' => $receipt_id, 'status' => $status));
 
 		if (isset($response['data']['error'])) {
 			return $response;
@@ -338,7 +339,7 @@ final class Etsy {
 	}
 
 	public function getEtsyItem($listing_id) {
-		$response = $this->openbay->etsy->call('product/listing/' . $listing_id, 'GET');
+		$response = $this->openbay->etsy->call('v1/etsy/product/listing/' . $listing_id, 'GET');
 
 		if (isset($response['data']['error'])) {
 			return $response;

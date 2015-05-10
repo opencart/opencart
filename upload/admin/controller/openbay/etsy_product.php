@@ -474,16 +474,12 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			$page = 1;
 		}
 
-		if (isset($this->request->get['limit'])){
-			$limit = (int)$this->request->get['limit'];
-		} else {
-			$limit = 100;
-		}
+		$limit = $this->config->get('config_limit_admin');
 
 		$pagination = new Pagination();
 		$pagination->total = $total_linked;
 		$pagination->page = $page;
-		$pagination->limit = 100;
+		$pagination->limit = $limit;
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('openbay/etsy/itemLinks', 'token=' . $this->session->data['token'] . '&page={page}', 'SSL');
 
@@ -544,15 +540,11 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			$filter['page'] = $this->request->get['page'];
 		}
 
-		if (!isset($this->request->get['limit'])) {
-			$filter['limit'] = 25;
-		} else {
-			$filter['limit'] = $this->request->get['limit'];
-		}
-
 		if (isset($this->request->get['keywords'])) {
 			$filter['keywords'] = $this->request->get['keywords'];
 		}
+
+		$filter['limit'] = $this->config->get('config_limit_admin');
 
 		$data['filter'] = $filter;
 

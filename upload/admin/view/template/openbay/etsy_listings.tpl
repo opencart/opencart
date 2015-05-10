@@ -28,14 +28,7 @@
               <div class="form-group">
                 <label class="control-label" for="input-keywords"><?php echo $entry_keywords; ?></label>
                 <input type="text" name="keywords" value="<?php echo isset($filter['keywords']) ? $filter['keywords'] : ''; ?>" placeholder="<?php echo $entry_keywords; ?>" id="input-keywords" class="form-control" />
-                <span class="help-block"><?php echo $help_keywords; ?></span> </div>
-              <div class="form-group">
-                <label class="control-label" for="input-limit"><?php echo $entry_limit; ?></label>
-                <select name="limit" id="input-limit" class="form-control">
-                  <option value="1"<?php if ($filter['limit'] == 1) { echo ' selected'; } ?>>1</option>
-                  <option value="10"<?php if ($filter['limit'] == 10) { echo ' selected'; } ?>>10</option>
-                  <option value="50"<?php if ($filter['limit'] == 50) { echo ' selected'; } ?>>50</option>
-                </select>
+                <span class="help-block"><?php echo $help_keywords; ?></span>
               </div>
             </div>
             <div class="col-sm-6">

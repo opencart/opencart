@@ -10,18 +10,18 @@ class ControllerApiCart extends Controller {
 		} else {
 			if (isset($this->request->post['product'])) {
 				$this->cart->clear();
-				
+
 				foreach ($this->request->post['product'] as $product) {
 					if (isset($product['option'])) {
 						$option = $product['option'];
 					} else {
 						$option = array();
 					}
-					
+
 					$this->cart->add($product['product_id'], $product['quantity'], $option);
 				}
 			}
-			
+
 			if (isset($this->request->post['product_id'])) {
 				$this->load->model('catalog/product');
 

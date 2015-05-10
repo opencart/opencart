@@ -1,7 +1,5 @@
 <?php
-
 class ModelPaymentPPExpress extends Model {
-
 	public function install() {
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "paypal_order` (
@@ -383,5 +381,4 @@ class ModelPaymentPPExpress extends Model {
 
 		return $response;
 	}
-
 }

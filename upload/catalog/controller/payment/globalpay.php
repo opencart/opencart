@@ -134,35 +134,35 @@ class ControllerPaymentGlobalpay extends Controller {
 				$message .= '<br /><strong>' . $this->language->get('text_avs_address') . ':</strong> ' . $this->request->post['AVSADDRESSRESULT'];
 			}
 
-            //3D Secure message
+			//3D Secure message
 			if (isset($this->request->post['ECI']) && isset($this->request->post['CAVV']) && isset($this->request->post['XID'])) {
-                $eci = $this->request->post['ECI'];
+				$eci = $this->request->post['ECI'];
 
 				if (($this->request->post['ECI'] == 6 || $this->request->post['ECI'] == 1) && empty($this->request->post['CAVV']) && empty($this->request->post['XID'])) {
 					$scenario_id = 1;
 				}
 
-                if (($this->request->post['ECI'] == 5 || $this->request->post['ECI'] == 0) && !empty($this->request->post['CAVV']) && !empty($this->request->post['XID'])) {
-                    $scenario_id = 5;
-                }
+				if (($this->request->post['ECI'] == 5 || $this->request->post['ECI'] == 0) && !empty($this->request->post['CAVV']) && !empty($this->request->post['XID'])) {
+					$scenario_id = 5;
+				}
 
-                if (($this->request->post['ECI'] == 6 || $this->request->post['ECI'] == 1) && !empty($this->request->post['CAVV']) && !empty($this->request->post['XID'])) {
-                    $scenario_id = 6;
-                }
+				if (($this->request->post['ECI'] == 6 || $this->request->post['ECI'] == 1) && !empty($this->request->post['CAVV']) && !empty($this->request->post['XID'])) {
+					$scenario_id = 6;
+				}
 
-                if (isset($scenario_id)) {
-                    $scenario_message = $this->language->get('text_3d_s' . $scenario_id);
-                } else {
-                    if (isset($this->request->post['CARDTYPE'])) {
-                        if ($this->request->post['CARDTYPE'] == 'VISA') {
-                            $eci = 7;
-                        } else {
-                            $eci = 2;
-                        }
-                    }
+				if (isset($scenario_id)) {
+					$scenario_message = $this->language->get('text_3d_s' . $scenario_id);
+				} else {
+					if (isset($this->request->post['CARDTYPE'])) {
+						if ($this->request->post['CARDTYPE'] == 'VISA') {
+							$eci = 7;
+						} else {
+							$eci = 2;
+						}
+					}
 
-                    $scenario_message = $this->language->get('text_3d_liability');
-                }
+					$scenario_message = $this->language->get('text_3d_liability');
+				}
 
 				$message .= '<br /><strong>' . $this->language->get('text_eci') . ':</strong> (' . $eci . ') ' . $scenario_message;
 			}

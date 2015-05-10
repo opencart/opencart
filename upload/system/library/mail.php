@@ -3,7 +3,7 @@ class Mail {
 	protected $to;
 	protected $from;
 	protected $sender;
-	protected $replyto;
+	protected $reply_to;
 	protected $subject;
 	protected $text;
 	protected $html;
@@ -37,7 +37,7 @@ class Mail {
 	}
 
 	public function setReplyTo($reply_to) {
-		$this->replyto = $reply_to;
+		$this->reply_to = $reply_to;
 	}
 
 	public function setSubject($subject) {
@@ -82,10 +82,6 @@ class Mail {
 			exit();
 		}
 
-		if (!$this->replyto) {
-			$this->setReplyTo($this->sender);
-		}
-
 		if (is_array($this->to)) {
 			$to = implode(',', $this->to);
 		} else {
@@ -98,12 +94,18 @@ class Mail {
 
 		if ($this->protocol != 'mail') {
 			$header .= 'To: ' . $to . $this->newline;
-			$header .= 'Subject: ' . '=?UTF-8?B?' . base64_encode($this->subject) . '?=' . $this->newline;
+			$header .= 'Subject: =?UTF-8?B?' . base64_encode($this->subject) . '?=' . $this->newline;
 		}
 
 		$header .= 'Date: ' . date('D, d M Y H:i:s O') . $this->newline;
 		$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . $this->newline;
-		$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->replyto) . '?=' . ' <' . $this->from . '>' . $this->newline;
+		
+		if (!$this->reply_to) {
+			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . $this->newline;
+		} else {
+			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to) . '?=' . ' <' . $this->from . '>' . $this->newline;
+		}
+		
 		$header .= 'Return-Path: ' . $this->from . $this->newline;
 		$header .= 'X-Mailer: PHP/' . phpversion() . $this->newline;
 		$header .= 'Content-Type: multipart/related; boundary="' . $boundary . '"' . $this->newline . $this->newline;

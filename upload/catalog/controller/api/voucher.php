@@ -61,7 +61,7 @@ class ControllerApiVoucher extends Controller {
 
 			if (isset($this->request->post['voucher'])) {
 				$this->session->data['vouchers'] = array();
-				
+
 				foreach ($this->request->post['voucher'] as $voucher) {
 					if (isset($voucher['code']) && isset($voucher['to_name']) && isset($voucher['to_email']) && isset($voucher['from_name']) && isset($voucher['from_email']) && isset($voucher['voucher_theme_id']) && isset($voucher['message']) && isset($voucher['amount'])) {
 						$this->session->data['vouchers'][$voucher['code']] = array(
@@ -78,7 +78,7 @@ class ControllerApiVoucher extends Controller {
 					}
 				}
 			}
-			
+
 			// Add a new voucher if set
 			if ((utf8_strlen($this->request->post['from_name']) < 1) || (utf8_strlen($this->request->post['from_name']) > 64)) {
 				$json['error']['from_name'] = $this->language->get('error_from_name');

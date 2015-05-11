@@ -145,22 +145,12 @@ if (filter_status) {
   url += '&status=' + encodeURIComponent(filter_status);
 }
 
-var filter_limit = $('input[name=\'limit\']').val();
-
-if (filter_limit) {
-  url += '&limit=' + encodeURIComponent(filter_limit);
-}
-
 $('#button-filter').on('click', function() {
   var url = 'index.php?route=openbay/etsy_product/listings&token=<?php echo $token; ?>';
 
   var status = $('select[name=\'status\']').val();
 
   url += '&status=' + encodeURIComponent(status);
-
-  var limit = $('select[name=\'limit\']').val();
-
-  url += '&limit=' + encodeURIComponent(limit);
 
   var keywords = $('input[name=\'keywords\']').val();
 

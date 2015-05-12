@@ -344,7 +344,14 @@ class ModelCatalogProduct extends Model {
 	}
 
 	public function getProducts($data = array()) {
+		$join = '';
+
+		if (isset($data['filter_category']) && !empty($data['filter_category'])) {
+			$join = "LEFT JOIN " . DB_PREFIX . "product_to_category pc ON (p.product_id = pc.product_id)";
+		}
+
 		$sql = "SELECT * FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "SELECT * FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) $join WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND pd.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
@@ -362,6 +369,10 @@ class ModelCatalogProduct extends Model {
 			$sql .= " AND p.quantity = '" . (int)$data['filter_quantity'] . "'";
 		}
 
+		if (isset($data['filter_category']) && !empty($data['filter_category'])) {
+			$sql .= " AND pc.category_id = '" . (int)$data['filter_category'] . "'";
+		}
+
 		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
 			$sql .= " AND p.status = '" . (int)$data['filter_status'] . "'";
 		}
@@ -373,6 +384,7 @@ class ModelCatalogProduct extends Model {
 			'p.model',
 			'p.price',
 			'p.quantity',
+			'pc.category_id',
 			'p.status',
 			'p.sort_order'
 		);
@@ -602,8 +614,14 @@ class ModelCatalogProduct extends Model {
 	}
 
 	public function getTotalProducts($data = array()) {
-		$sql = "SELECT COUNT(DISTINCT p.product_id) AS total FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id)";
+		$join = '';
 
+		if (isset($data['filter_category']) && !empty($data['filter_category'])) {
+			$join = "LEFT JOIN " . DB_PREFIX . "product_to_category pc ON (p.product_id = pc.product_id)";
+		}
+
+		$sql = "SELECT COUNT(DISTINCT p.product_id) AS total FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id)";
+		$sql .= $join;
 		$sql .= " WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
@@ -620,6 +638,10 @@ class ModelCatalogProduct extends Model {
 
 		if (isset($data['filter_quantity']) && !is_null($data['filter_quantity'])) {
 			$sql .= " AND p.quantity = '" . (int)$data['filter_quantity'] . "'";
+		}
+
+		if (isset($data['filter_category']) && !empty($data['filter_category'])) {
+			$sql .= " AND pc.category_id = '" . (int)$data['filter_category'] . "'";
 		}
 
 		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {

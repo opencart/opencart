@@ -8,6 +8,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 		$this->load->model('payment/amazon_login_pay');
 
+		// capital L in Amazon cookie name is required, do not alter for coding standards
 		if (!$this->customer->isLogged() || !isset($this->request->cookie['amazon_Login_state_cache'])) {
 			$this->session->data['lpa']['error'] = $this->language->get('error_login');
 			$this->response->redirect($this->url->link('payment/amazon_login_pay/failure', '', 'SSL'));
@@ -67,6 +68,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 		$this->load->model('payment/amazon_login_pay');
 
+		// capital L in Amazon cookie name is required, do not alter for coding standards
 		if (!$this->customer->isLogged() || !isset($this->request->cookie['amazon_Login_state_cache'])) {
 			$this->session->data['lpa']['error'] = $this->language->get('error_login');
 			$this->response->redirect($this->url->link('payment/amazon_login_pay/failure', '', 'SSL'));
@@ -119,6 +121,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$this->load->model('extension/extension');
 		$this->load->model('payment/amazon_login_pay');
 
+		// capital L in Amazon cookie name is required, do not alter for coding standards
 		if (!$this->customer->isLogged() || !isset($this->request->cookie['amazon_Login_state_cache'])) {
 			$this->session->data['lpa']['error'] = $this->language->get('error_login');
 			$this->response->redirect($this->url->link('payment/amazon_login_pay/loginFailure', '', 'SSL'));

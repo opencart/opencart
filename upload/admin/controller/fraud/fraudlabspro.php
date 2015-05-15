@@ -162,7 +162,8 @@ class ControllerFraudFraudLabsPro extends Controller {
 	}
 
 	public function order() {
-		// Fraud
+		$this->load->language('fraud/fraudlabspro');
+
 		$this->load->model('fraud/fraudlabspro');
 
 		// Action of the Approve/Reject button click

@@ -381,7 +381,7 @@ class ModelFraudMaxMind extends Model {
 			}
 		}
 
-		if ($risk_score > $this->config->get('config_fraud_score')) {
+		if ($risk_score > $this->config->get('maxmind_score') && $this->config->get('maxmind_key')) {
 			return $this->config->get('maxmind_order_status_id');
 		}		
 	}

@@ -9,35 +9,11 @@ class ControllerProductCategory extends Controller {
 
 		$this->load->model('tool/image');
 
-		if (isset($this->request->get['filter'])) {
-			$filter = $this->request->get['filter'];
-		} else {
-			$filter = '';
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$sort = $this->request->get['sort'];
-		} else {
-			$sort = 'p.sort_order';
-		}
-
-		if (isset($this->request->get['order'])) {
-			$order = $this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
-		if (isset($this->request->get['limit'])) {
-			$limit = $this->request->get['limit'];
-		} else {
-			$limit = $this->config->get('config_product_limit');
-		}
+		$filter = $this->request->get('filter', '');
+		$sort = $this->request->get('sort', 'p.sort_order');
+		$order = $this->request->get('order', 'ASC');
+		$page = $this->request->get('page', 1);
+		$limit = $this->request->get('limit', $this->config->get('config_product_limit'));
 
 		$data['breadcrumbs'] = array();
 

@@ -17,9 +17,9 @@ $_['button_remove_links'] 			= 'Remove links';
 $_['button_create_new_listing'] 	= 'Create new listing';
 
 // Help
-$_['help_sku'] 						= "Unique product's ID assigned by the merchant";
-$_['help_restock_date'] 			= "This is the date you will be able to ship any back-ordered items to a customer. This date should not be greater than 30 days from the date listed or orders received may automatically be canceled.";
-$_['help_sale_price'] 				= "Sale Price must have a start and end date";
+$_['help_sku'] 						= 'Unique product\'s ID assigned by the merchant';
+$_['help_restock_date'] 			= 'This is the date you will be able to ship any back-ordered items to a customer. This date should not be greater than 30 days from the date listed or orders received may automatically be canceled.';
+$_['help_sale_price'] 				= 'Sale Price must have a start and end date';
 
 //Text
 $_['text_products_sent'] 			= 'Products were sent for processing';
@@ -36,7 +36,7 @@ $_['text_collectible_good'] 		= 'Collectible - Good';
 $_['text_collectible_acceptable'] 	= 'Collectible - Acceptable';
 $_['text_refurbished'] 				= 'Refurbished';
 $_['text_product_not_sent'] 		= 'Product was not sent to Amazon. Reason: %s';
-$_['text_not_in_catalog'] 			= "Or, if it is not in the catalog&nbsp;&nbsp;&nbsp;";
+$_['text_not_in_catalog'] 			= 'Or, if it is not in the catalog&nbsp;&nbsp;&nbsp;';
 $_['text_placeholder_search'] 		= 'Enter product name, UPC, EAN, ISBN or ASIN';
 $_['text_placeholder_condition'] 	= 'Use this box to describe the condition of your products.';
 $_['text_characters'] 				= 'characters';
@@ -100,7 +100,7 @@ $_['error_connecting'] 				= 'There was problem connecting to the API. Please ch
 $_['error_text_missing'] 			= 'You must enter some search details';
 $_['error_missing_asin'] 			= 'ASIN is missing';
 $_['error_marketplace_missing'] 	= 'Please select a marketplace';
-$_['error_condition_missing'] 		= "Please select condition";
+$_['error_condition_missing'] 		= 'Please select condition';
 $_['error_amazon_price'] 			= 'Could not get the price from Amazon';
 $_['error_stock'] 					= 'You cannot list an item with less than 1 item in stock';
 $_['error_sku'] 					= 'You must enter an SKU for the item';

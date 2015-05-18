@@ -12,8 +12,8 @@ $_['entry_username']			 		 = 'Username';
 $_['entry_secret']				 		 = 'Secret';
 $_['entry_api_hash']		     		 = 'API Hash';
 $_['entry_environment']			 		 = 'Environment';
-$_['entry_secret_token']		 		 = "Secret Token";
-$_['entry_ipn_url']				 		 = "IPN URL:";
+$_['entry_secret_token']		 		 = 'Secret Token';
+$_['entry_ipn_url']				 		 = 'IPN URL:';
 $_['entry_total']				 		 = 'Total';
 
 $_['entry_geo_zone']			 		 = 'Geo Zone';

@@ -79,7 +79,7 @@ class ModelCheckoutVoucher extends Model {
 			$this->load->model('localisation/language');
 
 			$language = new Language($order_info['language_directory']);
-			$language->load('default');
+			$language->load($order_info['language_directory']);
 			$language->load('mail/voucher');
 
 			$voucher_query = $this->db->query("SELECT *, vtd.name AS theme FROM `" . DB_PREFIX . "voucher` v LEFT JOIN " . DB_PREFIX . "voucher_theme vt ON (v.voucher_theme_id = vt.voucher_theme_id) LEFT JOIN " . DB_PREFIX . "voucher_theme_description vtd ON (vt.voucher_theme_id = vtd.voucher_theme_id) AND vtd.language_id = '" . (int)$order_info['language_id'] . "' WHERE v.order_id = '" . (int)$order_id . "'");

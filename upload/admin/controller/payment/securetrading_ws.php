@@ -404,7 +404,7 @@ class ControllerPaymentSecureTradingWs extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	public function orderAction() {
+	public function action() {
 
 		if ($this->config->get('securetrading_ws_status')) {
 			$this->load->model('payment/securetrading_ws');

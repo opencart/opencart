@@ -1,12 +1,14 @@
 <?php
 class ControllerModuleAmazonPay extends Controller {
+
 	public function index() {
 
 		$this->load->model('payment/amazon_login_pay');
 
-		if ($this->config->get('amazon_login_pay_status') && $this->config->get('amazon_pay_status') && !empty($this->request->server['HTTPS'])) {
-			if (!$this->customer->isLogged() && isset($this->request->cookie['amazon_login_state_cache'])) {
-				setcookie('amazon_login_state_cache', '', time() - 4815162342);
+		if ($this->config->get('amazon_login_pay_status') && $this->config->get('amazon_pay_status') && !empty($_SERVER['HTTPS']) && !($this->config->get('amazon_login_pay_minimum_total') > 0 && $this->config->get('amazon_login_pay_minimum_total') > $this->cart->getTotal())) {
+			// capital L in Amazon cookie name is required, do not alter for coding standards
+			if (!$this->customer->isLogged() && isset($this->request->cookie['amazon_Login_state_cache'])) {
+				setcookie('amazon_Login_state_cache', '', time() - 4815162342);
 			}
 
 			$amazon_payment_js = $this->model_payment_amazon_login_pay->getWidgetJs();
@@ -113,6 +115,7 @@ class ControllerModuleAmazonPay extends Controller {
 				$last_name = array_pop($full_name);
 				$first_name = implode(' ', $full_name);
 
+
 				$data = array(
 					'customer_group_id' => (int)$this->config->get('config_customer_group_id'),
 					'firstname' => $first_name,
@@ -174,8 +177,9 @@ class ControllerModuleAmazonPay extends Controller {
 		unset($this->session->data['lpa']);
 		unset($this->session->data['access_token']);
 
-		if (isset($this->request->cookie['amazon_login_state_cache'])) {
-			setcookie('amazon_login_state_cache', '', time() - 4815162342);
+		// capital L in Amazon cookie name is required, do not alter for coding standards
+		if (isset($this->request->cookie['amazon_Login_state_cache'])) {
+			setcookie('amazon_Login_state_cache', '', time() - 4815162342);
 		}
 	}
 
@@ -196,4 +200,5 @@ class ControllerModuleAmazonPay extends Controller {
 			return false;
 		}
 	}
+
 }

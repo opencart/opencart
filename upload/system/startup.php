@@ -57,24 +57,23 @@ function modification($filename) {
 		$file = DIR_MODIFICATION . 'system/' . substr($filename, strlen(DIR_SYSTEM));
 	}
 	
-	if (file_exists($file)) {
+	if (is_file($file)) {
 		return $file;
-	} else {
-		return $filename;
 	}
+
+	return $filename;
 }
 
 // Autoloader
 function autoload($class) {
 	$file = DIR_SYSTEM . 'library/' . str_replace('\\', '/', strtolower($class)) . '.php';
-
-	if (file_exists($file)) {
-		include(modification($file));
-
+	
+	if (is_file($file)) {
+		include_once(modification($file));
 		return true;
-	} else {
-		return false;
 	}
+	
+	return false;
 }
 
 spl_autoload_register('autoload');

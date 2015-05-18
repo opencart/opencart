@@ -600,6 +600,7 @@ class ControllerSaleOrder extends Controller {
 		$data['entry_theme'] = $this->language->get('entry_theme');
 		$data['entry_message'] = $this->language->get('entry_message');
 		$data['entry_amount'] = $this->language->get('entry_amount');
+		$data['entry_currency'] = $this->language->get('entry_currency');
 		$data['entry_shipping_method'] = $this->language->get('entry_shipping_method');
 		$data['entry_payment_method'] = $this->language->get('entry_payment_method');
 		$data['entry_coupon'] = $this->language->get('entry_coupon');
@@ -745,7 +746,7 @@ class ControllerSaleOrder extends Controller {
 			$data['shipping_code'] = $order_info['shipping_code'];
 
 			// Add products to the API
-			$data['products'] = array();
+			$data['order_products'] = array();
 
 			$products = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
 
@@ -792,11 +793,12 @@ class ControllerSaleOrder extends Controller {
 					}
 				}
 			}
-
+			
 			$data['order_status_id'] = $order_info['order_status_id'];
 			$data['comment'] = $order_info['comment'];
 			$data['affiliate_id'] = $order_info['affiliate_id'];
 			$data['affiliate'] = $order_info['affiliate_firstname'] . ' ' . $order_info['affiliate_lastname'];
+			$data['currency_id'] = $order_info['currency_id'];
 		} else {
 			$data['order_id'] = 0;
 			$data['store_id'] = '';
@@ -837,16 +839,16 @@ class ControllerSaleOrder extends Controller {
 			$data['shipping_custom_field'] = array();
 			$data['shipping_method'] = '';
 			$data['shipping_code'] = '';
-
+			
 			$data['order_products'] = array();
 			$data['order_vouchers'] = array();
 			$data['order_totals'] = array();
 
 			$data['order_status_id'] = $this->config->get('config_order_status_id');
-
 			$data['comment'] = '';
 			$data['affiliate_id'] = '';
 			$data['affiliate'] = '';
+			$data['currency_id'] = $order_info['currency_id'];
 
 			$data['coupon'] = '';
 			$data['voucher'] = '';
@@ -877,7 +879,8 @@ class ControllerSaleOrder extends Controller {
 				'name'               => $custom_field['name'],
 				'value'              => $custom_field['value'],
 				'type'               => $custom_field['type'],
-				'location'           => $custom_field['location']
+				'location'           => $custom_field['location'],
+				'sort_order'         => $custom_field['sort_order']
 			);
 		}
 
@@ -888,6 +891,10 @@ class ControllerSaleOrder extends Controller {
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
+
+		$this->load->model('localisation/currency');
+		
+		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
 
 		$data['voucher_min'] = $this->config->get('config_voucher_min');
 
@@ -955,108 +962,7 @@ class ControllerSaleOrder extends Controller {
 			$data['text_shipping_method'] = $this->language->get('text_shipping_method');
 			$data['text_payment_method'] = $this->language->get('text_payment_method');
 			$data['text_history'] = $this->language->get('text_history');
-			$data['text_country_match'] = $this->language->get('text_country_match');
-			$data['text_country_code'] = $this->language->get('text_country_code');
-			$data['text_high_risk_country'] = $this->language->get('text_high_risk_country');
-			$data['text_distance'] = $this->language->get('text_distance');
-			$data['text_ip_region'] = $this->language->get('text_ip_region');
-			$data['text_ip_city'] = $this->language->get('text_ip_city');
-			$data['text_ip_latitude'] = $this->language->get('text_ip_latitude');
-			$data['text_ip_longitude'] = $this->language->get('text_ip_longitude');
-			$data['text_ip_isp'] = $this->language->get('text_ip_isp');
-			$data['text_ip_org'] = $this->language->get('text_ip_org');
-			$data['text_ip_asnum'] = $this->language->get('text_ip_asnum');
-			$data['text_ip_user_type'] = $this->language->get('text_ip_user_type');
-			$data['text_ip_country_confidence'] = $this->language->get('text_ip_country_confidence');
-			$data['text_ip_region_confidence'] = $this->language->get('text_ip_region_confidence');
-			$data['text_ip_city_confidence'] = $this->language->get('text_ip_city_confidence');
-			$data['text_ip_postal_confidence'] = $this->language->get('text_ip_postal_confidence');
-			$data['text_ip_postal_code'] = $this->language->get('text_ip_postal_code');
-			$data['text_ip_accuracy_radius'] = $this->language->get('text_ip_accuracy_radius');
-			$data['text_ip_net_speed_cell'] = $this->language->get('text_ip_net_speed_cell');
-			$data['text_ip_metro_code'] = $this->language->get('text_ip_metro_code');
-			$data['text_ip_area_code'] = $this->language->get('text_ip_area_code');
-			$data['text_ip_time_zone'] = $this->language->get('text_ip_time_zone');
-			$data['text_ip_region_name'] = $this->language->get('text_ip_region_name');
-			$data['text_ip_domain'] = $this->language->get('text_ip_domain');
-			$data['text_ip_country_name'] = $this->language->get('text_ip_country_name');
-			$data['text_ip_continent_code'] = $this->language->get('text_ip_continent_code');
-			$data['text_ip_corporate_proxy'] = $this->language->get('text_ip_corporate_proxy');
-			$data['text_anonymous_proxy'] = $this->language->get('text_anonymous_proxy');
-			$data['text_proxy_score'] = $this->language->get('text_proxy_score');
-			$data['text_is_trans_proxy'] = $this->language->get('text_is_trans_proxy');
-			$data['text_free_mail'] = $this->language->get('text_free_mail');
-			$data['text_carder_email'] = $this->language->get('text_carder_email');
-			$data['text_high_risk_username'] = $this->language->get('text_high_risk_username');
-			$data['text_high_risk_password'] = $this->language->get('text_high_risk_password');
-			$data['text_bin_match'] = $this->language->get('text_bin_match');
-			$data['text_bin_country'] = $this->language->get('text_bin_country');
-			$data['text_bin_name_match'] = $this->language->get('text_bin_name_match');
-			$data['text_bin_name'] = $this->language->get('text_bin_name');
-			$data['text_bin_phone_match'] = $this->language->get('text_bin_phone_match');
-			$data['text_bin_phone'] = $this->language->get('text_bin_phone');
-			$data['text_customer_phone_in_billing_location'] = $this->language->get('text_customer_phone_in_billing_location');
-			$data['text_ship_forward'] = $this->language->get('text_ship_forward');
-			$data['text_city_postal_match'] = $this->language->get('text_city_postal_match');
-			$data['text_ship_city_postal_match'] = $this->language->get('text_ship_city_postal_match');
-			$data['text_score'] = $this->language->get('text_score');
-			$data['text_explanation'] = $this->language->get('text_explanation');
-			$data['text_risk_score'] = $this->language->get('text_risk_score');
-			$data['text_queries_remaining'] = $this->language->get('text_queries_remaining');
-			$data['text_maxmind_id'] = $this->language->get('text_maxmind_id');
-			$data['text_error'] = $this->language->get('text_error');
 			$data['text_loading'] = $this->language->get('text_loading');
-
-			$data['help_country_match'] = $this->language->get('help_country_match');
-			$data['help_country_code'] = $this->language->get('help_country_code');
-			$data['help_high_risk_country'] = $this->language->get('help_high_risk_country');
-			$data['help_distance'] = $this->language->get('help_distance');
-			$data['help_ip_region'] = $this->language->get('help_ip_region');
-			$data['help_ip_city'] = $this->language->get('help_ip_city');
-			$data['help_ip_latitude'] = $this->language->get('help_ip_latitude');
-			$data['help_ip_longitude'] = $this->language->get('help_ip_longitude');
-			$data['help_ip_isp'] = $this->language->get('help_ip_isp');
-			$data['help_ip_org'] = $this->language->get('help_ip_org');
-			$data['help_ip_asnum'] = $this->language->get('help_ip_asnum');
-			$data['help_ip_user_type'] = $this->language->get('help_ip_user_type');
-			$data['help_ip_country_confidence'] = $this->language->get('help_ip_country_confidence');
-			$data['help_ip_region_confidence'] = $this->language->get('help_ip_region_confidence');
-			$data['help_ip_city_confidence'] = $this->language->get('help_ip_city_confidence');
-			$data['help_ip_postal_confidence'] = $this->language->get('help_ip_postal_confidence');
-			$data['help_ip_postal_code'] = $this->language->get('help_ip_postal_code');
-			$data['help_ip_accuracy_radius'] = $this->language->get('help_ip_accuracy_radius');
-			$data['help_ip_net_speed_cell'] = $this->language->get('help_ip_net_speed_cell');
-			$data['help_ip_metro_code'] = $this->language->get('help_ip_metro_code');
-			$data['help_ip_area_code'] = $this->language->get('help_ip_area_code');
-			$data['help_ip_time_zone'] = $this->language->get('help_ip_time_zone');
-			$data['help_ip_region_name'] = $this->language->get('help_ip_region_name');
-			$data['help_ip_domain'] = $this->language->get('help_ip_domain');
-			$data['help_ip_country_name'] = $this->language->get('help_ip_country_name');
-			$data['help_ip_continent_code'] = $this->language->get('help_ip_continent_code');
-			$data['help_ip_corporate_proxy'] = $this->language->get('help_ip_corporate_proxy');
-			$data['help_anonymous_proxy'] = $this->language->get('help_anonymous_proxy');
-			$data['help_proxy_score'] = $this->language->get('help_proxy_score');
-			$data['help_is_trans_proxy'] = $this->language->get('help_is_trans_proxy');
-			$data['help_free_mail'] = $this->language->get('help_free_mail');
-			$data['help_carder_email'] = $this->language->get('help_carder_email');
-			$data['help_high_risk_username'] = $this->language->get('help_high_risk_username');
-			$data['help_high_risk_password'] = $this->language->get('help_high_risk_password');
-			$data['help_bin_match'] = $this->language->get('help_bin_match');
-			$data['help_bin_country'] = $this->language->get('help_bin_country');
-			$data['help_bin_name_match'] = $this->language->get('help_bin_name_match');
-			$data['help_bin_name'] = $this->language->get('help_bin_name');
-			$data['help_bin_phone_match'] = $this->language->get('help_bin_phone_match');
-			$data['help_bin_phone'] = $this->language->get('help_bin_phone');
-			$data['help_customer_phone_in_billing_location'] = $this->language->get('help_customer_phone_in_billing_location');
-			$data['help_ship_forward'] = $this->language->get('help_ship_forward');
-			$data['help_city_postal_match'] = $this->language->get('help_city_postal_match');
-			$data['help_ship_city_postal_match'] = $this->language->get('help_ship_city_postal_match');
-			$data['help_score'] = $this->language->get('help_score');
-			$data['help_explanation'] = $this->language->get('help_explanation');
-			$data['help_risk_score'] = $this->language->get('help_risk_score');
-			$data['help_queries_remaining'] = $this->language->get('help_queries_remaining');
-			$data['help_maxmind_id'] = $this->language->get('help_maxmind_id');
-			$data['help_error'] = $this->language->get('help_error');
 
 			$data['column_product'] = $this->language->get('column_product');
 			$data['column_model'] = $this->language->get('column_model');
@@ -1301,7 +1207,8 @@ class ControllerSaleOrder extends Controller {
 						if ($custom_field_value_info) {
 							$data['payment_custom_fields'][] = array(
 								'name'  => $custom_field['name'],
-								'value' => $custom_field_value_info['name']
+								'value' => $custom_field_value_info['name'],
+								'sort_order' => $custom_field['sort_order']
 							);
 						}
 					}
@@ -1313,7 +1220,8 @@ class ControllerSaleOrder extends Controller {
 							if ($custom_field_value_info) {
 								$data['payment_custom_fields'][] = array(
 									'name'  => $custom_field['name'],
-									'value' => $custom_field_value_info['name']
+									'value' => $custom_field_value_info['name'],
+									'sort_order' => $custom_field['sort_order']
 								);
 							}
 						}
@@ -1322,7 +1230,8 @@ class ControllerSaleOrder extends Controller {
 					if ($custom_field['type'] == 'text' || $custom_field['type'] == 'textarea' || $custom_field['type'] == 'file' || $custom_field['type'] == 'date' || $custom_field['type'] == 'datetime' || $custom_field['type'] == 'time') {
 						$data['payment_custom_fields'][] = array(
 							'name'  => $custom_field['name'],
-							'value' => $order_info['payment_custom_field'][$custom_field['custom_field_id']]
+							'value' => $order_info['payment_custom_field'][$custom_field['custom_field_id']],
+							'sort_order' => $custom_field['sort_order']
 						);
 					}
 
@@ -1332,7 +1241,8 @@ class ControllerSaleOrder extends Controller {
 						if ($upload_info) {
 							$data['payment_custom_fields'][] = array(
 								'name'  => $custom_field['name'],
-								'value' => $upload_info['name']
+								'value' => $upload_info['name'],
+								'sort_order' => $custom_field['sort_order']
 							);
 						}
 					}
@@ -1361,7 +1271,8 @@ class ControllerSaleOrder extends Controller {
 						if ($custom_field_value_info) {
 							$data['shipping_custom_fields'][] = array(
 								'name'  => $custom_field['name'],
-								'value' => $custom_field_value_info['name']
+								'value' => $custom_field_value_info['name'],
+								'sort_order' => $custom_field['sort_order']
 							);
 						}
 					}
@@ -1373,7 +1284,8 @@ class ControllerSaleOrder extends Controller {
 							if ($custom_field_value_info) {
 								$data['shipping_custom_fields'][] = array(
 									'name'  => $custom_field['name'],
-									'value' => $custom_field_value_info['name']
+									'value' => $custom_field_value_info['name'],
+									'sort_order' => $custom_field['sort_order']
 								);
 							}
 						}
@@ -1382,7 +1294,8 @@ class ControllerSaleOrder extends Controller {
 					if ($custom_field['type'] == 'text' || $custom_field['type'] == 'textarea' || $custom_field['type'] == 'file' || $custom_field['type'] == 'date' || $custom_field['type'] == 'datetime' || $custom_field['type'] == 'time') {
 						$data['shipping_custom_fields'][] = array(
 							'name'  => $custom_field['name'],
-							'value' => $order_info['shipping_custom_field'][$custom_field['custom_field_id']]
+							'value' => $order_info['shipping_custom_field'][$custom_field['custom_field_id']],
+							'sort_order' => $custom_field['sort_order']
 						);
 					}
 
@@ -1392,7 +1305,8 @@ class ControllerSaleOrder extends Controller {
 						if ($upload_info) {
 							$data['shipping_custom_fields'][] = array(
 								'name'  => $custom_field['name'],
-								'value' => $upload_info['name']
+								'value' => $upload_info['name'],
+								'sort_order' => $custom_field['sort_order']
 							);
 						}
 					}
@@ -1514,215 +1428,30 @@ class ControllerSaleOrder extends Controller {
 			} else {
 				$data['error_warning'] = $this->language->get('error_permission');
 			}
+			
+			$data['payment_action'] = $this->load->controller('payment/' . $order_info['payment_code'] . '/action');
 
-			// Fraud
-			$this->load->model('sale/fraud');
-
-			$fraud_info = $this->model_sale_fraud->getFraud($order_info['order_id']);
-
-			if ($fraud_info) {
-				$data['country_match'] = $fraud_info['country_match'];
-
-				if ($fraud_info['country_code']) {
-					$data['country_code'] = $fraud_info['country_code'];
-				} else {
-					$data['country_code'] = '';
+			$data['frauds'] = array();
+			
+			$this->load->model('extension/extension');
+	
+			$extensions = $this->model_extension_extension->getInstalled('fraud');			
+			
+			foreach ($extensions as $extension) {
+				if ($this->config->get($extension . '_status')) {
+					$this->load->language('fraud/' . $extension);
+					
+					$content = $this->load->controller('fraud/' . $extension . '/order');
+					
+					if ($content) {
+						$data['frauds'][] = array(
+							'code'    => $extension,
+							'title'   => $this->language->get('heading_title'),
+							'content' => $content
+						);
+					}
 				}
-
-				$data['high_risk_country'] = $fraud_info['high_risk_country'];
-				$data['distance'] = $fraud_info['distance'];
-
-				if ($fraud_info['ip_region']) {
-					$data['ip_region'] = $fraud_info['ip_region'];
-				} else {
-					$data['ip_region'] = '';
-				}
-
-				if ($fraud_info['ip_city']) {
-					$data['ip_city'] = $fraud_info['ip_city'];
-				} else {
-					$data['ip_city'] = '';
-				}
-
-				$data['ip_latitude'] = $fraud_info['ip_latitude'];
-				$data['ip_longitude'] = $fraud_info['ip_longitude'];
-
-				if ($fraud_info['ip_isp']) {
-					$data['ip_isp'] = $fraud_info['ip_isp'];
-				} else {
-					$data['ip_isp'] = '';
-				}
-
-				if ($fraud_info['ip_org']) {
-					$data['ip_org'] = $fraud_info['ip_org'];
-				} else {
-					$data['ip_org'] = '';
-				}
-
-				$data['ip_asnum'] = $fraud_info['ip_asnum'];
-
-				if ($fraud_info['ip_user_type']) {
-					$data['ip_user_type'] = $fraud_info['ip_user_type'];
-				} else {
-					$data['ip_user_type'] = '';
-				}
-
-				if ($fraud_info['ip_country_confidence']) {
-					$data['ip_country_confidence'] = $fraud_info['ip_country_confidence'];
-				} else {
-					$data['ip_country_confidence'] = '';
-				}
-
-				if ($fraud_info['ip_region_confidence']) {
-					$data['ip_region_confidence'] = $fraud_info['ip_region_confidence'];
-				} else {
-					$data['ip_region_confidence'] = '';
-				}
-
-				if ($fraud_info['ip_city_confidence']) {
-					$data['ip_city_confidence'] = $fraud_info['ip_city_confidence'];
-				} else {
-					$data['ip_city_confidence'] = '';
-				}
-
-				if ($fraud_info['ip_postal_confidence']) {
-					$data['ip_postal_confidence'] = $fraud_info['ip_postal_confidence'];
-				} else {
-					$data['ip_postal_confidence'] = '';
-				}
-
-				if ($fraud_info['ip_postal_code']) {
-					$data['ip_postal_code'] = $fraud_info['ip_postal_code'];
-				} else {
-					$data['ip_postal_code'] = '';
-				}
-
-				$data['ip_accuracy_radius'] = $fraud_info['ip_accuracy_radius'];
-
-				if ($fraud_info['ip_net_speed_cell']) {
-					$data['ip_net_speed_cell'] = $fraud_info['ip_net_speed_cell'];
-				} else {
-					$data['ip_net_speed_cell'] = '';
-				}
-
-				$data['ip_metro_code'] = $fraud_info['ip_metro_code'];
-				$data['ip_area_code'] = $fraud_info['ip_area_code'];
-
-				if ($fraud_info['ip_time_zone']) {
-					$data['ip_time_zone'] = $fraud_info['ip_time_zone'];
-				} else {
-					$data['ip_time_zone'] = '';
-				}
-
-				if ($fraud_info['ip_region_name']) {
-					$data['ip_region_name'] = $fraud_info['ip_region_name'];
-				} else {
-					$data['ip_region_name'] = '';
-				}
-
-				if ($fraud_info['ip_domain']) {
-					$data['ip_domain'] = $fraud_info['ip_domain'];
-				} else {
-					$data['ip_domain'] = '';
-				}
-
-				if ($fraud_info['ip_country_name']) {
-					$data['ip_country_name'] = $fraud_info['ip_country_name'];
-				} else {
-					$data['ip_country_name'] = '';
-				}
-
-				if ($fraud_info['ip_continent_code']) {
-					$data['ip_continent_code'] = $fraud_info['ip_continent_code'];
-				} else {
-					$data['ip_continent_code'] = '';
-				}
-
-				if ($fraud_info['ip_corporate_proxy']) {
-					$data['ip_corporate_proxy'] = $fraud_info['ip_corporate_proxy'];
-				} else {
-					$data['ip_corporate_proxy'] = '';
-				}
-
-				$data['anonymous_proxy'] = $fraud_info['anonymous_proxy'];
-				$data['proxy_score'] = $fraud_info['proxy_score'];
-
-				if ($fraud_info['is_trans_proxy']) {
-					$data['is_trans_proxy'] = $fraud_info['is_trans_proxy'];
-				} else {
-					$data['is_trans_proxy'] = '';
-				}
-
-				$data['free_mail'] = $fraud_info['free_mail'];
-				$data['carder_email'] = $fraud_info['carder_email'];
-
-				if ($fraud_info['high_risk_username']) {
-					$data['high_risk_username'] = $fraud_info['high_risk_username'];
-				} else {
-					$data['high_risk_username'] = '';
-				}
-
-				if ($fraud_info['high_risk_password']) {
-					$data['high_risk_password'] = $fraud_info['high_risk_password'];
-				} else {
-					$data['high_risk_password'] = '';
-				}
-
-				$data['bin_match'] = $fraud_info['bin_match'];
-
-				if ($fraud_info['bin_country']) {
-					$data['bin_country'] = $fraud_info['bin_country'];
-				} else {
-					$data['bin_country'] = '';
-				}
-
-				$data['bin_name_match'] = $fraud_info['bin_name_match'];
-
-				if ($fraud_info['bin_name']) {
-					$data['bin_name'] = $fraud_info['bin_name'];
-				} else {
-					$data['bin_name'] = '';
-				}
-
-				$data['bin_phone_match'] = $fraud_info['bin_phone_match'];
-
-				if ($fraud_info['bin_phone']) {
-					$data['bin_phone'] = $fraud_info['bin_phone'];
-				} else {
-					$data['bin_phone'] = '';
-				}
-
-				if ($fraud_info['customer_phone_in_billing_location']) {
-					$data['customer_phone_in_billing_location'] = $fraud_info['customer_phone_in_billing_location'];
-				} else {
-					$data['customer_phone_in_billing_location'] = '';
-				}
-
-				$data['ship_forward'] = $fraud_info['ship_forward'];
-
-				if ($fraud_info['city_postal_match']) {
-					$data['city_postal_match'] = $fraud_info['city_postal_match'];
-				} else {
-					$data['city_postal_match'] = '';
-				}
-
-				if ($fraud_info['ship_city_postal_match']) {
-					$data['ship_city_postal_match'] = $fraud_info['ship_city_postal_match'];
-				} else {
-					$data['ship_city_postal_match'] = '';
-				}
-
-				$data['score'] = $fraud_info['score'];
-				$data['explanation'] = $fraud_info['explanation'];
-				$data['risk_score'] = $fraud_info['risk_score'];
-				$data['queries_remaining'] = $fraud_info['queries_remaining'];
-				$data['maxmind_id'] = $fraud_info['maxmind_id'];
-				$data['error'] = $fraud_info['error'];
-			} else {
-				$data['maxmind_id'] = '';
 			}
-
-			$data['payment_action'] = $this->load->controller('payment/' . $order_info['payment_code'] . '/orderAction', '');
 
 			$data['header'] = $this->load->controller('common/header');
 			$data['column_left'] = $this->load->controller('common/column_left');

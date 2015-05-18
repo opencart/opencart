@@ -105,8 +105,8 @@ $_['text_sub_amt']					= 'Subscription amount';
 $_['text_sub_period']				= 'Subscription period';
 $_['text_redirect']					= 'Redirect';
 $_['text_iframe']					= 'Iframe';
-$_['help_checkout_method']			= "Please use Redirect method if do not have SSL installed or if you do not have Pay with PayPal option disabled on your hosted payment page.";
-$_['help_debug']					= "Logs additional information.";
+$_['help_checkout_method']			= 'Please use Redirect method if do not have SSL installed or if you do not have Pay with PayPal option disabled on your hosted payment page.';
+$_['help_debug']					= 'Logs additional information.';
 
 // Column
 $_['column_trans_id']				= 'Transaction ID';

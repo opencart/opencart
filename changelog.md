@@ -37,7 +37,7 @@
 * Address book language string and menu positions in account area (https://github.com/opencart/opencart/issues/2574)
 * Unable to use return key when searching products (https://github.com/opencart/opencart/commit/f3afa2638c3ff5abed66a5f340313b68c8bb970b)
 * Ajax upload (https://github.com/opencart/opencart/issues/2610)
-* Compare doeas not cross original price when special price available (https://github.com/opencart/opencart/issues/2555)
+* Compare does not cross original price when special price available (https://github.com/opencart/opencart/issues/2555)
 * Login attempts comparison (https://github.com/opencart/opencart/issues/2552)
 * Affiliate Forgotten password (https://github.com/opencart/opencart/issues/2637)
 * Skrill hash validation (https://github.com/opencart/opencart/commit/6e8db77668ddbe87f0100f4d614e62020a86dc94)

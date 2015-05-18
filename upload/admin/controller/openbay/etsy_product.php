@@ -549,7 +549,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 		$data['filter'] = $filter;
 
-		$response = $this->openbay->etsy->call('v1/etsy/product/getListings/?' . http_build_query($filter), 'GET');
+		$response = $this->openbay->etsy->call('v1/etsy/product/listing/all/?' . http_build_query($filter), 'GET');
 
 		unset($filter['page']);
 

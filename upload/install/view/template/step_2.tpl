@@ -322,7 +322,7 @@
                   <span class="text-danger"><?php echo $text_unwritable; ?></span>
                   <?php } ?>
                 </td>
-              </tr>              
+              </tr>
               <tr>
                 <td><?php echo $image . '/'; ?></td>
                 <td><?php if (is_writable($image)) { ?>
@@ -344,6 +344,15 @@
               <tr>
                 <td><?php echo $image_data . '/'; ?></td>
                 <td><?php if (is_writable($image_data)) { ?>
+                  <span class="text-success"><?php echo $text_writable; ?></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><?php echo $text_unwritable; ?></span>
+                  <?php } ?>
+                </td>
+              </tr>
+              <tr>
+                <td><?php echo $modification . '/'; ?></td>
+                <td><?php if (is_writable($modification)) { ?>
                   <span class="text-success"><?php echo $text_writable; ?></span>
                   <?php } else { ?>
                   <span class="text-danger"><?php echo $text_unwritable; ?></span>

@@ -116,9 +116,7 @@ class ModelCheckoutOrder extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_voucher` WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_history` WHERE order_id = '" . (int)$order_id . "'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_fraud` WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE `or`, ort FROM `" . DB_PREFIX . "order_recurring` `or`, `" . DB_PREFIX . "order_recurring_transaction` `ort` WHERE order_id = '" . (int)$order_id . "' AND ort.order_recurring_id = `or`.order_recurring_id");
-
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "affiliate_transaction` WHERE order_id = '" . (int)$order_id . "'");
 
 		// Gift Voucher
@@ -271,7 +269,7 @@ class ModelCheckoutOrder extends Model {
 			} else {
 				$safe = false;
 			}
-			
+
 			if (!$safe) {
 				// Ban IP
 				$status = false;
@@ -292,24 +290,24 @@ class ModelCheckoutOrder extends Model {
 
 				if ($status) {
 					$order_status_id = $this->config->get('config_order_status_id');
-				}	
-				
+				}
+
 				// Anti-Fraud
 				$this->load->model('extension/extension');
-	
+
 				$extensions = $this->model_extension_extension->getExtensions('fraud');
-	
+
 				foreach ($extensions as $extension) {
-					if ($this->config->get($extension['code'] . '_status')) {	
+					if ($this->config->get($extension['code'] . '_status')) {
 						$this->load->model('fraud/' . $extension['code']);
-					
+
 						$fraud_status_id = $this->{'model_fraud_' . $extension['code']}->check($order_info);
-					
+
 						if ($fraud_status_id) {
 							$order_status_id = $fraud_status_id;
 						}
 					}
-				}							
+				}
 			}
 
 			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
@@ -718,7 +716,7 @@ class ModelCheckoutOrder extends Model {
 							$data['comment'] = '';
 						}
 					}
-					
+
 					$data['text_download'] = '';
 
 					$data['text_footer'] = '';

@@ -12,12 +12,7 @@ class ControllerInformationInformation extends Controller {
 			'href' => $this->url->link('common/home')
 		);
 
-		if (isset($this->request->get['information_id'])) {
-			$information_id = (int)$this->request->get['information_id'];
-		} else {
-			$information_id = 0;
-		}
-
+		$information_id = (int)$this->request->get('information_id', 0);		
 		$information_info = $this->model_catalog_information->getInformation($information_id);
 
 		if ($information_info) {

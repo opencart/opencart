@@ -28,4 +28,8 @@ class Request {
 
 		return $data;
 	}
+        
+	public function get($key, $default = null) {
+		return (isset($this->get[$key]) ? $this->get[$key] : $default);
+	}        
 }

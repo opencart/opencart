@@ -116,6 +116,7 @@ $registry->set('request', $request);
 $response = new Response();
 $response->addHeader('Content-Type: text/html; charset=utf-8');
 $response->setCompression($config->get('config_compression'));
+$response->setTemplate($config->get('config_template'));
 $registry->set('response', $response);
 
 // Cache

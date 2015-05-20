@@ -3,6 +3,7 @@ class Response {
 	private $headers = array();
 	private $level = 0;
 	private $output;
+	private $template;
 
 	public function addHeader($header) {
 		$this->headers[] = $header;
@@ -72,4 +73,21 @@ class Response {
 			echo $output;
 		}
 	}
+    
+    public function setTemplate($template) {
+        $this->template = $template;       
+    }
+    
+    public function render($path, $data) {
+        $this->setOutput($this->compile($path, $data));
+    }
+    
+    public function compile($path, $data) {
+        $loader = new Loader(null);
+        if (file_exists(DIR_TEMPLATE . $this->template . '/template/' . $path . '.tpl')) {
+			return $loader->view($this->template . '/template/' . $path . '.tpl', $data);
+		} else {
+			return $loader->view('default/template/'.$path.'.tpl', $data);
+		}        
+    }
 }

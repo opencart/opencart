@@ -48,11 +48,7 @@ class ControllerCheckoutShipping extends Controller {
 				$data['shipping_method'] = '';
 			}
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/shipping.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/checkout/shipping.tpl', $data);
-			} else {
-				return $this->load->view('default/template/checkout/shipping.tpl', $data);
-			}
+			return $this->response->compile('checkout/shipping', $data);
 		}
 	}
 

@@ -44,7 +44,7 @@ class ControllerInformationInformation extends Controller {
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
-
+            
             $this->response->render('information/information', $data);            
 		} else {
 			$data['breadcrumbs'][] = array(

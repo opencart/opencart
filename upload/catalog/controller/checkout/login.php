@@ -31,11 +31,7 @@ class ControllerCheckoutLogin extends Controller {
 
 		$data['forgotten'] = $this->url->link('account/forgotten', '', 'SSL');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/login.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/login.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/checkout/login.tpl', $data));
-		}
+		$this->response->render('checkout/login', $data);
 	}
 
 	public function save() {

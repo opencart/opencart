@@ -28,11 +28,7 @@ class ControllerCheckoutReward extends Controller {
 				$data['reward'] = '';
 			}
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/reward.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/checkout/reward.tpl', $data);
-			} else {
-				return $this->load->view('default/template/checkout/reward.tpl', $data);
-			}
+			return $this->response->compile('checkout/reward', $data);
 		}
 	}
 

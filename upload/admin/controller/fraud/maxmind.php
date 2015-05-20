@@ -129,8 +129,9 @@ class ControllerFraudMaxMind extends Controller {
 		return !$this->error;
 	}
 	
-	protected function order() {
-		// Fraud
+	public function order() {
+		$this->load->language('fraud/maxmind');
+
 		$this->load->model('fraud/maxmind');
 
 		if (isset($this->request->get['order_id'])) {
@@ -442,7 +443,7 @@ class ControllerFraudMaxMind extends Controller {
 			$data['maxmind_id'] = $fraud_info['maxmind_id'];
 			$data['error'] = $fraud_info['error'];
 			
-			return $this->load->view('sale/maxmind_info.tpl', $data);
+			return $this->load->view('fraud/maxmind_info.tpl', $data);
 		}
 	}
 }

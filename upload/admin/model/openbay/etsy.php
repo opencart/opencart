@@ -79,7 +79,7 @@ class ModelOpenbayEtsy extends Model{
 
 	public function verifyAccount() {
 		if ($this->openbay->etsy->validate() == true) {
-			return $this->openbay->etsy->call('account/info', 'GET');
+			return $this->openbay->etsy->call('v1/etsy/account/info/', 'GET');
 		} else {
 			return false;
 		}

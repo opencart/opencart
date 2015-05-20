@@ -56,6 +56,7 @@
 * Preserve styling of wishlist top menu item (https://github.com/opencart/opencart/pull/2814)
 
 #### Added
+* Latest OpenBay Pro release.
 * Added Jenkins automation install script for demo store (https://github.com/opencart/opencart/commit/710415264e5c4d530439b9a897cd115e8a582268)
 * Fraud extension support (https://github.com/opencart/opencart/commit/f9085aa99f00e0895d813ed8aef92f8366a93d33)
 * Fraud labs pro module added (https://github.com/opencart/opencart/commit/e62ae241f56ea2d3efb4f74ff3f840d2479ea28c)

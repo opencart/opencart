@@ -1,6 +1,5 @@
 <?php
 class ControllerModuleAmazonPay extends Controller {
-
 	public function index() {
 
 		$this->load->model('payment/amazon_login_pay');
@@ -106,6 +105,7 @@ class ControllerModuleAmazonPay extends Controller {
 					$this->session->data['lpa']['error'] = $this->language->get('error_login');
 					$this->response->redirect($this->url->link('payment/amazon_login_pay/loginFailure', '', 'SSL'));
 				}
+
 				$this->response->redirect($this->url->link('payment/amazon_login_pay/address', '', 'SSL'));
 			} else {
 				$country_id = 0;
@@ -114,7 +114,6 @@ class ControllerModuleAmazonPay extends Controller {
 				$full_name = explode(' ', $user->name);
 				$last_name = array_pop($full_name);
 				$first_name = implode(' ', $full_name);
-
 
 				$data = array(
 					'customer_group_id' => (int)$this->config->get('config_customer_group_id'),
@@ -200,5 +199,4 @@ class ControllerModuleAmazonPay extends Controller {
 			return false;
 		}
 	}
-
 }

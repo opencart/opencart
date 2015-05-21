@@ -6,6 +6,7 @@ class ControllerPaymentBankTransfer extends Controller {
 		$data['text_instruction'] = $this->language->get('text_instruction');
 		$data['text_description'] = $this->language->get('text_description');
 		$data['text_payment'] = $this->language->get('text_payment');
+		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
 

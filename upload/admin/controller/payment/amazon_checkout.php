@@ -359,7 +359,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$this->model_payment_amazon_checkout->addReportSubmission($this->request->get['order_id'], $this->request->get['submission_id']);
 	}
 
-	public function orderAction() {
+	public function action() {
 		$this->load->model('sale/order');
 		$this->load->model('payment/amazon_checkout');
 		$this->load->language('sale/order');

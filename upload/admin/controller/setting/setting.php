@@ -138,10 +138,6 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_mail_smtp_port'] = $this->language->get('entry_mail_smtp_port');
 		$data['entry_mail_smtp_timeout'] = $this->language->get('entry_mail_smtp_timeout');
 		$data['entry_mail_alert'] = $this->language->get('entry_mail_alert');
-		$data['entry_fraud_detection'] = $this->language->get('entry_fraud_detection');
-		$data['entry_fraud_key'] = $this->language->get('entry_fraud_key');
-		$data['entry_fraud_score'] = $this->language->get('entry_fraud_score');
-		$data['entry_fraud_status'] = $this->language->get('entry_fraud_status');
 		$data['entry_secure'] = $this->language->get('entry_secure');
 		$data['entry_shared'] = $this->language->get('entry_shared');
 		$data['entry_robots'] = $this->language->get('entry_robots');
@@ -211,9 +207,6 @@ class ControllerSettingSetting extends Controller {
 		$data['help_mail_parameter'] = $this->language->get('help_mail_parameter');
 		$data['help_mail_smtp_hostname'] = $this->language->get('help_mail_smtp_hostname');
 		$data['help_mail_alert'] = $this->language->get('help_mail_alert');
-		$data['help_fraud_detection'] = $this->language->get('help_fraud_detection');
-		$data['help_fraud_score'] = $this->language->get('help_fraud_score');
-		$data['help_fraud_status'] = $this->language->get('help_fraud_status');
 		$data['help_secure'] = $this->language->get('help_secure');
 		$data['help_shared'] = $this->language->get('help_shared');
 		$data['help_robots'] = $this->language->get('help_robots');
@@ -238,7 +231,6 @@ class ControllerSettingSetting extends Controller {
 		$data['tab_image'] = $this->language->get('tab_image');
 		$data['tab_ftp'] = $this->language->get('tab_ftp');
 		$data['tab_mail'] = $this->language->get('tab_mail');
-		$data['tab_fraud'] = $this->language->get('tab_fraud');
 		$data['tab_server'] = $this->language->get('tab_server');
 		$data['tab_google'] = $this->language->get('tab_google');
 
@@ -1177,30 +1169,6 @@ class ControllerSettingSetting extends Controller {
 			$data['config_mail_alert'] = $this->config->get('config_mail_alert');
 		}
 
-		if (isset($this->request->post['config_fraud_detection'])) {
-			$data['config_fraud_detection'] = $this->request->post['config_fraud_detection'];
-		} else {
-			$data['config_fraud_detection'] = $this->config->get('config_fraud_detection');
-		}
-
-		if (isset($this->request->post['config_fraud_key'])) {
-			$data['config_fraud_key'] = $this->request->post['config_fraud_key'];
-		} else {
-			$data['config_fraud_key'] = $this->config->get('config_fraud_key');
-		}
-
-		if (isset($this->request->post['config_fraud_score'])) {
-			$data['config_fraud_score'] = $this->request->post['config_fraud_score'];
-		} else {
-			$data['config_fraud_score'] = $this->config->get('config_fraud_score');
-		}
-
-		if (isset($this->request->post['config_fraud_status_id'])) {
-			$data['config_fraud_status_id'] = $this->request->post['config_fraud_status_id'];
-		} else {
-			$data['config_fraud_status_id'] = $this->config->get('config_fraud_status_id');
-		}
-
 		if (isset($this->request->post['config_secure'])) {
 			$data['config_secure'] = $this->request->post['config_secure'];
 		} else {
@@ -1436,7 +1404,11 @@ class ControllerSettingSetting extends Controller {
 		}
 
 		if (!$this->request->post['config_error_filename']) {
-			$this->error['error_error_filename'] = $this->language->get('error_error_filename');
+			$this->error['error_filename'] = $this->language->get('error_error_filename');
+		} else {
+			if (preg_match('/\.\.[\/\\\]?/', $this->request->post['config_error_filename'])) {
+				$this->error['error_filename'] = $this->language->get('error_malformed_filename');
+			}
 		}
 
 		if (!$this->request->post['config_product_limit']) {

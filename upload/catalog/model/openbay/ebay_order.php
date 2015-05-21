@@ -201,7 +201,7 @@ class ModelOpenbayEbayOrder extends Model{
 
 			if ($notify) {
 				$language = new Language($order_info['language_directory']);
-				$language->load('default');
+				$language->load($order_info['language_directory']);
 				$language->load('mail/order');
 
 				$subject = sprintf($language->get('text_update_subject'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);
@@ -276,7 +276,7 @@ class ModelOpenbayEbayOrder extends Model{
 
 				// Send out order confirmation mail
 				$language = new Language($order_info['language_directory']);
-				$language->load('default');
+				$language->load($order_info['language_directory']);
 				$language->load('mail/order');
 
 				$order_status_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `order_status_id` = '" . (int)$order_status_id . "' AND `language_id` = '" . (int)$order_info['language_id'] . "'");
@@ -339,7 +339,7 @@ class ModelOpenbayEbayOrder extends Model{
 				$data['order_status'] = $order_status;
 
 				$data['comment'] = '';
-				
+
 				if ($comment && $notify) {
 					$data['comment'] = nl2br($comment);
 				}
@@ -422,7 +422,7 @@ class ModelOpenbayEbayOrder extends Model{
 						if ($option['type'] != 'file') {
 							$value = $option['value'];
 						} else {
-							$value = utf8_substr($option['value'], 0, utf8_strrpos($option['value'], ' . '));
+							$value = utf8_substr($option['value'], 0, utf8_strrpos($option['value'], '.'));
 						}
 
 						$option_data[] = array(

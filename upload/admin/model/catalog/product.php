@@ -282,8 +282,6 @@ class ModelCatalogProduct extends Model {
 		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE p.product_id = '" . (int)$product_id . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 		if ($query->num_rows) {
-			$data = array();
-
 			$data = $query->row;
 
 			$data['sku'] = '';
@@ -292,20 +290,20 @@ class ModelCatalogProduct extends Model {
 			$data['keyword'] = '';
 			$data['status'] = '0';
 
-			$data = array_merge($data, array('product_attribute' => $this->getProductAttributes($product_id)));
-			$data = array_merge($data, array('product_description' => $this->getProductDescriptions($product_id)));
-			$data = array_merge($data, array('product_discount' => $this->getProductDiscounts($product_id)));
-			$data = array_merge($data, array('product_filter' => $this->getProductFilters($product_id)));
-			$data = array_merge($data, array('product_image' => $this->getProductImages($product_id)));
-			$data = array_merge($data, array('product_option' => $this->getProductOptions($product_id)));
-			$data = array_merge($data, array('product_related' => $this->getProductRelated($product_id)));
-			$data = array_merge($data, array('product_reward' => $this->getProductRewards($product_id)));
-			$data = array_merge($data, array('product_special' => $this->getProductSpecials($product_id)));
-			$data = array_merge($data, array('product_category' => $this->getProductCategories($product_id)));
-			$data = array_merge($data, array('product_download' => $this->getProductDownloads($product_id)));
-			$data = array_merge($data, array('product_layout' => $this->getProductLayouts($product_id)));
-			$data = array_merge($data, array('product_store' => $this->getProductStores($product_id)));
-			$data = array_merge($data, array('product_recurrings' => $this->getRecurrings($product_id)));
+			$data['product_attribute'] = $this->getProductAttributes($product_id);
+			$data['product_description'] = $this->getProductDescriptions($product_id);
+			$data['product_discount'] = $this->getProductDiscounts($product_id);
+			$data['product_filter'] = $this->getProductFilters($product_id);
+			$data['product_image'] = $this->getProductImages($product_id);
+			$data['product_option'] = $this->getProductOptions($product_id);
+			$data['product_related'] = $this->getProductRelated($product_id);
+			$data['product_reward'] = $this->getProductRewards($product_id);
+			$data['product_special'] = $this->getProductSpecials($product_id);
+			$data['product_category'] = $this->getProductCategories($product_id);
+			$data['product_download'] = $this->getProductDownloads($product_id);
+			$data['product_layout'] = $this->getProductLayouts($product_id);
+			$data['product_store'] = $this->getProductStores($product_id);
+			$data['product_recurrings'] = $this->getRecurrings($product_id);
 
 			$this->addProduct($data);
 		}

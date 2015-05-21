@@ -3,8 +3,7 @@ final class Etsy {
 	private $token;
 	private $enc1;
 	private $enc2;
-	private $url = 'http://staging.openbaypro.io/';
-	//private $url = 'http://api.openbaypro.io/';
+	private $url = 'https://api.openbaypro.com/';
 	private $registry;
 
 	public function __construct($registry) {

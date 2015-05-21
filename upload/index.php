@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '2.0.2.1_rc');
+define('VERSION', '2.0.3.0');
 
 // Configuration
 if (is_file('config.php')) {
@@ -141,15 +141,15 @@ if (isset($session->data['language']) && array_key_exists($session->data['langua
 	$code = $request->cookie['language'];
 } else {
 	$detect = '';
-	
+
 	if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && $request->server['HTTP_ACCEPT_LANGUAGE']) {
 		$browser_languages = explode(',', $request->server['HTTP_ACCEPT_LANGUAGE']);
-		
+
 		foreach ($browser_languages as $browser_language) {
 			foreach ($languages as $key => $value) {
 				if ($value['status']) {
 					$locale = explode(',', $value['locale']);
-					
+
 					if (in_array($browser_language, $locale)) {
 						$detect = $key;
 						break 2;
@@ -158,7 +158,7 @@ if (isset($session->data['language']) && array_key_exists($session->data['langua
 			}
 		}
 	}
-	
+
 	$code = $detect ? $detect : $config->get('config_language');
 }
 

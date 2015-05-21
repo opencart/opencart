@@ -391,7 +391,7 @@ class ControllerFraudFraudLabsPro extends Controller {
 				$data['flp_id'] = '';
 				$data['flp_link'] = '';
 			}
-			
+
 			if ($fraud_info['fraudlabspro_credits']) {
 				$data['flp_credits'] = $fraud_info['fraudlabspro_credits'];
 			} else {

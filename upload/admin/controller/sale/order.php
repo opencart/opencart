@@ -793,7 +793,7 @@ class ControllerSaleOrder extends Controller {
 					}
 				}
 			}
-			
+
 			$data['order_status_id'] = $order_info['order_status_id'];
 			$data['comment'] = $order_info['comment'];
 			$data['affiliate_id'] = $order_info['affiliate_id'];
@@ -839,7 +839,7 @@ class ControllerSaleOrder extends Controller {
 			$data['shipping_custom_field'] = array();
 			$data['shipping_method'] = '';
 			$data['shipping_code'] = '';
-			
+
 			$data['order_products'] = array();
 			$data['order_vouchers'] = array();
 			$data['order_totals'] = array();
@@ -893,7 +893,7 @@ class ControllerSaleOrder extends Controller {
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
 		$this->load->model('localisation/currency');
-		
+
 		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
 
 		$data['voucher_min'] = $this->config->get('config_voucher_min');
@@ -1428,21 +1428,21 @@ class ControllerSaleOrder extends Controller {
 			} else {
 				$data['error_warning'] = $this->language->get('error_permission');
 			}
-			
+
 			$data['payment_action'] = $this->load->controller('payment/' . $order_info['payment_code'] . '/action');
 
 			$data['frauds'] = array();
-			
+
 			$this->load->model('extension/extension');
-	
-			$extensions = $this->model_extension_extension->getInstalled('fraud');			
-			
+
+			$extensions = $this->model_extension_extension->getInstalled('fraud');
+
 			foreach ($extensions as $extension) {
 				if ($this->config->get($extension . '_status')) {
 					$this->load->language('fraud/' . $extension);
-					
+
 					$content = $this->load->controller('fraud/' . $extension . '/order');
-					
+
 					if ($content) {
 						$data['frauds'][] = array(
 							'code'    => $extension,

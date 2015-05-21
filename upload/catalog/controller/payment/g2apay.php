@@ -1,11 +1,10 @@
 <?php
-
 class ControllerPaymentG2APay extends Controller {
-
 	public function index() {
 		$this->load->language('payment/g2apay');
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
+
 		$data['action'] = $this->url->link('payment/g2apay/checkout', '', 'SSL');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/g2apay.tpl')) {
@@ -175,5 +174,4 @@ class ControllerPaymentG2APay extends Controller {
 			}
 		}
 	}
-
 }

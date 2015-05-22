@@ -162,7 +162,8 @@ class ControllerFraudFraudLabsPro extends Controller {
 	}
 
 	public function order() {
-		// Fraud
+		$this->load->language('fraud/fraudlabspro');
+
 		$this->load->model('fraud/fraudlabspro');
 
 		// Action of the Approve/Reject button click
@@ -390,7 +391,7 @@ class ControllerFraudFraudLabsPro extends Controller {
 				$data['flp_id'] = '';
 				$data['flp_link'] = '';
 			}
-			
+
 			if ($fraud_info['fraudlabspro_credits']) {
 				$data['flp_credits'] = $fraud_info['fraudlabspro_credits'];
 			} else {

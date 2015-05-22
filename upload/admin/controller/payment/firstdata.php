@@ -243,6 +243,16 @@ class ControllerPaymentFirstdata extends Controller {
 		$this->response->setOutput($this->load->view('payment/firstdata.tpl', $data));
 	}
 
+	public function install() {
+		$this->load->model('payment/firstdata');
+		$this->model_payment_firstdata->install();
+	}
+
+	public function uninstall() {
+		$this->load->model('payment/firstdata');
+		$this->model_payment_firstdata->uninstall();
+	}
+
 	public function action() {
 		if ($this->config->get('firstdata_status')) {
 			$this->load->model('payment/firstdata');

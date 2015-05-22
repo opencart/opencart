@@ -53,6 +53,7 @@ class ControllerPaymentFirstdata extends Controller {
 		$data['bstate'] = substr($order_info['payment_zone'], 0, 30);
 		$data['bcountry'] = $order_info['payment_iso_code_2'];
 		$data['bzip'] = $order_info['payment_postcode'];
+		$data['email'] = $order_info['email'];
 
 		if ($this->cart->hasShipping()) {
 			$data['sname'] = $order_info['shipping_firstname'] . ' ' . $order_info['shipping_lastname'];
@@ -107,7 +108,7 @@ class ControllerPaymentFirstdata extends Controller {
 			if ($local_hash == $this->request->post['notification_hash']) {
 				$order_id_parts = explode('T', $this->request->post['oid']);
 
-				$order_id = (int)$order_id_parts[0];
+				$order_id = str_replace("CON-","",$order_id_parts[0]);
 
 				$order_info = $this->model_checkout_order->getOrder($order_id);
 

@@ -168,7 +168,7 @@ class ModelOpenbayAmazon extends Model {
 		$log = new Log('amazon.log');
 
 		$request_xml = '<Request>
-  <ResponseURL>' . HTTPS_CATALOG . 'index.php?route=openbay/amazon/order' . '</ResponseURL>
+  <ResponseURL>' . HTTPS_CATALOG . 'index.php?route=openbay/amazon/order</ResponseURL>
   <MarketplaceIDs>';
 
 		foreach ($data['openbay_amazon_orders_marketplace_ids'] as $marketplace_id) {
@@ -774,7 +774,7 @@ class ModelOpenbayAmazon extends Model {
 				'quantity' => $row['quantity'],
 				'amazon_sku' => $row['amazon_sku'],
 				'amazon_quantity' => $row['amazon_quantity'],
-				'amazon_price' => number_format($row['amazon_price'], 2, ' . ', ''),
+				'amazon_price' => number_format($row['amazon_price'], 2, '.', ''),
 				'asin' => $row['asin'],
 				'combination' => implode(' > ', $combinations),
 			);

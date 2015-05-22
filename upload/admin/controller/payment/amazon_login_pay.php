@@ -532,7 +532,6 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			$this->error['error_access_secret'] = $this->language->get('error_access_secret');
 		}
 
-
 		if (!$this->request->post['amazon_login_pay_client_id']) {
 			$this->error['error_client_id'] = $this->language->get('error_client_id');
 		}

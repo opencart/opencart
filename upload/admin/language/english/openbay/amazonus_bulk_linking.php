@@ -16,12 +16,12 @@ $_['text_report_request_failed'] 	= 'Could not request Listing Report';
 $_['text_loading'] 					= 'Loading items';
 
 // Column
-$_['column_asin'] 					= "ASIN";
-$_['column_price'] 					= "Price";
-$_['column_name'] 					= "Name";
-$_['column_sku'] 					= "SKU";
-$_['column_quantity'] 				= "Quantity";
-$_['column_combination'] 			= "Combination";
+$_['column_asin'] 					= 'ASIN';
+$_['column_price'] 					= 'Price';
+$_['column_name'] 					= 'Name';
+$_['column_sku'] 					= 'SKU';
+$_['column_quantity'] 				= 'Quantity';
+$_['column_combination'] 			= 'Combination';
 
 // Error
 $_['error_bulk_link_permission'] 	= 'Bulk linking is not available on your plan, please upgrade to use this feature.';

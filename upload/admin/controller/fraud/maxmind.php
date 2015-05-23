@@ -18,7 +18,7 @@ class ControllerFraudMaxMind extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -42,13 +42,13 @@ class ControllerFraudMaxMind extends Controller {
 		} else {
 			$data['error_warning'] = '';
 		}
-
+		
 		if (isset($this->error['key'])) {
 			$data['error_key'] = $this->error['key'];
 		} else {
 			$data['error_key'] = '';
 		}
-
+		
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -87,11 +87,11 @@ class ControllerFraudMaxMind extends Controller {
 		} else {
 			$data['maxmind_order_status_id'] = $this->config->get('maxmind_order_status_id');
 		}
-
+		
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-
+		
 		if (isset($this->request->post['maxmind_status'])) {
 			$data['maxmind_status'] = $this->request->post['maxmind_status'];
 		} else {
@@ -104,11 +104,11 @@ class ControllerFraudMaxMind extends Controller {
 
 		$this->response->setOutput($this->load->view('fraud/maxmind.tpl', $data));
 	}
-
+	
 	public function install() {
 		$this->load->model('fraud/maxmind');
-
-		$this->model_fraud_maxmind->install();
+	
+		$this->model_fraud_maxmind->install();		
 	}
 
 	public function uninstall() {
@@ -116,22 +116,21 @@ class ControllerFraudMaxMind extends Controller {
 
 		$this->model_fraud_maxmind->uninstall();
 	}
-
+	
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'fraud/maxmind')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
-
+		
 		if (!$this->request->post['maxmind_key']) {
 			$this->error['key'] = $this->language->get('error_key');
 		}
-
+		
 		return !$this->error;
 	}
-
-	public function order() {
-		$this->load->language('fraud/maxmind');
-
+	
+	protected function order() {
+		// Fraud
 		$this->load->model('fraud/maxmind');
 
 		if (isset($this->request->get['order_id'])) {
@@ -193,7 +192,7 @@ class ControllerFraudMaxMind extends Controller {
 			$data['text_queries_remaining'] = $this->language->get('text_queries_remaining');
 			$data['text_maxmind_id'] = $this->language->get('text_maxmind_id');
 			$data['text_error'] = $this->language->get('text_error');
-
+		
 			$data['help_country_match'] = $this->language->get('help_country_match');
 			$data['help_country_code'] = $this->language->get('help_country_code');
 			$data['help_high_risk_country'] = $this->language->get('help_high_risk_country');
@@ -244,7 +243,7 @@ class ControllerFraudMaxMind extends Controller {
 			$data['help_queries_remaining'] = $this->language->get('help_queries_remaining');
 			$data['help_maxmind_id'] = $this->language->get('help_maxmind_id');
 			$data['help_error'] = $this->language->get('help_error');
-
+				
 			$data['country_match'] = $fraud_info['country_match'];
 
 			if ($fraud_info['country_code']) {
@@ -442,8 +441,8 @@ class ControllerFraudMaxMind extends Controller {
 			$data['queries_remaining'] = $fraud_info['queries_remaining'];
 			$data['maxmind_id'] = $fraud_info['maxmind_id'];
 			$data['error'] = $fraud_info['error'];
-
-			return $this->load->view('fraud/maxmind_info.tpl', $data);
+			
+			return $this->load->view('sale/maxmind_info.tpl', $data);
 		}
 	}
 }

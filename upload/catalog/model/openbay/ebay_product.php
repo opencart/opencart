@@ -198,7 +198,7 @@ class ModelOpenbayEbayProduct extends Model {
 
 				//package weight
 				if (isset($item['advanced']['package']['weight']['major'])) {
-					$weight = $item['advanced']['package']['weight']['major'] . '.' . $item['advanced']['package']['weight']['minor'];
+					$weight = $item['advanced']['package']['weight']['major'] . ' . ' . $item['advanced']['package']['weight']['minor'];
 				} else {
 					$weight = 0;
 				}

@@ -600,7 +600,6 @@ class ControllerSaleOrder extends Controller {
 		$data['entry_theme'] = $this->language->get('entry_theme');
 		$data['entry_message'] = $this->language->get('entry_message');
 		$data['entry_amount'] = $this->language->get('entry_amount');
-		$data['entry_currency'] = $this->language->get('entry_currency');
 		$data['entry_shipping_method'] = $this->language->get('entry_shipping_method');
 		$data['entry_payment_method'] = $this->language->get('entry_payment_method');
 		$data['entry_coupon'] = $this->language->get('entry_coupon');
@@ -798,7 +797,6 @@ class ControllerSaleOrder extends Controller {
 			$data['comment'] = $order_info['comment'];
 			$data['affiliate_id'] = $order_info['affiliate_id'];
 			$data['affiliate'] = $order_info['affiliate_firstname'] . ' ' . $order_info['affiliate_lastname'];
-			$data['currency_id'] = $order_info['currency_id'];
 		} else {
 			$data['order_id'] = 0;
 			$data['store_id'] = '';
@@ -845,10 +843,10 @@ class ControllerSaleOrder extends Controller {
 			$data['order_totals'] = array();
 
 			$data['order_status_id'] = $this->config->get('config_order_status_id');
+
 			$data['comment'] = '';
 			$data['affiliate_id'] = '';
 			$data['affiliate'] = '';
-			$data['currency_id'] = $order_info['currency_id'];
 
 			$data['coupon'] = '';
 			$data['voucher'] = '';
@@ -879,8 +877,7 @@ class ControllerSaleOrder extends Controller {
 				'name'               => $custom_field['name'],
 				'value'              => $custom_field['value'],
 				'type'               => $custom_field['type'],
-				'location'           => $custom_field['location'],
-				'sort_order'         => $custom_field['sort_order']
+				'location'           => $custom_field['location']
 			);
 		}
 
@@ -891,10 +888,6 @@ class ControllerSaleOrder extends Controller {
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
-
-		$this->load->model('localisation/currency');
-
-		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
 
 		$data['voucher_min'] = $this->config->get('config_voucher_min');
 
@@ -1207,8 +1200,7 @@ class ControllerSaleOrder extends Controller {
 						if ($custom_field_value_info) {
 							$data['payment_custom_fields'][] = array(
 								'name'  => $custom_field['name'],
-								'value' => $custom_field_value_info['name'],
-								'sort_order' => $custom_field['sort_order']
+								'value' => $custom_field_value_info['name']
 							);
 						}
 					}
@@ -1220,8 +1212,7 @@ class ControllerSaleOrder extends Controller {
 							if ($custom_field_value_info) {
 								$data['payment_custom_fields'][] = array(
 									'name'  => $custom_field['name'],
-									'value' => $custom_field_value_info['name'],
-									'sort_order' => $custom_field['sort_order']
+									'value' => $custom_field_value_info['name']
 								);
 							}
 						}
@@ -1230,8 +1221,7 @@ class ControllerSaleOrder extends Controller {
 					if ($custom_field['type'] == 'text' || $custom_field['type'] == 'textarea' || $custom_field['type'] == 'file' || $custom_field['type'] == 'date' || $custom_field['type'] == 'datetime' || $custom_field['type'] == 'time') {
 						$data['payment_custom_fields'][] = array(
 							'name'  => $custom_field['name'],
-							'value' => $order_info['payment_custom_field'][$custom_field['custom_field_id']],
-							'sort_order' => $custom_field['sort_order']
+							'value' => $order_info['payment_custom_field'][$custom_field['custom_field_id']]
 						);
 					}
 
@@ -1241,8 +1231,7 @@ class ControllerSaleOrder extends Controller {
 						if ($upload_info) {
 							$data['payment_custom_fields'][] = array(
 								'name'  => $custom_field['name'],
-								'value' => $upload_info['name'],
-								'sort_order' => $custom_field['sort_order']
+								'value' => $upload_info['name']
 							);
 						}
 					}
@@ -1271,8 +1260,7 @@ class ControllerSaleOrder extends Controller {
 						if ($custom_field_value_info) {
 							$data['shipping_custom_fields'][] = array(
 								'name'  => $custom_field['name'],
-								'value' => $custom_field_value_info['name'],
-								'sort_order' => $custom_field['sort_order']
+								'value' => $custom_field_value_info['name']
 							);
 						}
 					}
@@ -1284,8 +1272,7 @@ class ControllerSaleOrder extends Controller {
 							if ($custom_field_value_info) {
 								$data['shipping_custom_fields'][] = array(
 									'name'  => $custom_field['name'],
-									'value' => $custom_field_value_info['name'],
-									'sort_order' => $custom_field['sort_order']
+									'value' => $custom_field_value_info['name']
 								);
 							}
 						}
@@ -1294,8 +1281,7 @@ class ControllerSaleOrder extends Controller {
 					if ($custom_field['type'] == 'text' || $custom_field['type'] == 'textarea' || $custom_field['type'] == 'file' || $custom_field['type'] == 'date' || $custom_field['type'] == 'datetime' || $custom_field['type'] == 'time') {
 						$data['shipping_custom_fields'][] = array(
 							'name'  => $custom_field['name'],
-							'value' => $order_info['shipping_custom_field'][$custom_field['custom_field_id']],
-							'sort_order' => $custom_field['sort_order']
+							'value' => $order_info['shipping_custom_field'][$custom_field['custom_field_id']]
 						);
 					}
 
@@ -1305,8 +1291,7 @@ class ControllerSaleOrder extends Controller {
 						if ($upload_info) {
 							$data['shipping_custom_fields'][] = array(
 								'name'  => $custom_field['name'],
-								'value' => $upload_info['name'],
-								'sort_order' => $custom_field['sort_order']
+								'value' => $upload_info['name']
 							);
 						}
 					}
@@ -1428,21 +1413,21 @@ class ControllerSaleOrder extends Controller {
 			} else {
 				$data['error_warning'] = $this->language->get('error_permission');
 			}
-
+			
 			$data['payment_action'] = $this->load->controller('payment/' . $order_info['payment_code'] . '/action');
 
 			$data['frauds'] = array();
-
+			
 			$this->load->model('extension/extension');
-
-			$extensions = $this->model_extension_extension->getInstalled('fraud');
-
+	
+			$extensions = $this->model_extension_extension->getInstalled('fraud');			
+			
 			foreach ($extensions as $extension) {
 				if ($this->config->get($extension . '_status')) {
 					$this->load->language('fraud/' . $extension);
-
+					
 					$content = $this->load->controller('fraud/' . $extension . '/order');
-
+					
 					if ($content) {
 						$data['frauds'][] = array(
 							'code'    => $extension,

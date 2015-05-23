@@ -119,7 +119,6 @@ $_['entry_affiliate']          = 'Affiliate';
 $_['entry_order_status']       = 'Order Status';
 $_['entry_notify']             = 'Notify Customer';
 $_['entry_comment']            = 'Comment';
-$_['entry_currency']           = 'Currency';
 $_['entry_shipping_method']    = 'Shipping Method';
 $_['entry_payment_method']     = 'Payment Method';
 $_['entry_coupon']             = 'Coupon';

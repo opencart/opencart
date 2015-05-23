@@ -1,66 +1,21 @@
 # OpenCart 2.0 change log
 
-## v2.0.3.0 (Release date: 20.05.2015)
+## v2.0.2.1 (Pending release)
 #### Bugs fixed
 * Mail config hostname variable (https://github.com/opencart/opencart/issues/2840)
 * Order status id INT size in install.sql (https://github.com/opencart/opencart/issues/2820)
-* Fix admin alert email for new customer. (https://github.com/opencart/opencart/issues/2847)
+* Fix admin alert email for new customer.
 * Product review fixed when error message is returned.
 * Pagination fix in sale/recurring (https://github.com/opencart/opencart/pull/2853)
-* Product review fixed when error message is returned. Also added check to only attempt recapcha call if no other errors are set first which stops invalidating the saved token. (#2843 #2839)
-* Fixed pagination issue on sale/recurring (https://github.com/opencart/opencart/pull/2853)
-* Amazon - minimum order total bug (https://github.com/opencart/opencart/commit/6e1de669edcb4c16cad024c4ac1e71d16d6772fc)
-* BUG when sending the e-mail to admin (https://github.com/opencart/opencart/commit/7974e4674258bfe3688c7b54c5c984ddc98d6cf9)
-* Update modification.php - ensure modification mode is in correct state (https://github.com/opencart/opencart/pull/2895)
-* Gift Certificate, Back end bug Fix (https://github.com/opencart/opencart/commit/6e6e262d4e3ae2ac24ea0dc758b6a9924bd098b5)
-* Fixed Handling fee typoe on operator (https://github.com/opencart/opencart/commit/68dba1bbbc9f2fbeccbeac57ee7753b6e527a991)
-* BUG when sending the e-mail to admin (https://github.com/opencart/opencart/pull/2888)
-* Update cart.php - enforce minimum order qty of the product (https://github.com/opencart/opencart/commit/f1cefe1caf1a748b3c0a66877cb493642e220a22)
-* Update bestseller.php - fix link (https://github.com/opencart/opencart/commit/c1e58f86b7625b9692f2b90048f0cde0fddfa8c6)
-* Update coupon.php - remove current coupon if blank one is entered (https://github.com/opencart/opencart/commit/460a9c49b2c3834c30165eb28db60a7ce8b4622f)
-* Added missing jQuery link to order invoice and order shipping. (https://github.com/opencart/opencart/pull/2949)
-* ocMod regex operations are never trimmed (https://github.com/opencart/opencart/issues/2925)
-* Bug fixes First Data (https://github.com/opencart/opencart/commit/2accd5e0ab2d26a6f44193754b4a9104f77450be)
-* Fixed security issue on log filename (https://github.com/opencart/opencart/commit/b7242c495a40d3534cf8f24b1ebc038912220961)
-* Update product.php - Syntax fixed (https://github.com/opencart/opencart/commit/414519f49e1f093c8b94ff0815899cab66ea9c8f)
-* Amazon module - reverting cookie name to correct value and adding comments to warn against altering (https://github.com/opencart/opencart/commit/832707f0adc5695e1feb4ec40762eb2fbd493ba4)
-* Fix when serialized settings are changed to/from serialized state (https://github.com/opencart/opencart/issues/3015)
-* Full path disclosure due to Undefined index (https://github.com/opencart/opencart/pull/2998)
 
 #### Changes
 * Added pre & post triggers for customer log in
 * Order modified success string changed (https://github.com/opencart/opencart/pull/2817)
 * Changed the PayPal Express max amount calculation to be currency specific (https://github.com/opencart/opencart/issues/2836)
 * Worldpay signup icon link changed to new URL.
-* Order modified success string changed. (https://github.com/opencart/opencart/commit/faf463da8484d59cf7c2831aeabad106bbb08e15)
-* Removed unused empty function (https://github.com/opencart/opencart/pull/2634 https://github.com/opencart/opencart/pull/2634)
-* Changed the PayPal Express max amount calculation to be currency specific (https://github.com/opencart/opencart/commit/29f6c323d3d2e48e9929823b0f5b234285191208)
-* Removing redundant uninstall code, deleting tables that were never created (https://github.com/opencart/opencart/commit/6b3e3a6c6d6a73b1544f923229199ce29b9d21aa)
-* Remove unneeded array_merge calls (https://github.com/opencart/opencart/commit/a7d404250107cc63f77b1b30c9884a01d179d975)
-* Startup file - ensure it's a file, include_once (https://github.com/opencart/opencart/commit/4f090a119c132284e28b12bad828c4f06650f7ac)
-* Code standards (indents & whitespace)
-* Mail system changes (Commits on Apr 6, 2015)
-* Delete MoneyBrokers Icon, Replaces by Skrill Icon (https://github.com/opencart/opencart/commit/fbb33f70ef3fc31c52b484915e744e8652a76f97)
-* Position correction of custom fields in admin panel (https://github.com/opencart/opencart/pull/2953)
-* Zone name corrected (https://github.com/opencart/opencart/pull/2954)
-* Lebanon regions added (https://github.com/opencart/opencart/commit/fa0c7a633a392f0eacf70356da92851f207d3ebf)
-* Displays errors custom_field field (https://github.com/opencart/opencart/pull/2969)
-* Allow config of custom database port during setup (https://github.com/opencart/opencart/issues/2967)
-* Language change (https://github.com/opencart/opencart/commit/f56b30fb2f2dc5a799edc3b724bf3e840cd8af44)
-* Update installer.php - force array type on glob() result (https://github.com/opencart/opencart/commit/f1e7bbf9e7d595989e218e95a252bd9d8ea1e5c8)
-* Add check for modification folder write during install. (https://github.com/opencart/opencart/commit/9121f27e923a8a331688b8a8405fb4570f3eda33)
-* Changed install language file name (default > english). (https://github.com/opencart/opencart/commit/d39c7110df16edd3c4faae1d095e05d5f01cd159)
-* Return $language_id in language.php addLanguage method. (https://github.com/opencart/opencart/commit/e58cae10e1ca000b8207c7b745d19062b1fd3700)
-* Language file standard, removed double quotes to single. (https://github.com/opencart/opencart/commit/24d791d482c3dea4a840de73b450e1a01360b2e2)
-* Added loading text to form button. (https://github.com/opencart/opencart/commit/cea6ae647e3e513d36782654a9a5470bbde3bfa8)
-* Preserve styling of wishlist top menu item (https://github.com/opencart/opencart/pull/2814)
 
 #### Added
-* Latest OpenBay Pro release.
-* Added Jenkins automation install script for demo store (https://github.com/opencart/opencart/commit/710415264e5c4d530439b9a897cd115e8a582268)
-* Fraud extension support (https://github.com/opencart/opencart/commit/f9085aa99f00e0895d813ed8aef92f8366a93d33)
-* Fraud labs pro module added (https://github.com/opencart/opencart/commit/e62ae241f56ea2d3efb4f74ff3f840d2479ea28c)
-* G2A Pay module (https://github.com/opencart/opencart/commit/a0df0385bdc5785128da5302433fd5a65675b3e4)
+
 
 ## v2.0.2.0 (Release date: 31.03.2015)
 #### Bugs fixed

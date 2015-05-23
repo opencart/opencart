@@ -1096,7 +1096,7 @@
                     $('#feature-content').empty();
                     $('#specifics').empty();
                     $('input[name=popular]').removeAttr('checked');
-                    $('#popular_default').prop('checked', true);
+                    $('#popular_default').prop('checked', 'checked');
                   });
                 } else {
                     alert(data.msg);
@@ -2065,7 +2065,7 @@
     $('#feature-content').empty();
     $('#specifics').empty();
     $('input[name=suggested]').removeAttr('checked');
-    $('#suggested_default').prop('checked', true);
+    $('#suggested_default').prop('checked', 'checked');
   });
 
   $('input[name=popular]').bind('change', function() {
@@ -2076,7 +2076,7 @@
 
   $('#check-all-template-images').bind('change', function() {
     if ($('#check-all-template-images').is(':checked')) {
-      $('.check-template-image').prop('checked', true);
+      $('.check-template-image').prop('checked', 'checked');
     } else {
       $('.check-template-image').removeAttr('checked');
     }
@@ -2084,7 +2084,7 @@
 
   $('#check-all-ebay-images').bind('change', function() {
     if ($('#check-all-ebay-images').is(':checked')) {
-      $('.checkbox-ebay-image').prop('checked', true);
+      $('.checkbox-ebay-image').prop('checked', 'checked');
     } else {
       $('.checkbox-ebay-image').removeAttr('checked');
     }

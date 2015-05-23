@@ -227,5 +227,4 @@ $_['error_ftp_port']                   = 'FTP Port required!';
 $_['error_ftp_username']               = 'FTP Username required!';
 $_['error_ftp_password']               = 'FTP Password required!';
 $_['error_error_filename']             = 'Error Log Filename required!';
-$_['error_malformed_filename']	        = 'Error Malformed Log Filename!';
 $_['error_encryption']                 = 'Encryption Key must be between 3 and 32 characters!';

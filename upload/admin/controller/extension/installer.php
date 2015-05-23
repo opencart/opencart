@@ -279,7 +279,7 @@ class ControllerExtensionInstaller extends Controller {
 			while (count($path) != 0) {
 				$next = array_shift($path);
 
-				foreach ((array)glob($next) as $file) {
+				foreach (glob($next) as $file) {
 					if (is_dir($file)) {
 						$path[] = $file . '/*';
 					}

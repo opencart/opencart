@@ -194,8 +194,6 @@ class ModelLocalisationLanguage extends Model {
 		foreach ($query->rows as $recurring) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "recurring_description SET recurring_id = '" . (int)$recurring['recurring_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($recurring['name']));
 		}
-
-		return $language_id;
 	}
 
 	public function editLanguage($language_id, $data) {

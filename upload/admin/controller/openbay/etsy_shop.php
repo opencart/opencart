@@ -1,9 +1,11 @@
 <?php
 class ControllerOpenbayEtsyShop extends Controller {
+	private $error;
+
 	public function getSections() {
-		$response = $this->openbay->etsy->call('v1/etsy/shop/getSections/', 'GET');
+		$shop_sections = $this->openbay->etsy->call('shop/getSections', 'GET');
 
 		$this->response->addHeader('Content-Type: application/json');
-		return $this->response->setOutput(json_encode($response));
+		return $this->response->setOutput(json_encode($shop_sections));
 	}
 }

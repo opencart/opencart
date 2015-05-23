@@ -1,11 +1,11 @@
 <?php
 class ControllerModuleAmazonPay extends Controller {
+
 	public function index() {
 
 		$this->load->model('payment/amazon_login_pay');
 
 		if ($this->config->get('amazon_login_pay_status') && $this->config->get('amazon_pay_status') && !empty($_SERVER['HTTPS']) && !($this->config->get('amazon_login_pay_minimum_total') > 0 && $this->config->get('amazon_login_pay_minimum_total') > $this->cart->getTotal())) {
-			// capital L in Amazon cookie name is required, do not alter for coding standards
 			if (!$this->customer->isLogged() && isset($this->request->cookie['amazon_Login_state_cache'])) {
 				setcookie('amazon_Login_state_cache', '', time() - 4815162342);
 			}
@@ -105,7 +105,6 @@ class ControllerModuleAmazonPay extends Controller {
 					$this->session->data['lpa']['error'] = $this->language->get('error_login');
 					$this->response->redirect($this->url->link('payment/amazon_login_pay/loginFailure', '', 'SSL'));
 				}
-
 				$this->response->redirect($this->url->link('payment/amazon_login_pay/address', '', 'SSL'));
 			} else {
 				$country_id = 0;
@@ -114,6 +113,7 @@ class ControllerModuleAmazonPay extends Controller {
 				$full_name = explode(' ', $user->name);
 				$last_name = array_pop($full_name);
 				$first_name = implode(' ', $full_name);
+
 
 				$data = array(
 					'customer_group_id' => (int)$this->config->get('config_customer_group_id'),
@@ -176,7 +176,6 @@ class ControllerModuleAmazonPay extends Controller {
 		unset($this->session->data['lpa']);
 		unset($this->session->data['access_token']);
 
-		// capital L in Amazon cookie name is required, do not alter for coding standards
 		if (isset($this->request->cookie['amazon_Login_state_cache'])) {
 			setcookie('amazon_Login_state_cache', '', time() - 4815162342);
 		}
@@ -199,4 +198,5 @@ class ControllerModuleAmazonPay extends Controller {
 			return false;
 		}
 	}
+
 }

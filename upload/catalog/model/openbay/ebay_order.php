@@ -339,7 +339,7 @@ class ModelOpenbayEbayOrder extends Model{
 				$data['order_status'] = $order_status;
 
 				$data['comment'] = '';
-
+				
 				if ($comment && $notify) {
 					$data['comment'] = nl2br($comment);
 				}
@@ -422,7 +422,7 @@ class ModelOpenbayEbayOrder extends Model{
 						if ($option['type'] != 'file') {
 							$value = $option['value'];
 						} else {
-							$value = utf8_substr($option['value'], 0, utf8_strrpos($option['value'], '.'));
+							$value = utf8_substr($option['value'], 0, utf8_strrpos($option['value'], ' . '));
 						}
 
 						$option_data[] = array(

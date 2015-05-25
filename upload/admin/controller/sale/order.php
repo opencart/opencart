@@ -620,12 +620,7 @@ class ControllerSaleOrder extends Controller {
 		$data['button_back'] = $this->language->get('button_back');
 		$data['button_product_add'] = $this->language->get('button_product_add');
 		$data['button_voucher_add'] = $this->language->get('button_voucher_add');
-
-		$data['button_payment'] = $this->language->get('button_payment');
-		$data['button_shipping'] = $this->language->get('button_shipping');
-		$data['button_coupon'] = $this->language->get('button_coupon');
-		$data['button_voucher'] = $this->language->get('button_voucher');
-		$data['button_reward'] = $this->language->get('button_reward');
+		$data['button_apply'] = $this->language->get('button_apply');
 		$data['button_upload'] = $this->language->get('button_upload');
 		$data['button_remove'] = $this->language->get('button_remove');
 
@@ -869,8 +864,13 @@ class ControllerSaleOrder extends Controller {
 		$this->load->model('sale/custom_field');
 
 		$data['custom_fields'] = array();
-
-		$custom_fields = $this->model_sale_custom_field->getCustomFields();
+		
+		$filter_data = array(
+			'sort'  => 'cf.sort_order',
+			'order' => 'ASC'
+		);
+		
+		$custom_fields = $this->model_sale_custom_field->getCustomFields($filter_data);
 
 		foreach ($custom_fields as $custom_field) {
 			$data['custom_fields'][] = array(
@@ -2209,9 +2209,9 @@ class ControllerSaleOrder extends Controller {
 			}
 		} else {
 			$response = array();
+			
 			$response['error'] = $this->error;
-			unset($this->error);
-
+			
 			$json = json_encode($response);
 		}
 

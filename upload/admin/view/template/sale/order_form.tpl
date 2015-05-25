@@ -597,6 +597,10 @@
                 </div>
               </div>
             </div>
+            
+            
+            
+            
             <div class="tab-pane" id="tab-shipping">
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-shipping-address"><?php echo $entry_address; ?></label>
@@ -808,6 +812,7 @@
                 </div>
               </div>
             </div>
+
             <div class="tab-pane" id="tab-total">
               <div class="table-responsive">
                 <table class="table table-bordered">
@@ -826,8 +831,7 @@
                     </tr>
                   </tbody>
                 </table>
-              </div>
-              <fieldset>
+              </div>              <fieldset>
                 <legend><?php echo $text_order; ?></legend>
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-currency"><?php echo $entry_currency; ?></label>
@@ -843,7 +847,7 @@
                         <?php } ?>
                       </select>
                       <span class="input-group-btn">
-                      <button type="button" id="button-currency" data-toggle="tooltip" title="<?php echo $button_currency; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                      <button type="button" id="button-currency" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_apply; ?></button>
                       </span></div>
                   </div>
                 </div>
@@ -858,7 +862,7 @@
                         <?php } ?>
                       </select>
                       <span class="input-group-btn">
-                      <button type="button" id="button-shipping-method" data-toggle="tooltip" title="<?php echo $button_shipping; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                      <button type="button" id="button-shipping-method" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_apply; ?></button>
                       </span></div>
                   </div>
                 </div>
@@ -873,7 +877,7 @@
                         <?php } ?>
                       </select>
                       <span class="input-group-btn">
-                      <button type="button" id="button-payment-method" data-toggle="tooltip" title="<?php echo $button_payment; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                      <button type="button" id="button-payment-method" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_apply; ?></button>
                       </span></div>
                   </div>
                 </div>
@@ -883,7 +887,7 @@
                     <div class="input-group">
                       <input type="text" name="coupon" value="<?php echo $coupon; ?>" id="input-coupon" class="form-control" />
                       <span class="input-group-btn">
-                      <button type="button" id="button-coupon" data-toggle="tooltip" title="<?php echo $button_coupon; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                      <button type="button" id="button-coupon" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_apply; ?></button>
                       </span></div>
                   </div>
                 </div>
@@ -893,7 +897,7 @@
                     <div class="input-group">
                       <input type="text" name="voucher" value="<?php echo $voucher; ?>" id="input-voucher" data-loading-text="<?php echo $text_loading; ?>" class="form-control" />
                       <span class="input-group-btn">
-                      <button type="button" id="button-voucher" data-toggle="tooltip" title="<?php echo $button_voucher; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                      <button type="button" id="button-voucher" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_apply; ?></button>
                       </span></div>
                   </div>
                 </div>
@@ -903,7 +907,7 @@
                     <div class="input-group">
                       <input type="text" name="reward" value="<?php echo $reward; ?>" id="input-reward" data-loading-text="<?php echo $text_loading; ?>" class="form-control" />
                       <span class="input-group-btn">
-                      <button type="button" id="button-reward" data-toggle="tooltip" title="<?php echo $button_reward; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                      <button type="button" id="button-reward" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_apply; ?></button>
                       </span></div>
                   </div>
                 </div>
@@ -936,6 +940,7 @@
                   </div>
                 </div>
               </fieldset>
+            
               <div class="row">
                 <div class="col-sm-6 text-left">
                   <button type="button" onclick="$('select[name=\'shipping_method\']').prop('disabled') ? $('a[href=\'#tab-payment\']').tab('show') : $('a[href=\'#tab-shipping\']').tab('show');" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
@@ -2014,9 +2019,9 @@ $('#button-shipping-address').on('click', function() {
 									if (!json['shipping_methods'][i]['error']) {
 										for (j in json['shipping_methods'][i]['quote']) {
 											if (json['shipping_methods'][i]['quote'][j]['code'] == $('select[name=\'shipping_method\'] option:selected').val()) {
-												html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected="selected">' + json['shipping_methods'][i]['quote'][j]['title'] + '</option>';
+												html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected="selected">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
 											} else {
-												html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + '</option>';
+												html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
 											}
 										}		
 									} else {
@@ -2045,6 +2050,43 @@ $('#button-shipping-address').on('click', function() {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});				
+});
+
+// Shipping Method
+$('#button-currency').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/currency&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+		type: 'post',
+		data: 'currency=' + $('select[name=\'currency\'] option:selected').val(),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-currency').button('loading');	
+		},	
+		complete: function() {
+			$('#button-currency').button('reset');
+		},		
+		success: function(json) {
+			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
+			
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			
+				// Highlight any found errors
+				$('select[name=\'currency\']').parent().parent().parent().addClass('has-error');			
+			}
+			
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+				// Refresh products, vouchers and totals
+				$('#button-refresh').trigger('click');
+			}
+		},	
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
 });
 
 // Shipping Method

@@ -43,6 +43,20 @@
                 </div>
               </div>
               <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-currency"><?php echo $entry_currency; ?></label>
+                <div class="col-sm-10">
+                  <select name="currency" id="input-currency" class="form-control">
+                    <?php foreach ($currencies as $currency) { ?>
+                    <?php if ($currency['code'] == $currency_code) { ?>
+                    <option value="<?php echo $currency['code']; ?>" selected="selected"><?php echo $currency['title']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $currency['code']; ?>"><?php echo $currency['title']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-customer"><?php echo $entry_customer; ?></label>
                 <div class="col-sm-10">
                   <input type="text" name="customer" value="<?php echo $customer; ?>" placeholder="<?php echo $entry_customer; ?>" id="input-customer" class="form-control" />
@@ -597,10 +611,6 @@
                 </div>
               </div>
             </div>
-            
-            
-            
-            
             <div class="tab-pane" id="tab-shipping">
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-shipping-address"><?php echo $entry_address; ?></label>
@@ -812,7 +822,6 @@
                 </div>
               </div>
             </div>
-
             <div class="tab-pane" id="tab-total">
               <div class="table-responsive">
                 <table class="table table-bordered">
@@ -831,26 +840,9 @@
                     </tr>
                   </tbody>
                 </table>
-              </div>              <fieldset>
+              </div>
+              <fieldset>
                 <legend><?php echo $text_order; ?></legend>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-currency"><?php echo $entry_currency; ?></label>
-                  <div class="col-sm-10">
-                    <div class="input-group">
-                      <select name="currency" id="input-currency" class="form-control">
-                        <?php foreach ($currencies as $currency) { ?>
-                        <?php if ($currency['currency_id'] == $currency_id) { ?>
-                        <option value="<?php echo $currency['currency_id']; ?>" selected="selected"><?php echo $currency['title']; ?></option>
-                        <?php } else { ?>
-                        <option value="<?php echo $currency['currency_id']; ?>"><?php echo $currency['title']; ?></option>
-                        <?php } ?>
-                        <?php } ?>
-                      </select>
-                      <span class="input-group-btn">
-                      <button type="button" id="button-currency" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_apply; ?></button>
-                      </span></div>
-                  </div>
-                </div>
                 <div class="form-group required">
                   <label class="col-sm-2 control-label" for="input-shipping-method"><?php echo $entry_shipping_method; ?></label>
                   <div class="col-sm-10">
@@ -940,7 +932,6 @@
                   </div>
                 </div>
               </fieldset>
-            
               <div class="row">
                 <div class="col-sm-6 text-left">
                   <button type="button" onclick="$('select[name=\'shipping_method\']').prop('disabled') ? $('a[href=\'#tab-payment\']').tab('show') : $('a[href=\'#tab-shipping\']').tab('show');" class="btn btn-default"><i class="fa fa-arrow-left"></i> <?php echo $button_back; ?></button>
@@ -1140,6 +1131,38 @@ $('#button-refresh').on('click', function() {
 		}
 	});
 });
+
+// Currency
+$('select[name=\'currency\']').on('change', function() {
+	$.ajax({
+		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/currency&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+		type: 'post',
+		data: 'currency=' + $('select[name=\'currency\'] option:selected').val(),
+		dataType: 'json',
+		beforeSend: function() {
+			$('select[name=\'currency\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+		},	
+		complete: function() {
+			$('.fa-spin').remove();
+		},		
+		success: function(json) {
+			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
+			
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			
+				// Highlight any found errors
+				$('select[name=\'currency\']').parent().parent().parent().addClass('has-error');			
+			}
+		},	
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('select[name=\'currency\']').trigger('change');
 
 // Customer
 $('input[name=\'customer\']').autocomplete({
@@ -2053,43 +2076,6 @@ $('#button-shipping-address').on('click', function() {
 });
 
 // Shipping Method
-$('#button-currency').on('click', function() {
-	$.ajax({
-		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/currency&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
-		type: 'post',
-		data: 'currency=' + $('select[name=\'currency\'] option:selected').val(),
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-currency').button('loading');	
-		},	
-		complete: function() {
-			$('#button-currency').button('reset');
-		},		
-		success: function(json) {
-			$('.alert, .text-danger').remove();
-			$('.form-group').removeClass('has-error');
-			
-			if (json['error']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			
-				// Highlight any found errors
-				$('select[name=\'currency\']').parent().parent().parent().addClass('has-error');			
-			}
-			
-			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				
-				// Refresh products, vouchers and totals
-				$('#button-refresh').trigger('click');
-			}
-		},	
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
-
-// Shipping Method
 $('#button-shipping-method').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/shipping/method&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
@@ -2409,8 +2395,6 @@ $('.datetime').datetimepicker({
 $('.time').datetimepicker({
 	pickDate: false
 });	
-
-
 //--></script> 
   <script type="text/javascript">
 // Sort the custom fields

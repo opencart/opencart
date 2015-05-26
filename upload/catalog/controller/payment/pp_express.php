@@ -19,7 +19,7 @@ class ControllerPaymentPPExpress extends Controller {
 	}
 
 	public function express() {
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		if (!$this->cart->hasCart()) {
 			$this->log->write('No product redirect');
 
 			$this->response->redirect($this->url->link('checkout/cart'));
@@ -780,7 +780,7 @@ class ControllerPaymentPPExpress extends Controller {
 		}
 
 		// Validate cart has products and has stock.
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		if (!$this->cart->hasCart()) {
 			$redirect = $this->url->link('checkout/cart');
 		}
 
@@ -1263,7 +1263,7 @@ class ControllerPaymentPPExpress extends Controller {
 	}
 
 	public function checkout() {
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		if (!$this->cart->hasCart()) {
 			$this->response->redirect($this->url->link('checkout/cart'));
 		}
 

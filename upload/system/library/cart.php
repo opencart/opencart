@@ -443,4 +443,16 @@ class Cart {
 
 		return $download;
 	}
+
+	public function hasCart() {
+		$status = true;
+
+		if (!$this->hasProducts() && empty($this->session->data['vouchers'])) {
+			$status = false;
+		} elseif (!$this->hasStock() && !$this->config->get('config_stock_checkout')) {
+			$status = false;
+		}
+
+		return $status;
+	}
 }

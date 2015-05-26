@@ -107,7 +107,7 @@ class ControllerCheckoutGuestShipping extends Controller {
 		}
 
 		// Validate cart has products and has stock.
-		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+		if (!$this->cart->hasCart()) {
 			$json['redirect'] = $this->url->link('checkout/cart');
 		}
 

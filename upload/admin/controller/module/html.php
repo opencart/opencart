@@ -96,7 +96,7 @@ class ControllerModuleHTML extends Controller {
 		} elseif (!empty($module_info)) {
 			$data['module_description'] = $module_info['module_description'];
 		} else {
-			$data['module_description'] = '';
+			$data['module_description'] = array();
 		}
 
 		$this->load->model('localisation/language');

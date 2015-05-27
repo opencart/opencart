@@ -1345,9 +1345,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 	public function checkoutReturn() {
 		$this->language->load('payment/pp_express');
-		/**
-		 * Get the details
-		 */
+
 		$this->load->model('payment/pp_express');
 		$this->load->model('checkout/order');
 
@@ -1514,7 +1512,6 @@ class ControllerPaymentPPExpress extends Controller {
 				$this->response->redirect($this->url->link('checkout/success'));
 			}
 		} else {
-
 			if ($result['L_ERRORCODE0'] == '10486') {
 				if (isset($this->session->data['paypal_redirect_count'])) {
 
@@ -1570,10 +1567,10 @@ class ControllerPaymentPPExpress extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/not_found.tpl')) {
-				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/not_found.tpl'));
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
+				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/error/not_found.tpl'));
 			} else {
-				$this->response->setOutput($this->load->view('default/template/payment/not_found.tpl'));
+				$this->response->setOutput($this->load->view('default/template/error/not_found.tpl'));
 			}
 		}
 	}

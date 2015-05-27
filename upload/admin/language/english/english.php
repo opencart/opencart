@@ -92,12 +92,8 @@ $_['button_uninstall']              = 'Uninstall';
 $_['button_login']                  = 'Login into Store';
 $_['button_unlock']                 = 'Unlock Account';
 $_['button_link']                   = 'Link';
-$_['button_shipping']               = 'Apply Shipping Method';
-$_['button_payment']                = 'Apply Payment Method';
-$_['button_coupon']                 = 'Apply Coupon';
-$_['button_voucher']                = 'Apply Voucher';
-$_['button_reward']                 = 'Apply Points';
 $_['button_currency']               = 'Refresh Currency Values';
+$_['button_apply']                  = 'Apply';
 
 // Tab
 $_['tab_address']                   = 'Address';

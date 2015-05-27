@@ -43,6 +43,20 @@
                 </div>
               </div>
               <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-currency"><?php echo $entry_currency; ?></label>
+                <div class="col-sm-10">
+                  <select name="currency" id="input-currency" class="form-control">
+                    <?php foreach ($currencies as $currency) { ?>
+                    <?php if ($currency['code'] == $currency_code) { ?>
+                    <option value="<?php echo $currency['code']; ?>" selected="selected"><?php echo $currency['title']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $currency['code']; ?>"><?php echo $currency['title']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-customer"><?php echo $entry_customer; ?></label>
                 <div class="col-sm-10">
                   <input type="text" name="customer" value="<?php echo $customer; ?>" placeholder="<?php echo $entry_customer; ?>" id="input-customer" class="form-control" />
@@ -829,24 +843,6 @@
               </div>
               <fieldset>
                 <legend><?php echo $text_order; ?></legend>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-currency"><?php echo $entry_currency; ?></label>
-                  <div class="col-sm-10">
-                    <div class="input-group">
-                      <select name="currency" id="input-currency" class="form-control">
-                        <?php foreach ($currencies as $currency) { ?>
-                        <?php if ($currency['currency_id'] == $currency_id) { ?>
-                        <option value="<?php echo $currency['currency_id']; ?>" selected="selected"><?php echo $currency['title']; ?></option>
-                        <?php } else { ?>
-                        <option value="<?php echo $currency['currency_id']; ?>"><?php echo $currency['title']; ?></option>
-                        <?php } ?>
-                        <?php } ?>
-                      </select>
-                      <span class="input-group-btn">
-                      <button type="button" id="button-currency" data-toggle="tooltip" title="<?php echo $button_currency; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
-                      </span></div>
-                  </div>
-                </div>
                 <div class="form-group required">
                   <label class="col-sm-2 control-label" for="input-shipping-method"><?php echo $entry_shipping_method; ?></label>
                   <div class="col-sm-10">
@@ -858,7 +854,7 @@
                         <?php } ?>
                       </select>
                       <span class="input-group-btn">
-                      <button type="button" id="button-shipping-method" data-toggle="tooltip" title="<?php echo $button_shipping; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                      <button type="button" id="button-shipping-method" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_apply; ?></button>
                       </span></div>
                   </div>
                 </div>
@@ -873,7 +869,7 @@
                         <?php } ?>
                       </select>
                       <span class="input-group-btn">
-                      <button type="button" id="button-payment-method" data-toggle="tooltip" title="<?php echo $button_payment; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                      <button type="button" id="button-payment-method" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_apply; ?></button>
                       </span></div>
                   </div>
                 </div>
@@ -883,7 +879,7 @@
                     <div class="input-group">
                       <input type="text" name="coupon" value="<?php echo $coupon; ?>" id="input-coupon" class="form-control" />
                       <span class="input-group-btn">
-                      <button type="button" id="button-coupon" data-toggle="tooltip" title="<?php echo $button_coupon; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                      <button type="button" id="button-coupon" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_apply; ?></button>
                       </span></div>
                   </div>
                 </div>
@@ -893,7 +889,7 @@
                     <div class="input-group">
                       <input type="text" name="voucher" value="<?php echo $voucher; ?>" id="input-voucher" data-loading-text="<?php echo $text_loading; ?>" class="form-control" />
                       <span class="input-group-btn">
-                      <button type="button" id="button-voucher" data-toggle="tooltip" title="<?php echo $button_voucher; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                      <button type="button" id="button-voucher" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_apply; ?></button>
                       </span></div>
                   </div>
                 </div>
@@ -903,7 +899,7 @@
                     <div class="input-group">
                       <input type="text" name="reward" value="<?php echo $reward; ?>" id="input-reward" data-loading-text="<?php echo $text_loading; ?>" class="form-control" />
                       <span class="input-group-btn">
-                      <button type="button" id="button-reward" data-toggle="tooltip" title="<?php echo $button_reward; ?>" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                      <button type="button" id="button-reward" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_apply; ?></button>
                       </span></div>
                   </div>
                 </div>
@@ -1135,6 +1131,38 @@ $('#button-refresh').on('click', function() {
 		}
 	});
 });
+
+// Currency
+$('select[name=\'currency\']').on('change', function() {
+	$.ajax({
+		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/currency&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+		type: 'post',
+		data: 'currency=' + $('select[name=\'currency\'] option:selected').val(),
+		dataType: 'json',
+		beforeSend: function() {
+			$('select[name=\'currency\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+		},	
+		complete: function() {
+			$('.fa-spin').remove();
+		},		
+		success: function(json) {
+			$('.alert, .text-danger').remove();
+			$('.form-group').removeClass('has-error');
+			
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			
+				// Highlight any found errors
+				$('select[name=\'currency\']').parent().parent().parent().addClass('has-error');			
+			}
+		},	
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+$('select[name=\'currency\']').trigger('change');
 
 // Customer
 $('input[name=\'customer\']').autocomplete({
@@ -2014,9 +2042,9 @@ $('#button-shipping-address').on('click', function() {
 									if (!json['shipping_methods'][i]['error']) {
 										for (j in json['shipping_methods'][i]['quote']) {
 											if (json['shipping_methods'][i]['quote'][j]['code'] == $('select[name=\'shipping_method\'] option:selected').val()) {
-												html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected="selected">' + json['shipping_methods'][i]['quote'][j]['title'] + '</option>';
+												html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '" selected="selected">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
 											} else {
-												html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + '</option>';
+												html += '<option value="' + json['shipping_methods'][i]['quote'][j]['code'] + '">' + json['shipping_methods'][i]['quote'][j]['title'] + ' - ' + json['shipping_methods'][i]['quote'][j]['text'] + '</option>';
 											}
 										}		
 									} else {
@@ -2367,8 +2395,6 @@ $('.datetime').datetimepicker({
 $('.time').datetimepicker({
 	pickDate: false
 });	
-
-
 //--></script> 
   <script type="text/javascript">
 // Sort the custom fields

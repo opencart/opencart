@@ -620,12 +620,7 @@ class ControllerSaleOrder extends Controller {
 		$data['button_back'] = $this->language->get('button_back');
 		$data['button_product_add'] = $this->language->get('button_product_add');
 		$data['button_voucher_add'] = $this->language->get('button_voucher_add');
-
-		$data['button_payment'] = $this->language->get('button_payment');
-		$data['button_shipping'] = $this->language->get('button_shipping');
-		$data['button_coupon'] = $this->language->get('button_coupon');
-		$data['button_voucher'] = $this->language->get('button_voucher');
-		$data['button_reward'] = $this->language->get('button_reward');
+		$data['button_apply'] = $this->language->get('button_apply');
 		$data['button_upload'] = $this->language->get('button_upload');
 		$data['button_remove'] = $this->language->get('button_remove');
 
@@ -798,7 +793,7 @@ class ControllerSaleOrder extends Controller {
 			$data['comment'] = $order_info['comment'];
 			$data['affiliate_id'] = $order_info['affiliate_id'];
 			$data['affiliate'] = $order_info['affiliate_firstname'] . ' ' . $order_info['affiliate_lastname'];
-			$data['currency_id'] = $order_info['currency_id'];
+			$data['currency_code'] = $order_info['currency_code'];
 		} else {
 			$data['order_id'] = 0;
 			$data['store_id'] = '';
@@ -848,7 +843,7 @@ class ControllerSaleOrder extends Controller {
 			$data['comment'] = '';
 			$data['affiliate_id'] = '';
 			$data['affiliate'] = '';
-			$data['currency_id'] = $order_info['currency_id'];
+			$data['currency_code'] = $this->config->get('config_currency');
 
 			$data['coupon'] = '';
 			$data['voucher'] = '';
@@ -870,7 +865,12 @@ class ControllerSaleOrder extends Controller {
 
 		$data['custom_fields'] = array();
 
-		$custom_fields = $this->model_sale_custom_field->getCustomFields();
+		$filter_data = array(
+			'sort'  => 'cf.sort_order',
+			'order' => 'ASC'
+		);
+
+		$custom_fields = $this->model_sale_custom_field->getCustomFields($filter_data);
 
 		foreach ($custom_fields as $custom_field) {
 			$data['custom_fields'][] = array(
@@ -1367,6 +1367,8 @@ class ControllerSaleOrder extends Controller {
 					'href'        => $this->url->link('sale/voucher/edit', 'token=' . $this->session->data['token'] . '&voucher_id=' . $voucher['voucher_id'], 'SSL')
 				);
 			}
+
+			$data['totals'] = array();
 
 			$totals = $this->model_sale_order->getOrderTotals($this->request->get['order_id']);
 
@@ -2209,8 +2211,8 @@ class ControllerSaleOrder extends Controller {
 			}
 		} else {
 			$response = array();
+
 			$response['error'] = $this->error;
-			unset($this->error);
 
 			$json = json_encode($response);
 		}

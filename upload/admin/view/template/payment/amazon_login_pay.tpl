@@ -172,7 +172,7 @@
 			<label class="col-sm-2 control-label" for="input-ipn-url"><?php echo $entry_ipn_url; ?></label>
 			<div class="col-sm-10">
 			  <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
-				<input type="text" readonly="readonly" value="<?php echo $ipn_url; ?>" id="input-ipn-url" class="form-control" />
+				<input type="text" readonly value="<?php echo $ipn_url; ?>" id="input-ipn-url" class="form-control" />
 			  </div>
 			</div>
 		  </div>

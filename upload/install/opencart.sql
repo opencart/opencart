@@ -7,7 +7,7 @@
 -- --------------------------------------------------------
 
 SET sql_mode = '';
---pe
+--
 -- Table structure for table `oc_address`
 --
 

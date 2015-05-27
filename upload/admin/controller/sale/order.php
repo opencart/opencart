@@ -864,12 +864,12 @@ class ControllerSaleOrder extends Controller {
 		$this->load->model('sale/custom_field');
 
 		$data['custom_fields'] = array();
-		
+
 		$filter_data = array(
 			'sort'  => 'cf.sort_order',
 			'order' => 'ASC'
 		);
-		
+
 		$custom_fields = $this->model_sale_custom_field->getCustomFields($filter_data);
 
 		foreach ($custom_fields as $custom_field) {
@@ -1367,6 +1367,8 @@ class ControllerSaleOrder extends Controller {
 					'href'        => $this->url->link('sale/voucher/edit', 'token=' . $this->session->data['token'] . '&voucher_id=' . $voucher['voucher_id'], 'SSL')
 				);
 			}
+
+			$data['totals'] = array();
 
 			$totals = $this->model_sale_order->getOrderTotals($this->request->get['order_id']);
 
@@ -2209,9 +2211,9 @@ class ControllerSaleOrder extends Controller {
 			}
 		} else {
 			$response = array();
-			
+
 			$response['error'] = $this->error;
-			
+
 			$json = json_encode($response);
 		}
 

@@ -146,14 +146,14 @@
             <label class="col-sm-2 control-label" for="input-cron-job-url"><?php echo $entry_cron_job_url; ?></label>
             <div class="col-sm-10">
               <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
-                <input type="text" readonly="readonly" value="<?php echo $cron_job_url; ?>" id="input-cron-job-url" class="form-control" />
+                <input type="text" readonly value="<?php echo $cron_job_url; ?>" id="input-cron-job-url" class="form-control" />
               </div>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-cron-job-last-run"><?php echo $entry_cron_job_last_run; ?></label>
             <div class="col-sm-10">
-              <input type="text" readonly="readonly" value="<?php echo $cron_job_last_run; ?>" id="input-cron-job-last-run" class="form-control" />
+              <input type="text" readonly value="<?php echo $cron_job_last_run; ?>" id="input-cron-job-last-run" class="form-control" />
             </div>
           </div>
           <div class="form-group">

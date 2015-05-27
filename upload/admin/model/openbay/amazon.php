@@ -24,7 +24,7 @@ class ModelOpenbayAmazon extends Model {
 				`product_id` int(11) NOT NULL,
 				`quantity` int(11) NOT NULL DEFAULT '0',
 				PRIMARY KEY (`order_id`,`product_id`)
-			) DEFAULT COLLATE=utf8_general_ci;;");
+			) DEFAULT COLLATE=utf8_general_ci;");
 
 		$this->db->query("
 		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_product` (

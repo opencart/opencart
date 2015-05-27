@@ -1,5 +1,7 @@
 # OpenCart 2.0 change log
 
+## v2.0.3.1 (Pending release)
+
 ## v2.0.3.0 (Release date: 20.05.2015)
 #### Bugs fixed
 * Mail config hostname variable (https://github.com/opencart/opencart/issues/2840)

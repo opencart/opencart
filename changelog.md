@@ -1,6 +1,6 @@
 # OpenCart 2.0 change log
 
-## v2.0.3.1 (Pending release)
+## v2.0.3.1
 #### Bugs fixed
 * Safari text colour change on carousel (https://github.com/opencart/opencart/commit/2adcf21fbdf2c2d0e08860daf4012e14e24ff664)
 * Missing language strings during install for DB port (https://github.com/opencart/opencart/commit/c9f014f3a0441b05f4b2d9fad074a5b883695102)

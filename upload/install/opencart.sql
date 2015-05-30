@@ -4930,7 +4930,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (1496, 99, 'Mizoram', 'MI', 1),
 (1497, 99, 'Nagaland', 'NA', 1),
 (1498, 99, 'Orissa', 'OR', 1),
-(1499, 99, 'Pondicherry', 'PO', 1),
+(1499, 99, 'Puducherry', 'PO', 1),
 (1500, 99, 'Punjab', 'PU', 1),
 (1501, 99, 'Rajasthan', 'RA', 1),
 (1502, 99, 'Sikkim', 'SI', 1),

@@ -94,8 +94,12 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 			break;
 	}
 
-	if ($config->get('config_error_display')) {
+	if ($config->get('config_error_display') && !$config->get('config_development')) {
 		echo '<b>' . $error . '</b>: ' . $errstr . ' in <b>' . $errfile . '</b> on line <b>' . $errline . '</b>';
+	}
+
+	if ($config->get('config_development')) {
+		die('<b>' . $error . '</b>: ' . $errstr . ' in <b>' . $errfile . '</b> on line <b>' . $errline . '</b>');
 	}
 
 	if ($config->get('config_error_log')) {
@@ -241,6 +245,9 @@ $controller = new Front($registry);
 
 // Maintenance Mode
 $controller->addPreAction(new Action('common/maintenance'));
+
+// Development Mode
+$controller->addPreAction(new Action('common/development'));
 
 // SEO URL's
 $controller->addPreAction(new Action('common/seo_url'));

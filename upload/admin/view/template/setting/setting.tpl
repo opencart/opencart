@@ -1433,6 +1433,29 @@
                 </div>
               </div>
               <div class="form-group">
+                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_development; ?>"><?php echo $entry_development; ?></span></label>
+                <div class="col-sm-10">
+                  <label class="radio-inline">
+                    <?php if ($config_development) { ?>
+                    <input type="radio" name="config_development" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_development" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                  </label>
+                  <label class="radio-inline">
+                    <?php if (!$config_development) { ?>
+                    <input type="radio" name="config_development" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_development" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
                 <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_password; ?>"><?php echo $entry_password; ?></span></label>
                 <div class="col-sm-10">
                   <label class="radio-inline">

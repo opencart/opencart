@@ -145,6 +145,7 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_file_ext_allowed'] = $this->language->get('entry_file_ext_allowed');
 		$data['entry_file_mime_allowed'] = $this->language->get('entry_file_mime_allowed');
 		$data['entry_maintenance'] = $this->language->get('entry_maintenance');
+		$data['entry_development'] = $this->language->get('entry_development');
 		$data['entry_password'] = $this->language->get('entry_password');
 		$data['entry_encryption'] = $this->language->get('entry_encryption');
 		$data['entry_seo_url'] = $this->language->get('entry_seo_url');
@@ -215,6 +216,7 @@ class ControllerSettingSetting extends Controller {
 		$data['help_file_ext_allowed'] = $this->language->get('help_file_ext_allowed');
 		$data['help_file_mime_allowed'] = $this->language->get('help_file_mime_allowed');
 		$data['help_maintenance'] = $this->language->get('help_maintenance');
+		$data['help_development'] = $this->language->get('help_development');
 		$data['help_password'] = $this->language->get('help_password');
 		$data['help_encryption'] = $this->language->get('help_encryption');
 		$data['help_compression'] = $this->language->get('help_compression');
@@ -1217,6 +1219,12 @@ class ControllerSettingSetting extends Controller {
 			$data['config_maintenance'] = $this->request->post['config_maintenance'];
 		} else {
 			$data['config_maintenance'] = $this->config->get('config_maintenance');
+		}
+
+		if (isset($this->request->post['config_development'])) {
+			$data['config_development'] = $this->request->post['config_development'];
+		} else {
+			$data['config_development'] = $this->config->get('config_development');
 		}
 
 		if (isset($this->request->post['config_password'])) {

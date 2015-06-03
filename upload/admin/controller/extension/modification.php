@@ -65,6 +65,8 @@ class ControllerExtensionModification extends Controller {
 				$this->load->model('setting/setting');
 
 				$this->model_setting_setting->editSettingValue('config', 'config_maintenance', true);
+			
+				$this->config->set('config_maintenance', true);
 			}
 
 			//Log

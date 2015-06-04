@@ -7,7 +7,7 @@ class ControllerAccountForgotten extends Controller {
 			$this->response->redirect($this->url->link('account/account', '', 'SSL'));
 		}
 
-		$this->load->language('account/forgotten');
+		$this->language->load('account/forgotten');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

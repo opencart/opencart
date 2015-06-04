@@ -64,7 +64,7 @@
                 </div>
               <?php } ?>
               <?php if (!empty($product['popular_cats'])) { ?>
-              <div class="form-group">
+                <div class="form-group" id="category-popular-row">
                 <label class="col-sm-2 control-label">
                   <span title="" data-toggle="tooltip" data-original-title="<?php echo $help_category_popular; ?>"><?php echo $entry_category_popular; ?></span>
                 </label>
@@ -76,7 +76,7 @@
                 </div>
               </div>
               <?php } else { ?>
-              <input type="hidden" name="popular" value="" />
+                <input type="hidden" name="popular" value="" />
               <?php } ?>
               <div class="form-group" id="category-selections-row">
                 <label class="col-sm-2 control-label"><?php echo $entry_category; ?></label>
@@ -132,7 +132,7 @@
                   <input type="hidden" name="finalCat" id="final-category" />
                 </div>
               </div>
-              <div class="form-group" id="suggested-cats-container" style="display: none;">
+              <div class="form-group" id="category-suggested-row" style="display: none;">
                 <label class="col-sm-2 control-label">
                   <span title="" data-toggle="tooltip" data-original-title="<?php echo $help_category_suggested; ?>"><?php echo $entry_category_suggested; ?></span>
                 </label>
@@ -1054,7 +1054,6 @@
             success: function(data) {
                 if (data.error == false) {
                     var html_inj = '';
-
                         if (data.data) {
                             html_inj += '<p><input type="radio" name="suggested" value="" id="suggested_default" checked="checked"/> <strong><?php echo $text_none; ?></strong></p>';
 
@@ -1066,7 +1065,7 @@
                                 }
                             });
 
-                            $('#suggested-cats-container').fadeIn();
+                            $('#category-suggested-row').fadeIn();
                         }
 
                         $('#suggested-cats').html(html_inj);
@@ -1079,18 +1078,39 @@
 
                   $('.suggested_category').bind('click', function() {
                     $('#category-selections-row').hide();
+
                     $('input[name=popular]').removeAttr('checked');
+
+                    if($('#category-popular-row').length != 0) {
+                      $('#category-popular-row').hide();
+                    }
+
                     $('#popular_default').prop('checked', true);
                   });
 
                   $('.popular-category').bind('click', function() {
                     $('#category-selections-row').hide();
+
                     $('input[name=suggested]').removeAttr('checked');
+
+                    if($('#category-suggested-row').length != 0) {
+                      $('#category-suggested-row').hide();
+                    }
+
                     $('#suggested_default').prop('checked', true);
                   });
 
                   $('#suggested_default').bind('click', function() {
                     $('#category-selections-row').show();
+
+                    if($('#category-suggested-row').length != 0) {
+                      $('#category-suggested-row').show();
+                    }
+
+                    if($('#category-popular-row').length != 0) {
+                      $('#category-popular-row').show();
+                    }
+
                     $('#show-feature-element').hide();
                     $('#product-catalog-container').hide();
                     $('#feature-content').empty();
@@ -2060,6 +2080,15 @@
 
   $('#popular_default').click(function() {
     $('#category-selections-row').show();
+
+    if($('#category-suggested-row').length != 0) {
+      $('#category-suggested-row').show();
+    }
+
+    if($('#category-popular-row').length != 0) {
+      $('#category-popular-row').show();
+    }
+
     $('#show-feature-element').hide();
     $('#product-catalog-container').hide();
     $('#feature-content').empty();

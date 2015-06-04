@@ -3,9 +3,7 @@ class ModelFraudMaxMind extends Model {
 	public function check($data) {
 		$risk_score = 0;
 
-		$fraud_info = $this->getFraud($data['order_id']);
-
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "maxmind` WHERE order_id = '" . (int)$order_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "maxmind` WHERE order_id = '" . (int)$data['order_id'] . "'");
 		
 		if ($query->num_rows) {
 			$risk_score = $query->row['risk_score'];

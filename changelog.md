@@ -1,5 +1,9 @@
 # OpenCart 2.0 change log
 
+## v2.0.3.2
+#### Bugs fixed
+* Change post to session in order API (https://github.com/opencart/opencart/issues/2712)
+
 ## v2.0.3.1
 #### Bugs fixed
 * Safari text colour change on carousel (https://github.com/opencart/opencart/commit/2adcf21fbdf2c2d0e08860daf4012e14e24ff664)

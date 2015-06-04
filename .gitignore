@@ -1,4 +1,7 @@
 # Config and Htaccess Files
+/upload/backup.install/*
+/upload/install/*
+
 /upload/.htaccess
 /upload/config.php
 /upload/admin/config.php

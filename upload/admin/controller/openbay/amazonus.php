@@ -980,4 +980,25 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode(array('ok')));
 	}
+
+	public function doFullStockSync() {
+		/**
+		 * This is used if you ever need to force a complete update of your stock levels to Amazon.
+		 * It will get ALL products in your store then lookup any linked ones before sending to the API.
+		 *
+		 * This call can put serious load on your server if you have a lot of products.
+		 * It will make a lot of database queries so ensure your php memory limit is set high enough.
+		 */
+		set_time_limit(0);
+
+		$product_array = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "product`")->rows;
+
+		$bulk_array = array();
+
+		foreach ($product_array as $product) {
+			$bulk_array[] = $product['product_id'];
+		}
+
+		$this->openbay->amazonus->putStockUpdateBulk($bulk_array);
+	}
 }

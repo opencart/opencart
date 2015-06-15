@@ -93,8 +93,6 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_account_mail'] = $this->language->get('entry_account_mail');
 		$data['entry_invoice_prefix'] = $this->language->get('entry_invoice_prefix');
 		$data['entry_api'] = $this->language->get('entry_api');
-		$data['entry_api_loopback'] = $this->language->get('entry_api_loopback');
-		$data['entry_api_url'] = $this->language->get('entry_api_url');
 		$data['entry_cart_weight'] = $this->language->get('entry_cart_weight');
 		$data['entry_checkout_guest'] = $this->language->get('entry_checkout_guest');
 		$data['entry_checkout'] = $this->language->get('entry_checkout');

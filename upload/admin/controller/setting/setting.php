@@ -93,6 +93,8 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_account_mail'] = $this->language->get('entry_account_mail');
 		$data['entry_invoice_prefix'] = $this->language->get('entry_invoice_prefix');
 		$data['entry_api'] = $this->language->get('entry_api');
+		$data['entry_api_loopback'] = $this->language->get('entry_api_loopback');
+		$data['entry_api_url'] = $this->language->get('entry_api_url');
 		$data['entry_cart_weight'] = $this->language->get('entry_cart_weight');
 		$data['entry_checkout_guest'] = $this->language->get('entry_checkout_guest');
 		$data['entry_checkout'] = $this->language->get('entry_checkout');
@@ -1446,31 +1448,5 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->response->setOutput($server . 'image/no_image.png');
 		}
-	}
-
-	public function country() {
-		$json = array();
-
-		$this->load->model('localisation/country');
-
-		$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
-
-		if ($country_info) {
-			$this->load->model('localisation/zone');
-
-			$json = array(
-				'country_id'        => $country_info['country_id'],
-				'name'              => $country_info['name'],
-				'iso_code_2'        => $country_info['iso_code_2'],
-				'iso_code_3'        => $country_info['iso_code_3'],
-				'address_format'    => $country_info['address_format'],
-				'postcode_required' => $country_info['postcode_required'],
-				'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
-				'status'            => $country_info['status']
-			);
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 }

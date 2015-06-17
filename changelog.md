@@ -1,5 +1,13 @@
 # OpenCart 2.0 change log
 
+## v2.0.3.2 (Pending)
+#### Bugs fixed
+* Change post to session in order API (https://github.com/opencart/opencart/issues/2712)
+* Maxmind error with unused method (https://github.com/opencart/opencart/issues/3069)
+
+#### Changes
+* Pondicherry to Puducherry in oc_zone table
+
 ## v2.0.3.1
 #### Bugs fixed
 * Safari text colour change on carousel (https://github.com/opencart/opencart/commit/2adcf21fbdf2c2d0e08860daf4012e14e24ff664)

@@ -952,11 +952,41 @@
 $('#order a[data-toggle=\'tab\']').on('click', function(e) {
 	return false;
 });
+
+// test
+$.ajax({
+	url: 'http://127.0.0.1/index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/currency&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+	type: 'post',
+	data: 'currency=' + $('select[name=\'currency\'] option:selected').val(),
+	dataType: 'json',
+	beforeSend: function() {
+		$('select[name=\'currency\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+	},	
+	complete: function() {
+		$('.fa-spin').remove();
+	},		
+	success: function(json) {
+		$('.alert, .text-danger').remove();
+		$('.form-group').removeClass('has-error');
+		
+		if (json['error']) {
+			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+		
+			// Highlight any found errors
+			$('select[name=\'currency\']').parent().parent().parent().addClass('has-error');			
+		}
+	},	
+	error: function(xhr, ajaxOptions, thrownError) {
+		alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	}
+});
+
+
 			
 // Add all products to the cart using the api
 $('#button-refresh').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/products&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
+		url: '127.0.0.1/admin/index.php?route=sale/order/api&token=<?php echo $token; ?>&api=api/cart/products&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		dataType: 'json',
 		success: function(json) {
 			$('.alert-danger, .text-danger').remove();
@@ -1756,7 +1786,7 @@ var payment_zone_id = '<?php echo $payment_zone_id; ?>';
 
 $('#tab-payment select[name=\'country_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order/country&token=<?php echo $token; ?>&country_id=' + this.value,
+		url: 'index.php?route=localisation/country/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
 			$('#tab-payment select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
@@ -1940,7 +1970,7 @@ var shipping_zone_id = '<?php echo $shipping_zone_id; ?>';
 
 $('#tab-shipping select[name=\'country_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=sale/order/country&token=<?php echo $token; ?>&country_id=' + this.value,
+		url: 'index.php?route=localisation/country/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
 			$('#tab-shipping select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');

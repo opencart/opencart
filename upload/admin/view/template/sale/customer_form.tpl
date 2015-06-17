@@ -899,7 +899,7 @@ function addAddress() {
   <script type="text/javascript"><!--
 function country(element, index, zone_id) {
 	$.ajax({
-		url: 'index.php?route=sale/customer/country&token=<?php echo $token; ?>&country_id=' + element.value,
+		url: 'index.php?route=localisation/country/country&token=<?php echo $token; ?>&country_id=' + element.value,
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'address[' + index + '][country_id]\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');

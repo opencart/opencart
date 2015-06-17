@@ -31,7 +31,7 @@ class ControllerApiOrder extends Controller {
 				}
 
 				// Shipping Method
-				if (!isset($this->request->post['shipping_method'])) {
+				if (!isset($this->session->data['shipping_method'])) {
 					$json['error'] = $this->language->get('error_shipping_method');
 				}
 			} else {
@@ -363,7 +363,7 @@ class ControllerApiOrder extends Controller {
 					}
 
 					// Shipping Method
-					if (!isset($this->request->post['shipping_method'])) {
+					if (!isset($this->session->data['shipping_method'])) {
 						$json['error'] = $this->language->get('error_shipping_method');
 					}
 				} else {

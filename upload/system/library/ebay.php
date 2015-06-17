@@ -351,7 +351,7 @@ final class Ebay {
 		$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
 		$mail->smtp_port = $this->config->get('config_mail_smtp_port');
 		$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-			
+
 		$mail->setTo($this->config->get('config_email'));
 		$mail->setFrom($this->config->get('config_email'));
 		$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
@@ -657,6 +657,14 @@ final class Ebay {
 
 								//compare the stock - if different trigger update
 								if ($ebay_variant['qty'] != $options[$option_id]['stock']) {
+									$reserve = $this->getReserve($item['productId'], $item['itemId'], $ebay_variant['sku']);
+
+									if ($reserve != false) {
+										if ($options[$option_id]['stock'] > $reserve) {
+											$options[$option_id]['stock'] = $reserve;
+										}
+									}
+
 									$this->log('putStockUpdateBulk() - Revising variant item: ' . $item['itemId'] . ',Stock: ' . $options[$option_id]['stock'] . ', SKU ' . $ebay_variant['sku']);
 									$this->call('item/reviseStock/', array('itemId' => $item['itemId'], 'stock' => $options[$option_id]['stock'], 'sku' => $ebay_variant['sku']));
 								}

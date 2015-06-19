@@ -7,6 +7,7 @@
 
 #### Changes
 * Pondicherry to Puducherry in oc_zone table
+* Amazon checkout payment module removed. Replaced with newer Login and Pay module.
 
 ## v2.0.3.1
 #### Bugs fixed

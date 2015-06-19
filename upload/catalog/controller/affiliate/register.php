@@ -17,7 +17,7 @@ class ControllerAffiliateRegister extends Controller {
 			$affiliate_id = $this->model_affiliate_affiliate->addAffiliate($this->request->post);
 
 			// Clear any previous login attempts in not registered.
-			$this->model_affiliate_affiliate->deleteLoginAttempts($this->request->post['email']);
+			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
 			
 			$this->affiliate->login($this->request->post['email'], $this->request->post['password']);
 

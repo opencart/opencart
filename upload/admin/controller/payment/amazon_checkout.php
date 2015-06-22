@@ -362,7 +362,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 	public function action() {
 		$this->load->model('sale/order');
 		$this->load->model('payment/amazon_checkout');
-		$this->load->language('sale/order');
+		$this->language->load('sale/order');
 		$this->load->language('payment/amazon_checkout');
 
 		$amazon_order_info = $this->model_payment_amazon_checkout->getOrder($this->request->get['order_id']);

@@ -3,7 +3,7 @@ class ControllerCatalogAttributeGroup extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('catalog/attribute_group');
+		$this->language->load('catalog/attribute_group');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerCatalogAttributeGroup extends Controller {
 	}
 
 	public function add() {
-		$this->load->language('catalog/attribute_group');
+		$this->language->load('catalog/attribute_group');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -45,7 +45,7 @@ class ControllerCatalogAttributeGroup extends Controller {
 	}
 
 	public function edit() {
-		$this->load->language('catalog/attribute_group');
+		$this->language->load('catalog/attribute_group');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -77,7 +77,7 @@ class ControllerCatalogAttributeGroup extends Controller {
 	}
 
 	public function delete() {
-		$this->load->language('catalog/attribute_group');
+		$this->language->load('catalog/attribute_group');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

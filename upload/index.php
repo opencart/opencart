@@ -123,7 +123,13 @@ $cache = new Cache('file');
 $registry->set('cache', $cache);
 
 // Session
-$session = new Session();
+if (isset($request->post['cookie'])) {
+	$cookie = $request->post['cookie'];
+} else {
+	$cookie = null;
+}
+
+$session = new Session($cookie);
 $registry->set('session', $session);
 
 // Language Detection

@@ -3,7 +3,7 @@ class ControllerCatalogRecurring extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('catalog/recurring');
+		$this->language->load('catalog/recurring');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerCatalogRecurring extends Controller {
 	}
 
 	public function add() {
-		$this->load->language('catalog/recurring');
+		$this->language->load('catalog/recurring');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

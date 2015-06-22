@@ -4,7 +4,7 @@ class Session {
 
 	public function __construct($session_id = '') {
 		ini_set('session.use_only_cookies', 'Off');
-		ini_set('session.use_trans_sid', 'On');
+		ini_set('session.use_trans_sid', 'Off');
 		ini_set('session.cookie_httponly', 'Off');		
 		
 		if ($session_id) {
@@ -20,7 +20,11 @@ class Session {
 	public function getId() {
 		return session_id();
 	}
-
+	
+	public function regeneratId() {
+		return regenerate_id();
+	}
+	
 	public function destroy() {
 		return session_destroy();
 	}

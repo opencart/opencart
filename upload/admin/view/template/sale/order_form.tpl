@@ -1315,6 +1315,10 @@ $('#button-customer').on('click', function() {
 		type: 'post',
 		data: $('#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'], #tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea'),
 		dataType: 'json',
+		crossDomain: true,
+		xhrFields: {
+			withCredentials: true
+		},		
 		beforeSend: function() {
 			$('#button-customer').button('loading');
 		},
@@ -1348,6 +1352,10 @@ $('#button-customer').on('click', function() {
 					type: 'post',
 					data: $('#tab-customer input[name=\'cookie\'], #cart input[name^=\'product\'][type=\'text\'], #cart input[name^=\'product\'][type=\'hidden\'], #cart input[name^=\'product\'][type=\'radio\']:checked, #cart input[name^=\'product\'][type=\'checkbox\']:checked, #cart select[name^=\'product\'], #cart textarea[name^=\'product\']'),
 					dataType: 'json',
+					crossDomain: true,
+					xhrFields: {
+						withCredentials: true
+					},							
 					beforeSend: function() {
 						$('#button-product-add').button('loading');
 					},
@@ -1372,6 +1380,10 @@ $('#button-customer').on('click', function() {
 					type: 'post',
 					data: $('#tab-customer input[name=\'cookie\'], #cart input[name^=\'voucher\'][type=\'text\'], #cart input[name^=\'voucher\'][type=\'hidden\'], #cart input[name^=\'voucher\'][type=\'radio\']:checked, #cart input[name^=\'voucher\'][type=\'checkbox\']:checked, #cart select[name^=\'voucher\'], #cart textarea[name^=\'voucher\']'),
 					dataType: 'json',
+					crossDomain: true,
+					xhrFields: {
+						withCredentials: true
+					},							
 					beforeSend: function() {
 						$('#button-voucher-add').button('loading');
 					},
@@ -1604,8 +1616,10 @@ $('#button-product-add').on('click', function() {
 		type: 'post',
 		data: $('#tab-customer input[name=\'cookie\'], #tab-product input[name=\'product_id\'], #tab-product input[name=\'quantity\'], #tab-product input[name^=\'option\'][type=\'text\'], #tab-product input[name^=\'option\'][type=\'hidden\'], #tab-product input[name^=\'option\'][type=\'radio\']:checked, #tab-product input[name^=\'option\'][type=\'checkbox\']:checked, #tab-product select[name^=\'option\'], #tab-product textarea[name^=\'option\']'),
 		dataType: 'json',
-		data: 'cookie=' + $('input[name=\'cookie\']').val(),
-		dataType: 'json',		
+		crossDomain: true,
+		xhrFields: {
+			withCredentials: true
+		},
 		beforeSend: function() {
 			$('#button-product-add').button('loading');
 		},
@@ -1657,6 +1671,10 @@ $('#button-voucher-add').on('click', function() {
 		type: 'post',
 		data: $('#tab-customer input[name=\'cookie\'], #tab-voucher input[type=\'text\'], #tab-voucher input[type=\'hidden\'], #tab-voucher input[type=\'radio\']:checked, #tab-voucher input[type=\'checkbox\']:checked, #tab-voucher select, #tab-voucher textarea'),
 		dataType: 'json',
+		crossDomain: true,
+		xhrFields: {
+			withCredentials: true
+		},		
 		beforeSend: function() {
 			$('#button-voucher-add').button('loading');
 		},
@@ -1710,6 +1728,10 @@ $('#tab-cart').delegate('.btn-danger', 'click', function() {
 		type: 'post',
 		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&key=' + encodeURIComponent(this.value),
 		dataType: 'json',
+		crossDomain: true,
+		xhrFields: {
+			withCredentials: true
+		},		
 		beforeSend: function() {
 			$(node).button('loading');
 		},
@@ -1839,6 +1861,10 @@ $('#button-payment-address').on('click', function() {
 		type: 'post',
 		data: $('#tab-customer input[name=\'cookie\'], #tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea'),
 		dataType: 'json',
+		crossDomain: true,
+		xhrFields: {
+			withCredentials: true
+		},		
 		beforeSend: function() {
 			$('#button-payment-address').button('loading');
 		},
@@ -1871,7 +1897,13 @@ $('#button-payment-address').on('click', function() {
 				// Payment Methods
 				$.ajax({
 					url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/payment/methods&token=<?php echo $token; ?>',
+					type: 'post',
+					data: 'cookie=' + $('input[name=\'cookie\']').val(),
 					dataType: 'json',
+					crossDomain: true,
+					xhrFields: {
+						withCredentials: true
+					},					
 					beforeSend: function() {
 						$('#button-payment-address i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 						$('#button-payment-address').prop('disabled', true);
@@ -2021,8 +2053,12 @@ $('#button-shipping-address').on('click', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/shipping/address&token=<?php echo $token; ?>',
 		type: 'post',
-		data: $('#tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked, #tab-shipping select, #tab-shipping textarea'),
+		data: $('#tab-customer input[name=\'cookie\'], #tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked, #tab-shipping select, #tab-shipping textarea'),
 		dataType: 'json',
+		crossDomain: true,
+		xhrFields: {
+			withCredentials: true
+		},		
 		beforeSend: function() {
 			$('#button-shipping-address').button('loading');
 		},
@@ -2055,6 +2091,8 @@ $('#button-shipping-address').on('click', function() {
 				// Shipping Methods
 				$.ajax({
 					url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/shipping/methods&token=<?php echo $token; ?>',
+					type: 'post',
+					data: 'cookie=' + $('input[name=\'cookie\']').val(),
 					dataType: 'json',
 					beforeSend: function() {
 						$('#button-shipping-address i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
@@ -2116,8 +2154,12 @@ $('#button-shipping-method').on('click', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/shipping/method&token=<?php echo $token; ?>',
 		type: 'post',
-		data: 'shipping_method=' + $('select[name=\'shipping_method\'] option:selected').val(),
+		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&shipping_method=' + $('select[name=\'shipping_method\'] option:selected').val(),
 		dataType: 'json',
+		crossDomain: true,
+		xhrFields: {
+			withCredentials: true
+		},		
 		beforeSend: function() {
 			$('#button-shipping-method').button('loading');	
 		},	
@@ -2153,8 +2195,12 @@ $('#button-payment-method').on('click', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/payment/method&token=<?php echo $token; ?>',
 		type: 'post',
-		data: 'payment_method=' + $('select[name=\'payment_method\'] option:selected').val(),
+		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&payment_method=' + $('select[name=\'payment_method\'] option:selected').val(),
 		dataType: 'json',
+		crossDomain: true,
+		xhrFields: {
+			withCredentials: true
+		},		
 		beforeSend: function() {
 			$('#button-payment-method').button('loading');
 		},	
@@ -2190,8 +2236,12 @@ $('#button-coupon').on('click', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/coupon&token=<?php echo $token; ?>',
 		type: 'post',
-		data: $('input[name=\'coupon\']'),
+		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&coupon=' + $('input[name=\'coupon\']').val(),
 		dataType: 'json',
+		crossDomain: true,
+		xhrFields: {
+			withCredentials: true
+		},		
 		beforeSend: function() {
 			$('#button-coupon').button('loading');
 		},	
@@ -2227,8 +2277,12 @@ $('#button-voucher').on('click', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/voucher&token=<?php echo $token; ?>',
 		type: 'post',
-		data: $('input[name=\'voucher\']'),
+		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&voucher=' + $('input[name=\'voucher\']').val(),
 		dataType: 'json',
+		crossDomain: true,
+		xhrFields: {
+			withCredentials: true
+		},		
 		beforeSend: function() {
 			$('#button-voucher').button('loading');
 		},	
@@ -2264,8 +2318,12 @@ $('#button-reward').on('click', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/reward&token=<?php echo $token; ?>',
 		type: 'post',
-		data: $('input[name=\'reward\']'),
+		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&reward=' + $('input[name=\'reward\']').val(),
 		dataType: 'json',
+		crossDomain: true,
+		xhrFields: {
+			withCredentials: true
+		},
 		beforeSend: function() {
 			$('#button-reward').button('loading');
 		},	
@@ -2328,16 +2386,20 @@ $('#button-save').on('click', function() {
 	var order_id = $('input[name=\'order_id\']').val();
 	
 	if (order_id == 0) {
-		var url = 'index.php?route=api/order/add&token=<?php echo $token; ?>';
+		var url = $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/order/add&token=<?php echo $token; ?>';
 	} else {
-		var url = 'index.php?route=api/order/edit&token=<?php echo $token; ?>' + '&order_id=' + order_id;
+		var url = $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/order/edit&token=<?php echo $token; ?>' + '&order_id=' + order_id;
 	}
 	
 	$.ajax({
 		url: url,
 		type: 'post',
-		data: $('#tab-total select[name=\'order_status_id\'], #tab-total select, #tab-total textarea[name=\'comment\'], #tab-total input[name=\'affiliate_id\']'),
+		data: $('#tab-customer input[name=\'cookie\'], #tab-total select[name=\'order_status_id\'], #tab-total select, #tab-total textarea[name=\'comment\'], #tab-total input[name=\'affiliate_id\']'),
 		dataType: 'json',
+		crossDomain: true,
+		xhrFields: {
+			withCredentials: true
+		},
 		beforeSend: function() {
 			$('#button-save').button('loading');	
 		},	

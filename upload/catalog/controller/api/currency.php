@@ -32,5 +32,11 @@ class ControllerApiCurrency extends Controller {
 				
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+		
+		
+		print_r($_COOKIE);
+
+		echo $this->request->post['cookie'] . "\n";
+		echo $this->session->getId();
 	}
 }

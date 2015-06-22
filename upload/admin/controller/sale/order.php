@@ -16,7 +16,7 @@ class ControllerSaleOrder extends Controller {
 		$this->load->language('sale/order');
 
 		print_r($_COOKIE);
-
+		
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('sale/order');

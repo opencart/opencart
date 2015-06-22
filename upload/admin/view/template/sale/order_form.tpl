@@ -960,13 +960,12 @@ $.ajax({
 	data: 'username=<?php echo $username; ?>&password=<?php echo $password; ?>',
 	dataType: 'json',	
 	crossDomain: true,
-	xhrFields: {
-		withCredentials: true
-	},	
-	success: function(json) {
+	success: function(json) {	
+		console.log(json);
+				
 		if (json['cookie']) {
 			$('input[name=\'cookie\']').val(json['cookie']);
-			
+						
 			$('select[name=\'currency\']').trigger('change');
 		}
 		
@@ -986,10 +985,7 @@ $('select[name=\'currency\']').on('change', function() {
 		type: 'post',
 		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&currency=' + $('select[name=\'currency\'] option:selected').val(),
 		dataType: 'json',
-		crossDomain: true,
-		xhrFields: {
-			withCredentials: true
-		},
+		crossDomain: false,
 		beforeSend: function() {
 			$('select[name=\'currency\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
 		},	
@@ -1021,9 +1017,6 @@ $('#button-refresh').on('click', function() {
 		data: 'cookie=' + $('input[name=\'cookie\']').val(),
 		dataType: 'json',
 		crossDomain: true,
-		xhrFields: {
-			withCredentials: true
-		},		
 		success: function(json) {
 			$('.alert-danger, .text-danger').remove();
 			
@@ -1239,7 +1232,7 @@ $('input[name=\'customer\']').autocomplete({
 	},
 	'select': function(item) {
 		// Reset all custom fields
-		$('#tab-customer input[type=\'text\'], #tab-customer input[type=\'text\'], #tab-customer textarea').not('#tab-customer input[name=\'customer\'], #tab-customer input[name=\'customer_id\']').val('');
+		$('#tab-customer input[type=\'text\'], #tab-customer textarea').not('#tab-customer input[name=\'customer\'], #tab-customer input[name=\'customer_id\']').val('');
 		$('#tab-customer select option').removeAttr('selected');
 		$('#tab-customer input[type=\'checkbox\'], #tab-customer input[type=\'radio\']').removeAttr('checked');
 		
@@ -1316,9 +1309,6 @@ $('#button-customer').on('click', function() {
 		data: $('#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'], #tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea'),
 		dataType: 'json',
 		crossDomain: true,
-		xhrFields: {
-			withCredentials: true
-		},		
 		beforeSend: function() {
 			$('#button-customer').button('loading');
 		},
@@ -1352,10 +1342,7 @@ $('#button-customer').on('click', function() {
 					type: 'post',
 					data: $('#tab-customer input[name=\'cookie\'], #cart input[name^=\'product\'][type=\'text\'], #cart input[name^=\'product\'][type=\'hidden\'], #cart input[name^=\'product\'][type=\'radio\']:checked, #cart input[name^=\'product\'][type=\'checkbox\']:checked, #cart select[name^=\'product\'], #cart textarea[name^=\'product\']'),
 					dataType: 'json',
-					crossDomain: true,
-					xhrFields: {
-						withCredentials: true
-					},							
+					crossDomain: true,						
 					beforeSend: function() {
 						$('#button-product-add').button('loading');
 					},
@@ -1380,10 +1367,7 @@ $('#button-customer').on('click', function() {
 					type: 'post',
 					data: $('#tab-customer input[name=\'cookie\'], #cart input[name^=\'voucher\'][type=\'text\'], #cart input[name^=\'voucher\'][type=\'hidden\'], #cart input[name^=\'voucher\'][type=\'radio\']:checked, #cart input[name^=\'voucher\'][type=\'checkbox\']:checked, #cart select[name^=\'voucher\'], #cart textarea[name^=\'voucher\']'),
 					dataType: 'json',
-					crossDomain: true,
-					xhrFields: {
-						withCredentials: true
-					},							
+					crossDomain: true,					
 					beforeSend: function() {
 						$('#button-voucher-add').button('loading');
 					},
@@ -1617,9 +1601,6 @@ $('#button-product-add').on('click', function() {
 		data: $('#tab-customer input[name=\'cookie\'], #tab-product input[name=\'product_id\'], #tab-product input[name=\'quantity\'], #tab-product input[name^=\'option\'][type=\'text\'], #tab-product input[name^=\'option\'][type=\'hidden\'], #tab-product input[name^=\'option\'][type=\'radio\']:checked, #tab-product input[name^=\'option\'][type=\'checkbox\']:checked, #tab-product select[name^=\'option\'], #tab-product textarea[name^=\'option\']'),
 		dataType: 'json',
 		crossDomain: true,
-		xhrFields: {
-			withCredentials: true
-		},
 		beforeSend: function() {
 			$('#button-product-add').button('loading');
 		},
@@ -1671,10 +1652,7 @@ $('#button-voucher-add').on('click', function() {
 		type: 'post',
 		data: $('#tab-customer input[name=\'cookie\'], #tab-voucher input[type=\'text\'], #tab-voucher input[type=\'hidden\'], #tab-voucher input[type=\'radio\']:checked, #tab-voucher input[type=\'checkbox\']:checked, #tab-voucher select, #tab-voucher textarea'),
 		dataType: 'json',
-		crossDomain: true,
-		xhrFields: {
-			withCredentials: true
-		},		
+		crossDomain: true,	
 		beforeSend: function() {
 			$('#button-voucher-add').button('loading');
 		},
@@ -1729,9 +1707,6 @@ $('#tab-cart').delegate('.btn-danger', 'click', function() {
 		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&key=' + encodeURIComponent(this.value),
 		dataType: 'json',
 		crossDomain: true,
-		xhrFields: {
-			withCredentials: true
-		},		
 		beforeSend: function() {
 			$(node).button('loading');
 		},
@@ -1862,9 +1837,6 @@ $('#button-payment-address').on('click', function() {
 		data: $('#tab-customer input[name=\'cookie\'], #tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea'),
 		dataType: 'json',
 		crossDomain: true,
-		xhrFields: {
-			withCredentials: true
-		},		
 		beforeSend: function() {
 			$('#button-payment-address').button('loading');
 		},
@@ -1900,10 +1872,7 @@ $('#button-payment-address').on('click', function() {
 					type: 'post',
 					data: 'cookie=' + $('input[name=\'cookie\']').val(),
 					dataType: 'json',
-					crossDomain: true,
-					xhrFields: {
-						withCredentials: true
-					},					
+					crossDomain: true,				
 					beforeSend: function() {
 						$('#button-payment-address i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 						$('#button-payment-address').prop('disabled', true);
@@ -2056,9 +2025,6 @@ $('#button-shipping-address').on('click', function() {
 		data: $('#tab-customer input[name=\'cookie\'], #tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked, #tab-shipping select, #tab-shipping textarea'),
 		dataType: 'json',
 		crossDomain: true,
-		xhrFields: {
-			withCredentials: true
-		},		
 		beforeSend: function() {
 			$('#button-shipping-address').button('loading');
 		},
@@ -2157,9 +2123,6 @@ $('#button-shipping-method').on('click', function() {
 		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&shipping_method=' + $('select[name=\'shipping_method\'] option:selected').val(),
 		dataType: 'json',
 		crossDomain: true,
-		xhrFields: {
-			withCredentials: true
-		},		
 		beforeSend: function() {
 			$('#button-shipping-method').button('loading');	
 		},	
@@ -2198,9 +2161,6 @@ $('#button-payment-method').on('click', function() {
 		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&payment_method=' + $('select[name=\'payment_method\'] option:selected').val(),
 		dataType: 'json',
 		crossDomain: true,
-		xhrFields: {
-			withCredentials: true
-		},		
 		beforeSend: function() {
 			$('#button-payment-method').button('loading');
 		},	
@@ -2239,9 +2199,6 @@ $('#button-coupon').on('click', function() {
 		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&coupon=' + $('input[name=\'coupon\']').val(),
 		dataType: 'json',
 		crossDomain: true,
-		xhrFields: {
-			withCredentials: true
-		},		
 		beforeSend: function() {
 			$('#button-coupon').button('loading');
 		},	
@@ -2279,10 +2236,7 @@ $('#button-voucher').on('click', function() {
 		type: 'post',
 		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&voucher=' + $('input[name=\'voucher\']').val(),
 		dataType: 'json',
-		crossDomain: true,
-		xhrFields: {
-			withCredentials: true
-		},		
+		crossDomain: true,	
 		beforeSend: function() {
 			$('#button-voucher').button('loading');
 		},	
@@ -2321,9 +2275,6 @@ $('#button-reward').on('click', function() {
 		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&reward=' + $('input[name=\'reward\']').val(),
 		dataType: 'json',
 		crossDomain: true,
-		xhrFields: {
-			withCredentials: true
-		},
 		beforeSend: function() {
 			$('#button-reward').button('loading');
 		},	
@@ -2397,9 +2348,6 @@ $('#button-save').on('click', function() {
 		data: $('#tab-customer input[name=\'cookie\'], #tab-total select[name=\'order_status_id\'], #tab-total select, #tab-total textarea[name=\'comment\'], #tab-total input[name=\'affiliate_id\']'),
 		dataType: 'json',
 		crossDomain: true,
-		xhrFields: {
-			withCredentials: true
-		},
 		beforeSend: function() {
 			$('#button-save').button('loading');	
 		},	

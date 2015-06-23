@@ -3,7 +3,7 @@ class Session {
 	public $data = array();
 
 	public function __construct($session_id = '') {
-		ini_set('session.use_only_cookies', 'Off');
+		ini_set('session.use_only_cookies', 'On');
 		ini_set('session.use_cookies', 'On');
 		ini_set('session.use_trans_sid', 'Off');
 		ini_set('session.cookie_httponly', 'On');

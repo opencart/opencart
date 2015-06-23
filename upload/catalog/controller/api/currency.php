@@ -4,10 +4,6 @@ class ControllerApiCurrency extends Controller {
 		$this->load->language('api/currency');
 
 		$json = array();
-
-		print_r($_COOKIE);
-		
-		echo 'post: ' . $_POST['cookie'] . "\n";
 		
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');

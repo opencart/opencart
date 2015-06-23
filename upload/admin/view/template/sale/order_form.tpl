@@ -2334,12 +2334,10 @@ $('input[name=\'affiliate\']').autocomplete({
 
 // Checkout
 $('#button-save').on('click', function() {
-	var order_id = $('input[name=\'order_id\']').val();
-	
-	if (order_id == 0) {
+	if ($('input[name=\'order_id\']').val() == 0) {
 		var url = $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/order/add&token=<?php echo $token; ?>';
 	} else {
-		var url = $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/order/edit&token=<?php echo $token; ?>' + '&order_id=' + order_id;
+		var url = $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/order/edit&token=<?php echo $token; ?>' + '&order_id=' + $('input[name=\'order_id\']').val();
 	}
 	
 	$.ajax({

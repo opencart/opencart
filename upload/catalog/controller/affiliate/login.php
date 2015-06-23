@@ -120,7 +120,8 @@ class ControllerAffiliateLogin extends Controller {
 
 	protected function validate() {
 		// Check how many login attempts have been made.
-		$login_info = $this->model_affiliate_affiliate->getLoginAttempts($this->request->post['email']);
+        $this->load->model('account/customer');
+		$login_info = $this->model_account_customer->getLoginAttempts($this->request->post['email']);
 				
 		if ($login_info && ($login_info['total'] >= $this->config->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
 			$this->error['warning'] = $this->language->get('error_attempts');
@@ -137,9 +138,9 @@ class ControllerAffiliateLogin extends Controller {
 			if (!$this->affiliate->login($this->request->post['email'], $this->request->post['password'])) {
 				$this->error['warning'] = $this->language->get('error_login');
 			
-				$this->model_affiliate_affiliate->addLoginAttempt($this->request->post['email']);
+				$this->model_account_customer->addLoginAttempt($this->request->post['email']);
 			} else {
-				$this->model_affiliate_affiliate->deleteLoginAttempts($this->request->post['email']);
+				$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
 			}
 		}
 		

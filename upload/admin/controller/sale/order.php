@@ -472,6 +472,7 @@ class ControllerSaleOrder extends Controller {
 
 		$data['cancel'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		
+		// API Login
 		$this->load->model('user/api');
 
 		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
@@ -1191,6 +1192,19 @@ class ControllerSaleOrder extends Controller {
 
 			$data['order_status_id'] = $order_info['order_status_id'];
 
+			// API Login
+			$this->load->model('user/api');
+		
+			$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
+		
+			if ($api_info) {
+				$data['username'] = $api_info['username']; 
+				$data['password'] = $api_info['password'];
+			} else {
+				$data['username'] = '';
+				$data['password'] = '';
+			}
+		
 			$data['payment_action'] = $this->load->controller('payment/' . $order_info['payment_code'] . '/action');
 
 			$data['frauds'] = array();

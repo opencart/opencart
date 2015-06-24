@@ -270,6 +270,10 @@ class Cart {
 
 		return $this->data;
 	}
+	
+	public function getCart() {
+		return $this->session->data['cart'];
+	}
 
 	public function getRecurringProducts() {
 		$recurring_products = array();

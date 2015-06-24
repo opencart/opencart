@@ -961,8 +961,6 @@ $.ajax({
 	dataType: 'json',	
 	crossDomain: true,
 	success: function(json) {	
-		console.log(json);
-				
 		if (json['cookie']) {
 			$('input[name=\'cookie\']').val(json['cookie']);
 						

@@ -133,5 +133,4 @@ $_['entry_date_modified']      = 'Date Modified';
 // Error
 $_['error_warning']            = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']         = 'Warning: You do not have permission to modify orders!';
-$_['error_curl']               = 'Warning: CURL error %s(%s)!';
 $_['error_action']             = 'Warning: Could not complete this action!';

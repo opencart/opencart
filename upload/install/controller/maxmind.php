@@ -3,7 +3,7 @@ class ControllerMaxmind extends Controller {
 	private $error = array();
 
 	public function index() {
-		$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+		$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$db->query("REPLACE INTO `" . DB_PREFIX . "setting` SET `config_fraud_status_id` = '1', `config_fraud_score` = '" . (int)$this->request->post['config_fraud_score'] . "', `config_fraud_key` = '" . $db->escape($this->request->post['config_fraud_score']) . "', `config_fraud_detection` = '" . (int)$this->request->post['config_fraud_detection'] . "' WHERE `store_id` = '0' AND `code` = 'config'");

@@ -50,16 +50,19 @@ class ModelInstall extends Model {
 			$db->query("UPDATE `" . $data['db_prefix'] . "product` SET `viewed` = '0'");
 
 			// create order API user
-			$characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+			$string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+			
 			$api_username = '';
-			$api_password = '';
+			
 
 			for ($i = 0; $i < 64; $i++) {
-				$api_username .= $characters[rand(0, strlen($characters) - 1)];
+				$api_username .= $string[rand(0, strlen($string) - 1)];
 			}
 
+			$api_password = '';
+
 			for ($i = 0; $i < 256; $i++) {
-				$api_password .= $characters[rand(0, strlen($characters) - 1)];
+				$api_password .= $string[rand(0, strlen($string) - 1)];
 			}
 
 			$db->query("INSERT INTO `" . $data['db_prefix'] . "api` SET username = '" . $db->escape($api_username) . "', `password` = '" . $db->escape($api_password) . "', status = 1, date_added = NOW(), date_modified = NOW()");

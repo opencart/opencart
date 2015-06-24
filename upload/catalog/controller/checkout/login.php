@@ -106,6 +106,7 @@ class ControllerCheckoutLogin extends Controller {
 				}
 			}
 			
+			// Default Shipping Address
 			$this->load->model('account/address');
 
 			if ($this->config->get('config_tax_customer') == 'payment') {
@@ -115,8 +116,6 @@ class ControllerCheckoutLogin extends Controller {
 			if ($this->config->get('config_tax_customer') == 'shipping') {
 				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 			}
-
-			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
 
 			// Add to activity log
 			$this->load->model('account/activity');
@@ -130,6 +129,8 @@ class ControllerCheckoutLogin extends Controller {
 			
 			// Trigger customer post login event
 			$this->event->trigger('post.customer.login');
+			
+			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

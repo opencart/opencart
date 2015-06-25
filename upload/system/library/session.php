@@ -3,11 +3,11 @@ class Session {
 	public $data = array();
 
 	public function __construct($session_id = '') {
-		if ($session_id) {
-			session_id($session_id);
-		}
-		
 		if (!session_id()) {
+			if ($session_id) {
+				session_id($session_id);
+			}			
+			
 			ini_set('session.use_only_cookies', 'On');
 			ini_set('session.use_cookies', 'On');
 			ini_set('session.use_trans_sid', 'Off');
@@ -15,7 +15,7 @@ class Session {
 			
 			session_set_cookie_params(0, '/');
 			session_start();
-		}
+		}	
 		
 		$this->data =& $_SESSION;
 	}

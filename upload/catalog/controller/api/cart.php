@@ -28,10 +28,10 @@ class ControllerApiCart extends Controller {
 				$product_info = $this->model_catalog_product->getProduct($this->request->post['product_id']);
 
 				if ($product_info) {
-					if (isset($this->request->post['quantity'])) {
+					if (isset($this->request->post['quantity']) && ($this->request->post['quantity'] >= $product_info['minimum'])) {
 						$quantity = $this->request->post['quantity'];
 					} else {
-						$quantity = 1;
+						$quantity = $product_info['minimum'] ? $product_info['minimum'] : 1;
 					}
 
 					if (isset($this->request->post['option'])) {

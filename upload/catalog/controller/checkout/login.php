@@ -88,10 +88,21 @@ class ControllerCheckoutLogin extends Controller {
 			
 			// Restore customers cart
 			if ($this->customer->getCart()) {
-				foreach ($this->customer->getCart() as $key => $value) {
-					$this->cart->add($key, $value);
+				foreach ($this->customer->getCart() as $key => $quantity) {
+					$product = unserialize(base64_decode($key));
+					
+					if (!empty($product['option'])) {
+						$options = $product['option'];
+					} else {
+						$options = array();
+					}
+					
+					$this->cart->add($product['product_id'], $quantity, $options);
 				}
 			}
+			
+			// Edit customers cart if there already products in cart
+			$this->model_account_customer->editCart($this->cart->getCart());
 			
 			// Restore customers wish list
 			if ($this->customer->getWishlist()) {

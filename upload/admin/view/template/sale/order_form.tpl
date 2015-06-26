@@ -957,7 +957,7 @@ $('#order a[data-toggle=\'tab\']').on('click', function(e) {
 $.ajax({
 	url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/login',
 	type: 'post',
-	data: 'username=<?php echo $username; ?>&password=<?php echo $password; ?>',
+	data: 'token=<?php echo $token; ?>',
 	dataType: 'json',	
 	crossDomain: true,
 	success: function(json) {	

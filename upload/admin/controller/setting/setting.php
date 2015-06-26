@@ -92,7 +92,6 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_account'] = $this->language->get('entry_account');
 		$data['entry_account_mail'] = $this->language->get('entry_account_mail');
 		$data['entry_invoice_prefix'] = $this->language->get('entry_invoice_prefix');
-		$data['entry_api'] = $this->language->get('entry_api');
 		$data['entry_cart_weight'] = $this->language->get('entry_cart_weight');
 		$data['entry_checkout_guest'] = $this->language->get('entry_checkout_guest');
 		$data['entry_checkout'] = $this->language->get('entry_checkout');
@@ -100,6 +99,7 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_processing_status'] = $this->language->get('entry_processing_status');
 		$data['entry_complete_status'] = $this->language->get('entry_complete_status');
 		$data['entry_order_mail'] = $this->language->get('entry_order_mail');
+		$data['entry_api'] = $this->language->get('entry_api');
 		$data['entry_stock_display'] = $this->language->get('entry_stock_display');
 		$data['entry_stock_warning'] = $this->language->get('entry_stock_warning');
 		$data['entry_stock_checkout'] = $this->language->get('entry_stock_checkout');
@@ -181,7 +181,6 @@ class ControllerSettingSetting extends Controller {
 		$data['help_login_attempts'] = $this->language->get('help_login_attempts');
 		$data['help_account'] = $this->language->get('help_account');
 		$data['help_account_mail'] = $this->language->get('help_account_mail');
-		$data['help_api'] = $this->language->get('help_api');
 		$data['help_cart_weight'] = $this->language->get('help_cart_weight');
 		$data['help_checkout_guest'] = $this->language->get('help_checkout_guest');
 		$data['help_checkout'] = $this->language->get('help_checkout');
@@ -190,6 +189,7 @@ class ControllerSettingSetting extends Controller {
 		$data['help_processing_status'] = $this->language->get('help_processing_status');
 		$data['help_complete_status'] = $this->language->get('help_complete_status');
 		$data['help_order_mail'] = $this->language->get('help_order_mail');
+		$data['help_api'] = $this->language->get('help_api');
 		$data['help_stock_display'] = $this->language->get('help_stock_display');
 		$data['help_stock_warning'] = $this->language->get('help_stock_warning');
 		$data['help_stock_checkout'] = $this->language->get('help_stock_checkout');
@@ -789,16 +789,6 @@ class ControllerSettingSetting extends Controller {
 			$data['config_account_mail'] = $this->config->get('config_account_mail');
 		}
 
-		if (isset($this->request->post['config_api_id'])) {
-			$data['config_api_id'] = $this->request->post['config_api_id'];
-		} else {
-			$data['config_api_id'] = $this->config->get('config_api_id');
-		}
-
-		$this->load->model('user/api');
-
-		$data['apis'] = $this->model_user_api->getApis();
-
 		if (isset($this->request->post['config_cart_weight'])) {
 			$data['config_cart_weight'] = $this->request->post['config_cart_weight'];
 		} else {
@@ -856,6 +846,16 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_order_mail'] = $this->config->get('config_order_mail');
 		}
+
+		if (isset($this->request->post['config_api_id'])) {
+			$data['config_api_id'] = $this->request->post['config_api_id'];
+		} else {
+			$data['config_api_id'] = $this->config->get('config_api_id');
+		}
+
+		$this->load->model('user/api');
+
+		$data['apis'] = $this->model_user_api->getApis();
 
 		if (isset($this->request->post['config_stock_display'])) {
 			$data['config_stock_display'] = $this->request->post['config_stock_display'];

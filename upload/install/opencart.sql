@@ -132,6 +132,7 @@ CREATE TABLE IF NOT EXISTS `oc_api` (
   `lastname` varchar(64) NOT NULL,
   `password` text NOT NULL,
   `status` tinyint(1) NOT NULL,
+  `token` text NOT NULL,
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
   PRIMARY KEY (`api_id`)
@@ -1032,7 +1033,7 @@ CREATE TABLE IF NOT EXISTS `oc_customer` (
   `status` tinyint(1) NOT NULL,
   `approved` tinyint(1) NOT NULL,
   `safe` tinyint(1) NOT NULL,
-  `token` varchar(255) NOT NULL,
+  `token` text NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;

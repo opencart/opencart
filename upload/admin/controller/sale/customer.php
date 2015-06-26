@@ -1448,16 +1448,14 @@ class ControllerSaleCustomer extends Controller {
 
 		$json = array();
 
-		if (isset($this->request->post['ip'])) {
-			if (!$this->user->hasPermission('modify', 'sale/customer')) {
-				$json['error'] = $this->language->get('error_permission');
-			} else {
-				$this->load->model('sale/customer');
+		if (!$this->user->hasPermission('modify', 'sale/customer')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('sale/customer');
 
-				$this->model_sale_customer->addBanIp($this->request->post['ip']);
+			$this->model_sale_customer->addBanIp($this->request->post['ip']);
 
-				$json['success'] = $this->language->get('text_success');
-			}
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -1469,16 +1467,14 @@ class ControllerSaleCustomer extends Controller {
 
 		$json = array();
 
-		if (isset($this->request->post['ip'])) {
-			if (!$this->user->hasPermission('modify', 'sale/customer')) {
-				$json['error'] = $this->language->get('error_permission');
-			} else {
-				$this->load->model('sale/customer');
+		if (!$this->user->hasPermission('modify', 'sale/customer')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('sale/customer');
 
-				$this->model_sale_customer->removeBanIp($this->request->post['ip']);
+			$this->model_sale_customer->removeBanIp($this->request->post['ip']);
 
-				$json['success'] = $this->language->get('text_success');
-			}
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -86,8 +86,6 @@ class ControllerCheckoutLogin extends Controller {
 			// Unset guest
 			unset($this->session->data['guest']);
 
-			$has_products = $this->cart->hasProducts();
-
 			// Restore customers cart
 			if ($this->customer->getCart()) {
 				foreach ($this->customer->getCart() as $key => $quantity) {
@@ -103,9 +101,7 @@ class ControllerCheckoutLogin extends Controller {
 				}
 			}
 
-			if ($has_products) {
-				$this->model_account_customer->editCart($this->cart->getCart());
-			}
+			$this->model_account_customer->editCart($this->cart->getCart());
 
 			// Restore customers wish list
 			if ($this->customer->getWishlist()) {

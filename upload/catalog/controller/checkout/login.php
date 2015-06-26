@@ -85,7 +85,9 @@ class ControllerCheckoutLogin extends Controller {
 			
 			// Unset guest
 			unset($this->session->data['guest']);
-			
+
+			$has_products = $this->cart->hasProducts();
+
 			// Restore customers cart
 			if ($this->customer->getCart()) {
 				foreach ($this->customer->getCart() as $key => $quantity) {
@@ -100,10 +102,11 @@ class ControllerCheckoutLogin extends Controller {
 					$this->cart->add($product['product_id'], $quantity, $options);
 				}
 			}
-			
-			// Edit customers cart if there already products in cart
-			$this->model_account_customer->editCart($this->cart->getCart());
-			
+
+			if ($has_products) {
+				$this->model_account_customer->editCart($this->cart->getCart());
+			}
+
 			// Restore customers wish list
 			if ($this->customer->getWishlist()) {
 				if (!isset($this->session->data['wishlist'])) {

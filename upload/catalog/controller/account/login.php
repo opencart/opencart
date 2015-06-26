@@ -56,6 +56,8 @@ class ControllerAccountLogin extends Controller {
 
 			// Unset guest
 			unset($this->session->data['guest']);
+			
+			$has_products = $this->cart->hasProducts();
 
 			// Restore customers cart
 			if ($this->customer->getCart()) {
@@ -72,8 +74,9 @@ class ControllerAccountLogin extends Controller {
 				}
 			}
 			
-			// Edit customers cart if there already products in cart
-			$this->model_account_customer->editCart($this->cart->getCart());
+			if ($has_products) {
+				$this->model_account_customer->editCart($this->cart->getCart());
+			}
 			
 			// Restore customers wish list
 			if ($this->customer->getWishlist()) {

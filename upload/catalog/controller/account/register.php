@@ -27,6 +27,10 @@ class ControllerAccountRegister extends Controller {
 
 			unset($this->session->data['guest']);
 
+			if ($this->cart->hasProducts()) {
+				$this->model_account_customer->editCart($this->cart->getCart());
+			}
+
 			// Add to activity log
 			$this->load->model('account/activity');
 

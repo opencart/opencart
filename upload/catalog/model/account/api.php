@@ -5,4 +5,12 @@ class ModelAccountApi extends Model {
 
 		return $query->row;
 	}
+	
+	public function getApiByToken($token) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "api` WHERE token = '" . $this->db->escape($token) . "' AND token != ''");
+
+		$this->db->query("UPDATE " . DB_PREFIX . "api SET token = ''");
+
+		return $query->row;
+	}	
 }

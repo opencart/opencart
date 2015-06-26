@@ -21,14 +21,20 @@ class ControllerApiLogin extends Controller {
 
 		$this->load->model('account/api');
 
-		$api_info = $this->model_account_api->login($this->request->post['username'], $this->request->post['password']);
+		if (!empty($this->request->get['token'])) {
+			// Login by token
+			$api_info = $this->model_account_api->getApiByToken($this->request->get['token']);
+		} else {
+			// Login with username and password
+			$api_info = $this->model_account_api->login($this->request->post['username'], $this->request->post['password']);
+		}		
 
 		if ($api_info) {
+			$json['success'] = $this->language->get('text_success');
+			
 			$this->session->data['api_id'] = $api_info['api_id'];
 			
 			$json['cookie'] = $this->session->getId();
-
-			$json['success'] = $this->language->get('text_success');
 		} else {
 			$json['error'] = $this->language->get('error_login');
 		}

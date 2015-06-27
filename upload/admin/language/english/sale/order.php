@@ -32,16 +32,7 @@ $_['text_user_agent']          = 'User Agent:';
 $_['text_accept_language']     = 'Accept Language:';
 $_['text_date_added']          = 'Date Added:';
 $_['text_date_modified']       = 'Date Modified:';
-$_['text_firstname']           = 'First Name:';
-$_['text_lastname']            = 'Last Name:';
-$_['text_company']             = 'Company:';
-$_['text_address_1']           = 'Address 1:';
-$_['text_address_2']           = 'Address 2:';
-$_['text_postcode']            = 'Postcode:';
-$_['text_city']                = 'City:';
-$_['text_zone']                = 'Region / State:';
-$_['text_zone_code']           = 'Region / State Code:';
-$_['text_country']             = 'Country:';
+
 $_['text_invoice']             = 'Invoice';
 $_['text_from']                = 'Shipping From';
 $_['text_to']                  = 'To';
@@ -133,5 +124,4 @@ $_['entry_date_modified']      = 'Date Modified';
 // Error
 $_['error_warning']            = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']         = 'Warning: You do not have permission to modify orders!';
-$_['error_curl']               = 'Warning: CURL error %s(%s)!';
 $_['error_action']             = 'Warning: Could not complete this action!';

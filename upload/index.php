@@ -28,7 +28,7 @@ $config = new Config();
 $registry->set('config', $config);
 
 // Database
-$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
 $registry->set('db', $db);
 
 // Store
@@ -123,7 +123,13 @@ $cache = new Cache('file');
 $registry->set('cache', $cache);
 
 // Session
-$session = new Session();
+if (isset($request->post['cookie'])) {
+	$cookie = $request->post['cookie'];
+} else {
+	$cookie = null;
+}
+
+$session = new Session($cookie);
 $registry->set('session', $session);
 
 // Language Detection

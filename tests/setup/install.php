@@ -17,7 +17,7 @@ require(CONFIG_ADMIN);
 require(DIR_SYSTEM . 'library/db.php');
 require(DIR_SYSTEM . 'library/db/' . DB_DRIVER . '.php');
 
-$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
 
 /**
  * Store settings configuration

@@ -1,12 +1,9 @@
 <?php
 class Cart {
-	private $config;
-	private $db;
 	private $data = array();
 
 	public function __construct($registry) {
 		$this->config = $registry->get('config');
-		$this->customer = $registry->get('customer');
 		$this->session = $registry->get('session');
 		$this->db = $registry->get('db');
 		$this->tax = $registry->get('tax');
@@ -272,6 +269,10 @@ class Cart {
 		}
 
 		return $this->data;
+	}
+	
+	public function getCart() {
+		return $this->session->data['cart'];
 	}
 
 	public function getRecurringProducts() {

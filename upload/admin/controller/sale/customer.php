@@ -1158,8 +1158,15 @@ class ControllerSaleCustomer extends Controller {
 		$customer_info = $this->model_sale_customer->getCustomer($customer_id);
 
 		if ($customer_info) {
-			$token = md5(mt_rand());
-
+			// Create token to login with
+			$string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+			
+			$token = '';
+			
+			for ($i = 0; $i < 64; $i++) {
+				$token .= $string[rand(0, strlen($string) - 1)];
+			}
+			
 			$this->model_sale_customer->editToken($customer_id, $token);
 
 			if (isset($this->request->get['store_id'])) {
@@ -1441,16 +1448,14 @@ class ControllerSaleCustomer extends Controller {
 
 		$json = array();
 
-		if (isset($this->request->post['ip'])) {
-			if (!$this->user->hasPermission('modify', 'sale/customer')) {
-				$json['error'] = $this->language->get('error_permission');
-			} else {
-				$this->load->model('sale/customer');
+		if (!$this->user->hasPermission('modify', 'sale/customer')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('sale/customer');
 
-				$this->model_sale_customer->addBanIp($this->request->post['ip']);
+			$this->model_sale_customer->addBanIp($this->request->post['ip']);
 
-				$json['success'] = $this->language->get('text_success');
-			}
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -1462,16 +1467,14 @@ class ControllerSaleCustomer extends Controller {
 
 		$json = array();
 
-		if (isset($this->request->post['ip'])) {
-			if (!$this->user->hasPermission('modify', 'sale/customer')) {
-				$json['error'] = $this->language->get('error_permission');
-			} else {
-				$this->load->model('sale/customer');
+		if (!$this->user->hasPermission('modify', 'sale/customer')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('sale/customer');
 
-				$this->model_sale_customer->removeBanIp($this->request->post['ip']);
+			$this->model_sale_customer->removeBanIp($this->request->post['ip']);
 
-				$json['success'] = $this->language->get('text_success');
-			}
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

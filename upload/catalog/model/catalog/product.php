@@ -291,6 +291,33 @@ class ModelCatalogProduct extends Model {
 
 		return $product_data;
 	}
+	
+	public function getTopRatedProducts($limit) {
+		$product_data = $this->cache->get('product.toprated.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit);
+
+		if (!$product_data) {
+			$product_data = array();
+
+			$query = $this->db->query("SELECT p.product_id, AVG(r.rating) AS aggrating, COUNT(r.rating) AS totalreviews FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "review r ON (p.product_id = r.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) WHERE p.status = '1' AND r.status = '1' AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "' GROUP BY r.product_id ORDER BY aggrating DESC, totalreviews DESC LIMIT " . (int)$limit);
+
+			foreach ($query->rows as $result) {
+				$product_data[$result['product_id']] = $this->getProduct($result['product_id']);
+			}
+
+			$this->cache->set('product.toprated.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id') . '.' . $this->config->get('config_customer_group_id') . '.' . (int)$limit, $product_data);
+		}
+
+		return $product_data;
+	}
+	
+	        public function getAggResults() {						
+		$query = $this->db->query("SELECT AVG(r.`rating`) AS overallrating, COUNT(r.`rating`) AS overallreviews FROM `" . DB_PREFIX . "review` r, `" . DB_PREFIX . "product` p  WHERE r.`status` = 1 AND p.`product_id` = r.`product_id` AND p.`status` = 1" );
+		foreach ($query->rows as $result) {  	
+			$overallrating = $result['overallrating'];
+			$overallreviews = $result['overallreviews'];
+		}
+		return array ($overallreviews,$overallrating);
+	}
 
 	public function getProductAttributes($product_id) {
 		$product_attribute_group_data = array();

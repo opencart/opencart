@@ -97,6 +97,7 @@ $_['button_apply']                  = 'Apply';
 
 // Tab
 $_['tab_address']                   = 'Address';
+$_['tab_additional']                = 'Additional';
 $_['tab_admin']                     = 'Admin';
 $_['tab_attribute']                 = 'Attribute';
 $_['tab_customer']                  = 'Customer Details';

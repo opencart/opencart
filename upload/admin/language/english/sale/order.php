@@ -12,20 +12,18 @@ $_['text_invoice_no']          = 'Invoice No.:';
 $_['text_invoice_date']        = 'Invoice Date:';
 $_['text_store_name']          = 'Store Name:';
 $_['text_store_url']           = 'Store Url:';
-$_['text_customer']            = 'Customer:';
-$_['text_customer_group']      = 'Customer Group:';
 $_['text_email']               = 'E-Mail:';
 $_['text_telephone']           = 'Telephone:';
 $_['text_fax']                 = 'Fax:';
 $_['text_website']             = 'Web Site:';
-$_['text_shipping_method']     = 'Shipping Method:';
-$_['text_payment_method']      = 'Payment Method:';
-$_['text_total']               = 'Total:';
-$_['text_reward']              = 'Reward Points:';
+$_['text_affiliate']           = 'Affiliate';
+$_['text_reward']              = 'Reward Points';
 $_['text_order_status']        = 'Order Status:';
-$_['text_comment']             = 'Comment:';
-$_['text_affiliate']           = 'Affiliate:';
-$_['text_commission']          = 'Commission:';
+
+$_['text_comment']             = 'Customer Comment';
+$_['text_commission']          = 'Commission';
+
+
 $_['text_ip']                  = 'IP Address:';
 $_['text_forwarded_ip']        = 'Forwarded IP:';
 $_['text_user_agent']          = 'User Agent:';
@@ -34,9 +32,14 @@ $_['text_date_added']          = 'Date Added:';
 $_['text_date_modified']       = 'Date Modified:';
 
 $_['text_invoice']             = 'Invoice';
-$_['text_from']                = 'Shipping From';
-$_['text_to']                  = 'To';
-$_['text_ship_to']             = 'Ship To (if different address)';
+
+$_['text_payment_address']     = 'Payment Address';
+$_['text_shipping_address']    = 'Shipping Adress';
+$_['text_shipping_method']     = 'Shipping Method:';
+$_['text_payment_method']      = 'Payment Method:';
+
+
+
 $_['text_missing']             = 'Missing Orders';
 $_['text_default']             = 'Default';
 $_['text_product']             = 'Add Product(s)';

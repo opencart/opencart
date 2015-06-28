@@ -14,9 +14,54 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_order_detail; ?></h3>
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_order; ?></h3>
       </div>
-      <div class="panel-body"> Invoice: #121212 | Date: 04/04/2014
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-sm-3">
+            <?php if ($invoice_no) { ?>
+            Invoice: <?php echo $invoice_no; ?><br />
+            <?php } else { ?>
+            Invoice:
+            <button id="button-invoice" class="btn btn-success btn-xs"><i class="fa fa-cog"></i> <?php echo $button_generate; ?></button>
+            <br />
+            <?php } ?>
+            <br />
+            <i class="fa fa-calendar fa-fw"></i> <?php echo $date_added; ?><br />
+            <?php if ($customer) { ?>
+            <i class="fa fa-user fa-fw"></i> <a href="<?php echo $customer; ?>" target="_blank"><?php echo $firstname; ?> <?php echo $lastname; ?></a><br />
+            <?php } else { ?>
+            <i class="fa fa-user fa-fw"></i> <?php echo $firstname; ?> <?php echo $lastname; ?><br />
+            <?php } ?>
+            <?php if ($customer_group) { ?>
+            <i class="fa fa-group fa-fw"></i> <?php echo $customer_group; ?><br />
+            <?php } ?>
+            <i class="fa fa-envelope-o fa-fw"></i> <a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a><br />
+            <i class="fa fa-phone fa-fw"></i> <?php echo $telephone; ?><br />
+            <i class="fa fa-truck fa-fw"></i> <?php echo $shipping_method; ?><br />
+            <i class="fa fa-credit-card fa-fw"></i> <?php echo $payment_method; ?></div>
+          <?php if ($customer && $reward) { ?>
+          <div class="col-sm-3 text-center"><?php echo $text_reward; ?><br />
+            <?php if (!$reward_total) { ?>
+            <button id="button-reward-add" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_reward_add; ?>" class="btn btn-success btn-lg"><i class="fa fa-plus-circle"></i></button>
+            <?php } else { ?>
+            <button id="button-reward-remove" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_reward_remove; ?>" class="btn btn-danger btn-lg"><i class="fa fa-minus-circle"></i></button>
+            <?php } ?>
+            <br />
+            <?php echo $reward; ?></div>
+          <?php } ?>
+          <?php //if ($affiliate) { ?>
+          <div class="col-sm-3"><?php echo $text_affiliate; ?> <a href="<?php echo $affiliate; ?>"><?php echo $affiliate_firstname; ?> <?php echo $affiliate_lastname; ?></a>
+            <?php if (!$commission_total) { ?>
+            <button id="button-commission-add" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_commission_add; ?>" class="btn btn-success btn-lg"><i class="fa fa-plus-circle"></i></button>
+            <?php } else { ?>
+            <button id="button-commission-remove" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_commission_remove; ?>" class="btn btn-danger btn-lg"><i class="fa fa-minus-circle"></i></button>
+            <?php } ?>
+            <br />
+            <?php echo $commission; ?></div>
+          <?php //} ?>
+        </div>
+        <br />
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -28,8 +73,7 @@
           </thead>
           <tbody>
             <tr>
-              <td class="text-left"><?php echo $payment_address; ?>
-              </td>
+              <td class="text-left"><?php echo $payment_address; ?></td>
               <?php if ($shipping_method) { ?>
               <td class="text-left"><?php echo $shipping_address; ?></td>
               <?php } ?>
@@ -81,304 +125,20 @@
             <?php } ?>
           </tbody>
         </table>
-        
-        <!--
-          <div class="tab-pane active" id="tab-order">
-            <fieldset>
-              <legend><?php echo $tab_order; ?></legend>
-              <table class="table table-bordered">
-                <tr>
-                  <td><?php echo $text_order_id; ?></td>
-                  <td>#<?php echo $order_id; ?></td>
-                </tr>
-                <tr>
-                  <td><?php echo $text_invoice_no; ?></td>
-                  <td><?php if ($invoice_no) { ?>
-                    <?php echo $invoice_no; ?>
-                    <?php } else { ?>
-                    <button id="button-invoice" class="btn btn-success btn-xs"><i class="fa fa-cog"></i> <?php echo $button_generate; ?></button>
-                    <?php } ?></td>
-                </tr>
-                <tr>
-                  <td><?php echo $text_store_name; ?></td>
-                  <td><?php echo $store_name; ?></td>
-                </tr>
-                <tr>
-                  <td><?php echo $text_store_url; ?></td>
-                  <td><a href="<?php echo $store_url; ?>" target="_blank"><?php echo $store_url; ?></a></td>
-                </tr>
-                <?php if ($customer) { ?>
-                <tr>
-                  <td><?php echo $text_customer; ?></td>
-                  <td><a href="<?php echo $customer; ?>" target="_blank"><?php echo $firstname; ?> <?php echo $lastname; ?></a></td>
-                </tr>
-                <?php } else { ?>
-                <tr>
-                  <td><?php echo $text_customer; ?></td>
-                  <td><?php echo $firstname; ?> <?php echo $lastname; ?></td>
-                </tr>
-                <?php } ?>
-                <?php if ($customer_group) { ?>
-                <tr>
-                  <td><?php echo $text_customer_group; ?></td>
-                  <td><?php echo $customer_group; ?></td>
-                </tr>
-                <?php } ?>
-                <tr>
-                  <td><?php echo $text_email; ?></td>
-                  <td><a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a></td>
-                </tr>
-                <tr>
-                  <td><?php echo $text_telephone; ?></td>
-                  <td><?php echo $telephone; ?></td>
-                </tr>
-                <?php if ($fax) { ?>
-                <tr>
-                  <td><?php echo $text_fax; ?></td>
-                  <td><?php echo $fax; ?></td>
-                </tr>
-                <?php } ?>
-                <?php foreach ($account_custom_fields as $custom_field) { ?>
-                <tr>
-                  <td><?php echo $custom_field['name']; ?>:</td>
-                  <td><?php echo $custom_field['value']; ?></td>
-                </tr>
-                <?php } ?>
-                <tr>
-                  <td><?php echo $text_total; ?></td>
-                  <td><?php echo $total; ?></td>
-                </tr>
-                <?php if ($customer && $reward) { ?>
-                <tr>
-                  <td><?php echo $text_reward; ?></td>
-                  <td><?php echo $reward; ?>
-                    <?php if (!$reward_total) { ?>
-                    <button id="button-reward-add" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i> <?php echo $button_reward_add; ?></button>
-                    <?php } else { ?>
-                    <button id="button-reward-remove" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> <?php echo $button_reward_remove; ?></button>
-                    <?php } ?></td>
-                </tr>
-                <?php } ?>
-                <?php if ($order_status) { ?>
-                <tr>
-                  <td><?php echo $text_order_status; ?></td>
-                  <td id="order-status"><?php echo $order_status; ?></td>
-                </tr>
-                <?php } ?>
-                <?php if ($comment) { ?>
-                <tr>
-                  <td><?php echo $text_comment; ?></td>
-                  <td><?php echo $comment; ?></td>
-                </tr>
-                <?php } ?>
-                <?php if ($affiliate) { ?>
-                <tr>
-                  <td><?php echo $text_affiliate; ?></td>
-                  <td><a href="<?php echo $affiliate; ?>"><?php echo $affiliate_firstname; ?> <?php echo $affiliate_lastname; ?></a></td>
-                </tr>
-                <tr>
-                  <td><?php echo $text_commission; ?></td>
-                  <td><?php echo $commission; ?>
-                    <?php if (!$commission_total) { ?>
-                    <button id="button-commission-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i> <?php echo $button_commission_add; ?></button>
-                    <?php } else { ?>
-                    <button id="button-commission-remove" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> <?php echo $button_commission_remove; ?></button>
-                    <?php } ?></td>
-                </tr>
-                <?php } ?>
-                <?php if ($ip) { ?>
-                <tr>
-                  <td><?php echo $text_ip; ?></td>
-                  <td><?php echo $ip; ?></td>
-                </tr>
-                <?php } ?>
-                <?php if ($forwarded_ip) { ?>
-                <tr>
-                  <td><?php echo $text_forwarded_ip; ?></td>
-                  <td><?php echo $forwarded_ip; ?></td>
-                </tr>
-                <?php } ?>
-                <?php if ($user_agent) { ?>
-                <tr>
-                  <td><?php echo $text_user_agent; ?></td>
-                  <td><?php echo $user_agent; ?></td>
-                </tr>
-                <?php } ?>
-                <?php if ($accept_language) { ?>
-                <tr>
-                  <td><?php echo $text_accept_language; ?></td>
-                  <td><?php echo $accept_language; ?></td>
-                </tr>
-                <?php } ?>
-                <tr>
-                  <td><?php echo $text_date_added; ?></td>
-                  <td><?php echo $date_added; ?></td>
-                </tr>
-                <tr>
-                  <td><?php echo $text_date_modified; ?></td>
-                  <td><?php echo $date_modified; ?></td>
-                </tr>
-              </table>
-            </fieldset>
-            <fieldset>
-              <legend>Addresses</legend>
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <td></td>
-                    <td>Payment address</td>
-                    <td>Shipping address</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><?php echo $text_firstname; ?></td>
-                    <td><?php echo $payment_firstname; ?></td>
-                    <td><?php echo $shipping_firstname; ?></td>
-                  </tr>
-                  <tr>
-                    <td><?php echo $text_lastname; ?></td>
-                    <td><?php echo $payment_lastname; ?></td>
-                    <td><?php echo $shipping_lastname; ?></td>
-                  </tr>
-                  <?php if ($payment_company) { ?>
-                  <tr>
-                    <td><?php echo $text_company; ?></td>
-                    <td><?php echo $payment_company; ?></td>
-                  </tr>
-                  <?php } ?>
-                  <tr>
-                    <td><?php echo $text_address_1; ?></td>
-                    <td><?php echo $payment_address_1; ?></td>
-                  </tr>
-                  <?php if ($payment_address_2) { ?>
-                  <tr>
-                    <td><?php echo $text_address_2; ?></td>
-                    <td><?php echo $payment_address_2; ?></td>
-                  </tr>
-                  <?php } ?>
-                  <tr>
-                    <td><?php echo $text_city; ?></td>
-                    <td><?php echo $payment_city; ?></td>
-                  </tr>
-                  <?php if ($payment_postcode) { ?>
-                  <tr>
-                    <td><?php echo $text_postcode; ?></td>
-                    <td><?php echo $payment_postcode; ?></td>
-                  </tr>
-                  <?php } ?>
-                  <tr>
-                    <td><?php echo $text_zone; ?></td>
-                    <td><?php echo $payment_zone; ?></td>
-                  </tr>
-                  <?php if ($payment_zone_code) { ?>
-                  <tr>
-                    <td><?php echo $text_zone_code; ?></td>
-                    <td><?php echo $payment_zone_code; ?></td>
-                  </tr>
-                  <?php } ?>
-                  <tr>
-                    <td><?php echo $text_country; ?></td>
-                    <td><?php echo $payment_country; ?></td>
-                  </tr>
-                  <?php foreach ($payment_custom_fields as $custom_field) { ?>
-                  <tr data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
-                    <td><?php echo $custom_field['name']; ?>:</td>
-                    <td><?php echo $custom_field['value']; ?></td>
-                  </tr>
-                  <?php } ?>
-                  <tr>
-                    <td><?php echo $text_payment_method; ?></td>
-                    <td><?php echo $payment_method; ?></td>
-                  </tr>
-                </tbody>
-              </table>
-              <?php if ($shipping_method) { ?>
-              <table class="table table-bordered">
-                <tr>
-                  <td><?php echo $text_firstname; ?></td>
-                </tr>
-                <tr>
-                  <td><?php echo $text_lastname; ?></td>
-                  <td><?php echo $shipping_lastname; ?></td>
-                </tr>
-                <?php if ($shipping_company) { ?>
-                <tr>
-                  <td><?php echo $text_company; ?></td>
-                  <td><?php echo $shipping_company; ?></td>
-                </tr>
-                <?php } ?>
-                <tr>
-                  <td><?php echo $text_address_1; ?></td>
-                  <td><?php echo $shipping_address_1; ?></td>
-                </tr>
-                <?php if ($shipping_address_2) { ?>
-                <tr>
-                  <td><?php echo $text_address_2; ?></td>
-                  <td><?php echo $shipping_address_2; ?></td>
-                </tr>
-                <?php } ?>
-                <tr>
-                  <td><?php echo $text_city; ?></td>
-                  <td><?php echo $shipping_city; ?></td>
-                </tr>
-                <?php if ($shipping_postcode) { ?>
-                <tr>
-                  <td><?php echo $text_postcode; ?></td>
-                  <td><?php echo $shipping_postcode; ?></td>
-                </tr>
-                <?php } ?>
-                <tr>
-                  <td><?php echo $text_zone; ?></td>
-                  <td><?php echo $shipping_zone; ?></td>
-                </tr>
-                <?php if ($shipping_zone_code) { ?>
-                <tr>
-                  <td><?php echo $text_zone_code; ?></td>
-                  <td><?php echo $shipping_zone_code; ?></td>
-                </tr>
-                <?php } ?>
-                <tr>
-                  <td><?php echo $text_country; ?></td>
-                  <td><?php echo $shipping_country; ?></td>
-                </tr>
-                <?php foreach ($shipping_custom_fields as $custom_field) { ?>
-                <tr data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
-                  <td><?php echo $custom_field['name']; ?>:</td>
-                  <td><?php echo $custom_field['value']; ?></td>
-                </tr>
-                <?php } ?>
-                <?php if ($shipping_method) { ?>
-                <tr>
-                  <td><?php echo $text_shipping_method; ?></td>
-                  <td><?php echo $shipping_method; ?></td>
-                </tr>
-                <?php } ?>
-              </table>
-              <?php } ?>
-            </fieldset>
-            <fieldset>
-              <legend>Products</legend>
-            </fieldset>
-          </div>
-          <div class="tab-pane" id="tab-history">
-            
-            
-           
-              
-         
-          </div>
-        </div>
-        
-        <?php if ($payment_action) { ?>
-        <div class="tab-pane" id="tab-action"><?php echo $payment_action; ?></div>
+        <?php if ($comment) { ?>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <td><?php echo $text_comment; ?></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><?php echo $comment; ?></td>
+            </tr>
+          </tbody>
+        </table>
         <?php } ?>
-        <?php if ($tabs) { ?>
-        <?php foreach ($tabs as $fraud) { ?>
-        <div class="tab-pane" id="tab-<?php echo $fraud['code']; ?>"> <?php echo $fraud['content']; ?></div>
-        <?php } ?>
-        <?php } ?>
-        --> 
       </div>
     </div>
     <div class="panel panel-default">
@@ -388,6 +148,7 @@
       <div class="panel-body">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-history" data-toggle="tab"><?php echo $tab_history; ?></a></li>
+          <li><a href="#tab-additional" data-toggle="tab"><?php echo $tab_additional; ?></a></li>
           <?php foreach ($tabs as $tab) { ?>
           <li><a href="#tab-<?php echo $tab['code']; ?>" data-toggle="tab"><?php echo $tab['title']; ?></a></li>
           <?php } ?>
@@ -432,6 +193,75 @@
               <button id="button-history" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_history_add; ?></button>
             </div>
           </div>
+          <div class="tab-pane" id="tab-additional">
+            <table class="table table-bordered">
+              <tr>
+                <td><?php echo $text_store_name; ?></td>
+                <td><?php echo $store_name; ?></td>
+              </tr>
+              <tr>
+                <td><?php echo $text_store_url; ?></td>
+                <td><a href="<?php echo $store_url; ?>" target="_blank"><?php echo $store_url; ?></a></td>
+              </tr>
+              <?php foreach ($account_custom_fields as $custom_field) { ?>
+              <tr>
+                <td><?php echo $custom_field['name']; ?>:</td>
+                <td><?php echo $custom_field['value']; ?></td>
+              </tr>
+              <?php } ?>
+              <?php if ($ip) { ?>
+              <tr>
+                <td><?php echo $text_ip; ?></td>
+                <td><?php echo $ip; ?></td>
+              </tr>
+              <?php } ?>
+              <?php if ($forwarded_ip) { ?>
+              <tr>
+                <td><?php echo $text_forwarded_ip; ?></td>
+                <td><?php echo $forwarded_ip; ?></td>
+              </tr>
+              <?php } ?>
+              <?php if ($user_agent) { ?>
+              <tr>
+                <td><?php echo $text_user_agent; ?></td>
+                <td><?php echo $user_agent; ?></td>
+              </tr>
+              <?php } ?>
+              <?php if ($accept_language) { ?>
+              <tr>
+                <td><?php echo $text_accept_language; ?></td>
+                <td><?php echo $accept_language; ?></td>
+              </tr>
+              <?php } ?>
+              <tr>
+                <td><?php echo $text_date_modified; ?></td>
+                <td><?php echo $date_modified; ?></td>
+              </tr>
+            </table>
+            <table class="table table-bordered">
+              <tbody>
+                <?php foreach ($payment_custom_fields as $custom_field) { ?>
+                <tr data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                  <td><?php echo $custom_field['name']; ?>:</td>
+                  <td><?php echo $custom_field['value']; ?></td>
+                </tr>
+                <?php } ?>
+              </tbody>
+            </table>
+            <?php if ($shipping_method) { ?>
+            <table class="table table-bordered">
+              <?php foreach ($shipping_custom_fields as $custom_field) { ?>
+              <tr data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                <td><?php echo $custom_field['name']; ?>:</td>
+                <td><?php echo $custom_field['value']; ?></td>
+              </tr>
+              <?php } ?>
+            </table>
+            <?php } ?>
+          </div>
+          <?php foreach ($tabs as $fraud) { ?>
+          <div class="tab-pane" id="tab-<?php echo $fraud['code']; ?>"> <?php echo $fraud['content']; ?></div>
+          <?php } ?>
         </div>
       </div>
     </div>
@@ -651,8 +481,6 @@ $('#button-history').on('click', function() {
 				$('#history').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
 				$('textarea[name=\'comment\']').val('');
-				
-				$('#order-status').html($('select[name=\'order_status_id\'] option:selected').text());			
 			}			
 		},			
 		error: function(xhr, ajaxOptions, thrownError) {

@@ -39,7 +39,6 @@
                     <?php } ?>
                     <?php } ?>
                   </select>
-                  <input type="hidden" name="cookie" value="" />
                 </div>
               </div>
               <div class="form-group">
@@ -842,7 +841,7 @@
                 </table>
               </div>
               <fieldset>
-                <legend><?php echo $text_order; ?></legend>
+                <legend><?php echo $text_order_detail; ?></legend>
                 <div class="form-group required">
                   <label class="col-sm-2 control-label" for="input-shipping-method"><?php echo $entry_shipping_method; ?></label>
                   <div class="col-sm-10">
@@ -953,7 +952,7 @@ $('#order a[data-toggle=\'tab\']').on('click', function(e) {
 	return false;
 });
 
-// Cookie
+// Login to the API
 $.ajax({
 	url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/login',
 	type: 'post',
@@ -961,9 +960,7 @@ $.ajax({
 	dataType: 'json',	
 	crossDomain: true,
 	success: function(json) {	
-		if (json['cookie']) {
-			$('input[name=\'cookie\']').val(json['cookie']);
-						
+		if (json['success']) {
 			$('select[name=\'currency\']').trigger('change');
 		}
 		
@@ -981,7 +978,7 @@ $('select[name=\'currency\']').on('change', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/currency',
 		type: 'post',
-		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&currency=' + $('select[name=\'currency\'] option:selected').val(),
+		data: 'token=<?php echo $token; ?>&currency=' + $('select[name=\'currency\'] option:selected').val(),
 		dataType: 'json',
 		crossDomain: false,
 		beforeSend: function() {
@@ -1012,7 +1009,7 @@ $('#button-refresh').on('click', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/cart/products',
 		type: 'post',
-		data: 'cookie=' + $('input[name=\'cookie\']').val(),
+		data: 'token=<?php echo $token; ?>',
 		dataType: 'json',
 		crossDomain: true,
 		success: function(json) {

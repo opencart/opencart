@@ -14,7 +14,7 @@
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_order; ?></h3>
+        <h3 class="panel-title"><i class="fa fa-info-circle"></i> <?php echo $text_order; ?></h3>
       </div>
       <div class="panel-body">
         <div class="row">
@@ -27,7 +27,7 @@
             <br />
             <?php } ?>
             <br />
-            <i class="fa fa-calendar fa-fw"></i> <?php echo $date_added; ?><br />
+            <a href="<?php echo $store_url; ?>" target="_blank"><?php echo $store_name; ?></a> <i class="fa fa-calendar fa-fw"></i> <?php echo $date_added; ?><br />
             <?php if ($customer) { ?>
             <i class="fa fa-user fa-fw"></i> <a href="<?php echo $customer; ?>" target="_blank"><?php echo $firstname; ?> <?php echo $lastname; ?></a><br />
             <?php } else { ?>
@@ -172,7 +172,6 @@
                       <?php } ?>
                       <?php } ?>
                     </select>
-                    <input type="hidden" name="cookie" value="" />
                   </div>
                 </div>
                 <div class="form-group">
@@ -195,19 +194,25 @@
           </div>
           <div class="tab-pane" id="tab-additional">
             <table class="table table-bordered">
-              <tr>
-                <td><?php echo $text_store_name; ?></td>
-                <td><?php echo $store_name; ?></td>
-              </tr>
-              <tr>
-                <td><?php echo $text_store_url; ?></td>
-                <td><a href="<?php echo $store_url; ?>" target="_blank"><?php echo $store_url; ?></a></td>
-              </tr>
               <?php foreach ($account_custom_fields as $custom_field) { ?>
               <tr>
                 <td><?php echo $custom_field['name']; ?>:</td>
                 <td><?php echo $custom_field['value']; ?></td>
               </tr>
+              <?php } ?>
+              <?php foreach ($payment_custom_fields as $custom_field) { ?>
+              <tr data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                <td><?php echo $custom_field['name']; ?>:</td>
+                <td><?php echo $custom_field['value']; ?></td>
+              </tr>
+              <?php } ?>
+              <?php if ($shipping_method) { ?>
+              <?php foreach ($shipping_custom_fields as $custom_field) { ?>
+              <tr data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                <td><?php echo $custom_field['name']; ?>:</td>
+                <td><?php echo $custom_field['value']; ?></td>
+              </tr>
+              <?php } ?>
               <?php } ?>
               <?php if ($ip) { ?>
               <tr>
@@ -233,31 +238,7 @@
                 <td><?php echo $accept_language; ?></td>
               </tr>
               <?php } ?>
-              <tr>
-                <td><?php echo $text_date_modified; ?></td>
-                <td><?php echo $date_modified; ?></td>
-              </tr>
             </table>
-            <table class="table table-bordered">
-              <tbody>
-                <?php foreach ($payment_custom_fields as $custom_field) { ?>
-                <tr data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
-                  <td><?php echo $custom_field['name']; ?>:</td>
-                  <td><?php echo $custom_field['value']; ?></td>
-                </tr>
-                <?php } ?>
-              </tbody>
-            </table>
-            <?php if ($shipping_method) { ?>
-            <table class="table table-bordered">
-              <?php foreach ($shipping_custom_fields as $custom_field) { ?>
-              <tr data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
-                <td><?php echo $custom_field['name']; ?>:</td>
-                <td><?php echo $custom_field['value']; ?></td>
-              </tr>
-              <?php } ?>
-            </table>
-            <?php } ?>
           </div>
           <?php foreach ($tabs as $fraud) { ?>
           <div class="tab-pane" id="tab-<?php echo $fraud['code']; ?>"> <?php echo $fraud['content']; ?></div>
@@ -415,7 +396,7 @@ $(document).delegate('#button-commission-remove', 'click', function() {
 	});
 });
 
-// Cookie
+// Login to the API
 $.ajax({
 	url: '<?php echo $store_url; ?>index.php?route=api/login',
 	type: 'post',
@@ -425,10 +406,6 @@ $.ajax({
 	success: function(json) {
 		$('.alert').remove();
 			
-		if (json['cookie']) {
-			$('input[name=\'cookie\']').val(json['cookie']);
-		}
-		
 		if (json['error']) {
 			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 		}		
@@ -461,7 +438,7 @@ $('#button-history').on('click', function() {
 		url: '<?php echo $store_url; ?>index.php?route=api/order/history&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		type: 'post',
 		dataType: 'json',
-		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&order_status_id=' + encodeURIComponent($('select[name=\'order_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&append=' + ($('input[name=\'append\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
+		data: 'token=<?php echo $token; ?>&order_status_id=' + encodeURIComponent($('select[name=\'order_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&append=' + ($('input[name=\'append\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
 		beforeSend: function() {
 			$('#button-history').button('loading');			
 		},

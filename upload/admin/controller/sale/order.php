@@ -349,8 +349,8 @@ class ControllerSaleOrder extends Controller {
 		$data['text_loading'] = $this->language->get('text_loading');
 		$data['text_product'] = $this->language->get('text_product');
 		$data['text_voucher'] = $this->language->get('text_voucher');
-		$data['text_order'] = $this->language->get('text_order');
-
+		$data['text_order_detail'] = $this->language->get('text_order_detail');
+		
 		$data['entry_store'] = $this->language->get('entry_store');
 		$data['entry_customer'] = $this->language->get('entry_customer');
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
@@ -832,6 +832,8 @@ class ControllerSaleOrder extends Controller {
 			//	$data['logo'] = DIR_ 
 			//}
 			
+						$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
+
 			$data['order_id'] = $this->request->get['order_id'];
 
 			if ($order_info['invoice_no']) {
@@ -1111,8 +1113,6 @@ class ControllerSaleOrder extends Controller {
 			$data['forwarded_ip'] = $order_info['forwarded_ip'];
 			$data['user_agent'] = $order_info['user_agent'];
 			$data['accept_language'] = $order_info['accept_language'];
-			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
-			$data['date_modified'] = date($this->language->get('date_format_short'), strtotime($order_info['date_modified']));
 
 			
 			
@@ -1258,7 +1258,7 @@ class ControllerSaleOrder extends Controller {
 					$content = $this->load->controller('fraud/' . $extension . '/order');
 
 					if ($content) {
-						$data['frauds'][] = array(
+						$data['tabs'][] = array(
 							'code'    => $extension,
 							'title'   => $this->language->get('heading_title'),
 							'content' => $content
@@ -1935,32 +1935,5 @@ class ControllerSaleOrder extends Controller {
 		}
 
 		$this->response->setOutput($this->load->view('sale/order_shipping.tpl', $data));
-	}
-	
-	function api() {
-		$json = array();
-		
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {
-			// Create token to login with
-			$string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-			
-			$token = '';
-			
-			for ($i = 0; $i < 64; $i++) {
-				$token .= $string[rand(0, strlen($string) - 1)];
-			}
-			
-			$this->load->model('user/api');
-					
-			$this->model_user_api->editToken($this->config->get('config_api_id'), $token);
-		
-			//$data['token'] = $token;
-			$this->response->redirect();
-		}	
-		
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));		
 	}
 }

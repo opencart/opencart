@@ -6,6 +6,7 @@ $_['heading_title']            = 'Orders';
 $_['text_list']                = 'Order List';
 $_['text_add']                 = 'Add Order';
 $_['text_edit']                = 'Edit Order';
+$_['text_order']               = 'Order (#%s)';
 $_['text_order_detail']        = 'Order Details';
 $_['text_order_id']            = 'Order ID:';
 $_['text_invoice_no']          = 'Invoice No.:';
@@ -37,14 +38,10 @@ $_['text_payment_address']     = 'Payment Address';
 $_['text_shipping_address']    = 'Shipping Adress';
 $_['text_shipping_method']     = 'Shipping Method:';
 $_['text_payment_method']      = 'Payment Method:';
-
-
-
 $_['text_missing']             = 'Missing Orders';
 $_['text_default']             = 'Default';
 $_['text_product']             = 'Add Product(s)';
 $_['text_voucher']             = 'Add Voucher(s)';
-$_['text_order']               = 'Order Details';
 $_['text_shipping']            = 'Shipping';
 $_['text_contact']             = 'Contact';
 $_['text_sku']                 = 'SKU:';
@@ -53,7 +50,6 @@ $_['text_ean']                 = 'EAN:';
 $_['text_jan']                 = 'JAN:';
 $_['text_isbn']                = 'ISBN:';
 $_['text_mpn']                 = 'MPN:';
-$_['text_generate']            = 'Generate';
 $_['text_reward_added']        = 'Success: Reward points added!';
 $_['text_reward_removed']      = 'Success: Reward points removed!';
 $_['text_commission_added']    = 'Success: Commission added!';

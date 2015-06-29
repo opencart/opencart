@@ -22,7 +22,8 @@
             <?php if ($invoice_no) { ?>
             <i class="fa fa-shopping-cart fa-fw"></i> <?php echo $invoice_no; ?><br />
             <?php } else { ?>
-            <i class="fa fa-shopping-cart fa-fw"></i> <button id="button-invoice" class="btn btn-success btn-xs"><i class="fa fa-cog"></i> <?php echo $button_generate; ?></button>
+            <i class="fa fa-shopping-cart fa-fw"></i>
+            <button id="button-invoice" class="btn btn-success btn-xs"><i class="fa fa-cog"></i> <?php echo $button_generate; ?></button>
             <br />
             <?php } ?>
             <br />
@@ -193,8 +194,8 @@
             </div>
           </div>
           <div class="tab-pane" id="tab-additional">
+            <?php if ($account_custom_fields) { ?>
             <table class="table table-bordered">
-              <?php if ($account_custom_fields) { ?>
               <thead>
                 <tr>
                   <td colspan="2"><?php echo $text_account_custom_field; ?></td>
@@ -203,13 +204,15 @@
               <tbody>
                 <?php foreach ($account_custom_fields as $custom_field) { ?>
                 <tr>
-                  <td><?php echo $custom_field['name']; ?>:</td>
+                  <td><?php echo $custom_field['name']; ?></td>
                   <td><?php echo $custom_field['value']; ?></td>
                 </tr>
                 <?php } ?>
               </tbody>
-              <?php } ?>
-              <?php if ($payment_custom_fields) { ?>
+            </table>
+            <?php } ?>
+            <?php if ($payment_custom_fields) { ?>
+            <table class="table table-bordered">
               <thead>
                 <tr>
                   <td colspan="2"><?php echo $text_payment_custom_field; ?></td>
@@ -218,13 +221,15 @@
               <tbody>
                 <?php foreach ($payment_custom_fields as $custom_field) { ?>
                 <tr>
-                  <td><?php echo $custom_field['name']; ?>:</td>
+                  <td><?php echo $custom_field['name']; ?></td>
                   <td><?php echo $custom_field['value']; ?></td>
                 </tr>
                 <?php } ?>
               </tbody>
-              <?php } ?>
-              <?php if ($shipping_method && $shipping_custom_fields) { ?>
+            </table>
+            <?php } ?>
+            <?php if ($shipping_method && $shipping_custom_fields) { ?>
+            <table class="table table-bordered">
               <thead>
                 <tr>
                   <td colspan="2"><?php echo $text_shipping_custom_field; ?></td>
@@ -233,17 +238,19 @@
               <tbody>
                 <?php foreach ($shipping_custom_fields as $custom_field) { ?>
                 <tr>
-                  <td><?php echo $custom_field['name']; ?>:</td>
+                  <td><?php echo $custom_field['name']; ?></td>
                   <td><?php echo $custom_field['value']; ?></td>
                 </tr>
                 <?php } ?>
               </tbody>
-              <?php } ?>
+            </table>
+            <?php } ?>
+            <table class="table table-bordered">
               <thead>
                 <tr>
                   <td colspan="2"><?php echo $text_browser; ?></td>
                 </tr>
-              </thead>              
+              </thead>
               <tbody>
                 <tr>
                   <td><?php echo $text_ip; ?></td>

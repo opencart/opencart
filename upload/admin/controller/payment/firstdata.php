@@ -253,7 +253,7 @@ class ControllerPaymentFirstdata extends Controller {
 		$this->model_payment_firstdata->uninstall();
 	}
 
-	public function action() {
+	public function order() {
 		if ($this->config->get('firstdata_status')) {
 			$this->load->model('payment/firstdata');
 

@@ -1335,7 +1335,7 @@ $('#button-customer').on('click', function() {
 				$.ajax({
 					url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/cart/add',
 					type: 'post',
-					data: $('#tab-customer input[name=\'cookie\'], #cart input[name^=\'product\'][type=\'text\'], #cart input[name^=\'product\'][type=\'hidden\'], #cart input[name^=\'product\'][type=\'radio\']:checked, #cart input[name^=\'product\'][type=\'checkbox\']:checked, #cart select[name^=\'product\'], #cart textarea[name^=\'product\']'),
+					data: $('#cart input[name^=\'product\'][type=\'text\'], #cart input[name^=\'product\'][type=\'hidden\'], #cart input[name^=\'product\'][type=\'radio\']:checked, #cart input[name^=\'product\'][type=\'checkbox\']:checked, #cart select[name^=\'product\'], #cart textarea[name^=\'product\']'),
 					dataType: 'json',
 					crossDomain: true,						
 					beforeSend: function() {
@@ -1360,7 +1360,7 @@ $('#button-customer').on('click', function() {
 				$.ajax({
 					url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/voucher/add',
 					type: 'post',
-					data: $('#tab-customer input[name=\'cookie\'], #cart input[name^=\'voucher\'][type=\'text\'], #cart input[name^=\'voucher\'][type=\'hidden\'], #cart input[name^=\'voucher\'][type=\'radio\']:checked, #cart input[name^=\'voucher\'][type=\'checkbox\']:checked, #cart select[name^=\'voucher\'], #cart textarea[name^=\'voucher\']'),
+					data: $('#cart input[name^=\'voucher\'][type=\'text\'], #cart input[name^=\'voucher\'][type=\'hidden\'], #cart input[name^=\'voucher\'][type=\'radio\']:checked, #cart input[name^=\'voucher\'][type=\'checkbox\']:checked, #cart select[name^=\'voucher\'], #cart textarea[name^=\'voucher\']'),
 					dataType: 'json',
 					crossDomain: true,					
 					beforeSend: function() {
@@ -1593,7 +1593,7 @@ $('#button-product-add').on('click', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/cart/add',
 		type: 'post',
-		data: $('#tab-customer input[name=\'cookie\'], #tab-product input[name=\'product_id\'], #tab-product input[name=\'quantity\'], #tab-product input[name^=\'option\'][type=\'text\'], #tab-product input[name^=\'option\'][type=\'hidden\'], #tab-product input[name^=\'option\'][type=\'radio\']:checked, #tab-product input[name^=\'option\'][type=\'checkbox\']:checked, #tab-product select[name^=\'option\'], #tab-product textarea[name^=\'option\']'),
+		data: $('#tab-product input[name=\'product_id\'], #tab-product input[name=\'quantity\'], #tab-product input[name^=\'option\'][type=\'text\'], #tab-product input[name^=\'option\'][type=\'hidden\'], #tab-product input[name^=\'option\'][type=\'radio\']:checked, #tab-product input[name^=\'option\'][type=\'checkbox\']:checked, #tab-product select[name^=\'option\'], #tab-product textarea[name^=\'option\']'),
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {
@@ -1645,7 +1645,7 @@ $('#button-voucher-add').on('click', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/voucher/add',
 		type: 'post',
-		data: $('#tab-customer input[name=\'cookie\'], #tab-voucher input[type=\'text\'], #tab-voucher input[type=\'hidden\'], #tab-voucher input[type=\'radio\']:checked, #tab-voucher input[type=\'checkbox\']:checked, #tab-voucher select, #tab-voucher textarea'),
+		data: $('#tab-voucher input[type=\'text\'], #tab-voucher input[type=\'hidden\'], #tab-voucher input[type=\'radio\']:checked, #tab-voucher input[type=\'checkbox\']:checked, #tab-voucher select, #tab-voucher textarea'),
 		dataType: 'json',
 		crossDomain: true,	
 		beforeSend: function() {
@@ -1699,7 +1699,7 @@ $('#tab-cart').delegate('.btn-danger', 'click', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/cart/remove&token=<?php echo $token; ?>',
 		type: 'post',
-		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&key=' + encodeURIComponent(this.value),
+		data: 'token=<?php echo $token; ?>&key=' + encodeURIComponent(this.value),
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {
@@ -1829,7 +1829,7 @@ $('#button-payment-address').on('click', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/payment/address&token=<?php echo $token; ?>',
 		type: 'post',
-		data: $('#tab-customer input[name=\'cookie\'], #tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea'),
+		data: $('#tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea'),
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {
@@ -1865,7 +1865,7 @@ $('#button-payment-address').on('click', function() {
 				$.ajax({
 					url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/payment/methods&token=<?php echo $token; ?>',
 					type: 'post',
-					data: 'cookie=' + $('input[name=\'cookie\']').val(),
+					data: 'token=<?php echo $token; ?>',
 					dataType: 'json',
 					crossDomain: true,				
 					beforeSend: function() {
@@ -2017,7 +2017,7 @@ $('#button-shipping-address').on('click', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/shipping/address&token=<?php echo $token; ?>',
 		type: 'post',
-		data: $('#tab-customer input[name=\'cookie\'], #tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked, #tab-shipping select, #tab-shipping textarea'),
+		data: $('#tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked, #tab-shipping select, #tab-shipping textarea'),
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {
@@ -2053,7 +2053,7 @@ $('#button-shipping-address').on('click', function() {
 				$.ajax({
 					url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/shipping/methods&token=<?php echo $token; ?>',
 					type: 'post',
-					data: 'cookie=' + $('input[name=\'cookie\']').val(),
+					data: 'token=<?php echo $token; ?>',
 					dataType: 'json',
 					beforeSend: function() {
 						$('#button-shipping-address i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
@@ -2115,7 +2115,7 @@ $('#button-shipping-method').on('click', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/shipping/method&token=<?php echo $token; ?>',
 		type: 'post',
-		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&shipping_method=' + $('select[name=\'shipping_method\'] option:selected').val(),
+		data: 'token=<?php echo $token; ?>&shipping_method=' + $('select[name=\'shipping_method\'] option:selected').val(),
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {
@@ -2153,7 +2153,7 @@ $('#button-payment-method').on('click', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/payment/method&token=<?php echo $token; ?>',
 		type: 'post',
-		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&payment_method=' + $('select[name=\'payment_method\'] option:selected').val(),
+		data: 'payment_method=' + $('select[name=\'payment_method\'] option:selected').val(),
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {
@@ -2191,7 +2191,7 @@ $('#button-coupon').on('click', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/coupon&token=<?php echo $token; ?>',
 		type: 'post',
-		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&coupon=' + $('input[name=\'coupon\']').val(),
+		data: 'token=<?php echo $token; ?>&coupon=' + $('input[name=\'coupon\']').val(),
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {
@@ -2229,7 +2229,7 @@ $('#button-voucher').on('click', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/voucher&token=<?php echo $token; ?>',
 		type: 'post',
-		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&voucher=' + $('input[name=\'voucher\']').val(),
+		data: 'voucher=' + $('input[name=\'voucher\']').val(),
 		dataType: 'json',
 		crossDomain: true,	
 		beforeSend: function() {
@@ -2267,7 +2267,7 @@ $('#button-reward').on('click', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/reward&token=<?php echo $token; ?>',
 		type: 'post',
-		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&reward=' + $('input[name=\'reward\']').val(),
+		data: 'reward=' + $('input[name=\'reward\']').val(),
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {
@@ -2338,7 +2338,7 @@ $('#button-save').on('click', function() {
 	$.ajax({
 		url: url,
 		type: 'post',
-		data: $('#tab-customer input[name=\'cookie\'], #tab-total select[name=\'order_status_id\'], #tab-total select, #tab-total textarea[name=\'comment\'], #tab-total input[name=\'affiliate_id\']'),
+		data: $('#tab-total select[name=\'order_status_id\'], #tab-total select, #tab-total textarea[name=\'comment\'], #tab-total input[name=\'affiliate_id\']'),
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {

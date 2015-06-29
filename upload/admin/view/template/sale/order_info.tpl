@@ -296,7 +296,7 @@ $(document).delegate('#button-reward-add', 'click', function() {
 			if (json['success']) {
                 $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 				
-				$('#button-reward-add').replaceWith('<button id="button-reward-remove" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> <?php echo $button_reward_remove; ?></button>');
+				$('#button-reward-add').replaceWith('<button id="button-reward-remove" data-toggle="tooltip" title="<?php echo $button_reward_remove; ?>" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>');
 			}
 		},			
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -326,7 +326,7 @@ $(document).delegate('#button-reward-remove', 'click', function() {
 			if (json['success']) {
                 $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 				
-				$('#button-reward-remove').replaceWith('<button id="button-reward-add" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i> <?php echo $button_reward_add; ?></button>');
+				$('#button-reward-remove').replaceWith('<button id="button-reward-add" data-toggle="tooltip" title="<?php echo $button_reward_add; ?>" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>');
 			}
 		},			
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -356,7 +356,7 @@ $(document).delegate('#button-commission-add', 'click', function() {
 			if (json['success']) {
                 $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
                 
-				$('#button-commission-add').replaceWith('<button id="button-commission-remove" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> <?php echo $button_commission_remove; ?></button>');
+				$('#button-commission-add').replaceWith('<button id="button-commission-remove" data-toggle="tooltip" title="<?php echo $button_commission_remove; ?>" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>');
 			}
 		},			
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -387,7 +387,7 @@ $(document).delegate('#button-commission-remove', 'click', function() {
 			if (json['success']) {
                 $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 				
-				$('#button-commission-remove').replaceWith('<button id="button-commission-add" class="btn btn-success btn-xs"><i class="fa fa-minus-circle"></i> <?php echo $button_commission_add; ?></button>');
+				$('#button-commission-remove').replaceWith('<button id="button-commission-add" data-toggle="tooltip" title="<?php echo $button_commission_add; ?>" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>');
 			}
 		},			
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -398,9 +398,8 @@ $(document).delegate('#button-commission-remove', 'click', function() {
 
 // Login to the API
 $.ajax({
-	url: '<?php echo $store_url; ?>index.php?route=api/login',
+	url: '<?php echo $store_url; ?>index.php?route=api/login&token=<?php echo $token; ?>',
 	type: 'post',
-	data: 'token=<?php echo $token; ?>',
 	dataType: 'json',	
 	crossDomain: true,
 	success: function(json) {
@@ -435,10 +434,10 @@ $('#button-history').on('click', function() {
 	}
 
 	$.ajax({
-		url: '<?php echo $store_url; ?>index.php?route=api/order/history&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		url: '<?php echo $store_url; ?>index.php?route=api/order/history&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>&token=<?php echo $token; ?>',
 		type: 'post',
 		dataType: 'json',
-		data: 'token=<?php echo $token; ?>&order_status_id=' + encodeURIComponent($('select[name=\'order_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&append=' + ($('input[name=\'append\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
+		data: 'order_status_id=' + encodeURIComponent($('select[name=\'order_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&append=' + ($('input[name=\'append\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
 		beforeSend: function() {
 			$('#button-history').button('loading');			
 		},

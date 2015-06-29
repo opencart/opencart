@@ -248,9 +248,8 @@ $('input[name^=\'selected\']:first').trigger('change');
 
 // Login to the API
 $.ajax({
-	url: 'index.php?route=sale/order/api',
+	url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>',
 	type: 'post',
-	data: 'token=<?php echo $token; ?>',
 	dataType: 'json',	
 	crossDomain: true,
 	success: function(json) {	
@@ -272,9 +271,9 @@ $('button[id^=\'button-delete\']').on('click', function(e) {
 		var node = this;
 		
 		$.ajax({
-			url: 'http://localhost/opencart/upload/index.php?route=api/cart/remove',
+			url: 'http://localhost/opencart/upload/index.php?route=api/cart/remove&token=<?php echo $token; ?>',
 			type: 'post',
-			data: 'token=<?php echo $token; ?>&order_id=' + $(node).val(),
+			data: 'order_id=' + $(node).val(),
 			dataType: 'json',
 			crossDomain: true,						
 			beforeSend: function() {

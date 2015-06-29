@@ -1016,6 +1016,50 @@ class ControllerSaleOrder extends Controller {
 			$data['telephone'] = $order_info['telephone'];
 			$data['fax'] = $order_info['fax'];
 
+
+
+			$data['comment'] = nl2br($order_info['comment']);
+			$data['shipping_method'] = $order_info['shipping_method'];
+			$data['payment_method'] = $order_info['payment_method'];
+
+			$this->load->model('sale/customer');
+
+			$data['reward'] = $order_info['reward'];
+
+			$data['reward_total'] = $this->model_sale_customer->getTotalCustomerRewardsByOrderId($this->request->get['order_id']);
+
+			$data['affiliate_firstname'] = $order_info['affiliate_firstname'];
+			$data['affiliate_lastname'] = $order_info['affiliate_lastname'];
+
+			if ($order_info['affiliate_id']) {
+				$data['affiliate'] = $this->url->link('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $order_info['affiliate_id'], 'SSL');
+			} else {
+				$data['affiliate'] = '';
+			}
+
+			$data['commission'] = $this->currency->format($order_info['commission'], $order_info['currency_code'], $order_info['currency_value']);
+
+			$this->load->model('marketing/affiliate');
+
+			$data['commission_total'] = $this->model_marketing_affiliate->getTotalTransactionsByOrderId($this->request->get['order_id']);
+
+			$this->load->model('localisation/order_status');
+
+			$order_status_info = $this->model_localisation_order_status->getOrderStatus($order_info['order_status_id']);
+
+			if ($order_status_info) {
+				$data['order_status'] = $order_status_info['name'];
+			} else {
+				$data['order_status'] = '';
+			}
+
+
+			$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+
+			$data['order_status_id'] = $order_info['order_status_id'];
+
+
+
 			$data['account_custom_field'] = $order_info['custom_field'];
 
 			// Uploaded files
@@ -1073,53 +1117,7 @@ class ControllerSaleOrder extends Controller {
 					}
 				}
 			}
-
-			$data['comment'] = nl2br($order_info['comment']);
-			$data['shipping_method'] = $order_info['shipping_method'];
-			$data['payment_method'] = $order_info['payment_method'];
-
-			$this->load->model('sale/customer');
-
-			$data['reward'] = $order_info['reward'];
-
-			$data['reward_total'] = $this->model_sale_customer->getTotalCustomerRewardsByOrderId($this->request->get['order_id']);
-
-			$data['affiliate_firstname'] = $order_info['affiliate_firstname'];
-			$data['affiliate_lastname'] = $order_info['affiliate_lastname'];
-
-			if ($order_info['affiliate_id']) {
-				$data['affiliate'] = $this->url->link('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $order_info['affiliate_id'], 'SSL');
-			} else {
-				$data['affiliate'] = '';
-			}
-
-			$data['commission'] = $this->currency->format($order_info['commission'], $order_info['currency_code'], $order_info['currency_value']);
-
-			$this->load->model('marketing/affiliate');
-
-			$data['commission_total'] = $this->model_marketing_affiliate->getTotalTransactionsByOrderId($this->request->get['order_id']);
-
-			$this->load->model('localisation/order_status');
-
-			$order_status_info = $this->model_localisation_order_status->getOrderStatus($order_info['order_status_id']);
-
-			if ($order_status_info) {
-				$data['order_status'] = $order_status_info['name'];
-			} else {
-				$data['order_status'] = '';
-			}
-
-			$data['ip'] = $order_info['ip'];
-			$data['forwarded_ip'] = $order_info['forwarded_ip'];
-			$data['user_agent'] = $order_info['user_agent'];
-			$data['accept_language'] = $order_info['accept_language'];
-
 			
-			
-			
-			
-			
-
 			// Custom fields
 			$data['payment_custom_fields'] = array();
 
@@ -1226,11 +1224,10 @@ class ControllerSaleOrder extends Controller {
 				}
 			}
 
-
-
-			$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-
-			$data['order_status_id'] = $order_info['order_status_id'];
+			$data['ip'] = $order_info['ip'];
+			$data['forwarded_ip'] = $order_info['forwarded_ip'];
+			$data['user_agent'] = $order_info['user_agent'];
+			$data['accept_language'] = $order_info['accept_language'];
 		
 			// Additional Tabs
 			$data['tabs'] = array();

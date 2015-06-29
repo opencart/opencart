@@ -18,16 +18,7 @@
       </div>
       <div class="panel-body">
         <div class="row">
-          <div class="col-sm-3">
-            <?php if ($invoice_no) { ?>
-            <i class="fa fa-shopping-cart fa-fw"></i> <?php echo $invoice_no; ?><br />
-            <?php } else { ?>
-            <i class="fa fa-shopping-cart fa-fw"></i>
-            <button id="button-invoice" class="btn btn-success btn-xs"><i class="fa fa-cog"></i> <?php echo $button_generate; ?></button>
-            <br />
-            <?php } ?>
-            <br />
-            <i class="fa fa-shopping-cart fa-fw"></i> <a href="<?php echo $store_url; ?>" target="_blank"><?php echo $store_name; ?></a><br />
+          <div class="col-sm-3"><i class="fa fa-shopping-cart fa-fw"></i> <a href="<?php echo $store_url; ?>" target="_blank"><?php echo $store_name; ?></a><br />
             <i class="fa fa-calendar fa-fw"></i> <?php echo $date_added; ?><br />
             <?php if ($customer) { ?>
             <i class="fa fa-user fa-fw"></i> <a href="<?php echo $customer; ?>" target="_blank"><?php echo $firstname; ?> <?php echo $lastname; ?></a><br />
@@ -41,26 +32,6 @@
             <i class="fa fa-phone fa-fw"></i> <?php echo $telephone; ?><br />
             <i class="fa fa-truck fa-fw"></i> <?php echo $shipping_method; ?><br />
             <i class="fa fa-credit-card fa-fw"></i> <?php echo $payment_method; ?></div>
-          <?php if ($customer && $reward) { ?>
-          <div class="col-sm-3 text-center"><?php echo $text_reward; ?><br />
-            <?php if (!$reward_total) { ?>
-            <button id="button-reward-add" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_reward_add; ?>" class="btn btn-success btn-lg"><i class="fa fa-plus-circle"></i></button>
-            <?php } else { ?>
-            <button id="button-reward-remove" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_reward_remove; ?>" class="btn btn-danger btn-lg"><i class="fa fa-minus-circle"></i></button>
-            <?php } ?>
-            <br />
-            <?php echo $reward; ?></div>
-          <?php } ?>
-          <?php //if ($affiliate) { ?>
-          <div class="col-sm-3"><?php echo $text_affiliate; ?> <a href="<?php echo $affiliate; ?>"><?php echo $affiliate_firstname; ?> <?php echo $affiliate_lastname; ?></a>
-            <?php if (!$commission_total) { ?>
-            <button id="button-commission-add" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_commission_add; ?>" class="btn btn-success btn-lg"><i class="fa fa-plus-circle"></i></button>
-            <?php } else { ?>
-            <button id="button-commission-remove" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_commission_remove; ?>" class="btn btn-danger btn-lg"><i class="fa fa-minus-circle"></i></button>
-            <?php } ?>
-            <br />
-            <?php echo $commission; ?></div>
-          <?php //} ?>
         </div>
         <br />
         <table class="table table-bordered">
@@ -120,7 +91,7 @@
             <?php } ?>
             <?php foreach ($totals as $total) { ?>
             <tr>
-              <td colspan="4" class="text-right"><?php echo $total['title']; ?>:</td>
+              <td colspan="4" class="text-right"><?php echo $total['title']; ?></td>
               <td class="text-right"><?php echo $total['text']; ?></td>
             </tr>
             <?php } ?>
@@ -140,6 +111,57 @@
           </tbody>
         </table>
         <?php } ?>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-info-circle"></i> <?php echo $text_order; ?></h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <td class="text-center">Invoice</td>
+              <td class="text-center"><?php echo $text_reward; ?></td>
+              <td class="text-center"><?php echo $text_affiliate; ?>
+                <?php if ($affiliate) { ?>
+                (<a href="<?php echo $affiliate; ?>"><?php echo $affiliate_firstname; ?> <?php echo $affiliate_lastname; ?></a>)
+                <?php } ?></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-center"><?php if (!$invoice_no) { ?>
+                <button id="button-invoice" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_generate; ?>" class="btn btn-success btn-lg"><i class="fa fa-cog fa-3x"></i></button>
+                <?php } else { ?>
+                <button disabled="disabled" class="btn btn-success btn-lg"><i class="fa fa-cog fa-3x"></i></button>
+                <?php } ?></td>
+              <td class="text-center"><?php if ($customer && $reward) { ?>
+                <?php if (!$reward_total) { ?>
+                <button id="button-reward-add" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_reward_add; ?>" class="btn btn-success btn-lg"><i class="fa fa-plus-circle fa-3x"></i></button>
+                <?php } else { ?>
+                <button id="button-reward-remove" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_reward_remove; ?>" class="btn btn-danger btn-lg"><i class="fa fa-minus-circle fa-3x"></i></button>
+                <?php } ?>
+                <?php } else { ?>
+                <button disabled="disabled" class="btn btn-success btn-lg"><i class="fa fa-plus-circle fa-3x"></i></button>
+                <?php } ?></td>
+              <td class="text-center"><?php if ($affiliate) { ?>
+                <?php if (!$commission_total) { ?>
+                <button id="button-commission-add" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_commission_add; ?>" class="btn btn-success btn-lg"><i class="fa fa-plus-circle fa-3x"></i></button>
+                <?php } else { ?>
+                <button id="button-commission-remove" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_commission_remove; ?>" class="btn btn-danger btn-lg"><i class="fa fa-minus-circle fa-3x"></i></button>
+                <?php } ?>
+                <?php } else { ?>
+                <button disabled="disabled" class="btn btn-success btn-lg"><i class="fa fa-plus-circle fa-3x"></i></button>
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td id="invoice" class="text-center"><?php echo $invoice_no; ?></td>
+              <td class="text-center"><?php echo $reward; ?></td>
+              <td class="text-center"><?php echo $commission; ?></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
     <div class="panel panel-default">
@@ -295,11 +317,11 @@ $(document).delegate('#button-invoice', 'click', function() {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('#tab-order').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['invoice_no']) {
-				$('#button-invoice').replaceWith(json['invoice_no']);
+				$('#invoice').html(json['invoice_no']);
 			}
 		},			
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -329,7 +351,7 @@ $(document).delegate('#button-reward-add', 'click', function() {
 			if (json['success']) {
                 $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 				
-				$('#button-reward-add').replaceWith('<button id="button-reward-remove" data-toggle="tooltip" title="<?php echo $button_reward_remove; ?>" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>');
+				$('#button-reward-add').replaceWith('<button id="button-reward-remove" data-toggle="tooltip" title="<?php echo $button_reward_remove; ?>" class="btn btn-danger btn-lg"><i class="fa fa-minus-circle"></i></button>');
 			}
 		},			
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -389,7 +411,7 @@ $(document).delegate('#button-commission-add', 'click', function() {
 			if (json['success']) {
                 $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
                 
-				$('#button-commission-add').replaceWith('<button id="button-commission-remove" data-toggle="tooltip" title="<?php echo $button_commission_remove; ?>" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>');
+				$('#button-commission-add').replaceWith('<button id="button-commission-remove" data-toggle="tooltip" title="<?php echo $button_commission_remove; ?>" class="btn btn-danger btn-lg"><i class="fa fa-minus-circle"></i></button>');
 			}
 		},			
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -420,7 +442,7 @@ $(document).delegate('#button-commission-remove', 'click', function() {
 			if (json['success']) {
                 $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 				
-				$('#button-commission-remove').replaceWith('<button id="button-commission-add" data-toggle="tooltip" title="<?php echo $button_commission_add; ?>" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>');
+				$('#button-commission-remove').replaceWith('<button id="button-commission-add" data-toggle="tooltip" title="<?php echo $button_commission_add; ?>" class="btn btn-success btn-lg"><i class="fa fa-plus-circle"></i></button>');
 			}
 		},			
 		error: function(xhr, ajaxOptions, thrownError) {

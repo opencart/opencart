@@ -6,7 +6,7 @@ function token($length = 32) {
 	$token = '';
 	
 	for ($i = 0; $i < $length; $i++) {
-		$token .= $string[rand(0, strlen($string) - 1)];
+		$token .= $string[mt_rand(0, strlen($string) - 1)];
 	}	
 	
 	return $token;

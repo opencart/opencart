@@ -27,7 +27,8 @@
             <br />
             <?php } ?>
             <br />
-            <a href="<?php echo $store_url; ?>" target="_blank"><?php echo $store_name; ?></a> <i class="fa fa-calendar fa-fw"></i> <?php echo $date_added; ?><br />
+            <a href="<?php echo $store_url; ?>" target="_blank"><?php echo $store_name; ?></a><br />
+            <i class="fa fa-calendar fa-fw"></i> <?php echo $date_added; ?><br />
             <?php if ($customer) { ?>
             <i class="fa fa-user fa-fw"></i> <a href="<?php echo $customer; ?>" target="_blank"><?php echo $firstname; ?> <?php echo $lastname; ?></a><br />
             <?php } else { ?>

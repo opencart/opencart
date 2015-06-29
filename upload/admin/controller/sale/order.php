@@ -714,36 +714,16 @@ class ControllerSaleOrder extends Controller {
 			$data['heading_title'] = $this->language->get('heading_title');
 
 			$data['text_order'] = sprintf($this->language->get('text_order'), $this->request->get['order_id']);
-			$data['text_order_id'] = $this->language->get('text_order_id');
 			$data['text_invoice'] = $this->language->get('text_invoice');
-			$data['text_date'] = $this->language->get('text_date');
-			
+			$data['text_reward'] = $this->language->get('text_reward');
+			$data['text_affiliate'] = $this->language->get('text_affiliate');		
 			$data['text_payment_address'] = $this->language->get('text_payment_address');
 			$data['text_shipping_address'] = $this->language->get('text_shipping_address');
-			$data['text_customer'] = $this->language->get('text_customer');
-			$data['text_email'] = $this->language->get('text_email');
-			
-			
-			
-			
-			
-			
-			
-			$data['text_customer_group'] = $this->language->get('text_customer_group');
-			$data['text_reward'] = $this->language->get('text_reward');
-			$data['text_order_status'] = $this->language->get('text_order_status');
 			$data['text_comment'] = $this->language->get('text_comment');
-			$data['text_affiliate'] = $this->language->get('text_affiliate');
-			$data['text_commission'] = $this->language->get('text_commission');
 			$data['text_ip'] = $this->language->get('text_ip');
 			$data['text_forwarded_ip'] = $this->language->get('text_forwarded_ip');
 			$data['text_user_agent'] = $this->language->get('text_user_agent');
 			$data['text_accept_language'] = $this->language->get('text_accept_language');
-			$data['text_date_added'] = $this->language->get('text_date_added');
-			$data['text_date_modified'] = $this->language->get('text_date_modified');
-			
-			$data['text_shipping_method'] = $this->language->get('text_shipping_method');
-			$data['text_payment_method'] = $this->language->get('text_payment_method');
 			$data['text_history'] = $this->language->get('text_history');
 			$data['text_loading'] = $this->language->get('text_loading');
 
@@ -828,25 +808,47 @@ class ControllerSaleOrder extends Controller {
 			$data['edit'] = $this->url->link('sale/order/edit', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], 'SSL');
 			$data['cancel'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-			//if ($order_info['store_logo']) {
-			//	$data['logo'] = DIR_ 
-			//}
-			
-						$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
-
 			$data['order_id'] = $this->request->get['order_id'];
+			
+			$data['store_name'] = $order_info['store_name'];
+			$data['store_url'] = $order_info['store_url'];
 
 			if ($order_info['invoice_no']) {
 				$data['invoice_no'] = $order_info['invoice_prefix'] . $order_info['invoice_no'];
 			} else {
 				$data['invoice_no'] = '';
 			}
+			
+			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
 
-			$data['store_name'] = $order_info['store_name'];
-			$data['store_url'] = $order_info['store_url'];
+			$data['firstname'] = $order_info['firstname'];
+			$data['lastname'] = $order_info['lastname'];
+
+			if ($order_info['customer_id']) {
+				$data['customer'] = $this->url->link('sale/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . $order_info['customer_id'], 'SSL');
+			} else {
+				$data['customer'] = '';
+			}			
+			
+			$this->load->model('sale/customer_group');
+
+			$customer_group_info = $this->model_sale_customer_group->getCustomerGroup($order_info['customer_group_id']);
+
+			if ($customer_group_info) {
+				$data['customer_group'] = $customer_group_info['name'];
+			} else {
+				$data['customer_group'] = '';
+			}
+
+			$data['email'] = $order_info['email'];
+			$data['telephone'] = $order_info['telephone'];
+			
+			$data['shipping_method'] = $order_info['shipping_method'];
+			$data['payment_method'] = $order_info['payment_method'];
+		
 			
 			
-			
+						
 			// Payment Address
 			if ($order_info['payment_address_format']) {
 				$format = $order_info['payment_address_format'];
@@ -984,43 +986,7 @@ class ControllerSaleOrder extends Controller {
 				);
 			}
 
-
-
-
-
-
-
-			
-			
-			
-			$data['firstname'] = $order_info['firstname'];
-			$data['lastname'] = $order_info['lastname'];
-
-			if ($order_info['customer_id']) {
-				$data['customer'] = $this->url->link('sale/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . $order_info['customer_id'], 'SSL');
-			} else {
-				$data['customer'] = '';
-			}
-
-			$this->load->model('sale/customer_group');
-
-			$customer_group_info = $this->model_sale_customer_group->getCustomerGroup($order_info['customer_group_id']);
-
-			if ($customer_group_info) {
-				$data['customer_group'] = $customer_group_info['name'];
-			} else {
-				$data['customer_group'] = '';
-			}
-
-			$data['email'] = $order_info['email'];
-			$data['telephone'] = $order_info['telephone'];
-			$data['fax'] = $order_info['fax'];
-
-
-
 			$data['comment'] = nl2br($order_info['comment']);
-			$data['shipping_method'] = $order_info['shipping_method'];
-			$data['payment_method'] = $order_info['payment_method'];
 
 			$this->load->model('sale/customer');
 
@@ -1053,12 +1019,9 @@ class ControllerSaleOrder extends Controller {
 				$data['order_status'] = '';
 			}
 
-
 			$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 			$data['order_status_id'] = $order_info['order_status_id'];
-
-
 
 			$data['account_custom_field'] = $order_info['custom_field'];
 

@@ -44,37 +44,12 @@ class ModelInstall extends Model {
 			$db->query("DELETE FROM `" . $data['db_prefix'] . "setting` WHERE `key` = 'config_url'");
 			$db->query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_url', value = '" . $db->escape(HTTP_OPENCART) . "'");
 
-			// Create token to login with
-			$string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-			
-			$token = '';
-			
-			for ($i = 0; $i < 64; $i++) {
-				$token .= $string[rand(0, strlen($string) - 1)];
-			}
-
 			$db->query("DELETE FROM `" . $data['db_prefix'] . "setting` WHERE `key` = 'config_encryption'");
-			$db->query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_encryption', value = '" . $db->escape($token) . "'");
+			$db->query("INSERT INTO `" . $data['db_prefix'] . "setting` SET `code` = 'config', `key` = 'config_encryption', value = '" . $db->escape(token(64)) . "'");
 
 			$db->query("UPDATE `" . $data['db_prefix'] . "product` SET `viewed` = '0'");
 
-			// Create order API user
-			$string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-			
-			$api_username = '';
-			
-
-			for ($i = 0; $i < 64; $i++) {
-				$api_username .= $string[rand(0, strlen($string) - 1)];
-			}
-
-			$api_password = '';
-
-			for ($i = 0; $i < 256; $i++) {
-				$api_password .= $string[rand(0, strlen($string) - 1)];
-			}
-
-			$db->query("INSERT INTO `" . $data['db_prefix'] . "api` SET username = '" . $db->escape($api_username) . "', `password` = '" . $db->escape($api_password) . "', status = 1, date_added = NOW(), date_modified = NOW()");
+			$db->query("INSERT INTO `" . $data['db_prefix'] . "api` SET username = '" . $db->escape(token(64)) . "', `password` = '" . $db->escape(token(256)) . "', status = 1, date_added = NOW(), date_modified = NOW()");
 
 			$api_id = $db->getLastId();
 

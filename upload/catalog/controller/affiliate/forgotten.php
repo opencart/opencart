@@ -16,7 +16,7 @@ class ControllerAffiliateForgotten extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->load->language('mail/forgotten');
 
-			$password = substr(md5(mt_rand()), 0, 10);
+			$password = token(10);
 
 			$this->model_affiliate_affiliate->editPassword($this->request->post['email'], $password);
 

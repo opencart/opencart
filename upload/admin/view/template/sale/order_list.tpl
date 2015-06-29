@@ -246,19 +246,14 @@ $('input[name^=\'selected\']').on('change', function() {
 
 $('input[name^=\'selected\']:first').trigger('change');
 
-// Cookie
+// Login to the API
 $.ajax({
-	url: 'index.php?route=sale/order/api',
+	url: 'index.php?route=sale/order/api&token=<?php echo $token; ?>',
 	type: 'post',
-	data: 'token=<?php echo $token; ?>',
 	dataType: 'json',	
 	crossDomain: true,
 	success: function(json) {	
 		$('.alert').remove();
-		
-		if (json['cookie']) {
-			$('input[name=\'cookie\']').val(json['cookie']);
-		}
 		
 		if (json['error']) {
 			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
@@ -276,9 +271,9 @@ $('button[id^=\'button-delete\']').on('click', function(e) {
 		var node = this;
 		
 		$.ajax({
-			url: 'http://localhost/opencart/upload/index.php?route=api/cart/remove',
+			url: 'http://localhost/opencart/upload/index.php?route=api/cart/remove&token=<?php echo $token; ?>',
 			type: 'post',
-			data: 'cookie=' + $('input[name=\'cookie\']').val() + '&order_id=' + $(node).val(),
+			data: 'order_id=' + $(node).val(),
 			dataType: 'json',
 			crossDomain: true,						
 			beforeSend: function() {

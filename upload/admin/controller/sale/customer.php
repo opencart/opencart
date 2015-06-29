@@ -1159,13 +1159,7 @@ class ControllerSaleCustomer extends Controller {
 
 		if ($customer_info) {
 			// Create token to login with
-			$string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-			
-			$token = '';
-			
-			for ($i = 0; $i < 64; $i++) {
-				$token .= $string[rand(0, strlen($string) - 1)];
-			}
+			$token = token(64);
 			
 			$this->model_sale_customer->editToken($customer_id, $token);
 

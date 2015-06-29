@@ -20,14 +20,13 @@
         <div class="row">
           <div class="col-sm-3">
             <?php if ($invoice_no) { ?>
-            Invoice: <?php echo $invoice_no; ?><br />
+            <i class="fa fa-shopping-cart fa-fw"></i> <?php echo $invoice_no; ?><br />
             <?php } else { ?>
-            Invoice:
-            <button id="button-invoice" class="btn btn-success btn-xs"><i class="fa fa-cog"></i> <?php echo $button_generate; ?></button>
+            <i class="fa fa-shopping-cart fa-fw"></i> <button id="button-invoice" class="btn btn-success btn-xs"><i class="fa fa-cog"></i> <?php echo $button_generate; ?></button>
             <br />
             <?php } ?>
             <br />
-            <a href="<?php echo $store_url; ?>" target="_blank"><?php echo $store_name; ?></a><br />
+            <i class="fa fa-shopping-cart fa-fw"></i> <a href="<?php echo $store_url; ?>" target="_blank"><?php echo $store_name; ?></a><br />
             <i class="fa fa-calendar fa-fw"></i> <?php echo $date_added; ?><br />
             <?php if ($customer) { ?>
             <i class="fa fa-user fa-fw"></i> <a href="<?php echo $customer; ?>" target="_blank"><?php echo $firstname; ?> <?php echo $lastname; ?></a><br />
@@ -198,12 +197,12 @@
               <?php if ($account_custom_fields) { ?>
               <thead>
                 <tr>
-                  <td colspan="2"><?php echo $text_customer; ?></td>
+                  <td colspan="2"><?php echo $text_account_custom_field; ?></td>
                 </tr>
               </thead>
               <tbody>
                 <?php foreach ($account_custom_fields as $custom_field) { ?>
-                <tr data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                <tr>
                   <td><?php echo $custom_field['name']; ?>:</td>
                   <td><?php echo $custom_field['value']; ?></td>
                 </tr>
@@ -213,12 +212,12 @@
               <?php if ($payment_custom_fields) { ?>
               <thead>
                 <tr>
-                  <td colspan="2"><?php echo $text_payment; ?></td>
+                  <td colspan="2"><?php echo $text_payment_custom_field; ?></td>
                 </tr>
               </thead>
               <tbody>
                 <?php foreach ($payment_custom_fields as $custom_field) { ?>
-                <tr data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                <tr>
                   <td><?php echo $custom_field['name']; ?>:</td>
                   <td><?php echo $custom_field['value']; ?></td>
                 </tr>
@@ -228,18 +227,23 @@
               <?php if ($shipping_method && $shipping_custom_fields) { ?>
               <thead>
                 <tr>
-                  <td colspan="2"><?php echo $text_shipping; ?></td>
+                  <td colspan="2"><?php echo $text_shipping_custom_field; ?></td>
                 </tr>
               </thead>
               <tbody>
                 <?php foreach ($shipping_custom_fields as $custom_field) { ?>
-                <tr data-sort="<?php echo $custom_field['sort_order'] + 1; ?>">
+                <tr>
                   <td><?php echo $custom_field['name']; ?>:</td>
                   <td><?php echo $custom_field['value']; ?></td>
                 </tr>
                 <?php } ?>
               </tbody>
               <?php } ?>
+              <thead>
+                <tr>
+                  <td colspan="2"><?php echo $text_browser; ?></td>
+                </tr>
+              </thead>              
               <tbody>
                 <tr>
                   <td><?php echo $text_ip; ?></td>
@@ -518,36 +522,6 @@ $(document).ready(function() {
 
 $('select[name="order_status_id"]').change(function(){ 
 	changeStatus(); 
-});
-//--></script> 
-  <script type="text/javascript"><!--
-// Sort the custom fields
-$('#tab-payment tr[data-sort]').detach().each(function() {
-	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-payment tr').length) {
-		$('#tab-payment tr').eq($(this).attr('data-sort')).before(this);
-	}
-
-	if ($(this).attr('data-sort') > $('#tab-payment tr').length) {
-		$('#tab-payment tr:last').after(this);
-	}
-
-	if ($(this).attr('data-sort') < -$('#tab-payment tr').length) {
-		$('#tab-payment tr:first').before(this);
-	}
-});
-
-$('#tab-shipping tr[data-sort]').detach().each(function() {
-	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-shipping tr').length) {
-		$('#tab-shipping tr').eq($(this).attr('data-sort')).before(this);
-	}
-
-	if ($(this).attr('data-sort') > $('#tab-shipping tr').length) {
-		$('#tab-shipping tr:last').after(this);
-	}
-
-	if ($(this).attr('data-sort') < -$('#tab-shipping tr').length) {
-		$('#tab-shipping tr:first').before(this);
-	}
 });
 //--></script> 
 </div>

@@ -324,7 +324,7 @@ class ControllerPaymentFirstdataRemote extends Controller {
 		$this->model_payment_firstdata_remote->uninstall();
 	}
 
-	public function action() {
+	public function order() {
 		if ($this->config->get('firstdata_remote_status')) {
 			$this->load->model('payment/firstdata_remote');
 

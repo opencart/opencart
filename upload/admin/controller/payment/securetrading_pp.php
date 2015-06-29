@@ -293,7 +293,7 @@ class ControllerPaymentSecureTradingPp extends Controller {
 		$this->model_payment_securetrading_pp->uninstall();
 	}
 
-	public function action() {
+	public function order() {
 
 		if ($this->config->get('securetrading_pp_status')) {
 			$this->load->model('payment/securetrading_pp');

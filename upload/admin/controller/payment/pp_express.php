@@ -885,7 +885,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$this->model_payment_pp_express->uninstall();
 	}
 
-	public function action() {
+	public function order() {
 		if ($this->config->get('pp_express_status')) {
 			$this->load->model('payment/pp_express');
 			$this->load->language('payment/pp_express_order');

@@ -1,16 +1,16 @@
 <?php
 // Heading
-$_['heading_title']            = 'Orders';
+$_['heading_title']              = 'Orders';
 
 // Text
-$_['text_list']                = 'Order List';
-$_['text_add']                 = 'Add Order';
-$_['text_edit']                = 'Edit Order';
-$_['text_order']               = 'Order (#%s)';
-$_['text_order_detail']        = 'Order Details';
-$_['text_order_id']            = 'Order ID:';
-$_['text_invoice_no']          = 'Invoice No.:';
-$_['text_invoice_date']        = 'Invoice Date:';
+$_['text_list']                  = 'Order List';
+$_['text_add']                   = 'Add Order';
+$_['text_edit']                  = 'Edit Order';
+$_['text_order']                 = 'Order (#%s)';
+$_['text_order_detail']          = 'Order Details';
+$_['text_order_id']              = 'Order ID:';
+$_['text_invoice_no']            = 'Invoice No.:';
+$_['text_invoice_date']          = 'Invoice Date:';
 $_['text_store_name']          = 'Store Name:';
 $_['text_store_url']           = 'Store Url:';
 $_['text_email']               = 'E-Mail:';
@@ -34,8 +34,15 @@ $_['text_date_modified']       = 'Date Modified:';
 
 $_['text_invoice']             = 'Invoice';
 
-$_['text_payment_address']     = 'Payment Address';
-$_['text_shipping_address']    = 'Shipping Adress';
+$_['text_payment_address']       = 'Payment Address';
+$_['text_shipping_address']      = 'Shipping Adress';
+
+$_['text_account_custom_field']  = 'Account Custom Fields';
+
+$_['text_payment_custom_field']  = 'Payment Address Custom Fields';
+$_['text_shipping_custom_field'] = 'Shipping Adress Custom Fields';
+$_['text_browser']               = 'Browser';
+
 $_['text_shipping_method']     = 'Shipping Method:';
 $_['text_payment_method']      = 'Payment Method:';
 $_['text_missing']             = 'Missing Orders';

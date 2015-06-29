@@ -256,7 +256,7 @@ class ControllerPaymentWorldpay extends Controller {
 		$this->model_payment_worldpay->uninstall();
 	}
 
-	public function action() {
+	public function order() {
 
 		if ($this->config->get('worldpay_status')) {
 

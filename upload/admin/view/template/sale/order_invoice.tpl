@@ -49,7 +49,7 @@
       <thead>
         <tr>
           <td style="width: 50%;"><b><?php echo $text_payment_address; ?></b></td>
-          <td style="width: 50%;"><b><?php echo $text_ship_to; ?></b></td>
+          <td style="width: 50%;"><b><?php echo $text_shipping_address; ?></b></td>
         </tr>
       </thead>
       <tbody>

@@ -720,6 +720,10 @@ class ControllerSaleOrder extends Controller {
 			$data['text_payment_address'] = $this->language->get('text_payment_address');
 			$data['text_shipping_address'] = $this->language->get('text_shipping_address');
 			$data['text_comment'] = $this->language->get('text_comment');
+			$data['text_account_custom_field'] = $this->language->get('text_account_custom_field');
+			$data['text_payment_custom_field'] = $this->language->get('text_payment_custom_field');
+			$data['text_shipping_custom_field'] = $this->language->get('text_shipping_custom_field');		
+			$data['text_browser'] = $this->language->get('text_browser');
 			$data['text_ip'] = $this->language->get('text_ip');
 			$data['text_forwarded_ip'] = $this->language->get('text_forwarded_ip');
 			$data['text_user_agent'] = $this->language->get('text_user_agent');
@@ -1033,7 +1037,12 @@ class ControllerSaleOrder extends Controller {
 
 			$data['account_custom_fields'] = array();
 
-			$custom_fields = $this->model_sale_custom_field->getCustomFields();
+			$filter_data = array(
+				'sort'  => 'cf.sort_order',
+				'order' => 'ASC',
+			);
+
+			$custom_fields = $this->model_sale_custom_field->getCustomFields($filter_data);
 
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['location'] == 'account' && isset($order_info['custom_field'][$custom_field['custom_field_id']])) {
@@ -1501,7 +1510,7 @@ class ControllerSaleOrder extends Controller {
 		$data['text_email'] = $this->language->get('text_email');
 		$data['text_website'] = $this->language->get('text_website');
 		$data['text_payment_address'] = $this->language->get('text_payment_address');
-		$data['text_ship_to'] = $this->language->get('text_ship_to');
+		$data['text_shipping_address'] = $this->language->get('text_shipping_address');
 		$data['text_payment_method'] = $this->language->get('text_payment_method');
 		$data['text_shipping_method'] = $this->language->get('text_shipping_method');
 		$data['text_comment'] = $this->language->get('text_comment');

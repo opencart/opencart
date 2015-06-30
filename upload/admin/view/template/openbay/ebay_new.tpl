@@ -622,7 +622,7 @@
                 <label class="col-sm-2 control-label"><?php echo $entry_imediate_payment; ?></label>
                 <div class="col-sm-10">
                   <input type="hidden" name="ebay_payment_immediate" value="0" />
-                  <input type="checkbox" name="ebay_payment_immediate" value="1" id="ebay_payment_immediate" <?php if ($product['defaults']['ebay_payment_immediate'] != 1) { echo 'checked '; } ?> />
+                  <input type="checkbox" name="ebay_payment_immediate" value="1" id="ebay_payment_immediate" <?php if ($product['defaults']['ebay_payment_immediate'] == 1) { echo 'checked '; } ?> />
                 </div>
               </div>
               <div class="form-group">

@@ -174,7 +174,7 @@
                 <div class="form-group" id="product_identifier_ean_container" style="display:none;">
                   <label class="col-sm-2 control-label"><?php echo $text_ean; ?></label>
                   <div class="col-sm-10">
-                    <input type="hidden" id="identifier_ean_required" class="product_identifier_required" />
+                    <input type="hidden" id="identifier_ean_required" class="product_identifier_required" value="0" />
                     <input type="hidden" id="identifier_ean_original" value="<?php echo $product['ean']; ?>" />
                     <input type="text" name="identifier_ean" value="<?php echo $product['ean']; ?>" id="identifier_ean" class="form-control" />
                   </div>
@@ -182,7 +182,7 @@
                 <div class="form-group" id="product_identifier_isbn_container" style="display:none;">
                   <label class="col-sm-2 control-label"><?php echo $text_isbn; ?></label>
                   <div class="col-sm-10">
-                    <input type="hidden" id="identifier_isbn_required" class="product_identifier_required" />
+                    <input type="hidden" id="identifier_isbn_required" class="product_identifier_required" value="0" />
                     <input type="hidden" id="identifier_isbn_original" value="<?php echo $product['isbn']; ?>" />
                     <input type="text" name="identifier_isbn" value="<?php echo $product['isbn']; ?>" id="identifier_isbn" class="form-control" />
                   </div>
@@ -190,7 +190,7 @@
                 <div class="form-group" id="product_identifier_upc_container" style="display:none;">
                   <label class="col-sm-2 control-label"><?php echo $text_upc; ?></label>
                   <div class="col-sm-10">
-                    <input type="hidden" id="identifier_upc_required" class="product_identifier_required" />
+                    <input type="hidden" id="identifier_upc_required" class="product_identifier_required" value="0" />
                     <input type="hidden" id="identifier_upc_original" value="<?php echo $product['upc']; ?>" />
                     <input type="text" name="identifier_upc" value="<?php echo $product['upc']; ?>" id="identifier_upc" class="form-control" />
                   </div>
@@ -1327,7 +1327,7 @@
                     $('#product_identifier_ean_container').show();
 
                     if (data.data.ean_identifier_requirement == 'Required') {
-                      $('#product_identifier_ean_required').val(1);
+                      $('#identifier_ean_required').val(1);
                     }
                   }
 
@@ -1336,7 +1336,7 @@
                     $('#product_identifier_isbn_container').show();
 
                     if (data.data.isbn_identifier_requirement == 'Required') {
-                      $('#product_identifier_isbn_required').val(1);
+                      $('#identifier_isbn_required').val(1);
                     }
                   }
 
@@ -1345,7 +1345,7 @@
                     $('#product_identifier_upc_container').show();
 
                     if (data.data.upc_identifier_requirement == 'Required') {
-                      $('#product_identifier_upc_required').val(1);
+                      $('#identifier_upc_required').val(1);
                     }
                   }
                 } else {
@@ -1448,10 +1448,10 @@
     });
   }
 
-  $(document).on("change", '#identifier_not_required', function() {
+  $('#identifier_not_required').on("click", function() {
     var not_required_text = "<?php echo $setting['product_details']['product_identifier_unavailable_text']; ?>";
 
-    if ($('#identifier_not_required').checked) {
+    if ($('#identifier_not_required:checked').length == 1) {
       if ($('#identifier_ean_required').val() == 1) {
         $('#identifier_ean').val(not_required_text);
       }
@@ -1463,13 +1463,13 @@
       }
     } else {
       if ($('#identifier_ean_required').val() == 1) {
-        $('#identifier_ean').val($('#identifier_ean_original'));
+        $('#identifier_ean').val($('#identifier_ean_original').val());
       }
       if ($('#identifier_isbn_required').val() == 1) {
-        $('#identifier_isbn').val($('#identifier_isbn_original'));
+        $('#identifier_isbn').val($('#identifier_isbn_original').val());
       }
       if ($('#identifier_upc_required').val() == 1) {
-        $('#identifier_upc').val($('#identifier_upc_original'));
+        $('#identifier_upc').val($('#identifier_upc_original').val());
       }
     }
   });

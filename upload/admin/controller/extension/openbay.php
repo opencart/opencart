@@ -1021,7 +1021,6 @@ class ControllerExtensionOpenbay extends Controller {
 
 			foreach ($this->request->post['order_id'] as $order_id) {
 				if ($this->request->post['channel'][$order_id] == 'Amazon EU') {
-
 					if ($this->config->get('openbay_amazon_order_status_shipped') == $this->request->post['order_status_id']) {
 						$carrier = '';
 
@@ -1066,7 +1065,6 @@ class ControllerExtensionOpenbay extends Controller {
 
 			foreach ($this->request->post['order_id'] as $order_id) {
 				if ($this->request->post['channel'][$order_id] == 'Amazon US') {
-
 					if ($this->config->get('openbay_amazonus_order_status_shipped') == $this->request->post['order_status_id']) {
 						$carrier = '';
 
@@ -1094,6 +1092,43 @@ class ControllerExtensionOpenbay extends Controller {
 							'order_id' => $order_id,
 							'status' => 'canceled',
 						);
+					}
+				}
+			}
+
+			if ($orders) {
+				$this->openbay->amazonus->bulkUpdateOrders($orders);
+			}
+		}
+
+		//eBay
+		if ($this->config->get('ebay_status') == 1) {
+			$this->load->model('openbay/ebay');
+
+			$orders = array();
+
+			foreach ($this->request->post['order_id'] as $order_id) {
+				if ($this->request->post['channel'][$order_id] == 'eBay') {
+					if ($this->config->get('ebay_status_shipped_id') == $this->request->post['order_status_id']) {
+						$carrier = '';
+
+						if (isset($this->request->post['carrier_other'][$order_id]) && !empty($this->request->post['carrier_other'][$order_id])) {
+							$carrier_from_list = false;
+							$carrier = $this->request->post['carrier_other'][$order_id];
+						} else {
+							$carrier_from_list = true;
+							$carrier = $this->request->post['carrier'][$order_id];
+						}
+
+						$orders[] = array(
+							'order_id' => $order_id,
+							'status' => 'shipped',
+							'carrier' => $carrier,
+							'carrier_from_list' => $carrier_from_list,
+							'tracking' => $this->request->post['tracking'][$order_id],
+						);
+
+						$this->model_openbay_amazonus->updateAmazonusOrderTracking($order_id, $carrier, $carrier_from_list, !empty($carrier) ? $this->request->post['tracking'][$order_id] : '');
 					}
 				}
 			}

@@ -170,26 +170,26 @@
 
             <div id="tab-listing-feature" class="tab-pane">
               <div class="well" style="display: none;" id="product_identifier_container">
-                <h3>Product identifiers</h3>
+                <h3><?php echo $text_product_identifiers; ?></h3>
                 <div class="form-group" id="product_identifier_ean_container" style="display:none;">
-                  <label class="col-sm-2 control-label">EAN</label>
+                  <label class="col-sm-2 control-label"><?php echo $text_ean; ?></label>
                   <div class="col-sm-10">
                     <input type="hidden" name="identifier_ean_required" class="product_identifier_required" />
-                    <input type="text" name="name" value="<?php echo $product['ean']; ?>" id="identifier_ean" class="form-control" />
+                    <input type="text" name="identifier_ean" value="<?php echo $product['ean']; ?>" id="identifier_ean" class="form-control" />
                   </div>
                 </div>
                 <div class="form-group" id="product_identifier_isbn_container" style="display:none;">
-                  <label class="col-sm-2 control-label">ISBN</label>
+                  <label class="col-sm-2 control-label"><?php echo $text_isbn; ?></label>
                   <div class="col-sm-10">
                     <input type="hidden" name="identifier_isbn_required" class="product_identifier_required" />
-                    <input type="text" name="name" value="<?php echo $product['isbn']; ?>" id="identifier_isbn" class="form-control" />
+                    <input type="text" name="identifier_isbn" value="<?php echo $product['isbn']; ?>" id="identifier_isbn" class="form-control" />
                   </div>
                 </div>
                 <div class="form-group" id="product_identifier_upc_container" style="display:none;">
-                  <label class="col-sm-2 control-label">UPC</label>
+                  <label class="col-sm-2 control-label"><?php echo $text_upc; ?></label>
                   <div class="col-sm-10">
                     <input type="hidden" name="identifier_upc_required" class="product_identifier_required" />
-                    <input type="text" name="name" value="<?php echo $product['upc']; ?>" id="identifier_upc" class="form-control" />
+                    <input type="text" name="identifier_upc" value="<?php echo $product['upc']; ?>" id="identifier_upc" class="form-control" />
                   </div>
                 </div>
               </div>

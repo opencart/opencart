@@ -1297,6 +1297,13 @@ class ControllerOpenbayEbay extends Controller {
 				$setting['package_type'] = $this->openbay->ebay->getSetting('package_type');
 				$setting['shipping_types'] = $this->openbay->ebay->getSetting('shipping_types');
 				$setting['measurement_types'] = $this->openbay->ebay->getSetting('measurement_types');
+				$setting['measurement_types'] = $this->openbay->ebay->getSetting('measurement_types');
+				$setting['product_details'] = $this->openbay->ebay->getSetting('product_details');
+
+				if (!isset($setting['product_details']['product_identifier_unavailable_text'])) {
+					$this->session->data['warning'] = $this->language->get('error_missing_settings');
+					$this->response->redirect($this->url->link('openbay/ebay/syncronise&token=' . $this->session->data['token'], 'SSL'));
+				}
 
 				if (empty($setting['dispatch_times']) || empty($setting['countries']) || empty($setting['returns'])){
 					$this->session->data['warning'] = $this->language->get('error_missing_settings');

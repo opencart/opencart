@@ -198,7 +198,6 @@
                             </div>
                           </div>
                         </div>
-
                         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="overlay-catalog-<?php echo $i; ?>" data-backdrop="static" data-keyboard="false">
                           <div class="modal-dialog modal-lg">
                             <div class="modal-content">
@@ -237,7 +236,6 @@
                             </div>
                           </div>
                         </div>
-
                         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="overlay-profile-<?php echo $i; ?>" data-backdrop="static" data-keyboard="false">
                           <div class="modal-dialog modal-lg">
                             <div class="modal-content">

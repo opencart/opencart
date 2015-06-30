@@ -169,6 +169,30 @@
             </div>
 
             <div id="tab-listing-feature" class="tab-pane">
+              <div class="well" style="display: none;" id="product_identifier_container">
+                <h3>Product identifiers</h3>
+                <div class="form-group" id="product_identifier_ean_container" style="display:none;">
+                  <label class="col-sm-2 control-label">EAN</label>
+                  <div class="col-sm-10">
+                    <input type="hidden" name="identifier_ean_required" class="product_identifier_required" />
+                    <input type="text" name="name" value="<?php echo $product['ean']; ?>" id="identifier_ean" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group" id="product_identifier_isbn_container" style="display:none;">
+                  <label class="col-sm-2 control-label">ISBN</label>
+                  <div class="col-sm-10">
+                    <input type="hidden" name="identifier_isbn_required" class="product_identifier_required" />
+                    <input type="text" name="name" value="<?php echo $product['isbn']; ?>" id="identifier_isbn" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group" id="product_identifier_upc_container" style="display:none;">
+                  <label class="col-sm-2 control-label">UPC</label>
+                  <div class="col-sm-10">
+                    <input type="hidden" name="identifier_upc_required" class="product_identifier_required" />
+                    <input type="text" name="name" value="<?php echo $product['upc']; ?>" id="identifier_upc" class="form-control" />
+                  </div>
+                </div>
+              </div>
               <div class="alert alert-info"><?php echo $text_features_help; ?></div>
               <div class="form-group">
                 <div class="col-sm-12">
@@ -1232,6 +1256,9 @@
         $('#vrm-input-container').remove();
         $('#vin-input-container').remove();
 
+        $('#product_identifier_container').hide();
+        $('.product_identifier_required').val('0');
+
         $.ajax({
             url: 'index.php?route=openbay/ebay/getCategoryFeatures&token=<?php echo $token; ?>&category='+cat,
             type: 'GET',
@@ -1284,6 +1311,33 @@
                     html_inj += '</div>';
                     html_inj += '</div>';
                     $('#tab-listing-description').prepend(html_inj);
+                  }
+
+                  if (data.data.ean_identifier_requirement != '') {
+                    $('#product_identifier_container').show();
+                    $('#product_identifier_ean_container').show();
+
+                    if (data.data.ean_identifier_requirement == 'Required') {
+                      $('#product_identifier_ean_required').val(1);
+                    }
+                  }
+
+                  if (data.data.isbn_identifier_requirement != '') {
+                    $('#product_identifier_container').show();
+                    $('#product_identifier_isbn_container').show();
+
+                    if (data.data.isbn_identifier_requirement == 'Required') {
+                      $('#product_identifier_isbn_required').val(1);
+                    }
+                  }
+
+                  if (data.data.upc_identifier_requirement != '') {
+                    $('#product_identifier_container').show();
+                    $('#product_identifier_upc_container').show();
+
+                    if (data.data.upc_identifier_requirement == 'Required') {
+                      $('#product_identifier_upc_required').val(1);
+                    }
                   }
                 } else {
                     if (data.msg == null) {

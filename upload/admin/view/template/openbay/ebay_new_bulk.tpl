@@ -72,40 +72,57 @@
                         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="overlay-feature-<?php echo $i; ?>" data-backdrop="static" data-keyboard="false">
                           <div class="modal-dialog modal-lg">
                             <div class="modal-content">
-                              <div class="well modal-body" style="display: none;" id="product_identifier_container_<?php echo $i; ?>">
-                                <h3><?php echo $text_product_identifiers; ?></h3>
-                                <div class="form-group" id="product_identifier_ean_container_<?php echo $i; ?>" style="display:none;">
-                                  <label class="col-sm-2 control-label"><?php echo $text_ean; ?></label>
-                                  <div class="col-sm-10">
-                                    <input type="hidden" id="identifier_ean_required_<?php echo $i; ?>" class="product_identifier_required_<?php echo $i; ?>" value="0" />
-                                    <input type="hidden" id="identifier_ean_original_<?php echo $i; ?>" value="<?php echo $product['ean']; ?>" />
-                                    <input type="text" name="identifier_ean" value="<?php echo $product['ean']; ?>" id="identifier_ean_<?php echo $i; ?>" class="form-control openbay_data_<?php echo $i; ?>" />
+                              <div class="modal-body">
+                                <div class="page-header">
+                                  <div class="container-fluid">
+                                    <div class="pull-right">
+                                      <a onclick="overlayHide();" class="btn btn-default" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="fa fa-reply"></i></a>
+                                    </div>
+                                    <h1 class="panel-title"><?php echo $text_features; ?></h1>
                                   </div>
                                 </div>
-                                <div class="form-group" id="product_identifier_isbn_container_<?php echo $i; ?>" style="display:none;">
-                                  <label class="col-sm-2 control-label"><?php echo $text_isbn; ?></label>
-                                  <div class="col-sm-10">
-                                    <input type="hidden" id="identifier_isbn_required_<?php echo $i; ?>" class="product_identifier_required_<?php echo $i; ?>" value="0" />
-                                    <input type="hidden" id="identifier_isbn_original_<?php echo $i; ?>" value="<?php echo $product['isbn']; ?>" />
-                                    <input type="text" name="identifier_isbn" value="<?php echo $product['isbn']; ?>" id="identifier_isbn_<?php echo $i; ?>" class="form-control openbay_data_<?php echo $i; ?>" />
+                                <div class="container-fluid" style="display: none;" id="product_identifier_container_<?php echo $i; ?>">
+                                  <div class="panel panel-default">
+                                    <div class="panel-body">
+                                      <div class="well">
+                                        <div class="row">
+                                          <div class="form-group" id="product_identifier_ean_container_<?php echo $i; ?>" style="display:none;">
+                                            <label class="col-sm-2 control-label"><?php echo $text_ean; ?></label>
+                                            <div class="col-sm-10">
+                                              <input type="hidden" id="identifier_ean_required_<?php echo $i; ?>" class="product_identifier_required_<?php echo $i; ?>" value="0" />
+                                              <input type="hidden" id="identifier_ean_original_<?php echo $i; ?>" value="<?php echo $product['ean']; ?>" />
+                                              <input type="text" name="identifier_ean" value="<?php echo $product['ean']; ?>" id="identifier_ean_<?php echo $i; ?>" class="form-control openbay_data_<?php echo $i; ?>" />
+                                            </div>
+                                          </div>
+                                          <div class="form-group" id="product_identifier_isbn_container_<?php echo $i; ?>" style="display:none;">
+                                            <label class="col-sm-2 control-label"><?php echo $text_isbn; ?></label>
+                                            <div class="col-sm-10">
+                                              <input type="hidden" id="identifier_isbn_required_<?php echo $i; ?>" class="product_identifier_required_<?php echo $i; ?>" value="0" />
+                                              <input type="hidden" id="identifier_isbn_original_<?php echo $i; ?>" value="<?php echo $product['isbn']; ?>" />
+                                              <input type="text" name="identifier_isbn" value="<?php echo $product['isbn']; ?>" id="identifier_isbn_<?php echo $i; ?>" class="form-control openbay_data_<?php echo $i; ?>" />
+                                            </div>
+                                          </div>
+                                          <div class="form-group" id="product_identifier_upc_container_<?php echo $i; ?>" style="display:none;">
+                                            <label class="col-sm-2 control-label"><?php echo $text_upc; ?></label>
+                                            <div class="col-sm-10">
+                                              <input type="hidden" id="identifier_upc_required_<?php echo $i; ?>" class="product_identifier_required" value="0" />
+                                              <input type="hidden" id="identifier_upc_original_<?php echo $i; ?>" value="<?php echo $product['upc']; ?>" />
+                                              <input type="text" name="identifier_upc" value="<?php echo $product['upc']; ?>" id="identifier_upc_<?php echo $i; ?>" class="form-control openbay_data_<?php echo $i; ?>" />
+                                            </div>
+                                          </div>
+                                          <div class="form-group">
+                                            <label class="col-sm-2 control-label"><?php echo $text_identifier_not_required; ?></label>
+                                            <div class="col-sm-10">
+                                              <input type="checkbox" name="identifier_not_required" value="1" id="identifier_not_required_<?php echo $i; ?>" class="form-control" onclick="identifierNotRequired(<?php echo $i; ?>);"/>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
-                                <div class="form-group" id="product_identifier_upc_container_<?php echo $i; ?>" style="display:none;">
-                                  <label class="col-sm-2 control-label"><?php echo $text_upc; ?></label>
-                                  <div class="col-sm-10">
-                                    <input type="hidden" id="identifier_upc_required_<?php echo $i; ?>" class="product_identifier_required" value="0" />
-                                    <input type="hidden" id="identifier_upc_original_<?php echo $i; ?>" value="<?php echo $product['upc']; ?>" />
-                                    <input type="text" name="identifier_upc" value="<?php echo $product['upc']; ?>" id="identifier_upc_<?php echo $i; ?>" class="form-control openbay_data_<?php echo $i; ?>" />
-                                  </div>
-                                </div>
-                                <div class="form-group">
-                                  <label class="col-sm-2 control-label"><?php echo $text_identifier_not_required; ?></label>
-                                  <div class="col-sm-10">
-                                    <input type="checkbox" name="identifier_not_required" value="1" id="identifier_not_required_<?php echo $i; ?>" class="form-control" onclick="identifierNotRequired(<?php echo $i; ?>);"/>
-                                  </div>
-                                </div>
-                              </div
-                              <div class="modal-body" id="feature-data-<?php echo $i; ?>"></div>
+                                <div id="feature-data-<?php echo $i; ?>"></div>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -666,14 +683,6 @@
 
                   if (data.data) {
                     html_inj = '';
-                    html_inj += '<div class="page-header">';
-                      html_inj += '<div class="container-fluid">';
-                        html_inj += '<div class="pull-right">';
-                          html_inj += '<a onclick="overlayHide();" class="btn btn-default" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="fa fa-reply"></i></a>';
-                        html_inj += '</div>';
-                        html_inj += '<h1 class="panel-title"><?php echo $text_features; ?></h1>';
-                      html_inj += '</div>';
-                    html_inj += '</div>';
                     html_inj += '<div class="container-fluid">';
                       html_inj += '<div class="panel panel-default">';
                         html_inj += '<div class="panel-body">';
@@ -1045,7 +1054,7 @@
         $('#identifier_upc_' + id).val(not_required_text);
       }
     } else {
-      if ($('#identifier_ean_required_' + id').val() == 1) {
+      if ($('#identifier_ean_required_' + id).val() == 1) {
         $('#identifier_ean_' + id).val($('#identifier_ean_original_' + id).val());
       }
       if ($('#identifier_isbn_required_' + id).val() == 1) {

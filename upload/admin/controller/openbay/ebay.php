@@ -1550,6 +1550,13 @@ class ControllerOpenbayEbay extends Controller {
 							//load the settings from eBay
 							$setting = array();
 
+							$setting['product_details'] = $this->openbay->ebay->getSetting('product_details');
+
+							if (!isset($setting['product_details']['product_identifier_unavailable_text'])) {
+								$this->session->data['warning'] = $this->language->get('error_missing_settings');
+								$this->response->redirect($this->url->link('openbay/ebay/syncronise&token=' . $this->session->data['token'], 'SSL'));
+							}
+
 							$setting['dispatch_times'] = $this->openbay->ebay->getSetting('dispatch_time_max');
 							if (is_array($setting['dispatch_times'])) {
 								ksort($setting['dispatch_times']);

@@ -8,10 +8,6 @@ class ModelUserApi extends Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "api` SET username = '" . $this->db->escape($data['username']) . "', `password` = '" . $this->db->escape($data['password']) . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE api_id = '" . (int)$api_id . "'");
 	}
 	
-	public function editToken($api_id, $token) {
-		$this->db->query("UPDATE " . DB_PREFIX . "api SET token = '" . $this->db->escape($token) . "' WHERE api_id = '" . (int)$api_id . "'");
-	}
-	
 	public function deleteApi($api_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "api` WHERE api_id = '" . (int)$api_id . "'");
 	}

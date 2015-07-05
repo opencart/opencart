@@ -18,8 +18,7 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <td style="width: 50%;"><?php echo $text_from; ?></td>
-          <td style="width: 50%;"><?php echo $text_order_detail; ?></td>
+          <td colspan="2"><?php echo $text_order_detail; ?></td>
         </tr>
       </thead>
       <tbody>

@@ -6,62 +6,63 @@ $_['heading_title']              = 'Orders';
 $_['text_list']                  = 'Order List';
 $_['text_add']                   = 'Add Order';
 $_['text_edit']                  = 'Edit Order';
-$_['text_order']                 = 'Order (#%s)';
 $_['text_order_detail']          = 'Order Details';
-$_['text_order_id']              = 'Order ID:';
-$_['text_invoice_no']            = 'Invoice No.:';
-$_['text_invoice_date']          = 'Invoice Date:';
-$_['text_email']                 = 'E-Mail:';
-$_['text_telephone']             = 'Telephone:';
-$_['text_fax']                   = 'Fax:';
-$_['text_website']               = 'Web Site:';
-$_['text_affiliate']             = 'Affiliate';
+$_['text_customer_detail']       = 'Customer Details';
+$_['text_option']                = 'Options';
+$_['text_store']                 = 'Store';
+$_['text_date_added']            = 'Date Added';
+$_['text_payment_method']        = 'Payment Method';
+$_['text_shipping_method']       = 'Shipping Method';
+$_['text_customer']              = 'Customer';
+$_['text_customer_group']        = 'Customer Group';
+$_['text_email']                 = 'E-Mail';
+$_['text_telephone']             = 'Telephone';
+$_['text_invoice']               = 'Invoice';
 $_['text_reward']                = 'Reward Points';
-$_['text_order_status']          = 'Order Status:';
-
-$_['text_comment']               = 'Customer Comment';
-$_['text_commission']            = 'Commission';
-
-
-$_['text_ip']                    = 'IP Address:';
-$_['text_forwarded_ip']          = 'Forwarded IP:';
-$_['text_user_agent']            = 'User Agent:';
-$_['text_accept_language']       = 'Accept Language:';
-$_['text_date_added']            = 'Date Added:';
-
-$_['text_invoice']             = 'Invoice';
-
+$_['text_affiliate']             = 'Affiliate';
+$_['text_order']                 = 'Order (#%s)';
 $_['text_payment_address']       = 'Payment Address';
 $_['text_shipping_address']      = 'Shipping Adress';
-
+$_['text_comment']               = 'Customer Comment';
+$_['text_history']               = 'Order History';
+$_['text_history_add']           = 'Add Order History';
 $_['text_account_custom_field']  = 'Account Custom Fields';
-
 $_['text_payment_custom_field']  = 'Payment Address Custom Fields';
 $_['text_shipping_custom_field'] = 'Shipping Adress Custom Fields';
 $_['text_browser']               = 'Browser';
+$_['text_ip']                    = 'IP Address';
+$_['text_forwarded_ip']          = 'Forwarded IP';
+$_['text_user_agent']            = 'User Agent';
+$_['text_accept_language']       = 'Accept Language';
 
-$_['text_shipping_method']     = 'Shipping Method:';
-$_['text_payment_method']      = 'Payment Method:';
-$_['text_missing']             = 'Missing Orders';
-$_['text_default']             = 'Default';
-$_['text_product']             = 'Add Product(s)';
-$_['text_voucher']             = 'Add Voucher(s)';
-$_['text_shipping']            = 'Shipping';
-$_['text_contact']             = 'Contact';
+
+$_['text_order_id']              = 'Order ID:';
+$_['text_fax']                   = 'Fax:';
+$_['text_website']               = 'Web Site:';
+$_['text_invoice_no']            = 'Invoice No.:';
+$_['text_invoice_date']          = 'Invoice Date:';
 $_['text_sku']                 = 'SKU:';
 $_['text_upc']                 = 'UPC:';
 $_['text_ean']                 = 'EAN:';
 $_['text_jan']                 = 'JAN:';
 $_['text_isbn']                = 'ISBN:';
 $_['text_mpn']                 = 'MPN:';
+
+
+$_['text_missing']             = 'Missing Orders';
+$_['text_default']             = 'Default';
+$_['text_product']             = 'Add Product(s)';
+$_['text_voucher']             = 'Add Voucher(s)';
+$_['text_shipping']            = 'Shipping';
+$_['text_contact']             = 'Contact';
+
 $_['text_reward_added']        = 'Success: Reward points added!';
 $_['text_reward_removed']      = 'Success: Reward points removed!';
 $_['text_commission_added']    = 'Success: Commission added!';
 $_['text_commission_removed']  = 'Success: Commission removed!';
 $_['text_restock']             = 'Success: Products have been restocked!';
 $_['text_upload']              = 'Your file was successfully uploaded!';
-$_['text_picklist']            = 'Dispatch note';
-$_['text_history']             = 'Add Order History';
+$_['text_picklist']            = 'Dispatch Note';
 
 // Column
 $_['column_order_id']          = 'Order ID';

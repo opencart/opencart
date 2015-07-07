@@ -132,7 +132,6 @@ CREATE TABLE IF NOT EXISTS `oc_api` (
   `lastname` varchar(64) NOT NULL,
   `password` text NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `token` text NOT NULL,
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
   PRIMARY KEY (`api_id`)

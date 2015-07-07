@@ -12,89 +12,118 @@
     </div>
   </div>
   <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-shopping-cart"></i> <?php echo $text_order_detail; ?></h3>
+          </div>
+          <table class="table">
+            <tbody>
+              <tr>
+                <td style="width: 1%;"><button data-toggle="tooltip" title="<?php echo $text_store; ?>" class="btn btn-info btn-xs"><i class="fa fa-shopping-cart fa-fw"></i></button></td>
+                <td><a href="<?php echo $store_url; ?>" target="_blank"><?php echo $store_name; ?></a></td>
+              </tr>
+              <tr>
+                <td><button data-toggle="tooltip" title="<?php echo $text_date_added; ?>" class="btn btn-info btn-xs"><i class="fa fa-calendar fa-fw"></i></button></td>
+                <td><?php echo $date_added; ?></td>
+              </tr>
+              <tr>
+                <td><button data-toggle="tooltip" title="<?php echo $text_payment_method; ?>" class="btn btn-info btn-xs"><i class="fa fa-credit-card fa-fw"></i></button></td>
+                <td><?php echo $payment_method; ?></td>
+              </tr>
+              <tr>
+                <td><button data-toggle="tooltip" title="<?php echo $text_shipping_method; ?>" class="btn btn-info btn-xs"><i class="fa fa-truck fa-fw"></i></button></td>
+                <td><?php echo $shipping_method; ?></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-user"></i> <?php echo $text_customer_detail; ?></h3>
+          </div>
+          <table class="table">
+            <tr>
+              <td style="width: 1%;"><button data-toggle="tooltip" title="<?php echo $text_customer; ?>" class="btn btn-info btn-xs"><i class="fa fa-user fa-fw"></i></button></td>
+              <td><?php if ($customer) { ?>
+                <a href="<?php echo $customer; ?>" target="_blank"><?php echo $firstname; ?> <?php echo $lastname; ?></a>
+                <?php } else { ?>
+                <?php echo $firstname; ?> <?php echo $lastname; ?>
+                <?php } ?></td>
+            </tr>
+            <tr>
+              <td><button data-toggle="tooltip" title="<?php echo $text_customer_group; ?>" class="btn btn-info btn-xs"><i class="fa fa-group fa-fw"></i></button></td>
+              <td><?php echo $customer_group; ?></td>
+            </tr>
+            <tr>
+              <td><button data-toggle="tooltip" title="<?php echo $text_email; ?>" class="btn btn-info btn-xs"><i class="fa fa-envelope-o fa-fw"></i></button></td>
+              <td><a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a></td>
+            </tr>
+            <tr>
+              <td><button data-toggle="tooltip" title="<?php echo $text_telephone; ?>" class="btn btn-info btn-xs"><i class="fa fa-phone fa-fw"></i></button></td>
+              <td><?php echo $telephone; ?></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-cog"></i> <?php echo $text_option; ?></h3>
+          </div>
+          <table class="table">
+            <tbody>
+              <tr>
+                <td><?php echo $text_invoice; ?></td>
+                <td id="invoice" class="text-right"><?php echo $invoice_no; ?></td>
+                <td style="width: 1%;" class="text-center"><?php if (!$invoice_no) { ?>
+                  <button id="button-invoice" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_generate; ?>" class="btn btn-success btn-xs"><i class="fa fa-cog"></i></button>
+                  <?php } else { ?>
+                  <button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-refresh"></i></button>
+                  <?php } ?></td>
+              </tr>
+              <tr>
+                <td><?php echo $text_reward; ?></td>
+                <td class="text-right"><?php echo $reward; ?></td>
+                <td class="text-center"><?php if ($customer && $reward) { ?>
+                  <?php if (!$reward_total) { ?>
+                  <button id="button-reward-add" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_reward_add; ?>" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
+                  <?php } else { ?>
+                  <button id="button-reward-remove" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_reward_remove; ?>" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>
+                  <?php } ?>
+                  <?php } else { ?>
+                  <button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
+                  <?php } ?></td>
+              </tr>
+              <tr>
+                <td><?php echo $text_affiliate; ?>
+                  <?php if ($affiliate) { ?>
+                  (<a href="<?php echo $affiliate; ?>"><?php echo $affiliate_firstname; ?> <?php echo $affiliate_lastname; ?></a>)
+                  <?php } ?></td>
+                <td class="text-right"><?php echo $commission; ?></td>
+                <td class="text-center"><?php if ($affiliate) { ?>
+                  <?php if (!$commission_total) { ?>
+                  <button id="button-commission-add" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_commission_add; ?>" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
+                  <?php } else { ?>
+                  <button id="button-commission-remove" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_commission_remove; ?>" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>
+                  <?php } ?>
+                  <?php } else { ?>
+                  <button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
+                  <?php } ?></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-info-circle"></i> <?php echo $text_order; ?></h3>
       </div>
       <div class="panel-body">
-        <div class="row">
-          <div class="col-md-8">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <td colspan="2">Order Details</td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><?php if ($customer) { ?>
-                    <i class="fa fa-user fa-fw"></i> <a href="<?php echo $customer; ?>" target="_blank"><?php echo $firstname; ?> <?php echo $lastname; ?></a><br />
-                    <?php } else { ?>
-                    <i class="fa fa-user fa-fw"></i> <?php echo $firstname; ?> <?php echo $lastname; ?><br />
-                    <?php } ?>
-                    <?php if ($customer_group) { ?>
-                    <i class="fa fa-group fa-fw"></i> <?php echo $customer_group; ?><br />
-                    <?php } ?>
-                    <i class="fa fa-envelope-o fa-fw"></i> <a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a><br />
-                    <i class="fa fa-phone fa-fw"></i> <?php echo $telephone; ?><br /></td>
-                  <td><i class="fa fa-shopping-cart fa-fw"></i> <a href="<?php echo $store_url; ?>" target="_blank"><?php echo $store_name; ?></a><br />
-                    <i class="fa fa-calendar fa-fw"></i> <?php echo $date_added; ?><br />
-                    <i class="fa fa-truck fa-fw"></i> <?php echo $shipping_method; ?><br />
-                    <i class="fa fa-credit-card fa-fw"></i> <?php echo $payment_method; ?></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="col-md-4">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <td colspan="3">Options</td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="width: 1%;" class="text-center"><?php if (!$invoice_no) { ?>
-                    <button id="button-invoice" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_generate; ?>" class="btn btn-success btn-xs"><i class="fa fa-cog"></i></button>
-                    <?php } else { ?>
-                    <button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-cog"></i></button>
-                    <?php } ?></td>
-                  <td>Invoice</td>
-                  <td id="invoice" class="text-right"><?php echo $invoice_no; ?></td>
-                </tr>
-                <tr>
-                  <td class="text-center"><?php if ($customer && $reward) { ?>
-                    <?php if (!$reward_total) { ?>
-                    <button id="button-reward-add" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_reward_add; ?>" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
-                    <?php } else { ?>
-                    <button id="button-reward-remove" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_reward_remove; ?>" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>
-                    <?php } ?>
-                    <?php } else { ?>
-                    <button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
-                    <?php } ?></td>
-                  <td><?php echo $text_reward; ?></td>
-                  <td class="text-right"><?php echo $reward; ?></td>
-                </tr>
-                <tr>
-                  <td class="text-center"><?php if ($affiliate) { ?>
-                    <?php if (!$commission_total) { ?>
-                    <button id="button-commission-add" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_commission_add; ?>" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
-                    <?php } else { ?>
-                    <button id="button-commission-remove" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_commission_remove; ?>" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>
-                    <?php } ?>
-                    <?php } else { ?>
-                    <button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>
-                    <?php } ?></td>
-                  <td><?php echo $text_affiliate; ?>
-                    <?php if ($affiliate) { ?>
-                    (<a href="<?php echo $affiliate; ?>"><?php echo $affiliate_firstname; ?> <?php echo $affiliate_lastname; ?></a>)
-                    <?php } ?></td>
-                  <td class="text-right"><?php echo $commission; ?></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -176,7 +205,7 @@
     </div>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> Order History</h3>
+        <h3 class="panel-title"><i class="fa fa-comment-o"></i> <?php echo $text_history; ?></h3>
       </div>
       <div class="panel-body">
         <ul class="nav nav-tabs">
@@ -191,7 +220,7 @@
             <div id="history"></div>
             <br />
             <fieldset>
-              <legend><?php echo $text_history; ?></legend>
+              <legend><?php echo $text_history_add; ?></legend>
               <form class="form-horizontal">
                 <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
@@ -306,7 +335,7 @@
             </table>
           </div>
           <?php foreach ($tabs as $tab) { ?>
-          <div class="tab-pane" id="tab-<?php echo $tab['code']; ?>"> <?php echo $tab['content']; ?></div>
+          <div class="tab-pane" id="tab-<?php echo $tab['code']; ?>"><?php echo $tab['content']; ?></div>
           <?php } ?>
         </div>
       </div>
@@ -333,7 +362,7 @@ $(document).delegate('#button-invoice', 'click', function() {
 			if (json['invoice_no']) {
 				$('#invoice').html(json['invoice_no']);
 				
-				$('#button-invoice').replaceWith('<button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-minus-circle"></i></button>');
+				$('#button-invoice').replaceWith('<button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-cog"></i></button>');
 			}
 		},			
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -493,10 +522,10 @@ $('#button-history').on('click', function() {
 	if (typeof verifyStatusChange == 'function'){
 		if (verifyStatusChange() == false){
 			return false;
-		}else{
+		} else{
 			addOrderInfo();
 		}
-	}else{
+	} else{
 		addOrderInfo();
 	}
 

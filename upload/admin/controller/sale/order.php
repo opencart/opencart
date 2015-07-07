@@ -329,6 +329,21 @@ class ControllerSaleOrder extends Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
+		// Create a login
+		$this->load->model('user/api');
+		
+		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
+		
+		if ($api_info) {
+			$data['api_username'] = $api_info['username'];
+			$data['api_password'] = $api_info['password'];
+		} else {
+			$data['api_username'] = '';
+			$data['api_password'] = '';
+		}
+		
+		$data['store'] = HTTPS_CATALOG;
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -713,13 +728,25 @@ class ControllerSaleOrder extends Controller {
 
 			$data['heading_title'] = $this->language->get('heading_title');
 
-			$data['text_order'] = sprintf($this->language->get('text_order'), $this->request->get['order_id']);
+			$data['text_order_detail'] = $this->language->get('text_order_detail');
+			$data['text_customer_detail'] = $this->language->get('text_customer_detail');
+			$data['text_option'] = $this->language->get('text_option');
+			$data['text_store'] = $this->language->get('text_store');
+			$data['text_date_added'] = $this->language->get('text_date_added');
+			$data['text_payment_method'] = $this->language->get('text_payment_method');
+			$data['text_shipping_method'] = $this->language->get('text_shipping_method');
+			$data['text_customer'] = $this->language->get('text_customer');
+			$data['text_customer_group'] = $this->language->get('text_customer_group');
+			$data['text_email'] = $this->language->get('text_email');
+			$data['text_telephone'] = $this->language->get('text_telephone');
 			$data['text_invoice'] = $this->language->get('text_invoice');
 			$data['text_reward'] = $this->language->get('text_reward');
 			$data['text_affiliate'] = $this->language->get('text_affiliate');		
+			$data['text_order'] = sprintf($this->language->get('text_order'), $this->request->get['order_id']);
 			$data['text_payment_address'] = $this->language->get('text_payment_address');
 			$data['text_shipping_address'] = $this->language->get('text_shipping_address');
 			$data['text_comment'] = $this->language->get('text_comment');
+			
 			$data['text_account_custom_field'] = $this->language->get('text_account_custom_field');
 			$data['text_payment_custom_field'] = $this->language->get('text_payment_custom_field');
 			$data['text_shipping_custom_field'] = $this->language->get('text_shipping_custom_field');		
@@ -729,6 +756,7 @@ class ControllerSaleOrder extends Controller {
 			$data['text_user_agent'] = $this->language->get('text_user_agent');
 			$data['text_accept_language'] = $this->language->get('text_accept_language');
 			$data['text_history'] = $this->language->get('text_history');
+			$data['text_history_add'] = $this->language->get('text_history_add');
 			$data['text_loading'] = $this->language->get('text_loading');
 
 			$data['column_product'] = $this->language->get('column_product');
@@ -850,9 +878,6 @@ class ControllerSaleOrder extends Controller {
 			$data['shipping_method'] = $order_info['shipping_method'];
 			$data['payment_method'] = $order_info['payment_method'];
 		
-			
-			
-						
 			// Payment Address
 			if ($order_info['payment_address_format']) {
 				$format = $order_info['payment_address_format'];
@@ -1742,7 +1767,6 @@ class ControllerSaleOrder extends Controller {
 		$data['text_email'] = $this->language->get('text_email');
 		$data['text_website'] = $this->language->get('text_website');
 		$data['text_contact'] = $this->language->get('text_contact');
-		$data['text_from'] = $this->language->get('text_from');
 		$data['text_payment_address'] = $this->language->get('text_payment_address');
 		$data['text_shipping_method'] = $this->language->get('text_shipping_method');
 		$data['text_sku'] = $this->language->get('text_sku');

@@ -387,9 +387,9 @@ $('#transaction').load('index.php?route=marketing/affiliate/transaction&token=<?
 
 $('#button-transaction').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=marketing/affiliate/transaction&token=<?php echo $token; ?>&affiliate_id=<?php echo $affiliate_id; ?>',
+		url: 'index.php?route=marketing/affiliate/addtransaction&token=<?php echo $token; ?>&affiliate_id=<?php echo $affiliate_id; ?>',
 		type: 'post',
-		dataType: 'html',
+		dataType: 'json',
 		data: 'description=' + encodeURIComponent($('#tab-transaction input[name=\'description\']').val()) + '&amount=' + encodeURIComponent($('#tab-transaction input[name=\'amount\']').val()),
 		beforeSend: function() {
 			$('#button-transaction').button('loading');
@@ -397,13 +397,21 @@ $('#button-transaction').on('click', function() {
 		complete: function() {
 			$('#button-transaction').button('reset');
 		},
-		success: function(html) {
+		success: function(json) {
 			$('.alert').remove();
 			
-			$('#transaction').html(html);
+			if (json['error']) {
+				 $('#tab-transaction').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
+			}
 
-			$('#tab-transaction input[name=\'amount\']').val('');
-			$('#tab-transaction input[name=\'description\']').val('');
+			if (json['success']) {
+				$('#tab-transaction').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
+
+				$('#transaction').load('index.php?route=marketing/affiliate/transaction&token=<?php echo $token; ?>&affiliate_id=<?php echo $affiliate_id; ?>');
+	
+				$('#tab-transaction input[name=\'amount\']').val('');
+				$('#tab-transaction input[name=\'description\']').val('');			
+			}
 		}
 	});
 });

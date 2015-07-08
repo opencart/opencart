@@ -273,10 +273,16 @@ class ControllerUserApi extends Controller {
 		$data['entry_username'] = $this->language->get('entry_username');
 		$data['entry_password'] = $this->language->get('entry_password');
 		$data['entry_status'] = $this->language->get('entry_status');
-
+		$data['entry_ip'] = $this->language->get('entry_ip');
+		
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_generate'] = $this->language->get('button_generate');
+		$data['button_ip_add'] = $this->language->get('button_ip_add');
+		$data['button_remove'] = $this->language->get('button_remove');
+		
+		$data['tab_general'] = $this->language->get('tab_general');
+		$data['tab_ip'] = $this->language->get('tab_ip');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -358,6 +364,15 @@ class ControllerUserApi extends Controller {
 			$data['status'] = 0;
 		}
 
+		// IP
+		if (isset($this->request->post['api_ip'])) {
+			$data['api_ips'] = $this->request->post['api_ip'];
+		} elseif (isset($this->request->get['api_id'])) {
+			$data['api_ips'] = $this->model_user_api->getApiIps($this->request->get['api_id']);
+		} else {
+			$data['api_ips'] = array();
+		}
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -387,5 +402,36 @@ class ControllerUserApi extends Controller {
 		}
 
 		return !$this->error;
+	}
+	
+	public function addIp() {
+		$this->load->language('user/api');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'user/api')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			if (isset($this->request->get['api_id'])) {
+				$api_id = $this->request->get['api_id'];
+			} else {
+				$api_id = 0;
+			}
+
+			$this->load->model('sale/order');
+
+			$order_info = $this->model_sale_order->getOrder($order_id);
+
+			if ($order_info) {
+				$this->load->model('marketing/affiliate');
+
+				$this->model_marketing_affiliate->addTransaction($order_info['api_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['commission'], $order_id);
+			}
+
+			$json['success'] = $this->language->get('text_ip_added');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 }

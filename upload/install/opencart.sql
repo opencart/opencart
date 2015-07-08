@@ -128,14 +128,27 @@ CREATE TABLE IF NOT EXISTS `oc_affiliate_transaction` (
 CREATE TABLE IF NOT EXISTS `oc_api` (
   `api_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(64) NOT NULL,
-  `firstname` varchar(64) NOT NULL,
-  `lastname` varchar(64) NOT NULL,
   `password` text NOT NULL,
   `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
   PRIMARY KEY (`api_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_api_ip`
+--
+
+CREATE TABLE IF NOT EXISTS `oc_api_ip` (
+  `api_ip_id` int(11) NOT NULL AUTO_INCREMENT,
+  `api_id` int(11) NOT NULL,
+  `ip` varchar(40) NOT NULL,
+  PRIMARY KEY (`api_ip_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `oc_attribute`

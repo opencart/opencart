@@ -569,6 +569,8 @@ class ControllerMarketingAffiliate extends Controller {
 
 		$data['text_form'] = !isset($this->request->get['affiliate_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
+		$data['text_affiliate_detail'] = $this->language->get('text_affiliate_detail');
+		$data['text_affiliate_address'] = $this->language->get('text_affiliate_address');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');

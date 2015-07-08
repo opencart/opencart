@@ -1132,18 +1132,6 @@ class ControllerSaleCustomer extends Controller {
 		return !$this->error;
 	}
 
-	protected function validateHistory() {
-		if (!$this->user->hasPermission('modify', 'sale/customer')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		if (!isset($this->request->post['comment']) || utf8_strlen($this->request->post['comment']) < 1) {
-			$this->error['warning'] = $this->language->get('error_comment');
-		}
-
-		return !$this->error;
-	}
-
 	public function login() {
 		$json = array();
 

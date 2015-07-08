@@ -1212,20 +1212,6 @@ class ControllerSaleCustomer extends Controller {
 
 		$this->load->model('sale/customer');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateHistory()) {
-			$this->model_sale_customer->addHistory($this->request->get['customer_id'], $this->request->post['comment']);
-
-			$data['success'] = $this->language->get('text_success');
-		} else {
-			$data['success'] = '';
-		}
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
 		$data['text_no_results'] = $this->language->get('text_no_results');
 
 		$data['column_date_added'] = $this->language->get('column_date_added');
@@ -1243,8 +1229,8 @@ class ControllerSaleCustomer extends Controller {
 
 		foreach ($results as $result) {
 			$data['histories'][] = array(
-				'comment'     => $result['comment'],
-				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+				'comment'    => $result['comment'],
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
 			);
 		}
 
@@ -1263,24 +1249,29 @@ class ControllerSaleCustomer extends Controller {
 		$this->response->setOutput($this->load->view('sale/customer_history.tpl', $data));
 	}
 
+	public function addHistory() {
+		$this->load->language('sale/customer');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'sale/customer')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('sale/customer');
+
+			$this->model_sale_customer->addHistory($this->request->get['customer_id'], $this->request->post['comment']);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+	
 	public function transaction() {
 		$this->load->language('sale/customer');
 
 		$this->load->model('sale/customer');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->user->hasPermission('modify', 'sale/customer')) {
-			$this->model_sale_customer->addTransaction($this->request->get['customer_id'], $this->request->post['description'], $this->request->post['amount']);
-
-			$data['success'] = $this->language->get('text_success');
-		} else {
-			$data['success'] = '';
-		}
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && !$this->user->hasPermission('modify', 'sale/customer')) {
-			$data['error_warning'] = $this->language->get('error_permission');
-		} else {
-			$data['error_warning'] = '';
-		}
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_balance'] = $this->language->get('text_balance');
@@ -1324,24 +1315,29 @@ class ControllerSaleCustomer extends Controller {
 		$this->response->setOutput($this->load->view('sale/customer_transaction.tpl', $data));
 	}
 
+	public function addTransaction() {
+		$this->load->language('sale/customer');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'sale/customer')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('sale/customer');
+
+			$this->model_sale_customer->addTransaction($this->request->get['customer_id'], $this->request->post['description'], $this->request->post['amount']);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+	
 	public function reward() {
 		$this->load->language('sale/customer');
 
 		$this->load->model('sale/customer');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->user->hasPermission('modify', 'sale/customer')) {
-			$this->model_sale_customer->addReward($this->request->get['customer_id'], $this->request->post['description'], $this->request->post['points']);
-
-			$data['success'] = $this->language->get('text_success');
-		} else {
-			$data['success'] = '';
-		}
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && !$this->user->hasPermission('modify', 'sale/customer')) {
-			$data['error_warning'] = $this->language->get('error_permission');
-		} else {
-			$data['error_warning'] = '';
-		}
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_balance'] = $this->language->get('text_balance');
@@ -1385,6 +1381,25 @@ class ControllerSaleCustomer extends Controller {
 		$this->response->setOutput($this->load->view('sale/customer_reward.tpl', $data));
 	}
 
+	public function addReward() {
+		$this->load->language('sale/customer');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'sale/customer')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('sale/customer');
+
+			$this->model_sale_customer->addReward($this->request->get['customer_id'], $this->request->post['description'], $this->request->post['points']);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+	
 	public function ip() {
 		$this->load->language('sale/customer');
 

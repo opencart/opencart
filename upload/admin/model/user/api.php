@@ -92,7 +92,17 @@ class ModelUserApi extends Model {
 
 		return $query->rows;
 	}
-		
+
+	public function getApiSessions($api_id) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "api_session` WHERE api_id = '" . (int)$api_id . "'");
+
+		return $query->rows;
+	}
+	
+	public function deleteApiSession($api_session_id) {
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE api_id = '" . (int)$api_session_id . "'");
+	}
+				
 	public function getApiByIp($ip) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "api_ip` WHERE ip = '" . $this->db->escape($ip) . "'");
 

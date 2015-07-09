@@ -271,6 +271,12 @@ class ControllerStep3 extends Controller {
 			} else {
 				$mysql->close();
 			}
+		} elseif ($this->request->post['db_driver'] == 'mpdo') {
+			try {
+				new \DB\mPDO($this->request->post['db_hostname'], $this->request->post['db_username'], $this->request->post['db_password'], $this->request->post['db_database'], $this->request->post['db_port']);
+			} catch(Exception $e) {
+				$this->error['warning'] = $e->getMessage();
+			}
 		}
 
 		if (!$this->request->post['username']) {

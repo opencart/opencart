@@ -269,6 +269,7 @@ class ControllerUserApi extends Controller {
 		$data['text_form'] = !isset($this->request->get['api_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
+		$data['text_ip'] = sprintf($this->language->get('text_ip'), $this->request->server['REMOTE_ADDR']);
 
 		$data['entry_username'] = $this->language->get('entry_username');
 		$data['entry_password'] = $this->language->get('entry_password');
@@ -283,6 +284,7 @@ class ControllerUserApi extends Controller {
 		
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_ip'] = $this->language->get('tab_ip');
+		$data['tab_session'] = $this->language->get('tab_session');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

@@ -7,6 +7,7 @@ $_['text_success']         = 'Success: You have modified APIs!';
 $_['text_list']            = 'API List';
 $_['text_add']             = 'Add API';
 $_['text_edit']            = 'Edit API';
+$_['text_ip']              = 'Your current IP is %s';
 
 // Column
 $_['column_username']      = 'Username';
@@ -24,4 +25,4 @@ $_['entry_ip']             = 'IP';
 // Error
 $_['error_permission']     = 'Warning: You do not have permission to modify APIs!';
 $_['error_username']       = 'Username must be between 3 and 20 characters!';
-$_['error_password']       = 'API password must be between 3 and 256 characters!';
+$_['error_password']       = 'Password must be between 3 and 256 characters!';

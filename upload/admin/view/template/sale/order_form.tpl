@@ -39,6 +39,7 @@
                     <?php } ?>
                     <?php } ?>
                   </select>
+                  <input type="hidden" name="cookie" value="" />
                 </div>
               </div>
               <div class="form-group">
@@ -956,16 +957,20 @@ $('#order a[data-toggle=\'tab\']').on('click', function(e) {
 $.ajax({
 	url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/login',
 	type: 'post',
-	data: 'token=<?php echo $token; ?>',
+	data: 'username=<?php echo $api_username; ?>&password=<?php echo $api_password; ?>',
 	dataType: 'json',	
 	crossDomain: true,
 	success: function(json) {	
+		if (json['error']) {
+			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+		}
+		
 		if (json['success']) {
 			$('select[name=\'currency\']').trigger('change');
 		}
 		
-		if (json['error']) {
-			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+		if (json['cookie']) {
+			$('input[name=\'cookie\']').val(json['cookie']);
 		}		
 	},	
 	error: function(xhr, ajaxOptions, thrownError) {
@@ -978,7 +983,7 @@ $('select[name=\'currency\']').on('change', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/currency',
 		type: 'post',
-		data: 'token=<?php echo $token; ?>&currency=' + $('select[name=\'currency\'] option:selected').val(),
+		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&currency=' + $('select[name=\'currency\'] option:selected').val(),
 		dataType: 'json',
 		crossDomain: false,
 		beforeSend: function() {
@@ -1009,7 +1014,7 @@ $('#button-refresh').on('click', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/cart/products',
 		type: 'post',
-		data: 'token=<?php echo $token; ?>',
+		data: 'cookie=' + $('input[name=\'cookie\']').val(),
 		dataType: 'json',
 		crossDomain: true,
 		success: function(json) {

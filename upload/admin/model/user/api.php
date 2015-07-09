@@ -76,20 +76,24 @@ class ModelUserApi extends Model {
 
 		return $query->rows;
 	}
-
-	public function getApiIps($api_id) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "api_ip` WHERE api_id = '" . (int)$api_id . "'");
-
-		return $query->rows;
-	}
 	
 	public function getTotalApis() {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "api`");
 
 		return $query->row['total'];
 	}
+
+	public function addIp($ip_id, $ip) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` SET ip_id = '" . (int)$ip_id . "', ip = '" . $this->db->escape($ip) . "'");
+	}
 	
-	public function getTotalApiIpsByIp($ip) {
+	public function getApiIps($api_id) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "api_ip` WHERE api_id = '" . (int)$api_id . "'");
+
+		return $query->rows;
+	}
+		
+	public function getApiByIp($ip) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "api_ip` WHERE ip = '" . $this->db->escape($ip) . "'");
 
 		return $query->row['total'];

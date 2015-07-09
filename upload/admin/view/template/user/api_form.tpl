@@ -28,6 +28,7 @@
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
             <li><a href="#tab-ip" data-toggle="tab"><?php echo $tab_ip; ?></a></li>
+            <li><a href="#tab-session" data-toggle="tab"><?php echo $tab_session; ?></a></li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
@@ -67,6 +68,9 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-ip">
+              <div class="alert alert-info"><i class="fa fa-question-circle"></i> <?php echo $text_ip; ?>
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+              </div>
               <div class="table-responsive">
                 <table id="ip" class="table table-striped table-bordered table-hover">
                   <thead>
@@ -93,6 +97,32 @@
                   </tfoot>
                 </table>
               </div>
+            </div>
+            <div class="tab-pane" id="tab-session">
+              <table class="table table-striped table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <td class="text-left"><?php echo $column_token; ?></td>
+                    <td class="text-left"><?php echo $column_ip; ?></td>
+                    <td class="text-left"><?php echo $column_date_added; ?></td>
+                    <td class="text-left"><?php echo $column_date_modified; ?></td>
+                    <td class="text-left"></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php $session_row = 0; ?>
+                  <?php foreach ($api_sessions as $api_session) { ?>
+                  <tr id="session-row<?php echo $session_row; ?>">
+                    <td class="text-left"><?php echo $api_session['token']; ?></td>
+                    <td class="text-left"><?php echo $api_session['ip']; ?></td>
+                    <td class="text-left"><?php echo $api_session['date_added']; ?></td>
+                    <td class="text-left"><?php echo $api_session['date_modified']; ?></td>
+                    <td class="text-left"><button type="button" onclick="$('#session-row<?php echo $session_row; ?>').remove()" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                  </tr>
+                  <?php $session_row++; ?>
+                  <?php } ?>
+                </tbody>
+              </table>
             </div>
           </div>
         </form>

@@ -5,6 +5,9 @@ class ControllerSaleOrder extends Controller {
 	public function index() {
 		$this->load->language('sale/order');
 
+		print_r($this->session->data);
+		print_r($this->request->cookie);
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('sale/order');
@@ -181,6 +184,7 @@ class ControllerSaleOrder extends Controller {
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		$data['text_missing'] = $this->language->get('text_missing');
 		$data['text_loading'] = $this->language->get('text_loading');
+		$data['text_ip_add'] = sprintf($this->language->get('text_ip_add'), $this->request->server['REMOTE_ADDR']);
 
 		$data['column_order_id'] = $this->language->get('column_order_id');
 		$data['column_customer'] = $this->language->get('column_customer');
@@ -329,7 +333,7 @@ class ControllerSaleOrder extends Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		// Create a login
+		// API login
 		$this->load->model('user/api');
 		
 		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
@@ -337,11 +341,13 @@ class ControllerSaleOrder extends Controller {
 		if ($api_info) {
 			$data['api_username'] = $api_info['username'];
 			$data['api_password'] = $api_info['password'];
+			$data['token'] = token(32);
+			$data['sub_token' . rand()] = token(32);
 		} else {
 			$data['api_username'] = '';
 			$data['api_password'] = '';
 		}
-		
+				
 		$data['store'] = HTTPS_CATALOG;
 		
 		$data['header'] = $this->load->controller('common/header');
@@ -362,6 +368,7 @@ class ControllerSaleOrder extends Controller {
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_loading'] = $this->language->get('text_loading');
+		$data['text_ip_add'] = sprintf($this->language->get('text_ip_add'), $this->request->server['REMOTE_ADDR']);		
 		$data['text_product'] = $this->language->get('text_product');
 		$data['text_voucher'] = $this->language->get('text_voucher');
 		$data['text_order_detail'] = $this->language->get('text_order_detail');
@@ -634,7 +641,7 @@ class ControllerSaleOrder extends Controller {
 			$data['voucher'] = '';
 			$data['reward'] = '';
 		}
-
+		
 		// Stores
 		$this->load->model('setting/store');
 
@@ -702,7 +709,20 @@ class ControllerSaleOrder extends Controller {
 		$this->load->model('sale/voucher_theme');
 
 		$data['voucher_themes'] = $this->model_sale_voucher_theme->getVoucherThemes();
+
+		// API login
+		$this->load->model('user/api');
 		
+		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
+		
+		if ($api_info) {
+			$data['api_username'] = $api_info['username'];
+			$data['api_password'] = $api_info['password'];
+		} else {
+			$data['api_username'] = '';
+			$data['api_password'] = '';
+		}
+				
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -727,7 +747,8 @@ class ControllerSaleOrder extends Controller {
 			$this->document->setTitle($this->language->get('heading_title'));
 
 			$data['heading_title'] = $this->language->get('heading_title');
-
+			
+			$data['text_ip_add'] = sprintf($this->language->get('text_ip_add'), $this->request->server['REMOTE_ADDR']);		
 			$data['text_order_detail'] = $this->language->get('text_order_detail');
 			$data['text_customer_detail'] = $this->language->get('text_customer_detail');
 			$data['text_option'] = $this->language->get('text_option');
@@ -1260,7 +1281,20 @@ class ControllerSaleOrder extends Controller {
 					}
 				}
 			}
-		
+
+			// API login
+			$this->load->model('user/api');
+			
+			$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
+			
+			if ($api_info) {
+				$data['api_username'] = $api_info['username'];
+				$data['api_password'] = $api_info['password'];
+			} else {
+				$data['api_username'] = '';
+				$data['api_password'] = '';
+			}
+				
 			$data['header'] = $this->load->controller('common/header');
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['footer'] = $this->load->controller('common/footer');

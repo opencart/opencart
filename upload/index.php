@@ -122,14 +122,23 @@ $registry->set('response', $response);
 $cache = new Cache('file');
 $registry->set('cache', $cache);
 
-// Session
-if (isset($request->post['cookie'])) {
-	$cookie = $request->post['cookie'];
-} else {
-	$cookie = null;
+
+if (isset($request->get['token'])) {
+	$db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE token = '" . $db->escape($request->get['token']) . "' AND ip = '" . $db->escape($request->server['token']) . "' AND date_modififed");
+	
+	$query = $db->query("SELECT * FROM `" . DB_PREFIX . "api_session` WHERE token = '" . $db->escape($request->get['token']) . "'");
+	
+	if (isset($session_info['session_id'])) {
+		$session->getId($session_info['session_id']);
+	}
+	
+	if (isset($session_info['name'])) {
+		$session->name($session_info['name']);
+	}
 }
 
-$session = new Session($cookie);
+// Session
+$session = new Session();
 $registry->set('session', $session);
 
 // Language Detection

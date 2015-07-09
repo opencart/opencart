@@ -19,6 +19,7 @@ $_['column_action']        = 'Action';
 $_['entry_username']       = 'Username';
 $_['entry_password']       = 'Password';
 $_['entry_status']         = 'Status';
+$_['entry_ip']             = 'IP';
 
 // Error
 $_['error_permission']     = 'Warning: You do not have permission to modify APIs!';

@@ -122,23 +122,21 @@ $registry->set('response', $response);
 $cache = new Cache('file');
 $registry->set('cache', $cache);
 
+// Session
+$session = new Session();
 
 if (isset($request->get['token'])) {
-	$db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE token = '" . $db->escape($request->get['token']) . "' AND ip = '" . $db->escape($request->server['token']) . "' AND date_modififed");
+	$db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE TIMESTAMPADD(HOUR, 1, date_modified) < NOW()");
 	
-	$query = $db->query("SELECT * FROM `" . DB_PREFIX . "api_session` WHERE token = '" . $db->escape($request->get['token']) . "'");
+	$query = $db->query("SELECT * FROM `" . DB_PREFIX . "api_session` WHERE token = '" . $db->escape($request->get['token']) . "' AND ip = '" . $db->escape($request->get['REMOTE_ADDR']) . "'");
 	
-	if (isset($session_info['session_id'])) {
-		$session->getId($session_info['session_id']);
-	}
+	if ($query->num_row) {
+		$session->setId($session_info['session_id']);
 	
-	if (isset($session_info['name'])) {
-		$session->name($session_info['name']);
+		$session->setName($session_info['name']);
 	}
 }
 
-// Session
-$session = new Session();
 $registry->set('session', $session);
 
 // Language Detection

@@ -56,12 +56,26 @@ class ControllerAccountLogin extends Controller {
 
 			// Unset guest
 			unset($this->session->data['guest']);
+			
+			$has_products = $this->cart->hasProducts();
 
 			// Restore customers cart
 			if ($this->customer->getCart()) {
-				foreach ($this->customer->getCart() as $key => $value) {
-					$this->cart->add($key, $value);
+				foreach ($this->customer->getCart() as $key => $quantity) {
+					$product = unserialize(base64_decode($key));
+					
+					if (!empty($product['option'])) {
+						$options = $product['option'];
+					} else {
+						$options = array();
+					}
+					
+					$this->cart->add($product['product_id'], $quantity, $options);
 				}
+			}
+			
+			if ($has_products) {
+				$this->model_account_customer->editCart($this->cart->getCart());
 			}
 			
 			// Restore customers wish list

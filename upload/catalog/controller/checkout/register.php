@@ -249,6 +249,8 @@ class ControllerCheckoutRegister extends Controller {
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 
+			$this->model_account_customer->editCart($this->cart->getCart());
+
 			// Add to activity log
 			$this->load->model('account/activity');
 

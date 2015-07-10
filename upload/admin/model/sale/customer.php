@@ -501,8 +501,8 @@ class ModelSaleCustomer extends Model {
 	}
 
 	public function getTotalCustomerRewardsByOrderId($order_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer_reward WHERE order_id = '" . (int)$order_id . "'");
-
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer_reward WHERE order_id = '" . (int)$order_id . "' AND points > 0");
+	
 		return $query->row['total'];
 	}
 

@@ -1,4 +1,5 @@
 <?php
+namespace openbay;
 final class Etsy {
 	private $token;
 	private $enc1;
@@ -15,7 +16,7 @@ final class Etsy {
 		$this->logging = $this->config->get('etsy_logging');
 
 		$this->load->library('log');
-		$this->logger = new Log('etsylog.log');
+		$this->logger = new \Log('etsylog.log');
 	}
 
 	public function __get($name) {

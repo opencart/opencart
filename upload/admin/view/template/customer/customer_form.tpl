@@ -660,7 +660,7 @@
   <script type="text/javascript"><!--
 $('select[name=\'customer_group_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=sale/customer/customfield&token=<?php echo $token; ?>&customer_group_id=' + this.value,
+		url: 'index.php?route=customer/customer/customfield&token=<?php echo $token; ?>&customer_group_id=' + this.value,
 		dataType: 'json',
 		success: function(json) {
 			$('.custom-field').hide();
@@ -947,13 +947,13 @@ $('#history').delegate('.pagination a', 'click', function(e) {
 	$('#history').load(this.href);
 });
 
-$('#history').load('index.php?route=sale/customer/history&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
+$('#history').load('index.php?route=customer/customer/history&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
 
 $('#button-history').on('click', function(e) {
 	e.preventDefault();
 
 	$.ajax({
-		url: 'index.php?route=sale/customer/addhistory&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>',
+		url: 'index.php?route=customer/customer/addhistory&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>',
 		type: 'post',
 		dataType: 'json',
 		data: 'comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
@@ -973,7 +973,7 @@ $('#button-history').on('click', function(e) {
 			if (json['success']) {
 				$('#tab-history').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
 
-				$('#history').load('index.php?route=sale/customer/history&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
+				$('#history').load('index.php?route=customer/customer/history&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
 	
 				$('#tab-history textarea[name=\'comment\']').val('');				
 			}
@@ -988,13 +988,13 @@ $('#transaction').delegate('.pagination a', 'click', function(e) {
 	$('#transaction').load(this.href);
 });
 
-$('#transaction').load('index.php?route=sale/customer/transaction&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
+$('#transaction').load('index.php?route=customer/customer/transaction&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
 
 $('#button-transaction').on('click', function(e) {
   e.preventDefault();
 
   $.ajax({
-		url: 'index.php?route=sale/customer/addtransaction&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>',
+		url: 'index.php?route=customer/customer/addtransaction&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>',
 		type: 'post',
 		dataType: 'json',
 		data: 'description=' + encodeURIComponent($('#tab-transaction input[name=\'description\']').val()) + '&amount=' + encodeURIComponent($('#tab-transaction input[name=\'amount\']').val()),
@@ -1014,7 +1014,7 @@ $('#button-transaction').on('click', function(e) {
 			if (json['success']) {
 				$('#tab-transaction').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
 
-				$('#transaction').load('index.php?route=sale/customer/transaction&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
+				$('#transaction').load('index.php?route=customer/customer/transaction&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
 	
 				$('#tab-transaction input[name=\'amount\']').val('');
 				$('#tab-transaction input[name=\'description\']').val('');			
@@ -1030,13 +1030,13 @@ $('#reward').delegate('.pagination a', 'click', function(e) {
 	$('#reward').load(this.href);
 });
 
-$('#reward').load('index.php?route=sale/customer/reward&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
+$('#reward').load('index.php?route=customer/customer/reward&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
 
 $('#button-reward').on('click', function(e) {
 	e.preventDefault();
 
 	$.ajax({
-		url: 'index.php?route=sale/customer/addreward&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>',
+		url: 'index.php?route=customer/customer/addreward&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>',
 		type: 'post',
 		dataType: 'json',
 		data: 'description=' + encodeURIComponent($('#tab-reward input[name=\'description\']').val()) + '&points=' + encodeURIComponent($('#tab-reward input[name=\'points\']').val()),
@@ -1056,7 +1056,7 @@ $('#button-reward').on('click', function(e) {
 			if (json['success']) {
 				$('#tab-reward').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
 
-				$('#reward').load('index.php?route=sale/customer/reward&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
+				$('#reward').load('index.php?route=customer/customer/reward&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
 	
 				$('#tab-reward input[name=\'points\']').val('');
 				$('#tab-reward input[name=\'description\']').val('');		
@@ -1071,13 +1071,13 @@ $('#ip').delegate('.pagination a', 'click', function(e) {
 	$('#ip').load(this.href);
 });
 
-$('#ip').load('index.php?route=sale/customer/ip&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
+$('#ip').load('index.php?route=customer/customer/ip&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
 
 $('body').delegate('.button-ban-add', 'click', function() {
 	var element = this;
 
 	$.ajax({
-		url: 'index.php?route=sale/customer/addbanip&token=<?php echo $token; ?>',
+		url: 'index.php?route=customer/customer/addbanip&token=<?php echo $token; ?>',
 		type: 'post',
 		dataType: 'json',
 		data: 'ip=' + encodeURIComponent(this.value),
@@ -1107,7 +1107,7 @@ $('body').delegate('.button-ban-remove', 'click', function() {
 	var element = this;
 
 	$.ajax({
-		url: 'index.php?route=sale/customer/removebanip&token=<?php echo $token; ?>',
+		url: 'index.php?route=customer/customer/removebanip&token=<?php echo $token; ?>',
 		type: 'post',
 		dataType: 'json',
 		data: 'ip=' + encodeURIComponent(this.value),

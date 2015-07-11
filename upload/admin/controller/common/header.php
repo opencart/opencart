@@ -78,12 +78,12 @@ class ControllerCommonHeader extends Controller {
 
 			$data['online'] = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'], 'SSL');
 
-			$this->load->model('sale/customer');
+			$this->load->model('customer/customer');
 
-			$customer_total = $this->model_sale_customer->getTotalCustomers(array('filter_approved' => false));
+			$customer_total = $this->model_customer_customer->getTotalCustomers(array('filter_approved' => false));
 
 			$data['customer_total'] = $customer_total;
-			$data['customer_approval'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'] . '&filter_approved=0', 'SSL');
+			$data['customer_approval'] = $this->url->link('customer/customer', 'token=' . $this->session->data['token'] . '&filter_approved=0', 'SSL');
 
 			// Products
 			$this->load->model('catalog/product');

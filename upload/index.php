@@ -123,20 +123,19 @@ $cache = new Cache('file');
 $registry->set('cache', $cache);
 
 // Session
-$session = new Session();
-
 if (isset($request->get['token'])) {
-	$db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE TIMESTAMPADD(HOUR, 1, date_modified) < NOW()");
+	$db->query("DELETE FROM `" . DB_PREFIX . "api_session`  WHERE TIMESTAMPADD(HOUR, 1, date_modified) < NOW()");
 	
-	$query = $db->query("SELECT * FROM `" . DB_PREFIX . "api_session` WHERE token = '" . $db->escape($request->get['token']) . "' AND ip = '" . $db->escape($request->get['REMOTE_ADDR']) . "'");
+	$query = $db->query("SELECT * FROM `" . DB_PREFIX . "api_session` as LEFT JOIN api_ip ai ON (as.api_id = ai.api_id) WHERE as.token = '" . $db->escape($request->get['token']) . "' AND ai.ip = '" . $db->escape($request->get['REMOTE_ADDR']) . "'");
 	
 	if ($query->num_row) {
-		$session->setId($session_info['session_id']);
-	
-		$session->setName($session_info['name']);
+		ini_set('session.name', $session_info['session_name']);
+		
+		$session_id = $session_info['session_id'];
 	}
 }
 
+$session = new Session();
 $registry->set('session', $session);
 
 // Language Detection
@@ -236,8 +235,8 @@ $registry->set('cart', new Cart($registry));
 // Encryption
 $registry->set('encryption', new Encryption($config->get('config_encryption')));
 
-//OpenBay Pro
-$registry->set('openbay', new Openbay($registry));
+// OpenBay Pro
+$registry->set('openbay', new \openbay\Openbay($registry));
 
 // Event
 $event = new Event($registry);

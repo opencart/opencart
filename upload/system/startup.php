@@ -70,10 +70,11 @@ function autoload($class) {
 	
 	if (is_file($file)) {
 		include_once(modification($file));
+		
 		return true;
+	} else {
+		return false;
 	}
-	
-	return false;
 }
 
 spl_autoload_register('autoload');

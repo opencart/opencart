@@ -406,7 +406,7 @@ class ControllerLocalisationCountry extends Controller {
 		}
 
 		$this->load->model('setting/store');
-		$this->load->model('sale/customer');
+		$this->load->model('customer/customer');
 		$this->load->model('marketing/affiliate');
 		$this->load->model('localisation/zone');
 		$this->load->model('localisation/geo_zone');
@@ -422,7 +422,7 @@ class ControllerLocalisationCountry extends Controller {
 				$this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
 			}
 
-			$address_total = $this->model_sale_customer->getTotalAddressesByCountryId($country_id);
+			$address_total = $this->model_customer_customer->getTotalAddressesByCountryId($country_id);
 
 			if ($address_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_address'), $address_total);

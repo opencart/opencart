@@ -1,4 +1,5 @@
 <?php
+namespace openbay;
 final class Ebay {
 	private $token;
 	private $enc1;
@@ -21,7 +22,7 @@ final class Ebay {
 
 		$this->load->library('log');
 
-		$this->logger = new Log('ebaylog.log');
+		$this->logger = new \Log('ebaylog.log');
 	}
 
 	public function __get($name) {
@@ -343,7 +344,7 @@ final class Ebay {
 	public function notifyAdmin($subject, $message) {
 		$this->log('Sending email to: ' . $this->config->get('config_email') . ' - notifyAdmin()');
 
-		$mail = new Mail();
+		$mail = new \Mail();
 		$mail->protocol = $this->config->get('config_mail_protocol');
 		$mail->parameter = $this->config->get('config_mail_parameter');
 		$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');

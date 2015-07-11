@@ -1,5 +1,5 @@
 <?php
-class ModelSaleCustomerGroup extends Model {
+class ModelCustomerCustomerGroup extends Model {
 	public function addCustomerGroup($data) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "customer_group SET approval = '" . (int)$data['approval'] . "', sort_order = '" . (int)$data['sort_order'] . "'");
 

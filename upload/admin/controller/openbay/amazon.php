@@ -27,7 +27,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->load->model('setting/setting');
 		$this->load->model('localisation/order_status');
 		$this->load->model('openbay/amazon');
-		$this->load->model('sale/customer_group');
+		$this->load->model('customer/customer_group');
 
 		$data = $this->load->language('openbay/amazon');
 
@@ -237,7 +237,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->load->model('setting/setting');
 		$this->load->model('localisation/order_status');
 		$this->load->model('openbay/amazon');
-		$this->load->model('sale/customer_group');
+		$this->load->model('customer/customer_group');
 
 		$settings = $this->model_setting_setting->getSetting('openbay_amazon');
 
@@ -329,7 +329,7 @@ class ControllerOpenbayAmazon extends Controller {
 			'canceled' => array('name' => $this->language->get('text_canceled'), 'order_status_id' => $canceled_status_id),
 		);
 
-		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
+		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 		$data['openbay_amazon_order_customer_group'] = isset($settings['openbay_amazon_order_customer_group']) ? $settings['openbay_amazon_order_customer_group'] : '';
 
 		$data['amazon_order_statuses'] = $amazon_order_statuses;

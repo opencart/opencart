@@ -87,11 +87,11 @@ class ControllerStep2 extends Controller {
 		$data['image'] = DIR_OPENCART . 'image';
 		$data['image_cache'] = DIR_OPENCART . 'image/cache';
 		$data['image_catalog'] = DIR_OPENCART . 'image/catalog';
-		$data['cache'] = DIR_SYSTEM . '/storeage/cache';
-		$data['logs'] = DIR_SYSTEM . 'storeage/logs';
-		$data['download'] = DIR_SYSTEM . 'storeage/download';
-		$data['upload'] = DIR_SYSTEM . 'storeage/upload';
-		$data['modification'] = DIR_SYSTEM . 'storeage/modification';
+		$data['cache'] = DIR_SYSTEM . '/storage/cache';
+		$data['logs'] = DIR_SYSTEM . 'storage/logs';
+		$data['download'] = DIR_SYSTEM . 'storage/download';
+		$data['upload'] = DIR_SYSTEM . 'storage/upload';
+		$data['modification'] = DIR_SYSTEM . 'storage/modification';
 
 		$data['back'] = $this->url->link('step_1');
 

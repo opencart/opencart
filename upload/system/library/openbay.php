@@ -1,5 +1,4 @@
 <?php
-namespace openbay;
 final class Openbay {
 	private $registry;
 	private $installed_modules = array();
@@ -11,7 +10,8 @@ final class Openbay {
 		$this->getInstalled();
 
 		foreach ($this->installed_markets as $market) {
-			$class = ucfirst($market);
+			$class = '\openbay\\'. ucfirst($market);
+
 			$this->{$market} = new $class($registry);
 		}
 

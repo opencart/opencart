@@ -1,5 +1,6 @@
 <?php
 namespace openbay;
+
 final class Etsy {
 	private $token;
 	private $enc1;

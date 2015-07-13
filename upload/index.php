@@ -125,12 +125,12 @@ $registry->set('cache', $cache);
 // Session
 if (isset($request->get['token'])) {
 	$db->query("DELETE FROM `" . DB_PREFIX . "api_session`  WHERE TIMESTAMPADD(HOUR, 1, date_modified) < NOW()");
-	
+
 	$query = $db->query("SELECT * FROM `" . DB_PREFIX . "api_session` as LEFT JOIN api_ip ai ON (as.api_id = ai.api_id) WHERE as.token = '" . $db->escape($request->get['token']) . "' AND ai.ip = '" . $db->escape($request->get['REMOTE_ADDR']) . "'");
-	
+
 	if ($query->num_row) {
 		ini_set('session.name', $session_info['session_name']);
-		
+
 		$session_id = $session_info['session_id'];
 	}
 }
@@ -236,7 +236,7 @@ $registry->set('cart', new Cart($registry));
 $registry->set('encryption', new Encryption($config->get('config_encryption')));
 
 // OpenBay Pro
-$registry->set('openbay', new \openbay\Openbay($registry));
+$registry->set('openbay', new Openbay($registry));
 
 // Event
 $event = new Event($registry);

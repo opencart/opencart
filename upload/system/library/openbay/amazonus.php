@@ -1,4 +1,6 @@
 <?php
+namespace openbay;
+
 class Amazonus {
 	private $token;
 	private $enc1;

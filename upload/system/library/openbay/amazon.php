@@ -1,4 +1,6 @@
 <?php
+namespace openbay;
+
 class Amazon {
 	private $token;
 	private $enc1;

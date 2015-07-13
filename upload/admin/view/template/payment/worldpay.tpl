@@ -70,7 +70,7 @@
 			  <label class="col-sm-2 control-label" for="input-webhook-url"><span data-toggle="tooltip" title="<?php echo $help_webhook_url; ?>"><?php echo $entry_webhook_url; ?></span></label>
 			  <div class="col-sm-10">
 				<div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
-				  <input type="text" readonly="readonly" value="<?php echo $worldpay_webhook_url; ?>" id="input-webhook-url" class="form-control" />
+				  <input type="text" readonly value="<?php echo $worldpay_webhook_url; ?>" id="input-webhook-url" class="form-control" />
 				</div>
 			  </div>
 			</div>
@@ -78,7 +78,7 @@
 			  <label class="col-sm-2 control-label" for="input-cron-job-url"><span data-toggle="tooltip" title="<?php echo $help_cron_job_url; ?>"><?php echo $entry_cron_job_url; ?></span></label>
 			  <div class="col-sm-10">
 				<div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
-				  <input type="text" readonly="readonly" value="<?php echo $worldpay_cron_job_url; ?>" id="input-cron-job-url" class="form-control" />
+				  <input type="text" readonly value="<?php echo $worldpay_cron_job_url; ?>" id="input-cron-job-url" class="form-control" />
 				</div>
 			  </div>
 			</div>
@@ -86,7 +86,7 @@
 				<div class="form-group">
 				  <label class="col-sm-2 control-label" for="input-cron-job-last-run"><?php echo $entry_last_cron_job_run; ?></label>
 				  <div class="col-sm-10">
-					<input type="text" readonly="readonly" value="<?php echo $worldpay_last_cron_job_run; ?>" id="input-cron-job-last-run" class="form-control" />
+					<input type="text" readonly value="<?php echo $worldpay_last_cron_job_run; ?>" id="input-cron-job-last-run" class="form-control" />
 				  </div>
 				</div>
 			<?php } ?>

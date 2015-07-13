@@ -115,7 +115,7 @@ class ModelAccountCustomer extends Model {
 
 		$this->event->trigger('post.customer.edit.password');
 	}
-
+	
 	public function editNewsletter($newsletter) {
 		$this->event->trigger('pre.customer.edit.newsletter');
 
@@ -124,6 +124,22 @@ class ModelAccountCustomer extends Model {
 		$this->event->trigger('post.customer.edit.newsletter');
 	}
 
+	public function editCart($cart) {
+		$this->event->trigger('pre.customer.edit.cart');
+
+		$this->db->query("UPDATE " . DB_PREFIX . "customer SET cart = '" . $this->db->escape(serialize($cart)) . "' WHERE customer_id = '" . (int)$this->customer->getId() . "'");
+
+		$this->event->trigger('post.customer.edit.cart');
+	}
+	
+	public function editWishlist($wishlist) {
+		$this->event->trigger('pre.customer.edit.wishlist');
+
+		$this->db->query("UPDATE " . DB_PREFIX . "customer SET wishlist = '" . $this->db->escape(serialize($wishlist)) . "' WHERE customer_id = '" . (int)$this->customer->getId() . "'");
+
+		$this->event->trigger('post.customer.edit.wishlist');
+	}	
+	
 	public function getCustomer($customer_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE customer_id = '" . (int)$customer_id . "'");
 

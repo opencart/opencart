@@ -83,15 +83,15 @@ class ControllerStep2 extends Controller {
 
 		$data['config_catalog'] = DIR_OPENCART . 'config.php';
 		$data['config_admin'] = DIR_OPENCART . 'admin/config.php';
-
-		$data['cache'] = DIR_SYSTEM . 'cache';
-		$data['logs'] = DIR_SYSTEM . 'logs';
-		$data['download'] = DIR_SYSTEM . 'download';
-		$data['upload'] = DIR_SYSTEM . 'upload';
+		
 		$data['image'] = DIR_OPENCART . 'image';
 		$data['image_cache'] = DIR_OPENCART . 'image/cache';
-		$data['image_data'] = DIR_OPENCART . 'image/catalog';
-		$data['modification'] = DIR_SYSTEM . 'modification';
+		$data['image_catalog'] = DIR_OPENCART . 'image/catalog';
+		$data['cache'] = DIR_SYSTEM . '/storeage/cache';
+		$data['logs'] = DIR_SYSTEM . 'storeage/logs';
+		$data['download'] = DIR_SYSTEM . 'storeage/download';
+		$data['upload'] = DIR_SYSTEM . 'storeage/upload';
+		$data['modification'] = DIR_SYSTEM . 'storeage/modification';
 
 		$data['back'] = $this->url->link('step_1');
 

@@ -656,21 +656,6 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-api"><span data-toggle="tooltip" title="<?php echo $help_api; ?>"><?php echo $entry_api; ?></span></label>
-                  <div class="col-sm-10">
-                    <select name="config_api_id" id="input-api" class="form-control">
-                      <option value="0"><?php echo $text_none; ?></option>
-                      <?php foreach ($apis as $api) { ?>
-                      <?php if ($api['api_id'] == $config_api_id) { ?>
-                      <option value="<?php echo $api['api_id']; ?>" selected="selected"><?php echo $api['username']; ?></option>
-                      <?php } else { ?>
-                      <option value="<?php echo $api['api_id']; ?>"><?php echo $api['username']; ?></option>
-                      <?php } ?>
-                      <?php } ?>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group">
                   <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_cart_weight; ?>"><?php echo $entry_cart_weight; ?></span></label>
                   <div class="col-sm-10">
                     <label class="radio-inline">
@@ -814,6 +799,21 @@
                     </label>
                   </div>
                 </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-api"><span data-toggle="tooltip" title="<?php echo $help_api; ?>"><?php echo $entry_api; ?></span></label>
+                  <div class="col-sm-10">
+                    <select name="config_api_id" id="input-api" class="form-control">
+                      <option value="0"><?php echo $text_none; ?></option>
+                      <?php foreach ($apis as $api) { ?>
+                      <?php if ($api['api_id'] == $config_api_id) { ?>
+                      <option value="<?php echo $api['api_id']; ?>" selected="selected"><?php echo $api['username']; ?></option>
+                      <?php } else { ?>
+                      <option value="<?php echo $api['api_id']; ?>"><?php echo $api['username']; ?></option>
+                      <?php } ?>
+                      <?php } ?>
+                    </select>
+                  </div>
+                </div>                
               </fieldset>
               <fieldset>
                 <legend><?php echo $text_stock; ?></legend>
@@ -1406,7 +1406,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-file-mime-allowed"><span data-toggle="tooltip" title="<?php echo $help_file_mime_allowed; ?>"><?php echo $entry_file_mime_allowed; ?></span></label>
                 <div class="col-sm-10">
-                  <textarea name="config_file_mime_allowed" cols="60" rows="5" placeholder="<?php echo $entry_file_mime_allowed; ?>" id="input-file-mime-allowed" class="form-control"><?php echo $config_file_mime_allowed; ?></textarea>
+                  <textarea name="config_file_mime_allowed" rows="5" placeholder="<?php echo $entry_file_mime_allowed; ?>" id="input-file-mime-allowed" class="form-control"><?php echo $config_file_mime_allowed; ?></textarea>
                 </div>
               </div>
               <div class="form-group">
@@ -1458,7 +1458,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-encryption"><span data-toggle="tooltip" title="<?php echo $help_encryption; ?>"><?php echo $entry_encryption; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="config_encryption" value="<?php echo $config_encryption; ?>" placeholder="<?php echo $entry_encryption; ?>" id="input-encryption" class="form-control" />
+                  <textarea name="config_encryption" rows="5" placeholder="<?php echo $entry_encryption; ?>" id="input-encryption" class="form-control"><?php echo $config_encryption; ?></textarea>
                   <?php if ($error_encryption) { ?>
                   <div class="text-danger"><?php echo $error_encryption; ?></div>
                   <?php } ?>
@@ -1612,7 +1612,7 @@ $('select[name=\'config_template\']').trigger('change');
   <script type="text/javascript"><!--
 $('select[name=\'config_country_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=setting/setting/country&token=<?php echo $token; ?>&country_id=' + this.value,
+		url: 'index.php?route=localisation/country/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'config_country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');

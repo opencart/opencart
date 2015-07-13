@@ -406,7 +406,7 @@ class ControllerLocalisationCountry extends Controller {
 		}
 
 		$this->load->model('setting/store');
-		$this->load->model('sale/customer');
+		$this->load->model('customer/customer');
 		$this->load->model('marketing/affiliate');
 		$this->load->model('localisation/zone');
 		$this->load->model('localisation/geo_zone');
@@ -422,7 +422,7 @@ class ControllerLocalisationCountry extends Controller {
 				$this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
 			}
 
-			$address_total = $this->model_sale_customer->getTotalAddressesByCountryId($country_id);
+			$address_total = $this->model_customer_customer->getTotalAddressesByCountryId($country_id);
 
 			if ($address_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_address'), $address_total);
@@ -449,4 +449,30 @@ class ControllerLocalisationCountry extends Controller {
 
 		return !$this->error;
 	}
+	
+	public function country() {
+		$json = array();
+
+		$this->load->model('localisation/country');
+
+		$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
+
+		if ($country_info) {
+			$this->load->model('localisation/zone');
+
+			$json = array(
+				'country_id'        => $country_info['country_id'],
+				'name'              => $country_info['name'],
+				'iso_code_2'        => $country_info['iso_code_2'],
+				'iso_code_3'        => $country_info['iso_code_3'],
+				'address_format'    => $country_info['address_format'],
+				'postcode_required' => $country_info['postcode_required'],
+				'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
+				'status'            => $country_info['status']
+			);
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}	
 }

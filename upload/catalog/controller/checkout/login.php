@@ -80,8 +80,33 @@ class ControllerCheckoutLogin extends Controller {
 		}
 
 		if (!$json) {
+			// Trigger customer pre login event
+			$this->event->trigger('pre.customer.login');
+			
+			// Unset guest
 			unset($this->session->data['guest']);
-
+			
+			// Restore customers cart
+			if ($this->customer->getCart()) {
+				foreach ($this->customer->getCart() as $key => $value) {
+					$this->cart->add($key, $value);
+				}
+			}
+			
+			// Restore customers wish list
+			if ($this->customer->getWishlist()) {
+				if (!isset($this->session->data['wishlist'])) {
+					$this->session->data['wishlist'] = array();
+				}				
+				
+				foreach ($this->customer->getWishlist() as $product_id) {
+					if (!in_array($product_id, $this->session->data['wishlist'])) {
+						$this->session->data['wishlist'][] = $product_id;
+					}
+				}
+			}
+			
+			// Default Shipping Address
 			$this->load->model('account/address');
 
 			if ($this->config->get('config_tax_customer') == 'payment') {
@@ -92,8 +117,6 @@ class ControllerCheckoutLogin extends Controller {
 				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 			}
 
-			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
-
 			// Add to activity log
 			$this->load->model('account/activity');
 
@@ -103,6 +126,11 @@ class ControllerCheckoutLogin extends Controller {
 			);
 
 			$this->model_account_activity->addActivity('login', $activity_data);
+			
+			// Trigger customer post login event
+			$this->event->trigger('post.customer.login');
+			
+			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

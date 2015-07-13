@@ -135,7 +135,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 		$data['action'] = $this->url->link('payment/amazon_login_pay', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token']);
+		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
 
 		if (isset($this->request->post['amazon_login_pay_merchant_id'])) {
 			$data['amazon_login_pay_merchant_id'] = $this->request->post['amazon_login_pay_merchant_id'];
@@ -310,7 +310,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$this->model_extension_event->deleteEvent('amazon_history_capture');
 	}
 
-	public function action() {
+	public function order() {
 
 		if ($this->config->get('amazon_login_pay_status')) {
 

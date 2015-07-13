@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '2.0.3.0');
+define('VERSION', '2.0.3.2_rc');
 
 // Configuration
 if (is_file('config.php')) {
@@ -24,7 +24,7 @@ $config = new Config();
 $registry->set('config', $config);
 
 // Database
-$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
 $registry->set('db', $db);
 
 // Settings
@@ -138,7 +138,7 @@ $registry->set('length', new Length($registry));
 // User
 $registry->set('user', new User($registry));
 
-//OpenBay Pro
+// OpenBay Pro
 $registry->set('openbay', new Openbay($registry));
 
 // Event

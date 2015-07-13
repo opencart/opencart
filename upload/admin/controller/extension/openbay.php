@@ -573,7 +573,7 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function orderList() {
-		$this->load->language('sale/order');
+		$this->language->load('sale/order');
 		$this->load->model('openbay/order');
 
 		$data = $this->load->language('openbay/openbay_order');
@@ -881,7 +881,7 @@ class ControllerExtensionOpenbay extends Controller {
 			$this->response->redirect($this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'], 'SSL'));
 		} else {
 			$this->load->model('openbay/order');
-			$this->load->language('sale/order');
+			$this->language->load('sale/order');
 
 			$data['column_order_id'] = $this->language->get('column_order_id');
 			$data['column_customer'] = $this->language->get('column_customer');

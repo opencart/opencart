@@ -136,7 +136,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 		$data['action'] = $this->url->link('payment/amazon_checkout', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token']);
+		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
 
 		if (isset($this->request->post['amazon_checkout_merchant_id'])) {
 			$data['amazon_checkout_merchant_id'] = $this->request->post['amazon_checkout_merchant_id'];
@@ -359,10 +359,10 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$this->model_payment_amazon_checkout->addReportSubmission($this->request->get['order_id'], $this->request->get['submission_id']);
 	}
 
-	public function action() {
+	public function order() {
 		$this->load->model('sale/order');
 		$this->load->model('payment/amazon_checkout');
-		$this->load->language('sale/order');
+		$this->language->load('sale/order');
 		$this->load->language('payment/amazon_checkout');
 
 		$amazon_order_info = $this->model_payment_amazon_checkout->getOrder($this->request->get['order_id']);

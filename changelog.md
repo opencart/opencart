@@ -1,6 +1,38 @@
 # OpenCart 2.0 change log
 
-## v2.0.3.0 (Release date: 20.05.2015)
+## v2.0.3.2 (Pending)
+#### Bugs fixed
+* Change post to session in order API (https://github.com/opencart/opencart/issues/2712)
+* Maxmind error with unused method (https://github.com/opencart/opencart/issues/3069)
+
+#### Changes
+* Pondicherry to Puducherry in oc_zone table
+* Amazon checkout payment module removed. Replaced with newer Login and Pay module.
+
+## v2.0.3.1
+#### Bugs fixed
+* Safari text colour change on carousel (https://github.com/opencart/opencart/commit/2adcf21fbdf2c2d0e08860daf4012e14e24ff664)
+* Missing language strings during install for DB port (https://github.com/opencart/opencart/commit/c9f014f3a0441b05f4b2d9fad074a5b883695102)
+* Missing permission for admin to fraud module area (https://github.com/opencart/opencart/commit/ea1ef5dd7716637defea742d1e78bab40471caea)
+* Custom field correct sort order (https://github.com/opencart/opencart/commit/6e95c487cbb109ce7e9925d8d9a8073ea244c9a4)
+* Fixed edit currency feature in add/edit order area (https://github.com/opencart/opencart/commit/3826c8df1bfef24938eb68cce7fb9d76779ef0bd)
+* Missing totals $data key for sale/order (https://github.com/opencart/opencart/commit/783e089d54e091faa3abe1846afa483f0f7d3311)
+* Insecure links in payment gateways (https://github.com/opencart/opencart/commit/9c8645156d62319b219e6e4e93c0e73991e87ac0)
+* For element on information form (https://github.com/opencart/opencart/commit/6c126c8b9688bd3c43004325266d72f05857e472)
+* Redirect link in authorizenet sim (https://github.com/opencart/opencart/commit/59336a1bc6dc95bd52404379b5fca16d0949bfbf)
+* PayPal not found template ref (https://github.com/opencart/opencart/commit/455ee256b3ec0c2f08fc2907223560fa6733dce7)
+* Google hangouts admin form (https://github.com/opencart/opencart/commit/19e8c66fca65a424e646885792bcbf8eabba7b37)
+* Google base template layout (https://github.com/opencart/opencart/commit/cb6a7dab1b747a7200fa484a330c9a4783bf1a82)
+* Updated readonly="readonly" to readonly on form elements (https://github.com/opencart/opencart/commit/f5e85dc3a8cc45c4cbef9ec42735bf74272e15a8)
+* Google sitemap double amp encoding (https://github.com/opencart/opencart/commit/06fe3e5f3b3ff4f72ed74811fb6c32cea5a5776d)
+
+#### Changes
+None
+
+#### Added
+None
+
+## v2.0.3.0 (Developer Release date: 20.05.2015)
 #### Bugs fixed
 * Mail config hostname variable (https://github.com/opencart/opencart/issues/2840)
 * Order status id INT size in install.sql (https://github.com/opencart/opencart/issues/2820)

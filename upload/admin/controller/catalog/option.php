@@ -3,7 +3,7 @@ class ControllerCatalogOption extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('catalog/option');
+		$this->language->load('catalog/option');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerCatalogOption extends Controller {
 	}
 
 	public function add() {
-		$this->load->language('catalog/option');
+		$this->language->load('catalog/option');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -45,7 +45,7 @@ class ControllerCatalogOption extends Controller {
 	}
 
 	public function edit() {
-		$this->load->language('catalog/option');
+		$this->language->load('catalog/option');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -77,7 +77,7 @@ class ControllerCatalogOption extends Controller {
 	}
 
 	public function delete() {
-		$this->load->language('catalog/option');
+		$this->language->load('catalog/option');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -462,7 +462,7 @@ class ControllerCatalogOption extends Controller {
 		$json = array();
 
 		if (isset($this->request->get['filter_name'])) {
-			$this->load->language('catalog/option');
+			$this->language->load('catalog/option');
 
 			$this->load->model('catalog/option');
 

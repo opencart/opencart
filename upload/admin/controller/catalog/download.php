@@ -3,7 +3,7 @@ class ControllerCatalogDownload extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('catalog/download');
+		$this->language->load('catalog/download');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerCatalogDownload extends Controller {
 	}
 
 	public function add() {
-		$this->load->language('catalog/download');
+		$this->language->load('catalog/download');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -45,7 +45,7 @@ class ControllerCatalogDownload extends Controller {
 	}
 
 	public function edit() {
-		$this->load->language('catalog/download');
+		$this->language->load('catalog/download');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -77,7 +77,7 @@ class ControllerCatalogDownload extends Controller {
 	}
 
 	public function delete() {
-		$this->load->language('catalog/download');
+		$this->language->load('catalog/download');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -426,7 +426,7 @@ class ControllerCatalogDownload extends Controller {
 	}
 
 	public function upload() {
-		$this->load->language('catalog/download');
+		$this->language->load('catalog/download');
 
 		$json = array();
 
@@ -492,7 +492,7 @@ class ControllerCatalogDownload extends Controller {
 		}
 
 		if (!$json) {
-			$file = $filename . '.' . md5(mt_rand());
+			$file = $filename . '.' . token(32);
 
 			move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
 

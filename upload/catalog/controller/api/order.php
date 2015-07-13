@@ -31,7 +31,7 @@ class ControllerApiOrder extends Controller {
 				}
 
 				// Shipping Method
-				if (!isset($this->request->post['shipping_method'])) {
+				if (!isset($this->session->data['shipping_method'])) {
 					$json['error'] = $this->language->get('error_shipping_method');
 				}
 			} else {
@@ -195,7 +195,7 @@ class ControllerApiOrder extends Controller {
 					foreach ($this->session->data['vouchers'] as $voucher) {
 						$order_data['vouchers'][] = array(
 							'description'      => $voucher['description'],
-							'code'             => substr(md5(mt_rand()), 0, 10),
+							'code'             => substr(token(32), 0, 10),
 							'to_name'          => $voucher['to_name'],
 							'to_email'         => $voucher['to_email'],
 							'from_name'        => $voucher['from_name'],
@@ -316,7 +316,15 @@ class ControllerApiOrder extends Controller {
 				$json['success'] = $this->language->get('text_success');
 			}
 		}
-
+		
+		if (isset($this->request->server['HTTP_ORIGIN'])) {
+			$this->response->addHeader('Access-Control-Allow-Origin: ' . $this->request->server['HTTP_ORIGIN']);
+			$this->response->addHeader('Access-Control-Allow-Credentials: true');
+			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+			$this->response->addHeader('Access-Control-Max-Age: 1000');
+			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+		}
+		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
@@ -363,7 +371,7 @@ class ControllerApiOrder extends Controller {
 					}
 
 					// Shipping Method
-					if (!isset($this->request->post['shipping_method'])) {
+					if (!isset($this->session->data['shipping_method'])) {
 						$json['error'] = $this->language->get('error_shipping_method');
 					}
 				} else {
@@ -527,7 +535,7 @@ class ControllerApiOrder extends Controller {
 						foreach ($this->session->data['vouchers'] as $voucher) {
 							$order_data['vouchers'][] = array(
 								'description'      => $voucher['description'],
-								'code'             => substr(md5(mt_rand()), 0, 10),
+								'code'             => token(10),
 								'to_name'          => $voucher['to_name'],
 								'to_email'         => $voucher['to_email'],
 								'from_name'        => $voucher['from_name'],
@@ -617,7 +625,15 @@ class ControllerApiOrder extends Controller {
 				$json['error'] = $this->language->get('error_not_found');
 			}
 		}
-
+		
+		if (isset($this->request->server['HTTP_ORIGIN'])) {
+			$this->response->addHeader('Access-Control-Allow-Origin: ' . $this->request->server['HTTP_ORIGIN']);
+			$this->response->addHeader('Access-Control-Allow-Credentials: true');
+			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+			$this->response->addHeader('Access-Control-Max-Age: 1000');
+			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+		}
+		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
@@ -648,7 +664,15 @@ class ControllerApiOrder extends Controller {
 				$json['error'] = $this->language->get('error_not_found');
 			}
 		}
-
+		
+		if (isset($this->request->server['HTTP_ORIGIN'])) {
+			$this->response->addHeader('Access-Control-Allow-Origin: ' . $this->request->server['HTTP_ORIGIN']);
+			$this->response->addHeader('Access-Control-Allow-Credentials: true');
+			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+			$this->response->addHeader('Access-Control-Max-Age: 1000');
+			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+		}
+		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
@@ -693,7 +717,15 @@ class ControllerApiOrder extends Controller {
 				$json['error'] = $this->language->get('error_not_found');
 			}
 		}
-
+		
+		if (isset($this->request->server['HTTP_ORIGIN'])) {
+			$this->response->addHeader('Access-Control-Allow-Origin: ' . $this->request->server['HTTP_ORIGIN']);
+			$this->response->addHeader('Access-Control-Allow-Credentials: true');
+			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+			$this->response->addHeader('Access-Control-Max-Age: 1000');
+			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+		}
+		
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}

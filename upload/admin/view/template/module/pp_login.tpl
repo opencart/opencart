@@ -134,7 +134,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_return_url; ?>"><?php echo $entry_return_url; ?></span></label>
             <div class="col-sm-10">
-              <input type="text" readonly="readonly" id="return-url" value="<?php echo $return_url; ?>" class="form-control" />
+              <input type="text" readonly id="return-url" value="<?php echo $return_url; ?>" class="form-control" />
             </div>
           </div>
           <div class="form-group">

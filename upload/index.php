@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '2.0.3.0');
+define('VERSION', '2.0.3.2_rc');
 
 // Configuration
 if (is_file('config.php')) {
@@ -28,7 +28,7 @@ $config = new Config();
 $registry->set('config', $config);
 
 // Database
-$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
 $registry->set('db', $db);
 
 // Store
@@ -123,6 +123,18 @@ $cache = new Cache('file');
 $registry->set('cache', $cache);
 
 // Session
+if (isset($request->get['token'])) {
+	$db->query("DELETE FROM `" . DB_PREFIX . "api_session`  WHERE TIMESTAMPADD(HOUR, 1, date_modified) < NOW()");
+
+	$query = $db->query("SELECT * FROM `" . DB_PREFIX . "api_session` as LEFT JOIN api_ip ai ON (as.api_id = ai.api_id) WHERE as.token = '" . $db->escape($request->get['token']) . "' AND ai.ip = '" . $db->escape($request->get['REMOTE_ADDR']) . "'");
+
+	if ($query->num_row) {
+		ini_set('session.name', $session_info['session_name']);
+
+		$session_id = $session_info['session_id'];
+	}
+}
+
 $session = new Session();
 $registry->set('session', $session);
 
@@ -223,7 +235,7 @@ $registry->set('cart', new Cart($registry));
 // Encryption
 $registry->set('encryption', new Encryption($config->get('config_encryption')));
 
-//OpenBay Pro
+// OpenBay Pro
 $registry->set('openbay', new Openbay($registry));
 
 // Event

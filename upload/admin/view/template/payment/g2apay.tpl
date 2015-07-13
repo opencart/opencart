@@ -83,7 +83,7 @@
 				<label class="col-sm-2 control-label" for="input-ipn-url"><span data-toggle="tooltip" title="<?php echo $help_ipn_url; ?>"><?php echo $entry_ipn_url; ?></span></label>
 				<div class="col-sm-10">
 				  <div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span>
-					<input type="text" readonly="readonly" value="<?php echo $g2apay_ipn_url; ?>" id="input-ipn-url" class="form-control" />
+					<input type="text" readonly value="<?php echo $g2apay_ipn_url; ?>" id="input-ipn-url" class="form-control" />
 				  </div>
 				</div>
 			  </div>

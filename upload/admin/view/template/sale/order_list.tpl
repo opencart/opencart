@@ -142,7 +142,7 @@
                   <td class="text-right"><?php echo $order['total']; ?></td>
                   <td class="text-left"><?php echo $order['date_added']; ?></td>
                   <td class="text-left"><?php echo $order['date_modified']; ?></td>
-                  <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a> <a href="<?php echo $order['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a href="<?php echo $order['delete']; ?>" id="button-delete<?php echo $order['order_id']; ?>" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger"><i class="fa fa-trash-o"></i></a></td>
+                  <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a> <a href="<?php echo $order['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <button type="button" value="<?php echo $order['order_id']; ?>" id="button-delete<?php echo $order['order_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger"><i class="fa fa-trash-o"></i></button></td>
                 </tr>
                 <?php } ?>
                 <?php } else { ?>
@@ -208,7 +208,7 @@ $('#button-filter').on('click', function() {
 $('input[name=\'filter_customer\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=customer/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
 				response($.map(json, function(item) {
@@ -246,11 +246,65 @@ $('input[name^=\'selected\']').on('change', function() {
 
 $('input[name^=\'selected\']:first').trigger('change');
 
-$('a[id^=\'button-delete\']').on('click', function(e) {
+// Login to the API
+$.ajax({
+	url: '<?php echo $store; ?>index.php?route=api/login',
+	type: 'post',
+	data: 'username=<?php echo $api_username; ?>&password=<?php echo $api_password; ?>&sesson_name=<?php $session_name; ?>&sesson_id=<?php $sesson_id; ?>',
+	dataType: 'json',
+	headers: { 
+		'test': 'some value' 
+	},	
+	crossDomain: true,
+	success: function(json) {	
+		$('.alert').remove();
+		
+		if (json['error']) {
+			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+		} 
+		
+		if (json['cookie']) {
+			$('input[name=\'cookie\']').val(json['cookie']);
+		}		
+	},	
+	error: function(xhr, ajaxOptions, thrownError) {
+		alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	}
+});
+
+$('button[id^=\'button-delete\']').on('click', function(e) {
 	e.preventDefault();
 	
 	if (confirm('<?php echo $text_confirm; ?>')) {
-		location = $(this).attr('href');
+		var node = this;
+		
+		$.ajax({
+			url: '<?php echo $store; ?>index.php?route=api/cart/remove',
+			type: 'post',
+			data: 'token=' + $('input[name=\'cookie\']').val() + '&order_id=' + $(node).val(),
+			dataType: 'json',
+			crossDomain: true,						
+			beforeSend: function() {
+				$(node).button('loading');
+			},
+			complete: function() {
+				$(node).button('reset');
+			},
+			success: function(json) {
+				$('.alert').remove();
+			
+				if (json['error']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+				
+				if (json['success']) {
+					$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}				
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
 	}
 });
 //--></script> 

@@ -76,8 +76,12 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 			break;
 	}
 
-	if ($config->get('config_error_display')) {
+	if ($config->get('config_error_display') && !$config->get('config_development')) {
 		echo '<b>' . $error . '</b>: ' . $errstr . ' in <b>' . $errfile . '</b> on line <b>' . $errline . '</b>';
+	}
+
+	if ($config->get('config_development')) {
+		die('<b>' . $error . '</b>: ' . $errstr . ' in <b>' . $errfile . '</b> on line <b>' . $errline . '</b>');
 	}
 
 	if ($config->get('config_error_log')) {
@@ -159,6 +163,9 @@ $controller->addPreAction(new Action('common/login/check'));
 
 // Permission
 $controller->addPreAction(new Action('error/permission/check'));
+
+// Development Mode
+$controller->addPreAction(new Action('common/development'));
 
 // Router
 if (isset($request->get['route'])) {

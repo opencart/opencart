@@ -5,6 +5,9 @@ class ControllerSaleOrder extends Controller {
 	public function index() {
 		$this->load->language('sale/order');
 
+		print_r($this->session->data);
+		print_r($this->request->cookie);
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('sale/order');
@@ -181,6 +184,7 @@ class ControllerSaleOrder extends Controller {
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		$data['text_missing'] = $this->language->get('text_missing');
 		$data['text_loading'] = $this->language->get('text_loading');
+		$data['text_ip_add'] = sprintf($this->language->get('text_ip_add'), $this->request->server['REMOTE_ADDR']);
 
 		$data['column_order_id'] = $this->language->get('column_order_id');
 		$data['column_customer'] = $this->language->get('column_customer');
@@ -329,7 +333,7 @@ class ControllerSaleOrder extends Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		// Create a login
+		// API login
 		$this->load->model('user/api');
 		
 		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
@@ -337,11 +341,13 @@ class ControllerSaleOrder extends Controller {
 		if ($api_info) {
 			$data['api_username'] = $api_info['username'];
 			$data['api_password'] = $api_info['password'];
+			$data['token'] = token(32);
+			$data['sub_token' . rand()] = token(32);
 		} else {
 			$data['api_username'] = '';
 			$data['api_password'] = '';
 		}
-		
+				
 		$data['store'] = HTTPS_CATALOG;
 		
 		$data['header'] = $this->load->controller('common/header');
@@ -352,7 +358,7 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function getForm() {
-		$this->load->model('sale/customer');
+		$this->load->model('customer/customer');
 		
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -362,6 +368,7 @@ class ControllerSaleOrder extends Controller {
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_loading'] = $this->language->get('text_loading');
+		$data['text_ip_add'] = sprintf($this->language->get('text_ip_add'), $this->request->server['REMOTE_ADDR']);		
 		$data['text_product'] = $this->language->get('text_product');
 		$data['text_voucher'] = $this->language->get('text_voucher');
 		$data['text_order_detail'] = $this->language->get('text_order_detail');
@@ -505,9 +512,9 @@ class ControllerSaleOrder extends Controller {
 			$data['fax'] = $order_info['fax'];
 			$data['account_custom_field'] = $order_info['custom_field'];
 
-			$this->load->model('sale/customer');
+			$this->load->model('customer/customer');
 
-			$data['addresses'] = $this->model_sale_customer->getAddresses($order_info['customer_id']);
+			$data['addresses'] = $this->model_customer_customer->getAddresses($order_info['customer_id']);
 
 			$data['payment_firstname'] = $order_info['payment_firstname'];
 			$data['payment_lastname'] = $order_info['payment_lastname'];
@@ -634,7 +641,7 @@ class ControllerSaleOrder extends Controller {
 			$data['voucher'] = '';
 			$data['reward'] = '';
 		}
-
+		
 		// Stores
 		$this->load->model('setting/store');
 
@@ -657,12 +664,12 @@ class ControllerSaleOrder extends Controller {
 		}
 		
 		// Customer Groups
-		$this->load->model('sale/customer_group');
+		$this->load->model('customer/customer_group');
 
-		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
+		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
 		// Custom Fields
-		$this->load->model('sale/custom_field');
+		$this->load->model('customer/custom_field');
 
 		$data['custom_fields'] = array();
 
@@ -671,12 +678,12 @@ class ControllerSaleOrder extends Controller {
 			'order' => 'ASC'
 		);
 
-		$custom_fields = $this->model_sale_custom_field->getCustomFields($filter_data);
+		$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
 
 		foreach ($custom_fields as $custom_field) {
 			$data['custom_fields'][] = array(
 				'custom_field_id'    => $custom_field['custom_field_id'],
-				'custom_field_value' => $this->model_sale_custom_field->getCustomFieldValues($custom_field['custom_field_id']),
+				'custom_field_value' => $this->model_customer_custom_field->getCustomFieldValues($custom_field['custom_field_id']),
 				'name'               => $custom_field['name'],
 				'value'              => $custom_field['value'],
 				'type'               => $custom_field['type'],
@@ -702,7 +709,20 @@ class ControllerSaleOrder extends Controller {
 		$this->load->model('sale/voucher_theme');
 
 		$data['voucher_themes'] = $this->model_sale_voucher_theme->getVoucherThemes();
+
+		// API login
+		$this->load->model('user/api');
 		
+		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
+		
+		if ($api_info) {
+			$data['api_username'] = $api_info['username'];
+			$data['api_password'] = $api_info['password'];
+		} else {
+			$data['api_username'] = '';
+			$data['api_password'] = '';
+		}
+				
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -727,7 +747,8 @@ class ControllerSaleOrder extends Controller {
 			$this->document->setTitle($this->language->get('heading_title'));
 
 			$data['heading_title'] = $this->language->get('heading_title');
-
+			
+			$data['text_ip_add'] = sprintf($this->language->get('text_ip_add'), $this->request->server['REMOTE_ADDR']);		
 			$data['text_order_detail'] = $this->language->get('text_order_detail');
 			$data['text_customer_detail'] = $this->language->get('text_customer_detail');
 			$data['text_option'] = $this->language->get('text_option');
@@ -857,14 +878,14 @@ class ControllerSaleOrder extends Controller {
 			$data['lastname'] = $order_info['lastname'];
 
 			if ($order_info['customer_id']) {
-				$data['customer'] = $this->url->link('sale/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . $order_info['customer_id'], 'SSL');
+				$data['customer'] = $this->url->link('customer/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . $order_info['customer_id'], 'SSL');
 			} else {
 				$data['customer'] = '';
 			}			
 			
-			$this->load->model('sale/customer_group');
+			$this->load->model('customer/customer_group');
 
-			$customer_group_info = $this->model_sale_customer_group->getCustomerGroup($order_info['customer_group_id']);
+			$customer_group_info = $this->model_customer_customer_group->getCustomerGroup($order_info['customer_group_id']);
 
 			if ($customer_group_info) {
 				$data['customer_group'] = $customer_group_info['name'];
@@ -1017,11 +1038,11 @@ class ControllerSaleOrder extends Controller {
 
 			$data['comment'] = nl2br($order_info['comment']);
 
-			$this->load->model('sale/customer');
+			$this->load->model('customer/customer');
 
 			$data['reward'] = $order_info['reward'];
 
-			$data['reward_total'] = $this->model_sale_customer->getTotalCustomerRewardsByOrderId($this->request->get['order_id']);
+			$data['reward_total'] = $this->model_customer_customer->getTotalCustomerRewardsByOrderId($this->request->get['order_id']);
 
 			$data['affiliate_firstname'] = $order_info['affiliate_firstname'];
 			$data['affiliate_lastname'] = $order_info['affiliate_lastname'];
@@ -1058,7 +1079,7 @@ class ControllerSaleOrder extends Controller {
 			$this->load->model('tool/upload');
 
 			// Custom Fields
-			$this->load->model('sale/custom_field');
+			$this->load->model('customer/custom_field');
 
 			$data['account_custom_fields'] = array();
 
@@ -1067,12 +1088,12 @@ class ControllerSaleOrder extends Controller {
 				'order' => 'ASC',
 			);
 
-			$custom_fields = $this->model_sale_custom_field->getCustomFields($filter_data);
+			$custom_fields = $this->model_customer_custom_field->getCustomFields($filter_data);
 
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['location'] == 'account' && isset($order_info['custom_field'][$custom_field['custom_field_id']])) {
 					if ($custom_field['type'] == 'select' || $custom_field['type'] == 'radio') {
-						$custom_field_value_info = $this->model_sale_custom_field->getCustomFieldValue($order_info['custom_field'][$custom_field['custom_field_id']]);
+						$custom_field_value_info = $this->model_customer_custom_field->getCustomFieldValue($order_info['custom_field'][$custom_field['custom_field_id']]);
 
 						if ($custom_field_value_info) {
 							$data['account_custom_fields'][] = array(
@@ -1084,7 +1105,7 @@ class ControllerSaleOrder extends Controller {
 
 					if ($custom_field['type'] == 'checkbox' && is_array($order_info['custom_field'][$custom_field['custom_field_id']])) {
 						foreach ($order_info['custom_field'][$custom_field['custom_field_id']] as $custom_field_value_id) {
-							$custom_field_value_info = $this->model_sale_custom_field->getCustomFieldValue($custom_field_value_id);
+							$custom_field_value_info = $this->model_customer_custom_field->getCustomFieldValue($custom_field_value_id);
 
 							if ($custom_field_value_info) {
 								$data['account_custom_fields'][] = array(
@@ -1121,7 +1142,7 @@ class ControllerSaleOrder extends Controller {
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['location'] == 'address' && isset($order_info['payment_custom_field'][$custom_field['custom_field_id']])) {
 					if ($custom_field['type'] == 'select' || $custom_field['type'] == 'radio') {
-						$custom_field_value_info = $this->model_sale_custom_field->getCustomFieldValue($order_info['payment_custom_field'][$custom_field['custom_field_id']]);
+						$custom_field_value_info = $this->model_customer_custom_field->getCustomFieldValue($order_info['payment_custom_field'][$custom_field['custom_field_id']]);
 
 						if ($custom_field_value_info) {
 							$data['payment_custom_fields'][] = array(
@@ -1134,7 +1155,7 @@ class ControllerSaleOrder extends Controller {
 
 					if ($custom_field['type'] == 'checkbox' && is_array($order_info['payment_custom_field'][$custom_field['custom_field_id']])) {
 						foreach ($order_info['payment_custom_field'][$custom_field['custom_field_id']] as $custom_field_value_id) {
-							$custom_field_value_info = $this->model_sale_custom_field->getCustomFieldValue($custom_field_value_id);
+							$custom_field_value_info = $this->model_customer_custom_field->getCustomFieldValue($custom_field_value_id);
 
 							if ($custom_field_value_info) {
 								$data['payment_custom_fields'][] = array(
@@ -1174,7 +1195,7 @@ class ControllerSaleOrder extends Controller {
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['location'] == 'address' && isset($order_info['shipping_custom_field'][$custom_field['custom_field_id']])) {
 					if ($custom_field['type'] == 'select' || $custom_field['type'] == 'radio') {
-						$custom_field_value_info = $this->model_sale_custom_field->getCustomFieldValue($order_info['shipping_custom_field'][$custom_field['custom_field_id']]);
+						$custom_field_value_info = $this->model_customer_custom_field->getCustomFieldValue($order_info['shipping_custom_field'][$custom_field['custom_field_id']]);
 
 						if ($custom_field_value_info) {
 							$data['shipping_custom_fields'][] = array(
@@ -1187,7 +1208,7 @@ class ControllerSaleOrder extends Controller {
 
 					if ($custom_field['type'] == 'checkbox' && is_array($order_info['shipping_custom_field'][$custom_field['custom_field_id']])) {
 						foreach ($order_info['shipping_custom_field'][$custom_field['custom_field_id']] as $custom_field_value_id) {
-							$custom_field_value_info = $this->model_sale_custom_field->getCustomFieldValue($custom_field_value_id);
+							$custom_field_value_info = $this->model_customer_custom_field->getCustomFieldValue($custom_field_value_id);
 
 							if ($custom_field_value_info) {
 								$data['shipping_custom_fields'][] = array(
@@ -1260,7 +1281,20 @@ class ControllerSaleOrder extends Controller {
 					}
 				}
 			}
-		
+
+			// API login
+			$this->load->model('user/api');
+			
+			$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
+			
+			if ($api_info) {
+				$data['api_username'] = $api_info['username'];
+				$data['api_password'] = $api_info['password'];
+			} else {
+				$data['api_username'] = '';
+				$data['api_password'] = '';
+			}
+				
 			$data['header'] = $this->load->controller('common/header');
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['footer'] = $this->load->controller('common/footer');
@@ -1351,12 +1385,12 @@ class ControllerSaleOrder extends Controller {
 			$order_info = $this->model_sale_order->getOrder($order_id);
 
 			if ($order_info && $order_info['customer_id'] && ($order_info['reward'] > 0)) {
-				$this->load->model('sale/customer');
+				$this->load->model('customer/customer');
 
-				$reward_total = $this->model_sale_customer->getTotalCustomerRewardsByOrderId($order_id);
+				$reward_total = $this->model_customer_customer->getTotalCustomerRewardsByOrderId($order_id);
 
 				if (!$reward_total) {
-					$this->model_sale_customer->addReward($order_info['customer_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['reward'], $order_id);
+					$this->model_customer_customer->addReward($order_info['customer_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['reward'], $order_id);
 				}
 			}
 
@@ -1386,9 +1420,9 @@ class ControllerSaleOrder extends Controller {
 			$order_info = $this->model_sale_order->getOrder($order_id);
 
 			if ($order_info) {
-				$this->load->model('sale/customer');
+				$this->load->model('customer/customer');
 
-				$this->model_sale_customer->deleteReward($order_id);
+				$this->model_customer_customer->deleteReward($order_id);
 			}
 
 			$json['success'] = $this->language->get('text_reward_removed');

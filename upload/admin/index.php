@@ -138,7 +138,7 @@ $registry->set('length', new Length($registry));
 // User
 $registry->set('user', new User($registry));
 
-//OpenBay Pro
+// OpenBay Pro
 $registry->set('openbay', new Openbay($registry));
 
 // Event

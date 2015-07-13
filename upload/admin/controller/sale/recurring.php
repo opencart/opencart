@@ -418,7 +418,7 @@ class ControllerSaleRecurring extends Controller {
 			$data['options'] = array();
 
 			if ($order['customer_id']) {
-				$data['customer_href'] = $this->url->link('sale/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . $order['customer_id'], 'SSL');
+				$data['customer_href'] = $this->url->link('customer/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . $order['customer_id'], 'SSL');
 			} else {
 				$data['customer_href'] = '';
 			}

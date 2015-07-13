@@ -267,8 +267,16 @@ class ControllerUserApi extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 		
 		$data['text_form'] = !isset($this->request->get['api_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
+		$data['text_ip'] = sprintf($this->language->get('text_ip'), $this->request->server['REMOTE_ADDR']);
+
+		$data['column_token'] = $this->language->get('column_token');
+		$data['column_ip'] = $this->language->get('column_ip');
+		$data['column_date_added'] = $this->language->get('column_date_added');
+		$data['column_date_modified'] = $this->language->get('column_date_modified');
+		$data['column_action'] = $this->language->get('column_action');
 
 		$data['entry_username'] = $this->language->get('entry_username');
 		$data['entry_password'] = $this->language->get('entry_password');
@@ -283,6 +291,7 @@ class ControllerUserApi extends Controller {
 		
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_ip'] = $this->language->get('tab_ip');
+		$data['tab_session'] = $this->language->get('tab_session');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -373,6 +382,12 @@ class ControllerUserApi extends Controller {
 			$data['api_ips'] = array();
 		}
 
+		if (isset($this->request->get['api_id'])) {
+			$data['api_sessions'] = $this->model_user_api->getApiSessions($this->request->get['api_id']);
+		} else {
+			$data['api_sessions'] = array();
+		}
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -412,26 +427,33 @@ class ControllerUserApi extends Controller {
 		if (!$this->user->hasPermission('modify', 'user/api')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
-			if (isset($this->request->get['api_id'])) {
-				$api_id = $this->request->get['api_id'];
-			} else {
-				$api_id = 0;
-			}
+			$this->load->model('user/api');
 
-			$this->load->model('sale/order');
+			$this->model_user_api->addApiIp($this->request->get['api_id'], $this->request->post['ip']);
 
-			$order_info = $this->model_sale_order->getOrder($order_id);
-
-			if ($order_info) {
-				$this->load->model('marketing/affiliate');
-
-				$this->model_marketing_affiliate->addTransaction($order_info['api_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['commission'], $order_id);
-			}
-
-			$json['success'] = $this->language->get('text_ip_added');
+			$json['success'] = $this->language->get('text_success');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+	
+	public function deleteSession() {
+		$this->load->language('user/api');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'user/api')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('user/api');
+			
+			$this->model_user_api->deleteApiSession($this->request->get['api_session_id']);
+			
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}	
 }

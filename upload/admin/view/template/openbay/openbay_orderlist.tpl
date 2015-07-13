@@ -242,7 +242,7 @@
         delay: 0,
         source: function(request, response) {
             $.ajax({
-                url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
+                url: 'index.php?route=customer/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
                 dataType: 'json',
                 success: function(json) {
                     response($.map(json, function(item) {

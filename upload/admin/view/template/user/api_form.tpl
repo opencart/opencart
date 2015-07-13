@@ -28,6 +28,7 @@
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
             <li><a href="#tab-ip" data-toggle="tab"><?php echo $tab_ip; ?></a></li>
+            <li><a href="#tab-session" data-toggle="tab"><?php echo $tab_session; ?></a></li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
@@ -67,6 +68,9 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-ip">
+              <div class="alert alert-info"><i class="fa fa-question-circle"></i> <?php echo $text_ip; ?>
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+              </div>
               <div class="table-responsive">
                 <table id="ip" class="table table-striped table-bordered table-hover">
                   <thead>
@@ -93,6 +97,36 @@
                   </tfoot>
                 </table>
               </div>
+            </div>
+            <div class="tab-pane" id="tab-session">
+              <table class="table table-striped table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <td class="text-left"><?php echo $column_token; ?></td>
+                    <td class="text-left"><?php echo $column_ip; ?></td>
+                    <td class="text-left"><?php echo $column_date_added; ?></td>
+                    <td class="text-left"><?php echo $column_date_modified; ?></td>
+                    <td class="text-right"><?php echo $column_action; ?></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php if ($api_sessions) { ?>
+                  <?php foreach ($api_sessions as $api_session) { ?>
+                  <tr>
+                    <td class="text-left"><?php echo $api_session['token']; ?></td>
+                    <td class="text-left"><?php echo $api_session['ip']; ?></td>
+                    <td class="text-left"><?php echo $api_session['date_added']; ?></td>
+                    <td class="text-left"><?php echo $api_session['date_modified']; ?></td>
+                    <td class="text-right"><button type="button" onclick="$('#session-row<?php echo $session_row; ?>').remove()" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                  </tr>
+                  <?php } ?>
+                  <?php } else { ?>
+                  <tr>
+                    <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
+                  </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
             </div>
           </div>
         </form>
@@ -125,6 +159,43 @@ function addIp() {
 
 	ip_row++;
 }
-//--></script> 
+//--></script>
+  <script type="text/javascript"><!-- 
+$('button[id^=\'button-delete\']').on('click', function(e) {
+	e.preventDefault();
+	
+	if (confirm('<?php echo $text_confirm; ?>')) {
+		var node = this;
+		
+		$.ajax({
+			url: 'index.php?route=user/api/deletesession&token=<?php echo $token; ?>&api_session_id=' + $(node).val(),
+			type: 'post',
+			dataType: 'json',					
+			beforeSend: function() {
+				$(node).button('loading');
+			},
+			complete: function() {
+				$(node).button('reset');
+			},
+			success: function(json) {
+				$('.alert').remove();
+			
+				if (json['error']) {
+					$('#tab-session').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+				
+				if (json['success']) {
+					$('#tab-session').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+					$(node).parent().parent().remove();
+				}				
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	}
+});
+//--></script>
 </div>
 <?php echo $footer; ?> 

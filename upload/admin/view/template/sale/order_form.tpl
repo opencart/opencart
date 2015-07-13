@@ -39,6 +39,7 @@
                     <?php } ?>
                     <?php } ?>
                   </select>
+                  <input type="hidden" name="cookie" value="" />
                 </div>
               </div>
               <div class="form-group">
@@ -956,16 +957,20 @@ $('#order a[data-toggle=\'tab\']').on('click', function(e) {
 $.ajax({
 	url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/login',
 	type: 'post',
-	data: 'token=<?php echo $token; ?>',
+	data: 'username=<?php echo $api_username; ?>&password=<?php echo $api_password; ?>',
 	dataType: 'json',	
 	crossDomain: true,
 	success: function(json) {	
+		if (json['error']) {
+			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+		}
+		
 		if (json['success']) {
 			$('select[name=\'currency\']').trigger('change');
 		}
 		
-		if (json['error']) {
-			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+		if (json['cookie']) {
+			$('input[name=\'cookie\']').val(json['cookie']);
 		}		
 	},	
 	error: function(xhr, ajaxOptions, thrownError) {
@@ -978,7 +983,7 @@ $('select[name=\'currency\']').on('change', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/currency',
 		type: 'post',
-		data: 'token=<?php echo $token; ?>&currency=' + $('select[name=\'currency\'] option:selected').val(),
+		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&currency=' + $('select[name=\'currency\'] option:selected').val(),
 		dataType: 'json',
 		crossDomain: false,
 		beforeSend: function() {
@@ -1009,7 +1014,7 @@ $('#button-refresh').on('click', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/cart/products',
 		type: 'post',
-		data: 'token=<?php echo $token; ?>',
+		data: 'cookie=' + $('input[name=\'cookie\']').val(),
 		dataType: 'json',
 		crossDomain: true,
 		success: function(json) {
@@ -1190,7 +1195,7 @@ $('#button-refresh').on('click', function() {
 $('input[name=\'customer\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+			url: 'index.php?route=customer/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
 				json.unshift({
@@ -1273,7 +1278,7 @@ $('input[name=\'customer\']').autocomplete({
 // Custom Fields
 $('select[name=\'customer_group_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=sale/customer/customfield&token=<?php echo $token; ?>&customer_group_id=' + this.value,
+		url: 'index.php?route=customer/customer/customfield&token=<?php echo $token; ?>&customer_group_id=' + this.value,
 		dataType: 'json',	
 		success: function(json) {
 			$('.custom-field').hide();
@@ -1732,7 +1737,7 @@ $('#button-cart').on('click', function() {
 // Payment Address
 $('select[name=\'payment_address\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=sale/customer/address&token=<?php echo $token; ?>&address_id=' + this.value,
+		url: 'index.php?route=customer/customer/address&token=<?php echo $token; ?>&address_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'payment_address\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
@@ -1920,7 +1925,7 @@ $('#button-payment-address').on('click', function() {
 // Shipping Address
 $('select[name=\'shipping_address\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=sale/customer/address&token=<?php echo $token; ?>&address_id=' + this.value,
+		url: 'index.php?route=customer/customer/address&token=<?php echo $token; ?>&address_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'shipping_address\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');

@@ -151,6 +151,24 @@ CREATE TABLE IF NOT EXISTS `oc_api_ip` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `oc_api_session`
+--
+
+CREATE TABLE IF NOT EXISTS `oc_api_session` (
+  `api_session_id` int(11) NOT NULL AUTO_INCREMENT,
+  `api_id` int(11) NOT NULL,
+  `token` varchar(32) NOT NULL,
+  `session_id` varchar(32) NOT NULL,
+  `session_name` varchar(32) NOT NULL,
+  `ip` int(11) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL,
+  PRIMARY KEY (`api_session_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `oc_attribute`
 --
 

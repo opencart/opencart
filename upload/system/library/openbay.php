@@ -10,11 +10,12 @@ final class Openbay {
 		$this->getInstalled();
 
 		foreach ($this->installed_markets as $market) {
-			$class = ucfirst($market);
+			$class = '\openbay\\'. ucfirst($market);
+
 			$this->{$market} = new $class($registry);
 		}
 
-		$this->logger = new Log('openbay.log');
+		$this->logger = new \Log('openbay.log');
 	}
 
 	public function __get($name) {
@@ -237,7 +238,7 @@ final class Openbay {
 		$this->load->model('checkout/order');
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
-		$language = new Language($order_info['language_directory']);
+		$language = new \Language($order_info['language_directory']);
 		$language->load($order_info['language_directory']);
 		$language->load('mail/order');
 
@@ -295,9 +296,9 @@ final class Openbay {
 		}
 
 		if (version_compare(VERSION, '2.0.2', '<')) {
-			$mail = new Mail($this->config->get('config_mail'));
+			$mail = new \Mail($this->config->get('config_mail'));
 		} else {
-			$mail = new Mail();
+			$mail = new \Mail();
 			$mail->protocol = $this->config->get('config_mail_protocol');
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');

@@ -123,13 +123,19 @@ $cache = new Cache('file');
 $registry->set('cache', $cache);
 
 // Session
-if (isset($request->post['cookie'])) {
-	$cookie = $request->post['cookie'];
-} else {
-	$cookie = null;
+if (isset($request->get['token'])) {
+	$db->query("DELETE FROM `" . DB_PREFIX . "api_session`  WHERE TIMESTAMPADD(HOUR, 1, date_modified) < NOW()");
+
+	$query = $db->query("SELECT * FROM `" . DB_PREFIX . "api_session` as LEFT JOIN api_ip ai ON (as.api_id = ai.api_id) WHERE as.token = '" . $db->escape($request->get['token']) . "' AND ai.ip = '" . $db->escape($request->get['REMOTE_ADDR']) . "'");
+
+	if ($query->num_row) {
+		ini_set('session.name', $session_info['session_name']);
+
+		$session_id = $session_info['session_id'];
+	}
 }
 
-$session = new Session($cookie);
+$session = new Session();
 $registry->set('session', $session);
 
 // Language Detection
@@ -229,7 +235,7 @@ $registry->set('cart', new Cart($registry));
 // Encryption
 $registry->set('encryption', new Encryption($config->get('config_encryption')));
 
-//OpenBay Pro
+// OpenBay Pro
 $registry->set('openbay', new Openbay($registry));
 
 // Event

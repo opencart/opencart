@@ -468,7 +468,6 @@ $(document).delegate('#button-commission-remove', 'click', function() {
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-commission-remove').button('loading');
-		
 		},
 		complete: function() {
 			$('#button-commission-remove').button('reset');
@@ -496,7 +495,8 @@ $(document).delegate('#button-commission-remove', 'click', function() {
 $.ajax({
 	url: '<?php echo $store_url; ?>index.php?route=api/login&token=<?php echo $token; ?>',
 	type: 'post',
-	dataType: 'json',	
+	dataType: 'json',
+	data: 'username=<?php echo $api_username; ?>&password=<?php echo $api_password; ?>',
 	crossDomain: true,
 	success: function(json) {
 		$('.alert').remove();

@@ -115,6 +115,7 @@ $_['tab_option']                    = 'Option';
 $_['tab_server']                    = 'Server';
 $_['tab_store']                     = 'Store';
 $_['tab_special']                   = 'Special';
+$_['tab_session']                   = 'Session';
 $_['tab_local']                     = 'Local';
 $_['tab_mail']                      = 'Mail';
 $_['tab_module']                    = 'Module';

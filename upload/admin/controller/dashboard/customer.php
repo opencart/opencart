@@ -10,11 +10,11 @@ class ControllerDashboardCustomer extends Controller {
 		$data['token'] = $this->session->data['token'];
 
 		// Total Orders
-		$this->load->model('sale/customer');
+		$this->load->model('customer/customer');
 
-		$today = $this->model_sale_customer->getTotalCustomers(array('filter_date_added' => date('Y-m-d', strtotime('-1 day'))));
+		$today = $this->model_customer_customer->getTotalCustomers(array('filter_date_added' => date('Y-m-d', strtotime('-1 day'))));
 
-		$yesterday = $this->model_sale_customer->getTotalCustomers(array('filter_date_added' => date('Y-m-d', strtotime('-2 day'))));
+		$yesterday = $this->model_customer_customer->getTotalCustomers(array('filter_date_added' => date('Y-m-d', strtotime('-2 day'))));
 
 		$difference = $today - $yesterday;
 
@@ -24,7 +24,7 @@ class ControllerDashboardCustomer extends Controller {
 			$data['percentage'] = 0;
 		}
 
-		$customer_total = $this->model_sale_customer->getTotalCustomers();
+		$customer_total = $this->model_customer_customer->getTotalCustomers();
 
 		if ($customer_total > 1000000000000) {
 			$data['total'] = round($customer_total / 1000000000000, 1) . 'T';
@@ -38,7 +38,7 @@ class ControllerDashboardCustomer extends Controller {
 			$data['total'] = $customer_total;
 		}
 
-		$data['customer'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'], 'SSL');
+		$data['customer'] = $this->url->link('customer/customer', 'token=' . $this->session->data['token'], 'SSL');
 
 		return $this->load->view('dashboard/customer.tpl', $data);
 	}

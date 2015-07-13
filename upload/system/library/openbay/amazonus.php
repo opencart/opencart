@@ -1,17 +1,19 @@
 <?php
-class Amazon {
+namespace openbay;
+
+class Amazonus {
 	private $token;
 	private $enc1;
 	private $enc2;
-	private $url = 'http://uk-amazon.openbaypro.com/';
+	private $url = 'http://us-amazon.openbaypro.com/';
 	private $registry;
 
 	public function __construct($registry) {
 		$this->registry = $registry;
 
-		$this->token = $this->config->get('openbay_amazon_token');
-		$this->enc1 = $this->config->get('openbay_amazon_enc_string1');
-		$this->enc2 = $this->config->get('openbay_amazon_enc_string2');
+		$this->token = $this->config->get('openbay_amazonus_token');
+		$this->enc1 = $this->config->get('openbay_amazonus_enc_string1');
+		$this->enc2 = $this->config->get('openbay_amazonus_enc_string2');
 	}
 
 	public function __get($name) {
@@ -31,7 +33,7 @@ class Amazon {
 			CURLOPT_POST            => 1,
 			CURLOPT_HEADER          => 0,
 			CURLOPT_URL             => $this->url . $method,
-			CURLOPT_USERAGENT       => 'OpenBay Pro for Amazon/Opencart',
+			CURLOPT_USERAGENT       => 'OpenBay Pro for Amazonus/Opencart',
 			CURLOPT_FRESH_CONNECT   => 1,
 			CURLOPT_RETURNTRANSFER  => 1,
 			CURLOPT_FORBID_REUSE    => 1,
@@ -64,7 +66,7 @@ class Amazon {
 			CURLOPT_POST => 1,
 			CURLOPT_HEADER => 0,
 			CURLOPT_URL => $this->url . $method,
-			CURLOPT_USERAGENT => 'OpenBay Pro for Amazon/Opencart',
+			CURLOPT_USERAGENT => 'OpenBay Pro for Amazonus/Opencart',
 			CURLOPT_FRESH_CONNECT => 1,
 			CURLOPT_RETURNTRANSFER => 1,
 			CURLOPT_FORBID_REUSE => 1,
@@ -108,8 +110,8 @@ class Amazon {
 	}
 
 	public function productUpdateListen($product_id, $data = array()) {
-		$logger = new Log('amazon_stocks.log');
-		$logger->write('productUpdateListen (' . $product_id . ')');
+		$logger = new \Log('amazon_stocks.log');
+		$logger->write('productUpdateListen (' . (int)$product_id . ')');
 
 		$product = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "' LIMIT 1")->row;
 
@@ -130,7 +132,7 @@ class Amazon {
 				$amazon_sku_rows = $this->getLinkedSkus($product_id, $variant['sku']);
 
 				foreach($amazon_sku_rows as $amazon_sku_row) {
-					$quantity_data[$amazon_sku_row['amazon_sku']] = $variant['stock'];
+					$quantity_data[$amazon_sku_row['amazonus_sku']] = $variant['stock'];
 				}
 			}
 
@@ -149,12 +151,12 @@ class Amazon {
 
 	public function bulkUpdateOrders($orders) {
 		// Is the module enabled and called from admin?
-		if ($this->config->get('openbay_amazon_status') != 1 || !defined('HTTPS_CATALOG')) {
+		if ($this->config->get('openbay_amazonus_status') != 1 || !defined('HTTPS_CATALOG')) {
 			return;
 		}
-		$this->load->model('openbay/amazon');
+		$this->load->model('openbay/amazonus');
 
-		$log = new Log('amazon.log');
+		$log = new \Log('amazonus.log');
 		$log->write('Called bulkUpdateOrders method');
 
 		$request = array(
@@ -163,19 +165,19 @@ class Amazon {
 
 		foreach ($orders as $order) {
 			$amazon_order = $this->getOrder($order['order_id']);
-			$amazon_order_products = $this->model_openbay_amazon->getAmazonOrderedProducts($order['order_id']);
+			$amazon_order_products = $this->model_openbay_amazonus->getAmazonusOrderedProducts($order['order_id']);
 
 			$products = array();
 
 			foreach ($amazon_order_products as $amazon_order_product) {
 				$products[] = array(
-					'amazon_order_item_id' => $amazon_order_product['amazon_order_item_id'],
+					'amazon_order_item_id' => $amazon_order_product['amazonus_order_item_id'],
 					'quantity' => $amazon_order_product['quantity'],
 				);
 			}
 
 			$order_info = array(
-				'amazon_order_id' => $amazon_order['amazon_order_id'],
+				'amazon_order_id' => $amazon_order['amazonus_order_id'],
 				'status' => $order['status'],
 				'products' => $products,
 			);
@@ -202,7 +204,7 @@ class Amazon {
 
 	public function updateOrder($order_id, $order_status_string, $courier_id = '', $courier_from_list = true, $tracking_no = '') {
 
-		if ($this->config->get('openbay_amazon_status') != 1) {
+		if ($this->config->get('openbay_amazonus_status') != 1) {
 			return;
 		}
 
@@ -211,23 +213,23 @@ class Amazon {
 			return;
 		}
 
-		$amazon_order = $this->getOrder($order_id);
+		$amazonus_order = $this->getOrder($order_id);
 
-		if(!$amazon_order) {
+		if(!$amazonus_order) {
 			return;
 		}
 
-		$amazon_order_id = $amazon_order['amazon_order_id'];
+		$amazonus_order_id = $amazonus_order['amazonus_order_id'];
 
-		$log = new Log('amazon.log');
-		$log->write("Order's $amazon_order_id status changed to $order_status_string");
+		$log = new \Log('amazonus.log');
+		$log->write("Order's $amazonus_order_id status changed to $order_status_string");
 
-		$this->load->model('openbay/amazon');
-		$amazon_order_products = $this->model_openbay_amazon->getAmazonOrderedProducts($order_id);
+		$this->load->model('openbay/amazonus');
+		$amazonus_order_products = $this->model_openbay_amazonus->getAmazonusOrderedProducts($order_id);
 
-		$request_node = new SimpleXMLElement('<Request/>');
+		$request_node = new \SimpleXMLElement('<Request/>');
 
-		$request_node->addChild('AmazonOrderId', $amazon_order_id);
+		$request_node->addChild('AmazonusOrderId', $amazonus_order_id);
 		$request_node->addChild('Status', $order_status_string);
 
 		if(!empty($courier_id)) {
@@ -241,18 +243,18 @@ class Amazon {
 
 		$order_items_node = $request_node->addChild('OrderItems');
 
-		foreach ($amazon_order_products as $product) {
+		foreach ($amazonus_order_products as $product) {
 			$new_order_item = $order_items_node->addChild('OrderItem');
-			$new_order_item->addChild('ItemId', htmlspecialchars($product['amazon_order_item_id']));
+			$new_order_item->addChild('ItemId', htmlspecialchars($product['amazonus_order_item_id']));
 			$new_order_item->addChild('Quantity', (int)$product['quantity']);
 		}
 
-		$doc = new DOMDocument('1.0');
+		$doc = new \DOMDocument('1.0');
 		$doc->preserveWhiteSpace = false;
 		$doc->loadXML($request_node->asXML());
 		$doc->formatOutput = true;
 
-		$this->model_openbay_amazon->updateAmazonOrderTracking($order_id, $courier_id, $courier_from_list, !empty($courier_id) ? $tracking_no : '');
+		$this->model_openbay_amazonus->updateAmazonusOrderTracking($order_id, $courier_id, $courier_from_list, !empty($courier_id) ? $tracking_no : '');
 		$log->write('Request: ' . $doc->saveXML());
 		$response = $this->call('order/update2', $doc->saveXML(), false);
 		$log->write("Response for Order's status update: $response");
@@ -305,19 +307,19 @@ class Amazon {
 
 	public function putStockUpdateBulk($product_id_array, $end_inactive = false){
 		$this->load->library('log');
-		$logger = new Log('amazon_stocks.log');
+		$logger = new \Log('amazonus_stocks.log');
 		$logger->write('Updating stock using putStockUpdateBulk()');
 		$quantity_data = array();
 		foreach($product_id_array as $product_id) {
-			$amazon_rows = $this->getLinkedSkus($product_id);
-			foreach($amazon_rows as $amazon_row) {
-				$product_row = $this->db->query("SELECT `quantity`, `status` FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "'")->row;
+			$amazonus_rows = $this->getLinkedSkus($product_id);
+			foreach($amazonus_rows as $amazonus_row) {
+				$product_row = $this->db->query("SELECT quantity, status FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "'")->row;
 
 				if(!empty($product_row)) {
 					if($end_inactive && $product_row['status'] == '0') {
-						$quantity_data[$amazon_row['amazon_sku']] = 0;
+						$quantity_data[$amazonus_row['amazonus_sku']] = 0;
 					} else {
-						$quantity_data[$amazon_row['amazon_sku']] = $product_row['quantity'];
+						$quantity_data[$amazonus_row['amazonus_sku']] = $product_row['quantity'];
 					}
 				}
 			}
@@ -332,7 +334,7 @@ class Amazon {
 	}
 
 	public function getLinkedSkus($product_id, $var='') {
-		return $this->db->query("SELECT `amazon_sku` FROM `" . DB_PREFIX . "amazon_product_link` WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($var) . "'")->rows;
+		return $this->db->query("SELECT `amazonus_sku` FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($var) . "'")->rows;
 	}
 
 	public function getOrderdProducts($order_id) {
@@ -340,10 +342,10 @@ class Amazon {
 	}
 
 	public function validate(){
-		if($this->config->get('openbay_amazon_status') != 0 &&
-			$this->config->get('openbay_amazon_token') != '' &&
-			$this->config->get('openbay_amazon_enc_string1') != '' &&
-			$this->config->get('openbay_amazon_enc_string2') != ''){
+		if($this->config->get('openbay_amazonus_status') != 0 &&
+			$this->config->get('openbay_amazonus_token') != '' &&
+			$this->config->get('openbay_amazonus_enc_string1') != '' &&
+			$this->config->get('openbay_amazonus_enc_string2') != ''){
 			return true;
 		}else{
 			return false;
@@ -351,7 +353,7 @@ class Amazon {
 	}
 
 	public function deleteProduct($product_id){
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "amazon_product_link` WHERE `product_id` = '" . (int)$product_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
 	public function orderDelete($order_id){
@@ -361,7 +363,7 @@ class Amazon {
 	}
 
 	public function getOrder($order_id) {
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
+		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazonus_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 
 		if($qry->num_rows > 0){
 			return $qry->row;
@@ -372,55 +374,31 @@ class Amazon {
 
 	public function getCarriers() {
 		return array(
-			"USPS",
-			"UPS",
-			"UPSMI",
-			"FedEx",
+			"Blue Package",
+			"Canada Post",
+			"City Link",
 			"DHL",
+			"DHL Global Mail",
 			"Fastway",
+			"FedEx",
+			"FedEx SmartPost",
 			"GLS",
 			"GO!",
 			"Hermes Logistik Gruppe",
-			"Royal Mail",
-			"Parcelforce",
-			"City Link",
-			"TNT",
-			"Target",
-			"SagawaExpress",
+			"Newgistics",
 			"NipponExpress",
-			"YamatoTransport",
-			"DHL Global Mail",
-			"UPS Mail Innovations",
-			"FedEx SmartPost",
 			"OSM",
 			"OnTrac",
+			"Parcelforce",
+			"Royal Mail",
+			"SagawaExpress",
 			"Streamlite",
-			"Newgistics",
-			"Canada Post",
-			"Blue Package",
-			"Chronopost",
-			"Deutsche Post",
-			"DPD",
-			"La Poste",
-			"Parcelnet",
-			"Poste Italiane",
-			"SDA",
-			"Smartmail",
-			"FEDEX_JP",
-			"JP_EXPRESS",
-			"NITTSU",
-			"SAGAWA",
-			"YAMATO",
-			"BlueDart",
-			"AFL/Fedex",
-			"Aramex",
-			"India Post",
-			"Professional",
-			"DTDC",
-			"Overnite Express",
-			"First Flight",
-			"Delhivery",
-			"Lasership",
+			"TNT",
+			"Target",
+			"UPS",
+			"UPS Mail Innovations",
+			"USPS",
+			"YamatoTransport",
 		);
 	}
 
@@ -479,7 +457,7 @@ class Amazon {
 			$fields[$index]['unordered_index'] = $index;
 		}
 
-		usort($fields, array('Amazon','compareFields'));
+		usort($fields, array('Amazonus','compareFields'));
 
 		return array(
 			'category' => $category,

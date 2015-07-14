@@ -156,22 +156,6 @@ class ControllerStep2 extends Controller {
 			$this->error['warning'] = 'Warning: admin/config.php needs to be writable for OpenCart to be installed!';
 		}
 
-		if (!is_writable(DIR_SYSTEM . 'cache')) {
-			$this->error['warning'] = 'Warning: Cache directory needs to be writable for OpenCart to work!';
-		}
-
-		if (!is_writable(DIR_SYSTEM . 'logs')) {
-			$this->error['warning'] = 'Warning: Logs directory needs to be writable for OpenCart to work!';
-		}
-
-		if (!is_writable(DIR_SYSTEM . 'download')) {
-			$this->error['warning'] = 'Warning: Download directory needs to be writable for OpenCart to work!';
-		}
-
-		if (!is_writable(DIR_SYSTEM . 'upload')) {
-			$this->error['warning'] = 'Warning: Upload directory needs to be writable for OpenCart to work!';
-		}
-
 		if (!is_writable(DIR_OPENCART . 'image')) {
 			$this->error['warning'] = 'Warning: Image directory needs to be writable for OpenCart to work!';
 		}
@@ -183,8 +167,24 @@ class ControllerStep2 extends Controller {
 		if (!is_writable(DIR_OPENCART . 'image/catalog')) {
 			$this->error['warning'] = 'Warning: Image catalog directory needs to be writable for OpenCart to work!';
 		}
+		
+		if (!is_writable(DIR_SYSTEM . 'storage/cache')) {
+			$this->error['warning'] = 'Warning: Cache directory needs to be writable for OpenCart to work!';
+		}
 
-		if (!is_writable(DIR_SYSTEM . 'modification')) {
+		if (!is_writable(DIR_SYSTEM . 'storage/logs')) {
+			$this->error['warning'] = 'Warning: Logs directory needs to be writable for OpenCart to work!';
+		}
+
+		if (!is_writable(DIR_SYSTEM . 'storage/download')) {
+			$this->error['warning'] = 'Warning: Download directory needs to be writable for OpenCart to work!';
+		}
+
+		if (!is_writable(DIR_SYSTEM . 'storage/upload')) {
+			$this->error['warning'] = 'Warning: Upload directory needs to be writable for OpenCart to work!';
+		}
+
+		if (!is_writable(DIR_SYSTEM . 'storage/modification')) {
 			$this->error['warning'] = 'Warning: Modification directory needs to be writable for OpenCart to work!';
 		}
 

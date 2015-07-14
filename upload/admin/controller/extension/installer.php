@@ -63,7 +63,7 @@ class ControllerExtensionInstaller extends Controller {
 		if (!$json) {
 			if (!empty($this->request->files['file']['name'])) {
 				if (substr($this->request->files['file']['name'], -10) != '.ocmod.zip' && substr($this->request->files['file']['name'], -10) != '.ocmod.xml') {
-					$json['error'] = $this->language->get('error_filetype');
+					$json['error'] = $this->language->get('error_filename_ocmod');
 				}
 
 				if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {

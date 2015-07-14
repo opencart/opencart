@@ -29,8 +29,10 @@ class ControllerApiLogin extends Controller {
 			
 			$this->session->data['api_id'] = $api_info['api_id'];
 			
-			$json['session_id'] = $this->session->getId();
-			$json['session_name'] = $this->session->getName();
+			// Create Token
+			$json['token'] = $api_info['api_id'] . ':' . $this->session->getName() . ':' . $this->session->getId() . ':' . $this->request->server['REMOTE_ADDR'] . ':' . time();
+		
+			//$this->model_account_api->addSession($api_info['api_id'], $this->session->getName(), $this->session->getId(), $this->request->server['REMOTE_ADDR']);		
 		} else {
 			$json['error'] = $this->language->get('error_login');
 		}
@@ -40,7 +42,7 @@ class ControllerApiLogin extends Controller {
 			$this->response->addHeader('Access-Control-Allow-Credentials: true');
 			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 			$this->response->addHeader('Access-Control-Max-Age: 1000');
-			$this->response->addHeader('Access-Control-Allow-Headers: X-Requested-With, test, Content-Type');
+			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');

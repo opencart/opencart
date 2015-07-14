@@ -250,11 +250,8 @@ $('input[name^=\'selected\']:first').trigger('change');
 $.ajax({
 	url: '<?php echo $store; ?>index.php?route=api/login',
 	type: 'post',
-	data: 'username=<?php echo $api_username; ?>&password=<?php echo $api_password; ?>&sesson_name=<?php $session_name; ?>&sesson_id=<?php $sesson_id; ?>',
+	data: 'username=<?php echo $api_username; ?>&password=<?php echo $api_password; ?>',
 	dataType: 'json',
-	headers: { 
-		'test': 'some value' 
-	},	
 	crossDomain: true,
 	success: function(json) {	
 		$('.alert').remove();

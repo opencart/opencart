@@ -341,8 +341,6 @@ class ControllerSaleOrder extends Controller {
 		if ($api_info) {
 			$data['api_username'] = $api_info['username'];
 			$data['api_password'] = $api_info['password'];
-			$data['token'] = token(32);
-			$data['sub_token' . rand()] = token(32);
 		} else {
 			$data['api_username'] = '';
 			$data['api_password'] = '';

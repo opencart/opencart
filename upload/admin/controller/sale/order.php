@@ -5,9 +5,6 @@ class ControllerSaleOrder extends Controller {
 	public function index() {
 		$this->load->language('sale/order');
 
-		print_r($this->session->data);
-		print_r($this->request->cookie);
-
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('sale/order');
@@ -209,6 +206,7 @@ class ControllerSaleOrder extends Controller {
 		$data['button_delete'] = $this->language->get('button_delete');
 		$data['button_filter'] = $this->language->get('button_filter');
 		$data['button_view'] = $this->language->get('button_view');
+		$data['button_ip_add'] = $this->language->get('button_ip_add');
 
 		$data['token'] = $this->session->data['token'];
 
@@ -339,14 +337,16 @@ class ControllerSaleOrder extends Controller {
 		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 		
 		if ($api_info) {
+			$data['api_id'] = $api_info['username'];
 			$data['api_username'] = $api_info['username'];
 			$data['api_password'] = $api_info['password'];
-			$data['token'] = token(32);
-			$data['sub_token' . rand()] = token(32);
 		} else {
+			$data['api_id'] = '';
 			$data['api_username'] = '';
 			$data['api_password'] = '';
 		}
+		
+		$data['ip'] = $this->request->server['REMOTE_ADDR'];
 				
 		$data['store'] = HTTPS_CATALOG;
 		

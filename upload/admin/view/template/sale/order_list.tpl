@@ -15,6 +15,9 @@
     </div>
   </div>
   <div class="container-fluid">
+    <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> <?php echo $text_ip_add; ?>
+      <button type="button" id="button-ip-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-warning pull-right"><i class="fa fa-plus"></i> <?php echo $button_ip_add; ?></button>
+    </div>
     <?php if ($error_warning) { ?>
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -142,7 +145,8 @@
                   <td class="text-right"><?php echo $order['total']; ?></td>
                   <td class="text-left"><?php echo $order['date_added']; ?></td>
                   <td class="text-left"><?php echo $order['date_modified']; ?></td>
-                  <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a> <a href="<?php echo $order['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <button type="button" value="<?php echo $order['order_id']; ?>" id="button-delete<?php echo $order['order_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger"><i class="fa fa-trash-o"></i></button></td>
+                  <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a> <a href="<?php echo $order['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                    <button type="button" value="<?php echo $order['order_id']; ?>" id="button-delete<?php echo $order['order_id']; ?>" data-loading-text="<?php echo $text_loading; ?>" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger"><i class="fa fa-trash-o"></i></button></td>
                 </tr>
                 <?php } ?>
                 <?php } else { ?>
@@ -250,14 +254,11 @@ $('input[name^=\'selected\']:first').trigger('change');
 $.ajax({
 	url: '<?php echo $store; ?>index.php?route=api/login',
 	type: 'post',
-	data: 'username=<?php echo $api_username; ?>&password=<?php echo $api_password; ?>&sesson_name=<?php $session_name; ?>&sesson_id=<?php $sesson_id; ?>',
+	data: 'username=<?php echo $api_username; ?>&password=<?php echo $api_password; ?>',
 	dataType: 'json',
-	headers: { 
-		'test': 'some value' 
-	},	
 	crossDomain: true,
 	success: function(json) {	
-		$('.alert').remove();
+		//$('.alert').remove();
 		
 		if (json['error']) {
 			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
@@ -273,8 +274,6 @@ $.ajax({
 });
 
 $('button[id^=\'button-delete\']').on('click', function(e) {
-	e.preventDefault();
-	
 	if (confirm('<?php echo $text_confirm; ?>')) {
 		var node = this;
 		
@@ -306,6 +305,35 @@ $('button[id^=\'button-delete\']').on('click', function(e) {
 			}
 		});
 	}
+});
+
+$('#button-ip-add').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=user/api/addip&token=<?php echo $token; ?>&api_id=<?php echo $api_id; ?>',
+		type: 'post',
+		data: 'ip=<?php echo $ip; ?>',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-ip-add').button('loading');
+		},
+		complete: function() {
+			$('#button-ip-add').button('reset');
+		},
+		success: function(json) {
+			$('.alert').remove();
+		
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+			
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}				
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
 });
 //--></script> 
   <script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>

@@ -68,7 +68,7 @@ $registry->set('url', $url);
 $log = new Log($config->get('config_error_filename'));
 $registry->set('log', $log);
 
-function error_handler($errno, $errstr, $errfile, $errline) {
+function error_handler($code, $error, $file, $line) {
 	global $log, $config;
 
 	// error suppressed with @
@@ -76,7 +76,7 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 		return false;
 	}
 
-	switch ($errno) {
+	switch ($code) {
 		case E_NOTICE:
 		case E_USER_NOTICE:
 			$error = 'Notice';
@@ -95,11 +95,11 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 	}
 
 	if ($config->get('config_error_display')) {
-		echo '<b>' . $error . '</b>: ' . $errstr . ' in <b>' . $errfile . '</b> on line <b>' . $errline . '</b>';
+		echo '<b>' . $code . '</b>: ' . $error . ' in <b>' . $file . '</b> on line <b>' . $line . '</b>';
 	}
 
 	if ($config->get('config_error_log')) {
-		$log->write('PHP ' . $error . ':  ' . $errstr . ' in ' . $errfile . ' on line ' . $errline);
+		$log->write('PHP ' . $code . ':  ' . $error . ' in ' . $file . ' on line ' . $line);
 	}
 
 	return true;
@@ -125,16 +125,30 @@ $registry->set('cache', $cache);
 // Session
 if (isset($request->get['token'])) {
 	$db->query("DELETE FROM `" . DB_PREFIX . "api_session`  WHERE TIMESTAMPADD(HOUR, 1, date_modified) < NOW()");
+	// For API requests we need to create a separate cookie
+	if (isset($request->get['route']) && substr($request->get['route'], 0, 4) == 'api/') {
+		$db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE TIMESTAMPADD(HOUR, 1, date_modified) < NOW()");
 
-	$query = $db->query("SELECT * FROM `" . DB_PREFIX . "api_session` as LEFT JOIN api_ip ai ON (as.api_id = ai.api_id) WHERE as.token = '" . $db->escape($request->get['token']) . "' AND ai.ip = '" . $db->escape($request->get['REMOTE_ADDR']) . "'");
+		$query = $db->query("SELECT * FROM `" . DB_PREFIX . "api_session` as LEFT JOIN api_ip ai ON (as.api_id = ai.api_id) WHERE as.token = '" . $db->escape($request->get['token']) . "' AND ai.ip = '" . $db->escape($request->get['REMOTE_ADDR']) . "'");
 
-	if ($query->num_row) {
-		ini_set('session.name', $session_info['session_name']);
+		if ($query->num_row) {
+			ini_set('session.name', $session_info['session_name']);
+			if (isset($request->get['token'])) {
+				$query = $db->query("SELECT * FROM `" . DB_PREFIX . "api_session` as LEFT JOIN api_ip ai ON (as.api_id = ai.api_id) WHERE as.token = '" . $db->escape($request->get['token']) . "' AND ai.ip = '" . $db->escape($request->get['REMOTE_ADDR']) . "'");
 
-		$session_id = $session_info['session_id'];
+				if ($query->num_row) {
+					$session_id = $session_info['session_id'];
+					$session_id = $session_info['session_name'];
+				}
+			} else {
+				$session_id = $session_info['session_id'];
+				$session_id = $session_info['session_id'];
+			}
+		}
 	}
 }
 
+// Session
 $session = new Session();
 $registry->set('session', $session);
 

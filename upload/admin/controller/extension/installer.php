@@ -255,108 +255,121 @@ class ControllerExtensionInstaller extends Controller {
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'extension/installer')) {
-			$json['error'] = $this->language->get('error_permission');
-		}
-
-		// Check FTP status
-		if (!$this->config->get('config_ftp_status')) {
-			$json['error'] = $this->language->get('error_ftp_status');
-		}
-
 		$directory = DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/upload/';
 
 		if (!is_dir($directory)) {
 			$json['error'] = $this->language->get('error_directory');
 		}
 
+		if (!$this->user->hasPermission('modify', 'extension/installer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
 		if (!$json) {
-			// Get a list of files ready to upload
-			$files = array();
+			$files_invalid = false;
 
-			$path = array($directory . '*');
-
-			while (count($path) != 0) {
-				$next = array_shift($path);
-
-				foreach ((array)glob($next) as $file) {
-					if (is_dir($file)) {
-						$path[] = $file . '/*';
-					}
-
-					$files[] = $file;
-				}
+			try {
+				$this->move($directory, preg_replace('/system\/$/', '', DIR_SYSTEM));
+			} catch(Exception $e) {
+				$files_invalid = true;
 			}
 
-			// Connect to the site via FTP
-			$connection = ftp_connect($this->config->get('config_ftp_hostname'), $this->config->get('config_ftp_port'));
-
-			if ($connection) {
-				$login = ftp_login($connection, $this->config->get('config_ftp_username'), $this->config->get('config_ftp_password'));
-
-				if ($login) {
-					if ($this->config->get('config_ftp_root')) {
-						$root = ftp_chdir($connection, $this->config->get('config_ftp_root'));
-					} else {
-						$root = ftp_chdir($connection, '/');
-					}
-
-					if ($root) {
-						foreach ($files as $file) {
-							$destination = substr($file, strlen($directory));
-
-							// Upload everything in the upload directory
-							// Many people rename their admin folder for security purposes which I believe should be an option during installation just like setting the db prefix.
-							// the following code would allow you to change the name of the following directories and any extensions installed will still go to the right directory.
-							if (substr($destination, 0, 5) == 'admin') {
-								$destination = basename(DIR_APPLICATION) . substr($destination, 5);
-							}
-
-							if (substr($destination, 0, 7) == 'catalog') {
-								$destination = basename(DIR_CATALOG) . substr($destination, 7);
-							}
-
-							if (substr($destination, 0, 5) == 'image') {
-								$destination = basename(DIR_IMAGE) . substr($destination, 5);
-							}
-
-							if (substr($destination, 0, 6) == 'system') {
-								$destination = basename(DIR_SYSTEM) . substr($destination, 6);
-							}
-
-							if (is_dir($file)) {
-								$list = ftp_nlist($connection, substr($destination, 0, strrpos($destination, '/')));
-
-								// Basename all the directories because on some servers they don't return the fulll paths.
-								$list_data = array();
-
-								foreach ($list as $list) {
-									$list_data[] = basename($list);
-								}
-
-								if (!in_array(basename($destination), $list_data)) {
-									if (!ftp_mkdir($connection, $destination)) {
-										$json['error'] = sprintf($this->language->get('error_ftp_directory'), $destination);
-									}
-								}
-							}
-
-							if (is_file($file)) {
-								if (!ftp_put($connection, $destination, $file, FTP_BINARY)) {
-									$json['error'] = sprintf($this->language->get('error_ftp_file'), $file);
-								}
-							}
-						}
-					} else {
-						$json['error'] = sprintf($this->language->get('error_ftp_root'), $root);
-					}
-				} else {
-					$json['error'] = sprintf($this->language->get('error_ftp_login'), $this->config->get('config_ftp_username'));
+			// if the files were not moved, fall back to the FTP option
+			if ($files_invalid === true) {
+				// Check FTP status
+				if (!$this->config->get('config_ftp_status')) {
+					$json['error'] = $this->language->get('error_ftp_status');
 				}
 
-				ftp_close($connection);
-			} else {
-				$json['error'] = sprintf($this->language->get('error_ftp_connection'), $this->config->get('config_ftp_hostname'), $this->config->get('config_ftp_port'));
+				if (!$json) {
+					// Get a list of files ready to upload
+					$files = array();
+
+					$path = array($directory . '*');
+
+					while(count($path) != 0) {
+						$next = array_shift($path);
+
+						foreach((array)glob($next) as $file) {
+							if (is_dir($file)) {
+								$path[] = $file . '/*';
+							}
+
+							$files[] = $file;
+						}
+					}
+
+					// Connect to the site via FTP
+					$connection = ftp_connect($this->config->get('config_ftp_hostname'), $this->config->get('config_ftp_port'));
+
+					if ($connection) {
+						$login = ftp_login($connection, $this->config->get('config_ftp_username'), $this->config->get('config_ftp_password'));
+
+						if ($login) {
+							if ($this->config->get('config_ftp_root')) {
+								$root = ftp_chdir($connection, $this->config->get('config_ftp_root'));
+							} else {
+								$root = ftp_chdir($connection, '/');
+							}
+
+							if ($root) {
+								foreach($files as $file) {
+									$destination = substr($file, strlen($directory));
+
+									// Upload everything in the upload directory
+									// Many people rename their admin folder for security purposes which I believe should be an option during installation just like setting the db prefix.
+									// the following code would allow you to change the name of the following directories and any extensions installed will still go to the right directory.
+									if (substr($destination, 0, 5) == 'admin') {
+										$destination = basename(DIR_APPLICATION) . substr($destination, 5);
+									}
+
+									if (substr($destination, 0, 7) == 'catalog') {
+										$destination = basename(DIR_CATALOG) . substr($destination, 7);
+									}
+
+									if (substr($destination, 0, 5) == 'image') {
+										$destination = basename(DIR_IMAGE) . substr($destination, 5);
+									}
+
+									if (substr($destination, 0, 6) == 'system') {
+										$destination = basename(DIR_SYSTEM) . substr($destination, 6);
+									}
+
+									if (is_dir($file)) {
+										$list = ftp_nlist($connection, substr($destination, 0, strrpos($destination, '/')));
+
+										// Basename all the directories because on some servers they don't return the fulll paths.
+										$list_data = array();
+
+										foreach($list as $list) {
+											$list_data[] = basename($list);
+										}
+
+										if (!in_array(basename($destination), $list_data)) {
+											if (!ftp_mkdir($connection, $destination)) {
+												$json['error'] = sprintf($this->language->get('error_ftp_directory'), $destination);
+											}
+										}
+									}
+
+									if (is_file($file)) {
+										if (!ftp_put($connection, $destination, $file, FTP_BINARY)) {
+											$json['error'] = sprintf($this->language->get('error_ftp_file'), $file);
+										}
+									}
+								}
+							} else {
+								$json['error'] = sprintf($this->language->get('error_ftp_root'), $root);
+							}
+						} else {
+							$json['error'] = sprintf($this->language->get('error_ftp_login'), $this->config->get('config_ftp_username'));
+						}
+
+						ftp_close($connection);
+					} else {
+						$json['error'] = sprintf($this->language->get('error_ftp_connection'), $this->config->get('config_ftp_hostname'), $this->config->get('config_ftp_port'));
+					}
+				}
 			}
 		}
 
@@ -642,5 +655,38 @@ class ControllerExtensionInstaller extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	private function move($source, $target) {
+		if (is_dir($source)) {
+			if (!is_dir($target)) {
+				mkdir($target);
+			}
+
+			$directory = dir($source);
+
+			while (false !== ($entry = $directory->read())) {
+				if ($entry == '.' || $entry == '..') {
+					continue;
+				}
+
+				$new_source = $source . '/' . $entry;
+
+				if (is_dir($new_source)) {
+					$this->move($new_source, $target . '/' . $entry);
+					continue;
+				} else {
+					if (!@copy($new_source, $target . '/' . $entry)) {
+						throw new Exception();
+					}
+				}
+			}
+
+			$directory->close();
+		} else {
+			if (!@copy($source, $target)) {
+				throw new Exception();
+			}
+		}
 	}
 }

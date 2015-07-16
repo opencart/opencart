@@ -337,7 +337,7 @@ class ControllerSaleOrder extends Controller {
 		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
 		
 		if ($api_info) {
-			$data['api_id'] = $api_info['username'];
+			$data['api_id'] = $api_info['api_id'];
 			$data['api_username'] = $api_info['username'];
 			$data['api_password'] = $api_info['password'];
 		} else {
@@ -346,7 +346,20 @@ class ControllerSaleOrder extends Controller {
 			$data['api_password'] = '';
 		}
 		
+		// Check if IP is allowed
 		$data['ip'] = $this->request->server['REMOTE_ADDR'];
+				
+		$ip_data = array();		
+				
+		$results = $this->model_user_api->getApiIps($this->config->get('config_api_id'));	
+		
+		foreach ($results as $result) {
+			$ip_data[] = $result['ip'];
+		}		
+				
+		if (!in_array($this->request->server['REMOTE_ADDR'], $ip_data)) {
+			
+		}
 				
 		$data['store'] = HTTPS_CATALOG;
 		

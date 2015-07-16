@@ -15,9 +15,7 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> <?php echo $text_ip_add; ?>
-      <button type="button" id="button-ip-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-warning pull-right"><i class="fa fa-plus"></i> <?php echo $button_ip_add; ?></button>
-    </div>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $text_ip_add; ?> <button type="button" id="button-ip-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger btn-xs pull-right"><i class="fa fa-plus"></i> <?php echo $button_ip_add; ?></button></div>
     <?php if ($error_warning) { ?>
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -251,6 +249,8 @@ $('input[name^=\'selected\']').on('change', function() {
 $('input[name^=\'selected\']:first').trigger('change');
 
 // Login to the API
+var token = '';
+
 $.ajax({
 	url: '<?php echo $store; ?>index.php?route=api/login',
 	type: 'post',
@@ -258,14 +258,12 @@ $.ajax({
 	dataType: 'json',
 	crossDomain: true,
 	success: function(json) {	
-		//$('.alert').remove();
-		
 		if (json['error']) {
 			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 		} 
 		
-		if (json['cookie']) {
-			$('input[name=\'cookie\']').val(json['cookie']);
+		if (json['token']) {
+			var token = json['token'];
 		}		
 	},	
 	error: function(xhr, ajaxOptions, thrownError) {
@@ -278,9 +276,9 @@ $('button[id^=\'button-delete\']').on('click', function(e) {
 		var node = this;
 		
 		$.ajax({
-			url: '<?php echo $store; ?>index.php?route=api/cart/remove',
+			url: '<?php echo $store; ?>index.php?route=api/cart/remove&token=' + token,
 			type: 'post',
-			data: 'token=' + $('input[name=\'cookie\']').val() + '&order_id=' + $(node).val(),
+			data: 'order_id=' + $(node).val(),
 			dataType: 'json',
 			crossDomain: true,						
 			beforeSend: function() {

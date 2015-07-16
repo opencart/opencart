@@ -5,4 +5,12 @@ class ModelAccountApi extends Model {
 
 		return $query->row;
 	}
+	
+	public function addApiSession($api_id, $session_name, $session_id, $ip) {
+		$token = token(64);
+		
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "api_session` SET api_id = '" . (int)$api_id . "', name = '" . $this->db->escape($session_name) . "', ip = '" . $this->db->escape($session_name) . "', status = '1'");
+		
+		return $token;
+	}
 }

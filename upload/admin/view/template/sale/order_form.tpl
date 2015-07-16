@@ -981,7 +981,7 @@ $.ajax({
 // Currency
 $('select[name=\'currency\']').on('change', function() {
 	$.ajax({
-		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/currency',
+		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/currency&token=',
 		type: 'post',
 		data: 'cookie=' + $('input[name=\'cookie\']').val() + '&currency=' + $('select[name=\'currency\'] option:selected').val(),
 		dataType: 'json',

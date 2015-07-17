@@ -62,14 +62,17 @@
   </div>
 </div>
 <script type="text/javascript">
-  function removeSaved(id, option_var) {
+  function removeSaved(id, option_var, button) {
     if (!confirm("<?php echo $text_delete_confirm; ?>")) {
       return;
     }
     $.ajax({
-      url: '<?php echo html_entity_decode(delete_saved); ?>',
+      url: '<?php echo html_entity_decode($delete_saved); ?>',
       type: 'get',
       data: 'product_id=' + id + '&var=' + option_var,
+      beforeSend: function () {
+        $(button).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+      },
       success: function () {
         window.location.href = window.location.href;
       },

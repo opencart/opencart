@@ -1,7 +1,5 @@
 <?php
 class ControllerSaleOrder extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('sale/order');
 
@@ -333,9 +331,9 @@ class ControllerSaleOrder extends Controller {
 
 		// API login
 		$this->load->model('user/api');
-		
+
 		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
-		
+
 		if ($api_info) {
 			$data['api_id'] = $api_info['api_id'];
 			$data['api_username'] = $api_info['username'];
@@ -345,24 +343,24 @@ class ControllerSaleOrder extends Controller {
 			$data['api_username'] = '';
 			$data['api_password'] = '';
 		}
-		
+
 		// Check if IP is allowed
 		$data['ip'] = $this->request->server['REMOTE_ADDR'];
-				
-		$ip_data = array();		
-				
-		$results = $this->model_user_api->getApiIps($this->config->get('config_api_id'));	
-		
+
+		$ip_data = array();
+
+		$results = $this->model_user_api->getApiIps($this->config->get('config_api_id'));
+
 		foreach ($results as $result) {
 			$ip_data[] = $result['ip'];
-		}		
-				
-		if (!in_array($this->request->server['REMOTE_ADDR'], $ip_data)) {
-			
 		}
-				
+
+		if (!in_array($this->request->server['REMOTE_ADDR'], $ip_data)) {
+
+		}
+
 		$data['store'] = HTTPS_CATALOG;
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -372,7 +370,7 @@ class ControllerSaleOrder extends Controller {
 
 	public function getForm() {
 		$this->load->model('customer/customer');
-		
+
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_form'] = !isset($this->request->get['order_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
@@ -381,11 +379,11 @@ class ControllerSaleOrder extends Controller {
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_loading'] = $this->language->get('text_loading');
-		$data['text_ip_add'] = sprintf($this->language->get('text_ip_add'), $this->request->server['REMOTE_ADDR']);		
+		$data['text_ip_add'] = sprintf($this->language->get('text_ip_add'), $this->request->server['REMOTE_ADDR']);
 		$data['text_product'] = $this->language->get('text_product');
 		$data['text_voucher'] = $this->language->get('text_voucher');
 		$data['text_order_detail'] = $this->language->get('text_order_detail');
-		
+
 		$data['entry_store'] = $this->language->get('entry_store');
 		$data['entry_customer'] = $this->language->get('entry_customer');
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
@@ -506,11 +504,11 @@ class ControllerSaleOrder extends Controller {
 		);
 
 		$data['cancel'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		
+
 		if (isset($this->request->get['order_id'])) {
 			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
 		}
-		
+
 		if (!empty($order_info)) {
 			$data['order_id'] = $this->request->get['order_id'];
 			$data['store_id'] = $order_info['store_id'];
@@ -654,28 +652,28 @@ class ControllerSaleOrder extends Controller {
 			$data['voucher'] = '';
 			$data['reward'] = '';
 		}
-		
+
 		// Stores
 		$this->load->model('setting/store');
 
 		$data['stores'] = array();
-		
+
 		$data['stores'][] = array(
-			'store_id' => 0, 
+			'store_id' => 0,
 			'name'     => $this->language->get('text_default'),
 			'href'     => HTTP_CATALOG
 		);
-		
+
 		$results = $this->model_setting_store->getStores();
-		
+
 		foreach ($results as $result) {
 			$data['stores'][] = array(
-				'store_id' => $result['store_id'], 
+				'store_id' => $result['store_id'],
 				'name'     => $result['name'],
 				'href'     => $result['url']
 			);
 		}
-		
+
 		// Customer Groups
 		$this->load->model('customer/customer_group');
 
@@ -725,9 +723,9 @@ class ControllerSaleOrder extends Controller {
 
 		// API login
 		$this->load->model('user/api');
-		
+
 		$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
-		
+
 		if ($api_info) {
 			$data['api_username'] = $api_info['username'];
 			$data['api_password'] = $api_info['password'];
@@ -735,7 +733,7 @@ class ControllerSaleOrder extends Controller {
 			$data['api_username'] = '';
 			$data['api_password'] = '';
 		}
-				
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -760,8 +758,8 @@ class ControllerSaleOrder extends Controller {
 			$this->document->setTitle($this->language->get('heading_title'));
 
 			$data['heading_title'] = $this->language->get('heading_title');
-			
-			$data['text_ip_add'] = sprintf($this->language->get('text_ip_add'), $this->request->server['REMOTE_ADDR']);		
+
+			$data['text_ip_add'] = sprintf($this->language->get('text_ip_add'), $this->request->server['REMOTE_ADDR']);
 			$data['text_order_detail'] = $this->language->get('text_order_detail');
 			$data['text_customer_detail'] = $this->language->get('text_customer_detail');
 			$data['text_option'] = $this->language->get('text_option');
@@ -775,15 +773,15 @@ class ControllerSaleOrder extends Controller {
 			$data['text_telephone'] = $this->language->get('text_telephone');
 			$data['text_invoice'] = $this->language->get('text_invoice');
 			$data['text_reward'] = $this->language->get('text_reward');
-			$data['text_affiliate'] = $this->language->get('text_affiliate');		
+			$data['text_affiliate'] = $this->language->get('text_affiliate');
 			$data['text_order'] = sprintf($this->language->get('text_order'), $this->request->get['order_id']);
 			$data['text_payment_address'] = $this->language->get('text_payment_address');
 			$data['text_shipping_address'] = $this->language->get('text_shipping_address');
 			$data['text_comment'] = $this->language->get('text_comment');
-			
+
 			$data['text_account_custom_field'] = $this->language->get('text_account_custom_field');
 			$data['text_payment_custom_field'] = $this->language->get('text_payment_custom_field');
-			$data['text_shipping_custom_field'] = $this->language->get('text_shipping_custom_field');		
+			$data['text_shipping_custom_field'] = $this->language->get('text_shipping_custom_field');
 			$data['text_browser'] = $this->language->get('text_browser');
 			$data['text_ip'] = $this->language->get('text_ip');
 			$data['text_forwarded_ip'] = $this->language->get('text_forwarded_ip');
@@ -875,7 +873,7 @@ class ControllerSaleOrder extends Controller {
 			$data['cancel'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 			$data['order_id'] = $this->request->get['order_id'];
-			
+
 			$data['store_name'] = $order_info['store_name'];
 			$data['store_url'] = $order_info['store_url'];
 
@@ -884,7 +882,7 @@ class ControllerSaleOrder extends Controller {
 			} else {
 				$data['invoice_no'] = '';
 			}
-			
+
 			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
 
 			$data['firstname'] = $order_info['firstname'];
@@ -894,8 +892,8 @@ class ControllerSaleOrder extends Controller {
 				$data['customer'] = $this->url->link('customer/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . $order_info['customer_id'], 'SSL');
 			} else {
 				$data['customer'] = '';
-			}			
-			
+			}
+
 			$this->load->model('customer/customer_group');
 
 			$customer_group_info = $this->model_customer_customer_group->getCustomerGroup($order_info['customer_group_id']);
@@ -908,10 +906,10 @@ class ControllerSaleOrder extends Controller {
 
 			$data['email'] = $order_info['email'];
 			$data['telephone'] = $order_info['telephone'];
-			
+
 			$data['shipping_method'] = $order_info['shipping_method'];
 			$data['payment_method'] = $order_info['payment_method'];
-		
+
 			// Payment Address
 			if ($order_info['payment_address_format']) {
 				$format = $order_info['payment_address_format'];
@@ -946,7 +944,7 @@ class ControllerSaleOrder extends Controller {
 			);
 
 			$data['payment_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
-			
+
 			// Shipping Address
 			if ($order_info['shipping_address_format']) {
 				$format = $order_info['shipping_address_format'];
@@ -1148,7 +1146,7 @@ class ControllerSaleOrder extends Controller {
 					}
 				}
 			}
-			
+
 			// Custom fields
 			$data['payment_custom_fields'] = array();
 
@@ -1259,17 +1257,17 @@ class ControllerSaleOrder extends Controller {
 			$data['forwarded_ip'] = $order_info['forwarded_ip'];
 			$data['user_agent'] = $order_info['user_agent'];
 			$data['accept_language'] = $order_info['accept_language'];
-		
+
 			// Additional Tabs
 			$data['tabs'] = array();
 
 			$this->load->model('extension/extension');
-			
+
 			$content = $this->load->controller('payment/' . $order_info['payment_code'] . '/order');
 
 			if ($content) {
 				$this->load->language('payment/' . $order_info['payment_code']);
-				
+
 				$data['tabs'][] = array(
 					'code'    => $order_info['payment_code'],
 					'title'   => $this->language->get('heading_title'),
@@ -1297,9 +1295,9 @@ class ControllerSaleOrder extends Controller {
 
 			// API login
 			$this->load->model('user/api');
-			
+
 			$api_info = $this->model_user_api->getApi($this->config->get('config_api_id'));
-			
+
 			if ($api_info) {
 				$data['api_username'] = $api_info['username'];
 				$data['api_password'] = $api_info['password'];
@@ -1307,7 +1305,7 @@ class ControllerSaleOrder extends Controller {
 				$data['api_username'] = '';
 				$data['api_password'] = '';
 			}
-				
+
 			$data['header'] = $this->load->controller('common/header');
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['footer'] = $this->load->controller('common/footer');
@@ -1586,7 +1584,7 @@ class ControllerSaleOrder extends Controller {
 		$data['text_payment_method'] = $this->language->get('text_payment_method');
 		$data['text_shipping_method'] = $this->language->get('text_shipping_method');
 		$data['text_comment'] = $this->language->get('text_comment');
-		
+
 		$data['column_product'] = $this->language->get('column_product');
 		$data['column_model'] = $this->language->get('column_model');
 		$data['column_quantity'] = $this->language->get('column_quantity');

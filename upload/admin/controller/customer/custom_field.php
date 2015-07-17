@@ -1,7 +1,5 @@
 <?php
 class ControllerCustomerCustomField extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('customer/custom_field');
 

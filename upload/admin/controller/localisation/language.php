@@ -1,7 +1,5 @@
 <?php
 class ControllerLocalisationLanguage extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('localisation/language');
 

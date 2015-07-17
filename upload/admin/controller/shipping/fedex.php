@@ -1,7 +1,5 @@
 <?php
 class ControllerShippingFedex extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('shipping/fedex');
 

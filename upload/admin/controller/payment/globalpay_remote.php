@@ -1,7 +1,5 @@
 <?php
 class ControllerPaymentGlobalpayRemote extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('payment/globalpay_remote');
 

@@ -1,7 +1,5 @@
 <?php
 class ControllerAccountLogin extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->model('account/customer');
 
@@ -63,20 +61,20 @@ class ControllerAccountLogin extends Controller {
 					$this->cart->add($key, $value);
 				}
 			}
-			
+
 			// Restore customers wish list
 			if ($this->customer->getWishlist()) {
 				if (!isset($this->session->data['wishlist'])) {
 					$this->session->data['wishlist'] = array();
-				}				
-				
+				}
+
 				foreach ($this->customer->getWishlist() as $product_id) {
 					if (!in_array($product_id, $this->session->data['wishlist'])) {
 						$this->session->data['wishlist'][] = $product_id;
 					}
 				}
 			}
-			
+
 			// Default Shipping Address
 			$this->load->model('account/address');
 
@@ -87,7 +85,7 @@ class ControllerAccountLogin extends Controller {
 			if ($this->config->get('config_tax_customer') == 'shipping') {
 				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 			}
-			
+
 			// Add to activity log
 			$this->load->model('account/activity');
 
@@ -97,7 +95,7 @@ class ControllerAccountLogin extends Controller {
 			);
 
 			$this->model_account_activity->addActivity('login', $activity_data);
-			
+
 			// Trigger customer post login event
 			$this->event->trigger('post.customer.login');
 

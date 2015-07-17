@@ -1,7 +1,5 @@
 <?php
 class ControllerTotalTax extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('total/tax');
 

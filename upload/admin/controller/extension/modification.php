@@ -5,8 +5,6 @@
  * https://github.com/opencart/opencart/wiki/Modification-System
  */
 class ControllerExtensionModification extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('extension/modification');
 
@@ -61,7 +59,7 @@ class ControllerExtensionModification extends Controller {
 		if ($this->validate()) {
 			// Just before files are deleted, if config settings say maintenance mode is off then turn it on
 			$maintenance = $this->config->get('config_maintenance');
-			
+
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->editSettingValue('config', 'config_maintenance', true);

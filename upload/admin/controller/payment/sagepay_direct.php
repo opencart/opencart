@@ -1,7 +1,5 @@
 <?php
 class ControllerPaymentSagepayDirect extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('payment/sagepay_direct');
 

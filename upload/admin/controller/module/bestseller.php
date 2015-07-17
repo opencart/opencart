@@ -1,7 +1,5 @@
 <?php
 class ControllerModuleBestSeller extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('module/bestseller');
 

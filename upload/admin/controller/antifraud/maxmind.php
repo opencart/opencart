@@ -1,7 +1,5 @@
 <?php
 class ControllerFraudMaxMind extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('fraud/maxmind');
 

@@ -1,7 +1,5 @@
 <?php
 class ControllerShippingRoyalMail extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('shipping/royal_mail');
 

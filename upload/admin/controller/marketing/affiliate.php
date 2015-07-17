@@ -1,7 +1,5 @@
 <?php
 class ControllerMarketingAffiliate extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('marketing/affiliate');
 

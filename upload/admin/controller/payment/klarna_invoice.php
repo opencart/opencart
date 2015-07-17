@@ -1,7 +1,5 @@
 <?php
 class ControllerPaymentKlarnaInvoice extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('payment/klarna_invoice');
 

@@ -1,7 +1,5 @@
 <?php
 class ControllerTotalKlarnaFee extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('total/klarna_fee');
 

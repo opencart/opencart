@@ -1,7 +1,5 @@
 <?php
 class ControllerStep3 extends Controller {
-	private $error = array();
-
 	public function index() {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->load->model('install');
@@ -136,13 +134,13 @@ class ControllerStep3 extends Controller {
 		} else {
 			$data['error_db_database'] = '';
 		}
-		
+
 		if (isset($this->error['db_port'])) {
 			$data['error_db_port'] = $this->error['db_port'];
 		} else {
 			$data['error_db_port'] = '';
 		}
-		
+
 		if (isset($this->error['db_prefix'])) {
 			$data['error_db_prefix'] = $this->error['db_prefix'];
 		} else {
@@ -198,13 +196,13 @@ class ControllerStep3 extends Controller {
 		} else {
 			$data['db_database'] = '';
 		}
-		
+
 		if (isset($this->request->post['db_port'])) {
 			$data['db_port'] = $this->request->post['db_port'];
 		} else {
 			$data['db_port'] = ini_get("mysqli.default_port");
 		}
-		
+
 		if (isset($this->request->post['db_prefix'])) {
 			$data['db_prefix'] = $this->request->post['db_prefix'];
 		} else {
@@ -257,7 +255,7 @@ class ControllerStep3 extends Controller {
 
 		if (!$this->request->post['db_port']) {
 			$this->error['db_port'] = $this->language->get('error_db_port');
-		}		
+		}
 
 		if ($this->request->post['db_prefix'] && preg_match('/[^a-z0-9_]/', $this->request->post['db_prefix'])) {
 			$this->error['db_prefix'] = $this->language->get('error_db_prefix');

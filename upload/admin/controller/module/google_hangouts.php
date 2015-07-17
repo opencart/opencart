@@ -1,7 +1,5 @@
 <?php
 class ControllerModuleGoogleHangouts extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('module/google_hangouts');
 

@@ -1,7 +1,5 @@
 <?php
 class ControllerCustomerCustomerGroup extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('customer/customer_group');
 

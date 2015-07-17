@@ -1,7 +1,5 @@
 <?php
 class ControllerToolBackup extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('tool/backup');
 

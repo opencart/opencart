@@ -1,7 +1,5 @@
 <?php
 class ControllerLocalisationTaxClass extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('localisation/tax_class');
 

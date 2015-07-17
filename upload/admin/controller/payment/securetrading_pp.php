@@ -1,7 +1,5 @@
 <?php
 class ControllerPaymentSecureTradingPp extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->model('setting/setting');
 		$this->load->model('localisation/geo_zone');

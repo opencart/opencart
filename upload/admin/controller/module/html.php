@@ -1,7 +1,5 @@
 <?php
 class ControllerModuleHTML extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('module/html');
 

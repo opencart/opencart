@@ -1,7 +1,5 @@
 <?php
 class ControllerLocalisationOrderStatus extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('localisation/order_status');
 

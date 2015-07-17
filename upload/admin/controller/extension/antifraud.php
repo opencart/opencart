@@ -1,7 +1,5 @@
 <?php
 class ControllerExtensionFraud extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('extension/fraud');
 

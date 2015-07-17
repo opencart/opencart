@@ -1,7 +1,5 @@
 <?php
 class ControllerCatalogReview extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('catalog/review');
 

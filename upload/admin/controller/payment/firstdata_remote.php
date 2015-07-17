@@ -1,7 +1,5 @@
 <?php
 class ControllerPaymentFirstdataRemote extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('payment/firstdata_remote');
 

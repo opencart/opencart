@@ -1,7 +1,5 @@
 <?php
 class ControllerPaymentRealex extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('payment/realex');
 

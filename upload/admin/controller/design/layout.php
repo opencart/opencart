@@ -1,7 +1,5 @@
 <?php
 class ControllerDesignLayout extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('design/layout');
 

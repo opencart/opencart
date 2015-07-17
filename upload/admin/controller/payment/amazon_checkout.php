@@ -1,7 +1,5 @@
 <?php
 class ControllerPaymentAmazonCheckout extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('payment/amazon_checkout');
 

@@ -1,7 +1,5 @@
 <?php
 class ControllerCustomerCustomer extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('customer/customer');
 
@@ -1148,7 +1146,7 @@ class ControllerCustomerCustomer extends Controller {
 		if ($customer_info) {
 			// Create token to login with
 			$token = token(64);
-			
+
 			$this->model_customer_customer->editToken($customer_id, $token);
 
 			if (isset($this->request->get['store_id'])) {
@@ -1255,7 +1253,7 @@ class ControllerCustomerCustomer extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-	
+
 	public function transaction() {
 		$this->load->language('customer/customer');
 
@@ -1321,7 +1319,7 @@ class ControllerCustomerCustomer extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-	
+
 	public function reward() {
 		$this->load->language('customer/customer');
 
@@ -1387,7 +1385,7 @@ class ControllerCustomerCustomer extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-	
+
 	public function ip() {
 		$this->load->language('customer/customer');
 

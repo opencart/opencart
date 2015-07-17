@@ -1,7 +1,5 @@
 <?php
 class ControllerTotalSubTotal extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('total/sub_total');
 

@@ -1,9 +1,5 @@
 <?php
-
 class ControllerPaymentG2APay extends Controller {
-
-	private $error = array();
-
 	public function index() {
 		$this->load->language('payment/g2apay');
 
@@ -352,5 +348,4 @@ class ControllerPaymentG2APay extends Controller {
 
 		return !$this->error;
 	}
-
 }

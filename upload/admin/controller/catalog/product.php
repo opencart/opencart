@@ -1,7 +1,5 @@
 <?php
 class ControllerCatalogProduct extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->language->load('catalog/product');
 

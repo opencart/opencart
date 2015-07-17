@@ -1,7 +1,5 @@
 <?php
 class ControllerLocalisationReturnAction extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->load->language('localisation/return_action');
 

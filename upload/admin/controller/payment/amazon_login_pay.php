@@ -1,7 +1,5 @@
 <?php
 class ControllerPaymentAmazonLoginPay extends Controller {
-	private $error = array();
-
 	public function index() {
 
 		$this->load->language('payment/amazon_login_pay');

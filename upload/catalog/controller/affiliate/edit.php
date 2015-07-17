@@ -1,7 +1,5 @@
 <?php
 class ControllerAffiliateEdit extends Controller {
-	private $error = array();
-
 	public function index() {
 		if (!$this->affiliate->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('affiliate/edit', '', 'SSL');

@@ -1,7 +1,5 @@
 <?php
 class ControllerOpenbayEbayTemplate extends Controller {
-	private $error = array();
-
 	public function listAll() {
 		$data = $this->load->language('openbay/ebay_template');
 

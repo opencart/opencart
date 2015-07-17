@@ -1,7 +1,5 @@
 <?php
 class ControllerAffiliateRegister extends Controller {
-	private $error = array();
-
 	public function index() {
 		if ($this->affiliate->isLogged()) {
 			$this->response->redirect($this->url->link('affiliate/account', '', 'SSL'));
@@ -19,7 +17,7 @@ class ControllerAffiliateRegister extends Controller {
 			// Clear any previous login attempts in not registered.
     		$this->load->model('account/customer');
 			$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
-			
+
 			$this->affiliate->login($this->request->post['email'], $this->request->post['password']);
 
 			// Add to activity log

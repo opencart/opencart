@@ -1,7 +1,5 @@
 <?php
 class ControllerCatalogOption extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->language->load('catalog/option');
 

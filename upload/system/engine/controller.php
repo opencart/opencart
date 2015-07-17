@@ -1,6 +1,7 @@
 <?php
 abstract class Controller {
 	protected $registry;
+	protected $error = array();
 
 	public function __construct($registry) {
 		$this->registry = $registry;

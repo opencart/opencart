@@ -1,9 +1,5 @@
 <?php
-
 class ControllerModuleAmazonPay extends Controller {
-
-	private $error = array();
-
 	public function index() {
 		$this->language->load('module/amazon_pay');
 
@@ -142,5 +138,4 @@ class ControllerModuleAmazonPay extends Controller {
 		$this->load->model('extension/event');
 		$this->model_extension_event->deleteEvent('amazon_pay');
 	}
-
 }

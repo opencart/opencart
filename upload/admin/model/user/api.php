@@ -83,8 +83,8 @@ class ModelUserApi extends Model {
 		return $query->row['total'];
 	}
 
-	public function addApiIp($ip_id, $ip) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` SET ip_id = '" . (int)$ip_id . "', ip = '" . $this->db->escape($ip) . "'");
+	public function addApiIp($api_id, $ip) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "api_ip` SET api_id = '" . (int)$api_id . "', ip = '" . $this->db->escape($ip) . "'");
 	}
 	
 	public function getApiIps($api_id) {

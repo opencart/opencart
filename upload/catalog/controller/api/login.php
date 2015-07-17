@@ -27,10 +27,18 @@ class ControllerApiLogin extends Controller {
 		if ($api_info) {
 			$json['success'] = $this->language->get('text_success');
 			
-			$this->session->data['api_id'] = $api_info['api_id'];
+			$this->session->close();
 			
-			$json['session_id'] = $this->session->getId();
-			$json['session_name'] = $this->session->getName();
+			$session = new Session();
+			
+			$session->setName('PHPSESSID_' . uniqid());
+			//$session->setId();
+			$session->start();
+			
+			$session->data['api_id'] = $api_info['api_id'];
+						
+			// Create Token		
+			$json['token'] = $this->model_account_api->addApiSession($api_info['api_id'], $this->session->getName(), $this->session->getId(), $this->request->server['REMOTE_ADDR']);		
 		} else {
 			$json['error'] = $this->language->get('error_login');
 		}
@@ -40,7 +48,7 @@ class ControllerApiLogin extends Controller {
 			$this->response->addHeader('Access-Control-Allow-Credentials: true');
 			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 			$this->response->addHeader('Access-Control-Max-Age: 1000');
-			$this->response->addHeader('Access-Control-Allow-Headers: X-Requested-With, test, Content-Type');
+			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');

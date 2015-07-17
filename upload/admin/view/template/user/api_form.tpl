@@ -117,7 +117,7 @@
                     <td class="text-left"><?php echo $api_session['ip']; ?></td>
                     <td class="text-left"><?php echo $api_session['date_added']; ?></td>
                     <td class="text-left"><?php echo $api_session['date_modified']; ?></td>
-                    <td class="text-right"><button type="button" onclick="$('#session-row<?php echo $session_row; ?>').remove()" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                    <td class="text-right"><button type="button" id="button-delete<?php echo $api_session['apiid']; ?>" value="<?php echo $api_session['token']; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                   </tr>
                   <?php } ?>
                   <?php } else { ?>

@@ -129,8 +129,8 @@ class ControllerExtensionInstaller extends Controller {
 
 						// FTP
 						$json['step'][] = array(
-							'text' => $this->language->get('text_ftp'),
-							'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/ftp', 'token=' . $this->session->data['token'], 'SSL')),
+							'text' => $this->language->get('text_move'),
+							'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/move', 'token=' . $this->session->data['token'], 'SSL')),
 							'path' => $path
 						);
 
@@ -250,7 +250,7 @@ class ControllerExtensionInstaller extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function ftp() {
+	public function move() {
 		$this->load->language('extension/installer');
 
 		$json = array();
@@ -266,16 +266,14 @@ class ControllerExtensionInstaller extends Controller {
 		}
 
 		if (!$json) {
-			$files_invalid = false;
-
 			try {
-				$this->move($directory, preg_replace('/system\/$/', '', DIR_SYSTEM));
+				$this->moveFiles($directory, preg_replace('/system\/$/', '', DIR_SYSTEM));
 			} catch(Exception $e) {
-				$files_invalid = true;
+				$move_files_error = $e->getMessage();
 			}
 
 			// if the files were not moved, fall back to the FTP option
-			if ($files_invalid === true) {
+			if ($move_files_error) {
 				// Check FTP status
 				if (!$this->config->get('config_ftp_status')) {
 					$json['error'] = $this->language->get('error_ftp_status');
@@ -657,7 +655,7 @@ class ControllerExtensionInstaller extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	private function move($source, $target) {
+	private function moveFiles($source, $target) {
 		if (is_dir($source)) {
 			if (!is_dir($target)) {
 				mkdir($target);
@@ -673,11 +671,11 @@ class ControllerExtensionInstaller extends Controller {
 				$new_source = $source . '/' . $entry;
 
 				if (is_dir($new_source)) {
-					$this->move($new_source, $target . '/' . $entry);
+					$this->moveFiles($new_source, $target . '/' . $entry);
 					continue;
 				} else {
 					if (!@copy($new_source, $target . '/' . $entry)) {
-						throw new Exception();
+						throw new Exception($target . '/' . $entry);
 					}
 				}
 			}
@@ -685,7 +683,7 @@ class ControllerExtensionInstaller extends Controller {
 			$directory->close();
 		} else {
 			if (!@copy($source, $target)) {
-				throw new Exception();
+				throw new Exception($target);
 			}
 		}
 	}

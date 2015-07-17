@@ -271,6 +271,7 @@ class ControllerUserApi extends Controller {
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_ip'] = sprintf($this->language->get('text_ip'), $this->request->server['REMOTE_ADDR']);
+		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		$data['column_token'] = $this->language->get('column_token');
 		$data['column_ip'] = $this->language->get('column_ip');
@@ -292,6 +293,8 @@ class ControllerUserApi extends Controller {
 		$data['tab_general'] = $this->language->get('tab_general');
 		$data['tab_ip'] = $this->language->get('tab_ip');
 		$data['tab_session'] = $this->language->get('tab_session');
+
+		$data['token'] = $this->session->data['token'];
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -382,10 +385,20 @@ class ControllerUserApi extends Controller {
 			$data['api_ips'] = array();
 		}
 
+		$data['api_sessions'] = array();
+
 		if (isset($this->request->get['api_id'])) {
-			$data['api_sessions'] = $this->model_user_api->getApiSessions($this->request->get['api_id']);
-		} else {
-			$data['api_sessions'] = array();
+			$results = $this->model_user_api->getApiSessions($this->request->get['api_id']);
+			
+			foreach ($results as $result) {
+				$data['api_sessions'][] = array(
+					'api_id'        => $result['api_id'],
+					'token'         => $result['token'],
+					'ip'            => $result['ip'],
+					'date_added'    => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
+					'date_modified' => date($this->language->get('datetime_format'), strtotime($result['date_modified']))
+				);
+			}
 		}
 		
 		$data['header'] = $this->load->controller('common/header');

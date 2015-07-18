@@ -99,7 +99,7 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-session">
-              <table class="table table-striped table-bordered table-hover">
+              <table id="session" class="table table-striped table-bordered table-hover">
                 <thead>
                   <tr>
                     <td class="text-left"><?php echo $column_token; ?></td>
@@ -117,7 +117,7 @@
                     <td class="text-left"><?php echo $api_session['ip']; ?></td>
                     <td class="text-left"><?php echo $api_session['date_added']; ?></td>
                     <td class="text-left"><?php echo $api_session['date_modified']; ?></td>
-                    <td class="text-right"><button type="button" id="button-delete<?php echo $api_session['apiid']; ?>" value="<?php echo $api_session['token']; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                    <td class="text-right"><button type="button" value="<?php echo $api_session['api_session_id']; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                   </tr>
                   <?php } ?>
                   <?php } else { ?>
@@ -161,7 +161,7 @@ function addIp() {
 }
 //--></script>
   <script type="text/javascript"><!-- 
-$('button[id^=\'button-delete\']').on('click', function(e) {
+$('#session button').on('click', function(e) {
 	e.preventDefault();
 	
 	if (confirm('<?php echo $text_confirm; ?>')) {

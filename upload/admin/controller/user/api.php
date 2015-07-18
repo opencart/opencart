@@ -392,11 +392,11 @@ class ControllerUserApi extends Controller {
 			
 			foreach ($results as $result) {
 				$data['api_sessions'][] = array(
-					'api_id'        => $result['api_id'],
-					'token'         => $result['token'],
-					'ip'            => $result['ip'],
-					'date_added'    => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
-					'date_modified' => date($this->language->get('datetime_format'), strtotime($result['date_modified']))
+					'api_session_id' => $result['api_session_id'],
+					'token'          => $result['token'],
+					'ip'             => $result['ip'],
+					'date_added'     => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
+					'date_modified'  => date($this->language->get('datetime_format'), strtotime($result['date_modified']))
 				);
 			}
 		}

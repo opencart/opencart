@@ -132,8 +132,8 @@ if (isset($request->get['token']) && isset($request->get['route']) && substr($re
 	$query = $db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "api_session` as LEFT JOIN api_ip ai ON (as.api_id = ai.api_id) WHERE as.token = '" . $db->escape($request->get['token']) . "' AND ai.ip = '" . $db->escape($request->server['REMOTE_ADDR']) . "'");
 
 	if ($query->num_row) {
-		$session->setId($session_info['session_id']);
-		$session->setName($session_info['session_name']);
+		$session->setId($query->row['session_id']);
+		$session->setName($query->row['session_name']);
 	}
 }
 

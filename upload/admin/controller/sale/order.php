@@ -359,6 +359,8 @@ class ControllerSaleOrder extends Controller {
 				
 		if (!in_array($this->request->server['REMOTE_ADDR'], $ip_data)) {
 			
+			
+			break;
 		}
 				
 		$data['store'] = HTTPS_CATALOG;

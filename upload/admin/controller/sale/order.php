@@ -356,9 +356,9 @@ class ControllerSaleOrder extends Controller {
 		foreach ($results as $result) {
 			$ip_data[] = $result['ip'];
 		}		
-				
+		
 		if (!in_array($this->request->server['REMOTE_ADDR'], $ip_data)) {
-			
+			$data['total_api'] = $this->model_user_api->getApiIps($this->config->get('config_api_id'));
 			
 			break;
 		}

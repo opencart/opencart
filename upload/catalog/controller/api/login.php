@@ -29,6 +29,10 @@ class ControllerApiLogin extends Controller {
 			
 			$this->session->close();
 			
+			
+			
+			//setcookie('PHPSESSID_' . uniqid(), );
+			
 			$session = new Session();
 			
 			$session->setName('PHPSESSID_' . uniqid());

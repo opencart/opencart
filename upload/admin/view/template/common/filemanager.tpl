@@ -124,7 +124,7 @@ $('#button-search').on('click', function(e) {
 $('#button-upload').on('click', function() {
 	$('#form-upload').remove();
 	
-	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" value="" /></form>');
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" value="" multiple /></form>');
 	
 	$('#form-upload input[name=\'file\']').trigger('click');
 	
@@ -133,14 +133,23 @@ $('#button-upload').on('click', function() {
 	}
 		
 	timer = setInterval(function() {
+		var files_input = $('#form-upload input[name=\'file\']')[0];
 		if ($('#form-upload input[name=\'file\']').val() != '') {
 			clearInterval(timer);
+			
+			// Append multi files to form data
+			var form_data = new FormData();
+			var files = files_input.files;
+			for (var i = 0; i < files.length; i++) {
+				var f = files[i];
+				form_data.append('file[]', f);
+			}
 			
 			$.ajax({
 				url: 'index.php?route=common/filemanager/upload&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>',
 				type: 'post',		
 				dataType: 'json',
-				data: new FormData($('#form-upload')[0]),
+				data: form_data,
 				cache: false,
 				contentType: false,
 				processData: false,		

@@ -68,7 +68,7 @@ $registry->set('url', $url);
 $log = new Log($config->get('config_error_filename'));
 $registry->set('log', $log);
 
-function error_handler($code, $error, $file, $line) {
+function error_handler($code, $message, $file, $line) {
 	global $log, $config;
 
 	// error suppressed with @
@@ -95,11 +95,11 @@ function error_handler($code, $error, $file, $line) {
 	}
 
 	if ($config->get('config_error_display')) {
-		echo '<b>' . $code . '</b>: ' . $error . ' in <b>' . $file . '</b> on line <b>' . $line . '</b>';
+		echo '<b>' . $error . '</b>: ' . $message . ' in <b>' . $file . '</b> on line <b>' . $line . '</b>';
 	}
 
 	if ($config->get('config_error_log')) {
-		$log->write('PHP ' . $code . ':  ' . $error . ' in ' . $file . ' on line ' . $line);
+		$log->write('PHP ' . $error . ':  ' . $message . ' in ' . $file . ' on line ' . $line);
 	}
 
 	return true;
@@ -134,6 +134,8 @@ if (isset($request->get['token']) && isset($request->get['route']) && substr($re
 	if ($query->num_row) {
 		$session->setId($query->row['session_id']);
 		$session->setName($query->row['session_name']);
+		
+		$db->query("UPDATE `" . DB_PREFIX . "api_session` SET date_modified = NOW() WHERE api_session_id = '" . $query->row['api_session_id'] . "'");
 	}
 }
 

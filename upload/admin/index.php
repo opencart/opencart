@@ -50,7 +50,7 @@ $registry->set('url', $url);
 $log = new Log($config->get('config_error_filename'));
 $registry->set('log', $log);
 
-function error_handler($errno, $errstr, $errfile, $errline) {
+function error_handler($code, $message, $file, $line) {
 	global $log, $config;
 
 	// error suppressed with @
@@ -58,7 +58,7 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 		return false;
 	}
 
-	switch ($errno) {
+	switch ($code) {
 		case E_NOTICE:
 		case E_USER_NOTICE:
 			$error = 'Notice';
@@ -77,11 +77,11 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 	}
 
 	if ($config->get('config_error_display')) {
-		echo '<b>' . $error . '</b>: ' . $errstr . ' in <b>' . $errfile . '</b> on line <b>' . $errline . '</b>';
+		echo '<b>' . $error . '</b>: ' . $message . ' in <b>' . $file . '</b> on line <b>' . $line . '</b>';
 	}
 
 	if ($config->get('config_error_log')) {
-		$log->write('PHP ' . $error . ':  ' . $errstr . ' in ' . $errfile . ' on line ' . $errline);
+		$log->write('PHP ' . $error . ':  ' . $message . ' in ' . $file . ' on line ' . $line);
 	}
 
 	return true;

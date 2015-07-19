@@ -347,21 +347,23 @@ class ControllerSaleOrder extends Controller {
 		}
 		
 		// Check if IP is allowed
-		$data['ip'] = $this->request->server['REMOTE_ADDR'];
-				
-		$ip_data = array();		
-				
 		$results = $this->model_user_api->getApiIps($this->config->get('config_api_id'));	
 		
 		foreach ($results as $result) {
-			$ip_data[] = $result['ip'];
+			if ($this->request->server['REMOTE_ADDR'] == $result['ip']) {
+				$data['total_api'] = $result['ip'];
+				
+				break;
+			}
 		}		
 		
-		if (!in_array($this->request->server['REMOTE_ADDR'], $ip_data)) {
+		if (!in_array()) {
 			$data['total_api'] = $this->model_user_api->getApiIps($this->config->get('config_api_id'));
 			
 			break;
 		}
+		
+		$data['ip'] = $this->request->server['REMOTE_ADDR'];
 				
 		$data['store'] = HTTPS_CATALOG;
 		

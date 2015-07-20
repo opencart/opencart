@@ -357,12 +357,6 @@ class ControllerSaleOrder extends Controller {
 			}
 		}		
 		
-		if (!in_array()) {
-			$data['total_api'] = $this->model_user_api->getApiIps($this->config->get('config_api_id'));
-			
-			break;
-		}
-		
 		$data['ip'] = $this->request->server['REMOTE_ADDR'];
 				
 		$data['store'] = HTTPS_CATALOG;

@@ -27,16 +27,13 @@ class ControllerApiLogin extends Controller {
 		if ($api_info) {
 			$json['success'] = $this->language->get('text_success');
 			
-			$this->session->close();
-			
-			
 			//setcookie('PHPSESSID_' . uniqid(), );
 			
-			$session = new Session();
+			//session = new Session();
 			
-			$session->setName('PHPSESSID_' . uniqid());
+			//$session->setName('PHPSESSID_' . uniqid());
 			//$session->setId();
-			$session->start();
+			//$session->start();
 			
 			$session->data['api_id'] = $api_info['api_id'];
 						

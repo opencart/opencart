@@ -51,7 +51,7 @@ foreach ($query->rows as $result) {
 	if (!$result['serialized']) {
 		$config->set($result['key'], $result['value']);
 	} else {
-		$config->set($result['key'], unserialize($result['value']));
+		$config->set($result['key'], json_decode($result['value'], true));
 	}
 }
 
@@ -122,9 +122,6 @@ $registry->set('response', $response);
 $cache = new Cache('file');
 $registry->set('cache', $cache);
 
-// Session
-$session = new Session();
-
 // For API requests we need to create a separate cookie
 if (isset($request->get['token']) && isset($request->get['route']) && substr($request->get['route'], 0, 4) == 'api/') {
 	$db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE TIMESTAMPADD(HOUR, 1, date_modified) < NOW()");
@@ -132,14 +129,17 @@ if (isset($request->get['token']) && isset($request->get['route']) && substr($re
 	$query = $db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "api_session` as LEFT JOIN api_ip ai ON (as.api_id = ai.api_id) WHERE as.token = '" . $db->escape($request->get['token']) . "' AND ai.ip = '" . $db->escape($request->server['REMOTE_ADDR']) . "'");
 
 	if ($query->num_row) {
-		$session->setId($query->row['session_id']);
-		$session->setName($query->row['session_name']);
+		// Does not seem PHP is able to handle sessions as objects propperly so just using the built in functions
+		session_id($query->row['session_id']);
+		session_name($query->row['session_name']);
 		
+		// keep the session alive
 		$db->query("UPDATE `" . DB_PREFIX . "api_session` SET date_modified = NOW() WHERE api_session_id = '" . $query->row['api_session_id'] . "'");
 	}
 }
 
-$session->start();
+// Session
+$session = new Session();
 $registry->set('session', $session);
 
 // Language Detection

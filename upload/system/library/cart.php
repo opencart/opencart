@@ -300,7 +300,7 @@ class Cart {
 			$product['recurring_id'] = (int)$recurring_id;
 		}
 
-		$key = base64_encode(serialize($product));
+		$key = base64_encode(json_encode($product));
 
 		if ((int)$qty && ((int)$qty > 0)) {
 			if (!isset($this->session->data['cart'][$key])) {

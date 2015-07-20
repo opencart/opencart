@@ -50,7 +50,7 @@ class File {
 
 		flock($handle, LOCK_EX);
 
-		fwrite($handle, serialize($value));
+		fwrite($handle, json_encode($value));
 
 		fflush($handle);
 

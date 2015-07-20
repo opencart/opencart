@@ -64,6 +64,22 @@ class ControllerProductCategory extends Controller {
 			$path = '';
 
 			$parts = explode('_', (string)$this->request->get['path']);
+			
+			if (count($parts) <= 1){
+				$current_category = $this->model_catalog_category->getCategory((string)$this->request->get['path']);
+				
+				if (isset($current_category['parent_id']) > 0) {
+					$parts[] = $current_category['parent_id'];
+					
+					$parent = $current_category['parent_id'];
+					while (($current_category['store_id'] === $this->config->get('config_store_id')) && ($parent != 0)){
+						$parent = $this->model_catalog_category->getCategory($parent);
+						$parent = $parent['parent_id'];
+						$parts[] = $parent;
+					}
+					$parts = array_reverse($parts);
+				}
+			}
 
 			$category_id = (int)array_pop($parts);
 

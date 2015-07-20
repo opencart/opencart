@@ -93,7 +93,7 @@ class ControllerProductCategory extends Controller {
 			$this->document->setTitle($category_info['meta_title']);
 			$this->document->setDescription($category_info['meta_description']);
 			$this->document->setKeywords($category_info['meta_keyword']);
-			$this->document->addLink($this->url->link('product/category', 'path=' . $this->request->get['path']), 'canonical');
+			$this->document->addLink($this->url->link('product/category', 'path=' . $category_id), 'canonical');
 
 			$data['heading_title'] = $category_info['name'];
 

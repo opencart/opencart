@@ -17,7 +17,7 @@ class Cart {
 	public function getProducts() {
 		if (!$this->data) {
 			foreach ($this->session->data['cart'] as $key => $quantity) {
-				$product = unserialize(base64_decode($key));
+				$product = json_decode(base64_decode($key), true);
 
 				$product_id = $product['product_id'];
 
@@ -168,7 +168,7 @@ class Cart {
 					$discount_quantity = 0;
 
 					foreach ($this->session->data['cart'] as $key_2 => $quantity_2) {
-						$product_2 = (array)unserialize(base64_decode($key_2));
+						$product_2 = (array)json_decode(base64_decode($key_2), true);
 
 						if ($product_2['product_id'] == $product_id) {
 							$discount_quantity += $quantity_2;

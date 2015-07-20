@@ -35,7 +35,7 @@ class File {
 
 			fclose($handle);
 
-			return unserialize($data);
+			return json_decode($data, true);
 		}
 
 		return false;

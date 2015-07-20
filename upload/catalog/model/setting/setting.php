@@ -9,7 +9,7 @@ class ModelSettingSetting extends Model {
 			if (!$result['serialized']) {
 				$data[$result['key']] = $result['value'];
 			} else {
-				$data[$result['key']] = unserialize($result['value']);
+				$data[$result['key']] = json_decode($result['value'], true);
 			}
 		}
 

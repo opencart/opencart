@@ -178,19 +178,19 @@ class ControllerStep3 extends Controller {
 		if (isset($this->request->post['db_hostname'])) {
 			$data['db_hostname'] = $this->request->post['db_hostname'];
 		} else {
-			$data['db_hostname'] = ini_get('mysqli.default_host');
+			$data['db_hostname'] = 'localhost';
 		}
 
 		if (isset($this->request->post['db_username'])) {
 			$data['db_username'] = $this->request->post['db_username'];
 		} else {
-			$data['db_username'] = ini_get('mysqli.default_user');
+			$data['db_username'] = 'root';
 		}
 
 		if (isset($this->request->post['db_password'])) {
 			$data['db_password'] = $this->request->post['db_password'];
 		} else {
-			$data['db_password'] = ini_get('mysqli.default_pw');
+			$data['db_password'] = '';
 		}
 
 		if (isset($this->request->post['db_database'])) {
@@ -202,7 +202,7 @@ class ControllerStep3 extends Controller {
 		if (isset($this->request->post['db_port'])) {
 			$data['db_port'] = $this->request->post['db_port'];
 		} else {
-			$data['db_port'] = ini_get("mysqli.default_port");
+			$data['db_port'] = 3306;
 		}
 		
 		if (isset($this->request->post['db_prefix'])) {

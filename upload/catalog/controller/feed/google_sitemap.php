@@ -13,11 +13,12 @@ class ControllerFeedGoogleSitemap extends Controller {
 			foreach ($products as $product) {
 				if ($product['image']) {
 					$output .= '<url>';
-					$output .= '<loc>' . $this->url->link('product/product', 'product_id=' . $product['product_id']) . '</loc>';
+					$output .= '<loc>' . str_replace('&', '&amp;', $this->url->link('product/product', 'product_id=' . $product['product_id'])) . '</loc>';
+					$output .= '<lastmod>' . date('Y-m-d\TH:i:sP', strtotime($product['date_modified'])) . '</lastmod>';
 					$output .= '<changefreq>weekly</changefreq>';
 					$output .= '<priority>1.0</priority>';
 					$output .= '<image:image>';
-					$output .= '<image:loc>' . $this->model_tool_image->resize($product['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')) . '</image:loc>';
+					$output .= '<image:loc>' . str_replace(array('&', ' '), array('&amp;', '%20'), $this->config->get('config_url') . 'image/' . $product['image']) . '</image:loc>';
 					$output .= '<image:caption>' . $product['name'] . '</image:caption>';
 					$output .= '<image:title>' . $product['name'] . '</image:title>';
 					$output .= '</image:image>';
@@ -35,20 +36,10 @@ class ControllerFeedGoogleSitemap extends Controller {
 
 			foreach ($manufacturers as $manufacturer) {
 				$output .= '<url>';
-				$output .= '<loc>' . $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $manufacturer['manufacturer_id']) . '</loc>';
+				$output .= '<loc>' . str_replace('&', '&amp;', $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $manufacturer['manufacturer_id'])) . '</loc>';
 				$output .= '<changefreq>weekly</changefreq>';
 				$output .= '<priority>0.7</priority>';
 				$output .= '</url>';
-
-				$products = $this->model_catalog_product->getProducts(array('filter_manufacturer_id' => $manufacturer['manufacturer_id']));
-
-				foreach ($products as $product) {
-					$output .= '<url>';
-					$output .= '<loc>' . $this->url->link('product/product', 'manufacturer_id=' . $manufacturer['manufacturer_id'] . '&product_id=' . $product['product_id']) . '</loc>';
-					$output .= '<changefreq>weekly</changefreq>';
-					$output .= '<priority>1.0</priority>';
-					$output .= '</url>';
-				}
 			}
 
 			$this->load->model('catalog/information');
@@ -57,7 +48,7 @@ class ControllerFeedGoogleSitemap extends Controller {
 
 			foreach ($informations as $information) {
 				$output .= '<url>';
-				$output .= '<loc>' . $this->url->link('information/information', 'information_id=' . $information['information_id']) . '</loc>';
+				$output .= '<loc>' . str_replace('&', '&amp;', $this->url->link('information/information', 'information_id=' . $information['information_id'])) . '</loc>';
 				$output .= '<changefreq>weekly</changefreq>';
 				$output .= '<priority>0.5</priority>';
 				$output .= '</url>';
@@ -83,20 +74,11 @@ class ControllerFeedGoogleSitemap extends Controller {
 			}
 
 			$output .= '<url>';
-			$output .= '<loc>' . $this->url->link('product/category', 'path=' . $new_path) . '</loc>';
+			$output .= '<loc>' . str_replace('&', '&amp;', $this->url->link('product/category', 'path=' . $new_path)) . '</loc>';
+			$output .= '<lastmod>' . date('Y-m-d\TH:i:sP', strtotime($result['date_modified'])) . '</lastmod>';
 			$output .= '<changefreq>weekly</changefreq>';
 			$output .= '<priority>0.7</priority>';
 			$output .= '</url>';
-
-			$products = $this->model_catalog_product->getProducts(array('filter_category_id' => $result['category_id']));
-
-			foreach ($products as $product) {
-				$output .= '<url>';
-				$output .= '<loc>' . $this->url->link('product/product', 'path=' . $new_path . '&product_id=' . $product['product_id']) . '</loc>';
-				$output .= '<changefreq>weekly</changefreq>';
-				$output .= '<priority>1.0</priority>';
-				$output .= '</url>';
-			}
 
 			$output .= $this->getCategories($result['category_id'], $new_path);
 		}

@@ -929,7 +929,7 @@ class ControllerCustomerCustomer extends Controller {
 		if (isset($this->request->post['custom_field'])) {
 			$data['account_custom_field'] = $this->request->post['custom_field'];
 		} elseif (!empty($customer_info)) {
-			$data['account_custom_field'] = unserialize($customer_info['custom_field']);
+			$data['account_custom_field'] = json_decode($customer_info['custom_field'], true);
 		} else {
 			$data['account_custom_field'] = array();
 		}
@@ -1516,7 +1516,7 @@ class ControllerCustomerCustomer extends Controller {
 					'email'             => $result['email'],
 					'telephone'         => $result['telephone'],
 					'fax'               => $result['fax'],
-					'custom_field'      => unserialize($result['custom_field']),
+					'custom_field'      => json_decode($result['custom_field'], true),
 					'address'           => $this->model_customer_customer->getAddresses($result['customer_id'])
 				);
 			}

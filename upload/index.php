@@ -140,6 +140,7 @@ if (isset($request->get['token']) && isset($request->get['route']) && substr($re
 
 // Session
 $session = new Session();
+$session->start();
 $registry->set('session', $session);
 
 // Language Detection

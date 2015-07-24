@@ -953,19 +953,13 @@ class ControllerPaymentPPExpress extends Controller {
 				$option_data = array();
 
 				foreach ($product['option'] as $option) {
-					if ($option['type'] != 'file') {
-						$value = $option['option_value'];
-					} else {
-						$value = $this->encryption->decrypt($option['option_value']);
-					}
-
 					$option_data[] = array(
 						'product_option_id'       => $option['product_option_id'],
 						'product_option_value_id' => $option['product_option_value_id'],
 						'option_id'               => $option['option_id'],
 						'option_value_id'         => $option['option_value_id'],
 						'name'                    => $option['name'],
-						'value'                   => $value,
+						'value'                   => $option['value'],
 						'type'                    => $option['type']
 					);
 				}

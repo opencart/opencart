@@ -79,19 +79,17 @@ class Session {
 		if ($this->session_id) {
 			$file = ini_get('session.save_path') . '/' . $this->session_id;
 
-			if (is_file($file)) {
-				$handle = fopen($file, 'w');
+			$handle = fopen($file, 'w');
 
-				flock($handle, LOCK_EX);
+			flock($handle, LOCK_EX);
 
-				fwrite($handle, serialize($this->data));
+			fwrite($handle, serialize($this->data));
 
-				fflush($handle);
+			fflush($handle);
 
-				flock($handle, LOCK_UN);
+			flock($handle, LOCK_UN);
 
-				fclose($handle);
-			}
+			fclose($handle);
 		}
 	}
 }

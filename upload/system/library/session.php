@@ -6,7 +6,7 @@ class Session {
 	public function __construct($session_id = '') {
 		// Garbage collection
 		$files = glob(ini_get('session.save_path') . '/*');
-		
+
 		if ($files) {
 			foreach ($files as $file) {
 				if (filemtime($file) < (time() - ini_get('session.gc_maxlifetime'))) {
@@ -20,7 +20,7 @@ class Session {
 		if (!preg_match('/^[0-9a-z]*$/i', $session_id)) {
 			exit();
 		}
-				
+
 		$this->session_id = $session_id;
 	}
 
@@ -32,27 +32,27 @@ class Session {
 				$this->session_id = bin2hex(openssl_random_pseudo_bytes(16));
 			}
 		}
-		
+
 		// Protect the session from starting if invalid characters
 		if (!preg_match('/^[0-9a-z]*$/i', $this->session_id)) {
 			exit();
-		}	
-				
+		}
+
 		setcookie($name, $this->session_id, $expire, '/');
 
 		$file = ini_get('session.save_path') . '/' . $this->session_id;
 
 		if (is_file($file)) {
 			$handle = fopen($file, 'r');
-	
+
 			flock($handle, LOCK_SH);
-	
+
 			$data = fread($handle, filesize($file));
-	
+
 			flock($handle, LOCK_UN);
-	
+
 			fclose($handle);
-	
+
 			$this->data = unserialize($data);
 		}
 	}
@@ -60,36 +60,36 @@ class Session {
 	public function getId() {
 		return $this->session_id;
 	}
-	
+
 	public function destroy() {
 		$file = ini_get('session.save_path') . '/' . $this->session_id;
 
 		if (is_file($file)) {
 			@unlink($file);
-			
+
 			$this->data = array();
-			
+
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+
 	public function __destruct() {
 		if ($this->session_id) {
 			$file = ini_get('session.save_path') . '/' . $this->session_id;
-			
+
 			if (is_file($file)) {
 				$handle = fopen($file, 'w');
-		
+
 				flock($handle, LOCK_EX);
-		
+
 				fwrite($handle, serialize($this->data));
-		
+
 				fflush($handle);
-		
+
 				flock($handle, LOCK_UN);
-		
+
 				fclose($handle);
 			}
 		}

@@ -5,7 +5,7 @@ class ControllerApiLogin extends Controller {
 
 		// Delete old login so not to cause any issues if there is an error
 		unset($this->session->data['api_id']);
-			
+
 		$keys = array(
 			'username',
 			'password'
@@ -20,22 +20,23 @@ class ControllerApiLogin extends Controller {
 		$json = array();
 
 		$this->load->model('account/api');
-		
+
 		// Login with username and password
 		$api_info = $this->model_account_api->login($this->request->post['username'], $this->request->post['password']);
 
 		if ($api_info) {
 			$json['success'] = $this->language->get('text_success');
-			
+
 			$sesion_name = 'temp_session_' . uniqid();
-			
+
 			$session = new Session();
 			$session->start($sesion_name);
-			
+
+			// Set API ID
 			$session->data['api_id'] = $api_info['api_id'];
-						
-			// Create Token		
-			$json['token'] = $this->model_account_api->addApiSession($api_info['api_id'], $sesion_name, $session->getId(), $this->request->server['REMOTE_ADDR']);		
+
+			// Create Token
+			$json['token'] = $this->model_account_api->addApiSession($api_info['api_id'], $sesion_name, $session->getId(), $this->request->server['REMOTE_ADDR']);
 		} else {
 			$json['error'] = $this->language->get('error_login');
 		}
@@ -47,7 +48,7 @@ class ControllerApiLogin extends Controller {
 			$this->response->addHeader('Access-Control-Max-Age: 1000');
 			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 		}
-		
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}

@@ -24,6 +24,10 @@ class Session {
 		$this->session_id = $session_id;
 	}
 
+	public function getId() {
+		return $this->session_id;
+	}
+
 	public function start($name = 'PHPSESSID', $expire = 0) {
 		if (!$this->session_id) {
 			if (isset($_COOKIE[$name])) {
@@ -56,13 +60,9 @@ class Session {
 			$this->data = unserialize($data);
 
 			return true;
-		} else {		
+		} else {
 			return false;
 		}
-	}
-
-	public function getId() {
-		return $this->session_id;
 	}
 
 	public function destroy() {
@@ -71,6 +71,7 @@ class Session {
 		if (is_file($file)) {
 			@unlink($file);
 
+			$this->session_id = '';
 			$this->data = array();
 
 			return true;

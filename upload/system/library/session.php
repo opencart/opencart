@@ -54,6 +54,10 @@ class Session {
 			fclose($handle);
 
 			$this->data = unserialize($data);
+
+			return true;
+		} else {		
+			return false;
 		}
 	}
 

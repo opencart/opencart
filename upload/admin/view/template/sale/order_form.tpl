@@ -1012,7 +1012,6 @@ $('select[name=\'currency\']').on('change', function() {
 $('#button-refresh').on('click', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/cart/products&token=' + token,
-		type: 'post',
 		dataType: 'json',
 		crossDomain: true,
 		success: function(json) {
@@ -1867,7 +1866,6 @@ $('#button-payment-address').on('click', function() {
 				// Payment Methods
 				$.ajax({
 					url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/payment/methods&token=' + token,
-					type: 'post',
 					dataType: 'json',
 					crossDomain: true,
 					beforeSend: function() {
@@ -2054,7 +2052,6 @@ $('#button-shipping-address').on('click', function() {
 				// Shipping Methods
 				$.ajax({
 					url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/shipping/methods&token=' + token,
-					type: 'post',
 					dataType: 'json',
 					beforeSend: function() {
 						$('#button-shipping-address i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
@@ -2116,7 +2113,7 @@ $('#button-shipping-method').on('click', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/shipping/method&token=' + token,
 		type: 'post',
-		data: 'token=<?php echo $token; ?>&shipping_method=' + $('select[name=\'shipping_method\'] option:selected').val(),
+		data: 'shipping_method=' + $('select[name=\'shipping_method\'] option:selected').val(),
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {
@@ -2192,7 +2189,7 @@ $('#button-coupon').on('click', function() {
 	$.ajax({
 		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/coupon&token=' + token,
 		type: 'post',
-		data: 'token=<?php echo $token; ?>&coupon=' + $('input[name=\'coupon\']').val(),
+		data: 'coupon=' + $('input[name=\'coupon\']').val(),
 		dataType: 'json',
 		crossDomain: true,
 		beforeSend: function() {

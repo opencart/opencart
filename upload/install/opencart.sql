@@ -7,6 +7,7 @@
 -- --------------------------------------------------------
 
 SET sql_mode = '';
+
 --
 -- Table structure for table `oc_address`
 --
@@ -465,7 +466,6 @@ CREATE TABLE `oc_category_description` (
 -- Dumping data for table `oc_category_description`
 --
 
-DROP TABLE IF EXISTS `oc_address`;
 INSERT INTO `oc_category_description` (`category_id`, `language_id`, `name`, `description`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
 (28, 1, 'Monitors', '', '', '', ''),
 (33, 1, 'Cameras', '', '', '', ''),
@@ -2824,7 +2824,7 @@ CREATE TABLE `oc_product_to_download` (
 -- Table structure for table `oc_product_to_layout`
 --
 
-DROP TABLE IF EXISTS `oc_address`;
+DROP TABLE IF EXISTS `oc_product_to_layout`;
 CREATE TABLE `oc_product_to_layout` (
   `product_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,

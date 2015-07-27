@@ -984,7 +984,7 @@ $('select[name=\'currency\']').on('change', function() {
 		type: 'post',
 		data: 'currency=' + $('select[name=\'currency\'] option:selected').val(),
 		dataType: 'json',
-		crossDomain: false,
+		crossDomain: true,
 		beforeSend: function() {
 			$('select[name=\'currency\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
 		},
@@ -2055,7 +2055,6 @@ $('#button-shipping-address').on('click', function() {
 				$.ajax({
 					url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/shipping/methods&token=' + token,
 					type: 'post',
-					data: 'token=<?php echo $token; ?>',
 					dataType: 'json',
 					beforeSend: function() {
 						$('#button-shipping-address i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');

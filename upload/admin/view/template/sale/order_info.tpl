@@ -491,6 +491,8 @@ $(document).delegate('#button-commission-remove', 'click', function() {
 	});
 });
 
+var token = '';
+
 // Login to the API
 $.ajax({
 	url: '<?php echo $store_url; ?>index.php?route=api/login',
@@ -503,6 +505,10 @@ $.ajax({
 
 		if (json['error']) {
 			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+		}
+
+        if (json['token']) {
+			token = json['token'];
 		}
 	},
 	error: function(xhr, ajaxOptions, thrownError) {

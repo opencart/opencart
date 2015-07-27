@@ -263,7 +263,7 @@ $.ajax({
 		}
 
 		if (json['token']) {
-			var token = json['token'];
+			token = json['token'];
 		}
 	},
 	error: function(xhr, ajaxOptions, thrownError) {
@@ -276,9 +276,7 @@ $('button[id^=\'button-delete\']').on('click', function(e) {
 		var node = this;
 
 		$.ajax({
-			url: '<?php echo $store; ?>index.php?route=api/cart/remove&token=' + token,
-			type: 'post',
-			data: 'order_id=' + $(node).val(),
+			url: '<?php echo $store; ?>index.php?route=api/order/delete&token=' + token + '&order_id=' + $(node).val(),
 			dataType: 'json',
 			crossDomain: true,
 			beforeSend: function() {

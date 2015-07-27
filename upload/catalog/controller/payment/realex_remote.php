@@ -107,6 +107,9 @@ class ControllerPaymentRealexRemote extends Controller {
 		}
 
 		$eci_ref = '';
+		$eci = '';
+		$cavv = '';
+		$xid = '';
 
 		if ($this->config->get('realex_remote_3d') == 1) {
 			if ($this->request->post['cc_type'] == 'visa' || $this->request->post['cc_type'] == 'mc' || $this->request->post['cc_type'] == 'amex') {

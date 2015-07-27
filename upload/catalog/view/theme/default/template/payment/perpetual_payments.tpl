@@ -66,23 +66,23 @@ $('#button-confirm').bind('click', function() {
 		url: 'index.php?route=payment/perpetual_payments/send',
 		type: 'post',
 		data: $('#payment :input'),
-		dataType: 'json',		
+		dataType: 'json',
 		cache: false,
 		beforeSend: function() {
 			$('#button-confirm').button('loading');
 		},
 		complete: function() {
 			$('#button-confirm').button('reset');
-		},				
+		},
 		success: function(json) {
 			if (json['error']) {
 				alert(json['error']);
 			}
-			
+
 			if (json['redirect']) {
 				location = json['redirect'];
 			}
 		}
 	});
 });
-//--></script> 
+//--></script>

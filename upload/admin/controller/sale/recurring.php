@@ -109,7 +109,7 @@ class ControllerSaleRecurring extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'href'      => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -126,8 +126,8 @@ class ControllerSaleRecurring extends Controller {
 			'filter_date_added'         => $filter_date_added,
 			'order'                     => $order,
 			'sort'                      => $sort,
-			'start'                     => ($page - 1) * $this->config->get('config_admin_limit'),
-			'limit'                     => $this->config->get('config_admin_limit'),
+			'start'                     => ($page - 1) * $this->config->get('config_limit_admin'),
+			'limit'                     => $this->config->get('config_limit_admin'),
 		);
 
 		$recurrings_total = $this->model_sale_recurring->getTotalRecurrings($filter_data);
@@ -152,7 +152,7 @@ class ControllerSaleRecurring extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 
@@ -263,7 +263,7 @@ class ControllerSaleRecurring extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $recurrings_total;
 		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_admin_limit');
+		$pagination->limit = $this->config->get('config_limit_admin');
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('sale/recurring', 'token=' . $this->session->data['token'] . '&page={page}' . $url, 'SSL');
 
@@ -354,7 +354,7 @@ class ControllerSaleRecurring extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+				'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 			);
 
 			$data['breadcrumbs'][] = array(
@@ -418,7 +418,7 @@ class ControllerSaleRecurring extends Controller {
 			$data['options'] = array();
 
 			if ($order['customer_id']) {
-				$data['customer_href'] = $this->url->link('sale/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . $order['customer_id'], 'SSL');
+				$data['customer_href'] = $this->url->link('customer/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . $order['customer_id'], 'SSL');
 			} else {
 				$data['customer_href'] = '';
 			}

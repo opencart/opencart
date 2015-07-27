@@ -1,36 +1,51 @@
 <?php
-class ControllerPaymentWorldPay extends Controller {
+
+class ControllerPaymentWorldpay extends Controller {
+
 	public function index() {
+		$this->load->language('payment/worldpay');
+
+		$data['text_credit_card'] = $this->language->get('text_credit_card');
+		$data['text_loading'] = $this->language->get('text_loading');
+		$data['text_card_type'] = $this->language->get('text_card_type');
+		$data['text_card_name'] = $this->language->get('text_card_name');
+		$data['text_card_digits'] = $this->language->get('text_card_digits');
+		$data['text_card_expiry'] = $this->language->get('text_card_expiry');
+		$data['text_confirm_delete'] = $this->language->get('text_confirm_delete');
+
+		$data['entry_card'] = $this->language->get('entry_card');
+		$data['entry_card_existing'] = $this->language->get('entry_card_existing');
+		$data['entry_card_new'] = $this->language->get('entry_card_new');
+		$data['entry_card_save'] = $this->language->get('entry_card_save');
+		$data['entry_cc_cvc'] = $this->language->get('entry_cc_cvc');
+		$data['entry_cc_choice'] = $this->language->get('entry_cc_choice');
+
+		$data['button_delete_card'] = $this->language->get('button_delete_card');
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
-		$this->load->model('checkout/order');
+		$data['worldpay_script'] = 'https://cdn.worldpay.com/v1/worldpay.js';
 
-		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
+		$data['worldpay_client_key'] = $this->config->get('worldpay_client_key');
 
-		if (!$this->config->get('worldpay_test')) {
-			$data['action'] = 'https://secure.worldpay.com/wcc/purchase';
+		$data['form_submit'] = $this->url->link('payment/worldpay/send', '', 'SSL');
+
+		if ($this->config->get('worldpay_card') == '1' && $this->customer->isLogged()) {
+			$data['worldpay_card'] = true;
 		} else {
-			$data['action'] = 'https://secure-test.worldpay.com/wcc/purchase';
+			$data['worldpay_card'] = false;
 		}
 
-		$data['merchant'] = $this->config->get('worldpay_merchant');
-		$data['order_id'] = $order_info['order_id'];
-		$data['amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
-		$data['currency'] = $order_info['currency_code'];
-		$data['description'] = $this->config->get('config_name') . ' - #' . $order_info['order_id'];
-		$data['name'] = $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
-
-		if (!$order_info['payment_address_2']) {
-			$data['address'] = $order_info['payment_address_1'] . ', ' . $order_info['payment_city'] . ', ' . $order_info['payment_zone'];
-		} else {
-			$data['address'] = $order_info['payment_address_1'] . ', ' . $order_info['payment_address_2'] . ', ' . $order_info['payment_city'] . ', ' . $order_info['payment_zone'];
+		$data['existing_cards'] = array();
+		if ($this->customer->isLogged() && $data['worldpay_card']) {
+			$this->load->model('payment/worldpay');
+			$data['existing_cards'] = $this->model_payment_worldpay->getCards($this->customer->getId());
 		}
 
-		$data['postcode'] = $order_info['payment_postcode'];
-		$data['country'] = $order_info['payment_iso_code_2'];
-		$data['telephone'] = $order_info['telephone'];
-		$data['email'] = $order_info['email'];
-		$data['test'] = $this->config->get('worldpay_test');
+		$recurring_products = $this->cart->getRecurringProducts();
+
+		if (!empty($recurring_products)) {
+			$data['recurring_products'] = true;
+		}
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/worldpay.tpl')) {
 			return $this->load->view($this->config->get('config_template') . '/template/payment/worldpay.tpl', $data);
@@ -39,87 +54,171 @@ class ControllerPaymentWorldPay extends Controller {
 		}
 	}
 
-	public function callback() {
+	public function send() {
 		$this->load->language('payment/worldpay');
+		$this->load->model('checkout/order');
+		$this->load->model('localisation/country');
+		$this->load->model('payment/worldpay');
 
-		$data['title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_name'));
+		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		if (!$this->request->server['HTTPS']) {
-			$data['base'] = $this->config->get('config_url');
+		$recurring_products = $this->cart->getRecurringProducts();
+
+		if (empty($recurring_products)) {
+			$order_type = 'ECOM';
 		} else {
-			$data['base'] = $this->config->get('config_ssl');
+			$order_type = 'RECURRING';
 		}
 
-		$data['language'] = $this->language->get('code');
-		$data['direction'] = $this->language->get('direction');
+		$country_info = $this->model_localisation_country->getCountry($order_info['payment_country_id']);
 
-		$data['heading_title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_name'));
+		$billing_address = array(
+			"address1" => $order_info['payment_address_1'],
+			"address2" => $order_info['payment_address_2'],
+			"address3" => '',
+			"postalCode" => $order_info['payment_postcode'],
+			"city" => $order_info['payment_city'],
+			"state" => $order_info['payment_zone'],
+			"countryCode" => $country_info['iso_code_2'],
+		);
 
-		$data['text_response'] = $this->language->get('text_response');
-		$data['text_success'] = $this->language->get('text_success');
-		$data['text_success_wait'] = sprintf($this->language->get('text_success_wait'), $this->url->link('checkout/success'));
-		$data['text_failure'] = $this->language->get('text_failure');
-		$data['text_failure_wait'] = sprintf($this->language->get('text_failure_wait'), $this->url->link('checkout/checkout', '', 'SSL'));
+		$order = array(
+			"token" => $this->request->post['token'],
+			"orderType" => $order_type,
+			"amount" => (int)($order_info['total'] * 100),
+			"currencyCode" => $order_info['currency_code'],
+			"name" => $order_info['firstname'] . ' ' . $order_info['lastname'],
+			"orderDescription" => $order_info['store_name'] . ' - ' . date('Y-m-d H:i:s'),
+			"customerOrderCode" => $order_info['order_id'],
+			"billingAddress" => $billing_address
+		);
 
-		if (isset($this->request->post['transStatus']) && $this->request->post['transStatus'] == 'Y') {
-			$message = '';
+		$this->model_payment_worldpay->logger($order);
 
-			if (isset($this->request->post['transId'])) {
-				$message .= 'transId: ' . $this->request->post['transId'] . "\n";
+		$response_data = $this->model_payment_worldpay->sendCurl('orders', $order);
+
+		$this->model_payment_worldpay->logger($response_data);
+
+		if (isset($response_data->paymentStatus) && $response_data->paymentStatus == 'SUCCESS') {
+			$this->model_checkout_order->addOrderHistory($order_info['order_id'], $this->config->get('config_order_status_id'));
+
+			$worldpay_order_id = $this->model_payment_worldpay->addOrder($order_info, $response_data->orderCode);
+
+			$this->model_payment_worldpay->addTransaction($worldpay_order_id, 'payment', $order_info);
+
+			if (isset($this->request->post['save-card'])) {
+				$response = $this->model_payment_worldpay->sendCurl('tokens/' . $this->request->post['token']);
+
+				$this->model_payment_worldpay->logger($response);
+
+				$expiry_date = mktime(0, 0, 0, 0, (string)$response->paymentMethod->expiryMonth, (string)$response->paymentMethod->expiryYear);
+
+				if (isset($response->paymentMethod)) {
+					$card_data = array();
+					$card_data['customer_id'] = $this->customer->getId();
+					$card_data['Token'] = $response->token;
+					$card_data['Last4Digits'] = (string)$response->paymentMethod->maskedCardNumber;
+					$card_data['ExpiryDate'] = date("m/y", $expiry_date);
+					$card_data['CardType'] = (string)$response->paymentMethod->cardType;
+					$this->model_payment_worldpay->addCard($this->session->data['order_id'], $card_data);
+				}
 			}
 
-			if (isset($this->request->post['transStatus'])) {
-				$message .= 'transStatus: ' . $this->request->post['transStatus'] . "\n";
+			//loop through any products that are recurring items
+			foreach ($recurring_products as $item) {
+				$this->model_payment_worldpay->recurringPayment($item, $this->session->data['order_id'] . rand(), $this->request->post['token']);
 			}
 
-			if (isset($this->request->post['countryMatch'])) {
-				$message .= 'countryMatch: ' . $this->request->post['countryMatch'] . "\n";
-			}
-
-			if (isset($this->request->post['AVS'])) {
-				$message .= 'AVS: ' . $this->request->post['AVS'] . "\n";
-			}
-
-			if (isset($this->request->post['rawAuthCode'])) {
-				$message .= 'rawAuthCode: ' . $this->request->post['rawAuthCode'] . "\n";
-			}
-
-			if (isset($this->request->post['authMode'])) {
-				$message .= 'authMode: ' . $this->request->post['authMode'] . "\n";
-			}
-
-			if (isset($this->request->post['rawAuthMessage'])) {
-				$message .= 'rawAuthMessage: ' . $this->request->post['rawAuthMessage'] . "\n";
-			}
-
-			if (isset($this->request->post['wafMerchMessage'])) {
-				$message .= 'wafMerchMessage: ' . $this->request->post['wafMerchMessage'] . "\n";
-			}
-
-			$this->load->model('checkout/order');
-
-			// If returned successful but callbackPW doesn't match, set order to pendind and record reason
-			if (isset($this->request->post['callbackPW']) && ($this->request->post['callbackPW'] == $this->config->get('worldpay_password'))) {
-				$this->model_checkout_order->addOrderHistory($this->request->post['cartId'], $this->config->get('worldpay_order_status_id'), $message, false);
-			} else {
-				$this->model_checkout_order->addOrderHistory($this->request->post['cartId'], $this->config->get('config_order_status_id'), $this->language->get('text_pw_mismatch'));
-			}
-
-			$data['continue'] = $this->url->link('checkout/success');
-
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/worldpay_success.tpl')) {
-				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/worldpay_success.tpl', $data));
-			} else {
-				$this->response->setOutput($this->load->view('default/template/payment/worldpay_success.tpl', $data));
-			}
+			$this->response->redirect($this->url->link('checkout/success', '', 'SSL'));
 		} else {
-			$data['continue'] = $this->url->link('checkout/cart');
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/worldpay_failure.tpl')) {
-				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/worldpay_failure.tpl', $data));
-			} else {
-				$this->response->setOutput($this->load->view('default/template/payment/worldpay_failure.tpl', $data));
-			}
+			$this->session->data['error'] = $this->language->get('error_process_order');
+			$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
 		}
 	}
+
+	public function deleteCard() {
+		$this->load->language('payment/worldpay');
+		$this->load->model('payment/worldpay');
+
+		if (isset($this->request->post['token'])) {
+			if ($this->model_payment_worldpay->deleteCard($this->request->post['token'])) {
+				$json['success'] = $this->language->get('text_card_success');
+			} else {
+				$json['error'] = $this->language->get('text_card_error');
+			}
+
+			if (count($this->model_payment_worldpay->getCards($this->customer->getId()))) {
+				$json['existing_cards'] = true;
+			}
+		} else {
+			$json['error'] = $this->language->get('text_error');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function webhook() {
+		if (isset($this->request->get['token']) && $this->request->get['token'] == $this->config->get('worldpay_secret_token')) {
+			$this->load->model('payment/worldpay');
+			$message = json_decode(file_get_contents('php://input'), true);
+
+			if (isset($message['orderCode'])) {
+				$order = $this->model_payment_worldpay->getWorldpayOrder($message['orderCode']);
+				$this->model_payment_worldpay->logger($order);
+				switch ($message['paymentStatus']) {
+					case 'SUCCESS':
+						$order_status_id = $this->config->get('worldpay_entry_success_status_id');
+						break;
+					case 'FAILED':
+						$order_status_id = $this->config->get('worldpay_entry_failed_status_id');
+						break;
+					case 'SETTLED':
+						$order_status_id = $this->config->get('worldpay_entry_settled_status_id');
+						break;
+					case 'REFUNDED':
+						$order_status_id = $this->config->get('worldpay_refunded_status_id');
+						break;
+					case 'PARTIALLY_REFUNDED':
+						$order_status_id = $this->config->get('worldpay_entry_partially_refunded_status_id');
+						break;
+					case 'CHARGED_BACK':
+						$order_status_id = $this->config->get('worldpay_entry_charged_back_status_id');
+						break;
+					case 'INFORMATION_REQUESTED':
+						$order_status_id = $this->config->get('worldpay_entry_information_requested_status_id');
+						break;
+					case 'INFORMATION_SUPPLIED':
+						$order_status_id = $this->config->get('worldpay_entry_information_supplied_status_id');
+						break;
+					case 'CHARGEBACK_REVERSED':
+						$order_status_id = $this->config->get('worldpay_entry_chargeback_reversed_status_id');
+						break;
+				}
+
+				$this->model_payment_worldpay->logger($order_status_id);
+				if (isset($order['order_id'])) {
+					$this->load->model('checkout/order');
+					$this->model_checkout_order->addOrderHistory($order['order_id'], $order_status_id);
+				}
+			}
+		}
+
+		$this->response->addHeader('HTTP/1.1 200 OK');
+		$this->response->addHeader('Content-Type: application/json');
+	}
+
+	public function cron() {
+		if ($this->request->get['token'] == $this->config->get('worldpay_cron_job_token')) {
+			$this->load->model('payment/worldpay');
+
+			$orders = $this->model_payment_worldpay->cronPayment();
+
+			$this->model_payment_worldpay->updateCronJobRunTime();
+
+			$this->model_payment_worldpay->logger($orders);
+		}
+	}
+
 }

@@ -3,7 +3,7 @@ class ControllerCatalogCategory extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('catalog/category');
+		$this->language->load('catalog/category');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerCatalogCategory extends Controller {
 	}
 
 	public function add() {
-		$this->load->language('catalog/category');
+		$this->language->load('catalog/category');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -45,7 +45,7 @@ class ControllerCatalogCategory extends Controller {
 	}
 
 	public function edit() {
-		$this->load->language('catalog/category');
+		$this->language->load('catalog/category');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -77,7 +77,7 @@ class ControllerCatalogCategory extends Controller {
 	}
 
 	public function delete() {
-		$this->load->language('catalog/category');
+		$this->language->load('catalog/category');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -111,7 +111,7 @@ class ControllerCatalogCategory extends Controller {
 	}
 
 	public function repair() {
-		$this->load->language('catalog/category');
+		$this->language->load('catalog/category');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -160,7 +160,7 @@ class ControllerCatalogCategory extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-		
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -172,7 +172,7 @@ class ControllerCatalogCategory extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
-		
+
 		$data['add'] = $this->url->link('catalog/category/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('catalog/category/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['repair'] = $this->url->link('catalog/category/repair', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -282,7 +282,7 @@ class ControllerCatalogCategory extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_form'] = !isset($this->request->get['category_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_default'] = $this->language->get('text_default');
@@ -334,13 +334,13 @@ class ControllerCatalogCategory extends Controller {
 		} else {
 			$data['error_meta_title'] = array();
 		}
-		
+
 		if (isset($this->error['keyword'])) {
 			$data['error_keyword'] = $this->error['keyword'];
 		} else {
 			$data['error_keyword'] = '';
 		}
-		
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -354,7 +354,7 @@ class ControllerCatalogCategory extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-		
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -366,7 +366,7 @@ class ControllerCatalogCategory extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
-		
+
 		if (!isset($this->request->get['category_id'])) {
 			$data['action'] = $this->url->link('catalog/category/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
@@ -542,7 +542,7 @@ class ControllerCatalogCategory extends Controller {
 			$this->load->model('catalog/url_alias');
 
 			$url_alias_info = $this->model_catalog_url_alias->getUrlAlias($this->request->post['keyword']);
-		
+
 			if ($url_alias_info && isset($this->request->get['category_id']) && $url_alias_info['query'] != 'category_id=' . $this->request->get['category_id']) {
 				$this->error['keyword'] = sprintf($this->language->get('error_keyword'));
 			}

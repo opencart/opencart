@@ -10,11 +10,11 @@ class ControllerDashboardCustomer extends Controller {
 		$data['token'] = $this->session->data['token'];
 
 		// Total Orders
-		$this->load->model('sale/customer');
-		
-		$today = $this->model_sale_customer->getTotalCustomers(array('filter_date_added' => date('Y-m-d', strtotime('-1 day'))));
+		$this->load->model('customer/customer');
 
-		$yesterday = $this->model_sale_customer->getTotalCustomers(array('filter_date_added' => date('Y-m-d', strtotime('-2 day'))));
+		$today = $this->model_customer_customer->getTotalCustomers(array('filter_date_added' => date('Y-m-d', strtotime('-1 day'))));
+
+		$yesterday = $this->model_customer_customer->getTotalCustomers(array('filter_date_added' => date('Y-m-d', strtotime('-2 day'))));
 
 		$difference = $today - $yesterday;
 
@@ -23,9 +23,9 @@ class ControllerDashboardCustomer extends Controller {
 		} else {
 			$data['percentage'] = 0;
 		}
-		
-		$customer_total = $this->model_sale_customer->getTotalCustomers();
-		
+
+		$customer_total = $this->model_customer_customer->getTotalCustomers();
+
 		if ($customer_total > 1000000000000) {
 			$data['total'] = round($customer_total / 1000000000000, 1) . 'T';
 		} elseif ($customer_total > 1000000000) {
@@ -33,12 +33,12 @@ class ControllerDashboardCustomer extends Controller {
 		} elseif ($customer_total > 1000000) {
 			$data['total'] = round($customer_total / 1000000, 1) . 'M';
 		} elseif ($customer_total > 1000) {
-			$data['total'] = round($customer_total / 1000, 1) . 'K';						
+			$data['total'] = round($customer_total / 1000, 1) . 'K';
 		} else {
 			$data['total'] = $customer_total;
 		}
-				
-		$data['customer'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'], 'SSL');
+
+		$data['customer'] = $this->url->link('customer/customer', 'token=' . $this->session->data['token'], 'SSL');
 
 		return $this->load->view('dashboard/customer.tpl', $data);
 	}

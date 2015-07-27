@@ -39,7 +39,7 @@ $_['text_run_update']           		= 'Run update';
 $_['text_patch_complete']           	= 'Patch has been applied';
 $_['text_connection_ok']				= 'Connected to server OK. OpenCart folders found';
 $_['text_updated']						= 'Module has been updated (v.%s)';
-$_['text_update_description']			= "The update tool will make changes to your shop file system. Make sure you have a complete file and database backup before updating.";
+$_['text_update_description']			= 'The update tool will make changes to your shop file system. Make sure you have a complete file and database backup before updating.';
 $_['text_patch_description']			= 'If you uploaded the update files manually, you need to run the patch to complete the update';
 $_['text_clear_faq']                    = 'Clear hidden FAQ popups';
 $_['text_clear_faq_complete']           = 'Notifications will now show again';
@@ -96,6 +96,11 @@ $_['error_tracking_custom']				= 'Please leave courier field empty if you want t
 $_['error_permission']					= 'You do not have permission to modify the OpenBay Pro extension';
 $_['error_mkdir']						= 'PHP mkdir function is disabled, contact your host';
 $_['error_file_delete']					= 'Unable to remove these files, you should delete them manually';
+$_['error_mcrypt']            			= 'PHP function "mcrypt_encrypt" is not enabled. Contact your hosting provider.';
+$_['error_mbstring']               		= 'PHP library "mb strings" is not enabled. Contact your hosting provider.';
+$_['error_ftpconnect']             		= 'PHP FTP functions are not enabled. Contact your hosting provider.';
+$_['error_oc_version']             		= 'Your version of OpenCart is not tested to work with this module. You may experience problems.';
+$_['error_fopen']             			= 'PHP function "fopen" is disabled by your host - you will be unable to import images when importing products';
 
 // Help
 $_['help_ftp_username']           		= 'Use the FTP username from your host';

@@ -24,6 +24,16 @@
         </apply>
     </target>
 
+    <target name="csslint" description="Run the CSSLint tool on CSS files">
+        <fileset dir="${basedir}/upload" id="cssfiles.raw">
+            <include name="**/*.css" />
+        </fileset>
+        <pathconvert pathsep=" " property="cssfiles.clean" refid="cssfiles.raw" />
+        <exec executable="csslint" output="${basedir}/tests/csslint.xml">
+            <arg line="--warnings=box-model,floats --errors=ids,important --format=lint-xml ${cssfiles.clean}" />
+        </exec>
+    </target>
+
     <target name="phploc" description="Measure project size using PHPLOC">
         <exec executable="phploc">
             <arg value="--log-csv"/>
@@ -38,5 +48,5 @@
         </exec>
     </target>
 
-    <target name="build" depends="prepare,phpcs,lint,phploc"/>
+    <target name="build" depends="prepare,phpcs,lint,phploc,csslint"/>
 </project>

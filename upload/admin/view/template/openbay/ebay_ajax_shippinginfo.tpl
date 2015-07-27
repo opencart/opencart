@@ -12,9 +12,9 @@
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-2 control-label" for="tracking-no"><?php echo $text_ajax_tracking; ?></label>
+    <label class="col-sm-2 control-label" for="tracking-no"><?php echo $entry_tracking; ?></label>
     <div class="col-sm-10">
-      <input type="text" name="tracking_no" value="<?php if (isset($order_info['tracking_no'])){ echo $order_info['tracking_no']; } ?>" placeholder="<?php echo $text_ajax_tracking; ?>" id="tracking-no" class="form-control openbay-data" />
+      <input type="text" name="tracking_no" value="<?php if (isset($order_info['tracking_no'])){ echo $order_info['tracking_no']; } ?>" placeholder="<?php echo $entry_tracking; ?>" id="tracking-no" class="form-control openbay-data" />
     </div>
   </div>
 

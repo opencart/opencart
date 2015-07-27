@@ -267,16 +267,34 @@ class ControllerUserApi extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 		
 		$data['text_form'] = !isset($this->request->get['api_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
+		$data['text_ip'] = sprintf($this->language->get('text_ip'), $this->request->server['REMOTE_ADDR']);
+		$data['text_confirm'] = $this->language->get('text_confirm');
+
+		$data['column_token'] = $this->language->get('column_token');
+		$data['column_ip'] = $this->language->get('column_ip');
+		$data['column_date_added'] = $this->language->get('column_date_added');
+		$data['column_date_modified'] = $this->language->get('column_date_modified');
+		$data['column_action'] = $this->language->get('column_action');
 
 		$data['entry_username'] = $this->language->get('entry_username');
 		$data['entry_password'] = $this->language->get('entry_password');
 		$data['entry_status'] = $this->language->get('entry_status');
-
+		$data['entry_ip'] = $this->language->get('entry_ip');
+		
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_generate'] = $this->language->get('button_generate');
+		$data['button_ip_add'] = $this->language->get('button_ip_add');
+		$data['button_remove'] = $this->language->get('button_remove');
+		
+		$data['tab_general'] = $this->language->get('tab_general');
+		$data['tab_ip'] = $this->language->get('tab_ip');
+		$data['tab_session'] = $this->language->get('tab_session');
+
+		$data['token'] = $this->session->data['token'];
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -358,6 +376,31 @@ class ControllerUserApi extends Controller {
 			$data['status'] = 0;
 		}
 
+		// IP
+		if (isset($this->request->post['api_ip'])) {
+			$data['api_ips'] = $this->request->post['api_ip'];
+		} elseif (isset($this->request->get['api_id'])) {
+			$data['api_ips'] = $this->model_user_api->getApiIps($this->request->get['api_id']);
+		} else {
+			$data['api_ips'] = array();
+		}
+
+		$data['api_sessions'] = array();
+
+		if (isset($this->request->get['api_id'])) {
+			$results = $this->model_user_api->getApiSessions($this->request->get['api_id']);
+			
+			foreach ($results as $result) {
+				$data['api_sessions'][] = array(
+					'api_session_id' => $result['api_session_id'],
+					'token'          => $result['token'],
+					'ip'             => $result['ip'],
+					'date_added'     => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
+					'date_modified'  => date($this->language->get('datetime_format'), strtotime($result['date_modified']))
+				);
+			}
+		}
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -388,4 +431,42 @@ class ControllerUserApi extends Controller {
 
 		return !$this->error;
 	}
+	
+	public function addIp() {
+		$this->load->language('user/api');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'user/api')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('user/api');
+
+			$this->model_user_api->addApiIp($this->request->get['api_id'], $this->request->post['ip']);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+	
+	public function deleteSession() {
+		$this->load->language('user/api');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'user/api')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('user/api');
+			
+			$this->model_user_api->deleteApiSession($this->request->get['api_session_id']);
+			
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}	
 }

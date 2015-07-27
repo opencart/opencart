@@ -9,6 +9,7 @@ class ModelPaymentFirstdata extends Model {
 			  `order_ref_previous` CHAR(50) NOT NULL,
 			  `pasref` VARCHAR(50) NOT NULL,
 			  `pasref_previous` VARCHAR(50) NOT NULL,
+			  `tdate` DATETIME NOT NULL,
 			  `date_added` DATETIME NOT NULL,
 			  `date_modified` DATETIME NOT NULL,
 			  `capture_status` INT(1) DEFAULT NULL,
@@ -41,6 +42,12 @@ class ModelPaymentFirstdata extends Model {
 			  `token` CHAR(64) NOT NULL,
 			  PRIMARY KEY (`firstdata_card_id`)
 			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
+	}
+
+	public function uninstall() {
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "firstdata_order`;");
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "firstdata_order_transaction`;");
+		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "firstdata_card`;");
 	}
 
 	public function void($order_id) {

@@ -3,7 +3,7 @@ class ControllerCatalogProduct extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('catalog/product');
+		$this->language->load('catalog/product');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerCatalogProduct extends Controller {
 	}
 
 	public function add() {
-		$this->load->language('catalog/product');
+		$this->language->load('catalog/product');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -65,7 +65,7 @@ class ControllerCatalogProduct extends Controller {
 	}
 
 	public function edit() {
-		$this->load->language('catalog/product');
+		$this->language->load('catalog/product');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -117,7 +117,7 @@ class ControllerCatalogProduct extends Controller {
 	}
 
 	public function delete() {
-		$this->load->language('catalog/product');
+		$this->language->load('catalog/product');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -171,7 +171,7 @@ class ControllerCatalogProduct extends Controller {
 	}
 
 	public function copy() {
-		$this->load->language('catalog/product');
+		$this->language->load('catalog/product');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -376,7 +376,7 @@ class ControllerCatalogProduct extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -522,7 +522,7 @@ class ControllerCatalogProduct extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_form'] = !isset($this->request->get['product_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -662,13 +662,13 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['error_date_available'] = '';
 		}
-		
+
 		if (isset($this->error['keyword'])) {
 			$data['error_keyword'] = $this->error['keyword'];
 		} else {
 			$data['error_keyword'] = '';
 		}
-		
+
 		$url = '';
 
 		if (isset($this->request->get['filter_name'])) {
@@ -760,7 +760,7 @@ class ControllerCatalogProduct extends Controller {
 		}
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
-		
+
 		if (isset($this->request->post['model'])) {
 			$data['model'] = $this->request->post['model'];
 		} elseif (!empty($product_info)) {
@@ -1152,9 +1152,9 @@ class ControllerCatalogProduct extends Controller {
 			}
 		}
 
-		$this->load->model('sale/customer_group');
+		$this->load->model('customer/customer_group');
 
-		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
+		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
 		if (isset($this->request->post['product_discount'])) {
 			$product_discounts = $this->request->post['product_discount'];
@@ -1322,7 +1322,7 @@ class ControllerCatalogProduct extends Controller {
 		if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {
 			$this->error['model'] = $this->language->get('error_model');
 		}
-		
+
 		if (utf8_strlen($this->request->post['keyword']) > 0) {
 			$this->load->model('catalog/url_alias');
 

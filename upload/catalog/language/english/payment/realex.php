@@ -39,6 +39,7 @@ $_['text_3d_s7']				= 'Incorrect Password Entered, no liability shift';
 $_['text_3d_s8']				= 'Authentication Unavailable, no liability shift';
 $_['text_3d_s9']				= 'Invalid Response From ACS, no liability shift';
 $_['text_3d_s10']				= 'RealMPI Fatal Error, no liability shift';
+$_['text_3d_liability']     	= 'No Liability Shift';
 $_['text_card_visa']			= 'Visa';
 $_['text_card_mc']				= 'Mastercard';
 $_['text_card_amex']			= 'American Express';

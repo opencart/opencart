@@ -28,7 +28,7 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-code"><span data-toggle="tooltip" data-html="true" data-trigger="click" title="<?php echo htmlspecialchars($help_code); ?>"><?php echo $entry_code; ?></span></label>
             <div class="col-sm-10">
-              <textarea name="code" rows="5" id="input-code" class="form-control"><?php echo $code; ?></textarea>
+              <textarea name="google_hangouts_code" rows="5" id="input-code" class="form-control"><?php echo $google_hangouts_code; ?></textarea>
               <?php if ($error_code) { ?>
               <div class="text-danger"><?php echo $error_code; ?></div>
               <?php } ?>
@@ -37,8 +37,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
             <div class="col-sm-10">
-              <select name="status" id="input-status" class="form-control">
-                <?php if ($status) { ?>
+              <select name="google_hangouts_status" id="input-status" class="form-control">
+                <?php if ($google_hangouts_status) { ?>
                 <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                 <option value="0"><?php echo $text_disabled; ?></option>
                 <?php } else { ?>
@@ -47,7 +47,7 @@
                 <?php } ?>
               </select>
             </div>
-          </div>          
+          </div>
         </form>
       </div>
     </div>

@@ -87,7 +87,7 @@ class ControllerReportCustomerActivity extends Controller {
 		$results = $this->model_report_customer->getCustomerActivities($filter_data);
 
 		foreach ($results as $result) {
-			$comment = vsprintf($this->language->get('text_' . $result['key']), unserialize($result['data']));
+			$comment = vsprintf($this->language->get('text_' . $result['key']), json_decode($result['data'], true));
 
 			$find = array(
 				'customer_id=',
@@ -95,7 +95,7 @@ class ControllerReportCustomerActivity extends Controller {
 			);
 
 			$replace = array(
-				$this->url->link('sale/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=', 'SSL'),
+				$this->url->link('customer/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=', 'SSL'),
 				$this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=', 'SSL')
 			);
 
@@ -107,7 +107,7 @@ class ControllerReportCustomerActivity extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');

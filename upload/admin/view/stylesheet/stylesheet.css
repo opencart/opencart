@@ -605,3 +605,18 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .jqvmap-label {
 	z-index: 999;
 }
+
+.alert {
+	overflow: auto;
+}
+
+/* Menu Fix For System -> Layout -> Banner */
+.collapse.in {
+    display: block;
+    visibility: unset;
+}
+.collapse {
+    display: none;
+    visibility: unset;
+}
+/* Menu Fix For System -> Layout -> Banner */

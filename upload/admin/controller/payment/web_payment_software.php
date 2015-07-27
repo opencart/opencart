@@ -18,7 +18,7 @@ class ControllerPaymentWebPaymentSoftware extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -78,9 +78,8 @@ class ControllerPaymentWebPaymentSoftware extends Controller {
 			'href' => $this->url->link('payment/web_payment_software', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
-		$data['action'] = HTTPS_SERVER . 'index.php?route=payment/web_payment_software&token=' . $this->session->data['token'];
-
-		$data['cancel'] = HTTPS_SERVER . 'index.php?route=extension/payment&token=' . $this->session->data['token'];
+		$data['action'] = $this->url->link('payment/web_payment_software', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
 
 		if (isset($this->request->post['web_payment_software_login'])) {
 			$data['web_payment_software_merchant_name'] = $this->request->post['web_payment_software_merchant_name'];

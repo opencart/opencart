@@ -13,13 +13,13 @@ $_['button_remove_error'] 			= 'Remove error messages';
 $_['button_save_upload'] 			= 'Save and upload';
 $_['button_browse'] 				= 'Browse';
 $_['button_saved_listings'] 		= 'View saved listings';
-$_['button_remove_links'] 			= "Remove links";
-$_['button_create_new_listing'] 	= "Create new listing";
+$_['button_remove_links'] 			= 'Remove links';
+$_['button_create_new_listing'] 	= 'Create new listing';
 
 // Help
-$_['help_sku'] 						= "Unique product's ID assigned by the merchant";
-$_['help_restock_date'] 			= "This is the date you will be able to ship any back-ordered items to a customer. This date should not be greater than 30 days from the date listed or orders received may automatically be canceled.";
-$_['help_sale_price'] 				= "Sale Price must have a start and end date";
+$_['help_sku'] 						= 'Unique product ID assigned by the merchant';
+$_['help_restock_date'] 			= 'This is the date you will be able to ship any back-ordered items to a customer. This date should not be greater than 30 days from the date listed or orders received may automatically be canceled.';
+$_['help_sale_price'] 				= 'Sale Price must have a start and end date';
 
 //Text
 $_['text_products_sent'] 			= 'Products were sent for processing';
@@ -55,8 +55,9 @@ $_['column_price'] 					= 'Price';
 $_['column_action'] 				= 'Action';
 $_['column_name'] 					= 'Product Name';
 $_['column_model'] 					= 'Model';
-$_['column_combination'] 			= 'Combination';
-$_['column_sku'] 					= 'SKU';
+$_['column_combination'] 			= 'Variant Combination';
+$_['column_sku_variant'] 			= 'Variant SKU';
+$_['column_sku'] 					= 'Product SKU';
 $_['column_amazon_sku'] 			= 'Amazon item SKU';
 
 // Entry
@@ -86,7 +87,7 @@ $_['error_text_missing'] 			= 'You must enter some search details';
 $_['error_data_missing'] 			= 'Required data is missing';
 $_['error_missing_asin'] 			= 'ASIN is missing';
 $_['error_marketplace_missing'] 	= 'Please select a marketplace';
-$_['error_condition_missing'] 		= "Please select condition";
+$_['error_condition_missing'] 		= 'Please select condition';
 $_['error_fetch'] 					= 'Could not get the data';
 $_['error_amazonus_price'] 			= 'Could not get the price from Amazon US';
 $_['error_stock'] 					= 'You cannot list an item with less than 1 item in stock';

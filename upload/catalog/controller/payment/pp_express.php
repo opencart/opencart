@@ -21,6 +21,7 @@ class ControllerPaymentPPExpress extends Controller {
 	public function express() {
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$this->log->write('No product redirect');
+
 			$this->response->redirect($this->url->link('checkout/cart'));
 		}
 
@@ -29,6 +30,7 @@ class ControllerPaymentPPExpress extends Controller {
 			 * If the customer is already logged in
 			 */
 			$this->session->data['paypal']['guest'] = false;
+
 			unset($this->session->data['guest']);
 		} else {
 			if ($this->config->get('config_checkout_guest') && !$this->config->get('config_customer_price') && !$this->cart->hasDownload() && !$this->cart->hasRecurringProducts()) {
@@ -43,6 +45,7 @@ class ControllerPaymentPPExpress extends Controller {
 				 * Send them to the normal checkout flow.
 				 */
 				unset($this->session->data['guest']);
+
 				$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
 			}
 		}
@@ -61,8 +64,7 @@ class ControllerPaymentPPExpress extends Controller {
 			$shipping = 1;
 		}
 
-		$max_amount = $this->currency->convert($this->cart->getTotal(), $this->config->get('config_currency'), 'USD');
-		$max_amount = min($max_amount * 1.5, 10000);
+		$max_amount = $this->cart->getTotal() * 1.5;
 		$max_amount = $this->currency->format($max_amount, $this->currency->getCode(), '', false);
 
 		$data = array(
@@ -141,11 +143,13 @@ class ControllerPaymentPPExpress extends Controller {
 			$this->session->data['guest']['firstname'] = trim($result['FIRSTNAME']);
 			$this->session->data['guest']['lastname'] = trim($result['LASTNAME']);
 			$this->session->data['guest']['email'] = trim($result['EMAIL']);
+
 			if (isset($result['PHONENUM'])) {
 				$this->session->data['guest']['telephone'] = $result['PHONENUM'];
 			} else {
 				$this->session->data['guest']['telephone'] = '';
 			}
+
 			$this->session->data['guest']['fax'] = '';
 
 			$this->session->data['guest']['payment']['firstname'] = trim($result['FIRSTNAME']);
@@ -988,7 +992,7 @@ class ControllerPaymentPPExpress extends Controller {
 				foreach ($this->session->data['vouchers'] as $voucher) {
 					$voucher_data[] = array(
 						'description'      => $voucher['description'],
-						'code'             => substr(md5(mt_rand()), 0, 10),
+						'code'             => token(10),
 						'to_name'          => $voucher['to_name'],
 						'to_email'         => $voucher['to_email'],
 						'from_name'        => $voucher['from_name'],
@@ -1250,7 +1254,7 @@ class ControllerPaymentPPExpress extends Controller {
 					}
 				}
 
-				$this->session->data['error'] = $result['L_LONGMESSAGE0'];
+				$this->session->data['error_warning'] = $result['L_LONGMESSAGE0'];
 				$this->response->redirect($this->url->link('payment/pp_express/expressConfirm', '', 'SSL'));
 			}
 		} else {
@@ -1269,20 +1273,19 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		$max_amount = $this->currency->convert($order_info['total'], $this->config->get('config_currency'), 'USD');
-		$max_amount = min($max_amount * 1.25, 10000);
+		$max_amount = $this->cart->getTotal() * 1.5;
 		$max_amount = $this->currency->format($max_amount, $this->currency->getCode(), '', false);
 
 		if ($this->cart->hasShipping()) {
 			$shipping = 0;
 			$data_shipping = array(
-				'PAYMENTREQUEST_0_SHIPTONAME'				=> html_entity_decode($order_info['shipping_firstname'] . ' ' . $order_info['shipping_lastname'], ENT_QUOTES, 'UTF-8'),
-				'PAYMENTREQUEST_0_SHIPTOSTREET'				=> html_entity_decode($order_info['shipping_address_1'], ENT_QUOTES, 'UTF-8'),
-				'PAYMENTREQUEST_0_SHIPTOSTREET2'			=> html_entity_decode($order_info['shipping_address_2'], ENT_QUOTES, 'UTF-8'),
-				'PAYMENTREQUEST_0_SHIPTOCITY'				=> html_entity_decode($order_info['shipping_city'], ENT_QUOTES, 'UTF-8'),
-				'PAYMENTREQUEST_0_SHIPTOSTATE'				=> html_entity_decode($order_info['shipping_zone'], ENT_QUOTES, 'UTF-8'),
-				'PAYMENTREQUEST_0_SHIPTOZIP'				=> html_entity_decode($order_info['shipping_postcode'], ENT_QUOTES, 'UTF-8'),
-				'PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE'		=> $order_info['shipping_iso_code_2']
+				'PAYMENTREQUEST_0_SHIPTONAME'        => html_entity_decode($order_info['shipping_firstname'] . ' ' . $order_info['shipping_lastname'], ENT_QUOTES, 'UTF-8'),
+				'PAYMENTREQUEST_0_SHIPTOSTREET'      => html_entity_decode($order_info['shipping_address_1'], ENT_QUOTES, 'UTF-8'),
+				'PAYMENTREQUEST_0_SHIPTOSTREET2'     => html_entity_decode($order_info['shipping_address_2'], ENT_QUOTES, 'UTF-8'),
+				'PAYMENTREQUEST_0_SHIPTOCITY'        => html_entity_decode($order_info['shipping_city'], ENT_QUOTES, 'UTF-8'),
+				'PAYMENTREQUEST_0_SHIPTOSTATE'       => html_entity_decode($order_info['shipping_zone'], ENT_QUOTES, 'UTF-8'),
+				'PAYMENTREQUEST_0_SHIPTOZIP'         => html_entity_decode($order_info['shipping_postcode'], ENT_QUOTES, 'UTF-8'),
+				'PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE' => $order_info['shipping_iso_code_2']
 			);
 		} else {
 			$shipping = 1;
@@ -1342,9 +1345,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 	public function checkoutReturn() {
 		$this->language->load('payment/pp_express');
-		/**
-		 * Get the details
-		 */
+
 		$this->load->model('payment/pp_express');
 		$this->load->model('checkout/order');
 
@@ -1511,7 +1512,6 @@ class ControllerPaymentPPExpress extends Controller {
 				$this->response->redirect($this->url->link('checkout/success'));
 			}
 		} else {
-
 			if ($result['L_ERRORCODE0'] == '10486') {
 				if (isset($this->session->data['paypal_redirect_count'])) {
 
@@ -1567,10 +1567,10 @@ class ControllerPaymentPPExpress extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/not_found.tpl')) {
-				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/not_found.tpl'));
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
+				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/error/not_found.tpl'));
 			} else {
-				$this->response->setOutput($this->load->view('default/template/payment/not_found.tpl'));
+				$this->response->setOutput($this->load->view('default/template/error/not_found.tpl'));
 			}
 		}
 	}
@@ -1936,7 +1936,7 @@ class ControllerPaymentPPExpress extends Controller {
 		if (!$error) {
 			return true;
 		} else {
-			$this->session->data['error_warning'] = $this->language->get('error_voucher');;
+			$this->session->data['error_warning'] = $this->language->get('error_voucher');
 			return false;
 		}
 	}

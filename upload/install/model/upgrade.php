@@ -134,7 +134,7 @@ class ModelUpgrade extends Model {
 			}
 		}
 
-		$this->db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+		$this->db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
 
 		// Get all current tables, fields, type, size, etc..
 		$table_old_data = array();
@@ -313,7 +313,7 @@ class ModelUpgrade extends Model {
 			if (!$setting['serialized']) {
 				$settings[$setting['key']] = $setting['value'];
 			} else {
-				$settings[$setting['key']] = unserialize($setting['value']);
+				$settings[$setting['key']] = json_decode($setting['value'], true);
 			}
 		}
 

@@ -84,6 +84,8 @@ $_['text_insert']           		= 'Add new eBay listing';
 $_['text_price_ex_tax']           	= 'Excluding tax';
 $_['text_price_inc_tax']          	= 'Including tax';
 $_['text_ebay_imagesize_ok']        = 'The image size is good, it can be used on eBay';
+$_['text_compatible']        		= 'Compatible options';
+$_['text_loading_compatibility']    = 'Loading compatibility options';
 
 // Column
 $_['column_stock_total']      		= 'In stock';
@@ -99,8 +101,10 @@ $_['column_img_size']      			= 'Size';
 $_['column_template_image']         = 'Template image';
 $_['column_ebay_image']         	= 'eBay image';
 $_['column_main_ebay_image']        = 'Main eBay image';
+$_['column_sku']        			= 'SKU';
 
 // Entry
+$_['entry_compatibility']           = 'Parts compatibility';
 $_['entry_shop_category']           = 'Shop Category';
 $_['entry_category_popular']        = 'Popular Categories';
 $_['entry_category_suggested']      = 'eBay suggested category';
@@ -140,6 +144,8 @@ $_['entry_shipping_in_desc']        = 'Freight info in description';
 $_['entry_shipping_type_int']       = 'International shipping type';
 $_['entry_shipping_intnat']         = 'International shipping services';
 $_['entry_shipping_handling_int']   = 'Handling fee (international)';
+$_['entry_vrm']   					= 'Vehicle Registration Mark';
+$_['entry_vin']   					= 'Vehicle Identification Number';
 
 // Tab
 $_['tab_feature']              		= 'Features';
@@ -154,6 +160,9 @@ $_['help_quantity_reserve']         = 'Enter a lower amount if you want to maint
 $_['help_price_ex_tax']        		= 'Your standard item price excluding tax. This value is not sent to eBay.';
 $_['help_price_inc_tax']       		= 'This value is sent to eBay and is the price users will pay.';
 $_['help_private']             		= 'Hide buyer user names';
+$_['help_category_suggested']       = 'The list of categories eBay has suggested based of your item title';
+$_['help_category_popular']       	= 'A list of your recently used categories';
+$_['help_shop_category']       		= 'The category where the product will be added in your eBay shop';
 
 // Error
 $_['error_choose_category']    		= 'You must choose a category';
@@ -179,3 +188,4 @@ $_['error_image_size']          	= 'Ensure that you have a gallery and thumb ima
 $_['error_no_images']            	= 'Listing must have at least 1 image uploaded to eBay';
 $_['error_main_image']           	= 'You need to choose a main eBay image from your selection of eBay images';
 $_['error_ebay_imagesize']          = 'Image must be at least 500px on 1 side to use on eBay';
+$_['error_no_sku']          		= 'No SKU found!';

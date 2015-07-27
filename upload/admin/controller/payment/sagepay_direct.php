@@ -18,7 +18,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -193,7 +193,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 		$this->model_payment_sagepay_direct->uninstall();
 	}
 
-	public function orderAction() {
+	public function order() {
 
 		if ($this->config->get('sagepay_direct_status')) {
 

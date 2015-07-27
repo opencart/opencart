@@ -6,14 +6,14 @@ class ControllerExtensionModule extends Controller {
 		$this->load->language('extension/module');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$this->load->model('extension/extension');
-		
+
 		$this->load->model('extension/module');
 
 		$this->getList();
 	}
-	
+
 	public function install() {
 		$this->load->language('extension/module');
 
@@ -39,9 +39,9 @@ class ControllerExtensionModule extends Controller {
 			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
-		$this->getList();	
+		$this->getList();
 	}
-	
+
 	public function uninstall() {
 		$this->load->language('extension/module');
 
@@ -66,11 +66,11 @@ class ControllerExtensionModule extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
-		}	
-		
+		}
+
 		$this->getList();
 	}
-	
+
 	public function delete() {
 		$this->load->language('extension/module');
 
@@ -88,9 +88,9 @@ class ControllerExtensionModule extends Controller {
 			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
-		$this->getList();		
+		$this->getList();
 	}
-	
+
 	public function getList() {
 		$data['breadcrumbs'] = array();
 
@@ -103,9 +103,9 @@ class ControllerExtensionModule extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL')
 		);
-		
+
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_layout'] = sprintf($this->language->get('text_layout'), $this->url->link('design/layout', 'token=' . $this->session->data['token'], 'SSL'));
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
@@ -113,7 +113,7 @@ class ControllerExtensionModule extends Controller {
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_action'] = $this->language->get('column_action');
-		
+
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 		$data['button_install'] = $this->language->get('button_install');
@@ -124,7 +124,7 @@ class ControllerExtensionModule extends Controller {
 		} else {
 			$data['error_warning'] = '';
 		}
-		
+
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
 
@@ -132,7 +132,7 @@ class ControllerExtensionModule extends Controller {
 		} else {
 			$data['success'] = '';
 		}
-		
+
 		$data['delete'] = $this->url->link('extension/module/delete', 'token=' . $this->session->data['token'], 'SSL');
 
 		$extensions = $this->model_extension_extension->getInstalled('module');
@@ -142,10 +142,10 @@ class ControllerExtensionModule extends Controller {
 				$this->model_extension_extension->uninstall('module', $value);
 
 				unset($extensions[$key]);
-				
+
 				$this->model_extension_module->deleteModulesByCode($value);
 			}
-		}	
+		}
 
 		$data['extensions'] = array();
 
@@ -158,9 +158,9 @@ class ControllerExtensionModule extends Controller {
 				$this->load->language('module/' . $extension);
 
 				$module_data = array();
-				
+
 				$modules = $this->model_extension_module->getModulesByCode($extension);
-				
+
 				foreach ($modules as $module) {
 					$module_data[] = array(
 						'module_id' => $module['module_id'],
@@ -180,25 +180,30 @@ class ControllerExtensionModule extends Controller {
 				);
 			}
 		}
-		
+		$names = array();
+		foreach ($data['extensions'] as $key => $row)
+		{
+			$names[$key] = $row['name'];
+		}
+		array_multisort($names, SORT_ASC, $data['extensions']);
 		if (isset($this->request->post['selected'])) {
 			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
 			$data['selected'] = array();
 		}
-				
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('extension/module.tpl', $data));
 	}
-	
+
 	protected function validate() {
 		if (!$this->user->hasPermission('modify', 'extension/module')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
-			
+
 		return !$this->error;
 	}
 
@@ -208,5 +213,5 @@ class ControllerExtensionModule extends Controller {
 		}
 
 		return !$this->error;
-	}	
+	}
 }

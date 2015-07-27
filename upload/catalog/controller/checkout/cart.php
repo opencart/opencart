@@ -60,7 +60,7 @@ class ControllerCheckoutCart extends Controller {
 				$data['success'] = '';
 			}
 
-			$data['action'] = $this->url->link('checkout/cart/edit');
+			$data['action'] = $this->url->link('checkout/cart/edit', '', true);
 
 			if ($this->config->get('config_cart_weight')) {
 				$data['weight'] = $this->weight->format($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->language->get('decimal_point'), $this->language->get('thousand_point'));
@@ -292,7 +292,7 @@ class ControllerCheckoutCart extends Controller {
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
 		if ($product_info) {
-			if (isset($this->request->post['quantity'])) {
+			if (isset($this->request->post['quantity']) && ((int)$this->request->post['quantity'] >= $product_info['minimum'])) {
 				$quantity = (int)$this->request->post['quantity'];
 			} else {
 				$quantity = $product_info['minimum'] ? $product_info['minimum'] : 1;
@@ -336,7 +336,13 @@ class ControllerCheckoutCart extends Controller {
 				$this->cart->add($this->request->post['product_id'], $quantity, $option, $recurring_id);
 
 				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']), $product_info['name'], $this->url->link('checkout/cart'));
-
+				
+				// Edit customers cart
+				$this->load->model('account/customer');
+				
+				$this->model_account_customer->editCart($this->cart->getCart());
+				
+				// Unset all shipping and payment methods
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['shipping_methods']);
 				unset($this->session->data['payment_method']);
@@ -399,6 +405,11 @@ class ControllerCheckoutCart extends Controller {
 				$this->cart->update($key, $value);
 			}
 
+			// Edit customers cart
+			$this->load->model('account/customer');
+			
+			$this->model_account_customer->editCart($this->cart->getCart());
+				
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);
@@ -425,6 +436,11 @@ class ControllerCheckoutCart extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_remove');
 
+			// Edit customers cart
+			$this->load->model('account/customer');
+			
+			$this->model_account_customer->editCart($this->cart->getCart());
+				
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);

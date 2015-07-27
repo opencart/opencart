@@ -1,6 +1,5 @@
 <?php
 class ModelPaymentSecureTradingWs extends Model {
-
 	public function install() {
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "securetrading_ws_order` (
@@ -279,7 +278,7 @@ class ModelPaymentSecureTradingWs extends Model {
 
 		$response = curl_exec($ch);
 
-		if ($response === False) {
+		if ($response === false) {
 			$this->log->write('Secure Trading WS CURL Error: (' . curl_errno($ch) . ') ' . curl_error($ch));
 		}
 
@@ -336,7 +335,7 @@ class ModelPaymentSecureTradingWs extends Model {
 
 		$response = curl_exec($ch);
 
-		if ($response === False) {
+		if ($response === false) {
 			$this->log->write('Secure Trading WS CURL Error: (' . curl_errno($ch) . ') ' . curl_error($ch));
 		}
 
@@ -349,5 +348,4 @@ class ModelPaymentSecureTradingWs extends Model {
 		$log = new Log('securetrading_ws.log');
 		$log->write($message);
 	}
-
 }

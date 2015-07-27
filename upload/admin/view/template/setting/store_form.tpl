@@ -773,7 +773,7 @@ $('select[name=\'config_template\']').trigger('change');
   <script type="text/javascript"><!--
 $('select[name=\'config_country_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=setting/store/country&token=<?php echo $token; ?>&country_id=' + this.value,
+		url: 'index.php?route=localisation/country/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'config_country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');

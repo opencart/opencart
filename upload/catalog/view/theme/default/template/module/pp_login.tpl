@@ -1,6 +1,6 @@
 <div class="panel panel-default">
-  <div class="panel-body" style="text-align: right;"> <span id="pp_login_container"></span> 
-    <script src="https://www.paypalobjects.com/js/external/api.js"></script> 
+  <div class="panel-body" style="text-align: right;"> <span id="pp_login_container"></span>
+    <script src="https://www.paypalobjects.com/js/external/api.js"></script>
     <script>
 paypal.use(['login'], function(login) {
 	login.render ({
@@ -13,6 +13,6 @@ paypal.use(['login'], function(login) {
 		'returnurl': '<?php echo $return_url; ?>'
 	});
 });
-    </script> 
+    </script>
   </div>
 </div>

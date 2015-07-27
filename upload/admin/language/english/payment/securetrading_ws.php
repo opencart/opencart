@@ -6,10 +6,6 @@ $_['tab_myst'] = 'MyST';
 
 $_['text_securetrading_ws'] = '<a href="http://www.securetradingfs.com/partner/open-cart/" target="_blank"><img src="view/image/payment/secure_trading.png" alt="Secure Trading" title="Secure Trading" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_payment'] = 'Payment';
-$_['text_enabled'] = 'Enabled';
-$_['text_disabled'] = 'Disabled';
-$_['text_yes'] = 'Yes';
-$_['text_no'] = 'No';
 $_['text_all_geo_zones'] = 'All Geo Zones';
 $_['text_process_immediately'] = 'Process immediately';
 $_['text_wait_x_days'] = 'Wait %d days';
@@ -64,14 +60,14 @@ $_['entry_hour'] = 'Hour';
 $_['entry_minute'] = 'Minute';
 
 $_['column_order_id'] = 'Order ID';
-$_['column_transaction_reference'] = "Transaction reference";
-$_['column_customer'] = "Customer";
-$_['column_total'] = "Total";
-$_['column_currency'] = "Currency";
-$_['column_settle_status'] = "Settle status";
-$_['column_status'] = "Status";
-$_['column_type'] = "Type";
-$_['column_payment_type'] = "Payment type";
+$_['column_transaction_reference'] = 'Transaction reference';
+$_['column_customer'] = 'Customer';
+$_['column_total'] = 'Total';
+$_['column_currency'] = 'Currency';
+$_['column_settle_status'] = 'Settle status';
+$_['column_status'] = 'Status';
+$_['column_type'] = 'Type';
+$_['column_payment_type'] = 'Payment type';
 
 $_['error_permission'] = 'You do not have permissions to modify this module';
 $_['error_site_reference'] = 'Site Reference is required';

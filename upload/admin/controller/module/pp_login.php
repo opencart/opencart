@@ -72,7 +72,7 @@ class ControllerModulePPLogin extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -113,9 +113,9 @@ class ControllerModulePPLogin extends Controller {
 			$data['pp_login_debug'] = $this->config->get('pp_login_debug');
 		}
 
-		$this->load->model('sale/customer_group');
+		$this->load->model('customer/customer_group');
 
-		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
+		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
 		if (isset($this->request->post['pp_login_customer_group_id'])) {
 			$data['pp_login_customer_group_id'] = $this->request->post['pp_login_customer_group_id'];

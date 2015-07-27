@@ -45,7 +45,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label"><?php echo $entry_overwrite; ?></label>
             <div class="col-sm-10">
-              <textarea rows="10" readonly="readonly" id="overwrite" class="form-control"></textarea>
+              <textarea rows="10" readonly id="overwrite" class="form-control"></textarea>
               <br />
               <button type="button" id="button-continue" class="btn btn-primary" disabled="disabled"><i class="fa fa-check"></i> <?php echo $button_continue; ?></button>
             </div>
@@ -60,33 +60,33 @@ var total = 0;
 
 $('#button-upload').on('click', function() {
 	$('#form-upload').remove();
-	
+
 	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
 
 	$('#form-upload input[name=\'file\']').trigger('click');
-	
+
 	if (typeof timer != 'undefined') {
     	clearInterval(timer);
 	}
-	
+
 	timer = setInterval(function() {
 		if ($('#form-upload input[name=\'file\']').val() != '') {
-			clearInterval(timer);	
-			
+			clearInterval(timer);
+
 			// Reset everything
 			$('.alert').remove();
 			$('#progress-bar').css('width', '0%');
-			$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');		
+			$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');
 			$('#progress-text').html('');
-		
+
 			$.ajax({
 				url: 'index.php?route=extension/installer/upload&token=<?php echo $token; ?>',
-				type: 'post',		
+				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),
 				cache: false,
 				contentType: false,
-				processData: false,		
+				processData: false,
 				beforeSend: function() {
 					$('#button-upload').button('loading');
 				},
@@ -95,53 +95,53 @@ $('#button-upload').on('click', function() {
 				},
 				success: function(json) {
 					if (json['error']) {
-						$('#progress-bar').addClass('progress-bar-danger');				
+						$('#progress-bar').addClass('progress-bar-danger');
 						$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 					}
-					
+
 					if (json['step']) {
 						step = json['step'];
 						total = step.length;
-						
+
 						if (json['overwrite'].length) {
 							html = '';
-							
+
 							for (i = 0; i < json['overwrite'].length; i++) {
 								html += json['overwrite'][i] + "\n";
 							}
-							
+
 							$('#overwrite').html(html);
-							
+
 							$('#button-continue').prop('disabled', false);
 						} else {
 							next();
-						}	
+						}
 					}
-				},			
+				},
 				error: function(xhr, ajaxOptions, thrownError) {
 					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 				}
-			});	
+			});
 		}
 	}, 500);
 });
 
 $('#button-continue').on('click', function() {
 	next();
-	
+
 	$('#button-continue').prop('disabled', true);
 });
 
 function next() {
 	data = step.shift();
-	
+
 	if (data) {
 		$('#progress-bar').css('width', (100 - (step.length / total) * 100) + '%');
 		$('#progress-text').html('<span class="text-info">' + data['text'] + '</span>');
-		
+
 		$.ajax({
 			url: data.url,
-			type: 'post',		
+			type: 'post',
 			dataType: 'json',
 			data: 'path=' + data.path,
 			success: function(json) {
@@ -149,13 +149,13 @@ function next() {
 					$('#progress-bar').addClass('progress-bar-danger');
 					$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 					$('#button-clear').prop('disabled', false);
-				} 
-				
+				}
+
 				if (json['success']) {
 					$('#progress-bar').addClass('progress-bar-success');
 					$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
 				}
-									
+
 				if (!json['error'] && !json['success']) {
 					next();
 				}
@@ -169,27 +169,27 @@ function next() {
 
 $('#button-clear').bind('click', function() {
 	$.ajax({
-		url: 'index.php?route=extension/installer/clear&token=<?php echo $token; ?>',	
+		url: 'index.php?route=extension/installer/clear&token=<?php echo $token; ?>',
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-clear').button('loading');
-		},	
+		},
 		complete: function() {
 			$('#button-clear').button('reset');
-		},		
+		},
 		success: function(json) {
 			$('.alert').remove();
-				
+
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			} 
-		
+			}
+
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				
+
 				$('#button-clear').prop('disabled', true);
 			}
-		},			
+		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}

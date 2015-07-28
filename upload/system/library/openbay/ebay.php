@@ -8,6 +8,8 @@ final class Ebay {
 	private $url = 'https://uk.openbaypro.com/';
 	private $registry;
 	private $no_log = array('notification/getPublicNotifications/', 'setup/getEbayCategories/', 'item/getItemAllList/', 'account/validate/', 'item/getItemListLimited/');
+	private $logger;
+	private $max_log_size = 50; //max log size in Mb
 
 	public function __construct($registry) {
 		$this->registry = $registry;
@@ -21,9 +23,9 @@ final class Ebay {
 		$this->lasterror = '';
 		$this->lastmsg = '';
 
-		$this->load->library('log');
-
-		$this->logger = new \Log('ebaylog.log');
+		if ($this->logging == 1) {
+			$this->setLogger();
+		}
 	}
 
 	public function __get($name) {
@@ -138,6 +140,18 @@ final class Ebay {
 		} else {
 			$this->log('openbay_noresponse_call() - OpenBay Pro not active . ');
 		}
+	}
+
+	private function setLogger() {
+		$this->load->library('log');
+
+		if(file_exists(DIR_LOGS . 'ebaylog.log')) {
+			if(filesize(DIR_LOGS . 'ebaylog.log') > ($this->max_log_size * 1000000)) {
+				rename(DIR_LOG . 'ebaylog.log', DIR_LOG . '_ebaylog_' . date('Y-m-d_H-i-s') . '.log');
+			}
+		}
+
+		$this->logger = new \Log('ebaylog.log');
 	}
 
 	public function log($data, $write = true) {

@@ -420,21 +420,6 @@ final class Ebay {
 		return $this->call('order/getSmpRecord/', array('id' => $sale_id));
 	}
 
-	public function isEbayOrder($id) {
-		$this->log('isEbayOrder() - Is eBay order? ID: ' . $id);
-
-		$qry = $this->db->query("SELECT `comment` FROM `" . DB_PREFIX . "order_history` WHERE `comment` LIKE '[eBay Import:%]' AND `order_id` = '" . (int)$id . "' LIMIT 1");
-
-		if ($qry->num_rows) {
-			$this->log('isEbayOrder() - Yes');
-			$smp_id = str_replace(array('[eBay Import:', ']'), '', $qry->row['comment']);
-			return $smp_id;
-		} else {
-			$this->log('isEbayOrder() - No');
-			return false;
-		}
-	}
-
 	public function getEbayActiveListings() {
 		$this->log('getEbayActiveListings() - Get active eBay items from API');
 		return $this->call('item/getItemAllList/');
@@ -825,7 +810,13 @@ final class Ebay {
 	}
 
 	public function orderStatusListen($order_id, $status_id, $data = array()) {
-		$ebay_id = $this->isEbayOrder($order_id);
+		$ebay_order = $this->getOrder($order_id);
+
+		if (isset($ebay_order['smp_id'])) {
+			$ebay_id = $ebay_order['smp_id'];
+		} else {
+			$ebay_id = false;
+		}
 
 		$this->log('orderStatusListen() - Order ' . $order_id . ' changed status');
 
@@ -1114,6 +1105,20 @@ final class Ebay {
 	public function getOrder($order_id) {
 		if ($this->openbay->testDbTable(DB_PREFIX . "ebay_order") == true) {
 			$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
+
+			if ($qry->num_rows > 0) {
+				return $qry->row;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
+	public function getOrderBySmpId($smp_id) {
+		if ($this->openbay->testDbTable(DB_PREFIX . "ebay_order") == true) {
+			$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_order` WHERE `smp_id` = '" . (int)$smp_id . "' LIMIT 1");
 
 			if ($qry->num_rows > 0) {
 				return $qry->row;

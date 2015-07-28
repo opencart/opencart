@@ -154,7 +154,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 				}
 
 				$default_import_message = $this->language->get('text_smp_id') . (int)$order->smpId . "\r\n";
-				$default_import_message .= $this->language->get('text_buyer') . (int)$order->user->userid . "\r\n";
+				$default_import_message .= $this->language->get('text_buyer') . (string)$order->user->userid . "\r\n";
 
 				//new order, set to pending initially.
 				$this->model_openbay_ebay_order->confirm($order_id, $this->default_pending_id, $default_import_message);

@@ -1423,7 +1423,7 @@ class ControllerSettingSetting extends Controller {
 			$this->error['limit_admin'] = $this->language->get('error_limit');
 		}
 
-		if ((utf8_strlen($this->request->post['config_encryption']) < 3) || (utf8_strlen($this->request->post['config_encryption']) > 32)) {
+		if ((utf8_strlen($this->request->post['config_encryption']) < 32) || (utf8_strlen($this->request->post['config_encryption']) > 1024)) {
 			$this->error['encryption'] = $this->language->get('error_encryption');
 		}
 

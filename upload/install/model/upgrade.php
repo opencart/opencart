@@ -313,7 +313,7 @@ class ModelUpgrade extends Model {
 			if (!$setting['serialized']) {
 				$settings[$setting['key']] = $setting['value'];
 			} else {
-				$settings[$setting['key']] = unserialize($setting['value']);
+				$settings[$setting['key']] = json_decode($setting['value'], true);
 			}
 		}
 

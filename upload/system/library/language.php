@@ -12,6 +12,10 @@ class Language {
 		return (isset($this->data[$key]) ? $this->data[$key] : $key);
 	}
 
+	public function all() {
+		return $this->data;
+	}
+	
 	public function load($filename) {
 		$_ = array();
 
@@ -28,7 +32,5 @@ class Language {
 		}
 
 		$this->data = array_merge($this->data, $_);
-
-		return $this->data;
 	}
 }

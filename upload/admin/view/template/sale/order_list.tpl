@@ -166,52 +166,52 @@
   <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
 	url = 'index.php?route=sale/order&token=<?php echo $token; ?>';
-	
+
 	var filter_order_id = $('input[name=\'filter_order_id\']').val();
-	
+
 	if (filter_order_id) {
 		url += '&filter_order_id=' + encodeURIComponent(filter_order_id);
 	}
-	
+
 	var filter_customer = $('input[name=\'filter_customer\']').val();
-	
+
 	if (filter_customer) {
 		url += '&filter_customer=' + encodeURIComponent(filter_customer);
 	}
-	
+
 	var filter_order_status = $('select[name=\'filter_order_status\']').val();
-	
+
 	if (filter_order_status != '*') {
 		url += '&filter_order_status=' + encodeURIComponent(filter_order_status);
-	}	
+	}
 
 	var filter_total = $('input[name=\'filter_total\']').val();
 
 	if (filter_total) {
 		url += '&filter_total=' + encodeURIComponent(filter_total);
-	}	
-	
+	}
+
 	var filter_date_added = $('input[name=\'filter_date_added\']').val();
-	
+
 	if (filter_date_added) {
 		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
 	}
-	
+
 	var filter_date_modified = $('input[name=\'filter_date_modified\']').val();
-	
+
 	if (filter_date_modified) {
 		url += '&filter_date_modified=' + encodeURIComponent(filter_date_modified);
 	}
-				
+
 	location = url;
 });
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('input[name=\'filter_customer\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
 			url: 'index.php?route=customer/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-			dataType: 'json',			
+			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
@@ -224,23 +224,23 @@ $('input[name=\'filter_customer\']').autocomplete({
 	},
 	'select': function(item) {
 		$('input[name=\'filter_customer\']').val(item['label']);
-	}	
+	}
 });
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('input[name^=\'selected\']').on('change', function() {
 	$('#button-shipping, #button-invoice').prop('disabled', true);
-	
+
 	var selected = $('input[name^=\'selected\']:checked');
-	
+
 	if (selected.length) {
 		$('#button-invoice').prop('disabled', false);
 	}
-	
+
 	for (i = 0; i < selected.length; i++) {
 		if ($(selected[i]).parent().find('input[name^=\'shipping_code\']').val()) {
 			$('#button-shipping').prop('disabled', false);
-			
+
 			break;
 		}
 	}
@@ -257,15 +257,15 @@ $.ajax({
 	data: 'username=<?php echo $api_username; ?>&password=<?php echo $api_password; ?>',
 	dataType: 'json',
 	crossDomain: true,
-	success: function(json) {	
+	success: function(json) {
 		if (json['error']) {
 			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-		} 
-		
+		}
+
 		if (json['token']) {
-			var token = json['token'];
-		}		
-	},	
+			token = json['token'];
+		}
+	},
 	error: function(xhr, ajaxOptions, thrownError) {
 		alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 	}
@@ -274,13 +274,11 @@ $.ajax({
 $('button[id^=\'button-delete\']').on('click', function(e) {
 	if (confirm('<?php echo $text_confirm; ?>')) {
 		var node = this;
-		
+
 		$.ajax({
-			url: '<?php echo $store; ?>index.php?route=api/cart/remove&token=' + token,
-			type: 'post',
-			data: 'order_id=' + $(node).val(),
+			url: '<?php echo $store; ?>index.php?route=api/order/delete&token=' + token + '&order_id=' + $(node).val(),
 			dataType: 'json',
-			crossDomain: true,						
+			crossDomain: true,
 			beforeSend: function() {
 				$(node).button('loading');
 			},
@@ -289,14 +287,14 @@ $('button[id^=\'button-delete\']').on('click', function(e) {
 			},
 			success: function(json) {
 				$('.alert').remove();
-			
+
 				if (json['error']) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
-				
+
 				if (json['success']) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}				
+				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -319,21 +317,21 @@ $('#button-ip-add').on('click', function() {
 		},
 		success: function(json) {
 			$('.alert').remove();
-		
+
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
-			
+
 			if (json['success']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}				
+			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 });
-//--></script> 
+//--></script>
   <script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
   <link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
   <script type="text/javascript"><!--

@@ -17,7 +17,6 @@
         <input type="text" name="tracking_no" value="<?php if (isset($order_info['tracking_no'])){ echo $order_info['tracking_no']; } ?>" placeholder="<?php echo $entry_tracking; ?>" id="tracking-no" class="form-control openbay-data" />
       </div>
     </div>
-
     <input type="hidden" value="eBay" id="order-channel"/>
   </div>
 </div>

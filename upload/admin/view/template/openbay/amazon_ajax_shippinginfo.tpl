@@ -28,30 +28,30 @@
 </div>
 
 <script type="text/javascript">
-		function verifyStatusChange() {
-				var carrier = '';
-				var carrier_other = '';
-				var tracking = '';
+  function verifyStatusChange() {
+    var carrier = '';
+    var carrier_other = '';
+    var tracking = '';
 
-				if ($('#order-channel').val()){
-						carrier = $('#carrier-id').val();
-            carrier_other = $('#carrier-other').val();
-						tracking = $('#tracking-no').val();
+    if ($('#order-channel').val()){
+      carrier = $('#carrier-id').val();
+      carrier_other = $('#carrier-other').val();
+      tracking = $('#tracking-no').val();
 
-						if (carrier != '' && carrier_other != '') {
-								alert('<?php echo $error_tracking_custom; ?>');
-								return false;
-						}
+      if (carrier != '' && carrier_other != '') {
+        alert('<?php echo $error_tracking_custom; ?>');
+        return false;
+      }
 
-						if (tracking != '' && carrier == '' && carrier_other == ''){
-								alert('<?php echo $error_tracking_courier; ?>');
-								return false;
-						}
+      if (tracking != '' && carrier == '' && carrier_other == ''){
+        alert('<?php echo $error_tracking_courier; ?>');
+        return false;
+      }
 
-						if ((tracking.indexOf('>') != -1) || (tracking.indexOf('<') != -1)) {
-								alert('<?php echo $error_tracking_id_format; ?>');
-								return false;
-						}
-				}
-		}
+      if ((tracking.indexOf('>') != -1) || (tracking.indexOf('<') != -1)) {
+        alert('<?php echo $error_tracking_id_format; ?>');
+        return false;
+      }
+    }
+  }
 </script>

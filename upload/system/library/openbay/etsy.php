@@ -98,7 +98,7 @@ final class Etsy {
 
 		if(file_exists(DIR_LOGS . 'etsylog.log')) {
 			if(filesize(DIR_LOGS . 'etsylog.log') > ($this->max_log_size * 1000000)) {
-				rename(DIR_LOG . 'etsylog.log', DIR_LOG . '_etsylog_' . date('Y-m-d_H-i-s') . '.log');
+				rename(DIR_LOGS . 'etsylog.log', DIR_LOGS . '_etsylog_' . date('Y-m-d_H-i-s') . '.log');
 			}
 		}
 

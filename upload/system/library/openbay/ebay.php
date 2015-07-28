@@ -147,7 +147,7 @@ final class Ebay {
 
 		if(file_exists(DIR_LOGS . 'ebaylog.log')) {
 			if(filesize(DIR_LOGS . 'ebaylog.log') > ($this->max_log_size * 1000000)) {
-				rename(DIR_LOG . 'ebaylog.log', DIR_LOG . '_ebaylog_' . date('Y-m-d_H-i-s') . '.log');
+				rename(DIR_LOGS . 'ebaylog.log', DIR_LOGS . '_ebaylog_' . date('Y-m-d_H-i-s') . '.log');
 			}
 		}
 

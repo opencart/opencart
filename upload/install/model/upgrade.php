@@ -349,6 +349,71 @@ class ModelUpgrade extends Model {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "product_option` DROP `option_value`");
 		}
 
+		//  Change any serialized values to json values and restore in the DB
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting`");
+
+		foreach ($query->rows as $result) {
+			if ($result['serialized'] && preg_match($result['value'], '//') {
+				$value = unserialize($result['value']);
+
+				$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape(json_encode($value)) . "' WHERE `key` = '" . $this->db->escape($result['key']) . "', `code` = '" . $this->db->escape($result['code']) . "', `store_id` = '" . (int)$result['store_id'] . "'");
+			}
+		}
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer`");
+
+		foreach ($query->rows as $result) {
+			if (preg_match($result['cart'], '//') {
+				$cart = unserialize($result['cart']);
+
+				$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `cart` = '" . $this->db->escape(json_encode($cart)) . "' WHERE `customer_id` = '" . (int)$result['customer_id'] . "'");
+			}
+
+			if (preg_match($result['wishlist'], '//') {
+				$wishlist = unserialize($result['wishlist']);
+
+				$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `wishlist` = '" . $this->db->escape(json_encode($wishlist)) . "' WHERE `customer_id` = '" . (int)$result['customer_id'] . "'");
+			}
+
+			if (preg_match($result['custom_field'], '//') {
+				$custom_field = unserialize($result['custom_field']);
+
+				$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `custom_field` = '" . $this->db->escape(json_encode($custom_field)) . "' WHERE `customer_id` = '" . (int)$result['customer_id'] . "'");
+			}
+		}
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "address`");
+
+		foreach ($query->rows as $result) {
+			if (preg_match($result['custom_field'], '//') {
+				$custom_field = unserialize($result['custom_field']);
+
+				$this->db->query("UPDATE `" . DB_PREFIX . "address` SET `custom_field` = '" . $this->db->escape(json_encode($custom_field)) . "' WHERE `address_id` = '" . (int)$result['address_id'] . "'");
+			}
+		}
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order`");
+
+		foreach ($query->rows as $result) {
+			if (preg_match($result['custom_field'], '//') {
+				$custom_field = unserialize($result['custom_field']);
+
+				$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `custom_field` = '" . $this->db->escape(json_encode($custom_field)) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
+			}
+
+			if (preg_match($result['payment_custom_field'], '//') {
+				$custom_field = unserialize($result['payment_custom_field']);
+
+				$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_custom_field` = '" . $this->db->escape(json_encode($custom_field)) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
+			}
+
+			if (preg_match($result['shipping_custom_field'], '//') {
+				$custom_field = unserialize($result['shipping_custom_field']);
+
+				$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `shipping_custom_field` = '" . $this->db->escape(json_encode($custom_field)) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
+			}
+		}
+
 		// Sort the categories to take advantage of the nested set model
 		$this->repairCategories(0);
 	}

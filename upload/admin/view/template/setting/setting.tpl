@@ -806,14 +806,14 @@
                       <option value="0"><?php echo $text_none; ?></option>
                       <?php foreach ($apis as $api) { ?>
                       <?php if ($api['api_id'] == $config_api_id) { ?>
-                      <option value="<?php echo $api['api_id']; ?>" selected="selected"><?php echo $api['username']; ?></option>
+                      <option value="<?php echo $api['api_id']; ?>" selected="selected"><?php echo $api['name']; ?></option>
                       <?php } else { ?>
-                      <option value="<?php echo $api['api_id']; ?>"><?php echo $api['username']; ?></option>
+                      <option value="<?php echo $api['api_id']; ?>"><?php echo $api['name']; ?></option>
                       <?php } ?>
                       <?php } ?>
                     </select>
                   </div>
-                </div>                
+                </div>
               </fieldset>
               <fieldset>
                 <legend><?php echo $text_stock; ?></legend>
@@ -1608,7 +1608,7 @@ $('select[name=\'config_template\']').on('change', function() {
 });
 
 $('select[name=\'config_template\']').trigger('change');
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('select[name=\'config_country_id\']').on('change', function() {
 	$.ajax({

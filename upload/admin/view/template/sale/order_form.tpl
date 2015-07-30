@@ -1421,9 +1421,6 @@ $('#button-customer').on('click', function() {
 					}
 				});
 
-				// Refresh products, vouchers and totals
-				$('#button-refresh').trigger('click');
-
 				$('a[href=\'#tab-cart\']').tab('show');
 			}
 		},
@@ -1431,6 +1428,11 @@ $('#button-customer').on('click', function() {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
+});
+
+// Refresh products, vouchers and totals
+$('a[href=\'#tab-cart\']').on('shown.bs.tab', function() {
+    $('#button-refresh').trigger('click');
 });
 
 $('#tab-product input[name=\'product\']').autocomplete({

@@ -32,5 +32,7 @@ class Language {
 		}
 
 		$this->data = array_merge($this->data, $_);
+
+		return $this->data;
 	}
 }

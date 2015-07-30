@@ -958,13 +958,21 @@ var token = '';
 $.ajax({
 	url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/login',
 	type: 'post',
-	data: 'username=<?php echo $api_username; ?>&password=<?php echo $api_password; ?>',
+	data: 'key=<?php echo $api_key; ?>',
 	dataType: 'json',
 	crossDomain: true,
 	success: function(json) {
-		if (json['error']) {
-			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-		}
+        $('.alert').remove();
+
+        if (json['error']) {
+    		if (json['error']['key']) {
+    			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['key'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+    		}
+
+            if (json['error']['ip']) {
+    			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['ip'] + ' <button type="button" id="button-ip-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger btn-xs pull-right"><i class="fa fa-plus"></i> <?php echo $button_ip_add; ?></button></div>');
+    		}
+        }
 
 		if (json['token']) {
 			token = json['token'];
@@ -975,6 +983,35 @@ $.ajax({
 	error: function(xhr, ajaxOptions, thrownError) {
 		alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 	}
+});
+
+$(document).delegate('#button-ip-add', 'click', function() {
+	$.ajax({
+		url: 'index.php?route=user/api/addip&token=<?php echo $token; ?>&api_id=<?php echo $api_id; ?>',
+		type: 'post',
+		data: 'ip=<?php echo $api_ip; ?>',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-ip-add').button('loading');
+		},
+		complete: function() {
+			$('#button-ip-add').button('reset');
+		},
+		success: function(json) {
+			$('.alert').remove();
+
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
 });
 
 // Currency
@@ -1384,9 +1421,6 @@ $('#button-customer').on('click', function() {
 					}
 				});
 
-				// Refresh products, vouchers and totals
-				$('#button-refresh').trigger('click');
-
 				$('a[href=\'#tab-cart\']').tab('show');
 			}
 		},
@@ -1394,6 +1428,11 @@ $('#button-customer').on('click', function() {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
+});
+
+// Refresh products, vouchers and totals
+$('a[href=\'#tab-cart\']').on('shown.bs.tab', function() {
+    $('#button-refresh').trigger('click');
 });
 
 $('#tab-product input[name=\'product\']').autocomplete({

@@ -1070,11 +1070,11 @@ class ControllerOpenbayEbay extends Controller {
 				$this->document->setTitle($data['heading_title']);
 				$this->document->addScript('view/javascript/openbay/js/faq.js');
 
-				$data['action']       = $this->url->link('openbay/ebay/create', 'token=' . $this->session->data['token'], 'SSL');
-				$data['cancel']       = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], 'SSL');
-				$data['view_link']    = $this->config->get('ebay_itm_link') . $this->openbay->ebay->getEbayItemId($this->request->get['product_id']);
-				$data['token']        = $this->session->data['token'];
-				$data['product_id']   = $this->request->get['product_id'];
+				$data['action'] = $this->url->link('openbay/ebay/create', 'token=' . $this->session->data['token'], 'SSL');
+				$data['cancel'] = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'], 'SSL');
+				$data['view_link'] = $this->config->get('ebay_itm_link') . $this->openbay->ebay->getEbayItemId($this->request->get['product_id']);
+				$data['token'] = $this->session->data['token'];
+				$data['product_id'] = $this->request->get['product_id'];
 
 				$data['breadcrumbs'] = array();
 
@@ -2169,6 +2169,31 @@ class ControllerOpenbayEbay extends Controller {
 		);
 
 		$json = $this->model_openbay_ebay_product->getPartsCompatibilityValues($filters);
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function getItemRecommendations() {
+		$this->load->language('openbay/ebay_edit');
+		$this->load->model('openbay/ebay_product');
+
+		if (!isset($this->request->get['item_id']) || empty($this->request->get['item_id'])) {
+			$json = array(
+				'error' => true,
+				'msg' => $this->language->get('error_no_item_id'),
+			);
+		} else {
+			$filters = array();
+
+			$filters['item_id'] = $this->request->get['item_id'];
+
+			if (isset($this->request->get['recommendation_type'])) {
+				$filters['recommendation_type'] = $this->request->get['recommendation_type'];
+			}
+
+			$json = $this->model_openbay_ebay_product->getItemRecommendations($filters);
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

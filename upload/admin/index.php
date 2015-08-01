@@ -34,7 +34,7 @@ foreach ($query->rows as $setting) {
 	if (!$setting['serialized']) {
 		$config->set($setting['key'], $setting['value']);
 	} else {
-		$config->set($setting['key'], unserialize($setting['value']));
+		$config->set($setting['key'], json_decode($setting['value'], true));
 	}
 }
 
@@ -105,6 +105,7 @@ $registry->set('cache', $cache);
 
 // Session
 $session = new Session();
+$session->start();
 $registry->set('session', $session);
 
 // Language

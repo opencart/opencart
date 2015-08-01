@@ -736,10 +736,6 @@ final class Ebay {
 							$stock = true;
 						}
 
-						if ($v == 0) {
-							$variant_data['option_list'] = base64_encode(serialize($option['option_values']));
-						}
-
 						// PRODUCT RESERVE LEVELS FOR VARIANT ITEMS (DOES NOT PASS THROUGH NORMAL SYSTEM)
 						$reserve = $this->getReserve($product_id, $item_id, $option['sku']);
 						if ($reserve != false) {
@@ -757,12 +753,6 @@ final class Ebay {
 
 						if ($option['active'] == 1) {
 							$variant_data['opt'][$v]['active'] = 1;
-						}
-
-						$variant_option_values = $this->model_module_openstock->getVariant($option['product_option_variant_id']);
-
-						foreach($variant_option_values as $variant_option_value) {
-							$variant_data['opt'][$v]['specifics'][] = array('name' => $variant_option_value['option_name'], 'value' => $variant_option_value['option_value_name']);
 						}
 
 						$v++;

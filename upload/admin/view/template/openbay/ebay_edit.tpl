@@ -238,7 +238,11 @@ function load(){
                 } else {
                   html += '<td class="text-left"><input type="text" name="opt[' + i + '][price]" value="' + v.local.price + '" value="0" class="text-center form-control" /></td>';
                 }
-                html += '<td class="text-center"><input type="hidden" name="opt[' + i + '][active]" value="0" /><input type="checkbox" name="opt[' + i + '][active]" value="1" /></td>';
+                html += '<td class="text-center"><input type="hidden" name="opt[' + i + '][active]" value="0" />';
+
+                if (v.local.sku != '' && v.local.stock > 0) {
+                  html += '<input type="checkbox" name="opt[' + i + '][active]" value="1" /></td>';
+                }
                 html += '</tr>';
 
                 $('#matrix-inactive').append(html);

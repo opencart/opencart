@@ -1370,6 +1370,21 @@ final class Ebay {
 			} else {
 				$this->log('No measurement_types set!');
 			}
+
+			// Product details
+			if (isset($response['product_details'])) {
+				$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'product_details' LIMIT 1");
+
+				if ($qry->num_rows > 0) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['product_details'])) . "', `last_updated`  = now() WHERE `key` = 'product_details' LIMIT 1");
+					$this->log('Updated product_details info in to ebay_setting_option table');
+				} else {
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'product_details', `data` = '" . $this->db->escape(serialize($response['product_details'])) . "', `last_updated`  = now()");
+					$this->log('Inserted product_details info in to ebay_setting_option table');
+				}
+			} else {
+				$this->log('No product_details set!');
+			}
 		}
 
 		return array('msg' => $this->lastmsg, 'error' => $this->lasterror);

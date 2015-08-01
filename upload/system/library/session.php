@@ -5,7 +5,7 @@ class Session {
 
 	public function __construct($session_id = '') {
 		// Garbage collection
-		$files = glob(ini_get('session.save_path') . '/*');
+		$files = glob(ini_get('session.save_path') . '/oc.*');
 
 		if ($files) {
 			foreach ($files as $file) {
@@ -44,7 +44,7 @@ class Session {
 
 		setcookie($name, $this->session_id, $expire, '/');
 
-		$file = ini_get('session.save_path') . '/' . $this->session_id;
+		$file = ini_get('session.save_path') . '/oc.' . $this->session_id;
 
 		if (is_file($file)) {
 			$handle = fopen($file, 'r');
@@ -66,7 +66,7 @@ class Session {
 	}
 
 	public function destroy() {
-		$file = ini_get('session.save_path') . '/' . $this->session_id;
+		$file = ini_get('session.save_path') . '/oc.' . $this->session_id;
 
 		if (is_file($file)) {
 			@unlink($file);
@@ -82,7 +82,7 @@ class Session {
 
 	public function __destruct() {
 		if ($this->session_id) {
-			$file = ini_get('session.save_path') . '/' . $this->session_id;
+			$file = ini_get('session.save_path') . '/oc.' . $this->session_id;
 
 			$handle = fopen($file, 'w');
 

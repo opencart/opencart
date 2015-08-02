@@ -5,7 +5,7 @@ class Session {
 
 	public function __construct($session_id = '') {
 		// Garbage collection
-		$files = glob(ini_get('session.save_path') . '/*');
+		$files = glob(ini_get('session.save_path') . '/oc.*');
 
 		if ($files) {
 			foreach ($files as $file) {
@@ -44,20 +44,14 @@ class Session {
 
 		setcookie($name, $this->session_id, $expire, '/');
 
-		$file = ini_get('session.save_path') . '/' . $this->session_id;
+		$file = ini_get('session.save_path') . '/oc.' . $this->session_id;
 
 		if (is_file($file)) {
-			$handle = fopen($file, 'r');
+			$data = file_get_contents($file);
 
-			flock($handle, LOCK_SH);
-
-			$data = fread($handle, filesize($file));
-
-			flock($handle, LOCK_UN);
-
-			fclose($handle);
-
-			$this->data = unserialize($data);
+			if ($data) {
+				$this->data = unserialize($data);
+			}
 
 			return true;
 		} else {
@@ -66,7 +60,7 @@ class Session {
 	}
 
 	public function destroy() {
-		$file = ini_get('session.save_path') . '/' . $this->session_id;
+		$file = ini_get('session.save_path') . '/oc.' . $this->session_id;
 
 		if (is_file($file)) {
 			@unlink($file);
@@ -82,13 +76,13 @@ class Session {
 
 	public function __destruct() {
 		if ($this->session_id) {
-			$file = ini_get('session.save_path') . '/' . $this->session_id;
+			$file = ini_get('session.save_path') . '/oc.' . $this->session_id;
 
 			$handle = fopen($file, 'w');
 
 			flock($handle, LOCK_EX);
 
-			fwrite($handle, serialize($this->data));
+			fwrite($handle, serialize((array)$this->data));
 
 			fflush($handle);
 

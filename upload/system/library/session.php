@@ -47,17 +47,11 @@ class Session {
 		$file = ini_get('session.save_path') . '/oc.' . $this->session_id;
 
 		if (is_file($file)) {
-			$handle = fopen($file, 'r');
+			$data = file_get_contents($file);
 
-			flock($handle, LOCK_SH);
-
-			$data = fread($handle, filesize($file));
-
-			flock($handle, LOCK_UN);
-
-			fclose($handle);
-
-			$this->data = unserialize($data);
+			if ($data) {
+				$this->data = unserialize($data);
+			}
 
 			return true;
 		} else {
@@ -88,7 +82,7 @@ class Session {
 
 			flock($handle, LOCK_EX);
 
-			fwrite($handle, serialize($this->data));
+			fwrite($handle, serialize((array)$this->data));
 
 			fflush($handle);
 

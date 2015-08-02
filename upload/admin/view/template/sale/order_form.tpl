@@ -1426,9 +1426,9 @@ $('#button-customer').on('click', function() {
 
                 request_2.done(function() {
                     $('#button-refresh').trigger('click');
-                });
 
-				$('a[href=\'#tab-cart\']').tab('show');
+                    $('a[href=\'#tab-cart\']').tab('show');
+                });
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -1939,17 +1939,17 @@ $('#button-payment-address').on('click', function() {
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 					}
-				});
+				}).done(function() {
+                    // Refresh products, vouchers and totals
+    				$('#button-refresh').trigger('click');
 
-				// Refresh products, vouchers and totals
-				$('#button-refresh').trigger('click');
-
-				// If shipping required got to shipping tab else total tabs
-				if ($('select[name=\'shipping_method\']').prop('disabled')) {
-					$('a[href=\'#tab-total\']').tab('show');
-				} else {
-					$('a[href=\'#tab-shipping\']').tab('show');
-				}
+    				// If shipping required got to shipping tab else total tabs
+    				if ($('select[name=\'shipping_method\']').prop('disabled')) {
+    					$('a[href=\'#tab-total\']').tab('show');
+    				} else {
+    					$('a[href=\'#tab-shipping\']').tab('show');
+    				}
+                });
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -2091,7 +2091,7 @@ $('#button-shipping-address').on('click', function() {
 				$('.text-danger').parentsUntil('.form-group').parent().addClass('has-error');
 			} else {
 				// Shipping Methods
-				$.ajax({
+				var request = $.ajax({
 					url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/shipping/methods&token=' + token,
 					dataType: 'json',
 					beforeSend: function() {
@@ -2135,12 +2135,12 @@ $('#button-shipping-address').on('click', function() {
 					error: function(xhr, ajaxOptions, thrownError) {
 						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 					}
-				});
+				}).done(function() {
+				    // Refresh products, vouchers and totals
+				    $('#button-refresh').trigger('click');
 
-				// Refresh products, vouchers and totals
-				$('#button-refresh').trigger('click');
-
-				$('a[href=\'#tab-total\']').tab('show');
+                    $('a[href=\'#tab-total\']').tab('show');
+                });
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

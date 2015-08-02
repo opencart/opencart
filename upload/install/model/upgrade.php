@@ -353,7 +353,7 @@ class ModelUpgrade extends Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting`");
 
 		foreach ($query->rows as $result) {
-			if ($result['serialized'] && preg_match($result['value'], '//') {
+			if ($result['serialized'] && preg_match($result['value'], '/^(O:|a:)/')) {
 				$value = unserialize($result['value']);
 
 				$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape(json_encode($value)) . "' WHERE `key` = '" . $this->db->escape($result['key']) . "', `code` = '" . $this->db->escape($result['code']) . "', `store_id` = '" . (int)$result['store_id'] . "'");
@@ -363,19 +363,19 @@ class ModelUpgrade extends Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer`");
 
 		foreach ($query->rows as $result) {
-			if (preg_match($result['cart'], '//') {
+			if (preg_match($result['cart'], '/^(O:|a:)/') {
 				$cart = unserialize($result['cart']);
 
 				$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `cart` = '" . $this->db->escape(json_encode($cart)) . "' WHERE `customer_id` = '" . (int)$result['customer_id'] . "'");
 			}
 
-			if (preg_match($result['wishlist'], '//') {
+			if (preg_match($result['wishlist'], '/^(O:|a:)/') {
 				$wishlist = unserialize($result['wishlist']);
 
 				$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `wishlist` = '" . $this->db->escape(json_encode($wishlist)) . "' WHERE `customer_id` = '" . (int)$result['customer_id'] . "'");
 			}
 
-			if (preg_match($result['custom_field'], '//') {
+			if (preg_match($result['custom_field'], '/^(O:|a:)/') {
 				$custom_field = unserialize($result['custom_field']);
 
 				$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `custom_field` = '" . $this->db->escape(json_encode($custom_field)) . "' WHERE `customer_id` = '" . (int)$result['customer_id'] . "'");
@@ -385,7 +385,7 @@ class ModelUpgrade extends Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "address`");
 
 		foreach ($query->rows as $result) {
-			if (preg_match($result['custom_field'], '//') {
+			if (preg_match($result['custom_field'], '/^(O:|a:)/') {
 				$custom_field = unserialize($result['custom_field']);
 
 				$this->db->query("UPDATE `" . DB_PREFIX . "address` SET `custom_field` = '" . $this->db->escape(json_encode($custom_field)) . "' WHERE `address_id` = '" . (int)$result['address_id'] . "'");
@@ -395,19 +395,19 @@ class ModelUpgrade extends Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order`");
 
 		foreach ($query->rows as $result) {
-			if (preg_match($result['custom_field'], '//') {
+			if (preg_match($result['custom_field'], '/^(O:|a:)/') {
 				$custom_field = unserialize($result['custom_field']);
 
 				$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `custom_field` = '" . $this->db->escape(json_encode($custom_field)) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
 			}
 
-			if (preg_match($result['payment_custom_field'], '//') {
+			if (preg_match($result['payment_custom_field'], '/^(O:|a:)/') {
 				$custom_field = unserialize($result['payment_custom_field']);
 
 				$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_custom_field` = '" . $this->db->escape(json_encode($custom_field)) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
 			}
 
-			if (preg_match($result['shipping_custom_field'], '//') {
+			if (preg_match($result['shipping_custom_field'], '/^(O:|a:)/') {
 				$custom_field = unserialize($result['shipping_custom_field']);
 
 				$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `shipping_custom_field` = '" . $this->db->escape(json_encode($custom_field)) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");

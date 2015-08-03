@@ -1148,7 +1148,7 @@ class ControllerCustomerCustomer extends Controller {
 		if ($customer_info) {
 			// Create token to login with
 			$token = token(64);
-			
+
 			$this->model_customer_customer->editToken($customer_id, $token);
 
 			if (isset($this->request->get['store_id'])) {
@@ -1255,7 +1255,7 @@ class ControllerCustomerCustomer extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-	
+
 	public function transaction() {
 		$this->load->language('customer/customer');
 
@@ -1321,7 +1321,7 @@ class ControllerCustomerCustomer extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
-	
+
 	public function reward() {
 		$this->load->language('customer/customer');
 
@@ -1380,96 +1380,6 @@ class ControllerCustomerCustomer extends Controller {
 			$this->load->model('customer/customer');
 
 			$this->model_customer_customer->addReward($this->request->get['customer_id'], $this->request->post['description'], $this->request->post['points']);
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-	
-	public function ip() {
-		$this->load->language('customer/customer');
-
-		$this->load->model('customer/customer');
-
-		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_add_ban_ip'] = $this->language->get('text_add_ban_ip');
-		$data['text_remove_ban_ip'] = $this->language->get('text_remove_ban_ip');
-		$data['text_loading'] = $this->language->get('text_loading');
-
-		$data['column_ip'] = $this->language->get('column_ip');
-		$data['column_total'] = $this->language->get('column_total');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_action'] = $this->language->get('column_action');
-
-		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
-		$data['ips'] = array();
-
-		$results = $this->model_customer_customer->getIps($this->request->get['customer_id'], ($page - 1) * 10, 10);
-
-		foreach ($results as $result) {
-			$ban_ip_total = $this->model_customer_customer->getTotalBanIpsByIp($result['ip']);
-
-			$data['ips'][] = array(
-				'ip'         => $result['ip'],
-				'total'      => $this->model_customer_customer->getTotalCustomersByIp($result['ip']),
-				'date_added' => date('d/m/y', strtotime($result['date_added'])),
-				'filter_ip'  => $this->url->link('customer/customer', 'token=' . $this->session->data['token'] . '&filter_ip=' . $result['ip'], 'SSL'),
-				'ban_ip'     => $ban_ip_total
-			);
-		}
-
-		$ip_total = $this->model_customer_customer->getTotalIps($this->request->get['customer_id']);
-
-		$pagination = new Pagination();
-		$pagination->total = $ip_total;
-		$pagination->page = $page;
-		$pagination->limit = 10;
-		$pagination->url = $this->url->link('customer/customer/ip', 'token=' . $this->session->data['token'] . '&customer_id=' . $this->request->get['customer_id'] . '&page={page}', 'SSL');
-
-		$data['pagination'] = $pagination->render();
-
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($ip_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($ip_total - 10)) ? $ip_total : ((($page - 1) * 10) + 10), $ip_total, ceil($ip_total / 10));
-
-		$this->response->setOutput($this->load->view('customer/customer_ip.tpl', $data));
-	}
-
-	public function addBanIp() {
-		$this->load->language('customer/customer');
-
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'customer/customer')) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {
-			$this->load->model('customer/customer');
-
-			$this->model_customer_customer->addBanIp($this->request->post['ip']);
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function removeBanIp() {
-		$this->load->language('customer/customer');
-
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'customer/customer')) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {
-			$this->load->model('customer/customer');
-
-			$this->model_customer_customer->removeBanIp($this->request->post['ip']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

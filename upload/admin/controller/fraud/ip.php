@@ -107,19 +107,20 @@ class ControllerFraudIp extends Controller {
 	}
 
     public function ip() {
-		$this->load->language('customer/customer');
+		$this->load->language('fraud/ip');
 
 		$this->load->model('customer/customer');
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_add_ban_ip'] = $this->language->get('text_add_ban_ip');
-		$data['text_remove_ban_ip'] = $this->language->get('text_remove_ban_ip');
 		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['column_ip'] = $this->language->get('column_ip');
 		$data['column_total'] = $this->language->get('column_total');
 		$data['column_date_added'] = $this->language->get('column_date_added');
 		$data['column_action'] = $this->language->get('column_action');
+
+        $data['button_ip_add'] = $this->language->get('button_ip_add');
+        $data['button_remove'] = $this->language->get('button_remove');
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];

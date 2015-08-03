@@ -14,8 +14,8 @@ class ModelFraudIp extends Model {
 		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ip`");
 	}
 
-    public function addBanIp($ip) {
-        $this->db->query("INSERT INTO `" . DB_PREFIX . "fraud_ip` SET `ip` = '" . $this->db->escape($ip) . "'");
+    public function addIp($ip) {
+        $this->db->query("INSERT INTO `" . DB_PREFIX . "fraud_ip` SET `ip` = '" . $this->db->escape($ip) . "', date_added = NOW()");
     }
 
     public function removeIp($ip) {

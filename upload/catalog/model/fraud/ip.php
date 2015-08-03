@@ -1,6 +1,6 @@
 <?php
 class ModelFraudIp extends Model {
-    public function install() {
+    public function check() {
         // Ban IP
         $status = false;
 

@@ -160,16 +160,16 @@ class ControllerFraudIp extends Controller {
 	}
 
 	public function addIp() {
-		$this->load->language('customer/customer');
+		$this->load->language('fraud/ip');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'customer/customer')) {
+		if (!$this->user->hasPermission('modify', 'fraud/ip')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
-			$this->load->model('customer/customer');
+			$this->load->model('fraud/ip');
 
-			$this->model_customer_customer->addBanIp($this->request->post['ip']);
+			$this->model_fraud_ip->addIp($this->request->post['ip']);
 
 			$json['success'] = $this->language->get('text_success');
 		}
@@ -179,16 +179,16 @@ class ControllerFraudIp extends Controller {
 	}
 
 	public function removeIp() {
-		$this->load->language('customer/customer');
+		$this->load->language('fraud/ip');
 
 		$json = array();
 
-		if (!$this->user->hasPermission('modify', 'customer/customer')) {
+		if (!$this->user->hasPermission('modify', 'fraud/ip')) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
-			$this->load->model('customer/customer');
+			$this->load->model('fraud/ip');
 
-			$this->model_customer_customer->removeBanIp($this->request->post['ip']);
+			$this->model_fraud_ip->removeIp($this->request->post['ip']);
 
 			$json['success'] = $this->language->get('text_success');
 		}

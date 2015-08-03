@@ -109,7 +109,8 @@ class ControllerFraudIp extends Controller {
     public function ip() {
 		$this->load->language('fraud/ip');
 
-		$this->load->model('customer/customer');
+		$this->load->model('fraud/ip');
+        $this->load->model('customer/customer');
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -130,10 +131,10 @@ class ControllerFraudIp extends Controller {
 
 		$data['ips'] = array();
 
-		$results = $this->model_customer_customer->getIps($this->request->get['customer_id'], ($page - 1) * 10, 10);
+		$results = $this->model_fraud_ip->getIps(($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
-			$ban_ip_total = $this->model_customer_customer->getTotalBanIpsByIp($result['ip']);
+			$ban_ip_total = $this->model_customer_customer->getTotalCustomersByIp($result['ip']);
 
 			$data['ips'][] = array(
 				'ip'         => $result['ip'],
@@ -144,7 +145,7 @@ class ControllerFraudIp extends Controller {
 			);
 		}
 
-		$ip_total = $this->model_customer_customer->getTotalIps($this->request->get['customer_id']);
+		$ip_total = $this->model_fraud_ip->getTotalIps();
 
 		$pagination = new Pagination();
 		$pagination->total = $ip_total;

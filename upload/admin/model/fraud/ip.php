@@ -2,11 +2,11 @@
 class ModelFraudIp extends Model {
 	public function install() {
 		$this->db->query("
-			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ip` (
-			  `ip` varchar(40) NOT NULL,
-			  `date_added` datetime NOT NULL,
-			  PRIMARY KEY (`ip`)
-			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ip` (
+		  `ip` varchar(40) NOT NULL,
+		  `date_added` datetime NOT NULL,
+		  PRIMARY KEY (`ip`)
+		) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 		");
 	}
 
@@ -22,42 +22,22 @@ class ModelFraudIp extends Model {
         $this->db->query("DELETE FROM `" . DB_PREFIX . "fraud_ip` WHERE `ip` = '" . $this->db->escape($ip) . "'");
     }
 
-	public function getCustomerBanIps($data = array()) {
-		$sql = "SELECT *, (SELECT COUNT(DISTINCT customer_id) FROM `" . DB_PREFIX . "customer_ip` ci WHERE ci.ip = cbi.ip) AS total FROM `" . DB_PREFIX . "customer_ban_ip` cbi";
-
-		$sql .= " ORDER BY `ip`";
-
-		if (isset($data['order']) && ($data['order'] == 'DESC')) {
-			$sql .= " DESC";
-		} else {
-			$sql .= " ASC";
+	public function getIps($start = 0, $limit = 10) {
+        if ($start < 0) {
+			$start = 0;
 		}
 
-		if (isset($data['start']) || isset($data['limit'])) {
-			if ($data['start'] < 0) {
-				$data['start'] = 0;
-			}
-
-			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
-			}
-
-			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		if ($limit < 1) {
+			$limit = 10;
 		}
 
-		$query = $this->db->query($sql);
+        $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "fraud_ip` ORDER BY `ip` ASC LIMIT " . (int)$start . "," . (int)$limit);
 
 		return $query->rows;
 	}
 
-	public function getTotalCustomerBanIps($data = array()) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_ban_ip`");
-
-		return $query->row['total'];
-	}
-
-	public function getTotalBanIpsByIp($ip) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_ban_ip` WHERE `ip` = '" . $this->db->escape($ip) . "'");
+	public function getTotalIps($data = array()) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "fraud_ip`");
 
 		return $query->row['total'];
 	}

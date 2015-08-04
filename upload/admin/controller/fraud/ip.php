@@ -22,6 +22,8 @@ class ControllerFraudIp extends Controller {
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
+		$data['text_ip_add'] = $this->language->get('text_ip_add');
+		$data['text_ip_list'] = $this->language->get('text_ip_list');
 
 		$data['entry_ip'] = $this->language->get('entry_ip');
 		$data['entry_order_status'] = $this->language->get('entry_order_status');

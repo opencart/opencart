@@ -24,6 +24,7 @@ class ControllerFraudIp extends Controller {
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_ip_add'] = $this->language->get('text_ip_add');
 		$data['text_ip_list'] = $this->language->get('text_ip_list');
+		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['entry_ip'] = $this->language->get('entry_ip');
 		$data['entry_order_status'] = $this->language->get('entry_order_status');
@@ -34,6 +35,7 @@ class ControllerFraudIp extends Controller {
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
+		$data['button_ip_add'] = $this->language->get('button_ip_add');
 
 		$data['tab_general'] = $this->language->get('tab_general');
         $data['tab_ip'] = $this->language->get('tab_ip');
@@ -124,7 +126,6 @@ class ControllerFraudIp extends Controller {
 		$data['column_date_added'] = $this->language->get('column_date_added');
 		$data['column_action'] = $this->language->get('column_action');
 
-        $data['button_ip_add'] = $this->language->get('button_ip_add');
         $data['button_remove'] = $this->language->get('button_remove');
 
 		if (isset($this->request->get['page'])) {
@@ -142,8 +143,7 @@ class ControllerFraudIp extends Controller {
 				'ip'         => $result['ip'],
 				'total'      => $this->model_customer_customer->getTotalCustomersByIp($result['ip']),
 				'date_added' => date('d/m/y', strtotime($result['date_added'])),
-				'filter_ip'  => $this->url->link('customer/customer', 'token=' . $this->session->data['token'] . '&filter_ip=' . $result['ip'], 'SSL'),
-				'ban_ip'     => $ban_ip_total
+				'filter_ip'  => $this->url->link('customer/customer', 'token=' . $this->session->data['token'] . '&filter_ip=' . $result['ip'], 'SSL')
 			);
 		}
 

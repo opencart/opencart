@@ -64,13 +64,19 @@
                 <div class="form-group required">
                   <label class="col-sm-2 control-label" for="input-ip"><?php echo $entry_ip; ?></label>
                   <div class="col-sm-10">
-                    <input type="text" value="" placeholder="<?php echo $entry_ip; ?>" id="input-ip" class="form-control" />
-
+<div class="btn-group">
+<input type="text" value="" placeholder="<?php echo $entry_ip; ?>" id="input-ip" class="form-control" />
+<span class="input-group-btn">
+<button type="button" id="button-ip-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_ip_add; ?></button>
+</span>
+</div>
                   </div>
                 </div>
 
 
+
             </fieldset>
+            <br />
             <fieldset>
               <legend><?php echo $text_ip_list; ?></legend>
 
@@ -90,33 +96,36 @@ $('#ip').delegate('.pagination a', 'click', function(e) {
 
 $('#ip').load('index.php?route=fraud/ip/ip&token=<?php echo $token; ?>');
 
-$('#fraud-ip').delegate('.button-ban-add', 'click', function() {
-	var element = this;
-
+$('#button-ip-add').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=customer/customer/addbanip&token=<?php echo $token; ?>',
+		url: 'index.php?route=fraud/ip/addip&token=<?php echo $token; ?>',
 		type: 'post',
 		dataType: 'json',
-		data: 'ip=' + encodeURIComponent(this.value),
+		data: 'ip=' + encodeURIComponent($('#input-ip').val()),
 		beforeSend: function() {
-			$(element).button('loading');
+			$('#button-ip-add').button('loading');
 		},
 		complete: function() {
-			$(element).button('reset');
+			$('#button-ip-add').button('reset');
 		},
 		success: function(json) {
 			$('.alert').remove();
 
 			if (json['error']) {
-				 $('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				 $('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-danger btn-xs button-ban-remove"><i class="fa fa-minus-circle"></i> <?php echo $text_remove_ban_ip; ?></button>');
-			}
-		}
+                $('#ip').load('index.php?route=fraud/ip/ip&token=<?php echo $token; ?>');
+
+                $('#input-ip').val('');
+            }
+		},
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
 	});
 });
 
@@ -138,15 +147,18 @@ $('#ip').delegate('button', 'click', function() {
 			$('.alert').remove();
 
 			if (json['error']) {
-				 $('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				 $('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 
 			if (json['success']) {
-				 $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+				 $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 				$(element).parent().parent().remove();
 			}
-		}
+		},
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
 	});
 });
 //--></script></div>

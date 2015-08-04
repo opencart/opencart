@@ -134,8 +134,6 @@ class ControllerFraudIp extends Controller {
 		$results = $this->model_fraud_ip->getIps(($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
-			$ban_ip_total = $this->model_customer_customer->getTotalCustomersByIp($result['ip']);
-
 			$data['ips'][] = array(
 				'ip'         => $result['ip'],
 				'total'      => $this->model_customer_customer->getTotalCustomersByIp($result['ip']),
@@ -151,13 +149,13 @@ class ControllerFraudIp extends Controller {
 		$pagination->total = $ip_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('customer/customer/ip', 'token=' . $this->session->data['token'] . '&customer_id=' . $this->request->get['customer_id'] . '&page={page}', 'SSL');
+		$pagination->url = $this->url->link('fraud/ip/ip', 'token=' . $this->session->data['token'] . '&page={page}', 'SSL');
 
 		$data['pagination'] = $pagination->render();
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($ip_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($ip_total - 10)) ? $ip_total : ((($page - 1) * 10) + 10), $ip_total, ceil($ip_total / 10));
 
-		$this->response->setOutput($this->load->view('customer/customer_ip.tpl', $data));
+		$this->response->setOutput($this->load->view('fraud/ip_ip.tpl', $data));
 	}
 
 	public function addIp() {

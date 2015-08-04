@@ -36,7 +36,7 @@ class ModelFraudIp extends Model {
 		return $query->rows;
 	}
 
-	public function getTotalIps($data = array()) {
+	public function getTotalIps() {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "fraud_ip`");
 
 		return $query->row['total'];

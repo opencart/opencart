@@ -38,6 +38,8 @@ class ControllerFraudIp extends Controller {
 		$data['tab_general'] = $this->language->get('tab_general');
         $data['tab_ip'] = $this->language->get('tab_ip');
 
+		$data['token'] = $this->session->data['token'];
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

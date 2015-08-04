@@ -90,7 +90,7 @@ $('#ip').delegate('.pagination a', 'click', function(e) {
 
 $('#ip').load('index.php?route=fraud/ip/ip&token=<?php echo $token; ?>');
 
-$('body').delegate('.button-ban-add', 'click', function() {
+$('#fraud-ip').delegate('.button-ban-add', 'click', function() {
 	var element = this;
 
 	$.ajax({

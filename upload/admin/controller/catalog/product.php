@@ -657,12 +657,6 @@ class ControllerCatalogProduct extends Controller {
 			$data['error_model'] = '';
 		}
 
-		if (isset($this->error['date_available'])) {
-			$data['error_date_available'] = $this->error['date_available'];
-		} else {
-			$data['error_date_available'] = '';
-		}
-
 		if (isset($this->error['keyword'])) {
 			$data['error_keyword'] = $this->error['keyword'];
 		} else {

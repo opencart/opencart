@@ -777,6 +777,20 @@
                   </div>
                 </div>
                 <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-fraud-status"><span data-toggle="tooltip" title="<?php echo $help_fraud_status; ?>"><?php echo $entry_fraud_status; ?></span></label>
+                  <div class="col-sm-10">
+                    <select name="config_fraud_status_id" id="input-fraud-status" class="form-control">
+                      <?php foreach ($order_statuses as $order_status) { ?>
+                      <?php if ($order_status['order_status_id'] == $config_fraud_status_id) { ?>
+                      <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                      <?php } else { ?>
+                      <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                      <?php } ?>
+                      <?php } ?>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
                   <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_order_mail; ?>"><?php echo $entry_order_mail; ?></span></label>
                   <div class="col-sm-10">
                     <label class="radio-inline">

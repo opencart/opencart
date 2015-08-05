@@ -57,21 +57,21 @@
                 <?php } ?>
               </select>
             </div>
-          </div></div>
-          <div class="tab-pane" id="tab-ip">
-              <fieldset>
-                <legend><?php echo $text_ip_add; ?></legend>
-                <div class="form-group required">
+          </div>
+      </div>
+      <div class="tab-pane" id="tab-ip">
+          <fieldset>
+              <legend><?php echo $text_ip_add; ?></legend>
+              <div class="form-group required">
                   <label class="col-sm-2 control-label" for="input-ip"><?php echo $entry_ip; ?></label>
                   <div class="col-sm-10">
-<div class="btn-group">
-<input type="text" value="" placeholder="<?php echo $entry_ip; ?>" id="input-ip" class="form-control" />
-<span class="input-group-btn">
-<button type="button" id="button-ip-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_ip_add; ?></button>
-</span>
-</div>
+                          <input type="text" value="" placeholder="<?php echo $entry_ip; ?>" id="input-ip" class="form-control" />
+                          <span class="input-group-btn">
+                              <button type="button" id="button-ip-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_ip_add; ?></button>
+                          </span>
+                      </div>
                   </div>
-                </div>
+              </div>
 
 
 
@@ -82,9 +82,10 @@
 
             <div id="ip"></div>
         </fieldset>
-          </div>
-        </form>
-      </div>
+          </div></div>
+
+      
+      </form>
     </div>
   </div>
   <script type="text/javascript"><!--
@@ -133,10 +134,10 @@ $('#ip').delegate('button', 'click', function() {
 	var element = this;
 
 	$.ajax({
-		url: 'index.php?route=faud/ip/removeip&token=<?php echo $token; ?>',
+		url: 'index.php?route=fraud/ip/removeip&token=<?php echo $token; ?>',
 		type: 'post',
 		dataType: 'json',
-		data: 'ip=' + encodeURIComponent(this.value),
+		data: 'ip=' + encodeURIComponent($(element).val()),
 		beforeSend: function() {
 			$(element).button('loading');
 		},
@@ -153,7 +154,7 @@ $('#ip').delegate('button', 'click', function() {
 			if (json['success']) {
 				 $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
-				$(element).parent().parent().remove();
+                 $('#ip').load('index.php?route=fraud/ip/ip&token=<?php echo $token; ?>');
 			}
 		},
         error: function(xhr, ajaxOptions, thrownError) {

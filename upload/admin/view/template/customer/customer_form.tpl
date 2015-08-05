@@ -683,7 +683,7 @@ $('select[name=\'customer_group_id\']').on('change', function() {
 });
 
 $('select[name=\'customer_group_id\']').trigger('change');
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 var address_row = <?php echo $address_row; ?>;
 
@@ -869,16 +869,16 @@ function addAddress() {
 	$('.date').datetimepicker({
 		pickTime: false
 	});
-	
+
 	$('.datetime').datetimepicker({
 		pickDate: true,
 		pickTime: true
 	});
-	
+
 	$('.time').datetimepicker({
 		pickDate: false
-	});	
-	
+	});
+
 	$('#tab-address' + address_row + ' .form-group[data-sort]').detach().each(function() {
 		if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#tab-address' + address_row + ' .form-group').length) {
 			$('#tab-address' + address_row + ' .form-group').eq($(this).attr('data-sort')).before(this);
@@ -892,10 +892,10 @@ function addAddress() {
 			$('#tab-address' + address_row + ' .form-group:first').before(this);
 		}
 	});
-	
+
 	address_row++;
 }
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 function country(element, index, zone_id) {
 	$.ajax({
@@ -939,7 +939,7 @@ function country(element, index, zone_id) {
 }
 
 $('select[name$=\'[country_id]\']').trigger('change');
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('#history').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
@@ -974,13 +974,13 @@ $('#button-history').on('click', function(e) {
 				$('#tab-history').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
 
 				$('#history').load('index.php?route=customer/customer/history&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
-	
-				$('#tab-history textarea[name=\'comment\']').val('');				
+
+				$('#tab-history textarea[name=\'comment\']').val('');
 			}
 		}
 	});
 });
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('#transaction').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
@@ -1015,14 +1015,14 @@ $('#button-transaction').on('click', function(e) {
 				$('#tab-transaction').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
 
 				$('#transaction').load('index.php?route=customer/customer/transaction&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
-	
+
 				$('#tab-transaction input[name=\'amount\']').val('');
-				$('#tab-transaction input[name=\'description\']').val('');			
+				$('#tab-transaction input[name=\'description\']').val('');
 			}
 		}
 	});
 });
-//--></script> 
+//--></script>
   <script type="text/javascript"><!--
 $('#reward').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
@@ -1057,9 +1057,9 @@ $('#button-reward').on('click', function(e) {
 				$('#tab-reward').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div></div>');
 
 				$('#reward').load('index.php?route=customer/customer/reward&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
-	
+
 				$('#tab-reward input[name=\'points\']').val('');
-				$('#tab-reward input[name=\'description\']').val('');		
+				$('#tab-reward input[name=\'description\']').val('');
 			}
 		}
 	});
@@ -1073,112 +1073,52 @@ $('#ip').delegate('.pagination a', 'click', function(e) {
 
 $('#ip').load('index.php?route=customer/customer/ip&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
 
-$('body').delegate('.button-ban-add', 'click', function() {
-	var element = this;
-
-	$.ajax({
-		url: 'index.php?route=customer/customer/addbanip&token=<?php echo $token; ?>',
-		type: 'post',
-		dataType: 'json',
-		data: 'ip=' + encodeURIComponent(this.value),
-		beforeSend: function() {
-			$(element).button('loading');
-		},
-		complete: function() {
-			$(element).button('reset');
-		},
-		success: function(json) {
-			$('.alert').remove();
-
-			if (json['error']) {
-				 $('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
-			}
-
-			if (json['success']) {
-				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
-
-				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-danger btn-xs button-ban-remove"><i class="fa fa-minus-circle"></i> <?php echo $text_remove_ban_ip; ?></button>');
-			}
-		}
-	});
-});
-
-$('body').delegate('.button-ban-remove', 'click', function() {
-	var element = this;
-
-	$.ajax({
-		url: 'index.php?route=customer/customer/removebanip&token=<?php echo $token; ?>',
-		type: 'post',
-		dataType: 'json',
-		data: 'ip=' + encodeURIComponent(this.value),
-		beforeSend: function() {
-			$(element).button('loading');
-		},
-		complete: function() {
-			$(element).button('reset');
-		},
-		success: function(json) {
-			$('.alert').remove();
-
-			if (json['error']) {
-				 $('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
-			}
-
-			if (json['success']) {
-				 $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
-
-				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-success btn-xs button-ban-add"><i class="fa fa-plus-circle"></i> <?php echo $text_add_ban_ip; ?></button>');
-			}
-		}
-	});
-});
-
 $('#content').delegate('button[id^=\'button-custom-field\'], button[id^=\'button-address\']', 'click', function() {
 	var node = this;
-	
+
 	$('#form-upload').remove();
-	
+
 	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
 
 	$('#form-upload input[name=\'file\']').trigger('click');
-	
+
 	if (typeof timer != 'undefined') {
     	clearInterval(timer);
 	}
-	
+
 	timer = setInterval(function() {
 		if ($('#form-upload input[name=\'file\']').val() != '') {
 			clearInterval(timer);
-			
+
 			$.ajax({
 				url: 'index.php?route=tool/upload/upload&token=<?php echo $token; ?>',
-				type: 'post',		
+				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),
 				cache: false,
 				contentType: false,
-				processData: false,		
+				processData: false,
 				beforeSend: function() {
 					$(node).button('loading');
 				},
 				complete: function() {
 					$(node).button('reset');
-				},		
+				},
 				success: function(json) {
 					$(node).parent().find('.text-danger').remove();
-					
+
 					if (json['error']) {
 						$(node).parent().find('input[type=\'hidden\']').after('<div class="text-danger">' + json['error'] + '</div>');
 					}
-								
+
 					if (json['success']) {
 						alert(json['success']);
 					}
-					
+
 					if (json['code']) {
 						$(node).parent().find('input[type=\'hidden\']').attr('value', json['code']);
 					}
-				},			
+				},
 				error: function(xhr, ajaxOptions, thrownError) {
 					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 				}
@@ -1198,7 +1138,7 @@ $('.datetime').datetimepicker({
 
 $('.time').datetimepicker({
 	pickDate: false
-});	
+});
 
 // Sort the custom fields
 <?php $address_row = 1; ?>

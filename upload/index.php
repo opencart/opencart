@@ -122,25 +122,26 @@ $registry->set('response', $response);
 $cache = new Cache('file');
 $registry->set('cache', $cache);
 
-// For API requests we need to create a separate cookie
+// Session
 if (isset($request->get['token']) && isset($request->get['route']) && substr($request->get['route'], 0, 4) == 'api/') {
 	$db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE TIMESTAMPADD(HOUR, 1, date_modified) < NOW()");
-	
-	$query = $db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "api_session` as LEFT JOIN api_ip ai ON (as.api_id = ai.api_id) WHERE as.token = '" . $db->escape($request->get['token']) . "' AND ai.ip = '" . $db->escape($request->server['REMOTE_ADDR']) . "'");
 
-	if ($query->num_row) {
-		// Does not seem PHP is able to handle sessions as objects propperly so just using the built in functions
-		session_id($query->row['session_id']);
-		session_name($query->row['session_name']);
-		
+	$query = $db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "api` `a` LEFT JOIN `" . DB_PREFIX . "api_session` `as` ON (a.api_id = as.api_id) LEFT JOIN " . DB_PREFIX . "api_ip `ai` ON (as.api_id = ai.api_id) WHERE a.status = '1' AND as.token = '" . $db->escape($request->get['token']) . "' AND ai.ip = '" . $db->escape($request->server['REMOTE_ADDR']) . "'");
+
+	if ($query->num_rows) {
+		// Does not seem PHP is able to handle sessions as objects properly so so wrote my own class
+		$session = new Session($query->row['session_id']);
+		$session->start($query->row['session_name']);
+		$registry->set('session', $session);
+
 		// keep the session alive
 		$db->query("UPDATE `" . DB_PREFIX . "api_session` SET date_modified = NOW() WHERE api_session_id = '" . $query->row['api_session_id'] . "'");
 	}
+} else {
+	$session = new Session();
+	$session->start();
+	$registry->set('session', $session);
 }
-
-// Session
-$session = new Session();
-$registry->set('session', $session);
 
 // Language Detection
 $languages = array();

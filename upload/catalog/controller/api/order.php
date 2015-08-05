@@ -19,6 +19,18 @@ class ControllerApiOrder extends Controller {
 			}
 
 			// Payment Method
+			if (!$json && !empty($this->request->post['payment_method'])) {
+				if (empty($this->session->data['payment_methods'])) {
+					$json['error'] = $this->language->get('error_no_payment');
+				} elseif (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
+					$json['error'] = $this->language->get('error_payment_method');
+				}
+
+				if (!$json) {
+					$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->post['payment_method']];
+				}
+			}
+
 			if (!isset($this->session->data['payment_method'])) {
 				$json['error'] = $this->language->get('error_payment_method');
 			}
@@ -28,6 +40,23 @@ class ControllerApiOrder extends Controller {
 				// Shipping Address
 				if (!isset($this->session->data['shipping_address'])) {
 					$json['error'] = $this->language->get('error_shipping_address');
+				}
+
+				// Shipping Method
+				if (!$json && !empty($this->request->post['shipping_method'])) {
+					if (empty($this->session->data['shipping_methods'])) {
+						$json['error'] = $this->language->get('error_no_shipping');
+					} else {
+						$shipping = explode('.', $this->request->post['shipping_method']);
+
+						if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
+							$json['error'] = $this->language->get('error_shipping_method');
+						}
+					}
+
+					if (!$json) {
+						$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
+					}
 				}
 
 				// Shipping Method
@@ -316,15 +345,14 @@ class ControllerApiOrder extends Controller {
 				$json['success'] = $this->language->get('text_success');
 			}
 		}
-		
+
 		if (isset($this->request->server['HTTP_ORIGIN'])) {
 			$this->response->addHeader('Access-Control-Allow-Origin: ' . $this->request->server['HTTP_ORIGIN']);
-			$this->response->addHeader('Access-Control-Allow-Credentials: true');
 			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 			$this->response->addHeader('Access-Control-Max-Age: 1000');
 			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 		}
-		
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
@@ -359,6 +387,18 @@ class ControllerApiOrder extends Controller {
 				}
 
 				// Payment Method
+				if (!$json && !empty($this->request->post['payment_method'])) {
+					if (empty($this->session->data['payment_methods'])) {
+						$json['error'] = $this->language->get('error_no_payment');
+					} elseif (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
+						$json['error'] = $this->language->get('error_payment_method');
+					}
+
+					if (!$json) {
+						$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->post['payment_method']];
+					}
+				}
+
 				if (!isset($this->session->data['payment_method'])) {
 					$json['error'] = $this->language->get('error_payment_method');
 				}
@@ -371,6 +411,22 @@ class ControllerApiOrder extends Controller {
 					}
 
 					// Shipping Method
+					if (!$json && !empty($this->request->post['shipping_method'])) {
+						if (empty($this->session->data['shipping_methods'])) {
+							$json['error'] = $this->language->get('error_no_shipping');
+						} else {
+							$shipping = explode('.', $this->request->post['shipping_method']);
+
+							if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
+								$json['error'] = $this->language->get('error_shipping_method');
+							}
+						}
+
+						if (!$json) {
+							$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
+						}
+					}
+
 					if (!isset($this->session->data['shipping_method'])) {
 						$json['error'] = $this->language->get('error_shipping_method');
 					}
@@ -625,15 +681,14 @@ class ControllerApiOrder extends Controller {
 				$json['error'] = $this->language->get('error_not_found');
 			}
 		}
-		
+
 		if (isset($this->request->server['HTTP_ORIGIN'])) {
 			$this->response->addHeader('Access-Control-Allow-Origin: ' . $this->request->server['HTTP_ORIGIN']);
-			$this->response->addHeader('Access-Control-Allow-Credentials: true');
 			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 			$this->response->addHeader('Access-Control-Max-Age: 1000');
 			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 		}
-		
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
@@ -664,15 +719,14 @@ class ControllerApiOrder extends Controller {
 				$json['error'] = $this->language->get('error_not_found');
 			}
 		}
-		
+
 		if (isset($this->request->server['HTTP_ORIGIN'])) {
 			$this->response->addHeader('Access-Control-Allow-Origin: ' . $this->request->server['HTTP_ORIGIN']);
-			$this->response->addHeader('Access-Control-Allow-Credentials: true');
 			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 			$this->response->addHeader('Access-Control-Max-Age: 1000');
 			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 		}
-		
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
@@ -717,15 +771,14 @@ class ControllerApiOrder extends Controller {
 				$json['error'] = $this->language->get('error_not_found');
 			}
 		}
-		
+
 		if (isset($this->request->server['HTTP_ORIGIN'])) {
 			$this->response->addHeader('Access-Control-Allow-Origin: ' . $this->request->server['HTTP_ORIGIN']);
-			$this->response->addHeader('Access-Control-Allow-Credentials: true');
 			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 			$this->response->addHeader('Access-Control-Max-Age: 1000');
 			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 		}
-		
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}

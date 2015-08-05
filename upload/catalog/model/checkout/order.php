@@ -255,12 +255,12 @@ class ModelCheckoutOrder extends Model {
 
 	public function addOrderHistory($order_id, $order_status_id, $comment = '', $notify = false) {
 		$event_data = array(
-			'order_id'		=> $order_id,
-			'order_status_id'	=> $order_status_id,
-			'comment'		=> $comment,
-			'notify'		=> $notify
+			'order_id'		  => $order_id,
+			'order_status_id' => $order_status_id,
+			'comment'		  => $comment,
+			'notify'		  => $notify
 		);
-		
+
 		$this->event->trigger('pre.order.history.add', $event_data);
 
 		$order_info = $this->getOrder($order_id);

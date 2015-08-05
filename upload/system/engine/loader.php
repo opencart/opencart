@@ -1,9 +1,14 @@
 <?php
 final class Loader {
 	private $registry;
+	private $hooks = array();
 
 	public function __construct($registry) {
 		$this->registry = $registry;
+	}
+
+	public function addHook($type, $object) {
+		$this->hooks[$type][] = $object;
 	}
 
 	public function controller($route, $args = array()) {
@@ -27,6 +32,13 @@ final class Loader {
 	}
 
 	public function view($template, $data = array()) {
+		/*
+		if (isset($this->hooks[$type])) {
+			foreach ($this->hook as $hook) {
+				$hook->call(&$template, &data);
+			}
+		}
+		*/
 		$file = DIR_TEMPLATE . $template;
 
 		if (file_exists($file)) {

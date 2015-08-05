@@ -54,11 +54,11 @@ class Document {
 		return $this->styles;
 	}
 
-	public function addScript($script) {
-		$this->scripts[md5($script)] = $script;
+	public function addScript($script, $postion = 'header') {
+		$this->scripts[$postion][md5($script)] = $script;
 	}
 
-	public function getScripts() {
-		return $this->scripts;
+	public function getScripts($postion = 'header') {
+		return $this->scripts[$postion];
 	}
 }

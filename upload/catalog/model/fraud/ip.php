@@ -1,25 +1,32 @@
 <?php
 class ModelFraudIp extends Model {
-    public function check() {
-        // Ban IP
+    public function check($order_info) {
+        $this->load->model('account/customer');
+
         $status = false;
 
         if ($order_info['customer_id']) {
             $results = $this->model_account_customer->getIps($order_info['customer_id']);
 
             foreach ($results as $result) {
-                if ($this->model_account_customer->isBanIp($result['ip'])) {
+                $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "fraud_ip` WHERE ip = '" . $this->db->escape($ip) . "'");
+
+                if ($query->num_rows) {
                     $status = true;
 
                     break;
                 }
             }
         } else {
-            $status = $this->model_account_customer->isBanIp($order_info['ip']);
+            $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "fraud_ip` WHERE ip = '" . $this->db->escape($order_info['ip']) . "'");
+
+            if ($query->num_rows) {
+                $status = true;
+            }
         }
 
         if ($status) {
-            $order_status_id = $this->config->get('config_order_status_id');
+            return $this->config->get('ip_order_status_id');
         }
     }
 }

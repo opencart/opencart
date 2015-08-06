@@ -309,7 +309,7 @@ var compare = {
 }
 
 /* Agree to Terms */
-$(document).delegate('.agree', 'click', function(e) {
+$(document).on('click', '.agree', function(e) {
 	e.preventDefault();
 
 	$('#modal-agree').remove();
@@ -461,7 +461,7 @@ $(document).delegate('.agree', 'click', function(e) {
 			}
 			
 			$(this).after('<ul class="dropdown-menu"></ul>');
-			$(this).siblings('ul.dropdown-menu').delegate('a', 'click', $.proxy(this.click, this));	
+			$(this).siblings('ul.dropdown-menu').on('click', 'a', $.proxy(this.click, this));	
 			
 		});
 	}

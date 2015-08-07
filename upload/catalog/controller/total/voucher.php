@@ -18,12 +18,6 @@ class ControllerTotalVoucher extends Controller {
 				$data['voucher'] = '';
 			}
 
-			if (isset($this->request->get['redirect']) && !empty($this->request->get['redirect'])) {
-				$data['redirect'] = $this->request->get['redirect'];
-			} else {
-				$data['redirect'] = $this->url->link('checkout/cart');
-			}
-
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/total/voucher.tpl')) {
 				return $this->load->view($this->config->get('config_template') . '/template/total/voucher.tpl', $data);
 			} else {

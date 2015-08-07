@@ -18,12 +18,6 @@ class ControllerTotalCoupon extends Controller {
 				$data['coupon'] = '';
 			}
 
-			if (isset($this->request->get['redirect']) && !empty($this->request->get['redirect'])) {
-				$data['redirect'] = $this->request->get['redirect'];
-			} else {
-				$data['redirect'] = $this->url->link('checkout/cart');
-			}
-
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/total/coupon.tpl')) {
 				return $this->load->view($this->config->get('config_template') . '/template/total/coupon.tpl', $data);
 			} else {

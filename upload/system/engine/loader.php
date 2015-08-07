@@ -7,9 +7,14 @@ final class Loader {
 		$this->registry = $registry;
 	}
 
-	public function addHook($type, $object) {
+	public function addHook($path, $object) {
 		$this->hooks[$type][] = $object;
 	}
+
+  	public function __load() {
+
+
+  	}
 
 	public function controller($route, $args = array()) {
 		$action = new Action($route, $args);
@@ -18,6 +23,22 @@ final class Loader {
 	}
 
 	public function model($model) {
+		$file = DIR_APPLICATION . 'model/' . $model . '.php';
+/*
+		if (is_file($file)) {
+			include_once($file);
+
+			$this->registry->set('model_' . str_replace('/', '_', $model), new $class($this->registry));
+		} else {
+			$extension = end($parts);
+
+			$file = DIR_EXTENSION . $extension[0] . '/model/' . $extension[1] . '.php';
+
+			if (is_file($file)) {
+				include_once($file);
+			}
+		}
+*/		
 		$file = DIR_APPLICATION . 'model/' . $model . '.php';
 		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $model);
 

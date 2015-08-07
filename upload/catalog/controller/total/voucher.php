@@ -1,5 +1,5 @@
 <?php
-class ControllerCheckoutVoucher extends Controller {
+class ControllerTotalVoucher extends Controller {
 	public function index() {
 		if ($this->config->get('voucher_status')) {
 			$this->load->language('checkout/voucher');
@@ -24,8 +24,8 @@ class ControllerCheckoutVoucher extends Controller {
 				$data['redirect'] = $this->url->link('checkout/cart');
 			}
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/voucher.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/checkout/voucher.tpl', $data);
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/total/voucher.tpl')) {
+				return $this->load->view($this->config->get('config_template') . '/template/total/voucher.tpl', $data);
 			} else {
 				return $this->load->view('default/template/checkout/voucher.tpl', $data);
 			}

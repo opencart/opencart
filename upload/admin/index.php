@@ -105,7 +105,6 @@ $registry->set('cache', $cache);
 
 // Session
 $session = new Session();
-$session->start();
 $registry->set('session', $session);
 
 // Language

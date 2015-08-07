@@ -1,5 +1,5 @@
 <?php
-class ControllerCheckoutShipping extends Controller {
+class ControllerTotalShipping extends Controller {
 	public function index() {
 		if ($this->config->get('shipping_status') && $this->config->get('shipping_estimator') && $this->cart->hasShipping()) {
 			$this->load->language('checkout/shipping');
@@ -48,10 +48,10 @@ class ControllerCheckoutShipping extends Controller {
 				$data['shipping_method'] = '';
 			}
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/shipping.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/checkout/shipping.tpl', $data);
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/total/shipping.tpl')) {
+				return $this->load->view($this->config->get('config_template') . '/template/total/shipping.tpl', $data);
 			} else {
-				return $this->load->view('default/template/checkout/shipping.tpl', $data);
+				return $this->load->view('default/template/total/shipping.tpl', $data);
 			}
 		}
 	}

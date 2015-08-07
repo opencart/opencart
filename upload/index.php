@@ -130,8 +130,7 @@ if (isset($request->get['token']) && isset($request->get['route']) && substr($re
 
 	if ($query->num_rows) {
 		// Does not seem PHP is able to handle sessions as objects properly so so wrote my own class
-		$session = new Session($query->row['session_id']);
-		$session->start($query->row['session_name']);
+		$session = new Session($query->row['session_id'], $query->row['session_name']);
 		$registry->set('session', $session);
 
 		// keep the session alive
@@ -139,7 +138,6 @@ if (isset($request->get['token']) && isset($request->get['route']) && substr($re
 	}
 } else {
 	$session = new Session();
-	$session->start();
 	$registry->set('session', $session);
 }
 

@@ -524,20 +524,6 @@ class ModelCustomerCustomer extends Model {
 		return $query->row['total'];
 	}
 
-	public function addBanIp($ip) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_ban_ip` SET `ip` = '" . $this->db->escape($ip) . "'");
-	}
-
-	public function removeBanIp($ip) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_ban_ip` WHERE `ip` = '" . $this->db->escape($ip) . "'");
-	}
-
-	public function getTotalBanIpsByIp($ip) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_ban_ip` WHERE `ip` = '" . $this->db->escape($ip) . "'");
-
-		return $query->row['total'];
-	}
-
 	public function getTotalLoginAttempts($email) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_login` WHERE `email` = '" . $this->db->escape($email) . "'");
 

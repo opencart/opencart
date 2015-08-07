@@ -98,6 +98,7 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_order_status'] = $this->language->get('entry_order_status');
 		$data['entry_processing_status'] = $this->language->get('entry_processing_status');
 		$data['entry_complete_status'] = $this->language->get('entry_complete_status');
+		$data['entry_fraud_status'] = $this->language->get('entry_fraud_status');
 		$data['entry_order_mail'] = $this->language->get('entry_order_mail');
 		$data['entry_api'] = $this->language->get('entry_api');
 		$data['entry_stock_display'] = $this->language->get('entry_stock_display');
@@ -188,6 +189,7 @@ class ControllerSettingSetting extends Controller {
 		$data['help_order_status'] = $this->language->get('help_order_status');
 		$data['help_processing_status'] = $this->language->get('help_processing_status');
 		$data['help_complete_status'] = $this->language->get('help_complete_status');
+		$data['help_fraud_status'] = $this->language->get('help_fraud_status');
 		$data['help_order_mail'] = $this->language->get('help_order_mail');
 		$data['help_api'] = $this->language->get('help_api');
 		$data['help_stock_display'] = $this->language->get('help_stock_display');
@@ -837,6 +839,12 @@ class ControllerSettingSetting extends Controller {
 			$data['config_complete_status'] = array();
 		}
 
+		if (isset($this->request->post['config_order_status_id'])) {
+			$data['config_fraud_status_id'] = $this->request->post['config_fraud_status_id'];
+		} else {
+			$data['config_fraud_status_id'] = $this->config->get('config_fraud_status_id');
+		}
+
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
@@ -1128,40 +1136,40 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_mail_parameter'] = $this->config->get('config_mail_parameter');
 		}
-		
+
 		if (isset($this->request->post['config_mail_smtp_hostname'])) {
 			$data['config_mail_smtp_hostname'] = $this->request->post['config_mail_smtp_hostname'];
 		} else {
 			$data['config_mail_smtp_hostname'] = $this->config->get('config_mail_smtp_hostname');
 		}
-		
+
 		if (isset($this->request->post['config_mail_smtp_username'])) {
 			$data['config_mail_smtp_username'] = $this->request->post['config_mail_smtp_username'];
 		} else {
 			$data['config_mail_smtp_username'] = $this->config->get('config_mail_smtp_username');
-		}	
-					
+		}
+
 		if (isset($this->request->post['config_mail_smtp_password'])) {
 			$data['config_mail_smtp_password'] = $this->request->post['config_mail_smtp_password'];
 		} else {
 			$data['config_mail_smtp_password'] = $this->config->get('config_mail_smtp_password');
-		}	
-		
+		}
+
 		if (isset($this->request->post['config_mail_smtp_port'])) {
 			$data['config_mail_smtp_port'] = $this->request->post['config_mail_smtp_port'];
 		} elseif ($this->config->has('config_mail_smtp_port')) {
 			$data['config_mail_smtp_port'] = $this->config->get('config_mail_smtp_port');
 		} else {
 			$data['config_mail_smtp_port'] = 25;
-		}	
-		
+		}
+
 		if (isset($this->request->post['config_mail_smtp_timeout'])) {
 			$data['config_mail_smtp_timeout'] = $this->request->post['config_mail_smtp_timeout'];
 		} elseif ($this->config->has('config_mail_smtp_timeout')) {
-			$data['config_mail_smtp_timeout'] = $this->config->get('config_mail_smtp_timeout');		
+			$data['config_mail_smtp_timeout'] = $this->config->get('config_mail_smtp_timeout');
 		} else {
 			$data['config_mail_smtp_timeout'] = 5;
-		}	
+		}
 
 		if (isset($this->request->post['config_mail_alert'])) {
 			$data['config_mail_alert'] = $this->request->post['config_mail_alert'];

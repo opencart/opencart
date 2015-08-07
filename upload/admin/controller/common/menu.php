@@ -19,7 +19,6 @@ class ControllerCommonMenu extends Controller {
 		$data['text_customer'] = $this->language->get('text_customer');
 		$data['text_customer_group'] = $this->language->get('text_customer_group');
 		$data['text_customer_field'] = $this->language->get('text_customer_field');
-		$data['text_customer_ban_ip'] = $this->language->get('text_customer_ban_ip');
 		$data['text_custom_field'] = $this->language->get('text_custom_field');
 		$data['text_sale'] = $this->language->get('text_sale');
 		$data['text_paypal'] = $this->language->get('text_paypal');
@@ -121,7 +120,6 @@ class ControllerCommonMenu extends Controller {
 		$data['customer'] = $this->url->link('customer/customer', 'token=' . $this->session->data['token'], 'SSL');
 		$data['customer_fields'] = $this->url->link('customer/customer_field', 'token=' . $this->session->data['token'], 'SSL');
 		$data['customer_group'] = $this->url->link('customer/customer_group', 'token=' . $this->session->data['token'], 'SSL');
-		$data['customer_ban_ip'] = $this->url->link('customer/customer_ban_ip', 'token=' . $this->session->data['token'], 'SSL');
 		$data['custom_field'] = $this->url->link('customer/custom_field', 'token=' . $this->session->data['token'], 'SSL');
 		$data['download'] = $this->url->link('catalog/download', 'token=' . $this->session->data['token'], 'SSL');
 		$data['error_log'] = $this->url->link('tool/error_log', 'token=' . $this->session->data['token'], 'SSL');

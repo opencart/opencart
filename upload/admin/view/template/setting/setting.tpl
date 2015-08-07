@@ -43,153 +43,155 @@
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
-                <div class="col-sm-10">
-                  <input type="text" name="config_name" value="<?php echo $config_name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
-                  <?php if ($error_name) { ?>
-                  <div class="text-danger"><?php echo $error_name; ?></div>
-                  <?php } ?>
-                </div>
-              </div>
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-owner"><?php echo $entry_owner; ?></label>
-                <div class="col-sm-10">
-                  <input type="text" name="config_owner" value="<?php echo $config_owner; ?>" placeholder="<?php echo $entry_owner; ?>" id="input-owner" class="form-control" />
-                  <?php if ($error_owner) { ?>
-                  <div class="text-danger"><?php echo $error_owner; ?></div>
-                  <?php } ?>
-                </div>
-              </div>
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-address"><?php echo $entry_address; ?></label>
-                <div class="col-sm-10">
-                  <textarea name="config_address" placeholder="<?php echo $entry_address; ?>" rows="5" id="input-address" class="form-control"><?php echo $config_address; ?></textarea>
-                  <?php if ($error_address) { ?>
-                  <div class="text-danger"><?php echo $error_address; ?></div>
-                  <?php } ?>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-geocode"><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_geocode; ?>"><?php echo $entry_geocode; ?></span></label>
-                <div class="col-sm-10">
-                  <input type="text" name="config_geocode" value="<?php echo $config_geocode; ?>" placeholder="<?php echo $entry_geocode; ?>" id="input-geocode" class="form-control" />
-                </div>
-              </div>
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
-                <div class="col-sm-10">
-                  <input type="text" name="config_email" value="<?php echo $config_email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
-                  <?php if ($error_email) { ?>
-                  <div class="text-danger"><?php echo $error_email; ?></div>
-                  <?php } ?>
-                </div>
-              </div>
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
-                <div class="col-sm-10">
-                  <input type="text" name="config_telephone" value="<?php echo $config_telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" class="form-control" />
-                  <?php if ($error_telephone) { ?>
-                  <div class="text-danger"><?php echo $error_telephone; ?></div>
-                  <?php } ?>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-fax"><?php echo $entry_fax; ?></label>
-                <div class="col-sm-10">
-                  <input type="text" name="config_fax" value="<?php echo $config_fax; ?>" placeholder="<?php echo $entry_fax; ?>" id="input-fax" class="form-control" />
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_image; ?></label>
-                <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $thumb; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
-                  <input type="hidden" name="config_image" value="<?php echo $config_image; ?>" id="input-image" />
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-open"><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_open; ?>"><?php echo $entry_open; ?></span></label>
-                <div class="col-sm-10">
-                  <textarea name="config_open" rows="5" placeholder="<?php echo $entry_open; ?>" id="input-open" class="form-control"><?php echo $config_open; ?></textarea>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-comment"><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_comment; ?>"><?php echo $entry_comment; ?></span></label>
-                <div class="col-sm-10">
-                  <textarea name="config_comment" rows="5" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="form-control"><?php echo $config_comment; ?></textarea>
-                </div>
-              </div>
-              <?php if ($locations) { ?>
-              <div class="form-group">
-                <label class="col-sm-2 control-label"><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_location; ?>"><?php echo $entry_location; ?></span></label>
-                <div class="col-sm-10">
-                  <?php foreach ($locations as $location) { ?>
-                  <div class="checkbox">
-                    <label>
-                      <?php if (in_array($location['location_id'], $config_location)) { ?>
-                      <input type="checkbox" name="config_location[]" value="<?php echo $location['location_id']; ?>" checked="checked" />
-                      <?php echo $location['name']; ?>
-                      <?php } else { ?>
-                      <input type="checkbox" name="config_location[]" value="<?php echo $location['location_id']; ?>" />
-                      <?php echo $location['name']; ?>
-                      <?php } ?>
-                    </label>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-meta-title"><?php echo $entry_meta_title; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_meta_title" value="<?php echo $config_meta_title; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title" class="form-control" />
+                    <?php if ($error_meta_title) { ?>
+                    <div class="text-danger"><?php echo $error_meta_title; ?></div>
+                    <?php } ?>
                   </div>
-                  <?php } ?>
                 </div>
-              </div>
-              <?php } ?>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-meta-description"><?php echo $entry_meta_description; ?></label>
+                  <div class="col-sm-10">
+                    <textarea name="config_meta_description" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description" class="form-control"><?php echo $config_meta_description; ?></textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-meta-keyword"><?php echo $entry_meta_keyword; ?></label>
+                  <div class="col-sm-10">
+                    <textarea name="config_meta_keyword" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta-keyword" class="form-control"><?php echo $config_meta_keyword; ?></textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-template"><?php echo $entry_template; ?></label>
+                  <div class="col-sm-10">
+                    <select name="config_template" id="input-template" class="form-control">
+                      <?php foreach ($templates as $template) { ?>
+                      <?php if ($template == $config_template) { ?>
+                      <option value="<?php echo $template; ?>" selected="selected"><?php echo $template; ?></option>
+                      <?php } else { ?>
+                      <option value="<?php echo $template; ?>"><?php echo $template; ?></option>
+                      <?php } ?>
+                      <?php } ?>
+                    </select>
+                    <br />
+                    <img src="" alt="" id="template" class="img-thumbnail" /></div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-layout"><?php echo $entry_layout; ?></label>
+                  <div class="col-sm-10">
+                    <select name="config_layout_id" id="input-layout" class="form-control">
+                      <?php foreach ($layouts as $layout) { ?>
+                      <?php if ($layout['layout_id'] == $config_layout_id) { ?>
+                      <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
+                      <?php } else { ?>
+                      <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
+                      <?php } ?>
+                      <?php } ?>
+                    </select>
+                  </div>
+                </div>
+                
             </div>
             <div class="tab-pane" id="tab-store">
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-meta-title"><?php echo $entry_meta_title; ?></label>
-                <div class="col-sm-10">
-                  <input type="text" name="config_meta_title" value="<?php echo $config_meta_title; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title" class="form-control" />
-                  <?php if ($error_meta_title) { ?>
-                  <div class="text-danger"><?php echo $error_meta_title; ?></div>
-                  <?php } ?>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-meta-description"><?php echo $entry_meta_description; ?></label>
-                <div class="col-sm-10">
-                  <textarea name="config_meta_description" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description" class="form-control"><?php echo $config_meta_description; ?></textarea>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-meta-keyword"><?php echo $entry_meta_keyword; ?></label>
-                <div class="col-sm-10">
-                  <textarea name="config_meta_keyword" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta-keyword" class="form-control"><?php echo $config_meta_keyword; ?></textarea>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-template"><?php echo $entry_template; ?></label>
-                <div class="col-sm-10">
-                  <select name="config_template" id="input-template" class="form-control">
-                    <?php foreach ($templates as $template) { ?>
-                    <?php if ($template == $config_template) { ?>
-                    <option value="<?php echo $template; ?>" selected="selected"><?php echo $template; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $template; ?>"><?php echo $template; ?></option>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_name" value="<?php echo $config_name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
+                    <?php if ($error_name) { ?>
+                    <div class="text-danger"><?php echo $error_name; ?></div>
                     <?php } ?>
-                    <?php } ?>
-                  </select>
-                  <br />
-                  <img src="" alt="" id="template" class="img-thumbnail" /></div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-layout"><?php echo $entry_layout; ?></label>
-                <div class="col-sm-10">
-                  <select name="config_layout_id" id="input-layout" class="form-control">
-                    <?php foreach ($layouts as $layout) { ?>
-                    <?php if ($layout['layout_id'] == $config_layout_id) { ?>
-                    <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
-                    <?php } ?>
-                    <?php } ?>
-                  </select>
+                  </div>
                 </div>
-              </div>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-owner"><?php echo $entry_owner; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_owner" value="<?php echo $config_owner; ?>" placeholder="<?php echo $entry_owner; ?>" id="input-owner" class="form-control" />
+                    <?php if ($error_owner) { ?>
+                    <div class="text-danger"><?php echo $error_owner; ?></div>
+                    <?php } ?>
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-address"><?php echo $entry_address; ?></label>
+                  <div class="col-sm-10">
+                    <textarea name="config_address" placeholder="<?php echo $entry_address; ?>" rows="5" id="input-address" class="form-control"><?php echo $config_address; ?></textarea>
+                    <?php if ($error_address) { ?>
+                    <div class="text-danger"><?php echo $error_address; ?></div>
+                    <?php } ?>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-geocode"><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_geocode; ?>"><?php echo $entry_geocode; ?></span></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_geocode" value="<?php echo $config_geocode; ?>" placeholder="<?php echo $entry_geocode; ?>" id="input-geocode" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_email" value="<?php echo $config_email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
+                    <?php if ($error_email) { ?>
+                    <div class="text-danger"><?php echo $error_email; ?></div>
+                    <?php } ?>
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_telephone" value="<?php echo $config_telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" class="form-control" />
+                    <?php if ($error_telephone) { ?>
+                    <div class="text-danger"><?php echo $error_telephone; ?></div>
+                    <?php } ?>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-fax"><?php echo $entry_fax; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="config_fax" value="<?php echo $config_fax; ?>" placeholder="<?php echo $entry_fax; ?>" id="input-fax" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_image; ?></label>
+                  <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $thumb; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
+                    <input type="hidden" name="config_image" value="<?php echo $config_image; ?>" id="input-image" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-open"><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_open; ?>"><?php echo $entry_open; ?></span></label>
+                  <div class="col-sm-10">
+                    <textarea name="config_open" rows="5" placeholder="<?php echo $entry_open; ?>" id="input-open" class="form-control"><?php echo $config_open; ?></textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-comment"><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_comment; ?>"><?php echo $entry_comment; ?></span></label>
+                  <div class="col-sm-10">
+                    <textarea name="config_comment" rows="5" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="form-control"><?php echo $config_comment; ?></textarea>
+                  </div>
+                </div>
+                <?php if ($locations) { ?>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" data-container="#tab-general" title="<?php echo $help_location; ?>"><?php echo $entry_location; ?></span></label>
+                  <div class="col-sm-10">
+                    <?php foreach ($locations as $location) { ?>
+                    <div class="checkbox">
+                      <label>
+                        <?php if (in_array($location['location_id'], $config_location)) { ?>
+                        <input type="checkbox" name="config_location[]" value="<?php echo $location['location_id']; ?>" checked="checked" />
+                        <?php echo $location['name']; ?>
+                        <?php } else { ?>
+                        <input type="checkbox" name="config_location[]" value="<?php echo $location['location_id']; ?>" />
+                        <?php echo $location['name']; ?>
+                        <?php } ?>
+                      </label>
+                    </div>
+                    <?php } ?>
+                  </div>
+                </div>
+                <?php } ?>
+
             </div>
             <div class="tab-pane" id="tab-local">
               <div class="form-group">
@@ -774,6 +776,20 @@
                     <?php if ($error_complete_status) { ?>
                     <div class="text-danger"><?php echo $error_complete_status; ?></div>
                     <?php } ?>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-fraud-status"><span data-toggle="tooltip" title="<?php echo $help_fraud_status; ?>"><?php echo $entry_fraud_status; ?></span></label>
+                  <div class="col-sm-10">
+                    <select name="config_fraud_status_id" id="input-fraud-status" class="form-control">
+                      <?php foreach ($order_statuses as $order_status) { ?>
+                      <?php if ($order_status['order_status_id'] == $config_fraud_status_id) { ?>
+                      <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                      <?php } else { ?>
+                      <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                      <?php } ?>
+                      <?php } ?>
+                    </select>
                   </div>
                 </div>
                 <div class="form-group">

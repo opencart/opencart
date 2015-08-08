@@ -200,8 +200,4 @@ class Image {
 
 		return array($r, $g, $b);
 	}
-
-	function __destruct() {
-
-	}
 }

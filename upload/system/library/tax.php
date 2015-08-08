@@ -5,6 +5,7 @@ final class Tax {
 	public function __construct($registry) {
 		$this->config = $registry->get('config');
 		$this->db = $registry->get('db');
+		$this->customer = $registry->get('customer');
 		$this->session = $registry->get('session');
 
 		if (isset($this->session->data['shipping_address'])) {

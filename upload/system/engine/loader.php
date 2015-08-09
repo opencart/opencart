@@ -29,22 +29,28 @@ final class Loader {
 	public function view($template, $data = array()) {
 		$file = DIR_TEMPLATE . $template;
 
-		if (file_exists($file)) {
-			extract($data);
-
-			ob_start();
-
-			require($file);
-
-			$output = ob_get_contents();
-
-			ob_end_clean();
-
-			return $output;
-		} else {
+		if (!file_exists($file)) {
 			trigger_error('Error: Could not load template ' . $file . '!');
 			exit();
 		}
+
+		if (isset($data['url']) || isset($data['lng']) || isset($data['load'])) {
+			trigger_error('Error: you must not override url, lng, load and request parameters in the $data array!');
+			exit();
+		}
+
+		$data['url'] = $this->registry->get('url');
+		$data['lng'] = $this->registry->get('language');
+		$data['load'] = $this->registry->get('load');
+		$data['request'] = $this->registry->get('request');
+
+		extract($data);
+		ob_start();
+		require($file);
+		$output = ob_get_contents();
+		ob_end_clean();
+
+		return $output;
 	}
 
 	public function library($library) {

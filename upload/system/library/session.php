@@ -74,6 +74,15 @@ class Session {
 		}
 	}
 
+	public function unsetVariables($list)
+	{
+		$vars = explode(',', $list);
+
+		foreach($vars as $varName) {
+			unset($this->data[trim($varName)]);
+		}
+	}
+
 	public function __destruct() {
 		if ($this->session_id) {
 			$file = ini_get('session.save_path') . '/oc.' . $this->session_id;

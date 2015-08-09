@@ -3,7 +3,7 @@ class ModelFraudMaxMind extends Model {
 	public function check($data) {
 		$risk_score = 0;
 
-		$fraud_info = $this->getFraud($data['order_id']);
+		$order_id = $data['order_id'];
 
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "maxmind` WHERE order_id = '" . (int)$order_id . "'");
 		
@@ -25,7 +25,7 @@ class ModelFraudMaxMind extends Model {
 			$request .= '&country=' . urlencode($data['payment_country']);
 			$request .= '&domain=' . urlencode(utf8_substr(strrchr($data['email'], '@'), 1));
 			$request .= '&custPhone=' . urlencode($data['telephone']);
-			$request .= '&license_key=' . urlencode($this->config->get('config_fraud_key'));
+			$request .= '&license_key=' . urlencode($this->config->get('maxmind_key'));
 
 			if ($data['shipping_method']) {
 				$request .= '&shipAddr=' . urlencode($data['shipping_address_1']);
@@ -60,7 +60,6 @@ class ModelFraudMaxMind extends Model {
 			$risk_score = 0;
 
 			if ($response) {
-				$order_id = $data['order_id'];
 				$customer_id = $data['customer_id'];
 
 				$data = array();

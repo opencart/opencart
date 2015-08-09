@@ -269,7 +269,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$order_data['fax'] = '';
 
 		if (isset($this->session->data['coupon'])) {
-			$this->load->model('checkout/coupon');
+			$this->load->model('total/coupon');
 
 			$coupon = $this->model_checkout_coupon->getCoupon($this->session->data['coupon']);
 
@@ -500,7 +500,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 	public function processOrder() {
 		$this->load->language('payment/amazon_login_pay');
 		$this->load->model('checkout/order');
-		$this->load->model('checkout/coupon');
+		$this->load->model('total/coupon');
 		$this->load->model('account/order');
 		$this->load->model('payment/amazon_login_pay');
 

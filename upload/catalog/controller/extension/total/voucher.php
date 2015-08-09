@@ -2,7 +2,7 @@
 class ControllerTotalVoucher extends Controller {
 	public function index() {
 		if ($this->config->get('voucher_status')) {
-			$this->load->language('checkout/voucher');
+			$this->load->language('total/coupon');
 
 			$data['heading_title'] = $this->language->get('heading_title');
 
@@ -21,17 +21,17 @@ class ControllerTotalVoucher extends Controller {
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/total/voucher.tpl')) {
 				return $this->load->view($this->config->get('config_template') . '/template/total/voucher.tpl', $data);
 			} else {
-				return $this->load->view('default/template/checkout/voucher.tpl', $data);
+				return $this->load->view('default/template/total/coupon.tpl', $data);
 			}
 		}
 	}
 
 	public function voucher() {
-		$this->load->language('checkout/voucher');
+		$this->load->language('total/coupon');
 
 		$json = array();
 
-		$this->load->model('checkout/voucher');
+		$this->load->model('total/coupon');
 
 		if (isset($this->request->post['voucher'])) {
 			$voucher = $this->request->post['voucher'];

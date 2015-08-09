@@ -11,7 +11,7 @@ class ControllerApiCoupon extends Controller {
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
-			$this->load->model('checkout/coupon');
+			$this->load->model('total/coupon');
 
 			if (isset($this->request->post['coupon'])) {
 				$coupon = $this->request->post['coupon'];

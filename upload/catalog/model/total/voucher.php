@@ -6,7 +6,7 @@ class ModelTotalVoucher extends Model {
 		if (isset($this->session->data['voucher'])) {
 			$this->load->language('total/voucher');
 
-			$this->load->model('checkout/voucher');
+			$this->load->model('total/coupon');
 
 			$voucher_info = $this->model_checkout_voucher->getVoucher($this->session->data['voucher']);
 
@@ -39,7 +39,7 @@ class ModelTotalVoucher extends Model {
 			$code = substr($order_total['title'], $start, $end - $start);
 		}
 
-		$this->load->model('checkout/voucher');
+		$this->load->model('total/coupon');
 
 		$voucher_info = $this->model_checkout_voucher->getVoucher($code);
 

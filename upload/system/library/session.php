@@ -10,7 +10,7 @@ class Session {
 
 		if ($session_id) {
 			session_id($session_id);
-					}
+		}
 
 		if (!preg_match('/^[0-9a-z]*$/i', session_id())) {
 			exit();
@@ -21,26 +21,24 @@ class Session {
 
 		if (!isset($_SESSION[$key])) {
 			$_SESSION[$key] = array();
-	}
+		}
 
 		$this->data =& $_SESSION[$key];
-			}
+	}
 
-	public function getId() {
+	public function getId()	{
 		return session_id();
-		}
+	}
 
 	public function destroy() {
 		return session_destroy();
-		}
 	}
 
-	public function unsetVariables($list)
-	{
+	public function unsetVariables($list) {
 		$vars = explode(',', $list);
 
-		foreach($vars as $varName) {
+		foreach ($vars as $varName) {
 			unset($this->data[trim($varName)]);
 		}
 	}
-
+}

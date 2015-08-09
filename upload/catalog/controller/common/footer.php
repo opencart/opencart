@@ -69,7 +69,7 @@ class ControllerCommonFooter extends Controller {
 				$referer = '';
 			}
 
-			$this->model_tool_online->whosonline($ip, $this->customer->getId(), $url, $referer);
+			$this->model_tool_online->addOnline($ip, $this->customer->getId(), $url, $referer);
 		}
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/footer.tpl')) {

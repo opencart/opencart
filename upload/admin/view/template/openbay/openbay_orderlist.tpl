@@ -63,7 +63,7 @@
             </div>
             <div class="col-sm-4">
               <div class="form-group">
-                <label class="control-label" for="input-channel"><?php echo $entry_order_status; ?></label>
+                <label class="control-label" for="input-channel"><?php echo $entry_order_channel; ?></label>
                 <select name="filter_channel" id="input-channel" class="form-control">
                   <option value=""></option>
                   <?php foreach ($channels as $channel) { ?>

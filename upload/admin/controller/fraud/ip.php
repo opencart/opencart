@@ -172,7 +172,9 @@ class ControllerFraudIp extends Controller {
 		} else {
 			$this->load->model('fraud/ip');
 
-			$this->model_fraud_ip->addIp($this->request->post['ip']);
+			if (!$this->model_fraud_ip->getTotalIpsByIp($this->request->post['ip'])) {
+				$this->model_fraud_ip->addIp($this->request->post['ip']);
+			}
 
 			$json['success'] = $this->language->get('text_success');
 		}

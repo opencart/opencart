@@ -255,12 +255,12 @@ class ModelCheckoutOrder extends Model {
 
 	public function addOrderHistory($order_id, $order_status_id, $comment = '', $notify = false) {
 		$event_data = array(
-			'order_id'		=> $order_id,
-			'order_status_id'	=> $order_status_id,
-			'comment'		=> $comment,
-			'notify'		=> $notify
+			'order_id'		  => $order_id,
+			'order_status_id' => $order_status_id,
+			'comment'		  => $comment,
+			'notify'		  => $notify
 		);
-		
+
 		$this->event->trigger('pre.order.history.add', $event_data);
 
 		$order_info = $this->getOrder($order_id);
@@ -297,12 +297,33 @@ class ModelCheckoutOrder extends Model {
 				}
 			}
 
-			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
-
-			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($comment) . "', date_added = NOW()");
-
 			// If current order status is not processing or complete but new status is processing or complete then commence completing the order
 			if (!in_array($order_info['order_status_id'], array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status'))) && in_array($order_status_id, array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status')))) {
+				// Redeem coupon, vouchers and reward points
+				$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");
+
+				foreach ($order_total_query->rows as $order_total) {
+					$this->load->model('total/' . $order_total['code']);
+
+					if (method_exists($this->{'model_total_' . $order_total['code']}, 'confirm')) {
+					  // Confirm coupon, vouchers and reward points
+					  $fraud_status_id = $this->{'model_total_' . $order_total['code']}->confirm($order_info, $order_total);
+					
+					  // If the balance on the coupon, vouchers and reward points is not enough to cover the transaction or has already been used then the fraud order status is returned. 
+					  if ($fraud_status_id) {
+					   
+					   
+					  } 
+				  }
+				}
+
+				// Add commission if sale is linked to affiliate referral.
+				if ($order_info['affiliate_id'] && $this->config->get('config_affiliate_auto')) {
+					$this->load->model('affiliate/affiliate');
+
+					$this->model_affiliate_affiliate->addTransaction($order_info['affiliate_id'], $order_info['commission'], $order_id);
+				}
+				
 				// Stock subtraction
 				$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
 
@@ -314,26 +335,12 @@ class ModelCheckoutOrder extends Model {
 					foreach ($order_option_query->rows as $option) {
 						$this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_option_value_id = '" . (int)$option['product_option_value_id'] . "' AND subtract = '1'");
 					}
-				}
-
-				// Redeem coupon, vouchers and reward points
-				$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");
-
-				foreach ($order_total_query->rows as $order_total) {
-					$this->load->model('total/' . $order_total['code']);
-
-					if (method_exists($this->{'model_total_' . $order_total['code']}, 'confirm')) {
-						$this->{'model_total_' . $order_total['code']}->confirm($order_info, $order_total);
-					}
-				}
-
-				// Add commission if sale is linked to affiliate referral.
-				if ($order_info['affiliate_id'] && $this->config->get('config_affiliate_auto')) {
-					$this->load->model('affiliate/affiliate');
-
-					$this->model_affiliate_affiliate->addTransaction($order_info['affiliate_id'], $order_info['commission'], $order_id);
-				}
+				}			
 			}
+
+			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
+
+			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($comment) . "', date_added = NOW()");
 
 			// If old order status is the processing or complete status but new status is not then commence restock, and remove coupon, voucher and reward history
 			if (in_array($order_info['order_status_id'], array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status'))) && !in_array($order_status_id, array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status')))) {

@@ -1,5 +1,5 @@
 <?php
-class ControllerCheckoutCoupon extends Controller {
+class ControllerTotalCoupon extends Controller {
 	public function index() {
 		if ($this->config->get('coupon_status')) {
 			$this->load->language('checkout/coupon');
@@ -18,16 +18,10 @@ class ControllerCheckoutCoupon extends Controller {
 				$data['coupon'] = '';
 			}
 
-			if (isset($this->request->get['redirect']) && !empty($this->request->get['redirect'])) {
-				$data['redirect'] = $this->request->get['redirect'];
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/total/coupon.tpl')) {
+				return $this->load->view($this->config->get('config_template') . '/template/total/coupon.tpl', $data);
 			} else {
-				$data['redirect'] = $this->url->link('checkout/cart');
-			}
-
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/coupon.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/checkout/coupon.tpl', $data);
-			} else {
-				return $this->load->view('default/template/checkout/coupon.tpl', $data);
+				return $this->load->view('default/template/total/coupon.tpl', $data);
 			}
 		}
 	}

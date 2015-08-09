@@ -1,76 +1,37 @@
 <?php
 class Session {
-	private $session_id;
 	public $data = array();
 
-	public function __construct($session_id = '') {
-		// Garbage collection
-		$files = glob(ini_get('session.save_path') . '/oc.*');
+	public function __construct($session_id = '',  $key = 'default') {
+		ini_set('session.use_only_cookies', 'Off');
+		ini_set('session.use_cookies', 'On');
+		ini_set('session.use_trans_sid', 'Off');
+		ini_set('session.cookie_httponly', 'On');
 
-		if ($files) {
-			foreach ($files as $file) {
-				if (filemtime($file) < (time() - ini_get('session.gc_maxlifetime'))) {
-					if (file_exists($file)) {
-						unlink($file);
+		if ($session_id) {
+			session_id($session_id);
 					}
-				}
-			}
-		}
 
-		if (!preg_match('/^[0-9a-z]*$/i', $session_id)) {
+		if (!preg_match('/^[0-9a-z]*$/i', session_id())) {
 			exit();
 		}
 
-		$this->session_id = $session_id;
+		session_set_cookie_params(0, '/');
+		session_start();
+
+		if (!isset($_SESSION[$key])) {
+			$_SESSION[$key] = array();
 	}
+
+		$this->data =& $_SESSION[$key];
+			}
 
 	public function getId() {
-		return $this->session_id;
-	}
-
-	public function start($name = 'PHPSESSID', $expire = 0) {
-		if (!$this->session_id) {
-			if (isset($_COOKIE[$name])) {
-				$this->session_id = $_COOKIE[$name];
-			} else {
-				$this->session_id = bin2hex(openssl_random_pseudo_bytes(16));
-			}
+		return session_id();
 		}
-
-		// Protect the session from starting if invalid characters
-		if (!preg_match('/^[0-9a-z]*$/i', $this->session_id)) {
-			exit();
-		}
-
-		setcookie($name, $this->session_id, $expire, '/');
-
-		$file = ini_get('session.save_path') . '/oc.' . $this->session_id;
-
-		if (is_file($file)) {
-			$data = file_get_contents($file);
-
-			if ($data) {
-				$this->data = unserialize($data);
-			}
-
-			return true;
-		} else {
-			return false;
-		}
-	}
 
 	public function destroy() {
-		$file = ini_get('session.save_path') . '/oc.' . $this->session_id;
-
-		if (is_file($file)) {
-			@unlink($file);
-
-			$this->session_id = '';
-			$this->data = array();
-
-			return true;
-		} else {
-			return false;
+		return session_destroy();
 		}
 	}
 
@@ -83,21 +44,3 @@ class Session {
 		}
 	}
 
-	public function __destruct() {
-		if ($this->session_id) {
-			$file = ini_get('session.save_path') . '/oc.' . $this->session_id;
-
-			$handle = fopen($file, 'w');
-
-			flock($handle, LOCK_EX);
-
-			fwrite($handle, serialize((array)$this->data));
-
-			fflush($handle);
-
-			flock($handle, LOCK_UN);
-
-			fclose($handle);
-		}
-	}
-}

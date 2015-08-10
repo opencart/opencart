@@ -8,7 +8,7 @@ final class Loader {
 	}
 
 	public function addHook($path, $object) {
-		$this->hooks[$type][] = $object;
+		$this->hooks[$path][] = $object;
 	}
 
   	public function __load() {

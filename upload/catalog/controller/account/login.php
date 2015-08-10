@@ -61,8 +61,6 @@ class ControllerAccountLogin extends Controller {
 				if (isset($this->request->post['email']) && !empty($this->request->post['email'])) {
 					$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
 				}
-
-				$this->event->trigger('post.customer.login');
 			}
 		}
 

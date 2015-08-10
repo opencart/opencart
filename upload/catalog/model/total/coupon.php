@@ -99,7 +99,7 @@ class ModelTotalCoupon extends Model {
 		if (isset($this->session->data['coupon'])) {
 			$this->load->language('total/coupon');
 
-			$this->load->model('checkout/coupon');
+			$this->load->model('total/coupon');
 
 			$coupon_info = $this->model_checkout_coupon->getCoupon($this->session->data['coupon']);
 
@@ -197,7 +197,7 @@ class ModelTotalCoupon extends Model {
 			$code = substr($order_total['title'], $start, $end - $start);
 		}
 
-		$this->load->model('checkout/coupon');
+		$this->load->model('total/coupon');
 
 		$coupon_info = $this->model_checkout_coupon->getCoupon($code);
 

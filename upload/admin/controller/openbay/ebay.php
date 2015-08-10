@@ -82,7 +82,12 @@ class ControllerOpenbayEbay extends Controller {
 		$this->load->model('openbay/ebay');
 		$this->load->model('localisation/currency');
 		$this->load->model('localisation/order_status');
-		$this->load->model('customer/customer_group');
+
+		if (version_compare(VERSION, '2.0.3.1', '>')) {
+			$this->load->model('customer/customer_group');
+		} else {
+			$this->load->model('sale/customer_group');
+		}
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
 			$this->model_setting_setting->editSetting('ebay', $this->request->post);

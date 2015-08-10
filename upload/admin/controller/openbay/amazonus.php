@@ -27,7 +27,12 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->load->model('setting/setting');
 		$this->load->model('localisation/order_status');
 		$this->load->model('openbay/amazonus');
-		$this->load->model('customer/customer_group');
+
+		if (version_compare(VERSION, '2.0.3.1', '>')) {
+			$this->load->model('customer/customer_group');
+		} else {
+			$this->load->model('sale/customer_group');
+		}
 
 		$data = $this->load->language('openbay/amazonus');
 
@@ -233,7 +238,12 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->load->model('setting/setting');
 		$this->load->model('localisation/order_status');
 		$this->load->model('openbay/amazonus');
-		$this->load->model('customer/customer_group');
+
+		if (version_compare(VERSION, '2.0.3.1', '>')) {
+			$this->load->model('customer/customer_group');
+		} else {
+			$this->load->model('sale/customer_group');
+		}
 
 		$settings = $this->model_setting_setting->getSetting('openbay_amazonus');
 

@@ -743,10 +743,6 @@ final class Ebay {
 							$stock = true;
 						}
 
-						if ($v == 0) {
-							$variant_data['option_list'] = base64_encode(serialize($option['option_values']));
-						}
-
 						// PRODUCT RESERVE LEVELS FOR VARIANT ITEMS (DOES NOT PASS THROUGH NORMAL SYSTEM)
 						$reserve = $this->getReserve($product_id, $item_id, $option['sku']);
 						if ($reserve != false) {
@@ -764,12 +760,6 @@ final class Ebay {
 
 						if ($option['active'] == 1) {
 							$variant_data['opt'][$v]['active'] = 1;
-						}
-
-						$variant_option_values = $this->model_module_openstock->getVariant($option['product_option_variant_id']);
-
-						foreach($variant_option_values as $variant_option_value) {
-							$variant_data['opt'][$v]['specifics'][] = array('name' => $variant_option_value['option_name'], 'value' => $variant_option_value['option_value_name']);
 						}
 
 						$v++;
@@ -1410,6 +1400,21 @@ final class Ebay {
 				}
 			} else {
 				$this->log('No measurement_types set!');
+			}
+
+			// Product details
+			if (isset($response['product_details'])) {
+				$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'product_details' LIMIT 1");
+
+				if ($qry->num_rows > 0) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['product_details'])) . "', `last_updated`  = now() WHERE `key` = 'product_details' LIMIT 1");
+					$this->log('Updated product_details info in to ebay_setting_option table');
+				} else {
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'product_details', `data` = '" . $this->db->escape(serialize($response['product_details'])) . "', `last_updated`  = now()");
+					$this->log('Inserted product_details info in to ebay_setting_option table');
+				}
+			} else {
+				$this->log('No product_details set!');
 			}
 		}
 

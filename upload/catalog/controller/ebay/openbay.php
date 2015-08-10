@@ -143,6 +143,7 @@ class ControllerEbayOpenbay extends Controller {
 			$settings['ebay_secret']  = $this->request->post['secret'];
 			$settings['ebay_string1'] = $this->request->post['s1'];
 			$settings['ebay_string2'] = $this->request->post['s2'];
+
 			$this->openbay->ebay->editSetting('ebay', $settings);
 
 			$this->response->setOutput(json_encode(array('msg' => 'ok', 'reason' => 'Auto setup has been completed','version' => (int)$this->config->get('openbay_version'))));

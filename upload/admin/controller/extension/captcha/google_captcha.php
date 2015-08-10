@@ -28,7 +28,8 @@ class ControllerExtensionCaptchaGoogleCaptcha extends Controller {
 		$data['entry_secret'] = $this->language->get('entry_secret');
 		$data['entry_status'] = $this->language->get('entry_status');
 
-		$data['help_code'] = $this->language->get('help_code');
+		$data['help_key'] = $this->language->get('help_key');
+		$data['help_secret'] = $this->language->get('help_secret');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');

@@ -1101,43 +1101,6 @@ class ControllerExtensionOpenbay extends Controller {
 			}
 		}
 
-		//eBay
-		if ($this->config->get('ebay_status') == 1) {
-			$this->load->model('openbay/ebay');
-
-			$orders = array();
-
-			foreach ($this->request->post['order_id'] as $order_id) {
-				if ($this->request->post['channel'][$order_id] == 'eBay') {
-					if ($this->config->get('ebay_status_shipped_id') == $this->request->post['order_status_id']) {
-						$carrier = '';
-
-						if (isset($this->request->post['carrier_other'][$order_id]) && !empty($this->request->post['carrier_other'][$order_id])) {
-							$carrier_from_list = false;
-							$carrier = $this->request->post['carrier_other'][$order_id];
-						} else {
-							$carrier_from_list = true;
-							$carrier = $this->request->post['carrier'][$order_id];
-						}
-
-						$orders[] = array(
-							'order_id' => $order_id,
-							'status' => 'shipped',
-							'carrier' => $carrier,
-							'carrier_from_list' => $carrier_from_list,
-							'tracking' => $this->request->post['tracking'][$order_id],
-						);
-
-						$this->model_openbay_amazonus->updateAmazonusOrderTracking($order_id, $carrier, $carrier_from_list, !empty($carrier) ? $this->request->post['tracking'][$order_id] : '');
-					}
-				}
-			}
-
-			if ($orders) {
-				$this->openbay->amazonus->bulkUpdateOrders($orders);
-			}
-		}
-
 		$i = 0;
 		foreach($this->request->post['order_id'] as $order_id) {
 			if ($this->config->get('ebay_status') == 1 && $this->request->post['channel'][$order_id] == 'eBay') {

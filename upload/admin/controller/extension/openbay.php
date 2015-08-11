@@ -1106,8 +1106,8 @@ class ControllerExtensionOpenbay extends Controller {
 			if ($this->config->get('ebay_status') == 1 && $this->request->post['channel'][$order_id] == 'eBay') {
 				if ($this->config->get('ebay_status_shipped_id') == $this->request->post['order_status_id']) {
 					$this->openbay->ebay->orderStatusListen($order_id, $this->request->post['order_status_id'], array('tracking_no' => $this->request->post['tracking'][$order_id], 'carrier_id' => $this->request->post['carrier'][$order_id]));
-				}else{
-					$this->openbay->ebay->orderStatusListen($order_id, $this->request->get['status_id']);
+				} else {
+					$this->openbay->ebay->orderStatusListen($order_id, $this->request->post['order_status_id']);
 				}
 			}
 

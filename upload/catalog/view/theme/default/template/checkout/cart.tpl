@@ -81,16 +81,19 @@
                 <td class="text-right"><?php echo $product['total']; ?></td>
               </tr>
               <?php } ?>
-              <?php foreach ($vouchers as $vouchers) { ?>
+              <?php foreach ($vouchers as $voucher) { ?>
               <tr>
                 <td></td>
-                <td class="text-left"><?php echo $vouchers['description']; ?></td>
+                <td class="text-left"><?php echo $voucher['description']; ?></td>
                 <td class="text-left"></td>
-                <td class="text-left"><div class="input-group btn-block" style="max-width: 200px;">
-                    <input type="text" name="" value="1" size="1" disabled="disabled" class="form-control" />
-                    <span class="input-group-btn"><button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="voucher.remove('<?php echo $vouchers['key']; ?>');"><i class="fa fa-times-circle"></i></button></span></div></td>
-                <td class="text-right"><?php echo $vouchers['amount']; ?></td>
-                <td class="text-right"><?php echo $vouchers['amount']; ?></td>
+                <td class="text-left">
+                  <div class="input-group btn-block" style="max-width: 200px;">
+                      <input type="text" name="" value="1" size="1" disabled="disabled" class="form-control" />
+                      <span class="input-group-btn"><button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="voucher.remove('<?php echo $voucher['key']; ?>');"><i class="fa fa-times-circle"></i></button></span>
+                    </div>
+                </td>
+                <td class="text-right"><?php echo $voucher['amount']; ?></td>
+                <td class="text-right"><?php echo $voucher['amount']; ?></td>
               </tr>
               <?php } ?>
             </tbody>

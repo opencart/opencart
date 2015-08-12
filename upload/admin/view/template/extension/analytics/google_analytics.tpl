@@ -25,18 +25,18 @@
       </div>
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-coupon" class="form-horizontal">
-          <div class="alert alert-info"><?php echo $help_google_analytics; ?></div>
+          <div class="alert alert-info"><?php echo $text_signup; ?></div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-google-analytics"><?php echo $entry_google_analytics; ?></label>
+            <label class="col-sm-2 control-label" for="input-code"><?php echo $entry_code; ?></label>
             <div class="col-sm-10">
-              <textarea name="config_google_analytics" rows="5" placeholder="<?php echo $entry_google_analytics; ?>" id="input-google-analytics" class="form-control"><?php echo $config_google_analytics; ?></textarea>
+              <textarea name="google_analytics_code" rows="5" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control"><?php echo $google_analytics_code; ?></textarea>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-google-analytics-status"><?php echo $entry_status; ?></label>
+            <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
             <div class="col-sm-10">
-              <select name="config_google_analytics_status" id="input-google-analytics-status" class="form-control">
-                <?php if ($config_google_analytics_status) { ?>
+              <select name="google_analytics_status" id="input-status" class="form-control">
+                <?php if ($google_analytics_status) { ?>
                 <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                 <option value="0"><?php echo $text_disabled; ?></option>
                 <?php } else { ?>
@@ -51,4 +51,4 @@
     </div>
   </div>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

@@ -27,8 +27,6 @@ class ControllerExtensionAnalyticsGoogleAnalytics extends Controller {
 		$data['entry_code'] = $this->language->get('entry_code');
 		$data['entry_status'] = $this->language->get('entry_status');
 
-		$data['help_code'] = $this->language->get('help_code');
-
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
@@ -43,7 +41,7 @@ class ControllerExtensionAnalyticsGoogleAnalytics extends Controller {
 		} else {
 			$data['error_code'] = '';
 		}
-		
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -52,7 +50,7 @@ class ControllerExtensionAnalyticsGoogleAnalytics extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_payment'),
+			'text' => $this->language->get('text_analytic'),
 			'href' => $this->url->link('extension/analytics', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
@@ -64,7 +62,7 @@ class ControllerExtensionAnalyticsGoogleAnalytics extends Controller {
 		$data['action'] = $this->url->link('extension/analytics/google_analytics', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['cancel'] = $this->url->link('extension/analytics', 'token=' . $this->session->data['token'], 'SSL');
-		
+
 		if (isset($this->request->post['google_analytics_code'])) {
 			$data['google_analytics_code'] = $this->request->post['google_analytics_code'];
 		} else {
@@ -92,7 +90,7 @@ class ControllerExtensionAnalyticsGoogleAnalytics extends Controller {
 		if (!$this->request->post['google_analytics_code']) {
 			$this->error['code'] = $this->language->get('error_code');
 		}
-		
+
 		return !$this->error;
 	}
 }

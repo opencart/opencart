@@ -39,7 +39,7 @@ class ControllerTotalVoucher extends Controller {
 			$voucher = '';
 		}
 
-		$voucher_info = $this->model_checkout_voucher->getVoucher($voucher);
+		$voucher_info = $this->model_total_voucher->getVoucher($voucher);
 
 		if (empty($this->request->post['voucher'])) {
 			$json['error'] = $this->language->get('error_empty');

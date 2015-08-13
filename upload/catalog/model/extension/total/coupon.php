@@ -99,9 +99,7 @@ class ModelTotalCoupon extends Model {
 		if (isset($this->session->data['coupon'])) {
 			$this->load->language('total/coupon');
 
-			$this->load->model('total/coupon');
-
-			$coupon_info = $this->model_total_coupon->getCoupon($this->session->data['coupon']);
+			$coupon_info = $this->getCoupon($this->session->data['coupon']);
 
 			if ($coupon_info) {
 				$discount_total = 0;
@@ -197,14 +195,14 @@ class ModelTotalCoupon extends Model {
 			$code = substr($order_total['title'], $start, $end - $start);
 		}
 
-		$this->load->model('total/coupon');
+		if ($code) {
+			$coupon_info = $this->getCoupon($code);
 
-		$coupon_info = $this->model_total_coupon->getCoupon($code);
-
-		if ($coupon_info) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "coupon_history` SET coupon_id = '" . (int)$coupon_info['coupon_id'] . "', order_id = '" . (int)$order_info['order_id'] . "', customer_id = '" . (int)$order_info['customer_id'] . "', amount = '" . (float)$order_total['value'] . "', date_added = NOW()");
-		} else {
-		  return $this->config->get('config_fraud_status_id');
+			if ($coupon_info) {
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "coupon_history` SET coupon_id = '" . (int)$coupon_info['coupon_id'] . "', order_id = '" . (int)$order_info['order_id'] . "', customer_id = '" . (int)$order_info['customer_id'] . "', amount = '" . (float)$order_total['value'] . "', date_added = NOW()");
+			} else {
+				return $this->config->get('config_fraud_status_id');
+			}
 		}
 	}
 

@@ -39,11 +39,11 @@ class ControllerTotalCoupon extends Controller {
 			$coupon = '';
 		}
 
-		$coupon_info = $this->model_checkout_coupon->getCoupon($coupon);
+		$coupon_info = $this->model_total_coupon->getCoupon($coupon);
 
 		if (empty($this->request->post['coupon'])) {
 			$json['error'] = $this->language->get('error_empty');
-			
+
 			unset($this->session->data['coupon']);
 		} elseif ($coupon_info) {
 			$this->session->data['coupon'] = $this->request->post['coupon'];

@@ -1906,7 +1906,7 @@ class ControllerPaymentPPExpress extends Controller {
 	protected function validateCoupon() {
 		$this->load->model('total/coupon');
 
-		$coupon_info = $this->model_checkout_coupon->getCoupon($this->request->post['coupon']);
+		$coupon_info = $this->model_total_coupon->getCoupon($this->request->post['coupon']);
 
 		$error = '';
 

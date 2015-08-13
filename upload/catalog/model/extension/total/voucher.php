@@ -1,7 +1,7 @@
 <?php
 class ModelTotalVoucher extends Model {
-  
-  
+
+
 	public function getTotal(&$total_data, &$total, &$taxes) {
 		if (isset($this->session->data['voucher'])) {
 			$this->load->language('total/voucher');
@@ -39,13 +39,15 @@ class ModelTotalVoucher extends Model {
 			$code = substr($order_total['title'], $start, $end - $start);
 		}
 
-		$this->load->model('total/coupon');
+		$this->load->model('total/voucher');
 
 		$voucher_info = $this->model_checkout_voucher->getVoucher($code);
 
 		if ($voucher_info) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "voucher_history` SET voucher_id = '" . (int)$voucher_info['voucher_id'] . "', order_id = '" . (int)$order_info['order_id'] . "', amount = '" . (float)$order_total['value'] . "', date_added = NOW()");
-		}
+		} else {
+            return $this->config->get('config_fraud_status_id');
+        }
 	}
 
 	public function unconfirm($order_id) {

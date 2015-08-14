@@ -1875,45 +1875,61 @@ class ControllerSaleOrder extends Controller {
 				$products = $this->model_sale_order->getOrderProducts($order_id);
 
 				foreach ($products as $product) {
+					$option_weight = '';
+
 					$product_info = $this->model_catalog_product->getProduct($product['product_id']);
 
-					$option_data = array();
+					if ($product_info) {
+						$option_data = array();
 
-					$options = $this->model_sale_order->getOrderOptions($order_id, $product['order_product_id']);
+						$options = $this->model_sale_order->getOrderOptions($order_id, $product['order_product_id']);
 
-					foreach ($options as $option) {
-						if ($option['type'] != 'file') {
-							$value = $option['value'];
-						} else {
-							$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+						foreach ($options as $option) {
+							$option_value_info = $this->model_catalog_product->getProductOptionValue($order_id, $product['order_product_id']);
 
-							if ($upload_info) {
-								$value = $upload_info['name'];
+							if ($option['type'] != 'file') {
+								$value = $option['value'];
 							} else {
-								$value = '';
+								$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+
+								if ($upload_info) {
+									$value = $upload_info['name'];
+								} else {
+									$value = '';
+								}
+							}
+
+							$option_data[] = array(
+								'name'  => $option['name'],
+								'value' => $value
+							);
+
+							$product_option_value_info = $this->model_catalog_product->getProductOptionValue($product['product_id'], $option['product_option_value_id']);
+
+							if ($product_option_value_info) {
+								if ($product_option_value_info['weight_prefix'] == '+') {
+									$option_weight += $product_option_value_info['weight'];
+								} elseif ($product_option_value_info['weight_prefix'] == '-') {
+									$option_weight -= $product_option_value_info['weight'];
+								}
 							}
 						}
 
-						$option_data[] = array(
-							'name'  => $option['name'],
-							'value' => $value
+						$product_data[] = array(
+							'name'     => $product_info['name'],
+							'model'    => $product_info['model'],
+							'option'   => $option_data,
+							'quantity' => $product['quantity'],
+							'location' => $product_info['location'],
+							'sku'      => $product_info['sku'],
+							'upc'      => $product_info['upc'],
+							'ean'      => $product_info['ean'],
+							'jan'      => $product_info['jan'],
+							'isbn'     => $product_info['isbn'],
+							'mpn'      => $product_info['mpn'],
+							'weight'   => $this->weight->format(($product_info['weight'] + $option_weight) * $product['quantity'], $this->config->get('config_weight_class_id'), $this->language->get('decimal_point'), $this->language->get('thousand_point'))
 						);
 					}
-
-					$product_data[] = array(
-						'name'     => $product_info['name'],
-						'model'    => $product_info['model'],
-						'option'   => $option_data,
-						'quantity' => $product['quantity'],
-						'location' => $product_info['location'],
-						'sku'      => $product_info['sku'],
-						'upc'      => $product_info['upc'],
-						'ean'      => $product_info['ean'],
-						'jan'      => $product_info['jan'],
-						'isbn'     => $product_info['isbn'],
-						'mpn'      => $product_info['mpn'],
-						'weight'   => $this->weight->format($product_info['weight'], $this->config->get('config_weight_class_id'), $this->language->get('decimal_point'), $this->language->get('thousand_point'))
-					);
 				}
 
 				$data['orders'][] = array(

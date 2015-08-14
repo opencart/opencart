@@ -73,7 +73,7 @@ class ModelCheckoutOrder extends Model {
 		}
 
 		// Gift Voucher
-		$this->load->model('total/coupon');
+		$this->load->model('total/voucher');
 
 		$this->model_total_voucher->disableVoucher($order_id);
 
@@ -835,14 +835,6 @@ class ModelCheckoutOrder extends Model {
 				$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
 				$mail->setText($message);
 				$mail->send();
-			}
-
-			// If order status in the complete range create any vouchers that where in the order need to be made available.
-			if (in_array($order_info['order_status_id'], $this->config->get('config_complete_status'))) {
-				// Send out any gift voucher mails
-				$this->load->model('total/coupon');
-
-				$this->model_total_voucher->confirm($order_id);
 			}
 		}
 

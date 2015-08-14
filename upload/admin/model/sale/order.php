@@ -170,8 +170,6 @@ class ModelSaleOrder extends Model {
 
 			if ($implode) {
 				$sql .= " WHERE (" . implode(" OR ", $implode) . ")";
-			} else {
-
 			}
 		} else {
 			$sql .= " WHERE o.order_status_id > '0'";
@@ -268,7 +266,7 @@ class ModelSaleOrder extends Model {
 	public function getTotalOrders($data = array()) {
 		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order`";
 
-		if (!empty($data['filter_order_status'])) {
+		if (isset($data['filter_order_status'])) {
 			$implode = array();
 
 			$order_statuses = explode(',', $data['filter_order_status']);

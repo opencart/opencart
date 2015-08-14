@@ -42,10 +42,6 @@ class ControllerErrorPermission extends Controller {
 				$route .= '/' . $part[1];
 			}
 
-			if ($part[1] == 'extension' && isset($part[2])) {
-				$route .= '/' . $part[2];
-			}
-
 			$ignore = array(
 				'common/dashboard/*',
 				'common/login',

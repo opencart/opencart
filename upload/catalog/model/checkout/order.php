@@ -337,6 +337,7 @@ class ModelCheckoutOrder extends Model {
 				}
 			}
 
+			// Update the DB with the new statuses
 			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
 
 			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($comment) . "', date_added = NOW()");
@@ -378,6 +379,20 @@ class ModelCheckoutOrder extends Model {
 			}
 
 			$this->cache->delete('product');
+
+			// If order status in the complete range create any vouchers that where in the order need to be made available.
+			if (in_array($order_status_id, $this->config->get('config_complete_status'))) {
+				// Remove coupon, vouchers and reward points history
+				$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");
+
+				foreach ($order_total_query->rows as $order_total) {
+					$this->load->model('total/' . $order_total['code']);
+
+					if (method_exists($this->{'model_total_' . $order_total['code']}, 'complete')) {
+						$this->{'model_total_' . $order_total['code']}->complete($order_info);
+					}
+				}
+			}
 
 			// If order status is 0 then becomes greater than 0 send main html email
 			if (!$order_info['order_status_id'] && $order_status_id) {

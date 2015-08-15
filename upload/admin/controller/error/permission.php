@@ -43,7 +43,7 @@ class ControllerErrorPermission extends Controller {
 			}
 
 			$ignore = array(
-				'common/dashboard/*',
+				'common/dashboard',
 				'common/login',
 				'common/logout',
 				'common/forgotten',

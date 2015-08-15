@@ -56,6 +56,8 @@ class ModelTotalReward extends Model {
 
 		$points = 0;
 
+$avaliable = $this->customer->getRewardPoints();
+
 		$start = strpos($order_total['title'], '(') + 1;
 		$end = strrpos($order_total['title'], ')');
 

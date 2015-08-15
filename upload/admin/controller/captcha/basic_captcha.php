@@ -1,9 +1,9 @@
 <?php
-class ControllerExtensionCaptchaGoogleCaptcha extends Controller {
+class ControllerCaptchaBasicCaptcha extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('extension/captcha/basic_captcha');
+		$this->load->language('captcha/basic_captcha');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -22,10 +22,7 @@ class ControllerExtensionCaptchaGoogleCaptcha extends Controller {
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_signup'] = $this->language->get('text_signup');
 
-		$data['entry_key'] = $this->language->get('entry_key');
-		$data['entry_secret'] = $this->language->get('entry_secret');
 		$data['entry_status'] = $this->language->get('entry_status');
 
 		$data['button_save'] = $this->language->get('button_save');
@@ -35,18 +32,6 @@ class ControllerExtensionCaptchaGoogleCaptcha extends Controller {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['key'])) {
-			$data['error_key'] = $this->error['key'];
-		} else {
-			$data['error_key'] = '';
-		}
-
-		if (isset($this->error['secret'])) {
-			$data['error_secret'] = $this->error['secret'];
-		} else {
-			$data['error_secret'] = '';
 		}
 
 		$data['breadcrumbs'] = array();
@@ -63,24 +48,12 @@ class ControllerExtensionCaptchaGoogleCaptcha extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/captcha/basic_captcha', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('captcha/basic_captcha', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
-		$data['action'] = $this->url->link('extension/captcha/basic_captcha', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('captcha/basic_captcha', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['cancel'] = $this->url->link('extension/captcha', 'token=' . $this->session->data['token'], 'SSL');
-
-		if (isset($this->request->post['basic_captcha_key'])) {
-			$data['basic_captcha_key'] = $this->request->post['basic_captcha_key'];
-		} else {
-			$data['basic_captcha_key'] = $this->config->get('basic_captcha_key');
-		}
-
-		if (isset($this->request->post['basic_captcha_secret'])) {
-			$data['basic_captcha_secret'] = $this->request->post['basic_captcha_secret'];
-		} else {
-			$data['basic_captcha_secret'] = $this->config->get('basic_captcha_secret');
-		}
 
 		if (isset($this->request->post['basic_captcha_status'])) {
 			$data['basic_captcha_status'] = $this->request->post['basic_captcha_status'];
@@ -92,20 +65,12 @@ class ControllerExtensionCaptchaGoogleCaptcha extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/captcha/basic_captcha.tpl', $data));
+		$this->response->setOutput($this->load->view('captcha/basic_captcha.tpl', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/captcha/basic_captcha')) {
+		if (!$this->user->hasPermission('modify', 'captcha/basic_captcha')) {
 			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		if (!$this->request->post['basic_captcha_key']) {
-			$this->error['key'] = $this->language->get('error_key');
-		}
-
-		if (!$this->request->post['basic_captcha_secret']) {
-			$this->error['secret'] = $this->language->get('error_secret');
 		}
 
 		return !$this->error;

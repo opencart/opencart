@@ -1,9 +1,9 @@
 <?php
-class ControllerExtensionAnalyticsGoogleAnalytics extends Controller {
+class ControllerAnalyticsGoogleAnalytics extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('extension/analytics/google_analytics');
+		$this->load->language('analytics/google_analytics');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -50,16 +50,16 @@ class ControllerExtensionAnalyticsGoogleAnalytics extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_analytic'),
+			'text' => $this->language->get('text_analytics'),
 			'href' => $this->url->link('extension/analytics', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/analytics/google_analytics', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('analytics/google_analytics', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
-		$data['action'] = $this->url->link('extension/analytics/google_analytics', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('analytics/google_analytics', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['cancel'] = $this->url->link('extension/analytics', 'token=' . $this->session->data['token'], 'SSL');
 
@@ -79,11 +79,11 @@ class ControllerExtensionAnalyticsGoogleAnalytics extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/analytics/google_analytics.tpl', $data));
+		$this->response->setOutput($this->load->view('analytics/google_analytics.tpl', $data));
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/analytics/google_analytics')) {
+		if (!$this->user->hasPermission('modify', 'analytics/google_analytics')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

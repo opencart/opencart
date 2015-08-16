@@ -1,28 +1,22 @@
 <?php
 final class Loader {
 	private $registry;
-	private $hooks = array();
 
 	public function __construct($registry) {
 		$this->registry = $registry;
 	}
 
-	public function addHook($path, $object) {
-		$this->hooks[$type][] = $object;
-	}
-
-  	public function __load() {
-
-
-  	}
-
-	public function controller($route, $args = array()) {
-		$action = new Action($route, $args);
+	public function controller($route, $data = array()) {
+		$action = new Action($route, $data);
 
 		return $action->execute($this->registry);
 	}
 
-	public function model($model) {
+	public function model($model, $data = array()) {
+		$parts = explode('/', str_replace('../', '', (string)$model));
+
+
+
 		$file = DIR_APPLICATION . 'model/' . $model . '.php';
 /*
 		if (is_file($file)) {
@@ -38,7 +32,7 @@ final class Loader {
 				include_once($file);
 			}
 		}
-*/		
+*/
 		$file = DIR_APPLICATION . 'model/' . $model . '.php';
 		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $model);
 

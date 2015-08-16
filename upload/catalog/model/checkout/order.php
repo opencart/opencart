@@ -382,16 +382,9 @@ class ModelCheckoutOrder extends Model {
 
 			// If order status in the complete range create any vouchers that where in the order need to be made available.
 			if (in_array($order_status_id, $this->config->get('config_complete_status'))) {
-				// Remove coupon, vouchers and reward points history
-				$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");
+				$this->load->model('total/voucher');
 
-				foreach ($order_total_query->rows as $order_total) {
-					$this->load->model('total/' . $order_total['code']);
-
-					if (method_exists($this->{'model_total_' . $order_total['code']}, 'complete')) {
-						$this->{'model_total_' . $order_total['code']}->complete($order_info);
-					}
-				}
+				$this->model_total_voucher->send($order_info);
 			}
 
 			// If order status is 0 then becomes greater than 0 send main html email

@@ -3,14 +3,14 @@ class Template {
 	private $data = array();
 
   public function __construct($driver) {
-    $class = 'Template\\' . $driver;
+	    $class = 'Template\\' . $driver;
 
 		if (class_exists($class)) {
 			$this->template = new $class($expire);
 		} else {
 			exit('Error: Could not load template driver ' . $driver . ' cache!');
 		}
-  }
+	}
 
 	public function set($key, $value) {
 		$this->data[$key] = $value;

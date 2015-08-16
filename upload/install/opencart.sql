@@ -1375,6 +1375,13 @@ CREATE TABLE `oc_event` (
   PRIMARY KEY (`event_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `oc_extension`
+--
+
+INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`) VALUES
+(1, 'voucher', 'post.order.history.add', 'total/voucher/send');
+
 -- --------------------------------------------------------
 
 --

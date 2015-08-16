@@ -380,13 +380,6 @@ class ModelCheckoutOrder extends Model {
 
 			$this->cache->delete('product');
 
-			// If order status in the complete range create any vouchers that where in the order need to be made available.
-			if (in_array($order_status_id, $this->config->get('config_complete_status'))) {
-				$this->load->model('total/voucher');
-
-				$this->model_total_voucher->send($order_info);
-			}
-
 			// If order status is 0 then becomes greater than 0 send main html email
 			if (!$order_info['order_status_id'] && $order_status_id) {
 				// Check for any downloadable products

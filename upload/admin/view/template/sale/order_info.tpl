@@ -32,10 +32,12 @@
                 <td><button data-toggle="tooltip" title="<?php echo $text_payment_method; ?>" class="btn btn-info btn-xs"><i class="fa fa-credit-card fa-fw"></i></button></td>
                 <td><?php echo $payment_method; ?></td>
               </tr>
+              <?php if ($shipping_method) { ?>
               <tr>
                 <td><button data-toggle="tooltip" title="<?php echo $text_shipping_method; ?>" class="btn btn-info btn-xs"><i class="fa fa-truck fa-fw"></i></button></td>
                 <td><?php echo $shipping_method; ?></td>
               </tr>
+              <?php } ?>
             </tbody>
           </table>
         </div>

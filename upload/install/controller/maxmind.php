@@ -38,10 +38,10 @@ class ControllerMaxmind extends Controller {
 				$data['config_fraud_detection'] = '';
 			}
 
-			if (isset($this->request->post['config_fraud_key'])) {
-				$data['config_fraud_key'] = $this->request->post['config_fraud_key'];
+			if (isset($this->request->post['maxmind_key'])) {
+				$data['maxmind_key'] = $this->request->post['maxmind_key'];
 			} else {
-				$data['config_fraud_key'] = '';
+				$data['maxmind_key'] = '';
 			}
 
 			if (isset($this->request->post['config_fraud_score'])) {
@@ -80,12 +80,12 @@ class ControllerMaxmind extends Controller {
 	}
 
 	private function validate() {
-		if (!$this->request->post['config_fraud_key']) {
-			$this->error['fraud_key'] = $this->language->get('error_key');
+		if (!$this->request->post['maxmind_key']) {
+			$this->error['key'] = $this->language->get('error_key');
 		}
 
-		if (!$this->request->post['config_fraud_score'] || (int)$this->request->post['config_fraud_score'] > 100 || (int)$this->request->post['config_fraud_score'] < 0) {
-			$this->error['fraud_score'] = $this->language->get('error_score');
+		if (!$this->request->post['maxmind_score'] || (int)$this->request->post['maxmind_score'] > 100 || (int)$this->request->post['maxmind_score'] < 0) {
+			$this->error['score'] = $this->language->get('error_score');
 		}
 
 		return !$this->error;

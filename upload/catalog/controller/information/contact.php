@@ -74,12 +74,6 @@ class ControllerInformationContact extends Controller {
 			$data['error_enquiry'] = '';
 		}
 
-		if (isset($this->error['captcha'])) {
-			$data['error_captcha'] = $this->error['captcha'];
-		} else {
-			$data['error_captcha'] = '';
-		}
-
 		$data['button_submit'] = $this->language->get('button_submit');
 
 		$data['action'] = $this->url->link('information/contact');
@@ -146,13 +140,7 @@ class ControllerInformationContact extends Controller {
 			$data['enquiry'] = '';
 		}
 
-		if ($this->config->get('config_google_captcha_status')) {
-			$this->document->addScript('https://www.google.com/recaptcha/api.js');
-
-			$data['site_key'] = $this->config->get('config_google_captcha_public');
-		} else {
-			$data['site_key'] = '';
-		}
+		$data['captcha'] = $this->load->controller('captcha/basic_captcha');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -218,16 +206,6 @@ class ControllerInformationContact extends Controller {
 
 		if ((utf8_strlen($this->request->post['enquiry']) < 10) || (utf8_strlen($this->request->post['enquiry']) > 3000)) {
 			$this->error['enquiry'] = $this->language->get('error_enquiry');
-		}
-
-		if ($this->config->get('config_google_captcha_status')) {
-			$recaptcha = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($this->config->get('config_google_captcha_secret')) . '&response=' . $this->request->post['g-recaptcha-response'] . '&remoteip=' . $this->request->server['REMOTE_ADDR']);
-
-			$recaptcha = json_decode($recaptcha, true);
-
-			if (!$recaptcha['success']) {
-				$this->error['captcha'] = $this->language->get('error_captcha');
-			}
 		}
 
 		return !$this->error;

@@ -13,26 +13,25 @@ final class Loader {
 	}
 
 	public function model($model, $data = array()) {
-		$parts = explode('/', str_replace('../', '', (string)$model));
-
-
-
-		$file = DIR_APPLICATION . 'model/' . $model . '.php';
+		$model = str_replace('../', '', (string)$model);
 /*
-		if (is_file($file)) {
-			include_once($file);
+		$position = strpos('.', $model);
 
-			$this->registry->set('model_' . str_replace('/', '_', $model), new $class($this->registry));
-		} else {
-			$extension = end($parts);
-
-			$file = DIR_EXTENSION . $extension[0] . '/model/' . $extension[1] . '.php';
-
-			if (is_file($file)) {
-				include_once($file);
-			}
+		if ($position !== false) {
+			$method = substr($model, $position);
+			$model = substr($model, 0, $position);
 		}
-*/
+
+		if (!$this->registry->has($model)) {
+
+		}
+
+		if (function_exsits(array($class, $method))) {
+			call_user_func_array();
+
+		}
+
+		*/
 		$file = DIR_APPLICATION . 'model/' . $model . '.php';
 		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $model);
 
@@ -48,11 +47,7 @@ final class Loader {
 
 	public function view($template, $data = array()) {
 		/*
-		if (isset($this->hooks[$type])) {
-			foreach ($this->hook as $hook) {
-				$hook->call(&$template, &data);
-			}
-		}
+			$this->event->trigger($template, &data);
 		*/
 		$file = DIR_TEMPLATE . $template;
 
@@ -74,19 +69,8 @@ final class Loader {
 		}
 	}
 
-	public function library($library) {
-		$file = DIR_SYSTEM . 'library/' . $library . '.php';
-
-		if (file_exists($file)) {
-			include_once($file);
-		} else {
-			trigger_error('Error: Could not load library ' . $file . '!');
-			exit();
-		}
-	}
-
 	public function helper($helper) {
-		$file = DIR_SYSTEM . 'helper/' . $helper . '.php';
+		$file = DIR_SYSTEM . 'helper/' . str_replace('../', '', (string)$helper) . '.php';
 
 		if (file_exists($file)) {
 			include_once($file);

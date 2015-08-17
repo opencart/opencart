@@ -1376,7 +1376,7 @@ CREATE TABLE `oc_event` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `oc_extension`
+-- Dumping data for table `oc_event`
 --
 
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`) VALUES
@@ -1401,25 +1401,25 @@ CREATE TABLE `oc_extension` (
 --
 
 INSERT INTO `oc_extension` (`extension_id`, `type`, `code`) VALUES
-(23, 'payment', 'cod'),
-(22, 'total', 'shipping'),
-(57, 'total', 'sub_total'),
-(58, 'total', 'tax'),
-(59, 'total', 'total'),
-(410, 'module', 'banner'),
-(426, 'module', 'carousel'),
-(390, 'total', 'credit'),
-(387, 'shipping', 'flat'),
-(349, 'total', 'handling'),
-(350, 'total', 'low_order_fee'),
-(389, 'total', 'coupon'),
-(413, 'module', 'category'),
-(408, 'module', 'account'),
-(393, 'total', 'reward'),
-(398, 'total', 'voucher'),
-(407, 'payment', 'free_checkout'),
-(427, 'module', 'featured'),
-(419, 'module', 'slideshow');
+(1, 'payment', 'cod'),
+(2, 'total', 'shipping'),
+(3, 'total', 'sub_total'),
+(4, 'total', 'tax'),
+(5, 'total', 'total'),
+(6, 'module', 'banner'),
+(7, 'module', 'carousel'),
+(8, 'total', 'credit'),
+(9, 'shipping', 'flat'),
+(10, 'total', 'handling'),
+(11, 'total', 'low_order_fee'),
+(12, 'total', 'coupon'),
+(13, 'module', 'category'),
+(14, 'module', 'account'),
+(15, 'total', 'reward'),
+(16, 'total', 'voucher'),
+(17, 'payment', 'free_checkout'),
+(18, 'module', 'featured'),
+(19, 'module', 'slideshow');
 
 -- --------------------------------------------------------
 

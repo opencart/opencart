@@ -8,6 +8,8 @@ class ControllerMaxmind extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$db->query("REPLACE INTO `" . DB_PREFIX . "setting` SET `maxmind_key` = '" . $db->escape($this->request->post['maxmind_key']) . "', `maxmind_score` = '" . (int)$this->request->post['maxmind_score'] . "', `maxmind_order_status_id` = '" . (int)$this->request->post['maxmind_order_status_id'] . "'  WHERE `store_id` = '0' AND `code` = 'maxmind'");
 
+			$db->query("INSERT INTO `oc_extension` (`type`, `code`) VALUES ('fraud', 'maxmind')");
+
 			$this->session->data['success'] = $this->language->get('text_maxmind_success');
 
 			$this->response->redirect($this->url->link('step_4'));

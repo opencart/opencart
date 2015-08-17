@@ -463,6 +463,13 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	margin: 0;
 }
 
+/* Help */
+.help-link {
+    display: inline-block;
+    margin: 0;
+    padding: 2px 8px;
+}
+
 /* Panels */
 .panel {
 	border-radius: 0px;

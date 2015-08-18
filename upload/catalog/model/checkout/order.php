@@ -253,7 +253,7 @@ class ModelCheckoutOrder extends Model {
 		}
 	}
 
-	public function addOrderHistory($order_id, $order_status_id, $comment = '', $notify = false) {
+	public function addOrderHistory($order_id, $order_status_id, $comment = '', $notify = false, $override = false) {
 		$event_data = array(
 			'order_id'		  => $order_id,
 			'order_status_id' => $order_status_id,
@@ -278,7 +278,7 @@ class ModelCheckoutOrder extends Model {
 			}
 
 			// Only do the fraud check if the customer is not on the safe list and the order status is changing into the complete or process order status
-			if (!$safe && in_array($order_status_id, array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status')))) {
+			if (!$safe && !$override && in_array($order_status_id, array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status')))) {
 				// Anti-Fraud
 				$this->load->model('extension/extension');
 

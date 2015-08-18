@@ -770,7 +770,10 @@ class ControllerSaleOrder extends Controller {
 
 			$data['entry_order_status'] = $this->language->get('entry_order_status');
 			$data['entry_notify'] = $this->language->get('entry_notify');
+			$data['entry_override'] = $this->language->get('entry_override');
 			$data['entry_comment'] = $this->language->get('entry_comment');
+
+			$data['help_override'] = $this->language->get('help_override');
 
 			$data['button_invoice_print'] = $this->language->get('button_invoice_print');
 			$data['button_shipping_print'] = $this->language->get('button_shipping_print');

@@ -20,6 +20,13 @@ class ControllerApiCart extends Controller {
 
 					$this->cart->add($product['product_id'], $product['quantity'], $option);
 				}
+
+				$json['success'] = $this->language->get('text_success');
+
+				unset($this->session->data['shipping_method']);
+				unset($this->session->data['shipping_methods']);
+				unset($this->session->data['payment_method']);
+				unset($this->session->data['payment_methods']);
 			}
 
 			if (isset($this->request->post['product_id'])) {

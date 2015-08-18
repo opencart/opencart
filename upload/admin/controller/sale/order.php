@@ -398,11 +398,13 @@ class ControllerSaleOrder extends Controller {
 		$data['column_quantity'] = $this->language->get('column_quantity');
 		$data['column_price'] = $this->language->get('column_price');
 		$data['column_total'] = $this->language->get('column_total');
+		$data['column_action'] = $this->language->get('column_action');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_back'] = $this->language->get('button_back');
+		$data['button_refresh'] = $this->language->get('button_refresh');
 		$data['button_product_add'] = $this->language->get('button_product_add');
 		$data['button_voucher_add'] = $this->language->get('button_voucher_add');
 		$data['button_apply'] = $this->language->get('button_apply');

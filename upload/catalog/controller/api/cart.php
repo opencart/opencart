@@ -27,9 +27,7 @@ class ControllerApiCart extends Controller {
 				unset($this->session->data['shipping_methods']);
 				unset($this->session->data['payment_method']);
 				unset($this->session->data['payment_methods']);
-			}
-
-			if (isset($this->request->post['product_id'])) {
+			} elseif (isset($this->request->post['product_id'])) {
 				$this->load->model('catalog/product');
 
 				$product_info = $this->model_catalog_product->getProduct($this->request->post['product_id']);

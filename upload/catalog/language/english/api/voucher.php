@@ -2,7 +2,6 @@
 // Text
 $_['text_success']     = 'Success: Your gift voucher discount has been applied!';
 $_['text_cart']        = 'Success: You have modified your shopping cart!';
-
 $_['text_for']         = '%s Gift Certificate for %s';
 
 // Error

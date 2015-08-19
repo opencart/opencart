@@ -12,11 +12,13 @@ class Cart {
 		if (!isset($this->session->data['cart']) || !is_array($this->session->data['cart'])) {
 			$this->session->data['cart'] = array();
 		}
+        
+		$this->list = & $this->session->data['cart'];
 	}
 
 	public function getProducts() {
 		if (!$this->data) {
-			foreach ($this->session->data['cart'] as $key => $quantity) {
+			foreach ($this->list as $key => $quantity) {
 				$product = json_decode(base64_decode($key), true);
 
 				$product_id = $product['product_id'];
@@ -167,7 +169,7 @@ class Cart {
 					// Product Discounts
 					$discount_quantity = 0;
 
-					foreach ($this->session->data['cart'] as $key_2 => $quantity_2) {
+					foreach ($this->list as $key_2 => $quantity_2) {
 						$product_2 = (array)json_decode(base64_decode($key_2), true);
 
 						if ($product_2['product_id'] == $product_id) {
@@ -272,7 +274,7 @@ class Cart {
 	}
 	
 	public function getCart() {
-		return $this->session->data['cart'];
+		return $this->list;
 	}
 
 	public function getRecurringProducts() {
@@ -303,10 +305,10 @@ class Cart {
 		$key = base64_encode(json_encode($product));
 
 		if ((int)$qty && ((int)$qty > 0)) {
-			if (!isset($this->session->data['cart'][$key])) {
-				$this->session->data['cart'][$key] = (int)$qty;
+			if (!isset($this->list[$key])) {
+				$this->list[$key] = (int)$qty;
 			} else {
-				$this->session->data['cart'][$key] += (int)$qty;
+				$this->list[$key] += (int)$qty;
 			}
 		}
 	}
@@ -314,8 +316,8 @@ class Cart {
 	public function update($key, $qty) {
 		$this->data = array();
 
-		if ((int)$qty && ((int)$qty > 0) && isset($this->session->data['cart'][$key])) {
-			$this->session->data['cart'][$key] = (int)$qty;
+		if ((int)$qty && ((int)$qty > 0) && isset($this->list[$key])) {
+			$this->list[$key] = (int)$qty;
 		} else {
 			$this->remove($key);
 		}
@@ -324,13 +326,13 @@ class Cart {
 	public function remove($key) {
 		$this->data = array();
 
-		unset($this->session->data['cart'][$key]);
+		unset($this->list[$key]);
 	}
 
 	public function clear() {
 		$this->data = array();
 
-		$this->session->data['cart'] = array();
+		$this->list = array();
 	}
 
 	public function getWeight() {
@@ -398,7 +400,7 @@ class Cart {
 	}
 
 	public function hasProducts() {
-		return count($this->session->data['cart']);
+		return count($this->list);
 	}
 
 	public function hasRecurringProducts() {

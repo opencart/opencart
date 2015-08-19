@@ -49,7 +49,7 @@
 <script type="text/javascript"><!--
 // Get the current selection
 var range = window.getSelection().getRangeAt(0);
-var saveNode = range.startContainer;
+var node = range.startContainer;
 var startOffset = range.startOffset;  // where the range starts
 var endOffset = range.endOffset;      // where the range ends
 
@@ -65,8 +65,8 @@ $('a.thumbnail').on('click', function(e) {
     <?php } else { ?>
     // Create a new range from the orginal selection
     var range = document.createRange();
-    range.setStart(saveNode, startOffset);
-    range.setEnd(saveNode, endOffset);
+    range.setStart(node, startOffset);
+    range.setEnd(node, endOffset);
 
     var img = document.createElement('img');
 	img.src = $(this).attr('href');

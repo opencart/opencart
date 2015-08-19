@@ -7,7 +7,7 @@ final class Loader {
 	}
 
 	public function controller($route, $data = array()) {
-		// $this->event->trigger('pre/'. $route, $data);
+		// $this->event->trigger('pre.controller.' . $route, $data);
 
 		$parts = explode('/', str_replace('../', '', (string)$route));
 
@@ -42,13 +42,13 @@ final class Loader {
 			$output = call_user_func(array($controller, $method), $data);
 		}
 
-		// $this->event->trigger('post/' . $route, $output);
+		// $this->event->trigger('post.controller.' . $route, $output);
 
 		return $output;
 	}
 
 	public function model($model, $data = array()) {
-		// $this->event->trigger('pre/'. $template, $data);
+		// $this->event->trigger('pre.model.' . str_replace('/', '.', (string)$model), $data);
 
 		$model = str_replace('../', '', (string)$model);
 
@@ -64,11 +64,11 @@ final class Loader {
 			exit();
 		}
 
-		// $this->event->trigger('post/' . $template, $output);
+		// $this->event->trigger('post.model.' . str_replace('/', '.', (string)$model), $output);
 	}
 
 	public function view($template, $data = array()) {
-		// $this->event->trigger('pre/'. $template, $data);
+		// $this->event->trigger('pre.view.' . str_replace('/', '.', $template), $data);
 
 		$file = DIR_TEMPLATE . $template;
 
@@ -87,7 +87,7 @@ final class Loader {
 			exit();
 		}
 
-		// $this->event->trigger('post/' . $template, $output);
+		// $this->event->trigger('post.view.' . str_replace('/', '.', $template), $output);
 
 		return $output;
 	}

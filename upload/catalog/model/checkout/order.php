@@ -73,7 +73,7 @@ class ModelCheckoutOrder extends Model {
 		}
 
 		// Gift Voucher
-		$this->load->model('total/coupon');
+		$this->load->model('total/voucher');
 
 		$this->model_total_voucher->disableVoucher($order_id);
 
@@ -253,7 +253,7 @@ class ModelCheckoutOrder extends Model {
 		}
 	}
 
-	public function addOrderHistory($order_id, $order_status_id, $comment = '', $notify = false) {
+	public function addOrderHistory($order_id, $order_status_id, $comment = '', $notify = false, $override = false) {
 		$event_data = array(
 			'order_id'		  => $order_id,
 			'order_status_id' => $order_status_id,
@@ -278,7 +278,7 @@ class ModelCheckoutOrder extends Model {
 			}
 
 			// Only do the fraud check if the customer is not on the safe list and the order status is changing into the complete or process order status
-			if (!$safe && in_array($order_status_id, array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status')))) {
+			if (!$safe && !$override && in_array($order_status_id, array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status')))) {
 				// Anti-Fraud
 				$this->load->model('extension/extension');
 
@@ -337,6 +337,7 @@ class ModelCheckoutOrder extends Model {
 				}
 			}
 
+			// Update the DB with the new statuses
 			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
 
 			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($comment) . "', date_added = NOW()");
@@ -835,14 +836,6 @@ class ModelCheckoutOrder extends Model {
 				$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
 				$mail->setText($message);
 				$mail->send();
-			}
-
-			// If order status in the complete range create any vouchers that where in the order need to be made available.
-			if (in_array($order_info['order_status_id'], $this->config->get('config_complete_status'))) {
-				// Send out any gift voucher mails
-				$this->load->model('total/coupon');
-
-				$this->model_total_voucher->confirm($order_id);
 			}
 		}
 

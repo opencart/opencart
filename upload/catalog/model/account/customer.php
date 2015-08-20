@@ -166,12 +166,18 @@ class ModelAccountCustomer extends Model {
 		return $query->row['total'];
 	}
 
+	public function getRewardTotal($customer_id) {
+		$query = $this->db->query("SELECT SUM(points) AS total FROM " . DB_PREFIX . "customer_reward WHERE customer_id = '" . (int)$customer_id . "'");
+
+		return $query->row['total'];
+	}
+
 	public function getIps($customer_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_ip` WHERE customer_id = '" . (int)$customer_id . "'");
 
 		return $query->rows;
 	}
-	
+
 	public function addLoginAttempt($email) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_login WHERE email = '" . $this->db->escape(utf8_strtolower((string)$email)) . "' AND ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "'");
 

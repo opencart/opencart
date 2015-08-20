@@ -32,10 +32,12 @@
                 <td><button data-toggle="tooltip" title="<?php echo $text_payment_method; ?>" class="btn btn-info btn-xs"><i class="fa fa-credit-card fa-fw"></i></button></td>
                 <td><?php echo $payment_method; ?></td>
               </tr>
+              <?php if ($shipping_method) { ?>
               <tr>
                 <td><button data-toggle="tooltip" title="<?php echo $text_shipping_method; ?>" class="btn btn-info btn-xs"><i class="fa fa-truck fa-fw"></i></button></td>
                 <td><?php echo $shipping_method; ?></td>
               </tr>
+              <?php } ?>
             </tbody>
           </table>
         </div>
@@ -234,6 +236,12 @@
                       <?php } ?>
                       <?php } ?>
                     </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-override"><span data-toggle="tooltip" title="<?php echo $help_override; ?>"><?php echo $entry_override; ?></span></label>
+                  <div class="col-sm-10">
+                    <input type="checkbox" name="override" value="1" id="input-override" />
                   </div>
                 </div>
                 <div class="form-group">
@@ -574,7 +582,7 @@ $('#button-history').on('click', function() {
 		url: '<?php echo $store_url; ?>index.php?route=api/order/history&token=' + token + '&order_id=<?php echo $order_id; ?>',
 		type: 'post',
 		dataType: 'json',
-		data: 'order_status_id=' + encodeURIComponent($('select[name=\'order_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&append=' + ($('input[name=\'append\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
+		data: 'order_status_id=' + encodeURIComponent($('select[name=\'order_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&override=' + ($('input[name=\'override\']').prop('checked') ? 1 : 0) + '&append=' + ($('input[name=\'append\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
 		beforeSend: function() {
 			$('#button-history').button('loading');
 		},

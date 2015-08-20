@@ -84,6 +84,13 @@ class ControllerApiVoucher extends Controller {
 						);
 					}
 				}
+
+				$json['success'] = $this->language->get('text_cart');
+
+				unset($this->session->data['shipping_method']);
+				unset($this->session->data['shipping_methods']);
+				unset($this->session->data['payment_method']);
+				unset($this->session->data['payment_methods']);
 			} else {
 				// Add a new voucher if set
 				if ((utf8_strlen($this->request->post['from_name']) < 1) || (utf8_strlen($this->request->post['from_name']) > 64)) {
@@ -122,6 +129,11 @@ class ControllerApiVoucher extends Controller {
 					);
 
 					$json['success'] = $this->language->get('text_cart');
+
+					unset($this->session->data['shipping_method']);
+					unset($this->session->data['shipping_methods']);
+					unset($this->session->data['payment_method']);
+					unset($this->session->data['payment_methods']);
 				}
 			}
 		}

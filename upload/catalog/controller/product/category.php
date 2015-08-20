@@ -350,15 +350,15 @@ class ControllerProductCategory extends Controller {
 
 			// http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
 			if ($page == 1) {
-			    $this->document->addLink($this->url->link('product/category', '', 'SSL'), 'canonical');
+			    $this->document->addLink($this->url->link('product/category', 'path=' . $category_info['category_id'], 'SSL'), 'canonical');
 			} elseif ($page == 2) {
-			    $this->document->addLink($this->url->link('product/category', '', 'SSL'), 'prev');
+			    $this->document->addLink($this->url->link('product/category', 'path=' . $category_info['category_id'], 'SSL'), 'prev');
 			} else {
-			    $this->document->addLink($this->url->link('product/category', $url . '&page='. ($page - 1), 'SSL'), 'prev');
+			    $this->document->addLink($this->url->link('product/category', 'path=' . $category_info['category_id'] . '&page='. ($page - 1), 'SSL'), 'prev');
 			}
 
 			if ($limit && ceil($product_total / $limit) > $page) {
-			    $this->document->addLink($this->url->link('product/category', $url . '&page='. ($page + 1), 'SSL'), 'next');
+			    $this->document->addLink($this->url->link('product/category', 'path=' . $category_info['category_id'] . '&page='. ($page + 1), 'SSL'), 'next');
 			}
 
 			$data['sort'] = $sort;

@@ -133,9 +133,9 @@ class ControllerAccountVoucher extends Controller {
 			$data['from_email'] = '';
 		}
 
-		$this->load->model('checkout/voucher_theme');
+		$this->load->model('total/voucher_theme');
 
-		$data['voucher_themes'] = $this->model_checkout_voucher_theme->getVoucherThemes();
+		$data['voucher_themes'] = $this->model_total_voucher_theme->getVoucherThemes();
 
 		if (isset($this->request->post['voucher_theme_id'])) {
 			$data['voucher_theme_id'] = $this->request->post['voucher_theme_id'];

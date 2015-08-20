@@ -261,13 +261,13 @@ class ControllerProductSpecial extends Controller {
 		} elseif ($page == 2) {
 		    $this->document->addLink($this->url->link('product/special', '', 'SSL'), 'prev');
 		} else {
-		    $this->document->addLink($this->url->link('product/special', $url . '&page='. ($page - 1), 'SSL'), 'prev');
+		    $this->document->addLink($this->url->link('product/special', 'page='. ($page - 1), 'SSL'), 'prev');
 		}
 
 		if ($limit && ceil($product_total / $limit) > $page) {
-		    $this->document->addLink($this->url->link('product/special', $url . '&page='. ($page + 1), 'SSL'), 'next');
+		    $this->document->addLink($this->url->link('product/special', 'page='. ($page + 1), 'SSL'), 'next');
 		}
-		
+
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 		$data['limit'] = $limit;

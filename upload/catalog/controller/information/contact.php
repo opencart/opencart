@@ -80,7 +80,7 @@ class ControllerInformationContact extends Controller {
 
 		$data['button_submit'] = $this->language->get('button_submit');
 
-		$data['action'] = $this->url->link('information/contact', '', $this->config->get('config_ssl'));
+		$data['action'] = $this->url->link('information/contact', '', $this->config->get('config_secure'));
 
 		$this->load->model('tool/image');
 

@@ -30,7 +30,7 @@ class ControllerModuleFilter extends Controller {
 				$url .= '&order=' . $this->request->get['order'];
 			}
 
-			if (isset($this->request->get['limit'])) {
+			if (isset($this->request->get['limit']) && (int)$this->request->get['limit']) {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
 

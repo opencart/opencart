@@ -72,20 +72,30 @@ final class Loader {
 
 		$file = DIR_TEMPLATE . $template;
 
-		if (file_exists($file)) {
-			extract($data);
-
-			ob_start();
-
-			require($file);
-
-			$output = ob_get_contents();
-
-			ob_end_clean();
-		} else {
+		if (!file_exists($file)) {
 			trigger_error('Error: Could not load template ' . $file . '!');
 			exit();
 		}
+
+		if (isset($data['url']) || isset($data['lng']) || isset($data['load']) || isset($data['request'])) {
+			trigger_error('Error: you must not override url, lng, load and request parameters in the $data array!');
+			exit();
+		}
+
+		$data['url'] = $this->registry->get('url');
+		$data['lng'] = $this->registry->get('language');
+		$data['load'] = $this->registry->get('load');
+		$data['request'] = $this->registry->get('request');
+
+		extract($data);
+
+		ob_start();
+
+		require($file);
+
+		$output = ob_get_contents();
+
+		ob_end_clean();
 
 		// $this->event->trigger('post.view.' . str_replace('/', '.', $template), $output);
 

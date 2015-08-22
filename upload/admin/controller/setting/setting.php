@@ -45,7 +45,6 @@ class ControllerSettingSetting extends Controller {
 		$data['text_payment'] = $this->language->get('text_payment');
 		$data['text_mail'] = $this->language->get('text_mail');
 		$data['text_smtp'] = $this->language->get('text_smtp');
-		$data['text_google_analytics'] = $this->language->get('text_google_analytics');
 
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_owner'] = $this->language->get('entry_owner');
@@ -152,7 +151,6 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_error_display'] = $this->language->get('entry_error_display');
 		$data['entry_error_log'] = $this->language->get('entry_error_log');
 		$data['entry_error_filename'] = $this->language->get('entry_error_filename');
-		$data['entry_google_analytics'] = $this->language->get('entry_google_analytics');
 		$data['entry_status'] = $this->language->get('entry_status');
 
 		$data['help_geocode'] = $this->language->get('help_geocode');
@@ -229,7 +227,6 @@ class ControllerSettingSetting extends Controller {
 		$data['tab_ftp'] = $this->language->get('tab_ftp');
 		$data['tab_mail'] = $this->language->get('tab_mail');
 		$data['tab_server'] = $this->language->get('tab_server');
-		$data['tab_google'] = $this->language->get('tab_google');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -1256,18 +1253,6 @@ class ControllerSettingSetting extends Controller {
 			$data['config_error_filename'] = $this->request->post['config_error_filename'];
 		} else {
 			$data['config_error_filename'] = $this->config->get('config_error_filename');
-		}
-
-		if (isset($this->request->post['config_google_analytics'])) {
-			$data['config_google_analytics'] = $this->request->post['config_google_analytics'];
-		} else {
-			$data['config_google_analytics'] = $this->config->get('config_google_analytics');
-		}
-
-		if (isset($this->request->post['config_google_analytics_status'])) {
-			$data['config_google_analytics_status'] = $this->request->post['config_google_analytics_status'];
-		} else {
-			$data['config_google_analytics_status'] = $this->config->get('config_google_analytics_status');
 		}
 
 		$data['header'] = $this->load->controller('common/header');

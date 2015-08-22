@@ -21,7 +21,7 @@ class ModelCheckoutOrder extends Model {
 		}
 
 		// Gift Voucher
-		$this->load->model('checkout/voucher');
+		$this->load->model('total/coupon');
 
 		// Vouchers
 		if (isset($data['vouchers'])) {
@@ -30,7 +30,7 @@ class ModelCheckoutOrder extends Model {
 
 				$order_voucher_id = $this->db->getLastId();
 
-				$voucher_id = $this->model_checkout_voucher->addVoucher($order_id, $voucher);
+				$voucher_id = $this->model_total_voucher->addVoucher($order_id, $voucher);
 
 				$this->db->query("UPDATE " . DB_PREFIX . "order_voucher SET voucher_id = '" . (int)$voucher_id . "' WHERE order_voucher_id = '" . (int)$order_voucher_id . "'");
 			}
@@ -73,9 +73,9 @@ class ModelCheckoutOrder extends Model {
 		}
 
 		// Gift Voucher
-		$this->load->model('checkout/voucher');
+		$this->load->model('total/voucher');
 
-		$this->model_checkout_voucher->disableVoucher($order_id);
+		$this->model_total_voucher->disableVoucher($order_id);
 
 		// Vouchers
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_voucher WHERE order_id = '" . (int)$order_id . "'");
@@ -86,7 +86,7 @@ class ModelCheckoutOrder extends Model {
 
 				$order_voucher_id = $this->db->getLastId();
 
-				$voucher_id = $this->model_checkout_voucher->addVoucher($order_id, $voucher);
+				$voucher_id = $this->model_total_voucher->addVoucher($order_id, $voucher);
 
 				$this->db->query("UPDATE " . DB_PREFIX . "order_voucher SET voucher_id = '" . (int)$voucher_id . "' WHERE order_voucher_id = '" . (int)$order_voucher_id . "'");
 			}
@@ -120,9 +120,9 @@ class ModelCheckoutOrder extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "affiliate_transaction` WHERE order_id = '" . (int)$order_id . "'");
 
 		// Gift Voucher
-		$this->load->model('checkout/voucher');
+		$this->load->model('total/coupon');
 
-		$this->model_checkout_voucher->disableVoucher($order_id);
+		$this->model_total_voucher->disableVoucher($order_id);
 
 		$this->event->trigger('post.order.delete', $order_id);
 	}
@@ -253,7 +253,7 @@ class ModelCheckoutOrder extends Model {
 		}
 	}
 
-	public function addOrderHistory($order_id, $order_status_id, $comment = '', $notify = false) {
+	public function addOrderHistory($order_id, $order_status_id, $comment = '', $notify = false, $override = false) {
 		$event_data = array(
 			'order_id'		  => $order_id,
 			'order_status_id' => $order_status_id,
@@ -278,7 +278,7 @@ class ModelCheckoutOrder extends Model {
 			}
 
 			// Only do the fraud check if the customer is not on the safe list and the order status is changing into the complete or process order status
-			if (!$safe && in_array($order_status_id, array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status'))) {
+			if (!$safe && !$override && in_array($order_status_id, array_merge($this->config->get('config_processing_status'), $this->config->get('config_complete_status')))) {
 				// Anti-Fraud
 				$this->load->model('extension/extension');
 
@@ -308,12 +308,11 @@ class ModelCheckoutOrder extends Model {
 					if (method_exists($this->{'model_total_' . $order_total['code']}, 'confirm')) {
 					  // Confirm coupon, vouchers and reward points
 					  $fraud_status_id = $this->{'model_total_' . $order_total['code']}->confirm($order_info, $order_total);
-					
-					  // If the balance on the coupon, vouchers and reward points is not enough to cover the transaction or has already been used then the fraud order status is returned. 
+
+					  // If the balance on the coupon, vouchers and reward points is not enough to cover the transaction or has already been used then the fraud order status is returned.
 					  if ($fraud_status_id) {
-					   
-					   
-					  } 
+						  $order_status_id = $fraud_status_id;
+					  }
 				  }
 				}
 
@@ -323,7 +322,7 @@ class ModelCheckoutOrder extends Model {
 
 					$this->model_affiliate_affiliate->addTransaction($order_info['affiliate_id'], $order_info['commission'], $order_id);
 				}
-				
+
 				// Stock subtraction
 				$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
 
@@ -335,9 +334,10 @@ class ModelCheckoutOrder extends Model {
 					foreach ($order_option_query->rows as $option) {
 						$this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_option_value_id = '" . (int)$option['product_option_value_id'] . "' AND subtract = '1'");
 					}
-				}			
+				}
 			}
 
+			// Update the DB with the new statuses
 			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
 
 			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($comment) . "', date_added = NOW()");
@@ -836,14 +836,6 @@ class ModelCheckoutOrder extends Model {
 				$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
 				$mail->setText($message);
 				$mail->send();
-			}
-
-			// If order status in the complete range create any vouchers that where in the order need to be made available.
-			if (in_array($order_info['order_status_id'], $this->config->get('config_complete_status'))) {
-				// Send out any gift voucher mails
-				$this->load->model('checkout/voucher');
-
-				$this->model_checkout_voucher->confirm($order_id);
 			}
 		}
 

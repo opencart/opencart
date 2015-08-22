@@ -32,7 +32,6 @@ class ControllerProductSpecial extends Controller {
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addLink($this->url->link('product/category', 'path=' . $this->request->get['path']), 'canonical');
 
 		$data['breadcrumbs'] = array();
 
@@ -252,22 +251,22 @@ class ControllerProductSpecial extends Controller {
 		$pagination->limit = $limit;
 		$pagination->url = $this->url->link('product/special', $url . '&page={page}');
 
-		// http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
-		if ($pagination->page == 1) {
-		    $this->document->addLink($this->url->link('product/special', '', 'SSL'), 'canonical');
-		} elseif ($pagination->page == 2) {
-		    $this->document->addLink($this->url->link('product/special', '', 'SSL'), 'prev');
-		} else {
-		    $this->document->addLink($this->url->link('product/special', $url . '&page='. ($pagination->page - 1), 'SSL'), 'prev');
-		}
-
-		if ($pagination->limit && ceil($pagination->total / $pagination->limit) > $pagination->page) {
-		    $this->document->addLink($this->url->link('product/special', $url . '&page='. ($pagination->page + 1), 'SSL'), 'next');
-		}
-
 		$data['pagination'] = $pagination->render();
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
+
+		// http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
+		if ($page == 1) {
+		    $this->document->addLink($this->url->link('product/special', '', 'SSL'), 'canonical');
+		} elseif ($page == 2) {
+		    $this->document->addLink($this->url->link('product/special', '', 'SSL'), 'prev');
+		} else {
+		    $this->document->addLink($this->url->link('product/special', 'page='. ($page - 1), 'SSL'), 'prev');
+		}
+
+		if ($limit && ceil($product_total / $limit) > $page) {
+		    $this->document->addLink($this->url->link('product/special', 'page='. ($page + 1), 'SSL'), 'next');
+		}
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;

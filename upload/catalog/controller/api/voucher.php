@@ -11,7 +11,7 @@ class ControllerApiVoucher extends Controller {
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
-			$this->load->model('checkout/voucher');
+			$this->load->model('total/coupon');
 
 			if (isset($this->request->post['voucher'])) {
 				$voucher = $this->request->post['voucher'];
@@ -19,7 +19,7 @@ class ControllerApiVoucher extends Controller {
 				$voucher = '';
 			}
 
-			$voucher_info = $this->model_checkout_voucher->getVoucher($voucher);
+			$voucher_info = $this->model_total_voucher->getVoucher($voucher);
 
 			if ($voucher_info) {
 				$this->session->data['voucher'] = $this->request->post['voucher'];
@@ -84,6 +84,13 @@ class ControllerApiVoucher extends Controller {
 						);
 					}
 				}
+
+				$json['success'] = $this->language->get('text_cart');
+
+				unset($this->session->data['shipping_method']);
+				unset($this->session->data['shipping_methods']);
+				unset($this->session->data['payment_method']);
+				unset($this->session->data['payment_methods']);
 			} else {
 				// Add a new voucher if set
 				if ((utf8_strlen($this->request->post['from_name']) < 1) || (utf8_strlen($this->request->post['from_name']) > 64)) {
@@ -122,6 +129,11 @@ class ControllerApiVoucher extends Controller {
 					);
 
 					$json['success'] = $this->language->get('text_cart');
+
+					unset($this->session->data['shipping_method']);
+					unset($this->session->data['shipping_methods']);
+					unset($this->session->data['payment_method']);
+					unset($this->session->data['payment_methods']);
 				}
 			}
 		}

@@ -77,12 +77,12 @@ final class Loader {
 			exit();
 		}
 
-		if (isset($data['url']) || isset($data['lng']) || isset($data['load']) || isset($data['request'])) {
-			trigger_error('Error: you must not override url, lng, load and request parameters in the $data array!');
+		if (isset($data['router']) || isset($data['lng']) || isset($data['load']) || isset($data['request'])) {
+			trigger_error('Error: you must not override router, lng, load and request parameters in the $data array!');
 			exit();
 		}
 
-		$data['url'] = $this->registry->get('url');
+		$data['router'] = $this->registry->get('url');
 		$data['lng'] = $this->registry->get('language');
 		$data['load'] = $this->registry->get('load');
 		$data['request'] = $this->registry->get('request');

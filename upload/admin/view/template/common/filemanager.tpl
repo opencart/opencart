@@ -47,13 +47,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-<?php if (!$target) { ?>
-// Get the current selection
-var range = window.getSelection().getRangeAt(0);
-var node = range.startContainer;
-var startOffset = range.startOffset;  // where the range starts
-var endOffset = range.endOffset;      // where the range ends
-<?php } ?>
+<?php if ($target) { ?>
 $('a.thumbnail').on('click', function(e) {
 	e.preventDefault();
 
@@ -61,9 +55,21 @@ $('a.thumbnail').on('click', function(e) {
 	$('#<?php echo $thumb; ?>').find('img').attr('src', $(this).find('img').attr('src'));
 	<?php } ?>
 
-	<?php if ($target) { ?>
 	$('#<?php echo $target; ?>').attr('value', $(this).parent().find('input').attr('value'));
-    <?php } else { ?>
+
+	$('#modal-image').modal('hide');
+});
+
+<?php } else { ?>
+// Get the current selection
+var range = window.getSelection().getRangeAt(0);
+var node = range.startContainer;
+var startOffset = range.startOffset;  // where the range starts
+var endOffset = range.endOffset;      // where the range ends
+
+$('a.thumbnail').on('click', function(e) {
+	e.preventDefault();
+
     // Create a new range from the orginal selection
     var range = document.createRange();
     range.setStart(node, startOffset);
@@ -73,10 +79,10 @@ $('a.thumbnail').on('click', function(e) {
 	img.src = $(this).attr('href');
 
 	range.insertNode(img);
-	<?php } ?>
 
 	$('#modal-image').modal('hide');
 });
+<?php } ?>
 
 $('a.directory').on('click', function(e) {
 	e.preventDefault();

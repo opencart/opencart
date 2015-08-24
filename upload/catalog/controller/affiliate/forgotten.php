@@ -119,9 +119,9 @@ class ControllerAffiliateForgotten extends Controller {
 			$this->error['warning'] = $this->language->get('error_email');
 		}
 
-		$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
+		$affiliate_info = $this->model_affiliate_affiliate->getAffiliateByEmail($this->request->post['email']);
 
-		if ($customer_info && !$customer_info['approved']) {
+		if ($affiliate_info && !$affiliate_info['approved']) {
 		    $this->error['warning'] = $this->language->get('error_approved');
 		}
 

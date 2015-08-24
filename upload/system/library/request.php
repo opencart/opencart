@@ -15,6 +15,14 @@ class Request {
 		$this->server = $this->clean($_SERVER);
 	}
 
+	public function post($key, $default = '')	{
+		return isset($this->post[$key]) ? $this->post[$key] : $default;
+	}
+
+	public function get($key, $default = '')	{
+		return isset($this->get[$key]) ? $this->get[$key] : $default;
+	}
+
 	public function clean($data) {
 		if (is_array($data)) {
 			foreach ($data as $key => $value) {

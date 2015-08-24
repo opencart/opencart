@@ -47,12 +47,13 @@
   </div>
 </div>
 <script type="text/javascript"><!--
+<?php if (!$target) { ?>
 // Get the current selection
 var range = window.getSelection().getRangeAt(0);
 var node = range.startContainer;
 var startOffset = range.startOffset;  // where the range starts
 var endOffset = range.endOffset;      // where the range ends
-
+<?php } ?>
 $('a.thumbnail').on('click', function(e) {
 	e.preventDefault();
 

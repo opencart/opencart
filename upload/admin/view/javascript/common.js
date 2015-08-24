@@ -120,7 +120,7 @@ $(document).ready(function() {
 				$('#button-image').prop('disabled', false);
 			},
 			success: function(html) {
-				$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+				$('body').after('<div id="modal-image" class="modal"><div class="modal-dialog modal-lg">' + html + '</div></div>');
 
 				$('#modal-image').modal('show');
 			}

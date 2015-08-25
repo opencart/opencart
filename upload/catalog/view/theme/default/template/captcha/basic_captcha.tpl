@@ -1,12 +1,8 @@
-<div class="form-group">
-  <div class="col-sm-10 pull-right">
-    <img src="index.php?route=captcha/basic_captcha" alt="" />
-  </div>
-</div>
 <div class="form-group required">
   <label class="col-sm-2 control-label" for="input-captcha"><?php echo $entry_captcha; ?></label>
   <div class="col-sm-10">
     <input type="text" name="captcha" id="input-captcha" class="form-control" />
+    <img src="index.php?route=captcha/basic_captcha/captcha" alt="" />
   </div>
 </div>
 <script type="text/javascript"><!--
@@ -38,6 +34,5 @@ $('input[name="captcha"]').on('çlick', function(e) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
-});
 });
 //--></script>

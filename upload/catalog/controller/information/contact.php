@@ -140,7 +140,8 @@ class ControllerInformationContact extends Controller {
 			$data['enquiry'] = '';
 		}
 
-		$data['captcha'] = $this->load->controller('captcha/basic_captcha');
+		// Captcha
+		$data['captcha'] = $this->load->controller('captcha/' . $this->config->get('config_captcha'), $this->error);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -154,6 +155,28 @@ class ControllerInformationContact extends Controller {
 		} else {
 			$this->response->setOutput($this->load->view('default/template/information/contact.tpl', $data));
 		}
+	}
+
+	protected function validate() {
+		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 32)) {
+			$this->error['name'] = $this->language->get('error_name');
+		}
+
+		if (!preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['email'])) {
+			$this->error['email'] = $this->language->get('error_email');
+		}
+
+		if ((utf8_strlen($this->request->post['enquiry']) < 10) || (utf8_strlen($this->request->post['enquiry']) > 3000)) {
+			$this->error['enquiry'] = $this->language->get('error_enquiry');
+		}
+
+		$captcha = $this->load->controller('captcha/' . $this->config->get('config_captcha') . '/validate');
+
+		if ($captcha) {
+			$this->error['captcha'] = $captcha;
+		}
+
+		return !$this->error;
 	}
 
 	public function success() {
@@ -193,21 +216,5 @@ class ControllerInformationContact extends Controller {
 		} else {
 			$this->response->setOutput($this->load->view('default/template/common/success.tpl', $data));
 		}
-	}
-
-	protected function validate() {
-		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 32)) {
-			$this->error['name'] = $this->language->get('error_name');
-		}
-
-		if (!preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['email'])) {
-			$this->error['email'] = $this->language->get('error_email');
-		}
-
-		if ((utf8_strlen($this->request->post['enquiry']) < 10) || (utf8_strlen($this->request->post['enquiry']) > 3000)) {
-			$this->error['enquiry'] = $this->language->get('error_enquiry');
-		}
-
-		return !$this->error;
 	}
 }

@@ -23,7 +23,6 @@
     <ul>
       <li><a href="<?php echo $installer; ?>"><?php echo $text_installer; ?></a></li>
       <li><a href="<?php echo $modification; ?>"><?php echo $text_modification; ?></a></li>
-
       <li><a href="<?php echo $analytics; ?>"><?php echo $text_analytics; ?></a></li>
       <li><a href="<?php echo $captcha; ?>"><?php echo $text_captcha; ?></a></li>
       <li><a href="<?php echo $feed; ?>"><?php echo $text_feed; ?></a></li>
@@ -80,6 +79,12 @@
       <?php } ?>
     </ul>
   </li>
+  <li id="design"><a class="parent"><i class="fa fa-television fa-fw"></i> <span><?php echo $text_design; ?></span></a>
+    <ul>
+      <li><a href="<?php echo $layout; ?>"><?php echo $text_layout; ?></a></li>
+      <li><a href="<?php echo $banner; ?>"><?php echo $text_banner; ?></a></li>
+    </ul>
+  </li>  
   <li id="sale"><a class="parent"><i class="fa fa-shopping-cart fa-fw"></i> <span><?php echo $text_sale; ?></span></a>
     <ul>
       <li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li>
@@ -111,12 +116,6 @@
       <li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li>
       <li><a href="<?php echo $coupon; ?>"><?php echo $text_coupon; ?></a></li>
       <li><a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a></li>
-    </ul>
-  </li>
-  <li id="design"><a class="parent"><i class="fa fa-television fa-fw"></i> <span><?php echo $text_design; ?></span></a>
-    <ul>
-      <li><a href="<?php echo $layout; ?>"><?php echo $text_layout; ?></a></li>
-      <li><a href="<?php echo $banner; ?>"><?php echo $text_banner; ?></a></li>
     </ul>
   </li>
   <li id="system"><a class="parent"><i class="fa fa-cog fa-fw"></i> <span><?php echo $text_system; ?></span></a>

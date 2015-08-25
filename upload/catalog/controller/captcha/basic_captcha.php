@@ -1,28 +1,29 @@
 <?php
 class ControllerCaptchaBasicCaptcha extends Controller {
-	public function index() {
+	public function index($error = array()) {
 		$this->load->language('captcha/basic_captcha');
 
 		$data['entry_captcha'] = $this->language->get('entry_captcha');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/captcha/basic_captcha.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/captcha/basic_captcha.tpl', $data));
+		if (isset($error['captcha'])) {
+			$data['error_captcha'] = $error['captcha'];
 		} else {
-			$this->response->setOutput($this->load->view('default/template/captcha/basic_captcha.tpl', $data));
+			$data['error_captcha'] = '';
+		}
+
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/captcha/basic_captcha.tpl')) {
+			return $this->load->view($this->config->get('config_template') . '/template/captcha/basic_captcha.tpl', $data);
+		} else {
+			return $this->load->view('default/template/captcha/basic_captcha.tpl', $data);
 		}
 	}
 
 	public function validate() {
 		$this->load->language('captcha/basic_captcha');
 
-		$json = array();
-
 		if (empty($this->session->data['captcha']) || ($this->session->data['captcha'] != $this->request->post['captcha'])) {
-			$json['error'] = $this->language->get('error_captcha');
+			return $this->language->get('error_captcha');
 		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	public function captcha() {

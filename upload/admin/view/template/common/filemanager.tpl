@@ -1,4 +1,5 @@
-<div class="modal-content">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h4 class="modal-title"><?php echo $heading_title; ?></h4>
@@ -43,7 +44,7 @@
     </div>
     <div class="modal-footer"><?php echo $pagination; ?></div>
   </div>
-
+</div>
 <script type="text/javascript"><!--
 <?php if ($target) { ?>
 $('a.thumbnail').on('click', function(e) {
@@ -85,7 +86,7 @@ $('a.thumbnail').on('click', function(e) {
 $('a.directory').on('click', function(e) {
 	e.preventDefault();
 
-	$('#modal-image .modal-dialog').load($(this).attr('href'));
+	$('#modal-image').load($(this).attr('href'));
 });
 
 $('.pagination a').on('click', function(e) {

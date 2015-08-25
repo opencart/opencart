@@ -32,6 +32,7 @@ class ControllerSettingSetting extends Controller {
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
+		$data['text_captcha'] = $this->language->get('text_captcha');
 		$data['text_product'] = $this->language->get('text_product');
 		$data['text_review'] = $this->language->get('text_review');
 		$data['text_voucher'] = $this->language->get('text_voucher');
@@ -109,6 +110,7 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_affiliate_mail'] = $this->language->get('entry_affiliate_mail');
 		$data['entry_return'] = $this->language->get('entry_return');
 		$data['entry_return_status'] = $this->language->get('entry_return_status');
+		$data['entry_captcha'] = $this->language->get('entry_captcha');
 		$data['entry_logo'] = $this->language->get('entry_logo');
 		$data['entry_icon'] = $this->language->get('entry_icon');
 		$data['entry_image_category'] = $this->language->get('entry_image_category');
@@ -198,6 +200,7 @@ class ControllerSettingSetting extends Controller {
 		$data['help_commission'] = $this->language->get('help_commission');
 		$data['help_return'] = $this->language->get('help_return');
 		$data['help_return_status'] = $this->language->get('help_return_status');
+		$data['help_captcha'] = $this->language->get('help_captcha');
 		$data['help_icon'] = $this->language->get('help_icon');
 		$data['help_ftp_root'] = $this->language->get('help_ftp_root');
 		$data['help_mail_protocol'] = $this->language->get('help_mail_protocol');
@@ -928,6 +931,30 @@ class ControllerSettingSetting extends Controller {
 		$this->load->model('localisation/return_status');
 
 		$data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
+
+		if (isset($this->request->post['config_captcha'])) {
+			$data['config_captcha'] = $this->request->post['config_captcha'];
+		} else {
+			$data['config_captcha'] = $this->config->get('config_captcha');
+		}
+
+		$this->load->model('extension/extension');
+
+		$data['captchas'] = array();
+
+		// Get a list of installed captchas
+		$extensions = $this->model_extension_extension->getInstalled('captcha');
+
+		foreach ($extensions as $code) {
+			$this->load->language('captcha/' . $code);
+
+			if ($this->config->has($code . '_status') || $module_data) {
+				$data['captchas'][] = array(
+					'text'  => $this->language->get('heading_title'),
+					'value' => $code
+				);
+			}
+		}
 
 		if (isset($this->request->post['config_logo'])) {
 			$data['config_logo'] = $this->request->post['config_logo'];

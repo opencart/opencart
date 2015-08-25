@@ -89,10 +89,8 @@
                       <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
                       <?php } ?>
                       <?php } ?>
-                    </select>
-                  </div>
-                </div>
-                
+                  </select></div>
+              </div>
             </div>
             <div class="tab-pane" id="tab-store">
                 <div class="form-group required">
@@ -1027,6 +1025,24 @@
                   </div>
                 </div>
               </fieldset>
+              <fieldset>
+                <legend><?php echo $text_captcha; ?></legend>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_captcha; ?>"><?php echo $entry_captcha; ?></span></label>
+                  <div class="col-sm-10">
+                      <select name="config_captcha" id="input-return" class="form-control">
+                        <option value=""><?php echo $text_none; ?></option>
+                        <?php foreach ($captchas as $captcha) { ?>
+                        <?php if ($captcha['captcha'] == $config_captcha) { ?>
+                        <option value="<?php echo $captcha['value']; ?>" selected="selected"><?php echo $captcha['text']; ?></option>
+                        <?php } else { ?>
+                        <option value="<?php echo $captcha['value']; ?>"><?php echo $captcha['text']; ?></option>
+                        <?php } ?>
+                        <?php } ?>
+                      </select>
+                  </div>
+                </div>
+              </fieldset>
             </div>
             <div class="tab-pane" id="tab-image">
               <div class="form-group">
@@ -1036,7 +1052,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-icon"><?php echo $entry_icon; ?></label>
+                <label class="col-sm-2 control-label" for="input-icon"><span data-toggle="tooltip" title="<?php echo $help_icon; ?>"><?php echo $entry_icon; ?></span></label>
                 <div class="col-sm-10"><a href="" id="thumb-icon" data-toggle="image" class="img-thumbnail"><img src="<?php echo $icon; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
                   <input type="hidden" name="config_icon" value="<?php echo $config_icon; ?>" id="input-icon" />
                 </div>

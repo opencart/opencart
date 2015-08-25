@@ -25,7 +25,7 @@ class ControllerProductSpecial extends Controller {
 			$page = 1;
 		}
 
-		if (isset($this->request->get['limit'])) {
+		if (isset($this->request->get['limit']) && (int)$this->request->get['limit']) {
 			$limit = $this->request->get['limit'];
 		} else {
 			$limit = $this->config->get('config_product_limit');
@@ -54,7 +54,7 @@ class ControllerProductSpecial extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		if (isset($this->request->get['limit'])) {
+		if (isset($this->request->get['limit']) && (int)$this->request->get['limit']) {
 			$url .= '&limit=' . $this->request->get['limit'];
 		}
 
@@ -145,7 +145,7 @@ class ControllerProductSpecial extends Controller {
 
 		$url = '';
 
-		if (isset($this->request->get['limit'])) {
+		if (isset($this->request->get['limit']) && (int)$this->request->get['limit']) {
 			$url .= '&limit=' . $this->request->get['limit'];
 		}
 
@@ -241,7 +241,7 @@ class ControllerProductSpecial extends Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-		if (isset($this->request->get['limit'])) {
+		if (isset($this->request->get['limit']) && (int)$this->request->get['limit']) {
 			$url .= '&limit=' . $this->request->get['limit'];
 		}
 

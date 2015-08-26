@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '2.0.3.2_rc');
+define('VERSION', '2.1.0.0_rc');
 
 // Configuration
 if (is_file('config.php')) {
@@ -51,7 +51,7 @@ foreach ($query->rows as $result) {
 	if (!$result['serialized']) {
 		$config->set($result['key'], $result['value']);
 	} else {
-		$config->set($result['key'], unserialize($result['value']));
+		$config->set($result['key'], json_decode($result['value'], true));
 	}
 }
 
@@ -68,7 +68,7 @@ $registry->set('url', $url);
 $log = new Log($config->get('config_error_filename'));
 $registry->set('log', $log);
 
-function error_handler($code, $error, $file, $line) {
+function error_handler($code, $message, $file, $line) {
 	global $log, $config;
 
 	// error suppressed with @
@@ -95,11 +95,11 @@ function error_handler($code, $error, $file, $line) {
 	}
 
 	if ($config->get('config_error_display')) {
-		echo '<b>' . $code . '</b>: ' . $error . ' in <b>' . $file . '</b> on line <b>' . $line . '</b>';
+		echo '<b>' . $error . '</b>: ' . $message . ' in <b>' . $file . '</b> on line <b>' . $line . '</b>';
 	}
 
 	if ($config->get('config_error_log')) {
-		$log->write('PHP ' . $code . ':  ' . $error . ' in ' . $file . ' on line ' . $line);
+		$log->write('PHP ' . $error . ':  ' . $message . ' in ' . $file . ' on line ' . $line);
 	}
 
 	return true;
@@ -123,22 +123,23 @@ $cache = new Cache('file');
 $registry->set('cache', $cache);
 
 // Session
-$session = new Session();
-
-// For API requests we need to create a separate cookie
 if (isset($request->get['token']) && isset($request->get['route']) && substr($request->get['route'], 0, 4) == 'api/') {
 	$db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE TIMESTAMPADD(HOUR, 1, date_modified) < NOW()");
-	
-	$query = $db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "api_session` as LEFT JOIN api_ip ai ON (as.api_id = ai.api_id) WHERE as.token = '" . $db->escape($request->get['token']) . "' AND ai.ip = '" . $db->escape($request->server['REMOTE_ADDR']) . "'");
 
-	if ($query->num_row) {
-		$session->setId($session_info['session_id']);
-		$session->setName($session_info['session_name']);
+	$query = $db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "api` `a` LEFT JOIN `" . DB_PREFIX . "api_session` `as` ON (a.api_id = as.api_id) LEFT JOIN " . DB_PREFIX . "api_ip `ai` ON (as.api_id = ai.api_id) WHERE a.status = '1' AND as.token = '" . $db->escape($request->get['token']) . "' AND ai.ip = '" . $db->escape($request->server['REMOTE_ADDR']) . "'");
+
+	if ($query->num_rows) {
+		// Does not seem PHP is able to handle sessions as objects properly so so wrote my own class
+		$session = new Session($query->row['session_id'], $query->row['session_name']);
+		$registry->set('session', $session);
+
+		// keep the session alive
+		$db->query("UPDATE `" . DB_PREFIX . "api_session` SET date_modified = NOW() WHERE api_session_id = '" . $query->row['api_session_id'] . "'");
 	}
+} else {
+	$session = new Session();
+	$registry->set('session', $session);
 }
-
-$session->start();
-$registry->set('session', $session);
 
 // Language Detection
 $languages = array();

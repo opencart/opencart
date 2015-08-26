@@ -32,10 +32,12 @@
                 <td><button data-toggle="tooltip" title="<?php echo $text_payment_method; ?>" class="btn btn-info btn-xs"><i class="fa fa-credit-card fa-fw"></i></button></td>
                 <td><?php echo $payment_method; ?></td>
               </tr>
+              <?php if ($shipping_method) { ?>
               <tr>
                 <td><button data-toggle="tooltip" title="<?php echo $text_shipping_method; ?>" class="btn btn-info btn-xs"><i class="fa fa-truck fa-fw"></i></button></td>
                 <td><?php echo $shipping_method; ?></td>
               </tr>
+              <?php } ?>
             </tbody>
           </table>
         </div>
@@ -237,6 +239,12 @@
                   </div>
                 </div>
                 <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-override"><span data-toggle="tooltip" title="<?php echo $help_override; ?>"><?php echo $entry_override; ?></span></label>
+                  <div class="col-sm-10">
+                    <input type="checkbox" name="override" value="1" id="input-override" />
+                  </div>
+                </div>
+                <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-notify"><?php echo $entry_notify; ?></label>
                   <div class="col-sm-10">
                     <input type="checkbox" name="notify" value="1" id="input-notify" />
@@ -347,24 +355,24 @@ $(document).delegate('#button-invoice', 'click', function() {
 		url: 'index.php?route=sale/order/createinvoiceno&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-invoice').button('loading');			
+			$('#button-invoice').button('loading');
 		},
 		complete: function() {
 			$('#button-invoice').button('reset');
 		},
 		success: function(json) {
 			$('.alert').remove();
-						
+
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
-			
+
 			if (json['invoice_no']) {
 				$('#invoice').html(json['invoice_no']);
-				
+
 				$('#button-invoice').replaceWith('<button disabled="disabled" class="btn btn-success btn-xs"><i class="fa fa-cog"></i></button>');
 			}
-		},			
+		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
@@ -381,20 +389,20 @@ $(document).delegate('#button-reward-add', 'click', function() {
 		},
 		complete: function() {
 			$('#button-reward-add').button('reset');
-		},									
+		},
 		success: function(json) {
 			$('.alert').remove();
-						
+
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
-			
+
 			if (json['success']) {
                 $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
-				
+
 				$('#button-reward-add').replaceWith('<button id="button-reward-remove" data-toggle="tooltip" title="<?php echo $button_reward_remove; ?>" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>');
 			}
-		},			
+		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
@@ -411,20 +419,20 @@ $(document).delegate('#button-reward-remove', 'click', function() {
 		},
 		complete: function() {
 			$('#button-reward-remove').button('reset');
-		},				
+		},
 		success: function(json) {
 			$('.alert').remove();
-						
+
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
-			
+
 			if (json['success']) {
                 $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
-				
+
 				$('#button-reward-remove').replaceWith('<button id="button-reward-add" data-toggle="tooltip" title="<?php echo $button_reward_add; ?>" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>');
 			}
-		},			
+		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
@@ -441,20 +449,20 @@ $(document).delegate('#button-commission-add', 'click', function() {
 		},
 		complete: function() {
 			$('#button-commission-add').button('reset');
-		},			
+		},
 		success: function(json) {
 			$('.alert').remove();
-						
+
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
-			
+
 			if (json['success']) {
                 $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
-                
+
 				$('#button-commission-add').replaceWith('<button id="button-commission-remove" data-toggle="tooltip" title="<?php echo $button_commission_remove; ?>" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>');
 			}
-		},			
+		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
@@ -471,50 +479,91 @@ $(document).delegate('#button-commission-remove', 'click', function() {
 		},
 		complete: function() {
 			$('#button-commission-remove').button('reset');
-		},		
+		},
 		success: function(json) {
 			$('.alert').remove();
-						
+
 			if (json['error']) {
 				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
-			
+
 			if (json['success']) {
                 $('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
-				
+
 				$('#button-commission-remove').replaceWith('<button id="button-commission-add" data-toggle="tooltip" title="<?php echo $button_commission_add; ?>" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i></button>');
 			}
-		},			
+		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
 });
 
+var token = '';
+
 // Login to the API
 $.ajax({
-	url: '<?php echo $store_url; ?>index.php?route=api/login&token=<?php echo $token; ?>',
+	url: '<?php echo $store_url; ?>index.php?route=api/login',
 	type: 'post',
 	dataType: 'json',
-	data: 'username=<?php echo $api_username; ?>&password=<?php echo $api_password; ?>',
+	data: 'key=<?php echo $api_key; ?>',
 	crossDomain: true,
 	success: function(json) {
 		$('.alert').remove();
-			
-		if (json['error']) {
-			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-		}		
-	},	
+
+        if (json['error']) {
+    		if (json['error']['key']) {
+    			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['key'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+    		}
+
+            if (json['error']['ip']) {
+    			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['ip'] + ' <button type="button" id="button-ip-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger btn-xs pull-right"><i class="fa fa-plus"></i> <?php echo $button_ip_add; ?></button></div>');
+    		}
+        }
+
+        if (json['token']) {
+			token = json['token'];
+		}
+	},
 	error: function(xhr, ajaxOptions, thrownError) {
 		alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 	}
 });
 
+$(document).delegate('#button-ip-add', 'click', function() {
+	$.ajax({
+		url: 'index.php?route=user/api/addip&token=<?php echo $token; ?>&api_id=<?php echo $api_id; ?>',
+		type: 'post',
+		data: 'ip=<?php echo $api_ip; ?>',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-ip-add').button('loading');
+		},
+		complete: function() {
+			$('#button-ip-add').button('reset');
+		},
+		success: function(json) {
+			$('.alert').remove();
+
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
 $('#history').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
-	
+
 	$('#history').load(this.href);
-});			
+});
 
 $('#history').load('index.php?route=sale/order/history&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
 
@@ -530,31 +579,31 @@ $('#button-history').on('click', function() {
 	}
 
 	$.ajax({
-		url: '<?php echo $store_url; ?>index.php?route=api/order/history&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>&token=<?php echo $token; ?>',
+		url: '<?php echo $store_url; ?>index.php?route=api/order/history&token=' + token + '&order_id=<?php echo $order_id; ?>',
 		type: 'post',
 		dataType: 'json',
-		data: 'order_status_id=' + encodeURIComponent($('select[name=\'order_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&append=' + ($('input[name=\'append\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
+		data: 'order_status_id=' + encodeURIComponent($('select[name=\'order_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&override=' + ($('input[name=\'override\']').prop('checked') ? 1 : 0) + '&append=' + ($('input[name=\'append\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
 		beforeSend: function() {
-			$('#button-history').button('loading');			
+			$('#button-history').button('loading');
 		},
 		complete: function() {
-			$('#button-history').button('reset');	
+			$('#button-history').button('reset');
 		},
 		success: function(json) {
 			$('.alert').remove();
-			
+
 			if (json['error']) {
 				$('#history').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			} 
-		
+			}
+
 			if (json['success']) {
 				$('#history').load('index.php?route=sale/order/history&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
-				
+
 				$('#history').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				
+
 				$('textarea[name=\'comment\']').val('');
-			}			
-		},			
+			}
+		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
@@ -563,9 +612,9 @@ $('#button-history').on('click', function() {
 
 function changeStatus(){
 	var status_id = $('select[name="order_status_id"]').val();
-	
+
 	$('#openbay-info').remove();
-	
+
 	$.ajax({
 		url: 'index.php?route=extension/openbay/getorderinfo&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>&status_id=' + status_id,
 		dataType: 'html',
@@ -577,7 +626,7 @@ function changeStatus(){
 
 function addOrderInfo(){
 	var status_id = $('select[name="order_status_id"]').val();
-	
+
 	$.ajax({
 		url: 'index.php?route=extension/openbay/addorderinfo&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>&status_id=' + status_id,
 		type: 'post',
@@ -590,9 +639,9 @@ $(document).ready(function() {
 	changeStatus();
 });
 
-$('select[name="order_status_id"]').change(function(){ 
-	changeStatus(); 
+$('select[name="order_status_id"]').change(function(){
+	changeStatus();
 });
-//--></script> 
+//--></script>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

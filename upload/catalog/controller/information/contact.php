@@ -74,15 +74,9 @@ class ControllerInformationContact extends Controller {
 			$data['error_enquiry'] = '';
 		}
 
-		if (isset($this->error['captcha'])) {
-			$data['error_captcha'] = $this->error['captcha'];
-		} else {
-			$data['error_captcha'] = '';
-		}
-
 		$data['button_submit'] = $this->language->get('button_submit');
 
-		$data['action'] = $this->url->link('information/contact');
+		$data['action'] = $this->url->link('information/contact', '', 'SSL');
 
 		$this->load->model('tool/image');
 
@@ -146,13 +140,8 @@ class ControllerInformationContact extends Controller {
 			$data['enquiry'] = '';
 		}
 
-		if ($this->config->get('config_google_captcha_status')) {
-			$this->document->addScript('https://www.google.com/recaptcha/api.js');
-
-			$data['site_key'] = $this->config->get('config_google_captcha_public');
-		} else {
-			$data['site_key'] = '';
-		}
+		// Captcha
+		$data['captcha'] = $this->load->controller('captcha/' . $this->config->get('config_captcha'), $this->error);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -166,6 +155,28 @@ class ControllerInformationContact extends Controller {
 		} else {
 			$this->response->setOutput($this->load->view('default/template/information/contact.tpl', $data));
 		}
+	}
+
+	protected function validate() {
+		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 32)) {
+			$this->error['name'] = $this->language->get('error_name');
+		}
+
+		if (!preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['email'])) {
+			$this->error['email'] = $this->language->get('error_email');
+		}
+
+		if ((utf8_strlen($this->request->post['enquiry']) < 10) || (utf8_strlen($this->request->post['enquiry']) > 3000)) {
+			$this->error['enquiry'] = $this->language->get('error_enquiry');
+		}
+
+		$captcha = $this->load->controller('captcha/' . $this->config->get('config_captcha') . '/validate');
+
+		if ($captcha) {
+			$this->error['captcha'] = $captcha;
+		}
+
+		return !$this->error;
 	}
 
 	public function success() {
@@ -205,31 +216,5 @@ class ControllerInformationContact extends Controller {
 		} else {
 			$this->response->setOutput($this->load->view('default/template/common/success.tpl', $data));
 		}
-	}
-
-	protected function validate() {
-		if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 32)) {
-			$this->error['name'] = $this->language->get('error_name');
-		}
-
-		if (!preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['email'])) {
-			$this->error['email'] = $this->language->get('error_email');
-		}
-
-		if ((utf8_strlen($this->request->post['enquiry']) < 10) || (utf8_strlen($this->request->post['enquiry']) > 3000)) {
-			$this->error['enquiry'] = $this->language->get('error_enquiry');
-		}
-
-		if ($this->config->get('config_google_captcha_status')) {
-			$recaptcha = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($this->config->get('config_google_captcha_secret')) . '&response=' . $this->request->post['g-recaptcha-response'] . '&remoteip=' . $this->request->server['REMOTE_ADDR']);
-
-			$recaptcha = json_decode($recaptcha, true);
-
-			if (!$recaptcha['success']) {
-				$this->error['captcha'] = $this->language->get('error_captcha');
-			}
-		}
-
-		return !$this->error;
 	}
 }

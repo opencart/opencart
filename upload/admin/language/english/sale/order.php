@@ -6,7 +6,6 @@ $_['heading_title']              = 'Orders';
 $_['text_list']                  = 'Order List';
 $_['text_add']                   = 'Add Order';
 $_['text_edit']                  = 'Edit Order';
-$_['text_ip_add']                = 'You need to add your current IP %s to the default API allow list.';
 $_['text_order_detail']          = 'Order Details';
 $_['text_customer_detail']       = 'Customer Details';
 $_['text_option']                = 'Options';
@@ -35,8 +34,6 @@ $_['text_ip']                    = 'IP Address';
 $_['text_forwarded_ip']          = 'Forwarded IP';
 $_['text_user_agent']            = 'User Agent';
 $_['text_accept_language']       = 'Accept Language';
-
-
 $_['text_order_id']              = 'Order ID:';
 $_['text_fax']                   = 'Fax:';
 $_['text_website']               = 'Web Site:';
@@ -48,15 +45,12 @@ $_['text_ean']                   = 'EAN:';
 $_['text_jan']                   = 'JAN:';
 $_['text_isbn']                  = 'ISBN:';
 $_['text_mpn']                   = 'MPN:';
-
-
 $_['text_missing']               = 'Missing Orders';
 $_['text_default']               = 'Default';
 $_['text_product']               = 'Add Product(s)';
 $_['text_voucher']               = 'Add Voucher(s)';
 $_['text_shipping']              = 'Shipping';
 $_['text_contact']               = 'Contact';
-
 $_['text_reward_added']          = 'Success: Reward points added!';
 $_['text_reward_removed']        = 'Success: Reward points removed!';
 $_['text_commission_added']      = 'Success: Commission added!';
@@ -114,6 +108,7 @@ $_['entry_amount']               = 'Amount';
 $_['entry_affiliate']            = 'Affiliate';
 $_['entry_order_status']         = 'Order Status';
 $_['entry_notify']               = 'Notify Customer';
+$_['entry_override']             = 'Override';
 $_['entry_comment']              = 'Comment';
 $_['entry_currency']             = 'Currency';
 $_['entry_shipping_method']      = 'Shipping Method';
@@ -125,6 +120,9 @@ $_['entry_order_id']             = 'Order ID';
 $_['entry_total']                = 'Total';
 $_['entry_date_added']           = 'Date Added';
 $_['entry_date_modified']        = 'Date Modified';
+
+// Help
+$_['help_override']              = 'If the customers order is being blocked from changing the order status due to a anti-fraud extension enable override.';
 
 // Error
 $_['error_warning']              = 'Warning: Please check the form carefully for errors!';

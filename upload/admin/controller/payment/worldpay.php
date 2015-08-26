@@ -344,7 +344,7 @@ class ControllerPaymentWorldpay extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/realex')) {
+		if (!$this->user->hasPermission('modify', 'payment/worldpay')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

@@ -233,11 +233,17 @@ class ControllerCheckoutCart extends Controller {
 			$this->load->model('extension/extension');
 
 			$data['checkout_buttons'] = array();
-
-			$data['coupon'] = $this->load->controller('checkout/coupon');
-			$data['voucher'] = $this->load->controller('checkout/voucher');
-			$data['reward'] = $this->load->controller('checkout/reward');
-			$data['shipping'] = $this->load->controller('checkout/shipping');
+			
+			$files = glob(DIR_APPLICATION . '/controller/total/*.php');
+		
+			if ($files) {
+				foreach ($files as $file) {
+					$extension = basename($file, '.php');
+					
+					$data[$extension] = $this->load->controller('total/' . $extension);
+				}
+			}
+			
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');

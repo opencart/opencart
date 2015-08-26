@@ -1,4 +1,3 @@
-<div class="modal-backdrop in"></div>
 <div class="modal-dialog modal-lg">
   <div class="modal-content">
     <div class="modal-header">

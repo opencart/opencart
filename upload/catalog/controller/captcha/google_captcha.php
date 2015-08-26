@@ -1,14 +1,12 @@
 <?php
 class ControllerCaptchaGoogleCaptcha extends Controller {
-    private $error = array();
-
-    public function index() {
+    public function index($error = array()) {
         $this->load->language('captcha/google_captcha');
 
 		$this->document->addScript('https://www.google.com/recaptcha/api.js');
 
-        if (isset($this->error['captcha'])) {
-			$data['error_captcha'] = $this->error['captcha'];
+        if (isset($error['captcha'])) {
+			$data['error_captcha'] = $error['captcha'];
 		} else {
 			$data['error_captcha'] = '';
 		}
@@ -25,17 +23,12 @@ class ControllerCaptchaGoogleCaptcha extends Controller {
     public function validate() {
         $this->load->language('captcha/google_captcha');
 
-        $json = array();
-
         $recaptcha = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($this->config->get('google_captcha_secret')) . '&response=' . $this->request->post['g-recaptcha-response'] . '&remoteip=' . $this->request->server['REMOTE_ADDR']);
 
         $recaptcha = json_decode($recaptcha, true);
 
         if (!$recaptcha['success']) {
-            $json['error'] = $this->language->get('error_captcha');
+            return $this->language->get('error_captcha');
         }
-
-        $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode($json));
     }
 }

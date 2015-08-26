@@ -1033,13 +1033,33 @@
                       <select name="config_captcha" id="input-return" class="form-control">
                         <option value=""><?php echo $text_none; ?></option>
                         <?php foreach ($captchas as $captcha) { ?>
-                        <?php if ($captcha['captcha'] == $config_captcha) { ?>
+                        <?php if ($captcha['value'] == $config_captcha) { ?>
                         <option value="<?php echo $captcha['value']; ?>" selected="selected"><?php echo $captcha['text']; ?></option>
                         <?php } else { ?>
                         <option value="<?php echo $captcha['value']; ?>"><?php echo $captcha['text']; ?></option>
                         <?php } ?>
                         <?php } ?>
                       </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><?php echo $entry_captcha; ?></label>
+                  <div class="col-sm-10">
+                    <div class="well well-sm" style="height: 150px; overflow: auto;">
+                      <?php foreach ($captcha_pages as $captcha_page) { ?>
+                      <div class="checkbox">
+                        <label>
+                          <?php if (in_array($captcha_page['value'], $config_captcha_page)) { ?>
+                          <input type="checkbox" name="config_captcha_page[]" value="<?php echo $captcha_page['value']; ?>" checked="checked" />
+                          <?php echo $captcha_page['text']; ?>
+                          <?php } else { ?>
+                          <input type="checkbox" name="config_captcha_page[]" value="<?php echo $captcha_page['value']; ?>" />
+                          <?php echo $captcha_page['text']; ?>
+                          <?php } ?>
+                        </label>
+                      </div>
+                      <?php } ?>
+                    </div>
                   </div>
                 </div>
               </fieldset>

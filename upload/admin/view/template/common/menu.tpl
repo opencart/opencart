@@ -84,7 +84,7 @@
       <li><a href="<?php echo $layout; ?>"><?php echo $text_layout; ?></a></li>
       <li><a href="<?php echo $banner; ?>"><?php echo $text_banner; ?></a></li>
     </ul>
-  </li>  
+  </li>
   <li id="sale"><a class="parent"><i class="fa fa-shopping-cart fa-fw"></i> <span><?php echo $text_sale; ?></span></a>
     <ul>
       <li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li>
@@ -155,13 +155,13 @@
           <li><a href="<?php echo $weight_class; ?>"><?php echo $text_weight_class; ?></a></li>
         </ul>
       </li>
-    </ul>
-  </li>
-  <li id="tools"><a class="parent"><i class="fa fa-wrench fa-fw"></i> <span><?php echo $text_tools; ?></span></a>
-    <ul>
-      <li><a href="<?php echo $upload; ?>"><?php echo $text_upload; ?></a></li>
-      <li><a href="<?php echo $backup; ?>"><?php echo $text_backup; ?></a></li>
-      <li><a href="<?php echo $error_log; ?>"><?php echo $text_error_log; ?></a></li>
+      <li><a class="parent"><?php echo $text_tools; ?></a>
+        <ul>
+          <li><a href="<?php echo $upload; ?>"><?php echo $text_upload; ?></a></li>
+          <li><a href="<?php echo $backup; ?>"><?php echo $text_backup; ?></a></li>
+          <li><a href="<?php echo $error_log; ?>"><?php echo $text_error_log; ?></a></li>
+        </ul>
+      </li>
     </ul>
   </li>
   <li id="reports"><a class="parent"><i class="fa fa-bar-chart-o fa-fw"></i> <span><?php echo $text_reports; ?></span></a>

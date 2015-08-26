@@ -948,13 +948,48 @@ class ControllerSettingSetting extends Controller {
 		foreach ($extensions as $code) {
 			$this->load->language('captcha/' . $code);
 
-			if ($this->config->has($code . '_status') || $module_data) {
+			if ($this->config->has($code . '_status')) {
 				$data['captchas'][] = array(
 					'text'  => $this->language->get('heading_title'),
 					'value' => $code
 				);
 			}
 		}
+
+		if (isset($this->request->post['config_captcha_page'])) {
+			$data['config_captcha_page'] = $this->request->post['config_captcha_page'];
+		} elseif ($this->config->has('config_captcha_page')) {
+		   	$data['config_captcha_page'] = $this->config->get('config_captcha_page');
+		} else {
+			$data['config_captcha_page'] = array();
+		}
+
+		$data['captcha_pages'] = array();
+
+		$data['captcha_pages'][] = array(
+			'text'  => $this->language->get('text_customer'),
+			'value' => 'customer'
+		);
+
+		$data['captcha_pages'][] = array(
+			'text'  => $this->language->get('text_affiliate'),
+			'value' => 'affiliate'
+		);
+
+		$data['captcha_pages'][] = array(
+			'text'  => $this->language->get('text_review'),
+			'value' => 'review'
+		);
+
+		$data['captcha_pages'][] = array(
+			'text'  => $this->language->get('text_return'),
+			'value' => 'return'
+		);
+
+		$data['captcha_pages'][] = array(
+			'text'  => $this->language->get('text_contact'),
+			'value' => 'contact'
+		);
 
 		if (isset($this->request->post['config_logo'])) {
 			$data['config_logo'] = $this->request->post['config_logo'];

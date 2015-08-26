@@ -48,7 +48,7 @@ class ModelAccountCustomer extends Model {
 		$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
 		$mail->smtp_port = $this->config->get('config_mail_smtp_port');
 		$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-			
+
 		$mail->setTo($data['email']);
 		$mail->setFrom($this->config->get('config_email'));
 		$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
@@ -74,7 +74,7 @@ class ModelAccountCustomer extends Model {
 			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
 			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
 			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
-			
+
 			$mail->setTo($this->config->get('config_email'));
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
@@ -115,7 +115,7 @@ class ModelAccountCustomer extends Model {
 
 		$this->event->trigger('post.customer.edit.password');
 	}
-	
+
 	public function editNewsletter($newsletter) {
 		$this->event->trigger('pre.customer.edit.newsletter');
 
@@ -131,15 +131,15 @@ class ModelAccountCustomer extends Model {
 
 		$this->event->trigger('post.customer.edit.cart');
 	}
-	
+
 	public function editWishlist($wishlist) {
 		$this->event->trigger('pre.customer.edit.wishlist');
 
 		$this->db->query("UPDATE " . DB_PREFIX . "customer SET wishlist = '" . $this->db->escape(json_encode($wishlist)) . "' WHERE customer_id = '" . (int)$this->customer->getId() . "'");
 
 		$this->event->trigger('post.customer.edit.wishlist');
-	}	
-	
+	}
+
 	public function getCustomer($customer_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer WHERE customer_id = '" . (int)$customer_id . "'");
 
@@ -166,35 +166,35 @@ class ModelAccountCustomer extends Model {
 		return $query->row['total'];
 	}
 
+	public function getRewardTotal($customer_id) {
+		$query = $this->db->query("SELECT SUM(points) AS total FROM " . DB_PREFIX . "customer_reward WHERE customer_id = '" . (int)$customer_id . "'");
+
+		return $query->row['total'];
+	}
+
 	public function getIps($customer_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_ip` WHERE customer_id = '" . (int)$customer_id . "'");
 
 		return $query->rows;
 	}
 
-	public function isBanIp($ip) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_ban_ip` WHERE ip = '" . $this->db->escape($ip) . "'");
-
-		return $query->num_rows;
-	}
-	
 	public function addLoginAttempt($email) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_login WHERE email = '" . $this->db->escape(utf8_strtolower((string)$email)) . "' AND ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "'");
-		
+
 		if (!$query->num_rows) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "customer_login SET email = '" . $this->db->escape(utf8_strtolower((string)$email)) . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', total = 1, date_added = '" . $this->db->escape(date('Y-m-d H:i:s')) . "', date_modified = '" . $this->db->escape(date('Y-m-d H:i:s')) . "'");
 		} else {
 			$this->db->query("UPDATE " . DB_PREFIX . "customer_login SET total = (total + 1), date_modified = '" . $this->db->escape(date('Y-m-d H:i:s')) . "' WHERE customer_login_id = '" . (int)$query->row['customer_login_id'] . "'");
-		}			
-	}	
-	
+		}
+	}
+
 	public function getLoginAttempts($email) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_login` WHERE email = '" . $this->db->escape(utf8_strtolower($email)) . "'");
 
 		return $query->row;
 	}
-	
+
 	public function deleteLoginAttempts($email) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "customer_login` WHERE email = '" . $this->db->escape(utf8_strtolower($email)) . "'");
-	}	
+	}
 }

@@ -1,4 +1,4 @@
-# 1.To use URL Alias you need to be running apache with mod_rewrite enabled. 
+# 1.To use URL Alias you need to be running apache with mod_rewrite enabled.
 
 # 2. In your opencart directory rename htaccess.txt to .htaccess.
 
@@ -6,7 +6,7 @@
 
 Options +FollowSymlinks
 
-# Prevent Directoy listing 
+# Prevent Directoy listing
 Options -Indexes
 
 # Prevent Direct Access to files
@@ -17,18 +17,18 @@ Options -Indexes
 
 # SEO URL Settings
 RewriteEngine On
-# If your opencart installation does not run on the main web folder make sure you folder it does run in ie. / becomes /shop/ 
+# If your opencart installation does not run on the main web folder make sure you folder it does run in ie. / becomes /shop/
 
 RewriteBase /
 RewriteRule ^sitemap.xml$ index.php?route=feed/google_sitemap [L]
 RewriteRule ^googlebase.xml$ index.php?route=feed/google_base [L]
-RewriteRule ^system/download/(.*) /index.php?route=error/not_found [L]
+RewriteRule ^system/download/(.*) index.php?route=error/not_found [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} !.*\.(ico|gif|jpg|jpeg|png|js|css)
 RewriteRule ^([^?]*) index.php?_route_=$1 [L,QSA]
 
-### Additional Settings that may need to be enabled for some servers 
+### Additional Settings that may need to be enabled for some servers
 ### Uncomment the commands by removing the # sign in front of it.
 ### If you get an "Internal Server Error 500" after enabling any of the following settings, restore the # as this means your host doesn't allow that.
 

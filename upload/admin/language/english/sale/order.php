@@ -108,6 +108,7 @@ $_['entry_amount']               = 'Amount';
 $_['entry_affiliate']            = 'Affiliate';
 $_['entry_order_status']         = 'Order Status';
 $_['entry_notify']               = 'Notify Customer';
+$_['entry_override']             = 'Override';
 $_['entry_comment']              = 'Comment';
 $_['entry_currency']             = 'Currency';
 $_['entry_shipping_method']      = 'Shipping Method';
@@ -119,6 +120,9 @@ $_['entry_order_id']             = 'Order ID';
 $_['entry_total']                = 'Total';
 $_['entry_date_added']           = 'Date Added';
 $_['entry_date_modified']        = 'Date Modified';
+
+// Help
+$_['help_override']              = 'If the customers order is being blocked from changing the order status due to a anti-fraud extension enable override.';
 
 // Error
 $_['error_warning']              = 'Warning: Please check the form carefully for errors!';

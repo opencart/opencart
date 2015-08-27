@@ -720,6 +720,24 @@
                   <input type="checkbox" name="get_it_fast" value="1" id="get_it_fast" />
                 </div>
               </div>
+              <?php if ($setting['listing_restrictions']['eligible_for_pickup_dropoff'] == 1) { ?>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_shipping_pickupdropoff; ?></label>
+                <div class="col-sm-10">
+                  <input type="hidden" name="eligible_for_pickup_dropoff" value="0" />
+                  <input type="checkbox" name="eligible_for_pickup_dropoff" value="1" id="eligible_for_pickup_dropoff" />
+                </div>
+              </div>
+              <?php } ?>
+              <?php if ($setting['listing_restrictions']['eligible_for_pickup_instore'] == 1) { ?>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_shipping_pickupinstore; ?></label>
+                <div class="col-sm-10">
+                  <input type="hidden" name="eligible_for_pickup_instore" value="0" />
+                  <input type="checkbox" name="eligible_for_pickup_instore" value="1" id="eligible_for_pickup_instore" />
+                </div>
+              </div>
+              <?php } ?>
               <?php if ($product['defaults']['cod_surcharge'] == 1) { ?>
                 <div class="form-group">
                   <label class="col-sm-2 control-label"><?php echo $entry_shipping_cod; ?></label>
@@ -1801,6 +1819,12 @@
             }
             if (typeof data.data.country !== undefined && data.data.country) {
               $('#country').val(data.data.country);
+            }
+            if (typeof data.data.eligible_for_pickup_dropoff !== undefined && data.data.eligible_for_pickup_dropoff == 1) {
+              $('#eligible_for_pickup_dropoff').prop('checked', true);
+            }
+            if (typeof data.data.eligible_for_pickup_instore !== undefined && data.data.eligible_for_pickup_instore == 1) {
+              $('#eligible_for_pickup_instore').prop('checked', true);
             }
             if (data.data.get_it_fast == 1) {
               $('#get_it_fast').prop('checked', true);

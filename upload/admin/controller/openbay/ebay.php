@@ -1302,6 +1302,7 @@ class ControllerOpenbayEbay extends Controller {
 				$setting['measurement_types'] = $this->openbay->ebay->getSetting('measurement_types');
 				$setting['measurement_types'] = $this->openbay->ebay->getSetting('measurement_types');
 				$setting['product_details'] = $this->openbay->ebay->getSetting('product_details');
+				$setting['listing_restrictions'] = $this->openbay->ebay->getSetting('listing_restrictions');
 
 				if (!isset($setting['product_details']['product_identifier_unavailable_text'])) {
 					$this->session->data['warning'] = $this->language->get('error_missing_settings');
@@ -1804,6 +1805,14 @@ class ControllerOpenbayEbay extends Controller {
 					$data['country'] = $profile_shipping['data']['country'];
 				}
 
+				if (isset($profile_shipping['data']['eligible_for_pickup_dropoff'])) {
+					$data['eligible_for_pickup_dropoff'] = $profile_shipping['data']['eligible_for_pickup_dropoff'];
+				}
+
+				if (isset($profile_shipping['data']['eligible_for_pickup_instore'])) {
+					$data['eligible_for_pickup_instore'] = $profile_shipping['data']['eligible_for_pickup_instore'];
+				}
+
 				$data['get_it_fast']        = (isset($profile_shipping['data']['get_it_fast']) ? $profile_shipping['data']['get_it_fast'] : 0);
 
 				if (isset($profile_template['data']['ebay_template_id'])) {
@@ -2022,6 +2031,14 @@ class ControllerOpenbayEbay extends Controller {
 
 				if (isset($profile_shipping['data']['country'])) {
 					$data['country'] = $profile_shipping['data']['country'];
+				}
+
+				if (isset($profile_shipping['data']['eligible_for_pickup_dropoff'])) {
+					$data['eligible_for_pickup_dropoff'] = $profile_shipping['data']['eligible_for_pickup_dropoff'];
+				}
+
+				if (isset($profile_shipping['data']['eligible_for_pickup_instore'])) {
+					$data['eligible_for_pickup_instore'] = $profile_shipping['data']['eligible_for_pickup_instore'];
 				}
 
 				$data['get_it_fast']        = (isset($profile_shipping['data']['get_it_fast']) ? $profile_shipping['data']['get_it_fast'] : 0);

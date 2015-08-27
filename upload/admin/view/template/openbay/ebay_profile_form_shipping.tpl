@@ -93,6 +93,24 @@
                 <input type="checkbox" name="data[get_it_fast]" value="1" id="get_it_fast" <?php if (isset($data['get_it_fast']) && $data['get_it_fast'] == 1){ echo 'checked="checked"'; } ?> />
               </div>
             </div>
+            <?php if ($setting['listing_restrictions']['eligible_for_pickup_dropoff'] == 1) { ?>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $entry_shipping_pickupdropoff; ?></label>
+              <div class="col-sm-10">
+                <input type="hidden" name="data[eligible_for_pickup_dropoff]" value="0" />
+                <input type="checkbox" name="data[eligible_for_pickup_dropoff]" value="1" id="eligible_for_pickup_dropoff" <?php if (isset($data['eligible_for_pickup_dropoff']) && $data['eligible_for_pickup_dropoff'] == 1){ echo 'checked="checked"'; } ?> />
+              </div>
+            </div>
+            <?php } ?>
+            <?php if ($setting['listing_restrictions']['eligible_for_pickup_instore'] == 1) { ?>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $entry_shipping_pickupinstore; ?></label>
+              <div class="col-sm-10">
+                <input type="hidden" name="data[eligible_for_pickup_instore]" value="0" />
+                <input type="checkbox" name="data[eligible_for_pickup_instore]" value="1" id="eligible_for_pickup_instore" <?php if (isset($data['eligible_for_pickup_instore']) && $data['eligible_for_pickup_instore'] == 1){ echo 'checked="checked"'; } ?>/>
+              </div>
+            </div>
+            <?php } ?>
             <?php if ($cod_surcharge == 1) { ?>
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_shipping_cod; ?></label>

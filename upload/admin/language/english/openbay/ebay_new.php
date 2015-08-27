@@ -152,6 +152,8 @@ $_['entry_shipping_handling_int']   = 'Handling fee (international)';
 $_['entry_shipping_pickupdropoff']  = 'Click and Collect';
 $_['entry_shipping_pickupinstore']  = 'Available for In-Store Pickup';
 $_['entry_shipping_global_shipping']= 'Use Global shipping service';
+$_['entry_shipping_promotion_discount'] = 'Combined shipping discounts (national)';
+$_['entry_shipping_promotion_discount_international'] = 'Combined shipping discounts (international)';
 $_['entry_vrm']   					= 'Vehicle Registration Mark';
 $_['entry_vin']   					= 'Vehicle Identification Number';
 
@@ -171,6 +173,8 @@ $_['help_private']             		= 'Hide buyer user names';
 $_['help_category_suggested']       = 'The list of categories eBay has suggested based of your item title';
 $_['help_category_popular']       	= 'A list of your recently used categories';
 $_['help_shop_category']       		= 'The category where the product will be added in your eBay shop';
+$_['help_shipping_promotion_discount'] = 'Offer national buyers a discount on shipping if they buy multiple items. Discounts must have been setup in eBay to take effect.';
+$_['help_shipping_promotion_discount_international'] = 'Offer international buyers a discount on shipping if they buy multiple items. Discounts must have been setup in eBay to take effect.';
 
 // Error
 $_['error_choose_category']    		= 'You must choose a category';

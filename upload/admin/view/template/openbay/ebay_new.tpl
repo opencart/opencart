@@ -767,6 +767,14 @@
                 </div>
               </div>
 
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_shipping_promotion_discount; ?>"><?php echo $entry_shipping_promotion_discount; ?></span></label>
+                <div class="col-sm-10">
+                  <input type="hidden" name="promotional_shipping_discount" value="0" />
+                  <input type="checkbox" name="promotional_shipping_discount" value="1" id="promotional_shipping_discount" />
+                </div>
+              </div>
+
               <div id="national-container-flat" style="display:none;" class="shipping-national-container">
                 <div class="form-group">
                   <div class="col-sm-2">
@@ -834,6 +842,14 @@
                     <?php echo $setting['shipping_types']['flat'] == 1 ? '<option value="flat"'.(isset($data['international']['shipping_type']) && $data['international']['shipping_type'] == 'flat' ? ' selected' : '').'>'.$text_shipping_flat.'</option>' : ''; ?>
                     <?php echo $setting['shipping_types']['calculated'] == 1 ? '<option value="calculated"'.(isset($data['international']['shipping_type']) && $data['international']['shipping_type'] == 'calculated' ? ' selected' : '').'>'.$text_shipping_calculated.'</option>' : ''; ?>
                   </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_shipping_promotion_discount_international; ?>"><?php echo $entry_shipping_promotion_discount_international; ?></span></label>
+                <div class="col-sm-10">
+                  <input type="hidden" name="promotional_shipping_discount_international" value="0" />
+                  <input type="checkbox" name="promotional_shipping_discount_international" value="1" id="promotional_shipping_discount_international" />
                 </div>
               </div>
 
@@ -1851,6 +1867,12 @@
             }
             if (typeof data.data.global_shipping !== undefined && data.data.global_shipping == 1) {
               $('#global_shipping').prop('checked', true);
+            }
+            if (typeof data.data.promotional_shipping_discount !== undefined && data.data.promotional_shipping_discount == 1) {
+              $('#promotional_shipping_discount').prop('checked', true);
+            }
+            if (typeof data.data.promotional_shipping_discount_international !== undefined && data.data.promotional_shipping_discount_international == 1) {
+              $('#promotional_shipping_discount_international').prop('checked', true);
             }
             if (data.data.get_it_fast == 1) {
               $('#get_it_fast').prop('checked', true);

@@ -139,6 +139,14 @@
               </div>
             </div>
 
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_shipping_promotion_discount; ?>"><?php echo $entry_shipping_promotion_discount; ?></span></label>
+              <div class="col-sm-10">
+                <input type="hidden" name="data[promotional_shipping_discount]" value="0" />
+                <input type="checkbox" name="data[promotional_shipping_discount]" value="1" id="promotional_shipping_discount" <?php if (isset($data['promotional_shipping_discount']) && $data['promotional_shipping_discount'] == 1){ echo 'checked="checked"'; } ?> />
+              </div>
+            </div>
+
             <div id="national-container-flat" style="display:none;" class="shipping-national-container">
               <div class="form-group">
                 <div class="col-sm-2">
@@ -210,6 +218,14 @@
                   <?php echo $setting['shipping_types']['flat'] == 1 ? '<option value="flat"'.(isset($data['international']['shipping_type']) && $data['international']['shipping_type'] == 'flat' ? ' selected' : '').'>'.$text_shipping_flat.'</option>' : ''; ?>
                   <?php echo $setting['shipping_types']['calculated'] == 1 ? '<option value="calculated"'.(isset($data['international']['shipping_type']) && $data['international']['shipping_type'] == 'calculated' ? ' selected' : '').'>'.$text_shipping_calculated.'</option>' : ''; ?>
                 </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_shipping_promotion_discount_international; ?>"><?php echo $entry_shipping_promotion_discount_international; ?></span></label>
+              <div class="col-sm-10">
+                <input type="hidden" name="data[promotional_shipping_discount_international]" value="0" />
+                <input type="checkbox" name="data[promotional_shipping_discount_international]" value="1" id="promotional_shipping_discount_international" <?php if (isset($data['promotional_shipping_discount_international']) && $data['promotional_shipping_discount_international'] == 1){ echo 'checked="checked"'; } ?> />
               </div>
             </div>
 

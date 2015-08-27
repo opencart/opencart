@@ -1939,6 +1939,9 @@
   }
 
   $('#button-verify').bind('click', function() {
+    // bind latest changes for summernote
+    $('#description-field').val($('#description-field').code());
+
     var err = 0;
     $('.listing-error').remove();
 

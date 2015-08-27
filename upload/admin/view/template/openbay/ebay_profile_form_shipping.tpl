@@ -93,7 +93,7 @@
                 <input type="checkbox" name="data[get_it_fast]" value="1" id="get_it_fast" <?php if (isset($data['get_it_fast']) && $data['get_it_fast'] == 1){ echo 'checked="checked"'; } ?> />
               </div>
             </div>
-            <?php if ($setting['listing_restrictions']['eligible_for_pickup_dropoff'] == 1) { ?>
+            <?php if (isset($setting['listing_restrictions']['eligible_for_pickup_dropoff']) && $setting['listing_restrictions']['eligible_for_pickup_dropoff'] == 1) { ?>
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_shipping_pickupdropoff; ?></label>
               <div class="col-sm-10">
@@ -102,12 +102,21 @@
               </div>
             </div>
             <?php } ?>
-            <?php if ($setting['listing_restrictions']['eligible_for_pickup_instore'] == 1) { ?>
+            <?php if (isset($setting['listing_restrictions']['eligible_for_pickup_instore']) && $setting['listing_restrictions']['eligible_for_pickup_instore'] == 1) { ?>
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_shipping_pickupinstore; ?></label>
               <div class="col-sm-10">
                 <input type="hidden" name="data[eligible_for_pickup_instore]" value="0" />
                 <input type="checkbox" name="data[eligible_for_pickup_instore]" value="1" id="eligible_for_pickup_instore" <?php if (isset($data['eligible_for_pickup_instore']) && $data['eligible_for_pickup_instore'] == 1){ echo 'checked="checked"'; } ?>/>
+              </div>
+            </div>
+            <?php } ?>
+            <?php if (isset($setting['listing_restrictions']['global_shipping']) && $setting['listing_restrictions']['global_shipping'] == 1) { ?>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $entry_shipping_global_shipping; ?></label>
+              <div class="col-sm-10">
+                <input type="hidden" name="data[global_shipping]" value="0" />
+                <input type="checkbox" name="data[global_shipping]" value="1" id="global_shipping" <?php if (isset($data['global_shipping']) && $data['global_shipping'] == 1){ echo 'checked="checked"'; } ?>/>
               </div>
             </div>
             <?php } ?>

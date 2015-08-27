@@ -721,7 +721,7 @@
                 </div>
               </div>
               <?php if ($setting['listing_restrictions']['eligible_for_pickup_dropoff'] == 1) { ?>
-              <div class="form-group">
+              <div class="form-group" id="eligible_for_pickup_dropoff_container">
                 <label class="col-sm-2 control-label"><?php echo $entry_shipping_pickupdropoff; ?></label>
                 <div class="col-sm-10">
                   <input type="hidden" name="eligible_for_pickup_dropoff" value="0" />
@@ -735,6 +735,15 @@
                 <div class="col-sm-10">
                   <input type="hidden" name="eligible_for_pickup_instore" value="0" />
                   <input type="checkbox" name="eligible_for_pickup_instore" value="1" id="eligible_for_pickup_instore" />
+                </div>
+              </div>
+              <?php } ?>
+              <?php if ($setting['listing_restrictions']['global_shipping'] == 1) { ?>
+              <div class="form-group" id="global_shipping_container">
+                <label class="col-sm-2 control-label"><?php echo $entry_shipping_global_shipping; ?></label>
+                <div class="col-sm-10">
+                  <input type="hidden" name="global_shipping" value="0" />
+                  <input type="checkbox" name="global_shipping" value="1" id="global_shipping" />
                 </div>
               </div>
               <?php } ?>
@@ -1295,6 +1304,20 @@
                     var html_inj = '';
                     listingDuration(data.data.durations);
 
+                    if (typeof data.data.global_shipping_enabled !== undefined && data.data.global_shipping_enabled === true) {
+                      $('#global_shipping_container').show();
+                    } else {
+                      $('#global_shipping_container').hide();
+                      $('#global_shipping').prop('checked', false);
+                    }
+
+                    if (typeof data.data.pickup_dropoff_enabled !== undefined && data.data.pickup_dropoff_enabled === true) {
+                      $('#eligible_for_pickup_dropoff_container').show();
+                    } else {
+                      $('#eligible_for_pickup_dropoff_container').hide();
+                      $('#eligible_for_pickup_dropoff').prop('checked', false);
+                    }
+
                     if (data.data.maxshipping != false) {
                         $('#maxShippingAlert').append(data.data.maxshipping).show();
                     }
@@ -1825,6 +1848,9 @@
             }
             if (typeof data.data.eligible_for_pickup_instore !== undefined && data.data.eligible_for_pickup_instore == 1) {
               $('#eligible_for_pickup_instore').prop('checked', true);
+            }
+            if (typeof data.data.global_shipping !== undefined && data.data.global_shipping == 1) {
+              $('#global_shipping').prop('checked', true);
             }
             if (data.data.get_it_fast == 1) {
               $('#get_it_fast').prop('checked', true);

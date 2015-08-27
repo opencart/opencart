@@ -36,6 +36,7 @@ $_['text_shipping_handling_nat']    	= 'Handling fee (national)';
 $_['entry_shipping_handling_int']    	= 'Handling fee (international)';
 $_['entry_shipping_pickupdropoff']  	= 'Click and Collect';
 $_['entry_shipping_pickupinstore']  	= 'Available for In-Store Pickup';
+$_['entry_shipping_global_shipping']  	= 'Use eBay global shipping service';
 
 //Returns profile
 $_['text_returns_accept']       		= 'Returns accepted';

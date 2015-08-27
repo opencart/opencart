@@ -151,6 +151,7 @@ $_['entry_shipping_intnat']         = 'International shipping services';
 $_['entry_shipping_handling_int']   = 'Handling fee (international)';
 $_['entry_shipping_pickupdropoff']  = 'Click and Collect';
 $_['entry_shipping_pickupinstore']  = 'Available for In-Store Pickup';
+$_['entry_shipping_global_shipping']= 'Use Global shipping service';
 $_['entry_vrm']   					= 'Vehicle Registration Mark';
 $_['entry_vin']   					= 'Vehicle Identification Number';
 

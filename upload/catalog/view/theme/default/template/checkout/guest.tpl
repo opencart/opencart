@@ -304,6 +304,7 @@
     </fieldset>
   </div>
 </div>
+<?php echo $captcha; ?>
 <?php if ($shipping_required) { ?>
 <div class="checkbox">
   <label>

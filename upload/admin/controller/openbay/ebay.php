@@ -1665,6 +1665,7 @@ class ControllerOpenbayEbay extends Controller {
 		$this->load->model('openbay/ebay');
 		$this->load->model('openbay/ebay_template');
 		$this->load->model('catalog/product');
+		$this->load->model('catalog/filter');
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			if ($this->checkConfig() == true) {
@@ -1705,6 +1706,22 @@ class ControllerOpenbayEbay extends Controller {
 
 					$data['product_info'] = $query->row;
 
+					$data['product_info']['product_filters'] = array();
+
+					$filters = $this->model_catalog_product->getProductFilters($this->request->post['product_id']);
+
+					foreach ($filters as $filter_id) {
+						$filter_info = $this->model_catalog_filter->getFilter($filter_id);
+
+						if ($filter_info) {
+							$data['product_info']['product_filters'][] = array(
+								'filter_id' => $filter_info['filter_id'],
+								'group' => $filter_info['group'],
+								'name' => $filter_info['name']
+							);
+						}
+					}
+
 					if (!empty($data['product_info']['sku'])){
 						$data['sku'] = $data['product_info']['sku'];
 					}
@@ -1729,6 +1746,7 @@ class ControllerOpenbayEbay extends Controller {
 		$this->load->model('openbay/ebay_template');
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
+		$this->load->model('catalog/filter');
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			if ($this->checkConfig() == true) {
@@ -1752,6 +1770,23 @@ class ControllerOpenbayEbay extends Controller {
 				$query = $this->db->query("SELECT DISTINCT *, pd.name AS name, p.image, m.name AS manufacturer, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, p.sort_order FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id) WHERE p.product_id = '" . (int)$post['product_id'] . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 				$data['product_info'] = $query->row;
+
+				$data['product_info']['product_filters'] = array();
+
+				$filters = $this->model_catalog_product->getProductFilters($this->request->post['product_id']);
+
+				foreach ($filters as $filter_id) {
+					$filter_info = $this->model_catalog_filter->getFilter($filter_id);
+
+					if ($filter_info) {
+						$data['product_info']['product_filters'][] = array(
+							'filter_id' => $filter_info['filter_id'],
+							'group' => $filter_info['group'],
+							'name' => $filter_info['name']
+						);
+					}
+				}
+
 
 				$data['description'] = $product_info['description'];
 				$data['name'] = $post['title'];
@@ -1917,6 +1952,7 @@ class ControllerOpenbayEbay extends Controller {
 		$this->load->model('openbay/ebay');
 		$this->load->model('openbay/ebay_template');
 		$this->load->model('catalog/product');
+		$this->load->model('catalog/filter');
 
 		if ($this->checkConfig() == true && $this->request->server['REQUEST_METHOD'] == 'POST') {
 			$data = $this->request->post;
@@ -1951,6 +1987,22 @@ class ControllerOpenbayEbay extends Controller {
 
 			$data['product_info'] = $query->row;
 
+			$data['product_info']['product_filters'] = array();
+
+			$filters = $this->model_catalog_product->getProductFilters($this->request->post['product_id']);
+
+			foreach ($filters as $filter_id) {
+				$filter_info = $this->model_catalog_filter->getFilter($filter_id);
+
+				if ($filter_info) {
+					$data['product_info']['product_filters'][] = array(
+						'filter_id' => $filter_info['filter_id'],
+						'group' => $filter_info['group'],
+						'name' => $filter_info['name']
+					);
+				}
+			}
+
 			if (!empty($data['product_info']['sku'])){
 				$data['sku'] = $data['product_info']['sku'];
 			}
@@ -1970,6 +2022,7 @@ class ControllerOpenbayEbay extends Controller {
 		$this->load->model('openbay/ebay_template');
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
+		$this->load->model('catalog/filter');
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			if ($this->checkConfig() == true) {
@@ -1992,6 +2045,22 @@ class ControllerOpenbayEbay extends Controller {
 				$query = $this->db->query("SELECT DISTINCT *, pd.name AS name, p.image, m.name AS manufacturer, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, p.sort_order FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id) WHERE p.product_id = '" . (int)$post['product_id'] . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 				$data['product_info'] = $query->row;
+
+				$data['product_info']['product_filters'] = array();
+
+				$filters = $this->model_catalog_product->getProductFilters($this->request->post['product_id']);
+
+				foreach ($filters as $filter_id) {
+					$filter_info = $this->model_catalog_filter->getFilter($filter_id);
+
+					if ($filter_info) {
+						$data['product_info']['product_filters'][] = array(
+							'filter_id' => $filter_info['filter_id'],
+							'group' => $filter_info['group'],
+							'name' => $filter_info['name']
+						);
+					}
+				}
 
 				$data['description'] = $product_info['description'];
 				$data['name'] = $post['title'];

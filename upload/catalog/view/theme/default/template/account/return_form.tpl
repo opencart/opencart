@@ -150,16 +150,7 @@
               <textarea name="comment" rows="10" placeholder="<?php echo $entry_fault_detail; ?>" id="input-comment" class="form-control"><?php echo $comment; ?></textarea>
             </div>
           </div>
-          <?php if ($site_key) { ?>
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>"></div>
-                <?php if ($error_captcha) { ?>
-                  <div class="text-danger"><?php echo $error_captcha; ?></div>
-                <?php } ?>
-              </div>
-            </div>
-          <?php } ?>
+          <?php echo $captcha; ?>
         </fieldset>
         <?php if ($text_agree) { ?>
         <div class="buttons clearfix">

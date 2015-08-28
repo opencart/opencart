@@ -241,6 +241,7 @@ class ControllerProductProduct extends Controller {
 			$data['text_note'] = $this->language->get('text_note');
 			$data['text_tags'] = $this->language->get('text_tags');
 			$data['text_related'] = $this->language->get('text_related');
+			$data['text_payment_recurring'] = $this->language->get('text_payment_recurring');
 			$data['text_loading'] = $this->language->get('text_loading');
 
 			$data['entry_qty'] = $this->language->get('entry_qty');
@@ -268,6 +269,7 @@ class ControllerProductProduct extends Controller {
 			$data['model'] = $product_info['model'];
 			$data['reward'] = $product_info['reward'];
 			$data['points'] = $product_info['points'];
+			$data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
 
 			if ($product_info['quantity'] <= 0) {
 				$data['stock'] = $product_info['stock_status'];
@@ -388,7 +390,14 @@ class ControllerProductProduct extends Controller {
 
 			$data['reviews'] = sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']);
 			$data['rating'] = (int)$product_info['rating'];
-			$data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
+
+			// Captcha
+			if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('review', $this->config->get('config_captcha_page'))) {
+				$data['captcha'] = $this->load->controller('captcha/' . $this->config->get('config_captcha'));
+			} else {
+				$data['captcha'] = '';
+			}
+
 			$data['attribute_groups'] = $this->model_catalog_product->getProductAttributes($this->request->get['product_id']);
 
 			$data['products'] = array();
@@ -453,18 +462,9 @@ class ControllerProductProduct extends Controller {
 				}
 			}
 
-			$data['text_payment_recurring'] = $this->language->get('text_payment_recurring');
 			$data['recurrings'] = $this->model_catalog_product->getProfiles($this->request->get['product_id']);
 
 			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
-
-			if ($this->config->get('config_google_captcha_status')) {
-				$this->document->addScript('https://www.google.com/recaptcha/api.js');
-
-				$data['site_key'] = $this->config->get('config_google_captcha_public');
-			} else {
-				$data['site_key'] = '';
-			}
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
@@ -624,17 +624,12 @@ class ControllerProductProduct extends Controller {
 				$json['error'] = $this->language->get('error_rating');
 			}
 
-			if ($this->config->get('config_google_captcha_status') && empty($json['error'])) {
-				if (isset($this->request->post['g-recaptcha-response'])) {
-					$recaptcha = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($this->config->get('config_google_captcha_secret')) . '&response=' . $this->request->post['g-recaptcha-response'] . '&remoteip=' . $this->request->server['REMOTE_ADDR']);
+			// Captcha
+			if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('review', $this->config->get('config_captcha_page'))) {
+				$captcha = $this->load->controller('captcha/' . $this->config->get('config_captcha') . '/validate');
 
-					$recaptcha = json_decode($recaptcha, true);
-
-					if (!$recaptcha['success']) {
-						$json['error'] = $this->language->get('error_captcha');
-					}
-				} else {
-					$json['error'] = $this->language->get('error_captcha');
+				if ($captcha) {
+					$json['error'] = $captcha;
 				}
 			}
 

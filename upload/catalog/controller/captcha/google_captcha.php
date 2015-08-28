@@ -3,6 +3,10 @@ class ControllerCaptchaGoogleCaptcha extends Controller {
     public function index($error = array()) {
         $this->load->language('captcha/google_captcha');
 
+        $data['heading_title'] = $this->language->get('heading_title');
+
+		$data['entry_captcha'] = $this->language->get('entry_captcha');
+        
 		$this->document->addScript('https://www.google.com/recaptcha/api.js');
 
         if (isset($error['captcha'])) {

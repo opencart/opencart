@@ -1176,6 +1176,20 @@ final class Ebay {
 		$this->log('Getting eBay settings / sync');
 
 		if ($this->lasterror === false) {
+			if (isset($response['listing_restrictions'])) {
+				$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'listing_restrictions' LIMIT 1");
+
+				if ($qry->num_rows > 0) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['listing_restrictions'])) . "', `last_updated`  = now() WHERE `key` = 'listing_restrictions' LIMIT 1");
+					$this->log('Updated listing_restrictions into ebay_setting_option table');
+				} else {
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'listing_restrictions', `data` = '" . $this->db->escape(serialize($response['listing_restrictions'])) . "', `last_updated`  = now()");
+					$this->log('Inserted listing_restrictions into ebay_setting_option table');
+				}
+			} else {
+				$this->log('listing_restrictions data not set!');
+			}
+
 			if (isset($response['product_details'])) {
 				$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'product_details' LIMIT 1");
 

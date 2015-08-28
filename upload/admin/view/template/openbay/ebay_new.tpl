@@ -720,6 +720,33 @@
                   <input type="checkbox" name="get_it_fast" value="1" id="get_it_fast" />
                 </div>
               </div>
+              <?php if ($setting['listing_restrictions']['eligible_for_pickup_dropoff'] == 1) { ?>
+              <div class="form-group" id="eligible_for_pickup_dropoff_container">
+                <label class="col-sm-2 control-label"><?php echo $entry_shipping_pickupdropoff; ?></label>
+                <div class="col-sm-10">
+                  <input type="hidden" name="eligible_for_pickup_dropoff" value="0" />
+                  <input type="checkbox" name="eligible_for_pickup_dropoff" value="1" id="eligible_for_pickup_dropoff" />
+                </div>
+              </div>
+              <?php } ?>
+              <?php if ($setting['listing_restrictions']['eligible_for_pickup_instore'] == 1) { ?>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_shipping_pickupinstore; ?></label>
+                <div class="col-sm-10">
+                  <input type="hidden" name="eligible_for_pickup_instore" value="0" />
+                  <input type="checkbox" name="eligible_for_pickup_instore" value="1" id="eligible_for_pickup_instore" />
+                </div>
+              </div>
+              <?php } ?>
+              <?php if ($setting['listing_restrictions']['global_shipping'] == 1) { ?>
+              <div class="form-group" id="global_shipping_container">
+                <label class="col-sm-2 control-label"><?php echo $entry_shipping_global_shipping; ?></label>
+                <div class="col-sm-10">
+                  <input type="hidden" name="global_shipping" value="0" />
+                  <input type="checkbox" name="global_shipping" value="1" id="global_shipping" />
+                </div>
+              </div>
+              <?php } ?>
               <?php if ($product['defaults']['cod_surcharge'] == 1) { ?>
                 <div class="form-group">
                   <label class="col-sm-2 control-label"><?php echo $entry_shipping_cod; ?></label>
@@ -737,6 +764,14 @@
                     <?php echo $setting['shipping_types']['calculated'] == 1 ? '<option value="calculated"'.(isset($data['national']['shipping_type']) && $data['national']['shipping_type'] == 'calculated' ? ' selected' : '').'>'.$text_shipping_calculated.'</option>' : ''; ?>
                     <?php echo $setting['shipping_types']['freight'] == 1 ? '<option value="freight"'.(isset($data['national']['shipping_type']) && $data['national']['shipping_type'] == 'freight' ? ' selected' : '').'>'.$text_shipping_freight.'</option>' : ''; ?>
                   </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_shipping_promotion_discount; ?>"><?php echo $entry_shipping_promotion_discount; ?></span></label>
+                <div class="col-sm-10">
+                  <input type="hidden" name="promotional_shipping_discount" value="0" />
+                  <input type="checkbox" name="promotional_shipping_discount" value="1" id="promotional_shipping_discount" />
                 </div>
               </div>
 
@@ -807,6 +842,14 @@
                     <?php echo $setting['shipping_types']['flat'] == 1 ? '<option value="flat"'.(isset($data['international']['shipping_type']) && $data['international']['shipping_type'] == 'flat' ? ' selected' : '').'>'.$text_shipping_flat.'</option>' : ''; ?>
                     <?php echo $setting['shipping_types']['calculated'] == 1 ? '<option value="calculated"'.(isset($data['international']['shipping_type']) && $data['international']['shipping_type'] == 'calculated' ? ' selected' : '').'>'.$text_shipping_calculated.'</option>' : ''; ?>
                   </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_shipping_promotion_discount_international; ?>"><?php echo $entry_shipping_promotion_discount_international; ?></span></label>
+                <div class="col-sm-10">
+                  <input type="hidden" name="promotional_shipping_discount_international" value="0" />
+                  <input type="checkbox" name="promotional_shipping_discount_international" value="1" id="promotional_shipping_discount_international" />
                 </div>
               </div>
 
@@ -1276,6 +1319,20 @@
                 if (data.error == false) {
                     var html_inj = '';
                     listingDuration(data.data.durations);
+
+                    if (typeof data.data.global_shipping_enabled !== undefined && data.data.global_shipping_enabled === true) {
+                      $('#global_shipping_container').show();
+                    } else {
+                      $('#global_shipping_container').hide();
+                      $('#global_shipping').prop('checked', false);
+                    }
+
+                    if (typeof data.data.pickup_dropoff_enabled !== undefined && data.data.pickup_dropoff_enabled === true) {
+                      $('#eligible_for_pickup_dropoff_container').show();
+                    } else {
+                      $('#eligible_for_pickup_dropoff_container').hide();
+                      $('#eligible_for_pickup_dropoff').prop('checked', false);
+                    }
 
                     if (data.data.maxshipping != false) {
                         $('#maxShippingAlert').append(data.data.maxshipping).show();
@@ -1802,6 +1859,21 @@
             if (typeof data.data.country !== undefined && data.data.country) {
               $('#country').val(data.data.country);
             }
+            if (typeof data.data.eligible_for_pickup_dropoff !== undefined && data.data.eligible_for_pickup_dropoff == 1) {
+              $('#eligible_for_pickup_dropoff').prop('checked', true);
+            }
+            if (typeof data.data.eligible_for_pickup_instore !== undefined && data.data.eligible_for_pickup_instore == 1) {
+              $('#eligible_for_pickup_instore').prop('checked', true);
+            }
+            if (typeof data.data.global_shipping !== undefined && data.data.global_shipping == 1) {
+              $('#global_shipping').prop('checked', true);
+            }
+            if (typeof data.data.promotional_shipping_discount !== undefined && data.data.promotional_shipping_discount == 1) {
+              $('#promotional_shipping_discount').prop('checked', true);
+            }
+            if (typeof data.data.promotional_shipping_discount_international !== undefined && data.data.promotional_shipping_discount_international == 1) {
+              $('#promotional_shipping_discount_international').prop('checked', true);
+            }
             if (data.data.get_it_fast == 1) {
               $('#get_it_fast').prop('checked', true);
             } else {
@@ -1915,6 +1987,9 @@
   }
 
   $('#button-verify').bind('click', function() {
+    // bind latest changes for summernote
+    $('#description-field').val($('#description-field').code());
+
     var err = 0;
     $('.listing-error').remove();
 

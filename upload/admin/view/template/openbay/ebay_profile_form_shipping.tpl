@@ -93,6 +93,33 @@
                 <input type="checkbox" name="data[get_it_fast]" value="1" id="get_it_fast" <?php if (isset($data['get_it_fast']) && $data['get_it_fast'] == 1){ echo 'checked="checked"'; } ?> />
               </div>
             </div>
+            <?php if (isset($setting['listing_restrictions']['eligible_for_pickup_dropoff']) && $setting['listing_restrictions']['eligible_for_pickup_dropoff'] == 1) { ?>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $entry_shipping_pickupdropoff; ?></label>
+              <div class="col-sm-10">
+                <input type="hidden" name="data[eligible_for_pickup_dropoff]" value="0" />
+                <input type="checkbox" name="data[eligible_for_pickup_dropoff]" value="1" id="eligible_for_pickup_dropoff" <?php if (isset($data['eligible_for_pickup_dropoff']) && $data['eligible_for_pickup_dropoff'] == 1){ echo 'checked="checked"'; } ?> />
+              </div>
+            </div>
+            <?php } ?>
+            <?php if (isset($setting['listing_restrictions']['eligible_for_pickup_instore']) && $setting['listing_restrictions']['eligible_for_pickup_instore'] == 1) { ?>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $entry_shipping_pickupinstore; ?></label>
+              <div class="col-sm-10">
+                <input type="hidden" name="data[eligible_for_pickup_instore]" value="0" />
+                <input type="checkbox" name="data[eligible_for_pickup_instore]" value="1" id="eligible_for_pickup_instore" <?php if (isset($data['eligible_for_pickup_instore']) && $data['eligible_for_pickup_instore'] == 1){ echo 'checked="checked"'; } ?>/>
+              </div>
+            </div>
+            <?php } ?>
+            <?php if (isset($setting['listing_restrictions']['global_shipping']) && $setting['listing_restrictions']['global_shipping'] == 1) { ?>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $entry_shipping_global_shipping; ?></label>
+              <div class="col-sm-10">
+                <input type="hidden" name="data[global_shipping]" value="0" />
+                <input type="checkbox" name="data[global_shipping]" value="1" id="global_shipping" <?php if (isset($data['global_shipping']) && $data['global_shipping'] == 1){ echo 'checked="checked"'; } ?>/>
+              </div>
+            </div>
+            <?php } ?>
             <?php if ($cod_surcharge == 1) { ?>
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_shipping_cod; ?></label>
@@ -109,6 +136,14 @@
                   <?php echo $setting['shipping_types']['calculated'] == 1 ? '<option value="calculated"'.(isset($data['national']['shipping_type']) && $data['national']['shipping_type'] == 'calculated' ? ' selected' : '').'>'.$text_shipping_calculated.'</option>' : ''; ?>
                   <?php echo $setting['shipping_types']['freight'] == 1 ? '<option value="freight"'.(isset($data['national']['shipping_type']) && $data['national']['shipping_type'] == 'freight' ? ' selected' : '').'>'.$text_shipping_freight.'</option>' : ''; ?>
                 </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_shipping_promotion_discount; ?>"><?php echo $entry_shipping_promotion_discount; ?></span></label>
+              <div class="col-sm-10">
+                <input type="hidden" name="data[promotional_shipping_discount]" value="0" />
+                <input type="checkbox" name="data[promotional_shipping_discount]" value="1" id="promotional_shipping_discount" <?php if (isset($data['promotional_shipping_discount']) && $data['promotional_shipping_discount'] == 1){ echo 'checked="checked"'; } ?> />
               </div>
             </div>
 
@@ -183,6 +218,14 @@
                   <?php echo $setting['shipping_types']['flat'] == 1 ? '<option value="flat"'.(isset($data['international']['shipping_type']) && $data['international']['shipping_type'] == 'flat' ? ' selected' : '').'>'.$text_shipping_flat.'</option>' : ''; ?>
                   <?php echo $setting['shipping_types']['calculated'] == 1 ? '<option value="calculated"'.(isset($data['international']['shipping_type']) && $data['international']['shipping_type'] == 'calculated' ? ' selected' : '').'>'.$text_shipping_calculated.'</option>' : ''; ?>
                 </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_shipping_promotion_discount_international; ?>"><?php echo $entry_shipping_promotion_discount_international; ?></span></label>
+              <div class="col-sm-10">
+                <input type="hidden" name="data[promotional_shipping_discount_international]" value="0" />
+                <input type="checkbox" name="data[promotional_shipping_discount_international]" value="1" id="promotional_shipping_discount_international" <?php if (isset($data['promotional_shipping_discount_international']) && $data['promotional_shipping_discount_international'] == 1){ echo 'checked="checked"'; } ?> />
               </div>
             </div>
 

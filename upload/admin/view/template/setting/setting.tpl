@@ -1043,7 +1043,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label"><?php echo $entry_captcha; ?></label>
+                  <label class="col-sm-2 control-label"><?php echo $entry_captcha_page; ?></label>
                   <div class="col-sm-10">
                     <div class="well well-sm" style="height: 150px; overflow: auto;">
                       <?php foreach ($captcha_pages as $captcha_page) { ?>

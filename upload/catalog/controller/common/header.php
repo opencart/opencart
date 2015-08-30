@@ -1,6 +1,19 @@
 <?php
 class ControllerCommonHeader extends Controller {
 	public function index() {
+		// Analytics
+		$this->load->model('extension/extension');
+
+		$data['analytics'] = array();
+
+		$analytics = $this->model_extension_extension->getExtensions('analytics');
+
+		foreach ($analytics as $analytic) {
+			if ($this->config->get($analytic['code'] . '_status')) {
+				$data['analytics'][] = $this->load->controller('analytics/' . $analytic['code']);
+			}
+		}
+
 		$data['title'] = $this->document->getTitle();
 
 		if ($this->request->server['HTTPS']) {
@@ -17,18 +30,6 @@ class ControllerCommonHeader extends Controller {
 		$data['scripts'] = $this->document->getScripts();
 		$data['lang'] = $this->language->get('code');
 		$data['direction'] = $this->language->get('direction');
-
-		$this->load->model('extension/extension');
-
-		$data['analytics'] = array();
-
-		$analytics = $this->model_extension_extension->getExtensions('analytics');
-
-		foreach ($analytics as $analytic) {
-			if ($this->config->get($analytic . '_status')) {
-				$data['analytics'][] = html_entity_decode($analytic, ENT_QUOTES, 'UTF-8');
-			}
-		}
 
 		$data['name'] = $this->config->get('config_name');
 

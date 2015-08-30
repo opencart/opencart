@@ -721,11 +721,11 @@ h2.price {
        width: 50%;
     }
 
-	#column-left + #content + #column-right .product-layout .col-md-3{
+	#column-left + #content + #column-right .product-layout .col-md-3 {
        width: 100%;
     }
 
-    #content + #column-right .product-layout .col-md-3{
+    #content + #column-right .product-layout .col-md-3 {
        width: 100%;
     }
 }

@@ -36,7 +36,9 @@
 <?php foreach ($scripts as $script) { ?>
 <script src="<?php echo $script; ?>" type="text/javascript"></script>
 <?php } ?>
-<?php echo $google_analytics; ?>
+<?php foreach ($analytics as $analytic) { ?>
+<?php echo $analytic; ?>
+<?php } ?>
 </head>
 <body class="<?php echo $class; ?>">
 <nav id="top">

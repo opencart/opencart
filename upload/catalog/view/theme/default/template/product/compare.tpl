@@ -31,25 +31,25 @@
           <tr>
             <td><?php echo $text_name; ?></td>
             <?php foreach ($products as $product) { ?>
-            <td><a href="<?php echo $products[$product['product_id']]['href']; ?>"><strong><?php echo $products[$product['product_id']]['name']; ?></strong></a></td>
+            <td><a href="<?php echo $product['href']; ?>"><strong><?php echo $product['name']; ?></strong></a></td>
             <?php } ?>
           </tr>
           <tr>
             <td><?php echo $text_image; ?></td>
             <?php foreach ($products as $product) { ?>
-            <td class="text-center"><?php if ($products[$product['product_id']]['thumb']) { ?>
-              <img src="<?php echo $products[$product['product_id']]['thumb']; ?>" alt="<?php echo $products[$product['product_id']]['name']; ?>" title="<?php echo $products[$product['product_id']]['name']; ?>" class="img-thumbnail" />
+            <td class="text-center"><?php if ($product['thumb']) { ?>
+              <img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" class="img-thumbnail" />
               <?php } ?></td>
             <?php } ?>
           </tr>
           <tr>
             <td><?php echo $text_price; ?></td>
             <?php foreach ($products as $product) { ?>
-            <td><?php if ($products[$product['product_id']]['price']) { ?>
-              <?php if (!$products[$product['product_id']]['special']) { ?>
-              <?php echo $products[$product['product_id']]['price']; ?>
+            <td><?php if ($product['price']) { ?>
+              <?php if (!$product['special']) { ?>
+              <?php echo $product['price']; ?>
               <?php } else { ?>
-              <strike><?php echo $products[$product['product_id']]['price']; ?></strike> <?php echo $products[$product['product_id']]['special']; ?>
+              <strike><?php echo $product['price']; ?></strike> <?php echo $product['special']; ?>
               <?php } ?>
               <?php } ?></td>
             <?php } ?>
@@ -57,19 +57,19 @@
           <tr>
             <td><?php echo $text_model; ?></td>
             <?php foreach ($products as $product) { ?>
-            <td><?php echo $products[$product['product_id']]['model']; ?></td>
+            <td><?php echo $product['model']; ?></td>
             <?php } ?>
           </tr>
           <tr>
             <td><?php echo $text_manufacturer; ?></td>
             <?php foreach ($products as $product) { ?>
-            <td><?php echo $products[$product['product_id']]['manufacturer']; ?></td>
+            <td><?php echo $product['manufacturer']; ?></td>
             <?php } ?>
           </tr>
           <tr>
             <td><?php echo $text_availability; ?></td>
             <?php foreach ($products as $product) { ?>
-            <td><?php echo $products[$product['product_id']]['availability']; ?></td>
+            <td><?php echo $product['availability']; ?></td>
             <?php } ?>
           </tr>
           <?php if ($review_status) { ?>
@@ -77,33 +77,33 @@
             <td><?php echo $text_rating; ?></td>
             <?php foreach ($products as $product) { ?>
             <td class="rating"><?php for ($i = 1; $i <= 5; $i++) { ?>
-              <?php if ($products[$product['product_id']]['rating'] < $i) { ?>
+              <?php if ($product['rating'] < $i) { ?>
               <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
               <?php } else { ?>
               <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
               <?php } ?>
               <?php } ?>
               <br />
-              <?php echo $products[$product['product_id']]['reviews']; ?></td>
+              <?php echo $product['reviews']; ?></td>
             <?php } ?>
           </tr>
           <?php } ?>
           <tr>
             <td><?php echo $text_summary; ?></td>
             <?php foreach ($products as $product) { ?>
-            <td class="description"><?php echo $products[$product['product_id']]['description']; ?></td>
+            <td class="description"><?php echo $product['description']; ?></td>
             <?php } ?>
           </tr>
           <tr>
             <td><?php echo $text_weight; ?></td>
             <?php foreach ($products as $product) { ?>
-            <td><?php echo $products[$product['product_id']]['weight']; ?></td>
+            <td><?php echo $product['weight']; ?></td>
             <?php } ?>
           </tr>
           <tr>
             <td><?php echo $text_dimension; ?></td>
             <?php foreach ($products as $product) { ?>
-            <td><?php echo $products[$product['product_id']]['length']; ?> x <?php echo $products[$product['product_id']]['width']; ?> x <?php echo $products[$product['product_id']]['height']; ?></td>
+            <td><?php echo $product['length']; ?> x <?php echo $product['width']; ?> x <?php echo $product['height']; ?></td>
             <?php } ?>
           </tr>
         </tbody>
@@ -118,8 +118,8 @@
           <tr>
             <td><?php echo $attribute['name']; ?></td>
             <?php foreach ($products as $product) { ?>
-            <?php if (isset($products[$product['product_id']]['attribute'][$key])) { ?>
-            <td><?php echo $products[$product['product_id']]['attribute'][$key]; ?></td>
+            <?php if (isset($product['attribute'][$key])) { ?>
+            <td><?php echo $product['attribute'][$key]; ?></td>
             <?php } else { ?>
             <td></td>
             <?php } ?>

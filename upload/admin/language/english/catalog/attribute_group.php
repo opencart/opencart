@@ -4,6 +4,9 @@ $_['heading_title']     = 'Attribute Groups';
 
 // Text
 $_['text_success']      = 'Success: You have modified attribute groups!';
+$_['text_list']         = 'Attribute Group List';
+$_['text_add']          = 'Add Attribute Group';
+$_['text_edit']         = 'Edit Attribute Group';
 
 // Column
 $_['column_name']       = 'Attribute Group Name';

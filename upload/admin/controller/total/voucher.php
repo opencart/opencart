@@ -1,8 +1,8 @@
 <?php
 class ControllerTotalVoucher extends Controller {
-	private $error = array(); 
+	private $error = array();
 
-	public function index() { 
+	public function index() {
 		$this->load->language('total/voucher');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -19,6 +19,7 @@ class ControllerTotalVoucher extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 
@@ -68,7 +69,7 @@ class ControllerTotalVoucher extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('total/voucher.tpl', $data));
@@ -80,5 +81,19 @@ class ControllerTotalVoucher extends Controller {
 		}
 
 		return !$this->error;
+	}
+
+	public function install() {
+		// Register the event triggers
+		$this->load->model('extension/event');
+
+		$this->model_extension_event->addEvent('voucher', 'post.order.history.add', 'total/voucher/send');
+	}
+
+	public function uninstall() {
+		// delete the event triggers
+		$this->load->model('extension/event');
+
+		$this->model_extension_event->deleteEvent('voucher');
 	}
 }

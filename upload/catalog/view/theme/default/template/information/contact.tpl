@@ -102,7 +102,7 @@
       <?php } ?>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <fieldset>
-          <h3><?php echo $text_contact; ?></h3>
+          <legend><?php echo $text_contact; ?></legend>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
             <div class="col-sm-10">
@@ -130,20 +130,11 @@
               <?php } ?>
             </div>
           </div>
-          <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-captcha"><?php echo $entry_captcha; ?></label>
-            <div class="col-sm-10">
-              <input type="text" name="captcha" value="<?php echo $captcha; ?>" id="input-captcha" class="form-control" />
-              <img src="index.php?route=tool/captcha" alt="" />
-              <?php if ($error_captcha) { ?>
-              <div class="text-danger"><?php echo $error_captcha; ?></div>
-              <?php } ?>
-            </div>
-          </div>
+          <?php echo $captcha; ?>
         </fieldset>
         <div class="buttons">
           <div class="pull-right">
-            <input class="btn btn-primary" type="submit" value="<?php echo $button_continue; ?>" />
+            <input class="btn btn-primary" type="submit" value="<?php echo $button_submit; ?>" />
           </div>
         </div>
       </form>

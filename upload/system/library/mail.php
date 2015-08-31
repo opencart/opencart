@@ -3,6 +3,7 @@ class Mail {
 	protected $to;
 	protected $from;
 	protected $sender;
+	protected $reply_to;
 	protected $subject;
 	protected $text;
 	protected $html;
@@ -16,35 +17,39 @@ class Mail {
 	public $newline = "\n";
 	public $verp = false;
 	public $parameter = '';
-	
+
 	public function __construct($config = array()) {
 		foreach ($config as $key => $value) {
 			$this->$key = $value;
 		}
 	}
-	
+
 	public function setTo($to) {
-		$this->to = html_entity_decode($to, ENT_QUOTES, 'UTF-8');
+		$this->to = $to;
 	}
 
 	public function setFrom($from) {
-		$this->from = html_entity_decode($from, ENT_QUOTES, 'UTF-8');
+		$this->from = $from;
 	}
 
 	public function setSender($sender) {
-		$this->sender = html_entity_decode($sender, ENT_QUOTES, 'UTF-8');
+		$this->sender = $sender;
+	}
+
+	public function setReplyTo($reply_to) {
+		$this->reply_to = $reply_to;
 	}
 
 	public function setSubject($subject) {
-		$this->subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
+		$this->subject = $subject;
 	}
 
 	public function setText($text) {
-		$this->text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
+		$this->text = $text;
 	}
 
 	public function setHtml($html) {
-		$this->html = html_entity_decode($html, ENT_QUOTES, 'UTF-8');
+		$this->html = $html;
 	}
 
 	public function addAttachment($filename) {
@@ -89,12 +94,18 @@ class Mail {
 
 		if ($this->protocol != 'mail') {
 			$header .= 'To: ' . $to . $this->newline;
-			$header .= 'Subject: ' . '=?UTF-8?B?' . base64_encode($this->subject) . '?=' . $this->newline;
+			$header .= 'Subject: =?UTF-8?B?' . base64_encode($this->subject) . '?=' . $this->newline;
 		}
 
 		$header .= 'Date: ' . date('D, d M Y H:i:s O') . $this->newline;
 		$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . $this->newline;
-		$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . $this->newline;
+		
+		if (!$this->reply_to) {
+			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . $this->newline;
+		} else {
+			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to) . '?=' . ' <' . $this->from . '>' . $this->newline;
+		}
+		
 		$header .= 'Return-Path: ' . $this->from . $this->newline;
 		$header .= 'X-Mailer: PHP/' . phpversion() . $this->newline;
 		$header .= 'Content-Type: multipart/related; boundary="' . $boundary . '"' . $this->newline . $this->newline;
@@ -153,8 +164,9 @@ class Mail {
 				mail($to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $message, $header);
 			}
 		} elseif ($this->protocol == 'smtp') {
-			$is_tls = substr($this->smtp_hostname, 0, 3) == 'tls';
-			$hostname = $is_tls ? substr($this->smtp_hostname, 6) : $this->smtp_hostname;
+			$tls = substr($this->smtp_hostname, 0, 3) == 'tls';
+			$hostname = $tls ? substr($this->smtp_hostname, 6) : $this->smtp_hostname;
+
 			$handle = fsockopen($hostname, $this->smtp_port, $errno, $errstr, $this->smtp_timeout);
 
 			if (!$handle) {
@@ -170,14 +182,14 @@ class Mail {
 						break;
 					}
 				}
-        
+
 				fputs($handle, 'EHLO ' . getenv('SERVER_NAME') . "\r\n");
-				
+
 				$reply = '';
-				
+
 				while ($line = fgets($handle, 515)) {
 					$reply .= $line;
-					
+
 					if (substr($line, 3, 1) == ' ') {
 						break;
 					}
@@ -188,9 +200,9 @@ class Mail {
 					exit();
 				}
 
-				if ($is_tls) {
+				if ($tls) {
 					fputs($handle, 'STARTTLS' . "\r\n");
-					
+
 					$reply = '';
 
 					while ($line = fgets($handle, 515)) {
@@ -205,8 +217,8 @@ class Mail {
 						trigger_error('Error: STARTTLS not accepted from server!');
 						exit();
 					}
-          
-          			stream_socket_enable_crypto($handle, TRUE, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+
+					stream_socket_enable_crypto($handle, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
 				}
 
 				if (!empty($this->smtp_username)  && !empty($this->smtp_password)) {
@@ -375,12 +387,12 @@ class Mail {
 				// According to rfc 821 we should not send more than 1000 including the CRLF
 				$message = str_replace("\r\n", "\n", $header . $message);
 				$message = str_replace("\r", "\n", $message);
-				
+
 				$lines = explode("\n", $message);
-				
+
 				foreach ($lines as $line) {
 					$results = str_split($line, 998);
-					
+
 					foreach ($results as $result) {
 						if (substr(PHP_OS, 0, 3) != 'WIN') {
 							fputs($handle, $result . "\r\n");
@@ -406,7 +418,7 @@ class Mail {
 					trigger_error('Error: DATA not accepted from server!');
 					exit();
 				}
-				
+
 				fputs($handle, 'QUIT' . "\r\n");
 
 				$reply = '';

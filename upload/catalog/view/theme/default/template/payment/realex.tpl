@@ -11,31 +11,27 @@
   <input type=hidden name="BILLING_CO" value="<?php echo $payment_country; ?>">
   <input type=hidden name="SHIPPING_CODE" value="<?php echo $shipping_code; ?>">
   <input type=hidden name="SHIPPING_CO" value="<?php echo $shipping_country; ?>">
+  <input type=hidden name="MERCHANT_RESPONSE_URL" value="<?php echo $response_url; ?>">
   <input type=hidden name="COMMENT1" value="OpenCart">
-
   <?php if ($card_select == true) { ?>
-    <fieldset id="payment">
-      <div class="form-group required">
-        <label class="col-sm-2 control-label" for="input-cc-type"><?php echo $entry_cc_type; ?></label>
-        <div class="col-sm-10">
-          <select name="ACCOUNT" class="form-control" id="input-cc-type">
-            <?php foreach ($cards as $card) { ?>
-              <option value="<?php echo $card['account']; ?>"><?php echo $card['type']; ?></option>
-            <?php } ?>
-          </select>
-          <span class="help-block"><?php echo $text_select_card; ?></span>
-        </div>
-      </div>
-    </fieldset>
+  <fieldset id="payment">
+    <div class="form-group required">
+      <label class="col-sm-2 control-label" for="input-cc-type"><span data-toggle="tooltip" title="<?php echo $help_select_card; ?>"><?php echo $entry_cc_type; ?></span></label>
+      <div class="col-sm-10">
+        <select name="ACCOUNT" class="form-control" id="input-cc-type">
+          <?php foreach ($cards as $card) { ?>
+          <option value="<?php echo $card['account']; ?>"><?php echo $card['type']; ?></option>
+          <?php } ?>
+        </select></div>
+    </div>
+  </fieldset>
   <?php } ?>
 </form>
-
 <div class="buttons">
   <div class="pull-right">
     <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn btn-primary" />
   </div>
 </div>
-
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function() {
   $('#realex_form_redirect').submit();

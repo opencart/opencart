@@ -24,10 +24,10 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-generator"><?php echo $entry_generator; ?></label>
+          <label class="col-sm-2 control-label" for="input-generator"><span data-toggle="tooltip" title="<?php echo $help_generator; ?>"><?php echo $entry_generator; ?></span></label>
           <div class="col-sm-10">
             <input type="text" name="product" value="" placeholder="<?php echo $entry_generator; ?>" id="input-generator" class="form-control" />
-            <span class="help-block"><?php echo $help_generator; ?></span> </div>
+          </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="input-link"><?php echo $entry_link; ?></label>
@@ -47,7 +47,7 @@ $('input[name=\'product\']').autocomplete({
 	'source': function(request, response) {
 		$.ajax({
 			url: 'index.php?route=affiliate/tracking/autocomplete&filter_name=' +  encodeURIComponent(request),
-			dataType: 'json',			
+			dataType: 'json',
 			success: function(json) {
 				response($.map(json, function(item) {
 					return {
@@ -60,8 +60,8 @@ $('input[name=\'product\']').autocomplete({
 	},
 	'select': function(item) {
 		$('input[name=\'product\']').val(item['label']);
-		$('textarea[name=\'link\']').val(item['value']);	
-	}	
+		$('textarea[name=\'link\']').val(item['value']);
+	}
 });
-//--></script> 
-<?php echo $footer; ?> 
+//--></script>
+<?php echo $footer; ?>

@@ -4,6 +4,9 @@ $_['heading_title']      = 'Geo Zones';
 
 // Text
 $_['text_success']       = 'Success: You have modified geo zones!';
+$_['text_list']          = 'Geo Zone List';
+$_['text_add']           = 'Add Geo Zone';
+$_['text_edit']          = 'Edit Geo Zone';
 
 // Column
 $_['column_name']        = 'Geo Zone Name';

@@ -1,5 +1,5 @@
-<?php 
-class ControllerAffiliateTracking extends Controller { 
+<?php
+class ControllerAffiliateTracking extends Controller {
 	public function index() {
 		if (!$this->affiliate->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('affiliate/tracking', '', 'SSL');
@@ -55,7 +55,7 @@ class ControllerAffiliateTracking extends Controller {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/affiliate/tracking.tpl', $data));
 		} else {
 			$this->response->setOutput($this->load->view('default/template/affiliate/tracking.tpl', $data));
-		}	
+		}
 	}
 
 	public function autocomplete() {
@@ -75,11 +75,12 @@ class ControllerAffiliateTracking extends Controller {
 			foreach ($results as $result) {
 				$json[] = array(
 					'name' => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
-					'link' => str_replace('&amp;', '&', $this->url->link('product/product', 'product_id=' . $result['product_id'] . '&tracking=' . $this->affiliate->getCode()))			
-				);	
+					'link' => str_replace('&amp;', '&', $this->url->link('product/product', 'product_id=' . $result['product_id'] . '&tracking=' . $this->affiliate->getCode()))
+				);
 			}
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 }

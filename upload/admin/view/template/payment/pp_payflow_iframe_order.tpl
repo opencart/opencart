@@ -2,40 +2,35 @@
 <table class="table table-striped table-bordered">
   <tr>
     <td><?php echo $entry_capture_status; ?>: </td>
-    <td id="capture-status">
-      <?php if ($complete) { ?>
-        <?php echo $text_complete ?>
+    <td id="capture-status"><?php if ($complete) { ?>
+      <?php echo $text_complete ?>
       <?php } else { ?>
-        <?php echo $text_incomplete ?>
-      <?php } ?>
-    </td>
+      <?php echo $text_incomplete ?>
+      <?php } ?></td>
   </tr>
   <tr>
     <td><?php echo $entry_capture ?></td>
-    <td id="complete-entry">
-      <?php if ($complete) { ?>
-        -
+    <td id="complete-entry"><?php if ($complete) { ?>
+      -
       <?php } else { ?>
-        <?php echo $entry_complete_capture ?> <input type="checkbox" name="capture-complete" value="1" /><br />
-        <input type="text" name="capture-amount" value="0.00" />
-        <a class="btn btn-primary" id="button-capture" onclick="capture()"><?php echo $button_capture ?></a>
-      <?php } ?>
-    </td>
+      <?php echo $entry_complete_capture ?>
+      <input type="checkbox" name="capture-complete" value="1" />
+      <br />
+      <input type="text" name="capture-amount" value="0.00" />
+      <a class="btn btn-primary" id="button-capture" onclick="capture()"><?php echo $button_capture ?></a>
+      <?php } ?></td>
   </tr>
   <tr>
     <td><?php echo $entry_void ?></td>
-    <td id="reauthorise-entry">
-      <?php if ($complete) { ?>
+    <td id="reauthorise-entry"><?php if ($complete) { ?>
       -
       <?php } else { ?>
       <a class="btn btn-primary" id="button-void" onclick="doVoid()"><?php echo $button_void ?></a>
-      <?php } ?>
-    </td>
+      <?php } ?></td>
   </tr>
   <tr>
     <td><?php echo $entry_transactions ?></td>
-    <td>
-      <table id="transaction-table" class="table table-striped table-bordered">
+    <td><table id="transaction-table" class="table table-striped table-bordered">
         <thead>
           <tr>
             <td class="text-left"><?php echo $column_transaction_id ?></td>
@@ -47,21 +42,18 @@
         </thead>
         <tbody>
           <?php foreach ($transactions as $transaction) { ?>
-            <tr>
-              <td class="text-left"><?php echo $transaction['transaction_reference'] ?></td>
-              <td class="text-left"><?php echo $transaction['transaction_type'] ?></td>
-              <td class="text-left"><?php echo number_format($transaction['amount'], 2) ?></td>
-              <td class="text-left"><?php echo $transaction['time'] ?></td>
-              <td class="text-left">
-                <?php foreach ($transaction['actions'] as $action) { ?>
-                  [<a href="<?php echo $action['href'] ?>"><?php echo $action['title'] ?></a>]
-                <?php } ?>
-              </td>
-            </tr>
+          <tr>
+            <td class="text-left"><?php echo $transaction['transaction_reference'] ?></td>
+            <td class="text-left"><?php echo $transaction['transaction_type'] ?></td>
+            <td class="text-left"><?php echo number_format($transaction['amount'], 2) ?></td>
+            <td class="text-left"><?php echo $transaction['time'] ?></td>
+            <td class="text-left"><?php foreach ($transaction['actions'] as $action) { ?>
+              [<a href="<?php echo $action['href'] ?>"><?php echo $action['title'] ?></a>]
+              <?php } ?></td>
+          </tr>
           <?php } ?>
         </tbody>
-      </table>
-    </td>
+      </table></td>
   </tr>
 </table>
 <script type="text/javascript"><!--
@@ -70,19 +62,19 @@ function markAsComplete() {
     $('#capture-status').html('<?php echo $text_complete ?>');
 }
 
-function doVoid(){
+function doVoid() {
     if (confirm('<?php echo $text_confirm_void; ?>')) {
         $.ajax({
             type:'POST',
             dataType: 'json',
             data: {'order_id':<?php echo (int)$order_id; ?>},
             url: 'index.php?route=payment/pp_payflow_iframe/void&token=<?php echo $token; ?>',
-            beforeSend: function(){
-                $('#button-void').after('<span class="btn btn-primary loading"><i class="fa fa-cog fa-spin fa-lg"></i></span>');
+            beforeSend: function() {
+                $('#button-void').after('<span class="btn btn-primary loading"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>');
                 $('#button-void').hide();
             },
-            success: function(data){
-                if(!data.error){
+            success: function(data) {
+                if (!data.error) {
                     $('#capture-status').text('<?php echo $text_complete; ?>');
 
                     var html = '';
@@ -98,7 +90,7 @@ function doVoid(){
                     markAsComplete();
                 }
 
-                if(data.error){
+                if (data.error) {
                     alert(data.error);
                     $('#button-void').show();
                 }
@@ -109,7 +101,7 @@ function doVoid(){
     }
 }
 
-function capture(){
+function capture() {
     var amount = $('input[name="capture-amount"]').val();
     var complete = 0;
 
@@ -123,13 +115,13 @@ function capture(){
         data: {'order_id':<?php echo $order_id; ?>, 'amount':amount, 'complete':complete },
         url: 'index.php?route=payment/pp_payflow_iframe/capture&token=<?php echo $token; ?>',
 
-        beforeSend: function(){
-            $('#button-capture').after('<span class="btn btn-primary loading"><i class="fa fa-cog fa-spin fa-lg"></i></span>');
+        beforeSend: function() {
+            $('#button-capture').after('<span class="btn btn-primary loading"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>');
             $('#button-capture').hide();
         },
 
-        success: function(data){
-            if(!data.error){
+        success: function(data) {
+            if (!data.error) {
                 var html = '';
                 html += '<tr>';
                 html += ' <td class="left">' + data.success.transaction_reference + '</td>';
@@ -138,7 +130,7 @@ function capture(){
                 html += ' <td class="left">' + data.success.time + '</td>';
                 html += ' <td class="left">';
 
-                $.each(data.success.actions, function(index, value){
+                $.each(data.success.actions, function(index, value) {
                     html += ' [<a href="' + value.href + '">' + value.title + '</a>] ';
                 });
 
@@ -151,7 +143,7 @@ function capture(){
                 }
             }
 
-            if(data.error){
+            if (data.error) {
                 alert(data.error);
             }
 

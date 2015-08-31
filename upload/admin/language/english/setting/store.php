@@ -1,9 +1,13 @@
 <?php
 // Heading
-$_['heading_title']                    = 'Settings';
+$_['heading_title']                    = 'Stores';
 
 // Text
-$_['text_success']                     = 'Success: You have modified settings!';
+$_['text_settings']                    = 'Settings';
+$_['text_success']                     = 'Success: You have modified Stores!';
+$_['text_list']                        = 'Store List';
+$_['text_add']                         = 'Add Store';
+$_['text_edit']                        = 'Edit Store';
 $_['text_items']                       = 'Items';
 $_['text_tax']                         = 'Taxes';
 $_['text_account']                     = 'Account';
@@ -33,6 +37,7 @@ $_['entry_comment']                    = 'Comment';
 $_['entry_location']                   = 'Store Location';
 $_['entry_meta_title']                 = 'Meta Title';
 $_['entry_meta_description']           = 'Meta Tag Description';
+$_['entry_meta_keyword']               = 'Meta Tag Keywords';
 $_['entry_layout']                     = 'Default Layout';
 $_['entry_template']                   = 'Template';
 $_['entry_country']                    = 'Country';
@@ -40,7 +45,7 @@ $_['entry_zone']                       = 'Region / State';
 $_['entry_language']                   = 'Language';
 $_['entry_currency']                   = 'Currency';
 $_['entry_product_limit'] 	           = 'Default Items Per Page (Catalog)';
-$_['entry_product_description_length'] = 'List Description Limit (Catalog';
+$_['entry_product_description_length'] = 'List Description Limit (Catalog)';
 $_['entry_tax']                        = 'Display Prices With Tax';
 $_['entry_tax_default']                = 'Use Store Tax Address';
 $_['entry_tax_customer']               = 'Use Customer Tax Address';

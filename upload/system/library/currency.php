@@ -20,7 +20,7 @@ class Currency {
 				'symbol_right'  => $result['symbol_right'],
 				'decimal_place' => $result['decimal_place'],
 				'value'         => $result['value']
-			); 
+			);
 		}
 
 		if (isset($this->request->get['currency']) && (array_key_exists($this->request->get['currency'], $this->currencies))) {
@@ -102,13 +102,13 @@ class Currency {
 		if (isset($this->currencies[$from])) {
 			$from = $this->currencies[$from]['value'];
 		} else {
-			$from = 0;
+			$from = 1;
 		}
 
 		if (isset($this->currencies[$to])) {
 			$to = $this->currencies[$to]['value'];
 		} else {
-			$to = 0;
+			$to = 1;
 		}
 
 		return $value * ($to / $from);

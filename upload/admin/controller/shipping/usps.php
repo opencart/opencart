@@ -18,7 +18,8 @@ class ControllerShippingUsps extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-
+		
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_all_zones'] = $this->language->get('text_all_zones');
@@ -76,7 +77,7 @@ class ControllerShippingUsps extends Controller {
 		$data['entry_dimension'] = $this->language->get('entry_dimension');
 		$data['entry_length'] = $this->language->get('entry_length');
 		$data['entry_width'] = $this->language->get('entry_width');
-		$data['entry_height'] = $this->language->get('entry_height');		
+		$data['entry_height'] = $this->language->get('entry_height');
 		$data['entry_display_time'] = $this->language->get('entry_display_time');
 		$data['entry_display_weight'] = $this->language->get('entry_display_weight');
 		$data['entry_weight_class'] = $this->language->get('entry_weight_class');
@@ -91,7 +92,7 @@ class ControllerShippingUsps extends Controller {
 		$data['help_display_weight'] = $this->language->get('help_display_weight');
 		$data['help_weight_class'] = $this->language->get('help_weight_class');
 		$data['help_debug'] = $this->language->get('help_debug');
-		
+
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
@@ -101,13 +102,13 @@ class ControllerShippingUsps extends Controller {
 			$data['error_warning'] = '';
 		}
 
- 		if (isset($this->error['user_id'])) {
+		if (isset($this->error['user_id'])) {
 			$data['error_user_id'] = $this->error['user_id'];
 		} else {
 			$data['error_user_id'] = '';
 		}
 
- 		if (isset($this->error['postcode'])) {
+		if (isset($this->error['postcode'])) {
 			$data['error_postcode'] = $this->error['postcode'];
 		} else {
 			$data['error_postcode'] = '';
@@ -119,22 +120,22 @@ class ControllerShippingUsps extends Controller {
 			$data['error_dimension'] = '';
 		}
 
-  		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_shipping'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_shipping'),
 			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('shipping/usps', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 
 		$data['action'] = $this->url->link('shipping/usps', 'token=' . $this->session->data['token'], 'SSL');
 
@@ -478,7 +479,7 @@ class ControllerShippingUsps extends Controller {
 		} else {
 			$data['usps_tax_class_id'] = $this->config->get('usps_tax_class_id');
 		}
-		
+
 		$this->load->model('localisation/tax_class');
 
 		$data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
@@ -488,7 +489,7 @@ class ControllerShippingUsps extends Controller {
 		} else {
 			$data['usps_geo_zone_id'] = $this->config->get('usps_geo_zone_id');
 		}
-		
+
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
@@ -510,11 +511,11 @@ class ControllerShippingUsps extends Controller {
 		} else {
 			$data['usps_sort_order'] = $this->config->get('usps_sort_order');
 		}
-		
+
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
-		
+
 		$this->response->setOutput($this->load->view('shipping/usps.tpl', $data));
 	}
 

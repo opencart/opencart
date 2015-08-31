@@ -60,13 +60,13 @@ class ControllerAccountPassword extends Controller {
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_back'] = $this->language->get('button_back');
 
-		if (isset($this->error['password'])) { 
+		if (isset($this->error['password'])) {
 			$data['error_password'] = $this->error['password'];
 		} else {
 			$data['error_password'] = '';
 		}
 
-		if (isset($this->error['confirm'])) { 
+		if (isset($this->error['confirm'])) {
 			$data['error_confirm'] = $this->error['confirm'];
 		} else {
 			$data['error_confirm'] = '';
@@ -99,7 +99,7 @@ class ControllerAccountPassword extends Controller {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/password.tpl', $data));
 		} else {
 			$this->response->setOutput($this->load->view('default/template/account/password.tpl', $data));
-		}		
+		}
 	}
 
 	protected function validate() {

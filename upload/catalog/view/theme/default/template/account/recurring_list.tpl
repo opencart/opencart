@@ -15,26 +15,26 @@
     <?php } ?>
     <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
       <h1><?php echo $heading_title; ?></h1>
-      <?php if ($profiles) { ?>
+      <?php if ($recurrings) { ?>
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <td class="text-left"><?php echo $column_profile_id; ?></td>
-              <td class="text-left"><?php echo $column_created; ?></td>
+              <td class="text-left"><?php echo $column_recurring_id; ?></td>
+              <td class="text-left"><?php echo $column_date_added; ?></td>
               <td class="text-left"><?php echo $column_status; ?></td>
               <td class="text-left"><?php echo $column_product; ?></td>
               <td class="text-right"><?php echo $column_action; ?></td>
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($profiles as $profile) { ?>
+            <?php foreach ($recurrings as $recurring) { ?>
               <tr>
-                <td class="text-left">#<?php echo $profile['id']; ?></td>
-                <td class="text-left"><?php echo $profile['created']; ?></td>
-                <td class="text-left"><?php echo $status_types[$profile['status']]; ?></td>
-                <td class="text-left"><?php echo $profile['name']; ?></td>
-                <td class="text-right"><a href="<?php echo $profile['href']; ?>"><img src="catalog/view/theme/default/image/info.png" alt="<?php echo $button_view; ?>" title="<?php echo $button_view; ?>" /></a></td>
+                <td class="text-left">#<?php echo $recurring['id']; ?></td>
+                <td class="text-left"><?php echo $recurring['date_added']; ?></td>
+                <td class="text-left"><?php echo $status_types[$recurring['status']]; ?></td>
+                <td class="text-left"><?php echo $recurring['name']; ?></td>
+                <td class="text-right"><a href="<?php echo $recurring['href']; ?>" class="btn btn-info"><?php echo $button_view; ?></a></td>
               </tr>
             <?php } ?>
           </tbody>

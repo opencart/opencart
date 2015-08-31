@@ -7,7 +7,7 @@ class ControllerExtensionTotal extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
 		$this->getList();
 	}
@@ -17,15 +17,17 @@ class ControllerExtensionTotal extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
-		if ($this->validate()) {				
-			$this->model_setting_extension->install('total', $this->request->get['extension']);
+		if ($this->validate()) {
+			$this->model_extension_extension->install('total', $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
 
-			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'total/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'total/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'total/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'total/' . $this->request->get['extension']);
+
+			$this->load->controller('total/' . $this->request->get['extension'] . '/install');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -40,14 +42,16 @@ class ControllerExtensionTotal extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
-		if ($this->validate()) {			
-			$this->model_setting_extension->uninstall('total', $this->request->get['extension']);
+		if ($this->validate()) {
+			$this->model_extension_extension->uninstall('total', $this->request->get['extension']);
 
 			$this->load->model('setting/setting');
 
 			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
+
+			$this->load->controller('total/' . $this->request->get['extension'] . '/uninstall');
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -55,7 +59,7 @@ class ControllerExtensionTotal extends Controller {
 		}
 
 		$this->getList();
-	}	
+	}
 
 	public function getList() {
 		$data['breadcrumbs'] = array();
@@ -72,6 +76,7 @@ class ControllerExtensionTotal extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
+		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
@@ -98,13 +103,13 @@ class ControllerExtensionTotal extends Controller {
 			$data['success'] = '';
 		}
 
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
-		$extensions = $this->model_setting_extension->getInstalled('total');
+		$extensions = $this->model_extension_extension->getInstalled('total');
 
 		foreach ($extensions as $key => $value) {
 			if (!file_exists(DIR_APPLICATION . 'controller/total/' . $value . '.php')) {
-				$this->model_setting_extension->uninstall('total', $value);
+				$this->model_extension_extension->uninstall('total', $value);
 
 				unset($extensions[$key]);
 			}
@@ -124,16 +129,16 @@ class ControllerExtensionTotal extends Controller {
 					'name'       => $this->language->get('heading_title'),
 					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'edit'      => $this->url->link('total/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL'),
 					'install'   => $this->url->link('extension/total/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
 					'uninstall' => $this->url->link('extension/total/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
-					'installed' => in_array($extension, $extensions)
+					'installed' => in_array($extension, $extensions),
+					'edit'      => $this->url->link('total/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL')
 				);
 			}
 		}
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('extension/total.tpl', $data));

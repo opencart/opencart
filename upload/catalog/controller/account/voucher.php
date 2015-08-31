@@ -1,5 +1,5 @@
-<?php 
-class ControllerAccountVoucher extends Controller { 
+<?php
+class ControllerAccountVoucher extends Controller {
 	private $error = array();
 
 	public function index() {
@@ -128,14 +128,14 @@ class ControllerAccountVoucher extends Controller {
 		if (isset($this->request->post['from_email'])) {
 			$data['from_email'] = $this->request->post['from_email'];
 		} elseif ($this->customer->isLogged()) {
-			$data['from_email'] = $this->customer->getEmail();		
+			$data['from_email'] = $this->customer->getEmail();
 		} else {
 			$data['from_email'] = '';
 		}
 
-		$this->load->model('checkout/voucher_theme');
+		$this->load->model('total/voucher_theme');
 
-		$data['voucher_themes'] = $this->model_checkout_voucher_theme->getVoucherThemes();
+		$data['voucher_themes'] = $this->model_total_voucher_theme->getVoucherThemes();
 
 		if (isset($this->request->post['voucher_theme_id'])) {
 			$data['voucher_theme_id'] = $this->request->post['voucher_theme_id'];
@@ -147,7 +147,7 @@ class ControllerAccountVoucher extends Controller {
 			$data['message'] = $this->request->post['message'];
 		} else {
 			$data['message'] = '';
-		}	
+		}
 
 		if (isset($this->request->post['amount'])) {
 			$data['amount'] = $this->request->post['amount'];
@@ -159,7 +159,7 @@ class ControllerAccountVoucher extends Controller {
 			$data['agree'] = $this->request->post['agree'];
 		} else {
 			$data['agree'] = false;
-		}	
+		}
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -172,13 +172,13 @@ class ControllerAccountVoucher extends Controller {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/voucher.tpl', $data));
 		} else {
 			$this->response->setOutput($this->load->view('default/template/account/voucher.tpl', $data));
-		}	
+		}
 	}
 
 	public function success() {
 		$this->load->language('account/voucher');
 
-		$this->document->setTitle($this->language->get('heading_title')); 
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['breadcrumbs'] = array();
 
@@ -219,7 +219,7 @@ class ControllerAccountVoucher extends Controller {
 			$this->error['to_name'] = $this->language->get('error_to_name');
 		}
 
-		if ((utf8_strlen($this->request->post['to_email']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['to_email'])) {
+		if ((utf8_strlen($this->request->post['to_email']) > 96) || !preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['to_email'])) {
 			$this->error['to_email'] = $this->language->get('error_email');
 		}
 
@@ -227,7 +227,7 @@ class ControllerAccountVoucher extends Controller {
 			$this->error['from_name'] = $this->language->get('error_from_name');
 		}
 
-		if ((utf8_strlen($this->request->post['from_email']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['from_email'])) {
+		if ((utf8_strlen($this->request->post['from_email']) > 96) || !preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['from_email'])) {
 			$this->error['from_email'] = $this->language->get('error_email');
 		}
 
@@ -243,10 +243,6 @@ class ControllerAccountVoucher extends Controller {
 			$this->error['warning'] = $this->language->get('error_agree');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 }

@@ -1,5 +1,6 @@
 <?php
 class Language {
+	private $default = 'english';
 	private $directory;
 	private $data = array();
 
@@ -11,19 +12,27 @@ class Language {
 		return (isset($this->data[$key]) ? $this->data[$key] : $key);
 	}
 
+	public function all() {
+		return $this->data;
+	}
+	
 	public function load($filename) {
+		$_ = array();
+
+		$file = DIR_LANGUAGE . $this->default . '/' . $filename . '.php';
+
+		if (file_exists($file)) {
+			require($file);
+		}
+
 		$file = DIR_LANGUAGE . $this->directory . '/' . $filename . '.php';
 
 		if (file_exists($file)) {
-			$_ = array();
-
 			require($file);
-
-			$this->data = array_merge($this->data, $_);
-
-			return $this->data;
-		} else {
-			trigger_error('Error: Could not load language ' . $filename . '!');
 		}
+
+		$this->data = array_merge($this->data, $_);
+
+		return $this->data;
 	}
 }

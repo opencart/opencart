@@ -1,8 +1,8 @@
-<?php 
-class ControllerTotalTax extends Controller { 
+<?php
+class ControllerTotalTax extends Controller {
 	private $error = array();
 
-	public function index() { 
+	public function index() {
 		$this->load->language('total/tax');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -19,6 +19,7 @@ class ControllerTotalTax extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 
@@ -68,7 +69,7 @@ class ControllerTotalTax extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('total/tax.tpl', $data));

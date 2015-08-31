@@ -5,8 +5,8 @@ class ModelPaymentPPExpress extends Model {
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "paypal_order` (
 			  `paypal_order_id` int(11) NOT NULL AUTO_INCREMENT,
 			  `order_id` int(11) NOT NULL,
-			  `created` DATETIME NOT NULL,
-			  `modified` DATETIME NOT NULL,
+			  `date_added` DATETIME NOT NULL,
+			  `date_modified` DATETIME NOT NULL,
 			  `capture_status` ENUM('Complete','NotComplete') DEFAULT NULL,
 			  `currency_code` CHAR(3) NOT NULL,
 			  `authorization_id` VARCHAR(30) NOT NULL,
@@ -20,7 +20,7 @@ class ModelPaymentPPExpress extends Model {
 			  `paypal_order_id` int(11) NOT NULL,
 			  `transaction_id` CHAR(20) NOT NULL,
 			  `parent_transaction_id` CHAR(20) NOT NULL,
-			  `created` DATETIME NOT NULL,
+			  `date_added` DATETIME NOT NULL,
 			  `note` VARCHAR(255) NOT NULL,
 			  `msgsubid` CHAR(38) NOT NULL,
 			  `receipt_id` CHAR(20) NOT NULL,
@@ -78,16 +78,16 @@ class ModelPaymentPPExpress extends Model {
 	}
 
 	public function updateOrder($capture_status, $order_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order` SET `modified` = now(), `capture_status` = '" . $this->db->escape($capture_status) . "' WHERE `order_id` = '" . (int)$order_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order` SET `date_modified` = now(), `capture_status` = '" . $this->db->escape($capture_status) . "' WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
 	public function addTransaction($transaction_data, $request_data = array()) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "paypal_order_transaction` SET `paypal_order_id` = '" . (int)$transaction_data['paypal_order_id'] . "', `transaction_id` = '" . $this->db->escape($transaction_data['transaction_id']) . "', `parent_transaction_id` = '" . $this->db->escape($transaction_data['parent_transaction_id']) . "', `created` = NOW(), `note` = '" . $this->db->escape($transaction_data['note']) . "', `msgsubid` = '" . $this->db->escape($transaction_data['msgsubid']) . "', `receipt_id` = '" . $this->db->escape($transaction_data['receipt_id']) . "', `payment_type` = '" . $this->db->escape($transaction_data['payment_type']) . "', `payment_status` = '" . $this->db->escape($transaction_data['payment_status']) . "', `pending_reason` = '" . $this->db->escape($transaction_data['pending_reason']) . "', `transaction_entity` = '" . $this->db->escape($transaction_data['transaction_entity']) . "', `amount` = '" . (double)$transaction_data['amount'] . "', `debug_data` = '" . $this->db->escape($transaction_data['debug_data']) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "paypal_order_transaction` SET `paypal_order_id` = '" . (int)$transaction_data['paypal_order_id'] . "', `transaction_id` = '" . $this->db->escape($transaction_data['transaction_id']) . "', `parent_transaction_id` = '" . $this->db->escape($transaction_data['parent_transaction_id']) . "', `date_added` = NOW(), `note` = '" . $this->db->escape($transaction_data['note']) . "', `msgsubid` = '" . $this->db->escape($transaction_data['msgsubid']) . "', `receipt_id` = '" . $this->db->escape($transaction_data['receipt_id']) . "', `payment_type` = '" . $this->db->escape($transaction_data['payment_type']) . "', `payment_status` = '" . $this->db->escape($transaction_data['payment_status']) . "', `pending_reason` = '" . $this->db->escape($transaction_data['pending_reason']) . "', `transaction_entity` = '" . $this->db->escape($transaction_data['transaction_entity']) . "', `amount` = '" . (float)$transaction_data['amount'] . "', `debug_data` = '" . $this->db->escape($transaction_data['debug_data']) . "'");
 
 		$paypal_order_transaction_id = $this->db->getLastId();
 
 		if ($request_data) {
-			$serialized_data = serialize($request_data);
+			$serialized_data = json_encode($request_data);
 
 			$this->db->query("
 				UPDATE " . DB_PREFIX . "paypal_order_transaction
@@ -120,7 +120,7 @@ class ModelPaymentPPExpress extends Model {
 			SET paypal_order_id = " . (int)$transaction['paypal_order_id'] . ",
 				transaction_id = '" . $this->db->escape($transaction['transaction_id']) . "',
 				parent_transaction_id = '" . $this->db->escape($transaction['parent_transaction_id']) . "',
-				created = '" . $this->db->escape($transaction['created']) . "',
+				date_added = '" . $this->db->escape($transaction['date_added']) . "',
 				note = '" . $this->db->escape($transaction['note']) . "',
 				msgsubid = '" . $this->db->escape($transaction['msgsubid']) . "',
 				receipt_id = '" . $this->db->escape($transaction['receipt_id']) . "',
@@ -185,14 +185,20 @@ class ModelPaymentPPExpress extends Model {
 
 		if ($this->config->get('pp_express_test') == 1) {
 			$api_endpoint = 'https://api-3t.sandbox.paypal.com/nvp';
+			$user = $this->config->get('pp_express_sandbox_username');
+			$password = $this->config->get('pp_express_sandbox_password');
+			$signature = $this->config->get('pp_express_sandbox_signature');
 		} else {
 			$api_endpoint = 'https://api-3t.paypal.com/nvp';
+			$user = $this->config->get('pp_express_username');
+			$password = $this->config->get('pp_express_password');
+			$signature = $this->config->get('pp_express_signature');
 		}
 
 		$settings = array(
-			'USER' => $this->config->get('pp_express_username'),
-			'PWD' => $this->config->get('pp_express_password'),
-			'SIGNATURE' => $this->config->get('pp_express_signature'),
+			'USER' => $user,
+			'PWD' => $password,
+			'SIGNATURE' => $signature,
 			'VERSION' => '84',
 			'BUTTONSOURCE' => 'OpenCart_Cart_EC',
 		);
@@ -283,5 +289,96 @@ class ModelPaymentPPExpress extends Model {
 		);
 
 		return $this->call($data);
+	}
+
+	public function getTokens($test) {
+		if ($test == 'sandbox') {
+			$endpoint = 'https://api.sandbox.paypal.com/v1/oauth2/token';
+			$client_id = 'Ad3QTBAHwhuNI_blejO4_RqvES74yWRUC61c5QVNDbxkq9csbLpDZogWp_0n';
+			$client_secret = 'EGqgGxCqjs1GIa5l1Ex_Flq0Mb2oMT3rJu2kwz6FuF9QKyxCg6qNqyddxCCW';
+		} else {
+			$endpoint = 'https://api.paypal.com/v1/oauth2/token';
+			$client_id = 'AWyAiBCUYsE156N8YpiiISQpSpep2HPoXXPrf33VBeYleE0SQJg40pgEqZvq';
+			$client_secret = 'EEkc6xB30fDkgUO_YldWWHxKDquY7LBRId6FJ-parAR1CsVpK35zB6U0SIh4';
+		}
+
+		$request = '';
+		$request .= 'client_id=' . $client_id;
+		$request .= '&client_secret=' . $client_secret;
+		$request .= '&grant_type=client_credentials';
+
+		$additional_opts = array(
+			CURLOPT_USERPWD => $client_id . ':' . $client_secret,
+			CURLOPT_POST => true,
+			CURLOPT_POSTFIELDS => $request
+		);
+
+		$curl = $this->curl($endpoint, $additional_opts);
+
+		$this->log('cURL Response 1: ' . print_r($curl, 1));
+
+		return $curl;
+	}
+
+	public function getUserInfo($merchant_id, $test, $access_token) {
+		if ($test == 'sandbox') {
+			$endpoint = 'https://api.sandbox.paypal.com/v1/customer/partners/T4E8WSXT43QPJ/merchant-integrations';
+		} else {
+			$endpoint = 'https://api.paypal.com/v1/customer/partners/9PDNYE4RZBVFJ/merchant-integrations';
+		}
+
+		$endpoint1 = $endpoint . '?tracking_id=' . $merchant_id;
+
+		$header = array();
+		$header[] = 'Content-Type: application/json';
+		$header[] = 'Authorization: Bearer ' . $access_token;
+		$header[] = 'PAYPAL_SERVICE_VERSION:1.2.0';
+
+		$additional_opts = array(
+			CURLOPT_HTTPHEADER => $header,
+		);
+
+		$curl = $this->curl($endpoint1, $additional_opts);
+
+		$this->log('cURL Response 2: ' . print_r($curl, 1));
+
+		if (isset($curl->merchant_id)) {
+			$endpoint2 = $endpoint . '/' . $curl->merchant_id;
+			$curl2 = $this->curl($endpoint2, $additional_opts);
+
+			$this->log('cURL Response 3: ' . print_r($curl2, 1));
+
+			if (isset($curl2->api_credentials->signature)) {
+				return $curl2->api_credentials->signature;
+			} else {
+				return;
+			}
+		} else {
+			return;
+		}
+	}
+
+	private function curl($endpoint, $additional_opts = array()) {
+		$default_opts = array(
+			CURLOPT_PORT => 443,
+			CURLOPT_HEADER => 0,
+			CURLOPT_SSL_VERIFYPEER => 0,
+			CURLOPT_RETURNTRANSFER => 1,
+			CURLOPT_FORBID_REUSE => 1,
+			CURLOPT_FRESH_CONNECT => 1,
+			CURLOPT_URL => $endpoint,
+		);
+
+		$ch = curl_init($endpoint);
+
+		$opts = $default_opts + $additional_opts;
+
+		curl_setopt_array($ch, $opts);
+
+		$response = json_decode(curl_exec($ch));
+
+		curl_close($ch);
+
+		return $response;
 	}
 }

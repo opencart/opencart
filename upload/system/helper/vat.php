@@ -28,7 +28,8 @@ function vat_validation($prefix, $number) {
 		'RO' => 'RO', //Romania
 		'SK' => 'SK', //Slovakia
 		'CZ' => 'CZ', //Czech Republic
-		'SI' => 'SI'  //Slovania
+		'SI' => 'SI', //Slovenia
+		'HR' => 'HR'  //Croatia
 	);
 
 	if (array_search(substr($number, 0, 2), $iso_code_2_data)) {
@@ -44,7 +45,7 @@ function vat_validation($prefix, $number) {
 
 		if (preg_match('/\binvalid VAT number\b/i', $response)) {
 			return 'invalid';
-		} 
+		}
 	} else {
 		return 'unknown';
 	}

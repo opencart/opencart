@@ -8,14 +8,13 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label" for="input-cc-start-date"><?php echo $entry_cc_start_date; ?></label>
+      <label class="col-sm-2 control-label" for="input-cc-start-date"><span data-toggle="tooltip" title="<?php echo $help_start_date; ?>"><?php echo $entry_cc_start_date; ?></span></label>
       <div class="col-sm-3">
         <select name="cc_start_date_month" id="input-cc-start-date" class="form-control">
           <?php foreach ($months as $month) { ?>
           <option value="<?php echo $month['value']; ?>"><?php echo $month['text']; ?></option>
           <?php } ?>
         </select>
-        <span class="help-block"><?php echo $help_start_date; ?></span>
       </div>
       <div class="col-sm-3">
         <select name="cc_start_date_year" class="form-control">
@@ -49,10 +48,10 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label" for="input-cc-issue"><?php echo $entry_cc_issue; ?></label>
+      <label class="col-sm-2 control-label" for="input-cc-issue"><span data-toggle="tooltip" title="<?php echo $help_issue; ?>"><?php echo $entry_cc_issue; ?></span></label>
       <div class="col-sm-10">
         <input type="text" name="cc_issue" value="" id="input-cc-issue" class="form-control" />
-        <span class="help-block"><?php echo $help_issue; ?></span> </div>
+      </div>
     </div>
   </fieldset>
 </form>
@@ -67,23 +66,23 @@ $('#button-confirm').bind('click', function() {
 		url: 'index.php?route=payment/perpetual_payments/send',
 		type: 'post',
 		data: $('#payment :input'),
-		dataType: 'json',		
+		dataType: 'json',
 		cache: false,
 		beforeSend: function() {
 			$('#button-confirm').button('loading');
 		},
 		complete: function() {
 			$('#button-confirm').button('reset');
-		},				
+		},
 		success: function(json) {
 			if (json['error']) {
 				alert(json['error']);
 			}
-			
+
 			if (json['redirect']) {
 				location = json['redirect'];
 			}
 		}
 	});
 });
-//--></script> 
+//--></script>

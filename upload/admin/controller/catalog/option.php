@@ -1,9 +1,9 @@
 <?php
 class ControllerCatalogOption extends Controller {
-	private $error = array();  
+	private $error = array();
 
 	public function index() {
-		$this->load->language('catalog/option');
+		$this->language->load('catalog/option');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -12,8 +12,8 @@ class ControllerCatalogOption extends Controller {
 		$this->getList();
 	}
 
-	public function insert() {
-		$this->load->language('catalog/option');
+	public function add() {
+		$this->language->load('catalog/option');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -44,8 +44,8 @@ class ControllerCatalogOption extends Controller {
 		$this->getForm();
 	}
 
-	public function update() {
-		$this->load->language('catalog/option');
+	public function edit() {
+		$this->language->load('catalog/option');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -77,7 +77,7 @@ class ControllerCatalogOption extends Controller {
 	}
 
 	public function delete() {
-		$this->load->language('catalog/option');
+		$this->language->load('catalog/option');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -155,7 +155,7 @@ class ControllerCatalogOption extends Controller {
 			'href' => $this->url->link('catalog/option', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$data['insert'] = $this->url->link('catalog/option/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['add'] = $this->url->link('catalog/option/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('catalog/option/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['options'] = array();
@@ -176,20 +176,21 @@ class ControllerCatalogOption extends Controller {
 				'option_id'  => $result['option_id'],
 				'name'       => $result['name'],
 				'sort_order' => $result['sort_order'],
-				'edit'       => $this->url->link('catalog/option/update', 'token=' . $this->session->data['token'] . '&option_id=' . $result['option_id'] . $url, 'SSL')
+				'edit'       => $this->url->link('catalog/option/edit', 'token=' . $this->session->data['token'] . '&option_id=' . $result['option_id'] . $url, 'SSL')
 			);
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
+		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
-		$data['column_action'] = $this->language->get('column_action');	
+		$data['column_action'] = $this->language->get('column_action');
 
-		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 
@@ -252,7 +253,7 @@ class ControllerCatalogOption extends Controller {
 		$data['order'] = $order;
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('catalog/option_list.tpl', $data));
@@ -261,6 +262,7 @@ class ControllerCatalogOption extends Controller {
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
 
+		$data['text_form'] = !isset($this->request->get['option_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_choose'] = $this->language->get('text_choose');
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_radio'] = $this->language->get('text_radio');
@@ -295,13 +297,13 @@ class ControllerCatalogOption extends Controller {
 			$data['error_name'] = $this->error['name'];
 		} else {
 			$data['error_name'] = array();
-		}	
+		}
 
 		if (isset($this->error['option_value'])) {
 			$data['error_option_value'] = $this->error['option_value'];
 		} else {
 			$data['error_option_value'] = array();
-		}	
+		}
 
 		$url = '';
 
@@ -330,9 +332,9 @@ class ControllerCatalogOption extends Controller {
 		);
 
 		if (!isset($this->request->get['option_id'])) {
-			$data['action'] = $this->url->link('catalog/option/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		} else { 
-			$data['action'] = $this->url->link('catalog/option/update', 'token=' . $this->session->data['token'] . '&option_id=' . $this->request->get['option_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('catalog/option/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		} else {
+			$data['action'] = $this->url->link('catalog/option/edit', 'token=' . $this->session->data['token'] . '&option_id=' . $this->request->get['option_id'] . $url, 'SSL');
 		}
 
 		$data['cancel'] = $this->url->link('catalog/option', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -353,7 +355,7 @@ class ControllerCatalogOption extends Controller {
 			$data['option_description'] = $this->model_catalog_option->getOptionDescriptions($this->request->get['option_id']);
 		} else {
 			$data['option_description'] = array();
-		}	
+		}
 
 		if (isset($this->request->post['type'])) {
 			$data['type'] = $this->request->post['type'];
@@ -386,21 +388,25 @@ class ControllerCatalogOption extends Controller {
 		foreach ($option_values as $option_value) {
 			if (is_file(DIR_IMAGE . $option_value['image'])) {
 				$image = $option_value['image'];
+				$thumb = $option_value['image'];
 			} else {
 				$image = '';
+				$thumb = 'no_image.png';
 			}
 
 			$data['option_values'][] = array(
 				'option_value_id'          => $option_value['option_value_id'],
 				'option_value_description' => $option_value['option_value_description'],
 				'image'                    => $image,
-				'thumb'                    => $this->model_tool_image->resize($image, 100, 100),
+				'thumb'                    => $this->model_tool_image->resize($thumb, 100, 100),
 				'sort_order'               => $option_value['sort_order']
 			);
 		}
 
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('catalog/option_form.tpl', $data));
@@ -425,10 +431,10 @@ class ControllerCatalogOption extends Controller {
 			foreach ($this->request->post['option_value'] as $option_value_id => $option_value) {
 				foreach ($option_value['option_value_description'] as $language_id => $option_value_description) {
 					if ((utf8_strlen($option_value_description['name']) < 1) || (utf8_strlen($option_value_description['name']) > 128)) {
-						$this->error['option_value'][$option_value_id][$language_id] = $this->language->get('error_option_value'); 
-					}					
+						$this->error['option_value'][$option_value_id][$language_id] = $this->language->get('error_option_value');
+					}
 				}
-			}	
+			}
 		}
 
 		return !$this->error;
@@ -450,13 +456,13 @@ class ControllerCatalogOption extends Controller {
 		}
 
 		return !$this->error;
-	}	
+	}
 
 	public function autocomplete() {
 		$json = array();
 
 		if (isset($this->request->get['filter_name'])) {
-			$this->load->language('catalog/option');
+			$this->language->load('catalog/option');
 
 			$this->load->model('catalog/option');
 
@@ -480,13 +486,13 @@ class ControllerCatalogOption extends Controller {
 						if (is_file(DIR_IMAGE . $option_value['image'])) {
 							$image = $this->model_tool_image->resize($option_value['image'], 50, 50);
 						} else {
-							$image = '';
+							$image = $this->model_tool_image->resize('no_image.png', 50, 50);
 						}
 
 						$option_value_data[] = array(
 							'option_value_id' => $option_value['option_value_id'],
 							'name'            => strip_tags(html_entity_decode($option_value['name'], ENT_QUOTES, 'UTF-8')),
-							'image'           => $image					
+							'image'           => $image
 						);
 					}
 
@@ -496,7 +502,7 @@ class ControllerCatalogOption extends Controller {
 						$sort_order[$key] = $value['name'];
 					}
 
-					array_multisort($sort_order, SORT_ASC, $option_value_data);					
+					array_multisort($sort_order, SORT_ASC, $option_value_data);
 				}
 
 				$type = '';
@@ -535,6 +541,7 @@ class ControllerCatalogOption extends Controller {
 
 		array_multisort($sort_order, SORT_ASC, $json);
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 }

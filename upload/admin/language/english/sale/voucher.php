@@ -1,9 +1,12 @@
 <?php
-// Heading  
-$_['heading_title']     = 'Gift Voucher';
+// Heading
+$_['heading_title']     = 'Gift Vouchers';
 
 // Text
 $_['text_success']      = 'Success: You have modified vouchers!';
+$_['text_list']         = 'Gift Voucher List';
+$_['text_add']          = 'Add Gift Voucher';
+$_['text_edit']         = 'Edit Gift Voucher';
 $_['text_sent']         = 'Success: Gift Voucher e-mail has been sent!';
 
 // Column
@@ -34,6 +37,7 @@ $_['entry_status']      = 'Status';
 $_['help_code']         = 'The code the customer enters to activate the voucher.';
 
 // Error
+$_['error_selection']   = 'Warning: No vouchers selected!';
 $_['error_permission']  = 'Warning: You do not have permission to modify vouchers!';
 $_['error_exists']      = 'Warning: Voucher code is already in use!';
 $_['error_code']        = 'Code must be between 3 and 10 characters!';

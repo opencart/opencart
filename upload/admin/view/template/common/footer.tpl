@@ -1,5 +1,2 @@
-<footer id="footer">
-  <p class="text-center"><?php echo $text_footer; ?></p>
-</footer>
-<div>
+<footer id="footer"><?php echo $text_footer; ?><br /><?php echo $text_version; ?></footer></div>
 </body></html>

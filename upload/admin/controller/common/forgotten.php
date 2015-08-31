@@ -3,7 +3,7 @@ class ControllerCommonForgotten extends Controller {
 	private $error = array();
 
 	public function index() {
-		if ($this->user->isLogged()) {
+		if ($this->user->isLogged() && isset($this->request->get['token']) && ($this->request->get['token'] == $this->session->data['token'])) {
 			$this->response->redirect($this->url->link('common/dashboard', '', 'SSL'));
 		}
 
@@ -24,37 +24,33 @@ class ControllerCommonForgotten extends Controller {
 
 			$this->model_user_user->editCode($this->request->post['email'], $code);
 
-			$subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
+			$subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 
-			$message  = sprintf($this->language->get('text_greeting'), $this->config->get('config_name')) . "\n\n";
+			$message  = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')) . "\n\n";
 			$message .= $this->language->get('text_change') . "\n\n";
 			$message .= $this->url->link('common/reset', 'code=' . $code, 'SSL') . "\n\n";
 			$message .= sprintf($this->language->get('text_ip'), $this->request->server['REMOTE_ADDR']) . "\n\n";
 
-			$mail = new Mail($this->config->get('config_mail'));
+			$mail = new Mail();
+			$mail->protocol = $this->config->get('config_mail_protocol');
+			$mail->parameter = $this->config->get('config_mail_parameter');
+			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+
 			$mail->setTo($this->request->post['email']);
 			$mail->setFrom($this->config->get('config_email'));
-			$mail->setSender($this->config->get('config_name'));
-			$mail->setSubject($subject);
-			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
+			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+			$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
+			$mail->setText($message);
 			$mail->send();
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('common/login', '', 'SSL'));
 		}
-
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_forgotten'),
-			'href' => $this->url->link('common/forgotten', '', 'SSL')
-		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -72,6 +68,18 @@ class ControllerCommonForgotten extends Controller {
 			$data['error_warning'] = '';
 		}
 
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', '', 'SSL')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('common/forgotten', 'token=' . '', 'SSL')
+		);
+
 		$data['action'] = $this->url->link('common/forgotten', '', 'SSL');
 
 		$data['cancel'] = $this->url->link('common/login', '', 'SSL');
@@ -85,7 +93,7 @@ class ControllerCommonForgotten extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('common/forgotten.tpl', $data));		
+		$this->response->setOutput($this->load->view('common/forgotten.tpl', $data));
 	}
 
 	protected function validate() {

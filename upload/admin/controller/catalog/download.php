@@ -3,7 +3,7 @@ class ControllerCatalogDownload extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('catalog/download');
+		$this->language->load('catalog/download');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -12,8 +12,8 @@ class ControllerCatalogDownload extends Controller {
 		$this->getList();
 	}
 
-	public function insert() {
-		$this->load->language('catalog/download');
+	public function add() {
+		$this->language->load('catalog/download');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -44,8 +44,8 @@ class ControllerCatalogDownload extends Controller {
 		$this->getForm();
 	}
 
-	public function update() {
-		$this->load->language('catalog/download');
+	public function edit() {
+		$this->language->load('catalog/download');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -77,7 +77,7 @@ class ControllerCatalogDownload extends Controller {
 	}
 
 	public function delete() {
-		$this->load->language('catalog/download');
+		$this->language->load('catalog/download');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -155,7 +155,7 @@ class ControllerCatalogDownload extends Controller {
 			'href' => $this->url->link('catalog/download', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$data['insert'] = $this->url->link('catalog/download/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['add'] = $this->url->link('catalog/download/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('catalog/download/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['downloads'] = array();
@@ -176,12 +176,13 @@ class ControllerCatalogDownload extends Controller {
 				'download_id' => $result['download_id'],
 				'name'        => $result['name'],
 				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'        => $this->url->link('catalog/download/update', 'token=' . $this->session->data['token'] . '&download_id=' . $result['download_id'] . $url, 'SSL')
+				'edit'        => $this->url->link('catalog/download/edit', 'token=' . $this->session->data['token'] . '&download_id=' . $result['download_id'] . $url, 'SSL')
 			);
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
+		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
@@ -189,7 +190,7 @@ class ControllerCatalogDownload extends Controller {
 		$data['column_date_added'] = $this->language->get('column_date_added');
 		$data['column_action'] = $this->language->get('column_action');
 
-		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 
@@ -252,7 +253,7 @@ class ControllerCatalogDownload extends Controller {
 		$data['order'] = $order;
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('catalog/download_list.tpl', $data));
@@ -260,6 +261,9 @@ class ControllerCatalogDownload extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
+
+		$data['text_form'] = !isset($this->request->get['download_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
+		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_filename'] = $this->language->get('entry_filename');
@@ -319,13 +323,13 @@ class ControllerCatalogDownload extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/download', 'token=' . $this->session->data['token'] . $url, 'SSL'),
+			'href' => $this->url->link('catalog/download', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
 		if (!isset($this->request->get['download_id'])) {
-			$data['action'] = $this->url->link('catalog/download/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('catalog/download/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$data['action'] = $this->url->link('catalog/download/update', 'token=' . $this->session->data['token'] . '&download_id=' . $this->request->get['download_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('catalog/download/edit', 'token=' . $this->session->data['token'] . '&download_id=' . $this->request->get['download_id'] . $url, 'SSL');
 		}
 
 		$data['cancel'] = $this->url->link('catalog/download', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -371,7 +375,7 @@ class ControllerCatalogDownload extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('catalog/download_form.tpl', $data));
@@ -422,7 +426,7 @@ class ControllerCatalogDownload extends Controller {
 	}
 
 	public function upload() {
-		$this->load->language('catalog/download');
+		$this->language->load('catalog/download');
 
 		$json = array();
 
@@ -444,7 +448,7 @@ class ControllerCatalogDownload extends Controller {
 				// Allowed file extension types
 				$allowed = array();
 
-				$extension_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_extension_allowed'));
+				$extension_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_ext_allowed'));
 
 				$filetypes = explode("\n", $extension_allowed);
 
@@ -470,14 +474,14 @@ class ControllerCatalogDownload extends Controller {
 				if (!in_array($this->request->files['file']['type'], $allowed)) {
 					$json['error'] = $this->language->get('error_filetype');
 				}
-				
+
 				// Check to see if any PHP files are trying to be uploaded
 				$content = file_get_contents($this->request->files['file']['tmp_name']);
-						
+
 				if (preg_match('/\<\?php/i', $content)) {
 					$json['error'] = $this->language->get('error_filetype');
-				}	
-			
+				}
+
 				// Return any upload error
 				if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
 					$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
@@ -488,7 +492,7 @@ class ControllerCatalogDownload extends Controller {
 		}
 
 		if (!$json) {
-			$file = $filename . '.' . md5(mt_rand());
+			$file = $filename . '.' . token(32);
 
 			move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
 
@@ -498,6 +502,7 @@ class ControllerCatalogDownload extends Controller {
 			$json['success'] = $this->language->get('text_upload');
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -531,6 +536,7 @@ class ControllerCatalogDownload extends Controller {
 
 		array_multisort($sort_order, SORT_ASC, $json);
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 }

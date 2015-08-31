@@ -1,7 +1,7 @@
 <?php
 class ControllerProductSearch extends Controller {
 	public function index() {
-    	$this->load->language('product/search');
+		$this->load->language('product/search');
 
 		$this->load->model('catalog/category');
 
@@ -75,10 +75,10 @@ class ControllerProductSearch extends Controller {
 
 		$data['breadcrumbs'] = array();
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
-   		);
+		);
 
 		$url = '';
 
@@ -118,19 +118,19 @@ class ControllerProductSearch extends Controller {
 			$url .= '&limit=' . $this->request->get['limit'];
 		}
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('product/search', $url)
-   		);
+		);
 
 		if (isset($this->request->get['search'])) {
-    		$data['heading_title'] = $this->language->get('heading_title') .  ' - ' . $this->request->get['search'];
+			$data['heading_title'] = $this->language->get('heading_title') .  ' - ' . $this->request->get['search'];
 		} else {
 			$data['heading_title'] = $this->language->get('heading_title');
 		}
 
 		$data['text_empty'] = $this->language->get('text_empty');
-    	$data['text_search'] = $this->language->get('text_search');
+		$data['text_search'] = $this->language->get('text_search');
 		$data['text_keyword'] = $this->language->get('text_keyword');
 		$data['text_category'] = $this->language->get('text_category');
 		$data['text_sub_category'] = $this->language->get('text_sub_category');
@@ -145,9 +145,9 @@ class ControllerProductSearch extends Controller {
 		$data['text_limit'] = $this->language->get('text_limit');
 
 		$data['entry_search'] = $this->language->get('entry_search');
-    	$data['entry_description'] = $this->language->get('entry_description');
+		$data['entry_description'] = $this->language->get('entry_description');
 
-    	$data['button_search'] = $this->language->get('button_search');
+		$data['button_search'] = $this->language->get('button_search');
 		$data['button_cart'] = $this->language->get('button_cart');
 		$data['button_wishlist'] = $this->language->get('button_wishlist');
 		$data['button_compare'] = $this->language->get('button_compare');
@@ -252,6 +252,7 @@ class ControllerProductSearch extends Controller {
 					'price'       => $price,
 					'special'     => $special,
 					'tax'         => $tax,
+					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 					'rating'      => $result['rating'],
 					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'] . $url)
 				);
@@ -426,8 +427,21 @@ class ControllerProductSearch extends Controller {
 			$pagination->url = $this->url->link('product/search', $url . '&page={page}');
 
 			$data['pagination'] = $pagination->render();
-			
+
 			$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
+
+			// http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
+			if ($page == 1) {
+			    $this->document->addLink($this->url->link('product/search', '', 'SSL'), 'canonical');
+			} elseif ($page == 2) {
+			    $this->document->addLink($this->url->link('product/search', '', 'SSL'), 'prev');
+			} else {
+			    $this->document->addLink($this->url->link('product/search', $url . '&page='. ($page - 1), 'SSL'), 'prev');
+			}
+
+			if ($limit && ceil($product_total / $limit) > $page) {
+			    $this->document->addLink($this->url->link('product/search', $url . '&page='. ($page + 1), 'SSL'), 'next');
+			}
 		}
 
 		$data['search'] = $search;
@@ -445,11 +459,11 @@ class ControllerProductSearch extends Controller {
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
-		
+
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/product/search.tpl')) {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/product/search.tpl', $data));
 		} else {
 			$this->response->setOutput($this->load->view('default/template/product/search.tpl', $data));
 		}
-  	}
+	}
 }

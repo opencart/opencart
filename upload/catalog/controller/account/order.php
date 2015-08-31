@@ -1,4 +1,4 @@
-<?php 
+<?php
 class ControllerAccountOrder extends Controller {
 	private $error = array();
 
@@ -57,7 +57,7 @@ class ControllerAccountOrder extends Controller {
 		}
 
 		$data['orders'] = array();
-		
+
 		$this->load->model('account/order');
 
 		$order_total = $this->model_account_order->getTotalOrders();
@@ -102,17 +102,17 @@ class ControllerAccountOrder extends Controller {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/order_list.tpl', $data));
 		} else {
 			$this->response->setOutput($this->load->view('default/template/account/order_list.tpl', $data));
-		}					
+		}
 	}
 
-	public function info() { 
+	public function info() {
 		$this->load->language('account/order');
 
 		if (isset($this->request->get['order_id'])) {
 			$order_id = $this->request->get['order_id'];
 		} else {
 			$order_id = 0;
-		}	
+		}
 
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/order/info', 'order_id=' . $order_id, 'SSL');
@@ -132,11 +132,11 @@ class ControllerAccountOrder extends Controller {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
 				'href' => $this->url->link('common/home')
-			); 
+			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_account'),
-				'href' => $this->url->link('account/account', '', 'SSL')     	
+				'href' => $this->url->link('account/account', '', 'SSL')
 			);
 
 			$url = '';
@@ -177,27 +177,27 @@ class ControllerAccountOrder extends Controller {
 			$data['column_date_added'] = $this->language->get('column_date_added');
 			$data['column_status'] = $this->language->get('column_status');
 			$data['column_comment'] = $this->language->get('column_comment');
-			
+
 			$data['button_reorder'] = $this->language->get('button_reorder');
 			$data['button_return'] = $this->language->get('button_return');
 			$data['button_continue'] = $this->language->get('button_continue');
 
 			if (isset($this->session->data['error'])) {
 				$data['error_warning'] = $this->session->data['error'];
-				
+
 				unset($this->session->data['error']);
 			} else {
 				$data['error_warning'] = '';
 			}
-			
+
 			if (isset($this->session->data['success'])) {
 				$data['success'] = $this->session->data['success'];
-			
+
 				unset($this->session->data['success']);
 			} else {
 				$data['success'] = '';
 			}
-			
+
 			if ($order_info['invoice_no']) {
 				$data['invoice_no'] = $order_info['invoice_prefix'] . $order_info['invoice_no'];
 			} else {
@@ -278,7 +278,7 @@ class ControllerAccountOrder extends Controller {
 			$data['shipping_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 
 			$data['shipping_method'] = $order_info['shipping_method'];
-			
+
 			$this->load->model('catalog/product');
 			$this->load->model('tool/upload');
 
@@ -297,18 +297,18 @@ class ControllerAccountOrder extends Controller {
 						$value = $option['value'];
 					} else {
 						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
-						
+
 						if ($upload_info) {
 							$value = $upload_info['name'];
 						} else {
 							$value = '';
-						}						
+						}
 					}
 
 					$option_data[] = array(
 						'name'  => $option['name'],
 						'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
-					);					
+					);
 				}
 
 				$product_info = $this->model_catalog_product->getProduct($product['product_id']);
@@ -327,7 +327,7 @@ class ControllerAccountOrder extends Controller {
 					'price'    => $this->currency->format($product['price'] + ($this->config->get('config_tax') ? $product['tax'] : 0), $order_info['currency_code'], $order_info['currency_value']),
 					'total'    => $this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
 					'reorder'  => $reorder,
-					'return'   => $this->url->link('account/return/insert', 'order_id=' . $order_info['order_id'] . '&product_id=' . $product['product_id'], 'SSL')
+					'return'   => $this->url->link('account/return/add', 'order_id=' . $order_info['order_id'] . '&product_id=' . $product['product_id'], 'SSL')
 				);
 			}
 
@@ -352,7 +352,7 @@ class ControllerAccountOrder extends Controller {
 				$data['totals'][] = array(
 					'title' => $total['title'],
 					'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']),
-				);				
+				);
 			}
 
 			$data['comment'] = nl2br($order_info['comment']);
@@ -366,7 +366,7 @@ class ControllerAccountOrder extends Controller {
 				$data['histories'][] = array(
 					'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 					'status'     => $result['status'],
-					'comment'    => nl2br($result['comment'])
+					'comment'    => $result['notify'] ? nl2br($result['comment']) : ''
 				);
 			}
 
@@ -377,13 +377,13 @@ class ControllerAccountOrder extends Controller {
 			$data['content_top'] = $this->load->controller('common/content_top');
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
-			$data['header'] = $this->load->controller('common/header');;
+			$data['header'] = $this->load->controller('common/header');
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/order_info.tpl')) {
 				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/order_info.tpl', $data));
 			} else {
 				$this->response->setOutput($this->load->view('default/template/account/order_info.tpl', $data));
-			}		
+			}
 		} else {
 			$this->document->setTitle($this->language->get('text_order'));
 
@@ -422,16 +422,16 @@ class ControllerAccountOrder extends Controller {
 			$data['content_top'] = $this->load->controller('common/content_top');
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
-			$data['header'] = $this->load->controller('common/header');								
+			$data['header'] = $this->load->controller('common/header');
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
 				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/error/not_found.tpl', $data));
 			} else {
 				$this->response->setOutput($this->load->view('default/template/error/not_found.tpl', $data));
-			}				
+			}
 		}
 	}
-	
+
 	public function reorder() {
 		$this->load->language('account/order');
 
@@ -439,47 +439,47 @@ class ControllerAccountOrder extends Controller {
 			$order_id = $this->request->get['order_id'];
 		} else {
 			$order_id = 0;
-		}	
-		
-		$this->load->model('account/order');			
-		
+		}
+
+		$this->load->model('account/order');
+
 		$order_info = $this->model_account_order->getOrder($order_id);
-			
+
 		if ($order_info) {
 			if (isset($this->request->get['order_product_id'])) {
 				$order_product_id = $this->request->get['order_product_id'];
 			} else {
 				$order_product_id = 0;
 			}
-							
+
 			$order_product_info = $this->model_account_order->getOrderProduct($order_id, $order_product_id);
-			
+
 			if ($order_product_info) {
 				$this->load->model('catalog/product');
-				
+
 				$product_info = $this->model_catalog_product->getProduct($order_product_info['product_id']);
-			
+
 				if ($product_info) {
 					$option_data = array();
-	
+
 					$order_options = $this->model_account_order->getOrderOptions($order_product_info['order_id'], $order_product_id);
-	
+
 					foreach ($order_options as $order_option) {
 						if ($order_option['type'] == 'select' || $order_option['type'] == 'radio' || $order_option['type'] == 'image') {
 							$option_data[$order_option['product_option_id']] = $order_option['product_option_value_id'];
 						} elseif ($order_option['type'] == 'checkbox') {
 							$option_data[$order_option['product_option_id']][] = $order_option['product_option_value_id'];
 						} elseif ($order_option['type'] == 'text' || $order_option['type'] == 'textarea' || $order_option['type'] == 'date' || $order_option['type'] == 'datetime' || $order_option['type'] == 'time') {
-							$option_data[$order_option['product_option_id']] = $order_option['value'];	
+							$option_data[$order_option['product_option_id']] = $order_option['value'];
 						} elseif ($order_option['type'] == 'file') {
 							$option_data[$order_option['product_option_id']] = $this->encryption->encrypt($order_option['value']);
 						}
 					}
-	
+
 					$this->cart->add($order_product_info['product_id'], $order_product_info['quantity'], $option_data);
-					
+
 					$this->session->data['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . $product_info['product_id']), $product_info['name'], $this->url->link('checkout/cart'));
-					
+
 					unset($this->session->data['shipping_method']);
 					unset($this->session->data['shipping_methods']);
 					unset($this->session->data['payment_method']);
@@ -489,7 +489,7 @@ class ControllerAccountOrder extends Controller {
 				}
 			}
 		}
-		
+
 		$this->response->redirect($this->url->link('account/order/info', 'order_id=' . $order_id));
 	}
 }

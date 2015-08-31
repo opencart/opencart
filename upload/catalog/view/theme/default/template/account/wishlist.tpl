@@ -32,8 +32,8 @@
             <td class="text-right"><?php echo $column_action; ?></td>
           </tr>
         </thead>
-        <?php foreach ($products as $product) { ?>
-        <tbody id="wishlist-row<?php echo $product['product_id']; ?>">
+        <tbody>
+          <?php foreach ($products as $product) { ?>
           <tr>
             <td class="text-center"><?php if ($product['thumb']) { ?>
               <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
@@ -53,8 +53,8 @@
             <td class="text-right"><button type="button" onclick="cart.add('<?php echo $product['product_id']; ?>');" data-toggle="tooltip" title="<?php echo $button_cart; ?>" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></button>
               <a href="<?php echo $product['remove']; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-times"></i></a></td>
           </tr>
+          <?php } ?>
         </tbody>
-        <?php } ?>
       </table>
       <?php } else { ?>
       <p><?php echo $text_empty; ?></p>
@@ -65,4 +65,4 @@
       <?php echo $content_bottom; ?></div>
     <?php echo $column_right; ?></div>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

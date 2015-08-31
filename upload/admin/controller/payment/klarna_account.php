@@ -10,7 +10,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 
 		$this->load->model('setting/setting');
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {            
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$status = false;
 
 			foreach ($this->request->post['klarna_account'] as $klarna_account) {
@@ -19,7 +19,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 
 					break;
 				}
-			}			
+			}
 
 			$klarna_data = array(
 				'klarna_account_pclasses' => $this->pclasses,
@@ -35,6 +35,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_all_zones'] = $this->language->get('text_all_zones');
@@ -50,9 +51,9 @@ class ControllerPaymentKlarnaAccount extends Controller {
 		$data['entry_merchant'] = $this->language->get('entry_merchant');
 		$data['entry_secret'] = $this->language->get('entry_secret');
 		$data['entry_server'] = $this->language->get('entry_server');
-		$data['entry_total'] = $this->language->get('entry_total');	
+		$data['entry_total'] = $this->language->get('entry_total');
 		$data['entry_pending_status'] = $this->language->get('entry_pending_status');
-		$data['entry_accepted_status'] = $this->language->get('entry_accepted_status');		
+		$data['entry_accepted_status'] = $this->language->get('entry_accepted_status');
 		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
@@ -74,6 +75,14 @@ class ControllerPaymentKlarnaAccount extends Controller {
 			$data['error_warning'] = '';
 		}
 
+		if (isset($this->session->data['success'])) {
+			$data['success'] = $this->session->data['success'];
+
+			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
+		}
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -90,14 +99,6 @@ class ControllerPaymentKlarnaAccount extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('payment/klarna_account', 'token=' . $this->session->data['token'], 'SSL')
 		);
-
-		if (isset($this->session->data['success'])) {
-			$data['success'] = $this->session->data['success'];
-
-			unset($this->session->data['success']);
-		} else {
-			$data['success'] = '';
-		}
 
 		$data['action'] = $this->url->link('payment/klarna_account', 'token=' . $this->session->data['token'], 'SSL');
 
@@ -160,7 +161,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 		$data['clear'] = $this->url->link('payment/klarna_account/clear', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('payment/klarna_account.tpl', $data));
@@ -173,7 +174,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 
 		$log = new Log('klarna_account.log');
 
-		$country = array(    
+		$country = array(
 			'NOR' => array(
 				'currency' => 1,
 				'country'  => 164,
@@ -346,16 +347,16 @@ class ControllerPaymentKlarnaAccount extends Controller {
 		}
 
 		return $value;
-	}  
+	}
 
 	public function clear() {
 		$this->load->language('payment/klarna_account');
 
 		$file = DIR_LOGS . 'klarna_account.log';
 
-		$handle = fopen($file, 'w+'); 
+		$handle = fopen($file, 'w+');
 
-		fclose($handle); 		
+		fclose($handle);
 
 		$this->session->data['success'] = $this->language->get('text_success');
 

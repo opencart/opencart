@@ -27,30 +27,30 @@ class ControllerPaymentPPPayflow extends Controller {
 		$data['cards'] = array();
 
 		$data['cards'][] = array(
-			'text'  => 'Visa', 
+			'text'  => 'Visa',
 			'value' => '0'
 		);
 
 		$data['cards'][] = array(
-			'text'  => 'MasterCard', 
+			'text'  => 'MasterCard',
 			'value' => '1'
 		);
 
 		$data['cards'][] = array(
-			'text'  => 'Maestro', 
+			'text'  => 'Maestro',
 			'value' => '9'
 		);
 
 		$data['cards'][] = array(
-			'text'  => 'Solo', 
+			'text'  => 'Solo',
 			'value' => 'S'
-		);		
+		);
 
 		$data['months'] = array();
 
 		for ($i = 1; $i <= 12; $i++) {
 			$data['months'][] = array(
-				'text'  => strftime('%B', mktime(0, 0, 0, $i, 1, 2000)), 
+				'text'  => strftime('%B', mktime(0, 0, 0, $i, 1, 2000)),
 				'value' => sprintf('%02d', $i)
 			);
 		}
@@ -59,9 +59,9 @@ class ControllerPaymentPPPayflow extends Controller {
 
 		$data['year_valid'] = array();
 
-		for ($i = $today['year'] - 10; $i < $today['year'] + 1; $i++) {	
+		for ($i = $today['year'] - 10; $i < $today['year'] + 1; $i++) {
 			$data['year_valid'][] = array(
-				'text'  => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)), 
+				'text'  => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)),
 				'value' => strftime('%Y', mktime(0, 0, 0, 1, 1, $i))
 			);
 		}
@@ -71,7 +71,7 @@ class ControllerPaymentPPPayflow extends Controller {
 		for ($i = $today['year']; $i < $today['year'] + 11; $i++) {
 			$data['year_expire'][] = array(
 				'text'  => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)),
-				'value' => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)) 
+				'value' => strftime('%Y', mktime(0, 0, 0, 1, 1, $i))
 			);
 		}
 
@@ -79,7 +79,7 @@ class ControllerPaymentPPPayflow extends Controller {
 			return $this->load->view($this->config->get('config_template') . '/template/payment/pp_payflow.tpl', $data);
 		} else {
 			return $this->load->view('default/template/payment/pp_payflow.tpl', $data);
-		}	
+		}
 	}
 
 	public function send() {
@@ -90,7 +90,7 @@ class ControllerPaymentPPPayflow extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		if (!$this->config->get('pp_payflow_transaction')) {
-			$payment_type = 'A';	
+			$payment_type = 'A';
 		} else {
 			$payment_type = 'S';
 		}
@@ -150,8 +150,6 @@ class ControllerPaymentPPPayflow extends Controller {
 		$json = array();
 
 		if ($response_info['RESULT'] == '0') {
-			$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
-
 			$message = '';
 
 			if (isset($response_info['AVSCODE'])) {
@@ -166,9 +164,9 @@ class ControllerPaymentPPPayflow extends Controller {
 				$message .= 'TRANSACTIONID: ' . $response_info['TRANSACTIONID'] . "\n";
 			}
 
-			$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('pp_payflow_order_status_id'), $message, false);
+			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('pp_payflow_order_status_id'), $message, false);
 
-			$json['success'] = $this->url->link('checkout/success'); 
+			$json['success'] = $this->url->link('checkout/success');
 		} else {
 			switch ($response_info['RESULT']) {
 				case '1':
@@ -188,9 +186,10 @@ class ControllerPaymentPPPayflow extends Controller {
 				default:
 					$json['error'] = $this->language->get('error_general');
 					break;
-			}		
+			}
 		}
 
+		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 }

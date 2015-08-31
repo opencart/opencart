@@ -5,10 +5,10 @@ class ControllerHeader extends Controller {
 		$data['description'] = $this->document->getDescription();
 		$data['links'] = $this->document->getLinks();
 		$data['styles'] = $this->document->getStyles();
-		$data['scripts'] = $this->document->getScripts();		
-		
+		$data['scripts'] = $this->document->getScripts();
+
 		$data['base'] = HTTP_SERVER;
-		
-		return $this->load->view('header.tpl', $data);	
+
+		return $this->load->view('header.tpl', $data);
 	}
 }

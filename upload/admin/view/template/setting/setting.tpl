@@ -1367,6 +1367,11 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-server">
+
+
+            <fieldset>
+              <legend><?php echo $text_captcha; ?></legend>
+
               <div class="form-group">
                 <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_secure; ?>"><?php echo $entry_secure; ?></span></label>
                 <div class="col-sm-10">
@@ -1419,6 +1424,8 @@
                   <textarea name="config_robots" rows="5" placeholder="<?php echo $entry_robots; ?>" id="input-robots" class="form-control"><?php echo $config_robots; ?></textarea>
                 </div>
               </div>
+
+                      </fieldset>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_url; ?>"><?php echo $entry_seo_url; ?></span></label>
                 <div class="col-sm-10">

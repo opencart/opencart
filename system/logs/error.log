@@ -1,0 +1,1 @@
+2015-08-20 0:08:18 - PHP Notice:  Undefined index: payment_method in /usr/share/nginx/html/catalog/controller/payment/cod.php on line 20

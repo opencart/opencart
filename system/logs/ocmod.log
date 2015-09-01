@@ -1,0 +1,138 @@
+2015-07-31 9:12:29 - MOD: Modification Default
+FILE: system/engine/action.php
+REGEX: ~(require|include)(_once)?\(([^)]+)~
+LINE: 58
+FILE: system/engine/loader.php
+REGEX: ~(require|include)(_once)?\(([^)]+)~
+LINE: 20
+LINE: 37
+LINE: 54
+LINE: 65
+FILE: system/library/config.php
+REGEX: ~(require|include)(_once)?\(([^)]+)~
+LINE: 23
+FILE: system/library/language.php
+REGEX: ~(require|include)(_once)?\(([^)]+)~
+LINE: 21
+LINE: 27
+----------------------------------------------------------------
+MOD: Back to top
+FILE: catalog/view/theme/default/template/common/header.tpl
+CODE: </head>
+LINE: 42
+FILE: catalog/view/theme/octheme_1093/template/common/header.tpl
+CODE: </head>
+LINE: 42
+FILE: catalog/view/theme/default/template/common/footer.tpl
+CODE: </body>
+LINE: 71
+FILE: catalog/view/theme/octheme_1093/template/common/footer.tpl
+CODE: </body>
+LINE: 71
+----------------------------------------------------------------
+MOD: Custom background-color Admin page
+FILE: admin/controller/setting/setting.php
+CODE: $data['heading_title'] = $this->language->get('heading_title');
+LINE: 78
+CODE: $this->load->model('localisation/return_status');
+LINE: 1248
+FILE: admin/language/english/setting/setting.php
+CODE: <?php
+LINE: 54
+FILE: admin/view/template/setting/setting.tpl
+CODE: <li><a href="#tab-ftp" data-toggle="tab"><?php echo $tab_ftp; ?></a></li>
+LINE: 41
+CODE: <div class="tab-pane" id="tab-ftp">
+LINE: 1522
+CODE: //--></script></div>
+LINE: 1981
+----------------------------------------------------------------
+MOD: Custom background-color FRONT PAGE
+FILE: catalog/controller/common/header.php
+CODE: $this->load->language('common/header');
+LINE: 106
+CODE: <?php echo $google_analytics; ?>
+LINE: 178
+CODE: <?php echo $google_analytics; ?>
+LINE: 178
+----------------------------------------------------------------
+MOD: Followme
+CODE: $data['entry_google_analytics'] = $this->language->get('entry_google_analytics');
+LINE: 224
+CODE: $data['header'] = $this->load->controller('common/header');
+LINE: 1656
+CODE: <?php
+LINE: 18
+CODE: <legend><?php echo $text_product; ?></legend>
+LINE: 351
+FILE: catalog/controller/common/footer.php
+CODE: $this->load->language('common/footer');
+LINE: 23
+FILE: catalog/language/english/common/footer.php
+CODE: <?php
+LINE: 9
+CODE: <p><?php echo $powered; ?></p>
+LINE: 52
+CODE: <p><?php echo $powered; ?></p>
+LINE: 52
+----------------------------------------------------------------
+MOD: OC THEME
+FILE: catalog/view/theme/default/template/module/featured.tpl
+CODE: <h3><?php echo $heading_title; ?></h3>
+LINE: 0
+FILE: catalog/view/theme/octheme_1093/template/module/featured.tpl
+CODE: <h3><?php echo $heading_title; ?></h3>
+LINE: 0
+FILE: catalog/view/theme/default/template/module/special.tpl
+CODE: <h3><?php echo $heading_title; ?></h3>
+LINE: 0
+FILE: catalog/view/theme/octheme_1093/template/module/special.tpl
+CODE: <h3><?php echo $heading_title; ?></h3>
+LINE: 0
+FILE: catalog/view/theme/default/template/module/latest.tpl
+CODE: <h3><?php echo $heading_title; ?></h3>
+LINE: 0
+FILE: catalog/view/theme/octheme_1093/template/module/latest.tpl
+CODE: <h3><?php echo $heading_title; ?></h3>
+LINE: 0
+FILE: catalog/view/theme/default/template/module/bestseller.tpl
+CODE: <h3><?php echo $heading_title; ?></h3>
+LINE: 0
+FILE: catalog/view/theme/octheme_1093/template/module/bestseller.tpl
+CODE: <h3><?php echo $heading_title; ?></h3>
+LINE: 0
+FILE: catalog/view/theme/default/template/module/featuredmanufacturer.tpl
+CODE: <h3><?php echo $heading_title; ?></h3>
+LINE: 0
+FILE: catalog/view/theme/octheme_1093/template/module/featuredmanufacturer.tpl
+CODE: <h3><?php echo $heading_title; ?></h3>
+LINE: 0
+FILE: catalog/view/theme/default/template/module/category.tpl
+CODE: <div class="list-group">
+LINE: 3
+FILE: catalog/view/theme/octheme_1093/template/module/category.tpl
+CODE: <div class="list-group">
+LINE: 3
+FILE: catalog/view/theme/default/template/module/information.tpl
+CODE: <div class="sidebar">
+LINE: 3
+FILE: catalog/view/theme/octheme_1093/template/module/information.tpl
+CODE: <div class="sidebar">
+LINE: 3
+FILE: catalog/view/theme/default/template/module/account.tpl
+CODE: <div class="list-group">
+LINE: 3
+FILE: catalog/view/theme/octheme_1093/template/module/account.tpl
+CODE: <div class="list-group">
+LINE: 3
+FILE: catalog/view/theme/default/template/module/affiliate.tpl
+CODE: <div class="list-group">
+LINE: 3
+FILE: catalog/view/theme/octheme_1093/template/module/affiliate.tpl
+CODE: <div class="list-group">
+LINE: 3
+CODE: foreach ($children as $child) {
+LINE: 186
+CODE: 'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
+LINE: 197
+----------------------------------------------------------------

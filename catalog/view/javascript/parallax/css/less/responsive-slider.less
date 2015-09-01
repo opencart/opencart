@@ -1,0 +1,199 @@
+.responsive-slider {
+	width: 100%;
+  position: relative;
+
+  [data-animate] {
+    opacity: 0;
+  }
+	
+  .slides {
+    position: relative;
+    overflow: hidden;
+    
+  	ul {
+  		list-style-type: none;
+  		padding: 0;
+  		margin: 0;
+  		white-space: nowrap;
+      font-size: 0;
+		
+  		li {
+  			display: inline-block;
+        max-width: 100%;
+      
+        .slide-body {
+          display: inline-block;
+          position: relative;
+          max-width: 100%;
+          font-size: 14px;
+          
+          img {
+            max-width: 100%;
+          }
+          
+          .caption {
+            position: absolute;
+            color: #fff;
+            //font-family: 'Economica', sans-serif;
+            text-shadow: 0px 1px 0px rgba(0, 0, 0, 1);
+            
+            &.header {
+              top: 28%;
+              left: 8%;
+              
+              h2 {
+                font-size: 40px;
+                i {
+                  font-size: 35px;
+                }
+
+                @media (min-width: 481px) and (max-width: 767px) {
+                  font-size: 25px;
+                  i {
+                    font-size: 20px;
+                  }                  
+                }
+
+                @media (max-width: 480px) {
+                  font-size: 16px;
+                  i {
+                    font-size: 14px;
+                  } 
+                }
+              }
+            }
+            
+            &.sub {
+              bottom: -8px;
+              right: -20px;
+              font-weight: bold;
+
+              @media (min-width: 481px) and (max-width: 767px) {
+                font-size: 11px;
+                bottom: 0px;
+                right: -10px;
+              }
+
+              @media (max-width: 480px) {
+                font-size: 10px;
+                bottom: 5px;
+                right: 0;
+              }
+            }
+
+            &.img-html5 {
+              top: 13%;
+              right: 8%;
+              width: 30%;
+
+              img {
+                max-width: 100%;
+              }
+            }
+
+            &.img-css3 {
+              top: 57%;
+              right: 12%;
+              width: 10%;
+
+              img {
+                max-width: 100%;
+              }
+            }
+
+            &.img-bootstrap {
+              top: 48%;
+              right: 12%;
+              width: 11%;
+
+              img {
+                max-width: 100%;
+              }
+            }
+
+            &.img-twitter {
+              top: 19%;
+              right: 12%;
+              width: 11%;
+
+              img {
+                max-width: 100%;
+              }
+            }
+
+            &.img-jquery {
+              top: 66%;
+              right: 12%;
+              width: 33%;
+
+              img {
+                max-width: 100%;
+              }
+            }
+          }
+        }
+  		}
+  	}
+  }
+  
+  .slider-control {
+    position: absolute;
+    font-size: 20px;
+    color: #000;
+    top: 40%;
+    background-color: #fff;
+    padding: 10px;
+    
+    &.left {
+      left: 0;
+      padding-left: 0;
+      -webkit-border-radius: 0px 6px 6px 0px;
+      border-radius: 0px 6px 6px 0px;
+      
+      &:hover {
+        text-decoration: none;
+        padding-left: 10px;
+      }
+    }
+    
+    &.right {
+      right: 0;
+      padding-right: 0;
+      -webkit-border-radius: 6px 0px 0px 6px;
+      border-radius: 6px 0px 0px 6px;
+      
+      &:hover {
+        text-decoration: none;
+        padding-right: 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      &.left, &.right {
+        display: none;
+      }
+    }
+  }
+  
+  .pages {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    
+    .page {
+      display: inline-block;
+      color: transparent;
+      width: 5px;
+      height: 5px;
+      border: 3px solid #fff;
+      border-radius: 50%;
+      opacity: 0.5;
+      
+      &.active {
+        opacity: 1;
+      }
+    }
+  }
+}

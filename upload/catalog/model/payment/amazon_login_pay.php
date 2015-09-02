@@ -67,9 +67,9 @@ class ModelPaymentAmazonLoginPay extends Model {
 		$update_paramter_data['OrderReferenceAttributes.SellerOrderAttributes.SellerOrderId'] = $order_id;
 		$update_paramter_data['OrderReferenceAttributes.SellerOrderAttributes.StoreName'] = $this->config->get('config_name');
 		if ($this->config->get('amazon_login_pay_marketplace') == 'us') {
-			$update_paramter_data['OrderReferenceAttributes.OrderTotal.PlatformId'] = 'A3GK1RS09H3A7D';
+			$update_paramter_data['OrderReferenceAttributes.PlatformId'] = 'A3GK1RS09H3A7D';
 		} else {
-			$update_paramter_data['OrderReferenceAttributes.OrderTotal.PlatformId'] = 'A3EIRX2USI2KJV';
+			$update_paramter_data['OrderReferenceAttributes.PlatformId'] = 'A3EIRX2USI2KJV';
 		}
 
 		$address_paramter_data['AddressConsentToken'] = $this->session->data['access_token'];

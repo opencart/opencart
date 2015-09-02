@@ -12,7 +12,7 @@
 			<?php } ?>
 			<div style="display: inline-block; width: 400px; height: 185px;" id="readOnlyAddressBookWidgetDiv"></div>
 			<br>
-			<?php if($amazon_login_pay_test){ ?>
+			<?php if(isset($amazon_login_pay_test)){ ?>
 			<label>Debug Error Code     :</label>
 			<div id="errorCode_wallet"></div>
 			<br>

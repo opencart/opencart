@@ -6,7 +6,6 @@ html, body {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 12px;
 	color: #666666;
-	line-height: 18px;
 	text-rendering: optimizeLegibility;
 }
 h1, h2, h3, h4, h5, h6, p {
@@ -462,7 +461,12 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .pagination {
 	margin: 0;
 }
-
+.form-group {
+    border-bottom: 1px solid #ededed;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-bottom: 0;
+}
 /* Panels */
 .panel {
 	border-radius: 0px;
@@ -605,7 +609,6 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .jqvmap-label {
 	z-index: 999;
 }
-
 .alert {
 	overflow: auto;
 }
@@ -620,3 +623,80 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
     visibility: unset;
 }
 /* Menu Fix For System -> Layout -> Banner */
+
+/* Bootstrap Override */
+body {
+	font-size: 12px;
+}
+a {
+	color: #1e91cf;
+}
+a:hover, a:focus {
+    color: #14628c;
+}
+.img-rounded {
+	  border-radius: 5px;
+}
+.img-thumbnail {
+	  border-radius: 3px;
+}
+hr {
+	margin-top: 17px;
+	margin-bottom: 17px;
+}
+h1, .h1, h2, .h2, h3, .h3 {
+  margin-top: 17px;
+  margin-bottom: 8.5px;
+}
+h4, .h4, h5, .h5, h6, .h6 {
+  margin-top: 8.5px;
+  margin-bottom: 8.5px;
+}
+h1, .h1 {
+  font-size: 31px;
+}
+h2, .h2 {
+  font-size: 25px;
+}
+h3, .h3 {
+  font-size: 21px;
+}
+h4, .h4 {
+	font-size: 15px;
+}
+h5, .h5 {
+	font-size: 12px;
+}
+h6, .h6 {
+	font-size: 11px;
+}
+p {
+	margin: 0 0 8.5px;
+}
+.lead {
+	margin-bottom: 17px;
+	font-size: 13px;
+}
+@media (min-width: 768px) {
+	.lead {
+    	font-size: 18px;
+	}
+}
+small, .small {
+	font-size: 91%;
+}
+mark, .mark {
+	background-color: #fef8f4;
+}
+.text-primary {
+	color: #1e91cf;
+}
+a.text-primary:hover, a.text-primary:focus {
+	color: #1872a2;
+}
+.text-success {
+	color: #8fbb6c;
+}
+a.text-success:hover, a.text-success:focus {
+	color: #75a74d;
+}

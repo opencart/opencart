@@ -171,6 +171,10 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			}
 		}
 
+		if (!isset($this->session->data['lpa']['shipping_method']) || !isset($this->session->data['lpa']['address'])) {
+			$this->response->redirect($this->url->link('payment/amazon_login_pay/address', '', 'SSL'));
+		}
+
 		$total_data = array();
 		$total = 0;
 		$taxes = $this->cart->getTaxes();
@@ -179,12 +183,6 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$lpa_tax = array();
 
 		$sort_order = array();
-
-		if (isset($this->session->data['lpa']['shipping_method'])) {
-			$this->session->data['shipping_method'] = $this->session->data['lpa']['shipping_method'];
-		} else {
-			$this->response->redirect($this->url->link('payment/amazon_login_pay/address', '', 'SSL'));
-		}
 
 		$results = $this->model_extension_extension->getExtensions('total');
 
@@ -788,6 +786,10 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			}
 
 			$this->session->data['lpa']['shipping_method'] = $this->session->data['lpa']['shipping_methods'][$shipping_method[0]]['quote'][$shipping_method[1]];
+			$this->session->data['shipping_method'] = $this->session->data['lpa']['shipping_method'];
+			$this->session->data['shipping_address'] = $this->session->data['lpa']['address'];
+			$this->session->data['shipping_country_id'] = $this->session->data['lpa']['address']['country_id'];
+			$this->session->data['shipping_zone_id'] = $this->session->data['lpa']['address']['zone_id'];
 
 			$json['redirect'] = $this->url->link('payment/amazon_login_pay/paymentMethod', '', 'SSL');
 		} else {

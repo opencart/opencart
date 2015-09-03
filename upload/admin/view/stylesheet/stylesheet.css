@@ -1148,3 +1148,120 @@ border-color: #7aae50; }
 .dropdown-menu .divider {
   margin: 7.5px 0;
 }
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+  background-color: #1e91cf;
+}
+.dropdown-header {
+  font-size: 11px;
+}
+.btn-group-vertical > .btn:first-child:not(:last-child) {
+  border-top-right-radius: 3px;
+}
+.btn-group-vertical > .btn:last-child:not(:first-child) {
+  border-bottom-left-radius: 3px;
+}
+.input-group-addon {
+  padding: 8px 13px;
+  font-size: 12px;
+  border-radius: 3px;
+}
+.input-group-addon.input-sm, .input-group-sm > .form-control.input-group-addon, .input-group-sm > .input-group-addon.input-group-addon, .input-group-sm > .input-group-btn > .btn.input-group-addon {
+  padding: 4px 9px;
+  font-size: 11px;
+  border-radius: 2px;
+}
+.input-group-addon.input-lg, .input-group-lg > .form-control.input-group-addon, .input-group-lg > .input-group-addon.input-group-addon, .input-group-lg > .input-group-btn > .btn.input-group-addon {
+  padding: 9px 18px;
+  font-size: 15px;
+  border-radius: 5px;
+}
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+  border-color: #1e91cf;
+}
+.nav .nav-divider {
+  margin: 7.5px 0;
+}
+.nav-tabs > li > a {
+  border-radius: 3px 3px 0 0;
+}
+.nav-pills > li > a {
+  border-radius: 3px;
+}
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+    background-color: #1e91cf;
+}
+.nav-tabs-justified > li > a, .nav-tabs.nav-justified > li > a {
+  border-radius: 3px;
+}
+@media (min-width: 768px) {
+ .nav-tabs-justified > li > a, .nav-tabs.nav-justified > li > a {
+   border-radius: 3px 3px 0 0;
+ }
+}
+.navbar {
+  margin-bottom: 17px;
+}
+@media (min-width: 768px) {
+ .navbar {
+   border-radius: 3px;
+}
+}
+.navbar-brand {
+  padding: 16.5px 15px;
+  font-size: 15px;
+  line-height: 17px;
+}
+.navbar-toggle {
+  border-radius: 3px; }
+
+
+.navbar-nav {
+	margin: 8.25px -15px;
+}
+
+.navbar-nav > li > a {
+	line-height: 17px;
+}
+
+ @media (max-width: 767px) {
+	 .navbar-nav .open .dropdown-menu > li > a {
+        line-height: 17px;
+	 }
+}
+
+@media (min-width: 768px) {
+	.navbar-nav > li > a {
+	  padding-top: 16.5px;
+	  padding-bottom: 16.5px;
+  }
+ }
+ .navbar-form {
+  margin-top: 7.5px;
+  margin-bottom: 7.5px;
+}
+
+.navbar-fixed-bottom .navbar-nav > li > .dropdown-menu {
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+.navbar-btn {
+  margin-top: 7.5px;
+  margin-bottom: 7.5px;
+}
+.navbar-btn.btn-sm, .btn-group-sm > .btn.navbar-btn {
+	margin-top: 12px;
+	margin-bottom: 12px;
+}
+
+.navbar-text {
+	margin-top: 16.5px;
+	margin-bottom: 16.5px;
+}
+.breadcrumb {
+	margin-bottom: 17px;
+	border-radius: 3px;
+}
+.pagination {
+	margin: 17px 0;
+	border-radius: 3px;
+}

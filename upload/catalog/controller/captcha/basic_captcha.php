@@ -13,6 +13,8 @@ class ControllerCaptchaBasicCaptcha extends Controller {
 			$data['error_captcha'] = '';
 		}
 
+		$data['route'] = $this->request->get['route']; 
+
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/captcha/basic_captcha.tpl')) {
 			return $this->load->view($this->config->get('config_template') . '/template/captcha/basic_captcha.tpl', $data);
 		} else {

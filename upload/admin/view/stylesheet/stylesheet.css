@@ -1049,3 +1049,102 @@ border-color: #7aae50; }
 .btn-success .badge {
   color: #8fbb6c;
 }
+.btn-info {
+  border-color: #39b3d7; }
+
+.btn-info:focus, .btn-info.focus {
+	border-color: #186278;
+}
+.btn-info:hover {
+  border-color: #2390b0;
+}
+.btn-info:active, .btn-info.active, .open > .btn-info.dropdown-toggle {
+  border-color: #2390b0;
+}
+.btn-info:active:hover, .btn-info.active:hover, .open > .btn-info.dropdown-toggle:hover, .btn-info:active:focus, .btn-info.active:focus, .open > .btn-info.dropdown-toggle:focus, .btn-info:active.focus, .btn-info.active.focus, .open > .btn-info.dropdown-toggle.focus {
+  border-color: #186278;
+}
+.btn-info.disabled, .btn-info[disabled], fieldset[disabled] .btn-info, .btn-info.disabled:hover, .btn-info[disabled]:hover, fieldset[disabled] .btn-info:hover, .btn-info.disabled:focus, .btn-info[disabled]:focus, fieldset[disabled] .btn-info:focus, .btn-info.disabled.focus, .btn-info[disabled].focus, fieldset[disabled] .btn-info.focus, .btn-info.disabled:active, .btn-info[disabled]:active, fieldset[disabled] .btn-info:active, .btn-info.disabled.active, .btn-info[disabled].active, fieldset[disabled] .btn-info.active {
+  border-color: #39b3d7;
+}
+.btn-warning {
+  background-color: #f38733;
+  border-color: #ef710e;
+}
+.btn-warning:focus, .btn-warning.focus {
+  background-color: #e66c0e;
+  border-color: #773807;
+}
+.btn-warning:hover {
+  background-color: #e66c0e;
+  border-color: #b5550b;
+}
+.btn-warning:active, .btn-warning.active, .open > .btn-warning.dropdown-toggle {
+  background-color: #e66c0e;
+  border-color: #b5550b;
+}
+.btn-warning:active:hover, .btn-warning.active:hover, .open > .btn-warning.dropdown-toggle:hover, .btn-warning:active:focus, .btn-warning.active:focus, .open > .btn-warning.dropdown-toggle:focus, .btn-warning:active.focus, .btn-warning.active.focus, .open > .btn-warning.dropdown-toggle.focus {
+  background-color: #c45c0c;
+  border-color: #773807;
+}
+.btn-warning.disabled, .btn-warning[disabled], fieldset[disabled] .btn-warning, .btn-warning.disabled:hover, .btn-warning[disabled]:hover, fieldset[disabled] .btn-warning:hover, .btn-warning.disabled:focus, .btn-warning[disabled]:focus, fieldset[disabled] .btn-warning:focus, .btn-warning.disabled.focus, .btn-warning[disabled].focus, fieldset[disabled] .btn-warning.focus, .btn-warning.disabled:active, .btn-warning[disabled]:active, fieldset[disabled] .btn-warning:active, .btn-warning.disabled.active, .btn-warning[disabled].active, fieldset[disabled] .btn-warning.active {
+  background-color: #f38733;
+  border-color: #ef710e;
+}
+.btn-warning .badge {
+  color: #f38733;
+}
+.btn-danger {
+  background-color: #f56b6b;
+  border-color: #f24545;
+}
+.btn-danger:focus, .btn-danger.focus {
+  background-color: #f23b3b;
+  border-color: #ac0c0c;
+}
+.btn-danger:focus, .btn-danger.focus {
+  background-color: #f23b3b;
+  border-color: #ac0c0c;
+}
+.btn-danger:active, .btn-danger.active, .open > .btn-danger.dropdown-toggle {
+	background-color: #f23b3b;
+	border-color: #ea1010;
+}
+.btn-danger:active:hover, .btn-danger.active:hover, .open > .btn-danger.dropdown-toggle:hover, .btn-danger:active:focus, .btn-danger.active:focus, .open > .btn-danger.dropdown-toggle:focus, .btn-danger:active.focus, .btn-danger.active.focus, .open > .btn-danger.dropdown-toggle.focus {
+	background-color: #f01a1a;
+	border-color: #ac0c0c;
+}
+.btn-danger.disabled, .btn-danger[disabled], fieldset[disabled] .btn-danger, .btn-danger.disabled:hover, .btn-danger[disabled]:hover, fieldset[disabled] .btn-danger:hover, .btn-danger.disabled:focus, .btn-danger[disabled]:focus, fieldset[disabled] .btn-danger:focus, .btn-danger.disabled.focus, .btn-danger[disabled].focus, fieldset[disabled] .btn-danger.focus, .btn-danger.disabled:active, .btn-danger[disabled]:active, fieldset[disabled] .btn-danger:active, .btn-danger.disabled.active, .btn-danger[disabled].active, fieldset[disabled] .btn-danger.active {
+  background-color: #f56b6b;
+  border-color: #f24545; }
+
+.btn-danger .badge {
+  color: #f56b6b;
+}
+.btn-link {
+  color: #1e91cf;
+}
+.btn-link:hover, .btn-link:focus {
+  color: #14628c;
+}
+.btn-lg, .btn-group-lg > .btn {
+  padding: 9px 18px;
+  font-size: 15px;
+  border-radius: 5px;
+}
+.btn-sm, .btn-group-sm > .btn {
+  padding: 4px 9px;
+  font-size: 11px;
+  border-radius: 2px;
+}
+.btn-xs, .btn-group-xs > .btn {
+  font-size: 11px;
+  border-radius: 2px;
+}
+.dropdown-menu {
+  font-size: 12px;
+  border-radius: 3px;
+}
+.dropdown-menu .divider {
+  margin: 7.5px 0;
+}

@@ -14,6 +14,7 @@ class ControllerCommonHeader extends Controller {
 		if (!is_file($file)) {
 			$scss = new Scssc();
 			$scss->setImportPaths(DIR_APPLICATION . 'view/stylesheet/sass/');
+
 			$output = $scss->compile('@import "_bootstrap.scss"');
 
 			$handle = fopen($file, 'w');

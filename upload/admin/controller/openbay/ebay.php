@@ -1804,6 +1804,18 @@ class ControllerOpenbayEbay extends Controller {
 					$data['sku'] = $product_info['sku'];
 				}
 
+				if (isset($post['identifier_ean']) && !empty($post['identifier_ean'])){
+					$data['identifier_ean'] = $post['identifier_ean'];
+				}
+
+				if (isset($post['identifier_isbn']) && !empty($post['identifier_isbn'])){
+					$data['identifier_isbn'] = $post['identifier_isbn'];
+				}
+
+				if (isset($post['identifier_upc']) && !empty($post['identifier_upc'])){
+					$data['identifier_upc'] = $post['identifier_upc'];
+				}
+
 				$data['auction_duration'] = $post['duration'];
 				$data['condition'] = (isset($post['condition']) && $post['condition'] != 0 ? $post['condition'] : '');
 				$data['auction_type'] = 'FixedPriceItem';
@@ -2076,6 +2088,18 @@ class ControllerOpenbayEbay extends Controller {
 
 				if (!empty($product_info['sku'])){
 					$data['sku'] = $product_info['sku'];
+				}
+
+				if (isset($post['identifier_ean']) && !empty($post['identifier_ean'])){
+					$data['identifier_ean'] = $post['identifier_ean'];
+				}
+
+				if (isset($post['identifier_isbn']) && !empty($post['identifier_isbn'])){
+					$data['identifier_isbn'] = $post['identifier_isbn'];
+				}
+
+				if (isset($post['identifier_upc']) && !empty($post['identifier_upc'])){
+					$data['identifier_upc'] = $post['identifier_upc'];
 				}
 
 				$data['auction_duration'] = $post['duration'];

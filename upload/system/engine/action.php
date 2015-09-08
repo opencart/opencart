@@ -1,5 +1,5 @@
 <?php
-final class Action {
+class Action {
 	private $file;
 	private $class;
 	private $method;

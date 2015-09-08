@@ -1043,7 +1043,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label"><?php echo $entry_captcha; ?></label>
+                  <label class="col-sm-2 control-label"><?php echo $entry_captcha_page; ?></label>
                   <div class="col-sm-10">
                     <div class="well well-sm" style="height: 150px; overflow: auto;">
                       <?php foreach ($captcha_pages as $captcha_page) { ?>
@@ -1367,6 +1367,69 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-server">
+              <fieldset>
+                <legend><?php echo $text_general; ?></legend>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_maintenance; ?>"><?php echo $entry_maintenance; ?></span></label>
+                    <div class="col-sm-10">
+                      <label class="radio-inline">
+                        <?php if ($config_maintenance) { ?>
+                        <input type="radio" name="config_maintenance" value="1" checked="checked" />
+                        <?php echo $text_yes; ?>
+                        <?php } else { ?>
+                        <input type="radio" name="config_maintenance" value="1" />
+                        <?php echo $text_yes; ?>
+                        <?php } ?>
+                      </label>
+                      <label class="radio-inline">
+                        <?php if (!$config_maintenance) { ?>
+                        <input type="radio" name="config_maintenance" value="0" checked="checked" />
+                        <?php echo $text_no; ?>
+                        <?php } else { ?>
+                        <input type="radio" name="config_maintenance" value="0" />
+                        <?php echo $text_no; ?>
+                        <?php } ?>
+                      </label>
+                   </div>
+                 </div>
+                 <div class="form-group">
+                   <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_url; ?>"><?php echo $entry_seo_url; ?></span></label>
+                   <div class="col-sm-10">
+                     <label class="radio-inline">
+                       <?php if ($config_seo_url) { ?>
+                       <input type="radio" name="config_seo_url" value="1" checked="checked" />
+                       <?php echo $text_yes; ?>
+                       <?php } else { ?>
+                       <input type="radio" name="config_seo_url" value="1" />
+                       <?php echo $text_yes; ?>
+                       <?php } ?>
+                     </label>
+                     <label class="radio-inline">
+                       <?php if (!$config_seo_url) { ?>
+                       <input type="radio" name="config_seo_url" value="0" checked="checked" />
+                       <?php echo $text_no; ?>
+                       <?php } else { ?>
+                       <input type="radio" name="config_seo_url" value="0" />
+                       <?php echo $text_no; ?>
+                       <?php } ?>
+                     </label>
+                   </div>
+                 </div>
+                 <div class="form-group">
+                   <label class="col-sm-2 control-label" for="input-robots"><span data-toggle="tooltip" title="<?php echo $help_robots; ?>"><?php echo $entry_robots; ?></span></label>
+                   <div class="col-sm-10">
+                     <textarea name="config_robots" rows="5" placeholder="<?php echo $entry_robots; ?>" id="input-robots" class="form-control"><?php echo $config_robots; ?></textarea>
+                   </div>
+                 </div>
+                 <div class="form-group">
+                   <label class="col-sm-2 control-label" for="input-compression"><span data-toggle="tooltip" title="<?php echo $help_compression; ?>"><?php echo $entry_compression; ?></span></label>
+                   <div class="col-sm-10">
+                     <input type="text" name="config_compression" value="<?php echo $config_compression; ?>" placeholder="<?php echo $entry_compression; ?>" id="input-compression" class="form-control" />
+                   </div>
+                </div>
+            </fieldset>
+            <fieldset>
+              <legend><?php echo $text_security; ?></legend>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_secure; ?>"><?php echo $entry_secure; ?></span></label>
                 <div class="col-sm-10">
@@ -1385,99 +1448,6 @@
                     <?php echo $text_no; ?>
                     <?php } else { ?>
                     <input type="radio" name="config_secure" value="0" />
-                    <?php echo $text_no; ?>
-                    <?php } ?>
-                  </label>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_shared; ?>"><?php echo $entry_shared; ?></span></label>
-                <div class="col-sm-10">
-                  <label class="radio-inline">
-                    <?php if ($config_shared) { ?>
-                    <input type="radio" name="config_shared" value="1" checked="checked" />
-                    <?php echo $text_yes; ?>
-                    <?php } else { ?>
-                    <input type="radio" name="config_shared" value="1" />
-                    <?php echo $text_yes; ?>
-                    <?php } ?>
-                  </label>
-                  <label class="radio-inline">
-                    <?php if (!$config_shared) { ?>
-                    <input type="radio" name="config_shared" value="0" checked="checked" />
-                    <?php echo $text_no; ?>
-                    <?php } else { ?>
-                    <input type="radio" name="config_shared" value="0" />
-                    <?php echo $text_no; ?>
-                    <?php } ?>
-                  </label>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-robots"><span data-toggle="tooltip" title="<?php echo $help_robots; ?>"><?php echo $entry_robots; ?></span></label>
-                <div class="col-sm-10">
-                  <textarea name="config_robots" rows="5" placeholder="<?php echo $entry_robots; ?>" id="input-robots" class="form-control"><?php echo $config_robots; ?></textarea>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_seo_url; ?>"><?php echo $entry_seo_url; ?></span></label>
-                <div class="col-sm-10">
-                  <label class="radio-inline">
-                    <?php if ($config_seo_url) { ?>
-                    <input type="radio" name="config_seo_url" value="1" checked="checked" />
-                    <?php echo $text_yes; ?>
-                    <?php } else { ?>
-                    <input type="radio" name="config_seo_url" value="1" />
-                    <?php echo $text_yes; ?>
-                    <?php } ?>
-                  </label>
-                  <label class="radio-inline">
-                    <?php if (!$config_seo_url) { ?>
-                    <input type="radio" name="config_seo_url" value="0" checked="checked" />
-                    <?php echo $text_no; ?>
-                    <?php } else { ?>
-                    <input type="radio" name="config_seo_url" value="0" />
-                    <?php echo $text_no; ?>
-                    <?php } ?>
-                  </label>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-file-max-size"><span data-toggle="tooltip" title="<?php echo $help_file_max_size; ?>"><?php echo $entry_file_max_size; ?></span></label>
-                <div class="col-sm-10">
-                  <input type="text" name="config_file_max_size" value="<?php echo $config_file_max_size; ?>" placeholder="<?php echo $entry_file_max_size; ?>" id="input-file-max-size" class="form-control" />
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-file-ext-allowed"><span data-toggle="tooltip" title="<?php echo $help_file_ext_allowed; ?>"><?php echo $entry_file_ext_allowed; ?></span></label>
-                <div class="col-sm-10">
-                  <textarea name="config_file_ext_allowed" rows="5" placeholder="<?php echo $entry_file_ext_allowed; ?>" id="input-file-ext-allowed" class="form-control"><?php echo $config_file_ext_allowed; ?></textarea>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-file-mime-allowed"><span data-toggle="tooltip" title="<?php echo $help_file_mime_allowed; ?>"><?php echo $entry_file_mime_allowed; ?></span></label>
-                <div class="col-sm-10">
-                  <textarea name="config_file_mime_allowed" rows="5" placeholder="<?php echo $entry_file_mime_allowed; ?>" id="input-file-mime-allowed" class="form-control"><?php echo $config_file_mime_allowed; ?></textarea>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_maintenance; ?>"><?php echo $entry_maintenance; ?></span></label>
-                <div class="col-sm-10">
-                  <label class="radio-inline">
-                    <?php if ($config_maintenance) { ?>
-                    <input type="radio" name="config_maintenance" value="1" checked="checked" />
-                    <?php echo $text_yes; ?>
-                    <?php } else { ?>
-                    <input type="radio" name="config_maintenance" value="1" />
-                    <?php echo $text_yes; ?>
-                    <?php } ?>
-                  </label>
-                  <label class="radio-inline">
-                    <?php if (!$config_maintenance) { ?>
-                    <input type="radio" name="config_maintenance" value="0" checked="checked" />
-                    <?php echo $text_no; ?>
-                    <?php } else { ?>
-                    <input type="radio" name="config_maintenance" value="0" />
                     <?php echo $text_no; ?>
                     <?php } ?>
                   </label>
@@ -1507,6 +1477,29 @@
                 </div>
               </div>
               <div class="form-group">
+                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_shared; ?>"><?php echo $entry_shared; ?></span></label>
+                <div class="col-sm-10">
+                  <label class="radio-inline">
+                    <?php if ($config_shared) { ?>
+                    <input type="radio" name="config_shared" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_shared" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                  </label>
+                  <label class="radio-inline">
+                    <?php if (!$config_shared) { ?>
+                    <input type="radio" name="config_shared" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_shared" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-encryption"><span data-toggle="tooltip" title="<?php echo $help_encryption; ?>"><?php echo $entry_encryption; ?></span></label>
                 <div class="col-sm-10">
                   <textarea name="config_encryption" rows="5" placeholder="<?php echo $entry_encryption; ?>" id="input-encryption" class="form-control"><?php echo $config_encryption; ?></textarea>
@@ -1515,12 +1508,30 @@
                   <?php } ?>
                 </div>
               </div>
+            </fieldset>
+            <fieldset>
+              <legend><?php echo $text_upload; ?></legend>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-compression"><span data-toggle="tooltip" title="<?php echo $help_compression; ?>"><?php echo $entry_compression; ?></span></label>
+                <label class="col-sm-2 control-label" for="input-file-max-size"><span data-toggle="tooltip" title="<?php echo $help_file_max_size; ?>"><?php echo $entry_file_max_size; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="config_compression" value="<?php echo $config_compression; ?>" placeholder="<?php echo $entry_compression; ?>" id="input-compression" class="form-control" />
+                  <input type="text" name="config_file_max_size" value="<?php echo $config_file_max_size; ?>" placeholder="<?php echo $entry_file_max_size; ?>" id="input-file-max-size" class="form-control" />
                 </div>
               </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-file-ext-allowed"><span data-toggle="tooltip" title="<?php echo $help_file_ext_allowed; ?>"><?php echo $entry_file_ext_allowed; ?></span></label>
+                <div class="col-sm-10">
+                  <textarea name="config_file_ext_allowed" rows="5" placeholder="<?php echo $entry_file_ext_allowed; ?>" id="input-file-ext-allowed" class="form-control"><?php echo $config_file_ext_allowed; ?></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-file-mime-allowed"><span data-toggle="tooltip" title="<?php echo $help_file_mime_allowed; ?>"><?php echo $entry_file_mime_allowed; ?></span></label>
+                <div class="col-sm-10">
+                  <textarea name="config_file_mime_allowed" rows="5" placeholder="<?php echo $entry_file_mime_allowed; ?>" id="input-file-mime-allowed" class="form-control"><?php echo $config_file_mime_allowed; ?></textarea>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend><?php echo $text_error; ?></legend>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_error_display; ?></label>
                 <div class="col-sm-10">
@@ -1576,6 +1587,7 @@
                   <?php } ?>
                 </div>
               </div>
+              </fieldset>
             </div>
           </div>
         </form>

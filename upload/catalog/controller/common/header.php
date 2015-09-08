@@ -1,13 +1,30 @@
 <?php
 class ControllerCommonHeader extends Controller {
 	public function index() {
-		$data['title'] = $this->document->getTitle();
+		// Analytics
+		$this->load->model('extension/extension');
+
+		$data['analytics'] = array();
+
+		$analytics = $this->model_extension_extension->getExtensions('analytics');
+
+		foreach ($analytics as $analytic) {
+			if ($this->config->get($analytic['code'] . '_status')) {
+				$data['analytics'][] = $this->load->controller('analytics/' . $analytic['code']);
+			}
+		}
 
 		if ($this->request->server['HTTPS']) {
 			$server = $this->config->get('config_ssl');
 		} else {
 			$server = $this->config->get('config_url');
 		}
+
+		if (is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
+			$this->document->addLink($server . 'image/' . $this->config->get('config_icon'), 'icon');
+		}
+
+		$data['title'] = $this->document->getTitle();
 
 		$data['base'] = $server;
 		$data['description'] = $this->document->getDescription();
@@ -18,19 +35,7 @@ class ControllerCommonHeader extends Controller {
 		$data['lang'] = $this->language->get('code');
 		$data['direction'] = $this->language->get('direction');
 
-		if ($this->config->get('config_google_analytics_status')) {
-			$data['google_analytics'] = html_entity_decode($this->config->get('config_google_analytics'), ENT_QUOTES, 'UTF-8');
-		} else {
-			$data['google_analytics'] = '';
-		}
-
 		$data['name'] = $this->config->get('config_name');
-
-		if (is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
-			$data['icon'] = $server . 'image/' . $this->config->get('config_icon');
-		} else {
-			$data['icon'] = '';
-		}
 
 		if (is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
 			$data['logo'] = $server . 'image/' . $this->config->get('config_logo');

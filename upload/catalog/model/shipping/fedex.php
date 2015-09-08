@@ -21,6 +21,14 @@ class ModelShippingFedex extends Model {
 			$weight = $this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->config->get('fedex_weight_class_id'));
 			$weight_code = strtoupper($this->weight->getUnit($this->config->get('fedex_weight_class_id')));
 
+			if ($weight_code == 'KGS') {
+				$weight_code = 'KG';
+			}
+
+			if ($weight_code == 'LBS') {
+				$weight_code = 'LB';
+			}
+
 			$date = time();
 
 			$day = date('l', $date);
@@ -155,7 +163,11 @@ class ModelShippingFedex extends Model {
 			$dom = new DOMDocument('1.0', 'UTF-8');
 			$dom->loadXml($response);
 
-			if ($dom->getElementsByTagName('HighestSeverity')->item(0)->nodeValue == 'FAILURE' || $dom->getElementsByTagName('HighestSeverity')->item(0)->nodeValue == 'ERROR') {
+			if ($dom->getElementsByTagName('faultcode')->length > 0) {
+    			$error = $dom->getElementsByTagName('cause')->item(0)->nodeValue;
+
+    			$this->log->write('FEDEX :: ' . $response);
+			} elseif ($dom->getElementsByTagName('HighestSeverity')->item(0)->nodeValue == 'FAILURE' || $dom->getElementsByTagName('HighestSeverity')->item(0)->nodeValue == 'ERROR') {
 				$error = $dom->getElementsByTagName('HighestSeverity')->item(0)->nodeValue;
 
 				$this->log->write('FEDEX :: ' . $response);

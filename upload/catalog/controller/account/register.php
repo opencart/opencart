@@ -313,6 +313,13 @@ class ControllerAccountRegister extends Controller {
 			$data['newsletter'] = '';
 		}
 
+		// Captcha
+		if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('register', $this->config->get('config_captcha_page'))) {
+			$data['captcha'] = $this->load->controller('captcha/' . $this->config->get('config_captcha'), $this->error);
+		} else {
+			$data['captcha'] = '';
+		}
+
 		if ($this->config->get('config_account_id')) {
 			$this->load->model('catalog/information');
 
@@ -416,6 +423,15 @@ class ControllerAccountRegister extends Controller {
 
 		if ($this->request->post['confirm'] != $this->request->post['password']) {
 			$this->error['confirm'] = $this->language->get('error_confirm');
+		}
+
+		// Captcha
+		if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('register', $this->config->get('config_captcha_page'))) {
+			$captcha = $this->load->controller('captcha/' . $this->config->get('config_captcha') . '/validate');
+
+			if ($captcha) {
+				$this->error['captcha'] = $captcha;
+			}
 		}
 
 		// Agree to terms

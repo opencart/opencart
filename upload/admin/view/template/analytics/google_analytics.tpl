@@ -31,6 +31,9 @@
             <label class="col-sm-2 control-label" for="input-code"><?php echo $entry_code; ?></label>
             <div class="col-sm-10">
               <textarea name="google_analytics_code" rows="5" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control"><?php echo $google_analytics_code; ?></textarea>
+              <?php if ($error_code) { ?>
+              <div class="text-danger"><?php echo $error_code; ?></div>
+              <?php } ?>
             </div>
           </div>
           <div class="form-group">

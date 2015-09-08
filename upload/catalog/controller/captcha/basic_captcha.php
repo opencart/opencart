@@ -3,6 +3,8 @@ class ControllerCaptchaBasicCaptcha extends Controller {
 	public function index($error = array()) {
 		$this->load->language('captcha/basic_captcha');
 
+		$data['heading_title'] = $this->language->get('heading_title');
+
 		$data['entry_captcha'] = $this->language->get('entry_captcha');
 
 		if (isset($error['captcha'])) {
@@ -10,6 +12,8 @@ class ControllerCaptchaBasicCaptcha extends Controller {
 		} else {
 			$data['error_captcha'] = '';
 		}
+
+		$data['route'] = $this->request->get['route']; 
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/captcha/basic_captcha.tpl')) {
 			return $this->load->view($this->config->get('config_template') . '/template/captcha/basic_captcha.tpl', $data);

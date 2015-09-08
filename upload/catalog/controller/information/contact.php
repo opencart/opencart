@@ -89,6 +89,7 @@ class ControllerInformationContact extends Controller {
 		$data['store'] = $this->config->get('config_name');
 		$data['address'] = nl2br($this->config->get('config_address'));
 		$data['geocode'] = $this->config->get('config_geocode');
+		$data['geocode_hl'] = $this->config->get('config_language');
 		$data['telephone'] = $this->config->get('config_telephone');
 		$data['fax'] = $this->config->get('config_fax');
 		$data['open'] = nl2br($this->config->get('config_open'));
@@ -141,7 +142,11 @@ class ControllerInformationContact extends Controller {
 		}
 
 		// Captcha
-		$data['captcha'] = $this->load->controller('captcha/' . $this->config->get('config_captcha'), $this->error);
+		if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('contact', $this->config->get('config_captcha_page'))) {
+			$data['captcha'] = $this->load->controller('captcha/' . $this->config->get('config_captcha'), $this->error);
+		} else {
+			$data['captcha'] = '';
+		}
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -170,10 +175,13 @@ class ControllerInformationContact extends Controller {
 			$this->error['enquiry'] = $this->language->get('error_enquiry');
 		}
 
-		$captcha = $this->load->controller('captcha/' . $this->config->get('config_captcha') . '/validate');
+		// Captcha
+		if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('contact', $this->config->get('config_captcha_page'))) {
+			$captcha = $this->load->controller('captcha/' . $this->config->get('config_captcha') . '/validate');
 
-		if ($captcha) {
-			$this->error['captcha'] = $captcha;
+			if ($captcha) {
+				$this->error['captcha'] = $captcha;
+			}
 		}
 
 		return !$this->error;

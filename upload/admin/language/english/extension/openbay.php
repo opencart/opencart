@@ -101,6 +101,7 @@ $_['error_mbstring']               		= 'PHP library "mb strings" is not enabled.
 $_['error_ftpconnect']             		= 'PHP FTP functions are not enabled. Contact your hosting provider.';
 $_['error_oc_version']             		= 'Your version of OpenCart is not tested to work with this module. You may experience problems.';
 $_['error_fopen']             			= 'PHP function "fopen" is disabled by your host - you will be unable to import images when importing products';
+$_['lang_error_vqmod']             		= 'Your vqmod folder contains older OpenBay Pro files - these need to be removed!';
 
 // Help
 $_['help_ftp_username']           		= 'Use the FTP username from your host';

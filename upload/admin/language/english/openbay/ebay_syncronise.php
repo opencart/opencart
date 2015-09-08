@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']           	= 'Syncronise';
+$_['heading_title']           	= 'Synchronise';
 $_['text_openbay']              = 'OpenBay Pro';
 $_['text_ebay']                 = 'eBay';
 

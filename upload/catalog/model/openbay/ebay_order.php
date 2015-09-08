@@ -138,30 +138,6 @@ class ModelOpenbayEbayOrder extends Model{
 		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_method` = '" . $this->db->escape($order->payment->method) . "', `total` = '" . (double)$order->order->total . "', `date_modified` = NOW() WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
-	public function find($smp_id) {
-		$this->openbay->ebay->log('find() - Finding SMP: ' . $smp_id);
-
-		$order_id = $this->orderLinkGet($smp_id);
-
-		/**
-		 * This is a depreciated method of getting order Id's and will be removed in the future.
-		 */
-		if ($order_id == 0) {
-			$query = $this->db->query("SELECT `order_id` FROM `" . DB_PREFIX . "order_history` WHERE `comment` = '[eBay Import:" . $this->db->escape($smp_id) . "]' LIMIT 1");
-
-			if ($query->num_rows > 0) {
-				$this->openbay->ebay->log('find() (depreciated) - Found: ' . $query->row['order_id']);
-				return (int)$query->row['order_id'];
-			} else {
-				$this->openbay->ebay->log('find() (depreciated) - Nothing found');
-				return false;
-			}
-		} else {
-			$this->openbay->ebay->log('find() - Found: ' . $order_id);
-			return $order_id;
-		}
-	}
-
 	public function getHistory($order_id) {
 		$this->openbay->ebay->log('Getting order history for ID: ' . $order_id);
 
@@ -575,16 +551,6 @@ class ModelOpenbayEbayOrder extends Model{
 		return $this->db->getLastId();
 	}
 
-	public function orderLinkGet($smp_id) {
-		$query = $this->db->query("SELECT `order_id` FROM `" . DB_PREFIX . "ebay_order` WHERE `smp_id` = '" . (int)$smp_id . "' LIMIT 1");
-
-		if ($query->num_rows > 0) {
-			return (int)$query->row['order_id'];
-		} else {
-			return 0;
-		}
-	}
-
 	public function delete($order_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
@@ -618,7 +584,7 @@ class ModelOpenbayEbayOrder extends Model{
 
 	public function addOrderHistory($order_id) {
 		$this->openbay->ebay->log('addOrderHistory() - Order id:' . $order_id . ' passed');
-		if (!$this->openbay->ebay->isEbayOrder($order_id)) {
+		if (!$this->openbay->ebay->getOrder($order_id)) {
 			$order_products = $this->openbay->getOrderProducts($order_id);
 
 			foreach($order_products as $order_product) {

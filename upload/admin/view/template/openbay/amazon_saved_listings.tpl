@@ -85,10 +85,10 @@
       url: '<?php echo html_entity_decode($upload_saved); ?>',
       dataType: 'json',
       beforeSend: function () {
-        $('#upload_button').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#button-upload').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },
       complete: function () {
-        $('#upload_button').empty().html('<i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_upload; ?>').removeAttr('disabled');
+        $('#button-upload').empty().html('<i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_upload; ?>').removeAttr('disabled');
       },
       success: function (data) {
         if (data['status'] == 'ok') {

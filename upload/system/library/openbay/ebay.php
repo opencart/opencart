@@ -8,6 +8,8 @@ final class Ebay {
 	private $url = 'https://uk.openbaypro.com/';
 	private $registry;
 	private $no_log = array('notification/getPublicNotifications/', 'setup/getEbayCategories/', 'item/getItemAllList/', 'account/validate/', 'item/getItemListLimited/');
+	private $logger;
+	private $max_log_size = 50; //max log size in Mb
 
 	public function __construct($registry) {
 		$this->registry = $registry;
@@ -21,9 +23,9 @@ final class Ebay {
 		$this->lasterror = '';
 		$this->lastmsg = '';
 
-		$this->load->library('log');
-
-		$this->logger = new \Log('ebaylog.log');
+		if ($this->logging == 1) {
+			$this->setLogger();
+		}
 	}
 
 	public function __get($name) {
@@ -138,6 +140,18 @@ final class Ebay {
 		} else {
 			$this->log('openbay_noresponse_call() - OpenBay Pro not active . ');
 		}
+	}
+
+	private function setLogger() {
+		$this->load->library('log');
+
+		if(file_exists(DIR_LOGS . 'ebaylog.log')) {
+			if(filesize(DIR_LOGS . 'ebaylog.log') > ($this->max_log_size * 1000000)) {
+				rename(DIR_LOGS . 'ebaylog.log', DIR_LOGS . '_ebaylog_' . date('Y-m-d_H-i-s') . '.log');
+			}
+		}
+
+		$this->logger = new \Log('ebaylog.log');
 	}
 
 	public function log($data, $write = true) {
@@ -420,21 +434,6 @@ final class Ebay {
 		return $this->call('order/getSmpRecord/', array('id' => $sale_id));
 	}
 
-	public function isEbayOrder($id) {
-		$this->log('isEbayOrder() - Is eBay order? ID: ' . $id);
-
-		$qry = $this->db->query("SELECT `comment` FROM `" . DB_PREFIX . "order_history` WHERE `comment` LIKE '[eBay Import:%]' AND `order_id` = '" . (int)$id . "' LIMIT 1");
-
-		if ($qry->num_rows) {
-			$this->log('isEbayOrder() - Yes');
-			$smp_id = str_replace(array('[eBay Import:', ']'), '', $qry->row['comment']);
-			return $smp_id;
-		} else {
-			$this->log('isEbayOrder() - No');
-			return false;
-		}
-	}
-
 	public function getEbayActiveListings() {
 		$this->log('getEbayActiveListings() - Get active eBay items from API');
 		return $this->call('item/getItemAllList/');
@@ -659,6 +658,14 @@ final class Ebay {
 
 								//compare the stock - if different trigger update
 								if ($ebay_variant['qty'] != $options[$option_id]['stock']) {
+									$reserve = $this->getReserve($item['productId'], $item['itemId'], $ebay_variant['sku']);
+
+									if ($reserve != false) {
+										if ($options[$option_id]['stock'] > $reserve) {
+											$options[$option_id]['stock'] = $reserve;
+										}
+									}
+
 									$this->log('putStockUpdateBulk() - Revising variant item: ' . $item['itemId'] . ',Stock: ' . $options[$option_id]['stock'] . ', SKU ' . $ebay_variant['sku']);
 									$this->call('item/reviseStock/', array('itemId' => $item['itemId'], 'stock' => $options[$option_id]['stock'], 'sku' => $ebay_variant['sku']));
 								}
@@ -736,10 +743,6 @@ final class Ebay {
 							$stock = true;
 						}
 
-						if ($v == 0) {
-							$variant_data['option_list'] = base64_encode(serialize($option['option_values']));
-						}
-
 						// PRODUCT RESERVE LEVELS FOR VARIANT ITEMS (DOES NOT PASS THROUGH NORMAL SYSTEM)
 						$reserve = $this->getReserve($product_id, $item_id, $option['sku']);
 						if ($reserve != false) {
@@ -757,12 +760,6 @@ final class Ebay {
 
 						if ($option['active'] == 1) {
 							$variant_data['opt'][$v]['active'] = 1;
-						}
-
-						$variant_option_values = $this->model_module_openstock->getVariant($option['product_option_variant_id']);
-
-						foreach($variant_option_values as $variant_option_value) {
-							$variant_data['opt'][$v]['specifics'][] = array('name' => $variant_option_value['option_name'], 'value' => $variant_option_value['option_value_name']);
 						}
 
 						$v++;
@@ -817,7 +814,13 @@ final class Ebay {
 	}
 
 	public function orderStatusListen($order_id, $status_id, $data = array()) {
-		$ebay_id = $this->isEbayOrder($order_id);
+		$ebay_order = $this->getOrder($order_id);
+
+		if (isset($ebay_order['smp_id'])) {
+			$ebay_id = $ebay_order['smp_id'];
+		} else {
+			$ebay_id = false;
+		}
 
 		$this->log('orderStatusListen() - Order ' . $order_id . ' changed status');
 
@@ -1117,6 +1120,20 @@ final class Ebay {
 		}
 	}
 
+	public function getOrderBySmpId($smp_id) {
+		if ($this->openbay->testDbTable(DB_PREFIX . "ebay_order") == true) {
+			$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_order` WHERE `smp_id` = '" . (int)$smp_id . "' LIMIT 1");
+
+			if ($qry->num_rows > 0) {
+				return $qry->row;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
 	public function updateCategories() {
 		$cat_array = $this->call('setup/getEbayCategories/', array(), array(), 'json', true);
 
@@ -1159,6 +1176,34 @@ final class Ebay {
 		$this->log('Getting eBay settings / sync');
 
 		if ($this->lasterror === false) {
+			if (isset($response['listing_restrictions'])) {
+				$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'listing_restrictions' LIMIT 1");
+
+				if ($qry->num_rows > 0) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['listing_restrictions'])) . "', `last_updated`  = now() WHERE `key` = 'listing_restrictions' LIMIT 1");
+					$this->log('Updated listing_restrictions into ebay_setting_option table');
+				} else {
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'listing_restrictions', `data` = '" . $this->db->escape(serialize($response['listing_restrictions'])) . "', `last_updated`  = now()");
+					$this->log('Inserted listing_restrictions into ebay_setting_option table');
+				}
+			} else {
+				$this->log('listing_restrictions data not set!');
+			}
+
+			if (isset($response['product_details'])) {
+				$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'product_details' LIMIT 1");
+
+				if ($qry->num_rows > 0) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['product_details'])) . "', `last_updated`  = now() WHERE `key` = 'product_details' LIMIT 1");
+					$this->log('Updated product_details into ebay_setting_option table');
+				} else {
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'product_details', `data` = '" . $this->db->escape(serialize($response['product_details'])) . "', `last_updated`  = now()");
+					$this->log('Inserted product_details into ebay_setting_option table');
+				}
+			} else {
+				$this->log('Non identifier text not set!');
+			}
+
 			if (isset($response['urls']['ViewItemURL'])) {
 				$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE  `key` = 'ebay_itm_link' LIMIT 1");
 
@@ -1369,6 +1414,21 @@ final class Ebay {
 				}
 			} else {
 				$this->log('No measurement_types set!');
+			}
+
+			// Product details
+			if (isset($response['product_details'])) {
+				$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'product_details' LIMIT 1");
+
+				if ($qry->num_rows > 0) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['product_details'])) . "', `last_updated`  = now() WHERE `key` = 'product_details' LIMIT 1");
+					$this->log('Updated product_details info in to ebay_setting_option table');
+				} else {
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'product_details', `data` = '" . $this->db->escape(serialize($response['product_details'])) . "', `last_updated`  = now()");
+					$this->log('Inserted product_details info in to ebay_setting_option table');
+				}
+			} else {
+				$this->log('No product_details set!');
 			}
 		}
 

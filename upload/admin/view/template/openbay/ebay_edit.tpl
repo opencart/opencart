@@ -31,79 +31,92 @@
           <div class="alert alert-danger" id="error_box" style="display:none;"></div>
           <form method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
             <input type="hidden" name="itemId" value="" id="item-id" />
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="title"><?php echo $entry_title; ?></label>
-              <div class="col-sm-10">
-                <input type="text" name="title" value="" id="title" class="form-control" />
+            <ul class="nav nav-tabs">
+              <li class="active"><a data-toggle="tab" href="#tab-general"><?php echo $tab_general; ?></a></li>
+              <li><a data-toggle="tab" href="#tab-recommendation"><?php echo $tab_recommendations; ?></a></li>
+            </ul>
+            <div class="tab-content">
+              <div id="tab-general" class="tab-pane active">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="title"><?php echo $entry_title; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="title" value="" id="title" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group stdMatrix">
+                  <input type="hidden" name="qty_local" value="0" id="qty_local" />
+                  <input type="hidden" name="qty_ebay" value="0" id="qty_ebay" />
+                  <input type="hidden" name="variant" value="0" />
+                  <label class="col-sm-2 control-label" for="price"><?php echo $entry_price; ?></label>
+                  <div class="col-sm-2">
+                    <input type="text" name="price" value="" id="price" class="form-control" />
+                  </div>
+                </div>
+                <div class="form-group stdMatrix">
+                  <label class="col-sm-2 control-label" for="qty-instock"><?php echo $entry_stock_store; ?></label>
+                  <div class="col-sm-2">
+                  <input type="text" name="qty_instock" id="qty-instock" class="form-control" disabled="disabled" />
+                  <span class="help-block"><?php echo $help_stock_store; ?></span> </div>
+                </div>
+                <div class="form-group stdMatrix">
+                  <label class="col-sm-2 control-label" for="qty-listed"><?php echo $entry_stock_listed; ?></label>
+                  <div class="col-sm-2">
+                  <input type="text" name="qty_listed" id="qty-listed" class="form-control" disabled="disabled" />
+                  <span class="help-block"><?php echo $help_stock_listed; ?></span> </div>
+                </div>
+                <div class="form-group stdMatrix">
+                  <label class="col-sm-2 control-label"><?php echo $entry_stock_reserve; ?></label>
+                  <div class="col-sm-2">
+                  <input type="text" name="qty_reserve" value="0" id="qty-reserve" class="form-control" onkeyup="updateReserveMessage();" />
+                  <span class="help-block"><?php echo $help_stock_reserve; ?></span> </div>
+                </div>
+                <div class="form-group" id="variantMatrix">
+                  <label class="col-sm-2 control-label"><?php echo $entry_stock_matrix_active; ?></label>
+                  <div class="col-sm-10">
+                    <table class="table table-striped table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <td class="text-center"><?php echo $column_sku; ?></td>
+                          <td class="text-center"><?php echo $column_stock_total; ?></td>
+                          <td class="text-center"><?php echo $column_stock_listed; ?></td>
+                          <td class="text-center"><?php echo $column_stock_reserve; ?></td>
+                          <td class="text-left"><?php echo $column_combination; ?></td>
+                          <td class="text-center"><?php echo $column_price; ?></td>
+                          <td class="text-center"><?php echo $column_status; ?></td>
+                        </tr>
+                      </thead>
+                      <tbody id="matrix-active">
+                        <input type="hidden" name="variant" value="1" />
+                        <input type="hidden" name="optGroupArray" value="" id="option-groups" />
+                        <input type="hidden" name="optGroupRelArray" value="" id="option-group-relationship" />
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="form-group" id="variantMatrixInactive" style="display:none;">
+                  <label class="col-sm-2 control-label"><?php echo $entry_stock_matrix_inactive; ?></label>
+                  <div class="col-sm-10">
+                    <table class="table table-striped table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th class="text-center"><?php echo $column_sku; ?></th>
+                          <th class="text-center"><?php echo $column_stock_total; ?></th>
+                          <th class="text-center"><?php echo $column_stock_reserve; ?></th>
+                          <th class="text-left"><?php echo $column_combination; ?></th>
+                          <th class="text-center"><?php echo $column_price; ?></th>
+                          <th class="text-center"><?php echo $column_add; ?></th>
+                        </tr>
+                      </thead>
+                      <tbody id="matrix-inactive">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="form-group stdMatrix">
-              <input type="hidden" name="qty_local" value="0" id="qty_local" />
-              <input type="hidden" name="qty_ebay" value="0" id="qty_ebay" />
-              <input type="hidden" name="variant" value="0" />
-              <label class="col-sm-2 control-label" for="price"><?php echo $entry_price; ?></label>
-              <div class="col-sm-2">
-                <input type="text" name="price" value="" id="price" class="form-control" />
-              </div>
-            </div>
-            <div class="form-group stdMatrix">
-              <label class="col-sm-2 control-label" for="qty-instock"><?php echo $entry_stock_store; ?></label>
-              <div class="col-sm-2">
-              <input type="text" name="qty_instock" id="qty-instock" class="form-control" disabled="disabled" />
-              <span class="help-block"><?php echo $help_stock_store; ?></span> </div>
-            </div>
-            <div class="form-group stdMatrix">
-              <label class="col-sm-2 control-label" for="qty-listed"><?php echo $entry_stock_listed; ?></label>
-              <div class="col-sm-2">
-              <input type="text" name="qty_listed" id="qty-listed" class="form-control" disabled="disabled" />
-              <span class="help-block"><?php echo $help_stock_listed; ?></span> </div>
-            </div>
-            <div class="form-group stdMatrix">
-              <label class="col-sm-2 control-label"><?php echo $entry_stock_reserve; ?></label>
-              <div class="col-sm-2">
-              <input type="text" name="qty_reserve" value="0" id="qty-reserve" class="form-control" onkeyup="updateReserveMessage();" />
-              <span class="help-block"><?php echo $help_stock_reserve; ?></span> </div>
-            </div>
-            <div class="form-group" id="variantMatrix">
-              <label class="col-sm-2 control-label"><?php echo $entry_stock_matrix_active; ?></label>
-              <div class="col-sm-10">
-                <table class="table table-striped table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <td class="text-center"><?php echo $column_sku; ?></td>
-                      <td class="text-center"><?php echo $column_stock_total; ?></td>
-                      <td class="text-center"><?php echo $column_stock_listed; ?></td>
-                      <td class="text-center"><?php echo $column_stock_reserve; ?></td>
-                      <td class="text-left"><?php echo $column_combination; ?></td>
-                      <td class="text-center"><?php echo $column_price; ?></td>
-                      <td class="text-center"><?php echo $column_status; ?></td>
-                    </tr>
-                  </thead>
-                  <tbody id="matrix-active">
-                    <input type="hidden" name="variant" value="1" />
-                    <input type="hidden" name="optGroupArray" value="" id="option-groups" />
-                    <input type="hidden" name="optGroupRelArray" value="" id="option-group-relationship" />
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="form-group" id="variantMatrixInactive" style="display:none;">
-              <label class="col-sm-2 control-label"><?php echo $entry_stock_matrix_inactive; ?></label>
-              <div class="col-sm-10">
-                <table class="table table-striped table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th class="text-center"><?php echo $column_sku; ?></th>
-                      <th class="text-center"><?php echo $column_stock_total; ?></th>
-                      <th class="text-center"><?php echo $column_stock_reserve; ?></th>
-                      <th class="text-left"><?php echo $column_combination; ?></th>
-                      <th class="text-center"><?php echo $column_price; ?></th>
-                      <th class="text-center"><?php echo $column_add; ?></th>
-                    </tr>
-                  </thead>
-                  <tbody id="matrix-inactive">
-                  </tbody>
-                </table>
+              <div id="tab-recommendation" class="tab-pane">
+                <div class="alert alert-info" id="recommendations-loading"> <i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_check_recommendations; ?> </div>
+                <div class="alert alert-danger" id="recommendations-danger" style="display:none;"> <i class="fa fa-minus-circle"></i> </div>
+                <div class="alert alert-success" id="recommendations-success" style="display:none;"> <i class="fa fa-check-circle"></i> <?php echo $text_success_recommendations; ?></div>
               </div>
             </div>
           </form>
@@ -242,6 +255,8 @@
                             $('#qty_ebay').val(data.data.listing.qty);
                             $('#qty-reserve').val(data.data.reserve);
                         }
+
+                        loadRecommendations();
                     }
                 }
 
@@ -258,6 +273,38 @@
             }
         });
     }
+
+  function loadRecommendations() {
+    var item_id = $('#item-id').val();
+
+    $.ajax({
+      url: 'index.php?route=openbay/ebay/getItemRecommendations&token=<?php echo $token; ?>&item_id=' + item_id,
+      type: 'GET',
+      dataType: 'json',
+      success: function(data) {
+        if (data.error == false) {
+          if (data.data == false) {
+            $('#recommendations-success').fadeIn('slow');
+          } else {
+            $.each(data.data, function( key, value ) {
+              $('#tab-recommendation').append('<div class="alert alert-info">' + value.message + '</div>');
+            });
+          }
+        } else {
+          $('#recommendations-error').append('<?php echo $error_recommendations_load; ?>').fadeIn('slow');
+        }
+      },
+      complete: function() {
+        $('#recommendations-loading').hide();
+      },
+      failure: function(){
+        $('#recommendations-error').append('<?php echo $error_recommendations_load; ?>').fadeIn('slow');
+      },
+      error: function(){
+        $('#recommendations-error').append('<?php echo $error_recommendations_load; ?>').fadeIn('slow');
+      }
+    });
+  }
 
   $('#button-save').bind('click', function() {
     $.ajax({

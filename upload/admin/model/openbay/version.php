@@ -1,6 +1,6 @@
 <?php
 class ModelOpenbayVersion extends Model {
 	public function version() {
-		return (int)2907;
+		return (int)2918;
 	}
 }

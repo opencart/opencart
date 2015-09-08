@@ -72,7 +72,57 @@
                         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="overlay-feature-<?php echo $i; ?>" data-backdrop="static" data-keyboard="false">
                           <div class="modal-dialog modal-lg">
                             <div class="modal-content">
-                              <div class="modal-body" id="feature-data-<?php echo $i; ?>"></div>
+                              <div class="modal-body">
+                                <div class="page-header">
+                                  <div class="container-fluid">
+                                    <div class="pull-right">
+                                      <a onclick="overlayHide();" class="btn btn-default" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="fa fa-reply"></i></a>
+                                    </div>
+                                    <h1 class="panel-title"><?php echo $text_features; ?></h1>
+                                  </div>
+                                </div>
+                                <div class="container-fluid" style="display: none;" id="product_identifier_container_<?php echo $i; ?>">
+                                  <div class="panel panel-default">
+                                    <div class="panel-body">
+                                      <div class="well">
+                                        <div class="row">
+                                          <div class="form-group" id="product_identifier_ean_container_<?php echo $i; ?>" style="display:none;">
+                                            <label class="col-sm-2 control-label"><?php echo $text_ean; ?></label>
+                                            <div class="col-sm-10">
+                                              <input type="hidden" id="identifier_ean_required_<?php echo $i; ?>" class="product_identifier_required_<?php echo $i; ?>" value="0" />
+                                              <input type="hidden" id="identifier_ean_original_<?php echo $i; ?>" value="<?php echo $product['ean']; ?>" />
+                                              <input type="text" name="identifier_ean" value="<?php echo $product['ean']; ?>" id="identifier_ean_<?php echo $i; ?>" class="form-control openbay_data_<?php echo $i; ?>" />
+                                            </div>
+                                          </div>
+                                          <div class="form-group" id="product_identifier_isbn_container_<?php echo $i; ?>" style="display:none;">
+                                            <label class="col-sm-2 control-label"><?php echo $text_isbn; ?></label>
+                                            <div class="col-sm-10">
+                                              <input type="hidden" id="identifier_isbn_required_<?php echo $i; ?>" class="product_identifier_required_<?php echo $i; ?>" value="0" />
+                                              <input type="hidden" id="identifier_isbn_original_<?php echo $i; ?>" value="<?php echo $product['isbn']; ?>" />
+                                              <input type="text" name="identifier_isbn" value="<?php echo $product['isbn']; ?>" id="identifier_isbn_<?php echo $i; ?>" class="form-control openbay_data_<?php echo $i; ?>" />
+                                            </div>
+                                          </div>
+                                          <div class="form-group" id="product_identifier_upc_container_<?php echo $i; ?>" style="display:none;">
+                                            <label class="col-sm-2 control-label"><?php echo $text_upc; ?></label>
+                                            <div class="col-sm-10">
+                                              <input type="hidden" id="identifier_upc_required_<?php echo $i; ?>" class="product_identifier_required" value="0" />
+                                              <input type="hidden" id="identifier_upc_original_<?php echo $i; ?>" value="<?php echo $product['upc']; ?>" />
+                                              <input type="text" name="identifier_upc" value="<?php echo $product['upc']; ?>" id="identifier_upc_<?php echo $i; ?>" class="form-control openbay_data_<?php echo $i; ?>" />
+                                            </div>
+                                          </div>
+                                          <div class="form-group">
+                                            <label class="col-sm-2 control-label"><?php echo $text_identifier_not_required; ?></label>
+                                            <div class="col-sm-10">
+                                              <input type="checkbox" name="identifier_not_required" value="1" id="identifier_not_required_<?php echo $i; ?>" class="form-control" onclick="identifierNotRequired(<?php echo $i; ?>);"/>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div id="feature-data-<?php echo $i; ?>"></div>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -148,7 +198,6 @@
                             </div>
                           </div>
                         </div>
-
                         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="overlay-catalog-<?php echo $i; ?>" data-backdrop="static" data-keyboard="false">
                           <div class="modal-dialog modal-lg">
                             <div class="modal-content">
@@ -187,7 +236,6 @@
                             </div>
                           </div>
                         </div>
-
                         <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="overlay-profile-<?php echo $i; ?>" data-backdrop="static" data-keyboard="false">
                           <div class="modal-dialog modal-lg">
                             <div class="modal-content">
@@ -541,6 +589,9 @@
       $('#conditionLoading_'+id).show();
       $('#conditionContainer_'+id).hide();
 
+    $('#product_identifier_container_'+id).hide();
+    $('.product_identifier_required_'+id).val('0');
+
       $.ajax({
           url: 'index.php?route=openbay/ebay/getCategoryFeatures&token=<?php echo $token; ?>&category='+cat,
           type: 'GET',
@@ -548,25 +599,52 @@
           beforeSend: function() { addCount(); },
           success: function(data) {
               if (data.error == false) {
-                  var html_inj = '';
+                var html_inj = '';
 
-                  listingDuration(data.data.durations, id);
+                listingDuration(data.data.durations, id);
 
-                  if (data.data.conditions) {
-                      $.each(data.data.conditions, function(key, val) {
-                          html_inj += '<option value='+val.id+'>'+val.name+'</option>';
-                      });
+                if (data.data.conditions) {
+                  $.each(data.data.conditions, function(key, val) {
+                      html_inj += '<option value='+val.id+'>'+val.name+'</option>';
+                  });
 
-                      if (html_inj == '') {
-                          $('#conditionRow_'+id).empty();
-                          $('#conditionContainer_'+id).hide();
-                          $('#conditionLoading_'+id).hide();
-                      } else {
-                          $('#conditionRow_'+id).empty().html(html_inj);
-                          $('#conditionContainer_'+id).show();
-                          $('#conditionLoading_'+id).hide();
-                      }
+                  if (html_inj == '') {
+                    $('#conditionRow_'+id).empty();
+                    $('#conditionContainer_'+id).hide();
+                    $('#conditionLoading_'+id).hide();
+                  } else {
+                    $('#conditionRow_'+id).empty().html(html_inj);
+                    $('#conditionContainer_'+id).show();
+                    $('#conditionLoading_'+id).hide();
                   }
+                }
+
+                if (data.data.ean_identifier_requirement != '') {
+                  $('#product_identifier_container_'+id).show();
+                  $('#product_identifier_ean_container_'+id).show();
+
+                  if (data.data.ean_identifier_requirement == 'Required') {
+                    $('#identifier_ean_required_'+id).val(1);
+                  }
+                }
+
+                if (data.data.isbn_identifier_requirement != '') {
+                  $('#product_identifier_container_'+id).show();
+                  $('#product_identifier_isbn_container_'+id).show();
+
+                  if (data.data.isbn_identifier_requirement == 'Required') {
+                    $('#identifier_isbn_required_'+id).val(1);
+                  }
+                }
+
+                if (data.data.upc_identifier_requirement != '') {
+                  $('#product_identifier_container_'+id).show();
+                  $('#product_identifier_upc_container_'+id).show();
+
+                  if (data.data.upc_identifier_requirement == 'Required') {
+                    $('#identifier_upc_required_'+id).val(1);
+                  }
+                }
               } else {
                   alert(data.msg);
               }
@@ -603,14 +681,6 @@
 
                   if (data.data) {
                     html_inj = '';
-                    html_inj += '<div class="page-header">';
-                      html_inj += '<div class="container-fluid">';
-                        html_inj += '<div class="pull-right">';
-                          html_inj += '<a onclick="overlayHide();" class="btn btn-default" data-toggle="tooltip" title="<?php echo $text_close; ?>"><i class="fa fa-reply"></i></a>';
-                        html_inj += '</div>';
-                        html_inj += '<h1 class="panel-title"><?php echo $text_features; ?></h1>';
-                      html_inj += '</div>';
-                    html_inj += '</div>';
                     html_inj += '<div class="container-fluid">';
                       html_inj += '<div class="panel panel-default">';
                         html_inj += '<div class="panel-body">';
@@ -967,6 +1037,32 @@
           });
       }
   });
+
+  function identifierNotRequired(id) {
+    var not_required_text = "<?php echo $setting['product_details']['product_identifier_unavailable_text']; ?>";
+
+    if ($('#identifier_not_required_' + id + ':checked').length == 1) {
+      if ($('#identifier_ean_required_' + id).val() == 1) {
+        $('#identifier_ean_' + id).val(not_required_text);
+      }
+      if ($('#identifier_isbn_required_' + id).val() == 1) {
+        $('#identifier_isbn_' + id).val(not_required_text);
+      }
+      if ($('#identifier_upc_required_' + id).val() == 1) {
+        $('#identifier_upc_' + id).val(not_required_text);
+      }
+    } else {
+      if ($('#identifier_ean_required_' + id).val() == 1) {
+        $('#identifier_ean_' + id).val($('#identifier_ean_original_' + id).val());
+      }
+      if ($('#identifier_isbn_required_' + id).val() == 1) {
+        $('#identifier_isbn_' + id).val($('#identifier_isbn_original_' + id).val());
+      }
+      if ($('#identifier_upc_required_' + id).val() == 1) {
+        $('#identifier_upc_' + id).val($('#identifier_upc_original_' + id).val());
+      }
+    }
+  }
 
   function showFeatures(id) {
     overlay('overlay-feature-'+id);

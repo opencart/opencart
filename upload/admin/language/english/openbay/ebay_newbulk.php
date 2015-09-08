@@ -58,6 +58,11 @@ $_['text_loading_duration']         = 'Loading listing durations';
 $_['text_total_fee']         		= 'Total fees';
 $_['text_category_choose']         	= 'Find category';
 $_['text_suggested']         		= 'Suggested categories';
+$_['text_product_identifiers']    	= 'Product identifiers';
+$_['text_ean']    					= 'EAN';
+$_['text_upc']    					= 'UPC';
+$_['text_isbn']    					= 'ISBN';
+$_['text_identifier_not_required']  = 'Not required';
 
 //Errors
 $_['text_error_ship_profile']       = 'You need to have a default shipping profile set up';

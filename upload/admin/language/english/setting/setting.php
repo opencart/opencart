@@ -14,17 +14,20 @@ $_['text_account']                     = 'Account';
 $_['text_checkout']                    = 'Checkout';
 $_['text_stock']                       = 'Stock';
 $_['text_affiliate']                   = 'Affiliates';
+$_['text_captcha']                     = 'Captcha';
+$_['text_register']                    = 'register';
 $_['text_return']                      = 'Returns';
-$_['text_customer']                    = 'Customer Registration';
-$_['text_affiliate']                   = 'Affiliate Registration';
 $_['text_review']                      = 'Reviews';
 $_['text_return']                      = 'Returns';
-$_['text_captcha']                     = 'Captcha';
 $_['text_contact']                     = 'Contact';
 $_['text_shipping']                    = 'Shipping Address';
 $_['text_payment']                     = 'Payment Address';
 $_['text_mail']                        = 'Mail';
 $_['text_smtp']                        = 'SMTP';
+$_['text_general']                     = 'General';
+$_['text_security']                    = 'Security';
+$_['text_upload']                      = 'Uploads';
+$_['text_error']                       = 'Error Handling';
 
 // Entry
 $_['entry_name']                       = 'Store Name';

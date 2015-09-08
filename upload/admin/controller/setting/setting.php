@@ -32,7 +32,6 @@ class ControllerSettingSetting extends Controller {
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
-		$data['text_captcha'] = $this->language->get('text_captcha');
 		$data['text_product'] = $this->language->get('text_product');
 		$data['text_review'] = $this->language->get('text_review');
 		$data['text_voucher'] = $this->language->get('text_voucher');
@@ -42,10 +41,16 @@ class ControllerSettingSetting extends Controller {
 		$data['text_stock'] = $this->language->get('text_stock');
 		$data['text_affiliate'] = $this->language->get('text_affiliate');
 		$data['text_return'] = $this->language->get('text_return');
+		$data['text_captcha'] = $this->language->get('text_captcha');
+		$data['text_register'] = $this->language->get('text_register');
 		$data['text_shipping'] = $this->language->get('text_shipping');
 		$data['text_payment'] = $this->language->get('text_payment');
 		$data['text_mail'] = $this->language->get('text_mail');
 		$data['text_smtp'] = $this->language->get('text_smtp');
+		$data['text_general'] = $this->language->get('text_general');
+		$data['text_security'] = $this->language->get('text_security');
+		$data['text_upload'] = $this->language->get('text_upload');
+		$data['text_error'] = $this->language->get('text_error');
 
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_owner'] = $this->language->get('entry_owner');
@@ -111,6 +116,7 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_return'] = $this->language->get('entry_return');
 		$data['entry_return_status'] = $this->language->get('entry_return_status');
 		$data['entry_captcha'] = $this->language->get('entry_captcha');
+		$data['entry_captcha_page'] = $this->language->get('entry_captcha_page');
 		$data['entry_logo'] = $this->language->get('entry_logo');
 		$data['entry_icon'] = $this->language->get('entry_icon');
 		$data['entry_image_category'] = $this->language->get('entry_image_category');
@@ -967,13 +973,8 @@ class ControllerSettingSetting extends Controller {
 		$data['captcha_pages'] = array();
 
 		$data['captcha_pages'][] = array(
-			'text'  => $this->language->get('text_customer'),
-			'value' => 'customer'
-		);
-
-		$data['captcha_pages'][] = array(
-			'text'  => $this->language->get('text_affiliate'),
-			'value' => 'affiliate'
+			'text'  => $this->language->get('text_register'),
+			'value' => 'register'
 		);
 
 		$data['captcha_pages'][] = array(

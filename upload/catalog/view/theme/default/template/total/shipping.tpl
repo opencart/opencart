@@ -5,7 +5,7 @@
   <div id="collapse-shipping" class="panel-collapse collapse">
     <div class="panel-body">
       <p><?php echo $text_shipping; ?></p>
-      <form class="form-horizontal">
+      <div class="form-horizontal">
         <div class="form-group required">
           <label class="col-sm-2 control-label" for="input-country"><?php echo $entry_country; ?></label>
           <div class="col-sm-10">
@@ -34,7 +34,7 @@
             <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" class="form-control" />
           </div>
         </div>
-        <input type="button" value="<?php echo $button_quote; ?>" id="button-quote" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+        <button type="button" id="button-quote" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_quote; ?></button>
       </form>
       <script type="text/javascript"><!--
 $('#button-quote').on('click', function() {

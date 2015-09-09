@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="button" form="form-google-base" data-toggle="tooltip" title="<?php echo $button_import; ?>" class="btn btn-success"><i class="fa fa fa-upload"></i></button>
+        <button type="button" id="button-import" data-toggle="tooltip" title="<?php echo $button_import; ?>" class="btn btn-success"><i class="fa fa fa-upload"></i></button>
         <button type="submit" form="form-google-base" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1><?php echo $heading_title; ?></h1>
@@ -28,76 +28,125 @@
         <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_import; ?> <button type="button" class="close" data-dismiss="alert">×</button></div>
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-google-base" class="form-horizontal">
 
-          <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-google-category"><span data-toggle="tooltip" title="<?php echo $help_category; ?>"><?php echo $entry_category; ?></span></label>
-              <div class="col-sm-10">
-                <input type="text" name="google_category" value="" placeholder="<?php echo $entry_category; ?>" id="input-google-category" class="form-control" />
-                <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" class="form-control" />
-                <div id="product-category" class="well well-sm" style="height: 150px; overflow: auto;">
-                  <?php foreach ($category_categories as $product_category) { ?>
-                  <div id="product-category<?php echo $product_category['category_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_category['name']; ?>
-                    <input type="hidden" name="google_base_category[]" value="<?php echo $product_category['category_id']; ?>" />
-                  </div>
-                  <?php } ?>
+
+                <div class="table-responsive">
+                  <table id="category" class="table table-striped table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <td class="text-left"><?php echo $entry_category; ?></td>
+                        <td class="text-left"><?php echo $entry_google_category; ?></td>
+                        <td></td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php $category_row = 0; ?>
+                      <?php foreach ($google_base_categories as $google_base_category) { ?>
+                      <tr id="category-row<?php echo $category_row; ?>">
+                        <td class="text-left"><input type="hidden" name="google_base_category[]" value="<?php echo $google_base_category['google_base_category_id']; ?>" /><?php echo $google_base_category['name']; ?></td>
+                        <td class="text-left"><input type="hidden" name="google_base_category[]" value="<?php echo $google_base_category['google_base_category_id']; ?>" /><?php echo $google_base_category['name']; ?></td>
+                        <td class="text-left"><button type="button" onclick="$('#category-row<?php echo $category_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                      </tr>
+                      <?php $category_row++; ?>
+                      <?php } ?>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td><input type="hidden" name="category" value="" /><input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" class="form-control" /></td>
+                        <td><input type="hidden" name="google_category" value="" /><input type="text" name="google_category" value="" placeholder="<?php echo $entry_google_category; ?>" id="input-google-category" class="form-control" /></td>
+                        <td class="text-left"><button type="button" id="button-category-add" data-toggle="tooltip" title="<?php echo $button_category_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                      </tr>
+                    </tfoot>
+                  </table>
                 </div>
+
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-data-feed"><?php echo $entry_data_feed; ?></label>
+              <div class="col-sm-10">
+                <textarea rows="5" id="input-data-feed" class="form-control" readonly><?php echo $data_feed; ?></textarea>
               </div>
             </div>
-
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
-            <div class="col-sm-10">
-              <select name="google_base_status" id="input-status" class="form-control">
-                <?php if ($google_base_status) { ?>
-                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                <option value="0"><?php echo $text_disabled; ?></option>
-                <?php } else { ?>
-                <option value="1"><?php echo $text_enabled; ?></option>
-                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                <?php } ?>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-data-feed"><?php echo $entry_data_feed; ?></label>
-            <div class="col-sm-10">
-              <textarea rows="5" id="input-data-feed" class="form-control" readonly><?php echo $data_feed; ?></textarea>
-            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+              <div class="col-sm-10">
+                <select name="google_base_status" id="input-status" class="form-control">
+                  <?php if ($google_base_status) { ?>
+                  <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                  <option value="0"><?php echo $text_disabled; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_enabled; ?></option>
+                  <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
           </div>
         </form>
       </div>
     </div>
   </div>
   <script type="text/javascript"><!--
-  // Category
-  $('input[name=\'category\']').autocomplete({
-  	'source': function(request, response) {
-  		$.ajax({
-  			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-  			dataType: 'json',
-  			success: function(json) {
-  				response($.map(json, function(item) {
-  					return {
-  						label: item['name'],
-  						value: item['category_id']
-  					}
-  				}));
-  			}
-  		});
-  	},
-  	'select': function(item) {
-  		$('input[name=\'category\']').val('');
+// Category
+$('input[name=\'category\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['category_id']
+					}
+				}));
+			},
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+	},
+	'select': function(item) {
+        //$(this).parent().
+    }
+});
 
-  		$('#product-category' + item['value']).remove();
+// Google Category
+$('input[name=\'google_category\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=feed/google_base/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['google_category_id']
+					}
+				}));
+			},
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+	},
+	'select': function(item) {
 
-  		$('#product-category').append('<div id="product-category' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_category[]" value="' + item['value'] + '" /></div>');
-  	}
-  });
+    }
+});
 
+var category_row = <?php echo $category_row; ?>;
+
+$('input[name=\'category\']').on('çlick', function() {
+    html  = '<tr id="category-row' + category_row + '">';
+    html +=   '<td class="text-left"></td>';
+    html +=   '<td class="text-left"></td>';
+    html +=   '<td class="text-left"><button type="button" onclick="$(\'#category-row' + category_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+    html += '</tr>';
+
+    $('#category tbody').append(html);
+});
 //--></script>
   <script type="text/javascript"><!--
-$('#content').delegate('button[id^=\'button-import\']', 'click', function() {
-	var node = this;
-
+$('#button-import').on('click', function() {
 	$('#form-upload').remove();
 
 	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
@@ -113,7 +162,7 @@ $('#content').delegate('button[id^=\'button-import\']', 'click', function() {
 			clearInterval(timer);
 
 			$.ajax({
-				url: 'index.php?route=tool/upload/upload&token=<?php echo $token; ?>',
+				url: 'index.php?route=feed/google_base/import&token=<?php echo $token; ?>',
 				type: 'post',
 				dataType: 'json',
 				data: new FormData($('#form-upload')[0]),
@@ -121,25 +170,21 @@ $('#content').delegate('button[id^=\'button-import\']', 'click', function() {
 				contentType: false,
 				processData: false,
 				beforeSend: function() {
-					$(node).button('loading');
+					$('#button-import').button('loading');
 				},
 				complete: function() {
-					$(node).button('reset');
+					$('#button-import').button('reset');
 				},
 				success: function(json) {
-					$(node).parent().find('.text-danger').remove();
+					$('.alert').remove();
 
-					if (json['error']) {
-						$(node).parent().find('input[type=\'hidden\']').after('<div class="text-danger">' + json['error'] + '</div>');
-					}
+                    if (json['error']) {
+        				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+        			}
 
-					if (json['success']) {
-						alert(json['success']);
-					}
-
-					if (json['code']) {
-						$(node).parent().find('input[type=\'hidden\']').attr('value', json['code']);
-					}
+        			if (json['success']) {
+        				$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+        			}
 				},
 				error: function(xhr, ajaxOptions, thrownError) {
 					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

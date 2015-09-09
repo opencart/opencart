@@ -162,7 +162,7 @@ class ControllerCheckoutGuest extends Controller {
 		}
 
 		// Captcha
-		if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('register', $this->config->get('config_captcha_page'))) {
+		if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('guest_checkout', $this->config->get('config_captcha_page'))) {
 			$data['captcha'] = $this->load->controller('captcha/' . $this->config->get('config_captcha'));
 		} else {
 			$data['captcha'] = '';

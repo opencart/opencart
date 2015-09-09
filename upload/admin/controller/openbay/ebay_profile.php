@@ -124,6 +124,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 		$setting['dispatch_times']                = $this->openbay->ebay->getSetting('dispatch_time_max');
 		$setting['countries']                     = $this->openbay->ebay->getSetting('countries');
 		$setting['shipping_types'] 				  = $this->openbay->ebay->getSetting('shipping_types');
+		$setting['listing_restrictions'] 		  = $this->openbay->ebay->getSetting('listing_restrictions');
 
 		if (empty($setting['dispatch_times']) || empty($setting['countries']) || empty($setting['returns'])){
 			$this->session->data['warning'] = $this->language->get('error_missing_settings');

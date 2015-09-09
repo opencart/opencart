@@ -602,7 +602,7 @@ function loadBrowseNode(field) {
         },
         success: function(data) {
             if (data.node.error != true){
-                html += '<div class="row">';
+                html += '<div class="well">';
                 html += '<div class="input-group col-md-12">';
                 html += '<p><select class="form-control" id="root-node" onchange="nodeSelect(\'root-node\', \''+field+'\');">';
                 html += '<option value=""><?php echo $text_select; ?></option>';
@@ -650,7 +650,7 @@ function nodeSelect(field, original_field) {
                 html += '</div>';
                 html += '</div>';
                 if (data.node.final == 0){
-                    html += '<div class="row">';
+                    html += '<div class="well">';
                     html += '<div class="input-group col-md-12">';
                     html += '<p><select class="form-control" id="'+field+'-'+node+'" onchange="nodeSelect(\''+field+'-'+node+'\', \''+original_field+'\');">';
                     html += '<option value=""><?php echo $text_select; ?></option>';

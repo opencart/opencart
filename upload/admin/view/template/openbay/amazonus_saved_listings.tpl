@@ -22,7 +22,7 @@
         <div class="col-sm-12">
           <div class="pull-right">
             <?php if (!empty($saved_products)) { ?>
-            <a id="upload_button" onclick="upload()" class="btn btn-primary"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_upload; ?></a>
+            <a id="button-upload" class="btn btn-primary"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_upload; ?></a>
             <?php } ?>
           </div>
         </div>
@@ -62,14 +62,17 @@
   </div>
 </div>
 <script type="text/javascript">
-  function removeSaved(id, option_var) {
+  function removeSaved(id, option_var, button) {
     if (!confirm("<?php echo $text_delete_confirm; ?>")) {
       return;
     }
     $.ajax({
-      url: '<?php echo html_entity_decode(delete_saved); ?>',
+      url: '<?php echo html_entity_decode($delete_saved); ?>',
       type: 'get',
       data: 'product_id=' + id + '&var=' + option_var,
+      beforeSend: function () {
+        $(button).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+      },
       success: function () {
         window.location.href = window.location.href;
       },
@@ -86,10 +89,10 @@
       url: '<?php echo html_entity_decode($upload_saved); ?>',
       dataType: 'json',
       beforeSend: function () {
-        $('#upload_button').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('#button-upload').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },
       complete: function () {
-        $('#upload_button').empty().html('<i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_upload; ?>').removeAttr('disabled');
+        $('#button-upload').empty().html('<i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_upload; ?>').removeAttr('disabled');
       },
       success: function (data) {
         if (data['status'] == 'ok') {

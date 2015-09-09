@@ -27,7 +27,6 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->load->model('setting/setting');
 		$this->load->model('localisation/order_status');
 		$this->load->model('openbay/amazon');
-		$this->load->model('customer/customer_group');
 
 		$data = $this->load->language('openbay/amazon');
 
@@ -237,7 +236,16 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->load->model('setting/setting');
 		$this->load->model('localisation/order_status');
 		$this->load->model('openbay/amazon');
-		$this->load->model('customer/customer_group');
+
+		if (version_compare(VERSION, '2.0.3.1', '>')) {
+			$this->load->model('customer/customer_group');
+
+			$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
+		} else {
+			$this->load->model('sale/customer_group');
+
+			$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
+		}
 
 		$settings = $this->model_setting_setting->getSetting('openbay_amazon');
 
@@ -329,7 +337,6 @@ class ControllerOpenbayAmazon extends Controller {
 			'canceled' => array('name' => $this->language->get('text_canceled'), 'order_status_id' => $canceled_status_id),
 		);
 
-		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 		$data['openbay_amazon_order_customer_group'] = isset($settings['openbay_amazon_order_customer_group']) ? $settings['openbay_amazon_order_customer_group'] : '';
 
 		$data['amazon_order_statuses'] = $amazon_order_statuses;
@@ -1050,5 +1057,26 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode(array('ok')));
+	}
+
+	public function doFullStockSync() {
+		/**
+		 * This is used if you ever need to force a complete update of your stock levels to Amazon.
+		 * It will get ALL products in your store then lookup any linked ones before sending to the API.
+		 *
+		 * This call can put serious load on your server if you have a lot of products.
+		 * It will make a lot of database queries so ensure your php memory limit is set high enough.
+		 */
+		set_time_limit(0);
+
+		$product_array = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "product`")->rows;
+
+		$bulk_array = array();
+
+		foreach ($product_array as $product) {
+			$bulk_array[] = $product['product_id'];
+		}
+
+		$this->openbay->amazon->putStockUpdateBulk($bulk_array);
 	}
 }

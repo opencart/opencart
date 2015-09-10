@@ -40,7 +40,7 @@ class ControllerPaymentG2APay extends Controller {
 						$item = new stdClass();
 						$item->sku = $order_data['totals'][$i]['code'];
 						$item->name = $order_data['totals'][$i]['title'];
-						$item->amount = $order_data['totals'][$i]['value'];
+						$item->amount = number_format($order_data['totals'][$i]['value'], 2);
 						$item->qty = 1;
 						$items[] = $item;
 					}
@@ -49,7 +49,6 @@ class ControllerPaymentG2APay extends Controller {
 			}
 		}
 
-		//check this
 		$ordered_products = $this->model_account_order->getOrderProducts($this->session->data['order_id']);
 
 		foreach ($ordered_products as $product) {
@@ -78,7 +77,6 @@ class ControllerPaymentG2APay extends Controller {
 			'amount' => $order_total,
 			'currency' => $order_info['currency_code'],
 			'email' => $order_info['email'],
-//			'email' => $this->config->get('g2apay_username'),
 			'url_failure' => $this->url->link('checkout/failure'),
 			'url_ok' => $this->url->link('payment/g2apay/success'),
 			'items' => json_encode($items)

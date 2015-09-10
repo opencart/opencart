@@ -51,8 +51,8 @@
                     </tbody>
                     <tfoot>
                       <tr>
-                        <td><input type="hidden" name="category" value="" /><input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" class="form-control" /></td>
-                        <td><input type="hidden" name="google_category" value="" /><input type="text" name="google_category" value="" placeholder="<?php echo $entry_google_category; ?>" id="input-google-category" class="form-control" /></td>
+                        <td><input type="hidden" name="category_id" value="" /><input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" class="form-control" /></td>
+                        <td><input type="hidden" name="google_base_category_id" value="" /><input type="text" name="google_category" value="" placeholder="<?php echo $entry_google_category; ?>" class="form-control" /></td>
                         <td class="text-left"><button type="button" id="button-category-add" data-toggle="tooltip" title="<?php echo $button_category_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                       </tr>
                     </tfoot>
@@ -105,7 +105,8 @@ $('input[name=\'category\']').autocomplete({
         });
 	},
 	'select': function(item) {
-        //$(this).parent().
+        $(this).val(item['label']);
+        $('input[name=\'category_id\']').val(item['value']);
     }
 });
 
@@ -119,7 +120,7 @@ $('input[name=\'google_category\']').autocomplete({
 				response($.map(json, function(item) {
 					return {
 						label: item['name'],
-						value: item['google_category_id']
+						value: item['google_base_category_id']
 					}
 				}));
 			},
@@ -129,13 +130,14 @@ $('input[name=\'google_category\']').autocomplete({
         });
 	},
 	'select': function(item) {
-
+        $(this).val(item['label']);
+        $('input[name=\'google_base_category_id\']').val(item['value']);
     }
 });
 
 var category_row = <?php echo $category_row; ?>;
 
-$('input[name=\'category\']').on('çlick', function() {
+$('#button-category-add').on('çlick', function() {
     html  = '<tr id="category-row' + category_row + '">';
     html +=   '<td class="text-left"></td>';
     html +=   '<td class="text-left"></td>';

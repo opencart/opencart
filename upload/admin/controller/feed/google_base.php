@@ -196,7 +196,7 @@ class ControllerFeedGoogleBase extends Controller {
 			}
 
 			$filter_data = array(
-				'filter_name' => $filter_name,
+				'filter_name' => html_entity_decode($filter_name, ENT_QUOTES, 'UTF-8'),
 				'start'       => 0,
 				'limit'       => 5
 			);

@@ -42,8 +42,8 @@
                       <?php $category_row = 0; ?>
                       <?php foreach ($google_base_categories as $google_base_category) { ?>
                       <tr id="category-row<?php echo $category_row; ?>">
-                        <td class="text-left"><input type="hidden" name="google_base_category[]" value="<?php echo $google_base_category['google_base_category_id']; ?>" /><?php echo $google_base_category['name']; ?></td>
-                        <td class="text-left"><input type="hidden" name="google_base_category[]" value="<?php echo $google_base_category['google_base_category_id']; ?>" /><?php echo $google_base_category['name']; ?></td>
+                        <td class="text-left"><input type="hidden" name="google_base_category[<?php echo $google_base_category['google_base_category_id']; ?>][]" value="<?php echo $google_base_category['google_base_category_id']; ?>" /><?php echo $google_base_category['category_name']; ?></td>
+                        <td class="text-left"><?php echo $google_base_category['name']; ?></td>
                         <td class="text-left"><button type="button" onclick="$('#category-row<?php echo $category_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                       </tr>
                       <?php $category_row++; ?>
@@ -138,9 +138,15 @@ $('input[name=\'google_category\']').autocomplete({
 var category_row = <?php echo $category_row; ?>;
 
 $('#button-category-add').on('çlick', function() {
+	
+	$('input[name=\'google_base_category\']').val();
+	var google_base_category_id $('input[name=\'google_base_category_id\']').val();
+	
+	<input type="hidden" name="category_id" value="" /><input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" class="form-control" />
+	
     html  = '<tr id="category-row' + category_row + '">';
-    html +=   '<td class="text-left"></td>';
-    html +=   '<td class="text-left"></td>';
+    html +=   '<td class="text-left"><input type="hidden" name="google_base_category[]" value="" />' + $('input[name=\'google_base_category\']').val() + '</td>';
+    html +=   '<td class="text-left">' + + '</td>';
     html +=   '<td class="text-left"><button type="button" onclick="$(\'#category-row' + category_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
     html += '</tr>';
 

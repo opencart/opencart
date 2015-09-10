@@ -86,7 +86,7 @@ class ControllerFeedGoogleBase extends Controller {
 				$data['google_base_categories'][] = array(
 					'category_id'                => $category_info['category_id'],
 					'category_name'              => $category_info['name'],
-					'google_base_category_id'    => $google_base_info['google_base_category_id'],
+					'google_base_id'    => $google_base_info['google_base_category_id'],
 					'google_base_category_name'  => $google_base_info['name']
 				);
 			}

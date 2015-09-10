@@ -88,4 +88,14 @@ class ModelOpenbayEbayProduct extends Model {
 
 		return $response;
 	}
+
+	public function getItemRecommendations($filters) {
+		$response = $this->openbay->ebay->call('listingrecommendation/recommendations/', $filters);
+
+		return array(
+			'error' => $this->openbay->ebay->lasterror,
+			'error_message' => $this->openbay->ebay->lastmsg,
+			'data' => $response
+		);
+	}
 }

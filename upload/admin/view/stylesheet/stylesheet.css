@@ -6,7 +6,6 @@ html, body {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 12px;
 	color: #666666;
-	line-height: 18px;
 	text-rendering: optimizeLegibility;
 }
 h1, h2, h3, h4, h5, h6, p {
@@ -131,6 +130,10 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #profile div {
 	float: left;
 	color: #C4C4C4;
+}
+#profile div i {
+	font-size: 42px;
+	color: #2ca5d3;
 }
 #profile div + div {
 	margin-left: 15px;
@@ -462,7 +465,12 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .pagination {
 	margin: 0;
 }
-
+.form-group {
+    border-bottom: 1px solid #ededed;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-bottom: 0;
+}
 /* Panels */
 .panel {
 	border-radius: 0px;
@@ -605,7 +613,6 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 .jqvmap-label {
 	z-index: 999;
 }
-
 .alert {
 	overflow: auto;
 }

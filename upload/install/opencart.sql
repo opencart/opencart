@@ -3099,7 +3099,6 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (260, 0, 'config', 'config_mail_alert', '', 0),
 (103, 0, 'free_checkout', 'free_checkout_status', '1', 0),
 (104, 0, 'free_checkout', 'free_checkout_order_status_id', '1', 0),
-(259, 0, 'config', 'config_mail', 'a:7:{s:8:"protocol";s:4:"mail";s:9:"parameter";s:0:"";s:13:"smtp_hostname";s:0:"";s:13:"smtp_username";s:0:"";s:13:"smtp_password";s:0:"";s:9:"smtp_port";s:0:"";s:12:"smtp_timeout";s:0:"";}', 1),
 (258, 0, 'config', 'config_ftp_status', '0', 0),
 (257, 0, 'config', 'config_ftp_root', '', 0),
 (256, 0, 'config', 'config_ftp_password', '', 0),
@@ -3138,7 +3137,7 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (205, 0, 'config', 'config_tax_customer', 'shipping', 0),
 (206, 0, 'config', 'config_customer_online', '0', 0),
 (207, 0, 'config', 'config_customer_group_id', '1', 0),
-(208, 0, 'config', 'config_customer_group_display', 'a:1:{i:0;s:1:"1";}', 1),
+(208, 0, 'config', 'config_customer_group_display', '["1"]', 1),
 (209, 0, 'config', 'config_customer_price', '0', 0),
 (210, 0, 'config', 'config_account_id', '3', 0),
 (211, 0, 'config', 'config_account_mail', '0', 0),
@@ -3148,8 +3147,8 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (215, 0, 'config', 'config_checkout_guest', '1', 0),
 (216, 0, 'config', 'config_checkout_id', '5', 0),
 (217, 0, 'config', 'config_order_status_id', '1', 0),
-(218, 0, 'config', 'config_processing_status', '["7"]', 1),
-(219, 0, 'config', 'config_complete_status', '["5"]', 1),
+(218, 0, 'config', 'config_processing_status', '["5","1","2","12","3"]', 1),
+(219, 0, 'config', 'config_complete_status', '["5","3"]', 1),
 (220, 0, 'config', 'config_order_mail', '0', 0),
 (221, 0, 'config', 'config_stock_display', '0', 0),
 (222, 0, 'config', 'config_stock_warning', '0', 0),
@@ -3199,7 +3198,16 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (276, 0, 'config', 'config_error_display', '1', 0),
 (277, 0, 'config', 'config_error_log', '1', 0),
 (278, 0, 'config', 'config_error_filename', 'error.log', 0),
-(279, 0, 'config', 'config_google_analytics', '', 0);
+(279, 0, 'config', 'config_google_analytics', '', 0),
+(280, 0, 'config', 'config_mail_protocol', 'mail', 0),
+(281, 0, 'config', 'config_mail_parameter', '', 0),
+(282, 0, 'config', 'config_mail_smtp_hostname', '', 0),
+(283, 0, 'config', 'config_mail_smtp_username', '', 0),
+(284, 0, 'config', 'config_mail_smtp_password', '', 0),
+(285, 0, 'config', 'config_mail_smtp_port', '25', 0),
+(286, 0, 'config', 'config_mail_smtp_timeout', '5', 0),
+(287, 0, 'config', 'config_captcha', 'basic_captcha', 0),
+(288, 0, 'config', 'config_captcha_page', '["review","return","contact"]', 1);
 
 -- --------------------------------------------------------
 

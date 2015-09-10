@@ -5,9 +5,10 @@ final class Etsy {
 	private $token;
 	private $enc1;
 	private $enc2;
-	private $url = 'http://staging.openbaypro.io/';
-	//private $url = 'http://api.openbaypro.io/';
+	private $url = 'https://api.openbaypro.io/';
 	private $registry;
+	private $logger;
+	private $max_log_size = 50; //max log size in Mb
 
 	public function __construct($registry) {
 		$this->registry = $registry;
@@ -16,8 +17,9 @@ final class Etsy {
 		$this->enc2 = $this->config->get('etsy_enc2');
 		$this->logging = $this->config->get('etsy_logging');
 
-		$this->load->library('log');
-		$this->logger = new \Log('etsylog.log');
+		if ($this->logging == 1) {
+			$this->setLogger();
+		}
 	}
 
 	public function __get($name) {
@@ -91,14 +93,28 @@ final class Etsy {
 		}
 	}
 
-	public function log($data, $write = true) {
-		if(function_exists('getmypid')) {
-			$process_id = getmypid();
-			$data = $process_id . ' - ' . $data;
+	private function setLogger() {
+		$this->load->library('log');
+
+		if(file_exists(DIR_LOGS . 'etsylog.log')) {
+			if(filesize(DIR_LOGS . 'etsylog.log') > ($this->max_log_size * 1000000)) {
+				rename(DIR_LOGS . 'etsylog.log', DIR_LOGS . '_etsylog_' . date('Y-m-d_H-i-s') . '.log');
+			}
 		}
 
-		if($write == true) {
-			$this->logger->write($data);
+		$this->logger = new \Log('etsylog.log');
+	}
+
+	public function log($data, $write = true) {
+		if ($this->logging == 1) {
+			if (function_exists('getmypid')) {
+				$process_id = getmypid();
+				$data = $process_id . ' - ' . $data;
+			}
+
+			if ($write == true) {
+				$this->logger->write($data);
+			}
 		}
 	}
 

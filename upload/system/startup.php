@@ -56,7 +56,7 @@ function modification($filename) {
 	if (substr($filename, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {
 		$file = DIR_MODIFICATION . 'system/' . substr($filename, strlen(DIR_SYSTEM));
 	}
-	
+
 	if (is_file($file)) {
 		return $file;
 	}
@@ -65,19 +65,32 @@ function modification($filename) {
 }
 
 // Autoloader
-function autoload($class) {
+function library($class) {
 	$file = DIR_SYSTEM . 'library/' . str_replace('\\', '/', strtolower($class)) . '.php';
-	
+
 	if (is_file($file)) {
 		include_once(modification($file));
-		
+
 		return true;
 	} else {
 		return false;
 	}
 }
 
-spl_autoload_register('autoload');
+function vendor($class) {
+	$file = DIR_SYSTEM . 'vendor/' . str_replace('\\', '/', strtolower($class)) . '.php';
+
+	if (is_file($file)) {
+		include_once(modification($file));
+
+		return true;
+	} else {
+		return false;
+	}
+}
+
+spl_autoload_register('library');
+spl_autoload_register('vendor');
 spl_autoload_extensions('.php');
 
 // Engine

@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-backup" data-toggle="tooltip" title="<?php echo $button_backup; ?>" class="btn btn-default"><i class="fa fa-download"></i></button>
-        <button type="submit" form="form-restore" data-toggle="tooltip" title="<?php echo $button_restore; ?>" class="btn btn-default"><i class="fa fa-upload"></i></button>
+        <button type="submit" form="form-backup" data-toggle="tooltip" title="<?php echo $button_export; ?>" class="btn btn-default"><i class="fa fa-download"></i></button>
+        <button type="submit" form="form-restore" data-toggle="tooltip" title="<?php echo $button_import; ?>" class="btn btn-default"><i class="fa fa-upload"></i></button>
       </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -40,7 +40,7 @@
         </form>
         <form action="<?php echo $backup; ?>" method="post" enctype="multipart/form-data" id="form-backup" class="form-horizontal">
           <div class="form-group">
-            <label class="col-sm-2 control-label"><?php echo $entry_backup; ?></label>
+            <label class="col-sm-2 control-label"><?php echo $entry_export; ?></label>
             <div class="col-sm-10">
               <div class="well well-sm" style="height: 150px; overflow: auto;">
                 <?php foreach ($tables as $table) { ?>

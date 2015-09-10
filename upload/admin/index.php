@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '2.1.0.0_rc');
+define('VERSION', '2.1.0.0_rc1');
 
 // Configuration
 if (is_file('config.php')) {
@@ -153,6 +153,9 @@ foreach ($query->rows as $result) {
 
 // Front Controller
 $controller = new Front($registry);
+
+// Compile Sass
+$controller->addPreAction(new Action('common/sass'));
 
 // Login
 $controller->addPreAction(new Action('common/login/check'));

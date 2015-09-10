@@ -47,6 +47,10 @@ class ControllerSettingSetting extends Controller {
 		$data['text_payment'] = $this->language->get('text_payment');
 		$data['text_mail'] = $this->language->get('text_mail');
 		$data['text_smtp'] = $this->language->get('text_smtp');
+		$data['text_general'] = $this->language->get('text_general');
+		$data['text_security'] = $this->language->get('text_security');
+		$data['text_upload'] = $this->language->get('text_upload');
+		$data['text_error'] = $this->language->get('text_error');
 
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_owner'] = $this->language->get('entry_owner');

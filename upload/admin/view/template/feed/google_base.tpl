@@ -27,39 +27,21 @@
       <div class="panel-body">
         <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_import; ?> <button type="button" class="close" data-dismiss="alert">×</button></div>
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-google-base" class="form-horizontal">
+            <div id="category"></div>
+            <br />
 
-
-                <div class="table-responsive">
-                  <table id="category" class="table table-striped table-bordered table-hover">
-                    <thead>
-                      <tr>
-                        <td class="text-left"><?php echo $entry_category; ?></td>
-                        <td class="text-left"><?php echo $entry_google_category; ?></td>
-                        <td></td>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php $category_row = 0; ?>
-                      <?php foreach ($google_base_categories as $google_base_category) { ?>
-                      <tr id="category-row<?php echo $category_row; ?>">
-                        <td class="text-left"><input type="hidden" name="google_base_category[<?php echo $google_base_category['google_base_category_id']; ?>][]" value="<?php echo $google_base_category['google_base_category_id']; ?>" /><?php echo $google_base_category['category_name']; ?></td>
-                        <td class="text-left"><?php echo $google_base_category['name']; ?></td>
-                        <td class="text-left"><button type="button" onclick="$('#category-row<?php echo $category_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
-                      </tr>
-                      <?php $category_row++; ?>
-                      <?php } ?>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <td><input type="hidden" name="category_id" value="" /><input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" class="form-control" /></td>
-                        <td><input type="hidden" name="google_base_category_id" value="" /><input type="text" name="google_category" value="" placeholder="<?php echo $entry_google_category; ?>" class="form-control" /></td>
-                        <td class="text-left"><button type="button" id="button-category-add" data-toggle="tooltip" title="<?php echo $button_category_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
-
-
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-data-feed"><?php echo $entry_google_category; ?></label>
+              <div class="col-sm-10">
+                  <input type="text" name="google_category" value="" placeholder="<?php echo $entry_google_category; ?>" id="input-google-category" class="form-control" />
+                  <input type="hidden" name="google_base_category_id" value="" />
+                  <div class="input-group">
+                    <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" class="form-control" />
+                    <span class="input-group-btn"><button type="button" id="button-category-add" data-toggle="tooltip" title="<?php echo $button_category_add; ?>" class="btn btn-primary"><i class="fa fa-plus"></i></button></span>
+                  </div>
+                  <input type="hidden" name="category_id" value="" />
+              </div>
+            </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-data-feed"><?php echo $entry_data_feed; ?></label>
               <div class="col-sm-10">
@@ -85,6 +67,31 @@
     </div>
   </div>
   <script type="text/javascript"><!--
+// Google Category
+$('input[name=\'google_category\']').autocomplete({
+    'source': function(request, response) {
+        $.ajax({
+            url: 'index.php?route=feed/google_base/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+            dataType: 'json',
+            success: function(json) {
+                response($.map(json, function(item) {
+                    return {
+                        label: item['name'],
+                        value: item['google_base_category_id']
+                    }
+                }));
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    },
+    'select': function(item) {
+        $(this).val(item['label']);
+        $('input[name=\'google_base_category_id\']').val(item['value']);
+  }
+});
+
 // Category
 $('input[name=\'category\']').autocomplete({
 	'source': function(request, response) {
@@ -110,50 +117,85 @@ $('input[name=\'category\']').autocomplete({
     }
 });
 
-// Google Category
-$('input[name=\'google_category\']').autocomplete({
-	'source': function(request, response) {
-		$.ajax({
-			url: 'index.php?route=feed/google_base/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
-			dataType: 'json',
-			success: function(json) {
-				response($.map(json, function(item) {
-					return {
-						label: item['name'],
-						value: item['google_base_category_id']
-					}
-				}));
-			},
-            error: function(xhr, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
-	},
-	'select': function(item) {
-        $(this).val(item['label']);
-        $('input[name=\'google_base_category_id\']').val(item['value']);
-    }
+$('#category').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
+
+	$('#category').load(this.href);
 });
 
-var category_row = <?php echo $category_row; ?>;
+$('#category').load('index.php?route=feed/google_base/category&token=<?php echo $token; ?>');
 
-$('#button-category-add').on('çlick', function() {
-	
-	$('input[name=\'google_base_category\']').val();
-	var google_base_category_id $('input[name=\'google_base_category_id\']').val();
-	
-	<input type="hidden" name="category_id" value="" /><input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" class="form-control" />
-	
-    html  = '<tr id="category-row' + category_row + '">';
-    html +=   '<td class="text-left"><input type="hidden" name="google_base_category[]" value="" />' + $('input[name=\'google_base_category\']').val() + '</td>';
-    html +=   '<td class="text-left">' + + '</td>';
-    html +=   '<td class="text-left"><button type="button" onclick="$(\'#category-row' + category_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
-    html += '</tr>';
+$('#button-category-add').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=feed/google_base/addcategory&token=<?php echo $token; ?>',
+		type: 'post',
+		dataType: 'json',
+		data: 'google_base_category_id=' + $('input[name=\'google_base_category_id\']').val() + '&category_id=' + $('input[name=\'category_id\']').val(),
+		beforeSend: function() {
+			$('#button-category-add').button('loading');
+		},
+		complete: function() {
+			$('#button-category-add').button('reset');
+		},
+		success: function(json) {
+			$('.alert').remove();
 
-    $('#category tbody').append(html);
+			if (json['error']) {
+				$('#category').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+
+			if (json['success']) {
+				$('#category').load('index.php?route=feed/google_base/category&token=<?php echo $token; ?>');
+
+				$('#category').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+				$('input[name=\'category\']').val('');
+                $('input[name=\'category_id\']').val('');
+                $('input[name=\'google_base_category\']').val('');
+                $('input[name=\'google_base_category_id\']').val('');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
 });
-//--></script>
-  <script type="text/javascript"><!--
+
+$('#category').delegate('.btn-danger', 'click', function() {
+	var node = this;
+
+	$.ajax({
+		url: 'index.php?route=feed/google_base/removecategory&token=<?php echo $token; ?>',
+		type: 'post',
+		data: 'category_id=' + encodeURIComponent(this.value),
+		dataType: 'json',
+		crossDomain: true,
+		beforeSend: function() {
+			$(node).button('loading');
+		},
+		complete: function() {
+			$(node).button('reset');
+		},
+		success: function(json) {
+			$('.alert').remove();
+
+			// Check for errors
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+
+            if (json['success']) {
+				$('#category').load('index.php?route=feed/google_base/category&token=<?php echo $token; ?>');
+
+				$('#category').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
 $('#button-import').on('click', function() {
 	$('#form-upload').remove();
 

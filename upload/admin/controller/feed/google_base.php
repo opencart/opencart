@@ -24,8 +24,8 @@ class ControllerFeedGoogleBase extends Controller {
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_import'] = $this->language->get('text_import');
 
-		$data['entry_category'] = $this->language->get('entry_category');
 		$data['entry_google_category'] = $this->language->get('entry_google_category');
+		$data['entry_category'] = $this->language->get('entry_category');
 		$data['entry_data_feed'] = $this->language->get('entry_data_feed');
 		$data['entry_status'] = $this->language->get('entry_status');
 
@@ -33,7 +33,6 @@ class ControllerFeedGoogleBase extends Controller {
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_category_add'] = $this->language->get('button_category_add');
-		$data['button_remove'] = $this->language->get('button_remove');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -63,34 +62,6 @@ class ControllerFeedGoogleBase extends Controller {
 		$data['cancel'] = $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['token'] = $this->session->data['token'];
-
-		$this->load->model('feed/google_base');
-		$this->load->model('catalog/category');
-
-		if (isset($this->request->post['google_base_category'])) {
-			$google_base_categories = $this->request->post['google_base_category'];
-		} elseif ($this->config->has('google_base_category')) {
-			$google_base_categories = $this->config->get('google_base_category');
-		} else {
-			$google_base_categories = array();
-		}
-
-		$data['google_base_categories'] = array();
-
-		foreach ($google_base_categories as $category_id => $google_base_category_id) {
-			$google_base_info = $this->model_feed_google_base->getGoogleBaseCategory($google_base_category_id);
-
-			$category_info = $this->model_catalog_category->getCategory($category_id);
-
-			if ($category_info && $google_base_info) {
-				$data['google_base_categories'][] = array(
-					'category_id'                => $category_info['category_id'],
-					'category_name'              => $category_info['name'],
-					'google_base_id'    => $google_base_info['google_base_category_id'],
-					'google_base_category_name'  => $google_base_info['name']
-				);
-			}
-		}
 
 		$data['data_feed'] = HTTP_CATALOG . 'index.php?route=feed/google_base';
 
@@ -127,11 +98,6 @@ class ControllerFeedGoogleBase extends Controller {
 		$this->model_feed_google_base->uninstall();
 	}
 
-	/*
-	https://support.google.com/merchants/answer/160081?hl=en
-
-	Choose Taxonomy with numeric IDs in Plain Text (.txt)
-	*/
 	public function import() {
 		$this->load->language('feed/google_base');
 
@@ -183,6 +149,92 @@ class ControllerFeedGoogleBase extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
+	public function category() {
+		$this->load->language('feed/google_base');
+
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_loading'] = $this->language->get('text_loading');
+
+		$data['column_google_category'] = $this->language->get('column_google_category');
+		$data['column_category'] = $this->language->get('column_category');
+		$data['column_action'] = $this->language->get('column_action');
+
+		$data['button_remove'] = $this->language->get('button_remove');
+
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+
+		$data['google_base_categories'] = array();
+
+		$this->load->model('feed/google_base');
+
+		$results = $this->model_feed_google_base->getCategories(($page - 1) * 10, 10);
+
+		foreach ($results as $result) {
+			$data['google_base_categories'][] = array(
+				'google_base_category_id' => $result['google_base_category_id'],
+				'google_base_category'    => $result['google_base_category'],
+				'category_id'             => $result['category_id'],
+				'category'                => $result['category']
+			);
+		}
+
+		$category_total = $this->model_feed_google_base->getTotalCategories();
+
+		$pagination = new Pagination();
+		$pagination->total = $category_total;
+		$pagination->page = $page;
+		$pagination->limit = 10;
+		$pagination->url = $this->url->link('feed/google_base/category', 'token=' . $this->session->data['token'] . '&page={page}', 'SSL');
+
+		$data['pagination'] = $pagination->render();
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($category_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($category_total - 10)) ? $category_total : ((($page - 1) * 10) + 10), $category_total, ceil($category_total / 10));
+
+		$this->response->setOutput($this->load->view('feed/google_base_category.tpl', $data));
+	}
+
+	public function addCategory() {
+		$this->load->language('feed/google_base');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'sale/order')) {
+			$json['error'] = $this->language->get('error_permission');
+		} elseif (!empty($this->request->post['google_base_category_id']) && !empty($this->request->post['category_id'])) {
+			$this->load->model('feed/google_base');
+
+			$this->model_feed_google_base->addCategory($this->request->post);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function removeCategory() {
+		$this->load->language('feed/google_base');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'sale/order')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('feed/google_base');
+
+			$this->model_feed_google_base->deleteCategory($this->request->post['category_id']);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
 	public function autocomplete() {
 		$json = array();
 
@@ -201,7 +253,7 @@ class ControllerFeedGoogleBase extends Controller {
 				'limit'       => 5
 			);
 
-			$results = $this->model_feed_google_base->getGoogleCategories($filter_data);
+			$results = $this->model_feed_google_base->getGoogleBaseCategories($filter_data);
 
 			foreach ($results as $result) {
 				$json[] = array(

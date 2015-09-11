@@ -358,7 +358,7 @@ class ModelUpgrade extends Model {
 			if ($result['serialized'] && preg_match('/^(a:)/', $result['value'])) {
 				$value = unserialize($result['value']);
 
-				$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape(json_encode($value)) . "' WHERE `key` = '" . $this->db->escape($result['key']) . "', `code` = '" . $this->db->escape($result['code']) . "', `store_id` = '" . (int)$result['store_id'] . "'");
+				$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape(json_encode($value)) . "' WHERE `key` = '" . $this->db->escape($result['key']) . "' AND `code` = '" . $this->db->escape($result['code']) . "' AND `store_id` = '" . (int)$result['store_id'] . "'");
 			}
 		}
 

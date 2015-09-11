@@ -45,8 +45,8 @@ $_['button_copy']                   = 'Copy';
 $_['button_back']                   = 'Back';
 $_['button_remove']                 = 'Remove';
 $_['button_refresh']                = 'Refresh';
-$_['button_backup']                 = 'Backup';
-$_['button_restore']                = 'Restore';
+$_['button_export']                 = 'Export';
+$_['button_import']                 = 'Import';
 $_['button_download']               = 'Download';
 $_['button_rebuild']                = 'Rebuild';
 $_['button_upload']                 = 'Upload';
@@ -94,6 +94,7 @@ $_['button_unlock']                 = 'Unlock Account';
 $_['button_link']                   = 'Link';
 $_['button_currency']               = 'Refresh Currency Values';
 $_['button_apply']                  = 'Apply';
+$_['button_category_add']           = 'Add Category';
 
 // Tab
 $_['tab_address']                   = 'Address';

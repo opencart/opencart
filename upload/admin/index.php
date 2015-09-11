@@ -154,6 +154,9 @@ foreach ($query->rows as $result) {
 // Front Controller
 $controller = new Front($registry);
 
+// Compile Sass
+$controller->addPreAction(new Action('common/sass'));
+
 // Login
 $controller->addPreAction(new Action('common/login/check'));
 

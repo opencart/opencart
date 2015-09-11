@@ -20,7 +20,9 @@ class ModelUpgrade extends Model {
 		// Get only the create statements
 		foreach($lines as $line) {
 			// Set any prefix
-			$line = str_replace("CREATE TABLE IF NOT EXISTS `oc_", "CREATE TABLE IF NOT EXISTS `" . DB_PREFIX, $line);
+			$line = str_replace("DROP TABLE IF EXISTS `oc_", "DROP TABLE IF EXISTS `" . DB_PREFIX, $line);
+
+			$line = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . DB_PREFIX, $line);
 
 			// If line begins with create table we want to start recording
 			if (substr($line, 0, 12) == 'CREATE TABLE') {

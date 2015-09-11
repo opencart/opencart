@@ -843,8 +843,8 @@
             </div>
             <div class="tab-pane" id="tab-reward">
               <div class="form-group">
-                <label class="col-lg-2 control-label" for="input-points"><span data-toggle="tooltip" title="<?php echo $help_points; ?>"><?php echo $entry_points; ?></span></label>
-                <div class="col-lg-10">
+                <label class="col-sm-2 control-label" for="input-points"><span data-toggle="tooltip" title="<?php echo $help_points; ?>"><?php echo $entry_points; ?></span></label>
+                <div class="col-sm-10">
                   <input type="text" name="points" value="<?php echo $points; ?>" placeholder="<?php echo $entry_points; ?>" id="input-points" class="form-control" />
                 </div>
               </div>

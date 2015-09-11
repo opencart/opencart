@@ -33,13 +33,13 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-data-feed"><?php echo $entry_google_category; ?></label>
               <div class="col-sm-10">
-                  <input type="text" name="google_category" value="" placeholder="<?php echo $entry_google_category; ?>" id="input-google-category" class="form-control" />
+                  <input type="text" name="google_base_category" value="" placeholder="<?php echo $entry_google_category; ?>" id="input-google-category" class="form-control" />
                   <input type="hidden" name="google_base_category_id" value="" />
                   <div class="input-group">
                     <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" class="form-control" />
+                    <input type="hidden" name="category_id" value="" />
                     <span class="input-group-btn"><button type="button" id="button-category-add" data-toggle="tooltip" title="<?php echo $button_category_add; ?>" class="btn btn-primary"><i class="fa fa-plus"></i></button></span>
                   </div>
-                  <input type="hidden" name="category_id" value="" />
               </div>
             </div>
             <div class="form-group">
@@ -68,7 +68,7 @@
   </div>
   <script type="text/javascript"><!--
 // Google Category
-$('input[name=\'google_category\']').autocomplete({
+$('input[name=\'google_base_category\']').autocomplete({
     'source': function(request, response) {
         $.ajax({
             url: 'index.php?route=feed/google_base/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
@@ -113,7 +113,7 @@ $('input[name=\'category\']').autocomplete({
 	},
 	'select': function(item) {
         $(this).val(item['label']);
-        $('input[name=\'category_id\']').val(item['value']);
+        $('input[name="category_id"]').val(item['value']);
     }
 });
 

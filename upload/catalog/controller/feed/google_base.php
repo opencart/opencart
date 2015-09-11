@@ -9,60 +9,62 @@ class ControllerFeedGoogleBase extends Controller {
 			$output .= '<description>' . $this->config->get('config_meta_description') . '</description>';
 			$output .= '<link>' . HTTP_SERVER . '</link>';
 
+			$this->load->model('feed/google_base');
 			$this->load->model('catalog/category');
-
 			$this->load->model('catalog/product');
 
 			$this->load->model('tool/image');
 
-			$google_categories = $this->config->get('google_base_category');
-			
-			foreach ($google_categories as $category_id => $google_category_id) {
+			$product_data = array();
+
+			$google_base_categories = $this->model_feed_google_base->getCategories();
+
+			foreach ($google_base_categories as $google_base_category) {
 				$filter_data = array(
-					'filter_category_id' => $category_id,
-					'filter_filter'      => $filter
+					'filter_category_id' => $google_base_category['category_id'],
+					'filter_filter'      => false
 				);
 
 				$products = $this->model_catalog_product->getProducts($filter_data);
 
 				foreach ($products as $product) {
-					if ($product['description']) {
+					if (!in_array($product['product_id'], $product_data) && $product['description']) {
 						$output .= '<item>';
-						$output .= '<title>' . $product['name'] . '</title>';
+						$output .= '<title><![CDATA[' . $product['name'] . ']]></title>';
 						$output .= '<link>' . $this->url->link('product/product', 'product_id=' . $product['product_id']) . '</link>';
-						$output .= '<description>' . $product['description'] . '</description>';
-						$output .= '<g:brand>' . html_entity_decode($product['manufacturer'], ENT_QUOTES, 'UTF-8') . '</g:brand>';
+						$output .= '<description><![CDATA[' . $product['description'] . ']]></description>';
+						$output .= '<g:brand><![CDATA[' . html_entity_decode($product['manufacturer'], ENT_QUOTES, 'UTF-8') . ']]></g:brand>';
 						$output .= '<g:condition>new</g:condition>';
 						$output .= '<g:id>' . $product['product_id'] . '</g:id>';
-	
+
 						if ($product['image']) {
 							$output .= '<g:image_link>' . $this->model_tool_image->resize($product['image'], 500, 500) . '</g:image_link>';
 						} else {
 							$output .= '<g:image_link></g:image_link>';
 						}
-	
+
 						$output .= '<g:model_number>' . $product['model'] . '</g:model_number>';
-	
+
 						if ($product['mpn']) {
-							$output .= '<g:mpn>' . $product['mpn'] . '</g:mpn>' ;
+							$output .= '<g:mpn><![CDATA[' . $product['mpn'] . ']]></g:mpn>' ;
 						} else {
 							$output .= '<g:identifier_exists>false</g:identifier_exists>';
 						}
-	
+
 						if ($product['upc']) {
 							$output .= '<g:upc>' . $product['upc'] . '</g:upc>';
 						}
-	
+
 						if ($product['ean']) {
 							$output .= '<g:ean>' . $product['ean'] . '</g:ean>';
 						}
-	
+
 						$currencies = array(
 							'USD',
 							'EUR',
 							'GBP'
 						);
-	
+
 						if (in_array($this->currency->getCode(), $currencies)) {
 							$currency_code = $this->currency->getCode();
 							$currency_value = $this->currency->getValue();
@@ -70,24 +72,26 @@ class ControllerFeedGoogleBase extends Controller {
 							$currency_code = 'USD';
 							$currency_value = $this->currency->getValue('USD');
 						}
-	
+
 						if ((float)$product['special']) {
 							$output .= '<g:price>' .  $this->currency->format($this->tax->calculate($product['special'], $product['tax_class_id']), $currency_code, $currency_value, false) . '</g:price>';
 						} else {
 							$output .= '<g:price>' . $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id']), $currency_code, $currency_value, false) . '</g:price>';
 						}
-	
+
+						$output .= '<g:google_product_category>' . $google_base_category['google_base_category_id'] . '</g:google_product_category>';
+
 						$categories = $this->model_catalog_product->getCategories($product['product_id']);
-	
+
 						foreach ($categories as $category) {
 							$path = $this->getPath($category['category_id']);
-	
+
 							if ($path) {
 								$string = '';
-	
+
 								foreach (explode('_', $path) as $path_id) {
 									$category_info = $this->model_catalog_category->getCategory($path_id);
-	
+
 									if ($category_info) {
 										if (!$string) {
 											$string = $category_info['name'];
@@ -96,17 +100,18 @@ class ControllerFeedGoogleBase extends Controller {
 										}
 									}
 								}
-	
-								$output .= '<g:product_type>' . $string . '</g:product_type>';
+
+								$output .= '<g:product_type><![CDATA[' . $string . ']]></g:product_type>';
 							}
 						}
-	
+
 						$output .= '<g:quantity>' . $product['quantity'] . '</g:quantity>';
 						$output .= '<g:weight>' . $this->weight->format($product['weight'], $product['weight_class_id']) . '</g:weight>';
-						$output .= '<g:availability>' . ($product['quantity'] ? 'in stock' : 'out of stock') . '</g:availability>';
+						$output .= '<g:availability><![CDATA[' . ($product['quantity'] ? 'in stock' : 'out of stock') . ']]></g:availability>';
 						$output .= '</item>';
 					}
 				}
+			}
 
 			$output .= '</channel>';
 			$output .= '</rss>';

@@ -21,7 +21,7 @@ class ModelCheckoutOrder extends Model {
 		}
 
 		// Gift Voucher
-		$this->load->model('total/coupon');
+		$this->load->model('total/voucher');
 
 		// Vouchers
 		if (isset($data['vouchers'])) {
@@ -120,7 +120,7 @@ class ModelCheckoutOrder extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "affiliate_transaction` WHERE order_id = '" . (int)$order_id . "'");
 
 		// Gift Voucher
-		$this->load->model('total/coupon');
+		$this->load->model('total/voucher');
 
 		$this->model_total_voucher->disableVoucher($order_id);
 

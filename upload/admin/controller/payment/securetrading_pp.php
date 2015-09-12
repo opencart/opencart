@@ -325,9 +325,9 @@ class ControllerPaymentSecureTradingPp extends Controller {
 				$data['text_column_amount'] = $this->language->get('text_column_amount');
 				$data['text_column_type'] = $this->language->get('text_column_type');
 				$data['text_column_created'] = $this->language->get('text_column_created');
-				$data['btn_release'] = $this->language->get('btn_release');
-				$data['btn_rebate'] = $this->language->get('btn_rebate');
-				$data['btn_void'] = $this->language->get('btn_void');
+				$data['button_release'] = $this->language->get('button_release');
+				$data['button_rebate'] = $this->language->get('button_rebate');
+				$data['button_void'] = $this->language->get('button_void');
 				$data['text_confirm_void'] = $this->language->get('text_confirm_void');
 				$data['text_confirm_release'] = $this->language->get('text_confirm_release');
 				$data['text_confirm_rebate'] = $this->language->get('text_confirm_rebate');

@@ -4,11 +4,12 @@ final class mPDO {
 	private $pdo = null;
 	private $statement = null;
 
-	public function __construct($hostname, $username, $password, $database, $port = "3306") {
+	public function __construct($hostname, $username, $password, $database, $port = '3306') {
 		try {
 			$this->pdo = new \PDO("mysql:host=" . $hostname . ";port=" . $port . ";dbname=" . $database, $username, $password, array(\PDO::ATTR_PERSISTENT => true));
 		} catch(\PDOException $e) {
 			trigger_error('Error: Could not make a database link ( ' . $e->getMessage() . '). Error Code : ' . $e->getCode() . ' <br />');
+			exit();
 		}
 
 		$this->pdo->exec("SET NAMES 'utf8'");
@@ -83,9 +84,7 @@ final class mPDO {
 	}
 
 	public function escape($value) {
-		$search = array("\\", "\0", "\n", "\r", "\x1a", "'", '"');
-		$replace = array("\\\\", "\\0", "\\n", "\\r", "\Z", "\'", '\"');
-		return str_replace($search, $replace, $value);
+		return str_replace(array("\\", "\0", "\n", "\r", "\x1a", "'", '"'), array("\\\\", "\\0", "\\n", "\\r", "\Z", "\'", '\"'), $value);
 	}
 
 	public function countAffected() {

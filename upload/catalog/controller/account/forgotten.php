@@ -7,7 +7,7 @@ class ControllerAccountForgotten extends Controller {
 			$this->response->redirect($this->url->link('account/account', '', 'SSL'));
 		}
 
-		$this->load->language('account/forgotten');
+		$this->language->load('account/forgotten');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -20,18 +20,26 @@ class ControllerAccountForgotten extends Controller {
 
 			$this->model_account_customer->editPassword($this->request->post['email'], $password);
 
-			$subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
+			$subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 
-			$message  = sprintf($this->language->get('text_greeting'), $this->config->get('config_name')) . "\n\n";
+			$message  = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')) . "\n\n";
 			$message .= $this->language->get('text_password') . "\n\n";
 			$message .= $password;
 
-			$mail = new Mail($this->config->get('config_mail'));
-			$mail->setTo(html_entity_decode($this->request->post['email'], ENT_QUOTES, 'UTF-8'));
+			$mail = new Mail();
+			$mail->protocol = $this->config->get('config_mail_protocol');
+			$mail->parameter = $this->config->get('config_mail_parameter');
+			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+
+			$mail->setTo($this->request->post['email']);
 			$mail->setFrom($this->config->get('config_email'));
-			$mail->setSender($this->config->get('config_name'));
+			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 			$mail->setSubject($subject);
-			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
+			$mail->setText($message);
 			$mail->send();
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -109,6 +117,12 @@ class ControllerAccountForgotten extends Controller {
 			$this->error['warning'] = $this->language->get('error_email');
 		} elseif (!$this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
 			$this->error['warning'] = $this->language->get('error_email');
+		}
+
+		$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
+
+		if ($customer_info && !$customer_info['approved']) {
+		    $this->error['warning'] = $this->language->get('error_approved');
 		}
 
 		return !$this->error;

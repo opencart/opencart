@@ -5,7 +5,7 @@ class ControllerModuleSlideshow extends Controller {
 
 		$this->load->model('design/banner');
 		$this->load->model('tool/image');
-		
+
 		$this->document->addStyle('catalog/view/javascript/jquery/owl-carousel/owl.carousel.css');
 		$this->document->addScript('catalog/view/javascript/jquery/owl-carousel/owl.carousel.min.js');
 

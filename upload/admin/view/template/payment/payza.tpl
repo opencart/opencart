@@ -46,7 +46,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-callback"><span data-toggle="tooltip" title="<?php echo $help_callback; ?>"><?php echo $entry_callback; ?></span></label>
             <div class="col-sm-10">
-              <textarea rows="5" readonly="readonly" id="input-callback" class="form-control"><?php echo $callback; ?></textarea>
+              <textarea rows="5" readonly id="input-callback" class="form-control"><?php echo $callback; ?></textarea>
             </div>
           </div>
           <div class="form-group">
@@ -109,4 +109,4 @@
     </div>
   </div>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

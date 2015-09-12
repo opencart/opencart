@@ -274,7 +274,7 @@ class ControllerPaymentSecureTradingPp extends Controller {
 
 		$data['action'] = $this->url->link('payment/securetrading_pp', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token']);
+		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -293,7 +293,7 @@ class ControllerPaymentSecureTradingPp extends Controller {
 		$this->model_payment_securetrading_pp->uninstall();
 	}
 
-	public function orderAction() {
+	public function order() {
 
 		if ($this->config->get('securetrading_pp_status')) {
 			$this->load->model('payment/securetrading_pp');

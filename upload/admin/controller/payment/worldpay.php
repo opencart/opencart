@@ -256,7 +256,7 @@ class ControllerPaymentWorldpay extends Controller {
 		$this->model_payment_worldpay->uninstall();
 	}
 
-	public function orderAction() {
+	public function order() {
 
 		if ($this->config->get('worldpay_status')) {
 
@@ -344,7 +344,7 @@ class ControllerPaymentWorldpay extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'payment/realex')) {
+		if (!$this->user->hasPermission('modify', 'payment/worldpay')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

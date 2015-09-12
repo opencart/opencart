@@ -98,7 +98,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -239,7 +239,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+				'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 			);
 
 			$data['breadcrumbs'][] = array(
@@ -445,7 +445,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function orderAction() {
+	public function order() {
 		$this->load->model('payment/pp_payflow_iframe');
 		$this->load->language('payment/pp_payflow_iframe');
 

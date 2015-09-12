@@ -138,30 +138,6 @@ class ModelOpenbayEbayOrder extends Model{
 		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_method` = '" . $this->db->escape($order->payment->method) . "', `total` = '" . (double)$order->order->total . "', `date_modified` = NOW() WHERE `order_id` = '" . (int)$order_id . "'");
 	}
 
-	public function find($smp_id) {
-		$this->openbay->ebay->log('find() - Finding SMP: ' . $smp_id);
-
-		$order_id = $this->orderLinkGet($smp_id);
-
-		/**
-		 * This is a depreciated method of getting order Id's and will be removed in the future.
-		 */
-		if ($order_id == 0) {
-			$query = $this->db->query("SELECT `order_id` FROM `" . DB_PREFIX . "order_history` WHERE `comment` = '[eBay Import:" . $this->db->escape($smp_id) . "]' LIMIT 1");
-
-			if ($query->num_rows > 0) {
-				$this->openbay->ebay->log('find() (depreciated) - Found: ' . $query->row['order_id']);
-				return (int)$query->row['order_id'];
-			} else {
-				$this->openbay->ebay->log('find() (depreciated) - Nothing found');
-				return false;
-			}
-		} else {
-			$this->openbay->ebay->log('find() - Found: ' . $order_id);
-			return $order_id;
-		}
-	}
-
 	public function getHistory($order_id) {
 		$this->openbay->ebay->log('Getting order history for ID: ' . $order_id);
 
@@ -195,13 +171,13 @@ class ModelOpenbayEbayOrder extends Model{
 		$notify = $this->config->get('ebay_update_notify');
 
 		if ($order_info) {
-
 			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
+
 			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($comment) . "', date_added = NOW()");
 
 			if ($notify) {
 				$language = new Language($order_info['language_directory']);
-				$language->load('default');
+				$language->load($order_info['language_directory']);
 				$language->load('mail/order');
 
 				$subject = sprintf($language->get('text_update_subject'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);
@@ -231,12 +207,20 @@ class ModelOpenbayEbayOrder extends Model{
 				$message .= "\n\n";
 				$message .= 'eBay and Amazon order management - http://www.openbaypro.com/';
 
-				$mail = new Mail($this->config->get('config_mail'));
+				$mail = new Mail();
+				$mail->protocol = $this->config->get('config_mail_protocol');
+				$mail->parameter = $this->config->get('config_mail_parameter');
+				$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+				$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+				$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+				$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+				$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+
 				$mail->setTo($order_info['email']);
 				$mail->setFrom($this->config->get('config_email'));
-				$mail->setSender($order_info['store_name']);
+				$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
 				$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
-				$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
+				$mail->setText($message);
 				$mail->send();
 			}
 		}
@@ -268,25 +252,24 @@ class ModelOpenbayEbayOrder extends Model{
 
 				// Send out order confirmation mail
 				$language = new Language($order_info['language_directory']);
-				$language->load('default');
+				$language->load($order_info['language_directory']);
 				$language->load('mail/order');
 
 				$order_status_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_status` WHERE `order_status_id` = '" . (int)$order_status_id . "' AND `language_id` = '" . (int)$order_info['language_id'] . "'");
 
-				$order_status = '';
 				if ($order_status_query->num_rows) {
 					$order_status = $order_status_query->row['name'];
 				} else {
 					$order_status = '';
 				}
 
-				$subject = sprintf($language->get('text_new_subject'), $order_info['store_name'], $order_id);
+				$subject = sprintf($language->get('text_new_subject'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);
 
 				// HTML Mail
 				$data = array();
 
-				$data['title'] = sprintf($language->get('text_new_subject'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);
-				$data['text_greeting'] = sprintf($language->get('text_new_greeting'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
+				$data['title'] = sprintf($language->get('text_new_subject'), $order_info['store_name'], $order_id);
+				$data['text_greeting'] = sprintf($language->get('text_new_greeting'), $order_info['store_name']);
 				$data['text_link'] = $language->get('text_new_link');
 				$data['text_download'] = $language->get('text_new_download');
 				$data['text_order_detail'] = $language->get('text_new_order_detail');
@@ -332,6 +315,7 @@ class ModelOpenbayEbayOrder extends Model{
 				$data['order_status'] = $order_status;
 
 				$data['comment'] = '';
+
 				if ($comment && $notify) {
 					$data['comment'] = nl2br($comment);
 				}
@@ -414,7 +398,7 @@ class ModelOpenbayEbayOrder extends Model{
 						if ($option['type'] != 'file') {
 							$value = $option['value'];
 						} else {
-							$value = utf8_substr($option['value'], 0, utf8_strrpos($option['value'], ' . '));
+							$value = utf8_substr($option['value'], 0, utf8_strrpos($option['value'], '.'));
 						}
 
 						$option_data[] = array(
@@ -495,13 +479,25 @@ class ModelOpenbayEbayOrder extends Model{
 				$text .= $language->get('text_new_footer') . "\n\n";
 
 				if ($notify == 1) {
-					$mail = new Mail($this->config->get('config_mail'));
+					if (version_compare(VERSION, '2.0.2', '<')) {
+						$mail = new Mail($this->config->get('config_mail'));
+					} else {
+						$mail = new Mail();
+						$mail->protocol = $this->config->get('config_mail_protocol');
+						$mail->parameter = $this->config->get('config_mail_parameter');
+						$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+						$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+						$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+						$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+						$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+					}
+
 					$mail->setTo($order_info['email']);
 					$mail->setFrom($this->config->get('config_email'));
-					$mail->setSender($order_info['store_name']);
-					$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
+					$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
+					$mail->setSubject($subject);
 					$mail->setHtml($html);
-					$mail->setText(html_entity_decode($text, ENT_QUOTES, 'UTF-8'));
+					$mail->setText($text);
 					$mail->send();
 				}
 			}
@@ -555,16 +551,6 @@ class ModelOpenbayEbayOrder extends Model{
 		return $this->db->getLastId();
 	}
 
-	public function orderLinkGet($smp_id) {
-		$query = $this->db->query("SELECT `order_id` FROM `" . DB_PREFIX . "ebay_order` WHERE `smp_id` = '" . (int)$smp_id . "' LIMIT 1");
-
-		if ($query->num_rows > 0) {
-			return (int)$query->row['order_id'];
-		} else {
-			return 0;
-		}
-	}
-
 	public function delete($order_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
@@ -598,7 +584,7 @@ class ModelOpenbayEbayOrder extends Model{
 
 	public function addOrderHistory($order_id) {
 		$this->openbay->ebay->log('addOrderHistory() - Order id:' . $order_id . ' passed');
-		if (!$this->openbay->ebay->isEbayOrder($order_id)) {
+		if (!$this->openbay->ebay->getOrder($order_id)) {
 			$order_products = $this->openbay->getOrderProducts($order_id);
 
 			foreach($order_products as $order_product) {

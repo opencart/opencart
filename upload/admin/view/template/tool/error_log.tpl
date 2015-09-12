@@ -27,7 +27,7 @@
         <h3 class="panel-title"><i class="fa fa-exclamation-triangle"></i> <?php echo $text_list; ?></h3>
       </div>
       <div class="panel-body">
-        <textarea wrap="off" rows="15" readonly="readonly" class="form-control"><?php echo $log; ?></textarea>
+        <textarea wrap="off" rows="15" readonly class="form-control"><?php echo $log; ?></textarea>
       </div>
     </div>
   </div>

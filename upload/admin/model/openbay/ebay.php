@@ -716,7 +716,7 @@ class ModelOpenbayEbay extends Model{
 		return $data;
 	}
 
-	public function verifyCreds() {
+	public function verifyCredentials() {
 		$this->request->post['domain'] = HTTPS_SERVER;
 
 		$data = $this->openbay->ebay->call('account/validate/', $this->request->post, array(), 'json', 1);
@@ -804,7 +804,14 @@ class ModelOpenbayEbay extends Model{
 				$variant_data['opt'][$k]['sku']     	= $opt['sku'];
 				$variant_data['opt'][$k]['qty']     	= $stock['quantity'];
 				$variant_data['opt'][$k]['price']   	= number_format($opt['price'], 2, '.', '');
-				$variant_data['opt'][$k]['active']  	= $opt['active'];
+
+				// if any of the variants have 0 stock or no SKU set to inactive
+				if ($opt['sku'] == '' || $variant_data['opt'][$k]['qty'] < 1) {
+					$variant_data['opt'][$k]['active'] = 0;
+				} else {
+					$variant_data['opt'][$k]['active'] = $opt['active'];
+				}
+
 
 				$variant_option_values = $this->model_module_openstock->getVariant($opt['product_option_variant_id']);
 

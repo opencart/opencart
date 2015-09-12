@@ -258,7 +258,7 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 		$this->model_payment_globalpay_remote->install();
 	}
 
-	public function orderAction() {
+	public function order() {
 		if ($this->config->get('globalpay_remote_status')) {
 			$this->load->model('payment/globalpay_remote');
 

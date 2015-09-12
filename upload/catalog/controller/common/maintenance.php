@@ -13,8 +13,6 @@ class ControllerCommonMaintenance extends Controller {
 			}
 
 			// Show site if logged in as admin
-			$this->load->library('user');
-
 			$this->user = new User($this->registry);
 
 			if (($route != 'payment' && $route != 'api') && !$this->user->isLogged()) {

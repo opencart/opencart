@@ -275,7 +275,7 @@ class ControllerPaymentSecureTradingWs extends Controller {
 
 		$data['action'] = $this->url->link('payment/securetrading_ws', 'token=' . $this->session->data['token'], 'SSL');
 
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token']);
+		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['myst_status'] = !empty($data['securetrading_ws_csv_username']) && !empty($data['securetrading_ws_csv_password']);
 		$data['hours'] = array();
@@ -404,7 +404,7 @@ class ControllerPaymentSecureTradingWs extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	public function orderAction() {
+	public function order() {
 
 		if ($this->config->get('securetrading_ws_status')) {
 			$this->load->model('payment/securetrading_ws');

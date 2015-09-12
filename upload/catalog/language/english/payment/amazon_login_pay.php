@@ -26,4 +26,5 @@ $_['error_no_shipping_methods'] = 'There are no shipping options to the selected
 $_['error_process_order']		= 'There was an error processing your order. Please contact the shop administrator for help.';
 $_['error_login']				= 'Login failed';
 $_['error_login_email']			= 'Login failed: %s account email address did not match Amazon account email address';
+$_['error_minimum']             = 'Minimum order amount for Login and Pay with Amazon is %s!';
 

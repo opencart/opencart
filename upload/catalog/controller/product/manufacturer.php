@@ -120,7 +120,6 @@ class ControllerProductManufacturer extends Controller {
 
 		if ($manufacturer_info) {
 			$this->document->setTitle($manufacturer_info['name']);
-			$this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id']), 'canonical');
 
 			$url = '';
 
@@ -337,6 +336,19 @@ class ControllerProductManufacturer extends Controller {
 			$data['pagination'] = $pagination->render();
 
 			$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
+
+			// http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
+			if ($page == 1) {
+			    $this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'], 'SSL'), 'canonical');
+			} elseif ($page == 2) {
+			    $this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'], 'SSL'), 'prev');
+			} else {
+			    $this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page='. ($page - 1), 'SSL'), 'prev');
+			}
+
+			if ($limit && ceil($product_total / $limit) > $page) {
+			    $this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page='. ($page + 1), 'SSL'), 'next');
+			}
 
 			$data['sort'] = $sort;
 			$data['order'] = $order;

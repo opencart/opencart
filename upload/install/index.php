@@ -11,7 +11,7 @@ define('HTTP_OPENCART', $protocol . $_SERVER['HTTP_HOST'] . rtrim(rtrim(dirname(
 define('DIR_APPLICATION', str_replace('\\', '/', realpath(dirname(__FILE__))) . '/');
 define('DIR_SYSTEM', str_replace('\\', '/', realpath(dirname(__FILE__) . '/../')) . '/system/');
 define('DIR_OPENCART', str_replace('\\', '/', realpath(DIR_APPLICATION . '../')) . '/');
-define('DIR_MODIFICATION', DIR_SYSTEM . 'modification/');
+define('DIR_MODIFICATION', DIR_SYSTEM . 'storage/modification/');
 define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
 define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');
 define('DIR_CONFIG', DIR_SYSTEM . 'config/');
@@ -41,7 +41,7 @@ $registry->set('response', $response);
 
 // Language
 $language = new Language('english');
-$language->load('default');
+$language->load('english');
 $registry->set('language', $language);
 
 // Document

@@ -76,7 +76,7 @@ class ControllerExtensionInstaller extends Controller {
 
 		if (!$json) {
 			// If no temp directory exists create it
-			$path = 'temp-' . md5(mt_rand());
+			$path = 'temp-' . token(32);
 
 			if (!is_dir(DIR_UPLOAD . $path)) {
 				mkdir(DIR_UPLOAD . $path, 0777);
@@ -279,7 +279,7 @@ class ControllerExtensionInstaller extends Controller {
 			while (count($path) != 0) {
 				$next = array_shift($path);
 
-				foreach (glob($next) as $file) {
+				foreach ((array)glob($next) as $file) {
 					if (is_dir($file)) {
 						$path[] = $file . '/*';
 					}

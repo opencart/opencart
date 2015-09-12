@@ -1,12 +1,9 @@
 <?php
 class Cart {
-	private $config;
-	private $db;
 	private $data = array();
 
 	public function __construct($registry) {
 		$this->config = $registry->get('config');
-		$this->customer = $registry->get('customer');
 		$this->session = $registry->get('session');
 		$this->db = $registry->get('db');
 		$this->tax = $registry->get('tax');
@@ -20,7 +17,7 @@ class Cart {
 	public function getProducts() {
 		if (!$this->data) {
 			foreach ($this->session->data['cart'] as $key => $quantity) {
-				$product = unserialize(base64_decode($key));
+				$product = json_decode(base64_decode($key), true);
 
 				$product_id = $product['product_id'];
 
@@ -171,7 +168,7 @@ class Cart {
 					$discount_quantity = 0;
 
 					foreach ($this->session->data['cart'] as $key_2 => $quantity_2) {
-						$product_2 = (array)unserialize(base64_decode($key_2));
+						$product_2 = (array)json_decode(base64_decode($key_2), true);
 
 						if ($product_2['product_id'] == $product_id) {
 							$discount_quantity += $quantity_2;
@@ -273,6 +270,10 @@ class Cart {
 
 		return $this->data;
 	}
+	
+	public function getCart() {
+		return $this->session->data['cart'];
+	}
 
 	public function getRecurringProducts() {
 		$recurring_products = array();
@@ -299,7 +300,7 @@ class Cart {
 			$product['recurring_id'] = (int)$recurring_id;
 		}
 
-		$key = base64_encode(serialize($product));
+		$key = base64_encode(json_encode($product));
 
 		if ((int)$qty && ((int)$qty > 0)) {
 			if (!isset($this->session->data['cart'][$key])) {

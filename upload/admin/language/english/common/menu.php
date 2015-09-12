@@ -1,11 +1,13 @@
 <?php
 // Text
+$_['text_analytics']                   = 'Analytics';
 $_['text_affiliate']                   = 'Affiliates';
 $_['text_api']                         = 'API';
 $_['text_attribute']                   = 'Attributes';
 $_['text_attribute_group']             = 'Attribute Groups';
 $_['text_backup']                      = 'Backup / Restore';
 $_['text_banner']                      = 'Banners';
+$_['text_captcha']                     = 'Captcha';
 $_['text_catalog']                     = 'Catalog';
 $_['text_category']                    = 'Categories';
 $_['text_country']                     = 'Countries';
@@ -13,7 +15,6 @@ $_['text_coupon']                      = 'Coupons';
 $_['text_currency']                    = 'Currencies';
 $_['text_customer']                    = 'Customers';
 $_['text_customer_group']              = 'Customer Groups';
-$_['text_customer_ban_ip']             = 'Banned IP';
 $_['text_custom_field']                = 'Custom Fields';
 $_['text_dashboard']                   = 'Dashboard';
 $_['text_design']                      = 'Design';
@@ -22,6 +23,7 @@ $_['text_error_log']                   = 'Error Logs';
 $_['text_extension']                   = 'Extensions';
 $_['text_feed']                        = 'Feeds';
 $_['text_filter']                      = 'Filters';
+$_['text_fraud']                       = 'Anti-Fraud';
 $_['text_geo_zone']                    = 'Geo Zones';
 $_['text_information']                 = 'Information';
 $_['text_installer']                   = 'Extension Installer';

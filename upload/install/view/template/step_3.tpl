@@ -84,6 +84,15 @@
               <?php } ?>
             </div>
           </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-db-port"><?php echo $entry_db_port; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="db_port" value="<?php echo $db_port; ?>" id="input-db-port" class="form-control" />
+              <?php if ($error_db_port) { ?>
+              <div class="text-danger"><?php echo $error_db_port; ?></div>
+              <?php } ?>
+            </div>
+          </div>          
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-db-prefix"><?php echo $entry_db_prefix; ?></label>
             <div class="col-sm-10">

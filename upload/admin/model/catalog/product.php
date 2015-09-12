@@ -282,8 +282,6 @@ class ModelCatalogProduct extends Model {
 		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) WHERE p.product_id = '" . (int)$product_id . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 		if ($query->num_rows) {
-			$data = array();
-
 			$data = $query->row;
 
 			$data['sku'] = '';
@@ -292,20 +290,20 @@ class ModelCatalogProduct extends Model {
 			$data['keyword'] = '';
 			$data['status'] = '0';
 
-			$data = array_merge($data, array('product_attribute' => $this->getProductAttributes($product_id)));
-			$data = array_merge($data, array('product_description' => $this->getProductDescriptions($product_id)));
-			$data = array_merge($data, array('product_discount' => $this->getProductDiscounts($product_id)));
-			$data = array_merge($data, array('product_filter' => $this->getProductFilters($product_id)));
-			$data = array_merge($data, array('product_image' => $this->getProductImages($product_id)));
-			$data = array_merge($data, array('product_option' => $this->getProductOptions($product_id)));
-			$data = array_merge($data, array('product_related' => $this->getProductRelated($product_id)));
-			$data = array_merge($data, array('product_reward' => $this->getProductRewards($product_id)));
-			$data = array_merge($data, array('product_special' => $this->getProductSpecials($product_id)));
-			$data = array_merge($data, array('product_category' => $this->getProductCategories($product_id)));
-			$data = array_merge($data, array('product_download' => $this->getProductDownloads($product_id)));
-			$data = array_merge($data, array('product_layout' => $this->getProductLayouts($product_id)));
-			$data = array_merge($data, array('product_store' => $this->getProductStores($product_id)));
-			$data = array_merge($data, array('product_recurrings' => $this->getRecurrings($product_id)));
+			$data['product_attribute'] = $this->getProductAttributes($product_id);
+			$data['product_description'] = $this->getProductDescriptions($product_id);
+			$data['product_discount'] = $this->getProductDiscounts($product_id);
+			$data['product_filter'] = $this->getProductFilters($product_id);
+			$data['product_image'] = $this->getProductImages($product_id);
+			$data['product_option'] = $this->getProductOptions($product_id);
+			$data['product_related'] = $this->getProductRelated($product_id);
+			$data['product_reward'] = $this->getProductRewards($product_id);
+			$data['product_special'] = $this->getProductSpecials($product_id);
+			$data['product_category'] = $this->getProductCategories($product_id);
+			$data['product_download'] = $this->getProductDownloads($product_id);
+			$data['product_layout'] = $this->getProductLayouts($product_id);
+			$data['product_store'] = $this->getProductStores($product_id);
+			$data['product_recurrings'] = $this->getRecurrings($product_id);
 
 			$this->addProduct($data);
 		}
@@ -330,8 +328,8 @@ class ModelCatalogProduct extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_download WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_layout WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_store WHERE product_id = '" . (int)$product_id . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "review WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_recurring WHERE product_id = " . (int)$product_id);
+		$this->db->query("DELETE FROM " . DB_PREFIX . "review WHERE product_id = '" . (int)$product_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'product_id=" . (int)$product_id . "'");
 
 		$this->cache->delete('product');
@@ -367,7 +365,7 @@ class ModelCatalogProduct extends Model {
 		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
 			$sql .= " AND p.status = '" . (int)$data['filter_status'] . "'";
 		}
-		
+
 		$sql .= " GROUP BY p.product_id";
 
 		$sort_data = array(
@@ -517,6 +515,12 @@ class ModelCatalogProduct extends Model {
 		}
 
 		return $product_option_data;
+	}
+
+	public function getProductOptionValue($product_id, $product_option_value_id) {
+		$query = $this->db->query("SELECT pov.option_value_id, ovd.name, pov.quantity, pov.subtract, pov.price, pov.price_prefix, pov.points, pov.points_prefix, pov.weight, pov.weight_prefix FROM " . DB_PREFIX . "product_option_value pov LEFT JOIN " . DB_PREFIX . "option_value ov ON (pov.option_value_id = ov.option_value_id) LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE pov.product_id = '" . (int)$product_id . "' AND pov.product_option_value_id = '" . (int)$product_option_value_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+		return $query->row;
 	}
 
 	public function getProductImages($product_id) {

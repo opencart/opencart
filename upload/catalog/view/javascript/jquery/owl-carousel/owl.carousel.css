@@ -1,4 +1,4 @@
-/* 
+/*
  * 	Core Owl Carousel CSS File
  *	v1.3.3
  */
@@ -79,6 +79,7 @@
 	margin: 0 0 20px;
 	background: #fff;
 	direction: ltr !important;
+	z-index: 1;
 }
 .owl-wrapper-outer {
 	border: 4px solid #fff;

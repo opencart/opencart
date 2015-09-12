@@ -77,7 +77,7 @@ class ControllerPaymentPPProIframe extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -270,7 +270,7 @@ class ControllerPaymentPPProIframe extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -563,7 +563,7 @@ class ControllerPaymentPPProIframe extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -769,7 +769,7 @@ class ControllerPaymentPPProIframe extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function orderAction() {
+	public function order() {
 		$this->load->model('payment/pp_pro_iframe');
 		$this->load->language('payment/pp_pro_iframe');
 
@@ -861,7 +861,7 @@ class ControllerPaymentPPProIframe extends Controller {
 			$transaction = $this->model_payment_pp_pro_iframe->getFailedTransaction($this->request->get['paypal_iframe_order_transaction_id']);
 
 			if ($transaction) {
-				$call_data = unserialize($transaction['call_data']);
+				$call_data = json_decode($transaction['call_data'], true);
 
 				$result = $this->model_payment_pp_pro_iframe->call($call_data);
 

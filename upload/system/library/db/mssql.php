@@ -3,8 +3,8 @@ namespace DB;
 final class MSSQL {
 	private $link;
 
-	public function __construct($hostname, $username, $password, $database) {
-		if (!$this->link = mssql_connect($hostname, $username, $password)) {
+	public function __construct($hostname, $username, $password, $database, $port = '1433') {
+		if (!$this->link = mssql_connect($hostname. ':' . $port, $username, $password)) {
 			exit('Error: Could not make a database connection using ' . $username . '@' . $hostname);
 		}
 

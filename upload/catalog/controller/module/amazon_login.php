@@ -3,8 +3,9 @@ class ControllerModuleAmazonLogin extends Controller {
 	public function index() {
 		$this->load->model('payment/amazon_login_pay');
 
-		if ($this->config->get('amazon_login_pay_status') && $this->config->get('amazon_login_status') && !$this->customer->isLogged() && !empty($_SERVER['HTTPS'])) {
-			if (isset($_COOKIE['amazon_Login_state_cache'])) {
+		if ($this->config->get('amazon_login_pay_status') && $this->config->get('amazon_login_status') && !$this->customer->isLogged() && !empty($this->request->server['HTTPS'])) {
+			// capital L in Amazon cookie name is required, do not alter for coding standards
+			if (isset($this->request->cookie['amazon_Login_state_cache'])) {
 				setcookie('amazon_Login_state_cache', '', time() - 4815162342);
 			}
 
@@ -167,7 +168,8 @@ class ControllerModuleAmazonLogin extends Controller {
 		unset($this->session->data['lpa']);
 		unset($this->session->data['access_token']);
 
-		if (isset($_COOKIE['amazon_Login_state_cache'])) {
+		// capital L in Amazon cookie name is required, do not alter for coding standards
+		if (isset($this->request->cookie['amazon_Login_state_cache'])) {
 			setcookie('amazon_Login_state_cache', '', time() - 4815162342);
 		}
 	}

@@ -293,7 +293,7 @@ class ControllerPaymentRealex extends Controller {
 		$this->model_payment_realex->install();
 	}
 
-	public function orderAction() {
+	public function order() {
 		if ($this->config->get('realex_status')) {
 			$this->load->model('payment/realex');
 

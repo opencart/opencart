@@ -32,7 +32,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_home'),
 		);
 
@@ -124,6 +124,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 		$setting['dispatch_times']                = $this->openbay->ebay->getSetting('dispatch_time_max');
 		$setting['countries']                     = $this->openbay->ebay->getSetting('countries');
 		$setting['shipping_types'] 				  = $this->openbay->ebay->getSetting('shipping_types');
+		$setting['listing_restrictions'] 		  = $this->openbay->ebay->getSetting('listing_restrictions');
 
 		if (empty($setting['dispatch_times']) || empty($setting['countries']) || empty($setting['returns'])){
 			$this->session->data['warning'] = $this->language->get('error_missing_settings');
@@ -172,7 +173,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_home'),
 		);
 

@@ -3,7 +3,7 @@ class ControllerCatalogProduct extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('catalog/product');
+		$this->language->load('catalog/product');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerCatalogProduct extends Controller {
 	}
 
 	public function add() {
-		$this->load->language('catalog/product');
+		$this->language->load('catalog/product');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -65,7 +65,7 @@ class ControllerCatalogProduct extends Controller {
 	}
 
 	public function edit() {
-		$this->load->language('catalog/product');
+		$this->language->load('catalog/product');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -117,7 +117,7 @@ class ControllerCatalogProduct extends Controller {
 	}
 
 	public function delete() {
-		$this->load->language('catalog/product');
+		$this->language->load('catalog/product');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -171,7 +171,7 @@ class ControllerCatalogProduct extends Controller {
 	}
 
 	public function copy() {
-		$this->load->language('catalog/product');
+		$this->language->load('catalog/product');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -655,12 +655,6 @@ class ControllerCatalogProduct extends Controller {
 			$data['error_model'] = $this->error['model'];
 		} else {
 			$data['error_model'] = '';
-		}
-
-		if (isset($this->error['date_available'])) {
-			$data['error_date_available'] = $this->error['date_available'];
-		} else {
-			$data['error_date_available'] = '';
 		}
 
 		if (isset($this->error['keyword'])) {
@@ -1152,9 +1146,9 @@ class ControllerCatalogProduct extends Controller {
 			}
 		}
 
-		$this->load->model('sale/customer_group');
+		$this->load->model('customer/customer_group');
 
-		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
+		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
 		if (isset($this->request->post['product_discount'])) {
 			$product_discounts = $this->request->post['product_discount'];

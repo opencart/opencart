@@ -279,8 +279,6 @@ class ControllerAccountReturn extends Controller {
 		$this->load->model('account/return');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			unset($this->session->data['captcha']);
-
 			$return_id = $this->model_account_return->addReturn($this->request->post);
 
 			// Add to activity log
@@ -406,12 +404,6 @@ class ControllerAccountReturn extends Controller {
 			$data['error_reason'] = '';
 		}
 
-		if (isset($this->error['captcha'])) {
-			$data['error_captcha'] = $this->error['captcha'];
-		} else {
-			$data['error_captcha'] = '';
-		}
-
 		$data['action'] = $this->url->link('account/return/add', '', 'SSL');
 
 		$this->load->model('account/order');
@@ -517,13 +509,14 @@ class ControllerAccountReturn extends Controller {
 		} else {
 			$data['comment'] = '';
 		}
-		
-		if ($this->config->get('config_google_captcha_status')) {
-			$this->document->addScript('https://www.google.com/recaptcha/api.js');
-			
-			$data['site_key'] = $this->config->get('config_google_captcha_public');
+
+		// Captcha
+		if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('return', (array)$this->config->get('config_captcha_page'))) {
+			$data['captcha'] = $this->load->controller('captcha/' . $this->config->get('config_captcha'), $this->error);
+		} else {
+			$data['captcha'] = '';
 		}
-		
+
 		if ($this->config->get('config_return_id')) {
 			$this->load->model('catalog/information');
 
@@ -558,6 +551,60 @@ class ControllerAccountReturn extends Controller {
 		} else {
 			$this->response->setOutput($this->load->view('default/template/account/return_form.tpl', $data));
 		}
+	}
+
+	protected function validate() {
+		if (!$this->request->post['order_id']) {
+			$this->error['order_id'] = $this->language->get('error_order_id');
+		}
+
+		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
+			$this->error['firstname'] = $this->language->get('error_firstname');
+		}
+
+		if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+			$this->error['lastname'] = $this->language->get('error_lastname');
+		}
+
+		if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['email'])) {
+			$this->error['email'] = $this->language->get('error_email');
+		}
+
+		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+			$this->error['telephone'] = $this->language->get('error_telephone');
+		}
+
+		if ((utf8_strlen($this->request->post['product']) < 1) || (utf8_strlen($this->request->post['product']) > 255)) {
+			$this->error['product'] = $this->language->get('error_product');
+		}
+
+		if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {
+			$this->error['model'] = $this->language->get('error_model');
+		}
+
+		if (empty($this->request->post['return_reason_id'])) {
+			$this->error['reason'] = $this->language->get('error_reason');
+		}
+
+		if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('return', (array)$this->config->get('config_captcha_page'))) {
+			$captcha = $this->load->controller('captcha/' . $this->config->get('config_captcha') . '/validate');
+
+			if ($captcha) {
+				$this->error['captcha'] = $captcha;
+			}
+		}
+
+		if ($this->config->get('config_return_id')) {
+			$this->load->model('catalog/information');
+
+			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_return_id'));
+
+			if ($information_info && !isset($this->request->post['agree'])) {
+				$this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+			}
+		}
+
+		return !$this->error;
 	}
 
 	public function success() {
@@ -597,61 +644,5 @@ class ControllerAccountReturn extends Controller {
 		} else {
 			$this->response->setOutput($this->load->view('default/template/common/success.tpl', $data));
 		}
-	}
-
-	protected function validate() {
-		if (!$this->request->post['order_id']) {
-			$this->error['order_id'] = $this->language->get('error_order_id');
-		}
-
-		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
-			$this->error['firstname'] = $this->language->get('error_firstname');
-		}
-
-		if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
-			$this->error['lastname'] = $this->language->get('error_lastname');
-		}
-
-		if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['email'])) {
-			$this->error['email'] = $this->language->get('error_email');
-		}
-
-		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-			$this->error['telephone'] = $this->language->get('error_telephone');
-		}
-
-		if ((utf8_strlen($this->request->post['product']) < 1) || (utf8_strlen($this->request->post['product']) > 255)) {
-			$this->error['product'] = $this->language->get('error_product');
-		}
-
-		if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {
-			$this->error['model'] = $this->language->get('error_model');
-		}
-
-		if (empty($this->request->post['return_reason_id'])) {
-			$this->error['reason'] = $this->language->get('error_reason');
-		}
-
-		if ($this->config->get('config_google_captcha_status')) {
-			$json = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($this->config->get('config_google_captcha_secret')) . '&response=g-recaptcha&remoteip=' . $this->request->server['REMOTE_ADDR']);
-			
-			$json = json_decode($json, true);
-				
-			if (!$json['success']) {
-				$this->error['captcha'] = $this->language->get('error_captcha');
-			}		
-		}
-
-		if ($this->config->get('config_return_id')) {
-			$this->load->model('catalog/information');
-
-			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_return_id'));
-
-			if ($information_info && !isset($this->request->post['agree'])) {
-				$this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
-			}
-		}
-
-		return !$this->error;
 	}
 }

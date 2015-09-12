@@ -1,12 +1,11 @@
 <?php
-
 // Heading
 $_['heading_title']				 = 'Worldpay Online Payments';
 
 // Text
 $_['text_payment']				 = 'Payment';
 $_['text_success']				 = 'Success: You have modified Worldpay account details!';
-$_['text_worldpay']				 = '<a href="https://support.worldpay.com/apply/default.aspx?PartnerID=E511AF91-E4A0-42DE-80B0-09C981A3FB61" target="_blank"><img src="view/image/payment/worldpay.png" alt="Worldpay" title="Worldpay" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_worldpay']				 = '<a href="https://online.worldpay.com/signup/ee48b6e6-d3e3-42aa-a80e-cbee3f4f8b09" target="_blank"><img src="view/image/payment/worldpay.png" alt="Worldpay" title="Worldpay" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_test']					 = 'Test';
 $_['text_live']					 = 'Live';
 $_['text_authenticate']			 = 'Authenticate';
@@ -26,12 +25,12 @@ $_['entry_status']				 = 'Status';
 $_['entry_sort_order']			 = 'Sort Order';
 $_['entry_debug']				 = 'Debug logging';
 $_['entry_card']				 = 'Store Cards';
-$_['entry_secret_token']		 = "Secret Token";
-$_['entry_webhook_url']			 = "Webhook URL:";
-$_['entry_cron_job_url']		 = "Cron Job URL:";
-$_['entry_last_cron_job_run']	 = "Last cron job's run time:";
+$_['entry_secret_token']		 = 'Secret Token';
+$_['entry_webhook_url']			 = 'Webhook URL:';
+$_['entry_cron_job_url']		 = 'Cron Job URL:';
+$_['entry_last_cron_job_run']	 = 'Last cron job\'s run time:';
 $_['entry_success_status']		 = 'Success Status:';
-$_['entry_failed_status']		= 'Failed Status:';
+$_['entry_failed_status']		 = 'Failed Status:';
 $_['entry_settled_status']			= 'Settled Status:';
 $_['entry_refunded_status']			= 'Refunded Status:';
 $_['entry_partially_refunded_status']	= 'Partially Refunded Status:';
@@ -47,13 +46,13 @@ $_['entry_voided_status']			= 'Voided Status:';
 // Help
 $_['help_total']				 = 'The checkout total the order must reach before this payment method becomes active.';
 $_['help_debug']				 = 'Enabling debug will write sensitive data to a log file. You should always disable unless instructed otherwise';
-$_['help_secret_token']			 = "Make this long and hard to guess";
-$_['help_webhook_url']			 = "Set Worldpay webhooks to call this URL";
-$_['help_cron_job_url']			 = "Set a cron job to call this URL";
+$_['help_secret_token']			 = 'Make this long and hard to guess';
+$_['help_webhook_url']			 = 'Set Worldpay webhooks to call this URL';
+$_['help_cron_job_url']			 = 'Set a cron job to call this URL';
 
 // Tab
-$_['tab_settings']					= 'Settings';
-$_['tab_order_status']				= 'Order Status';
+$_['tab_settings']				 = 'Settings';
+$_['tab_order_status']			 = 'Order Status';
 
 // Error
 $_['error_permission']			 = 'Warning: You do not have permission to modify payment Worldpay!';

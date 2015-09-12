@@ -183,7 +183,7 @@
         </select>
       </div>
       <div class="form-group required">
-        <label class="control-label" for="input-payment-zone"><?php echo $entry_zone;; ?></label>
+        <label class="control-label" for="input-payment-zone"><?php echo $entry_zone; ?></label>
         <select name="zone_id" id="input-payment-zone" class="form-control">
         </select>
       </div>
@@ -281,8 +281,11 @@
       <?php } ?>
       <?php } ?>
     </fieldset>
+
+    <?php echo $captcha; ?>
   </div>
 </div>
+
 <div class="checkbox">
   <label for="newsletter">
     <input type="checkbox" name="newsletter" value="1" id="newsletter" />

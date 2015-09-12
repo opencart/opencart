@@ -40,6 +40,8 @@ class ModelOpenbayEbayOpenbay extends Model{
 		$this->load->model('checkout/order');
 		$this->load->model('openbay/ebay_order');
 
+		$this->language->load('openbay/ebay_order');
+
 		if ($this->model_openbay_ebay_order->lockExists($order->smpId) == true) {
 			return;
 		}
@@ -48,7 +50,13 @@ class ModelOpenbayEbayOpenbay extends Model{
 			$order->txn = array($order->txn);
 		}
 
-		$order_id = $this->model_openbay_ebay_order->find($order->smpId);
+		$ebay_order = $this->openbay->ebay->getOrderBySmpId($order->smpId);
+
+		if (isset($ebay_order['order_id'])) {
+			$order_id = $ebay_order['order_id'];
+		} else {
+			$order_id = false;
+		}
 
 		$created_hours = (int)$this->config->get('ebay_created_hours');
 		if ($created_hours == 0 || $created_hours == '') {
@@ -91,7 +99,6 @@ class ModelOpenbayEbayOpenbay extends Model{
 
 				$this->openbay->ebay->log('Order ID: ' . $order_id . ' -> Paid');
 			} elseif (($order->payment->status == 'Refunded' || $order->payment->status == 'Unpaid') && ($order_loaded['order_status_id'] != $this->default_refunded_id) && in_array($this->default_paid_id, $order_history)) {
-				/* @todo what happens if the order has never been paid? - need to find a cancelled in ebay flag*/
 				$this->model_openbay_ebay_order->update($order_id, $this->default_refunded_id);
 				$this->model_openbay_ebay_order->cancel($order_id);
 				$this->openbay->ebay->log('Order ID: ' . $order_id . ' -> Refunded');
@@ -112,7 +119,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 				$this->openbay->ebay->log('Paid date: ' . $order->payment->date);
 			}
 			/**
-			 * @TODO - FOLLOWING ORDER STATE TESTS REQUIRED
+			 * FOLLOWING ORDER STATE TESTS REQUIRED
 			 *
 			 * - single item order, not checked out but then marked as paid. i.e. user wants to pay by manual method such as cheque
 			 * - multi item order, same as above. Is this possible? i dont think the order will combine if checkout not done.
@@ -143,11 +150,14 @@ class ModelOpenbayEbayOpenbay extends Model{
 						$this->openbay->ebay->log('Order ID: ' . $order_id . ' -> Updated with user info . ');
 					}
 				} else {
-					$this->openbay->ebay->log('No user information . ');
+					$this->openbay->ebay->log('No user information.');
 				}
 
+				$default_import_message = $this->language->get('text_smp_id') . (int)$order->smpId . "\r\n";
+				$default_import_message .= $this->language->get('text_buyer') . (string)$order->user->userid . "\r\n";
+
 				//new order, set to pending initially.
-				$this->model_openbay_ebay_order->confirm($order_id, $this->default_pending_id, '[eBay Import:' . (int)$order->smpId . ']');
+				$this->model_openbay_ebay_order->confirm($order_id, $this->default_pending_id, $default_import_message);
 				$this->openbay->ebay->log('Order ID: ' . $order_id . ' -> Pending');
 				$order_status_id = $this->default_pending_id;
 

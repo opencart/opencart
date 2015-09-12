@@ -36,9 +36,9 @@
                 <tr>
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
                   <td class="text-left"><?php if ($sort == 'name') { ?>
-                    <a href="<?php echo $sort_username; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_username; ?></a>
+                    <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
                     <?php } else { ?>
-                    <a href="<?php echo $sort_username; ?>"><?php echo $column_username; ?></a>
+                    <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
                     <?php } ?></td>
                   <td class="text-left"><?php if ($sort == 'status') { ?>
                     <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
@@ -62,7 +62,7 @@
                     <?php } else { ?>
                     <input type="checkbox" name="selected[]" value="<?php echo $api['api_id']; ?>" />
                     <?php } ?></td>
-                  <td class="text-left"><?php echo $api['username']; ?></td>
+                  <td class="text-left"><?php echo $api['name']; ?></td>
                   <td class="text-left"><?php echo $api['status']; ?></td>
                   <td class="text-left"><?php echo $api['date_added']; ?></td>
                   <td class="text-right"><a href="<?php echo $api['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
@@ -85,4 +85,4 @@
     </div>
   </div>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

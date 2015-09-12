@@ -42,7 +42,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-data-feed"><?php echo $entry_data_feed; ?></label>
             <div class="col-sm-10">
-              <textarea rows="5" readonly="readonly" id="input-data-feed" class="form-control"><?php echo $data_feed; ?></textarea>
+              <textarea rows="5" readonly id="input-data-feed" class="form-control"><?php echo $data_feed; ?></textarea>
             </div>
           </div>
         </form>

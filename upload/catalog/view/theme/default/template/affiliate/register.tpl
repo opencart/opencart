@@ -248,6 +248,7 @@
             </div>
           </div>
         </fieldset>
+        <?php echo $captcha; ?>
         <?php if ($text_agree) { ?>
         <div class="buttons clearfix">
           <div class="pull-right"><?php echo $text_agree; ?>

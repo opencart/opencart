@@ -69,14 +69,14 @@ class ControllerPaymentGlobalpay extends Controller {
 		$tmp = $hash . '.' . $this->config->get('globalpay_secret');
 		$data['hash'] = sha1($tmp);
 
-		$data['billing_code'] = filter_var($order_info['payment_postcode'], FILTER_SANITIZE_NUMBER_INT) . '|' . filter_var($order_info['payment_address_1'], FILTER_SANITIZE_NUMBER_INT);
+		$data['billing_code'] = filter_var(str_replace('-', '', $order_info['payment_postcode']), FILTER_SANITIZE_NUMBER_INT) . '|' . filter_var(str_replace('-', '', $order_info['payment_address_1']), FILTER_SANITIZE_NUMBER_INT);
 		$data['payment_country'] = $order_info['payment_iso_code_2'];
 
 		if ($this->cart->hasShipping()) {
-			$data['shipping_code'] = filter_var($order_info['shipping_postcode'], FILTER_SANITIZE_NUMBER_INT) . '|' . filter_var($order_info['shipping_address_1'], FILTER_SANITIZE_NUMBER_INT);
+			$data['shipping_code'] = filter_var(str_replace('-', '', $order_info['shipping_postcode']), FILTER_SANITIZE_NUMBER_INT) . '|' . filter_var(str_replace('-', '', $order_info['shipping_address_1']), FILTER_SANITIZE_NUMBER_INT);
 			$data['shipping_country'] = $order_info['shipping_iso_code_2'];
 		} else {
-			$data['shipping_code'] = filter_var($order_info['payment_postcode'], FILTER_SANITIZE_NUMBER_INT) . '|' . filter_var($order_info['payment_address_1'], FILTER_SANITIZE_NUMBER_INT);
+			$data['shipping_code'] = filter_var(str_replace('-', '', $order_info['payment_postcode']), FILTER_SANITIZE_NUMBER_INT) . '|' . filter_var(str_replace('-', '', $order_info['payment_address_1']), FILTER_SANITIZE_NUMBER_INT);
 			$data['shipping_country'] = $order_info['payment_iso_code_2'];
 		}
 
@@ -134,12 +134,37 @@ class ControllerPaymentGlobalpay extends Controller {
 				$message .= '<br /><strong>' . $this->language->get('text_avs_address') . ':</strong> ' . $this->request->post['AVSADDRESSRESULT'];
 			}
 
-			if (isset($this->request->post['ECI'])) {
-				if ($this->request->post['ECI'] == 6 && (!isset($this->request->post['CAVV']) || empty($this->request->post['CAVV'])) && (!isset($this->request->post['XID']) || empty($this->request->post['CAVV']))) {
-					$this->request->post['ECI'] = 1;
+			//3D Secure message
+			if (isset($this->request->post['ECI']) && isset($this->request->post['CAVV']) && isset($this->request->post['XID'])) {
+				$eci = $this->request->post['ECI'];
+
+				if (($this->request->post['ECI'] == 6 || $this->request->post['ECI'] == 1) && empty($this->request->post['CAVV']) && empty($this->request->post['XID'])) {
+					$scenario_id = 1;
 				}
 
-				$message .= '<br /><strong>' . $this->language->get('text_eci') . ':</strong> (' . $this->request->post['ECI'] . ') ' . $this->language->get('text_3d_s' . $this->request->post['ECI']);
+				if (($this->request->post['ECI'] == 5 || $this->request->post['ECI'] == 0) && !empty($this->request->post['CAVV']) && !empty($this->request->post['XID'])) {
+					$scenario_id = 5;
+				}
+
+				if (($this->request->post['ECI'] == 6 || $this->request->post['ECI'] == 1) && !empty($this->request->post['CAVV']) && !empty($this->request->post['XID'])) {
+					$scenario_id = 6;
+				}
+
+				if (isset($scenario_id)) {
+					$scenario_message = $this->language->get('text_3d_s' . $scenario_id);
+				} else {
+					if (isset($this->request->post['CARDTYPE'])) {
+						if ($this->request->post['CARDTYPE'] == 'VISA') {
+							$eci = 7;
+						} else {
+							$eci = 2;
+						}
+					}
+
+					$scenario_message = $this->language->get('text_3d_liability');
+				}
+
+				$message .= '<br /><strong>' . $this->language->get('text_eci') . ':</strong> (' . $eci . ') ' . $scenario_message;
 			}
 
 			if ($tss == 1 && isset($this->request->post['TSS'])) {

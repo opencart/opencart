@@ -168,11 +168,11 @@ div.required .control-label:before {
 #cart .dropdown-menu {
 	min-width: 100%;
 }
-	@media (max-width: 478px) {
-		#cart .dropdown-menu {
-			width: 100%;
-		}
+@media (max-width: 478px) {
+	#cart .dropdown-menu {
+		width: 100%;
 	}
+}
 #cart .dropdown-menu table {
 	margin-bottom: 10px;
 }
@@ -180,11 +180,11 @@ div.required .control-label:before {
 	min-width: 427px;
 	padding: 0 10px;
 }
-	@media (max-width: 478px) {
-		#cart .dropdown-menu li > div {
-			min-width: 100%;
-		}
+@media (max-width: 478px) {
+	#cart .dropdown-menu li > div {
+		min-width: 100%;
 	}
+}
 #cart .dropdown-menu li p {
 	margin: 20px 0;
 }
@@ -683,29 +683,65 @@ h2.price {
 	margin-left: 20px;
 }
 
+@media (min-width: 1200px) {
+	#content .col-lg-2:nth-child(6n+1),
+	#content .col-lg-2:nth-child(6n+1),
+	#content .col-lg-3:nth-child(4n+1),
+	#content .col-lg-4:nth-child(3n+1),
+	#content .col-lg-6:nth-child(2n+1) {
+		clear:left;
+	}
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+	#content .col-md-2:nth-child(6n+1),
+	#content .col-md-2:nth-child(6n+1),
+	#content .col-md-3:nth-child(4n+1),
+	#content .col-md-4:nth-child(3n+1),
+	#content .col-md-6:nth-child(2n+1) {
+		clear:left;
+	}
+}
+@media (min-width: 768px) and (max-width: 991px) {
+	#content .col-sm-2:nth-child(6n+1),
+	#content .col-sm-2:nth-child(6n+1),
+	#content .col-sm-3:nth-child(4n+1),
+	#content .col-sm-4:nth-child(3n+1),
+	#content .col-sm-6:nth-child(2n+1) {
+		clear:left;
+	}
+}
+
 /* fixed colum left + content + right*/
 @media (min-width: 768px) {
     #column-left  .product-layout .col-md-3 {
        width: 100%;
     }
-    #column-left + #content .product-layout .col-md-3 {
+
+	#column-left + #content .product-layout .col-md-3 {
        width: 50%;
     }
-    #column-left + #content + #column-right .product-layout .col-md-3{
+
+	#column-left + #content + #column-right .product-layout .col-md-3 {
        width: 100%;
     }
-    #content + #column-right .product-layout .col-md-3{
+
+    #content + #column-right .product-layout .col-md-3 {
        width: 100%;
     }
 }
 
 /* fixed product layouts used in left and right columns */
-#column-left .product-layout,
-#column-right .product-layout {
+#column-left .product-layout, #column-right .product-layout {
 	width: 100%;
 }
 
 /* fixed mobile cart quantity input */
 .input-group .form-control[name^=quantity] {
 	min-width: 50px;
+}
+
+/* Missing focus and border color to overwrite bootstrap */
+.btn-info:hover, .btn-info:active, .btn-info.active, .btn-info.disabled, .btn-info[disabled] {
+    background-image: none;
+    background-color: #df5c39;
 }

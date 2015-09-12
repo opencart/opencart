@@ -69,7 +69,7 @@
             <?php } ?>
             <?php if ($review_status) { ?>
             <div class="tab-pane" id="tab-review">
-              <form class="form-horizontal">
+              <form class="form-horizontal" id="form-review">
                 <div id="review"></div>
                 <h2><?php echo $text_write; ?></h2>
                 <?php if ($review_guest) { ?>
@@ -101,11 +101,7 @@
                     <input type="radio" name="rating" value="5" />
                     &nbsp;<?php echo $entry_good; ?></div>
                 </div>
-                <div class="form-group">
-                  <div class="col-sm-12">
-                    <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>"></div>
-                  </div>
-                </div>
+                <?php echo $captcha; ?>
                 <div class="buttons clearfix">
                   <div class="pull-right">
                     <button type="button" id="button-review" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_continue; ?></button>
@@ -552,7 +548,7 @@ $('button[id^=\'button-upload\']').on('click', function() {
 //--></script>
 <script type="text/javascript"><!--
 $('#review').delegate('.pagination a', 'click', function(e) {
-  e.preventDefault();
+    e.preventDefault();
 
     $('#review').fadeOut('slow');
 
@@ -568,7 +564,7 @@ $('#button-review').on('click', function() {
 		url: 'index.php?route=product/product/write&product_id=<?php echo $product_id; ?>',
 		type: 'post',
 		dataType: 'json',
-		data: 'name=' + encodeURIComponent($('input[name=\'name\']').val()) + '&text=' + encodeURIComponent($('textarea[name=\'text\']').val()) + '&rating=' + encodeURIComponent($('input[name=\'rating\']:checked').val() ? $('input[name=\'rating\']:checked').val() : ''),
+		data: $("#form-review").serialize(),
 		beforeSend: function() {
 			$('#button-review').button('loading');
 		},

@@ -1,11 +1,11 @@
 <?php
 class ModelUserUserGroup extends Model {
 	public function addUserGroup($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($data['name']) . "', permission = '" . (isset($data['permission']) ? $this->db->escape(serialize($data['permission'])) : '') . "'");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($data['name']) . "', permission = '" . (isset($data['permission']) ? $this->db->escape(json_encode($data['permission'])) : '') . "'");
 	}
 
 	public function editUserGroup($user_group_id, $data) {
-		$this->db->query("UPDATE " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($data['name']) . "', permission = '" . (isset($data['permission']) ? $this->db->escape(serialize($data['permission'])) : '') . "' WHERE user_group_id = '" . (int)$user_group_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "user_group SET name = '" . $this->db->escape($data['name']) . "', permission = '" . (isset($data['permission']) ? $this->db->escape(json_encode($data['permission'])) : '') . "' WHERE user_group_id = '" . (int)$user_group_id . "'");
 	}
 
 	public function deleteUserGroup($user_group_id) {
@@ -17,7 +17,7 @@ class ModelUserUserGroup extends Model {
 
 		$user_group = array(
 			'name'       => $query->row['name'],
-			'permission' => unserialize($query->row['permission'])
+			'permission' => json_decode($query->row['permission'], true)
 		);
 
 		return $user_group;
@@ -61,11 +61,11 @@ class ModelUserUserGroup extends Model {
 		$user_group_query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_group_id . "'");
 
 		if ($user_group_query->num_rows) {
-			$data = unserialize($user_group_query->row['permission']);
+			$data = json_decode($user_group_query->row['permission'], true);
 
 			$data[$type][] = $route;
 
-			$this->db->query("UPDATE " . DB_PREFIX . "user_group SET permission = '" . $this->db->escape(serialize($data)) . "' WHERE user_group_id = '" . (int)$user_group_id . "'");
+			$this->db->query("UPDATE " . DB_PREFIX . "user_group SET permission = '" . $this->db->escape(json_encode($data)) . "' WHERE user_group_id = '" . (int)$user_group_id . "'");
 		}
 	}
 
@@ -73,11 +73,11 @@ class ModelUserUserGroup extends Model {
 		$user_group_query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_group_id . "'");
 
 		if ($user_group_query->num_rows) {
-			$data = unserialize($user_group_query->row['permission']);
+			$data = json_decode($user_group_query->row['permission'], true);
 
 			$data[$type] = array_diff($data[$type], array($route));
 
-			$this->db->query("UPDATE " . DB_PREFIX . "user_group SET permission = '" . $this->db->escape(serialize($data)) . "' WHERE user_group_id = '" . (int)$user_group_id . "'");
+			$this->db->query("UPDATE " . DB_PREFIX . "user_group SET permission = '" . $this->db->escape(json_encode($data)) . "' WHERE user_group_id = '" . (int)$user_group_id . "'");
 		}
 	}
 }

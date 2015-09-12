@@ -63,7 +63,7 @@
             </div>
             <div class="col-sm-4">
               <div class="form-group">
-                <label class="control-label" for="input-channel"><?php echo $entry_order_status; ?></label>
+                <label class="control-label" for="input-channel"><?php echo $entry_order_channel; ?></label>
                 <select name="filter_channel" id="input-channel" class="form-control">
                   <option value=""></option>
                   <?php foreach ($channels as $channel) { ?>
@@ -87,7 +87,7 @@
               </div>
             </div>
             <div class="col-sm-4">
-              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
+              <button onclick="filter();" type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
             </div>
           </div>
         </div>
@@ -242,7 +242,7 @@
         delay: 0,
         source: function(request, response) {
             $.ajax({
-                url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
+                url: 'index.php?route=customer/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
                 dataType: 'json',
                 success: function(json) {
                     response($.map(json, function(item) {
@@ -261,5 +261,12 @@
             return false;
         }
     });
+//--></script>
+<script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+<link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
+<script type="text/javascript"><!--
+$('.date').datetimepicker({
+  pickTime: false
+});
 //--></script>
 <?php echo $footer; ?>

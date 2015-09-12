@@ -34,7 +34,7 @@
 			if ($("input[name='payment_method']").val() == '1') {
 				location = '<?php echo $continue ?>';
 			} else {
-				$('#walletWidgetDiv').before('<div class="warning"><?php echo $error_payment_method ?></div>');
+				$('#walletWidgetDiv').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i><?php echo $error_payment_method ?></div>');
 			}
 		});
 

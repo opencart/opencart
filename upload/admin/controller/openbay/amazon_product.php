@@ -14,7 +14,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_home'),
 		);
 
@@ -439,7 +439,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 
 		$tax_added = isset($openbay_settings['openbay_amazon_listing_tax_added']) ? $openbay_settings['openbay_amazon_listing_tax_added'] : 0;
 		$default_condition =  isset($openbay_settings['openbay_amazon_listing_default_condition']) ? $openbay_settings['openbay_amazon_listing_default_condition'] : '';
-		$product_info['price'] = number_format($product_info['price'] + $tax_added / 100 * $product_info['price'], 2, ' . ', '');
+		$product_info['price'] = number_format($product_info['price'] + $tax_added / 100 * $product_info['price'], 2, '.', '');
 
 		$defaults = array(
 			'sku' => $product_info['sku'],
@@ -449,7 +449,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			'description' => $product_info['description'],
 			'mainimage' => $product_info['image'],
 			'currency' => $this->config->get('config_currency'),
-			'shippingweight' => number_format($product_info['weight'], 2, ' . ', ''),
+			'shippingweight' => number_format($product_info['weight'], 2, '.', ''),
 			'conditiontype' => $default_condition,
 		);
 
@@ -502,8 +502,8 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			if ($option != null) {
 				$defaults['sku'] = $option['sku'];
 				$defaults['quantity'] = $option['stock'];
-				$defaults['standardprice'] = number_format($option['price'] + $tax_added / 100 * $option['price'], 2, ' . ', '');
-				$defaults['shippingweight'] = number_format($option['weight'], 2, ' . ', '');
+				$defaults['standardprice'] = number_format($option['price'] + $tax_added / 100 * $option['price'], 2, '.', '');
+				$defaults['shippingweight'] = number_format($option['weight'], 2, '.', '');
 
 				if (!empty($option['image'])) {
 					$defaults['mainimage'] = HTTPS_CATALOG . 'image/' . $option['image'];

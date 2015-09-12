@@ -288,6 +288,33 @@
             </thead>
             <tbody>
               <tr>
+                <td><?php echo $image . '/'; ?></td>
+                <td><?php if (is_writable($image)) { ?>
+                  <span class="text-success"><?php echo $text_writable; ?></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><?php echo $text_unwritable; ?></span>
+                  <?php } ?>
+                </td>
+              </tr>
+              <tr>
+                <td><?php echo $image_cache . '/'; ?></td>
+                <td><?php if (is_writable($image_cache)) { ?>
+                  <span class="text-success"><?php echo $text_writable; ?></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><?php echo $text_unwritable; ?></span>
+                  <?php } ?>
+                </td>
+              </tr>
+              <tr>
+                <td><?php echo $image_catalog . '/'; ?></td>
+                <td><?php if (is_writable($image_catalog)) { ?>
+                  <span class="text-success"><?php echo $text_writable; ?></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><?php echo $text_unwritable; ?></span>
+                  <?php } ?>
+                </td>
+              </tr>
+              <tr>
                 <td><?php echo $cache . '/'; ?></td>
                 <td><?php if (is_writable($cache)) { ?>
                   <span class="text-success"><?php echo $text_writable; ?></span>
@@ -322,28 +349,10 @@
                   <span class="text-danger"><?php echo $text_unwritable; ?></span>
                   <?php } ?>
                 </td>
-              </tr>              
-              <tr>
-                <td><?php echo $image . '/'; ?></td>
-                <td><?php if (is_writable($image)) { ?>
-                  <span class="text-success"><?php echo $text_writable; ?></span>
-                  <?php } else { ?>
-                  <span class="text-danger"><?php echo $text_unwritable; ?></span>
-                  <?php } ?>
-                </td>
               </tr>
               <tr>
-                <td><?php echo $image_cache . '/'; ?></td>
-                <td><?php if (is_writable($image_cache)) { ?>
-                  <span class="text-success"><?php echo $text_writable; ?></span>
-                  <?php } else { ?>
-                  <span class="text-danger"><?php echo $text_unwritable; ?></span>
-                  <?php } ?>
-                </td>
-              </tr>
-              <tr>
-                <td><?php echo $image_data . '/'; ?></td>
-                <td><?php if (is_writable($image_data)) { ?>
+                <td><?php echo $modification . '/'; ?></td>
+                <td><?php if (is_writable($modification)) { ?>
                   <span class="text-success"><?php echo $text_writable; ?></span>
                   <?php } else { ?>
                   <span class="text-danger"><?php echo $text_unwritable; ?></span>

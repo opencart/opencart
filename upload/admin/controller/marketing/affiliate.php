@@ -569,6 +569,8 @@ class ControllerMarketingAffiliate extends Controller {
 
 		$data['text_form'] = !isset($this->request->get['affiliate_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
+		$data['text_affiliate_detail'] = $this->language->get('text_affiliate_detail');
+		$data['text_affiliate_address'] = $this->language->get('text_affiliate_address');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
@@ -1130,50 +1132,10 @@ class ControllerMarketingAffiliate extends Controller {
 		return !$this->error;
 	}
 
-	public function country() {
-		$json = array();
-
-		$this->load->model('localisation/country');
-
-		$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
-
-		if ($country_info) {
-			$this->load->model('localisation/zone');
-
-			$json = array(
-				'country_id'        => $country_info['country_id'],
-				'name'              => $country_info['name'],
-				'iso_code_2'        => $country_info['iso_code_2'],
-				'iso_code_3'        => $country_info['iso_code_3'],
-				'address_format'    => $country_info['address_format'],
-				'postcode_required' => $country_info['postcode_required'],
-				'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
-				'status'            => $country_info['status']
-			);
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
 	public function transaction() {
 		$this->load->language('marketing/affiliate');
 
 		$this->load->model('marketing/affiliate');
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->user->hasPermission('modify', 'marketing/affiliate')) {
-			$this->model_marketing_affiliate->addTransaction($this->request->get['affiliate_id'], $this->request->post['description'], $this->request->post['amount']);
-
-			$data['success'] = $this->language->get('text_success');
-		} else {
-			$data['success'] = '';
-		}
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && !$this->user->hasPermission('modify', 'marketing/affiliate')) {
-			$data['error_warning'] = $this->language->get('error_permission');
-		} else {
-			$data['error_warning'] = '';
-		}
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_balance'] = $this->language->get('text_balance');
@@ -1215,6 +1177,25 @@ class ControllerMarketingAffiliate extends Controller {
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($transaction_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($transaction_total - 10)) ? $transaction_total : ((($page - 1) * 10) + 10), $transaction_total, ceil($transaction_total / 10));
 
 		$this->response->setOutput($this->load->view('marketing/affiliate_transaction.tpl', $data));
+	}
+
+	public function addTransaction() {
+		$this->load->language('marketing/affiliate');
+
+		$json = array();
+
+		if (!$this->user->hasPermission('modify', 'marketing/affiliate')) {
+			$json['error'] = $this->language->get('error_permission');
+		} else {
+			$this->load->model('marketing/affiliate');
+
+			$this->model_marketing_affiliate->addTransaction($this->request->get['affiliate_id'], $this->request->post['description'], $this->request->post['amount']);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function autocomplete() {

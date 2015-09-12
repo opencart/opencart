@@ -24,7 +24,7 @@ class ModelOpenbayAmazonus extends Model {
 				`product_id` int(11) NOT NULL,
 				`quantity` int(11) NOT NULL DEFAULT '0',
 				PRIMARY KEY (`order_id`,`product_id`)
-			) DEFAULT COLLATE=utf8_general_ci;;");
+			) DEFAULT COLLATE=utf8_general_ci;");
 
 		$this->db->query("
 		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazonus_product` (
@@ -154,7 +154,7 @@ class ModelOpenbayAmazonus extends Model {
 		$log = new Log('amazonus.log');
 
 		$request_xml = '<Request>
-  <ResponseURL>' . HTTPS_CATALOG . 'index.php?route=openbay/amazonus/order' . '</ResponseURL>
+  <ResponseURL>' . HTTPS_CATALOG . 'index.php?route=openbay/amazonus/order</ResponseURL>
   <MarketplaceIDs>';
 
 		foreach ($data['openbay_amazonus_orders_marketplace_ids'] as $marketplace_id) {
@@ -422,7 +422,7 @@ class ModelOpenbayAmazonus extends Model {
 
 		$product_links = $this->db->query($query)->rows;
 
-		$this->load->library('amazon');
+		$this->load->library('openbay/amazon');
 
 		if ($this->openbay->addonLoad('openstock')) {
 			$this->load->model('module/openstock');
@@ -448,7 +448,7 @@ class ModelOpenbayAmazonus extends Model {
 	}
 
 	public function getUnlinkedProducts() {
-		$this->load->library('amazonus');
+		$this->load->library('openbay/amazonus');
 		if ($this->openbay->addonLoad('openstock')) {
 
 			$rows = $this->db->query("
@@ -566,7 +566,7 @@ class ModelOpenbayAmazonus extends Model {
 	}
 
 	public function getProductQuantity($product_id, $var = '') {
-		$this->load->library('amazonus');
+		$this->load->library('openbay/amazonus');
 
 		$result = null;
 
@@ -763,7 +763,7 @@ class ModelOpenbayAmazonus extends Model {
 				'quantity' => $row['quantity'],
 				'amazon_sku' => $row['amazon_sku'],
 				'amazon_quantity' => $row['amazon_quantity'],
-				'amazon_price' => number_format($row['amazon_price'], 2, ' . ', ''),
+				'amazon_price' => number_format($row['amazon_price'], 2, '.', ''),
 				'asin' => $row['asin'],
 				'combination' => implode(' > ', $combinations),
 			);

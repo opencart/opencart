@@ -6,7 +6,7 @@ $_['text_amazon']						= 'Amazon US';
 
 // Text
 $_['text_current_plan']             	= 'Current plan';
-$_['text_register_invite']          	= "Don't have your API details yet?";
+$_['text_register_invite']          	= 'Don\'t have your API details yet?';
 $_['text_available_plans']          	= 'Available plans';
 $_['text_listings_remaining']       	= 'Listings remaining';
 $_['text_listings_reserved']        	= 'Products being processed';

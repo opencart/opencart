@@ -1,7 +1,5 @@
 <?php
-
 class ModelPaymentPPExpress extends Model {
-
 	public function install() {
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "paypal_order` (
@@ -89,7 +87,7 @@ class ModelPaymentPPExpress extends Model {
 		$paypal_order_transaction_id = $this->db->getLastId();
 
 		if ($request_data) {
-			$serialized_data = serialize($request_data);
+			$serialized_data = json_encode($request_data);
 
 			$this->db->query("
 				UPDATE " . DB_PREFIX . "paypal_order_transaction
@@ -383,5 +381,4 @@ class ModelPaymentPPExpress extends Model {
 
 		return $response;
 	}
-
 }

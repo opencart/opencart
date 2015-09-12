@@ -34,9 +34,9 @@ $(document).ready(function() {
 		$('#continue-button').click(function() {
 			$('div.warning').remove();
 			if ($('input[name="addressSelected"]').val() == '0') {
-				$('#addressBookWidgetDiv').before('<div class="warning"><?php echo $error_shipping_address ?></div>');
+				$('#addressBookWidgetDiv').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i><?php echo $error_shipping_address ?></div>');
 			} else if ($('input[name="shipping_method"]:checked').length == 0) {
-				$('#addressBookWidgetDiv').before('<div class="warning"><?php echo $error_shipping ?></div>');
+				$('#addressBookWidgetDiv').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i><?php echo $error_shipping ?></div>');
 			} else {
 				$.ajax({
 					url: 'index.php?route=payment/amazon_login_pay/setshipping',
@@ -66,7 +66,7 @@ $(document).ready(function() {
 					$('.shipping-methods').html('');
 
 					if (data.error) {
-						$('#addressBookWidgetDiv').before('<div class="warning">' + data.error + '</div>');
+						$('#addressBookWidgetDiv').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i>' + data.error + '</div>');
 					} else if (data.quotes) {
 						var html = '';
 

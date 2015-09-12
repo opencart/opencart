@@ -7,6 +7,7 @@ class ControllerPaymentCheque extends Controller {
 		$data['text_payable'] = $this->language->get('text_payable');
 		$data['text_address'] = $this->language->get('text_address');
 		$data['text_payment'] = $this->language->get('text_payment');
+		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
 

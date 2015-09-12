@@ -3,7 +3,7 @@ class ControllerCatalogAttribute extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('catalog/attribute');
+		$this->language->load('catalog/attribute');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerCatalogAttribute extends Controller {
 	}
 
 	public function add() {
-		$this->load->language('catalog/attribute');
+		$this->language->load('catalog/attribute');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -45,7 +45,7 @@ class ControllerCatalogAttribute extends Controller {
 	}
 
 	public function edit() {
-		$this->load->language('catalog/attribute');
+		$this->language->load('catalog/attribute');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -77,7 +77,7 @@ class ControllerCatalogAttribute extends Controller {
 	}
 
 	public function delete() {
-		$this->load->language('catalog/attribute');
+		$this->language->load('catalog/attribute');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -286,6 +286,12 @@ class ControllerCatalogAttribute extends Controller {
 			$data['error_name'] = array();
 		}
 
+		if (isset($this->error['attribute_group'])) {
+			$data['error_attribute_group'] = $this->error['attribute_group'];
+		} else {
+			$data['error_attribute_group'] = '';
+		}
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -366,6 +372,10 @@ class ControllerCatalogAttribute extends Controller {
 	protected function validateForm() {
 		if (!$this->user->hasPermission('modify', 'catalog/attribute')) {
 			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		if (!$this->request->post['attribute_group_id']) {
+			$this->error['attribute_group'] = $this->language->get('error_attribute_group');
 		}
 
 		foreach ($this->request->post['attribute_description'] as $language_id => $value) {

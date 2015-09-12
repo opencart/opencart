@@ -88,7 +88,7 @@ class ModelPaymentBluepayredirect extends Model {
 			$release_data = array();
 
 			$release_data['MERCHANT'] = $this->config->get('bluepay_redirect_account_id');
-			$release_data["TRANSACTION_TYPE"] = 'VOID';
+			$release_data["TRANSACTION_TYPE"] = 'CAPTURE';
 			$release_data["MODE"] = strtoupper($this->config->get('bluepay_redirect_test'));
 			$release_data["RRNO"] = $bluepay_redirect_order['transaction_id'];
 

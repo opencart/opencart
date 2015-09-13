@@ -287,9 +287,9 @@ class ControllerPaymentWorldpay extends Controller {
 				$data['text_column_amount'] = $this->language->get('text_column_amount');
 				$data['text_column_type'] = $this->language->get('text_column_type');
 				$data['text_column_date_added'] = $this->language->get('text_column_date_added');
-				$data['btn_release'] = $this->language->get('btn_release');
-				$data['btn_refund'] = $this->language->get('btn_refund');
-				$data['btn_void'] = $this->language->get('btn_void');
+				$data['button_release'] = $this->language->get('button_release');
+				$data['button_refund'] = $this->language->get('button_refund');
+				$data['button_void'] = $this->language->get('button_void');
 				$data['text_confirm_void'] = $this->language->get('text_confirm_void');
 				$data['text_confirm_release'] = $this->language->get('text_confirm_release');
 				$data['text_confirm_refund'] = $this->language->get('text_confirm_refund');

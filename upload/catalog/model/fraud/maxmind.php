@@ -107,12 +107,6 @@ class ModelFraudMaxMind extends Model {
 					$ip_city = '';
 				}
 
-				if (isset($response_info['ip_city'])) {
-					$ip_city = $response_info['ip_city'];
-				} else {
-					$ip_city = '';
-				}
-
 				if (isset($response_info['ip_latitude'])) {
 					$ip_latitude = $response_info['ip_latitude'];
 				} else {

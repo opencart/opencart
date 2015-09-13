@@ -73,6 +73,12 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 			if ($response_data['Result'] == 'APPROVED') {
 				$bluepay_hosted_order_id = $this->model_payment_bluepay_hosted->addOrder($order_info, $response_data);
 
+				if ($this->config->get('bluepay_hosted_transaction') == 'SALE') {
+					$this->model_payment_globalpay->addTransaction($bluepay_hosted_order_id, 'payment', $order_info);
+				} else {
+					$this->model_payment_globalpay->addTransaction($bluepay_hosted_order_id, 'auth', $order_info);
+				}
+
 				$this->model_payment_bluepay_hosted->addTransaction($bluepay_hosted_order_id, $this->config->get('bluepay_hosted_transaction'), $order_info);
 
 				$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('bluepay_hosted_order_status_id'));

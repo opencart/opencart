@@ -4,19 +4,47 @@ class Cart {
 
 	public function __construct($registry) {
 		$this->config = $registry->get('config');
+		$this->customer = $registry->get('customer');
 		$this->session = $registry->get('session');
 		$this->db = $registry->get('db');
 		$this->tax = $registry->get('tax');
 		$this->weight = $registry->get('weight');
 
-		if (!isset($this->session->data['cart']) || !is_array($this->session->data['cart'])) {
-			$this->session->data['cart'] = array();
+		// Remove all the expired carts
+		$this->db->query("DELETE FROM " . DB_PREFIX . "cart WHERE customer_id = '0' AND HOUR(date_modified) + 1 < NOW()");
+
+		// Update the current date modified for the current session
+		$this->db->query("UPDATE " . DB_PREFIX . "cart SET date_modified = NOW() WHERE session_id = '" . $this->db->escape($this->session->getId()) . "'");
+
+		if ($this->customer->getId()) {
+			// If customer is logged in we need to set the customer ID for all items with the same session ID
+			$this->db->query("UPDATE " . DB_PREFIX . "cart SET customer_id = '" . (int)$this->customer->getId() . "', session_id = '" . $this->db->escape($this->session->getId()) . "' WHERE customer_id = '" . (int)$this->customer->getId() . "' OR session_id = '" . $this->db->escape($this->session->getId()) . "'");
+
+			$this->db->query("UPDATE " . DB_PREFIX . "cart SET session_id = '" . $this->db->escape($this->session->getId()) . "' WHERE customer_id = '" . (int)$this->customer->getId() . "'");
+		}
+
+		$cart_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "cart WHERE customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
+
+		foreach ($cart_query->rows as $product) {
+			$product['product_id'] = (int)$product_id;
+
+			if ($option) {
+				$product['option'] = $option;
+			}
+
+			if ($recurring_id) {
+				$product['recurring_id'] = (int)$recurring_id;
+			}
+
+			$key = base64_encode(json_encode($product));
+
+			$this->data[$product['product_id']] = '';
 		}
 	}
 
 	public function getProducts() {
 		if (!$this->data) {
-			foreach ($this->session->data['cart'] as $key => $quantity) {
+			foreach ($this->data as $key => $quantity) {
 				$product = json_decode(base64_decode($key), true);
 
 				$product_id = $product['product_id'];
@@ -167,7 +195,7 @@ class Cart {
 					// Product Discounts
 					$discount_quantity = 0;
 
-					foreach ($this->session->data['cart'] as $key_2 => $quantity_2) {
+					foreach ($this->data['cart'] as $key_2 => $quantity_2) {
 						$product_2 = (array)json_decode(base64_decode($key_2), true);
 
 						if ($product_2['product_id'] == $product_id) {
@@ -270,26 +298,8 @@ class Cart {
 
 		return $this->data;
 	}
-	
-	public function getCart() {
-		return $this->session->data['cart'];
-	}
-
-	public function getRecurringProducts() {
-		$recurring_products = array();
-
-		foreach ($this->getProducts() as $key => $value) {
-			if ($value['recurring']) {
-				$recurring_products[$key] = $value;
-			}
-		}
-
-		return $recurring_products;
-	}
 
 	public function add($product_id, $qty = 1, $option = array(), $recurring_id = 0) {
-		$this->data = array();
-
 		$product['product_id'] = (int)$product_id;
 
 		if ($option) {
@@ -305,32 +315,41 @@ class Cart {
 		if ((int)$qty && ((int)$qty > 0)) {
 			if (!isset($this->session->data['cart'][$key])) {
 				$this->session->data['cart'][$key] = (int)$qty;
+
+				$this->db->query("UPDATE " . DB_PREFIX . "cart SET product_id = '" . (int)$product_id . "', quanitiy = '" . (int)$qty . "', date_added = NOW(), date_modified = NOW() WHERE session_id = '" . $this->db->escape($this->session->getId()) . "'");
+
 			} else {
 				$this->session->data['cart'][$key] += (int)$qty;
 			}
 		}
 	}
 
-	public function update($key, $qty) {
-		$this->data = array();
-
-		if ((int)$qty && ((int)$qty > 0) && isset($this->session->data['cart'][$key])) {
-			$this->session->data['cart'][$key] = (int)$qty;
+	public function update($cart_id, $qty) {
+		if ((int)$qty && ((int)$qty > 0)) {
+			$this->db->query("UPDATE " . DB_PREFIX . "cart SET quanitiy = '" . (int)$qty . "', date_modified = NOW() WHERE cart_id = '" . (int)$cart_id . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
 		} else {
-			$this->remove($key);
+			$this->remove($cart_id);
 		}
 	}
 
-	public function remove($key) {
-		$this->data = array();
-
-		unset($this->session->data['cart'][$key]);
+	public function remove($cart_id) {
+		$this->db->query("DELETE FROM " . DB_PREFIX . "cart WHERE cart_id = '" . (int)$cart_id . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
 	}
 
 	public function clear() {
-		$this->data = array();
+		$this->db->query("DELETE FROM " . DB_PREFIX . "cart WHERE session_id = '" . $this->db->escape($this->session->getId()) . "'");
+	}
 
-		$this->session->data['cart'] = array();
+	public function getRecurringProducts() {
+		$recurring_products = array();
+
+		foreach ($this->getProducts() as $key => $value) {
+			if ($value['recurring']) {
+				$recurring_products[$key] = $value;
+			}
+		}
+
+		return $recurring_products;
 	}
 
 	public function getWeight() {
@@ -398,7 +417,7 @@ class Cart {
 	}
 
 	public function hasProducts() {
-		return count($this->session->data['cart']);
+		return count($this->data);
 	}
 
 	public function hasRecurringProducts() {
@@ -443,5 +462,31 @@ class Cart {
 		}
 
 		return $download;
+	}
+
+	public function __destruct() {
+		$this->db->query("DELETE FROM " . DB_PREFIX . "cart WHERE session_id = '" . $this->db->escape($this->session->getId()) . "'");
+
+		foreach ($this->data as $key => $value) {
+			$product = json_decode(base64_decode($key), true);
+
+			$product_id = $product['product_id'];
+
+			// Profile
+			if (!empty($product['recurring_id'])) {
+				$recurring_id = $product['recurring_id'];
+			} else {
+				$recurring_id = 0;
+			}
+
+			// Options
+			if (!empty($product['option'])) {
+				$option = $product['option'];
+			} else {
+				$option = array();
+			}
+
+			$this->db->query("INSERT " . DB_PREFIX . "cart SET customer_id = '" . (int)$this->customer->getId() . "', session_id = '" . $this->db->escape($this->session->getId()) . "', product_id = '" . (int)$product_id . "', recurring_id = '" . (int)$recurring_id . "', option = '" . $this->db->escape(json_encode($option)) . "', quantity = '" . (int)$value . "', date_added = NOW()");
+		}
 	}
 }

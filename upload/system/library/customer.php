@@ -9,8 +9,6 @@ class Customer {
 	private $fax;
 	private $newsletter;
 	private $address_id;
-	private $cart;
-	private $wishlist;
 
 	public function __construct($registry) {
 		$this->config = $registry->get('config');
@@ -31,8 +29,6 @@ class Customer {
 				$this->fax = $customer_query->row['fax'];
 				$this->newsletter = $customer_query->row['newsletter'];
 				$this->address_id = $customer_query->row['address_id'];
-				$this->cart = json_decode($customer_query->row['cart'], true);
-				$this->wishlist = json_decode($customer_query->row['cart'], true);
 
 				$this->db->query("UPDATE " . DB_PREFIX . "customer SET ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE customer_id = '" . (int)$this->customer_id . "'");
 
@@ -66,8 +62,6 @@ class Customer {
 			$this->fax = $customer_query->row['fax'];
 			$this->newsletter = $customer_query->row['newsletter'];
 			$this->address_id = $customer_query->row['address_id'];
-			$this->cart = json_decode($customer_query->row['cart'], true);
-			$this->wishlist = json_decode($customer_query->row['wishlist'], true);
 
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE customer_id = '" . (int)$this->customer_id . "'");
 
@@ -89,8 +83,6 @@ class Customer {
 		$this->fax = '';
 		$this->newsletter = '';
 		$this->address_id = '';
-		$this->cart = array();
-		$this->wishlist = array();		
 	}
 
 	public function isLogged() {
@@ -132,15 +124,15 @@ class Customer {
 	public function getAddressId() {
 		return $this->address_id;
 	}
-	
+
 	public function getCart() {
 		return $this->cart;
 	}
-	
+
 	public function getWishlist() {
 		return $this->wishlist;
-	}	
-	
+	}
+
 	public function getBalance() {
 		$query = $this->db->query("SELECT SUM(amount) AS total FROM " . DB_PREFIX . "customer_transaction WHERE customer_id = '" . (int)$this->customer_id . "'");
 

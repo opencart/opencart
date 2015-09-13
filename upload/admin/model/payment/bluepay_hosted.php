@@ -186,7 +186,7 @@ class ModelPaymentBluePayHosted extends Model {
 	}
 
 	public function getTotalReleased($bluepay_hosted_order_id) {
-		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "bluepay_hosted_order_transaction` WHERE `bluepay_hosted_order_id` = '" . (int)$bluepay_hosted_order_id . "' AND (`type` = 'sale' OR `type` = 'rebate' OR `type` = 'auth')");
+		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "bluepay_hosted_order_transaction` WHERE `bluepay_hosted_order_id` = '" . (int)$bluepay_hosted_order_id . "' AND (`type` = 'sale' OR `type` = 'rebate')");
 
 		return (float)$query->row['total'];
 	}
@@ -211,7 +211,7 @@ class ModelPaymentBluePayHosted extends Model {
 		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($post_data));
 
 		$response_data = curl_exec($curl);
-		
+
 		curl_close($curl);
 
 		return json_decode($response_data, true);

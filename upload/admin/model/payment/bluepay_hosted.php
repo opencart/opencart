@@ -21,7 +21,7 @@ class ModelPaymentBluePayHosted extends Model {
 			  `bluepay_hosted_order_transaction_id` INT(11) NOT NULL AUTO_INCREMENT,
 			  `bluepay_hosted_order_id` INT(11) NOT NULL,
 			  `date_added` DATETIME NOT NULL,
-			  `type` ENUM('auth', 'sale', 'rebate', 'void') DEFAULT NULL,
+			  `type` ENUM('auth', 'payment', 'rebate', 'void') DEFAULT NULL,
 			  `amount` DECIMAL( 10, 2 ) NOT NULL,
 			  PRIMARY KEY (`bluepay_hosted_order_transaction_id`)
 			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");

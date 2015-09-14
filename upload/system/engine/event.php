@@ -8,10 +8,10 @@ class Event {
 	}
 
 	public function register($key, $action, $priority = 0) {
-		$this->data[$key][] = [
+		$this->data[$key][] = array(
 			'action' => $action,
 			'priority' => (int)$priority,
-		];
+		);
 	}
 
 	public function unregister($key, $action) {

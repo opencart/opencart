@@ -155,7 +155,10 @@ var cart = {
 
 					$('#cart > ul').load('index.php?route=common/cart/info ul li');
 				}
-			}
+			},
+	        error: function(xhr, ajaxOptions, thrownError) {
+	            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	        }
 		});
 	},
 	'update': function(key, quantity) {
@@ -181,7 +184,10 @@ var cart = {
 				} else {
 					$('#cart > ul').load('index.php?route=common/cart/info ul li');
 				}
-			}
+			},
+	        error: function(xhr, ajaxOptions, thrownError) {
+	            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	        }
 		});
 	},
 	'remove': function(key) {
@@ -207,7 +213,10 @@ var cart = {
 				} else {
 					$('#cart > ul').load('index.php?route=common/cart/info ul li');
 				}
-			}
+			},
+	        error: function(xhr, ajaxOptions, thrownError) {
+	            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	        }
 		});
 	}
 }
@@ -239,7 +248,10 @@ var voucher = {
 				} else {
 					$('#cart > ul').load('index.php?route=common/cart/info ul li');
 				}
-			}
+			},
+	        error: function(xhr, ajaxOptions, thrownError) {
+	            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	        }
 		});
 	}
 }
@@ -262,7 +274,10 @@ var wishlist = {
 				$('#wishlist-total').attr('title', json['total']);
 
 				$('html, body').animate({ scrollTop: 0 }, 'slow');
-			}
+			},
+	        error: function(xhr, ajaxOptions, thrownError) {
+	            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	        }
 		});
 	},
 	'remove': function() {
@@ -287,7 +302,10 @@ var compare = {
 
 					$('html, body').animate({ scrollTop: 0 }, 'slow');
 				}
-			}
+			},
+	        error: function(xhr, ajaxOptions, thrownError) {
+	            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	        }
 		});
 	},
 	'remove': function() {

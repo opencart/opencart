@@ -7,7 +7,6 @@ class ControllerAccountLogout extends Controller {
 			$this->customer->logout();
 			$this->cart->clear();
 
-			unset($this->session->data['wishlist']);
 			unset($this->session->data['shipping_address']);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);

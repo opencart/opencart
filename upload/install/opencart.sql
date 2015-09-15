@@ -387,17 +387,17 @@ INSERT INTO `oc_banner_image_description` (`banner_image_id`, `language_id`, `ba
 DROP TABLE IF EXISTS `oc_cart`;
 CREATE TABLE `oc_cart` (
   `cart_id` int(11) NOT NULL AUTO_INCREMENT,
+  `store_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `session_id` varchar(32) NOT NULL,
-  `customer_id` int(11) NOT NULL,
-  `store_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `recurring_id` int(11) NOT NULL,
   `option` text NOT NULL,
   `quantity` int(5) NOT NULL,
   `date_added` datetime NOT NULL,
-  PRIMARY KEY (`category_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`cart_id`),
+  KEY `cart_id` (`customer_id`,`session_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 

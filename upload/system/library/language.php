@@ -8,8 +8,24 @@ class Language {
 		$this->directory = $directory;
 	}
 
-	public function get($key) {
-		return (isset($this->data[$key]) ? $this->data[$key] : $key);
+	public function get($lang, $args = array(), $data = array()) {
+		$args = (array)$args;
+
+		if (is_array($lang)) {
+			foreach ($lang as $prefix => $names) {
+				foreach ($names as $name) {
+					$data[$prefix . '_' . $name] = $this->get($prefix . '_' . $name, (isset($args[$prefix][$name]) ? $args[$prefix][$name] : array()));
+				}
+			}
+		} else {
+			$data = (isset($this->data[$lang]) ? $this->data[$lang] : $lang);
+
+			if (!empty($args)) {
+				$data = vsprintf($data, $args);
+			}
+		}
+
+		return $data;
 	}
 
 	public function all() {

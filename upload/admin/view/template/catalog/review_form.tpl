@@ -49,8 +49,7 @@
             <div class="col-sm-10">
               <textarea name="text" cols="60" rows="8" placeholder="<?php echo $entry_text; ?>" id="input-text" class="form-control"><?php echo $text; ?></textarea>
               <?php if ($error_text) { ?>
-              <dspan class="text-danger">
-              <?php echo $error_text; ?></span>
+              <div class="text-danger"><?php echo $error_text; ?></div>
               <?php } ?>
             </div>
           </div>

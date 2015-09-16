@@ -519,19 +519,19 @@ class ControllerPaymentPPExpress extends Controller {
 			}
 
 			$data['products'][] = array(
-				'key'                 => $product['key'],
-				'thumb'               => $image,
-				'name'                => $product['name'],
-				'model'               => $product['model'],
-				'option'              => $option_data,
-				'quantity'            => $product['quantity'],
-				'stock'               => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
-				'reward'              => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
-				'price'               => $price,
-				'total'               => $total,
-				'href'                => $this->url->link('product/product', 'product_id=' . $product['product_id']),
-				'remove'              => $this->url->link('checkout/cart', 'remove=' . $product['key']),
-				'recurring'           => $product['recurring'],
+				'cart_id'               => $product['cart_id'],
+				'thumb'                 => $image,
+				'name'                  => $product['name'],
+				'model'                 => $product['model'],
+				'option'                => $option_data,
+				'quantity'              => $product['quantity'],
+				'stock'                 => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
+				'reward'                => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
+				'price'                 => $price,
+				'total'                 => $total,
+				'href'                  => $this->url->link('product/product', 'product_id=' . $product['product_id']),
+				'remove'                => $this->url->link('checkout/cart', 'remove=' . $product['cart_id']),
+				'recurring'             => $product['recurring'],
 				'recurring_name'        => (isset($product['recurring']['recurring_name']) ? $product['recurring']['recurring_name'] : ''),
 				'recurring_description' => $recurring_description
 			);

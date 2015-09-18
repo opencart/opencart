@@ -83,7 +83,7 @@ $('#button-confirm').bind('click', function() {
     },
     complete: function() {
       $('#button-confirm').attr('disabled', false);
-      $('.attention').remove();
+      $('.alert').remove();
     },
     success: function(json) {
       if (json['error']) {

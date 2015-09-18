@@ -91,11 +91,13 @@ class ControllerMarketingContact extends Controller {
 
 				if ($store_info) {
 					$store_name = $store_info['name'];
-					$store_email = $store_info['email'];
 				} else {
 					$store_name = $this->config->get('config_name');
-					$store_email = $this->config->get('config_email');
 				}
+				
+				$this->load->model('setting/setting');
+				$setting = $this->model_setting_setting->getSetting('config', $this->request->post['store_id']);
+				$store_email = isset($setting['config_email']) ? $setting['config_email'] : $this->config->get('config_email');
 
 				$this->load->model('customer/customer');
 

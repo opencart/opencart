@@ -976,6 +976,11 @@ class ControllerSettingSetting extends Controller {
 			'text'  => $this->language->get('text_register'),
 			'value' => 'register'
 		);
+		
+		$data['captcha_pages'][] = array(
++			'text'  => $this->language->get('text_guest_checkout'),
++			'value' => 'guest_checkout'
++		);
 
 		$data['captcha_pages'][] = array(
 			'text'  => $this->language->get('text_review'),

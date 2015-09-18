@@ -91,8 +91,10 @@ class ControllerMarketingContact extends Controller {
 
 				if ($store_info) {
 					$store_name = $store_info['name'];
+					$store_email = $store_info['email'];
 				} else {
 					$store_name = $this->config->get('config_name');
+					$store_email = $this->config->get('config_email');
 				}
 
 				$this->load->model('customer/customer');
@@ -243,7 +245,7 @@ class ControllerMarketingContact extends Controller {
 							$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
 							$mail->setTo($email);
-							$mail->setFrom($this->config->get('config_email'));
+							$mail->setFrom($store_email);
 							$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
 							$mail->setSubject(html_entity_decode($this->request->post['subject'], ENT_QUOTES, 'UTF-8'));
 							$mail->setHtml($message);

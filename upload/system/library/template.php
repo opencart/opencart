@@ -6,11 +6,11 @@ class Template {
 		$this->registry = $registry;
 	}
 
-	public function render($filename, $data) {
-		if (file_exists(DIR_TEMPLATE . $this->registry->config->get('config_template') . '/template/common/' . $filename)) {
-			$this->registry->response->setOutput($this->registry->load->view($this->registry->config->get('config_template') . '/template/common/' . $filename, $data));
+	public function render($path, $data) {
+		if (file_exists(DIR_TEMPLATE . $this->registry->config->get('config_template') . '/template/' . $path)) {
+			$this->registry->response->setOutput($this->registry->load->view($this->registry->config->get('config_template') . '/template/' . $path, $data));
 		} else {
-			$this->registry->response->setOutput($this->registry->load->view('default/template/common/' . $filename, $data));
+			$this->registry->response->setOutput($this->registry->load->view('default/template/' . $path, $data));
 		}
 	}
 

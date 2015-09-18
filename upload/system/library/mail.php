@@ -103,7 +103,7 @@ class Mail {
 		if (!$this->reply_to) {
 			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . $this->newline;
 		} else {
-			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to) . '?=' . ' <' . $this->from . '>' . $this->newline;
+			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to) . '?=' . ' <' . $this->reply_to . '>' . $this->newline;
 		}
 		
 		$header .= 'Return-Path: ' . $this->from . $this->newline;

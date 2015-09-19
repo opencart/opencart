@@ -32,6 +32,10 @@ class Session {
 		return session_id();
 	}
 
+	public function start() {
+		return session_start();
+	}
+
 	public function destroy() {
 		return session_destroy();
 	}

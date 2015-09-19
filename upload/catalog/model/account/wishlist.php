@@ -1,10 +1,5 @@
 <?php
 class ModelAccountWishlist extends Model {
-	public function __constuct() {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_wishlist WHERE customer_id = '0' AND date_added < DATE_SUB(NOW(), INTERVAL 1 HOUR)");
-
-	}
-
 	public function addWishlist($product_id) {
 		$this->event->trigger('pre.wishlist.add');
 

@@ -1280,6 +1280,20 @@ CREATE TABLE `oc_customer_transaction` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `oc_customer_wishlist`
+--
+
+DROP TABLE IF EXISTS `oc_customer_wishlist`;
+CREATE TABLE `oc_customer_wishlist` (
+  `customer_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`customer_id`,`product_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `oc_custom_field`
 --
 

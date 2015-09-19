@@ -110,7 +110,7 @@ final class Tax {
 		$tax_rate_data = array();
 
 		if (isset($this->tax_rates[$tax_class_id])) {
-			foreach ($this->tax_rates[$tax_class_id] as $tax_rate) {
+			foreach ($this->tax_rates[$tax_class_id] as $tax_rate_id => $tax_rate) {
 				$amount = 0;
 
 				if ($tax_rate['type'] == 'F') {
@@ -120,7 +120,7 @@ final class Tax {
 				}
 
 				$tax_rate_data[$tax_rate_id] = array(
-					'tax_rate_id' => $tax_rate['tax_rate_id'],
+					'tax_rate_id' => $tax_rate_id,
 					'name'        => $tax_rate['name'],
 					'rate'        => $tax_rate['rate'],
 					'type'        => $tax_rate['type'],

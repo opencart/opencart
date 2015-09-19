@@ -241,6 +241,9 @@ $registry->set('encryption', new Encryption($config->get('config_encryption')));
 // OpenBay Pro
 $registry->set('openbay', new Openbay($registry));
 
+// Template
+$registry->set('template', new Template($registry));
+
 // Event
 $event = new Event($registry);
 $registry->set('event', $event);

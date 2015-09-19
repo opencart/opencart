@@ -17,7 +17,7 @@ class ControllerAccountWishList extends Controller {
 
 		if (isset($this->request->get['remove'])) {
 			// Remove Wishlist
-			$this->model_account_wislist->removeWishlist($this->request->get['remove']);
+			$this->model_account_wislist->addWishlist($this->request->get['remove']);
 
 			$this->session->data['success'] = $this->language->get('text_remove');
 
@@ -68,7 +68,7 @@ class ControllerAccountWishList extends Controller {
 
 		$data['products'] = array();
 
-		foreach ($this->model_account_wislist->getWishlist() as $key => $product_id) {
+		foreach ($this->model_account_wishlist->getWishlist() as $key => $product_id) {
 			$product_info = $this->model_catalog_product->getProduct($product_id);
 
 			if ($product_info) {

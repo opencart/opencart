@@ -37,6 +37,10 @@ class ControllerAccountLogin extends Controller {
 					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 				}
 
+				if (isset($this->session->data['wishlist']) as $product_id) {
+
+				}
+
 				$this->response->redirect($this->url->link('account/account', '', 'SSL'));
 			}
 		}

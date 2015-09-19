@@ -35,8 +35,8 @@ class ControllerToolBackup extends Controller {
 		$data['entry_restore'] = $this->language->get('entry_restore');
 		$data['entry_backup'] = $this->language->get('entry_backup');
 
-		$data['button_backup'] = $this->language->get('button_backup');
-		$data['button_restore'] = $this->language->get('button_restore');
+		$data['button_export'] = $this->language->get('button_export');
+		$data['button_import'] = $this->language->get('button_import');
 
 		if (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];

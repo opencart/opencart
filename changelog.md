@@ -1,6 +1,9 @@
 # OpenCart 2.0 change log
 
-## v2.0.3.2 (Pending)
+## v2.1.0.0 (Pending)
+~~
+This version is currently in RC stage. Please report any bugs on GitHub.
+~~
 #### Bugs fixed
 * Change post to session in order API (https://github.com/opencart/opencart/issues/2712)
 * Maxmind error with unused method (https://github.com/opencart/opencart/issues/3069)

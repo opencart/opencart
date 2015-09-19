@@ -14,13 +14,20 @@ $_['text_account']                     = 'Account';
 $_['text_checkout']                    = 'Checkout';
 $_['text_stock']                       = 'Stock';
 $_['text_affiliate']                   = 'Affiliates';
+$_['text_captcha']                     = 'Captcha';
+$_['text_register']                    = 'register';
 $_['text_return']                      = 'Returns';
+$_['text_review']                      = 'Reviews';
+$_['text_return']                      = 'Returns';
+$_['text_contact']                     = 'Contact';
 $_['text_shipping']                    = 'Shipping Address';
 $_['text_payment']                     = 'Payment Address';
 $_['text_mail']                        = 'Mail';
 $_['text_smtp']                        = 'SMTP';
-$_['text_google_analytics']            = 'Google Analytics';
-$_['text_google_captcha']              = 'Google reCAPTCHA';
+$_['text_general']                     = 'General';
+$_['text_security']                    = 'Security';
+$_['text_upload']                      = 'Uploads';
+$_['text_error']                       = 'Error Handling';
 
 // Entry
 $_['entry_name']                       = 'Store Name';
@@ -73,6 +80,7 @@ $_['entry_invoice_prefix']             = 'Invoice Prefix';
 $_['entry_order_status']               = 'Order Status';
 $_['entry_processing_status']          = 'Processing Order Status';
 $_['entry_complete_status']            = 'Complete Order Status';
+$_['entry_fraud_status']               = 'Fraud Status';
 $_['entry_order_mail']                 = 'New Order Alert Mail';
 $_['entry_mail_alert']                 = 'Additional Alert E-Mails';
 $_['entry_api']                        = 'API User';
@@ -86,6 +94,8 @@ $_['entry_affiliate']                  = 'Affiliate Terms';
 $_['entry_affiliate_mail']             = 'New Affiliate Alert Mail';
 $_['entry_return']                     = 'Return Terms';
 $_['entry_return_status']              = 'Return Status';
+$_['entry_captcha']                    = 'Captcha';
+$_['entry_captcha_page']               = 'Captcha Page';
 $_['entry_logo']                       = 'Store Logo';
 $_['entry_icon']                       = 'Icon';
 $_['entry_image_category']             = 'Category Image Size';
@@ -127,9 +137,6 @@ $_['entry_compression']                = 'Output Compression Level';
 $_['entry_error_display']              = 'Display Errors';
 $_['entry_error_log']                  = 'Log Errors';
 $_['entry_error_filename']             = 'Error Log Filename';
-$_['entry_google_analytics']           = 'Google Analytics Code';
-$_['entry_google_captcha_public']      = 'Site key';
-$_['entry_google_captcha_secret']      = 'Secret key';
 $_['entry_status']                     = 'Status';
 
 // Help
@@ -164,6 +171,7 @@ $_['help_checkout']                    = 'Forces people to agree to terms before
 $_['help_order_status']                = 'Set the default order status when an order is processed.';
 $_['help_processing_status']           = 'Set the order status the customer\'s order must reach before the order starts stock subtraction and coupon, voucher and rewards redemption.';
 $_['help_complete_status']             = 'Set the order status the customer\'s order must reach before they are allowed to access their downloadable products and gift vouchers.';
+$_['help_fraud_status']                = 'Set the order status when an customer is suspected of trying to alter the order payment details or use a coupon, gift voucher, reward points that has already been used.';
 $_['help_order_mail']                  = 'Send an email to the store owner when a new order is created.';
 $_['help_api']                         = 'Default API user the admin should use.';
 $_['help_stock_display']               = 'Display stock quantity on the product page.';
@@ -176,6 +184,7 @@ $_['help_affiliate']                   = 'Forces people to agree to terms before
 $_['help_affiliate_mail']              = 'Send an email to the store owner when a new affiliate is registered.';
 $_['help_return']                      = 'Forces people to agree to terms before a return can be created.';
 $_['help_return_status']               = 'Set the default return status when a return request is submitted.';
+$_['help_captcha']                     = 'Captcha to use for registration, login, contact and reviews.';
 $_['help_icon']                        = 'The icon should be a PNG that is 16px x 16px.';
 $_['help_ftp_root']                    = 'The directory your OpenCart installation is stored in. Normally \'public_html/\'.';
 $_['help_mail_protocol']               = 'Only choose \'Mail\' unless your host has disabled the php mail function.';
@@ -193,8 +202,6 @@ $_['help_maintenance']                 = 'Prevents customers from browsing your 
 $_['help_password']                    = 'Allow forgotten password to be used for the admin. This will be disabled automatically if the system detects a hack attempt.';
 $_['help_encryption']                  = 'Please provide a secret key that will be used to encrypt private information when processing orders.';
 $_['help_compression']                 = 'GZIP for more efficient transfer to requesting clients. Compression level must be between 0 - 9.';
-$_['help_google_analytics']            = 'Login to your <a href="http://www.google.com/analytics/" target="_blank"><u>Google Analytics</u></a> account and after creating your website profile copy and paste the analytics code into this field.';
-$_['help_google_captcha']              = 'Go to <a href="https://www.google.com/recaptcha/intro/index.html" target="_blank"><u>Google reCAPTCHA page</u></a> and register your website.';
 
 // Error
 $_['error_warning']                    = 'Warning: Please check the form carefully for errors!';
@@ -227,5 +234,5 @@ $_['error_ftp_port']                   = 'FTP Port required!';
 $_['error_ftp_username']               = 'FTP Username required!';
 $_['error_ftp_password']               = 'FTP Password required!';
 $_['error_error_filename']             = 'Error Log Filename required!';
-$_['error_malformed_filename']	        = 'Error Malformed Log Filename!';
-$_['error_encryption']                 = 'Encryption Key must be between 3 and 32 characters!';
+$_['error_malformed_filename']	       = 'Error Malformed Log Filename!';
+$_['error_encryption']                 = 'Encryption Key must be between 32 and 1024 characters!';

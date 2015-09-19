@@ -53,13 +53,13 @@ class ControllerCheckoutLogin extends Controller {
 
 		if (!$json) {
 			$this->load->model('account/customer');
-			
+
 			// Check how many login attempts have been made.
 			$login_info = $this->model_account_customer->getLoginAttempts($this->request->post['email']);
-					
+
 			if ($login_info && ($login_info['total'] >= $this->config->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
 				$json['error']['warning'] = $this->language->get('error_attempts');
-			}			
+			}
 
 			// Check if customer has been approved.
 			$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
@@ -67,44 +67,24 @@ class ControllerCheckoutLogin extends Controller {
 			if ($customer_info && !$customer_info['approved']) {
 				$json['error']['warning'] = $this->language->get('error_approved');
 			}
-						
+
 			if (!isset($json['error'])) {
 				if (!$this->customer->login($this->request->post['email'], $this->request->post['password'])) {
 					$json['error']['warning'] = $this->language->get('error_login');
-				
+
 					$this->model_account_customer->addLoginAttempt($this->request->post['email']);
 				} else {
 					$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
-				}			
+				}
 			}
 		}
 
 		if (!$json) {
 			// Trigger customer pre login event
 			$this->event->trigger('pre.customer.login');
-			
+
 			// Unset guest
 			unset($this->session->data['guest']);
-			
-			// Restore customers cart
-			if ($this->customer->getCart()) {
-				foreach ($this->customer->getCart() as $key => $value) {
-					$this->cart->add($key, $value);
-				}
-			}
-			
-			// Restore customers wish list
-			if ($this->customer->getWishlist()) {
-				if (!isset($this->session->data['wishlist'])) {
-					$this->session->data['wishlist'] = array();
-				}				
-				
-				foreach ($this->customer->getWishlist() as $product_id) {
-					if (!in_array($product_id, $this->session->data['wishlist'])) {
-						$this->session->data['wishlist'][] = $product_id;
-					}
-				}
-			}
 			
 			// Default Shipping Address
 			$this->load->model('account/address');
@@ -126,10 +106,10 @@ class ControllerCheckoutLogin extends Controller {
 			);
 
 			$this->model_account_activity->addActivity('login', $activity_data);
-			
+
 			// Trigger customer post login event
 			$this->event->trigger('post.customer.login');
-			
+
 			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
 		}
 

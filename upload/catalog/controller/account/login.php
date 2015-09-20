@@ -37,11 +37,6 @@ class ControllerAccountLogin extends Controller {
 					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 				}
 
-				if (isset($this->session->data['wishlist'])) {
-					foreach ($this->session->data['wishlist'] as $product_id) {
-						$this->account_wishlist->addWishlist($product_id);
-					}
-				}
 
 				$this->response->redirect($this->url->link('account/account', '', 'SSL'));
 			}
@@ -71,6 +66,17 @@ class ControllerAccountLogin extends Controller {
 
 			if ($this->config->get('config_tax_customer') == 'shipping') {
 				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+			}
+
+			// Wishlist
+			if (isset($this->session->data['wishlist']) && is_array($this->session->data['wishlist'])) {
+				$this->load->model('account/wishlist');
+
+				foreach ($this->session->data['wishlist'] as $key => $product_id) {
+					$this->model_account_wishlist->addWishlist($product_id);
+
+					unset($this->session->data['wishlist'][$key]);
+				}
 			}
 
 			// Add to activity log

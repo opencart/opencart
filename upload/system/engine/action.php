@@ -6,7 +6,7 @@ class Action {
 	private $args = array();
 
 	public function __construct($route, $args = array()) {
-		$parts = explode('.', str_replace('../', '', (string)$route));
+		$parts = explode('/', str_replace('../', '', (string)$route));
 
 		// Break apart the route
 		while ($parts) {

@@ -173,7 +173,7 @@ class ModelTotalCoupon extends Model {
 					$discount_total = $total;
 				}
 
-				if ($discount_total) {
+				if ($discount_total > 0) {
 					$total_data[] = array(
 						'code'       => 'coupon',
 						'title'      => sprintf($this->language->get('text_coupon'), $this->session->data['coupon']),

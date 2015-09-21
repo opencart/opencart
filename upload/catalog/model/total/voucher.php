@@ -85,14 +85,20 @@ class ModelTotalVoucher extends Model {
 					$amount = $voucher_info['amount'];
 				}
 
-				$total_data[] = array(
-					'code'       => 'voucher',
-					'title'      => sprintf($this->language->get('text_voucher'), $this->session->data['voucher']),
-					'value'      => -$amount,
-					'sort_order' => $this->config->get('voucher_sort_order')
-				);
+				if ($amount > 0) {
+					$total_data[] = array(
+						'code'       => 'voucher',
+						'title'      => sprintf($this->language->get('text_voucher'), $this->session->data['voucher']),
+						'value'      => -$amount,
+						'sort_order' => $this->config->get('voucher_sort_order')
+					);
 
-				$total -= $amount;
+					$total -= $amount;
+				} else {
+					unset($this->session->data['voucher']);
+				}
+			} else {
+				unset($this->session->data['voucher']);
 			}
 		}
 	}

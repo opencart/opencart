@@ -69,8 +69,6 @@ These instructions are for a manual installation using FTP, cPanel or other web 
 
 6. After successful install, delete the /install/ directory.
 
-
-
 - Local Install -
 
 There are many all-in-one web servers out there and most of them should work with OpenCart out of the box. Some examples...
@@ -79,3 +77,11 @@ http://www.apachefriends.org/en/xampp.html
 http://www.ampps.com/
 http://www.usbwebserver.net
 http://www.wampserver.com/en/
+
+ - Notes -
+
+Godaddy Issues
+
+If your hosting on godaddy you might need to rename the php.ini to user.ini
+
+It seems godadddy has started changing the industry standard names of files.

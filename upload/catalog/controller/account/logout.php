@@ -5,7 +5,6 @@ class ControllerAccountLogout extends Controller {
 			$this->event->trigger('pre.customer.logout');
 
 			$this->customer->logout();
-			$this->cart->clear();
 
 			unset($this->session->data['shipping_address']);
 			unset($this->session->data['shipping_method']);

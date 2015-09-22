@@ -9,16 +9,16 @@ class Session {
 			ini_set('session.use_trans_sid', 'Off');
 			ini_set('session.cookie_httponly', 'On');
 
+			if (isset($_COOKIE[session_name()]) && !preg_match('/^[a-zA-Z0-9,\-]{22,40}$/', $_COOKIE[session_name()])) {
+				exit();
+			}
+
 			if ($session_id) {
 				session_id($session_id);
 			}
 
 			session_set_cookie_params(0, '/');
 			session_start();
-		}
-
-		if (!preg_match('/^[0-9a-z]*$/i', session_id())) {
-			exit();
 		}
 
 		if (!isset($_SESSION[$key])) {
@@ -30,6 +30,10 @@ class Session {
 
 	public function getId() {
 		return session_id();
+	}
+
+	public function start() {
+		return session_start();
 	}
 
 	public function destroy() {

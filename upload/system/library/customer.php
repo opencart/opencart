@@ -125,14 +125,6 @@ class Customer {
 		return $this->address_id;
 	}
 
-	public function getCart() {
-		return $this->cart;
-	}
-
-	public function getWishlist() {
-		return $this->wishlist;
-	}
-
 	public function getBalance() {
 		$query = $this->db->query("SELECT SUM(amount) AS total FROM " . DB_PREFIX . "customer_transaction WHERE customer_id = '" . (int)$this->customer_id . "'");
 

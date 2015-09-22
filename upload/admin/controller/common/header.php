@@ -16,6 +16,7 @@ class ControllerCommonHeader extends Controller {
 		$data['scripts'] = $this->document->getScripts();
 		$data['lang'] = $this->language->get('code');
 		$data['direction'] = $this->language->get('direction');
+		$data['locale_js'] = $this->config->get('config_locale_js');
 
 		$this->load->language('common/header');
 

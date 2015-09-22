@@ -162,9 +162,9 @@ class ControllerAccountWishList extends Controller {
 					$this->session->data['wishlist'] = array();
 				}
 
-				if (!in_array($this->request->post['product_id'], $this->session->data['wishlist'])) {
-					$this->session->data['wishlist'][] = $this->request->post['product_id'];
-				}
+				$this->session->data['wishlist'][] = $this->request->post['product_id'];
+
+				$this->session->data['wishlist'] = array_unique($this->session->data['wishlist']);
 
 				$json['success'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', '', 'SSL'), $this->url->link('account/register', '', 'SSL'), $this->url->link('product/product', 'product_id=' . (int)$this->request->post['product_id']), $product_info['name'], $this->url->link('account/wishlist'));
 

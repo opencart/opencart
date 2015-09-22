@@ -26,7 +26,11 @@
 <?php foreach ($styles as $style) { ?>
 <link href="<?php echo $style['href']; ?>" type="text/css" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
 <?php } ?>
-<script src="catalog/view/javascript/common-<?php echo $lang; ?>.js" type="text/javascript"></script>
+<?php if ($locale_js) { ?>
+<script src="catalog/view/javascript/locale/common-<?php echo $lang; ?>.js" type="text/javascript"></script>
+<?php } else { ?>
+<script src="catalog/view/javascript/common.js" type="text/javascript"></script>
+<?php } ?>
 <?php foreach ($links as $link) { ?>
 <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
 <?php } ?>

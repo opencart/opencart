@@ -466,11 +466,15 @@ class ControllerPaymentPPExpress extends Controller {
 
 			foreach ($product['option'] as $option) {
 				if ($option['type'] != 'file') {
-					$value = $option['option_value'];
+					$value = $option['value'];
 				} else {
-					$filename = $this->encryption->decrypt($option['option_value']);
+					$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
 
-					$value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
+					if ($upload_info) {
+						$value = $upload_info['name'];
+					} else {
+						$value = '';
+					}
 				}
 
 				$option_data[] = array(

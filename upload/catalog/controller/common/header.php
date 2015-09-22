@@ -33,6 +33,7 @@ class ControllerCommonHeader extends Controller {
 		$data['styles'] = $this->document->getStyles();
 		$data['scripts'] = $this->document->getScripts();
 		$data['lang'] = $this->language->get('code');
+		$data['locale_js'] = $this->config->get('config_locale_js');
 		$data['direction'] = $this->language->get('direction');
 
 		$data['name'] = $this->config->get('config_name');

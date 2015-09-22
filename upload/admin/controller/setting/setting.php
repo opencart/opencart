@@ -72,6 +72,7 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_zone'] = $this->language->get('entry_zone');
 		$data['entry_language'] = $this->language->get('entry_language');
 		$data['entry_admin_language'] = $this->language->get('entry_admin_language');
+		$data['entry_locale_js'] = $this->language->get('entry_locale_js');
 		$data['entry_currency'] = $this->language->get('entry_currency');
 		$data['entry_currency_auto'] = $this->language->get('entry_currency_auto');
 		$data['entry_length_class'] = $this->language->get('entry_length_class');
@@ -628,6 +629,12 @@ class ControllerSettingSetting extends Controller {
 			$data['config_admin_language'] = $this->request->post['config_admin_language'];
 		} else {
 			$data['config_admin_language'] = $this->config->get('config_admin_language');
+		}
+
+		if (isset($this->request->post['config_locale_js'])) {
+			$data['config_locale_js'] = $this->request->post['config_locale_js'];
+		} else {
+			$data['config_locale_js'] = $this->config->get('config_locale_js');
 		}
 
 		if (isset($this->request->post['config_currency'])) {

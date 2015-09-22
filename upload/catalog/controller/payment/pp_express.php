@@ -441,6 +441,8 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$data['action'] = $this->url->link('payment/pp_express/expressConfirm', '', 'SSL');
 
+		$this->load->model('tool/upload');
+
 		$products = $this->cart->getProducts();
 
 		foreach ($products as $product) {

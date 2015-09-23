@@ -23,6 +23,7 @@ class ControllerFeedGoogleBase extends Controller {
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_import'] = $this->language->get('text_import');
+		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['entry_google_category'] = $this->language->get('entry_google_category');
 		$data['entry_category'] = $this->language->get('entry_category');

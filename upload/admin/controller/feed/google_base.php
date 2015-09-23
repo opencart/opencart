@@ -241,14 +241,8 @@ class ControllerFeedGoogleBase extends Controller {
 		if (isset($this->request->get['filter_name'])) {
 			$this->load->model('feed/google_base');
 
-			if (isset($this->request->get['filter_name'])) {
-				$filter_name = $this->request->get['filter_name'];
-			} else {
-				$filter_name = '';
-			}
-
 			$filter_data = array(
-				'filter_name' => html_entity_decode($filter_name, ENT_QUOTES, 'UTF-8'),
+				'filter_name' => html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'),
 				'start'       => 0,
 				'limit'       => 5
 			);

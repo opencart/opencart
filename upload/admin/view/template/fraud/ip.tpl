@@ -68,7 +68,7 @@
                   <div class="col-sm-10">
                     <div class="input-group">
                       <input type="text" value="" id="input-ip" placeholder="<?php echo $entry_ip; ?>" class="form-control" />
-                      <span class="input-group-btn"><button type="button" id="button-ip-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_add_ip; ?></button></span>
+                      <span class="input-group-btn"><button type="button" id="button-ip-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_ip_add; ?></button></span>
                     </div>
                   </div>
                 </div>

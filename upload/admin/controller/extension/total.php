@@ -129,10 +129,10 @@ class ControllerExtensionTotal extends Controller {
 					'name'       => $this->language->get('heading_title'),
 					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'install'   => $this->url->link('extension/total/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
-					'uninstall' => $this->url->link('extension/total/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
-					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('total/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL')
+					'install'    => $this->url->link('extension/total/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
+					'uninstall'  => $this->url->link('extension/total/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
+					'installed'  => in_array($extension, $extensions),
+					'edit'       => $this->url->link('total/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL')
 				);
 			}
 		}

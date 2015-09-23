@@ -3,8 +3,8 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button class="btn btn-primary" data-toggle="tooltip" form="form-google-base" title="<?php echo $button_save; ?>" type="submit"><i class="fa fa-save"></i></button>
-        <a class="btn btn-default" data-toggle="tooltip" href="<?php echo $cancel; ?>" title="<?php echo $button_cancel; ?>"><i class="fa fa-reply"></i></a></div>
+        <button type="submit" form="form-ip" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -24,65 +24,64 @@
         <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_edit; ?></h3>
       </div>
       <div class="panel-body">
-      <form action="<?php echo $action; ?>" class="form-horizontal" enctype="multipart/form-data" id="form-google-base" method="post">
-        <ul class="nav nav-tabs">
-          <li class="active"><a data-toggle="tab" href="#tab-general"><?php echo $tab_general; ?></a></li>
-          <li><a data-toggle="tab" href="#tab-ip"><?php echo $tab_ip; ?></a></li>
-        </ul>
-        <div class="tab-content">
-          <div class="tab-pane active" id="tab-general">
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-order-status"><span data-toggle="tooltip" title="<?php echo $help_order_status; ?>"><?php echo $entry_order_status; ?></span></label>
-              <div class="col-sm-10">
-                <select class="form-control" id="input-order-status" name="ip_order_status_id">
-                  <?php foreach ($order_statuses as $order_status) { ?>
-                  <?php if ($order_status['order_status_id'] == $ip_order_status_id) { ?>
-                  <option selected="selected" value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-status"> <?php echo $entry_status; ?> </label>
-              <div class="col-sm-10">
-                <select class="form-control" id="input-status" name="ip_status">
-                  <?php if ($ip_status) { ?>
-                  <option selected="selected" value="1"> <?php echo $text_enabled; ?> </option>
-                  <option value="0"> <?php echo $text_disabled; ?> </option>
-                  <?php } else { ?>
-                  <option value="1"> <?php echo $text_enabled; ?> </option>
-                  <option selected="selected" value="0"> <?php echo $text_disabled; ?> </option>
-                  <?php } ?>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="tab-pane" id="tab-ip">
-            <fieldset>
-              <legend> <?php echo $text_ip_add; ?> </legend>
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-ip"> <?php echo $entry_ip; ?> </label>
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-ip" class="form-horizontal">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
+            <li><a href="#tab-ip" data-toggle="tab"><?php echo $tab_ip; ?></a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab-general">
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-order-status"><span data-toggle="tooltip" title="<?php echo $help_order_status; ?>"><?php echo $entry_order_status; ?></span></label>
                 <div class="col-sm-10">
-                  <div class="input-group">
-                    <input  class="form-control" id="input-ip" placeholder="<?php echo $entry_ip; ?>" type="text" value=""/>
-                    <span class="input-group-btn">
-                    <button class="btn btn-primary" data-loading-text="<?php echo $text_loading; ?>" id="button-ip-add" type="button"> <?php echo $button_ip_add; ?> </button>
-                    </span> </div>
+                  <select name="ip_order_status_id" id="input-order-status" class="form-control">
+                    <?php foreach ($order_statuses as $order_status) { ?>
+                    <?php if ($order_status['order_status_id'] == $ip_order_status_id) { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
                 </div>
               </div>
-            </fieldset>
-            <br/>
-            <fieldset>
-              <legend> <?php echo $text_ip_list; ?> </legend>
-              <div id="ip"></div>
-            </fieldset>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+                <div class="col-sm-10">
+                  <select name="ip_status" id="input-status" class="form-control">
+                    <?php if ($ip_status) { ?>
+                    <option value="1" selected="selected"> <?php echo $text_enabled; ?> </option>
+                    <option value="0"> <?php echo $text_disabled; ?> </option>
+                    <?php } else { ?>
+                    <option value="1"> <?php echo $text_enabled; ?> </option>
+                    <option value="0" selected="selected"> <?php echo $text_disabled; ?> </option>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab-ip">
+              <fieldset>
+                <legend><?php echo $text_ip_add; ?></legend>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-ip"><?php echo $entry_ip; ?></label>
+                  <div class="col-sm-10">
+                    <div class="input-group">
+                      <input type="text" value="" id="input-ip" placeholder="<?php echo $entry_ip; ?>" class="form-control" />
+                      <span class="input-group-btn"><button type="button" id="button-ip-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_add_ip; ?></button></span>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+              <br/>
+              <fieldset>
+                <legend><?php echo $text_ip_list; ?></legend>
+                <div id="ip"></div>
+              </fieldset>
+            </div>
           </div>
-        </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
   <script type="text/javascript"><!--
@@ -159,6 +158,5 @@ $('#ip').delegate('button', 'click', function() {
 		}
 	});
 });
-//--></script> 
-</div>
+//--></script></div>
 <?php echo $footer; ?> 

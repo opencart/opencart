@@ -1,5 +1,5 @@
 <div class="table-responsive">
-  <table class="table table-bordered">
+  <table class="table table-bordered table-hover">
     <thead>
       <tr>
         <td class="text-left"><?php echo $column_google_category; ?></td>

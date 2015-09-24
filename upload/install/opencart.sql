@@ -3241,7 +3241,8 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (285, 0, 'config', 'config_mail_smtp_port', '25', 0),
 (286, 0, 'config', 'config_mail_smtp_timeout', '5', 0),
 (287, 0, 'config', 'config_captcha', 'basic_captcha', 0),
-(288, 0, 'config', 'config_captcha_page', '["review","return","contact"]', 1);
+(288, 0, 'config', 'config_captcha_page', '["review","return","contact"]', 1),
+(289, 0, 'config', 'config_login_attempts', '5', 0);
 
 -- --------------------------------------------------------
 

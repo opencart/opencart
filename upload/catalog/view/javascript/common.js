@@ -113,7 +113,7 @@ $(document).ready(function() {
 		$('#grid-view').trigger('click');
 	}
 
-    // Checkout
+	// Checkout
 	$(document).on('keydown', '#collapse-checkout-option input[name=\'email\'], #collapse-checkout-option input[name=\'password\']', function(e) {
 		if (e.keyCode == 13) {
 			$('#collapse-checkout-option #button-login').trigger('click');

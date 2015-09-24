@@ -38,7 +38,7 @@ class ModelOpenbayAmazonOrder extends Model {
 		if ($var == '') {
 			$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `quantity` = GREATEST(`quantity` - '" . (int)$delta . "', 0) WHERE `product_id` = '" . (int)$product_id . "' AND `subtract` = '1'");
 		} else {
-			$this->db->query("UPDATE `" . DB_PREFIX . "product_option_relation` SET `stock` = GREATEST(`stock` - '" . (int)$delta . "', 0) WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($var) . "' AND `subtract` = '1'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "product_option_variant` SET `stock` = GREATEST(`stock` - '" . (int)$delta . "', 0) WHERE `product_id` = '" . (int)$product_id . "' AND `sku` = '" . $this->db->escape($var) . "' AND `subtract` = '1'");
 		}
 	}
 

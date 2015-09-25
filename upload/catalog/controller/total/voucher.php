@@ -21,7 +21,7 @@ class ControllerTotalVoucher extends Controller {
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/total/voucher.tpl')) {
 				return $this->load->view($this->config->get('config_template') . '/template/total/voucher.tpl', $data);
 			} else {
-				return $this->load->view('default/template/total/coupon.tpl', $data);
+				return $this->load->view('default/template/total/voucher.tpl', $data);
 			}
 		}
 	}

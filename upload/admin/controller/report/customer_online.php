@@ -50,7 +50,7 @@ class ControllerReportCustomerOnline extends Controller {
 		);
 
 		$this->load->model('report/customer');
-		$this->load->model('sale/customer');
+		$this->load->model('customer/customer');
 
 		$data['customers'] = array();
 
@@ -66,7 +66,7 @@ class ControllerReportCustomerOnline extends Controller {
 		$results = $this->model_report_customer->getCustomersOnline($filter_data);
 
 		foreach ($results as $result) {
-			$customer_info = $this->model_sale_customer->getCustomer($result['customer_id']);
+			$customer_info = $this->model_customer_customer->getCustomer($result['customer_id']);
 
 			if ($customer_info) {
 				$customer = $customer_info['firstname'] . ' ' . $customer_info['lastname'];
@@ -81,7 +81,7 @@ class ControllerReportCustomerOnline extends Controller {
 				'url'         => $result['url'],
 				'referer'     => $result['referer'],
 				'date_added'  => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
-				'edit'        => $this->url->link('sale/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'], 'SSL')
+				'edit'        => $this->url->link('customer/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'], 'SSL')
 			);
 		}
 

@@ -657,12 +657,6 @@ class ControllerCatalogProduct extends Controller {
 			$data['error_model'] = '';
 		}
 
-		if (isset($this->error['date_available'])) {
-			$data['error_date_available'] = $this->error['date_available'];
-		} else {
-			$data['error_date_available'] = '';
-		}
-
 		if (isset($this->error['keyword'])) {
 			$data['error_keyword'] = $this->error['keyword'];
 		} else {
@@ -1152,9 +1146,9 @@ class ControllerCatalogProduct extends Controller {
 			}
 		}
 
-		$this->load->model('sale/customer_group');
+		$this->load->model('customer/customer_group');
 
-		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
+		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
 		if (isset($this->request->post['product_discount'])) {
 			$product_discounts = $this->request->post['product_discount'];

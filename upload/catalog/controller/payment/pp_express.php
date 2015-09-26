@@ -441,6 +441,8 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$data['action'] = $this->url->link('payment/pp_express/expressConfirm', '', 'SSL');
 
+		$this->load->model('tool/upload');
+
 		$products = $this->cart->getProducts();
 
 		foreach ($products as $product) {
@@ -466,11 +468,15 @@ class ControllerPaymentPPExpress extends Controller {
 
 			foreach ($product['option'] as $option) {
 				if ($option['type'] != 'file') {
-					$value = $option['option_value'];
+					$value = $option['value'];
 				} else {
-					$filename = $this->encryption->decrypt($option['option_value']);
+					$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
 
-					$value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
+					if ($upload_info) {
+						$value = $upload_info['name'];
+					} else {
+						$value = '';
+					}
 				}
 
 				$option_data[] = array(
@@ -519,19 +525,19 @@ class ControllerPaymentPPExpress extends Controller {
 			}
 
 			$data['products'][] = array(
-				'key'                 => $product['key'],
-				'thumb'               => $image,
-				'name'                => $product['name'],
-				'model'               => $product['model'],
-				'option'              => $option_data,
-				'quantity'            => $product['quantity'],
-				'stock'               => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
-				'reward'              => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
-				'price'               => $price,
-				'total'               => $total,
-				'href'                => $this->url->link('product/product', 'product_id=' . $product['product_id']),
-				'remove'              => $this->url->link('checkout/cart', 'remove=' . $product['key']),
-				'recurring'           => $product['recurring'],
+				'cart_id'               => $product['cart_id'],
+				'thumb'                 => $image,
+				'name'                  => $product['name'],
+				'model'                 => $product['model'],
+				'option'                => $option_data,
+				'quantity'              => $product['quantity'],
+				'stock'                 => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
+				'reward'                => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
+				'price'                 => $price,
+				'total'                 => $total,
+				'href'                  => $this->url->link('product/product', 'product_id=' . $product['product_id']),
+				'remove'                => $this->url->link('checkout/cart', 'remove=' . $product['cart_id']),
+				'recurring'             => $product['recurring'],
 				'recurring_name'        => (isset($product['recurring']['recurring_name']) ? $product['recurring']['recurring_name'] : ''),
 				'recurring_description' => $recurring_description
 			);
@@ -953,19 +959,13 @@ class ControllerPaymentPPExpress extends Controller {
 				$option_data = array();
 
 				foreach ($product['option'] as $option) {
-					if ($option['type'] != 'file') {
-						$value = $option['option_value'];
-					} else {
-						$value = $this->encryption->decrypt($option['option_value']);
-					}
-
 					$option_data[] = array(
 						'product_option_id'       => $option['product_option_id'],
 						'product_option_value_id' => $option['product_option_value_id'],
 						'option_id'               => $option['option_id'],
 						'option_value_id'         => $option['option_value_id'],
 						'name'                    => $option['name'],
-						'value'                   => $value,
+						'value'                   => $option['value'],
 						'type'                    => $option['type']
 					);
 				}
@@ -992,7 +992,7 @@ class ControllerPaymentPPExpress extends Controller {
 				foreach ($this->session->data['vouchers'] as $voucher) {
 					$voucher_data[] = array(
 						'description'      => $voucher['description'],
-						'code'             => substr(md5(mt_rand()), 0, 10),
+						'code'             => token(10),
 						'to_name'          => $voucher['to_name'],
 						'to_email'         => $voucher['to_email'],
 						'from_name'        => $voucher['from_name'],
@@ -1904,9 +1904,9 @@ class ControllerPaymentPPExpress extends Controller {
 	}
 
 	protected function validateCoupon() {
-		$this->load->model('checkout/coupon');
+		$this->load->model('total/coupon');
 
-		$coupon_info = $this->model_checkout_coupon->getCoupon($this->request->post['coupon']);
+		$coupon_info = $this->model_total_coupon->getCoupon($this->request->post['coupon']);
 
 		$error = '';
 
@@ -1923,9 +1923,9 @@ class ControllerPaymentPPExpress extends Controller {
 	}
 
 	protected function validateVoucher() {
-		$this->load->model('checkout/voucher');
+		$this->load->model('total/coupon');
 
-		$voucher_info = $this->model_checkout_voucher->getVoucher($this->request->post['voucher']);
+		$voucher_info = $this->model_total_voucher->getVoucher($this->request->post['voucher']);
 
 		$error = '';
 

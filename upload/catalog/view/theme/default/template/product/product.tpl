@@ -15,9 +15,7 @@
     <?php } ?>
     <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
       <div class="row">
-        <?php if ($column_left && $column_right) { ?>
-        <?php $class = 'col-sm-6'; ?>
-        <?php } elseif ($column_left || $column_right) { ?>
+        <?php if ($column_left || $column_right) { ?>
         <?php $class = 'col-sm-6'; ?>
         <?php } else { ?>
         <?php $class = 'col-sm-8'; ?>
@@ -101,13 +99,7 @@
                     <input type="radio" name="rating" value="5" />
                     &nbsp;<?php echo $entry_good; ?></div>
                 </div>
-                <?php if ($site_key) { ?>
-                  <div class="form-group">
-                    <div class="col-sm-12">
-                      <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>"></div>
-                    </div>
-                  </div>
-                <?php } ?>
+                <?php echo $captcha; ?>
                 <div class="buttons clearfix">
                   <div class="pull-right">
                     <button type="button" id="button-review" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_continue; ?></button>
@@ -121,9 +113,7 @@
             <?php } ?>
           </div>
         </div>
-        <?php if ($column_left && $column_right) { ?>
-        <?php $class = 'col-sm-6'; ?>
-        <?php } elseif ($column_left || $column_right) { ?>
+        <?php if ($column_left || $column_right) { ?>
         <?php $class = 'col-sm-6'; ?>
         <?php } else { ?>
         <?php $class = 'col-sm-4'; ?>
@@ -482,7 +472,10 @@ $('#button-cart').on('click', function() {
 
 				$('#cart > ul').load('index.php?route=common/cart/info ul li');
 			}
-		}
+		},
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
 	});
 });
 //--></script>
@@ -554,7 +547,7 @@ $('button[id^=\'button-upload\']').on('click', function() {
 //--></script>
 <script type="text/javascript"><!--
 $('#review').delegate('.pagination a', 'click', function(e) {
-  e.preventDefault();
+    e.preventDefault();
 
     $('#review').fadeOut('slow');
 

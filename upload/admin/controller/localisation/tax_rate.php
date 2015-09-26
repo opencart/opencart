@@ -375,9 +375,9 @@ class ControllerLocalisationTaxRate extends Controller {
 			$data['tax_rate_customer_group'] = array($this->config->get('config_customer_group_id'));
 		}
 
-		$this->load->model('sale/customer_group');
+		$this->load->model('customer/customer_group');
 
-		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
+		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
 		if (isset($this->request->post['geo_zone_id'])) {
 			$data['geo_zone_id'] = $this->request->post['geo_zone_id'];

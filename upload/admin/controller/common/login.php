@@ -12,7 +12,7 @@ class ControllerCommonLogin extends Controller {
 		}
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->session->data['token'] = md5(mt_rand());
+			$this->session->data['token'] = token(32);
 
 			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0 || strpos($this->request->post['redirect'], HTTPS_SERVER) === 0 )) {
 				$this->response->redirect($this->request->post['redirect'] . '&token=' . $this->session->data['token']);
@@ -93,7 +93,7 @@ class ControllerCommonLogin extends Controller {
 	}
 
 	protected function validate() {
-		if (!isset($this->request->post['username']) || !isset($this->request->post['password']) || !$this->user->login($this->request->post['username'], $this->request->post['password'])) {
+		if (!isset($this->request->post['username']) || !isset($this->request->post['password']) || !$this->user->login($this->request->post['username'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'))) {
 			$this->error['warning'] = $this->language->get('error_login');
 		}
 

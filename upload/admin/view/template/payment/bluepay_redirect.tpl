@@ -35,7 +35,7 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="entry_secret_key"><?php echo $entry_secret_key; ?></label>
+            <label class="col-sm-2 control-label" for="bluepay_redirect_secret_key"><?php echo $entry_secret_key; ?></label>
             <div class="col-sm-10">
               <input type="text" name="bluepay_redirect_secret_key" value="<?php echo $bluepay_redirect_secret_key; ?>" placeholder="<?php echo $entry_secret_key; ?>" id="bluepay_redirect_secret_key" class="form-control" />
               <?php if ($error_secret_key) { ?>
@@ -159,4 +159,4 @@
     </div>
   </div>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

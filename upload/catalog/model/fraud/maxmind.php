@@ -1,12 +1,10 @@
 <?php
 class ModelFraudMaxMind extends Model {
-	public function check($data) {
+	public function check($order_info) {
 		$risk_score = 0;
 
-		$fraud_info = $this->getFraud($data['order_id']);
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "maxmind` WHERE order_id = '" . (int)$order_info['order_id'] . "'");
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "maxmind` WHERE order_id = '" . (int)$order_id . "'");
-		
 		if ($query->num_rows) {
 			$risk_score = $query->row['risk_score'];
 		} else {
@@ -18,30 +16,30 @@ class ModelFraudMaxMind extends Model {
 			https://cms.paypal.com/us/cgi-bin/?cmd=_render-content&content_ID=developer/e_howto_html_IPNandPDTVariables
 			*/
 
-			$request = 'i=' . urlencode($data['ip']);
-			$request .= '&city=' . urlencode($data['payment_city']);
-			$request .= '&region=' . urlencode($data['payment_zone']);
-			$request .= '&postal=' . urlencode($data['payment_postcode']);
-			$request .= '&country=' . urlencode($data['payment_country']);
-			$request .= '&domain=' . urlencode(utf8_substr(strrchr($data['email'], '@'), 1));
-			$request .= '&custPhone=' . urlencode($data['telephone']);
-			$request .= '&license_key=' . urlencode($this->config->get('config_fraud_key'));
+			$request = 'i=' . urlencode($order_info['ip']);
+			$request .= '&city=' . urlencode($order_info['payment_city']);
+			$request .= '&region=' . urlencode($order_info['payment_zone']);
+			$request .= '&postal=' . urlencode($order_info['payment_postcode']);
+			$request .= '&country=' . urlencode($order_info['payment_country']);
+			$request .= '&domain=' . urlencode(utf8_substr(strrchr($order_info['email'], '@'), 1));
+			$request .= '&custPhone=' . urlencode($order_info['telephone']);
+			$request .= '&license_key=' . urlencode($this->config->get('maxmind_key'));
 
-			if ($data['shipping_method']) {
-				$request .= '&shipAddr=' . urlencode($data['shipping_address_1']);
-				$request .= '&shipCity=' . urlencode($data['shipping_city']);
-				$request .= '&shipRegion=' . urlencode($data['shipping_zone']);
-				$request .= '&shipPostal=' . urlencode($data['shipping_postcode']);
-				$request .= '&shipCountry=' . urlencode($data['shipping_country']);
+			if ($order_info['shipping_method']) {
+				$request .= '&shipAddr=' . urlencode($order_info['shipping_address_1']);
+				$request .= '&shipCity=' . urlencode($order_info['shipping_city']);
+				$request .= '&shipRegion=' . urlencode($order_info['shipping_zone']);
+				$request .= '&shipPostal=' . urlencode($order_info['shipping_postcode']);
+				$request .= '&shipCountry=' . urlencode($order_info['shipping_country']);
 			}
 
-			$request .= '&user_agent=' . urlencode($data['user_agent']);
-			$request .= '&forwardedIP=' . urlencode($data['forwarded_ip']);
-			$request .= '&emailMD5=' . urlencode(md5(utf8_strtolower($data['email'])));
-			//$request .= '&passwordMD5=' . urlencode($data['password']);
-			$request .= '&accept_language=' .  urlencode($data['accept_language']);
-			$request .= '&order_amount=' . urlencode($this->currency->format($data['total'], $data['currency_code'], $data['currency_value'], false));
-			$request .= '&order_currency=' . urlencode($data['currency_code']);
+			$request .= '&user_agent=' . urlencode($order_info['user_agent']);
+			$request .= '&forwardedIP=' . urlencode($order_info['forwarded_ip']);
+			$request .= '&emailMD5=' . urlencode(md5(utf8_strtolower($order_info['email'])));
+			//$request .= '&passwordMD5=' . urlencode($order_info['password']);
+			$request .= '&accept_language=' .  urlencode($order_info['accept_language']);
+			$request .= '&order_amount=' . urlencode($this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false));
+			$request .= '&order_currency=' . urlencode($order_info['currency_code']);
 
 			$curl = curl_init('https://minfraud1.maxmind.com/app/ccv2r');
 
@@ -60,319 +58,313 @@ class ModelFraudMaxMind extends Model {
 			$risk_score = 0;
 
 			if ($response) {
-				$order_id = $data['order_id'];
-				$customer_id = $data['customer_id'];
+				$order_id = $order_info['order_id'];
+				$customer_id = $order_info['customer_id'];
 
-				$data = array();
+				$response_info = array();
 
 				$parts = explode(';', $response);
 
 				foreach ($parts as $part) {
 					list($key, $value) = explode('=', $part);
 
-					$data[$key] = $value;
+					$response_info[$key] = $value;
 				}
 
-				if (isset($data['countryMatch'])) {
-					$country_match = $data['countryMatch'];
+				if (isset($response_info['countryMatch'])) {
+					$country_match = $response_info['countryMatch'];
 				} else {
 					$country_match = '';
 				}
 
-				if (isset($data['countryCode'])) {
-					$country_code = $data['countryCode'];
+				if (isset($response_info['countryCode'])) {
+					$country_code = $response_info['countryCode'];
 				} else {
 					$country_code = '';
 				}
 
-				if (isset($data['highRiskCountry'])) {
-					$high_risk_country = $data['highRiskCountry'];
+				if (isset($response_info['highRiskCountry'])) {
+					$high_risk_country = $response_info['highRiskCountry'];
 				} else {
 					$high_risk_country = '';
 				}
 
-				if (isset($data['distance'])) {
-					$distance = $data['distance'];
+				if (isset($response_info['distance'])) {
+					$distance = $response_info['distance'];
 				} else {
 					$distance = '';
 				}
 
-				if (isset($data['ip_region'])) {
-					$ip_region = $data['ip_region'];
+				if (isset($response_info['ip_region'])) {
+					$ip_region = $response_info['ip_region'];
 				} else {
 					$ip_region = '';
 				}
 
-				if (isset($data['ip_city'])) {
-					$ip_city = $data['ip_city'];
+				if (isset($response_info['ip_city'])) {
+					$ip_city = $response_info['ip_city'];
 				} else {
 					$ip_city = '';
 				}
 
-				if (isset($data['ip_city'])) {
-					$ip_city = $data['ip_city'];
-				} else {
-					$ip_city = '';
-				}
-
-				if (isset($data['ip_latitude'])) {
-					$ip_latitude = $data['ip_latitude'];
+				if (isset($response_info['ip_latitude'])) {
+					$ip_latitude = $response_info['ip_latitude'];
 				} else {
 					$ip_latitude = '';
 				}
 
-				if (isset($data['ip_longitude'])) {
-					$ip_longitude = $data['ip_longitude'];
+				if (isset($response_info['ip_longitude'])) {
+					$ip_longitude = $response_info['ip_longitude'];
 				} else {
 					$ip_longitude = '';
 				}
 
-				if (isset($data['ip_isp'])) {
-					$ip_isp = $data['ip_isp'];
+				if (isset($response_info['ip_isp'])) {
+					$ip_isp = $response_info['ip_isp'];
 				} else {
 					$ip_isp = '';
 				}
 
-				if (isset($data['ip_org'])) {
-					$ip_org = $data['ip_org'];
+				if (isset($response_info['ip_org'])) {
+					$ip_org = $response_info['ip_org'];
 				} else {
 					$ip_org = '';
 				}
 
-				if (isset($data['ip_asnum'])) {
-					$ip_asnum = $data['ip_asnum'];
+				if (isset($response_info['ip_asnum'])) {
+					$ip_asnum = $response_info['ip_asnum'];
 				} else {
 					$ip_asnum = '';
 				}
 
-				if (isset($data['ip_userType'])) {
-					$ip_user_type = $data['ip_userType'];
+				if (isset($response_info['ip_userType'])) {
+					$ip_user_type = $response_info['ip_userType'];
 				} else {
 					$ip_user_type = '';
 				}
 
-				if (isset($data['ip_countryConf'])) {
-					$ip_country_confidence = $data['ip_countryConf'];
+				if (isset($response_info['ip_countryConf'])) {
+					$ip_country_confidence = $response_info['ip_countryConf'];
 				} else {
 					$ip_country_confidence = '';
 				}
 
-				if (isset($data['ip_regionConf'])) {
-					$ip_region_confidence = $data['ip_regionConf'];
+				if (isset($response_info['ip_regionConf'])) {
+					$ip_region_confidence = $response_info['ip_regionConf'];
 				} else {
 					$ip_region_confidence = '';
 				}
 
-				if (isset($data['ip_cityConf'])) {
-					$ip_city_confidence = $data['ip_cityConf'];
+				if (isset($response_info['ip_cityConf'])) {
+					$ip_city_confidence = $response_info['ip_cityConf'];
 				} else {
 					$ip_city_confidence = '';
 				}
 
-				if (isset($data['ip_postalConf'])) {
-					$ip_postal_confidence = $data['ip_postalConf'];
+				if (isset($response_info['ip_postalConf'])) {
+					$ip_postal_confidence = $response_info['ip_postalConf'];
 				} else {
 					$ip_postal_confidence = '';
 				}
 
-				if (isset($data['ip_postalCode'])) {
-					$ip_postal_code = $data['ip_postalCode'];
+				if (isset($response_info['ip_postalCode'])) {
+					$ip_postal_code = $response_info['ip_postalCode'];
 				} else {
 					$ip_postal_code = '';
 				}
 
-				if (isset($data['ip_accuracyRadius'])) {
-					$ip_accuracy_radius = $data['ip_accuracyRadius'];
+				if (isset($response_info['ip_accuracyRadius'])) {
+					$ip_accuracy_radius = $response_info['ip_accuracyRadius'];
 				} else {
 					$ip_accuracy_radius = '';
 				}
 
-				if (isset($data['ip_netSpeedCell'])) {
-					$ip_net_speed_cell = $data['ip_netSpeedCell'];
+				if (isset($response_info['ip_netSpeedCell'])) {
+					$ip_net_speed_cell = $response_info['ip_netSpeedCell'];
 				} else {
 					$ip_net_speed_cell = '';
 				}
 
-				if (isset($data['ip_metroCode'])) {
-					$ip_metro_code = $data['ip_metroCode'];
+				if (isset($response_info['ip_metroCode'])) {
+					$ip_metro_code = $response_info['ip_metroCode'];
 				} else {
 					$ip_metro_code = '';
 				}
-				if (isset($data['ip_areaCode'])) {
-					$ip_area_code = $data['ip_areaCode'];
+				if (isset($response_info['ip_areaCode'])) {
+					$ip_area_code = $response_info['ip_areaCode'];
 				} else {
 					$ip_area_code = '';
 				}
 
-				if (isset($data['ip_timeZone'])) {
-					$ip_time_zone = $data['ip_timeZone'];
+				if (isset($response_info['ip_timeZone'])) {
+					$ip_time_zone = $response_info['ip_timeZone'];
 				} else {
 					$ip_time_zone = '';
 				}
 
-				if (isset($data['ip_regionName'])) {
-					$ip_region_name = $data['ip_regionName'];
+				if (isset($response_info['ip_regionName'])) {
+					$ip_region_name = $response_info['ip_regionName'];
 				} else {
 					$ip_region_name = '';
 				}
 
-				if (isset($data['ip_domain'])) {
-					$ip_domain = $data['ip_domain'];
+				if (isset($response_info['ip_domain'])) {
+					$ip_domain = $response_info['ip_domain'];
 				} else {
 					$ip_domain = '';
 				}
-				if (isset($data['ip_countryName'])) {
-					$ip_country_name = $data['ip_countryName'];
+				if (isset($response_info['ip_countryName'])) {
+					$ip_country_name = $response_info['ip_countryName'];
 				} else {
 					$ip_country_name = '';
 				}
 
-				if (isset($data['ip_continentCode'])) {
-					$ip_continent_code = $data['ip_continentCode'];
+				if (isset($response_info['ip_continentCode'])) {
+					$ip_continent_code = $response_info['ip_continentCode'];
 				} else {
 					$ip_continent_code = '';
 				}
 
-				if (isset($data['ip_corporateProxy'])) {
-					$ip_corporate_proxy = $data['ip_corporateProxy'];
+				if (isset($response_info['ip_corporateProxy'])) {
+					$ip_corporate_proxy = $response_info['ip_corporateProxy'];
 				} else {
 					$ip_corporate_proxy = '';
 				}
 
-				if (isset($data['anonymousProxy'])) {
-					$anonymous_proxy = $data['anonymousProxy'];
+				if (isset($response_info['anonymousProxy'])) {
+					$anonymous_proxy = $response_info['anonymousProxy'];
 				} else {
 					$anonymous_proxy = '';
 				}
 
-				if (isset($data['proxyScore'])) {
-					$proxy_score = $data['proxyScore'];
+				if (isset($response_info['proxyScore'])) {
+					$proxy_score = $response_info['proxyScore'];
 				} else {
 					$proxy_score = '';
 				}
 
-				if (isset($data['isTransProxy'])) {
-					$is_trans_proxy = $data['isTransProxy'];
+				if (isset($response_info['isTransProxy'])) {
+					$is_trans_proxy = $response_info['isTransProxy'];
 				} else {
 					$is_trans_proxy = '';
 				}
 
-				if (isset($data['freeMail'])) {
-					$free_mail = $data['freeMail'];
+				if (isset($response_info['freeMail'])) {
+					$free_mail = $response_info['freeMail'];
 				} else {
 					$free_mail = '';
 				}
 
-				if (isset($data['carderEmail'])) {
-					$carder_email = $data['carderEmail'];
+				if (isset($response_info['carderEmail'])) {
+					$carder_email = $response_info['carderEmail'];
 				} else {
 					$carder_email = '';
 				}
 
-				if (isset($data['highRiskUsername'])) {
-					$high_risk_username = $data['highRiskUsername'];
+				if (isset($response_info['highRiskUsername'])) {
+					$high_risk_username = $response_info['highRiskUsername'];
 				} else {
 					$high_risk_username = '';
 				}
 
-				if (isset($data['highRiskPassword'])) {
-					$high_risk_password = $data['highRiskPassword'];
+				if (isset($response_info['highRiskPassword'])) {
+					$high_risk_password = $response_info['highRiskPassword'];
 				} else {
 					$high_risk_password = '';
 				}
 
-				if (isset($data['binMatch'])) {
-					$bin_match = $data['binMatch'];
+				if (isset($response_info['binMatch'])) {
+					$bin_match = $response_info['binMatch'];
 				} else {
 					$bin_match = '';
 				}
 
-				if (isset($data['binCountry'])) {
-					$bin_country = $data['binCountry'];
+				if (isset($response_info['binCountry'])) {
+					$bin_country = $response_info['binCountry'];
 				} else {
 					$bin_country = '';
 				}
 
-				if (isset($data['binNameMatch'])) {
-					$bin_name_match = $data['binNameMatch'];
+				if (isset($response_info['binNameMatch'])) {
+					$bin_name_match = $response_info['binNameMatch'];
 				} else {
 					$bin_name_match = '';
 				}
 
-				if (isset($data['binName'])) {
-					$bin_name = $data['binName'];
+				if (isset($response_info['binName'])) {
+					$bin_name = $response_info['binName'];
 				} else {
 					$bin_name = '';
 				}
 
-				if (isset($data['binPhoneMatch'])) {
-					$bin_phone_match = $data['binPhoneMatch'];
+				if (isset($response_info['binPhoneMatch'])) {
+					$bin_phone_match = $response_info['binPhoneMatch'];
 				} else {
 					$bin_phone_match = '';
 				}
 
-				if (isset($data['binPhone'])) {
-					$bin_phone = $data['binPhone'];
+				if (isset($response_info['binPhone'])) {
+					$bin_phone = $response_info['binPhone'];
 				} else {
 					$bin_phone = '';
 				}
 
-				if (isset($data['custPhoneInBillingLoc'])) {
-					$customer_phone_in_billing_location = $data['custPhoneInBillingLoc'];
+				if (isset($response_info['custPhoneInBillingLoc'])) {
+					$customer_phone_in_billing_location = $response_info['custPhoneInBillingLoc'];
 				} else {
 					$customer_phone_in_billing_location = '';
 				}
 
-				if (isset($data['shipForward'])) {
-					$ship_forward = $data['shipForward'];
+				if (isset($response_info['shipForward'])) {
+					$ship_forward = $response_info['shipForward'];
 				} else {
 					$ship_forward = '';
 				}
 
-				if (isset($data['cityPostalMatch'])) {
-					$city_postal_match = $data['cityPostalMatch'];
+				if (isset($response_info['cityPostalMatch'])) {
+					$city_postal_match = $response_info['cityPostalMatch'];
 				} else {
 					$city_postal_match = '';
 				}
 
-				if (isset($data['shipCityPostalMatch'])) {
-					$ship_city_postal_match = $data['shipCityPostalMatch'];
+				if (isset($response_info['shipCityPostalMatch'])) {
+					$ship_city_postal_match = $response_info['shipCityPostalMatch'];
 				} else {
 					$ship_city_postal_match = '';
 				}
 
-				if (isset($data['score'])) {
-					$score = $data['score'];
+				if (isset($response_info['score'])) {
+					$score = $response_info['score'];
 				} else {
 					$score = '';
 				}
 
-				if (isset($data['explanation'])) {
-					$explanation = $data['explanation'];
+				if (isset($response_info['explanation'])) {
+					$explanation = $response_info['explanation'];
 				} else {
 					$explanation = '';
 				}
 
-				if (isset($data['riskScore'])) {
-					$risk_score = $data['riskScore'];
+				if (isset($response_info['riskScore'])) {
+					$risk_score = $response_info['riskScore'];
 				} else {
 					$risk_score = '';
 				}
 
-				if (isset($data['queriesRemaining'])) {
-					$queries_remaining = $data['queriesRemaining'];
+				if (isset($response_info['queriesRemaining'])) {
+					$queries_remaining = $response_info['queriesRemaining'];
 				} else {
 					$queries_remaining = '';
 				}
 
-				if (isset($data['maxmindID'])) {
-					$maxmind_id = $data['maxmindID'];
+				if (isset($response_info['maxmindID'])) {
+					$maxmind_id = $response_info['maxmindID'];
 				} else {
 					$maxmind_id = '';
 				}
 
-				if (isset($data['err'])) {
-					$error = $data['err'];
+				if (isset($response_info['err'])) {
+					$error = $response_info['err'];
 				} else {
 					$error = '';
 				}
@@ -383,6 +375,6 @@ class ModelFraudMaxMind extends Model {
 
 		if ($risk_score > $this->config->get('maxmind_score') && $this->config->get('maxmind_key')) {
 			return $this->config->get('maxmind_order_status_id');
-		}		
+		}
 	}
 }

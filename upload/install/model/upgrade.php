@@ -20,7 +20,9 @@ class ModelUpgrade extends Model {
 		// Get only the create statements
 		foreach($lines as $line) {
 			// Set any prefix
-			$line = str_replace("CREATE TABLE IF NOT EXISTS `oc_", "CREATE TABLE IF NOT EXISTS `" . DB_PREFIX, $line);
+			$line = str_replace("DROP TABLE IF EXISTS `oc_", "DROP TABLE IF EXISTS `" . DB_PREFIX, $line);
+
+			$line = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . DB_PREFIX, $line);
 
 			// If line begins with create table we want to start recording
 			if (substr($line, 0, 12) == 'CREATE TABLE') {
@@ -134,7 +136,7 @@ class ModelUpgrade extends Model {
 			}
 		}
 
-		$this->db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+		$this->db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
 
 		// Get all current tables, fields, type, size, etc..
 		$table_old_data = array();
@@ -313,7 +315,7 @@ class ModelUpgrade extends Model {
 			if (!$setting['serialized']) {
 				$settings[$setting['key']] = $setting['value'];
 			} else {
-				$settings[$setting['key']] = unserialize($setting['value']);
+				$settings[$setting['key']] = json_decode($setting['value'], true);
 			}
 		}
 
@@ -347,6 +349,85 @@ class ModelUpgrade extends Model {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "product_option` DROP `value`");
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "product_option` CHANGE `option_value` `value` TEXT");
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "product_option` DROP `option_value`");
+		}
+
+		//  Change any serialized values to json values and restore in the DB
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting`");
+
+		foreach ($query->rows as $result) {
+			if ($result['serialized'] && preg_match('/^(a:)/', $result['value'])) {
+				$value = unserialize($result['value']);
+
+				$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape(json_encode($value)) . "' WHERE `setting_id` = '" . (int)$result['setting_id'] . "'");
+			}
+		}
+
+		// Customer
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer`");
+
+		foreach ($query->rows as $result) {
+			if (preg_match('/^(a:)/', $result['cart'])) {
+				$cart = unserialize($result['cart']);
+
+				$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `cart` = '" . $this->db->escape(json_encode($cart)) . "' WHERE `customer_id` = '" . (int)$result['customer_id'] . "'");
+			}
+
+			if (preg_match('/^(a:)/', $result['wishlist'])) {
+				$wishlist = unserialize($result['wishlist']);
+
+				$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `wishlist` = '" . $this->db->escape(json_encode($wishlist)) . "' WHERE `customer_id` = '" . (int)$result['customer_id'] . "'");
+			}
+
+			if (preg_match('/^(a:)/', $result['custom_field'])) {
+				$custom_field = unserialize($result['custom_field']);
+
+				$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET `custom_field` = '" . $this->db->escape(json_encode($custom_field)) . "' WHERE `customer_id` = '" . (int)$result['customer_id'] . "'");
+			}
+		}
+
+		// Address
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "address`");
+
+		foreach ($query->rows as $result) {
+			if (preg_match('/^(a:)/', $result['custom_field'])) {
+				$custom_field = unserialize($result['custom_field']);
+
+				$this->db->query("UPDATE `" . DB_PREFIX . "address` SET `custom_field` = '" . $this->db->escape(json_encode($custom_field)) . "' WHERE `address_id` = '" . (int)$result['address_id'] . "'");
+			}
+		}
+
+		// Order
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order`");
+
+		foreach ($query->rows as $result) {
+			if (preg_match('/^(a:)/', $result['custom_field'])) {
+				$custom_field = unserialize($result['custom_field']);
+
+				$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `custom_field` = '" . $this->db->escape(json_encode($custom_field)) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
+			}
+
+			if (preg_match('/^(a:)/', $result['payment_custom_field'])) {
+				$custom_field = unserialize($result['payment_custom_field']);
+
+				$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_custom_field` = '" . $this->db->escape(json_encode($custom_field)) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
+			}
+
+			if (preg_match('/^(a:)/', $result['shipping_custom_field'])) {
+				$custom_field = unserialize($result['shipping_custom_field']);
+
+				$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `shipping_custom_field` = '" . $this->db->escape(json_encode($custom_field)) . "' WHERE `order_id` = '" . (int)$result['order_id'] . "'");
+			}
+		}
+
+		// User Group
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user_group`");
+
+		foreach ($query->rows as $result) {
+			if (preg_match('/^(a:)/', $result['permission'])) {
+				$permission = unserialize($result['permission']);
+
+				$this->db->query("UPDATE `" . DB_PREFIX . "user_group` SET `permission` = '" . $this->db->escape(json_encode($permission)) . "' WHERE `user_group_id` = '" . (int)$result['user_group_id'] . "'");
+			}
 		}
 
 		// Sort the categories to take advantage of the nested set model

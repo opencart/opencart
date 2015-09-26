@@ -204,7 +204,7 @@ class ControllerPaymentBluePayHosted extends Controller {
 		$this->model_payment_bluepay_hosted->uninstall();
 	}
 
-	public function action() {
+	public function order() {
 		if ($this->config->get('bluepay_hosted_status')) {
 			$this->load->model('payment/bluepay_hosted');
 
@@ -296,7 +296,7 @@ class ControllerPaymentBluePayHosted extends Controller {
 			$this->model_payment_bluepay_hosted->logger('Release result:\r\n' . print_r($release_response, 1));
 
 			if ($release_response['Result'] == 'APPROVED') {
-				$this->model_payment_bluepay_hosted->addTransaction($bluepay_hosted_order['bluepay_hosted_order_id'], 'sale', $this->request->post['amount']);
+				$this->model_payment_bluepay_hosted->addTransaction($bluepay_hosted_order['bluepay_hosted_order_id'], 'payment', $this->request->post['amount']);
 
 				$total_released = $this->model_payment_bluepay_hosted->getTotalReleased($bluepay_hosted_order['bluepay_hosted_order_id']);
 

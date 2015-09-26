@@ -77,6 +77,6 @@ $_['text_confirm_void'] = 'Are you sure you want to reverse the authorisation?';
 $_['text_confirm_release'] = 'Are you sure you want to release the payment?';
 $_['text_confirm_rebate'] = 'Are you sure you want to rebate the payment?';
 
-$_['btn_release'] = 'Release';
-$_['btn_rebate'] = 'Rebate / refund';
-$_['btn_void'] = 'Reverse Authorisation';
+$_['button_release'] = 'Release';
+$_['button_rebate'] = 'Rebate / refund';
+$_['button_void'] = 'Reverse Authorisation';

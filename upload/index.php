@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '2.0.3.2_rc');
+define('VERSION', '2.1.0.0_rc1');
 
 // Configuration
 if (is_file('config.php')) {
@@ -28,7 +28,7 @@ $config = new Config();
 $registry->set('config', $config);
 
 // Database
-$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
 $registry->set('db', $db);
 
 // Store
@@ -51,7 +51,7 @@ foreach ($query->rows as $result) {
 	if (!$result['serialized']) {
 		$config->set($result['key'], $result['value']);
 	} else {
-		$config->set($result['key'], unserialize($result['value']));
+		$config->set($result['key'], json_decode($result['value'], true));
 	}
 }
 
@@ -68,7 +68,7 @@ $registry->set('url', $url);
 $log = new Log($config->get('config_error_filename'));
 $registry->set('log', $log);
 
-function error_handler($errno, $errstr, $errfile, $errline) {
+function error_handler($code, $message, $file, $line) {
 	global $log, $config;
 
 	// error suppressed with @
@@ -76,7 +76,7 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 		return false;
 	}
 
-	switch ($errno) {
+	switch ($code) {
 		case E_NOTICE:
 		case E_USER_NOTICE:
 			$error = 'Notice';
@@ -95,11 +95,11 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 	}
 
 	if ($config->get('config_error_display')) {
-		echo '<b>' . $error . '</b>: ' . $errstr . ' in <b>' . $errfile . '</b> on line <b>' . $errline . '</b>';
+		echo '<b>' . $error . '</b>: ' . $message . ' in <b>' . $file . '</b> on line <b>' . $line . '</b>';
 	}
 
 	if ($config->get('config_error_log')) {
-		$log->write('PHP ' . $error . ':  ' . $errstr . ' in ' . $errfile . ' on line ' . $errline);
+		$log->write('PHP ' . $error . ':  ' . $message . ' in ' . $file . ' on line ' . $line);
 	}
 
 	return true;
@@ -123,14 +123,23 @@ $cache = new Cache('file');
 $registry->set('cache', $cache);
 
 // Session
-if (isset($request->post['cookie'])) {
-	$cookie = $request->post['cookie'];
-} else {
-	$cookie = null;
-}
+if (isset($request->get['token']) && isset($request->get['route']) && substr($request->get['route'], 0, 4) == 'api/') {
+	$db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE TIMESTAMPADD(HOUR, 1, date_modified) < NOW()");
 
-$session = new Session($cookie);
-$registry->set('session', $session);
+	$query = $db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "api` `a` LEFT JOIN `" . DB_PREFIX . "api_session` `as` ON (a.api_id = as.api_id) LEFT JOIN " . DB_PREFIX . "api_ip `ai` ON (as.api_id = ai.api_id) WHERE a.status = '1' AND as.token = '" . $db->escape($request->get['token']) . "' AND ai.ip = '" . $db->escape($request->server['REMOTE_ADDR']) . "'");
+
+	if ($query->num_rows) {
+		// Does not seem PHP is able to handle sessions as objects properly so so wrote my own class
+		$session = new Session($query->row['session_id'], $query->row['session_name']);
+		$registry->set('session', $session);
+
+		// keep the session alive
+		$db->query("UPDATE `" . DB_PREFIX . "api_session` SET date_modified = NOW() WHERE api_session_id = '" . $query->row['api_session_id'] . "'");
+	}
+} else {
+	$session = new Session();
+	$registry->set('session', $session);
+}
 
 // Language Detection
 $languages = array();
@@ -229,7 +238,7 @@ $registry->set('cart', new Cart($registry));
 // Encryption
 $registry->set('encryption', new Encryption($config->get('config_encryption')));
 
-//OpenBay Pro
+// OpenBay Pro
 $registry->set('openbay', new Openbay($registry));
 
 // Event

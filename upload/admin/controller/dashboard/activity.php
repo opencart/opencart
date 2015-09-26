@@ -16,7 +16,7 @@ class ControllerDashboardActivity extends Controller {
 		$results = $this->model_report_activity->getActivities();
 
 		foreach ($results as $result) {
-			$comment = vsprintf($this->language->get('text_' . $result['key']), unserialize($result['data']));
+			$comment = vsprintf($this->language->get('text_' . $result['key']), json_decode($result['data'], true));
 
 			$find = array(
 				'customer_id=',
@@ -26,7 +26,7 @@ class ControllerDashboardActivity extends Controller {
 			);
 
 			$replace = array(
-				$this->url->link('sale/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=', 'SSL'),
+				$this->url->link('customer/customer/edit', 'token=' . $this->session->data['token'] . '&customer_id=', 'SSL'),
 				$this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=', 'SSL'),
 				$this->url->link('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=', 'SSL'),
 				$this->url->link('sale/return/edit', 'token=' . $this->session->data['token'] . '&return_id=', 'SSL')

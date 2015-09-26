@@ -141,13 +141,13 @@ class ControllerCheckoutGuest extends Controller {
 			} else {
 				$guest_custom_field = array();
 			}
-			
+
 			if (isset($this->session->data['payment_address']['custom_field'])) {
 				$address_custom_field = $this->session->data['payment_address']['custom_field'];
 			} else {
 				$address_custom_field = array();
 			}
-						
+
 			$data['guest_custom_field'] = $guest_custom_field + $address_custom_field;
 		} else {
 			$data['guest_custom_field'] = array();
@@ -159,6 +159,13 @@ class ControllerCheckoutGuest extends Controller {
 			$data['shipping_address'] = $this->session->data['guest']['shipping_address'];
 		} else {
 			$data['shipping_address'] = true;
+		}
+
+		// Captcha
+		if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
+			$data['captcha'] = $this->load->controller('captcha/' . $this->config->get('config_captcha'));
+		} else {
+			$data['captcha'] = '';
 		}
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/guest.tpl')) {
@@ -244,6 +251,15 @@ class ControllerCheckoutGuest extends Controller {
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
 					$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+				}
+			}
+
+			// Captcha
+			if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('register', (array)$this->config->get('config_captcha_page'))) {
+				$captcha = $this->load->controller('captcha/' . $this->config->get('config_captcha') . '/validate');
+
+				if ($captcha) {
+					$json['error']['captcha'] = $captcha;
 				}
 			}
 		}

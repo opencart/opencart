@@ -445,7 +445,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function action() {
+	public function order() {
 		$this->load->model('payment/pp_payflow_iframe');
 		$this->load->language('payment/pp_payflow_iframe');
 

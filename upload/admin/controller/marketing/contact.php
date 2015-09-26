@@ -55,9 +55,9 @@ class ControllerMarketingContact extends Controller {
 
 		$data['stores'] = $this->model_setting_store->getStores();
 
-		$this->load->model('sale/customer_group');
+		$this->load->model('customer/customer_group');
 
-		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
+		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -95,9 +95,9 @@ class ControllerMarketingContact extends Controller {
 					$store_name = $this->config->get('config_name');
 				}
 
-				$this->load->model('sale/customer');
+				$this->load->model('customer/customer');
 
-				$this->load->model('sale/customer_group');
+				$this->load->model('customer/customer_group');
 
 				$this->load->model('marketing/affiliate');
 
@@ -121,9 +121,9 @@ class ControllerMarketingContact extends Controller {
 							'limit'             => 10
 						);
 
-						$email_total = $this->model_sale_customer->getTotalCustomers($customer_data);
+						$email_total = $this->model_customer_customer->getTotalCustomers($customer_data);
 
-						$results = $this->model_sale_customer->getCustomers($customer_data);
+						$results = $this->model_customer_customer->getCustomers($customer_data);
 
 						foreach ($results as $result) {
 							$emails[] = $result['email'];
@@ -135,9 +135,9 @@ class ControllerMarketingContact extends Controller {
 							'limit' => 10
 						);
 
-						$email_total = $this->model_sale_customer->getTotalCustomers($customer_data);
+						$email_total = $this->model_customer_customer->getTotalCustomers($customer_data);
 
-						$results = $this->model_sale_customer->getCustomers($customer_data);
+						$results = $this->model_customer_customer->getCustomers($customer_data);
 
 						foreach ($results as $result) {
 							$emails[] = $result['email'];
@@ -150,9 +150,9 @@ class ControllerMarketingContact extends Controller {
 							'limit'                    => 10
 						);
 
-						$email_total = $this->model_sale_customer->getTotalCustomers($customer_data);
+						$email_total = $this->model_customer_customer->getTotalCustomers($customer_data);
 
-						$results = $this->model_sale_customer->getCustomers($customer_data);
+						$results = $this->model_customer_customer->getCustomers($customer_data);
 
 						foreach ($results as $result) {
 							$emails[$result['customer_id']] = $result['email'];
@@ -161,7 +161,7 @@ class ControllerMarketingContact extends Controller {
 					case 'customer':
 						if (!empty($this->request->post['customer'])) {
 							foreach ($this->request->post['customer'] as $customer_id) {
-								$customer_info = $this->model_sale_customer->getCustomer($customer_id);
+								$customer_info = $this->model_customer_customer->getCustomer($customer_id);
 
 								if ($customer_info) {
 									$emails[] = $customer_info['email'];

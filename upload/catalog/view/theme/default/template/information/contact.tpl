@@ -27,7 +27,7 @@
               <?php echo $address; ?>
               </address>
               <?php if ($geocode) { ?>
-              <a href="https://maps.google.com/maps?q=<?php echo urlencode($geocode); ?>&hl=en&t=m&z=15" target="_blank" class="btn btn-info"><i class="fa fa-map-marker"></i> <?php echo $button_map; ?></a>
+              <a href="https://maps.google.com/maps?q=<?php echo urlencode($geocode); ?>&hl=<?php echo $geocode_hl; ?>&t=m&z=15" target="_blank" class="btn btn-info"><i class="fa fa-map-marker"></i> <?php echo $button_map; ?></a>
               <?php } ?>
             </div>
             <div class="col-sm-3"><strong><?php echo $text_telephone; ?></strong><br>
@@ -71,7 +71,7 @@
                   <?php echo $location['address']; ?>
                   </address>
                   <?php if ($location['geocode']) { ?>
-                  <a href="https://maps.google.com/maps?q=<?php echo urlencode($location['geocode']); ?>&hl=en&t=m&z=15" target="_blank" class="btn btn-info"><i class="fa fa-map-marker"></i> <?php echo $button_map; ?></a>
+                  <a href="https://maps.google.com/maps?q=<?php echo urlencode($location['geocode']); ?>&hl=<?php echo $geocode_hl; ?>&t=m&z=15" target="_blank" class="btn btn-info"><i class="fa fa-map-marker"></i> <?php echo $button_map; ?></a>
                   <?php } ?>
                 </div>
                 <div class="col-sm-3"> <strong><?php echo $text_telephone; ?></strong><br>
@@ -102,7 +102,7 @@
       <?php } ?>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <fieldset>
-          <h3><?php echo $text_contact; ?></h3>
+          <legend><?php echo $text_contact; ?></legend>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
             <div class="col-sm-10">
@@ -130,16 +130,7 @@
               <?php } ?>
             </div>
           </div>
-          <?php if ($site_key) { ?>
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <div class="g-recaptcha" data-sitekey="<?php echo $site_key; ?>"></div>
-                <?php if ($error_captcha) { ?>
-                  <div class="text-danger"><?php echo $error_captcha; ?></div>
-                <?php } ?>
-              </div>
-            </div>
-          <?php } ?>
+          <?php echo $captcha; ?>
         </fieldset>
         <div class="buttons">
           <div class="pull-right">

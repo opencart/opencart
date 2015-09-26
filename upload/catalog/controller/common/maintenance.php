@@ -10,6 +10,16 @@ class ControllerCommonMaintenance extends Controller {
 				if (isset($part[0])) {
 					$route .= $part[0];
 				}
+
+				if (isset($part[1])) {
+					if ($route . '/' . $part[1] == 'common/language') {
+						return new Action('common/language/language');
+					}
+					
+					if ($route . '/' . $part[1] == 'common/currency') {
+						return new Action('common/currency/currency');
+					}
+				}				
 			}
 
 			// Show site if logged in as admin

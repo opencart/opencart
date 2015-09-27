@@ -381,6 +381,26 @@ INSERT INTO `oc_banner_image_description` (`banner_image_id`, `language_id`, `ba
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `oc_cart`
+--
+
+DROP TABLE IF EXISTS `oc_cart`;
+CREATE TABLE `oc_cart` (
+  `cart_id` int(11) NOT NULL AUTO_INCREMENT,
+  `customer_id` int(11) NOT NULL,
+  `session_id` varchar(32) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `recurring_id` int(11) NOT NULL,
+  `option` text NOT NULL,
+  `quantity` int(5) NOT NULL,
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`cart_id`),
+  KEY `cart_id` (`customer_id`,`session_id`,`product_id`,`recurring_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `oc_category`
 --
 
@@ -1255,6 +1275,20 @@ CREATE TABLE `oc_customer_transaction` (
   `amount` decimal(15,4) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_transaction_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_customer_wishlist`
+--
+
+DROP TABLE IF EXISTS `oc_customer_wishlist`;
+CREATE TABLE `oc_customer_wishlist` (
+  `customer_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`customer_id`,`product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
@@ -3207,7 +3241,8 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (285, 0, 'config', 'config_mail_smtp_port', '25', 0),
 (286, 0, 'config', 'config_mail_smtp_timeout', '5', 0),
 (287, 0, 'config', 'config_captcha', 'basic_captcha', 0),
-(288, 0, 'config', 'config_captcha_page', '["review","return","contact"]', 1);
+(288, 0, 'config', 'config_captcha_page', '["review","return","contact"]', 1),
+(289, 0, 'config', 'config_login_attempts', '5', 0);
 
 -- --------------------------------------------------------
 

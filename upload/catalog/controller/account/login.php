@@ -11,7 +11,6 @@ class ControllerAccountLogin extends Controller {
 			$this->cart->clear();
 
 			unset($this->session->data['order_id']);
-			unset($this->session->data['wishlist']);
 			unset($this->session->data['payment_address']);
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
@@ -38,6 +37,7 @@ class ControllerAccountLogin extends Controller {
 					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 				}
 
+
 				$this->response->redirect($this->url->link('account/account', '', 'SSL'));
 			}
 		}
@@ -57,26 +57,6 @@ class ControllerAccountLogin extends Controller {
 			// Unset guest
 			unset($this->session->data['guest']);
 
-			// Restore customers cart
-			if ($this->customer->getCart()) {
-				foreach ($this->customer->getCart() as $key => $value) {
-					$this->cart->add($key, $value);
-				}
-			}
-			
-			// Restore customers wish list
-			if ($this->customer->getWishlist()) {
-				if (!isset($this->session->data['wishlist'])) {
-					$this->session->data['wishlist'] = array();
-				}				
-				
-				foreach ($this->customer->getWishlist() as $product_id) {
-					if (!in_array($product_id, $this->session->data['wishlist'])) {
-						$this->session->data['wishlist'][] = $product_id;
-					}
-				}
-			}
-			
 			// Default Shipping Address
 			$this->load->model('account/address');
 
@@ -87,7 +67,18 @@ class ControllerAccountLogin extends Controller {
 			if ($this->config->get('config_tax_customer') == 'shipping') {
 				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 			}
-			
+
+			// Wishlist
+			if (isset($this->session->data['wishlist']) && is_array($this->session->data['wishlist'])) {
+				$this->load->model('account/wishlist');
+
+				foreach ($this->session->data['wishlist'] as $key => $product_id) {
+					$this->model_account_wishlist->addWishlist($product_id);
+
+					unset($this->session->data['wishlist'][$key]);
+				}
+			}
+
 			// Add to activity log
 			$this->load->model('account/activity');
 
@@ -97,7 +88,7 @@ class ControllerAccountLogin extends Controller {
 			);
 
 			$this->model_account_activity->addActivity('login', $activity_data);
-			
+
 			// Trigger customer post login event
 			$this->event->trigger('post.customer.login');
 

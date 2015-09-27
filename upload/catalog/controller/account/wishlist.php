@@ -9,27 +9,17 @@ class ControllerAccountWishList extends Controller {
 
 		$this->load->language('account/wishlist');
 
+		$this->load->model('account/wishlist');
+
 		$this->load->model('catalog/product');
 
 		$this->load->model('tool/image');
 
-		if (!isset($this->session->data['wishlist'])) {
-			$this->session->data['wishlist'] = array();
-		}
-
 		if (isset($this->request->get['remove'])) {
-			$key = array_search($this->request->get['remove'], $this->session->data['wishlist']);
-
-			if ($key !== false) {
-				unset($this->session->data['wishlist'][$key]);
-			}
+			// Remove Wishlist
+			$this->model_account_wishlist->deleteWishlist($this->request->get['remove']);
 
 			$this->session->data['success'] = $this->language->get('text_remove');
-
-			// Edit customers cart
-			$this->load->model('account/customer');
-			
-			$this->model_account_customer->editWishlist($this->session->data['wishlist']);			
 
 			$this->response->redirect($this->url->link('account/wishlist'));
 		}
@@ -78,8 +68,10 @@ class ControllerAccountWishList extends Controller {
 
 		$data['products'] = array();
 
-		foreach ($this->session->data['wishlist'] as $key => $product_id) {
-			$product_info = $this->model_catalog_product->getProduct($product_id);
+		$results = $this->model_account_wishlist->getWishlist();
+
+		foreach ($results as $result) {
+			$product_info = $this->model_catalog_product->getProduct($result['product_id']);
 
 			if ($product_info) {
 				if ($product_info['image']) {
@@ -120,7 +112,7 @@ class ControllerAccountWishList extends Controller {
 					'remove'     => $this->url->link('account/wishlist', 'remove=' . $product_info['product_id'])
 				);
 			} else {
-				unset($this->session->data['wishlist'][$key]);
+				$this->model_account_wishlist->deleteWishlist($product_id);
 			}
 		}
 
@@ -145,10 +137,6 @@ class ControllerAccountWishList extends Controller {
 
 		$json = array();
 
-		if (!isset($this->session->data['wishlist'])) {
-			$this->session->data['wishlist'] = array();
-		}
-
 		if (isset($this->request->post['product_id'])) {
 			$product_id = $this->request->post['product_id'];
 		} else {
@@ -160,22 +148,28 @@ class ControllerAccountWishList extends Controller {
 		$product_info = $this->model_catalog_product->getProduct($product_id);
 
 		if ($product_info) {
-			if (!in_array($this->request->post['product_id'], $this->session->data['wishlist'])) {
-				$this->session->data['wishlist'][] = (int)$this->request->post['product_id'];
-			}
-					
 			if ($this->customer->isLogged()) {
-				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . (int)$this->request->post['product_id']), $product_info['name'], $this->url->link('account/wishlist'));
-			
 				// Edit customers cart
-				$this->load->model('account/customer');
-				
-				$this->model_account_customer->editWishlist($this->session->data['wishlist']);			
-			} else {
-				$json['success'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', '', 'SSL'), $this->url->link('account/register', '', 'SSL'), $this->url->link('product/product', 'product_id=' . (int)$this->request->post['product_id']), $product_info['name'], $this->url->link('account/wishlist'));
-			}
+				$this->load->model('account/wishlist');
 
-			$json['total'] = sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
+				$this->model_account_wishlist->addWishlist($this->request->post['product_id']);
+
+				$json['success'] = sprintf($this->language->get('text_success'), $this->url->link('product/product', 'product_id=' . (int)$this->request->post['product_id']), $product_info['name'], $this->url->link('account/wishlist'));
+
+				$json['total'] = sprintf($this->language->get('text_wishlist'), $this->model_account_wishlist->getTotalWishlist());
+			} else {
+				if (!isset($this->session->data['wishlist'])) {
+					$this->session->data['wishlist'] = array();
+				}
+
+				$this->session->data['wishlist'][] = $this->request->post['product_id'];
+
+				$this->session->data['wishlist'] = array_unique($this->session->data['wishlist']);
+
+				$json['success'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', '', 'SSL'), $this->url->link('account/register', '', 'SSL'), $this->url->link('product/product', 'product_id=' . (int)$this->request->post['product_id']), $product_info['name'], $this->url->link('account/wishlist'));
+
+				$json['total'] = sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
+			}
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

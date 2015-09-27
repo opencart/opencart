@@ -72,5 +72,5 @@ $_['text_column_date_added']	 = 'Added';
 
 $_['text_confirm_refund']		 = 'Are you sure you want to refund the payment?';
 
-$_['btn_refund']				 = 'Rebate / refund';
+$_['button_refund']				 = 'Rebate / refund';
 

@@ -35,7 +35,7 @@
           </div>
         </div>
         <button type="button" id="button-quote" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary"><?php echo $button_quote; ?></button>
-      </form>
+      </div>
       <script type="text/javascript"><!--
 $('#button-quote').on('click', function() {
 	$.ajax({

@@ -30,7 +30,7 @@ $_['entry_description']      = 'Description';
 $_['entry_meta_title'] 	     = 'Meta Tag Title';
 $_['entry_meta_keyword'] 	 = 'Meta Tag Keywords';
 $_['entry_meta_description'] = 'Meta Tag Description';
-$_['entry_keyword']          = 'SEO Keyword';
+$_['entry_keyword']          = 'SEO URL';
 $_['entry_model']            = 'Model';
 $_['entry_sku']              = 'SKU';
 $_['entry_upc']              = 'UPC';
@@ -81,7 +81,7 @@ $_['entry_layout']           = 'Layout Override';
 $_['entry_recurring']        = 'Recurring Profile';
 
 // Help
-$_['help_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the keyword is globally unique.';
+$_['help_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';
 $_['help_sku']               = 'Stock Keeping Unit';
 $_['help_upc']               = 'Universal Product Code';
 $_['help_ean']               = 'European Article Number';

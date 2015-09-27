@@ -9,27 +9,6 @@ class ControllerCommonHeader extends Controller {
 			$data['base'] = HTTP_SERVER;
 		}
 
-		$file = DIR_APPLICATION . 'view/stylesheet/bootstrap.css';
-
-		if (!is_file($file)) {
-			$scss = new Scssc();
-			$scss->setImportPaths(DIR_APPLICATION . 'view/stylesheet/sass/');
-
-			$output = $scss->compile('@import "_bootstrap.scss"');
-
-			$handle = fopen($file, 'w');
-
-			flock($handle, LOCK_EX);
-
-			fwrite($handle, $output);
-
-			fflush($handle);
-
-			flock($handle, LOCK_UN);
-
-			fclose($handle);
-		}
-
 		$data['description'] = $this->document->getDescription();
 		$data['keywords'] = $this->document->getKeywords();
 		$data['links'] = $this->document->getLinks();
@@ -155,10 +134,5 @@ class ControllerCommonHeader extends Controller {
 		}
 
 		return $this->load->view('common/header.tpl', $data);
-	}
-
-	function compile() {
-
-
 	}
 }

@@ -955,6 +955,8 @@ class ControllerSaleOrder extends Controller {
 
 			$data['shipping_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 
+			// Uploaded files
+			$this->load->model('tool/upload');
 
 			$data['products'] = array();
 
@@ -1060,9 +1062,6 @@ class ControllerSaleOrder extends Controller {
 			$data['order_status_id'] = $order_info['order_status_id'];
 
 			$data['account_custom_field'] = $order_info['custom_field'];
-
-			// Uploaded files
-			$this->load->model('tool/upload');
 
 			// Custom Fields
 			$this->load->model('customer/custom_field');

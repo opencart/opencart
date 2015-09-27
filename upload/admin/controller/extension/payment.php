@@ -15,6 +15,8 @@ class ControllerExtensionPayment extends Controller {
 	public function install() {
 		$this->load->language('extension/payment');
 
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$this->load->model('extension/extension');
 
 		if ($this->validate()) {

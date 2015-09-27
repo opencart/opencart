@@ -441,6 +441,8 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$data['action'] = $this->url->link('payment/pp_express/expressConfirm', '', 'SSL');
 
+		$this->load->model('tool/upload');
+
 		$products = $this->cart->getProducts();
 
 		foreach ($products as $product) {
@@ -466,11 +468,15 @@ class ControllerPaymentPPExpress extends Controller {
 
 			foreach ($product['option'] as $option) {
 				if ($option['type'] != 'file') {
-					$value = $option['option_value'];
+					$value = $option['value'];
 				} else {
-					$filename = $this->encryption->decrypt($option['option_value']);
+					$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
 
-					$value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
+					if ($upload_info) {
+						$value = $upload_info['name'];
+					} else {
+						$value = '';
+					}
 				}
 
 				$option_data[] = array(
@@ -519,19 +525,19 @@ class ControllerPaymentPPExpress extends Controller {
 			}
 
 			$data['products'][] = array(
-				'key'                 => $product['key'],
-				'thumb'               => $image,
-				'name'                => $product['name'],
-				'model'               => $product['model'],
-				'option'              => $option_data,
-				'quantity'            => $product['quantity'],
-				'stock'               => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
-				'reward'              => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
-				'price'               => $price,
-				'total'               => $total,
-				'href'                => $this->url->link('product/product', 'product_id=' . $product['product_id']),
-				'remove'              => $this->url->link('checkout/cart', 'remove=' . $product['key']),
-				'recurring'           => $product['recurring'],
+				'cart_id'               => $product['cart_id'],
+				'thumb'                 => $image,
+				'name'                  => $product['name'],
+				'model'                 => $product['model'],
+				'option'                => $option_data,
+				'quantity'              => $product['quantity'],
+				'stock'                 => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
+				'reward'                => ($product['reward'] ? sprintf($this->language->get('text_points'), $product['reward']) : ''),
+				'price'                 => $price,
+				'total'                 => $total,
+				'href'                  => $this->url->link('product/product', 'product_id=' . $product['product_id']),
+				'remove'                => $this->url->link('checkout/cart', 'remove=' . $product['cart_id']),
+				'recurring'             => $product['recurring'],
 				'recurring_name'        => (isset($product['recurring']['recurring_name']) ? $product['recurring']['recurring_name'] : ''),
 				'recurring_description' => $recurring_description
 			);

@@ -113,6 +113,13 @@ $(document).ready(function() {
 		$('#grid-view').trigger('click');
 	}
 
+	// Checkout
+	$(document).on('keydown', '#collapse-checkout-option input[name=\'email\'], #collapse-checkout-option input[name=\'password\']', function(e) {
+		if (e.keyCode == 13) {
+			$('#collapse-checkout-option #button-login').trigger('click');
+		}
+	});
+
 	// tooltips on hover
 	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 
@@ -144,7 +151,7 @@ var cart = {
 				}
 
 				if (json['success']) {
-					$('#content').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 					// Need to set timeout otherwise it wont update the total
 					setTimeout(function () {
@@ -155,7 +162,10 @@ var cart = {
 
 					$('#cart > ul').load('index.php?route=common/cart/info ul li');
 				}
-			}
+			},
+	        error: function(xhr, ajaxOptions, thrownError) {
+	            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	        }
 		});
 	},
 	'update': function(key, quantity) {
@@ -181,7 +191,10 @@ var cart = {
 				} else {
 					$('#cart > ul').load('index.php?route=common/cart/info ul li');
 				}
-			}
+			},
+	        error: function(xhr, ajaxOptions, thrownError) {
+	            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	        }
 		});
 	},
 	'remove': function(key) {
@@ -207,7 +220,10 @@ var cart = {
 				} else {
 					$('#cart > ul').load('index.php?route=common/cart/info ul li');
 				}
-			}
+			},
+	        error: function(xhr, ajaxOptions, thrownError) {
+	            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	        }
 		});
 	}
 }
@@ -239,7 +255,10 @@ var voucher = {
 				} else {
 					$('#cart > ul').load('index.php?route=common/cart/info ul li');
 				}
-			}
+			},
+	        error: function(xhr, ajaxOptions, thrownError) {
+	            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	        }
 		});
 	}
 }
@@ -254,15 +273,22 @@ var wishlist = {
 			success: function(json) {
 				$('.alert').remove();
 
+				if (json['redirect']) {
+					location = json['redirect'];
+				}
+
 				if (json['success']) {
-					$('#content').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				$('#wishlist-total span').html(json['total']);
 				$('#wishlist-total').attr('title', json['total']);
 
 				$('html, body').animate({ scrollTop: 0 }, 'slow');
-			}
+			},
+	        error: function(xhr, ajaxOptions, thrownError) {
+	            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	        }
 		});
 	},
 	'remove': function() {
@@ -281,13 +307,16 @@ var compare = {
 				$('.alert').remove();
 
 				if (json['success']) {
-					$('#content').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 					$('#compare-total').html(json['total']);
 
 					$('html, body').animate({ scrollTop: 0 }, 'slow');
 				}
-			}
+			},
+	        error: function(xhr, ajaxOptions, thrownError) {
+	            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	        }
 		});
 	},
 	'remove': function() {

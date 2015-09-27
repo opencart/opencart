@@ -927,7 +927,7 @@ class ControllerOpenbayEbay extends Controller {
 			'text' => $this->language->get('heading_title'),
 		);
 
-		$data['return']       = $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel']       = $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL');
 		$data['edit_url']     = $this->url->link('openbay/ebay/edit', 'token=' . $this->session->data['token'] . '&product_id=', 'SSL');
 		$data['validation']   = $this->openbay->ebay->validate();
 		$data['token']        = $this->session->data['token'];

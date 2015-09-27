@@ -481,7 +481,7 @@ class Amazon {
 			$fields[$index]['unordered_index'] = $index;
 		}
 
-		usort($fields, array('Amazon','compareFields'));
+		usort($fields, array('openbay\Amazon','compareFields'));
 
 		return array(
 			'category' => $category,

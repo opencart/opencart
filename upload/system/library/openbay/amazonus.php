@@ -457,7 +457,7 @@ class Amazonus {
 			$fields[$index]['unordered_index'] = $index;
 		}
 
-		usort($fields, array('Amazonus','compareFields'));
+		usort($fields, array('openbay\Amazonus','compareFields'));
 
 		return array(
 			'category' => $category,

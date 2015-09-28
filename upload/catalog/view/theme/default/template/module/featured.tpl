@@ -28,6 +28,11 @@
           <?php if ($product['tax']) { ?>
           <span class="price-tax"><?php echo $text_tax; ?> <?php echo $product['tax']; ?></span>
           <?php } ?>
+          <?php if ($product['discounts']) { ?>
+            <?php foreach ($product['discounts'] as $discount) { ?>
+            <div><?php echo $discount['quantity']; ?><?php echo $text_discount; ?><?php echo $discount['price']; ?></div>
+            <?php } ?>
+          <?php } ?>
         </p>
         <?php } ?>
       </div>

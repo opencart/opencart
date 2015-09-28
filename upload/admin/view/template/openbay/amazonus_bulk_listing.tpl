@@ -15,27 +15,11 @@
     <?php if ($bulk_listing_status) { ?>
     <div class="well">
       <div class="row">
-        <div class="col-sm-12">
-          <div class="form-group">
-            <label class="control-label" for="filter_marketplace"><?php echo $text_marketplace; ?></label>
-            <select id="filter_marketplace" name="filter_marketplace" class="form-control">
-              <?php foreach ($marketplaces as $marketplace) { ?>
-              <?php if ($filter_marketplace == $marketplace['code']) { ?>
-              <option selected="selected" value="<?php echo $marketplace['code'] ?>"><?php echo $marketplace['name'] ?></option>
-              <?php } else { ?>
-              <option value="<?php echo $marketplace['code'] ?>"><?php echo $marketplace['name'] ?></option>
-              <?php } ?>
-              <?php } ?>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12 text-right"> <a class="btn btn-primary" id="button-filter"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></a> <a class="btn btn-primary" id="button-search"><i class="fa fa-search"></i> <?php echo $button_search; ?></a> </div>
+        <div class="col-sm-12 text-right"><a class="btn btn-primary" id="button-search"><i class="fa fa-search"></i> <?php echo $button_search; ?></a> </div>
       </div>
     </div>
     <form id="bulk-list-form" class="form-horizontal">
-      <table class="table">
+      <table class="table table-bordered table-hover">
         <thead>
           <tr>
             <th class="text-center"><input type="checkbox"/></th>
@@ -117,7 +101,7 @@
             <div class="form-group">
               <label for="input-start" class="control-label"><?php echo $entry_start_selling; ?></label>
               <div class="input-group date">
-                <input type="text" class="form-control" id="input-start" data-format="YYYY-MM-DD" placeholder="<?php echo $entry_start_selling; ?>" name="start_selling">
+                <input type="text" class="form-control" id="input-start" data-date-format="YYYY-MM-DD" placeholder="<?php echo $entry_start_selling; ?>" name="start_selling">
                 <span class="input-group-btn">
                 <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
                 </span> </div>
@@ -156,12 +140,6 @@ $(document).ready(function () {
       $('#product-form table thead input[type="checkbox"]').removeAttr('checked');
     }
   });
-});
-
-$('#button-filter').bind('click', function() {
-  url = 'index.php?route=openbay/amazonus/bulkListProducts&token=<?php echo $token ?>';
-  url += '&filter_marketplace=' + $("select[name='filter_marketplace']").val();
-  location = url;
 });
 
 $('#button-list').bind('click', function(e) {
@@ -247,5 +225,5 @@ $('#button-search').bind('click', function(e) {
     $('#bulk-list-form').prepend('<div class="alert alert-danger"><?php echo $error_select_items; ?></div>');
   }
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

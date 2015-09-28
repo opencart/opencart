@@ -3,7 +3,7 @@ class ControllerCatalogOption extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('catalog/option');
+		$this->language->load('catalog/option');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerCatalogOption extends Controller {
 	}
 
 	public function add() {
-		$this->load->language('catalog/option');
+		$this->language->load('catalog/option');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -45,7 +45,7 @@ class ControllerCatalogOption extends Controller {
 	}
 
 	public function edit() {
-		$this->load->language('catalog/option');
+		$this->language->load('catalog/option');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -77,7 +77,7 @@ class ControllerCatalogOption extends Controller {
 	}
 
 	public function delete() {
-		$this->load->language('catalog/option');
+		$this->language->load('catalog/option');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -142,7 +142,7 @@ class ControllerCatalogOption extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-		
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -154,8 +154,8 @@ class ControllerCatalogOption extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('catalog/option', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
-		
-		$data['insert'] = $this->url->link('catalog/option/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+
+		$data['add'] = $this->url->link('catalog/option/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('catalog/option/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['options'] = array();
@@ -181,7 +181,7 @@ class ControllerCatalogOption extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
@@ -190,7 +190,7 @@ class ControllerCatalogOption extends Controller {
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
 		$data['column_action'] = $this->language->get('column_action');
 
-		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 
@@ -261,7 +261,7 @@ class ControllerCatalogOption extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_form'] = !isset($this->request->get['option_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_choose'] = $this->language->get('text_choose');
 		$data['text_select'] = $this->language->get('text_select');
@@ -330,7 +330,7 @@ class ControllerCatalogOption extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('catalog/option', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
-		
+
 		if (!isset($this->request->get['option_id'])) {
 			$data['action'] = $this->url->link('catalog/option/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
@@ -404,7 +404,7 @@ class ControllerCatalogOption extends Controller {
 		}
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -462,7 +462,7 @@ class ControllerCatalogOption extends Controller {
 		$json = array();
 
 		if (isset($this->request->get['filter_name'])) {
-			$this->load->language('catalog/option');
+			$this->language->load('catalog/option');
 
 			$this->load->model('catalog/option');
 

@@ -1,25 +1,29 @@
 <?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
-  <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  <?php } ?>
-  <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="page-header">
+    <div class="container-fluid">
       <div class="pull-right">
-        <a data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-default" onclick="$('#form').submit();"><i class="fa fa-check-circle"></i></a>
+        <a data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary" onclick="$('#form').submit();"><i class="fa fa-check-circle"></i></a>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
       </div>
-      <h1 class="panel-title"><i class="fa fa-file-text fa-lg"></i> <?php echo $heading_title; ?></h1>
+      <h1><?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
-    <div class="panel-body">
-      <form action="<?php echo $btn_save; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
+  </div>
+  <div class="container-fluid">
+    <?php if ($error_warning) { ?>
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+    <?php } ?>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_manage; ?></h3>
+      </div>
+      <div class="panel-body">
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
         <input type="hidden" name="type" value="<?php echo $type; ?>" />
         <input type="hidden" name="ebay_profile_id" value="<?php echo $ebay_profile_id; ?>" />
         <ul class="nav nav-tabs">
@@ -89,6 +93,33 @@
                 <input type="checkbox" name="data[get_it_fast]" value="1" id="get_it_fast" <?php if (isset($data['get_it_fast']) && $data['get_it_fast'] == 1){ echo 'checked="checked"'; } ?> />
               </div>
             </div>
+            <?php if (isset($setting['listing_restrictions']['eligible_for_pickup_dropoff']) && $setting['listing_restrictions']['eligible_for_pickup_dropoff'] == 1) { ?>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $entry_shipping_pickupdropoff; ?></label>
+              <div class="col-sm-10">
+                <input type="hidden" name="data[eligible_for_pickup_dropoff]" value="0" />
+                <input type="checkbox" name="data[eligible_for_pickup_dropoff]" value="1" id="eligible_for_pickup_dropoff" <?php if (isset($data['eligible_for_pickup_dropoff']) && $data['eligible_for_pickup_dropoff'] == 1){ echo 'checked="checked"'; } ?> />
+              </div>
+            </div>
+            <?php } ?>
+            <?php if (isset($setting['listing_restrictions']['eligible_for_pickup_instore']) && $setting['listing_restrictions']['eligible_for_pickup_instore'] == 1) { ?>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $entry_shipping_pickupinstore; ?></label>
+              <div class="col-sm-10">
+                <input type="hidden" name="data[eligible_for_pickup_instore]" value="0" />
+                <input type="checkbox" name="data[eligible_for_pickup_instore]" value="1" id="eligible_for_pickup_instore" <?php if (isset($data['eligible_for_pickup_instore']) && $data['eligible_for_pickup_instore'] == 1){ echo 'checked="checked"'; } ?>/>
+              </div>
+            </div>
+            <?php } ?>
+            <?php if (isset($setting['listing_restrictions']['global_shipping']) && $setting['listing_restrictions']['global_shipping'] == 1) { ?>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $entry_shipping_global_shipping; ?></label>
+              <div class="col-sm-10">
+                <input type="hidden" name="data[global_shipping]" value="0" />
+                <input type="checkbox" name="data[global_shipping]" value="1" id="global_shipping" <?php if (isset($data['global_shipping']) && $data['global_shipping'] == 1){ echo 'checked="checked"'; } ?>/>
+              </div>
+            </div>
+            <?php } ?>
             <?php if ($cod_surcharge == 1) { ?>
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_shipping_cod; ?></label>
@@ -108,6 +139,14 @@
               </div>
             </div>
 
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_shipping_promotion_discount; ?>"><?php echo $entry_shipping_promotion_discount; ?></span></label>
+              <div class="col-sm-10">
+                <input type="hidden" name="data[promotional_shipping_discount]" value="0" />
+                <input type="checkbox" name="data[promotional_shipping_discount]" value="1" id="promotional_shipping_discount" <?php if (isset($data['promotional_shipping_discount']) && $data['promotional_shipping_discount'] == 1){ echo 'checked="checked"'; } ?> />
+              </div>
+            </div>
+
             <div id="national-container-flat" style="display:none;" class="shipping-national-container">
               <div class="form-group">
                 <div class="col-sm-2">
@@ -118,7 +157,7 @@
                   </div>
                   <div class="row">
                     <div class="col-sm-12 text-right">
-                      <p><a class="btn btn-primary" onclick="addShipping('national', 'flat');" id="add-national-flat"><i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?></a></p>
+                      <p><a class="btn btn-primary" onclick="addShipping('national', 'flat');" id="add-national-flat"><i class="fa fa-plus-circle"></i> <?php echo $button_add; ?></a></p>
                     </div>
                   </div>
                 </div>
@@ -130,6 +169,7 @@
               </div>
             </div>
 
+            <?php if ($setting['shipping_types']['calculated'] == 1) { ?>
             <div id="national-container-calculated" style="display:none;" class="shipping-national-container">
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $text_shipping_handling_nat; ?></label>
@@ -146,7 +186,7 @@
                   </div>
                   <div class="row">
                     <div class="col-sm-12 text-right">
-                      <p><a class="btn btn-primary" onclick="addShipping('national', 'calculated');" id="add-national-calculated"><i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?></a></p>
+                      <p><a class="btn btn-primary" onclick="addShipping('national', 'calculated');" id="add-national-calculated"><i class="fa fa-plus-circle"></i> <?php echo $button_add; ?></a></p>
                     </div>
                   </div>
                 </div>
@@ -157,7 +197,9 @@
                 </div>
               </div>
             </div>
+            <?php } ?>
 
+            <?php if ($setting['shipping_types']['freight'] == 1) { ?>
             <div id="national-container-freight" style="display:none;" class="shipping-national-container">
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $text_shipping_in_desc; ?></label>
@@ -167,6 +209,7 @@
                 </div>
               </div>
             </div>
+            <?php } ?>
 
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_shipping_type_int; ?></label>
@@ -175,6 +218,14 @@
                   <?php echo $setting['shipping_types']['flat'] == 1 ? '<option value="flat"'.(isset($data['international']['shipping_type']) && $data['international']['shipping_type'] == 'flat' ? ' selected' : '').'>'.$text_shipping_flat.'</option>' : ''; ?>
                   <?php echo $setting['shipping_types']['calculated'] == 1 ? '<option value="calculated"'.(isset($data['international']['shipping_type']) && $data['international']['shipping_type'] == 'calculated' ? ' selected' : '').'>'.$text_shipping_calculated.'</option>' : ''; ?>
                 </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_shipping_promotion_discount_international; ?>"><?php echo $entry_shipping_promotion_discount_international; ?></span></label>
+              <div class="col-sm-10">
+                <input type="hidden" name="data[promotional_shipping_discount_international]" value="0" />
+                <input type="checkbox" name="data[promotional_shipping_discount_international]" value="1" id="promotional_shipping_discount_international" <?php if (isset($data['promotional_shipping_discount_international']) && $data['promotional_shipping_discount_international'] == 1){ echo 'checked="checked"'; } ?> />
               </div>
             </div>
 
@@ -188,7 +239,7 @@
                   </div>
                   <div class="row">
                     <div class="col-sm-12 text-right">
-                      <p><a class="btn btn-primary" onclick="addShipping('international', 'flat');" id="add-international-flat"><i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?></a></p>
+                      <p><a class="btn btn-primary" onclick="addShipping('international', 'flat');" id="add-international-flat"><i class="fa fa-plus-circle"></i> <?php echo $button_add; ?></a></p>
                     </div>
                   </div>
                 </div>
@@ -202,38 +253,41 @@
               </div>
             </div>
 
-            <div id="international-container-calculated" style="display:none;" class="shipping-international-container">
-              <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $text_shipping_handling_nat; ?></label>
-                <div class="col-sm-10">
-                  <input type="text" name="data[international][calculated][handling_fee]" id="national-handling-fee" class="form-control" value="<?php echo $data['international']['calculated']['handling_fee']; ?>" />
+            <?php if ($setting['shipping_types']['calculated'] == 1) { ?>
+              <div id="international-container-calculated" style="display:none;" class="shipping-international-container">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><?php echo $text_shipping_handling_nat; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="data[international][calculated][handling_fee]" id="international-handling-fee" class="form-control" value="<?php echo $data['international']['calculated']['handling_fee']; ?>" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-2">
+                    <div class="row">
+                      <div class="col-sm-12 text-right">
+                        <p><label class="control-label text-right"><?php echo $text_shipping_intnat; ?></label></p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12 text-right">
+                        <p><a class="btn btn-primary" onclick="addShipping('international', 'calculated');" id="add-international-calculated"><i class="fa fa-plus-circle"></i> <?php echo $button_add; ?></a></p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-10">
+                    <div class="row">
+                      <div class="col-sm-12" id="options-international-calculated">
+                        <?php echo $html_international_calculated; ?>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="form-group">
-                <div class="col-sm-2">
-                  <div class="row">
-                    <div class="col-sm-12 text-right">
-                      <p><label class="control-label text-right"><?php echo $text_shipping_intnat; ?></label></p>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-12 text-right">
-                      <p><a class="btn btn-primary" onclick="addShipping('international', 'calculated');" id="add-international-calculated"><i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?></a></p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-10">
-                  <div class="row">
-                    <div class="col-sm-12" id="options-international-calculated">
-                      <?php echo $html_international_calculated; ?>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <?php } ?>
           </div>
         </div>
       </form>
+      </div>
     </div>
   </div>
 </div>
@@ -338,10 +392,10 @@
         html += '</div>';
 
         $('#options-' + id + '-' + type).append(html);
-        $('#add-' + id + '-' + type).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?>').removeAttr('disabled');
+        $('#add-' + id + '-' + type).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $button_add; ?>').removeAttr('disabled');
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        $('#add-shipping-'+id).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?>').removeAttr('disabled');
+        $('#add-shipping-'+id).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $button_add; ?>').removeAttr('disabled');
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });

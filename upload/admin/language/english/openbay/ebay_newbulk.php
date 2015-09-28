@@ -1,6 +1,6 @@
 <?php
 //Heading
-$_['text_page_title']               = 'Bulk listing';
+$_['heading_title']               	= 'New listings';
 $_['text_ebay']               		= 'eBay';
 $_['text_openbay']               	= 'Openbay Pro';
 
@@ -15,6 +15,7 @@ $_['text_catalog']                  = 'Select catalog';
 $_['text_catalog_search']           = 'Search catalog';
 $_['text_search_term']           	= 'Search term';
 $_['text_close']           			= 'Close';
+$_['text_bulk']           			= 'Create new listings in bulk';
 
 //Form options / text
 $_['text_pixels']                   = 'Pixels';
@@ -57,6 +58,11 @@ $_['text_loading_duration']         = 'Loading listing durations';
 $_['text_total_fee']         		= 'Total fees';
 $_['text_category_choose']         	= 'Find category';
 $_['text_suggested']         		= 'Suggested categories';
+$_['text_product_identifiers']    	= 'Product identifiers';
+$_['text_ean']    					= 'EAN';
+$_['text_upc']    					= 'UPC';
+$_['text_isbn']    					= 'ISBN';
+$_['text_identifier_not_required']  = 'Not required';
 
 //Errors
 $_['text_error_ship_profile']       = 'You need to have a default shipping profile set up';

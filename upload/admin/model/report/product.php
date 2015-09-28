@@ -20,6 +20,12 @@ class ModelReportProduct extends Model {
 		return $query->rows;
 	}
 
+	public function getTotalProductViews() {
+		$query = $this->db->query("SELECT SUM(viewed) AS total FROM " . DB_PREFIX . "product");
+
+		return $query->row['total'];
+	}
+
 	public function getTotalProductsViewed() {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product WHERE viewed > 0");
 
@@ -47,7 +53,7 @@ class ModelReportProduct extends Model {
 			$sql .= " AND DATE(o.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
 		}
 
-		$sql .= " GROUP BY op.model ORDER BY total DESC";
+		$sql .= " GROUP BY op.product_id ORDER BY total DESC";
 
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {
@@ -67,7 +73,7 @@ class ModelReportProduct extends Model {
 	}
 
 	public function getTotalPurchased($data) {
-		$sql = "SELECT COUNT(DISTINCT op.model) AS total FROM `" . DB_PREFIX . "order_product` op LEFT JOIN `" . DB_PREFIX . "order` o ON (op.order_id = o.order_id)";
+		$sql = "SELECT COUNT(DISTINCT op.product_id) AS total FROM `" . DB_PREFIX . "order_product` op LEFT JOIN `" . DB_PREFIX . "order` o ON (op.order_id = o.order_id)";
 
 		if (!empty($data['filter_order_status_id'])) {
 			$sql .= " WHERE o.order_status_id = '" . (int)$data['filter_order_status_id'] . "'";

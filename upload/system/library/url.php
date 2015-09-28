@@ -1,6 +1,7 @@
 <?php
 class Url {
 	private $domain;
+	private $ssl;
 	private $rewrite = array();
 
 	public function __construct($domain, $ssl = '') {
@@ -22,7 +23,11 @@ class Url {
 		$url .= 'index.php?route=' . $route;
 
 		if ($args) {
-			$url .= str_replace('&', '&amp;', '&' . ltrim($args, '&'));
+			if (is_array($args)) {
+				$url .= '&amp;' . http_build_query($args);
+			} else {
+				$url .= str_replace('&', '&amp;', '&' . ltrim($args, '&'));
+			}
 		}
 
 		foreach ($this->rewrite as $rewrite) {

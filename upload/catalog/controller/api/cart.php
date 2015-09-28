@@ -8,7 +8,26 @@ class ControllerApiCart extends Controller {
 		if (!isset($this->session->data['api_id'])) {
 			$json['error']['warning'] = $this->language->get('error_permission');
 		} else {
-			if (isset($this->request->post['product_id'])) {
+			if (isset($this->request->post['product'])) {
+				$this->cart->clear();
+
+				foreach ($this->request->post['product'] as $product) {
+					if (isset($product['option'])) {
+						$option = $product['option'];
+					} else {
+						$option = array();
+					}
+
+					$this->cart->add($product['product_id'], $product['quantity'], $option);
+				}
+
+				$json['success'] = $this->language->get('text_success');
+
+				unset($this->session->data['shipping_method']);
+				unset($this->session->data['shipping_methods']);
+				unset($this->session->data['payment_method']);
+				unset($this->session->data['payment_methods']);
+			} elseif (isset($this->request->post['product_id'])) {
 				$this->load->model('catalog/product');
 
 				$product_info = $this->model_catalog_product->getProduct($this->request->post['product_id']);
@@ -26,13 +45,11 @@ class ControllerApiCart extends Controller {
 						$option = array();
 					}
 
-					if (!isset($this->request->post['override']) || !$this->request->post['override']) {
-						$product_options = $this->model_catalog_product->getProductOptions($this->request->post['product_id']);
+					$product_options = $this->model_catalog_product->getProductOptions($this->request->post['product_id']);
 
-						foreach ($product_options as $product_option) {
-							if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
-								$json['error']['option'][$product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
-							}
+					foreach ($product_options as $product_option) {
+						if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
+							$json['error']['option'][$product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
 						}
 					}
 
@@ -50,6 +67,13 @@ class ControllerApiCart extends Controller {
 					$json['error']['store'] = $this->language->get('error_store');
 				}
 			}
+		}
+
+		if (isset($this->request->server['HTTP_ORIGIN'])) {
+			$this->response->addHeader('Access-Control-Allow-Origin: ' . $this->request->server['HTTP_ORIGIN']);
+			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+			$this->response->addHeader('Access-Control-Max-Age: 1000');
+			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -73,6 +97,13 @@ class ControllerApiCart extends Controller {
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
 			unset($this->session->data['reward']);
+		}
+
+		if (isset($this->request->server['HTTP_ORIGIN'])) {
+			$this->response->addHeader('Access-Control-Allow-Origin: ' . $this->request->server['HTTP_ORIGIN']);
+			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+			$this->response->addHeader('Access-Control-Max-Age: 1000');
+			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -101,6 +132,13 @@ class ControllerApiCart extends Controller {
 				unset($this->session->data['payment_methods']);
 				unset($this->session->data['reward']);
 			}
+		}
+
+		if (isset($this->request->server['HTTP_ORIGIN'])) {
+			$this->response->addHeader('Access-Control-Allow-Origin: ' . $this->request->server['HTTP_ORIGIN']);
+			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+			$this->response->addHeader('Access-Control-Max-Age: 1000');
+			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -151,7 +189,7 @@ class ControllerApiCart extends Controller {
 				}
 
 				$json['products'][] = array(
-					'key'        => $product['key'],
+					'cart_id'    => $product['cart_id'],
 					'product_id' => $product['product_id'],
 					'name'       => $product['name'],
 					'model'      => $product['model'],
@@ -225,6 +263,13 @@ class ControllerApiCart extends Controller {
 					'text'  => $this->currency->format($total['value'])
 				);
 			}
+		}
+
+		if (isset($this->request->server['HTTP_ORIGIN'])) {
+			$this->response->addHeader('Access-Control-Allow-Origin: ' . $this->request->server['HTTP_ORIGIN']);
+			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+			$this->response->addHeader('Access-Control-Max-Age: 1000');
+			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -76,4 +76,26 @@ class ModelOpenbayEbayProduct extends Model {
 
 		return $response;
 	}
+
+	public function getPartsCompatibilityOptions($category_id) {
+		$response = $this->openbay->ebay->call('partscompatibility/getOptions/', array('category_id' => $category_id));
+
+		return $response;
+	}
+
+	public function getPartsCompatibilityValues($filters) {
+		$response = $this->openbay->ebay->call('partscompatibility/getValues/', $filters);
+
+		return $response;
+	}
+
+	public function getItemRecommendations($filters) {
+		$response = $this->openbay->ebay->call('listingrecommendation/recommendations/', $filters);
+
+		return array(
+			'error' => $this->openbay->ebay->lasterror,
+			'error_message' => $this->openbay->ebay->lastmsg,
+			'data' => $response
+		);
+	}
 }

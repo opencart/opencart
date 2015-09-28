@@ -34,7 +34,7 @@ class Response {
 			$encoding = 'x-gzip';
 		}
 
-		if (!isset($encoding)) {
+		if (!isset($encoding) || ($level < -1 || $level > 9)) {
 			return $data;
 		}
 

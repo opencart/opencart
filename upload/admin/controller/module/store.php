@@ -18,7 +18,7 @@ class ControllerModuleStore extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
@@ -63,13 +63,13 @@ class ControllerModuleStore extends Controller {
 		} else {
 			$data['store_admin'] = $this->config->get('store_admin');
 		}
-		
+
 		if (isset($this->request->post['store_status'])) {
 			$data['store_status'] = $this->request->post['store_status'];
 		} else {
 			$data['store_status'] = $this->config->get('store_status');
 		}
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

@@ -22,7 +22,7 @@ $_['text_refund']					= 'Refund';
 $_['text_refund_issued']			= 'Refund was issued successfully';
 $_['text_redirect']					= 'Redirect';
 $_['text_iframe']					= 'Iframe';
-$_['help_checkout_method']			= "Please use Redirect method if do not have SSL installed or if you do not have Pay with PayPal option disabled on your hosted payment page.";
+$_['help_checkout_method']			= 'Please use Redirect method if do not have SSL installed or if you do not have Pay with PayPal option disabled on your hosted payment page.';
 
 // Column
 $_['column_transaction_id']			= 'Transaction ID';

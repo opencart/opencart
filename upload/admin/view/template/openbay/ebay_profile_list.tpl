@@ -1,44 +1,56 @@
 <?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+  <div class="page-header">
+    <div class="container-fluid">
+      <h1><?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <?php if ($error_warning) { ?>
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
     <?php } ?>
-  </ul>
-  <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <?php if ($success) { ?>
+      <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
+    <?php } ?>
   </div>
-  <?php } ?>
-  <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  <?php } ?>
-  <div class="panel panel-default">
+  <div class="container-fluid">
+    <div class="panel panel-default">
     <div class="panel-heading">
-      <div class="pull-right">
-        <form action="<?php echo $insert; ?>" method="post" id="add-profile-form">
-          <input type="hidden" name="step1" value="1"/>
-          <select name="type">
-            <?php foreach($types as $key => $val){ ?>
-              <option value="<?php echo $key; ?>"><?php echo $val['name']; ?></option>
-            <?php } ?>
-          </select>
-          <a data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn btn-default" onclick="$('#add-profile-form').submit();"><i class="fa fa-plus-circle"></i></a>
-        </form>
-      </div>
-      <h1 class="panel-title"><i class="fa fa-file-text fa-lg"></i> <?php echo $heading_title; ?></h1>
+      <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_list; ?></h3>
     </div>
     <div class="panel-body">
+      <div class="well">
+        <div class="row">
+          <div class="col-sm-12">
+            <form action="<?php echo $add; ?>" method="post" id="add-profile-form" class="form-inline pull-right" role="form">
+              <input type="hidden" name="step1" value="1" />
+              <div class="form-group">
+                <div class="input-group">
+                  <select name="type"class="form-control">
+                    <?php foreach($types as $key => $val){ ?>
+                      <option value="<?php echo $key; ?>"><?php echo $val['name']; ?></option>
+                    <?php } ?>
+                  </select>
+                  <a data-toggle="tooltip" title="<?php echo $button_add; ?>" class="btn btn-primary input-group-addon" onclick="$('#add-profile-form').submit();"><i class="fa fa-plus-circle"></i> <?php echo $button_add; ?></a>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
       <table class="table table-bordered table-hover">
         <thead>
-        <tr>
-          <td class="text-left"><?php echo $text_profile_name; ?></td>
-          <td class="text-left"><?php echo $text_profile_type; ?></td>
-          <td class="text-left"><?php echo $text_profile_desc; ?></td>
-          <td class="text-left"></td>
-        </tr>
+          <tr>
+            <td class="text-left"><?php echo $text_profile_name; ?></td>
+            <td class="text-left"><?php echo $text_profile_type; ?></td>
+            <td class="text-left"><?php echo $text_profile_desc; ?></td>
+            <td class="text-left"></td>
+          </tr>
         </thead>
         <tbody>
         <?php if ($profiles) { ?><?php foreach ($profiles as $profile) { ?>
@@ -60,6 +72,7 @@
       </table>
     </div>
   </div>
+  </div>
 </div>
 <script type="text/javascript"><!--
 $(document).ready(function () {
@@ -73,5 +86,4 @@ $(document).ready(function () {
   });
 });
 //--></script>
-
 <?php echo $footer; ?>

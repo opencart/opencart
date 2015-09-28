@@ -7,12 +7,10 @@ class ControllerAccountLogin extends Controller {
 
 		// Login override for admin users
 		if (!empty($this->request->get['token'])) {
-			$this->event->trigger('pre.customer.login');
-
 			$this->customer->logout();
 			$this->cart->clear();
 
-			unset($this->session->data['wishlist']);
+			unset($this->session->data['order_id']);
 			unset($this->session->data['payment_address']);
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
@@ -20,7 +18,6 @@ class ControllerAccountLogin extends Controller {
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['comment']);
-			unset($this->session->data['order_id']);
 			unset($this->session->data['coupon']);
 			unset($this->session->data['reward']);
 			unset($this->session->data['voucher']);
@@ -40,7 +37,6 @@ class ControllerAccountLogin extends Controller {
 					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 				}
 
-				$this->event->trigger('post.customer.login');
 
 				$this->response->redirect($this->url->link('account/account', '', 'SSL'));
 			}
@@ -55,6 +51,10 @@ class ControllerAccountLogin extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			// Trigger customer pre login event
+			$this->event->trigger('pre.customer.login');
+
+			// Unset guest
 			unset($this->session->data['guest']);
 
 			// Default Shipping Address
@@ -68,6 +68,17 @@ class ControllerAccountLogin extends Controller {
 				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 			}
 
+			// Wishlist
+			if (isset($this->session->data['wishlist']) && is_array($this->session->data['wishlist'])) {
+				$this->load->model('account/wishlist');
+
+				foreach ($this->session->data['wishlist'] as $key => $product_id) {
+					$this->model_account_wishlist->addWishlist($product_id);
+
+					unset($this->session->data['wishlist'][$key]);
+				}
+			}
+
 			// Add to activity log
 			$this->load->model('account/activity');
 
@@ -77,6 +88,9 @@ class ControllerAccountLogin extends Controller {
 			);
 
 			$this->model_account_activity->addActivity('login', $activity_data);
+
+			// Trigger customer post login event
+			$this->event->trigger('post.customer.login');
 
 			// Added strpos check to pass McAfee PCI compliance test (http://forum.opencart.com/viewtopic.php?f=10&t=12043&p=151494#p151295)
 			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], $this->config->get('config_url')) !== false || strpos($this->request->post['redirect'], $this->config->get('config_ssl')) !== false)) {
@@ -174,10 +188,16 @@ class ControllerAccountLogin extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->customer->login($this->request->post['email'], $this->request->post['password'])) {
-			$this->error['warning'] = $this->language->get('error_login');
+		$this->event->trigger('pre.customer.login');
+
+		// Check how many login attempts have been made.
+		$login_info = $this->model_account_customer->getLoginAttempts($this->request->post['email']);
+
+		if ($login_info && ($login_info['total'] >= $this->config->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
+			$this->error['warning'] = $this->language->get('error_attempts');
 		}
 
+		// Check if customer has been approved.
 		$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
 
 		if ($customer_info && !$customer_info['approved']) {
@@ -185,9 +205,15 @@ class ControllerAccountLogin extends Controller {
 		}
 
 		if (!$this->error) {
-			return true;
-		} else {
-			return false;
+			if (!$this->customer->login($this->request->post['email'], $this->request->post['password'])) {
+				$this->error['warning'] = $this->language->get('error_login');
+
+				$this->model_account_customer->addLoginAttempt($this->request->post['email']);
+			} else {
+				$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
+			}
 		}
+
+		return !$this->error;
 	}
 }

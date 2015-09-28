@@ -155,7 +155,7 @@ class ControllerLocalisationLanguage extends Controller {
 			'href' => $this->url->link('localisation/language', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$data['insert'] = $this->url->link('localisation/language/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['add'] = $this->url->link('localisation/language/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('localisation/language/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['languages'] = array();
@@ -182,7 +182,7 @@ class ControllerLocalisationLanguage extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
@@ -192,7 +192,7 @@ class ControllerLocalisationLanguage extends Controller {
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
 		$data['column_action'] = $this->language->get('column_action');
 
-		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 
@@ -262,7 +262,7 @@ class ControllerLocalisationLanguage extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_form'] = !isset($this->request->get['language_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -272,7 +272,6 @@ class ControllerLocalisationLanguage extends Controller {
 		$data['entry_locale'] = $this->language->get('entry_locale');
 		$data['entry_image'] = $this->language->get('entry_image');
 		$data['entry_directory'] = $this->language->get('entry_directory');
-		$data['entry_filename'] = $this->language->get('entry_filename');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$data['entry_status'] = $this->language->get('entry_status');
 
@@ -280,7 +279,6 @@ class ControllerLocalisationLanguage extends Controller {
 		$data['help_locale'] = $this->language->get('help_locale');
 		$data['help_image'] = $this->language->get('help_image');
 		$data['help_directory'] = $this->language->get('help_directory');
-		$data['help_filename'] = $this->language->get('help_filename');
 		$data['help_status'] = $this->language->get('help_status');
 
 		$data['button_save'] = $this->language->get('button_save');
@@ -406,20 +404,12 @@ class ControllerLocalisationLanguage extends Controller {
 			$data['directory'] = '';
 		}
 
-		if (isset($this->request->post['filename'])) {
-			$data['filename'] = $this->request->post['filename'];
-		} elseif (!empty($language_info)) {
-			$data['filename'] = $language_info['filename'];
-		} else {
-			$data['filename'] = '';
-		}
-
 		if (isset($this->request->post['sort_order'])) {
 			$data['sort_order'] = $this->request->post['sort_order'];
 		} elseif (!empty($language_info)) {
 			$data['sort_order'] = $language_info['sort_order'];
 		} else {
-			$data['sort_order'] = '';
+			$data['sort_order'] = 1;
 		}
 
 		if (isset($this->request->post['status'])) {
@@ -427,7 +417,7 @@ class ControllerLocalisationLanguage extends Controller {
 		} elseif (!empty($language_info)) {
 			$data['status'] = $language_info['status'];
 		} else {
-			$data['status'] = 1;
+			$data['status'] = true;
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -456,10 +446,6 @@ class ControllerLocalisationLanguage extends Controller {
 
 		if (!$this->request->post['directory']) {
 			$this->error['directory'] = $this->language->get('error_directory');
-		}
-
-		if (!$this->request->post['filename']) {
-			$this->error['filename'] = $this->language->get('error_filename');
 		}
 
 		if ((utf8_strlen($this->request->post['image']) < 3) || (utf8_strlen($this->request->post['image']) > 32)) {

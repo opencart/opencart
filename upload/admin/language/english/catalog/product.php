@@ -30,7 +30,7 @@ $_['entry_description']      = 'Description';
 $_['entry_meta_title'] 	     = 'Meta Tag Title';
 $_['entry_meta_keyword'] 	 = 'Meta Tag Keywords';
 $_['entry_meta_description'] = 'Meta Tag Description';
-$_['entry_keyword']          = 'SEO Keyword';
+$_['entry_keyword']          = 'SEO URL';
 $_['entry_model']            = 'Model';
 $_['entry_sku']              = 'SKU';
 $_['entry_upc']              = 'UPC';
@@ -81,7 +81,7 @@ $_['entry_layout']           = 'Layout Override';
 $_['entry_recurring']        = 'Recurring Profile';
 
 // Help
-$_['help_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the keyword is globally unique.';
+$_['help_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';
 $_['help_sku']               = 'Stock Keeping Unit';
 $_['help_upc']               = 'Universal Product Code';
 $_['help_ean']               = 'European Article Number';
@@ -104,3 +104,4 @@ $_['error_permission']       = 'Warning: You do not have permission to modify pr
 $_['error_name']             = 'Product Name must be greater than 3 and less than 255 characters!';
 $_['error_meta_title']       = 'Meta Title must be greater than 3 and less than 255 characters!';
 $_['error_model']            = 'Product Model must be greater than 1 and less than 64 characters!';
+$_['error_keyword']          = 'SEO keyword already in use!';

@@ -4,7 +4,7 @@
     <div class="container-fluid">
       <div class="pull-right">
         <?php if ($has_listing_errors) { ?>
-        <a href="<?php echo $url_remove_errors; ?>" data-toggle="tooltip" title="<?php echo $button_remove_error; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
+        <a href="<?php echo $url_remove_errors; ?>" data-toggle="tooltip" title="<?php echo $button_remove_error; ?>" class="btn btn-danger"><i class="fa fa-reply"></i></a>
         <?php } ?>
         <a href="<?php echo $cancel_url; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
       <h1><?php echo $text_title_advanced; ?></h1>
@@ -20,7 +20,7 @@
     <div class="alert alert-danger">
       <ul>
         <?php foreach ($errors as $listing_error) { ?>
-        <li><i class="fa fa-exclamation-circle"></i> <?php echo $listing_error ?></li>
+        <li><i class="fa fa-exclamation-circle"></i> <?php echo $listing_error['message']; ?></li>
         <?php } ?>
       </ul>
     </div>
@@ -43,9 +43,14 @@
                 </a>
                 <?php if (!empty($options)) { ?>
                 <select id="openstock_selector" name="optionVar" class="form-control">
-                  <option></option>
+                  <?php $option_selected = false; ?>
                   <?php foreach($options as $option) { ?>
-                  <option <?php if ($variation === $option['var']) { echo "selected='selected'";} ?> value="<?php echo  $option['var']?>"><?php echo $option['combi']?></option>
+                    <?php if (!empty($option['sku'])) { ?>
+                      <option <?php if ($variation == $option['sku']) { echo "selected='selected'"; $option_selected = true; } ?> value="<?php echo  $option['sku']?>"><?php echo $option['combination']?></option>
+                    <?php } ?>
+                  <?php } ?>
+                  <?php if ($option_selected == false) { ?>
+                    <option selected="selected"></option>
                   <?php } ?>
                 </select>
                 <?php }?>
@@ -77,7 +82,7 @@
               </select>
             </div>
           </div>
-          <table class="table">
+          <table class="table table-bordered table-hover">
             <tbody class="fields_advanced">
             </tbody>
           </table>
@@ -137,7 +142,7 @@ $(document).ready(function(){
 });
 
 function redirectOption(varOption, tabOption) {
-    var searchLoc = insertParamToUrl(document.location.search, 'var', varOption);
+    var searchLoc = insertParamToUrl(document.location.search, 'sku', varOption);
     searchLoc = insertParamToUrl(searchLoc, 'tab', tabOption);
     searchLoc = searchLoc.substr(1);
     if (document.location.search === searchLoc) {
@@ -183,7 +188,7 @@ function show_form(xml, formType) {
     var reqUrl = parserURL + '&xml=' + xml;
 
     if ($('#openstock_selector').val() !== undefined) {
-        reqUrl = reqUrl + '&var=' + $('#openstock_selector').val();
+        reqUrl = reqUrl + '&sku=' + $('#openstock_selector').val();
     }
 
     $.ajax({
@@ -475,13 +480,13 @@ function validate(formType) {
   }
 
   $('.marketplace_ids').each(function (i) {
-    if ($(this).attr('checked') == 'checked') {
+    if ($(this).is(':checked')) {
       mChecked++;
     }
   });
 
   if (mChecked == 0) {
-    $('#required_marketplaces').prepend('<div class="alert alert-danger" id="marketplace-alert"><?php echo $error_required ?></div>');
+    $('#marketplaces').prepend('<div class="alert alert-danger" id="marketplace-alert"><?php echo $error_required ?></div>');
     warnings ++;
   } else {
     $('#marketplace-alert').remove();
@@ -511,17 +516,14 @@ function validate(formType) {
 
         if (field_type == 'required' || field_value !== '') {
             if (field_value === '') {
-              alert('1');
-                $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $error_required ?>').show();
-                warnings ++;
+              $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $error_required ?>').show();
+              warnings ++;
             } else if (min_length != undefined && field_value.length < min_length) {
-              alert('2');
-                $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $error_length; ?> ' + min_length + ' <?php echo $text_characters; ?>').show();
-                warnings ++;
+              $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $error_length; ?> ' + min_length + ' <?php echo $text_characters; ?>').show();
+              warnings ++;
             } else if (max_length != undefined && field_value.length > max_length) {
-              alert('3');
-                $('.fields_' + formType + ' #error_' + field_name).text((field_value.length - max_length) + ' <?php echo $error_char_limit; ?>').show();
-                warnings ++;
+              $('.fields_' + formType + ' #error_' + field_name).text((field_value.length - max_length) + ' <?php echo $error_char_limit; ?>').show();
+              warnings ++;
             } else {
                 $('.fields_' + formType + ' #error_' + field_name).text('').hide();
             }
@@ -529,20 +531,19 @@ function validate(formType) {
     });
 
     if (productIdRequired && productIdType !== 'ASIN' && !isValidProductId(productId)) {
-        $('.fields_' + formType + ' :input').each(function (i) {
-            var field_name = $(this).attr('field_name');
-            if (field_name === 'Value') {
-                $('.fields_' + formType + ' #error_' + field_name).text('Not valid product ID!');
-                warnings ++;
-              alert('5');
-                return;
-            }
-        });
+      $('.fields_' + formType + ' :input').each(function (i) {
+        var field_name = $(this).attr('field_name');
+        if (field_name === 'Value') {
+          $('.fields_' + formType + ' #error_' + field_name).text('Not valid product ID!');
+          warnings ++;
+          return;
+        }
+      });
     }
 
     if ($('.fields_' + formType + ' [name="category"]').val() == undefined) {
-        warnings ++;
-    }
+      warnings ++;
+  }
 
     if (warnings > 0) {
         return false;
@@ -552,15 +553,15 @@ function validate(formType) {
 }
 
 function validate_and_save(formType) {
-    if (validate(formType)) {
-        if (formType == 'advanced') {
-            $("#product_form_advanced").submit();
-        } else if (formType == 'quick') {
-            $("#product_form_quick").submit();
-        }
-    } else {
-        alert('<?php echo $error_not_saved; ?>');
+  if (validate(formType)) {
+    if (formType == 'advanced') {
+      $("#product_form_advanced").submit();
+    } else if (formType == 'quick') {
+      $("#product_form_quick").submit();
     }
+  } else {
+    alert('<?php echo $error_not_saved; ?>');
+  }
 }
 
 function save_and_upload() {
@@ -630,7 +631,7 @@ function loadBrowseNode(field) {
         },
         success: function(data) {
             if (data.node.error != true){
-                html += '<div class="row">';
+                html += '<div class="well">';
                   html += '<div class="input-group col-md-12">';
                     html += '<p><select class="form-control" id="root-node" onchange="nodeSelect(\'root-node\', \''+field+'\');">';
                       html += '<option value=""><?php echo $text_select; ?></option>';
@@ -679,7 +680,7 @@ function nodeSelect(field, original_field) {
               html += '</div>';
             html += '</div>';
             if (data.node.final == 0){
-              html += '<div class="row">';
+              html += '<div class="well">';
                 html += '<div class="input-group col-md-12">';
                   html += '<p><select class="form-control" id="'+field+'-'+node+'" onchange="nodeSelect(\''+field+'-'+node+'\', \''+original_field+'\');">';
                     html += '<option value=""><?php echo $text_select; ?></option>';
@@ -716,5 +717,5 @@ function saveNode(id, field, text){
   $('#'+field+'_label').text(text).show();
   $('#browse-node-modal').modal('toggle');
 }
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

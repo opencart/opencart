@@ -1,7 +1,13 @@
 <?php
 class ModelOpenbayEtsyProduct extends Model{
 	public function getStatus($product_id) {
-		return 0;
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "etsy_listing` WHERE `product_id` = '" . (int)$product_id . "' AND `status` = 1 LIMIT 1");
+
+		if ($query->num_rows == 0) {
+			return 0;
+		} else {
+			return 1;
+		}
 	}
 
 	public function totalLinked() {
@@ -58,7 +64,7 @@ class ModelOpenbayEtsyProduct extends Model{
 					'name'          	=> $row['name'],
 					'status'        	=> $row['status'],
 					'etsy_item_id'  	=> $row['etsy_item_id'],
-					'link_edit'     	=> $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $row['product_id'], 'SSL'),
+					'link_edit'     	=> $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $row['product_id'], 'SSL'),
 					'link_etsy'     	=> 'http://www.etsy.com/listing/' . $row['etsy_item_id'],
 				);
 			}

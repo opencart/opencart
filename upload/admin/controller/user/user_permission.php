@@ -155,7 +155,7 @@ class ControllerUserUserPermission extends Controller {
 			'href' => $this->url->link('user/user_permission', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$data['insert'] = $this->url->link('user/user_permission/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['add'] = $this->url->link('user/user_permission/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('user/user_permission/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['user_groups'] = array();
@@ -188,7 +188,7 @@ class ControllerUserUserPermission extends Controller {
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_action'] = $this->language->get('column_action');
 
-		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 
@@ -334,21 +334,52 @@ class ControllerUserUserPermission extends Controller {
 			'common/login',
 			'common/logout',
 			'common/forgotten',
-			'common/reset',
+			'common/reset',			
+			'common/footer',
+			'common/header',
 			'error/not_found',
 			'error/permission',
-			'common/footer',
-			'common/header'
+			'dashboard/order',
+			'dashboard/sale',
+			'dashboard/customer',
+			'dashboard/online',
+			'dashboard/map',
+			'dashboard/activity',
+			'dashboard/chart',
+			'dashboard/recent'
 		);
 
 		$data['permissions'] = array();
 
-		$files = glob(DIR_APPLICATION . 'controller/*/*.php');
+		$files = array();
 
+		// Make path into an array
+		$path = array(DIR_APPLICATION . 'controller/*');
+
+		// While the path array is still populated keep looping through
+		while (count($path) != 0) {
+			$next = array_shift($path);
+
+			foreach (glob($next) as $file) {
+				// If directory add to path array
+				if (is_dir($file)) {
+					$path[] = $file . '/*';
+				}
+
+				// Add the file to the files to be deleted array
+				if (is_file($file)) {
+					$files[] = $file;
+				}
+			}
+		}
+
+		// Sort the file array
+		sort($files);
+					
 		foreach ($files as $file) {
-			$part = explode('/', dirname($file));
+			$controller = substr($file, strlen(DIR_APPLICATION . 'controller/'));
 
-			$permission = end($part) . '/' . basename($file, '.php');
+			$permission = substr($controller, 0, strrpos($controller, '.'));
 
 			if (!in_array($permission, $ignore)) {
 				$data['permissions'][] = $permission;

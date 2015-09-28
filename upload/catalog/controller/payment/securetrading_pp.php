@@ -1,13 +1,11 @@
 <?php
-
 class ControllerPaymentSecureTradingPp extends Controller {
-
 	public function index() {
 		$this->load->model('checkout/order');
 		$this->load->model('localisation/country');
 		$this->load->model('localisation/zone');
 		$this->load->language('payment/securetrading_pp');
-		
+
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		if ($order_info) {
@@ -19,38 +17,38 @@ class ControllerPaymentSecureTradingPp extends Controller {
 			$data['total'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
 			$data['settle_due_date'] = date('Y-m-d', strtotime(date('Y-m-d') . ' +' . $this->config->get('securetrading_pp_settle_due_date') . ' days'));
 			$data['settle_status'] = $this->config->get('securetrading_pp_settle_status');
-		
+
 			$payment_country = $this->model_localisation_country->getCountry($order_info['payment_country_id']);
 			$payment_zone = $this->model_localisation_zone->getZone($order_info['payment_zone_id']);
-			
+
 			$shipping_country = $this->model_localisation_country->getCountry($order_info['shipping_country_id']);
 			$shipping_zone = $this->model_localisation_zone->getZone($order_info['shipping_zone_id']);
-			
+
 			if ($payment_country['iso_code_3'] == 'USA') {
 				$data['billing_county'] = $payment_zone['code'];
 			} else {
 				$data['billing_county'] = $order_info['payment_zone'];
 			}
-			
+
 			if (isset($shipping_country['iso_code_3']) && $shipping_country['iso_code_3'] == 'USA') {
 				$data['shipping_county'] = $shipping_zone['code'];
 			} else {
 				$data['shipping_county'] = $order_info['shipping_zone'];
-			} 
-			
+			}
+
 			if (!isset($shipping_country['iso_code_2'])) {
 				$shipping_country['iso_code_2'] = $payment_country['iso_code_2'];
-			} 
-			
+			}
+
 			$data['payment_country'] = $payment_country;
 			$data['shipping_country'] = $shipping_country;
-			
+
 			if ($this->config->get('securetrading_pp_site_security_status')) {
-				$data['site_security'] = hash('sha256', $order_info['currency_code'] . $data['total'] . $data['site_reference'] . $data['settle_status']. $data['settle_due_date'] . $order_info['order_id'] . $this->config->get('securetrading_pp_site_security_password'));
+				$data['site_security'] = hash('sha256', $order_info['currency_code'] . $data['total'] . $data['site_reference'] . $data['settle_status'] . $data['settle_due_date'] . $order_info['order_id'] . $this->config->get('securetrading_pp_site_security_password'));
 			} else {
 				$data['site_security'] = false;
 			}
-			
+
 			$cards = array(
 				'AMEX' => 'American Express',
 				'VISA' => 'Visa',
@@ -63,15 +61,15 @@ class ControllerPaymentSecureTradingPp extends Controller {
 				'MAESTRO' => 'Maestro',
 				'PAYPAL' => 'PayPal',
 			);
-			
+
 			$data['cards'] = array();
-			
+
 			foreach ($cards as $key => $value) {
 				if (in_array($key, $this->config->get('securetrading_pp_cards_accepted'))) {
 					$data['cards'][$key] = $value;
 				}
 			}
-			
+
 			$data['button_confirm'] = $this->language->get('button_confirm');
 			$data['text_payment_details'] = $this->language->get('text_payment_details');
 			$data['entry_card_type'] = $this->language->get('entry_card_type');
@@ -84,32 +82,32 @@ class ControllerPaymentSecureTradingPp extends Controller {
 		}
 	}
 
-	public function ipn() {	
+	public function ipn() {
 		$this->load->model('checkout/order');
 		$this->load->model('payment/securetrading_pp');
 		$this->load->language('payment/securetrading_pp');
-		
+
 		$keys = array_keys($this->request->post);
 		sort($keys);
-		
+
 		$keys_ignore = array('notificationreference', 'responsesitesecurity');
-		
+
 		$string_to_hash = '';
-		
+
 		foreach ($keys as $key) {
 			if (!in_array($key, $keys_ignore)) {
 				$string_to_hash .= $this->request->post[$key];
 			}
 		}
-		
+
 		$string_to_hash .= $this->config->get('securetrading_pp_notification_password');
-		
+
 		if (hash('sha256', $string_to_hash) == $this->request->post['responsesitesecurity'] && $this->request->post['sitereference'] == $this->config->get('securetrading_pp_site_reference')) {
 			$order_info = $this->model_checkout_order->getOrder($this->request->post['orderreference']);
-			
+
 			if ($order_info) {
 				$order_total = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
-				
+
 				if ($order_total == $this->request->post['mainamount'] && $order_info['currency_code'] == $this->request->post['currencyiso3a'] && $order_info['payment_code'] == 'securetrading_pp') {
 					$status_code_mapping = array(
 						0 => $this->language->get('text_not_given'),
@@ -119,7 +117,7 @@ class ControllerPaymentSecureTradingPp extends Controller {
 					);
 					$shipping_country = $this->model_payment_securetrading_pp->getCountry($this->request->post['customercountryiso2a']);
 					$payment_country = $this->model_payment_securetrading_pp->getCountry($this->request->post['billingcountryiso2a']);
-					
+
 					$order_info['payment_firstname'] = $this->request->post['billingfirstname'];
 					$order_info['payment_lastname'] = $this->request->post['billinglastname'];
 					$order_info['payment_address_1'] = $this->request->post['billingpremise'];
@@ -130,7 +128,7 @@ class ControllerPaymentSecureTradingPp extends Controller {
 					$order_info['payment_country'] = $payment_country['name'];
 					$order_info['payment_country_id'] = $payment_country['country_id'];
 					$order_info['payment_postcode'] = $this->request->post['billingpostcode'];
-					
+
 					$order_info['shipping_firstname'] = $this->request->post['customerfirstname'];
 					$order_info['shipping_lastname'] = $this->request->post['customerlastname'];
 					$order_info['shipping_address_1'] = $this->request->post['customerpremise'];
@@ -141,9 +139,9 @@ class ControllerPaymentSecureTradingPp extends Controller {
 					$order_info['shipping_country'] = $shipping_country['name'];
 					$order_info['shipping_country_id'] = $shipping_country['country_id'];
 					$order_info['shipping_postcode'] = $this->request->post['customerpostcode'];
-					
+
 					$this->model_payment_securetrading_pp->editOrder($order_info['order_id'], $order_info);
-					
+
 					$postcode_status = $this->request->post['securityresponsepostcode'];
 					$security_code_status = $this->request->post['securityresponsesecuritycode'];
 					$address_status = $this->request->post['securityresponseaddress'];
@@ -151,21 +149,24 @@ class ControllerPaymentSecureTradingPp extends Controller {
 					$message = sprintf($this->language->get('text_postcode_check'), $status_code_mapping[$postcode_status]) . "\n";
 					$message .= sprintf($this->language->get('text_security_code_check'), $status_code_mapping[$security_code_status]) . "\n";
 					$message .= sprintf($this->language->get('text_address_check'), $status_code_mapping[$address_status]) . "\n";
-					
-					$this->model_payment_securetrading_pp->addReference($order_info['order_id'], $this->request->post['transactionreference']);
-					
+
+					if (isset($this->request->post['transactionreference'])) {
+						$transactionreference = $this->request->post['transactionreference'];
+					} else {
+						$transactionreference = '';
+					}
+					$this->model_payment_securetrading_pp->addReference($order_info['order_id'], $transactionreference);
+
 					if ($this->request->post['errorcode'] == '0') {
 						$order_status_id = $this->config->get('securetrading_pp_order_status_id');
-						
+
 						$this->model_payment_securetrading_pp->confirmOrder($order_info['order_id'], $order_status_id);
 						$this->model_payment_securetrading_pp->updateOrder($order_info['order_id'], $order_status_id, $message);
 					} elseif ($this->request->post['errorcode'] == '70000') {
 						$order_status_id = $this->config->get('securetrading_pp_declined_order_status_id');
-						
+
 						$this->model_payment_securetrading_pp->updateOrder($order_info['order_id'], $order_status_id, $message);
 					}
-					
-					
 				}
 			}
 		}

@@ -29,11 +29,15 @@ class ControllerPaymentPPStandard extends Controller {
 
 				foreach ($product['option'] as $option) {
 					if ($option['type'] != 'file') {
-						$value = $option['option_value'];
+						$value = $option['value'];
 					} else {
-						$filename = $this->encryption->decrypt($option['option_value']);
-
-						$value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
+						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+						
+						if ($upload_info) {
+							$value = $upload_info['name'];
+						} else {
+							$value = '';
+						}
 					}
 
 					$option_data[] = array(
@@ -156,13 +160,14 @@ class ControllerPaymentPPStandard extends Controller {
 
 						if ($receiver_match && $total_paid_match) {
 							$order_status_id = $this->config->get('pp_standard_completed_status_id');
-						} else {
-							if (!$receiver_match) {
-								$this->log->write('PP_STANDARD :: RECEIVER EMAIL MISMATCH! ' . strtolower($this->request->post['receiver_email']));
-							}
-							if (!$total_paid_match) {
-								$this->log->write('PP_STANDARD :: TOTAL PAID MISMATCH! ' . $this->request->post['mc_gross']);
-							}
+						}
+						
+						if (!$receiver_match) {
+							$this->log->write('PP_STANDARD :: RECEIVER EMAIL MISMATCH! ' . strtolower($this->request->post['receiver_email']));
+						}
+						
+						if (!$total_paid_match) {
+							$this->log->write('PP_STANDARD :: TOTAL PAID MISMATCH! ' . $this->request->post['mc_gross']);
 						}
 						break;
 					case 'Denied':
@@ -191,11 +196,7 @@ class ControllerPaymentPPStandard extends Controller {
 						break;
 				}
 
-				if (!$order_info['order_status_id']) {
-					$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
-				} else {
-					$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
-				}
+				$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
 			} else {
 				$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('config_order_status_id'));
 			}

@@ -20,7 +20,7 @@ class ControllerErrorPermission extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('error/permission', 'token=' . $this->session->data['token'], 'SSL')
 		);
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -49,7 +49,15 @@ class ControllerErrorPermission extends Controller {
 				'common/forgotten',
 				'common/reset',
 				'error/not_found',
-				'error/permission'
+				'error/permission',
+				'dashboard/order',
+				'dashboard/sale',
+				'dashboard/customer',
+				'dashboard/online',
+				'dashboard/map',
+				'dashboard/activity',
+				'dashboard/chart',
+				'dashboard/recent'
 			);
 
 			if (!in_array($route, $ignore) && !$this->user->hasPermission('access', $route)) {

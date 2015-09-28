@@ -10,30 +10,39 @@ class ModelCatalogReview extends Model {
 		if ($this->config->get('config_review_mail')) {
 			$this->load->language('mail/review');
 			$this->load->model('catalog/product');
+			
 			$product_info = $this->model_catalog_product->getProduct($product_id);
 
-			$subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
+			$subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 
 			$message  = $this->language->get('text_waiting') . "\n";
-			$message .= sprintf($this->language->get('text_product'), $this->db->escape(strip_tags($product_info['name']))) . "\n";
-			$message .= sprintf($this->language->get('text_reviewer'), $this->db->escape(strip_tags($data['name']))) . "\n";
-			$message .= sprintf($this->language->get('text_rating'), $this->db->escape(strip_tags($data['rating']))) . "\n";
+			$message .= sprintf($this->language->get('text_product'), html_entity_decode($product_info['name'], ENT_QUOTES, 'UTF-8')) . "\n";
+			$message .= sprintf($this->language->get('text_reviewer'), html_entity_decode($data['name'], ENT_QUOTES, 'UTF-8')) . "\n";
+			$message .= sprintf($this->language->get('text_rating'), $data['rating']) . "\n";
 			$message .= $this->language->get('text_review') . "\n";
-			$message .= $this->db->escape(strip_tags($data['text'])) . "\n\n";
+			$message .= html_entity_decode($data['text'], ENT_QUOTES, 'UTF-8') . "\n\n";
 
-			$mail = new Mail($this->config->get('config_mail'));
-			$mail->setTo(array($this->config->get('config_email')));
+			$mail = new Mail();
+			$mail->protocol = $this->config->get('config_mail_protocol');
+			$mail->parameter = $this->config->get('config_mail_parameter');
+			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+
+			$mail->setTo($this->config->get('config_email'));
 			$mail->setFrom($this->config->get('config_email'));
-			$mail->setSender($this->config->get('config_name'));
+			$mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 			$mail->setSubject($subject);
-			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
+			$mail->setText($message);
 			$mail->send();
 
 			// Send to additional alert emails
 			$emails = explode(',', $this->config->get('config_mail_alert'));
 
 			foreach ($emails as $email) {
-				if ($email && preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $email)) {
+				if ($email && preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $email)) {
 					$mail->setTo($email);
 					$mail->send();
 				}

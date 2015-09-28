@@ -26,10 +26,9 @@ $_['text_loading']                  = 'Loading...';
 $_['text_no_results']               = 'No results!';
 $_['text_confirm']                  = 'Are you sure?';
 $_['text_home']                     = 'Home';
-$_['text_confirm']                  = 'Delete/Uninstall cannot be undone! Are you sure you want to do this?';
 
 // Button
-$_['button_insert']                 = 'Add New';
+$_['button_add']                    = 'Add New';
 $_['button_delete']                 = 'Delete';
 $_['button_save']                   = 'Save';
 $_['button_cancel']                 = 'Cancel';
@@ -46,8 +45,8 @@ $_['button_copy']                   = 'Copy';
 $_['button_back']                   = 'Back';
 $_['button_remove']                 = 'Remove';
 $_['button_refresh']                = 'Refresh';
-$_['button_backup']                 = 'Backup';
-$_['button_restore']                = 'Restore';
+$_['button_export']                 = 'Export';
+$_['button_import']                 = 'Import';
 $_['button_download']               = 'Download';
 $_['button_rebuild']                = 'Rebuild';
 $_['button_upload']                 = 'Upload';
@@ -90,16 +89,16 @@ $_['button_search']                 = 'Search';
 $_['button_view']                   = 'View';
 $_['button_install']                = 'Install';
 $_['button_uninstall']              = 'Uninstall';
+$_['button_login']                  = 'Login into Store';
+$_['button_unlock']                 = 'Unlock Account';
 $_['button_link']                   = 'Link';
-$_['button_shipping']               = 'Apply Shipping Method';
-$_['button_payment']                = 'Apply Payment Method';
-$_['button_coupon']                 = 'Apply Coupon';
-$_['button_voucher']                = 'Apply Voucher';
-$_['button_reward']                 = 'Apply Points';
-
+$_['button_currency']               = 'Refresh Currency Values';
+$_['button_apply']                  = 'Apply';
+$_['button_category_add']           = 'Add Category';
 
 // Tab
 $_['tab_address']                   = 'Address';
+$_['tab_additional']                = 'Additional';
 $_['tab_admin']                     = 'Admin';
 $_['tab_attribute']                 = 'Attribute';
 $_['tab_customer']                  = 'Customer Details';
@@ -108,7 +107,6 @@ $_['tab_design']                    = 'Design';
 $_['tab_discount']                  = 'Discount';
 $_['tab_general']                   = 'General';
 $_['tab_history']                   = 'History';
-$_['tab_fraud']                     = 'Fraud';
 $_['tab_ftp']                       = 'FTP';
 $_['tab_ip']                        = 'IP Addresses';
 $_['tab_links']                     = 'Links';
@@ -118,10 +116,10 @@ $_['tab_option']                    = 'Option';
 $_['tab_server']                    = 'Server';
 $_['tab_store']                     = 'Store';
 $_['tab_special']                   = 'Special';
+$_['tab_session']                   = 'Session';
 $_['tab_local']                     = 'Local';
 $_['tab_mail']                      = 'Mail';
 $_['tab_module']                    = 'Module';
-$_['tab_order']                     = 'Order Details';
 $_['tab_payment']                   = 'Payment Details';
 $_['tab_product']                   = 'Products';
 $_['tab_reward']                    = 'Reward Points';
@@ -134,6 +132,8 @@ $_['tab_marketing']                 = 'Marketing';
 $_['tab_online']                    = 'People Online';
 $_['tab_activity']                  = 'Recent Activity';
 $_['tab_recurring']                 = 'Recurring';
+$_['tab_action']                    = 'Action';
+$_['tab_google']                    = 'Google';
 
 // Error
 $_['error_exception']               = 'Error Code(%s): %s in %s on line %s';

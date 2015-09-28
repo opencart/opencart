@@ -12,7 +12,7 @@ class ControllerCommonLogin extends Controller {
 		}
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->session->data['token'] = md5(mt_rand());
+			$this->session->data['token'] = token(32);
 
 			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0 || strpos($this->request->post['redirect'], HTTPS_SERVER) === 0 )) {
 				$this->response->redirect($this->request->post['redirect'] . '&token=' . $this->session->data['token']);
@@ -93,7 +93,7 @@ class ControllerCommonLogin extends Controller {
 	}
 
 	protected function validate() {
-		if (!isset($this->request->post['username']) || !isset($this->request->post['password']) || !$this->user->login($this->request->post['username'], $this->request->post['password'])) {
+		if (!isset($this->request->post['username']) || !isset($this->request->post['password']) || !$this->user->login($this->request->post['username'], html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8'))) {
 			$this->error['warning'] = $this->language->get('error_login');
 		}
 
@@ -101,19 +101,7 @@ class ControllerCommonLogin extends Controller {
 	}
 
 	public function check() {
-		$route = '';
-
-		if (isset($this->request->get['route'])) {
-			$part = explode('/', $this->request->get['route']);
-
-			if (isset($part[0])) {
-				$route .= $part[0];
-			}
-
-			if (isset($part[1])) {
-				$route .= '/' . $part[1];
-			}
-		}
+		$route = isset($this->request->get['route']) ? $this->request->get['route'] : '';
 
 		$ignore = array(
 			'common/login',
@@ -134,14 +122,6 @@ class ControllerCommonLogin extends Controller {
 				'error/not_found',
 				'error/permission'
 			);
-
-			$config_ignore = array();
-
-			if ($this->config->get('config_token_ignore')) {
-				$config_ignore = unserialize($this->config->get('config_token_ignore'));
-			}
-
-			$ignore = array_merge($ignore, $config_ignore);
 
 			if (!in_array($route, $ignore) && (!isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token']))) {
 				return new Action('common/login');

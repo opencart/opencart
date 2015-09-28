@@ -24,14 +24,16 @@ class ControllerOpenbayEbayTemplate extends Controller {
 			$data['success'] = '';
 		}
 
-		$data['insert']  = $this->url->link('openbay/ebay_template/add', 'token=' . $this->session->data['token'], 'SSL');
+		$data['add'] = $this->url->link('openbay/ebay_template/add', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL');
+
 		$data['templates'] = $this->model_openbay_ebay_template->getAll();
-		$data['token']    = $this->session->data['token'];
+		$data['token'] = $this->session->data['token'];
 
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_home'),
 		);
 
@@ -62,7 +64,7 @@ class ControllerOpenbayEbayTemplate extends Controller {
 
 		$this->load->model('openbay/ebay_template');
 
-		$data['page_title']   = $data['text_title_list_add'];
+		$data['page_title']   = $data['heading_title'];
 		$data['btn_save']     = $this->url->link('openbay/ebay_template/add', 'token=' . $this->session->data['token'], 'SSL');
 		$data['cancel']       = $this->url->link('openbay/ebay_template/listAll', 'token=' . $this->session->data['token'], 'SSL');
 
@@ -127,6 +129,9 @@ class ControllerOpenbayEbayTemplate extends Controller {
 
 		if (isset($this->request->get['template_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$template_info = $this->model_openbay_ebay_template->get($this->request->get['template_id']);
+			$data['text_manage'] = $this->language->get('text_edit');
+		} else {
+			$data['text_manage'] = $this->language->get('text_add');
 		}
 
 		$this->document->setTitle($data['page_title']);
@@ -137,7 +142,7 @@ class ControllerOpenbayEbayTemplate extends Controller {
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_home'),
 		);
 
@@ -194,10 +199,6 @@ class ControllerOpenbayEbayTemplate extends Controller {
 			$this->error['warning'] = $this->language->get('error_name');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 }

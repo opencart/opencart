@@ -6,16 +6,6 @@ class ModelOpenbayEtsyOrder extends Model {
 
 		$this->language->load('openbay/etsy_order');
 
-		/**
-		 * debug code to remove
-
-		$this->db->query("TRUNCATE `" . DB_PREFIX . "etsy_order`");
-		$this->db->query("TRUNCATE `" . DB_PREFIX . "order`");
-		$this->db->query("TRUNCATE `" . DB_PREFIX . "order_history`");
-		$this->db->query("TRUNCATE `" . DB_PREFIX . "order_option`");
-		$this->db->query("TRUNCATE `" . DB_PREFIX . "order_product`");
-		$this->db->query("TRUNCATE `" . DB_PREFIX . "order_total`");
-*/
 		if (!empty($orders)) {
 			foreach ($orders as $order) {
 				$etsy_order = $this->openbay->etsy->orderFind(null, $order->receipt_id);
@@ -31,7 +21,11 @@ class ModelOpenbayEtsyOrder extends Model {
 
 						// shipped status changed?
 						if ($order->shipped != $etsy_order['shipped']) {
-							$this->updateShipped($order_id, $order->shipped);
+							if ($order->paid == 1) {
+								$this->updateShipped($order_id, $order->shipped);
+							} else {
+								$this->updateShipped($order_id, 0);
+							}
 						}
 
 						$this->lockDelete($order_id);
@@ -42,11 +36,11 @@ class ModelOpenbayEtsyOrder extends Model {
 					// is paid?
 					if ($order->paid == 1) {
 						$this->updatePaid($order_id, $order->paid);
-					}
 
-					// is shipped?
-					if ($order->shipped == 1) {
-						$this->updateShipped($order_id, $order->shipped);
+						// is shipped?
+						if ($order->shipped == 1) {
+							$this->updateShipped($order_id, $order->shipped);
+						}
 					}
 
 					$this->openbay->etsy->log('Created new order: ' . $order_id);
@@ -219,14 +213,14 @@ class ModelOpenbayEtsyOrder extends Model {
 		$totals[0] = array(
 			'code'          => 'sub_total',
 			'title'         => $this->language->get('text_total_sub'),
-			'value'         => number_format((double)$order->price_total, 4, ' . ', ''),
+			'value'         => number_format($order->price_total, 4, '.', ''),
 			'sort_order'    => '1'
 		);
 
 		$totals[1] = array(
 			'code'          => 'shipping',
 			'title'         => $this->language->get('text_total_shipping'),
-			'value'         => number_format((double)$order->price_shipping, 4, ' . ', ''),
+			'value'         => number_format($order->price_shipping, 4, '.', ''),
 			'sort_order'    => '3'
 		);
 
@@ -234,7 +228,7 @@ class ModelOpenbayEtsyOrder extends Model {
 			$totals[2] = array(
 				'code'          => 'coupon',
 				'title'         => $this->language->get('text_total_discount'),
-				'value'         => number_format((double)$order->amount_discount, 4, ' . ', ''),
+				'value'         => number_format($order->amount_discount, 4, '.', ''),
 				'sort_order'    => '4'
 			);
 		}
@@ -242,7 +236,7 @@ class ModelOpenbayEtsyOrder extends Model {
 		$totals[3] = array(
 			'code'          => 'tax',
 			'title'         => $this->language->get('text_total_tax'),
-			'value'         => number_format((double)$order->price_tax, 3, ' . ', ''),
+			'value'         => number_format($order->price_tax, 3, '.', ''),
 			'sort_order'    => '5'
 		);
 
@@ -258,7 +252,18 @@ class ModelOpenbayEtsyOrder extends Model {
 		}
 
 		$this->updateOrderStatus($order_id, $this->config->get('etsy_order_status_new'));
+		$this->event->trigger('post.order.history.add', $order_id);
 
 		return $order_id;
+	}
+
+	public function addOrderHistory($order_id) {
+		if(!$this->openbay->etsy->orderFind($order_id)) {
+			$order_products = $this->openbay->getOrderProducts($order_id);
+
+			foreach ($order_products as $order_product) {
+				$this->openbay->etsy->productUpdateListen($order_product['product_id']);
+			}
+		}
 	}
 }

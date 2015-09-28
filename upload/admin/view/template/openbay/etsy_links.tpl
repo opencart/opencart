@@ -2,19 +2,26 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
+      <div class="pull-right">
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default" id="btn-cancel"><i class="fa fa-reply"></i></a>
+      </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+          <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
         <?php } ?>
       </ul>
     </div>
   </div>
   <div class="container-fluid">
-    <h4><?php echo $text_new_link; ?></h4>
-    <div class="alert alert-success" id="alert-link-save" style="display:none;"><i class="fa fa-check fa-lg" style="color:green"></i> <?php echo $text_link_saved; ?></div>
-    <div class="alert alert-danger" id="alert-link-error" style="display:none;"></div>
-    <div class="well">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-plus fa-lg"></i> <?php echo $text_new_link; ?></h3>
+      </div>
+      <div class="panel-body">
+        <div class="alert alert-success" id="alert-link-save" style="display:none;"><i class="fa fa-check fa-lg" style="color:green"></i> <?php echo $text_link_saved; ?></div>
+        <div class="alert alert-danger" id="alert-link-error" style="display:none;"></div>
+        <div class="well">
       <div class="row">
         <div class="col-sm-6">
           <div class="form-group">
@@ -31,34 +38,53 @@
           <a onclick="addLink();" class="btn btn-primary pull-right" id="button-submit-link"><i class="fa fa-check"></i> <?php echo $button_save; ?></a> </div>
       </div>
     </div>
-    <h4><?php echo $text_current_links; ?></h4>
-    <table class="table">
-      <thead>
-        <tr>
-          <th class="text-left"><?php echo $column_product; ?></th>
-          <th class="text-center"><?php echo $column_item_id; ?></th>
-          <th class="text-center"><?php echo $column_store_stock; ?></th>
-          <th class="text-center"><?php echo $column_status; ?></th>
-          <th class="text-center"><?php echo $column_action; ?></th>
-        </tr>
-      </thead>
-      <tbody id="show-linked-items">
-        <?php foreach ($items as $id => $item) { ?>
-        <tr id="row-<?php echo $item['etsy_listing_id']; ?>">
-          <td class="text-left"><a href="<?php echo $item['link_edit']; ?>" target="_BLANK"><?php echo $item['name']; ?></a></td>
-          <td class="text-center"><a href="<?php echo $item['link_etsy']; ?>" target="_BLANK"><?php echo $item['etsy_item_id']; ?></a></td>
-          <td class="text-center"><?php echo $item['quantity']; ?></td>
-          <td class="text-center"><?php if ($item['status'] == 1) { ?>
-            <i class="fa fa-check" style="color: green;"></i>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-link fa-lg"></i> <?php echo $text_current_links; ?></h3>
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th class="text-left"><?php echo $column_product; ?></th>
+              <th class="text-center"><?php echo $column_item_id; ?></th>
+              <th class="text-center"><?php echo $column_store_stock; ?></th>
+              <th class="text-center"><?php echo $column_status; ?></th>
+              <th class="text-center"><?php echo $column_action; ?></th>
+            </tr>
+          </thead>
+          <tbody id="show-linked-items">
+            <?php if (!empty($items)) { ?>
+              <?php foreach ($items as $id => $item) { ?>
+                <tr id="row-<?php echo $item['etsy_listing_id']; ?>">
+                  <td class="text-left"><a href="<?php echo $item['link_edit']; ?>" target="_BLANK"><?php echo $item['name']; ?></a></td>
+                  <td class="text-center"><a href="<?php echo $item['link_etsy']; ?>" target="_BLANK"><?php echo $item['etsy_item_id']; ?></a></td>
+                  <td class="text-center"><?php echo $item['quantity']; ?></td>
+                  <td class="text-center"><?php if ($item['status'] == 1) { ?>
+                    <i class="fa fa-check" style="color: green;"></i>
+                    <?php } else { ?>
+                    <i class="fa fa-times" style="color: red;"></i>
+                    <?php } ?></td>
+                  <td class="text-center"><button class="btn btn-danger" id="row-delete-btn-<?php echo $item['etsy_listing_id']; ?>" onclick="deleteLink('<?php echo $item['etsy_listing_id']; ?>')"><i class="fa fa-times"></i></button></td>
+                </tr>
+              <?php } ?>
             <?php } else { ?>
-            <i class="fa fa-times" style="color: red;"></i>
-            <?php } ?></td>
-          <td class="text-center"><button class="btn btn-danger" id="row-delete-btn-<?php echo $item['etsy_listing_id']; ?>" onclick="deleteLink('<?php echo $item['etsy_listing_id']; ?>')"><i class="fa fa-times"></i></button></td>
-        </tr>
-        <?php } ?>
-      </tbody>
-    </table>
-    <div class="pagination"><?php echo $pagination; ?></div>
+            <tr>
+              <td colspan="5" class="text-center"><?php echo $text_no_links; ?></td>
+            </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+          <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <script type="text/javascript"><!--
@@ -151,5 +177,5 @@
   $(document).ready(function() {
 
   });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

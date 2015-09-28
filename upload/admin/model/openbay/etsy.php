@@ -47,17 +47,39 @@ class ModelOpenbayEtsy extends Model{
 				) ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
 
 		// register the event triggers
-		$this->model_tool_event->addEvent('openbaypro_etsy', 'post.order.add', 'openbay/etsy/eventAddOrder');
+		if (version_compare(VERSION, '2.0.1', '>=')) {
+			$this->load->model('extension/event');
+			$this->model_extension_event->addEvent('openbaypro_etsy', 'post.order.history.add', 'openbay/etsy/eventAddOrderHistory');
+		} else {
+			$this->load->model('tool/event');
+			$this->model_tool_event->addEvent('openbaypro_etsy', 'post.order.history.add', 'openbay/etsy/eventAddOrderHistory');
+		}
 	}
 
 	public function uninstall() {
 		// remove the event triggers
-		$this->model_tool_event->deleteEvent('openbaypro_etsy');
+		if (version_compare(VERSION, '2.0.1', '>=')) {
+			$this->load->model('extension/event');
+			$this->model_extension_event->deleteEvent('openbaypro_etsy');
+		} else {
+			$this->load->model('tool/event');
+			$this->model_tool_event->deleteEvent('openbaypro_etsy');
+		}
+	}
+
+	public function patch() {
+		if ($this->config->get('etsy_status') == 1) {
+			//remove the current events
+			$this->model_extension_event->deleteEvent('openbaypro_etsy');
+
+			//re-add the correct events
+			$this->model_extension_event->addEvent('openbaypro_etsy', 'post.order.history.add', 'openbay/etsy/eventAddOrderHistory');
+		}
 	}
 
 	public function verifyAccount() {
 		if ($this->openbay->etsy->validate() == true) {
-			return $this->openbay->etsy->call('account/info', 'GET');
+			return $this->openbay->etsy->call('v1/etsy/account/info/', 'GET');
 		} else {
 			return false;
 		}

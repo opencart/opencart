@@ -3,11 +3,12 @@ namespace DB;
 final class MySQLi {
 	private $link;
 
-	public function __construct($hostname, $username, $password, $database) {
-		$this->link = new \mysqli($hostname, $username, $password, $database);
+	public function __construct($hostname, $username, $password, $database, $port = '3306') {
+		$this->link = new \mysqli($hostname, $username, $password, $database, $port);
 
 		if ($this->link->connect_error) {
 			trigger_error('Error: Could not make a database link (' . $this->link->connect_errno . ') ' . $this->link->connect_error);
+			exit();
 		}
 
 		$this->link->set_charset("utf8");

@@ -20,7 +20,6 @@ $_['entry_code']        = 'Code';
 $_['entry_locale']      = 'Locale';
 $_['entry_image']       = 'Image';
 $_['entry_directory']   = 'Directory';
-$_['entry_filename']    = 'Filename';
 $_['entry_status']      = 'Status';
 $_['entry_sort_order']  = 'Sort Order';
 
@@ -29,7 +28,6 @@ $_['help_code']         = 'Example: en. Do not change if this is your default la
 $_['help_locale']       = 'Example: en_US.UTF-8,en_US,en-gb,en_gb,english';
 $_['help_image']        = 'Example: gb.png';
 $_['help_directory']    = 'Name of the language directory (case-sensitive)';
-$_['help_filename']     = 'Main language filename without extension';
 $_['help_status']       = 'Hide/Show it in language dropdown';
 
 // Error
@@ -39,7 +37,6 @@ $_['error_code']        = 'Language Code must at least 2 characters!';
 $_['error_locale']      = 'Locale required!';
 $_['error_image']       = 'Image Filename must be between 3 and 64 characters!';
 $_['error_directory']   = 'Directory required!';
-$_['error_filename']    = 'Filename must be between 3 and 64 characters!';
 $_['error_default']     = 'Warning: This language cannot be deleted as it is currently assigned as the default store language!';
 $_['error_admin']       = 'Warning: This Language cannot be deleted as it is currently assigned as the administration language!';
 $_['error_store']       = 'Warning: This language cannot be deleted as it is currently assigned to %s stores!';

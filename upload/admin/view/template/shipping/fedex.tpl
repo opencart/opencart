@@ -113,6 +113,39 @@
               </div>
               <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a></div>
           </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-length"><?php echo $entry_dimension; ?></label>
+            <div class="col-sm-10">
+              <div class="row">
+                <div class="col-sm-4">
+                  <input type="text" name="fedex_length" value="<?php echo $fedex_length; ?>" placeholder="<?php echo $entry_length; ?>" id="input-length" class="form-control" />
+                </div>
+                <div class="col-sm-4">
+                  <input type="text" name="fedex_width" value="<?php echo $fedex_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-width" class="form-control" />
+                </div>
+                <div class="col-sm-4">
+                  <input type="text" name="fedex_height" value="<?php echo $fedex_height; ?>" placeholder="<?php echo $entry_height; ?>" id="input-height" class="form-control" />
+                </div>
+              </div>
+              <?php if ($error_dimension) { ?>
+              <div class="text-danger"><?php echo $error_dimension; ?></div>
+              <?php } ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-length-class"><span data-toggle="tooltip" title="<?php echo $help_length_class; ?>"><?php echo $entry_length_class; ?></span></label>
+            <div class="col-sm-10">
+              <select name="fedex_length_class_id" id="input-length-class" class="form-control">
+                <?php foreach ($length_classes as $length_class) { ?>
+                <?php if ($length_class['length_class_id'] == $fedex_length_class_id) { ?>
+                <option value="<?php echo $length_class['length_class_id']; ?>" selected="selected"><?php echo $length_class['title']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $length_class['length_class_id']; ?>"><?php echo $length_class['title']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-dropoff-type"><?php echo $entry_dropoff_type; ?></label>
             <div class="col-sm-10">

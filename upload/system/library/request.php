@@ -23,7 +23,7 @@ class Request {
 				$data[$this->clean($key)] = $this->clean($value);
 			}
 		} else {
-			$data = htmlspecialchars(trim($data), ENT_COMPAT, 'UTF-8');
+			$data = htmlspecialchars($data, ENT_COMPAT, 'UTF-8');
 		}
 
 		return $data;

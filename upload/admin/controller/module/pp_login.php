@@ -18,7 +18,7 @@ class ControllerModulePPLogin extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -72,20 +72,17 @@ class ControllerModulePPLogin extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => false
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_module'),
-			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => ' :: '
+			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/pp_login', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => ' :: '
+			'href' => $this->url->link('module/pp_login', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$data['action'] = $this->url->link('module/pp_login', 'token=' . $this->session->data['token'], 'SSL');
@@ -116,14 +113,14 @@ class ControllerModulePPLogin extends Controller {
 			$data['pp_login_debug'] = $this->config->get('pp_login_debug');
 		}
 
-		$this->load->model('sale/customer_group');
+		$this->load->model('customer/customer_group');
 
-		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
+		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
-		if (isset($this->request->post['customer_group_id'])) {
-			$data['customer_group_id'] = $this->request->post['customer_group_id'];
+		if (isset($this->request->post['pp_login_customer_group_id'])) {
+			$data['pp_login_customer_group_id'] = $this->request->post['pp_login_customer_group_id'];
 		} else {
-			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
+			$data['pp_login_customer_group_id'] = $this->config->get('pp_login_customer_group_id');
 		}
 
 		if (isset($this->request->post['pp_login_button_colour'])) {
@@ -169,7 +166,7 @@ class ControllerModulePPLogin extends Controller {
 		$data['locales'][] = array(
 			'value' => 'zh-xc',
 			'text' => 'Chinese (US)'
-			);
+		);
 
 		$data['locales'][] = array(
 			'value' => 'da-dk',
@@ -188,7 +185,8 @@ class ControllerModulePPLogin extends Controller {
 
 		$data['locales'][] = array(
 			'value' => 'en-us',
-			'text' => 'English (US)',);
+			'text' => 'English (US)',
+		);
 
 		$data['locales'][] = array(
 			'value' => 'fr-fr',
@@ -285,7 +283,7 @@ class ControllerModulePPLogin extends Controller {
 			$data['pp_login_locale'] = $this->config->get('pp_login_locale');
 		}
 
-		$data['pp_login_return_url'] = HTTPS_CATALOG . 'index.php?route=module/pp_login/login';
+		$data['return_url'] = HTTPS_CATALOG . 'index.php?route=module/pp_login/login';
 
 		if (isset($this->request->post['pp_login_status'])) {
 			$data['pp_login_status'] = $this->request->post['pp_login_status'];
@@ -313,22 +311,18 @@ class ControllerModulePPLogin extends Controller {
 			$this->error['secret'] = $this->language->get('error_secret');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 
 	public function install() {
-		$this->load->model('tool/event');
+		$this->load->model('extension/event');
 
-		$this->model_tool_event->addEvent('pp_login', 'post.customer.logout', 'module/pp_login/logout');
+		$this->model_extension_event->addEvent('pp_login', 'post.customer.logout', 'module/pp_login/logout');
 	}
 
 	public function uninstall() {
-		$this->load->model('tool/event');
+		$this->load->model('extension/event');
 
-		$this->model_tool_event->deleteEvent('pp_login');
+		$this->model_extension_event->deleteEvent('pp_login');
 	}
 }

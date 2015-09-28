@@ -15,13 +15,13 @@
 					</label>
 				</div>
 			</div>
-			<div id="card-existing">                
+			<div id="card-existing">
 				<div class="form-group required">
 					<label class="col-sm-2 control-label" for="Token"><?php echo $entry_cc_choice; ?></label>
 					<div class="col-sm-10">
 						<select name="Token" class="form-control">
 							<?php foreach ($cards as $card) { ?>
-								<option value="<?php echo $card['token']; ?>"><?php echo $text_card_type . ' ' . $card['type']; ?>, <?php echo $text_card_digits . ' ' . $card['digits']; ?>, <?php echo $text_card_expiry . ' ' . $card['expiry']; ?></option>    
+								<option value="<?php echo $card['token']; ?>"><?php echo $text_card_type . ' ' . $card['type']; ?>, <?php echo $text_card_digits . ' ' . $card['digits']; ?>, <?php echo $text_card_expiry . ' ' . $card['expiry']; ?></option>
 							<?php } ?>
 						</select>
 					</div>
@@ -64,7 +64,7 @@
                 <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
             </div>
         </div>
-    </fieldset> 
+    </fieldset>
 </form>
 <script type="text/javascript">
 	$('input[name=\'CreateToken\']').on('change', function() {

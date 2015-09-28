@@ -27,7 +27,7 @@
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-pp-std-uk" class="form-horizontal">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
-            <li><a href="#tab-status" data-toggle="tab"><?php echo $tab_status; ?></a></li>
+            <li><a href="#tab-status" data-toggle="tab"><?php echo $tab_order_status; ?></a></li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">

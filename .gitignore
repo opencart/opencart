@@ -3,10 +3,6 @@
 /upload/config.php
 /upload/admin/config.php
 
-# System Cache Files
-/upload/system/cache/*
-!/upload/system/cache/index.html
-
 # Image File
 !/upload/image/no_image.jpg
 
@@ -14,31 +10,33 @@
 /upload/image/cache/*
 !/upload/image/cache/index.html
 
+# System Cache Files
+/upload/system/storage/cache/*
+!/upload/system/storage/cache/index.html
+
 # Modification Files
-/upload/system/modification/*
-!/upload/system/modification/index.html
+/upload/system/storage/modification/*
+!/upload/system/storage/modification/index.html
 
 # Templates Files
 /upload/image/templates/*
 /upload/image/templates/default.jpg
 
 # Download Files
-/upload/system/download/*
-!/upload/system/download/index.html
+/upload/system/storage/download/*
+!/upload/system/storage/download/index.html
 
 # Upload Files
-/upload/system/upload/*
-!/upload/system/upload/index.html
-
-!/upload/data/index.html
+/upload/system/storage/upload/*
+!/upload/system/storage/upload/index.html
 
 # Flags 
 # remove sharp char if you want to add flags to gitignore
 # /upload/flags/*
 
 # Log Files
-/upload/system/logs/*
-!/upload/system/logs/index.html
+/upload/system/storage/logs/*
+!/upload/system/storage/logs/index.html
 
 # If you want to ignore install file use following lines [on development mode]
 # /upload/backup.install/*
@@ -47,3 +45,9 @@
 # Ignore all vendor files included by composer and the lock file
 /tests/phpunit/vendor/*
 /tests/phpunit/composer.lock
+
+# Test Config File
+/tests/phpunit/bootstrap.php
+
+# IDE Project files
+/.idea

@@ -142,7 +142,7 @@ class ControllerDesignLayout extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-		
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -154,8 +154,8 @@ class ControllerDesignLayout extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('design/layout', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
-		
-		$data['insert'] = $this->url->link('design/layout/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+
+		$data['add'] = $this->url->link('design/layout/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('design/layout/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['layouts'] = array();
@@ -180,7 +180,7 @@ class ControllerDesignLayout extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
@@ -188,7 +188,7 @@ class ControllerDesignLayout extends Controller {
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_action'] = $this->language->get('column_action');
 
-		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 
@@ -258,7 +258,7 @@ class ControllerDesignLayout extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_form'] = !isset($this->request->get['layout_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_default'] = $this->language->get('text_default');
 		$data['text_enabled'] = $this->language->get('text_enabled');
@@ -318,7 +318,7 @@ class ControllerDesignLayout extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('design/layout', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
-		
+
 		if (!isset($this->request->get['layout_id'])) {
 			$data['action'] = $this->url->link('design/layout/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
@@ -350,7 +350,7 @@ class ControllerDesignLayout extends Controller {
 		} else {
 			$data['layout_routes'] = array();
 		}
-		
+
 		if (isset($this->request->post['layout_module'])) {
 			$data['layout_modules'] = $this->request->post['layout_module'];
 		} elseif (isset($this->request->get['layout_id'])) {
@@ -358,46 +358,40 @@ class ControllerDesignLayout extends Controller {
 		} else {
 			$data['layout_modules'] = array();
 		}
-		
+
 		$this->load->model('extension/extension');
-		
-		$data['modules'] = array();
-		
+
+		$this->load->model('extension/module');
+
+		$data['extensions'] = array();
+
 		// Get a list of installed modules
 		$extensions = $this->model_extension_extension->getInstalled('module');
-				
+
 		// Add all the modules which have multiple settings for each module
 		foreach ($extensions as $code) {
 			$this->load->language('module/' . $code);
-		
-			$i = 1;
-			
+
 			$module_data = array();
-			
-			if ($this->config->has($code . '_module')) {
-				$modules = $this->config->get($code . '_module');
-				
-				foreach (array_keys($modules) as $key) {
-					$module_data[] = array(
-						'name' => $this->language->get('heading_title') . ' ' . $i++,
-						'code' => $code . '.' . $key
-					);
-				}
-			} else {
+
+			$modules = $this->model_extension_module->getModulesByCode($code);
+
+			foreach ($modules as $module) {
 				$module_data[] = array(
-					'name' => $this->language->get('heading_title'),
-					'code' => $code
+					'name' => strip_tags($this->language->get('heading_title') . ' &gt; ' . $module['name']),
+					'code' => $code . '.' .  $module['module_id']
 				);
 			}
-			
-			if ($module_data) {
-				$data['modules'][] = array(
-					'name'   => $this->language->get('heading_title'),
+
+			if ($this->config->has($code . '_status') || $module_data) {
+				$data['extensions'][] = array(
+					'name'   => strip_tags($this->language->get('heading_title')),
+					'code'   => $code,
 					'module' => $module_data
 				);
 			}
 		}
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

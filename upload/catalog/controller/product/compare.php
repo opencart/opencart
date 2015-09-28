@@ -120,6 +120,7 @@ class ControllerProductCompare extends Controller {
 					'model'        => $product_info['model'],
 					'manufacturer' => $product_info['manufacturer'],
 					'availability' => $availability,
+					'minimum'      => $product_info['minimum'] > 0 ? $product_info['minimum'] : 1,
 					'rating'       => (int)$product_info['rating'],
 					'reviews'      => sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']),
 					'weight'       => $this->weight->format($product_info['weight'], $product_info['weight_class_id']),
@@ -194,9 +195,5 @@ class ControllerProductCompare extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
-	}
-
-	public function remove() {
-
 	}
 }

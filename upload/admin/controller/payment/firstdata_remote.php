@@ -18,7 +18,7 @@ class ControllerPaymentFirstdataRemote extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -314,7 +314,17 @@ class ControllerPaymentFirstdataRemote extends Controller {
 		$this->response->setOutput($this->load->view('payment/firstdata_remote.tpl', $data));
 	}
 
-	public function orderAction() {
+	public function install() {
+		$this->load->model('payment/firstdata_remote');
+		$this->model_payment_firstdata_remote->install();
+	}
+
+	public function uninstall() {
+		$this->load->model('payment/firstdata_remote');
+		$this->model_payment_firstdata_remote->uninstall();
+	}
+
+	public function order() {
 		if ($this->config->get('firstdata_remote_status')) {
 			$this->load->model('payment/firstdata_remote');
 
@@ -518,10 +528,6 @@ class ControllerPaymentFirstdataRemote extends Controller {
 			$this->error['error_ca'] = $this->language->get('error_ca');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 }

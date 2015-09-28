@@ -19,7 +19,7 @@ class ControllerPaymentBluepayredirect extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -181,7 +181,7 @@ class ControllerPaymentBluepayredirect extends Controller {
 		$this->model_payment_bluepay_redirect->uninstall();
 	}
 
-	public function orderAction() {
+	public function order() {
 		if ($this->config->get('bluepay_redirect_status')) {
 			$this->load->model('payment/bluepay_redirect');
 
@@ -371,6 +371,7 @@ class ControllerPaymentBluepayredirect extends Controller {
 
 	public function callback() {
 		$this->response->addHeader('Content-Type: application/json');
+
 		$this->response->setOutput(json_encode($this->request->get));
 	}
 }

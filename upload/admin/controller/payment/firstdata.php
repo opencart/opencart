@@ -18,7 +18,7 @@ class ControllerPaymentFirstdata extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -69,7 +69,7 @@ class ControllerPaymentFirstdata extends Controller {
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
-		
+
 		$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=payment/firstdata/notify';
 
 		$this->load->model('localisation/order_status');
@@ -243,7 +243,17 @@ class ControllerPaymentFirstdata extends Controller {
 		$this->response->setOutput($this->load->view('payment/firstdata.tpl', $data));
 	}
 
-	public function orderAction() {
+	public function install() {
+		$this->load->model('payment/firstdata');
+		$this->model_payment_firstdata->install();
+	}
+
+	public function uninstall() {
+		$this->load->model('payment/firstdata');
+		$this->model_payment_firstdata->uninstall();
+	}
+
+	public function order() {
 		if ($this->config->get('firstdata_status')) {
 			$this->load->model('payment/firstdata');
 
@@ -389,10 +399,6 @@ class ControllerPaymentFirstdata extends Controller {
 			$this->error['error_demo_url'] = $this->language->get('error_demo_url');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 }

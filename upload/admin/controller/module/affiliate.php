@@ -1,5 +1,7 @@
 <?php
 class ControllerModuleAffiliate extends Controller {
+	private $error = array();
+
 	public function index() {
 		$this->load->language('module/affiliate');
 
@@ -16,7 +18,7 @@ class ControllerModuleAffiliate extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -52,13 +54,13 @@ class ControllerModuleAffiliate extends Controller {
 		$data['action'] = $this->url->link('module/affiliate', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
-		
+
 		if (isset($this->request->post['affiliate_status'])) {
 			$data['affiliate_status'] = $this->request->post['affiliate_status'];
 		} else {
 			$data['affiliate_status'] = $this->config->get('affiliate_status');
 		}
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

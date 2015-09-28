@@ -155,7 +155,7 @@ class ControllerLocalisationZone extends Controller {
 			'href' => $this->url->link('localisation/zone', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$data['insert'] = $this->url->link('localisation/zone/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['add'] = $this->url->link('localisation/zone/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('localisation/zone/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['zones'] = array();
@@ -182,7 +182,7 @@ class ControllerLocalisationZone extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
@@ -192,7 +192,7 @@ class ControllerLocalisationZone extends Controller {
 		$data['column_code'] = $this->language->get('column_code');
 		$data['column_action'] = $this->language->get('column_action');
 
-		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 
@@ -264,9 +264,9 @@ class ControllerLocalisationZone extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_form'] = !isset($this->request->get['zone_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-		
+
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_code'] = $this->language->get('entry_code');
@@ -389,7 +389,7 @@ class ControllerLocalisationZone extends Controller {
 		}
 
 		$this->load->model('setting/store');
-		$this->load->model('sale/customer');
+		$this->load->model('customer/customer');
 		$this->load->model('marketing/affiliate');
 		$this->load->model('localisation/geo_zone');
 
@@ -404,7 +404,7 @@ class ControllerLocalisationZone extends Controller {
 				$this->error['warning'] = sprintf($this->language->get('error_store'), $store_total);
 			}
 
-			$address_total = $this->model_sale_customer->getTotalAddressesByZoneId($zone_id);
+			$address_total = $this->model_customer_customer->getTotalAddressesByZoneId($zone_id);
 
 			if ($address_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_address'), $address_total);

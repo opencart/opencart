@@ -1,8 +1,8 @@
 <?php
-$_['heading_title'] = 'Recurring payments';
+$_['heading_title'] = 'Recurring Payments';
 $_['button_continue'] = 'Continue';
 $_['button_view'] = 'View';
-$_['text_empty'] = 'No recurring payment recurrings found';
+$_['text_empty'] = 'No recurring payments found';
 $_['text_product'] = 'Product: ';
 $_['text_order'] = 'Order: ';
 $_['text_quantity'] = 'Quantity: ';

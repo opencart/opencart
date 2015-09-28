@@ -1,7 +1,7 @@
 <?php
 class ControllerOpenbayAmazon extends Controller {
 	public function order() {
-		if ($this->config->get('amazon_status') != '1') {
+		if ($this->config->get('openbay_amazon_status') != '1') {
 			return;
 		}
 
@@ -295,6 +295,8 @@ class ControllerOpenbayAmazon extends Controller {
 			}
 		}
 
+		$this->event->trigger('post.order.history.add', $order_id);
+
 		$logger->write('Order ' . $amazon_order_id . ' was added to the database (ID: ' . $order_id . ')');
 		$logger->write("Finished processing the order");
 
@@ -313,12 +315,12 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function listing() {
-		if ($this->config->get('amazon_status') != '1') {
+		if ($this->config->get('openbay_amazon_status') != '1') {
 			return;
 		}
 
 		$this->load->library('log');
-		$this->load->library('amazon');
+		$this->load->library('openbay/amazon');
 		$this->load->model('openbay/amazon_listing');
 		$this->load->model('openbay/amazon_product');
 
@@ -358,7 +360,7 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function listingReport() {
-		if ($this->config->get('amazon_status') != '1') {
+		if ($this->config->get('openbay_amazon_status') != '1') {
 			return;
 		}
 
@@ -409,14 +411,14 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function product() {
-		if ($this->config->get('amazon_status') != '1') {
+		if ($this->config->get('openbay_amazon_status') != '1') {
 			$this->response->setOutput("disabled");
 			return;
 		}
 
 		ob_start();
 
-		$this->load->library('amazon');
+		$this->load->library('openbay/amazon');
 		$this->load->model('openbay/amazon_product');
 		$this->load->library('log');
 		$logger = new Log('amazon_product.log');
@@ -488,7 +490,7 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function search() {
-		if ($this->config->get('amazon_status') != '1') {
+		if ($this->config->get('openbay_amazon_status') != '1') {
 			return;
 		}
 
@@ -521,7 +523,7 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function dev() {
-		if ($this->config->get('amazon_status') != '1') {
+		if ($this->config->get('openbay_amazon_status') != '1') {
 			$this->response->setOutput("error 001");
 			return;
 		}
@@ -577,7 +579,11 @@ class ControllerOpenbayAmazon extends Controller {
 		}
 	}
 
-	public function eventAddOrder($order_id) {
-		$this->openbay->amazon->addOrder($order_id);
+	public function eventAddOrderHistory($order_id) {
+		if (!empty($order_id)) {
+			$this->load->model('openbay/amazon_order');
+
+			$this->model_openbay_amazon_order->addOrderHistory($order_id);
+		}
 	}
 }

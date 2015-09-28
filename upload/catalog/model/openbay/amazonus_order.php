@@ -38,7 +38,7 @@ class ModelOpenbayAmazonusOrder extends Model {
 		if ($var == '') {
 			$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `quantity` = GREATEST(`quantity` - '" . (int)$delta . "', 0) WHERE `product_id` = '" . (int)$product_id . "' AND `subtract` = '1'");
 		} else {
-			$this->db->query("UPDATE `" . DB_PREFIX . "product_option_relation` SET `stock` = GREATEST(`stock` - '" . (int)$delta . "', 0) WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($var) . "' AND `subtract` = '1'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "product_option_variant` SET `stock` = GREATEST(`stock` - '" . (int)$delta . "', 0) WHERE `product_id` = '" . (int)$product_id . "' AND `sku` = '" . $this->db->escape($var) . "' AND `subtract` = '1'");
 		}
 	}
 
@@ -199,5 +199,23 @@ class ModelOpenbayAmazonusOrder extends Model {
 		}
 
 		return $options;
+	}
+
+	public function addOrderHistory($order_id) {
+		if ($this->config->get('openbay_amazonus_status') != 1) {
+			return;
+		}
+
+		$this->load->library('log');
+		$logger = new Log('amazonus_stocks.log');
+		$logger->write('addOrder() called with order id: ' . $order_id);
+
+		$order_products = $this->openbay->getOrderProducts($order_id);
+
+		foreach($order_products as $order_product) {
+			$this->openbay->amazonus->productUpdateListen($order_product['product_id']);
+		}
+
+		$logger->write('addOrder() exiting');
 	}
 }

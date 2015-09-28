@@ -10,13 +10,29 @@ final class Openbay {
 		$this->getInstalled();
 
 		foreach ($this->installed_markets as $market) {
-			$class = ucfirst($market);
+			$class = '\openbay\\'. ucfirst($market);
+
 			$this->{$market} = new $class($registry);
 		}
+
+		$this->logger = new \Log('openbay.log');
 	}
 
 	public function __get($name) {
 		return $this->registry->get($name);
+	}
+
+	public function log($data, $write = true) {
+		if ($this->logging == 1) {
+			if (function_exists('getmypid')) {
+				$process_id = getmypid();
+				$data = $process_id . ' - ' . $data;
+			}
+
+			if ($write == true) {
+				$this->logger->write($data);
+			}
+		}
 	}
 
 	public function encrypt($msg, $k, $base64 = false) {
@@ -103,6 +119,10 @@ final class Openbay {
 		foreach ($query->rows as $result) {
 			$this->installed_markets[] = $result['code'];
 		}
+	}
+
+	public function getInstalledMarkets() {
+		return $this->installed_markets;
 	}
 
 	public function putStockUpdateBulk($product_id_array, $end_inactive = false) {
@@ -218,8 +238,8 @@ final class Openbay {
 		$this->load->model('checkout/order');
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
-		$language = new Language($order_info['language_directory']);
-		$language->load($order_info['language_filename']);
+		$language = new \Language($order_info['language_directory']);
+		$language->load($order_info['language_directory']);
 		$language->load('mail/order');
 
 		$order_status = $this->db->query("SELECT `name` FROM " . DB_PREFIX . "order_status WHERE order_status_id = '" . (int)$order_status_id . "' AND language_id = '" . (int)$this->config->get('config_language_id') . "' LIMIT 1")->row['name'];
@@ -265,7 +285,7 @@ final class Openbay {
 		$text .= $language->get('text_new_order_total') . "\n";
 
 		foreach ($order_total_query->rows as $total) {
-			$text .= $total['title'] . ': ' . html_entity_decode($total['text'], ENT_NOQUOTES, 'UTF-8') . "\n";
+			$text .= $total['title'] . ': ' . html_entity_decode($this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
 		}
 
 		$text .= "\n";
@@ -275,26 +295,31 @@ final class Openbay {
 			$text .= $order_info['comment'] . "\n\n";
 		}
 
-		$mail = new Mail();
-		$mail->protocol = $this->config->get('config_mail_protocol');
-		$mail->parameter = $this->config->get('config_mail_parameter');
-		$mail->hostname = $this->config->get('config_smtp_host');
-		$mail->username = $this->config->get('config_smtp_username');
-		$mail->password = $this->config->get('config_smtp_password');
-		$mail->port = $this->config->get('config_smtp_port');
-		$mail->timeout = $this->config->get('config_smtp_timeout');
+		if (version_compare(VERSION, '2.0.2', '<')) {
+			$mail = new \Mail($this->config->get('config_mail'));
+		} else {
+			$mail = new \Mail();
+			$mail->protocol = $this->config->get('config_mail_protocol');
+			$mail->parameter = $this->config->get('config_mail_parameter');
+			$mail->smtp_hostname = $this->config->get('config_mail_smtp_hostname');
+			$mail->smtp_username = $this->config->get('config_mail_smtp_username');
+			$mail->smtp_password = html_entity_decode($this->config->get('config_mail_smtp_password'), ENT_QUOTES, 'UTF-8');
+			$mail->smtp_port = $this->config->get('config_mail_smtp_port');
+			$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
+		}
+
 		$mail->setTo($this->config->get('config_email'));
 		$mail->setFrom($this->config->get('config_email'));
-		$mail->setSender($order_info['store_name']);
-		$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
-		$mail->setText(html_entity_decode($text, ENT_QUOTES, 'UTF-8'));
+		$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
+		$mail->setSubject($subject);
+		$mail->setText($text);
 		$mail->send();
 
 		// Send to additional alert emails
 		$emails = explode(',', $this->config->get('config_alert_emails'));
 
 		foreach ($emails as $email) {
-			if ($email && preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $email)) {
+			if ($email && preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $email)) {
 				$mail->setTo($email);
 				$mail->send();
 			}
@@ -315,7 +340,7 @@ final class Openbay {
 
 	public function getProductModelNumber($product_id, $sku = null) {
 		if($sku != null) {
-			$qry = $this->db->query("SELECT `sku` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($sku) . "'");
+			$qry = $this->db->query("SELECT `sku` FROM `" . DB_PREFIX . "product_option_variant` WHERE `product_id` = '" . (int)$product_id . "' AND `sku` = '" . $this->db->escape($sku) . "'");
 
 			if($qry->num_rows > 0) {
 				return $qry->row['sku'];
@@ -401,12 +426,38 @@ final class Openbay {
 					'option_id'         => $product_option['option_id'],
 					'name'              => $product_option['name'],
 					'type'              => $product_option['type'],
-					'option_value'      => $product_option['option_value'],
+					'option_value'      => $product_option['value'],
 					'required'          => $product_option['required']
 				);
 			}
 		}
 
 		return $product_option_data;
+	}
+
+	public function getOrderProducts($order_id) {
+		$order_products = $this->db->query("SELECT `product_id`, `order_product_id` FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
+
+		if($order_products->num_rows > 0) {
+			return $order_products->rows;
+		} else {
+			return array();
+		}
+	}
+
+	public function getOrderProductVariant($order_id, $product_id, $order_product_id) {
+		$this->load->model('module/openstock');
+
+		$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$order_product_id . "'");
+
+		if ($order_option_query->num_rows) {
+			$options = array();
+
+			foreach ($order_option_query->rows as $option) {
+				$options[] = $option['product_option_value_id'];
+			}
+
+			return $this->model_module_openstock->getVariantByOptionValues($options, $product_id);
+		}
 	}
 }

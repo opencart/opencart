@@ -1,52 +1,59 @@
 <?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
-  <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  <?php } ?>
-  <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="page-header">
+    <div class="container-fluid">
       <div class="pull-right">
         <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $button_back; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
-      <h1 class="panel-title"><i class="fa fa-cog fa-lg fa-lg"></i> <?php echo $heading_title; ?></h1>
+      <h1><?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
-    <div class="panel-body">
-      <?php if ($validation == true) { ?>
-        <p><?php echo $text_sync_desc; ?></p>
-        <form id="form-ebay-sync" class="form-horizontal">
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="update-categories"><span data-toggle="tooltip" title="<?php echo $help_sync_categories; ?>"><?php echo $entry_sync_categories; ?></span></label>
-            <div class="col-sm-10">
-              <a class="btn btn-primary" id="update-categories"><?php echo $button_update; ?></a>
+  </div>
+  <div class="container-fluid">
+    <?php if ($error_warning) { ?>
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
+    <?php } ?>
+  </div>
+  <div class="container-fluid">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?php echo $text_sync; ?></h3>
+      </div>
+      <div class="panel-body">
+        <?php if ($validation == true) { ?>
+          <p><?php echo $text_sync_desc; ?></p>
+          <form id="form-ebay-sync" class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="update-categories"><span data-toggle="tooltip" title="<?php echo $help_sync_categories; ?>"><?php echo $entry_sync_categories; ?></span></label>
+              <div class="col-sm-10">
+                <a class="btn btn-primary" id="update-categories"><?php echo $button_update; ?></a>
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="update-store"><span data-toggle="tooltip" title="<?php echo $help_sync_shop; ?>"><?php echo $entry_sync_shop; ?></span></label>
-            <div class="col-sm-10">
-              <a class="btn btn-primary" id="update-store"><?php echo $button_update; ?></a>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="update-store"><span data-toggle="tooltip" title="<?php echo $help_sync_shop; ?>"><?php echo $entry_sync_shop; ?></span></label>
+              <div class="col-sm-10">
+                <a class="btn btn-primary" id="update-store"><?php echo $button_update; ?></a>
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="update-settings"><span data-toggle="tooltip" title="<?php echo $help_sync_setting; ?>"><?php echo $entry_sync_setting; ?></span></label>
-            <div class="col-sm-10">
-              <a class="btn btn-primary" id="update-settings"><?php echo $button_update; ?></a>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="update-settings"><span data-toggle="tooltip" title="<?php echo $help_sync_setting; ?>"><?php echo $entry_sync_setting; ?></span></label>
+              <div class="col-sm-10">
+                <a class="btn btn-primary" id="update-settings"><?php echo $button_update; ?></a>
+              </div>
             </div>
+          </form>
+        <?php }else{ ?>
+          <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_validation; ?>
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
           </div>
-        </form>
-      <?php }else{ ?>
-        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_validation; ?>
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-        </div>
-      <?php } ?>
+        <?php } ?>
+      </div>
     </div>
+  </div>
 </div>
-
 <script type="text/javascript"><!--
   $('#update-categories').bind('click', function() {
     $.ajax({

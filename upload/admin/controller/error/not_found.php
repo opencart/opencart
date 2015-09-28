@@ -20,7 +20,7 @@ class ControllerErrorNotFound extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('error/not_found', 'token=' . $this->session->data['token'], 'SSL')
 		);
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');

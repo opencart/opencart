@@ -24,8 +24,8 @@ class ControllerExtensionFeed extends Controller {
 
 			$this->load->model('user/user_group');
 
-			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'feed/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'feed/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'feed/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'feed/' . $this->request->get['extension']);
 
 			// Call install method if it exsits
 			$this->load->controller('feed/' . $this->request->get['extension'] . '/install');
@@ -73,9 +73,9 @@ class ControllerExtensionFeed extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL')
 		);
-				
+
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');

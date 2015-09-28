@@ -20,7 +20,7 @@ class ControllerExtensionInstaller extends Controller {
 		$data['button_upload'] = $this->language->get('button_upload');
 		$data['button_clear'] = $this->language->get('button_clear');
 		$data['button_continue'] = $this->language->get('button_continue');
-		
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -32,10 +32,10 @@ class ControllerExtensionInstaller extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/installer', 'token=' . $this->session->data['token'], 'SSL')
 		);
-		
+
 		$data['token'] = $this->session->data['token'];
 
-		$directories = glob(DIR_DOWNLOAD . 'temp-*', GLOB_ONLYDIR);
+		$directories = glob(DIR_UPLOAD . 'temp-*', GLOB_ONLYDIR);
 
 		if ($directories) {
 			$data['error_warning'] = $this->language->get('error_temporary');
@@ -76,10 +76,10 @@ class ControllerExtensionInstaller extends Controller {
 
 		if (!$json) {
 			// If no temp directory exists create it
-			$path = 'temp-' . md5(mt_rand());
+			$path = 'temp-' . token(32);
 
-			if (!is_dir(DIR_DOWNLOAD . $path)) {
-				mkdir(DIR_DOWNLOAD . $path, 0777);
+			if (!is_dir(DIR_UPLOAD . $path)) {
+				mkdir(DIR_UPLOAD . $path, 0777);
 			}
 
 			// Set the steps required for installation
@@ -87,7 +87,7 @@ class ControllerExtensionInstaller extends Controller {
 			$json['overwrite'] = array();
 
 			if (strrchr($this->request->files['file']['name'], '.') == '.xml') {
-				$file = DIR_DOWNLOAD . $path . '/install.xml';
+				$file = DIR_UPLOAD . $path . '/install.xml';
 
 				// If xml file copy it to the temporary directory
 				move_uploaded_file($this->request->files['file']['tmp_name'], $file);
@@ -112,7 +112,7 @@ class ControllerExtensionInstaller extends Controller {
 
 			// If zip file copy it to the temp directory
 			if (strrchr($this->request->files['file']['name'], '.') == '.zip') {
-				$file = DIR_DOWNLOAD . $path . '/upload.zip';
+				$file = DIR_UPLOAD . $path . '/upload.zip';
 
 				move_uploaded_file($this->request->files['file']['tmp_name'], $file);
 
@@ -134,6 +134,7 @@ class ControllerExtensionInstaller extends Controller {
 							'path' => $path
 						);
 
+						// Send make and array of actions to carry out
 						while ($entry = zip_read($zip)) {
 							$zip_name = zip_entry_name($entry);
 
@@ -172,7 +173,7 @@ class ControllerExtensionInstaller extends Controller {
 							}
 
 							// Compare catalog files
-							$file = DIR_CATALOG . substr($zip_name, 7);
+							$file = DIR_CATALOG . substr($zip_name, 15);
 
 							if (is_file($file) && substr($zip_name, 0, 15) == 'upload/catalog/') {
 								$json['overwrite'][] = substr($zip_name, 7);
@@ -224,7 +225,7 @@ class ControllerExtensionInstaller extends Controller {
 		}
 
 		// Sanitize the filename
-		$file = DIR_DOWNLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/upload.zip';
+		$file = DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/upload.zip';
 
 		if (!file_exists($file)) {
 			$json['error'] = $this->language->get('error_file');
@@ -235,7 +236,7 @@ class ControllerExtensionInstaller extends Controller {
 			$zip = new ZipArchive();
 
 			if ($zip->open($file)) {
-				$zip->extractTo(DIR_DOWNLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']));
+				$zip->extractTo(DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']));
 				$zip->close();
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
@@ -257,13 +258,13 @@ class ControllerExtensionInstaller extends Controller {
 		if (!$this->user->hasPermission('modify', 'extension/installer')) {
 			$json['error'] = $this->language->get('error_permission');
 		}
-		
+
 		// Check FTP status
-		if (!$this->config->get('ftp_status')) {
+		if (!$this->config->get('config_ftp_status')) {
 			$json['error'] = $this->language->get('error_ftp_status');
 		}
 
-		$directory = DIR_DOWNLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/upload/';
+		$directory = DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/upload/';
 
 		if (!is_dir($directory)) {
 			$json['error'] = $this->language->get('error_directory');
@@ -278,7 +279,7 @@ class ControllerExtensionInstaller extends Controller {
 			while (count($path) != 0) {
 				$next = array_shift($path);
 
-				foreach (glob($next) as $file) {
+				foreach ((array)glob($next) as $file) {
 					if (is_dir($file)) {
 						$path[] = $file . '/*';
 					}
@@ -302,13 +303,38 @@ class ControllerExtensionInstaller extends Controller {
 
 					if ($root) {
 						foreach ($files as $file) {
-							// Upload everything in the upload directory
 							$destination = substr($file, strlen($directory));
+
+							// Upload everything in the upload directory
+							// Many people rename their admin folder for security purposes which I believe should be an option during installation just like setting the db prefix.
+							// the following code would allow you to change the name of the following directories and any extensions installed will still go to the right directory.
+							if (substr($destination, 0, 5) == 'admin') {
+								$destination = basename(DIR_APPLICATION) . substr($destination, 5);
+							}
+
+							if (substr($destination, 0, 7) == 'catalog') {
+								$destination = basename(DIR_CATALOG) . substr($destination, 7);
+							}
+
+							if (substr($destination, 0, 5) == 'image') {
+								$destination = basename(DIR_IMAGE) . substr($destination, 5);
+							}
+
+							if (substr($destination, 0, 6) == 'system') {
+								$destination = basename(DIR_SYSTEM) . substr($destination, 6);
+							}
 
 							if (is_dir($file)) {
 								$list = ftp_nlist($connection, substr($destination, 0, strrpos($destination, '/')));
 
-								if (!in_array($destination, $list)) {
+								// Basename all the directories because on some servers they don't return the fulll paths.
+								$list_data = array();
+
+								foreach ($list as $list) {
+									$list_data[] = basename($list);
+								}
+
+								if (!in_array(basename($destination), $list_data)) {
 									if (!ftp_mkdir($connection, $destination)) {
 										$json['error'] = sprintf($this->language->get('error_ftp_directory'), $destination);
 									}
@@ -347,7 +373,7 @@ class ControllerExtensionInstaller extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$file = DIR_DOWNLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/install.sql';
+		$file = DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/install.sql';
 
 		if (!file_exists($file)) {
 			$json['error'] = $this->language->get('error_file');
@@ -392,7 +418,7 @@ class ControllerExtensionInstaller extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$file = DIR_DOWNLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/install.xml';
+		$file = DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/install.xml';
 
 		if (!file_exists($file)) {
 			$json['error'] = $this->language->get('error_file');
@@ -415,6 +441,21 @@ class ControllerExtensionInstaller extends Controller {
 						$name = $name->nodeValue;
 					} else {
 						$name = '';
+					}
+
+					$code = $dom->getElementsByTagName('code')->item(0);
+
+					if ($code) {
+						$code = $code->nodeValue;
+
+						// Check to see if the modification is already installed or not.
+						$modification_info = $this->model_extension_modification->getModificationByCode($code);
+
+						if ($modification_info) {
+							$json['error'] = sprintf($this->language->get('error_exists'), $modification_info['name']);
+						}
+					} else {
+						$json['error'] = $this->language->get('error_code');
 					}
 
 					$author = $dom->getElementsByTagName('author')->item(0);
@@ -442,15 +483,18 @@ class ControllerExtensionInstaller extends Controller {
 					}
 
 					$modification_data = array(
-						'name'       => $name,
-						'author'     => $author,
-						'version'    => $version,
-						'link'       => $link,
-						'code'       => $xml,
-						'status'     => 1
+						'name'    => $name,
+						'code'    => $code,
+						'author'  => $author,
+						'version' => $version,
+						'link'    => $link,
+						'xml'     => $xml,
+						'status'  => 1
 					);
 
-					$this->model_extension_modification->addModification($modification_data);
+					if (!$json) {
+						$this->model_extension_modification->addModification($modification_data);
+					}
 				} catch(Exception $exception) {
 					$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 				}
@@ -470,7 +514,7 @@ class ControllerExtensionInstaller extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$file = DIR_DOWNLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/install.php';
+		$file = DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/install.php';
 
 		if (!file_exists($file)) {
 			$json['error'] = $this->language->get('error_file');
@@ -497,7 +541,7 @@ class ControllerExtensionInstaller extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		$directory = DIR_DOWNLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']);
+		$directory = DIR_UPLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']);
 
 		if (!is_dir($directory)) {
 			$json['error'] = $this->language->get('error_directory');
@@ -507,21 +551,22 @@ class ControllerExtensionInstaller extends Controller {
 			// Get a list of files ready to upload
 			$files = array();
 
-			$path = array($directory . '*');
+			$path = array($directory);
 
 			while (count($path) != 0) {
 				$next = array_shift($path);
 
-				foreach (glob($next) as $file) {
+				// We have to use scandir function because glob will not pick up dot files.
+				foreach (array_diff(scandir($next), array('.', '..')) as $file) {
+					$file = $next . '/' . $file;
+
 					if (is_dir($file)) {
-						$path[] = $file . '/*';
+						$path[] = $file;
 					}
 
 					$files[] = $file;
 				}
 			}
-
-			sort($files);
 
 			rsort($files);
 
@@ -554,27 +599,28 @@ class ControllerExtensionInstaller extends Controller {
 		}
 
 		if (!$json) {
-			$directories = glob(DIR_DOWNLOAD . 'temp-*', GLOB_ONLYDIR);
+			$directories = glob(DIR_UPLOAD . 'temp-*', GLOB_ONLYDIR);
 
 			foreach ($directories as $directory) {
 				// Get a list of files ready to upload
 				$files = array();
 
-				$path = array($directory . '*');
+				$path = array($directory);
 
 				while (count($path) != 0) {
 					$next = array_shift($path);
 
-					foreach (glob($next) as $file) {
+					// We have to use scandir function because glob will not pick up dot files.
+					foreach (array_diff(scandir($next), array('.', '..')) as $file) {
+						$file = $next . '/' . $file;
+
 						if (is_dir($file)) {
-							$path[] = $file . '/*';
+							$path[] = $file;
 						}
 
 						$files[] = $file;
 					}
 				}
-
-				sort($files);
 
 				rsort($files);
 

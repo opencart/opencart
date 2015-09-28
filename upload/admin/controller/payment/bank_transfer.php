@@ -18,7 +18,7 @@ class ControllerPaymentBankTransfer extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -47,7 +47,7 @@ class ControllerPaymentBankTransfer extends Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 
 		foreach ($languages as $language) {
-			if (isset($this->error['bank_' . $language['language_id']])) {
+			if (isset($this->error['bank' . $language['language_id']])) {
 				$data['error_bank' . $language['language_id']] = $this->error['bank' . $language['language_id']];
 			} else {
 				$data['error_bank' . $language['language_id']] = '';

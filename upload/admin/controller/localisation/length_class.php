@@ -155,7 +155,7 @@ class ControllerLocalisationLengthClass extends Controller {
 			'href' => $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$data['insert'] = $this->url->link('localisation/length_class/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['add'] = $this->url->link('localisation/length_class/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('localisation/length_class/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['length_classes'] = array();
@@ -182,7 +182,7 @@ class ControllerLocalisationLengthClass extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
@@ -192,7 +192,7 @@ class ControllerLocalisationLengthClass extends Controller {
 		$data['column_value'] = $this->language->get('column_value');
 		$data['column_action'] = $this->language->get('column_action');
 
-		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 
@@ -262,9 +262,9 @@ class ControllerLocalisationLengthClass extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_form'] = !isset($this->request->get['length_class_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
-		
+
 		$data['entry_title'] = $this->language->get('entry_title');
 		$data['entry_unit'] = $this->language->get('entry_unit');
 		$data['entry_value'] = $this->language->get('entry_value');

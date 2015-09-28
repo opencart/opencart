@@ -37,6 +37,7 @@ $_['error_permission']       = 'Warning: You do not have permission to modify in
 $_['error_title']            = 'Information Title must be between 3 and 64 characters!';
 $_['error_description']      = 'Description must be more than 3 characters!';
 $_['error_meta_title']       = 'Meta Title must be greater than 3 and less than 255 characters!';
+$_['error_keyword']          = 'SEO keyword already in use!';
 $_['error_account']          = 'Warning: This information page cannot be deleted as it is currently assigned as the store account terms!';
 $_['error_checkout']         = 'Warning: This information page cannot be deleted as it is currently assigned as the store checkout terms!';
 $_['error_affiliate']        = 'Warning: This information page cannot be deleted as it is currently assigned as the store affiliate terms!';

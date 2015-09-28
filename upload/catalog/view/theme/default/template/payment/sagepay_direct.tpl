@@ -127,7 +127,7 @@
 			$('#card-new select').prop('disabled', true);
 <?php } ?>
 	});
-//</script> 
+//</script>
 <script type="text/javascript">
 	$('input[name=\'CreateToken\']').on('change', function() {
 		if (this.value === '0') {
@@ -146,7 +146,7 @@
 			$('#card-existing input').prop('disabled', true);
 		}
 	});
-//</script> 
+//</script>
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function() {
 		$.ajax({

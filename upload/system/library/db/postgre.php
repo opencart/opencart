@@ -3,13 +3,15 @@ namespace DB;
 final class Postgre {
 	private $link;
 
-	public function __construct($hostname, $username, $password, $database) {
-		if (!$this->link = pg_connect('hostname=' . $hostname . ' username=' . $username . ' password='	. $password . ' database=' . $database)) {
+	public function __construct($hostname, $username, $password, $database, $port = '5432') {
+		if (!$this->link = pg_connect('hostname=' . $hostname . ' port=' . $port .  ' username=' . $username . ' password='	. $password . ' database=' . $database)) {
 			trigger_error('Error: Could not make a database link using ' . $username . '@' . $hostname);
+			exit();
 		}
 
 		if (!mysql_select_db($database, $this->link)) {
 			trigger_error('Error: Could not connect to database ' . $database);
+			exit();
 		}
 
 		pg_query($this->link, "SET CLIENT_ENCODING TO 'UTF8'");

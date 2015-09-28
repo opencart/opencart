@@ -3,7 +3,7 @@ class ControllerCatalogManufacturer extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('catalog/manufacturer');
+		$this->language->load('catalog/manufacturer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerCatalogManufacturer extends Controller {
 	}
 
 	public function add() {
-		$this->load->language('catalog/manufacturer');
+		$this->language->load('catalog/manufacturer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -45,7 +45,7 @@ class ControllerCatalogManufacturer extends Controller {
 	}
 
 	public function edit() {
-		$this->load->language('catalog/manufacturer');
+		$this->language->load('catalog/manufacturer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -77,7 +77,7 @@ class ControllerCatalogManufacturer extends Controller {
 	}
 
 	public function delete() {
-		$this->load->language('catalog/manufacturer');
+		$this->language->load('catalog/manufacturer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -142,7 +142,7 @@ class ControllerCatalogManufacturer extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-		
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
@@ -154,8 +154,8 @@ class ControllerCatalogManufacturer extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('catalog/manufacturer', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
-		
-		$data['insert'] = $this->url->link('catalog/manufacturer/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+
+		$data['add'] = $this->url->link('catalog/manufacturer/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('catalog/manufacturer/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['manufacturers'] = array();
@@ -181,7 +181,7 @@ class ControllerCatalogManufacturer extends Controller {
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
@@ -190,7 +190,7 @@ class ControllerCatalogManufacturer extends Controller {
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
 		$data['column_action'] = $this->language->get('column_action');
 
-		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 
@@ -261,7 +261,7 @@ class ControllerCatalogManufacturer extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_form'] = !isset($this->request->get['manufacturer_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
@@ -293,6 +293,12 @@ class ControllerCatalogManufacturer extends Controller {
 			$data['error_name'] = '';
 		}
 
+		if (isset($this->error['keyword'])) {
+			$data['error_keyword'] = $this->error['keyword'];
+		} else {
+			$data['error_keyword'] = '';
+		}
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -318,7 +324,7 @@ class ControllerCatalogManufacturer extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('catalog/manufacturer', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
-		
+
 		if (!isset($this->request->get['manufacturer_id'])) {
 			$data['action'] = $this->url->link('catalog/manufacturer/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
@@ -403,6 +409,20 @@ class ControllerCatalogManufacturer extends Controller {
 
 		if ((utf8_strlen($this->request->post['name']) < 2) || (utf8_strlen($this->request->post['name']) > 64)) {
 			$this->error['name'] = $this->language->get('error_name');
+		}
+
+		if (utf8_strlen($this->request->post['keyword']) > 0) {
+			$this->load->model('catalog/url_alias');
+
+			$url_alias_info = $this->model_catalog_url_alias->getUrlAlias($this->request->post['keyword']);
+
+			if ($url_alias_info && isset($this->request->get['manufacturer_id']) && $url_alias_info['query'] != 'manufacturer_id=' . $this->request->get['manufacturer_id']) {
+				$this->error['keyword'] = sprintf($this->language->get('error_keyword'));
+			}
+
+			if ($url_alias_info && !isset($this->request->get['manufacturer_id'])) {
+				$this->error['keyword'] = sprintf($this->language->get('error_keyword'));
+			}
 		}
 
 		return !$this->error;

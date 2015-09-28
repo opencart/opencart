@@ -35,8 +35,8 @@ class ControllerToolBackup extends Controller {
 		$data['entry_restore'] = $this->language->get('entry_restore');
 		$data['entry_backup'] = $this->language->get('entry_backup');
 
-		$data['button_backup'] = $this->language->get('button_backup');
-		$data['button_restore'] = $this->language->get('button_restore');
+		$data['button_export'] = $this->language->get('button_export');
+		$data['button_import'] = $this->language->get('button_import');
 
 		if (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
@@ -93,7 +93,7 @@ class ControllerToolBackup extends Controller {
 			$this->response->addheader('Expires: 0');
 			$this->response->addheader('Content-Description: File Transfer');
 			$this->response->addheader('Content-Type: application/octet-stream');
-			$this->response->addheader('Content-Disposition: attachment; filename=' . date('Y-m-d_H-i-s', time()) . '_backup.sql');
+			$this->response->addheader('Content-Disposition: attachment; filename=' . DB_DATABASE . '_' . date('Y-m-d_H-i-s', time()) . '_backup.sql');
 			$this->response->addheader('Content-Transfer-Encoding: binary');
 
 			$this->load->model('tool/backup');

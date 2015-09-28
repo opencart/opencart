@@ -24,10 +24,9 @@ class ControllerExtensionTotal extends Controller {
 
 			$this->load->model('user/user_group');
 
-			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'total/' . $this->request->get['extension']);
-			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'total/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'total/' . $this->request->get['extension']);
+			$this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'total/' . $this->request->get['extension']);
 
-			// Call install method if it exsits
 			$this->load->controller('total/' . $this->request->get['extension'] . '/install');
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -52,7 +51,6 @@ class ControllerExtensionTotal extends Controller {
 
 			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
 
-			// Call uninstall method if it exsits
 			$this->load->controller('total/' . $this->request->get['extension'] . '/uninstall');
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -73,11 +71,11 @@ class ControllerExtensionTotal extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('extension/total', 'token=' . $this->session->data['token'], 'SSL')
 		);
-			
+
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
 		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');

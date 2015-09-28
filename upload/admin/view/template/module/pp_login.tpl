@@ -76,7 +76,7 @@
             <div class="col-sm-10">
               <select name="pp_login_customer_group_id" id="input-customer-group" class="form-control">
                 <?php foreach ($customer_groups as $customer_group) { ?>
-                <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
+                <?php if ($customer_group['customer_group_id'] == $pp_login_customer_group_id) { ?>
                 <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
                 <?php } else { ?>
                 <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
@@ -134,7 +134,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_return_url; ?>"><?php echo $entry_return_url; ?></span></label>
             <div class="col-sm-10">
-              <input type="text" readonly="readonly" id="return-url" value="<?php echo $pp_login_return_url; ?>" class="form-control" />
+              <input type="text" readonly id="return-url" value="<?php echo $return_url; ?>" class="form-control" />
             </div>
           </div>
           <div class="form-group">

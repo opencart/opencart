@@ -1,14 +1,14 @@
 <?php echo $header; ?><?php echo $column_left; ?>
 <div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right"> <a href="<?php echo $url_return; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a> </div>
       <h1><?php echo $heading_title; ?></h1>
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
     </div>
   </div>
   <div class="container-fluid">
@@ -37,26 +37,11 @@
             <div class="form-group"> <a id="search-submit" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_search; ?>"><i class="fa fa-search"></i></a> </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <?php foreach ($marketplaces as $id => $name) {?>
-              <label class="radio-inline">
-                <?php if ($default_marketplace == $id) { ?>
-                <input type="radio" name="marketplace" id="marketplace_<?php echo $id ?>" value="<?php echo $id ?>" checked="checked" />
-                <?php } else { ?>
-                <input type="radio" name="marketplace" id="marketplace_<?php echo $id ?>" value="<?php echo $id ?>" />
-                <?php } ?>
-                <?php echo $name ?> </label>
-              <?php } ?>
-            </div>
-          </div>
-        </div>
       </div>
       <div class="well"> <?php echo $text_not_in_catalog; ?><a href="<?php echo $url_advanced; ?>" id="create_new" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_new; ?></a> </div>
     </div>
     <div class="panel-body" id="search-result-container" style="display:none;">
-      <table class="table">
+      <table class="table table-bordered table-hover">
         <thead>
           <tr>
             <th class="text-center"><?php echo $column_image ?></th>
@@ -144,14 +129,14 @@
                   <label class="col-sm-2 control-label" for="sale_price"><?php echo $entry_sale_date; ?></label>
                   <div class="col-sm-3">
                     <div class="input-group date">
-                      <input type="text" class="form-control" id="sale_from" data-format="YYYY-MM-DD" placeholder="<?php echo $entry_from; ?>" name="sale_from">
+                      <input type="text" class="form-control" id="sale_from" data-date-format="YYYY-MM-DD" placeholder="<?php echo $entry_from; ?>" name="sale_from">
                       <span class="input-group-btn">
                       <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
                       </span> </div>
                   </div>
                   <div class="col-sm-3">
                     <div class="input-group date">
-                      <input type="text" class="form-control" id="sale_to" data-format="YYYY-MM-DD" placeholder="<?php echo $entry_to; ?>" name="sale_to">
+                      <input type="text" class="form-control" id="sale_to" data-date-format="YYYY-MM-DD" placeholder="<?php echo $entry_to; ?>" name="sale_to">
                       <span class="input-group-btn">
                       <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
                       </span> </div>
@@ -161,7 +146,7 @@
                   <label class="col-sm-2 control-label" for="start_selling"><?php echo $entry_start_selling; ?></label>
                   <div class="col-sm-3">
                     <div class="input-group date">
-                      <input type="text" class="form-control" id="start_selling" data-format="YYYY-MM-DD" placeholder="<?php echo $entry_start_selling; ?>" name="start_selling">
+                      <input type="text" class="form-control" id="start_selling" data-date-format="YYYY-MM-DD" placeholder="<?php echo $entry_start_selling; ?>" name="start_selling">
                       <span class="input-group-btn">
                       <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
                       </span> </div>
@@ -171,7 +156,7 @@
                   <label class="col-sm-2 control-label" for="input-date-restock"><?php echo $entry_restock_date; ?></label>
                   <div class="col-sm-3">
                     <div class="input-group date">
-                      <input type="text" class="form-control" id="input-date-restock" data-format="YYYY-MM-DD" placeholder="<?php echo $entry_restock_date; ?>" name="restock_date">
+                      <input type="text" class="form-control" id="input-date-restock" data-date-format="YYYY-MM-DD" placeholder="<?php echo $entry_restock_date; ?>" name="restock_date">
                       <span class="input-group-btn">
                       <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
                       </span> </div>
@@ -353,7 +338,7 @@
       $('form input[name="marketplace"]').val($(this).val());
     });
   });
-</script> 
+</script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
   pickTime: false
@@ -367,5 +352,5 @@ $('.datetime').datetimepicker({
 $('.time').datetimepicker({
   pickDate: false
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

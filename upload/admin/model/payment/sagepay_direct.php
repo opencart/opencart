@@ -166,7 +166,7 @@ class ModelPaymentSagepayDirect extends Model {
 			$refund_data['Vendor'] = $this->config->get('sagepay_direct_vendor');
 			$refund_data['VendorTxCode'] = $sagepay_direct_order['sagepay_direct_order_id'] . rand();
 			$refund_data['Amount'] = $amount;
-			$refund_data['Currency'] = $this->currency->getCode();
+			$refund_data['Currency'] = $sagepay_direct_order['currency_code'];
 			$refund_data['Description'] = substr($this->config->get('config_name'), 0, 100);
 			$refund_data['RelatedVPSTxId'] = $sagepay_direct_order['VPSTxId'];
 			$refund_data['RelatedVendorTxCode'] = $sagepay_direct_order['VendorTxCode'];

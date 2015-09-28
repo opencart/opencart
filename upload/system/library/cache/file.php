@@ -35,7 +35,7 @@ class File {
 
 			fclose($handle);
 
-			return unserialize($data);
+			return json_decode($data, true);
 		}
 
 		return false;
@@ -50,7 +50,7 @@ class File {
 
 		flock($handle, LOCK_EX);
 
-		fwrite($handle, serialize($value));
+		fwrite($handle, json_encode($value));
 
 		fflush($handle);
 

@@ -57,7 +57,6 @@ class ModelFraudFraudLabsPro extends Model {
 		$request['format'] = 'json';
 
 		$curl = curl_init();
-		
 		curl_setopt($curl, CURLOPT_URL, 'https://api.fraudlabspro.com/v1/order/screen?' . http_build_query($request));
 		curl_setopt($curl, CURLOPT_HEADER, 0);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);

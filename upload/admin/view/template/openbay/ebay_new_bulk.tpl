@@ -754,8 +754,6 @@
                                   }
 
                                   html_inj += '</div>';
-
-                                id++;
                                 html_inj += '</div>';
                               });
                             html_inj += '</div>';

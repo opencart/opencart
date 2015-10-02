@@ -34,7 +34,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-import"><?php echo $entry_restore; ?></label>
             <div class="col-sm-10">
-              <input type="file" name="import" id="input-import" />
+              <input class="btn btn-default" type="file" name="import" id="input-import" />
             </div>
           </div>
         </form>

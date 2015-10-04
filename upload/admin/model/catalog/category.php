@@ -185,17 +185,16 @@ class ModelCatalogCategory extends Model {
 
 	public function repairCategories($parent_id = 0) {
             
-                //AMP : $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category WHERE parent_id = '" . (int)$parent_id . "'");
-            
-                $sql = "SELECT * FROM " . DB_PREFIX . "category";
-            
+                $sql_id = "";
+                
                 if (empty($parent_id)) {
-			$sql .= " WHERE parent_id IS NULL";
-		} else {
-			$sql .= " WHERE parent_id = '" . (int)$parent_id . "'";
-		}
-                            
-		$query = $this->db->query($sql);
+                    $sql_id = " IS NULL";
+                } else {
+                    $sql_id = " = '" . (int)$parent_id . "'";
+                }
+                
+                //AMP : $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category WHERE parent_id = '" . (int)$parent_id . "'");
+                $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category WHERE parent_id " . $sql_id);
 
 		foreach ($query->rows as $category) {
 			// Delete the path below the current one

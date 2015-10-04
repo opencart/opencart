@@ -637,7 +637,17 @@ class ModelOpenbayEbayProduct extends Model {
 	}
 
 	private function repairCategories($parent_id = 0) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category WHERE parent_id = '" . (int)$parent_id . "'");
+            
+		$sql_id = "";
+                
+                if (empty($parent_id)) {
+                    $sql_id = " IS NULL";
+                } else {
+                    $sql_id = " = '" . (int)$parent_id . "'";
+                }            
+            
+                //AMP : $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category WHERE parent_id = '" . (int)$parent_id . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category WHERE parent_id " . $sql_id );
 
 		foreach ($query->rows as $category) {
 			// Delete the path below the current one

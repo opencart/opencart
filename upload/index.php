@@ -41,11 +41,16 @@ if (isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTPS
 if ($store_query->num_rows) {
 	$config->set('config_store_id', $store_query->row['store_id']);
 } else {
-	$config->set('config_store_id', 0);
+        //AMP : $config->set('config_store_id', 0);
+    
+        $store_query_default = $db->query("SELECT store_id FROM " . DB_PREFIX . "store WHERE `default` = '1'");
+    
+	$config->set('config_store_id', $store_query_default->row['store_id']);
 }
 
 // Settings
-$query = $db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = '0' OR store_id = '" . (int)$config->get('config_store_id') . "' ORDER BY store_id ASC");
+//AMP : $query = $db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id = '0' OR store_id = '" . (int)$config->get('config_store_id') . "' ORDER BY store_id ASC");
+$query = $db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE store_id IN (SELECT store_id FROM " . DB_PREFIX . "store WHERE `default` = '1') OR store_id = '" . (int)$config->get('config_store_id') . "' ORDER BY store_id ASC");
 
 foreach ($query->rows as $result) {
 	if (!$result['serialized']) {

@@ -137,7 +137,9 @@ class ModelOpenbayEbayProduct extends Model {
 												$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = '" . $this->db->escape($id3) . "', `status` = '1', `top` = '1'");
 												$id4 = $this->db->getLastId();
 												$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `name` = '" . $this->db->escape($key5) . "', `language_id` = '" . (int)$this->config->get('config_language_id') . "', `category_id` = '" . $this->db->escape($id4) . "'");
-												$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id4) . "', `store_id` = '0'");
+												// AMP : $this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id4) . "', `store_id` = '0'");
+                                                                                                $this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id4) . "', `store_id` IN (SELECT store_id FROM " . DB_PREFIX . "store WHERE `default` = '1')");
+                                                                                                
 											}
 
 											$cat_link[$key1 . ':' . $key2 . ':' . $key3 . ':' . $key4 . ':' . $key5] = $id4;

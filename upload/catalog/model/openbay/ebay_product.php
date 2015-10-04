@@ -99,7 +99,8 @@ class ModelOpenbayEbayProduct extends Model {
                                                 $this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = NULL, `status` = '1', `top` = '1'");
 						$id1 = $this->db->getLastId();
 						$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `name` = '" . $this->db->escape($key2) . "', `language_id` = '" . (int)$this->config->get('config_language_id') . "', `category_id` = '" . $this->db->escape($id1) . "'");
-						$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id1) . "', `store_id` = '0'");
+                                                // AMP : $this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id1) . "', `store_id` = '0'");
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id1) . "', `store_id` IN (SELECT store_id FROM " . DB_PREFIX . "store WHERE `default` = '1')");
 					}
 
 					if (!empty($cat2)) {

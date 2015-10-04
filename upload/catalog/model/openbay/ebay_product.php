@@ -90,7 +90,8 @@ class ModelOpenbayEbayProduct extends Model {
 			foreach ($categories as $key1 => $cat1) {
 				foreach ($cat1 as $key2 => $cat2) {
 					//final cat, add to array as node
-					$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category`, `" . DB_PREFIX . "category_description` WHERE `" . DB_PREFIX . "category`.`parent_id` = '0' AND `" . DB_PREFIX . "category_description`.`name` = '" . $this->db->escape($key2) . "' LIMIT 1");
+					// AMP : $qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category`, `" . DB_PREFIX . "category_description` WHERE `" . DB_PREFIX . "category`.`parent_id` = '0' AND `" . DB_PREFIX . "category_description`.`name` = '" . $this->db->escape($key2) . "' LIMIT 1");
+                                        $qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category`, `" . DB_PREFIX . "category_description` WHERE `" . DB_PREFIX . "category`.`parent_id` = NULL AND `" . DB_PREFIX . "category_description`.`name` = '" . $this->db->escape($key2) . "' LIMIT 1");
 
 					if ($qry->num_rows != 0) {
 						$id1 = $qry->row['category_id'];

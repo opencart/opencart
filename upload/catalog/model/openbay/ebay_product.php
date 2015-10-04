@@ -542,7 +542,8 @@ class ModelOpenbayEbayProduct extends Model {
 
 			$id = $this->db->getLastId();
 
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_to_store` SET `manufacturer_id` = '" . (int)$id . "', `store_id` = '0'");
+			// AMP : $this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_to_store` SET `manufacturer_id` = '" . (int)$id . "', `store_id` = '0'");
+                        $this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_to_store` SET `manufacturer_id` = '" . (int)$id . "', `store_id` IN (SELECT store_id FROM " . DB_PREFIX . "store WHERE `default` = '1')");
 
 			return $id;
 		}

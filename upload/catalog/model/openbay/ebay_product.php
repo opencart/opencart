@@ -276,7 +276,8 @@ class ModelOpenbayEbayProduct extends Model {
 				$this->openbay->ebay->log('Product description done');
 
 				//Insert product store link
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "product_to_store` SET `product_id` = '" . (int)$product_id . "', `store_id` = '0'");
+				//AMP : $this->db->query("INSERT INTO `" . DB_PREFIX . "product_to_store` SET `product_id` = '" . (int)$product_id . "', `store_id` = '0'");
+                                $this->db->query("INSERT INTO `" . DB_PREFIX . "product_to_store` SET `product_id` = '" . (int)$product_id . "', `store_id` IN (SELECT store_id FROM " . DB_PREFIX . "store WHERE `default` = '1')");
 				$this->openbay->ebay->log('Store link done');
 
 				//Create any attributes from eBay for the item

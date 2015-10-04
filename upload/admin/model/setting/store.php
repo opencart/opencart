@@ -3,6 +3,7 @@ class ModelSettingStore extends Model {
 	public function addStore($data) {
 		$this->event->trigger('pre.admin.store.add', $data);
 
+                //AMP : $this->db->query("INSERT INTO " . DB_PREFIX . "store SET name = '" . $this->db->escape($data['config_name']) . "', `url` = '" . $this->db->escape($data['config_url']) . "', `ssl` = '" . $this->db->escape($data['config_ssl']) . "'");
 		$this->db->query("INSERT INTO " . DB_PREFIX . "store SET name = '" . $this->db->escape($data['config_name']) . "', `url` = '" . $this->db->escape($data['config_url']) . "', `ssl` = '" . $this->db->escape($data['config_ssl']) . "', `default` = '0'");
 
 		$store_id = $this->db->getLastId();

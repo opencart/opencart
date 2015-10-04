@@ -1485,22 +1485,14 @@ final class Ebay {
 
 	public function editSetting($group, $data, $store_id = 0) {
             
-                $sql_id = "";
-                
-                if (empty($store_id)) {
-                    $sql_id = " IS NULL";
-                } else {
-                    $sql_id = " = '" . (int)$store_id . "'";
-                }  
-            
 		//AMP : $this->db->query("DELETE FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($group) . "'");
-                $this->db->query("DELETE FROM " . DB_PREFIX . "setting WHERE store_id " . $sql_id . " AND `code` = '" . $this->db->escape($group) . "'");
+                $this->db->query("DELETE FROM " . DB_PREFIX . "setting WHERE store_id " . getIdSql($store_id) . " AND `code` = '" . $this->db->escape($group) . "'");
 
 		foreach ($data as $key => $value) {
 			if (!is_array($value)) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '" . (int)$store_id . "', `code` = '" . $this->db->escape($group) . "', `key` = '" . $this->db->escape($key) . "', `value` = '" . $this->db->escape($value) . "'");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id " . getIdSql($store_id) . ", `code` = '" . $this->db->escape($group) . "', `key` = '" . $this->db->escape($key) . "', `value` = '" . $this->db->escape($value) . "'");
 			} else {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '" . (int)$store_id . "', `code` = '" . $this->db->escape($group) . "', `key` = '" . $this->db->escape($key) . "', `value` = '" . $this->db->escape(serialize($value)) . "', serialized = '1'");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id " . getIdSql($store_id) . ", `code` = '" . $this->db->escape($group) . "', `key` = '" . $this->db->escape($key) . "', `value` = '" . $this->db->escape(serialize($value)) . "', serialized = '1'");
 			}
 		}
 	}

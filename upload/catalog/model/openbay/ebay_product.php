@@ -95,7 +95,8 @@ class ModelOpenbayEbayProduct extends Model {
 					if ($qry->num_rows != 0) {
 						$id1 = $qry->row['category_id'];
 					} else {
-						$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = '0', `status` = '1', `top` = '1'");
+						// AMP : $this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = '0', `status` = '1', `top` = '1'");
+                                                $this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = NULL, `status` = '1', `top` = '1'");
 						$id1 = $this->db->getLastId();
 						$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `name` = '" . $this->db->escape($key2) . "', `language_id` = '" . (int)$this->config->get('config_language_id') . "', `category_id` = '" . $this->db->escape($id1) . "'");
 						$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id1) . "', `store_id` = '0'");
@@ -111,7 +112,8 @@ class ModelOpenbayEbayProduct extends Model {
 								$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = '" . $this->db->escape($id1) . "', `status` = '1', `top` = '1'");
 								$id2 = $this->db->getLastId();
 								$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `name` = '" . $this->db->escape($key3) . "', `language_id` = '" . (int)$this->config->get('config_language_id') . "', `category_id` = '" . $this->db->escape($id2) . "'");
-								$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id2) . "', `store_id` = '0'");
+								// AMP : $this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id2) . "', `store_id` = '0'");
+                                                                $this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id2) . "', `store_id` IN (SELECT store_id FROM " . DB_PREFIX . "store WHERE `default` = '1')");
 							}
 
 							if (!empty($cat3)) {
@@ -124,7 +126,8 @@ class ModelOpenbayEbayProduct extends Model {
 										$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = '" . $this->db->escape($id2) . "', `status` = '1', `top` = '1'");
 										$id3 = $this->db->getLastId();
 										$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `name` = '" . $this->db->escape($key4) . "', `language_id` = '" . (int)$this->config->get('config_language_id') . "', `category_id` = '" . $id3 . "'");
-										$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id3) . "', `store_id` = '0'");
+										// AMP : $this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id3) . "', `store_id` = '0'");
+                                                                                $this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id3) . "', `store_id` IN (SELECT store_id FROM " . DB_PREFIX . "store WHERE `default` = '1')");
 									}
 
 									if (!empty($cat4)) {

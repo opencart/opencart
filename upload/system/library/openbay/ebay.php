@@ -1484,7 +1484,17 @@ final class Ebay {
 	}
 
 	public function editSetting($group, $data, $store_id = 0) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($group) . "'");
+            
+                $sql_id = "";
+                
+                if (empty($store_id)) {
+                    $sql_id = " IS NULL";
+                } else {
+                    $sql_id = " = '" . (int)$store_id . "'";
+                }  
+            
+		//AMP : $this->db->query("DELETE FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($group) . "'");
+                $this->db->query("DELETE FROM " . DB_PREFIX . "setting WHERE store_id " . $sql_id . " AND `code` = '" . $this->db->escape($group) . "'");
 
 		foreach ($data as $key => $value) {
 			if (!is_array($value)) {

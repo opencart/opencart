@@ -2,17 +2,9 @@
 class ModelSettingSetting extends Model {
 	public function getSetting($code, $store_id = 0) {
 		$data = array();
-                
-                $sql_id = "";
-                
-                if (empty($store_id)) {
-                    $sql_id = " IS NULL";
-                } else {
-                    $sql_id = " = '" . (int)$store_id . "'";
-                }                
 
 		//AMP : $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code) . "'");
-                $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id " . $sql_id . " AND `code` = '" . $this->db->escape($code) . "'");
+                $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id " . $this->getIdSql($store_id) . " AND `code` = '" . $this->db->escape($code) . "'");
 
 		foreach ($query->rows as $result) {
 			if (!$result['serialized']) {
@@ -24,4 +16,17 @@ class ModelSettingSetting extends Model {
 
 		return $data;
 	}
+        
+        private function getIdSql($id) {
+                $sql_id = "";
+                
+                if (empty($store_id)) {
+                    $sql_id = " IS NULL";
+                } else {
+                    $sql_id = " = '" . (int)$id . "'";
+                }  
+                
+                return $sql_id;
+        }
+        
 }

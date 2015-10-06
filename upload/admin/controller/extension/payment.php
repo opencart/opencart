@@ -140,10 +140,10 @@ class ControllerExtensionPayment extends Controller {
 					'link'       => $link,
 					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'install'   => $this->url->link('extension/payment/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
-					'uninstall' => $this->url->link('extension/payment/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
-					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('payment/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL')
+					'install'    => $this->url->link('extension/payment/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
+					'uninstall'  => $this->url->link('extension/payment/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
+					'installed'  => in_array($extension, $extensions),
+					'edit'       => $this->url->link('payment/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL')
 				);
 			}
 		}

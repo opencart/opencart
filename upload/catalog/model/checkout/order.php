@@ -585,6 +585,8 @@ class ModelCheckoutOrder extends Model {
 				}
 
 				// Order Totals
+				$data['totals'] = array();
+				
 				$order_total_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id = '" . (int)$order_id . "' ORDER BY sort_order ASC");
 
 				foreach ($order_total_query->rows as $total) {

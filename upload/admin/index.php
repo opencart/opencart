@@ -28,7 +28,10 @@ $db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_P
 $registry->set('db', $db);
 
 // Settings
-$query = $db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '0'");
+//AMP : $query = $db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '0'");
+
+$query = $db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id IN (SELECT store_id FROM " . DB_PREFIX . "store WHERE `default` = '1')");
+
 
 foreach ($query->rows as $setting) {
 	if (!$setting['serialized']) {

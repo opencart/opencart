@@ -90,15 +90,18 @@ class ModelOpenbayEbayProduct extends Model {
 			foreach ($categories as $key1 => $cat1) {
 				foreach ($cat1 as $key2 => $cat2) {
 					//final cat, add to array as node
-					$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category`, `" . DB_PREFIX . "category_description` WHERE `" . DB_PREFIX . "category`.`parent_id` = '0' AND `" . DB_PREFIX . "category_description`.`name` = '" . $this->db->escape($key2) . "' LIMIT 1");
+					// AMP : $qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category`, `" . DB_PREFIX . "category_description` WHERE `" . DB_PREFIX . "category`.`parent_id` = '0' AND `" . DB_PREFIX . "category_description`.`name` = '" . $this->db->escape($key2) . "' LIMIT 1");
+                                        $qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category`, `" . DB_PREFIX . "category_description` WHERE `" . DB_PREFIX . "category`.`parent_id` = NULL AND `" . DB_PREFIX . "category_description`.`name` = '" . $this->db->escape($key2) . "' LIMIT 1");
 
 					if ($qry->num_rows != 0) {
 						$id1 = $qry->row['category_id'];
 					} else {
-						$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = '0', `status` = '1', `top` = '1'");
+						// AMP : $this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = '0', `status` = '1', `top` = '1'");
+                                                $this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = NULL, `status` = '1', `top` = '1'");
 						$id1 = $this->db->getLastId();
 						$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `name` = '" . $this->db->escape($key2) . "', `language_id` = '" . (int)$this->config->get('config_language_id') . "', `category_id` = '" . $this->db->escape($id1) . "'");
-						$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id1) . "', `store_id` = '0'");
+                                                // AMP : $this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id1) . "', `store_id` = '0'");
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id1) . "', `store_id` IN (SELECT store_id FROM " . DB_PREFIX . "store WHERE `default` = '1')");
 					}
 
 					if (!empty($cat2)) {
@@ -111,7 +114,8 @@ class ModelOpenbayEbayProduct extends Model {
 								$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = '" . $this->db->escape($id1) . "', `status` = '1', `top` = '1'");
 								$id2 = $this->db->getLastId();
 								$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `name` = '" . $this->db->escape($key3) . "', `language_id` = '" . (int)$this->config->get('config_language_id') . "', `category_id` = '" . $this->db->escape($id2) . "'");
-								$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id2) . "', `store_id` = '0'");
+								// AMP : $this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id2) . "', `store_id` = '0'");
+                                                                $this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id2) . "', `store_id` IN (SELECT store_id FROM " . DB_PREFIX . "store WHERE `default` = '1')");
 							}
 
 							if (!empty($cat3)) {
@@ -124,7 +128,8 @@ class ModelOpenbayEbayProduct extends Model {
 										$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = '" . $this->db->escape($id2) . "', `status` = '1', `top` = '1'");
 										$id3 = $this->db->getLastId();
 										$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `name` = '" . $this->db->escape($key4) . "', `language_id` = '" . (int)$this->config->get('config_language_id') . "', `category_id` = '" . $id3 . "'");
-										$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id3) . "', `store_id` = '0'");
+										// AMP : $this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id3) . "', `store_id` = '0'");
+                                                                                $this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id3) . "', `store_id` IN (SELECT store_id FROM " . DB_PREFIX . "store WHERE `default` = '1')");
 									}
 
 									if (!empty($cat4)) {
@@ -137,7 +142,9 @@ class ModelOpenbayEbayProduct extends Model {
 												$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = '" . $this->db->escape($id3) . "', `status` = '1', `top` = '1'");
 												$id4 = $this->db->getLastId();
 												$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `name` = '" . $this->db->escape($key5) . "', `language_id` = '" . (int)$this->config->get('config_language_id') . "', `category_id` = '" . $this->db->escape($id4) . "'");
-												$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id4) . "', `store_id` = '0'");
+												// AMP : $this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id4) . "', `store_id` = '0'");
+                                                                                                $this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . $this->db->escape($id4) . "', `store_id` IN (SELECT store_id FROM " . DB_PREFIX . "store WHERE `default` = '1')");
+                                                                                                
 											}
 
 											$cat_link[$key1 . ':' . $key2 . ':' . $key3 . ':' . $key4 . ':' . $key5] = $id4;
@@ -274,7 +281,8 @@ class ModelOpenbayEbayProduct extends Model {
 				$this->openbay->ebay->log('Product description done');
 
 				//Insert product store link
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "product_to_store` SET `product_id` = '" . (int)$product_id . "', `store_id` = '0'");
+				//AMP : $this->db->query("INSERT INTO `" . DB_PREFIX . "product_to_store` SET `product_id` = '" . (int)$product_id . "', `store_id` = '0'");
+                                $this->db->query("INSERT INTO `" . DB_PREFIX . "product_to_store` SET `product_id` = '" . (int)$product_id . "', `store_id` IN (SELECT store_id FROM " . DB_PREFIX . "store WHERE `default` = '1')");
 				$this->openbay->ebay->log('Store link done');
 
 				//Create any attributes from eBay for the item
@@ -536,7 +544,8 @@ class ModelOpenbayEbayProduct extends Model {
 
 			$id = $this->db->getLastId();
 
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_to_store` SET `manufacturer_id` = '" . (int)$id . "', `store_id` = '0'");
+			// AMP : $this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_to_store` SET `manufacturer_id` = '" . (int)$id . "', `store_id` = '0'");
+                        $this->db->query("INSERT INTO `" . DB_PREFIX . "manufacturer_to_store` SET `manufacturer_id` = '" . (int)$id . "', `store_id` IN (SELECT store_id FROM " . DB_PREFIX . "store WHERE `default` = '1')");
 
 			return $id;
 		}
@@ -628,7 +637,9 @@ class ModelOpenbayEbayProduct extends Model {
 	}
 
 	private function repairCategories($parent_id = 0) {
-		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category WHERE parent_id = '" . (int)$parent_id . "'");
+            
+                //AMP : $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category WHERE parent_id = '" . (int)$parent_id . "'");
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category WHERE parent_id " . getIdSql($parent_id));
 
 		foreach ($query->rows as $category) {
 			// Delete the path below the current one
@@ -637,7 +648,8 @@ class ModelOpenbayEbayProduct extends Model {
 			// Fix for records with no paths
 			$level = 0;
 
-			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE category_id = '" . (int)$parent_id . "' ORDER BY level ASC");
+                        //AMP : $query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE category_id = '" . (int)$parent_id . "' ORDER BY level ASC");
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category_path` WHERE category_id " . getIdSql($parent_id) . " ORDER BY level ASC");
 
 			foreach ($query->rows as $result) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "category_path` SET category_id = '" . (int)$category['category_id'] . "', `path_id` = '" . (int)$result['path_id'] . "', level = '" . (int)$level . "'");

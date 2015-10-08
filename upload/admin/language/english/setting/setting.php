@@ -16,7 +16,6 @@ $_['text_stock']                       = 'Stock';
 $_['text_affiliate']                   = 'Affiliates';
 $_['text_captcha']                     = 'Captcha';
 $_['text_register']                    = 'register';
-$_['text_return']                      = 'Returns';
 $_['text_review']                      = 'Reviews';
 $_['text_return']                      = 'Returns';
 $_['text_contact']                     = 'Contact';

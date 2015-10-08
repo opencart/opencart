@@ -219,11 +219,19 @@ class ControllerCommonFileManager extends Controller {
 		if (!is_dir($directory)) {
 			$json['error'] = $this->language->get('error_directory');
 		}
+		
+		$files = $this->reArrayFiles($this->request->files['file']);
+		
+		foreach($files as $file) {			
+			if (empty($file['name']) && !is_file($file['tmp_name'])) {
+				$json['error'] = $this->language->get('error_upload');
+			}
+		}
 
 		if (!$json) {
-			if (!empty($this->request->files['file']['name']) && is_file($this->request->files['file']['tmp_name'])) {
+			foreach($files as $file) {
 				// Sanitize the filename
-				$filename = basename(html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8'));
+				$filename = basename(html_entity_decode($file['name'], ENT_QUOTES, 'UTF-8'));
 
 				// Validate the filename length
 				if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 255)) {
@@ -251,28 +259,30 @@ class ControllerCommonFileManager extends Controller {
 					'image/gif'
 				);
 
-				if (!in_array($this->request->files['file']['type'], $allowed)) {
+				if (!in_array($file['type'], $allowed)) {
 					$json['error'] = $this->language->get('error_filetype');
 				}
 
 				// Check to see if any PHP files are trying to be uploaded
-				$content = file_get_contents($this->request->files['file']['tmp_name']);
+				$content = file_get_contents($file['tmp_name']);
 
 				if (preg_match('/\<\?php/i', $content)) {
 					$json['error'] = $this->language->get('error_filetype');
 				}
 
 				// Return any upload error
-				if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
-					$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
+				if ($file['error'] != UPLOAD_ERR_OK) {
+					$json['error'] = $this->language->get('error_upload_' . $file['error']);
 				}
-			} else {
-				$json['error'] = $this->language->get('error_upload');
 			}
 		}
 
 		if (!$json) {
-			move_uploaded_file($this->request->files['file']['tmp_name'], $directory . '/' . $filename);
+			foreach($files as $file) {
+				$filename = basename(html_entity_decode($file['name'], ENT_QUOTES, 'UTF-8'));
+				
+				move_uploaded_file($file['tmp_name'], $directory . '/' . $filename);
+			}
 
 			$json['success'] = $this->language->get('text_uploaded');
 		}
@@ -409,5 +419,20 @@ class ControllerCommonFileManager extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+	private function reArrayFiles(&$file_post) {
+
+		$file_ary = array();
+		$file_count = count($file_post['name']);
+		$file_keys = array_keys($file_post);
+
+		for ($i=0; $i<$file_count; $i++) {
+			foreach ($file_keys as $key) {
+				$file_ary[$i][$key] = $file_post[$key][$i];
+			}
+		}
+
+		return $file_ary;
 	}
 }

@@ -132,21 +132,14 @@ class ControllerProductCategory extends Controller {
 
 			$url = '';
 
-			if (isset($this->request->get['filter'])) {
-				$url .= '&filter=' . $this->request->get['filter'];
+			$getParams = array('filter', 'sort', 'order', 'limit');
+
+			foreach($getParams as $param) {
+				if (isset($this->request->get[$param])) {
+					$url .= '&' . $param . $this->request->get[$param];
+				}
 			}
 
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['limit'])) {
-				$url .= '&limit=' . $this->request->get['limit'];
-			}
 
 			$data['categories'] = array();
 
@@ -294,16 +287,12 @@ class ControllerProductCategory extends Controller {
 
 			$url = '';
 
-			if (isset($this->request->get['filter'])) {
-				$url .= '&filter=' . $this->request->get['filter'];
-			}
+			$getParams = array('filter', 'sort', 'order');
 
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
+			foreach($getParams as $param) {
+				if (isset($this->request->get[$param])) {
+					$url .= '&' . $param . $this->request->get[$param];
+				}
 			}
 
 			$data['limits'] = array();
@@ -322,21 +311,14 @@ class ControllerProductCategory extends Controller {
 
 			$url = '';
 
-			if (isset($this->request->get['filter'])) {
-				$url .= '&filter=' . $this->request->get['filter'];
+			$getParams = array('filter', 'sort', 'order', 'limit');
+
+			foreach($getParams as $param) {
+				if (isset($this->request->get[$param])) {
+					$url .= '&' . $param . $this->request->get[$param];
+				}
 			}
 
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['limit'])) {
-				$url .= '&limit=' . $this->request->get['limit'];
-			}
 
 			$pagination = new Pagination();
 			$pagination->total = $product_total;
@@ -382,29 +364,14 @@ class ControllerProductCategory extends Controller {
 		} else {
 			$url = '';
 
-			if (isset($this->request->get['path'])) {
-				$url .= '&path=' . $this->request->get['path'];
+			$getParams = array('path', 'filter', 'sort', 'order', 'page', 'limit');
+
+			foreach($getParams as $param) {
+				if (isset($this->request->get[$param])) {
+					$url .= '&' . $param . $this->request->get[$param];
+				}
 			}
 
-			if (isset($this->request->get['filter'])) {
-				$url .= '&filter=' . $this->request->get['filter'];
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			if (isset($this->request->get['limit'])) {
-				$url .= '&limit=' . $this->request->get['limit'];
-			}
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_error'),

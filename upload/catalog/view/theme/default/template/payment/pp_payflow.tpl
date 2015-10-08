@@ -73,7 +73,7 @@
 </form>
 <div class="buttons">
   <div class="pull-right">
-    <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+    <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" data-loading-text="<?php echo $text_wait; ?>" class="btn btn-primary" />
   </div>
 </div>
 <script type="text/javascript"><!--

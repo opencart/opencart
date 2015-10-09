@@ -367,7 +367,7 @@ class ControllerShippingRoyalMail extends Controller {
 		// International Economy
 		if (isset($this->request->post['royal_mail_international_economy_rate'])) {
 			$data['royal_mail_international_economy_rate'] = $this->request->post['royal_mail_international_economy_rate'];
-		} elseif ($this->config->has('royal_mail_economy_rate')) {
+		} elseif ($this->config->has('royal_mail_international_economy_rate')) {
 			$data['royal_mail_international_economy_rate'] = $this->config->get('royal_mail_international_economy_rate');
 		} else {
 			$data['royal_mail_international_economy_rate'] = '0.02:0.81,0.06:1.43,0.1:2.80,0.25:3.65,0.5:5.10,0.75:6.55,1:8.00,1.25:9.45,1.5:10.90,1.75:12.35,2:13.80';

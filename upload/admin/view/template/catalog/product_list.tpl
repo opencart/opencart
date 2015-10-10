@@ -69,6 +69,19 @@
                   <?php } ?>
                 </select>
               </div>
+              <div class="form-group">
+                <label class="control-label" for="input-category"><?php echo $column_category; ?></label>
+                <select name="filter_category" id="input-category" class="form-control" >
+              <option value="*"></option>
+              <?php foreach ($categories as $category) { ?>
+                <?php if ($category['category_id']==$filter_category) { ?>
+                  <option value="<?php echo $category['category_id']; ?>" selected="selected"><?php echo $category['name']; ?></option>
+                <?php } else { ?>
+                  <option value="<?php echo $category['category_id']; ?>"><?php echo $category['name']; ?></option> 
+                <?php } ?>
+              <?php } ?>
+              </select>
+              </div>
               <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
             </div>
           </div>
@@ -94,6 +107,11 @@
                     <a href="<?php echo $sort_price; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_price; ?></a>
                     <?php } else { ?>
                     <a href="<?php echo $sort_price; ?>"><?php echo $column_price; ?></a>
+                    <?php } ?></td>
+                  <td class="text-right"><?php if ($sort == 'p2c.category_id') { ?>
+                    <a href="<?php echo $sort_category; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_category; ?></a>
+                    <?php } else { ?>
+                    <a href="<?php echo $sort_category; ?>"><?php echo $column_category; ?></a>
                     <?php } ?></td>
                   <td class="text-right"><?php if ($sort == 'p.quantity') { ?>
                     <a href="<?php echo $sort_quantity; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_quantity; ?></a>
@@ -130,6 +148,11 @@
                     <?php } else { ?>
                     <?php echo $product['price']; ?>
                     <?php } ?></td>
+                  <td class="text-right">
+                    <?php foreach ($categories as $category) { ?>
+                    <?php if (in_array($category['category_id'], $product['category'])) { ?>
+                    <?php echo $category['name'];?><br>
+                    <?php } ?> <?php } ?></td>
                   <td class="text-right"><?php if ($product['quantity'] <= 0) { ?>
                     <span class="label label-warning"><?php echo $product['quantity']; ?></span>
                     <?php } elseif ($product['quantity'] <= 5) { ?>
@@ -171,6 +194,12 @@ $('#button-filter').on('click', function() {
 
 	if (filter_model) {
 		url += '&filter_model=' + encodeURIComponent(filter_model);
+	}
+
+	var filter_category = $('select[name=\'filter_category\']').val();     
+	
+	if (filter_category != '*') {
+		url += '&filter_category=' + encodeURIComponent(filter_category);
 	}
 
 	var filter_price = $('input[name=\'filter_price\']').val();

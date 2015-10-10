@@ -550,12 +550,12 @@ class ControllerCatalogCategory extends Controller {
 			if ($url_alias_info && !isset($this->request->get['category_id'])) {
 				$this->error['keyword'] = sprintf($this->language->get('error_keyword'));
 			}
-
-			if ($this->error && !isset($this->error['warning'])) {
-				$this->error['warning'] = $this->language->get('error_warning');
-			}
 		}
-
+		
+		if ($this->error && !isset($this->error['warning'])) {
+			$this->error['warning'] = $this->language->get('error_warning');
+		}
+		
 		return !$this->error;
 	}
 

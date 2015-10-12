@@ -112,7 +112,7 @@ class ControllerAccountWishList extends Controller {
 					'remove'     => $this->url->link('account/wishlist', 'remove=' . $product_info['product_id'])
 				);
 			} else {
-				$this->model_account_wishlist->deleteWishlist($product_id);
+				$this->model_account_wishlist->deleteWishlist($result['product_id']);
 			}
 		}
 

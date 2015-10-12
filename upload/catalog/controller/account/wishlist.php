@@ -7,7 +7,7 @@ class ControllerAccountWishList extends Controller {
 			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
 		}
 
-		$this->load->language('account/wishlist');
+		$this->language->load('account/wishlist');
 
 		$this->load->model('account/wishlist');
 
@@ -133,7 +133,7 @@ class ControllerAccountWishList extends Controller {
 	}
 
 	public function add() {
-		$this->load->language('account/wishlist');
+		$this->language->load('account/wishlist');
 
 		$json = array();
 

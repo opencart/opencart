@@ -3,7 +3,7 @@ class ControllerModuleStore extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/store');
+		$this->language->load('module/store');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

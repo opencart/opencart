@@ -3,7 +3,7 @@ class ControllerFeedGoogleBase extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('feed/google_base');
+		$this->language->load('feed/google_base');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -99,7 +99,7 @@ class ControllerFeedGoogleBase extends Controller {
 	}
 
 	public function import() {
-		$this->load->language('feed/google_base');
+		$this->language->load('feed/google_base');
 
 		$json = array();
 
@@ -150,7 +150,7 @@ class ControllerFeedGoogleBase extends Controller {
 	}
 
 	public function category() {
-		$this->load->language('feed/google_base');
+		$this->language->load('feed/google_base');
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -198,7 +198,7 @@ class ControllerFeedGoogleBase extends Controller {
 	}
 
 	public function addCategory() {
-		$this->load->language('feed/google_base');
+		$this->language->load('feed/google_base');
 
 		$json = array();
 
@@ -217,7 +217,7 @@ class ControllerFeedGoogleBase extends Controller {
 	}
 
 	public function removeCategory() {
-		$this->load->language('feed/google_base');
+		$this->language->load('feed/google_base');
 
 		$json = array();
 

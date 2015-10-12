@@ -3,7 +3,7 @@ class ControllerPaymentLiqPay extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/liqpay');
+		$this->language->load('payment/liqpay');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

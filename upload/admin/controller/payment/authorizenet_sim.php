@@ -3,7 +3,7 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/authorizenet_sim');
+		$this->language->load('payment/authorizenet_sim');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

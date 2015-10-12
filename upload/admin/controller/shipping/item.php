@@ -3,7 +3,7 @@ class ControllerShippingItem extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('shipping/item');
+		$this->language->load('shipping/item');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

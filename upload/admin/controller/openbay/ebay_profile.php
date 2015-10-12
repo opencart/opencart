@@ -3,7 +3,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 	private $error = array();
 
 	public function profileAll() {
-		$data = $this->load->language('openbay/ebay_profile');
+		$data = $this->language->load('openbay/ebay_profile');
 
 		$this->load->model('openbay/ebay_profile');
 
@@ -60,7 +60,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 	}
 
 	public function add() {
-		$data = $this->load->language('openbay/ebay_profile');
+		$data = $this->language->load('openbay/ebay_profile');
 
 		$this->load->model('openbay/ebay_profile');
 
@@ -95,7 +95,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 	}
 
 	public function edit() {
-		$data = $this->load->language('openbay/ebay_profile');
+		$data = $this->language->load('openbay/ebay_profile');
 
 		$this->load->model('openbay/ebay_profile');
 
@@ -286,7 +286,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 	public function profileGet() {
 		$this->load->model('openbay/ebay_profile');
 		$this->load->model('openbay/ebay');
-		$this->load->language('openbay/ebay_profile');
+		$this->language->load('openbay/ebay_profile');
 
 		$profile_info = $this->model_openbay_ebay_profile->get($this->request->get['ebay_profile_id']);
 		$data = array();

@@ -3,7 +3,7 @@ class ControllerMarketingAffiliate extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('marketing/affiliate');
+		$this->language->load('marketing/affiliate');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerMarketingAffiliate extends Controller {
 	}
 
 	public function add() {
-		$this->load->language('marketing/affiliate');
+		$this->language->load('marketing/affiliate');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -65,7 +65,7 @@ class ControllerMarketingAffiliate extends Controller {
 	}
 
 	public function edit() {
-		$this->load->language('marketing/affiliate');
+		$this->language->load('marketing/affiliate');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -117,7 +117,7 @@ class ControllerMarketingAffiliate extends Controller {
 	}
 
 	public function delete() {
-		$this->load->language('marketing/affiliate');
+		$this->language->load('marketing/affiliate');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -171,7 +171,7 @@ class ControllerMarketingAffiliate extends Controller {
 	}
 
 	public function approve() {
-		$this->load->language('marketing/affiliate');
+		$this->language->load('marketing/affiliate');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -223,7 +223,7 @@ class ControllerMarketingAffiliate extends Controller {
 	}
 
 	public function unlock() {
-		$this->load->language('marketing/affiliate');
+		$this->language->load('marketing/affiliate');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -1133,7 +1133,7 @@ class ControllerMarketingAffiliate extends Controller {
 	}
 
 	public function transaction() {
-		$this->load->language('marketing/affiliate');
+		$this->language->load('marketing/affiliate');
 
 		$this->load->model('marketing/affiliate');
 
@@ -1180,7 +1180,7 @@ class ControllerMarketingAffiliate extends Controller {
 	}
 
 	public function addTransaction() {
-		$this->load->language('marketing/affiliate');
+		$this->language->load('marketing/affiliate');
 
 		$json = array();
 

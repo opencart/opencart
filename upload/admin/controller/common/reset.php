@@ -22,7 +22,7 @@ class ControllerCommonReset extends Controller {
 		$user_info = $this->model_user_user->getUserByCode($code);
 
 		if ($user_info) {
-			$this->load->language('common/reset');
+			$this->language->load('common/reset');
 
 			$this->document->setTitle($this->language->get('heading_title'));
 

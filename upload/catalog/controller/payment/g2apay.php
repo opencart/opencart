@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentG2APay extends Controller {
 	public function index() {
-		$this->load->language('payment/g2apay');
+		$this->language->load('payment/g2apay');
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
 

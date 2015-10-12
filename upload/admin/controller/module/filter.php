@@ -3,7 +3,7 @@ class ControllerModulefilter extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/filter');
+		$this->language->load('module/filter');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

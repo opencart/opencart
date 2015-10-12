@@ -3,7 +3,7 @@ class ControllerToolUpload extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('tool/upload');
+		$this->language->load('tool/upload');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerToolUpload extends Controller {
 	}
 
 	public function delete() {
-		$this->load->language('tool/upload');
+		$this->language->load('tool/upload');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -293,7 +293,7 @@ class ControllerToolUpload extends Controller {
 				exit('Error: Headers already sent out!');
 			}
 		} else {
-			$this->load->language('error/not_found');
+			$this->language->load('error/not_found');
 
 			$this->document->setTitle($this->language->get('heading_title'));
 
@@ -322,7 +322,7 @@ class ControllerToolUpload extends Controller {
 	}
 
 	public function upload() {
-		$this->load->language('sale/order');
+		$this->language->load('sale/order');
 
 		$json = array();
 

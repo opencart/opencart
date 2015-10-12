@@ -1,8 +1,8 @@
 <?php
 class ControllerOpenbayAmazonProduct extends Controller {
 	public function index() {
-		$this->load->language('catalog/product');
-		$data = $this->load->language('openbay/amazon_listing');
+		$this->language->load('catalog/product');
+		$data = $this->language->load('openbay/amazon_listing');
 
 		$this->load->model('openbay/amazon');
 		$this->load->model('catalog/product');
@@ -319,7 +319,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 	}
 
 	private function uploadItems() {
-		$this->load->language('openbay/amazon_listing');
+		$this->language->load('openbay/amazon_listing');
 		$this->load->model('openbay/amazon');
 		$logger = new Log('amazon_product.log');
 

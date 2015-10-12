@@ -3,7 +3,7 @@ class ControllerPaymentTwoCheckout extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/twocheckout');
+		$this->language->load('payment/twocheckout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

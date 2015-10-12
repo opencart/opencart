@@ -43,7 +43,7 @@ class ControllerCommonHeader extends Controller {
 			$data['logo'] = '';
 		}
 
-		$this->load->language('common/header');
+		$this->language->load('common/header');
 
 		$data['text_home'] = $this->language->get('text_home');
 

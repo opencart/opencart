@@ -3,7 +3,7 @@ class ControllerSaleVoucher extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('sale/voucher');
+		$this->language->load('sale/voucher');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerSaleVoucher extends Controller {
 	}
 
 	public function add() {
-		$this->load->language('sale/voucher');
+		$this->language->load('sale/voucher');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -45,7 +45,7 @@ class ControllerSaleVoucher extends Controller {
 	}
 
 	public function edit() {
-		$this->load->language('sale/voucher');
+		$this->language->load('sale/voucher');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -77,7 +77,7 @@ class ControllerSaleVoucher extends Controller {
 	}
 
 	public function delete() {
-		$this->load->language('sale/voucher');
+		$this->language->load('sale/voucher');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -537,7 +537,7 @@ class ControllerSaleVoucher extends Controller {
 	}
 
 	public function history() {
-		$this->load->language('sale/voucher');
+		$this->language->load('sale/voucher');
 
 		$this->load->model('sale/voucher');
 
@@ -583,7 +583,7 @@ class ControllerSaleVoucher extends Controller {
 	}
 
 	public function send() {
-		$this->load->language('sale/voucher');
+		$this->language->load('sale/voucher');
 
 		$json = array();
 

@@ -3,7 +3,7 @@ class ControllerShippingWeight extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('shipping/weight');
+		$this->language->load('shipping/weight');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

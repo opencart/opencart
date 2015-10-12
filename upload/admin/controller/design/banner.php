@@ -3,7 +3,7 @@ class ControllerDesignBanner extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('design/banner');
+		$this->language->load('design/banner');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerDesignBanner extends Controller {
 	}
 
 	public function add() {
-		$this->load->language('design/banner');
+		$this->language->load('design/banner');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -45,7 +45,7 @@ class ControllerDesignBanner extends Controller {
 	}
 
 	public function edit() {
-		$this->load->language('design/banner');
+		$this->language->load('design/banner');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -77,7 +77,7 @@ class ControllerDesignBanner extends Controller {
 	}
 
 	public function delete() {
-		$this->load->language('design/banner');
+		$this->language->load('design/banner');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

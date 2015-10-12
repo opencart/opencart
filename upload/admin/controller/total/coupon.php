@@ -3,7 +3,7 @@ class ControllerTotalCoupon extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('total/coupon');
+		$this->language->load('total/coupon');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

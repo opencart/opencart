@@ -1,7 +1,7 @@
 <?php
 class ControllerReportCustomerActivity extends Controller {
 	public function index() {
-		$this->load->language('report/customer_activity');
+		$this->language->load('report/customer_activity');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

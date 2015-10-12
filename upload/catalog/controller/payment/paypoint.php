@@ -93,7 +93,7 @@ class ControllerPaymentPaypoint extends Controller {
 		}
 
 		if ($order_info) {
-			$this->load->language('payment/paypoint');
+			$this->language->load('payment/paypoint');
 
 			$data['title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_name'));
 

@@ -3,7 +3,7 @@ class ControllerPaymentPayPoint extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/paypoint');
+		$this->language->load('payment/paypoint');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

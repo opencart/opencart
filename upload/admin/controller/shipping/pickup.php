@@ -3,7 +3,7 @@ class ControllerShippingPickup extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('shipping/pickup');
+		$this->language->load('shipping/pickup');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

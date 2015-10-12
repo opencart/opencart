@@ -1,7 +1,7 @@
 <?php
 class ControllerApiVoucher extends Controller {
 	public function index() {
-		$this->load->language('api/voucher');
+		$this->language->load('api/voucher');
 
 		// Delete past voucher in case there is an error
 		unset($this->session->data['voucher']);
@@ -42,7 +42,7 @@ class ControllerApiVoucher extends Controller {
 	}
 
 	public function add() {
-		$this->load->language('api/voucher');
+		$this->language->load('api/voucher');
 
 		$json = array();
 

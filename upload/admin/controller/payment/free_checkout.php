@@ -3,7 +3,7 @@ class ControllerPaymentFreeCheckout extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/free_checkout');
+		$this->language->load('payment/free_checkout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

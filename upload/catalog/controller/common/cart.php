@@ -1,7 +1,7 @@
 <?php
 class ControllerCommonCart extends Controller {
 	public function index() {
-		$this->load->language('common/cart');
+		$this->language->load('common/cart');
 
 		// Totals
 		$this->load->model('extension/extension');

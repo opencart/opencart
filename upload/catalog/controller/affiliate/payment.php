@@ -9,7 +9,7 @@ class ControllerAffiliatePayment extends Controller {
 			$this->response->redirect($this->url->link('affiliate/login', '', 'SSL'));
 		}
 
-		$this->load->language('affiliate/payment');
+		$this->language->load('affiliate/payment');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

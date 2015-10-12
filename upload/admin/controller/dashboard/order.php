@@ -1,7 +1,7 @@
 <?php
 class ControllerDashboardOrder extends Controller {
 	public function index() {
-		$this->load->language('dashboard/order');
+		$this->language->load('dashboard/order');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 

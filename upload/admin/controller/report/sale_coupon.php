@@ -1,7 +1,7 @@
 <?php
 class ControllerReportSaleCoupon extends Controller {
 	public function index() {
-		$this->load->language('report/sale_coupon');
+		$this->language->load('report/sale_coupon');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

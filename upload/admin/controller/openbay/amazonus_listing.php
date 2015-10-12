@@ -1,7 +1,7 @@
 <?php
 class ControllerOpenbayAmazonusListing extends Controller{
 	public function create() {
-		$this->load->language('openbay/amazonus_listing');
+		$this->language->load('openbay/amazonus_listing');
 		$this->load->model('openbay/amazonus_listing');
 		$this->load->model('openbay/amazonus');
 		$this->load->model('catalog/product');
@@ -215,7 +215,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 	public function edit() {
 		$this->load->model('openbay/amazonus_listing');
 		$this->load->model('openbay/amazonus');
-		$this->load->language('openbay/amazonus_listing');
+		$this->language->load('openbay/amazonus_listing');
 
 		$this->document->setTitle($this->language->get('text_edit_heading'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -421,7 +421,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 	}
 
 	public function deleteLinks() {
-		$this->load->language('openbay/amazonus_listing');
+		$this->language->load('openbay/amazonus_listing');
 		$url = '';
 
 		if (isset($this->request->get['filter_name'])) {
@@ -501,7 +501,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 
 	public function search() {
 		$this->load->model('openbay/amazonus_listing');
-		$this->load->language('openbay/amazonus_listing');
+		$this->language->load('openbay/amazonus_listing');
 
 		$error = '';
 
@@ -527,7 +527,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 
 	public function bestPrice() {
 		$this->load->model('openbay/amazonus_listing');
-		$this->load->language('openbay/amazonus_listing');
+		$this->language->load('openbay/amazonus_listing');
 
 		$error = '';
 

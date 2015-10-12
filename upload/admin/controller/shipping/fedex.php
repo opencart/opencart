@@ -3,7 +3,7 @@ class ControllerShippingFedex extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('shipping/fedex');
+		$this->language->load('shipping/fedex');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

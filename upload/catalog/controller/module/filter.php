@@ -14,7 +14,7 @@ class ControllerModuleFilter extends Controller {
 		$category_info = $this->model_catalog_category->getCategory($category_id);
 
 		if ($category_info) {
-			$this->load->language('module/filter');
+			$this->language->load('module/filter');
 
 			$data['heading_title'] = $this->language->get('heading_title');
 

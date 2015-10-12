@@ -1,6 +1,12 @@
 # OpenCart 2.0 change log
 
-## v2.1.0.0 (Pending)
+## v2.1.0.1 (06.10.2015)
+#### Bugs fixed
+* Use the ip address from data in Fraudlanbs module and update language strings
+#### Changes
+* Allow download of the error log
+
+## v2.1.0.0 (29.09.2015)
 #### Bugs fixed
 * Change post to session in order API (https://github.com/opencart/opencart/issues/2712)
 * Maxmind error with unused method (https://github.com/opencart/opencart/issues/3069)

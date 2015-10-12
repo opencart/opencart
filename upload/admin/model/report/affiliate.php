@@ -117,7 +117,7 @@ class ModelReportAffiliate extends Model {
 	}
 
 	public function getAffiliateActivities($data = array()) {
-		$sql = "SELECT aa.activity_id, aa.affiliate_id, aa.key, aa.data, aa.ip, aa.date_added FROM " . DB_PREFIX . "affiliate_activity aa LEFT JOIN " . DB_PREFIX . "affiliate a ON (aa.affiliate_id = a.affiliate_id)";
+		$sql = "SELECT aa.affiliate_activity_id, aa.affiliate_id, aa.key, aa.data, aa.ip, aa.date_added FROM " . DB_PREFIX . "affiliate_activity aa LEFT JOIN " . DB_PREFIX . "affiliate a ON (aa.affiliate_id = a.affiliate_id)";
 
 		$implode = array();
 

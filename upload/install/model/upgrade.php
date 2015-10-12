@@ -430,6 +430,30 @@ class ModelUpgrade extends Model {
 			}
 		}
 
+		// Activity
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "affiliate_activity`");
+
+		foreach ($query->rows as $result) {
+			if (preg_match('/^(a:)/', $result['data'])) {
+				$data = unserialize($result['data']);
+
+				$this->db->query("UPDATE `" . DB_PREFIX . "affiliate_activity` SET `data` = '" . $this->db->escape(json_encode($data)) . "' WHERE `affiliate_activity_id` = '" . (int)$result['affiliate_activity_id'] . "'");
+			}
+		}
+		
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_activity`");
+
+		foreach ($query->rows as $result) {
+			if (preg_match('/^(a:)/', $result['data'])) {
+				$data = unserialize($result['data']);
+
+				$this->db->query("UPDATE `" . DB_PREFIX . "customer_activity` SET `data` = '" . $this->db->escape(json_encode($data)) . "' WHERE `customer_activity_id` = '" . (int)$result['customer_activity_id'] . "'");
+			}
+		}	
+		
+		
+		
+		
 		// Sort the categories to take advantage of the nested set model
 		$this->repairCategories(0);
 	}

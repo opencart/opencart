@@ -451,7 +451,16 @@ class ModelUpgrade extends Model {
 			}
 		}	
 		
-		
+		// Module
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module`");
+
+		foreach ($query->rows as $result) {
+			if (preg_match('/^(a:)/', $result['setting'])) {
+				$setting = unserialize($result['setting']);
+
+				$this->db->query("UPDATE `" . DB_PREFIX . "module` SET `setting` = '" . $this->db->escape(json_encode($setting)) . "' WHERE `module_id` = '" . (int)$result['module_id'] . "'");
+			}
+		}	
 		
 		
 		// Sort the categories to take advantage of the nested set model

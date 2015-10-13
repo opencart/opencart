@@ -7,11 +7,8 @@ class Event {
 		$this->registry = $registry;
 	}
 
-	public function register($key, $action, $priority = 0) {
-		$this->data[$key][] = array(
-			'action' => $action,
-			'priority' => (int)$priority,
-		);
+	public function register($key, $action) {
+		$this->data[$key][] = $action;
 	}
 
 	public function unregister($key, $action) {
@@ -28,21 +25,9 @@ class Event {
 		if (isset($this->data[$key])) {
 			usort($this->data[$key], array("Event", "cmpByPriority"));
 			foreach ($this->data[$key] as $event) {
-				$action = $this->createAction($event['action'], $arg);
+				$action = new Action($event['action'], $arg);
 				$action->execute($this->registry);
 			}
 		}
-	}
-
-	protected static function cmpByPriority($a, $b) {
-		if ($a['priority'] == $b['priority']) {
-			return 0;
-		}
-
-		return ($a['priority'] > $b['priority']) ? -1 : 1;
-	}
-
-	protected function createAction($action, &$arg) {
-		return new Action($action, $arg);
 	}
 }

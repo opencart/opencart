@@ -3,7 +3,7 @@ class ControllerPaymentCheque extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/cheque');
+		$this->language->load('payment/cheque');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

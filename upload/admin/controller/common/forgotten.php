@@ -11,14 +11,14 @@ class ControllerCommonForgotten extends Controller {
 			$this->response->redirect($this->url->link('common/login', '', 'SSL'));
 		}
 
-		$this->load->language('common/forgotten');
+		$this->language->load('common/forgotten');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('user/user');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->load->language('mail/forgotten');
+			$this->language->load('mail/forgotten');
 
 			$code = sha1(uniqid(mt_rand(), true));
 

@@ -80,13 +80,13 @@ CREATE TABLE `oc_affiliate` (
 
 DROP TABLE IF EXISTS `oc_affiliate_activity`;
 CREATE TABLE `oc_affiliate_activity` (
-  `activity_id` int(11) NOT NULL AUTO_INCREMENT,
+  `affiliate_activity_id` int(11) NOT NULL AUTO_INCREMENT,
   `affiliate_id` int(11) NOT NULL,
   `key` varchar(64) NOT NULL,
   `data` text NOT NULL,
   `ip` varchar(40) NOT NULL,
   `date_added` datetime NOT NULL,
-  PRIMARY KEY (`activity_id`)
+  PRIMARY KEY (`affiliate_activity_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
@@ -1125,13 +1125,13 @@ CREATE TABLE `oc_customer` (
 
 DROP TABLE IF EXISTS `oc_customer_activity`;
 CREATE TABLE `oc_customer_activity` (
-  `activity_id` int(11) NOT NULL AUTO_INCREMENT,
+  `customer_activity_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
   `key` varchar(64) NOT NULL,
   `data` text NOT NULL,
   `ip` varchar(40) NOT NULL,
   `date_added` datetime NOT NULL,
-  PRIMARY KEY (`activity_id`)
+  PRIMARY KEY (`customer_activity_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
@@ -3884,8 +3884,8 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (198, 13, 'Western Australia', 'WA', 1),
 (199, 14, 'Burgenland', 'BUR', 1),
 (200, 14, 'Kärnten', 'KAR', 1),
-(201, 14, 'Nieder&ouml;sterreich', 'NOS', 1),
-(202, 14, 'Ober&ouml;sterreich', 'OOS', 1),
+(201, 14, 'Niederösterreich', 'NOS', 1),
+(202, 14, 'Oberösterreich', 'OOS', 1),
 (203, 14, 'Salzburg', 'SAL', 1),
 (204, 14, 'Steiermark', 'STE', 1),
 (205, 14, 'Tirol', 'TIR', 1),

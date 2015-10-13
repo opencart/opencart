@@ -3,7 +3,7 @@ class ControllerModuleGoogleHangouts extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/google_hangouts');
+		$this->language->load('module/google_hangouts');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

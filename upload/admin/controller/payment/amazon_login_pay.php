@@ -4,7 +4,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 	public function index() {
 
-		$this->load->language('payment/amazon_login_pay');
+		$this->language->load('payment/amazon_login_pay');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -320,7 +320,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 
 			if (!empty($amazon_login_pay_order)) {
 
-				$this->load->language('payment/amazon_login_pay');
+				$this->language->load('payment/amazon_login_pay');
 
 				$amazon_login_pay_order['total_captured'] = $this->model_payment_amazon_login_pay->getTotalCaptured($amazon_login_pay_order['amazon_login_pay_order_id']);
 
@@ -363,7 +363,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 	}
 
 	public function cancel() {
-		$this->load->language('payment/amazon_login_pay');
+		$this->language->load('payment/amazon_login_pay');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
@@ -398,7 +398,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 	}
 
 	public function capture() {
-		$this->load->language('payment/amazon_login_pay');
+		$this->language->load('payment/amazon_login_pay');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
@@ -447,7 +447,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 	}
 
 	public function refund() {
-		$this->load->language('payment/amazon_login_pay');
+		$this->language->load('payment/amazon_login_pay');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {

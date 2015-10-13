@@ -3,7 +3,7 @@ class ControllerFraudMaxMind extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('fraud/maxmind');
+		$this->language->load('fraud/maxmind');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -130,7 +130,7 @@ class ControllerFraudMaxMind extends Controller {
 	}
 
 	public function order() {
-		$this->load->language('fraud/maxmind');
+		$this->language->load('fraud/maxmind');
 
 		$this->load->model('fraud/maxmind');
 

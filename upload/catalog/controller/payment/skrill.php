@@ -3,7 +3,7 @@ class ControllerPaymentSkrill extends Controller {
 	public function index() {
 		$this->load->model('checkout/order');
 
-		$this->load->language('payment/skrill');
+		$this->language->load('payment/skrill');
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
 

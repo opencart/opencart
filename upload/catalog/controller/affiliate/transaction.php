@@ -7,7 +7,7 @@ class ControllerAffiliateTransaction extends Controller {
 			$this->response->redirect($this->url->link('affiliate/login', '', 'SSL'));
 		}
 
-		$this->load->language('affiliate/transaction');
+		$this->language->load('affiliate/transaction');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

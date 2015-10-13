@@ -3,7 +3,7 @@ class ControllerShippingFree extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('shipping/free');
+		$this->language->load('shipping/free');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

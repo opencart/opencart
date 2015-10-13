@@ -3,7 +3,7 @@ class ControllerFraudFraudLabsPro extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('fraud/fraudlabspro');
+		$this->language->load('fraud/fraudlabspro');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -162,7 +162,7 @@ class ControllerFraudFraudLabsPro extends Controller {
 	}
 
 	public function order() {
-		$this->load->language('fraud/fraudlabspro');
+		$this->language->load('fraud/fraudlabspro');
 
 		$this->load->model('fraud/fraudlabspro');
 

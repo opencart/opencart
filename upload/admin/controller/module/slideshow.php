@@ -3,7 +3,7 @@ class ControllerModuleSlideshow extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/slideshow');
+		$this->language->load('module/slideshow');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

@@ -3,7 +3,7 @@ class ControllerToolBackup extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('tool/backup');
+		$this->language->load('tool/backup');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -32,8 +32,8 @@ class ControllerToolBackup extends Controller {
 		$data['text_select_all'] = $this->language->get('text_select_all');
 		$data['text_unselect_all'] = $this->language->get('text_unselect_all');
 
-		$data['entry_restore'] = $this->language->get('entry_restore');
-		$data['entry_backup'] = $this->language->get('entry_backup');
+		$data['entry_export'] = $this->language->get('entry_export');
+		$data['entry_import'] = $this->language->get('entry_import');
 
 		$data['button_export'] = $this->language->get('button_export');
 		$data['button_import'] = $this->language->get('button_import');
@@ -82,10 +82,10 @@ class ControllerToolBackup extends Controller {
 	}
 
 	public function backup() {
-		$this->load->language('tool/backup');
+		$this->language->load('tool/backup');
 
 		if (!isset($this->request->post['backup'])) {
-			$this->session->data['error'] = $this->language->get('error_backup');
+			$this->session->data['error'] = $this->language->get('error_export');
 
 			$this->response->redirect($this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL'));
 		} elseif ($this->user->hasPermission('modify', 'tool/backup')) {

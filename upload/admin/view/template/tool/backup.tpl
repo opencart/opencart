@@ -32,7 +32,7 @@
       <div class="panel-body">
         <form action="<?php echo $restore; ?>" method="post" enctype="multipart/form-data" id="form-restore" class="form-horizontal">
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-import"><?php echo $entry_restore; ?></label>
+            <label class="col-sm-2 control-label" for="input-import"><?php echo $entry_import; ?></label>
             <div class="col-sm-10">
               <input type="file" name="import" id="input-import" />
             </div>

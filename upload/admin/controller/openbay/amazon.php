@@ -28,7 +28,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->load->model('localisation/order_status');
 		$this->load->model('openbay/amazon');
 
-		$data = $this->load->language('openbay/amazon');
+		$data = $this->language->load('openbay/amazon');
 
 		$this->document->setTitle($this->language->get('text_dashboard'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -72,7 +72,7 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function stockUpdates() {
-		$data = $this->load->language('openbay/amazon_stockupdates');
+		$data = $this->language->load('openbay/amazon_stockupdates');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -154,7 +154,7 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function subscription() {
-		$data = $this->load->language('openbay/amazon_subscription');
+		$data = $this->language->load('openbay/amazon_subscription');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -228,7 +228,7 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function settings() {
-		$data = $this->load->language('openbay/amazon_settings');
+		$data = $this->language->load('openbay/amazon_settings');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -366,7 +366,7 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function itemLinks() {
-		$data = $this->load->language('openbay/amazon_links');
+		$data = $this->language->load('openbay/amazon_links');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -409,7 +409,7 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function savedListings() {
-		$data = $this->load->language('openbay/amazon_listingsaved');
+		$data = $this->language->load('openbay/amazon_listingsaved');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -583,7 +583,7 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function doBulkList() {
-		$this->load->language('amazon/listing');
+		$this->language->load('amazon/listing');
 
 		if (empty($this->request->post['products'])) {
 			$json = array(
@@ -649,7 +649,7 @@ class ControllerOpenbayAmazon extends Controller {
 	public function doBulkSearch() {
 		$this->load->model('catalog/product');
 		$this->load->model('openbay/amazon_listing');
-		$this->load->language('openbay/amazon_bulk_listing');
+		$this->language->load('openbay/amazon_bulk_listing');
 
 		$json = array();
 		$search_data = array();
@@ -708,7 +708,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
 
-		$data = $this->load->language('openbay/amazon_bulk_listing');
+		$data = $this->language->load('openbay/amazon_bulk_listing');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -860,7 +860,7 @@ class ControllerOpenbayAmazon extends Controller {
 	public function bulkLinking() {
 		$this->load->model('openbay/amazon');
 
-		$data = $this->load->language('openbay/amazon_bulk_linking');
+		$data = $this->language->load('openbay/amazon_bulk_linking');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -1000,7 +1000,7 @@ class ControllerOpenbayAmazon extends Controller {
 	public function loadListingReport() {
 		$this->load->model('openbay/amazon');
 		$this->load->model('setting/setting');
-		$this->load->language('openbay/amazon_bulk_linking');
+		$this->language->load('openbay/amazon_bulk_linking');
 
 		$marketplace = $this->request->get['marketplace'];
 

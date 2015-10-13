@@ -3,7 +3,7 @@ class ControllerCaptchaBasicCaptcha extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('captcha/basic_captcha');
+		$this->language->load('captcha/basic_captcha');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

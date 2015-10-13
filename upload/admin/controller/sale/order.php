@@ -3,7 +3,7 @@ class ControllerSaleOrder extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('sale/order');
+		$this->language->load('sale/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function add() {
-		$this->load->language('sale/order');
+		$this->language->load('sale/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -23,7 +23,7 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function edit() {
-		$this->load->language('sale/order');
+		$this->language->load('sale/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -724,7 +724,7 @@ class ControllerSaleOrder extends Controller {
 		$order_info = $this->model_sale_order->getOrder($order_id);
 
 		if ($order_info) {
-			$this->load->language('sale/order');
+			$this->language->load('sale/order');
 
 			$this->document->setTitle($this->language->get('heading_title'));
 
@@ -1240,7 +1240,7 @@ class ControllerSaleOrder extends Controller {
 			$content = $this->load->controller('payment/' . $order_info['payment_code'] . '/order');
 
 			if ($content) {
-				$this->load->language('payment/' . $order_info['payment_code']);
+				$this->language->load('payment/' . $order_info['payment_code']);
 
 				$data['tabs'][] = array(
 					'code'    => $order_info['payment_code'],
@@ -1253,7 +1253,7 @@ class ControllerSaleOrder extends Controller {
 
 			foreach ($extensions as $extension) {
 				if ($this->config->get($extension . '_status')) {
-					$this->load->language('fraud/' . $extension);
+					$this->language->load('fraud/' . $extension);
 
 					$content = $this->load->controller('fraud/' . $extension . '/order');
 
@@ -1288,7 +1288,7 @@ class ControllerSaleOrder extends Controller {
 
 			$this->response->setOutput($this->load->view('sale/order_info.tpl', $data));
 		} else {
-			$this->load->language('error/not_found');
+			$this->language->load('error/not_found');
 
 			$this->document->setTitle($this->language->get('heading_title'));
 
@@ -1317,7 +1317,7 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function createInvoiceNo() {
-		$this->load->language('sale/order');
+		$this->language->load('sale/order');
 
 		$json = array();
 
@@ -1346,7 +1346,7 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function addReward() {
-		$this->load->language('sale/order');
+		$this->language->load('sale/order');
 
 		$json = array();
 
@@ -1381,7 +1381,7 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function removeReward() {
-		$this->load->language('sale/order');
+		$this->language->load('sale/order');
 
 		$json = array();
 
@@ -1412,7 +1412,7 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function addCommission() {
-		$this->load->language('sale/order');
+		$this->language->load('sale/order');
 
 		$json = array();
 
@@ -1447,7 +1447,7 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function removeCommission() {
-		$this->load->language('sale/order');
+		$this->language->load('sale/order');
 
 		$json = array();
 
@@ -1478,7 +1478,7 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function history() {
-		$this->load->language('sale/order');
+		$this->language->load('sale/order');
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
 
@@ -1524,7 +1524,7 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function invoice() {
-		$this->load->language('sale/order');
+		$this->language->load('sale/order');
 
 		$data['title'] = $this->language->get('text_invoice');
 
@@ -1755,7 +1755,7 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function shipping() {
-		$this->load->language('sale/order');
+		$this->language->load('sale/order');
 
 		$data['title'] = $this->language->get('text_shipping');
 

@@ -17,7 +17,7 @@ class ControllerCommonHeader extends Controller {
 		$data['lang'] = $this->language->get('code');
 		$data['direction'] = $this->language->get('direction');
 
-		$this->load->language('common/header');
+		$this->language->load('common/header');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 

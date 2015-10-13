@@ -3,7 +3,7 @@ class ControllerModuleBestSeller extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/bestseller');
+		$this->language->load('module/bestseller');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

@@ -3,7 +3,7 @@ class ControllerModuleEbayListing extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('module/ebay_listing');
+		$this->language->load('module/ebay_listing');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');

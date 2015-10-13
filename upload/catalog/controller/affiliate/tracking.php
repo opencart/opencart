@@ -7,7 +7,7 @@ class ControllerAffiliateTracking extends Controller {
 			$this->response->redirect($this->url->link('affiliate/login', '', 'SSL'));
 		}
 
-		$this->load->language('affiliate/tracking');
+		$this->language->load('affiliate/tracking');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

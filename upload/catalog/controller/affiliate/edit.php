@@ -9,7 +9,7 @@ class ControllerAffiliateEdit extends Controller {
 			$this->response->redirect($this->url->link('affiliate/login', '', 'SSL'));
 		}
 
-		$this->load->language('affiliate/edit');
+		$this->language->load('affiliate/edit');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

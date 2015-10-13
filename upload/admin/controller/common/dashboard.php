@@ -1,7 +1,7 @@
 <?php
 class ControllerCommonDashboard extends Controller {
 	public function index() {
-		$this->load->language('common/dashboard');
+		$this->language->load('common/dashboard');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

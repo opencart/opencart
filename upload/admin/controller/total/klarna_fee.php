@@ -3,7 +3,7 @@ class ControllerTotalKlarnaFee extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('total/klarna_fee');
+		$this->language->load('total/klarna_fee');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

@@ -2,7 +2,7 @@
 class ControllerTotalCoupon extends Controller {
 	public function index() {
 		if ($this->config->get('coupon_status')) {
-			$this->load->language('total/coupon');
+			$this->language->load('total/coupon');
 
 			$data['heading_title'] = $this->language->get('heading_title');
 
@@ -27,7 +27,7 @@ class ControllerTotalCoupon extends Controller {
 	}
 
 	public function coupon() {
-		$this->load->language('total/coupon');
+		$this->language->load('total/coupon');
 
 		$json = array();
 

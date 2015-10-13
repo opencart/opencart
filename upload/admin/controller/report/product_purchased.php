@@ -1,7 +1,7 @@
 <?php
 class ControllerReportProductPurchased extends Controller {
 	public function index() {
-		$this->load->language('report/product_purchased');
+		$this->language->load('report/product_purchased');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

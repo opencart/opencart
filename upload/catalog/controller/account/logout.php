@@ -24,7 +24,7 @@ class ControllerAccountLogout extends Controller {
 			$this->response->redirect($this->url->link('account/logout', '', 'SSL'));
 		}
 
-		$this->load->language('account/logout');
+		$this->language->load('account/logout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

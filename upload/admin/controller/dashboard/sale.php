@@ -1,7 +1,7 @@
 <?php
 class ControllerDashboardSale extends Controller {
 	public function index() {
-		$this->load->language('dashboard/sale');
+		$this->language->load('dashboard/sale');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -17,7 +17,7 @@ class ControllerDashboardSale extends Controller {
 
 		$difference = $today - $yesterday;
 
-		if ($difference && $today) {
+		if ($difference && (int)$today) {
 			$data['percentage'] = round(($difference / $today) * 100);
 		} else {
 			$data['percentage'] = 0;

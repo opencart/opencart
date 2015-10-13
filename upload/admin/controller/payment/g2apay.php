@@ -5,7 +5,7 @@ class ControllerPaymentG2APay extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/g2apay');
+		$this->language->load('payment/g2apay');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -244,7 +244,7 @@ class ControllerPaymentG2APay extends Controller {
 			$g2apay_order = $this->model_payment_g2apay->getOrder($this->request->get['order_id']);
 
 			if (!empty($g2apay_order)) {
-				$this->load->language('payment/g2apay');
+				$this->language->load('payment/g2apay');
 
 				$g2apay_order['total_released'] = $this->model_payment_g2apay->getTotalReleased($g2apay_order['g2apay_order_id']);
 
@@ -276,7 +276,7 @@ class ControllerPaymentG2APay extends Controller {
 	}
 
 	public function refund() {
-		$this->load->language('payment/g2apay');
+		$this->language->load('payment/g2apay');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {

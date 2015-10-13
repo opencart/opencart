@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentRealex extends Controller {
 	public function index() {
-		$this->load->language('payment/realex');
+		$this->language->load('payment/realex');
 
 		$data['entry_cc_type'] = $this->language->get('entry_cc_type');
 
@@ -94,7 +94,7 @@ class ControllerPaymentRealex extends Controller {
 
 		$this->model_payment_realex->logger(print_r($this->request->post, 1));
 
-		$this->load->language('payment/realex');
+		$this->language->load('payment/realex');
 
 		$hash = sha1($this->request->post['TIMESTAMP'] . '.' . $this->config->get('realex_merchant_id') . '.' . $this->request->post['ORDER_ID'] . '.' . $this->request->post['RESULT'] . '.' . $this->request->post['MESSAGE'] . '.' . $this->request->post['PASREF'] . '.' . $this->request->post['AUTHCODE']);
 		$tmp = $hash . '.' . $this->config->get('realex_secret');

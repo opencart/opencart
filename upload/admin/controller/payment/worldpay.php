@@ -4,7 +4,7 @@ class ControllerPaymentWorldpay extends Controller {
 
 	public function index() {
 
-		$this->load->language('payment/worldpay');
+		$this->language->load('payment/worldpay');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -265,7 +265,7 @@ class ControllerPaymentWorldpay extends Controller {
 			$worldpay_order = $this->model_payment_worldpay->getOrder($this->request->get['order_id']);
 
 			if (!empty($worldpay_order)) {
-				$this->load->language('payment/worldpay');
+				$this->language->load('payment/worldpay');
 
 				$worldpay_order['total_released'] = $this->model_payment_worldpay->getTotalReleased($worldpay_order['worldpay_order_id']);
 
@@ -303,7 +303,7 @@ class ControllerPaymentWorldpay extends Controller {
 	}
 
 	public function refund() {
-		$this->load->language('payment/worldpay');
+		$this->language->load('payment/worldpay');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {

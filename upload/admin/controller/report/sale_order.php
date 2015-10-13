@@ -1,7 +1,7 @@
 <?php
 class ControllerReportSaleOrder extends Controller {
 	public function index() {
-		$this->load->language('report/sale_order');
+		$this->language->load('report/sale_order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

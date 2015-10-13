@@ -2,7 +2,7 @@
 class Session {
 	public $data = array();
 
-	public function __construct() {
+	public function __construct($session_id = '',  $key = 'default') {
 		
 		
 		

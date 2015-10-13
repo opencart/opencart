@@ -1,4 +1,5 @@
 <?php
+namespace Shop;
 class Customer {
 	private $customer_id;
 	private $firstname;

@@ -105,6 +105,7 @@ $registry->set('cache', $cache);
 
 // Session
 $session = new Session();
+$session->start();
 $registry->set('session', $session);
 
 // Language
@@ -127,16 +128,16 @@ $registry->set('language', $language);
 $registry->set('document', new Document());
 
 // Currency
-$registry->set('currency', new Currency($registry));
+$registry->set('currency', new Shop\Currency($registry));
 
 // Weight
-$registry->set('weight', new Weight($registry));
+$registry->set('weight', new Shop\Weight($registry));
 
 // Length
-$registry->set('length', new Length($registry));
+$registry->set('length', new Shop\Length($registry));
 
 // User
-$registry->set('user', new User($registry));
+$registry->set('user', new Shop\User($registry));
 
 // OpenBay Pro
 $registry->set('openbay', new Openbay($registry));

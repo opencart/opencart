@@ -1,4 +1,5 @@
 <?php
+namespace Shop;
 class Cart {
 	private $data = array();
 

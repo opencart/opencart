@@ -1,4 +1,5 @@
 <?php
+namespace Shop;
 class Currency {
 	private $code;
 	private $currencies = array();

@@ -1,4 +1,5 @@
 <?php
+namespace Shop;
 final class Tax {
 	private $tax_rates = array();
 

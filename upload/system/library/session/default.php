@@ -3,7 +3,8 @@ namespace Session;
 final class File {
 	public $data = array();
 
-	public function __construct($session_id = '',  $key = 'default') {
+	public function __construct() {
+		/*
 		if (!session_id()) {
 			ini_set('session.use_only_cookies', 'Off');
 			ini_set('session.use_cookies', 'On');
@@ -27,17 +28,6 @@ final class File {
 		}
 
 		$this->data =& $_SESSION[$key];
-	}
-
-	public function getId() {
-		return session_id();
-	}
-
-	public function start() {
-		return session_start();
-	}
-
-	public function destroy() {
-		return session_destroy();
+		*/
 	}
 }

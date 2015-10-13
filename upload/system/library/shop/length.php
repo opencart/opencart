@@ -1,4 +1,5 @@
 <?php
+namespace Shop;
 class Length {
 	private $lengths = array();
 

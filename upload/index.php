@@ -123,6 +123,8 @@ $cache = new Cache('file');
 $registry->set('cache', $cache);
 
 // Session
+$session = new Session('db', $registry);
+
 if (isset($request->get['token']) && isset($request->get['route']) && substr($request->get['route'], 0, 4) == 'api/') {
 	$db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE TIMESTAMPADD(HOUR, 1, date_modified) < NOW()");
 
@@ -130,16 +132,16 @@ if (isset($request->get['token']) && isset($request->get['route']) && substr($re
 
 	if ($query->num_rows) {
 		// Does not seem PHP is able to handle sessions as objects properly so so wrote my own class
-		$session = new Session($query->row['session_id'], $query->row['session_name']);
-		$registry->set('session', $session);
+		$session->start($query->row['session_id'], $query->row['session_name']);
 
 		// keep the session alive
-		$db->query("UPDATE `" . DB_PREFIX . "api_session` SET date_modified = NOW() WHERE api_session_id = '" . $query->row['api_session_id'] . "'");
+		$db->query("UPDATE `" . DB_PREFIX . "api_session` SET date_modified = NOW() WHERE api_session_id = '" . (int)$query->row['api_session_id'] . "'");
 	}
 } else {
-	$session = new Session();
-	$registry->set('session', $session);
+	$session->start();
 }
+
+$registry->set('session', $session);
 
 // Language Detection
 $languages = array();
@@ -197,7 +199,7 @@ $registry->set('language', $language);
 $registry->set('document', new Document());
 
 // Customer
-$customer = new Customer($registry);
+$customer = new Shop\Customer($registry);
 $registry->set('customer', $customer);
 
 // Customer Group
@@ -218,22 +220,22 @@ if (isset($request->get['tracking'])) {
 }
 
 // Affiliate
-$registry->set('affiliate', new Affiliate($registry));
+$registry->set('affiliate', new Shop\Affiliate($registry));
 
 // Currency
-$registry->set('currency', new Currency($registry));
+$registry->set('currency', new Shop\Currency($registry));
 
 // Tax
-$registry->set('tax', new Tax($registry));
+$registry->set('tax', new Shop\Tax($registry));
 
 // Weight
-$registry->set('weight', new Weight($registry));
+$registry->set('weight', new Shop\Weight($registry));
 
 // Length
-$registry->set('length', new Length($registry));
+$registry->set('length', new Shop\Length($registry));
 
 // Cart
-$registry->set('cart', new Cart($registry));
+$registry->set('cart', new Shop\Cart($registry));
 
 // Encryption
 $registry->set('encryption', new Encryption($config->get('config_encryption')));

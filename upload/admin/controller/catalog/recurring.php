@@ -202,7 +202,7 @@ class ControllerCatalogRecurring extends Controller {
 			'limit' => $this->config->get('config_limit_admin')
 		);
 
-		$recurring_total = $this->model_catalog_recurring->getTotalRecurrings($filter_data);
+		$recurring_total = $this->model_catalog_recurring->getTotalRecurrings();
 
 		$results = $this->model_catalog_recurring->getRecurrings($filter_data);
 

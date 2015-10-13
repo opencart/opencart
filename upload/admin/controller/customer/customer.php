@@ -1133,8 +1133,6 @@ class ControllerCustomerCustomer extends Controller {
 	}
 
 	public function login() {
-		$json = array();
-
 		if (isset($this->request->get['customer_id'])) {
 			$customer_id = $this->request->get['customer_id'];
 		} else {

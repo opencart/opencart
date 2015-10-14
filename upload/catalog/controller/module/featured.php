@@ -7,6 +7,8 @@ class ControllerModuleFeatured extends Controller {
 
 		$data['text_tax'] = $this->language->get('text_tax');
 
+		$data['text_discount'] = $this->language->get('text_discount');
+
 		$data['button_cart'] = $this->language->get('button_cart');
 		$data['button_wishlist'] = $this->language->get('button_wishlist');
 		$data['button_compare'] = $this->language->get('button_compare');
@@ -26,6 +28,7 @@ class ControllerModuleFeatured extends Controller {
 
 			foreach ($products as $product_id) {
 				$product_info = $this->model_catalog_product->getProduct($product_id);
+				$product_discounts = $this->model_catalog_product->getProductDiscounts($product_id);
 
 				if ($product_info) {
 					if ($product_info['image']) {
@@ -52,6 +55,19 @@ class ControllerModuleFeatured extends Controller {
 						$tax = false;
 					}
 
+					if ($product_discounts) {
+						$discounts = array();
+						foreach ($product_discounts as $discount) {
+							$discounts[] = array(
+								'quantity' => $discount['quantity'],
+								'price'    => $this->currency->format($this->tax->calculate($discount['price'], $product_info['tax_class_id'], $this->config->get('config_tax')))
+							);
+						}
+					} else {
+						$discounts = false;
+					}
+
+
 					if ($this->config->get('config_review_status')) {
 						$rating = $product_info['rating'];
 					} else {
@@ -66,6 +82,7 @@ class ControllerModuleFeatured extends Controller {
 						'price'       => $price,
 						'special'     => $special,
 						'tax'         => $tax,
+						'discounts'   => $discounts,
 						'rating'      => $rating,
 						'href'        => $this->url->link('product/product', 'product_id=' . $product_info['product_id'])
 					);

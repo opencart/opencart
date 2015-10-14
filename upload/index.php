@@ -200,7 +200,7 @@ $registry->set('language', $language);
 $registry->set('document', new Document());
 
 // Customer
-$customer = new Shop\Customer($registry);
+$customer = new Cart\Customer($registry);
 $registry->set('customer', $customer);
 
 // Customer Group
@@ -221,22 +221,22 @@ if (isset($request->get['tracking'])) {
 }
 
 // Affiliate
-$registry->set('affiliate', new Shop\Affiliate($registry));
+$registry->set('affiliate', new Cart\Affiliate($registry));
 
 // Currency
-$registry->set('currency', new Shop\Currency($registry));
+$registry->set('currency', new Cart\Currency($registry));
 
 // Tax
-$registry->set('tax', new Shop\Tax($registry));
+$registry->set('tax', new Cart\Tax($registry));
 
 // Weight
-$registry->set('weight', new Shop\Weight($registry));
+$registry->set('weight', new Cart\Weight($registry));
 
 // Length
-$registry->set('length', new Shop\Length($registry));
+$registry->set('length', new Cart\Length($registry));
 
 // Cart
-$registry->set('cart', new Shop\Cart($registry));
+$registry->set('cart', new Cart\Cart($registry));
 
 // Encryption
 $registry->set('encryption', new Encryption($config->get('config_encryption')));
@@ -251,7 +251,7 @@ $registry->set('event', $event);
 $query = $db->query("SELECT * FROM " . DB_PREFIX . "event");
 
 foreach ($query->rows as $result) {
-	$event->register($result['trigger'], $result['action']);
+	$event->register($result['trigger'], new Action($result['action']));
 }
 
 // Front Controller

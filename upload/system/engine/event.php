@@ -1,7 +1,7 @@
 <?php
 class Event {
+	protected $registry;
 	private $data = array();
-	private $registry;
 
 	public function __construct($registry) {
 		$this->registry = $registry;
@@ -25,7 +25,7 @@ class Event {
 		if (isset($this->data[$key])) {
 			foreach ($this->data[$key] as $event) {
 				$action = new Action($event['action'], $arg);
-				$action->execute($this->registry);
+				$event->execute($this->registry);
 			}
 		}
 	}

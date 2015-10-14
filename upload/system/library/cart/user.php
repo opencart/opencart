@@ -1,5 +1,5 @@
 <?php
-namespace Shop;
+namespace Cart;
 class User {
 	private $user_id;
 	private $username;

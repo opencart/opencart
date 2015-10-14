@@ -1,5 +1,5 @@
 <?php
-namespace Shop;
+namespace Cart;
 class Affiliate {
 	private $affiliate_id;
 	private $firstname;

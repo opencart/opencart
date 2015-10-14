@@ -4,11 +4,11 @@ class ControllerCommonForgotten extends Controller {
 
 	public function index() {
 		if ($this->user->isLogged() && isset($this->request->get['token']) && ($this->request->get['token'] == $this->session->data['token'])) {
-			$this->response->redirect($this->url->link('common/dashboard', '', 'SSL'));
+			$this->response->redirect($this->url->link('common/dashboard', '', true));
 		}
 
 		if (!$this->config->get('config_password')) {
-			$this->response->redirect($this->url->link('common/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('common/login', '', true));
 		}
 
 		$this->language->load('common/forgotten');
@@ -20,7 +20,7 @@ class ControllerCommonForgotten extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->language->load('mail/forgotten');
 
-			$code = sha1(uniqid(mt_rand(), true));
+			$code = token(40);
 
 			$this->model_user_user->editCode($this->request->post['email'], $code);
 
@@ -28,7 +28,7 @@ class ControllerCommonForgotten extends Controller {
 
 			$message  = sprintf($this->language->get('text_greeting'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')) . "\n\n";
 			$message .= $this->language->get('text_change') . "\n\n";
-			$message .= $this->url->link('common/reset', 'code=' . $code, 'SSL') . "\n\n";
+			$message .= $this->url->link('common/reset', 'code=' . $code, true) . "\n\n";
 			$message .= sprintf($this->language->get('text_ip'), $this->request->server['REMOTE_ADDR']) . "\n\n";
 
 			$mail = new Mail();
@@ -49,7 +49,7 @@ class ControllerCommonForgotten extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('common/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('common/login', '', true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -72,17 +72,17 @@ class ControllerCommonForgotten extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', '', 'SSL')
+			'href' => $this->url->link('common/dashboard', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('common/forgotten', 'token=' . '', 'SSL')
+			'href' => $this->url->link('common/forgotten', 'token=' . '', true)
 		);
 
-		$data['action'] = $this->url->link('common/forgotten', '', 'SSL');
+		$data['action'] = $this->url->link('common/forgotten', '', true);
 
-		$data['cancel'] = $this->url->link('common/login', '', 'SSL');
+		$data['cancel'] = $this->url->link('common/login', '', true);
 
 		if (isset($this->request->post['email'])) {
 			$data['email'] = $this->request->post['email'];

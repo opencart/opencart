@@ -9,7 +9,7 @@ class Url {
 		$this->ssl = $ssl;
 	}
 
-	public function setPrefix($rewrite = 'index.php?route=') {
+	public function setPrefix($prefix = '') {
 		$this->domain = $rewrite;
 	}
 	

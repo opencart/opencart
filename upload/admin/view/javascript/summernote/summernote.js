@@ -4004,7 +4004,7 @@
                    ) +
                    '<form class="note-modal-form">' +
                      '<div class="modal-body">' +
-                       '<div class="row-fluid">' + body + '</div>' +
+                       '<div class="row-fluid"><div class="col-xs-12">' + body + '</div></div>' +
                      '</div>' +
                      (footer ?
                      '<div class="modal-footer">' + footer + '</div>' : ''

@@ -14,7 +14,7 @@ class ControllerShippingUsps extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/shipping', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -124,22 +124,22 @@ class ControllerShippingUsps extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_shipping'),
-			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('shipping/usps', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('shipping/usps', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('shipping/usps', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('shipping/usps', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['usps_user_id'])) {
 			$data['usps_user_id'] = $this->request->post['usps_user_id'];

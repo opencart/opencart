@@ -432,15 +432,15 @@ class ControllerProductSearch extends Controller {
 
 			// http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
 			if ($page == 1) {
-			    $this->document->addLink($this->url->link('product/search', '', 'SSL'), 'canonical');
+			    $this->document->addLink($this->url->link('product/search', '', true), 'canonical');
 			} elseif ($page == 2) {
-			    $this->document->addLink($this->url->link('product/search', '', 'SSL'), 'prev');
+			    $this->document->addLink($this->url->link('product/search', '', true), 'prev');
 			} else {
-			    $this->document->addLink($this->url->link('product/search', $url . '&page='. ($page - 1), 'SSL'), 'prev');
+			    $this->document->addLink($this->url->link('product/search', $url . '&page='. ($page - 1), true), 'prev');
 			}
 
 			if ($limit && ceil($product_total / $limit) > $page) {
-			    $this->document->addLink($this->url->link('product/search', $url . '&page='. ($page + 1), 'SSL'), 'next');
+			    $this->document->addLink($this->url->link('product/search', $url . '&page='. ($page + 1), true), 'next');
 			}
 		}
 

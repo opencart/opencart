@@ -13,12 +13,12 @@ class ControllerErrorPermission extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('error/permission', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('error/permission', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['header'] = $this->load->controller('common/header');

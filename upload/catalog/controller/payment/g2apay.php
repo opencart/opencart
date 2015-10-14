@@ -5,7 +5,7 @@ class ControllerPaymentG2APay extends Controller {
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
-		$data['action'] = $this->url->link('payment/g2apay/checkout', '', 'SSL');
+		$data['action'] = $this->url->link('payment/g2apay/checkout', '', true);
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/g2apay.tpl')) {
 			return $this->load->view($this->config->get('config_template') . '/template/payment/g2apay.tpl', $data);
@@ -89,11 +89,11 @@ class ControllerPaymentG2APay extends Controller {
 		$this->model_payment_g2apay->logger($fields);
 
 		if ($response_data === false) {
-			$this->response->redirect($this->url->link('payment/failure', '', 'SSL'));
+			$this->response->redirect($this->url->link('payment/failure', '', true));
 		}
 
 		if (strtolower($response_data->status) != 'ok') {
-			$this->response->redirect($this->url->link('payment/failure', '', 'SSL'));
+			$this->response->redirect($this->url->link('payment/failure', '', true));
 		}
 
 		$this->model_payment_g2apay->addG2aOrder($order_info);

@@ -4,9 +4,9 @@ class ControllerAccountEdit extends Controller {
 
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/edit', '', 'SSL');
+			$this->session->data['redirect'] = $this->url->link('account/edit', '', true);
 
-			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
 		$this->language->load('account/edit');
@@ -34,7 +34,7 @@ class ControllerAccountEdit extends Controller {
 
 			$this->model_account_activity->addActivity('edit', $activity_data);
 
-			$this->response->redirect($this->url->link('account/account', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/account', '', true));
 		}
 
 		$data['breadcrumbs'] = array();
@@ -46,12 +46,12 @@ class ControllerAccountEdit extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('account/account', '', 'SSL')
+			'href'      => $this->url->link('account/account', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_edit'),
-			'href'      => $this->url->link('account/edit', '', 'SSL')
+			'href'      => $this->url->link('account/edit', '', true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -107,7 +107,7 @@ class ControllerAccountEdit extends Controller {
 			$data['error_custom_field'] = array();
 		}
 
-		$data['action'] = $this->url->link('account/edit', '', 'SSL');
+		$data['action'] = $this->url->link('account/edit', '', true);
 
 		if ($this->request->server['REQUEST_METHOD'] != 'POST') {
 			$customer_info = $this->model_account_customer->getCustomer($this->customer->getId());
@@ -166,7 +166,7 @@ class ControllerAccountEdit extends Controller {
 			$data['account_custom_field'] = array();
 		}
 
-		$data['back'] = $this->url->link('account/account', '', 'SSL');
+		$data['back'] = $this->url->link('account/account', '', true);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

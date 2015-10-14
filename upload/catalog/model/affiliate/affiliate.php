@@ -20,7 +20,7 @@ class ModelAffiliateAffiliate extends Model {
 			$message .= $this->language->get('text_approval') . "\n";
 		}
 
-		$message .= $this->url->link('affiliate/login', '', 'SSL') . "\n\n";
+		$message .= $this->url->link('affiliate/login', '', true) . "\n\n";
 		$message .= $this->language->get('text_services') . "\n\n";
 		$message .= $this->language->get('text_thanks') . "\n";
 		$message .= html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');

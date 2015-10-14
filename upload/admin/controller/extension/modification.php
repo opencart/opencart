@@ -108,17 +108,17 @@ class ControllerExtensionModification extends Controller {
 			}
 
 			// Begin
-			$xml = array();
+			$xml_files = array();
 
 			// Load the default modification XML
-			$xml[] = file_get_contents(DIR_SYSTEM . 'modification.xml');
+			$xml_files[] = file_get_contents(DIR_SYSTEM . 'modification.xml');
 
 			// This is purly for developers so they can run mods directly and have them run without upload sfter each change.
 			$files = glob(DIR_SYSTEM . '*.ocmod.xml');
 
 			if ($files) {
 				foreach ($files as $file) {
-					$xml[] = file_get_contents($file);
+					$xml_files[] = file_get_contents($file);
 				}
 			}
 
@@ -127,16 +127,17 @@ class ControllerExtensionModification extends Controller {
 
 			foreach ($results as $result) {
 				if ($result['status']) {
-					$xml[] = $result['xml'];
+					$xml_files[] = $result['xml'];
 				}
 			}
 
 			$modification = array();
+			$original = array();
 
-			foreach ($xml as $xml) {
+			foreach ($xml_files as $xml_file) {
 				$dom = new DOMDocument('1.0', 'UTF-8');
 				$dom->preserveWhiteSpace = false;
-				$dom->loadXml($xml);
+				$dom->loadXml($xml_file);
 
 				// Log
 				$log[] = 'MOD: ' . $dom->getElementsByTagName('name')->item(0)->textContent;
@@ -149,12 +150,12 @@ class ControllerExtensionModification extends Controller {
 					$recovery = $modification;
 				}
 
-				$files = $dom->getElementsByTagName('modification')->item(0)->getElementsByTagName('file');
+				$file_nodes = $dom->getElementsByTagName('modification')->item(0)->getElementsByTagName('file');
 
-				foreach ($files as $file) {
-					$operations = $file->getElementsByTagName('operation');
+                foreach ($file_nodes as $file_node) {
+					$operations = $file_node->getElementsByTagName('operation');
 
-					$files = explode('|', $file->getAttribute('path'));
+					$files = explode('|', $file_node->getAttribute('path'));
 
 					foreach ($files as $file) {
 						$path = '';
@@ -173,26 +174,28 @@ class ControllerExtensionModification extends Controller {
 						}
 
 						if ($path) {
-							$files = glob($path, GLOB_BRACE);
+							$found_files = glob($path, GLOB_BRACE);
 
-							if ($files) {
-								foreach ($files as $file) {
+							if ($found_files) {
+								foreach ($found_files as $found_file) {
+                                    $key = '';
+
 									// Get the key to be used for the modification cache filename.
-									if (substr($file, 0, strlen(DIR_CATALOG)) == DIR_CATALOG) {
-										$key = 'catalog/' . substr($file, strlen(DIR_CATALOG));
+									if (substr($found_file, 0, strlen(DIR_CATALOG)) == DIR_CATALOG) {
+										$key = 'catalog/' . substr($found_file, strlen(DIR_CATALOG));
 									}
 
-									if (substr($file, 0, strlen(DIR_APPLICATION)) == DIR_APPLICATION) {
-										$key = 'admin/' . substr($file, strlen(DIR_APPLICATION));
+									if (substr($found_file, 0, strlen(DIR_APPLICATION)) == DIR_APPLICATION) {
+										$key = 'admin/' . substr($found_file, strlen(DIR_APPLICATION));
 									}
 
-									if (substr($file, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {
-										$key = 'system/' . substr($file, strlen(DIR_SYSTEM));
+									if (substr($found_file, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {
+										$key = 'system/' . substr($found_file, strlen(DIR_SYSTEM));
 									}
 
 									// If file contents is not already in the modification array we need to load it.
 									if (!isset($modification[$key])) {
-										$content = file_get_contents($file);
+										$content = file_get_contents($found_file);
 
 										$modification[$key] = preg_replace('~\r?\n~', "\n", $content);
 										$original[$key] = preg_replace('~\r?\n~', "\n", $content);
@@ -392,7 +395,7 @@ class ControllerExtensionModification extends Controller {
 			// Write all modification files
 			foreach ($modification as $key => $value) {
 				// Only create a file if there are changes
-				if ($original[$key] != $value) {
+				if (!empty($original[$key]) && ($original[$key] != $value)) {
 					$path = '';
 
 					$directories = explode('/', dirname($key));

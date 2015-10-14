@@ -123,6 +123,7 @@ $cache = new Cache('file');
 $registry->set('cache', $cache);
 
 // Session
+//$session = new Session('db', $registry);
 $session = new Session();
 
 if (isset($request->get['token']) && isset($request->get['route']) && substr($request->get['route'], 0, 4) == 'api/') {

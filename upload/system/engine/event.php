@@ -14,7 +14,7 @@ class Event {
 	public function unregister($key, $action) {
 		if (isset($this->data[$key])) {
 			foreach ($this->data[$key] as $index => $event) {
-				if ($event['action'] == $action) {
+				if ($event == $action) {
 					unset($this->data[$key][$index]);
 				}
 			}
@@ -23,7 +23,6 @@ class Event {
 
 	public function trigger($key, &$arg = array()) {
 		if (isset($this->data[$key])) {
-			usort($this->data[$key], array("Event", "cmpByPriority"));
 			foreach ($this->data[$key] as $event) {
 				$action = new Action($event['action'], $arg);
 				$action->execute($this->registry);

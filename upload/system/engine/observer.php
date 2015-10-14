@@ -1,10 +1,13 @@
 <?php
-class Event {
+class Observer {
 	private $data = array();
-	private $registry;
 
 	public function __construct($registry) {
 		$this->registry = $registry;
+	}
+
+	public function __call($method) {
+		
 	}
 
 	public function register($key, $action, $priority = 0) {
@@ -32,17 +35,5 @@ class Event {
 				$action->execute($this->registry);
 			}
 		}
-	}
-
-	protected static function cmpByPriority($a, $b) {
-		if ($a['priority'] == $b['priority']) {
-			return 0;
-		}
-
-		return ($a['priority'] > $b['priority']) ? -1 : 1;
-	}
-
-	protected function createAction($action, &$arg) {
-		return new Action($action, $arg);
 	}
 }

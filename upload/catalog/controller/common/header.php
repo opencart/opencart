@@ -122,6 +122,7 @@ class ControllerCommonHeader extends Controller {
 					);
 
 					$children_data[] = array(
+						'category_id'     => $child['category_id'],
 						'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
 						'href'  => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])
 					);
@@ -129,6 +130,7 @@ class ControllerCommonHeader extends Controller {
 
 				// Level 1
 				$data['categories'][] = array(
+					'category_id'     => $category['category_id'],
 					'name'     => $category['name'],
 					'children' => $children_data,
 					'column'   => $category['column'] ? $category['column'] : 1,

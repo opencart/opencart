@@ -9,6 +9,10 @@ class Url {
 		$this->ssl = $ssl;
 	}
 
+	public function setPrefix($prefix = '') {
+		$this->domain = $rewrite;
+	}
+	
 	public function addRewrite($rewrite) {
 		$this->rewrite[] = $rewrite;
 	}

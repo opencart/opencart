@@ -37,16 +37,16 @@ class ControllerToolErrorLog extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('tool/error_log', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('tool/error_log', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['download'] = $this->url->link('tool/error_log/download', 'token=' . $this->session->data['token'], 'SSL');
-		$data['clear'] = $this->url->link('tool/error_log/clear', 'token=' . $this->session->data['token'], 'SSL');
+		$data['download'] = $this->url->link('tool/error_log/download', 'token=' . $this->session->data['token'], true);
+		$data['clear'] = $this->url->link('tool/error_log/clear', 'token=' . $this->session->data['token'], true);
 
 		$data['log'] = '';
 
@@ -114,6 +114,6 @@ class ControllerToolErrorLog extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 		}
 
-		$this->response->redirect($this->url->link('tool/error_log', 'token=' . $this->session->data['token'], 'SSL'));
+		$this->response->redirect($this->url->link('tool/error_log', 'token=' . $this->session->data['token'], true));
 	}
 }

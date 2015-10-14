@@ -10,7 +10,7 @@ class Session {
 		$class = 'Session\\' . $driver;
 		
 		if ($driver && class_exists($class)) {
-			$session = new $class($args);
+			call_user_func($class, $registry);
 		
 			session_set_save_handler(
 				array($session, 'open'),

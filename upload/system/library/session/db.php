@@ -15,6 +15,9 @@ final class DB {
 	public function __construct($registry) {
 		$this->db = $registry->get('db');
 		
+		
+		
+		
 		register_shutdown_function('session_write_close');
 		
 		$this->expire = ini_get('session.gc_maxlifetime');

@@ -29,7 +29,8 @@ class ControllerApiLogin extends Controller {
 
 				$sesion_name = 'temp_session_' . uniqid();
 
-				$session = new Session($this->session->getId(), $sesion_name);
+				$session = new Session();
+				$session->start($this->session->getId(), $sesion_name);
 
 				// Set API ID
 				$session->data['api_id'] = $api_info['api_id'];

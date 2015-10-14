@@ -2,9 +2,9 @@
 class ControllerAffiliateTracking extends Controller {
 	public function index() {
 		if (!$this->affiliate->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('affiliate/tracking', '', 'SSL');
+			$this->session->data['redirect'] = $this->url->link('affiliate/tracking', '', true);
 
-			$this->response->redirect($this->url->link('affiliate/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('affiliate/login', '', true));
 		}
 
 		$this->language->load('affiliate/tracking');
@@ -20,12 +20,12 @@ class ControllerAffiliateTracking extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('affiliate/account', '', 'SSL')
+			'href' => $this->url->link('affiliate/account', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('affiliate/tracking', '', 'SSL')
+			'href' => $this->url->link('affiliate/tracking', '', true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -42,7 +42,7 @@ class ControllerAffiliateTracking extends Controller {
 
 		$data['code'] = $this->affiliate->getCode();
 
-		$data['continue'] = $this->url->link('affiliate/account', '', 'SSL');
+		$data['continue'] = $this->url->link('affiliate/account', '', true);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

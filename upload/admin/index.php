@@ -128,16 +128,16 @@ $registry->set('language', $language);
 $registry->set('document', new Document());
 
 // Currency
-$registry->set('currency', new Shop\Currency($registry));
+$registry->set('currency', new Cart\Currency($registry));
 
 // Weight
-$registry->set('weight', new Shop\Weight($registry));
+$registry->set('weight', new Cart\Weight($registry));
 
 // Length
-$registry->set('length', new Shop\Length($registry));
+$registry->set('length', new Cart\Length($registry));
 
 // User
-$registry->set('user', new Shop\User($registry));
+$registry->set('user', new Cart\User($registry));
 
 // OpenBay Pro
 $registry->set('openbay', new Openbay($registry));
@@ -149,7 +149,7 @@ $registry->set('event', $event);
 $query = $db->query("SELECT * FROM " . DB_PREFIX . "event");
 
 foreach ($query->rows as $result) {
-	$event->register($result['trigger'], $result['action']);
+	$event->register($result['trigger'], new Action($result['action']));
 }
 
 // Front Controller

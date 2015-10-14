@@ -2,9 +2,9 @@
 class ControllerAccountDownload extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/download', '', 'SSL');
+			$this->session->data['redirect'] = $this->url->link('account/download', '', true);
 
-			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
 		$this->language->load('account/download');
@@ -20,12 +20,12 @@ class ControllerAccountDownload extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', 'SSL')
+			'href' => $this->url->link('account/account', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_downloads'),
-			'href' => $this->url->link('account/download', '', 'SSL')
+			'href' => $this->url->link('account/download', '', true)
 		);
 
 		$this->load->model('account/download');
@@ -82,7 +82,7 @@ class ControllerAccountDownload extends Controller {
 					'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 					'name'       => $result['name'],
 					'size'       => round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i],
-					'href'       => $this->url->link('account/download/download', 'download_id=' . $result['download_id'], 'SSL')
+					'href'       => $this->url->link('account/download/download', 'download_id=' . $result['download_id'], true)
 				);
 			}
 		}
@@ -91,13 +91,13 @@ class ControllerAccountDownload extends Controller {
 		$pagination->total = $download_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_product_limit');
-		$pagination->url = $this->url->link('account/download', 'page={page}', 'SSL');
+		$pagination->url = $this->url->link('account/download', 'page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($download_total) ? (($page - 1) * $this->config->get('config_product_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_product_limit')) > ($download_total - $this->config->get('config_product_limit'))) ? $download_total : ((($page - 1) * $this->config->get('config_product_limit')) + $this->config->get('config_product_limit')), $download_total, ceil($download_total / $this->config->get('config_product_limit')));
 
-		$data['continue'] = $this->url->link('account/account', '', 'SSL');
+		$data['continue'] = $this->url->link('account/account', '', true);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -115,9 +115,9 @@ class ControllerAccountDownload extends Controller {
 
 	public function download() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/download', '', 'SSL');
+			$this->session->data['redirect'] = $this->url->link('account/download', '', true);
 
-			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
 		$this->load->model('account/download');
@@ -157,7 +157,7 @@ class ControllerAccountDownload extends Controller {
 				exit('Error: Headers already sent out!');
 			}
 		} else {
-			$this->response->redirect($this->url->link('account/download', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/download', '', true));
 		}
 	}
 }

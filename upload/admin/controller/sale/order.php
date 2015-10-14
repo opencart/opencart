@@ -1889,8 +1889,6 @@ class ControllerSaleOrder extends Controller {
 						$options = $this->model_sale_order->getOrderOptions($order_id, $product['order_product_id']);
 
 						foreach ($options as $option) {
-							$option_value_info = $this->model_catalog_product->getProductOptionValue($order_id, $product['order_product_id']);
-
 							if ($option['type'] != 'file') {
 								$value = $option['value'];
 							} else {

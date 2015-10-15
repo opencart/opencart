@@ -1,4 +1,6 @@
 <?php
+use Cart\User;
+
 class ControllerCommonMaintenance extends Controller {
 	public function index() {
 		if ($this->config->get('config_maintenance')) {

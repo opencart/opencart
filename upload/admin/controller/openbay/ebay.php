@@ -1939,6 +1939,25 @@ class ControllerOpenbayEbay extends Controller {
 					$data['img_tpl_thumb']  = $tmp_thumbnail_array;
 				}
 
+				$weight_parts = explode('.', $product_info['weight']);
+
+				// package size and weights
+				$data['package']['depth'] = $product_info['height'];
+				$data['package']['irregular'] = 0;
+				$data['package']['length'] = $product_info['length'];
+				$data['package']['unit'] = $this->config->get('ebay_measurement');
+				$data['package']['weight_major'] = (int)$weight_parts[0];
+				$data['package']['weight_minor'] = (int)substr($weight_parts[1], 0, 3);
+				$data['package']['width'] = $product_info['width'];
+
+				$package_types = $this->openbay->ebay->getSetting('package_type');
+
+				foreach ($package_types as $package_type) {
+					if ($package_type['default'] == 1) {
+						$data['package']['package']	= $package_type['code'];
+					}
+				}
+
 				$data = array_merge($data, $profile_shipping['data']);
 
 				$verify_response = $this->model_openbay_ebay->ebayVerifyAddItem($data, 'no');
@@ -2223,6 +2242,25 @@ class ControllerOpenbayEbay extends Controller {
 
 					$data['img_tpl']        = $tmp_gallery_array;
 					$data['img_tpl_thumb']  = $tmp_thumbnail_array;
+				}
+
+				$weight_parts = explode('.', $product_info['weight']);
+
+				// package size and weights
+				$data['package']['depth'] = $product_info['height'];
+				$data['package']['irregular'] = 0;
+				$data['package']['length'] = $product_info['length'];
+				$data['package']['unit'] = $this->config->get('ebay_measurement');
+				$data['package']['weight_major'] = (int)$weight_parts[0];
+				$data['package']['weight_minor'] = (int)substr($weight_parts[1], 0, 3);
+				$data['package']['width'] = $product_info['width'];
+
+				$package_types = $this->openbay->ebay->getSetting('package_type');
+
+				foreach ($package_types as $package_type) {
+					if ($package_type['default'] == 1) {
+						$data['package']['package']	= $package_type['code'];
+					}
 				}
 
 				$data = array_merge($data, $profile_shipping['data']);

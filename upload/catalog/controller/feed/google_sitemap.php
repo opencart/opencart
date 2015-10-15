@@ -15,6 +15,7 @@ class ControllerFeedGoogleSitemap extends Controller {
 					$output .= '<url>';
 					$output .= '<loc>' . $this->url->link('product/product', 'product_id=' . $product['product_id']) . '</loc>';
 					$output .= '<changefreq>weekly</changefreq>';
+					$output .= '<lastmod>' . date('Y-m-d\TH:i:sP', strtotime($product['date_modified'])) . '</lastmod>';
 					$output .= '<priority>1.0</priority>';
 					$output .= '<image:image>';
 					$output .= '<image:loc>' . $this->model_tool_image->resize($product['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')) . '</image:loc>';

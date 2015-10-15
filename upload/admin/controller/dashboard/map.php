@@ -1,7 +1,7 @@
 <?php
 class ControllerDashboardMap extends Controller {
 	public function index() {
-		$this->load->language('dashboard/map');
+		$this->language->load('dashboard/map');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 

@@ -21,10 +21,10 @@ class ControllerAccountLogout extends Controller {
 
 			$this->event->trigger('post.customer.logout');
 
-			$this->response->redirect($this->url->link('account/logout', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/logout', '', true));
 		}
 
-		$this->load->language('account/logout');
+		$this->language->load('account/logout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -37,12 +37,12 @@ class ControllerAccountLogout extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', 'SSL')
+			'href' => $this->url->link('account/account', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_logout'),
-			'href' => $this->url->link('account/logout', '', 'SSL')
+			'href' => $this->url->link('account/logout', '', true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');

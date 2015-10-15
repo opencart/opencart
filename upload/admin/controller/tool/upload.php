@@ -3,7 +3,7 @@ class ControllerToolUpload extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('tool/upload');
+		$this->language->load('tool/upload');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerToolUpload extends Controller {
 	}
 
 	public function delete() {
-		$this->load->language('tool/upload');
+		$this->language->load('tool/upload');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -55,7 +55,7 @@ class ControllerToolUpload extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('tool/upload', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			$this->response->redirect($this->url->link('tool/upload', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
@@ -118,15 +118,15 @@ class ControllerToolUpload extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('tool/upload', 'token=' . $this->session->data['token'] . $url, 'SSL')
+			'href' => $this->url->link('tool/upload', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
-		$data['delete'] = $this->url->link('tool/upload/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['delete'] = $this->url->link('tool/upload/delete', 'token=' . $this->session->data['token'] . $url, true);
 
 		$data['uploads'] = array();
 
@@ -149,7 +149,7 @@ class ControllerToolUpload extends Controller {
 				'name'       => $result['name'],
 				'filename'   => $result['filename'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'download'   => $this->url->link('tool/upload/download', 'token=' . $this->session->data['token'] . '&code=' . $result['code'] . $url, 'SSL')
+				'download'   => $this->url->link('tool/upload/download', 'token=' . $this->session->data['token'] . '&code=' . $result['code'] . $url, true)
 			);
 		}
 
@@ -205,9 +205,9 @@ class ControllerToolUpload extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('tool/upload', 'token=' . $this->session->data['token'] . '&sort=name' . $url, 'SSL');
-		$data['sort_filename'] = $this->url->link('tool/upload', 'token=' . $this->session->data['token'] . '&sort=filename' . $url, 'SSL');
-		$data['sort_date_added'] = $this->url->link('tool/upload', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, 'SSL');
+		$data['sort_name'] = $this->url->link('tool/upload', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
+		$data['sort_filename'] = $this->url->link('tool/upload', 'token=' . $this->session->data['token'] . '&sort=filename' . $url, true);
+		$data['sort_date_added'] = $this->url->link('tool/upload', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, true);
 
 		$url = '';
 
@@ -231,7 +231,7 @@ class ControllerToolUpload extends Controller {
 		$pagination->total = $upload_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('tool/upload', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
+		$pagination->url = $this->url->link('tool/upload', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -293,7 +293,7 @@ class ControllerToolUpload extends Controller {
 				exit('Error: Headers already sent out!');
 			}
 		} else {
-			$this->load->language('error/not_found');
+			$this->language->load('error/not_found');
 
 			$this->document->setTitle($this->language->get('heading_title'));
 
@@ -305,12 +305,12 @@ class ControllerToolUpload extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+				'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('error/not_found', 'token=' . $this->session->data['token'], 'SSL')
+				'href' => $this->url->link('error/not_found', 'token=' . $this->session->data['token'], true)
 			);
 
 			$data['header'] = $this->load->controller('common/header');
@@ -322,7 +322,7 @@ class ControllerToolUpload extends Controller {
 	}
 
 	public function upload() {
-		$this->load->language('sale/order');
+		$this->language->load('sale/order');
 
 		$json = array();
 

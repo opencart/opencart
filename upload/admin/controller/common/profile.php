@@ -1,7 +1,7 @@
 <?php
 class ControllerCommonProfile extends Controller {
 	public function index() {
-		$this->load->language('common/menu');
+		$this->language->load('common/menu');
 
 		$this->load->model('user/user');
 

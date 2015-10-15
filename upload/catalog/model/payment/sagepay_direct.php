@@ -1,7 +1,7 @@
 <?php
 class ModelPaymentSagePayDirect extends Model {
 	public function getMethod($address, $total) {
-		$this->load->language('payment/sagepay_direct');
+		$this->language->load('payment/sagepay_direct');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('sagepay_direct_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 

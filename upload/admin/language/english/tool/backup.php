@@ -3,15 +3,13 @@
 $_['heading_title']    = 'Backup &amp; Restore';
 
 // Text
-$_['text_backup']      = 'Download Backup';
 $_['text_success']     = 'Success: You have successfully imported your database!';
-$_['text_list']        = 'Upload List';
 
 // Entry
-$_['entry_restore']    = 'Restore Backup';
-$_['entry_backup']     = 'Backup';
+$_['entry_import']     = 'Import';
+$_['entry_export']     = 'Export';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify backups!';
-$_['error_backup']     = 'Warning: You must select at least one table to backup!';
+$_['error_permission'] = 'Warning: You do not have permission to modify Backup &amp; Restore!';
+$_['error_export']     = 'Warning: You must select at least one table to export!';
 $_['error_empty']      = 'Warning: The file you uploaded was empty!';

@@ -3,7 +3,7 @@ class ControllerExtensionFraud extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('extension/fraud');
+		$this->language->load('extension/fraud');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerExtensionFraud extends Controller {
 	}
 
 	public function install() {
-		$this->load->language('extension/fraud');
+		$this->language->load('extension/fraud');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -32,14 +32,14 @@ class ControllerExtensionFraud extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/fraud', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/fraud', 'token=' . $this->session->data['token'], true));
 		}
 
 		$this->getList();
 	}
 
 	public function uninstall() {
-		$this->load->language('extension/fraud');
+		$this->language->load('extension/fraud');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -57,7 +57,7 @@ class ControllerExtensionFraud extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/fraud', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/fraud', 'token=' . $this->session->data['token'], true));
 		}
 	}
 
@@ -66,12 +66,12 @@ class ControllerExtensionFraud extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/fraud', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('extension/fraud', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -120,15 +120,15 @@ class ControllerExtensionFraud extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->load->language('fraud/' . $extension);
+				$this->language->load('fraud/' . $extension);
 
 				$data['extensions'][] = array(
 					'name'      => $this->language->get('heading_title'),
 					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'install'   => $this->url->link('extension/fraud/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
-					'uninstall' => $this->url->link('extension/fraud/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
+					'install'   => $this->url->link('extension/fraud/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'uninstall' => $this->url->link('extension/fraud/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('fraud/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL')
+					'edit'      => $this->url->link('fraud/' . $extension . '', 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}

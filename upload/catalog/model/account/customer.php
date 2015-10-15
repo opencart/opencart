@@ -23,7 +23,7 @@ class ModelAccountCustomer extends Model {
 
 		$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$customer_id . "'");
 
-		$this->load->language('mail/customer');
+		$this->language->load('mail/customer');
 
 		$subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 
@@ -35,7 +35,7 @@ class ModelAccountCustomer extends Model {
 			$message .= $this->language->get('text_approval') . "\n";
 		}
 
-		$message .= $this->url->link('account/login', '', 'SSL') . "\n\n";
+		$message .= $this->url->link('account/login', '', true) . "\n\n";
 		$message .= $this->language->get('text_services') . "\n\n";
 		$message .= $this->language->get('text_thanks') . "\n";
 		$message .= html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');

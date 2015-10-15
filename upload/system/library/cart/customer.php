@@ -1,4 +1,5 @@
 <?php
+namespace Cart;
 class Customer {
 	private $customer_id;
 	private $firstname;

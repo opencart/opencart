@@ -1,4 +1,5 @@
 <?php
+namespace Cart;
 class Length {
 	private $lengths = array();
 

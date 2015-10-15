@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentSagepayDirect extends Controller {
 	public function index() {
-		$this->load->language('payment/sagepay_direct');
+		$this->language->load('payment/sagepay_direct');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -124,7 +124,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 	}
 
 	public function send() {
-		$this->load->language('payment/sagepay_direct');
+		$this->language->load('payment/sagepay_direct');
 		$this->load->model('checkout/order');
 		$this->load->model('payment/sagepay_direct');
 
@@ -250,7 +250,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 				$this->model_payment_sagepay_direct->addCard($this->session->data['order_id'], $card_data);
 			}
 
-			$json['TermUrl'] = $this->url->link('payment/sagepay_direct/callback', '', 'SSL');
+			$json['TermUrl'] = $this->url->link('payment/sagepay_direct/callback', '', true);
 		} elseif ($response_data['Status'] == 'OK' || $response_data['Status'] == 'AUTHENTICATED' || $response_data['Status'] == 'REGISTERED') {
 			$message = '';
 
@@ -308,7 +308,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 				}
 			}
 
-			$json['redirect'] = $this->url->link('checkout/success', '', 'SSL');
+			$json['redirect'] = $this->url->link('checkout/success', '', true);
 		} else {
 			$json['error'] = $response_data['Status'] . ': ' . $response_data['StatusDetail'];
 
@@ -322,7 +322,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 	public function callback() {
 		$this->load->model('payment/sagepay_direct');
 
-		$this->load->language('payment/sagepay_direct');
+		$this->language->load('payment/sagepay_direct');
 
 		$this->load->model('checkout/order');
 
@@ -399,14 +399,14 @@ class ControllerPaymentSagepayDirect extends Controller {
 					}
 				}
 
-				$this->response->redirect($this->url->link('checkout/success', '', 'SSL'));
+				$this->response->redirect($this->url->link('checkout/success', '', true));
 			} else {
 				$this->session->data['error'] = $response_data['StatusDetail'];
 
-				$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
+				$this->response->redirect($this->url->link('checkout/checkout', '', true));
 			}
 		} else {
-			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 	}
 

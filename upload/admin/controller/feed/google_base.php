@@ -3,7 +3,7 @@ class ControllerFeedGoogleBase extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('feed/google_base');
+		$this->language->load('feed/google_base');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -14,7 +14,7 @@ class ControllerFeedGoogleBase extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/feed', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -44,22 +44,22 @@ class ControllerFeedGoogleBase extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_feed'),
-			'href' => $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('extension/feed', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('feed/google_base', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('feed/google_base', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('feed/google_base', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('feed/google_base', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->link('extension/feed', 'token=' . $this->session->data['token'], true);
 
 		$data['token'] = $this->session->data['token'];
 
@@ -99,7 +99,7 @@ class ControllerFeedGoogleBase extends Controller {
 	}
 
 	public function import() {
-		$this->load->language('feed/google_base');
+		$this->language->load('feed/google_base');
 
 		$json = array();
 
@@ -150,7 +150,7 @@ class ControllerFeedGoogleBase extends Controller {
 	}
 
 	public function category() {
-		$this->load->language('feed/google_base');
+		$this->language->load('feed/google_base');
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -188,7 +188,7 @@ class ControllerFeedGoogleBase extends Controller {
 		$pagination->total = $category_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('feed/google_base/category', 'token=' . $this->session->data['token'] . '&page={page}', 'SSL');
+		$pagination->url = $this->url->link('feed/google_base/category', 'token=' . $this->session->data['token'] . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -198,7 +198,7 @@ class ControllerFeedGoogleBase extends Controller {
 	}
 
 	public function addCategory() {
-		$this->load->language('feed/google_base');
+		$this->language->load('feed/google_base');
 
 		$json = array();
 
@@ -217,7 +217,7 @@ class ControllerFeedGoogleBase extends Controller {
 	}
 
 	public function removeCategory() {
-		$this->load->language('feed/google_base');
+		$this->language->load('feed/google_base');
 
 		$json = array();
 

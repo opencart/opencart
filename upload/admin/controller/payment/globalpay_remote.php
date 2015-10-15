@@ -3,7 +3,7 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('payment/globalpay_remote');
+		$this->language->load('payment/globalpay_remote');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -14,7 +14,7 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -102,21 +102,21 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/globalpay_remote', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('payment/globalpay_remote', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/globalpay_remote', 'token=' . $this->session->data['token'], 'SSL');
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('payment/globalpay_remote', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['globalpay_remote_merchant_id'])) {
 			$data['globalpay_remote_merchant_id'] = $this->request->post['globalpay_remote_merchant_id'];
@@ -265,7 +265,7 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 			$globalpay_order = $this->model_payment_globalpay_remote->getOrder($this->request->get['order_id']);
 
 			if (!empty($globalpay_order)) {
-				$this->load->language('payment/globalpay_remote');
+				$this->language->load('payment/globalpay_remote');
 
 				$globalpay_order['total_captured'] = $this->model_payment_globalpay_remote->getTotalCaptured($globalpay_order['globalpay_remote_order_id']);
 
@@ -305,7 +305,7 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 	}
 
 	public function void() {
-		$this->load->language('payment/globalpay_remote');
+		$this->language->load('payment/globalpay_remote');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
@@ -339,7 +339,7 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 	}
 
 	public function capture() {
-		$this->load->language('payment/globalpay');
+		$this->language->load('payment/globalpay');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
@@ -388,7 +388,7 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 	}
 
 	public function rebate() {
-		$this->load->language('payment/globalpay_remote');
+		$this->language->load('payment/globalpay_remote');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {

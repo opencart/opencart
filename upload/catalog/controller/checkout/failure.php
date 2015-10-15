@@ -1,7 +1,7 @@
 <?php
 class ControllerCheckoutFailure extends Controller {
 	public function index() {
-		$this->load->language('checkout/failure');
+		$this->language->load('checkout/failure');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -19,7 +19,7 @@ class ControllerCheckoutFailure extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_checkout'),
-			'href' => $this->url->link('checkout/checkout', '', 'SSL')
+			'href' => $this->url->link('checkout/checkout', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(

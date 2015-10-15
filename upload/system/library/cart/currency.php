@@ -1,4 +1,5 @@
 <?php
+namespace Cart;
 class Currency {
 	private $code;
 	private $currencies = array();

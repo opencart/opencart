@@ -1,8 +1,8 @@
 # 1.To use URL Alias you need to be running apache with mod_rewrite enabled.
 
-# 2. In your opencart directory rename htaccess.txt to .htaccess.
+# 2. In your carrito directory rename htaccess.txt to .htaccess.
 
-# For any support issues please visit: http://www.opencart.com
+# For any support issues please visit: https://github.com/maddes/carrito
 
 Options +FollowSymlinks
 
@@ -17,7 +17,7 @@ Options -Indexes
 
 # SEO URL Settings
 RewriteEngine On
-# If your opencart installation does not run on the main web folder make sure you folder it does run in ie. / becomes /shop/
+# If your Carrito installation does not run on the main web folder make sure you folder it does run in ie. / becomes /shop/
 
 RewriteBase /
 RewriteRule ^sitemap.xml$ index.php?route=feed/google_sitemap [L]

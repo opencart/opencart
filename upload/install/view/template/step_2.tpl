@@ -8,7 +8,7 @@
       </div>
       <div class="col-sm-6">
         <div id="logo" class="pull-right hidden-xs">
-          <img src="view/image/logo.png" alt="OpenCart" title="OpenCart" />
+          <img src="view/image/logo.png" alt="Carrito" title="Carrito" />
         </div>
       </div>
     </div>

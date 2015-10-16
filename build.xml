@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="OpenCart" default="build" basedir=".">
+<project name="Carrito" default="build" basedir=".">
     <property name="source" value="upload"/>
 
     <target name="clean" description="Cleanup build artifacts">

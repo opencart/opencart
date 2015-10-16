@@ -1,7 +1,7 @@
 <?php
 
 //
-// Command line tool for installing opencart
+// Command line tool for installing carrito
 // Author: Vineet Naik <vineet.naik@kodeplay.com> <naikvin@gmail.com>
 //
 // (Currently tested on linux only)
@@ -12,13 +12,13 @@
 //   php cli_install.php install --db_hostname localhost \
 //                               --db_username root \
 //                               --db_password pass \
-//                               --db_database opencart \
+//                               --db_database carrito \
 //                               --db_driver mysqli \
 //								 --db_port 3306 \
 //                               --username admin \
 //                               --password admin \
 //                               --email youremail@example.com \
-//                               --http_server http://localhost/opencart
+//                               --http_server http://localhost/carrito
 //
 
 ini_set('display_errors', 1);
@@ -64,13 +64,13 @@ function usage() {
 		'--db_hostname', 'localhost',
 		'--db_username', 'root',
 		'--db_password', 'pass',
-		'--db_database', 'opencart',
+		'--db_database', 'carrito',
 		'--db_driver', 'mysqli',
 		'--db_port', '3306',
 		'--username', 'admin',
 		'--password', 'admin',
 		'--email', 'youremail@example.com',
-		'--http_server', 'http://localhost/opencart'
+		'--http_server', 'http://localhost/carrito'
 	));
 	echo 'php cli_install.php install ' . $options . "\n\n";
 }
@@ -79,7 +79,7 @@ function usage() {
 function get_options($argv) {
 	$defaults = array(
 		'db_hostname' => 'localhost',
-		'db_database' => 'opencart',
+		'db_database' => 'carrito',
 		'db_prefix' => 'oc_',
 		'db_driver' => 'mysqli',
 		'db_port' => '3306',
@@ -142,7 +142,7 @@ function install($options) {
 function check_requirements() {
 	$error = null;
 	if (phpversion() < '5.0') {
-		$error = 'Warning: You need to use PHP5 or above for OpenCart to work!';
+		$error = 'Warning: You need to use PHP5 or above for Carrito to work!';
 	}
 
 	if (!ini_get('file_uploads')) {
@@ -150,27 +150,27 @@ function check_requirements() {
 	}
 
 	if (ini_get('session.auto_start')) {
-		$error = 'Warning: OpenCart will not work with session.auto_start enabled!';
+		$error = 'Warning: Carrito will not work with session.auto_start enabled!';
 	}
 
 	if (!extension_loaded('mysqli')) {
-		$error = 'Warning: MySQLi extension needs to be loaded for OpenCart to work!';
+		$error = 'Warning: MySQLi extension needs to be loaded for Carrito to work!';
 	}
 
 	if (!extension_loaded('gd')) {
-		$error = 'Warning: GD extension needs to be loaded for OpenCart to work!';
+		$error = 'Warning: GD extension needs to be loaded for Carrito to work!';
 	}
 
 	if (!extension_loaded('curl')) {
-		$error = 'Warning: CURL extension needs to be loaded for OpenCart to work!';
+		$error = 'Warning: CURL extension needs to be loaded for Carrito to work!';
 	}
 
 	if (!function_exists('mcrypt_encrypt')) {
-		$error = 'Warning: mCrypt extension needs to be loaded for OpenCart to work!';
+		$error = 'Warning: mCrypt extension needs to be loaded for Carrito to work!';
 	}
 
 	if (!extension_loaded('zlib')) {
-		$error = 'Warning: ZLIB extension needs to be loaded for OpenCart to work!';
+		$error = 'Warning: ZLIB extension needs to be loaded for Carrito to work!';
 	}
 
 	return array($error === null, $error);
@@ -297,7 +297,7 @@ case "install":
 			exit(1);
 		}
 		install($options);
-		echo "SUCCESS! Opencart successfully installed on your server\n";
+		echo "SUCCESS! Carrito successfully installed on your server\n";
 		echo "Store link: " . $options['http_server'] . "\n";
 		echo "Admin link: " . $options['http_server'] . "admin/\n\n";
 	} catch (ErrorException $e) {

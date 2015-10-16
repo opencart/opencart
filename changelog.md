@@ -1,3 +1,8 @@
+
+# Carrito 1.0.0.0 changelog
+
+* Just changed branding for now… OC v2.1.0.0 = Carrito 1.0.0.0
+
 # OpenCart 2.0 change log
 
 ## v2.1.0.0 (Pending)

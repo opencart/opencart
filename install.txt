@@ -22,10 +22,11 @@ These instructions are for a manual installation using FTP, cPanel or other web 
 
 3. For Linux/Unix make sure the following folders and files are writeable.
 
-		chmod 0755 or 0777 system/cache/
-		chmod 0755 or 0777 system/logs/
-		chmod 0755 or 0777 system/download/
-		chmod 0755 or 0777 system/upload/
+		chmod 0755 or 0777 system/storage/cache/
+		chmod 0755 or 0777 system/storage/logs/
+		chmod 0755 or 0777 system/storage/download/
+		chmod 0755 or 0777 system/storage/upload/
+		chmod 0755 or 0777 system/storage/modification/
 		chmod 0755 or 0777 image/
 		chmod 0755 or 0777 image/cache/
 		chmod 0755 or 0777 image/catalog/

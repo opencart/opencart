@@ -2,6 +2,9 @@
 // Version
 define('VERSION', '2.1.0.2_rc');
 
+// Composer Autoload
+require_once('vendor/autoload.php');
+
 // Configuration
 if (is_file('config.php')) {
 	require_once('config.php');

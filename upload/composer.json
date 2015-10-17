@@ -1,0 +1,17 @@
+{
+    "name": "opencart/opencart",
+    "authors": [
+        {
+            "name": "Opencart",
+            "email": "opencart@opencart.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Opencart\\Admin\\": "admin/",
+            "Opencart\\Catalog\\": "catalog/",
+            "Opencart\\System\\": "system/"
+        }
+    }
+}

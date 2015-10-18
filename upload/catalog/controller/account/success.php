@@ -1,7 +1,7 @@
 <?php
 class ControllerAccountSuccess extends Controller {
 	public function index() {
-		$this->load->language('account/success');
+		$this->language->load('account/success');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -14,7 +14,7 @@ class ControllerAccountSuccess extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', 'SSL')
+			'href' => $this->url->link('account/account', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -39,7 +39,7 @@ class ControllerAccountSuccess extends Controller {
 		if ($this->cart->hasProducts()) {
 			$data['continue'] = $this->url->link('checkout/cart');
 		} else {
-			$data['continue'] = $this->url->link('account/account', '', 'SSL');
+			$data['continue'] = $this->url->link('account/account', '', true);
 		}
 
 		$data['column_left'] = $this->load->controller('common/column_left');

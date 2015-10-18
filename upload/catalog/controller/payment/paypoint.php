@@ -46,7 +46,7 @@ class ControllerPaymentPaypoint extends Controller {
 		}
 
 		$data['currency'] = $this->currency->getCode();
-		$data['callback'] = $this->url->link('payment/paypoint/callback', '', 'SSL');
+		$data['callback'] = $this->url->link('payment/paypoint/callback', '', true);
 
 		switch ($this->config->get('paypoint_test')) {
 			case 'live':
@@ -93,7 +93,7 @@ class ControllerPaymentPaypoint extends Controller {
 		}
 
 		if ($order_info) {
-			$this->load->language('payment/paypoint');
+			$this->language->load('payment/paypoint');
 
 			$data['title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_name'));
 

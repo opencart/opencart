@@ -2,7 +2,7 @@
 class ControllerAccountForgotten extends Controller {
 	public function index() {
 		if ($this->customer->isLogged()) {
-			$this->response->redirect($this->url->link('account/account', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/account', '', true));
 		}
 
 		$this->language->load('account/forgotten');
@@ -12,7 +12,7 @@ class ControllerAccountForgotten extends Controller {
 		$this->load->model('account/customer');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->load->language('mail/forgotten');
+			$this->language->load('mail/forgotten');
 
 			$password = substr(sha1(uniqid(mt_rand(), true)), 0, 10);
 
@@ -56,7 +56,7 @@ class ControllerAccountForgotten extends Controller {
 				$this->model_account_activity->addActivity('forgotten', $activity_data);
 			}
 
-			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
 		$data['breadcrumbs'] = array();
@@ -68,12 +68,12 @@ class ControllerAccountForgotten extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', 'SSL')
+			'href' => $this->url->link('account/account', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_forgotten'),
-			'href' => $this->url->link('account/forgotten', '', 'SSL')
+			'href' => $this->url->link('account/forgotten', '', true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -92,9 +92,9 @@ class ControllerAccountForgotten extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['action'] = $this->url->link('account/forgotten', '', 'SSL');
+		$data['action'] = $this->url->link('account/forgotten', '', true);
 
-		$data['back'] = $this->url->link('account/login', '', 'SSL');
+		$data['back'] = $this->url->link('account/login', '', true);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -115,6 +115,12 @@ class ControllerAccountForgotten extends Controller {
 			$this->error['warning'] = $this->language->get('error_email');
 		} elseif (!$this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
 			$this->error['warning'] = $this->language->get('error_email');
+		}
+
+		$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
+
+		if ($customer_info && !$customer_info['approved']) {
+		    $this->error['warning'] = $this->language->get('error_approved');
 		}
 
 		return !$this->error;

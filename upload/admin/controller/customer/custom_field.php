@@ -1,7 +1,7 @@
 <?php
 class ControllerCustomerCustomField extends Controller {
 	public function index() {
-		$this->load->language('customer/custom_field');
+		$this->language->load('customer/custom_field');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -11,7 +11,7 @@ class ControllerCustomerCustomField extends Controller {
 	}
 
 	public function add() {
-		$this->load->language('customer/custom_field');
+		$this->language->load('customer/custom_field');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -36,14 +36,14 @@ class ControllerCustomerCustomField extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			$this->response->redirect($this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
 	}
 
 	public function edit() {
-		$this->load->language('customer/custom_field');
+		$this->language->load('customer/custom_field');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -68,14 +68,14 @@ class ControllerCustomerCustomField extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			$this->response->redirect($this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
 	}
 
 	public function delete() {
-		$this->load->language('customer/custom_field');
+		$this->language->load('customer/custom_field');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -102,7 +102,7 @@ class ControllerCustomerCustomField extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			$this->response->redirect($this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
@@ -145,16 +145,16 @@ class ControllerCustomerCustomField extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL')
+			'href' => $this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
-		$data['add'] = $this->url->link('customer/custom_field/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$data['delete'] = $this->url->link('customer/custom_field/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['add'] = $this->url->link('customer/custom_field/add', 'token=' . $this->session->data['token'] . $url, true);
+		$data['delete'] = $this->url->link('customer/custom_field/delete', 'token=' . $this->session->data['token'] . $url, true);
 
 		$data['custom_fields'] = array();
 
@@ -212,7 +212,7 @@ class ControllerCustomerCustomField extends Controller {
 				'type'            => $type,
 				'status'          => $result['status'],
 				'sort_order'      => $result['sort_order'],
-				'edit'            => $this->url->link('customer/custom_field/edit', 'token=' . $this->session->data['token'] . '&custom_field_id=' . $result['custom_field_id'] . $url, 'SSL')
+				'edit'            => $this->url->link('customer/custom_field/edit', 'token=' . $this->session->data['token'] . '&custom_field_id=' . $result['custom_field_id'] . $url, true)
 			);
 		}
 
@@ -265,11 +265,11 @@ class ControllerCustomerCustomField extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . '&sort=cfd.name' . $url, 'SSL');
-		$data['sort_location'] = $this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . '&sort=cf.location' . $url, 'SSL');
-		$data['sort_type'] = $this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . '&sort=cf.type' . $url, 'SSL');
-		$data['sort_status'] = $this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . '&sort=cf.status' . $url, 'SSL');
-		$data['sort_sort_order'] = $this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . '&sort=cf.sort_order' . $url, 'SSL');
+		$data['sort_name'] = $this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . '&sort=cfd.name' . $url, true);
+		$data['sort_location'] = $this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . '&sort=cf.location' . $url, true);
+		$data['sort_type'] = $this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . '&sort=cf.type' . $url, true);
+		$data['sort_status'] = $this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . '&sort=cf.status' . $url, true);
+		$data['sort_sort_order'] = $this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . '&sort=cf.sort_order' . $url, true);
 
 		$url = '';
 
@@ -285,7 +285,7 @@ class ControllerCustomerCustomField extends Controller {
 		$pagination->total = $custom_field_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
+		$pagination->url = $this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -374,21 +374,21 @@ class ControllerCustomerCustomField extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL')
+			'href' => $this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
 		if (!isset($this->request->get['custom_field_id'])) {
-			$data['action'] = $this->url->link('customer/custom_field/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('customer/custom_field/add', 'token=' . $this->session->data['token'] . $url, true);
 		} else {
-			$data['action'] = $this->url->link('customer/custom_field/edit', 'token=' . $this->session->data['token'] . '&custom_field_id=' . $this->request->get['custom_field_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('customer/custom_field/edit', 'token=' . $this->session->data['token'] . '&custom_field_id=' . $this->request->get['custom_field_id'] . $url, true);
 		}
 
-		$data['cancel'] = $this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['cancel'] = $this->url->link('customer/custom_field', 'token=' . $this->session->data['token'] . $url, true);
 
 		if (isset($this->request->get['custom_field_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$custom_field_info = $this->model_customer_custom_field->getCustomField($this->request->get['custom_field_id']);

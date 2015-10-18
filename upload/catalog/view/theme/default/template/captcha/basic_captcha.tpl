@@ -1,43 +1,19 @@
-<div class="form-group">
-  <div class="col-sm-10 pull-right">
-    <img src="index.php?route=captcha/basic_captcha" alt="" />
+<fieldset>
+  <legend><?php echo $heading_title; ?></legend>
+  <div class="form-group required">
+    <?php if (substr($route, 0, 9) == 'checkout/') { ?>
+    <label class="control-label" for="input-payment-captcha"><?php echo $entry_captcha; ?></label>
+    <input type="text" name="captcha" id="input-payment-captcha" class="form-control" />
+    <img src="index.php?route=captcha/basic_captcha/captcha" alt="" />
+    <?php } else { ?>
+    <label class="col-sm-2 control-label" for="input-captcha"><?php echo $entry_captcha; ?></label>
+    <div class="col-sm-10">
+      <input type="text" name="captcha" id="input-captcha" class="form-control" />
+      <img src="index.php?route=captcha/basic_captcha/captcha" alt="" />
+      <?php if ($error_captcha) { ?>
+      <div class="text-danger"><?php echo $error_captcha; ?></div>
+      <?php } ?>
+    </div>
+    <?php } ?>
   </div>
-</div>
-<div class="form-group required">
-  <label class="col-sm-2 control-label" for="input-captcha"><?php echo $entry_captcha; ?></label>
-  <div class="col-sm-10">
-    <input type="text" name="captcha" id="input-captcha" class="form-control" />
-  </div>
-</div>
-<script type="text/javascript"><!--
-// Sort the custom fields
-$('input[name="captcha"]').on('çlick', function(e) {
-    e.preventDefault();
-
-    $.ajax({
-		url: 'index.php?route=captcha/basic_captcha/validate',
-		dataType: 'json',
-		beforeSend: function() {
-			$('input[name="captcha"]').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
-		},
-		complete: function() {
-			$('.fa-spin').remove();
-		},
-		success: function(json) {
-            if (json['error']) {
-                $(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
-            }
-
-            if (json['success']) {
-                alert(json['success']);
-
-                $(node).parent().find('input').attr('value', json['code']);
-            }
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
-});
-//--></script>
+</fieldset>

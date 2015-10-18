@@ -12,9 +12,9 @@ class ControllerPaymentPPProIframe extends Controller {
 			$hosted_button_id = $this->constructButtonData($order_info);
 
 			if ($this->config->get('pp_pro_iframe_test')) {
-				$data['url'] = 'https://securepayments.sandbox.paypal.com/cgi-bin/webscr';
+				$data['url'] = 'https://securepayments.sandbox.paypal.com/webapps/HostedSoleSolutionApp/webflow/sparta/hostedSoleSolutionProcess';
 			} else {
-				$data['url'] = 'https://securepayments.paypal.com/cgi-bin/webscr';
+				$data['url'] = 'https://securepayments.paypal.com/webapps/HostedSoleSolutionApp/webflow/sparta/hostedSoleSolutionProcess';
 			}
 
 			if ($hosted_button_id) {
@@ -49,9 +49,9 @@ class ControllerPaymentPPProIframe extends Controller {
 			$data['code'] = $hosted_button_id;
 
 			if ($this->config->get('pp_pro_iframe_test')) {
-				$data['url'] = 'https://securepayments.sandbox.paypal.com/cgi-bin/webscr';
+				$data['url'] = 'https://securepayments.sandbox.paypal.com/webapps/HostedSoleSolutionApp/webflow/sparta/hostedSoleSolutionProcess';
 			} else {
-				$data['url'] = 'https://securepayments.paypal.com/cgi-bin/webscr';
+				$data['url'] = 'https://securepayments.paypal.com/webapps/HostedSoleSolutionApp/webflow/sparta/hostedSoleSolutionProcess';
 			}
 
 			$data['error_connection'] = '';
@@ -244,8 +244,8 @@ class ControllerPaymentPPProIframe extends Controller {
 		$s_data['L_BUTTONVAR18'] = 'billing_zip=' . urlencode($order_info['payment_postcode']);
 		$s_data['L_BUTTONVAR19'] = 'billing_country=' . urlencode($order_info['payment_iso_code_2']);
 
-		$s_data['L_BUTTONVAR20'] = 'notify_url=' . $this->url->link('payment/pp_pro_iframe/notify', '', 'SSL');
-		$s_data['L_BUTTONVAR21'] = 'cancel_return=' . $this->url->link('checkout/checkout', '', 'SSL');
+		$s_data['L_BUTTONVAR20'] = 'notify_url=' . $this->url->link('payment/pp_pro_iframe/notify', '', true);
+		$s_data['L_BUTTONVAR21'] = 'cancel_return=' . $this->url->link('checkout/checkout', '', true);
 		$s_data['L_BUTTONVAR22'] = 'paymentaction=' . $this->config->get('pp_pro_iframe_transaction_method');
 		$s_data['L_BUTTONVAR23'] = 'currency_code=' . urlencode($order_info['currency_code']);
 		$s_data['L_BUTTONVAR26'] = 'showBillingAddress=false';
@@ -265,7 +265,7 @@ class ControllerPaymentPPProIframe extends Controller {
 		$s_data['L_BUTTONVAR50'] = 'PageButtonBgColor=#AEAEAE';
 		$s_data['L_BUTTONVAR51'] = 'orderSummaryBgColor=#AEAEAE';
 		$s_data['L_BUTTONVAR55'] = 'template=templateD';
-		$s_data['L_BUTTONVAR56'] = 'return=' . $this->url->link('checkout/success', '', 'SSL');
+		$s_data['L_BUTTONVAR56'] = 'return=' . $this->url->link('checkout/success', '', true);
 		$s_data['L_BUTTONVAR57'] = 'custom=' . $this->encryption->encrypt($order_info['order_id']);
 
 		if ($this->config->get('pp_pro_iframe_test')) {

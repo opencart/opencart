@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentRealex extends Controller {
 	public function index() {
-		$this->load->language('payment/realex');
+		$this->language->load('payment/realex');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -12,7 +12,7 @@ class ControllerPaymentRealex extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -120,21 +120,21 @@ class ControllerPaymentRealex extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/realex', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('payment/realex', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/realex', 'token=' . $this->session->data['token'], 'SSL');
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('payment/realex', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['realex_merchant_id'])) {
 			$data['realex_merchant_id'] = $this->request->post['realex_merchant_id'];
@@ -298,7 +298,7 @@ class ControllerPaymentRealex extends Controller {
 			$realex_order = $this->model_payment_realex->getOrder($this->request->get['order_id']);
 
 			if (!empty($realex_order)) {
-				$this->load->language('payment/realex');
+				$this->language->load('payment/realex');
 
 				$realex_order['total_captured'] = $this->model_payment_realex->getTotalCaptured($realex_order['realex_order_id']);
 
@@ -338,7 +338,7 @@ class ControllerPaymentRealex extends Controller {
 	}
 
 	public function void() {
-		$this->load->language('payment/realex');
+		$this->language->load('payment/realex');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
@@ -372,7 +372,7 @@ class ControllerPaymentRealex extends Controller {
 	}
 
 	public function capture() {
-		$this->load->language('payment/realex');
+		$this->language->load('payment/realex');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
@@ -420,7 +420,7 @@ class ControllerPaymentRealex extends Controller {
 	}
 
 	public function rebate() {
-		$this->load->language('payment/realex');
+		$this->language->load('payment/realex');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {

@@ -2,7 +2,7 @@
 class ControllerPaymentWorldpay extends Controller {
 	public function index() {
 
-		$this->load->language('payment/worldpay');
+		$this->language->load('payment/worldpay');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerPaymentWorldpay extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -78,22 +78,22 @@ class ControllerPaymentWorldpay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/worldpay', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('payment/worldpay', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/worldpay', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('payment/worldpay', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['worldpay_service_key'])) {
 			$data['worldpay_service_key'] = $this->request->post['worldpay_service_key'];
@@ -263,7 +263,7 @@ class ControllerPaymentWorldpay extends Controller {
 			$worldpay_order = $this->model_payment_worldpay->getOrder($this->request->get['order_id']);
 
 			if (!empty($worldpay_order)) {
-				$this->load->language('payment/worldpay');
+				$this->language->load('payment/worldpay');
 
 				$worldpay_order['total_released'] = $this->model_payment_worldpay->getTotalReleased($worldpay_order['worldpay_order_id']);
 
@@ -285,9 +285,9 @@ class ControllerPaymentWorldpay extends Controller {
 				$data['text_column_amount'] = $this->language->get('text_column_amount');
 				$data['text_column_type'] = $this->language->get('text_column_type');
 				$data['text_column_date_added'] = $this->language->get('text_column_date_added');
-				$data['btn_release'] = $this->language->get('btn_release');
-				$data['btn_refund'] = $this->language->get('btn_refund');
-				$data['btn_void'] = $this->language->get('btn_void');
+				$data['button_release'] = $this->language->get('button_release');
+				$data['button_refund'] = $this->language->get('button_refund');
+				$data['button_void'] = $this->language->get('button_void');
 				$data['text_confirm_void'] = $this->language->get('text_confirm_void');
 				$data['text_confirm_release'] = $this->language->get('text_confirm_release');
 				$data['text_confirm_refund'] = $this->language->get('text_confirm_refund');
@@ -301,7 +301,7 @@ class ControllerPaymentWorldpay extends Controller {
 	}
 
 	public function refund() {
-		$this->load->language('payment/worldpay');
+		$this->language->load('payment/worldpay');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {

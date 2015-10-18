@@ -1,5 +1,6 @@
 <?php
 class Event {
+	protected $registry;
 	private $data = array();
 
 	public function __construct($registry) {
@@ -11,14 +12,20 @@ class Event {
 	}
 
 	public function unregister($key, $action) {
-		unset($this->data[$key]);
+		if (isset($this->data[$key])) {
+			foreach ($this->data[$key] as $index => $event) {
+				if ($event == $action) {
+					unset($this->data[$key][$index]);
+				}
+			}
+		}
 	}
 
 	public function trigger($key, &$arg = array()) {
 		if (isset($this->data[$key])) {
 			foreach ($this->data[$key] as $event) {
-				$action = new Action($event, $arg);
-				$action->execute($this->registry);
+				$action = new Action($event['action'], $arg);
+				$event->execute($this->registry);
 			}
 		}
 	}

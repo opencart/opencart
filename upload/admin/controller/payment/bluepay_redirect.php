@@ -2,7 +2,7 @@
 class ControllerPaymentBluepayredirect extends Controller {
 	public function index() {
 
-		$this->load->language('payment/bluepay_redirect');
+		$this->language->load('payment/bluepay_redirect');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerPaymentBluepayredirect extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -69,22 +69,22 @@ class ControllerPaymentBluepayredirect extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/bluepay_redirect', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('payment/bluepay_redirect', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/bluepay_redirect', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('payment/bluepay_redirect', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['bluepay_redirect_account_id'])) {
 			$data['bluepay_redirect_account_id'] = $this->request->post['bluepay_redirect_account_id'];
@@ -186,7 +186,7 @@ class ControllerPaymentBluepayredirect extends Controller {
 			$bluepay_redirect_order = $this->model_payment_bluepay_redirect->getOrder($this->request->get['order_id']);
 
 			if (!empty($bluepay_redirect_order)) {
-				$this->load->language('payment/bluepay_redirect');
+				$this->language->load('payment/bluepay_redirect');
 
 				$bluepay_redirect_order['total_released'] = $this->model_payment_bluepay_redirect->getTotalReleased($bluepay_redirect_order['bluepay_redirect_order_id']);
 
@@ -224,7 +224,7 @@ class ControllerPaymentBluepayredirect extends Controller {
 	}
 
 	public function void() {
-		$this->load->language('payment/bluepay_redirect');
+		$this->language->load('payment/bluepay_redirect');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
@@ -258,7 +258,7 @@ class ControllerPaymentBluepayredirect extends Controller {
 	}
 
 	public function release() {
-		$this->load->language('payment/bluepay_redirect');
+		$this->language->load('payment/bluepay_redirect');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
@@ -304,7 +304,7 @@ class ControllerPaymentBluepayredirect extends Controller {
 	}
 
 	public function rebate() {
-		$this->load->language('payment/bluepay_redirect');
+		$this->language->load('payment/bluepay_redirect');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {

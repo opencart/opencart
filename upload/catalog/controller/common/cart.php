@@ -1,7 +1,7 @@
 <?php
 class ControllerCommonCart extends Controller {
 	public function index() {
-		$this->load->language('common/cart');
+		$this->language->load('common/cart');
 
 		// Totals
 		$this->load->model('extension/extension');
@@ -97,7 +97,7 @@ class ControllerCommonCart extends Controller {
 			}
 
 			$data['products'][] = array(
-				'key'       => $product['key'],
+				'cart_id'   => $product['cart_id'],
 				'thumb'     => $image,
 				'name'      => $product['name'],
 				'model'     => $product['model'],
@@ -133,7 +133,7 @@ class ControllerCommonCart extends Controller {
 		}
 
 		$data['cart'] = $this->url->link('checkout/cart');
-		$data['checkout'] = $this->url->link('checkout/checkout', '', 'SSL');
+		$data['checkout'] = $this->url->link('checkout/checkout', '', true);
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/cart.tpl')) {
 			return $this->load->view($this->config->get('config_template') . '/template/common/cart.tpl', $data);

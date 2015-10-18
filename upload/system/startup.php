@@ -7,6 +7,25 @@ if (version_compare(phpversion(), '5.3.0', '<') == true) {
 	exit('PHP5.3+ Required');
 }
 
+// Magic Quotes Fix
+if (ini_get('magic_quotes_gpc')) {
+	function clean($data) {
+   		if (is_array($data)) {
+  			foreach ($data as $key => $value) {
+    			$data[clean($key)] = clean($value);
+  			}
+		} else {
+  			$data = stripslashes($data);
+		}
+
+		return $data;
+	}
+
+	$_GET = clean($_GET);
+	$_POST = clean($_POST);
+	$_COOKIE = clean($_COOKIE);
+}
+
 if (!ini_get('date.timezone')) {
 	date_default_timezone_set('UTC');
 }
@@ -56,7 +75,7 @@ function modification($filename) {
 	if (substr($filename, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {
 		$file = DIR_MODIFICATION . 'system/' . substr($filename, strlen(DIR_SYSTEM));
 	}
-	
+
 	if (is_file($file)) {
 		return $file;
 	}
@@ -65,19 +84,32 @@ function modification($filename) {
 }
 
 // Autoloader
-function autoload($class) {
+function library($class) {
 	$file = DIR_SYSTEM . 'library/' . str_replace('\\', '/', strtolower($class)) . '.php';
-	
+
 	if (is_file($file)) {
 		include_once(modification($file));
-		
+
 		return true;
 	} else {
 		return false;
 	}
 }
 
-spl_autoload_register('autoload');
+function vendor($class) {
+	$file = DIR_SYSTEM . 'vendor/' . str_replace('\\', '/', strtolower($class)) . '.php';
+
+	if (is_file($file)) {
+		include_once(modification($file));
+
+		return true;
+	} else {
+		return false;
+	}
+}
+
+spl_autoload_register('library');
+spl_autoload_register('vendor');
 spl_autoload_extensions('.php');
 
 // Engine

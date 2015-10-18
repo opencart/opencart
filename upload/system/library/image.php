@@ -167,8 +167,10 @@ class Image {
 		$this->height = imagesy($this->image);
 	}
 
-	private function filter($filter) {
-		imagefilter($this->image, $filter);
+	private function filter() {
+        $args = func_get_args();
+
+        call_user_func_array('imagefilter', $args);
 	}
 
 	private function text($text, $x = 0, $y = 0, $size = 5, $color = '000000') {

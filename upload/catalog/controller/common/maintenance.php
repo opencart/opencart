@@ -1,4 +1,6 @@
 <?php
+use Cart\User;
+
 class ControllerCommonMaintenance extends Controller {
 	public function index() {
 		if ($this->config->get('config_maintenance')) {
@@ -22,7 +24,7 @@ class ControllerCommonMaintenance extends Controller {
 	}
 
 	public function info() {
-		$this->load->language('common/maintenance');
+		$this->language->load('common/maintenance');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

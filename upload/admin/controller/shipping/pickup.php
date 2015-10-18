@@ -1,7 +1,7 @@
 <?php
 class ControllerShippingPickup extends Controller {
 	public function index() {
-		$this->load->language('shipping/pickup');
+		$this->language->load('shipping/pickup');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -12,7 +12,7 @@ class ControllerShippingPickup extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/shipping', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -40,22 +40,22 @@ class ControllerShippingPickup extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_shipping'),
-			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('shipping/pickup', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('shipping/pickup', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('shipping/pickup', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('shipping/pickup', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['pickup_geo_zone_id'])) {
 			$data['pickup_geo_zone_id'] = $this->request->post['pickup_geo_zone_id'];

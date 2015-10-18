@@ -1,7 +1,7 @@
 <?php
 class ControllerAffiliateSuccess extends Controller {
 	public function index() {
-		$this->load->language('affiliate/success');
+		$this->language->load('affiliate/success');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -14,7 +14,7 @@ class ControllerAffiliateSuccess extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('affiliate/account', '', 'SSL')
+			'href' => $this->url->link('affiliate/account', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -32,7 +32,7 @@ class ControllerAffiliateSuccess extends Controller {
 
 		$data['button_continue'] = $this->language->get('button_continue');
 
-		$data['continue'] = $this->url->link('affiliate/account', '', 'SSL');
+		$data['continue'] = $this->url->link('affiliate/account', '', true);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

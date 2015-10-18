@@ -386,7 +386,7 @@
 			  <div class="form-group">
 				<label class="col-sm-2 control-label" for="input-image"><span data-toggle="tooltip" title="<?php echo $help_logo; ?>"><?php echo $entry_logo; ?></span></label>
 				<div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $thumb; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" /></a>
-				  <input type="hidden" name="pp_express_logo" value="<?php echo $pp_express_logo; ?>" />
+				  <input type="hidden" name="pp_express_logo" value="<?php echo $pp_express_logo; ?>" id="input-logo" />
 				</div>
 			  </div>
 			</div>

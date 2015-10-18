@@ -2,12 +2,12 @@
 class ControllerAffiliatePassword extends Controller {
 	public function index() {
 		if (!$this->affiliate->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('affiliate/password', '', 'SSL');
+			$this->session->data['redirect'] = $this->url->link('affiliate/password', '', true);
 
-			$this->response->redirect($this->url->link('affiliate/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('affiliate/login', '', true));
 		}
 
-		$this->load->language('affiliate/password');
+		$this->language->load('affiliate/password');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -28,7 +28,7 @@ class ControllerAffiliatePassword extends Controller {
 
 			$this->model_affiliate_activity->addActivity('password', $activity_data);
 
-			$this->response->redirect($this->url->link('affiliate/account', '', 'SSL'));
+			$this->response->redirect($this->url->link('affiliate/account', '', true));
 		}
 
 		$data['breadcrumbs'] = array();
@@ -40,12 +40,12 @@ class ControllerAffiliatePassword extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('affiliate/account', '', 'SSL')
+			'href' => $this->url->link('affiliate/account', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('affiliate/password', '', 'SSL')
+			'href' => $this->url->link('affiliate/password', '', true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -70,7 +70,7 @@ class ControllerAffiliatePassword extends Controller {
 			$data['error_confirm'] = '';
 		}
 
-		$data['action'] = $this->url->link('affiliate/password', '', 'SSL');
+		$data['action'] = $this->url->link('affiliate/password', '', true);
 
 		if (isset($this->request->post['password'])) {
 			$data['password'] = $this->request->post['password'];
@@ -84,7 +84,7 @@ class ControllerAffiliatePassword extends Controller {
 			$data['confirm'] = '';
 		}
 
-		$data['back'] = $this->url->link('affiliate/account', '', 'SSL');
+		$data['back'] = $this->url->link('affiliate/account', '', true);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

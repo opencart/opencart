@@ -2,12 +2,12 @@
 class ControllerAccountPassword extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/password', '', 'SSL');
+			$this->session->data['redirect'] = $this->url->link('account/password', '', true);
 
-			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
-		$this->load->language('account/password');
+		$this->language->load('account/password');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -28,7 +28,7 @@ class ControllerAccountPassword extends Controller {
 
 			$this->model_account_activity->addActivity('password', $activity_data);
 
-			$this->response->redirect($this->url->link('account/account', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/account', '', true));
 		}
 
 		$data['breadcrumbs'] = array();
@@ -40,12 +40,12 @@ class ControllerAccountPassword extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', 'SSL')
+			'href' => $this->url->link('account/account', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/password', '', 'SSL')
+			'href' => $this->url->link('account/password', '', true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -70,7 +70,7 @@ class ControllerAccountPassword extends Controller {
 			$data['error_confirm'] = '';
 		}
 
-		$data['action'] = $this->url->link('account/password', '', 'SSL');
+		$data['action'] = $this->url->link('account/password', '', true);
 
 		if (isset($this->request->post['password'])) {
 			$data['password'] = $this->request->post['password'];
@@ -84,7 +84,7 @@ class ControllerAccountPassword extends Controller {
 			$data['confirm'] = '';
 		}
 
-		$data['back'] = $this->url->link('account/account', '', 'SSL');
+		$data['back'] = $this->url->link('account/account', '', true);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

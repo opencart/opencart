@@ -320,7 +320,7 @@ class ModelOpenbayEbay extends Model{
 					'model'         => $row['model'],
 					'qty'           => $row['quantity'],
 					'name'          => $row['name'],
-					'link_edit'     => $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $row['product_id'], 'SSL'),
+					'link_edit'     => $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $row['product_id'], true),
 					'link_ebay'     => $this->config->get('ebay_itm_link') . $row['ebay_item_id'],
 					'reserve'       => (int)$row['reserve'],
 				);
@@ -468,7 +468,7 @@ class ModelOpenbayEbay extends Model{
 	}
 
 	public function getCategory($parent) {
-		$this->load->language('openbay/ebay_new');
+		$this->language->load('openbay/ebay_new');
 
 		$json = array();
 
@@ -804,7 +804,14 @@ class ModelOpenbayEbay extends Model{
 				$variant_data['opt'][$k]['sku']     	= $opt['sku'];
 				$variant_data['opt'][$k]['qty']     	= $stock['quantity'];
 				$variant_data['opt'][$k]['price']   	= number_format($opt['price'], 2, '.', '');
-				$variant_data['opt'][$k]['active']  	= $opt['active'];
+
+				// if any of the variants have 0 stock or no SKU set to inactive
+				if ($opt['sku'] == '' || $variant_data['opt'][$k]['qty'] < 1) {
+					$variant_data['opt'][$k]['active'] = 0;
+				} else {
+					$variant_data['opt'][$k]['active'] = $opt['active'];
+				}
+
 
 				$variant_option_values = $this->model_module_openstock->getVariant($opt['product_option_variant_id']);
 

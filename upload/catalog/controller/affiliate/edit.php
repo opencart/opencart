@@ -2,12 +2,12 @@
 class ControllerAffiliateEdit extends Controller {
 	public function index() {
 		if (!$this->affiliate->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('affiliate/edit', '', 'SSL');
+			$this->session->data['redirect'] = $this->url->link('affiliate/edit', '', true);
 
-			$this->response->redirect($this->url->link('affiliate/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('affiliate/login', '', true));
 		}
 
-		$this->load->language('affiliate/edit');
+		$this->language->load('affiliate/edit');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -28,7 +28,7 @@ class ControllerAffiliateEdit extends Controller {
 
 			$this->model_affiliate_activity->addActivity('edit', $activity_data);
 
-			$this->response->redirect($this->url->link('affiliate/account', '', 'SSL'));
+			$this->response->redirect($this->url->link('affiliate/account', '', true));
 		}
 
 		$data['breadcrumbs'] = array();
@@ -40,12 +40,12 @@ class ControllerAffiliateEdit extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('affiliate/account', '', 'SSL')
+			'href' => $this->url->link('affiliate/account', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_edit'),
-			'href' => $this->url->link('affiliate/edit', '', 'SSL')
+			'href' => $this->url->link('affiliate/edit', '', true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -131,7 +131,7 @@ class ControllerAffiliateEdit extends Controller {
 			$data['error_zone'] = '';
 		}
 
-		$data['action'] = $this->url->link('affiliate/edit', '', 'SSL');
+		$data['action'] = $this->url->link('affiliate/edit', '', true);
 
 		if ($this->request->server['REQUEST_METHOD'] != 'POST') {
 			$affiliate_info = $this->model_affiliate_affiliate->getAffiliate($this->affiliate->getId());
@@ -245,7 +245,7 @@ class ControllerAffiliateEdit extends Controller {
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
-		$data['back'] = $this->url->link('affiliate/account', '', 'SSL');
+		$data['back'] = $this->url->link('affiliate/account', '', true);
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

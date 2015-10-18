@@ -21,7 +21,7 @@ class ModelPaymentBluepayredirect extends Model {
 			  `bluepay_redirect_order_transaction_id` INT(11) NOT NULL AUTO_INCREMENT,
 			  `bluepay_redirect_order_id` INT(11) NOT NULL,
 			  `date_added` DATETIME NOT NULL,
-			  `type` ENUM('auth', 'sale', 'rebate', 'void') DEFAULT NULL,
+			  `type` ENUM('auth', 'payment', 'rebate', 'void') DEFAULT NULL,
 			  `amount` DECIMAL( 10, 2 ) NOT NULL,
 			  PRIMARY KEY (`bluepay_redirect_order_transaction_id`)
 			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
@@ -88,7 +88,7 @@ class ModelPaymentBluepayredirect extends Model {
 			$release_data = array();
 
 			$release_data['MERCHANT'] = $this->config->get('bluepay_redirect_account_id');
-			$release_data["TRANSACTION_TYPE"] = 'VOID';
+			$release_data["TRANSACTION_TYPE"] = 'CAPTURE';
 			$release_data["MODE"] = strtoupper($this->config->get('bluepay_redirect_test'));
 			$release_data["RRNO"] = $bluepay_redirect_order['transaction_id'];
 
@@ -180,7 +180,7 @@ class ModelPaymentBluepayredirect extends Model {
 	}
 
 	public function getTotalReleased($bluepay_redirect_order_id) {
-		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "bluepay_redirect_order_transaction` WHERE `bluepay_redirect_order_id` = '" . (int)$bluepay_redirect_order_id . "' AND (`type` = 'sale' OR `type` = 'rebate' OR `type` = 'auth')");
+		$query = $this->db->query("SELECT SUM(`amount`) AS `total` FROM `" . DB_PREFIX . "bluepay_redirect_order_transaction` WHERE `bluepay_redirect_order_id` = '" . (int)$bluepay_redirect_order_id . "' AND (`type` = 'payment' OR `type` = 'rebate')");
 
 		return (float)$query->row['total'];
 	}

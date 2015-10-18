@@ -13,6 +13,6 @@ $_['entry_secret']     = 'Secret key';
 $_['entry_status']     = 'Status';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify Google Analytics!';
+$_['error_permission'] = 'Warning: You do not have permission to modify Google reCAPTCHA!';
 $_['error_key']	       = 'Key required!';
 $_['error_secret']	   = 'Secret required!';

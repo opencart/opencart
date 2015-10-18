@@ -6,13 +6,32 @@ final class Loader {
 		$this->registry = $registry;
 	}
 
-	public function controller($route, $args = array()) {
-		$action = new Action($route, $args);
+	public function controller($route, $data = array()) {
+		$action = new Action($route, $data);
 
 		return $action->execute($this->registry);
 	}
 
-	public function model($model) {
+	public function model($model, $data = array()) {
+		$model = str_replace('../', '', (string)$model);
+/*
+		$position = strpos('.', $model);
+
+		if ($position !== false) {
+			$method = substr($model, $position);
+			$model = substr($model, 0, $position);
+		}
+
+		if (!$this->registry->has($model)) {
+
+		}
+
+		if (function_exsits(array($class, $method))) {
+			call_user_func_array();
+
+		}
+
+		*/
 		$file = DIR_APPLICATION . 'model/' . $model . '.php';
 		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $model);
 
@@ -27,6 +46,9 @@ final class Loader {
 	}
 
 	public function view($template, $data = array()) {
+		/*
+			$this->event->trigger($template, &data);
+		*/
 		$file = DIR_TEMPLATE . $template;
 
 		if (file_exists($file)) {
@@ -47,19 +69,8 @@ final class Loader {
 		}
 	}
 
-	public function library($library) {
-		$file = DIR_SYSTEM . 'library/' . $library . '.php';
-
-		if (file_exists($file)) {
-			include_once($file);
-		} else {
-			trigger_error('Error: Could not load library ' . $file . '!');
-			exit();
-		}
-	}
-
 	public function helper($helper) {
-		$file = DIR_SYSTEM . 'helper/' . $helper . '.php';
+		$file = DIR_SYSTEM . 'helper/' . str_replace('../', '', (string)$helper) . '.php';
 
 		if (file_exists($file)) {
 			include_once($file);

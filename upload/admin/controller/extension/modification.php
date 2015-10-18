@@ -152,7 +152,7 @@ class ControllerExtensionModification extends Controller {
 				foreach ($files as $file) {
 					$operations = $file->getElementsByTagName('operation');
 
-					$files = explode(',', $file->getAttribute('path'));
+					$files = explode('|', $file->getAttribute('path'));
 
 					foreach ($files as $file) {
 						$path = '';

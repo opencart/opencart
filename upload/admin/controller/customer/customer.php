@@ -927,7 +927,7 @@ class ControllerCustomerCustomer extends Controller {
 		if (isset($this->request->post['custom_field'])) {
 			$data['account_custom_field'] = $this->request->post['custom_field'];
 		} elseif (!empty($customer_info)) {
-			$data['account_custom_field'] = unserialize($customer_info['custom_field']);
+			$data['account_custom_field'] = json_decode($customer_info['custom_field'], true);
 		} else {
 			$data['account_custom_field'] = array();
 		}
@@ -1392,14 +1392,10 @@ class ControllerCustomerCustomer extends Controller {
 		$this->load->model('customer/customer');
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
-		$data['text_add_ban_ip'] = $this->language->get('text_add_ban_ip');
-		$data['text_remove_ban_ip'] = $this->language->get('text_remove_ban_ip');
-		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['column_ip'] = $this->language->get('column_ip');
 		$data['column_total'] = $this->language->get('column_total');
 		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_action'] = $this->language->get('column_action');
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -1412,14 +1408,11 @@ class ControllerCustomerCustomer extends Controller {
 		$results = $this->model_customer_customer->getIps($this->request->get['customer_id'], ($page - 1) * 10, 10);
 
 		foreach ($results as $result) {
-			$ban_ip_total = $this->model_customer_customer->getTotalBanIpsByIp($result['ip']);
-
 			$data['ips'][] = array(
 				'ip'         => $result['ip'],
 				'total'      => $this->model_customer_customer->getTotalCustomersByIp($result['ip']),
 				'date_added' => date('d/m/y', strtotime($result['date_added'])),
-				'filter_ip'  => $this->url->link('customer/customer', 'token=' . $this->session->data['token'] . '&filter_ip=' . $result['ip'], 'SSL'),
-				'ban_ip'     => $ban_ip_total
+				'filter_ip'  => $this->url->link('customer/customer', 'token=' . $this->session->data['token'] . '&filter_ip=' . $result['ip'], 'SSL')
 			);
 		}
 
@@ -1436,44 +1429,6 @@ class ControllerCustomerCustomer extends Controller {
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($ip_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($ip_total - 10)) ? $ip_total : ((($page - 1) * 10) + 10), $ip_total, ceil($ip_total / 10));
 
 		$this->response->setOutput($this->load->view('customer/customer_ip.tpl', $data));
-	}
-
-	public function addBanIp() {
-		$this->load->language('customer/customer');
-
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'customer/customer')) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {
-			$this->load->model('customer/customer');
-
-			$this->model_customer_customer->addBanIp($this->request->post['ip']);
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function removeBanIp() {
-		$this->load->language('customer/customer');
-
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'customer/customer')) {
-			$json['error'] = $this->language->get('error_permission');
-		} else {
-			$this->load->model('customer/customer');
-
-			$this->model_customer_customer->removeBanIp($this->request->post['ip']);
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 
 	public function autocomplete() {
@@ -1514,7 +1469,7 @@ class ControllerCustomerCustomer extends Controller {
 					'email'             => $result['email'],
 					'telephone'         => $result['telephone'],
 					'fax'               => $result['fax'],
-					'custom_field'      => unserialize($result['custom_field']),
+					'custom_field'      => json_decode($result['custom_field'], true),
 					'address'           => $this->model_customer_customer->getAddresses($result['customer_id'])
 				);
 			}

@@ -9,8 +9,6 @@ $_['text_add']              = 'Add Customer';
 $_['text_edit']             = 'Edit Customer';
 $_['text_default']          = 'Default';
 $_['text_balance']          = 'Balance';
-$_['text_add_ban_ip']       = 'Add Ban IP';
-$_['text_remove_ban_ip']    = 'Remove Ban IP';
 
 // Column
 $_['column_name']           = 'Customer Name';

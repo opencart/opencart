@@ -87,7 +87,7 @@ class ModelPaymentPPExpress extends Model {
 		$paypal_order_transaction_id = $this->db->getLastId();
 
 		if ($request_data) {
-			$serialized_data = serialize($request_data);
+			$serialized_data = json_encode($request_data);
 
 			$this->db->query("
 				UPDATE " . DB_PREFIX . "paypal_order_transaction

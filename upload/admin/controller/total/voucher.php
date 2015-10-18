@@ -80,4 +80,18 @@ class ControllerTotalVoucher extends Controller {
 
 		return !$this->error;
 	}
+
+	public function install() {
+		// Register the event triggers
+		$this->load->model('extension/event');
+
+		$this->model_extension_event->addEvent('voucher', 'post.order.history.add', 'total/voucher/send');
+	}
+
+	public function uninstall() {
+		// delete the event triggers
+		$this->load->model('extension/event');
+
+		$this->model_extension_event->deleteEvent('voucher');
+	}
 }

@@ -57,10 +57,10 @@
                   <?php } ?></td>
                 <td class="text-left"><?php echo $customer['date_added']; ?></td>
                 <td class="text-right"><?php if ($customer['customer_id']) { ?>
-                  <a href="<?php echo $customer['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
-                <?php } else { ?>
-                <button type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary" disabled="disabled"><i class="fa fa-pencil"></i></button>
-                <?php } ?>
+                  <a href="<?php echo $customer['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                  <?php } else { ?>
+                  <button type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary" disabled="disabled"><i class="fa fa-pencil"></i></button>
+                  <?php } ?></td>
               </tr>
               <?php } ?>
               <?php } else { ?>
@@ -81,19 +81,19 @@
   <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
 	url = 'index.php?route=report/customer_online&token=<?php echo $token; ?>';
-	
+
 	var filter_customer = $('input[name=\'filter_customer\']').val();
-	
+
 	if (filter_customer) {
 		url += '&filter_customer=' + encodeURIComponent(filter_customer);
 	}
-		
+
 	var filter_ip = $('input[name=\'filter_ip\']').val();
-	
+
 	if (filter_ip) {
 		url += '&filter_ip=' + encodeURIComponent(filter_ip);
 	}
-				
+
 	location = url;
 });
 //--></script></div>

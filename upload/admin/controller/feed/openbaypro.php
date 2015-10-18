@@ -77,9 +77,11 @@ class ControllerFeedOpenbaypro extends Controller {
 		// delete the event triggers
 		if (version_compare(VERSION, '2.0.1', '>=')) {
 			$this->load->model('extension/event');
+
 			$this->model_extension_event->deleteEvent('openbay');
 		} else {
 			$this->load->model('tool/event');
+
 			$this->model_tool_event->deleteEvent('openbay');
 		}
 	}

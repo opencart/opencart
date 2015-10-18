@@ -43,8 +43,6 @@ class ControllerSettingSetting extends Controller {
 		$data['text_payment'] = $this->language->get('text_payment');
 		$data['text_mail'] = $this->language->get('text_mail');
 		$data['text_smtp'] = $this->language->get('text_smtp');
-		$data['text_google_analytics'] = $this->language->get('text_google_analytics');
-		$data['text_google_captcha'] = $this->language->get('text_google_captcha');
 
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_owner'] = $this->language->get('entry_owner');
@@ -96,6 +94,7 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_order_status'] = $this->language->get('entry_order_status');
 		$data['entry_processing_status'] = $this->language->get('entry_processing_status');
 		$data['entry_complete_status'] = $this->language->get('entry_complete_status');
+		$data['entry_fraud_status'] = $this->language->get('entry_fraud_status');
 		$data['entry_order_mail'] = $this->language->get('entry_order_mail');
 		$data['entry_api'] = $this->language->get('entry_api');
 		$data['entry_stock_display'] = $this->language->get('entry_stock_display');
@@ -150,9 +149,6 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_error_display'] = $this->language->get('entry_error_display');
 		$data['entry_error_log'] = $this->language->get('entry_error_log');
 		$data['entry_error_filename'] = $this->language->get('entry_error_filename');
-		$data['entry_google_analytics'] = $this->language->get('entry_google_analytics');
-		$data['entry_google_captcha_public'] = $this->language->get('entry_google_captcha_public');
-		$data['entry_google_captcha_secret'] = $this->language->get('entry_google_captcha_secret');
 		$data['entry_status'] = $this->language->get('entry_status');
 
 		$data['help_geocode'] = $this->language->get('help_geocode');
@@ -186,6 +182,7 @@ class ControllerSettingSetting extends Controller {
 		$data['help_order_status'] = $this->language->get('help_order_status');
 		$data['help_processing_status'] = $this->language->get('help_processing_status');
 		$data['help_complete_status'] = $this->language->get('help_complete_status');
+		$data['help_fraud_status'] = $this->language->get('help_fraud_status');
 		$data['help_order_mail'] = $this->language->get('help_order_mail');
 		$data['help_api'] = $this->language->get('help_api');
 		$data['help_stock_display'] = $this->language->get('help_stock_display');
@@ -216,8 +213,6 @@ class ControllerSettingSetting extends Controller {
 		$data['help_password'] = $this->language->get('help_password');
 		$data['help_encryption'] = $this->language->get('help_encryption');
 		$data['help_compression'] = $this->language->get('help_compression');
-		$data['help_google_analytics'] = $this->language->get('help_google_analytics');
-		$data['help_google_captcha'] = $this->language->get('help_google_captcha');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -230,7 +225,6 @@ class ControllerSettingSetting extends Controller {
 		$data['tab_ftp'] = $this->language->get('tab_ftp');
 		$data['tab_mail'] = $this->language->get('tab_mail');
 		$data['tab_server'] = $this->language->get('tab_server');
-		$data['tab_google'] = $this->language->get('tab_google');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -835,6 +829,12 @@ class ControllerSettingSetting extends Controller {
 			$data['config_complete_status'] = array();
 		}
 
+		if (isset($this->request->post['config_order_status_id'])) {
+			$data['config_fraud_status_id'] = $this->request->post['config_fraud_status_id'];
+		} else {
+			$data['config_fraud_status_id'] = $this->config->get('config_fraud_status_id');
+		}
+
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
@@ -1253,36 +1253,6 @@ class ControllerSettingSetting extends Controller {
 			$data['config_error_filename'] = $this->config->get('config_error_filename');
 		}
 
-		if (isset($this->request->post['config_google_analytics'])) {
-			$data['config_google_analytics'] = $this->request->post['config_google_analytics'];
-		} else {
-			$data['config_google_analytics'] = $this->config->get('config_google_analytics');
-		}
-
-		if (isset($this->request->post['config_google_analytics_status'])) {
-			$data['config_google_analytics_status'] = $this->request->post['config_google_analytics_status'];
-		} else {
-			$data['config_google_analytics_status'] = $this->config->get('config_google_analytics_status');
-		}
-
-		if (isset($this->request->post['config_google_captcha_public'])) {
-			$data['config_google_captcha_public'] = $this->request->post['config_google_captcha_public'];
-		} else {
-			$data['config_google_captcha_public'] = $this->config->get('config_google_captcha_public');
-		}
-
-		if (isset($this->request->post['config_google_captcha_secret'])) {
-			$data['config_google_captcha_secret'] = $this->request->post['config_google_captcha_secret'];
-		} else {
-			$data['config_google_captcha_secret'] = $this->config->get('config_google_captcha_secret');
-		}
-
-		if (isset($this->request->post['config_google_captcha_status'])) {
-			$data['config_google_captcha_status'] = $this->request->post['config_google_captcha_status'];
-		} else {
-			$data['config_google_captcha_status'] = $this->config->get('config_google_captcha_status');
-		}
-
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -1421,7 +1391,7 @@ class ControllerSettingSetting extends Controller {
 			$this->error['limit_admin'] = $this->language->get('error_limit');
 		}
 
-		if ((utf8_strlen($this->request->post['config_encryption']) < 3) || (utf8_strlen($this->request->post['config_encryption']) > 32)) {
+		if ((utf8_strlen($this->request->post['config_encryption']) < 32) || (utf8_strlen($this->request->post['config_encryption']) > 1024)) {
 			$this->error['encryption'] = $this->language->get('error_encryption');
 		}
 

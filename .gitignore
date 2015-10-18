@@ -48,3 +48,6 @@
 
 # Test Config File
 /tests/phpunit/bootstrap.php
+
+# IDE Project files
+/.idea

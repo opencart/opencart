@@ -1904,9 +1904,9 @@ class ControllerPaymentPPExpress extends Controller {
 	}
 
 	protected function validateCoupon() {
-		$this->load->model('checkout/coupon');
+		$this->load->model('total/coupon');
 
-		$coupon_info = $this->model_checkout_coupon->getCoupon($this->request->post['coupon']);
+		$coupon_info = $this->model_total_coupon->getCoupon($this->request->post['coupon']);
 
 		$error = '';
 
@@ -1923,9 +1923,9 @@ class ControllerPaymentPPExpress extends Controller {
 	}
 
 	protected function validateVoucher() {
-		$this->load->model('checkout/voucher');
+		$this->load->model('total/coupon');
 
-		$voucher_info = $this->model_checkout_voucher->getVoucher($this->request->post['voucher']);
+		$voucher_info = $this->model_total_voucher->getVoucher($this->request->post['voucher']);
 
 		$error = '';
 

@@ -1,7 +1,5 @@
 <?php
 class ControllerLocalisationTaxRate extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->language->load('localisation/tax_rate');
 

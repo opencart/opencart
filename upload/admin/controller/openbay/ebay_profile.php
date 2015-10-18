@@ -1,7 +1,5 @@
 <?php
 class ControllerOpenbayEbayProfile extends Controller {
-	private $error = array();
-
 	public function profileAll() {
 		$data = $this->language->load('openbay/ebay_profile');
 

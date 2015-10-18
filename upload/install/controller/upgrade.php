@@ -1,7 +1,5 @@
 <?php
 class ControllerUpgrade extends Controller {
-	private $error = array();
-
 	public function index() {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->load->model('upgrade');

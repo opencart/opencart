@@ -1,7 +1,5 @@
 <?php
 class ControllerPaymentFirstdata extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->language->load('payment/firstdata');
 

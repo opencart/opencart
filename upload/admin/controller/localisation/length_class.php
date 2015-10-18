@@ -1,7 +1,5 @@
 <?php
 class ControllerLocalisationLengthClass extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->language->load('localisation/length_class');
 

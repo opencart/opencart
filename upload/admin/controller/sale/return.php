@@ -1,7 +1,5 @@
 <?php
 class ControllerSaleReturn extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->language->load('sale/return');
 

@@ -1,7 +1,5 @@
 <?php
 class ControllerSettingSetting extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->language->load('setting/setting');
 

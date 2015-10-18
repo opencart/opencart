@@ -1,7 +1,5 @@
 <?php
 class ControllerFeedGoogleBase extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->language->load('feed/google_base');
 

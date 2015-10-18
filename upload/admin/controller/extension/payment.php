@@ -1,7 +1,5 @@
 <?php
 class ControllerExtensionPayment extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->language->load('extension/payment');
 

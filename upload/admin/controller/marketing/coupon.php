@@ -1,7 +1,5 @@
 <?php
 class ControllerMarketingCoupon extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->language->load('marketing/coupon');
 

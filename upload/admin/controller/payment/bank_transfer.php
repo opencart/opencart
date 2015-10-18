@@ -1,7 +1,5 @@
 <?php
 class ControllerPaymentBankTransfer extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->language->load('payment/bank_transfer');
 

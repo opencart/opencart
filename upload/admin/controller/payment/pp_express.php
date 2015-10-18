@@ -1,7 +1,5 @@
 <?php
 class ControllerPaymentPPExpress extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->language->load('payment/pp_express');
 

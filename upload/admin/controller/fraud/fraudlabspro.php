@@ -1,7 +1,5 @@
 <?php
 class ControllerFraudFraudLabsPro extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->language->load('fraud/fraudlabspro');
 

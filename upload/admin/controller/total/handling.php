@@ -1,7 +1,5 @@
 <?php
 class ControllerTotalHandling extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->language->load('total/handling');
 

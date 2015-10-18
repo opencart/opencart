@@ -1,7 +1,5 @@
 <?php
 class ControllerPaymentSagepayServer extends Controller {
-	private $error = array();
-
 	public function index() {
 
 		$this->language->load('payment/sagepay_server');

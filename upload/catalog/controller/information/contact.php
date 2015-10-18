@@ -1,7 +1,5 @@
 <?php
 class ControllerInformationContact extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->language->load('information/contact');
 

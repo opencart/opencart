@@ -5,7 +5,7 @@ $_['heading_title']        = 'Extension Installer';
 // Text
 $_['text_success']         = 'Success: You have installed your extension!';
 $_['text_unzip']           = 'Extracting files!';
-$_['text_ftp']             = 'Copying files!';
+$_['text_move']            = 'Copying files!';
 $_['text_sql']             = 'Running SQL!';
 $_['text_xml']             = 'Applying modifications!';
 $_['text_php']             = 'Running PHP!';

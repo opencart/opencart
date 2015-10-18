@@ -1,7 +1,5 @@
 <?php
 class ControllerLocalisationStockStatus extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->language->load('localisation/stock_status');
 

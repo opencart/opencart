@@ -1,7 +1,5 @@
 <?php
 class ControllerPaymentFreeCheckout extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->language->load('payment/free_checkout');
 

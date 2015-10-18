@@ -1,7 +1,5 @@
 <?php
 class ControllerExtensionOpenbay extends Controller {
-	private $error = array();
-
 	public function install() {
 		$this->language->load('extension/openbay');
 

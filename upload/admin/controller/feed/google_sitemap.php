@@ -1,7 +1,5 @@
 <?php
 class ControllerFeedGoogleSitemap extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->language->load('feed/google_sitemap');
 

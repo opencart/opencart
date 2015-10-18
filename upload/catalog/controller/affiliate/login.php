@@ -1,7 +1,5 @@
 <?php
 class ControllerAffiliateLogin extends Controller {
-	private $error = array();
-
 	public function index() {
 		if ($this->affiliate->isLogged()) {
 			$this->response->redirect($this->url->link('affiliate/account', '', true));
@@ -122,28 +120,28 @@ class ControllerAffiliateLogin extends Controller {
 		// Check how many login attempts have been made.
         $this->load->model('account/customer');
 		$login_info = $this->model_account_customer->getLoginAttempts($this->request->post['email']);
-				
+
 		if ($login_info && ($login_info['total'] >= $this->config->get('config_login_attempts')) && strtotime('-1 hour') < strtotime($login_info['date_modified'])) {
 			$this->error['warning'] = $this->language->get('error_attempts');
-		}		
-		
+		}
+
 		// Check if affiliate has been approved.
 		$affiliate_info = $this->model_affiliate_affiliate->getAffiliateByEmail($this->request->post['email']);
 
 		if ($affiliate_info && !$affiliate_info['approved']) {
 			$this->error['warning'] = $this->language->get('error_approved');
 		}
-		
+
 		if (!$this->error) {
 			if (!$this->affiliate->login($this->request->post['email'], $this->request->post['password'])) {
 				$this->error['warning'] = $this->language->get('error_login');
-			
+
 				$this->model_account_customer->addLoginAttempt($this->request->post['email']);
 			} else {
 				$this->model_account_customer->deleteLoginAttempts($this->request->post['email']);
 			}
 		}
-		
+
 		return !$this->error;
 	}
 }

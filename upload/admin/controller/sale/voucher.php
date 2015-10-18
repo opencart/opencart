@@ -1,7 +1,5 @@
 <?php
 class ControllerSaleVoucher extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->language->load('sale/voucher');
 

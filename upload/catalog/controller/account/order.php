@@ -1,7 +1,5 @@
 <?php
 class ControllerAccountOrder extends Controller {
-	private $error = array();
-
 	public function index() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/order', '', true);

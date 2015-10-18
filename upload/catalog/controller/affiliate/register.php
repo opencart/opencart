@@ -1,7 +1,5 @@
 <?php
 class ControllerAffiliateRegister extends Controller {
-	private $error = array();
-
 	public function index() {
 		if ($this->affiliate->isLogged()) {
 			$this->response->redirect($this->url->link('affiliate/account', '', true));

@@ -1,7 +1,5 @@
 <?php
 class ControllerPaymentWorldpay extends Controller {
-	private $error = array();
-
 	public function index() {
 
 		$this->language->load('payment/worldpay');

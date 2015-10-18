@@ -1,7 +1,5 @@
 <?php
 class ControllerModuleLatest extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->language->load('module/latest');
 

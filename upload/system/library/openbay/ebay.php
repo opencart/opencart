@@ -143,8 +143,6 @@ final class Ebay {
 	}
 
 	private function setLogger() {
-		$this->load->library('log');
-
 		if(file_exists(DIR_LOGS . 'ebaylog.log')) {
 			if(filesize(DIR_LOGS . 'ebaylog.log') > ($this->max_log_size * 1000000)) {
 				rename(DIR_LOGS . 'ebaylog.log', DIR_LOGS . '_ebaylog_' . date('Y-m-d_H-i-s') . '.log');

@@ -349,7 +349,6 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 
 	public function parseTemplateAjax() {
 		$this->load->model('tool/image');
-		$this->load->library('log');
 		$log = new Log('amazonus_product.log');
 
 		$result = array();

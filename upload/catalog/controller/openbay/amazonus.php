@@ -5,7 +5,6 @@ class ControllerOpenbayAmazonus extends Controller {
 			return;
 		}
 
-		$this->load->library('log');
 		$this->load->model('checkout/order');
 		$this->load->model('openbay/amazonus_order');
 		$this->language->load('openbay/amazonus_order');
@@ -320,8 +319,6 @@ class ControllerOpenbayAmazonus extends Controller {
 			return;
 		}
 
-		$this->load->library('log');
-		$this->load->library('openbay/amazonus');
 		$this->load->model('openbay/amazonus_listing');
 		$this->load->model('openbay/amazonus_product');
 
@@ -418,9 +415,7 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		ob_start();
 
-		$this->load->library('openbay/amazonus');
 		$this->load->model('openbay/amazonus_product');
-		$this->load->library('log');
 		$logger = new Log('amazonus_product.log');
 
 		$logger->write("AmazonusProduct/inbound: incoming data");

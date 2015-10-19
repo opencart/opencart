@@ -306,7 +306,6 @@ class Amazonus {
 	}
 
 	public function putStockUpdateBulk($product_id_array, $end_inactive = false){
-		$this->load->library('log');
 		$logger = new \Log('amazonus_stocks.log');
 		$logger->write('Updating stock using putStockUpdateBulk()');
 		$quantity_data = array();

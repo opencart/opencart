@@ -3,7 +3,7 @@ class ControllerProductProduct extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('product/product');
+		$this->language->load('product/product');
 
 		$data['breadcrumbs'] = array();
 
@@ -237,7 +237,7 @@ class ControllerProductProduct extends Controller {
 			$data['text_option'] = $this->language->get('text_option');
 			$data['text_minimum'] = sprintf($this->language->get('text_minimum'), $product_info['minimum']);
 			$data['text_write'] = $this->language->get('text_write');
-			$data['text_login'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', '', 'SSL'), $this->url->link('account/register', '', 'SSL'));
+			$data['text_login'] = sprintf($this->language->get('text_login'), $this->url->link('account/login', '', true), $this->url->link('account/register', '', true));
 			$data['text_note'] = $this->language->get('text_note');
 			$data['text_tags'] = $this->language->get('text_tags');
 			$data['text_related'] = $this->language->get('text_related');
@@ -392,7 +392,7 @@ class ControllerProductProduct extends Controller {
 			$data['rating'] = (int)$product_info['rating'];
 
 			// Captcha
-			if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('review', $this->config->get('config_captcha_page'))) {
+			if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('review', (array)$this->config->get('config_captcha_page'))) {
 				$data['captcha'] = $this->load->controller('captcha/' . $this->config->get('config_captcha'));
 			} else {
 				$data['captcha'] = '';
@@ -562,7 +562,7 @@ class ControllerProductProduct extends Controller {
 	}
 
 	public function review() {
-		$this->load->language('product/product');
+		$this->language->load('product/product');
 
 		$this->load->model('catalog/review');
 
@@ -607,7 +607,7 @@ class ControllerProductProduct extends Controller {
 	}
 
 	public function write() {
-		$this->load->language('product/product');
+		$this->language->load('product/product');
 
 		$json = array();
 
@@ -625,7 +625,7 @@ class ControllerProductProduct extends Controller {
 			}
 
 			// Captcha
-			if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('review', $this->config->get('config_captcha_page'))) {
+			if ($this->config->get($this->config->get('config_captcha') . '_status') && in_array('review', (array)$this->config->get('config_captcha_page'))) {
 				$captcha = $this->load->controller('captcha/' . $this->config->get('config_captcha') . '/validate');
 
 				if ($captcha) {

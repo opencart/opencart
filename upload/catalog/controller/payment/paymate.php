@@ -41,7 +41,7 @@ class ControllerPaymentPaymate extends Controller {
 	}
 
 	public function callback() {
-		$this->load->language('payment/paymate');
+		$this->language->load('payment/paymate');
 
 		if (isset($this->request->post['ref'])) {
 			$order_id = $this->request->post['ref'];
@@ -82,7 +82,7 @@ class ControllerPaymentPaymate extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_checkout'),
-				'href' => $this->url->link('checkout/checkout', '', 'SSL')
+				'href' => $this->url->link('checkout/checkout', '', true)
 			);
 
 			$data['breadcrumbs'][] = array(

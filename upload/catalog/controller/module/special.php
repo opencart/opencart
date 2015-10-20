@@ -1,7 +1,7 @@
 <?php
 class ControllerModuleSpecial extends Controller {
 	public function index($setting) {
-		$this->load->language('module/special');
+		$this->language->load('module/special');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 

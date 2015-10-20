@@ -97,7 +97,7 @@ class ModelTotalCoupon extends Model {
 
 	public function getTotal(&$total_data, &$total, &$taxes) {
 		if (isset($this->session->data['coupon'])) {
-			$this->load->language('total/coupon');
+			$this->language->load('total/coupon');
 
 			$coupon_info = $this->getCoupon($this->session->data['coupon']);
 
@@ -173,14 +173,20 @@ class ModelTotalCoupon extends Model {
 					$discount_total = $total;
 				}
 
-				$total_data[] = array(
-					'code'       => 'coupon',
-					'title'      => sprintf($this->language->get('text_coupon'), $this->session->data['coupon']),
-					'value'      => -$discount_total,
-					'sort_order' => $this->config->get('coupon_sort_order')
-				);
+				if ($discount_total > 0) {
+					$total_data[] = array(
+						'code'       => 'coupon',
+						'title'      => sprintf($this->language->get('text_coupon'), $this->session->data['coupon']),
+						'value'      => -$discount_total,
+						'sort_order' => $this->config->get('coupon_sort_order')
+					);
 
-				$total -= $discount_total;
+					$total -= $discount_total;
+				} else {
+					unset($this->session->data['coupon']);
+				}
+			} else {
+				unset($this->session->data['coupon']);
 			}
 		}
 	}

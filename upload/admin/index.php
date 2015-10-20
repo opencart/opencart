@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '2.1.0.0_rc1');
+define('VERSION', '2.1.0.2_rc');
 
 // Configuration
 if (is_file('config.php')) {
@@ -105,6 +105,7 @@ $registry->set('cache', $cache);
 
 // Session
 $session = new Session();
+$session->start();
 $registry->set('session', $session);
 
 // Language
@@ -127,16 +128,16 @@ $registry->set('language', $language);
 $registry->set('document', new Document());
 
 // Currency
-$registry->set('currency', new Currency($registry));
+$registry->set('currency', new Cart\Currency($registry));
 
 // Weight
-$registry->set('weight', new Weight($registry));
+$registry->set('weight', new Cart\Weight($registry));
 
 // Length
-$registry->set('length', new Length($registry));
+$registry->set('length', new Cart\Length($registry));
 
 // User
-$registry->set('user', new User($registry));
+$registry->set('user', new Cart\User($registry));
 
 // OpenBay Pro
 $registry->set('openbay', new Openbay($registry));
@@ -148,7 +149,7 @@ $registry->set('event', $event);
 $query = $db->query("SELECT * FROM " . DB_PREFIX . "event");
 
 foreach ($query->rows as $result) {
-	$event->register($result['trigger'], $result['action']);
+	$event->register($result['trigger'], new Action($result['action']));
 }
 
 // Front Controller

@@ -1,7 +1,7 @@
 <?php
 class ControllerDashboardOrder extends Controller {
 	public function index() {
-		$this->load->language('dashboard/order');
+		$this->language->load('dashboard/order');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -38,7 +38,7 @@ class ControllerDashboardOrder extends Controller {
 			$data['total'] = $order_total;
 		}
 
-		$data['order'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL');
+		$data['order'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'], true);
 
 		return $this->load->view('dashboard/order.tpl', $data);
 	}

@@ -7,7 +7,7 @@ class ControllerPaymentSecureTradingWs extends Controller {
 		$this->load->model('localisation/geo_zone');
 		$this->load->model('localisation/order_status');
 		$this->load->model('localisation/currency');
-		$this->load->language('payment/securetrading_ws');
+		$this->language->load('payment/securetrading_ws');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->request->post['securetrading_ws_site_reference'] = trim($this->request->post['securetrading_ws_site_reference']);
@@ -17,7 +17,7 @@ class ControllerPaymentSecureTradingWs extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], true));
 		}
 
 		if (isset($this->request->post['securetrading_ws_site_reference'])) {
@@ -237,17 +237,17 @@ class ControllerPaymentSecureTradingWs extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/securetrading_ws', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('payment/securetrading_ws', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
@@ -273,9 +273,9 @@ class ControllerPaymentSecureTradingWs extends Controller {
 			'100' => $this->language->get('text_pending_settled'),
 		);
 
-		$data['action'] = $this->url->link('payment/securetrading_ws', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('payment/securetrading_ws', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true);
 
 		$data['myst_status'] = !empty($data['securetrading_ws_csv_username']) && !empty($data['securetrading_ws_csv_password']);
 		$data['hours'] = array();
@@ -313,7 +313,7 @@ class ControllerPaymentSecureTradingWs extends Controller {
 
 	public function downloadTransactions() {
 		$this->load->model('payment/securetrading_ws');
-		$this->load->language('payment/securetrading_ws');
+		$this->language->load('payment/securetrading_ws');
 
 		$csv_data = $this->request->post;
 		$csv_data['detail'] = true;
@@ -337,7 +337,7 @@ class ControllerPaymentSecureTradingWs extends Controller {
 
 	public function showTransactions() {
 		$this->load->model('payment/securetrading_ws');
-		$this->load->language('payment/securetrading_ws');
+		$this->language->load('payment/securetrading_ws');
 
 		$data['column_order_id'] = $this->language->get('column_order_id');
 		$data['column_transaction_reference'] = $this->language->get('column_transaction_reference');
@@ -386,7 +386,7 @@ class ControllerPaymentSecureTradingWs extends Controller {
 			foreach ($csv as $row) {
 				$data['transactions'][] = array(
 					'order_id' => $row['orderreference'],
-					'order_href' => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $row['orderreference'], 'SSL'),
+					'order_href' => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $row['orderreference'], true),
 					'transaction_reference' => $row['transactionreference'],
 					'customer' => $row['billingfirstname'] . ' ' . $row['billinglastname'],
 					'total' => $row['mainamount'],
@@ -410,7 +410,7 @@ class ControllerPaymentSecureTradingWs extends Controller {
 			$securetrading_ws_order = $this->model_payment_securetrading_ws->getOrder($this->request->get['order_id']);
 
 			if (!empty($securetrading_ws_order)) {
-				$this->load->language('payment/securetrading_ws');
+				$this->language->load('payment/securetrading_ws');
 
 				$securetrading_ws_order['total_released'] = $this->model_payment_securetrading_ws->getTotalReleased($securetrading_ws_order['securetrading_ws_order_id']);
 
@@ -434,9 +434,9 @@ class ControllerPaymentSecureTradingWs extends Controller {
 				$data['text_column_amount'] = $this->language->get('text_column_amount');
 				$data['text_column_type'] = $this->language->get('text_column_type');
 				$data['text_column_created'] = $this->language->get('text_column_created');
-				$data['btn_release'] = $this->language->get('btn_release');
-				$data['btn_rebate'] = $this->language->get('btn_rebate');
-				$data['btn_void'] = $this->language->get('btn_void');
+				$data['button_release'] = $this->language->get('button_release');
+				$data['button_rebate'] = $this->language->get('button_rebate');
+				$data['button_void'] = $this->language->get('button_void');
 				$data['text_confirm_void'] = $this->language->get('text_confirm_void');
 				$data['text_confirm_release'] = $this->language->get('text_confirm_release');
 				$data['text_confirm_rebate'] = $this->language->get('text_confirm_rebate');
@@ -450,7 +450,7 @@ class ControllerPaymentSecureTradingWs extends Controller {
 	}
 
 	public function void() {
-		$this->load->language('payment/securetrading_ws');
+		$this->language->load('payment/securetrading_ws');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
@@ -500,7 +500,7 @@ class ControllerPaymentSecureTradingWs extends Controller {
 	}
 
 	public function release() {
-		$this->load->language('payment/securetrading_ws');
+		$this->language->load('payment/securetrading_ws');
 		$json = array();
 
 		$amount = number_format($this->request->post['amount'], 2);
@@ -563,7 +563,7 @@ class ControllerPaymentSecureTradingWs extends Controller {
 	}
 
 	public function rebate() {
-		$this->load->language('payment/securetrading_ws');
+		$this->language->load('payment/securetrading_ws');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {

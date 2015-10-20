@@ -2,7 +2,7 @@
 class ModelPaymentG2APay extends Model {
 
 	public function getMethod($address, $total) {
-		$this->load->language('payment/g2apay');
+		$this->language->load('payment/g2apay');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('g2apay_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 

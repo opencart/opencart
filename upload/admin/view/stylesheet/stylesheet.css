@@ -466,10 +466,13 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	margin: 0;
 }
 .form-group {
-    border-bottom: 1px solid #ededed;
     padding-top: 15px;
     padding-bottom: 15px;
     margin-bottom: 0;
+}
+
+.form-group + .form-group {
+    border-top: 1px solid #ededed;
 }
 /* Panels */
 .panel {

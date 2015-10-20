@@ -1,7 +1,7 @@
 <?php
 class ControllerApiCoupon extends Controller {
 	public function index() {
-		$this->load->language('api/coupon');
+		$this->language->load('api/coupon');
 
 		// Delete past coupon in case there is an error
 		unset($this->session->data['coupon']);

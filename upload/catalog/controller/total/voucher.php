@@ -2,7 +2,7 @@
 class ControllerTotalVoucher extends Controller {
 	public function index() {
 		if ($this->config->get('voucher_status')) {
-			$this->load->language('total/voucher');
+			$this->language->load('total/voucher');
 
 			$data['heading_title'] = $this->language->get('heading_title');
 
@@ -21,13 +21,13 @@ class ControllerTotalVoucher extends Controller {
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/total/voucher.tpl')) {
 				return $this->load->view($this->config->get('config_template') . '/template/total/voucher.tpl', $data);
 			} else {
-				return $this->load->view('default/template/total/coupon.tpl', $data);
+				return $this->load->view('default/template/total/voucher.tpl', $data);
 			}
 		}
 	}
 
 	public function voucher() {
-		$this->load->language('total/voucher');
+		$this->language->load('total/voucher');
 
 		$json = array();
 
@@ -64,7 +64,7 @@ class ControllerTotalVoucher extends Controller {
 
 		// If order status in the complete range create any vouchers that where in the order need to be made available.
 		if (in_array($order_info['order_status_id'], $this->config->get('config_complete_status'))) {
-			$voucher_query = $this->db->query("SELECT *, vtd.name AS theme FROM `" . DB_PREFIX . "voucher` v LEFT JOIN " . DB_PREFIX . "voucher_theme vt ON (v.voucher_theme_id = vt.voucher_theme_id) LEFT JOIN " . DB_PREFIX . "voucher_theme_description vtd ON (vt.voucher_theme_id = vtd.voucher_theme_id) AND vtd.language_id = '" . (int)$order_info['language_id'] . "' WHERE v.order_id = '" . (int)$order_info['order_id'] . "'");
+			$voucher_query = $this->db->query("SELECT *, vtd.name AS theme FROM `" . DB_PREFIX . "voucher` v LEFT JOIN " . DB_PREFIX . "voucher_theme vt ON (v.voucher_theme_id = vt.voucher_theme_id) LEFT JOIN " . DB_PREFIX . "voucher_theme_description vtd ON (vt.voucher_theme_id = vtd.voucher_theme_id) WHERE v.order_id = '" . (int)$order_info['order_id'] . "' AND vtd.language_id = '" . (int)$order_info['language_id'] . "'");
 
 			if ($voucher_query->num_rows) {
 				// Send out any gift voucher mails

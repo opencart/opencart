@@ -1,7 +1,7 @@
 <?php
 class ControllerProductManufacturer extends Controller {
 	public function index() {
-		$this->load->language('product/manufacturer');
+		$this->language->load('product/manufacturer');
 
 		$this->load->model('catalog/manufacturer');
 
@@ -66,7 +66,7 @@ class ControllerProductManufacturer extends Controller {
 	}
 
 	public function info() {
-		$this->load->language('product/manufacturer');
+		$this->language->load('product/manufacturer');
 
 		$this->load->model('catalog/manufacturer');
 
@@ -99,9 +99,9 @@ class ControllerProductManufacturer extends Controller {
 		}
 
 		if (isset($this->request->get['limit'])) {
-			$limit = $this->request->get['limit'];
+			$limit = (int)$this->request->get['limit'];
 		} else {
-			$limit = $this->config->get('config_product_limit');
+			$limit = (int)$this->config->get('config_product_limit');
 		}
 
 		$data['breadcrumbs'] = array();
@@ -120,7 +120,6 @@ class ControllerProductManufacturer extends Controller {
 
 		if ($manufacturer_info) {
 			$this->document->setTitle($manufacturer_info['name']);
-			$this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id']), 'canonical');
 
 			$url = '';
 
@@ -340,15 +339,15 @@ class ControllerProductManufacturer extends Controller {
 
 			// http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
 			if ($page == 1) {
-			    $this->document->addLink($this->url->link('product/manufacturer/info', '', 'SSL'), 'canonical');
+			    $this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'], true), 'canonical');
 			} elseif ($page == 2) {
-			    $this->document->addLink($this->url->link('product/manufacturer/info', '', 'SSL'), 'prev');
+			    $this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'], true), 'prev');
 			} else {
-			    $this->document->addLink($this->url->link('product/manufacturer/info', $url . '&page='. ($page - 1), 'SSL'), 'prev');
+			    $this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page='. ($page - 1), true), 'prev');
 			}
 
 			if ($limit && ceil($product_total / $limit) > $page) {
-			    $this->document->addLink($this->url->link('product/manufacturer/info', $url . '&page='. ($page + 1), 'SSL'), 'next');
+			    $this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page='. ($page + 1), true), 'next');
 			}
 
 			$data['sort'] = $sort;

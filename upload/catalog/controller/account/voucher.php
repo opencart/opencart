@@ -3,7 +3,7 @@ class ControllerAccountVoucher extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('account/voucher');
+		$this->language->load('account/voucher');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -35,12 +35,12 @@ class ControllerAccountVoucher extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', 'SSL')
+			'href' => $this->url->link('account/account', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_voucher'),
-			'href' => $this->url->link('account/voucher', '', 'SSL')
+			'href' => $this->url->link('account/voucher', '', true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -103,7 +103,7 @@ class ControllerAccountVoucher extends Controller {
 			$data['error_amount'] = '';
 		}
 
-		$data['action'] = $this->url->link('account/voucher', '', 'SSL');
+		$data['action'] = $this->url->link('account/voucher', '', true);
 
 		if (isset($this->request->post['to_name'])) {
 			$data['to_name'] = $this->request->post['to_name'];
@@ -176,7 +176,7 @@ class ControllerAccountVoucher extends Controller {
 	}
 
 	public function success() {
-		$this->load->language('account/voucher');
+		$this->language->load('account/voucher');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

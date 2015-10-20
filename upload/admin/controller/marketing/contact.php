@@ -3,7 +3,7 @@ class ControllerMarketingContact extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('marketing/contact');
+		$this->language->load('marketing/contact');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -41,15 +41,15 @@ class ControllerMarketingContact extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('marketing/contact', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('marketing/contact', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['cancel'] = $this->url->link('marketing/contact', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->link('marketing/contact', 'token=' . $this->session->data['token'], true);
 
 		$this->load->model('setting/store');
 
@@ -67,7 +67,7 @@ class ControllerMarketingContact extends Controller {
 	}
 
 	public function send() {
-		$this->load->language('marketing/contact');
+		$this->language->load('marketing/contact');
 
 		$json = array();
 
@@ -94,6 +94,10 @@ class ControllerMarketingContact extends Controller {
 				} else {
 					$store_name = $this->config->get('config_name');
 				}
+				
+				$this->load->model('setting/setting');
+				$setting = $this->model_setting_setting->getSetting('config', $this->request->post['store_id']);
+				$store_email = isset($setting['config_email']) ? $setting['config_email'] : $this->config->get('config_email');
 
 				$this->load->model('customer/customer');
 
@@ -218,7 +222,7 @@ class ControllerMarketingContact extends Controller {
 					}
 
 					if ($end < $email_total) {
-						$json['next'] = str_replace('&amp;', '&', $this->url->link('marketing/contact/send', 'token=' . $this->session->data['token'] . '&page=' . ($page + 1), 'SSL'));
+						$json['next'] = str_replace('&amp;', '&', $this->url->link('marketing/contact/send', 'token=' . $this->session->data['token'] . '&page=' . ($page + 1), true));
 					} else {
 						$json['next'] = '';
 					}
@@ -243,7 +247,7 @@ class ControllerMarketingContact extends Controller {
 							$mail->smtp_timeout = $this->config->get('config_mail_smtp_timeout');
 
 							$mail->setTo($email);
-							$mail->setFrom($this->config->get('config_email'));
+							$mail->setFrom($store_email);
 							$mail->setSender(html_entity_decode($store_name, ENT_QUOTES, 'UTF-8'));
 							$mail->setSubject(html_entity_decode($this->request->post['subject'], ENT_QUOTES, 'UTF-8'));
 							$mail->setHtml($message);

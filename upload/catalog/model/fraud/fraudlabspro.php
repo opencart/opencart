@@ -1,7 +1,7 @@
 <?php
 class ModelFraudFraudLabsPro extends Model {
 	public function check($data) {
-		// Do not performat fraud check if FraudLabs Pro is disabled or API key is not provided.
+		// Do not perform fraud check if FraudLabs Pro is disabled or API key is not provided.
 		if (!$this->config->get('fraudlabspro_status') ||!$this->config->get('fraudlabspro_key')) {
 			return;
 		}
@@ -15,7 +15,7 @@ class ModelFraudFraudLabsPro extends Model {
 			return;
 		}
 
-		$ip = $_SERVER['REMOTE_ADDR'];
+		$ip = $data['ip'];
 
 		// Detect client IP is store is behind CloudFlare protection.
 		if(isset($_SERVER['HTTP_CF_CONNECTING_IP']) && filter_var($_SERVER['HTTP_CF_CONNECTING_IP'], FILTER_VALIDATE_IP)){
@@ -57,7 +57,6 @@ class ModelFraudFraudLabsPro extends Model {
 		$request['format'] = 'json';
 
 		$curl = curl_init();
-		
 		curl_setopt($curl, CURLOPT_URL, 'https://api.fraudlabspro.com/v1/order/screen?' . http_build_query($request));
 		curl_setopt($curl, CURLOPT_HEADER, 0);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);

@@ -3,7 +3,7 @@
 class ControllerPaymentWorldpay extends Controller {
 
 	public function index() {
-		$this->load->language('payment/worldpay');
+		$this->language->load('payment/worldpay');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -27,7 +27,7 @@ class ControllerPaymentWorldpay extends Controller {
 
 		$data['worldpay_client_key'] = $this->config->get('worldpay_client_key');
 
-		$data['form_submit'] = $this->url->link('payment/worldpay/send', '', 'SSL');
+		$data['form_submit'] = $this->url->link('payment/worldpay/send', '', true);
 
 		if ($this->config->get('worldpay_card') == '1' && $this->customer->isLogged()) {
 			$data['worldpay_card'] = true;
@@ -55,7 +55,7 @@ class ControllerPaymentWorldpay extends Controller {
 	}
 
 	public function send() {
-		$this->load->language('payment/worldpay');
+		$this->language->load('payment/worldpay');
 		$this->load->model('checkout/order');
 		$this->load->model('localisation/country');
 		$this->load->model('payment/worldpay');
@@ -129,16 +129,16 @@ class ControllerPaymentWorldpay extends Controller {
 				$this->model_payment_worldpay->recurringPayment($item, $this->session->data['order_id'] . rand(), $this->request->post['token']);
 			}
 
-			$this->response->redirect($this->url->link('checkout/success', '', 'SSL'));
+			$this->response->redirect($this->url->link('checkout/success', '', true));
 		} else {
 
 			$this->session->data['error'] = $this->language->get('error_process_order');
-			$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
+			$this->response->redirect($this->url->link('checkout/checkout', '', true));
 		}
 	}
 
 	public function deleteCard() {
-		$this->load->language('payment/worldpay');
+		$this->language->load('payment/worldpay');
 		$this->load->model('payment/worldpay');
 
 		if (isset($this->request->post['token'])) {

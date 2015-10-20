@@ -3,7 +3,6 @@
 $_['text_title']				= 'Credit or Debit Card (Processed securely by PayPal)';
 $_['text_wait']					= 'Please wait!';
 $_['text_credit_card']			= 'Credit Card Details';
-$_['text_loading']				= 'Loading';
 
 // Entry
 $_['entry_cc_type']				= 'Card Type';

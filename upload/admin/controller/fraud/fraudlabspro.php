@@ -3,7 +3,7 @@ class ControllerFraudFraudLabsPro extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('fraud/fraudlabspro');
+		$this->language->load('fraud/fraudlabspro');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -14,7 +14,7 @@ class ControllerFraudFraudLabsPro extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/fraud', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/fraud', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -61,22 +61,22 @@ class ControllerFraudFraudLabsPro extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_fraud'),
-			'href' => $this->url->link('extension/fraud', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('extension/fraud', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('fraud/fraudlabspro', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('fraud/fraudlabspro', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('fraud/fraudlabspro', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('fraud/fraudlabspro', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/fraud', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->link('extension/fraud', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['fraudlabspro_key'])) {
 			$data['fraudlabspro_key'] = $this->request->post['fraudlabspro_key'];
@@ -162,7 +162,7 @@ class ControllerFraudFraudLabsPro extends Controller {
 	}
 
 	public function order() {
-		$this->load->language('fraud/fraudlabspro');
+		$this->language->load('fraud/fraudlabspro');
 
 		$this->load->model('fraud/fraudlabspro');
 

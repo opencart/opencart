@@ -7,6 +7,25 @@ if (version_compare(phpversion(), '5.3.0', '<') == true) {
 	exit('PHP5.3+ Required');
 }
 
+// Magic Quotes Fix
+if (ini_get('magic_quotes_gpc')) {
+	function clean($data) {
+   		if (is_array($data)) {
+  			foreach ($data as $key => $value) {
+    			$data[clean($key)] = clean($value);
+  			}
+		} else {
+  			$data = stripslashes($data);
+		}
+
+		return $data;
+	}
+
+	$_GET = clean($_GET);
+	$_POST = clean($_POST);
+	$_COOKIE = clean($_COOKIE);
+}
+
 if (!ini_get('date.timezone')) {
 	date_default_timezone_set('UTC');
 }

@@ -335,9 +335,7 @@ class ControllerPaymentSecureTradingPp extends Controller {
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['token'] = $this->request->get['token'];
 
-				$this->template = 'payment/securetrading_pp_order.tpl';
-
-				$this->response->setOutput($this->render());
+				return $this->load->view('payment/securetrading_pp_order.tpl', $data);
 			}
 		}
 	}

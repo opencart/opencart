@@ -427,7 +427,13 @@ class ControllerOpenbayEbay extends Controller {
 		$recommendation_data = array();
 
 		if (isset($response['data']['Recommendations']['NameRecommendation'])) {
-			foreach($response['data']['Recommendations']['NameRecommendation'] as $name_recommendation_key => $name_recommendation) {
+			if (isset($response['data']['Recommendations']['NameRecommendation']['Name'])) {
+				$recommendations = array($response['data']['Recommendations']['NameRecommendation']);
+			} else {
+				$recommendations = $response['data']['Recommendations']['NameRecommendation'];
+			}
+
+			foreach ($recommendations as $name_recommendation_key => $name_recommendation) {
 				$recommendation_data_option = array(
 					'name' => $name_recommendation['Name'],
 					'validation' =>

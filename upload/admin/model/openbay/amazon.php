@@ -436,8 +436,6 @@ class ModelOpenbayAmazon extends Model {
 
 		$product_links = $this->db->query($query)->rows;
 
-		$this->load->library('openbay/amazon');
-
 		if ($this->openbay->addonLoad('openstock')) {
 			$this->load->model('module/openstock');
 			$this->load->model('tool/image');
@@ -462,9 +460,7 @@ class ModelOpenbayAmazon extends Model {
 	}
 
 	public function getUnlinkedProducts() {
-		$this->load->library('openbay/amazon');
 		if ($this->openbay->addonLoad('openstock')) {
-
 			$rows = $this->db->query("
 				SELECT `p`.`product_id`, `p`.`model`, `p`.`sku`, `pd`.`name` as `product_name`, '' as `var`, '' as `combination`, `p`.`has_option`
 				FROM `" . DB_PREFIX . "product` as `p`
@@ -579,8 +575,6 @@ class ModelOpenbayAmazon extends Model {
 	}
 
 	public function getProductQuantity($product_id, $var = '') {
-		$this->load->library('openbay/amazon');
-
 		$result = null;
 
 		if ($var !== '' && $this->openbay->addonLoad('openstock')) {

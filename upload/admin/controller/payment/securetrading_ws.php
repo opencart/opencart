@@ -445,8 +445,8 @@ class ControllerPaymentSecureTradingWs extends Controller {
 
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['token'] = $this->request->get['token'];
-
-				$this->response->setOutput($this->load->view('payment/securetrading_ws_order.tpl', $data));
+				
+				return $this->load->view('payment/securetrading_ws_order.tpl', $data);
 			}
 		}
 	}

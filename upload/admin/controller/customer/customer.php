@@ -809,7 +809,11 @@ class ControllerCustomerCustomer extends Controller {
 		if (isset($this->request->get['filter_approved'])) {
 			$url .= '&filter_approved=' . $this->request->get['filter_approved'];
 		}
-
+		
+		if (isset($this->request->get['filter_ip'])) {
+			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
+		}
+		
 		if (isset($this->request->get['filter_date_added'])) {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}

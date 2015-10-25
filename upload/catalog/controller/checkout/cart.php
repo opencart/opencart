@@ -232,8 +232,6 @@ class ControllerCheckoutCart extends Controller {
 
 			$this->load->model('extension/extension');
 
-			$data['checkout_buttons'] = array();
-
 			$files = glob(DIR_APPLICATION . '/controller/total/*.php');
 
 			if ($files) {

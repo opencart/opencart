@@ -120,18 +120,19 @@ class ControllerModuleFeatured extends Controller {
 		} else {
 			$products = array();
 		}
-
-		foreach ($products as $product_id) {
-			$product_info = $this->model_catalog_product->getProduct($product_id);
-
-			if ($product_info) {
-				$data['products'][] = array(
-					'product_id' => $product_info['product_id'],
-					'name'       => $product_info['name']
-				);
+		if(!empty($products)){
+			foreach ($products as $product_id) {
+				$product_info = $this->model_catalog_product->getProduct($product_id);
+	
+				if ($product_info) {
+					$data['products'][] = array(
+						'product_id' => $product_info['product_id'],
+						'name'       => $product_info['name']
+					);
+				}
 			}
 		}
-
+		
 		if (isset($this->request->post['limit'])) {
 			$data['limit'] = $this->request->post['limit'];
 		} elseif (!empty($module_info)) {

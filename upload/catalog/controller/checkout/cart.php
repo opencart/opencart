@@ -232,13 +232,13 @@ class ControllerCheckoutCart extends Controller {
 
 			$this->load->model('extension/extension');
 
+			$data['modules'] = array();
+			
 			$files = glob(DIR_APPLICATION . '/controller/total/*.php');
 
 			if ($files) {
 				foreach ($files as $file) {
-					$extension = basename($file, '.php');
-
-					$data[$extension] = $this->load->controller('total/' . $extension);
+					$data['modules'][] = $this->load->controller('total/' . basename($file, '.php'));
 				}
 			}
 

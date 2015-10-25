@@ -1,6 +1,6 @@
 <h2><?php echo $text_payment_info; ?></h2>
 <div class="success" id="securetrading_ws_transaction_msg" style="display:none;"></div>
-<table class="form">
+<table class="table table-bordered">
 	<tr>
 		<td><?php echo $text_order_ref; ?></td>
 		<td><?php echo $securetrading_ws_order['transaction_reference']; ?></td>
@@ -61,7 +61,7 @@
 	<tr>
 		<td><?php echo $text_transactions; ?>:</td>
 		<td>
-			<table class="list" id="securetrading_ws_transactions">
+			<table class="table table-bordered" id="securetrading_ws_transactions">
 				<thead>
 					<tr>
 						<td class="text-left"><strong><?php echo $text_column_created; ?></strong></td>

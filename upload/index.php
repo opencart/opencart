@@ -123,26 +123,26 @@ $cache = new Cache('file');
 $registry->set('cache', $cache);
 
 // Session
+$session = new Session();
+
 if (isset($request->get['token']) && isset($request->get['route']) && substr($request->get['route'], 0, 4) == 'api/') {
 	$db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE TIMESTAMPADD(HOUR, 1, date_modified) < NOW()");
 
 	$query = $db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "api` `a` LEFT JOIN `" . DB_PREFIX . "api_session` `as` ON (a.api_id = as.api_id) LEFT JOIN " . DB_PREFIX . "api_ip `ai` ON (as.api_id = ai.api_id) WHERE a.status = '1' AND as.token = '" . $db->escape($request->get['token']) . "' AND ai.ip = '" . $db->escape($request->server['REMOTE_ADDR']) . "'");
 
 	if ($query->num_rows) {
-		$session = new Session();
 		$session->start($query->row['session_id'], $query->row['session_name']);
+		
 		$registry->set('session', $session);
 
 		// keep the session alive
 		$db->query("UPDATE `" . DB_PREFIX . "api_session` SET date_modified = NOW() WHERE api_session_id = '" . (int)$query->row['api_session_id'] . "'");
 	}
 } else {
-	$session = new Session();
 	$session->start();
-	$registry->set('session', $session);
 }
 
-
+$registry->set('session', $session);
 
 // Language Detection
 $languages = array();

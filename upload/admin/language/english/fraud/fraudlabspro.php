@@ -47,9 +47,9 @@ $_['entry_simulate_ip']                       = 'Simulate IP';
 
 // Help
 $_['help_order_status']                       = 'Orders that have a score over your set risk score will be assigned this order status.';
-$_['help_review_status']                      = 'Orders that marked as review by FraudLabs Pro will be assigned this order status.';
-$_['help_approve_status']                     = 'Orders that marked as approve by FraudLabs Pro will be assigned this order status.';
-$_['help_reject_status']                      = 'Orders that marked as reject by FraudLabs Pro will be assigned this order status.';
+$_['help_review_status']                      = 'Orders marked as review by FraudLabs Pro will be assigned this order status.';
+$_['help_approve_status']                     = 'Orders marked as approve by FraudLabs Pro will be assigned this order status.';
+$_['help_reject_status']                      = 'Orders marked as reject by FraudLabs Pro will be assigned this order status.';
 $_['help_simulate_ip']                        = 'Simulate the visitor IP address for testing. Leave blank to disable it.';
 $_['help_fraudlabspro_id']                    = 'Unique identifier for a transaction screened by FraudLabs Pro system.';
 $_['help_ip_address']                         = 'IP Address.';
@@ -67,7 +67,7 @@ $_['help_free_email']                         = 'Whether e-mail is from free e-m
 $_['help_ship_forward']                       = 'Whether shipping address is a freight forwarder address.';
 $_['help_using_proxy']                        = 'Whether IP address is from Anonymous Proxy Server.';
 $_['help_bin_found']                          = 'Whether the BIN information matches our BIN list.';
-$_['help_email_blacklist']                    = 'Whether the email address is in our blacklist database.';
+$_['help_email_blacklist']                    = 'Whether the e-mail address is in our blacklist database.';
 $_['help_credit_card_blacklist']              = 'Whether the credit card is in our blacklist database.';
 $_['help_score']                              = 'Risk score, 0 (low risk) - 100 (high risk).';
 $_['help_status']                             = 'FraudLabs Pro status.';

@@ -22,13 +22,13 @@ $_['text_reward']                = 'Reward Points';
 $_['text_affiliate']             = 'Affiliate';
 $_['text_order']                 = 'Order (#%s)';
 $_['text_payment_address']       = 'Payment Address';
-$_['text_shipping_address']      = 'Shipping Adress';
+$_['text_shipping_address']      = 'Shipping Address';
 $_['text_comment']               = 'Customer Comment';
 $_['text_history']               = 'Order History';
 $_['text_history_add']           = 'Add Order History';
 $_['text_account_custom_field']  = 'Account Custom Fields';
 $_['text_payment_custom_field']  = 'Payment Address Custom Fields';
-$_['text_shipping_custom_field'] = 'Shipping Adress Custom Fields';
+$_['text_shipping_custom_field'] = 'Shipping Address Custom Fields';
 $_['text_browser']               = 'Browser';
 $_['text_ip']                    = 'IP Address';
 $_['text_forwarded_ip']          = 'Forwarded IP';
@@ -75,7 +75,7 @@ $_['column_notify']              = 'Customer Notified';
 $_['column_location']            = 'Location';
 $_['column_reference']           = 'Reference';
 $_['column_action']              = 'Action';
-$_['column_weight']              = 'Product weight';
+$_['column_weight']              = 'Product Weight';
 
 // Entry
 $_['entry_store']                = 'Store';

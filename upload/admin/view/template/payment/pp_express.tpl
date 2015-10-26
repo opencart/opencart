@@ -20,11 +20,11 @@
 		</div>
 	<?php } ?>
 	<div class="alert alert-info">
-	  <a data-paypal-button="true" target="PPFrame" href="<?php echo $text_paypal_link; ?>" ><?php echo $text_paypal_join; ?></a>
+	  <a data-paypal-button="true" target="PPFrame" href="<?php echo $text_paypal_link; ?>" ><i class="fa fa-info-circle"></i> <?php echo $text_paypal_join; ?></a>
 	  <button type="button" class="close" data-dismiss="alert">&times;</button>
 	</div>
 	<div class="alert alert-info">
-	  <a data-paypal-button="true" target="PPFrame" href="<?php echo $text_paypal_link_sandbox; ?>" ><?php echo $text_paypal_join_sandbox; ?></a>
+	  <a data-paypal-button="true" target="PPFrame" href="<?php echo $text_paypal_link_sandbox; ?>" ><i class="fa fa-info-circle"></i> <?php echo $text_paypal_join_sandbox; ?></a>
 	  <button type="button" class="close" data-dismiss="alert">&times;</button>
 	</div>
 	<div class="panel panel-default">

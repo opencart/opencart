@@ -99,9 +99,9 @@ $_['entry_product']              = 'Choose Product';
 $_['entry_option']               = 'Choose Option(s)';
 $_['entry_quantity']             = 'Quantity';
 $_['entry_to_name']              = 'Recipient\'s Name';
-$_['entry_to_email']             = 'Recipient\'s Email';
-$_['entry_from_name']            = 'Senders Name';
-$_['entry_from_email']           = 'Senders Email';
+$_['entry_to_email']             = 'Recipient\'s E-mail';
+$_['entry_from_name']            = 'Sender\'s Name';
+$_['entry_from_email']           = 'Sender\'s E-mail';
 $_['entry_theme']                = 'Gift Certificate Theme';
 $_['entry_message']              = 'Message';
 $_['entry_amount']               = 'Amount';
@@ -122,7 +122,7 @@ $_['entry_date_added']           = 'Date Added';
 $_['entry_date_modified']        = 'Date Modified';
 
 // Help
-$_['help_override']              = 'If the customers order is being blocked from changing the order status due to a anti-fraud extension enable override.';
+$_['help_override']              = 'If the customers order is being blocked from changing the order status due to an anti-fraud extension enable override.';
 
 // Error
 $_['error_warning']              = 'Warning: Please check the form carefully for errors!';

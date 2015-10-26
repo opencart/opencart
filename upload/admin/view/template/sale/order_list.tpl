@@ -320,6 +320,7 @@ $('button[id^=\'button-delete\']').on('click', function(e) {
 
 				if (json['success']) {
 					$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                    $(node).closest('tr').remove();
 				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {

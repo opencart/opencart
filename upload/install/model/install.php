@@ -22,7 +22,8 @@ class ModelInstall extends Model {
 						$sql = str_replace("DROP TABLE IF EXISTS `oc_", "DROP TABLE IF EXISTS `" . $data['db_prefix'], $sql);
 						$sql = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . $data['db_prefix'], $sql);
 						$sql = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $sql);
-
+                                                $sql = str_replace("ENGINE=MyISAM", "ENGINE= " . $data['db_engine'], $sql);
+                                                
 						$db->query($sql);
 
 						$sql = '';

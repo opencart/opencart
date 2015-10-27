@@ -51,6 +51,15 @@
               </select>
             </div>
           </div>
+          <div class="form-group" id="form-db-engine">
+            <label class="col-sm-2 control-label" for="input-db-engine"><?php echo $entry_db_engine; ?></label>
+            <div class="col-sm-10">                
+              <select name="db_engine" id="input-db-engine" class="form-control">
+                <option value="MyISAM" selected="selected">MyISAM</option>
+                <option value="InnoDB">InnoDB</option>
+              </select>
+            </div>
+          </div>            
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-db-hostname"><?php echo $entry_db_hostname; ?></label>
             <div class="col-sm-10">
@@ -152,3 +161,20 @@
   </div>
 </div>
 <?php echo $footer; ?>
+<script type="text/javascript"><!--
+function hideDbEngine() {
+  var mySqlArray = ['mysqli','mpdo'];
+  
+  $('#input-db-driver').change(function () {
+      if( $.inArray( $('#input-db-driver').val(), mySqlArray ) == -1) {
+           $('#form-db-engine').hide(); 
+      } else {
+           $('#form-db-engine').show();   
+      };
+  });     
+}
+
+$( document ).ready(function() {
+  hideDbEngine();
+});
+//--></script>

@@ -90,6 +90,7 @@ $_['text_amazon_about']	 	 = 'Amazon Marketplace a fixed-price online marketplac
 
 // Entry
 $_['entry_db_driver']        = 'DB Driver';
+$_['entry_db_engine']        = 'DB Engine';
 $_['entry_db_hostname']      = 'Hostname';
 $_['entry_db_username']      = 'Username';
 $_['entry_db_password']      = 'Password';

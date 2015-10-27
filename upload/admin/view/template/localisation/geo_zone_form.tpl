@@ -83,7 +83,7 @@
     </div>
   </div>
   <script type="text/javascript"><!--
-$('#zone-id').load('index.php?route=localisation/geo_zone/zone&token=<?php echo $token; ?>&country_id=' + $('#country-id').attr('value') + '&zone_id=0');
+$('#zone-id').load('index.php?route=localisation/geo_zone/zone&token=<?php echo $token; ?>&country_id=' + $('#country-id').val() + '&zone_id=0');
 //--></script>
   <?php $zone_to_geo_zone_row = 0; ?>
   <?php foreach ($zone_to_geo_zones as $zone_to_geo_zone) { ?>
@@ -108,7 +108,7 @@ function addGeoZone() {
 	
 	$('#zone-to-geo-zone tbody').append(html);
 		
-	$('#zone' + zone_to_geo_zone_row).load('index.php?route=localisation/geo_zone/zone&token=<?php echo $token; ?>&country_id=' + $('#country' + zone_to_geo_zone_row).attr('value') + '&zone_id=0');
+	$('#zone' + zone_to_geo_zone_row).load('index.php?route=localisation/geo_zone/zone&token=<?php echo $token; ?>&country_id=' + $('#country' + zone_to_geo_zone_row).val() + '&zone_id=0');
 	
 	zone_to_geo_zone_row++;
 }

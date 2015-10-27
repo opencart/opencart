@@ -166,7 +166,7 @@ function hideDbEngine() {
   var mySqlArray = ['mysqli','mpdo'];
   
   $('#input-db-driver').change(function () {
-      if( $.inArray( $('#input-db-driver').val(), mySqlArray ) == -1) {
+      if( $.inArray( $(this).val(), mySqlArray ) == -1) {
            $('#form-db-engine').hide(); 
       } else {
            $('#form-db-engine').show();   

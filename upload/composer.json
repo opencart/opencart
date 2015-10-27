@@ -1,0 +1,7 @@
+{
+    "name": "opencart/opencart",
+    "homepage": "http://www.opencart.com",
+    "require": {
+        "cardinity/cardinity-sdk-php": "^1.0"
+    }
+}

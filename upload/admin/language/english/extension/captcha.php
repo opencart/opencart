@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']    = 'Captcha';
+$_['heading_title']    = 'Captchas';
 
 // Text
 $_['text_success']     = 'Success: You have modified captchas!';

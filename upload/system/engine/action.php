@@ -25,11 +25,11 @@ class Action {
 		if (!$this->method) {
 			$this->method = 'index';
 		}
-
+		
 		$this->args = $args;
 	}
 
-	public function execute($registry) {
+	public function execute($registry, $args = array()) {
 		// Stop any magical methods being called
 		if (substr($this->method, 0, 2) == '__') {
 			return false;
@@ -43,7 +43,7 @@ class Action {
 			$controller = new $class($registry);
 
 			if (is_callable(array($controller, $this->method))) {
-				return call_user_func(array($controller, $this->method), $this->args);
+				return call_user_func(array($controller, $this->method), $args);
 			} else {
 				return false;
 			}
@@ -51,4 +51,8 @@ class Action {
 			return false;
 		}
 	}
+	
+	public function getArgs() {
+		return $this->args;
+	}	
 }

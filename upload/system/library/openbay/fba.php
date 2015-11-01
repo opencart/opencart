@@ -6,10 +6,12 @@ namespace openbay;
 class fba {
 	private $api_key;
 	private $api_account_id;
-	private $url = 'https://api.openbaypro.io/';
+	//private $url = 'https://api.openbaypro.io/';
+	private $url = 'http://localhost/';
 	private $registry;
 
 	private $logging = 1;
+	private $logging_verbose = 1;
 	private $max_log_size = 50;
 
 	public function __construct($registry) {
@@ -19,9 +21,7 @@ class fba {
 		$this->api_account_id = $this->config->get('openbay_fba_api_account_id');
 		$this->logging = $this->config->get('openbay_fba_debug_log');
 
-		if ($this->logging == 1) {
-			$this->setLogger();
-		}
+		$this->setLogger();
 	}
 
 	public function __get($name) {
@@ -29,13 +29,14 @@ class fba {
 	}
 
 	public function call($uri, $data = array(), $request_type = 'GET') {
+		$this->log("Request: " . $request_type . " : " . $this->url . $uri);
+
 		$headers = array();
 		$headers[] = 'X-Auth-Token: ' . $this->api_key;
 		$headers[] = 'Content-Type: application/json';
 		$headers[] = 'X-Account-ID: ' . $this->api_account_id;
 
 		$defaults = array(
-			CURLOPT_POST            => 1,
 			CURLOPT_HTTPHEADER      => $headers,
 			CURLOPT_URL             => $this->url . $uri,
 			CURLOPT_USERAGENT       => 'OpenBay Pro for Fulfillment by Amazon',
@@ -47,7 +48,13 @@ class fba {
 			CURLOPT_SSL_VERIFYHOST  => 0,
 		);
 
+		if ($this->logging_verbose == 1) {
+			$defaults[CURLOPT_VERBOSE] = 1;
+			$defaults[CURLOPT_STDERR] = fopen(DIR_LOGS . 'fba_verbose.log', "a+");
+		}
+
 		if ($request_type = ("POST" || "PUT" || "DELETE")) {
+			$defaults[CURLOPT_POST] = json_encode($data);
 			$defaults[CURLOPT_POSTFIELDS] = json_encode($data);
 
 			if ($request_type = ("PUT" || "DELETE")) {
@@ -60,10 +67,15 @@ class fba {
 		curl_setopt_array($ch, $defaults);
 
 		if (! $result = curl_exec($ch)) {
+			echo 'call() - Curl Failed ' . curl_error($ch) . ' ' . curl_errno($ch);
 			$this->log('call() - Curl Failed ' . curl_error($ch) . ' ' . curl_errno($ch));
 
 			$response = array('error' => true, 'body' => null);
 		} else {
+			$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+			$this->log("Response: " . $http_code . " : " . strlen($result) . " bytes");
+
 			$encoding = mb_detect_encoding($result);
 
 			if ($encoding == 'UTF-8') {
@@ -97,16 +109,16 @@ class fba {
 			}
 		}
 
-		$this->logger = new \Log('ebaylog.log');
+		$this->logger = new \Log('fulfillment_by_amazon.log');
 	}
 
-	public function log($data, $write = true) {
+	public function log($data) {
 		if (function_exists('getmypid')) {
 			$process_id = getmypid();
 			$data = $process_id . ' - ' . $data;
 		}
 
-		if ($write == true) {
+		if ($this->logging == 1) {
 			$this->logger->write($data);
 		}
 	}

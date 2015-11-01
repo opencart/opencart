@@ -27,6 +27,8 @@ $_['entry_send_orders']         = 'Send orders automatically';
 $_['entry_fulfill_policy']      = 'Fulfillment policy';
 $_['entry_shipping_speed']      = 'Default shipping speed';
 $_['entry_debug_log']           = 'Enable debug logging';
+$_['entry_new_order_status']    = 'New fulfillment trigger';
+$_['entry_cancel_order_status'] = 'Cancel fulfillment trigger';
 
 // Help
 $_['help_api_key']            	= 'This is your API key, obtain this from your OpenBay Pro account area';
@@ -35,6 +37,8 @@ $_['help_send_orders']  		= 'Orders containing matching Fulfillment by Amazon pr
 $_['help_fulfill_policy']  		= 'The default fulfillment policy (FillAll - All fulfillable items in the fulfillment order are shipped. The fulfillment order remains in a processing state until all items are either shipped by Amazon or cancelled by the seller. FillAllAvailable - All fulfillable items in the fulfillment order are shipped. All unfulfillable items in the order are cancelled by Amazon.FillOrKill - If an item in a fulfillment order is determined to be unfulfillable before any shipment in the order moves to the Pending status (the process of picking units from inventory has begun), then the entire order is considered unfulfillable. However, if an item in a fulfillment order is determined to be unfulfillable after a shipment in the order moves to the Pending status, Amazon cancels as much of the fulfillment order as possible.)';
 $_['help_shipping_speed']  		= 'This is the default shipping speed category to apply to new orders, different service levels may incurr different costs';
 $_['help_debug_log']  		    = 'Debug logs will record information to a log file about actions the module does. This should be left enabled to help find the cause of any problems.';
+$_['help_new_order_status']  	= 'This is the order status which will trigger the order to be created for fulfillment. Ensure that this is using a status only after you have received payment.';
+$_['help_cancel_order_status']  = 'This is the order status which will trigger the fulfillment to be cancelled (if possible).';
 
 // Error
 $_['error_api_connect']         = 'Failed to connect to the API';

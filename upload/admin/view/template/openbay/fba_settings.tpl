@@ -109,6 +109,26 @@
               </select>
             </div>
           </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="openbay_fba_order_trigger_status"><span data-toggle="tooltip" data-container="#tab-content" title="<?php echo $help_new_order_status; ?>"><?php echo $entry_new_order_status; ?></span></label>
+            <div class="col-sm-10">
+              <select name="openbay_fba_order_trigger_status" id="openbay_fba_order_trigger_status" class="form-control">
+                <?php foreach ($order_statuses as $status) { ?>
+                <option value="<?php echo $status['order_status_id']; ?>" <?php echo ($openbay_fba_order_trigger_status == $status['order_status_id'] ? ' selected=selected' :''); ?>><?php echo $status['name']; ?></option>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="openbay_fba_cancel_order_trigger_status"><span data-toggle="tooltip" data-container="#tab-content" title="<?php echo $help_cancel_order_status; ?>"><?php echo $entry_cancel_order_status; ?></span></label>
+            <div class="col-sm-10">
+              <select name="openbay_fba_cancel_order_trigger_status" id="openbay_fba_cancel_order_trigger_status" class="form-control">
+                <?php foreach ($order_statuses as $status) { ?>
+                <option value="<?php echo $status['order_status_id']; ?>" <?php echo ($openbay_fba_cancel_order_trigger_status == $status['order_status_id'] ? ' selected=selected' :''); ?>><?php echo $status['name']; ?></option>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
     </form>

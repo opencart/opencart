@@ -141,6 +141,18 @@ class ControllerOpenbayFba extends Controller {
             $data['openbay_fba_debug_log'] = $this->config->get('openbay_fba_debug_log');
         }
 
+        if (isset($this->request->post['openbay_fba_order_trigger_status'])) {
+            $data['openbay_fba_order_trigger_status'] = $this->request->post['openbay_fba_order_trigger_status'];
+        } else {
+            $data['openbay_fba_order_trigger_status'] = $this->config->get('openbay_fba_order_trigger_status');
+        }
+
+        if (isset($this->request->post['openbay_fba_cancel_order_trigger_status'])) {
+            $data['openbay_fba_cancel_order_trigger_status'] = $this->request->post['openbay_fba_cancel_order_trigger_status'];
+        } else {
+            $data['openbay_fba_cancel_order_trigger_status'] = $this->config->get('openbay_fba_cancel_order_trigger_status');
+        }
+
         $data['fulfillment_policy'] = array(
             'FillOrKill' => $this->language->get('text_fillorkill'),
             'FillAll' => $this->language->get('text_fillall'),
@@ -181,5 +193,13 @@ class ControllerOpenbayFba extends Controller {
         }
 
         return !$this->error;
+    }
+
+    public function status() {
+        $response = $this->openbay->fba->call("v1/fba/status/");
+
+        echo '<pre>';
+        print_r($response);
+        echo '</pre>';
     }
 }

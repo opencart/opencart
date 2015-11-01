@@ -116,7 +116,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$data['extensions'] = array();
 
-		$markets = array('ebay', 'etsy', 'amazon', 'amazonus');
+		$markets = array('ebay', 'etsy', 'amazon', 'amazonus', 'fba');
 
 		foreach ($markets as $market) {
 			$extension = basename($market, '.php');

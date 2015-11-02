@@ -7,7 +7,7 @@ class fba {
 	private $api_key;
 	private $api_account_id;
 	//private $url = 'https://api.openbaypro.io/';
-	private $url = 'http://localhost/';
+	private $url = 'http://192.168.1.136/';
 	private $registry;
 
 	private $logging = 1;
@@ -60,6 +60,8 @@ class fba {
 			if ($request_type = ("PUT" || "DELETE")) {
 				$defaults[CURLOPT_CUSTOMREQUEST] = $request_type;
 			}
+		} else {
+			$defaults[CURLOPT_CUSTOMREQUEST] = "GET";
 		}
 
 		$ch = curl_init();

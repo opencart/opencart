@@ -196,7 +196,7 @@ class ControllerOpenbayFba extends Controller {
     }
 
     public function status() {
-        $response = $this->openbay->fba->call("v1/fba/status/");
+        $response = $this->openbay->fba->call("v1/fba/fulfillments/", array(), 'POST');
 
         echo '<pre>';
         print_r($response);

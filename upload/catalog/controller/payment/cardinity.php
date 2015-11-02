@@ -119,7 +119,7 @@ class ControllerPaymentCardinity extends Controller {
 						$json['3ds'] = array(
 							'url'     => $authorization_information->getUrl(),
 							'PaReq'   => $authorization_information->getData(),
-							'TermUrl' => $this->url->link('payment/cardinity/threeDSecureCallback', '', 'SSL'),
+							'TermUrl' => $this->url->link('payment/cardinity/threedSecureCallback', '', 'SSL'),
 							'hash'    => $hash
 						);
 					} elseif ($payment->getStatus() == 'approved') {
@@ -171,7 +171,7 @@ class ControllerPaymentCardinity extends Controller {
 		$this->response->setOutput($this->load->view('default/template/payment/cardinity_3ds.tpl', $data));
 	}
 
-	public function threeDSecureCallback() {
+	public function threedSecureCallback() {
 		$this->load->model('payment/cardinity');
 
 		$this->load->language('payment/cardinity');

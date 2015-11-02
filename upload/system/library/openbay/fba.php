@@ -7,7 +7,7 @@ class fba {
 	private $api_key;
 	private $api_account_id;
 	//private $url = 'https://api.openbaypro.io/';
-	private $url = 'http://apiv3.welfordlocal.co.uk/';
+	private $url = 'http://dev.openbaypro.io/';
 	private $registry;
 
 	private $logging = 1;
@@ -53,7 +53,7 @@ class fba {
 			$defaults[CURLOPT_STDERR] = fopen(DIR_LOGS . 'fba_verbose.log', "a+");
 		}
 
-		if ($request_type = ("POST")) {
+		if ($request_type == "POST") {
 			$defaults[CURLOPT_POST] = json_encode($data);
 			$defaults[CURLOPT_POSTFIELDS] = json_encode($data);
 		} else {
@@ -64,7 +64,9 @@ class fba {
 
 		curl_setopt_array($ch, $defaults);
 
-		if (! $result = curl_exec($ch)) {
+		$result = curl_exec($ch);
+
+		if (!$result) {
 			echo 'call() - Curl Failed ' . curl_error($ch) . ' ' . curl_errno($ch);
 			$this->log('call() - Curl Failed ' . curl_error($ch) . ' ' . curl_errno($ch));
 

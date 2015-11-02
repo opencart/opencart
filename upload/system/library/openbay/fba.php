@@ -7,7 +7,7 @@ class fba {
 	private $api_key;
 	private $api_account_id;
 	//private $url = 'https://api.openbaypro.io/';
-	private $url = 'http://192.168.1.136/';
+	private $url = 'http://apiv3.welfordlocal.co.uk/';
 	private $registry;
 
 	private $logging = 1;
@@ -53,13 +53,9 @@ class fba {
 			$defaults[CURLOPT_STDERR] = fopen(DIR_LOGS . 'fba_verbose.log', "a+");
 		}
 
-		if ($request_type = ("POST" || "PUT" || "DELETE")) {
+		if ($request_type = ("POST")) {
 			$defaults[CURLOPT_POST] = json_encode($data);
 			$defaults[CURLOPT_POSTFIELDS] = json_encode($data);
-
-			if ($request_type = ("PUT" || "DELETE")) {
-				$defaults[CURLOPT_CUSTOMREQUEST] = $request_type;
-			}
 		} else {
 			$defaults[CURLOPT_CUSTOMREQUEST] = "GET";
 		}

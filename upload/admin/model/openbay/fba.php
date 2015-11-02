@@ -3,6 +3,18 @@ class ModelOpenbayFba extends Model {
     public function install() {
         $this->load->model('extension/event');
         $this->model_extension_event->addEvent('openbay_fba', 'post.order.history.add', 'openbay/amazon/eventAddOrderHistory');
+
+        // Default settings
+        $setting = array();
+        $setting["openbay_fba_status"] = 0;
+        $setting["openbay_fba_send_orders"] = 0;
+        $setting["openbay_fba_debug_log"] = 1;
+        $setting["openbay_fba_order_trigger_status"] = 15;
+        $setting["openbay_fba_cancel_order_trigger_status"] = 7;
+        $setting["openbay_fba_fulfill_policy"] = 'FillAllAvailable';
+        $setting["openbay_fba_shipping_speed"] = 'Standard';
+
+		$this->model_setting_setting->editSetting('openbay_fba', $setting);
     }
 
     public function uninstall() {

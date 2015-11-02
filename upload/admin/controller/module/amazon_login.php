@@ -4,7 +4,7 @@ class ControllerModuleAmazonLogin extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('module/amazon_login');
+		$this->load->language('module/amazon_login');
 
 		$this->load->model('setting/setting');
 		$this->load->model('design/layout');

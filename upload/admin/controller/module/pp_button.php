@@ -1,7 +1,7 @@
 <?php
 class ControllerModulePPButton extends Controller {
 	public function index() {
-		$this->language->load('module/pp_button');
+		$this->load->language('module/pp_button');
 
 		$this->load->model('setting/setting');
 

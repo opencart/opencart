@@ -1,7 +1,7 @@
 <?php
 class ControllerModuleFeatured extends Controller {
 	public function index($setting) {
-		$this->language->load('module/featured');
+		$this->load->language('module/featured');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 

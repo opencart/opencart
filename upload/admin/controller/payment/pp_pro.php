@@ -3,7 +3,7 @@ class ControllerPaymentPPPro extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('payment/pp_pro');
+		$this->load->language('payment/pp_pro');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

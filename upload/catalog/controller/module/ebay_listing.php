@@ -2,7 +2,7 @@
 class ControllerModuleEbayListing extends Controller {
 	public function index() {
 		if ($this->config->get('ebay_status') == 1) {
-			$this->language->load('module/ebay');
+			$this->load->language('module/ebay');
 			
 			$this->load->model('tool/image');
 			$this->load->model('openbay/ebay_product');

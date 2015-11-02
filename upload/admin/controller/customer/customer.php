@@ -3,7 +3,7 @@ class ControllerCustomerCustomer extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('customer/customer');
+		$this->load->language('customer/customer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerCustomerCustomer extends Controller {
 	}
 
 	public function add() {
-		$this->language->load('customer/customer');
+		$this->load->language('customer/customer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -73,7 +73,7 @@ class ControllerCustomerCustomer extends Controller {
 	}
 
 	public function edit() {
-		$this->language->load('customer/customer');
+		$this->load->language('customer/customer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -133,7 +133,7 @@ class ControllerCustomerCustomer extends Controller {
 	}
 
 	public function delete() {
-		$this->language->load('customer/customer');
+		$this->load->language('customer/customer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -195,7 +195,7 @@ class ControllerCustomerCustomer extends Controller {
 	}
 
 	public function approve() {
-		$this->language->load('customer/customer');
+		$this->load->language('customer/customer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -263,7 +263,7 @@ class ControllerCustomerCustomer extends Controller {
 	}
 
 	public function unlock() {
-		$this->language->load('customer/customer');
+		$this->load->language('customer/customer');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -1169,7 +1169,7 @@ class ControllerCustomerCustomer extends Controller {
 				$this->response->redirect(HTTP_CATALOG . 'index.php?route=account/login&token=' . $token);
 			}
 		} else {
-			$this->language->load('error/not_found');
+			$this->load->language('error/not_found');
 
 			$this->document->setTitle($this->language->get('heading_title'));
 
@@ -1198,7 +1198,7 @@ class ControllerCustomerCustomer extends Controller {
 	}
 
 	public function history() {
-		$this->language->load('customer/customer');
+		$this->load->language('customer/customer');
 
 		$this->load->model('customer/customer');
 
@@ -1240,7 +1240,7 @@ class ControllerCustomerCustomer extends Controller {
 	}
 
 	public function addHistory() {
-		$this->language->load('customer/customer');
+		$this->load->language('customer/customer');
 
 		$json = array();
 
@@ -1259,7 +1259,7 @@ class ControllerCustomerCustomer extends Controller {
 	}
 
 	public function transaction() {
-		$this->language->load('customer/customer');
+		$this->load->language('customer/customer');
 
 		$this->load->model('customer/customer');
 
@@ -1306,7 +1306,7 @@ class ControllerCustomerCustomer extends Controller {
 	}
 
 	public function addTransaction() {
-		$this->language->load('customer/customer');
+		$this->load->language('customer/customer');
 
 		$json = array();
 
@@ -1325,7 +1325,7 @@ class ControllerCustomerCustomer extends Controller {
 	}
 
 	public function reward() {
-		$this->language->load('customer/customer');
+		$this->load->language('customer/customer');
 
 		$this->load->model('customer/customer');
 
@@ -1372,7 +1372,7 @@ class ControllerCustomerCustomer extends Controller {
 	}
 
 	public function addReward() {
-		$this->language->load('customer/customer');
+		$this->load->language('customer/customer');
 
 		$json = array();
 
@@ -1391,7 +1391,7 @@ class ControllerCustomerCustomer extends Controller {
 	}
 
 	public function ip() {
-		$this->language->load('customer/customer');
+		$this->load->language('customer/customer');
 
 		$this->load->model('customer/customer');
 

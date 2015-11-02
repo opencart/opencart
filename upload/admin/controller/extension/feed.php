@@ -3,7 +3,7 @@ class ControllerExtensionFeed extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('extension/feed');
+		$this->load->language('extension/feed');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerExtensionFeed extends Controller {
 	}
 
 	public function install() {
-		$this->language->load('extension/feed');
+		$this->load->language('extension/feed');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -39,7 +39,7 @@ class ControllerExtensionFeed extends Controller {
 	}
 
 	public function uninstall() {
-		$this->language->load('extension/feed');
+		$this->load->language('extension/feed');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -120,7 +120,7 @@ class ControllerExtensionFeed extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->language->load('feed/' . $extension);
+				$this->load->language('feed/' . $extension);
 
 				$data['extensions'][] = array(
 					'name'      => $this->language->get('heading_title'),

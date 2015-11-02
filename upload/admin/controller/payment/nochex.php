@@ -3,7 +3,7 @@ class ControllerPaymentNOCHEX extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('payment/nochex');
+		$this->load->language('payment/nochex');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

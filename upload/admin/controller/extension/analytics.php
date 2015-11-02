@@ -3,7 +3,7 @@ class ControllerExtensionAnalytics extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('extension/analytics');
+		$this->load->language('extension/analytics');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerExtensionAnalytics extends Controller {
 	}
 
 	public function install() {
-		$this->language->load('extension/analytics');
+		$this->load->language('extension/analytics');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -39,7 +39,7 @@ class ControllerExtensionAnalytics extends Controller {
 	}
 
 	public function uninstall() {
-		$this->language->load('extension/analytics');
+		$this->load->language('extension/analytics');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -120,7 +120,7 @@ class ControllerExtensionAnalytics extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 
-				$this->language->load('analytics/' . $extension);
+				$this->load->language('analytics/' . $extension);
 
 				$data['extensions'][] = array(
 					'name'      => $this->language->get('heading_title'),

@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentPPStandard extends Controller {
 	public function index() {
-		$this->language->load('payment/pp_standard');
+		$this->load->language('payment/pp_standard');
 
 		$data['text_testmode'] = $this->language->get('text_testmode');
 		$data['button_confirm'] = $this->language->get('button_confirm');

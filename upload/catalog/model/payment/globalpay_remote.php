@@ -1,7 +1,7 @@
 <?php
 class ModelPaymentGlobalpayRemote extends Model {
 	public function getMethod($address, $total) {
-		$this->language->load('payment/globalpay_remote');
+		$this->load->language('payment/globalpay_remote');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('globalpay_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 
@@ -235,7 +235,7 @@ class ModelPaymentGlobalpayRemote extends Model {
 
 		$response = simplexml_load_string($response);
 
-		$this->language->load('payment/globalpay_remote');
+		$this->load->language('payment/globalpay_remote');
 
 		$message = '<strong>' . $this->language->get('text_result') . ':</strong> ' . (int)$response->result;
 		$message .= '<br /><strong>' . $this->language->get('text_message') . ':</strong> ' . (string)$response->message;

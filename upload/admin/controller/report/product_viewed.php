@@ -1,7 +1,7 @@
 <?php
 class ControllerReportProductViewed extends Controller {
 	public function index() {
-		$this->language->load('report/product_viewed');
+		$this->load->language('report/product_viewed');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -116,7 +116,7 @@ class ControllerReportProductViewed extends Controller {
 	}
 
 	public function reset() {
-		$this->language->load('report/product_viewed');
+		$this->load->language('report/product_viewed');
 
 		if (!$this->user->hasPermission('modify', 'report/product_viewed')) {
 			$this->session->data['error'] = $this->language->get('error_permission');

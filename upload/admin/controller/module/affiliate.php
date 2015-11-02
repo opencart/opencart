@@ -3,7 +3,7 @@ class ControllerModuleAffiliate extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('module/affiliate');
+		$this->load->language('module/affiliate');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

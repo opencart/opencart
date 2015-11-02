@@ -3,7 +3,7 @@ class ControllerTotalVoucher extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('total/voucher');
+		$this->load->language('total/voucher');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

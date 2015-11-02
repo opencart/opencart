@@ -9,7 +9,7 @@ class ControllerAccountPassword extends Controller {
 			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
-		$this->language->load('account/password');
+		$this->load->language('account/password');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

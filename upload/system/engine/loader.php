@@ -68,7 +68,7 @@ final class Loader {
 	}
 
 	public function view($template, $data = array()) {
-		// $this->event->trigger('pre.view.' . str_replace('/', '.', $template), $data);
+		 $this->event->beforeTrigger('view/' . str_replace('/', '.', $template) . '/before/', $data);
 
 		$file = DIR_TEMPLATE . $template;
 
@@ -87,7 +87,7 @@ final class Loader {
 			exit();
 		}
 
-		// $this->event->trigger('post/view/' . $template, $output);
+		$this->event->afterTrigger('view/' . $template, $output);
 
 		return $output;
 	}

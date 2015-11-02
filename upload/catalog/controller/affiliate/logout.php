@@ -7,7 +7,7 @@ class ControllerAffiliateLogout extends Controller {
 			$this->response->redirect($this->url->link('affiliate/logout', '', true));
 		}
 
-		$this->language->load('affiliate/logout');
+		$this->load->language('affiliate/logout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

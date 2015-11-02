@@ -3,7 +3,7 @@ class ControllerCustomerCustomField extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('customer/custom_field');
+		$this->load->language('customer/custom_field');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerCustomerCustomField extends Controller {
 	}
 
 	public function add() {
-		$this->language->load('customer/custom_field');
+		$this->load->language('customer/custom_field');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -45,7 +45,7 @@ class ControllerCustomerCustomField extends Controller {
 	}
 
 	public function edit() {
-		$this->language->load('customer/custom_field');
+		$this->load->language('customer/custom_field');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -77,7 +77,7 @@ class ControllerCustomerCustomField extends Controller {
 	}
 
 	public function delete() {
-		$this->language->load('customer/custom_field');
+		$this->load->language('customer/custom_field');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

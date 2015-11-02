@@ -1,7 +1,7 @@
 <?php
 class ControllerModuleCategory extends Controller {
 	public function index() {
-		$this->language->load('module/category');
+		$this->load->language('module/category');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 

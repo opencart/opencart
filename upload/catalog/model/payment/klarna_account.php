@@ -1,7 +1,7 @@
 <?php
 class ModelPaymentKlarnaAccount extends Model {
 	public function getMethod($address, $total) {
-		$this->language->load('payment/klarna_account');
+		$this->load->language('payment/klarna_account');
 
 		$status = true;
 

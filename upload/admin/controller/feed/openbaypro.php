@@ -3,7 +3,7 @@ class ControllerFeedOpenbaypro extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('feed/openbaypro');
+		$this->load->language('feed/openbaypro');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

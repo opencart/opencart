@@ -3,7 +3,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('localisation/order_status');
+		$this->load->language('localisation/order_status');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 	}
 
 	public function add() {
-		$this->language->load('localisation/order_status');
+		$this->load->language('localisation/order_status');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -45,7 +45,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 	}
 
 	public function edit() {
-		$this->language->load('localisation/order_status');
+		$this->load->language('localisation/order_status');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -77,7 +77,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 	}
 
 	public function delete() {
-		$this->language->load('localisation/order_status');
+		$this->load->language('localisation/order_status');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

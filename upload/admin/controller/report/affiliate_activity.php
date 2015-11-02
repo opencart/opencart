@@ -1,7 +1,7 @@
 <?php
 class ControllerReportAffiliateActivity extends Controller {
 	public function index() {
-		$this->language->load('report/affiliate_activity');
+		$this->load->language('report/affiliate_activity');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

@@ -3,7 +3,7 @@ class ControllerPaymentGlobalpay extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('payment/globalpay');
+		$this->load->language('payment/globalpay');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -300,7 +300,7 @@ class ControllerPaymentGlobalpay extends Controller {
 			$globalpay_order = $this->model_payment_globalpay->getOrder($this->request->get['order_id']);
 
 			if (!empty($globalpay_order)) {
-				$this->language->load('payment/globalpay');
+				$this->load->language('payment/globalpay');
 
 				$globalpay_order['total_captured'] = $this->model_payment_globalpay->getTotalCaptured($globalpay_order['globalpay_order_id']);
 
@@ -340,7 +340,7 @@ class ControllerPaymentGlobalpay extends Controller {
 	}
 
 	public function void() {
-		$this->language->load('payment/globalpay');
+		$this->load->language('payment/globalpay');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
@@ -374,7 +374,7 @@ class ControllerPaymentGlobalpay extends Controller {
 	}
 
 	public function capture() {
-		$this->language->load('payment/globalpay');
+		$this->load->language('payment/globalpay');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
@@ -422,7 +422,7 @@ class ControllerPaymentGlobalpay extends Controller {
 	}
 
 	public function rebate() {
-		$this->language->load('payment/globalpay');
+		$this->load->language('payment/globalpay');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {

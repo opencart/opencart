@@ -3,7 +3,7 @@ class ControllerCatalogFilter extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('catalog/filter');
+		$this->load->language('catalog/filter');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerCatalogFilter extends Controller {
 	}
 
 	public function add() {
-		$this->language->load('catalog/filter');
+		$this->load->language('catalog/filter');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -45,7 +45,7 @@ class ControllerCatalogFilter extends Controller {
 	}
 
 	public function edit() {
-		$this->language->load('catalog/filter');
+		$this->load->language('catalog/filter');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -77,7 +77,7 @@ class ControllerCatalogFilter extends Controller {
 	}
 
 	public function delete() {
-		$this->language->load('catalog/filter');
+		$this->load->language('catalog/filter');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

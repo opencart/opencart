@@ -1,7 +1,7 @@
 <?php
 class ControllerCommonMenu extends Controller {
 	public function index() {
-		$this->language->load('common/menu');
+		$this->load->language('common/menu');
 
 		$data['text_analytics'] = $this->language->get('text_analytics');
 		$data['text_affiliate'] = $this->language->get('text_affiliate');

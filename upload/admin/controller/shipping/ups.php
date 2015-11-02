@@ -3,7 +3,7 @@ class ControllerShippingUPS extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('shipping/ups');
+		$this->load->language('shipping/ups');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

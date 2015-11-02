@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentPPExpress extends Controller {
 	public function index() {
-		$this->language->load('payment/pp_express');
+		$this->load->language('payment/pp_express');
 
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_continue_action'] = $this->url->link('payment/pp_express/checkout', '', true);
@@ -354,8 +354,8 @@ class ControllerPaymentPPExpress extends Controller {
 	}
 
 	public function expressConfirm() {
-		$this->language->load('payment/pp_express');
-		$this->language->load('checkout/cart');
+		$this->load->language('payment/pp_express');
+		$this->load->language('checkout/cart');
 
 		$this->load->model('tool/image');
 
@@ -745,7 +745,7 @@ class ControllerPaymentPPExpress extends Controller {
 	}
 
 	public function expressComplete() {
-		$this->language->load('payment/pp_express');
+		$this->load->language('payment/pp_express');
 		$redirect = '';
 
 		if ($this->cart->hasShipping()) {
@@ -842,7 +842,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 			array_multisort($sort_order, SORT_ASC, $total_data);
 
-			$this->language->load('checkout/checkout');
+			$this->load->language('checkout/checkout');
 
 			$data = array();
 
@@ -1161,7 +1161,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 				//loop through any products that are recurring items
 				if ($recurring_products) {
-					$this->language->load('payment/pp_express');
+					$this->load->language('payment/pp_express');
 
 					$this->load->model('checkout/recurring');
 
@@ -1344,7 +1344,7 @@ class ControllerPaymentPPExpress extends Controller {
 	}
 
 	public function checkoutReturn() {
-		$this->language->load('payment/pp_express');
+		$this->load->language('payment/pp_express');
 
 		$this->load->model('payment/pp_express');
 		$this->load->model('checkout/order');
@@ -1534,7 +1534,7 @@ class ControllerPaymentPPExpress extends Controller {
 				}
 			}
 
-			$this->language->load('payment/pp_express');
+			$this->load->language('payment/pp_express');
 
 			$data['breadcrumbs'] = array();
 
@@ -1855,8 +1855,8 @@ class ControllerPaymentPPExpress extends Controller {
 	}
 
 	protected function shippingValidate($code) {
-		$this->language->load('checkout/cart');
-		$this->language->load('payment/pp_express');
+		$this->load->language('checkout/cart');
+		$this->load->language('payment/pp_express');
 
 		if (empty($code)) {
 			$this->session->data['error_warning'] = $this->language->get('error_shipping');
@@ -1880,7 +1880,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$this->load->model('account/recurring');
 		$this->load->model('payment/pp_express');
-		$this->language->load('account/recurring');
+		$this->load->language('account/recurring');
 
 		$recurring = $this->model_account_recurring->getProfile($this->request->get['recurring_id']);
 
@@ -1975,7 +1975,7 @@ class ControllerPaymentPPExpress extends Controller {
 	}
 
 	public function recurringButtons() {
-		$this->language->load('payment/pp_express');
+		$this->load->language('payment/pp_express');
 
 		$recurring = $this->model_account_recurring->getProfile($this->request->get['recurring_id']);
 

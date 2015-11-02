@@ -267,7 +267,7 @@ class ModelOpenbayOpenbay extends Model {
 	}
 
 	public function updateTest() {
-		$this->language->load('extension/openbay');
+		$this->load->language('extension/openbay');
 
 		$data = $this->request->post;
 		$data['user'] = $data['openbay_ftp_username'];
@@ -346,7 +346,7 @@ class ModelOpenbayOpenbay extends Model {
 		ob_start();
 
 		$this->load->model('setting/setting');
-		$this->language->load('extension/openbay');
+		$this->load->language('extension/openbay');
 
 		$data = $this->request->post;
 		$data['user'] = $data['openbay_ftp_username'];

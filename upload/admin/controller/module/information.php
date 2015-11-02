@@ -3,7 +3,7 @@ class ControllerModuleInformation extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('module/information');
+		$this->load->language('module/information');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

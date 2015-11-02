@@ -137,7 +137,7 @@ class ControllerPaymentCardinity extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function threeDSecureForm() {
+	public function threedSecureForm() {
 		$this->load->model('payment/cardinity');
 
 		$this->load->language('payment/cardinity');

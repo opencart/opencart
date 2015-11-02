@@ -91,7 +91,7 @@ $('#button-confirm').on('click', function() {
 
 			if (json['3ds']) {
 				$.ajax({
-					url: 'index.php?route=payment/cardinity/threeDSecureForm',
+					url: 'index.php?route=payment/cardinity/threedSecureForm',
 					type: 'post',
 					data: json['3ds'],
 					dataType: 'html',

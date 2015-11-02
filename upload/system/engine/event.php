@@ -24,6 +24,10 @@ class Event {
 	public function trigger($key, &$arg = array()) {
 		if (isset($this->data[$key])) {
 			foreach ($this->data[$key] as $event) {
+				if (!$arg) {
+					$args = $event->getArgs();
+				}
+				
 				$event->execute($this->registry, $arg);
 			}
 		}

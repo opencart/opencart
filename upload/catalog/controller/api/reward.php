@@ -1,7 +1,7 @@
 <?php
 class ControllerApiReward extends Controller {
 	public function index() {
-		$this->language->load('api/reward');
+		$this->load->language('api/reward');
 
 		// Delete past reward in case there is an error
 		unset($this->session->data['reward']);
@@ -52,7 +52,7 @@ class ControllerApiReward extends Controller {
 	}
 
 	public function maximum() {
-		$this->language->load('api/reward');
+		$this->load->language('api/reward');
 
 		$json = array();
 
@@ -80,7 +80,7 @@ class ControllerApiReward extends Controller {
 	}
 
 	public function available() {
-		$this->language->load('api/reward');
+		$this->load->language('api/reward');
 
 		$json = array();
 

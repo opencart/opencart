@@ -7,7 +7,7 @@ class ModelAffiliateAffiliate extends Model {
 
 		$affiliate_id = $this->db->getLastId();
 
-		$this->language->load('mail/affiliate');
+		$this->load->language('mail/affiliate');
 
 		$subject = sprintf($this->language->get('text_subject'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
 
@@ -140,7 +140,7 @@ class ModelAffiliateAffiliate extends Model {
 		if ($affiliate_info) {
 			$this->event->trigger('pre.affiliate.add.transaction');
 
-			$this->language->load('mail/affiliate');
+			$this->load->language('mail/affiliate');
 
 			$this->db->query("INSERT INTO " . DB_PREFIX . "affiliate_transaction SET affiliate_id = '" . (int)$affiliate_id . "', order_id = '" . (float)$order_id . "', description = '" . $this->db->escape($this->language->get('text_order_id') . ' #' . $order_id) . "', amount = '" . (float)$amount . "', date_added = NOW()");
 

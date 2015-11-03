@@ -3,7 +3,7 @@ class ControllerTotalTax extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('total/tax');
+		$this->load->language('total/tax');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

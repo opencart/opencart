@@ -125,7 +125,7 @@ class ModelMarketingAffiliate extends Model {
 
 			$this->db->query("UPDATE " . DB_PREFIX . "affiliate SET approved = '1' WHERE affiliate_id = '" . (int)$affiliate_id . "'");
 
-			$this->language->load('mail/affiliate');
+			$this->load->language('mail/affiliate');
 
 			$message  = sprintf($this->language->get('text_approve_welcome'), html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8')) . "\n\n";
 			$message .= $this->language->get('text_approve_login') . "\n";
@@ -222,7 +222,7 @@ class ModelMarketingAffiliate extends Model {
 
 			$affiliate_transaction_id = $this->db->getLastId();
 
-			$this->language->load('mail/affiliate');
+			$this->load->language('mail/affiliate');
 
 			$message  = sprintf($this->language->get('text_transaction_received'), $this->currency->format($amount, $this->config->get('config_currency'))) . "\n\n";
 			$message .= sprintf($this->language->get('text_transaction_total'), $this->currency->format($this->getTransactionTotal($affiliate_id), $this->config->get('config_currency')));

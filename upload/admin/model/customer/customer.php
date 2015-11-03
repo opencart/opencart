@@ -158,7 +158,7 @@ class ModelCustomerCustomer extends Model {
 		if ($customer_info) {
 			$this->db->query("UPDATE " . DB_PREFIX . "customer SET approved = '1' WHERE customer_id = '" . (int)$customer_id . "'");
 
-			$this->language->load('mail/customer');
+			$this->load->language('mail/customer');
 
 			$this->load->model('setting/store');
 
@@ -370,7 +370,7 @@ class ModelCustomerCustomer extends Model {
 		if ($customer_info) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "customer_transaction SET customer_id = '" . (int)$customer_id . "', order_id = '" . (int)$order_id . "', description = '" . $this->db->escape($description) . "', amount = '" . (float)$amount . "', date_added = NOW()");
 
-			$this->language->load('mail/customer');
+			$this->load->language('mail/customer');
 
 			$this->load->model('setting/store');
 
@@ -445,7 +445,7 @@ class ModelCustomerCustomer extends Model {
 		if ($customer_info) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "customer_reward SET customer_id = '" . (int)$customer_id . "', order_id = '" . (int)$order_id . "', points = '" . (int)$points . "', description = '" . $this->db->escape($description) . "', date_added = NOW()");
 
-			$this->language->load('mail/customer');
+			$this->load->language('mail/customer');
 
 			$this->load->model('setting/store');
 

@@ -3,7 +3,7 @@
 $_['heading_title']        = 'Extension Installer';
 
 // Text
-$_['text_success']         = 'Success: You have installed your extension!';
+$_['text_success']         = 'Success: The extension has been installed!';
 $_['text_unzip']           = 'Extracting files!';
 $_['text_ftp']             = 'Copying files!';
 $_['text_sql']             = 'Running SQL!';

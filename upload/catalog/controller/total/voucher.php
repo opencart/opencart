@@ -2,7 +2,7 @@
 class ControllerTotalVoucher extends Controller {
 	public function index() {
 		if ($this->config->get('voucher_status')) {
-			$this->language->load('total/voucher');
+			$this->load->language('total/voucher');
 
 			$data['heading_title'] = $this->language->get('heading_title');
 
@@ -27,7 +27,7 @@ class ControllerTotalVoucher extends Controller {
 	}
 
 	public function voucher() {
-		$this->language->load('total/voucher');
+		$this->load->language('total/voucher');
 
 		$json = array();
 

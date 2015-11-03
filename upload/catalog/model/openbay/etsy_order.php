@@ -4,7 +4,7 @@ class ModelOpenbayEtsyOrder extends Model {
 		$this->load->model('checkout/order');
 		$this->load->model('localisation/currency');
 
-		$this->language->load('openbay/etsy_order');
+		$this->load->language('openbay/etsy_order');
 
 		if (!empty($orders)) {
 			foreach ($orders as $order) {

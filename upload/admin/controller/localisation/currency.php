@@ -3,7 +3,7 @@ class ControllerLocalisationCurrency extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('localisation/currency');
+		$this->load->language('localisation/currency');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerLocalisationCurrency extends Controller {
 	}
 
 	public function add() {
-		$this->language->load('localisation/currency');
+		$this->load->language('localisation/currency');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -45,7 +45,7 @@ class ControllerLocalisationCurrency extends Controller {
 	}
 
 	public function edit() {
-		$this->language->load('localisation/currency');
+		$this->load->language('localisation/currency');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -77,7 +77,7 @@ class ControllerLocalisationCurrency extends Controller {
 	}
 
 	public function delete() {
-		$this->language->load('localisation/currency');
+		$this->load->language('localisation/currency');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -111,7 +111,7 @@ class ControllerLocalisationCurrency extends Controller {
 	}
 
 	public function refresh() {
-		$this->language->load('localisation/currency');
+		$this->load->language('localisation/currency');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

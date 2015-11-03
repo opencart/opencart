@@ -3,7 +3,7 @@ class ControllerCatalogDownload extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('catalog/download');
+		$this->load->language('catalog/download');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerCatalogDownload extends Controller {
 	}
 
 	public function add() {
-		$this->language->load('catalog/download');
+		$this->load->language('catalog/download');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -45,7 +45,7 @@ class ControllerCatalogDownload extends Controller {
 	}
 
 	public function edit() {
-		$this->language->load('catalog/download');
+		$this->load->language('catalog/download');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -77,7 +77,7 @@ class ControllerCatalogDownload extends Controller {
 	}
 
 	public function delete() {
-		$this->language->load('catalog/download');
+		$this->load->language('catalog/download');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -426,7 +426,7 @@ class ControllerCatalogDownload extends Controller {
 	}
 
 	public function upload() {
-		$this->language->load('catalog/download');
+		$this->load->language('catalog/download');
 
 		$json = array();
 

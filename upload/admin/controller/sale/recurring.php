@@ -3,7 +3,7 @@ class ControllerSaleRecurring extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('sale/recurring');
+		$this->load->language('sale/recurring');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -303,7 +303,7 @@ class ControllerSaleRecurring extends Controller {
 		$this->load->model('sale/order');
 		$this->load->model('catalog/product');
 
-		$this->language->load('sale/recurring');
+		$this->load->language('sale/recurring');
 
 		$order_recurring = $this->model_sale_recurring->getRecurring($this->request->get['order_recurring_id']);
 

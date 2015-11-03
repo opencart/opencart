@@ -3,7 +3,7 @@ class ControllerMarketingCoupon extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('marketing/coupon');
+		$this->load->language('marketing/coupon');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerMarketingCoupon extends Controller {
 	}
 
 	public function add() {
-		$this->language->load('marketing/coupon');
+		$this->load->language('marketing/coupon');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -45,7 +45,7 @@ class ControllerMarketingCoupon extends Controller {
 	}
 
 	public function edit() {
-		$this->language->load('marketing/coupon');
+		$this->load->language('marketing/coupon');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -77,7 +77,7 @@ class ControllerMarketingCoupon extends Controller {
 	}
 
 	public function delete() {
-		$this->language->load('marketing/coupon');
+		$this->load->language('marketing/coupon');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -573,7 +573,7 @@ class ControllerMarketingCoupon extends Controller {
 	}
 
 	public function history() {
-		$this->language->load('marketing/coupon');
+		$this->load->language('marketing/coupon');
 
 		$this->load->model('marketing/coupon');
 

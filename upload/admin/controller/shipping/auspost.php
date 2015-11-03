@@ -3,7 +3,7 @@ class ControllerShippingAusPost extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('shipping/auspost');
+		$this->load->language('shipping/auspost');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

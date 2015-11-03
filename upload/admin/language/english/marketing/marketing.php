@@ -24,8 +24,8 @@ $_['entry_example']     = 'Examples';
 $_['entry_date_added']  = 'Date Added';
 
 // Help
-$_['help_code']         = 'The tracking code that will be used to marketing track campaigns.';
-$_['help_example']      = 'So the system can track refferals you neeed to add the tracking code to the end of the URL linking to your site.';
+$_['help_code']         = 'The tracking code that will be used to track marketing campaigns.';
+$_['help_example']      = 'So the system can track referrals you need to add the tracking code to the end of the URL linking to your site.';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify marketing tracking!';

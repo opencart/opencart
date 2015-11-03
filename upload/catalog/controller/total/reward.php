@@ -12,7 +12,7 @@ class ControllerTotalReward extends Controller {
 		}
 
 		if ($points && $points_total && $this->config->get('reward_status')) {
-			$this->language->load('total/reward');
+			$this->load->language('total/reward');
 
 			$data['heading_title'] = sprintf($this->language->get('heading_title'), $points);
 
@@ -37,7 +37,7 @@ class ControllerTotalReward extends Controller {
 	}
 
 	public function reward() {
-		$this->language->load('total/reward');
+		$this->load->language('total/reward');
 
 		$json = array();
 

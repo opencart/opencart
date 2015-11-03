@@ -3,7 +3,7 @@ class ControllerSettingSetting extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('setting/setting');
+		$this->load->language('setting/setting');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -952,7 +952,7 @@ class ControllerSettingSetting extends Controller {
 		$extensions = $this->model_extension_extension->getInstalled('captcha');
 
 		foreach ($extensions as $code) {
-			$this->language->load('captcha/' . $code);
+			$this->load->language('captcha/' . $code);
 
 			if ($this->config->has($code . '_status')) {
 				$data['captchas'][] = array(

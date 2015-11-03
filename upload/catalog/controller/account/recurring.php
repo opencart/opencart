@@ -7,7 +7,7 @@ class ControllerAccountRecurring extends Controller {
 			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
-		$this->language->load('account/recurring');
+		$this->load->language('account/recurring');
 
 		$this->load->model('account/recurring');
 
@@ -108,7 +108,7 @@ class ControllerAccountRecurring extends Controller {
 
 	public function info() {
 		$this->load->model('account/recurring');
-		$this->language->load('account/recurring');
+		$this->load->language('account/recurring');
 
 		if (isset($this->request->get['recurring_id'])) {
 			$recurring_id = $this->request->get['recurring_id'];

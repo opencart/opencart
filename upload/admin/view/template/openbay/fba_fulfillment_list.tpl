@@ -33,15 +33,31 @@
             <table class="table table-bordered table-hover">
             <thead>
               <tr>
-                <th width="1"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></th>
                 <th class="text-left"><?php echo $column_seller_fulfillment_order_id; ?></th>
+                <th class="text-left"><?php echo $column_displayable_order_id; ?></th>
                 <th class="text-left"><?php echo $column_displayable_order_date; ?></th>
+                <th class="text-left"><?php echo $column_shipping_speed_category; ?></th>
+                <th class="text-left"><?php echo $column_fulfillment_order_status; ?></th>
+                <td class="text-left"><?php echo $column_action; ?></td>
               </tr>
             </thead>
             <tbody>
+            <?php if (empty($fulfillments)) { ?>
               <tr>
-                <td class="text-center" colspan="3"><?php echo $text_no_results; ?></td>
+                <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
               </tr>
+            <?php } else { ?>
+              <?php foreach ($fulfillments as $fulfillment) { ?>
+              <tr>
+                <td class="text-left"><?php echo $fulfillment['seller_fulfillment_order_id']; ?></td>
+                <td class="text-left"><?php echo $fulfillment['displayable_order_id']; ?></td>
+                <td class="text-left"><?php echo $fulfillment['displayable_order_date_time']; ?></td>
+                <td class="text-left"><?php echo $fulfillment['shipping_speed_category']; ?></td>
+                <td class="text-left"><?php echo $fulfillment['fulfillment_order_status']; ?></td>
+                <td class="text-right"><a href="<?php echo $fulfillment['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+              </tr>
+              <?php } ?>
+            <?php } ?>
             </tbody>
           </table>
           </div>

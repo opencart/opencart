@@ -197,16 +197,8 @@ class ControllerOpenbayFba extends Controller {
         return !$this->error;
     }
 
-    public function status() {
-        $response = $this->openbay->fba->call("v1/fba/fulfillments/", array());
-
-        echo '<pre>';
-        print_r($response);
-        echo '</pre>';
-    }
-
     public function fulfillments() {
-        $data = $this->load->language('openbay/fba_fulfillments');
+        $data = $this->load->language('openbay/fba_fulfillment_list');
         $this->document->setTitle($this->language->get('heading_title'));
 
         $data['breadcrumbs'] = array();
@@ -231,11 +223,25 @@ class ControllerOpenbayFba extends Controller {
             'text' => $data['heading_title'],
         );
 
-        $data['orders'] = array();
-        $data['heading_title'] = $this->language->get('heading_title');
-        $data['text_no_results'] = $this->language->get('text_no_results');
-        $data['column_seller_fulfillment_order_id'] = $this->language->get('column_seller_fulfillment_order_id');
-        $data['column_displayable_order_date'] = $this->language->get('column_displayable_order_date');
+        $data['fulfillments'] = array();
+        $response = $this->openbay->fba->call("v1/fba/fulfillments/", array());
+
+        if (isset($response['body']['list_all_fulfillment_orders_result']['fulfillment_orders'])) {
+            $fulfillment_orders = $response['body']['list_all_fulfillment_orders_result']['fulfillment_orders'];
+
+            if (!empty($fulfillment_orders)) {
+                foreach ($fulfillment_orders as $fulfillment_order) {
+                    $data['fulfillments'][] = array(
+                        'seller_fulfillment_order_id' => $fulfillment_order['seller_fulfillment_order_id'],
+                        'displayable_order_id' => $fulfillment_order['displayable_order_id'],
+                        'displayable_order_date_time' => $fulfillment_order['displayable_order_date_time'],
+                        'shipping_speed_category' => $fulfillment_order['shipping_speed_category'],
+                        'fulfillment_order_status' => $fulfillment_order['fulfillment_order_status'],
+                        'edit' => $this->url->link('openbay/fba/fulfillment', 'token=' . $this->session->data['token'] . '&fulfillment_id=' . $fulfillment_order['seller_fulfillment_order_id'], 'SSL'),
+                    );
+                }
+            }
+        }
 
         $data['cancel'] = $this->url->link('openbay/fba/index', 'token=' . $this->session->data['token'], 'SSL');
 
@@ -262,5 +268,65 @@ class ControllerOpenbayFba extends Controller {
 
         $this->response->setOutput($this->load->view('openbay/fba_fulfillment_list.tpl', $data));
 
+    }
+
+    public function fulfillment() {
+        if (!isset($this->request->get['fulfillment_id'])) {
+            $this->response->redirect($this->url->link('openbay/fba/fulfillments', 'token=' . $this->session->data['token'], 'SSL'));
+        }
+
+        $data = $this->load->language('openbay/fba_fulfillment');
+        $this->document->setTitle($this->language->get('heading_title'));
+
+        $data['breadcrumbs'] = array();
+
+        $data['breadcrumbs'][] = array(
+            'href'      => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
+            'text'      => $this->language->get('text_home'),
+        );
+
+        $data['breadcrumbs'][] = array(
+            'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+            'text' => $this->language->get('text_openbay'),
+        );
+
+        $data['breadcrumbs'][] = array(
+            'href' => $this->url->link('openbay/fba', 'token=' . $this->session->data['token'], 'SSL'),
+            'text' => $data['text_fba'],
+        );
+
+        $data['response'] = $this->openbay->fba->call("v1/fba/fulfillments/" . $this->request->get['fulfillment_id'] . "/", array());
+
+        $data['cancel'] = $this->url->link('openbay/fba/fulfillments', 'token=' . $this->session->data['token'], 'SSL');
+
+        $data['token'] = $this->session->data['token'];
+
+        if (isset($this->session->data['error'])) {
+            $data['error_warning'] = $this->session->data['error'];
+            unset($this->session->data['error']);
+        } else {
+            $data['error_warning'] = '';
+        }
+
+        if (isset($this->session->data['success'])) {
+            $data['success'] = $this->session->data['success'];
+
+            unset($this->session->data['success']);
+        } else {
+            $data['success'] = '';
+        }
+
+        $data['header'] = $this->load->controller('common/header');
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['footer'] = $this->load->controller('common/footer');
+
+        $this->response->setOutput($this->load->view('openbay/fba_fulfillment_form.tpl', $data));
+    }
+
+    public function dev() {
+        $response = $this->openbay->fba->call("v1/fba/fulfillments/" . $this->request->get['fulfillment_id'] . "/", array());
+
+        echo '<pre>';
+        print_r($response);
     }
 }

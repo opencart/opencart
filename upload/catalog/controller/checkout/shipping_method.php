@@ -1,7 +1,7 @@
 <?php
 class ControllerCheckoutShippingMethod extends Controller {
 	public function index() {
-		$this->language->load('checkout/checkout');
+		$this->load->language('checkout/checkout');
 
 		if (isset($this->session->data['shipping_address'])) {
 			// Shipping Methods
@@ -77,7 +77,7 @@ class ControllerCheckoutShippingMethod extends Controller {
 	}
 
 	public function save() {
-		$this->language->load('checkout/checkout');
+		$this->load->language('checkout/checkout');
 
 		$json = array();
 

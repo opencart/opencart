@@ -3,7 +3,7 @@ class ControllerPaymentPayMate extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('payment/paymate');
+		$this->load->language('payment/paymate');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

@@ -3,7 +3,7 @@ class ControllerModulePPLogin extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('module/pp_login');
+		$this->load->language('module/pp_login');
 
 		$this->load->model('setting/setting');
 

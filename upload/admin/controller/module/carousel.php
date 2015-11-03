@@ -3,7 +3,7 @@ class ControllerModuleCarousel extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('module/carousel');
+		$this->load->language('module/carousel');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

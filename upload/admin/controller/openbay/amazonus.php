@@ -28,7 +28,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->load->model('localisation/order_status');
 		$this->load->model('openbay/amazonus');
 
-		$data = $this->language->load('openbay/amazonus');
+		$data = $this->load->language('openbay/amazonus');
 
 		$this->document->setTitle($this->language->get('text_dashboard'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -71,7 +71,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function stockUpdates() {
-		$data = $this->language->load('openbay/amazonus_stockupdates');
+		$data = $this->load->language('openbay/amazonus_stockupdates');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -150,7 +150,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function subscription() {
-		$data = $this->language->load('openbay/amazonus_subscription');
+		$data = $this->load->language('openbay/amazonus_subscription');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -224,7 +224,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function settings() {
-		$data = $this->language->load('openbay/amazonus_settings');
+		$data = $this->load->language('openbay/amazonus_settings');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -364,7 +364,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function itemLinks() {
-		$data = $this->language->load('openbay/amazonus_links');
+		$data = $this->load->language('openbay/amazonus_links');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -406,7 +406,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function savedListings() {
-		$data = $this->language->load('openbay/amazonus_listingsaved');
+		$data = $this->load->language('openbay/amazonus_listingsaved');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -580,7 +580,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function doBulkList() {
-		$this->language->load('openbay/amazonus_listing');
+		$this->load->language('openbay/amazonus_listing');
 
 		if (empty($this->request->post['products'])) {
 			$json = array(
@@ -645,7 +645,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	public function doBulkSearch() {
 		$this->load->model('catalog/product');
 		$this->load->model('openbay/amazonus_listing');
-		$this->language->load('openbay/amazonus_bulk');
+		$this->load->language('openbay/amazonus_bulk');
 
 		$json = array();
 		$search_data = array();
@@ -703,7 +703,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
 
-		$data = $this->language->load('openbay/amazonus_bulk_listing');
+		$data = $this->load->language('openbay/amazonus_bulk_listing');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -837,7 +837,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	public function bulkLinking() {
 		$this->load->model('openbay/amazonus');
 
-		$data = $this->language->load('openbay/amazonus_bulk_linking');
+		$data = $this->load->language('openbay/amazonus_bulk_linking');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/js/faq.js');
@@ -933,7 +933,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	public function loadListingReport() {
 		$this->load->model('openbay/amazonus');
 		$this->load->model('setting/setting');
-		$this->language->load('openbay/amazonus_bulk_linking');
+		$this->load->language('openbay/amazonus_bulk_linking');
 
 		$this->model_openbay_amazonus->deleteListingReports();
 

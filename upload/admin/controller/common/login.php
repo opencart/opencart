@@ -3,7 +3,7 @@ class ControllerCommonLogin extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('common/login');
+		$this->load->language('common/login');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

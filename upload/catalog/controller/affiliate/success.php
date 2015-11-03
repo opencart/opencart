@@ -1,7 +1,7 @@
 <?php
 class ControllerAffiliateSuccess extends Controller {
 	public function index() {
-		$this->language->load('affiliate/success');
+		$this->load->language('affiliate/success');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

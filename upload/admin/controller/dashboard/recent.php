@@ -1,7 +1,7 @@
 <?php
 class ControllerDashboardRecent extends Controller {
 	public function index() {
-		$this->language->load('dashboard/recent');
+		$this->load->language('dashboard/recent');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 

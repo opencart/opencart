@@ -6,7 +6,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		if ($order_info) {
-			$this->language->load('payment/klarna_account');
+			$this->load->language('payment/klarna_account');
 
 			$data['text_information'] = $this->language->get('text_information');
 			$data['text_additional'] = $this->language->get('text_additional');
@@ -281,7 +281,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 	}
 
 	public function send() {
-		$this->language->load('payment/klarna_account');
+		$this->load->language('payment/klarna_account');
 
 		$json = array();
 

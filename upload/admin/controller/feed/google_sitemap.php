@@ -3,7 +3,7 @@ class ControllerFeedGoogleSitemap extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('feed/google_sitemap');
+		$this->load->language('feed/google_sitemap');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

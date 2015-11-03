@@ -1,7 +1,7 @@
 <?php
 class ControllerCheckoutSuccess extends Controller {
 	public function index() {
-		$this->language->load('checkout/success');
+		$this->load->language('checkout/success');
 
 		if (isset($this->session->data['order_id'])) {
 			$this->cart->clear();

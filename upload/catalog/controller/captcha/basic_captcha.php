@@ -1,7 +1,7 @@
 <?php
 class ControllerCaptchaBasicCaptcha extends Controller {
 	public function index($error = array()) {
-		$this->language->load('captcha/basic_captcha');
+		$this->load->language('captcha/basic_captcha');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -23,7 +23,7 @@ class ControllerCaptchaBasicCaptcha extends Controller {
 	}
 
 	public function validate() {
-		$this->language->load('captcha/basic_captcha');
+		$this->load->language('captcha/basic_captcha');
 
 		if (empty($this->session->data['captcha']) || ($this->session->data['captcha'] != $this->request->post['captcha'])) {
 			return $this->language->get('error_captcha');

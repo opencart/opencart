@@ -9,7 +9,7 @@ class ControllerAccountEdit extends Controller {
 			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
-		$this->language->load('account/edit');
+		$this->load->language('account/edit');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

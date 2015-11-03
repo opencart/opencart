@@ -1,7 +1,7 @@
 <?php
 class ControllerAccountSuccess extends Controller {
 	public function index() {
-		$this->language->load('account/success');
+		$this->load->language('account/success');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

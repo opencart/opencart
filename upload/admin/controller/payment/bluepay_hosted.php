@@ -3,7 +3,7 @@ class ControllerPaymentBluePayHosted extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('payment/bluepay_hosted');
+		$this->load->language('payment/bluepay_hosted');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -211,7 +211,7 @@ class ControllerPaymentBluePayHosted extends Controller {
 			$bluepay_hosted_order = $this->model_payment_bluepay_hosted->getOrder($this->request->get['order_id']);
 
 			if (!empty($bluepay_hosted_order)) {
-				$this->language->load('payment/bluepay_hosted');
+				$this->load->language('payment/bluepay_hosted');
 
 				$bluepay_hosted_order['total_released'] = $this->model_payment_bluepay_hosted->getTotalReleased($bluepay_hosted_order['bluepay_hosted_order_id']);
 
@@ -249,7 +249,7 @@ class ControllerPaymentBluePayHosted extends Controller {
 	}
 
 	public function void() {
-		$this->language->load('payment/bluepay_hosted');
+		$this->load->language('payment/bluepay_hosted');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
@@ -283,7 +283,7 @@ class ControllerPaymentBluePayHosted extends Controller {
 	}
 
 	public function release() {
-		$this->language->load('payment/bluepay_hosted');
+		$this->load->language('payment/bluepay_hosted');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '' && isset($this->request->post['amount']) && $this->request->post['amount'] > 0) {
@@ -329,7 +329,7 @@ class ControllerPaymentBluePayHosted extends Controller {
 	}
 
 	public function rebate() {
-		$this->language->load('payment/bluepay_hosted');
+		$this->load->language('payment/bluepay_hosted');
 		$json = array();
 
 		if (isset($this->request->post['order_id']) && !empty($this->request->post['order_id'])) {

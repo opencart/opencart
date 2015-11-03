@@ -3,7 +3,7 @@ class ControllerCatalogReview extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('catalog/review');
+		$this->load->language('catalog/review');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerCatalogReview extends Controller {
 	}
 
 	public function add() {
-		$this->language->load('catalog/review');
+		$this->load->language('catalog/review');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -61,7 +61,7 @@ class ControllerCatalogReview extends Controller {
 	}
 
 	public function edit() {
-		$this->language->load('catalog/review');
+		$this->load->language('catalog/review');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -109,7 +109,7 @@ class ControllerCatalogReview extends Controller {
 	}
 
 	public function delete() {
-		$this->language->load('catalog/review');
+		$this->load->language('catalog/review');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

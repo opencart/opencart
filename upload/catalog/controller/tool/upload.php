@@ -1,7 +1,7 @@
 <?php
 class ControllerToolUpload extends Controller {
 	public function index() {
-		$this->language->load('tool/upload');
+		$this->load->language('tool/upload');
 
 		$json = array();
 

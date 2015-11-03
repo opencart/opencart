@@ -1,7 +1,7 @@
 <?php
 class ControllerCheckoutCart extends Controller {
 	public function index() {
-		$this->language->load('checkout/cart');
+		$this->load->language('checkout/cart');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -281,7 +281,7 @@ class ControllerCheckoutCart extends Controller {
 	}
 
 	public function add() {
-		$this->language->load('checkout/cart');
+		$this->load->language('checkout/cart');
 
 		$json = array();
 
@@ -394,7 +394,7 @@ class ControllerCheckoutCart extends Controller {
 	}
 
 	public function edit() {
-		$this->language->load('checkout/cart');
+		$this->load->language('checkout/cart');
 
 		$json = array();
 
@@ -418,7 +418,7 @@ class ControllerCheckoutCart extends Controller {
 	}
 
 	public function remove() {
-		$this->language->load('checkout/cart');
+		$this->load->language('checkout/cart');
 
 		$json = array();
 

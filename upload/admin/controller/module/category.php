@@ -3,7 +3,7 @@ class ControllerModuleCategory extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('module/category');
+		$this->load->language('module/category');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

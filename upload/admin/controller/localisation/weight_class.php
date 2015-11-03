@@ -3,7 +3,7 @@ class ControllerLocalisationWeightClass extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('localisation/weight_class');
+		$this->load->language('localisation/weight_class');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -13,7 +13,7 @@ class ControllerLocalisationWeightClass extends Controller {
 	}
 
 	public function add() {
-		$this->language->load('localisation/weight_class');
+		$this->load->language('localisation/weight_class');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -45,7 +45,7 @@ class ControllerLocalisationWeightClass extends Controller {
 	}
 
 	public function edit() {
-		$this->language->load('localisation/weight_class');
+		$this->load->language('localisation/weight_class');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -77,7 +77,7 @@ class ControllerLocalisationWeightClass extends Controller {
 	}
 
 	public function delete() {
-		$this->language->load('localisation/weight_class');
+		$this->load->language('localisation/weight_class');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

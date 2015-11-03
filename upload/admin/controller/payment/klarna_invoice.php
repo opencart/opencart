@@ -3,7 +3,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('payment/klarna_invoice');
+		$this->load->language('payment/klarna_invoice');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -222,7 +222,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 	}
 
 	public function clear() {
-		$this->language->load('payment/klarna_invoice');
+		$this->load->language('payment/klarna_invoice');
 
 		$file = DIR_LOGS . 'klarna_invoice.log';
 

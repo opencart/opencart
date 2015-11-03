@@ -1,7 +1,7 @@
 <?php
 class ControllerApiPayment extends Controller {
 	public function address() {
-		$this->language->load('api/payment');
+		$this->load->language('api/payment');
 
 		// Delete old payment address, payment methods and method so not to cause any issues if there is an error
 		unset($this->session->data['payment_address']);
@@ -142,7 +142,7 @@ class ControllerApiPayment extends Controller {
 	}
 
 	public function methods() {
-		$this->language->load('api/payment');
+		$this->load->language('api/payment');
 
 		// Delete past shipping methods and method just in case there is an error
 		unset($this->session->data['payment_methods']);
@@ -239,7 +239,7 @@ class ControllerApiPayment extends Controller {
 	}
 
 	public function method() {
-		$this->language->load('api/payment');
+		$this->load->language('api/payment');
 
 		// Delete old payment method so not to cause any issues if there is an error
 		unset($this->session->data['payment_method']);

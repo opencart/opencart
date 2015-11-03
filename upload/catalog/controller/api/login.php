@@ -1,7 +1,7 @@
 <?php
 class ControllerApiLogin extends Controller {
 	public function index() {
-		$this->language->load('api/login');
+		$this->load->language('api/login');
 
 		$json = array();
 

@@ -3,7 +3,7 @@ class ControllerFraudIp extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('fraud/ip');
+		$this->load->language('fraud/ip');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -113,7 +113,7 @@ class ControllerFraudIp extends Controller {
 	}
 
     public function ip() {
-		$this->language->load('fraud/ip');
+		$this->load->language('fraud/ip');
 
 		$this->load->model('fraud/ip');
         $this->load->model('customer/customer');
@@ -163,7 +163,7 @@ class ControllerFraudIp extends Controller {
 	}
 
 	public function addIp() {
-		$this->language->load('fraud/ip');
+		$this->load->language('fraud/ip');
 
 		$json = array();
 
@@ -184,7 +184,7 @@ class ControllerFraudIp extends Controller {
 	}
 
 	public function removeIp() {
-		$this->language->load('fraud/ip');
+		$this->load->language('fraud/ip');
 
 		$json = array();
 

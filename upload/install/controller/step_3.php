@@ -30,6 +30,7 @@ class ControllerStep3 extends Controller {
 
 			$output .= '// DB' . "\n";
 			$output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->post['db_driver']) . '\');' . "\n";
+                        $output .= 'define(\'DB_ENGINE\', \'' . addslashes($this->request->post['db_engine']) . '\');' . "\n";
 			$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($this->request->post['db_hostname']) . '\');' . "\n";
 			$output .= 'define(\'DB_USERNAME\', \'' . addslashes($this->request->post['db_username']) . '\');' . "\n";
 			$output .= 'define(\'DB_PASSWORD\', \'' . addslashes(html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8')) . '\');' . "\n";
@@ -68,6 +69,7 @@ class ControllerStep3 extends Controller {
 
 			$output .= '// DB' . "\n";
 			$output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->post['db_driver']) . '\');' . "\n";
+                        $output .= 'define(\'DB_ENGINE\', \'' . addslashes($this->request->post['db_engine']) . '\');' . "\n";
 			$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($this->request->post['db_hostname']) . '\');' . "\n";
 			$output .= 'define(\'DB_USERNAME\', \'' . addslashes($this->request->post['db_username']) . '\');' . "\n";
 			$output .= 'define(\'DB_PASSWORD\', \'' . addslashes(html_entity_decode($this->request->post['db_password'], ENT_QUOTES, 'UTF-8')) . '\');' . "\n";
@@ -100,6 +102,7 @@ class ControllerStep3 extends Controller {
 		$data['text_pgsql'] = $this->language->get('text_pgsql');
 
 		$data['entry_db_driver'] = $this->language->get('entry_db_driver');
+                $data['entry_db_engine'] = $this->language->get('entry_db_engine');
 		$data['entry_db_hostname'] = $this->language->get('entry_db_hostname');
 		$data['entry_db_username'] = $this->language->get('entry_db_username');
 		$data['entry_db_password'] = $this->language->get('entry_db_password');
@@ -174,6 +177,12 @@ class ControllerStep3 extends Controller {
 		} else {
 			$data['db_driver'] = '';
 		}
+                
+                if (isset($this->request->post['db_engine'])) {
+			$data['db_engine'] = $this->request->post['db_engine'];
+		} else {
+			$data['db_engine'] = '';
+		} 
 
 		if (isset($this->request->post['db_hostname'])) {
 			$data['db_hostname'] = $this->request->post['db_hostname'];

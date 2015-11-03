@@ -25,12 +25,13 @@ $_['text_fulfillment_list'] 				= 'Amazon Fulfillment list';
 $_['text_form'] 							= 'Amazon Fulfillment';
 
 // Columns
-$_['column_seller_fulfillment_order_id'] 	= 'Seller Order ID';
-$_['column_displayable_order_id'] 			= 'Displayable Order ID';
-$_['column_displayable_order_date'] 		= 'Displayable date/time';
-$_['column_shipping_speed_category'] 		= 'Shipping speed';
-$_['column_fulfillment_order_status'] 		= 'Order Status';
-$_['column_action'] 						= 'Action';
+$_['column_sku'] 							= 'SKU';
+$_['column_order_item_id'] 					= 'Order item ID';
+$_['column_quantity'] 						= 'Quantity';
+$_['column_cancelled_quantity'] 			= 'Cancelled Quantity';
+$_['column_unfulfillable_quantity'] 		= 'Unfulfillable Quantity';
+$_['column_estimated_ship'] 				= 'Estimated ship';
+$_['column_estimated_arrive'] 				= 'Estimated arrive';
 
 // Errors
 //$_['error_validation']             		= 'You need to register for your API token and enable the module.';

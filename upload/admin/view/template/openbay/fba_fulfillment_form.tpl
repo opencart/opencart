@@ -85,13 +85,13 @@
               <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <td class="text-left">SKU</td>
-                  <td class="text-left">Order item ID</td>
-                  <td class="text-left">Quantity</td>
-                  <td class="text-left">Cancelled Quantity</td>
-                  <td class="text-left">Unfulfillable Quantity</td>
-                  <td class="text-left">Estimated ship</td>
-                  <td class="text-left">Estimated arrive</td>
+                  <td class="text-left"><?php echo $column_sku; ?></td>
+                  <td class="text-left"><?php echo $column_order_item_id; ?></td>
+                  <td class="text-left"><?php echo $column_quantity; ?></td>
+                  <td class="text-left"><?php echo $column_cancelled_quantity; ?></td>
+                  <td class="text-left"><?php echo $column_unfulfillable_quantity; ?></td>
+                  <td class="text-left"><?php echo $column_estimated_ship; ?></td>
+                  <td class="text-left"><?php echo $column_estimated_arrive; ?></td>
                 </tr>
                 </thead>
                 <tbody>

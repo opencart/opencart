@@ -35,7 +35,7 @@
       </div>
     </div>
     <form id="bulk-list-form" class="form-horizontal">
-      <table class="table">
+      <table class="table table-bordered table-hover">
         <thead>
           <tr>
             <th class="text-center"><input type="checkbox"/></th>
@@ -117,7 +117,7 @@
             <div class="form-group">
               <label for="input-start" class="control-label"><?php echo $entry_start_selling; ?></label>
               <div class="input-group date">
-                <input type="text" class="form-control" id="input-start" data-format="YYYY-MM-DD" placeholder="<?php echo $entry_start_selling; ?>" name="start_selling">
+                <input type="text" class="form-control" id="input-start" data-date-format="YYYY-MM-DD" placeholder="<?php echo $entry_start_selling; ?>" name="start_selling">
                 <span class="input-group-btn">
                 <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
                 </span> </div>

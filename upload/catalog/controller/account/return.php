@@ -288,16 +288,16 @@ class ControllerAccountReturn extends Controller {
 
 			if ($this->customer->isLogged()) {
 				$activity_data = array(
-					'return_id'   => $return_id,
 					'customer_id' => $this->customer->getId(),
-					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName(),
+					'return_id'   => $return_id
 				);
 
 				$this->model_account_activity->addActivity('return_account', $activity_data);
 			} else {
 				$activity_data = array(
-					'return_id'   => $return_id,
-					'name'        => $this->request->post['firstname'] . ' ' . $this->request->post['lastname']
+					'name'      => $this->request->post['firstname'] . ' ' . $this->request->post['lastname'],
+					'return_id' => $return_id
 				);
 
 				$this->model_account_activity->addActivity('return_guest', $activity_data);
@@ -307,7 +307,7 @@ class ControllerAccountReturn extends Controller {
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.min.js');
+		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.js');
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
 		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
@@ -607,7 +607,7 @@ class ControllerAccountReturn extends Controller {
 			$this->error['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email'])) {
+		if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['email'])) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 

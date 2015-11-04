@@ -1,7 +1,6 @@
 <?php
 // Text
 $_['text_affiliate']                   = 'Affiliates';
-$_['text_affiliate_activity']          = 'Affiliate Activity';
 $_['text_api']                         = 'API';
 $_['text_attribute']                   = 'Attributes';
 $_['text_attribute_group']             = 'Attribute Groups';
@@ -55,7 +54,9 @@ $_['text_report_customer_online']      = 'Customers Online';
 $_['text_report_customer_order']       = 'Orders';
 $_['text_report_customer_reward']      = 'Reward Points';
 $_['text_report_customer_credit']      = 'Credit';
-$_['text_report_affiliate_commission'] = 'Commission';
+$_['text_report_affiliate']            = 'Affiliates';
+$_['text_report_affiliate']            = 'Commission';
+$_['text_report_affiliate_activity']   = 'Affiliate Activity';
 $_['text_review']                      = 'Reviews';
 $_['text_return']                      = 'Returns';
 $_['text_return_action']               = 'Return Actions';
@@ -89,6 +90,7 @@ $_['text_openbay_items']               = 'Manage items';
 $_['text_openbay_ebay']                = 'eBay';
 $_['text_openbay_amazon']              = 'Amazon (EU)';
 $_['text_openbay_amazonus']            = 'Amazon (US)';
+$_['text_openbay_etsy']            	   = 'Etsy';
 $_['text_openbay_settings']            = 'Settings';
 $_['text_openbay_links']               = 'Item links';
 $_['text_openbay_report_price']        = 'Pricing report';

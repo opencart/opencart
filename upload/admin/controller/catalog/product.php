@@ -662,7 +662,13 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$data['error_date_available'] = '';
 		}
-
+		
+		if (isset($this->error['keyword'])) {
+			$data['error_keyword'] = $this->error['keyword'];
+		} else {
+			$data['error_keyword'] = '';
+		}
+		
 		$url = '';
 
 		if (isset($this->request->get['filter_name'])) {
@@ -1315,6 +1321,20 @@ class ControllerCatalogProduct extends Controller {
 
 		if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {
 			$this->error['model'] = $this->language->get('error_model');
+		}
+		
+		if (utf8_strlen($this->request->post['keyword']) > 0) {
+			$this->load->model('catalog/url_alias');
+
+			$url_alias_info = $this->model_catalog_url_alias->getUrlAlias($this->request->post['keyword']);
+
+			if ($url_alias_info && isset($this->request->get['product_id']) && $url_alias_info['query'] != 'product_id=' . $this->request->get['product_id']) {
+				$this->error['keyword'] = sprintf($this->language->get('error_keyword'));
+			}
+
+			if ($url_alias_info && !isset($this->request->get['product_id'])) {
+				$this->error['keyword'] = sprintf($this->language->get('error_keyword'));
+			}
 		}
 
 		if ($this->error && !isset($this->error['warning'])) {

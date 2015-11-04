@@ -72,39 +72,14 @@ class ControllerModuleFeatured extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 
-		if (isset($this->request->post['featured_product'])) {
-			$data['featured_product'] = $this->request->post['featured_product'];
-		} else {
-			$data['featured_product'] = $this->config->get('featured_product');
-		}
-
-		$this->load->model('catalog/product');
-
-		if (isset($this->request->post['featured_product'])) {
-			$products = explode(',', $this->request->post['featured_product']);
-		} else {
-			$products = explode(',', $this->config->get('featured_product'));
-		}
-
-		$data['products'] = array();
-
-		foreach ($products as $product_id) {
-			$product_info = $this->model_catalog_product->getProduct($product_id);
-
-			if ($product_info) {
-				$data['products'][] = array(
-					'product_id' => $product_info['product_id'],
-					'name'       => $product_info['name']
-				);
-			}
-		}
-		
 		if (isset($this->request->post['featured_status'])) {
 			$data['featured_status'] = $this->request->post['featured_status'];
 		} else {
 			$data['featured_status'] = $this->config->get('featured_status');
 		}
-				
+		
+		$this->load->model('catalog/product');
+					
 		if (isset($this->request->post['featured_module'])) {
 			$modules = $this->request->post['featured_module'];
 		} elseif ($this->config->has('featured_module')) {
@@ -116,11 +91,27 @@ class ControllerModuleFeatured extends Controller {
 		$data['featured_modules'] = array();
 		
 		foreach ($modules as $key => $module) {
+			$product_data = array();
+			
+			if (isset($module['product'])) {
+				foreach ($module['product'] as $product_id) {
+					$product_info = $this->model_catalog_product->getProduct($product_id);
+		
+					if ($product_info) {
+						$product_data[] = array(
+							'product_id' => $product_info['product_id'],
+							'name'       => $product_info['name']
+						);
+					}
+				}
+			}
+			
 			$data['featured_modules'][] = array(
-				'key'    => $key,
-				'limit'  => $module['limit'],
-				'width'  => $module['width'],
-				'height' => $module['height']
+				'key'     => $key,
+				'product' => $product_data,
+				'limit'   => $module['limit'],
+				'width'   => $module['width'],
+				'height'  => $module['height']
 			);
 		}
 				
@@ -142,6 +133,8 @@ class ControllerModuleFeatured extends Controller {
 					$this->error['image'][$key] = $this->language->get('error_image');
 				}
 			}
+		} else {
+			$this->error['warning'] = $this->language->get('error_module');
 		}
 
 		return !$this->error;

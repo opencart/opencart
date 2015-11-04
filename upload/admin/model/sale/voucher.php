@@ -88,7 +88,7 @@ class ModelSaleVoucher extends Model {
 				$this->load->model('localisation/language');
 
 				$language = new Language($order_info['language_directory']);
-				$language->load($order_info['language_filename']);
+				$language->load('default');
 				$language->load('mail/voucher');
 
 				// HTML Mail
@@ -173,10 +173,6 @@ class ModelSaleVoucher extends Model {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "voucher WHERE voucher_theme_id = '" . (int)$voucher_theme_id . "'");
 
 		return $query->row['total'];
-	}
-
-	public function addVoucherHistory($voucher_id, $order_id, $customer_id, $value) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "voucher_history SET voucher_id = '" . (int)$voucher_id . "', order_id = '" . (int)$order_id . "', customer_id = '" . (int)$customer_id . "', amount = '" . (float)$order_total['value'] . "', date_added = NOW()");
 	}
 
 	public function getVoucherHistories($voucher_id, $start = 0, $limit = 10) {

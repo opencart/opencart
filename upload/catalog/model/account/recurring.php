@@ -18,7 +18,7 @@ class ModelAccountRecurring extends Model {
 		6 => 'Suspended',
 		7 => 'Suspended from failed payment',
 		8 => 'Outstanding payment failed',
-		9 => 'Expired',
+		9 => 'Expired'
 	);
 
 	public function getProfile($id) {
@@ -44,7 +44,6 @@ class ModelAccountRecurring extends Model {
 	}
 
 	public function getProfileTransactions($id) {
-
 		$recurring = $this->getProfile($id);
 
 		$results = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_recurring_transaction` WHERE `order_recurring_id` = '" . (int)$id . "'");

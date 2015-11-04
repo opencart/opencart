@@ -162,7 +162,7 @@ function addModule() {
 	<?php foreach ($modules as $module) { ?>
     html += '    <optgroup label="<?php echo $module['name']; ?>">';
     <?php foreach ($module['module'] as $module) { ?>
-	html += '      <option value="<?php echo $module['code']; ?>"><?php echo $module['name']; ?></option>';
+	html += '      <option value="<?php echo $module['code']; ?>"><?php echo addslashes($module['name']); ?></option>';
 	<?php } ?>
 	html += '    </optgroup>';
 	<?php } ?>
@@ -173,7 +173,7 @@ function addModule() {
     html += '    <option value="column_left"><?php echo $text_column_left; ?></option>';
     html += '    <option value="column_right"><?php echo $text_column_right; ?></option>';
     html += '  </select></td>';
-	html += '  <td class="text-left"><input type="text" name="layout_module[' + module_row + '][sort_order]" value="0" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
+	html += '  <td class="text-left"><input type="text" name="layout_module[' + module_row + '][sort_order]" value="' + (module_row+1) + '" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + module_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';
 	

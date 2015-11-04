@@ -334,7 +334,7 @@ class ModelOpenbayEbayProduct extends Model {
 					foreach ($item['pictures'] as $img) {
 						if (!empty($img)) {
 							$name = rand(500000, 1000000000);
-							$this->addImage($img, DIR_IMAGE . 'data/' . $name . ' . jpg', $name . ' . jpg', $product_id, $img_count);
+							$this->addImage($img, DIR_IMAGE . 'catalog/' . $name . '.jpg', $name . '.jpg', $product_id, $img_count);
 							$img_count++;
 						}
 					}
@@ -709,12 +709,12 @@ class ModelOpenbayEbayProduct extends Model {
 	}
 
 	public function resize($filename, $width, $height, $type = "") {
-		if (!file_exists(DIR_IMAGE . 'catalog/' . md5($filename) . ' . jpg')) {
-			copy($filename, DIR_IMAGE . 'catalog/' . md5($filename) . ' . jpg');
+		if (!file_exists(DIR_IMAGE . 'catalog/' . md5($filename) . '.jpg')) {
+			copy($filename, DIR_IMAGE . 'catalog/' . md5($filename) . '.jpg');
 		}
 
-		$old_image = DIR_IMAGE . 'catalog/' . md5($filename) . ' . jpg';
-		$new_image = 'cache/ebaydisplay/' . md5($filename) . '-' . $width . 'x' . $height . $type  . ' . jpg';
+		$old_image = DIR_IMAGE . 'catalog/' . md5($filename) . '.jpg';
+		$new_image = 'cache/ebaydisplay/' . md5($filename) . '-' . $width . 'x' . $height . $type  . '.jpg';
 
 		if (!file_exists(DIR_IMAGE . $new_image)) {
 			$path = '';

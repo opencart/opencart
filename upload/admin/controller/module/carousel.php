@@ -24,7 +24,6 @@ class ControllerModuleCarousel extends Controller {
 		$data['text_disabled'] = $this->language->get('text_disabled');
 
 		$data['entry_banner'] = $this->language->get('entry_banner');
-		$data['entry_limit'] = $this->language->get('entry_limit');
 		$data['entry_scroll'] = $this->language->get('entry_scroll');
 		$data['entry_image'] = $this->language->get('entry_image');
 		$data['entry_width'] = $this->language->get('entry_width');
@@ -89,7 +88,6 @@ class ControllerModuleCarousel extends Controller {
 			$data['carousel_modules'][] = array(
 				'key'       => $key,
 				'banner_id' => $module['banner_id'],
-				'limit'     => $module['limit'],
 				'scroll'    => $module['scroll'],
 				'width'     => $module['width'],
 				'height'    => $module['height']
@@ -118,6 +116,8 @@ class ControllerModuleCarousel extends Controller {
 					$this->error['image'][$key] = $this->language->get('error_image');
 				}
 			}
+		} else {
+			$this->error['warning'] = $this->language->get('error_module');
 		}
 
 		return !$this->error;

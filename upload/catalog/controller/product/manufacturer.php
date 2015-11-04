@@ -335,16 +335,6 @@ class ControllerProductManufacturer extends Controller {
 
 			$data['pagination'] = $pagination->render();
 
-			$this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page=' . $pagination->page), 'canonical');
-
-			if ($pagination->limit && ceil($pagination->total / $pagination->limit) > $pagination->page) {
-				$this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page=' . ($pagination->page + 1)), 'next');
-			}
-
-			if ($pagination->page > 1) {
-				$this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page=' . ($pagination->page - 1)), 'prev');
-			}
-
 			$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
 
 			$data['sort'] = $sort;
@@ -390,7 +380,7 @@ class ControllerProductManufacturer extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_error'),
-				'href' => $this->url->link('product/category', $url)
+				'href' => $this->url->link('product/manufacturer/info', $url)
 			);
 
 			$this->document->setTitle($this->language->get('text_error'));

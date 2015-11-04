@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `oc_address` (
   `custom_field` text NOT NULL,
   PRIMARY KEY (`address_id`),
   KEY `customer_id` (`customer_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `oc_affiliate` (
   `approved` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`affiliate_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -83,7 +83,25 @@ CREATE TABLE IF NOT EXISTS `oc_affiliate_activity` (
   `ip` varchar(40) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`activity_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_affiliate_login`
+--
+
+CREATE TABLE IF NOT EXISTS `oc_affiliate_login` (
+  `affiliate_login_id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(96) NOT NULL,
+  `ip` varchar(40) NOT NULL,
+  `total` int(4) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL,
+  PRIMARY KEY (`affiliate_login_id`),
+  KEY `email` (`email`),
+  KEY `ip` (`ip`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -99,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `oc_affiliate_transaction` (
   `amount` decimal(15,4) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`affiliate_transaction_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -117,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `oc_api` (
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
   PRIMARY KEY (`api_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Table structure for table `oc_attribute`
@@ -128,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `oc_attribute` (
   `attribute_group_id` int(11) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`attribute_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_attribute`
@@ -158,7 +176,7 @@ CREATE TABLE IF NOT EXISTS `oc_attribute_description` (
   `language_id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
   PRIMARY KEY (`attribute_id`,`language_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_attribute_description`
@@ -187,7 +205,7 @@ CREATE TABLE IF NOT EXISTS `oc_attribute_group` (
   `attribute_group_id` int(11) NOT NULL AUTO_INCREMENT,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`attribute_group_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_attribute_group`
@@ -210,7 +228,7 @@ CREATE TABLE IF NOT EXISTS `oc_attribute_group_description` (
   `language_id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
   PRIMARY KEY (`attribute_group_id`,`language_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_attribute_group_description`
@@ -233,7 +251,7 @@ CREATE TABLE IF NOT EXISTS `oc_banner` (
   `name` varchar(64) NOT NULL,
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`banner_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_banner`
@@ -257,7 +275,7 @@ CREATE TABLE IF NOT EXISTS `oc_banner_image` (
   `image` varchar(255) NOT NULL,
   `sort_order` int(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (`banner_image_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=99 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_banner_image`
@@ -291,7 +309,7 @@ CREATE TABLE IF NOT EXISTS `oc_banner_image_description` (
   `banner_id` int(11) NOT NULL,
   `title` varchar(64) NOT NULL,
   PRIMARY KEY (`banner_image_id`,`language_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_banner_image_description`
@@ -331,7 +349,7 @@ CREATE TABLE IF NOT EXISTS `oc_category` (
   `date_modified` datetime NOT NULL,
   PRIMARY KEY (`category_id`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=59 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_category`
@@ -393,7 +411,7 @@ CREATE TABLE IF NOT EXISTS `oc_category_description` (
   `meta_keyword` varchar(255) NOT NULL,
   PRIMARY KEY (`category_id`,`language_id`),
   KEY `name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_category_description`
@@ -449,7 +467,7 @@ CREATE TABLE IF NOT EXISTS `oc_category_filter` (
   `category_id` int(11) NOT NULL,
   `filter_id` int(11) NOT NULL,
   PRIMARY KEY (`category_id`,`filter_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -462,7 +480,7 @@ CREATE TABLE IF NOT EXISTS `oc_category_path` (
   `path_id` int(11) NOT NULL,
   `level` int(11) NOT NULL,
   PRIMARY KEY (`category_id`,`path_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_category_path`
@@ -552,7 +570,7 @@ CREATE TABLE IF NOT EXISTS `oc_category_to_layout` (
   `store_id` int(11) NOT NULL,
   `layout_id` int(11) NOT NULL,
   PRIMARY KEY (`category_id`,`store_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -564,7 +582,7 @@ CREATE TABLE IF NOT EXISTS `oc_category_to_store` (
   `category_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
   PRIMARY KEY (`category_id`,`store_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_category_to_store`
@@ -625,7 +643,7 @@ CREATE TABLE IF NOT EXISTS `oc_country` (
   `postcode_required` tinyint(1) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`country_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=258 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_country`
@@ -908,7 +926,7 @@ CREATE TABLE IF NOT EXISTS `oc_coupon` (
   `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`coupon_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_coupon`
@@ -929,7 +947,7 @@ CREATE TABLE IF NOT EXISTS `oc_coupon_category` (
   `coupon_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   PRIMARY KEY (`coupon_id`,`category_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -945,7 +963,7 @@ CREATE TABLE IF NOT EXISTS `oc_coupon_history` (
   `amount` decimal(15,4) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`coupon_history_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -958,7 +976,7 @@ CREATE TABLE IF NOT EXISTS `oc_coupon_product` (
   `coupon_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   PRIMARY KEY (`coupon_product_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -977,7 +995,7 @@ CREATE TABLE IF NOT EXISTS `oc_currency` (
   `status` tinyint(1) NOT NULL,
   `date_modified` datetime NOT NULL,
   PRIMARY KEY (`currency_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_currency`
@@ -1017,7 +1035,7 @@ CREATE TABLE IF NOT EXISTS `oc_customer` (
   `token` varchar(255) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1033,7 +1051,7 @@ CREATE TABLE IF NOT EXISTS `oc_customer_activity` (
   `ip` varchar(40) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`activity_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1046,7 +1064,7 @@ CREATE TABLE IF NOT EXISTS `oc_customer_ban_ip` (
   `ip` varchar(40) NOT NULL,
   PRIMARY KEY (`customer_ban_ip_id`),
   KEY `ip` (`ip`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1059,7 +1077,7 @@ CREATE TABLE IF NOT EXISTS `oc_customer_group` (
   `approval` int(1) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`customer_group_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_customer_group`
@@ -1080,7 +1098,7 @@ CREATE TABLE IF NOT EXISTS `oc_customer_group_description` (
   `name` varchar(32) NOT NULL,
   `description` text NOT NULL,
   PRIMARY KEY (`customer_group_id`,`language_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_customer_group_description`
@@ -1101,7 +1119,25 @@ CREATE TABLE IF NOT EXISTS `oc_customer_history` (
   `comment` text NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_history_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_customer_login`
+--
+
+CREATE TABLE IF NOT EXISTS `oc_customer_login` (
+  `customer_login_id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(96) NOT NULL,
+  `ip` varchar(40) NOT NULL,
+  `total` int(4) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL,
+  PRIMARY KEY (`customer_login_id`),
+  KEY `email` (`email`),
+  KEY `ip` (`ip`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1116,7 +1152,7 @@ CREATE TABLE IF NOT EXISTS `oc_customer_ip` (
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_ip_id`),
   KEY `ip` (`ip`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1131,7 +1167,7 @@ CREATE TABLE IF NOT EXISTS `oc_customer_online` (
   `referer` text NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`ip`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1147,7 +1183,7 @@ CREATE TABLE IF NOT EXISTS `oc_customer_reward` (
   `points` int(8) NOT NULL DEFAULT '0',
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_reward_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1163,7 +1199,7 @@ CREATE TABLE IF NOT EXISTS `oc_customer_transaction` (
   `amount` decimal(15,4) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`customer_transaction_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1179,7 +1215,7 @@ CREATE TABLE IF NOT EXISTS `oc_custom_field` (
   `status` tinyint(1) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`custom_field_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1192,7 +1228,7 @@ CREATE TABLE IF NOT EXISTS `oc_custom_field_customer_group` (
   `customer_group_id` int(11) NOT NULL,
   `required` tinyint(1) NOT NULL,
   PRIMARY KEY (`custom_field_id`,`customer_group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1205,7 +1241,7 @@ CREATE TABLE IF NOT EXISTS `oc_custom_field_description` (
   `language_id` int(11) NOT NULL,
   `name` varchar(128) NOT NULL,
   PRIMARY KEY (`custom_field_id`,`language_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1218,7 +1254,7 @@ CREATE TABLE IF NOT EXISTS `oc_custom_field_value` (
   `custom_field_id` int(11) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`custom_field_value_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1232,7 +1268,7 @@ CREATE TABLE IF NOT EXISTS `oc_custom_field_value_description` (
   `custom_field_id` int(11) NOT NULL,
   `name` varchar(128) NOT NULL,
   PRIMARY KEY (`custom_field_value_id`,`language_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1246,7 +1282,7 @@ CREATE TABLE IF NOT EXISTS `oc_download` (
   `mask` varchar(128) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`download_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1259,7 +1295,7 @@ CREATE TABLE IF NOT EXISTS `oc_download_description` (
   `language_id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
   PRIMARY KEY (`download_id`,`language_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1273,7 +1309,7 @@ CREATE TABLE IF NOT EXISTS `oc_event` (
   `trigger` text NOT NULL,
   `action` text NOT NULL,
   PRIMARY KEY (`event_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1286,7 +1322,7 @@ CREATE TABLE IF NOT EXISTS `oc_extension` (
   `type` varchar(32) NOT NULL,
   `code` varchar(32) NOT NULL,
   PRIMARY KEY (`extension_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=428 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_extension`
@@ -1324,7 +1360,7 @@ CREATE TABLE IF NOT EXISTS `oc_filter` (
   `filter_group_id` int(11) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`filter_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1338,7 +1374,7 @@ CREATE TABLE IF NOT EXISTS `oc_filter_description` (
   `filter_group_id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
   PRIMARY KEY (`filter_id`,`language_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1350,7 +1386,7 @@ CREATE TABLE IF NOT EXISTS `oc_filter_group` (
   `filter_group_id` int(11) NOT NULL AUTO_INCREMENT,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`filter_group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1363,7 +1399,7 @@ CREATE TABLE IF NOT EXISTS `oc_filter_group_description` (
   `language_id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
   PRIMARY KEY (`filter_group_id`,`language_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1378,7 +1414,7 @@ CREATE TABLE IF NOT EXISTS `oc_geo_zone` (
   `date_modified` datetime NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`geo_zone_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_geo_zone`
@@ -1400,7 +1436,7 @@ CREATE TABLE IF NOT EXISTS `oc_information` (
   `sort_order` int(3) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`information_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_information`
@@ -1427,7 +1463,7 @@ CREATE TABLE IF NOT EXISTS `oc_information_description` (
   `meta_description` varchar(255) NOT NULL,
   `meta_keyword` varchar(255) NOT NULL,
   PRIMARY KEY (`information_id`,`language_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_information_description`
@@ -1450,7 +1486,7 @@ CREATE TABLE IF NOT EXISTS `oc_information_to_layout` (
   `store_id` int(11) NOT NULL,
   `layout_id` int(11) NOT NULL,
   PRIMARY KEY (`information_id`,`store_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1462,7 +1498,7 @@ CREATE TABLE IF NOT EXISTS `oc_information_to_store` (
   `information_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
   PRIMARY KEY (`information_id`,`store_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_information_to_store`
@@ -1487,19 +1523,18 @@ CREATE TABLE IF NOT EXISTS `oc_language` (
   `locale` varchar(255) NOT NULL,
   `image` varchar(64) NOT NULL,
   `directory` varchar(32) NOT NULL,
-  `filename` varchar(64) NOT NULL,
   `sort_order` int(3) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`language_id`),
   KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_language`
 --
 
-INSERT INTO `oc_language` (`language_id`, `name`, `code`, `locale`, `image`, `directory`, `filename`, `sort_order`, `status`) VALUES
-(1, 'English', 'en', 'en_US.UTF-8,en_US,en-gb,english', 'gb.png', 'english', 'english', 1, 1);
+INSERT INTO `oc_language` (`language_id`, `name`, `code`, `locale`, `image`, `directory`, `sort_order`, `status`) VALUES
+(1, 'English', 'en', 'en_US.UTF-8,en_US,en-gb,english', 'gb.png', 'english', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1511,7 +1546,7 @@ CREATE TABLE IF NOT EXISTS `oc_layout` (
   `layout_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
   PRIMARY KEY (`layout_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_layout`
@@ -1543,7 +1578,7 @@ CREATE TABLE IF NOT EXISTS `oc_layout_module` (
   `position` varchar(14) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`layout_module_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_layout_module`
@@ -1572,7 +1607,7 @@ CREATE TABLE IF NOT EXISTS `oc_layout_route` (
   `store_id` int(11) NOT NULL,
   `route` varchar(255) NOT NULL,
   PRIMARY KEY (`layout_route_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=47 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_layout_route`
@@ -1588,9 +1623,8 @@ INSERT INTO `oc_layout_route` (`layout_route_id`, `layout_id`, `store_id`, `rout
 (23, 7, 0, 'checkout/%'),
 (31, 8, 0, 'information/contact'),
 (32, 9, 0, 'information/sitemap'),
-(34, 4, 0, 'common/home'),
-(45, 5, 0, 'product/manufacturer'),
-(46, 5, 0, 'common/home');
+(34, 4, 0, ''),
+(45, 5, 0, 'product/manufacturer');
 
 -- --------------------------------------------------------
 
@@ -1602,7 +1636,7 @@ CREATE TABLE IF NOT EXISTS `oc_length_class` (
   `length_class_id` int(11) NOT NULL AUTO_INCREMENT,
   `value` decimal(15,8) NOT NULL,
   PRIMARY KEY (`length_class_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_length_class`
@@ -1625,7 +1659,7 @@ CREATE TABLE IF NOT EXISTS `oc_length_class_description` (
   `title` varchar(32) NOT NULL,
   `unit` varchar(4) NOT NULL,
   PRIMARY KEY (`length_class_id`,`language_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_length_class_description`
@@ -1654,7 +1688,7 @@ CREATE TABLE IF NOT EXISTS `oc_location` (
   `comment` text NOT NULL,
   PRIMARY KEY (`location_id`),
   KEY `name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1668,7 +1702,7 @@ CREATE TABLE IF NOT EXISTS `oc_manufacturer` (
   `image` varchar(255) DEFAULT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`manufacturer_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_manufacturer`
@@ -1692,7 +1726,7 @@ CREATE TABLE IF NOT EXISTS `oc_manufacturer_to_store` (
   `manufacturer_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
   PRIMARY KEY (`manufacturer_id`,`store_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_manufacturer_to_store`
@@ -1720,7 +1754,7 @@ CREATE TABLE IF NOT EXISTS `oc_marketing` (
   `clicks` int(5) NOT NULL DEFAULT '0',
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`marketing_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1731,14 +1765,15 @@ CREATE TABLE IF NOT EXISTS `oc_marketing` (
 CREATE TABLE IF NOT EXISTS `oc_modification` (
   `modification_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
+  `code` varchar(64) NOT NULL,
   `author` varchar(64) NOT NULL,
   `version` varchar(32) NOT NULL,
   `link` varchar(255) NOT NULL,
-  `code` text NOT NULL,
+  `xml` text NOT NULL,
   `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`modification_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1751,7 +1786,7 @@ CREATE TABLE IF NOT EXISTS `oc_option` (
   `type` varchar(32) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`option_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_option`
@@ -1781,7 +1816,7 @@ CREATE TABLE IF NOT EXISTS `oc_option_description` (
   `language_id` int(11) NOT NULL,
   `name` varchar(128) NOT NULL,
   PRIMARY KEY (`option_id`,`language_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_option_description`
@@ -1812,7 +1847,7 @@ CREATE TABLE IF NOT EXISTS `oc_option_value` (
   `image` varchar(255) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`option_value_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=49 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_option_value`
@@ -1846,7 +1881,7 @@ CREATE TABLE IF NOT EXISTS `oc_option_value_description` (
   `option_id` int(11) NOT NULL,
   `name` varchar(128) NOT NULL,
   PRIMARY KEY (`option_value_id`,`language_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_option_value_description`
@@ -1937,7 +1972,7 @@ CREATE TABLE IF NOT EXISTS `oc_order` (
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
   PRIMARY KEY (`order_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1955,7 +1990,7 @@ CREATE TABLE IF NOT EXISTS `oc_order_custom_field` (
   `type` varchar(32) NOT NULL,
   `location` varchar(16) NOT NULL,
   PRIMARY KEY (`order_custom_field_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2018,7 +2053,7 @@ CREATE TABLE IF NOT EXISTS `oc_order_fraud` (
   `error` text NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`order_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2034,7 +2069,7 @@ CREATE TABLE IF NOT EXISTS `oc_order_history` (
   `comment` text NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`order_history_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2052,7 +2087,7 @@ CREATE TABLE IF NOT EXISTS `oc_order_option` (
   `value` text NOT NULL,
   `type` varchar(32) NOT NULL,
   PRIMARY KEY (`order_option_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2072,7 +2107,7 @@ CREATE TABLE IF NOT EXISTS `oc_order_product` (
   `tax` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `reward` int(8) NOT NULL,
   PRIMARY KEY (`order_product_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2102,7 +2137,7 @@ CREATE TABLE IF NOT EXISTS `oc_order_recurring` (
   `status` tinyint(4) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`order_recurring_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2118,7 +2153,7 @@ CREATE TABLE IF NOT EXISTS `oc_order_recurring_transaction` (
   `amount` decimal(10,4) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`order_recurring_transaction_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2131,7 +2166,7 @@ CREATE TABLE IF NOT EXISTS `oc_order_status` (
   `language_id` int(11) NOT NULL,
   `name` varchar(32) NOT NULL,
   PRIMARY KEY (`order_status_id`,`language_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_order_status`
@@ -2168,7 +2203,7 @@ CREATE TABLE IF NOT EXISTS `oc_order_total` (
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`order_total_id`),
   KEY `order_id` (`order_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2190,7 +2225,7 @@ CREATE TABLE IF NOT EXISTS `oc_order_voucher` (
   `message` text NOT NULL,
   `amount` decimal(15,4) NOT NULL,
   PRIMARY KEY (`order_voucher_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2231,7 +2266,7 @@ CREATE TABLE IF NOT EXISTS `oc_product` (
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
   PRIMARY KEY (`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=50 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_product`
@@ -2270,7 +2305,7 @@ CREATE TABLE IF NOT EXISTS `oc_product_attribute` (
   `language_id` int(11) NOT NULL,
   `text` text NOT NULL,
   PRIMARY KEY (`product_id`,`attribute_id`,`language_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_product_attribute`
@@ -2300,7 +2335,7 @@ CREATE TABLE IF NOT EXISTS `oc_product_description` (
   `meta_keyword` varchar(255) NOT NULL,
   PRIMARY KEY (`product_id`,`language_id`),
   KEY `name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_product_description`
@@ -2344,7 +2379,7 @@ CREATE TABLE IF NOT EXISTS `oc_product_discount` (
   `date_end` date NOT NULL DEFAULT '0000-00-00',
   PRIMARY KEY (`product_discount_id`),
   KEY `product_id` (`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=441 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_product_discount`
@@ -2365,7 +2400,7 @@ CREATE TABLE IF NOT EXISTS `oc_product_filter` (
   `product_id` int(11) NOT NULL,
   `filter_id` int(11) NOT NULL,
   PRIMARY KEY (`product_id`,`filter_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2380,7 +2415,7 @@ CREATE TABLE IF NOT EXISTS `oc_product_image` (
   `sort_order` int(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (`product_image_id`),
   KEY `product_id` (`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2352 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_product_image`
@@ -2462,7 +2497,7 @@ CREATE TABLE IF NOT EXISTS `oc_product_option` (
   `value` text NOT NULL,
   `required` tinyint(1) NOT NULL,
   PRIMARY KEY (`product_option_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=227 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_product_option`
@@ -2503,7 +2538,7 @@ CREATE TABLE IF NOT EXISTS `oc_product_option_value` (
   `weight` decimal(15,8) NOT NULL,
   `weight_prefix` varchar(1) NOT NULL,
   PRIMARY KEY (`product_option_value_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_product_option_value`
@@ -2538,7 +2573,7 @@ CREATE TABLE IF NOT EXISTS `oc_product_recurring` (
   `recurring_id` int(11) NOT NULL,
   `customer_group_id` int(11) NOT NULL,
   PRIMARY KEY (`product_id`,`recurring_id`,`customer_group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2550,7 +2585,7 @@ CREATE TABLE IF NOT EXISTS `oc_product_related` (
   `product_id` int(11) NOT NULL,
   `related_id` int(11) NOT NULL,
   PRIMARY KEY (`product_id`,`related_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_product_related`
@@ -2574,7 +2609,7 @@ CREATE TABLE IF NOT EXISTS `oc_product_reward` (
   `customer_group_id` int(11) NOT NULL DEFAULT '0',
   `points` int(8) NOT NULL DEFAULT '0',
   PRIMARY KEY (`product_reward_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=546 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_product_reward`
@@ -2617,7 +2652,7 @@ CREATE TABLE IF NOT EXISTS `oc_product_special` (
   `date_end` date NOT NULL DEFAULT '0000-00-00',
   PRIMARY KEY (`product_special_id`),
   KEY `product_id` (`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=440 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_product_special`
@@ -2639,7 +2674,7 @@ CREATE TABLE IF NOT EXISTS `oc_product_to_category` (
   `category_id` int(11) NOT NULL,
   PRIMARY KEY (`product_id`,`category_id`),
   KEY `category_id` (`category_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_product_to_category`
@@ -2687,7 +2722,7 @@ CREATE TABLE IF NOT EXISTS `oc_product_to_download` (
   `product_id` int(11) NOT NULL,
   `download_id` int(11) NOT NULL,
   PRIMARY KEY (`product_id`,`download_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2700,7 +2735,7 @@ CREATE TABLE IF NOT EXISTS `oc_product_to_layout` (
   `store_id` int(11) NOT NULL,
   `layout_id` int(11) NOT NULL,
   PRIMARY KEY (`product_id`,`store_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2712,7 +2747,7 @@ CREATE TABLE IF NOT EXISTS `oc_product_to_store` (
   `product_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`product_id`,`store_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_product_to_store`
@@ -2759,7 +2794,7 @@ CREATE TABLE IF NOT EXISTS `oc_recurring` (
   `status` tinyint(4) NOT NULL,
   `sort_order` int(11) NOT NULL,
   PRIMARY KEY (`recurring_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2772,7 +2807,7 @@ CREATE TABLE IF NOT EXISTS `oc_recurring_description` (
   `language_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`recurring_id`,`language_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2801,7 +2836,7 @@ CREATE TABLE IF NOT EXISTS `oc_return` (
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
   PRIMARY KEY (`return_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2814,7 +2849,7 @@ CREATE TABLE IF NOT EXISTS `oc_return_action` (
   `language_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(64) NOT NULL,
   PRIMARY KEY (`return_action_id`,`language_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_return_action`
@@ -2839,7 +2874,7 @@ CREATE TABLE IF NOT EXISTS `oc_return_history` (
   `comment` text NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`return_history_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2852,7 +2887,7 @@ CREATE TABLE IF NOT EXISTS `oc_return_reason` (
   `language_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(128) NOT NULL,
   PRIMARY KEY (`return_reason_id`,`language_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_return_reason`
@@ -2876,7 +2911,7 @@ CREATE TABLE IF NOT EXISTS `oc_return_status` (
   `language_id` int(11) NOT NULL DEFAULT '0',
   `name` varchar(32) NOT NULL,
   PRIMARY KEY (`return_status_id`,`language_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_return_status`
@@ -2905,7 +2940,7 @@ CREATE TABLE IF NOT EXISTS `oc_review` (
   `date_modified` datetime NOT NULL,
   PRIMARY KEY (`review_id`),
   KEY `product_id` (`product_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2921,7 +2956,7 @@ CREATE TABLE IF NOT EXISTS `oc_setting` (
   `value` text NOT NULL,
   `serialized` tinyint(1) NOT NULL,
   PRIMARY KEY (`setting_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=280 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_setting`
@@ -2973,7 +3008,7 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `se
 (103, 0, 'free_checkout', 'free_checkout_status', '1', 0),
 (104, 0, 'free_checkout', 'free_checkout_order_status_id', '1', 0),
 (259, 0, 'config', 'config_mail', 'a:7:{s:8:"protocol";s:4:"mail";s:9:"parameter";s:0:"";s:13:"smtp_hostname";s:0:"";s:13:"smtp_username";s:0:"";s:13:"smtp_password";s:0:"";s:9:"smtp_port";s:0:"";s:12:"smtp_timeout";s:0:"";}', 1),
-(157, 0, 'featured', 'featured_module', 'a:1:{i:0;a:3:{s:5:"limit";s:1:"4";s:5:"width";s:3:"200";s:6:"height";s:3:"200";}}', 1),
+(157, 0, 'featured', 'featured_module', 'a:1:{s:16:"u06jtwl7kwy4lsor";a:4:{s:7:"product";a:4:{i:0;s:2:"44";i:1;s:2:"40";i:2;s:2:"42";i:3;s:2:"30";}s:5:"limit";s:1:"4";s:5:"width";s:3:"200";s:6:"height";s:3:"200";}}', 1),
 (165, 0, 'slideshow', 'slideshow_status', '1', 0),
 (166, 0, 'slideshow', 'slideshow_module', 'a:2:{i:0;a:3:{s:9:"banner_id";s:1:"7";s:5:"width";s:4:"1140";s:6:"height";s:3:"380";}s:16:"pol3h8iif8j2lnmi";a:3:{s:9:"banner_id";s:1:"6";s:5:"width";s:3:"300";s:6:"height";s:3:"300";}}', 1),
 (109, 0, 'banner', 'banner_module', 'a:1:{i:0;a:8:{s:9:"banner_id";s:1:"6";s:5:"width";s:3:"182";s:6:"height";s:3:"182";s:11:"resize_type";s:7:"default";s:9:"layout_id";s:1:"3";s:8:"position";s:11:"column_left";s:6:"status";s:1:"1";s:10:"sort_order";s:1:"3";}}', 1),
@@ -2982,7 +3017,7 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `se
 (256, 0, 'config', 'config_ftp_password', '', 0),
 (255, 0, 'config', 'config_ftp_username', '', 0),
 (254, 0, 'config', 'config_ftp_port', '21', 0),
-(253, 0, 'config', 'config_ftp_hostname', 'opencart.opencartdemo.com', 0),
+(253, 0, 'config', 'config_ftp_hostname', '', 0),
 (252, 0, 'config', 'config_image_location_height', '50', 0),
 (251, 0, 'config', 'config_image_location_width', '268', 0),
 (250, 0, 'config', 'config_image_cart_height', '47', 0),
@@ -3089,7 +3124,7 @@ CREATE TABLE IF NOT EXISTS `oc_stock_status` (
   `language_id` int(11) NOT NULL,
   `name` varchar(32) NOT NULL,
   PRIMARY KEY (`stock_status_id`,`language_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_stock_status`
@@ -3113,7 +3148,7 @@ CREATE TABLE IF NOT EXISTS `oc_store` (
   `url` varchar(255) NOT NULL,
   `ssl` varchar(255) NOT NULL,
   PRIMARY KEY (`store_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -3128,7 +3163,7 @@ CREATE TABLE IF NOT EXISTS `oc_tax_class` (
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
   PRIMARY KEY (`tax_class_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_tax_class`
@@ -3153,7 +3188,7 @@ CREATE TABLE IF NOT EXISTS `oc_tax_rate` (
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
   PRIMARY KEY (`tax_rate_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=88 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_tax_rate`
@@ -3173,7 +3208,7 @@ CREATE TABLE IF NOT EXISTS `oc_tax_rate_to_customer_group` (
   `tax_rate_id` int(11) NOT NULL,
   `customer_group_id` int(11) NOT NULL,
   PRIMARY KEY (`tax_rate_id`,`customer_group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_tax_rate_to_customer_group`
@@ -3196,7 +3231,7 @@ CREATE TABLE IF NOT EXISTS `oc_tax_rule` (
   `based` varchar(10) NOT NULL,
   `priority` int(5) NOT NULL DEFAULT '1',
   PRIMARY KEY (`tax_rule_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=129 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_tax_rule`
@@ -3221,7 +3256,7 @@ CREATE TABLE IF NOT EXISTS `oc_upload` (
   `code` varchar(255) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`upload_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -3233,8 +3268,10 @@ CREATE TABLE IF NOT EXISTS `oc_url_alias` (
   `url_alias_id` int(11) NOT NULL AUTO_INCREMENT,
   `query` varchar(255) NOT NULL,
   `keyword` varchar(255) NOT NULL,
-  PRIMARY KEY (`url_alias_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=844 ;
+  PRIMARY KEY (`url_alias_id`),
+  KEY `query` (`query`),
+  KEY `keyword` (`keyword`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_url_alias`
@@ -3307,7 +3344,36 @@ INSERT INTO `oc_url_alias` (`url_alias_id`, `query`, `keyword`) VALUES
 (832, 'manufacturer_id=10', 'sony'),
 (841, 'information_id=6', 'delivery'),
 (842, 'information_id=3', 'privacy'),
-(843, 'information_id=5', 'terms');
+(843, 'information_id=5', 'terms'),
+(845, 'common/home', ''),
+(846, 'information/contact', 'contact-us'),
+(847, 'information/sitemap', 'sitemap'),
+(848, 'product/special', 'specials'),
+(849, 'product/manufacturer', 'brands'),
+(850, 'product/compare', 'compare-products'),
+(851, 'product/search', 'search'),
+(852, 'checkout/cart', 'cart'),
+(853, 'checkout/checkout', 'checkout'),
+(854, 'account/login', 'login'),
+(855, 'account/logout', 'logout'),
+(856, 'account/voucher', 'vouchers'),
+(857, 'account/wishlist', 'wishlist'),
+(858, 'account/account', 'my-account'),
+(859, 'account/order', 'order-history'),
+(860, 'account/newsletter', 'newsletter'),
+(861, 'account/return/add', 'return-add'),
+(862, 'account/forgotten', 'forgot-password'),
+(863, 'account/download', 'downloads'),
+(864, 'account/return', 'returns'),
+(865, 'account/transaction', 'transactions'),
+(866, 'account/register', 'create-account'),
+(867, 'account/recurring', 'recurring'),
+(868, 'account/address', 'address-book'),
+(869, 'account/reward', 'reward-points'),
+(870, 'affiliate/forgotten', 'affiliate-forgot-password'),
+(871, 'affiliate/register', 'create-affiliate-account'),
+(872, 'affiliate/login', 'affiliate-login'),
+(873, 'affiliate/account', 'affiliates');
 
 -- --------------------------------------------------------
 
@@ -3330,7 +3396,7 @@ CREATE TABLE IF NOT EXISTS `oc_user` (
   `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -3343,15 +3409,15 @@ CREATE TABLE IF NOT EXISTS `oc_user_group` (
   `name` varchar(64) NOT NULL,
   `permission` text NOT NULL,
   PRIMARY KEY (`user_group_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_user_group`
 --
 
 INSERT INTO `oc_user_group` (`user_group_id`, `name`, `permission`) VALUES
-(1, 'Administrator', 'a:2:{s:6:"access";a:177:{i:0;s:17:"catalog/attribute";i:1;s:23:"catalog/attribute_group";i:2;s:16:"catalog/category";i:3;s:16:"catalog/download";i:4;s:14:"catalog/filter";i:5;s:19:"catalog/information";i:6;s:20:"catalog/manufacturer";i:7;s:14:"catalog/option";i:8;s:15:"catalog/product";i:9;s:17:"catalog/recurring";i:10;s:14:"catalog/review";i:11;s:18:"common/column_left";i:12;s:18:"common/filemanager";i:13;s:11:"common/menu";i:14;s:14:"common/profile";i:15;s:12:"common/stats";i:16;s:18:"dashboard/activity";i:17;s:15:"dashboard/chart";i:18;s:18:"dashboard/customer";i:19;s:13:"dashboard/map";i:20;s:16:"dashboard/online";i:21;s:15:"dashboard/order";i:22;s:16:"dashboard/recent";i:23;s:14:"dashboard/sale";i:24;s:13:"design/banner";i:25;s:13:"design/layout";i:26;s:14:"extension/feed";i:27;s:19:"extension/installer";i:28;s:22:"extension/modification";i:29;s:16:"extension/module";i:30;s:17:"extension/openbay";i:31;s:17:"extension/payment";i:32;s:18:"extension/shipping";i:33;s:15:"extension/total";i:34;s:16:"feed/google_base";i:35;s:19:"feed/google_sitemap";i:36;s:15:"feed/openbaypro";i:37;s:20:"localisation/country";i:38;s:21:"localisation/currency";i:39;s:21:"localisation/geo_zone";i:40;s:21:"localisation/language";i:41;s:25:"localisation/length_class";i:42;s:21:"localisation/location";i:43;s:25:"localisation/order_status";i:44;s:26:"localisation/return_action";i:45;s:26:"localisation/return_reason";i:46;s:26:"localisation/return_status";i:47;s:25:"localisation/stock_status";i:48;s:22:"localisation/tax_class";i:49;s:21:"localisation/tax_rate";i:50;s:25:"localisation/weight_class";i:51;s:17:"localisation/zone";i:52;s:19:"marketing/affiliate";i:53;s:17:"marketing/contact";i:54;s:16:"marketing/coupon";i:55;s:19:"marketing/marketing";i:56;s:14:"module/account";i:57;s:16:"module/affiliate";i:58;s:20:"module/amazon_button";i:59;s:13:"module/banner";i:60;s:17:"module/bestseller";i:61;s:15:"module/carousel";i:62;s:15:"module/category";i:63;s:18:"module/ebaydisplay";i:64;s:15:"module/featured";i:65;s:13:"module/filter";i:66;s:22:"module/google_hangouts";i:67;s:11:"module/html";i:68;s:18:"module/information";i:69;s:13:"module/latest";i:70;s:16:"module/pp_button";i:71;s:15:"module/pp_login";i:72;s:16:"module/slideshow";i:73;s:14:"module/special";i:74;s:12:"module/store";i:75;s:14:"openbay/amazon";i:76;s:22:"openbay/amazon_listing";i:77;s:22:"openbay/amazon_product";i:78;s:16:"openbay/amazonus";i:79;s:24:"openbay/amazonus_listing";i:80;s:24:"openbay/amazonus_product";i:81;s:12:"openbay/ebay";i:82;s:20:"openbay/ebay_profile";i:83;s:21:"openbay/ebay_template";i:84;s:12:"openbay/etsy";i:85;s:20:"openbay/etsy_product";i:86;s:21:"openbay/etsy_shipping";i:87;s:17:"openbay/etsy_shop";i:88;s:23:"payment/amazon_checkout";i:89;s:24:"payment/authorizenet_aim";i:90;s:24:"payment/authorizenet_sim";i:91;s:21:"payment/bank_transfer";i:92;s:27:"payment/bluepay_hosted_form";i:93;s:24:"payment/bluepay_redirect";i:94;s:14:"payment/cheque";i:95;s:11:"payment/cod";i:96;s:17:"payment/firstdata";i:97;s:24:"payment/firstdata_remote";i:98;s:21:"payment/free_checkout";i:99;s:22:"payment/klarna_account";i:100;s:22:"payment/klarna_invoice";i:101;s:14:"payment/liqpay";i:102;s:20:"payment/moneybookers";i:103;s:14:"payment/nochex";i:104;s:15:"payment/paymate";i:105;s:16:"payment/paypoint";i:106;s:13:"payment/payza";i:107;s:26:"payment/perpetual_payments";i:108;s:18:"payment/pp_express";i:109;s:18:"payment/pp_payflow";i:110;s:25:"payment/pp_payflow_iframe";i:111;s:14:"payment/pp_pro";i:112;s:21:"payment/pp_pro_iframe";i:113;s:19:"payment/pp_standard";i:114;s:14:"payment/realex";i:115;s:21:"payment/realex_remote";i:116;s:22:"payment/sagepay_direct";i:117;s:22:"payment/sagepay_server";i:118;s:18:"payment/sagepay_us";i:119;s:19:"payment/twocheckout";i:120;s:28:"payment/web_payment_software";i:121;s:16:"payment/worldpay";i:122;s:16:"report/affiliate";i:123;s:25:"report/affiliate_activity";i:124;s:24:"report/customer_activity";i:125;s:22:"report/customer_credit";i:126;s:22:"report/customer_online";i:127;s:21:"report/customer_order";i:128;s:22:"report/customer_reward";i:129;s:16:"report/marketing";i:130;s:24:"report/product_purchased";i:131;s:21:"report/product_viewed";i:132;s:18:"report/sale_coupon";i:133;s:17:"report/sale_order";i:134;s:18:"report/sale_return";i:135;s:20:"report/sale_shipping";i:136;s:15:"report/sale_tax";i:137;s:17:"sale/custom_field";i:138;s:13:"sale/customer";i:139;s:20:"sale/customer_ban_ip";i:140;s:19:"sale/customer_group";i:141;s:10:"sale/order";i:142;s:14:"sale/recurring";i:143;s:11:"sale/return";i:144;s:12:"sale/voucher";i:145;s:18:"sale/voucher_theme";i:146;s:15:"setting/setting";i:147;s:13:"setting/store";i:148;s:16:"shipping/auspost";i:149;s:17:"shipping/citylink";i:150;s:14:"shipping/fedex";i:151;s:13:"shipping/flat";i:152;s:13:"shipping/free";i:153;s:13:"shipping/item";i:154;s:23:"shipping/parcelforce_48";i:155;s:15:"shipping/pickup";i:156;s:19:"shipping/royal_mail";i:157;s:12:"shipping/ups";i:158;s:13:"shipping/usps";i:159;s:15:"shipping/weight";i:160;s:11:"tool/backup";i:161;s:14:"tool/error_log";i:162;s:11:"tool/upload";i:163;s:12:"total/coupon";i:164;s:12:"total/credit";i:165;s:14:"total/handling";i:166;s:16:"total/klarna_fee";i:167;s:19:"total/low_order_fee";i:168;s:12:"total/reward";i:169;s:14:"total/shipping";i:170;s:15:"total/sub_total";i:171;s:9:"total/tax";i:172;s:11:"total/total";i:173;s:13:"total/voucher";i:174;s:8:"user/api";i:175;s:9:"user/user";i:176;s:20:"user/user_permission";}s:6:"modify";a:177:{i:0;s:17:"catalog/attribute";i:1;s:23:"catalog/attribute_group";i:2;s:16:"catalog/category";i:3;s:16:"catalog/download";i:4;s:14:"catalog/filter";i:5;s:19:"catalog/information";i:6;s:20:"catalog/manufacturer";i:7;s:14:"catalog/option";i:8;s:15:"catalog/product";i:9;s:17:"catalog/recurring";i:10;s:14:"catalog/review";i:11;s:18:"common/column_left";i:12;s:18:"common/filemanager";i:13;s:11:"common/menu";i:14;s:14:"common/profile";i:15;s:12:"common/stats";i:16;s:18:"dashboard/activity";i:17;s:15:"dashboard/chart";i:18;s:18:"dashboard/customer";i:19;s:13:"dashboard/map";i:20;s:16:"dashboard/online";i:21;s:15:"dashboard/order";i:22;s:16:"dashboard/recent";i:23;s:14:"dashboard/sale";i:24;s:13:"design/banner";i:25;s:13:"design/layout";i:26;s:14:"extension/feed";i:27;s:19:"extension/installer";i:28;s:22:"extension/modification";i:29;s:16:"extension/module";i:30;s:17:"extension/openbay";i:31;s:17:"extension/payment";i:32;s:18:"extension/shipping";i:33;s:15:"extension/total";i:34;s:16:"feed/google_base";i:35;s:19:"feed/google_sitemap";i:36;s:15:"feed/openbaypro";i:37;s:20:"localisation/country";i:38;s:21:"localisation/currency";i:39;s:21:"localisation/geo_zone";i:40;s:21:"localisation/language";i:41;s:25:"localisation/length_class";i:42;s:21:"localisation/location";i:43;s:25:"localisation/order_status";i:44;s:26:"localisation/return_action";i:45;s:26:"localisation/return_reason";i:46;s:26:"localisation/return_status";i:47;s:25:"localisation/stock_status";i:48;s:22:"localisation/tax_class";i:49;s:21:"localisation/tax_rate";i:50;s:25:"localisation/weight_class";i:51;s:17:"localisation/zone";i:52;s:19:"marketing/affiliate";i:53;s:17:"marketing/contact";i:54;s:16:"marketing/coupon";i:55;s:19:"marketing/marketing";i:56;s:14:"module/account";i:57;s:16:"module/affiliate";i:58;s:20:"module/amazon_button";i:59;s:13:"module/banner";i:60;s:17:"module/bestseller";i:61;s:15:"module/carousel";i:62;s:15:"module/category";i:63;s:18:"module/ebaydisplay";i:64;s:15:"module/featured";i:65;s:13:"module/filter";i:66;s:22:"module/google_hangouts";i:67;s:11:"module/html";i:68;s:18:"module/information";i:69;s:13:"module/latest";i:70;s:16:"module/pp_button";i:71;s:15:"module/pp_login";i:72;s:16:"module/slideshow";i:73;s:14:"module/special";i:74;s:12:"module/store";i:75;s:14:"openbay/amazon";i:76;s:22:"openbay/amazon_listing";i:77;s:22:"openbay/amazon_product";i:78;s:16:"openbay/amazonus";i:79;s:24:"openbay/amazonus_listing";i:80;s:24:"openbay/amazonus_product";i:81;s:12:"openbay/ebay";i:82;s:20:"openbay/ebay_profile";i:83;s:21:"openbay/ebay_template";i:84;s:12:"openbay/etsy";i:85;s:20:"openbay/etsy_product";i:86;s:21:"openbay/etsy_shipping";i:87;s:17:"openbay/etsy_shop";i:88;s:23:"payment/amazon_checkout";i:89;s:24:"payment/authorizenet_aim";i:90;s:24:"payment/authorizenet_sim";i:91;s:21:"payment/bank_transfer";i:92;s:27:"payment/bluepay_hosted_form";i:93;s:24:"payment/bluepay_redirect";i:94;s:14:"payment/cheque";i:95;s:11:"payment/cod";i:96;s:17:"payment/firstdata";i:97;s:24:"payment/firstdata_remote";i:98;s:21:"payment/free_checkout";i:99;s:22:"payment/klarna_account";i:100;s:22:"payment/klarna_invoice";i:101;s:14:"payment/liqpay";i:102;s:20:"payment/moneybookers";i:103;s:14:"payment/nochex";i:104;s:15:"payment/paymate";i:105;s:16:"payment/paypoint";i:106;s:13:"payment/payza";i:107;s:26:"payment/perpetual_payments";i:108;s:18:"payment/pp_express";i:109;s:18:"payment/pp_payflow";i:110;s:25:"payment/pp_payflow_iframe";i:111;s:14:"payment/pp_pro";i:112;s:21:"payment/pp_pro_iframe";i:113;s:19:"payment/pp_standard";i:114;s:14:"payment/realex";i:115;s:21:"payment/realex_remote";i:116;s:22:"payment/sagepay_direct";i:117;s:22:"payment/sagepay_server";i:118;s:18:"payment/sagepay_us";i:119;s:19:"payment/twocheckout";i:120;s:28:"payment/web_payment_software";i:121;s:16:"payment/worldpay";i:122;s:16:"report/affiliate";i:123;s:25:"report/affiliate_activity";i:124;s:24:"report/customer_activity";i:125;s:22:"report/customer_credit";i:126;s:22:"report/customer_online";i:127;s:21:"report/customer_order";i:128;s:22:"report/customer_reward";i:129;s:16:"report/marketing";i:130;s:24:"report/product_purchased";i:131;s:21:"report/product_viewed";i:132;s:18:"report/sale_coupon";i:133;s:17:"report/sale_order";i:134;s:18:"report/sale_return";i:135;s:20:"report/sale_shipping";i:136;s:15:"report/sale_tax";i:137;s:17:"sale/custom_field";i:138;s:13:"sale/customer";i:139;s:20:"sale/customer_ban_ip";i:140;s:19:"sale/customer_group";i:141;s:10:"sale/order";i:142;s:14:"sale/recurring";i:143;s:11:"sale/return";i:144;s:12:"sale/voucher";i:145;s:18:"sale/voucher_theme";i:146;s:15:"setting/setting";i:147;s:13:"setting/store";i:148;s:16:"shipping/auspost";i:149;s:17:"shipping/citylink";i:150;s:14:"shipping/fedex";i:151;s:13:"shipping/flat";i:152;s:13:"shipping/free";i:153;s:13:"shipping/item";i:154;s:23:"shipping/parcelforce_48";i:155;s:15:"shipping/pickup";i:156;s:19:"shipping/royal_mail";i:157;s:12:"shipping/ups";i:158;s:13:"shipping/usps";i:159;s:15:"shipping/weight";i:160;s:11:"tool/backup";i:161;s:14:"tool/error_log";i:162;s:11:"tool/upload";i:163;s:12:"total/coupon";i:164;s:12:"total/credit";i:165;s:14:"total/handling";i:166;s:16:"total/klarna_fee";i:167;s:19:"total/low_order_fee";i:168;s:12:"total/reward";i:169;s:14:"total/shipping";i:170;s:15:"total/sub_total";i:171;s:9:"total/tax";i:172;s:11:"total/total";i:173;s:13:"total/voucher";i:174;s:8:"user/api";i:175;s:9:"user/user";i:176;s:20:"user/user_permission";}}'),
-(10, 'Demonstration', '');
+(1, 'Administrator', 'a:2:{s:6:"access";a:185:{i:0;s:17:"catalog/attribute";i:1;s:23:"catalog/attribute_group";i:2;s:16:"catalog/category";i:3;s:16:"catalog/download";i:4;s:14:"catalog/filter";i:5;s:19:"catalog/information";i:6;s:20:"catalog/manufacturer";i:7;s:14:"catalog/option";i:8;s:15:"catalog/product";i:9;s:17:"catalog/recurring";i:10;s:14:"catalog/review";i:11;s:18:"common/column_left";i:12;s:18:"common/filemanager";i:13;s:11:"common/menu";i:14;s:14:"common/profile";i:15;s:12:"common/stats";i:16;s:18:"dashboard/activity";i:17;s:15:"dashboard/chart";i:18;s:18:"dashboard/customer";i:19;s:13:"dashboard/map";i:20;s:16:"dashboard/online";i:21;s:15:"dashboard/order";i:22;s:16:"dashboard/recent";i:23;s:14:"dashboard/sale";i:24;s:13:"design/banner";i:25;s:13:"design/layout";i:26;s:14:"extension/feed";i:27;s:19:"extension/installer";i:28;s:22:"extension/modification";i:29;s:16:"extension/module";i:30;s:17:"extension/openbay";i:31;s:17:"extension/payment";i:32;s:18:"extension/shipping";i:33;s:15:"extension/total";i:34;s:16:"feed/google_base";i:35;s:19:"feed/google_sitemap";i:36;s:15:"feed/openbaypro";i:37;s:20:"localisation/country";i:38;s:21:"localisation/currency";i:39;s:21:"localisation/geo_zone";i:40;s:21:"localisation/language";i:41;s:25:"localisation/length_class";i:42;s:21:"localisation/location";i:43;s:25:"localisation/order_status";i:44;s:26:"localisation/return_action";i:45;s:26:"localisation/return_reason";i:46;s:26:"localisation/return_status";i:47;s:25:"localisation/stock_status";i:48;s:22:"localisation/tax_class";i:49;s:21:"localisation/tax_rate";i:50;s:25:"localisation/weight_class";i:51;s:17:"localisation/zone";i:52;s:19:"marketing/affiliate";i:53;s:17:"marketing/contact";i:54;s:16:"marketing/coupon";i:55;s:19:"marketing/marketing";i:56;s:14:"module/account";i:57;s:16:"module/affiliate";i:58;s:20:"module/amazon_button";i:59;s:13:"module/banner";i:60;s:17:"module/bestseller";i:61;s:15:"module/carousel";i:62;s:15:"module/category";i:63;s:18:"module/codemanager";i:64;s:18:"module/ebaydisplay";i:65;s:16:"module/excelport";i:66;s:15:"module/featured";i:67;s:13:"module/filter";i:68;s:22:"module/google_hangouts";i:69;s:11:"module/html";i:70;s:18:"module/information";i:71;s:14:"module/isearch";i:72;s:13:"module/latest";i:73;s:16:"module/pp_button";i:74;s:15:"module/pp_login";i:75;s:16:"module/slideshow";i:76;s:14:"module/special";i:77;s:12:"module/store";i:78;s:14:"openbay/amazon";i:79;s:22:"openbay/amazon_listing";i:80;s:22:"openbay/amazon_product";i:81;s:16:"openbay/amazonus";i:82;s:24:"openbay/amazonus_listing";i:83;s:24:"openbay/amazonus_product";i:84;s:12:"openbay/ebay";i:85;s:20:"openbay/ebay_profile";i:86;s:21:"openbay/ebay_template";i:87;s:12:"openbay/etsy";i:88;s:20:"openbay/etsy_product";i:89;s:21:"openbay/etsy_shipping";i:90;s:17:"openbay/etsy_shop";i:91;s:23:"payment/amazon_checkout";i:92;s:24:"payment/authorizenet_aim";i:93;s:24:"payment/authorizenet_sim";i:94;s:21:"payment/bank_transfer";i:95;s:22:"payment/bluepay_hosted";i:96;s:24:"payment/bluepay_redirect";i:97;s:14:"payment/cheque";i:98;s:11:"payment/cod";i:99;s:17:"payment/firstdata";i:100;s:24:"payment/firstdata_remote";i:101;s:21:"payment/free_checkout";i:102;s:22:"payment/klarna_account";i:103;s:22:"payment/klarna_invoice";i:104;s:14:"payment/liqpay";i:105;s:20:"payment/moneybookers";i:106;s:14:"payment/nochex";i:107;s:15:"payment/paymate";i:108;s:16:"payment/paypoint";i:109;s:13:"payment/payza";i:110;s:26:"payment/perpetual_payments";i:111;s:18:"payment/pp_express";i:112;s:18:"payment/pp_payflow";i:113;s:25:"payment/pp_payflow_iframe";i:114;s:14:"payment/pp_pro";i:115;s:21:"payment/pp_pro_iframe";i:116;s:19:"payment/pp_standard";i:117;s:14:"payment/realex";i:118;s:21:"payment/realex_remote";i:119;s:22:"payment/sagepay_direct";i:120;s:22:"payment/sagepay_server";i:121;s:18:"payment/sagepay_us";i:122;s:24:"payment/securetrading_pp";i:123;s:24:"payment/securetrading_ws";i:124;s:19:"payment/twocheckout";i:125;s:28:"payment/web_payment_software";i:126;s:16:"payment/worldpay";i:127;s:16:"report/affiliate";i:128;s:25:"report/affiliate_activity";i:129;s:22:"report/affiliate_login";i:130;s:24:"report/customer_activity";i:131;s:22:"report/customer_credit";i:132;s:21:"report/customer_login";i:133;s:22:"report/customer_online";i:134;s:21:"report/customer_order";i:135;s:22:"report/customer_reward";i:136;s:16:"report/marketing";i:137;s:24:"report/product_purchased";i:138;s:21:"report/product_viewed";i:139;s:18:"report/sale_coupon";i:140;s:17:"report/sale_order";i:141;s:18:"report/sale_return";i:142;s:20:"report/sale_shipping";i:143;s:15:"report/sale_tax";i:144;s:17:"sale/custom_field";i:145;s:13:"sale/customer";i:146;s:20:"sale/customer_ban_ip";i:147;s:19:"sale/customer_group";i:148;s:10:"sale/order";i:149;s:14:"sale/recurring";i:150;s:11:"sale/return";i:151;s:12:"sale/voucher";i:152;s:18:"sale/voucher_theme";i:153;s:15:"setting/setting";i:154;s:13:"setting/store";i:155;s:16:"shipping/auspost";i:156;s:17:"shipping/citylink";i:157;s:14:"shipping/fedex";i:158;s:13:"shipping/flat";i:159;s:13:"shipping/free";i:160;s:13:"shipping/item";i:161;s:17:"shipping/ocaaspro";i:162;s:23:"shipping/parcelforce_48";i:163;s:15:"shipping/pickup";i:164;s:19:"shipping/royal_mail";i:165;s:12:"shipping/ups";i:166;s:13:"shipping/usps";i:167;s:15:"shipping/weight";i:168;s:11:"tool/backup";i:169;s:14:"tool/error_log";i:170;s:11:"tool/upload";i:171;s:12:"total/coupon";i:172;s:12:"total/credit";i:173;s:14:"total/handling";i:174;s:16:"total/klarna_fee";i:175;s:19:"total/low_order_fee";i:176;s:12:"total/reward";i:177;s:14:"total/shipping";i:178;s:15:"total/sub_total";i:179;s:9:"total/tax";i:180;s:11:"total/total";i:181;s:13:"total/voucher";i:182;s:8:"user/api";i:183;s:9:"user/user";i:184;s:20:"user/user_permission";}s:6:"modify";a:185:{i:0;s:17:"catalog/attribute";i:1;s:23:"catalog/attribute_group";i:2;s:16:"catalog/category";i:3;s:16:"catalog/download";i:4;s:14:"catalog/filter";i:5;s:19:"catalog/information";i:6;s:20:"catalog/manufacturer";i:7;s:14:"catalog/option";i:8;s:15:"catalog/product";i:9;s:17:"catalog/recurring";i:10;s:14:"catalog/review";i:11;s:18:"common/column_left";i:12;s:18:"common/filemanager";i:13;s:11:"common/menu";i:14;s:14:"common/profile";i:15;s:12:"common/stats";i:16;s:18:"dashboard/activity";i:17;s:15:"dashboard/chart";i:18;s:18:"dashboard/customer";i:19;s:13:"dashboard/map";i:20;s:16:"dashboard/online";i:21;s:15:"dashboard/order";i:22;s:16:"dashboard/recent";i:23;s:14:"dashboard/sale";i:24;s:13:"design/banner";i:25;s:13:"design/layout";i:26;s:14:"extension/feed";i:27;s:19:"extension/installer";i:28;s:22:"extension/modification";i:29;s:16:"extension/module";i:30;s:17:"extension/openbay";i:31;s:17:"extension/payment";i:32;s:18:"extension/shipping";i:33;s:15:"extension/total";i:34;s:16:"feed/google_base";i:35;s:19:"feed/google_sitemap";i:36;s:15:"feed/openbaypro";i:37;s:20:"localisation/country";i:38;s:21:"localisation/currency";i:39;s:21:"localisation/geo_zone";i:40;s:21:"localisation/language";i:41;s:25:"localisation/length_class";i:42;s:21:"localisation/location";i:43;s:25:"localisation/order_status";i:44;s:26:"localisation/return_action";i:45;s:26:"localisation/return_reason";i:46;s:26:"localisation/return_status";i:47;s:25:"localisation/stock_status";i:48;s:22:"localisation/tax_class";i:49;s:21:"localisation/tax_rate";i:50;s:25:"localisation/weight_class";i:51;s:17:"localisation/zone";i:52;s:19:"marketing/affiliate";i:53;s:17:"marketing/contact";i:54;s:16:"marketing/coupon";i:55;s:19:"marketing/marketing";i:56;s:14:"module/account";i:57;s:16:"module/affiliate";i:58;s:20:"module/amazon_button";i:59;s:13:"module/banner";i:60;s:17:"module/bestseller";i:61;s:15:"module/carousel";i:62;s:15:"module/category";i:63;s:18:"module/codemanager";i:64;s:18:"module/ebaydisplay";i:65;s:16:"module/excelport";i:66;s:15:"module/featured";i:67;s:13:"module/filter";i:68;s:22:"module/google_hangouts";i:69;s:11:"module/html";i:70;s:18:"module/information";i:71;s:14:"module/isearch";i:72;s:13:"module/latest";i:73;s:16:"module/pp_button";i:74;s:15:"module/pp_login";i:75;s:16:"module/slideshow";i:76;s:14:"module/special";i:77;s:12:"module/store";i:78;s:14:"openbay/amazon";i:79;s:22:"openbay/amazon_listing";i:80;s:22:"openbay/amazon_product";i:81;s:16:"openbay/amazonus";i:82;s:24:"openbay/amazonus_listing";i:83;s:24:"openbay/amazonus_product";i:84;s:12:"openbay/ebay";i:85;s:20:"openbay/ebay_profile";i:86;s:21:"openbay/ebay_template";i:87;s:12:"openbay/etsy";i:88;s:20:"openbay/etsy_product";i:89;s:21:"openbay/etsy_shipping";i:90;s:17:"openbay/etsy_shop";i:91;s:23:"payment/amazon_checkout";i:92;s:24:"payment/authorizenet_aim";i:93;s:24:"payment/authorizenet_sim";i:94;s:21:"payment/bank_transfer";i:95;s:22:"payment/bluepay_hosted";i:96;s:24:"payment/bluepay_redirect";i:97;s:14:"payment/cheque";i:98;s:11:"payment/cod";i:99;s:17:"payment/firstdata";i:100;s:24:"payment/firstdata_remote";i:101;s:21:"payment/free_checkout";i:102;s:22:"payment/klarna_account";i:103;s:22:"payment/klarna_invoice";i:104;s:14:"payment/liqpay";i:105;s:20:"payment/moneybookers";i:106;s:14:"payment/nochex";i:107;s:15:"payment/paymate";i:108;s:16:"payment/paypoint";i:109;s:13:"payment/payza";i:110;s:26:"payment/perpetual_payments";i:111;s:18:"payment/pp_express";i:112;s:18:"payment/pp_payflow";i:113;s:25:"payment/pp_payflow_iframe";i:114;s:14:"payment/pp_pro";i:115;s:21:"payment/pp_pro_iframe";i:116;s:19:"payment/pp_standard";i:117;s:14:"payment/realex";i:118;s:21:"payment/realex_remote";i:119;s:22:"payment/sagepay_direct";i:120;s:22:"payment/sagepay_server";i:121;s:18:"payment/sagepay_us";i:122;s:24:"payment/securetrading_pp";i:123;s:24:"payment/securetrading_ws";i:124;s:19:"payment/twocheckout";i:125;s:28:"payment/web_payment_software";i:126;s:16:"payment/worldpay";i:127;s:16:"report/affiliate";i:128;s:25:"report/affiliate_activity";i:129;s:22:"report/affiliate_login";i:130;s:24:"report/customer_activity";i:131;s:22:"report/customer_credit";i:132;s:21:"report/customer_login";i:133;s:22:"report/customer_online";i:134;s:21:"report/customer_order";i:135;s:22:"report/customer_reward";i:136;s:16:"report/marketing";i:137;s:24:"report/product_purchased";i:138;s:21:"report/product_viewed";i:139;s:18:"report/sale_coupon";i:140;s:17:"report/sale_order";i:141;s:18:"report/sale_return";i:142;s:20:"report/sale_shipping";i:143;s:15:"report/sale_tax";i:144;s:17:"sale/custom_field";i:145;s:13:"sale/customer";i:146;s:20:"sale/customer_ban_ip";i:147;s:19:"sale/customer_group";i:148;s:10:"sale/order";i:149;s:14:"sale/recurring";i:150;s:11:"sale/return";i:151;s:12:"sale/voucher";i:152;s:18:"sale/voucher_theme";i:153;s:15:"setting/setting";i:154;s:13:"setting/store";i:155;s:16:"shipping/auspost";i:156;s:17:"shipping/citylink";i:157;s:14:"shipping/fedex";i:158;s:13:"shipping/flat";i:159;s:13:"shipping/free";i:160;s:13:"shipping/item";i:161;s:17:"shipping/ocaaspro";i:162;s:23:"shipping/parcelforce_48";i:163;s:15:"shipping/pickup";i:164;s:19:"shipping/royal_mail";i:165;s:12:"shipping/ups";i:166;s:13:"shipping/usps";i:167;s:15:"shipping/weight";i:168;s:11:"tool/backup";i:169;s:14:"tool/error_log";i:170;s:11:"tool/upload";i:171;s:12:"total/coupon";i:172;s:12:"total/credit";i:173;s:14:"total/handling";i:174;s:16:"total/klarna_fee";i:175;s:19:"total/low_order_fee";i:176;s:12:"total/reward";i:177;s:14:"total/shipping";i:178;s:15:"total/sub_total";i:179;s:9:"total/tax";i:180;s:11:"total/total";i:181;s:13:"total/voucher";i:182;s:8:"user/api";i:183;s:9:"user/user";i:184;s:20:"user/user_permission";}}'),
+ (10, 'Demonstration', '');
 
 -- --------------------------------------------------------
 
@@ -3373,7 +3439,7 @@ CREATE TABLE IF NOT EXISTS `oc_voucher` (
   `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`voucher_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -3388,7 +3454,7 @@ CREATE TABLE IF NOT EXISTS `oc_voucher_history` (
   `amount` decimal(15,4) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`voucher_history_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -3400,7 +3466,7 @@ CREATE TABLE IF NOT EXISTS `oc_voucher_theme` (
   `voucher_theme_id` int(11) NOT NULL AUTO_INCREMENT,
   `image` varchar(255) NOT NULL,
   PRIMARY KEY (`voucher_theme_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_voucher_theme`
@@ -3422,7 +3488,7 @@ CREATE TABLE IF NOT EXISTS `oc_voucher_theme_description` (
   `language_id` int(11) NOT NULL,
   `name` varchar(32) NOT NULL,
   PRIMARY KEY (`voucher_theme_id`,`language_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_voucher_theme_description`
@@ -3443,7 +3509,7 @@ CREATE TABLE IF NOT EXISTS `oc_weight_class` (
   `weight_class_id` int(11) NOT NULL AUTO_INCREMENT,
   `value` decimal(15,8) NOT NULL DEFAULT '0.00000000',
   PRIMARY KEY (`weight_class_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_weight_class`
@@ -3467,7 +3533,7 @@ CREATE TABLE IF NOT EXISTS `oc_weight_class_description` (
   `title` varchar(32) NOT NULL,
   `unit` varchar(4) NOT NULL,
   PRIMARY KEY (`weight_class_id`,`language_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_weight_class_description`
@@ -3492,7 +3558,7 @@ CREATE TABLE IF NOT EXISTS `oc_zone` (
   `code` varchar(32) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`zone_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4222 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_zone`
@@ -4175,9 +4241,9 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (674, 43, 'Atacama', 'AT', 1),
 (675, 43, 'Bio-Bio', 'BI', 1),
 (676, 43, 'Coquimbo', 'CO', 1),
-(677, 43, 'Libertador General Bernardo O''Hi', 'LI', 1),
+(677, 43, 'Libertador General Bernardo O''Higgins', 'LI', 1),
 (678, 43, 'Los Lagos', 'LL', 1),
-(679, 43, 'Magallanes y de la Antartica Chi', 'MA', 1),
+(679, 43, 'Magallanes y de la Antartica Chilena', 'MA', 1),
 (680, 43, 'Maule', 'ML', 1),
 (681, 43, 'Region Metropolitana', 'RM', 1),
 (682, 43, 'Tarapaca', 'TA', 1),
@@ -6922,32 +6988,32 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (3477, 219, 'Mbarara', 'MBR', 1),
 (3478, 219, 'Ntungamo', 'NTU', 1),
 (3479, 219, 'Rukungiri', 'RUK', 1),
-(3480, 220, 'Cherkasy', 'CK', 1),
-(3481, 220, 'Chernihiv', 'CH', 1),
-(3482, 220, 'Chernivtsi', 'CV', 1),
-(3483, 220, 'Crimea', 'CR', 1),
-(3484, 220, 'Dnipropetrovs''k', 'DN', 1),
-(3485, 220, 'Donets''k', 'DO', 1),
-(3486, 220, 'Ivano-Frankivs''k', 'IV', 1),
-(3487, 220, 'Kharkiv Kherson', 'KL', 1),
-(3488, 220, 'Khmel''nyts''kyy', 'KM', 1),
-(3489, 220, 'Kirovohrad', 'KR', 1),
-(3490, 220, 'Kiev', 'KV', 1),
-(3491, 220, 'Kyyiv', 'KY', 1),
-(3492, 220, 'Luhans''k', 'LU', 1),
-(3493, 220, 'L''viv', 'LV', 1),
-(3494, 220, 'Mykolayiv', 'MY', 1),
-(3495, 220, 'Odesa', 'OD', 1),
-(3496, 220, 'Poltava', 'PO', 1),
-(3497, 220, 'Rivne', 'RI', 1),
-(3498, 220, 'Sevastopol', 'SE', 1),
-(3499, 220, 'Sumy', 'SU', 1),
-(3500, 220, 'Ternopil''', 'TE', 1),
-(3501, 220, 'Vinnytsya', 'VI', 1),
-(3502, 220, 'Volyn''', 'VO', 1),
-(3503, 220, 'Zakarpattya', 'ZK', 1),
-(3504, 220, 'Zaporizhzhya', 'ZA', 1),
-(3505, 220, 'Zhytomyr', 'ZH', 1),
+(3480, 220, 'Cherkas''ka Oblast''', '71', 1),
+(3481, 220, 'Chernihivs''ka Oblast''', '74', 1),
+(3482, 220, 'Chernivets''ka Oblast''', '77', 1),
+(3483, 220, 'Crimea', '43', 1),
+(3484, 220, 'Dnipropetrovs''ka Oblast''', '12', 1),
+(3485, 220, 'Donets''ka Oblast''', '14', 1),
+(3486, 220, 'Ivano-Frankivs''ka Oblast''', '26', 1),
+(3487, 220, 'Khersons''ka Oblast''', '65', 1),
+(3488, 220, 'Khmel''nyts''ka Oblast''', '68', 1),
+(3489, 220, 'Kirovohrads''ka Oblast''', '35', 1),
+(3490, 220, 'Kyiv', '30', 1),
+(3491, 220, 'Kyivs''ka Oblast''', '32', 1),
+(3492, 220, 'Luhans''ka Oblast''', '09', 1),
+(3493, 220, 'L''vivs''ka Oblast''', '46', 1),
+(3494, 220, 'Mykolayivs''ka Oblast''', '48', 1),
+(3495, 220, 'Odes''ka Oblast''', '51', 1),
+(3496, 220, 'Poltavs''ka Oblast''', '53', 1),
+(3497, 220, 'Rivnens''ka Oblast''', '56', 1),
+(3498, 220, 'Sevastopol''', '40', 1),
+(3499, 220, 'Sums''ka Oblast''', '59', 1),
+(3500, 220, 'Ternopil''s''ka Oblast''', '61', 1),
+(3501, 220, 'Vinnyts''ka Oblast''', '05', 1),
+(3502, 220, 'Volyns''ka Oblast''', '07', 1),
+(3503, 220, 'Zakarpats''ka Oblast''', '21', 1),
+(3504, 220, 'Zaporiz''ka Oblast''', '23', 1),
+(3505, 220, 'Zhytomyrs''ka oblast''', '18', 1),
 (3506, 221, 'Abu Zaby', 'AZ', 1),
 (3507, 221, '''Ajman', 'AJ', 1),
 (3508, 221, 'Al Fujayrah', 'FU', 1),
@@ -7635,7 +7701,10 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `name`, `code`, `status`) VALUES
 (4218, 117, 'Viļāni, Viļānu novads', '0781817', 1),
 (4219, 117, 'Viļānu novads', '0781800', 1),
 (4220, 117, 'Zilupe, Zilupes novads', '0681817', 1),
-(4221, 117, 'Zilupes novads', '0681801', 1);
+(4221, 117, 'Zilupes novads', '0681801', 1),
+(4222, 43, 'Arica y Parinacota', 'AP', 1),
+(4223, 43, 'Los Rios', 'LR', 1),
+(4224, 220, 'Kharkivs''ka Oblast''', '63', 1);
 
 -- --------------------------------------------------------
 
@@ -7651,7 +7720,7 @@ CREATE TABLE IF NOT EXISTS `oc_zone_to_geo_zone` (
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
   PRIMARY KEY (`zone_to_geo_zone_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=110 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_zone_to_geo_zone`

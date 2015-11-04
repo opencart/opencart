@@ -405,7 +405,19 @@ class ControllerSettingStore extends Controller {
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL')
 		);
-
+		
+		if (!isset($this->request->get['store_id'])) {
+			$data['breadcrumbs'][] = array(
+				'text' => $this->language->get('text_settings'),
+				'href' => $this->url->link('setting/store/add', 'token=' . $this->session->data['token'], 'SSL')
+			);
+		} else {
+			$data['breadcrumbs'][] = array(
+				'text' => $this->language->get('text_settings'),
+				'href' => $this->url->link('setting/store/edit', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], 'SSL')
+			);			
+		}
+		
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
 
@@ -503,11 +515,11 @@ class ControllerSettingStore extends Controller {
 		}
 
 		if (isset($this->request->post['config_image'])) {
-			$data['image'] = $this->request->post['config_image'];
+			$data['config_image'] = $this->request->post['config_image'];
 		} elseif (isset($store_info['config_image'])) {
-			$data['image'] = $store_info['config_image'];
+			$data['config_image'] = $store_info['config_image'];
 		} else {
-			$data['image'] = '';
+			$data['config_image'] = '';
 		}
 
 		$this->load->model('tool/image');
@@ -519,6 +531,8 @@ class ControllerSettingStore extends Controller {
 		} else {
 			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
+
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
 		if (isset($this->request->post['open'])) {
 			$data['open'] = $this->request->post['open'];
@@ -1006,7 +1020,7 @@ class ControllerSettingStore extends Controller {
 			$this->error['address'] = $this->language->get('error_address');
 		}
 
-		if ((utf8_strlen($this->request->post['config_email']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['config_email'])) {
+		if ((utf8_strlen($this->request->post['config_email']) > 96) || !preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['config_email'])) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 

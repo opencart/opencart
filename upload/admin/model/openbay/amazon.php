@@ -82,7 +82,7 @@ class ModelOpenbayAmazon extends Model {
 			) DEFAULT COLLATE=utf8_general_ci;");
 
 		// add the event triggers
-		$this->model_tool_event->addEvent('openbaypro_amazon', 'post.order.add', 'openbay/amazon/eventAddOrder');
+		$this->model_extension_event->addEvent('openbaypro_amazon', 'post.order.add', 'openbay/amazon/eventAddOrder'); 
 	}
 
 	public function uninstall() {
@@ -101,7 +101,7 @@ class ModelOpenbayAmazon extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `group` = 'openbay_amazon'");
 
 		// remove the event triggers
-		$this->model_tool_event->deleteEvent('openbaypro_amazon');
+		$this->model_extension_event->deleteEvent('openbaypro_amazon');
 	}
 
 	public function scheduleOrders($data) {

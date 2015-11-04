@@ -25,8 +25,8 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="amazon-status"><?php echo $entry_status; ?></label>
             <div class="col-sm-10">
-              <select name="amazon_status" id="amazon-status" class="form-control">
-                <?php if ($amazon_status) { ?>
+              <select name="openbay_amazon_status" id="amazon-status" class="form-control">
+                <?php if ($openbay_amazon_status) { ?>
                 <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                 <option value="0"><?php echo $text_disabled; ?></option>
                 <?php } else { ?>

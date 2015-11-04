@@ -142,7 +142,7 @@ class ControllerPaymentPPProIframe extends Controller {
 							$order_status_id = $this->config->get('pp_pro_iframe_refunded_status_id');
 							break;
 						case 'Reversed':
-							$order_status_id = $this->config->get['pp_pro_iframe_reversed_status_id'];
+							$order_status_id = $this->config->get('pp_pro_iframe_reversed_status_id');
 							break;
 						case 'Voided':
 							$order_status_id = $this->config->get('pp_pro_iframe_voided_status_id');

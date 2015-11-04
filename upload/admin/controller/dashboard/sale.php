@@ -34,7 +34,7 @@ class ControllerDashboardSale extends Controller {
 		} elseif ($sale_total > 1000) {
 			$data['total'] = round($sale_total / 1000, 1) . 'K';
 		} else {
-			$data['total'] = $sale_total;
+			$data['total'] = round($sale_total);
 		}
 
 		$data['sale'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL');

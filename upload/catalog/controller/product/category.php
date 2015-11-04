@@ -117,24 +117,6 @@ class ControllerProductCategory extends Controller {
 			$data['button_grid'] = $this->language->get('button_grid');
 
 			// Set the last category breadcrumb
-			$url = '';
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			if (isset($this->request->get['limit'])) {
-				$url .= '&limit=' . $this->request->get['limit'];
-			}
-
 			$data['breadcrumbs'][] = array(
 				'text' => $category_info['name'],
 				'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'])
@@ -363,16 +345,6 @@ class ControllerProductCategory extends Controller {
 			$pagination->url = $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&page={page}');
 
 			$data['pagination'] = $pagination->render();
-
-			$this->document->addLink($this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&page=' . $pagination->page), 'canonical');
-
-			if ($pagination->limit && ceil($pagination->total / $pagination->limit) > $pagination->page) {
-				$this->document->addLink($this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&page=' . ($pagination->page + 1)), 'next');
-			}
-
-			if ($pagination->page > 1) {
-				$this->document->addLink($this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&page=' . ($pagination->page - 1)), 'prev');
-			}
 
 			$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
 

@@ -81,7 +81,8 @@ class ControllerProductSpecial extends Controller {
 		$data['button_compare'] = $this->language->get('button_compare');
 		$data['button_list'] = $this->language->get('button_list');
 		$data['button_grid'] = $this->language->get('button_grid');
-
+		$data['button_continue'] = $this->language->get('button_continue');
+		
 		$data['compare'] = $this->url->link('product/compare');
 
 		$data['products'] = array();
@@ -251,21 +252,13 @@ class ControllerProductSpecial extends Controller {
 
 		$data['pagination'] = $pagination->render();
 
-		$this->document->addLink($this->url->link('product/special', $url . '&page=' . $pagination->page), 'canonical');
-
-		if ($pagination->limit && ceil($pagination->total / $pagination->limit) > $pagination->page) {
-			$this->document->addLink($this->url->link('product/special', $url . '&page=' . ($pagination->page + 1)), 'next');
-		}
-
-		if ($pagination->page > 1) {
-			$this->document->addLink($this->url->link('product/special', $url . '&page=' . ($pagination->page - 1)), 'prev');
-		}
-
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 		$data['limit'] = $limit;
+
+		$data['continue'] = $this->url->link('common/home');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

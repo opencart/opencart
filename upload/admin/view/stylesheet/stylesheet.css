@@ -158,7 +158,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #column-left.active {
 	width: 235px;
-	opacity: 1;
+	display: block;
 }
 #content {
 	padding-bottom: 40px;
@@ -174,7 +174,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 @media (max-width: 767px) {
 #column-left {
 	overflow: hidden;
-	opacity: 0;
+	display: none;
 }
 #column-left + #content {
 	margin-left: 0;
@@ -362,44 +362,23 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	font-weight: bold;
 	color: #333;
 }
-
-/*
-.form-horizontal .form-group {
-	padding-left: 0;
-	padding-right: 0;
-	margin-bottom: 0;
-	margin-left: 0;
-	margin-right: 0;
-	 
-}
-
-.form-group + .form-group {
-	border-top: 1px solid #ededed;
-}
-*/
 .form-control:hover {
 	border: 1px solid #b9b9b9;
 	border-top-color: #a0a0a0;
 	-webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
 	box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
 }
-
-
 div.required .control-label:not(span):before, td.required:before {
 	content: '* ';
 	color: #F00;
 	font-weight: bold;
 }
-label.control-label span:after {
+.table thead td span[data-toggle="tooltip"]:after, label.control-label span:after {
 	font-family: FontAwesome;
 	color: #1E91CF;
 	content: "\f059";
 	margin-left: 4px;
 }
-label.control-label {
-	/*font-weight: normal;*/
-}
-
 fieldset legend {
 	padding-bottom: 5px;	
 }
@@ -532,32 +511,6 @@ input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked:
 	border-color: #e8e8e8;
 	background: #fcfcfc;
 }
-
-
-/*
-// Info
-color: #115376;
-background-color: #f8fcfe;
-border-color: #c3e4f6;
-
-// Danger
-.panel-danger {
-	border-top: 2px solid lighten($warning, 15%);
-	color: #f56b6b;
-	background: #fef1f1;
-	border-color: #fde2e2;
-}
-
-// Warning
-color: #f38733;
-background-color: #fef8f4;
-border-color: #fcdcc3;
-
-// Success
-color: #8fbb6c;
-background: #f9fcf7;
-border-color: #dfebd5;
-*/
 .img-thumbnail i {
 	color: #FFFFFF;
 	background-color: #EEEEEE;
@@ -651,4 +604,7 @@ border-color: #dfebd5;
 #stats .progress {
 	height: 3px;
 	margin-bottom: 0;
+}
+.jqvmap-label {
+	z-index: 999;
 }

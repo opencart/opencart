@@ -16,6 +16,9 @@ class ControllerAffiliateRegister extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$affiliate_id = $this->model_affiliate_affiliate->addAffiliate($this->request->post);
 
+			// Clear any previous login attempts in not registered.
+			$this->model_affiliate_affiliate->deleteLoginAttempts($this->request->post['email']);
+			
 			$this->affiliate->login($this->request->post['email'], $this->request->post['password']);
 
 			// Add to activity log
@@ -354,7 +357,7 @@ class ControllerAffiliateRegister extends Controller {
 			$this->error['lastname'] = $this->language->get('error_lastname');
 		}
 
-		if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email'])) {
+		if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['email'])) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 

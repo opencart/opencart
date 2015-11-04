@@ -45,6 +45,11 @@ class ControllerFeedGoogleSitemap extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_feed'),
+			'href' => $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL')
+		);
+
+		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('feed/google_sitemap', 'token=' . $this->session->data['token'], 'SSL')
 		);

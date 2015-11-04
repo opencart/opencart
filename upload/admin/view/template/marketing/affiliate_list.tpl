@@ -79,7 +79,7 @@
               <div class="form-group">
                 <label class="control-label" for="input-date-added"><?php echo $entry_date_added; ?></label>
                 <div class="input-group date">
-                  <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $entry_date_added; ?>" data-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
+                  <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $entry_date_added; ?>" data-date-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
                   <span class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </span></div>
@@ -90,7 +90,7 @@
             </div>
           </div>
         </div>
-        <form action="" method="post" enctype="multipart/form-data" id="form-affiliate">
+        <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-affiliate">
           <div class="table-responsive">
             <table class="table table-bordered table-hover">
               <thead>
@@ -134,11 +134,16 @@
                   <td class="text-right"><?php echo $affiliate['balance']; ?></td>
                   <td class="text-left"><?php echo $affiliate['status']; ?></td>
                   <td class="text-left"><?php echo $affiliate['date_added']; ?></td>
-                  <td class="text-right"><?php if (!$affiliate['approved']) { ; ?>
+                  <td class="text-right"><?php if (!$affiliate['approve']) { ; ?>
                     <a href="<?php echo $affiliate['approve']; ?>" data-toggle="tooltip" title="<?php echo $button_approve; ?>" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i></a>
                     <?php } else { ?>
                     <button type="button" class="btn btn-success" disabled><i class="fa fa-thumbs-o-up"></i></button>
                     <?php } ?>
+                    <?php if ($affiliate['unlock']) { ; ?>
+                    <a href="<?php echo $affiliate['unlock']; ?>" data-toggle="tooltip" title="<?php echo $button_unlock; ?>" class="btn btn-warning"><i class="fa fa-unlock"></i></a>
+                    <?php } else { ?>
+                    <button type="button" class="btn btn-warning" disabled><i class="fa fa-unlock"></i></button>
+                    <?php } ?>                   
                     <a href="<?php echo $affiliate['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 <?php } ?>

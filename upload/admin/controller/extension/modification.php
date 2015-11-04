@@ -63,28 +63,62 @@ class ControllerExtensionModification extends Controller {
 			$log = array();
 
 			// Clear all modification files
-			$files = glob(DIR_MODIFICATION . '{*.php,*.tpl}', GLOB_BRACE);
+			$files = array();
+			
+			// Make path into an array
+			$path = array(DIR_MODIFICATION . '*');
 
-			if ($files) {
-				foreach ($files as $file) {
-					if (file_exists($file)) {
-						unlink($file);
+			// While the path array is still populated keep looping through
+			while (count($path) != 0) {
+				$next = array_shift($path);
+
+				foreach (glob($next) as $file) {
+					// If directory add to path array
+					if (is_dir($file)) {
+						$path[] = $file . '/*';
 					}
+
+					// Add the file to the files to be deleted array
+					$files[] = $file;
 				}
 			}
-
+			
+			// Reverse sort the file array
+			rsort($files);
+			
+			// Clear all modification files
+			foreach ($files as $file) {
+				if ($file != DIR_MODIFICATION . 'index.html') {
+					// If file just delete
+					if (is_file($file)) {
+						unlink($file);
+	
+					// If directory use the remove directory function
+					} elseif (is_dir($file)) {
+						rmdir($file);
+					}
+				}
+			}	
+			
 			// Begin
 			$xml = array();
 
 			// Load the default modification XML
 			$xml[] = file_get_contents(DIR_SYSTEM . 'modification.xml');
+			
+			// This is purly for developers so they can run mods directly and have them run without upload sfter each change.
+			$files = glob(DIR_SYSTEM . '*.ocmod.xml');
+
+			foreach ($files as $file) {
+				$xml[] = file_get_contents($file);
+			}
 
 			// Get the default modification file
 			$results = $this->model_extension_modification->getModifications();
 
 			foreach ($results as $result) {
 				if ($result['status']) {
-					$xml[] = $result['code'];
+					$xml[] = $result['xml'];
 				}
 			}
 
@@ -95,6 +129,14 @@ class ControllerExtensionModification extends Controller {
 				$dom->preserveWhiteSpace = false;
 				$dom->loadXml($xml);
 
+				// Wipe the past modification store in the backup array
+				$recovery = array();
+				
+				// Set the a recovery of the modification code in case we need to use it if an abort attribute is used.
+				if (isset($modification)) {
+					$recovery = $modification;
+				}
+								
 				// Log
 				$log[] = 'MOD: ' . $dom->getElementsByTagName('name')->item(0)->textContent;
 
@@ -135,93 +177,124 @@ class ControllerExtensionModification extends Controller {
 								if (substr($file, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {
 									$key = 'system/' . substr($file, strlen(DIR_SYSTEM));
 								}
-
+								
+								// If file contents is not already in the modification array we need to load it.
 								if (!isset($modification[$key])) {
 									$content = file_get_contents($file);
 
-									$content = preg_replace('~\r?\n~', "\n", $content);
-
-									$modification[$key] = $content;
-									$original[$key] = $content;
+									$modification[$key] = preg_replace('~\r?\n~', "\n", $content);
+									$original[$key] = preg_replace('~\r?\n~', "\n", $content);
 
 									// Log
 									$log[] = 'FILE: ' . $key;
 								}
-
+								
 								foreach ($operations as $operation) {
+									$error = $operation->getAttribute('error');
+									
+									// Ignoreif
+									$ignoreif = $operation->getElementsByTagName('ignoreif')->item(0);
+									
+									if ($ignoreif) {
+										if ($ignoreif->item(0)->getAttribute('regex') != 'true') {
+											if (strpos($modification[$file], $ignoreif->item(0)->textContent) !== false) {
+												continue;
+											}												
+										} else {
+											if (preg_match($ignoreif->item(0)->textContent, $modification[$file])) {
+												continue;
+											}
+										}
+									}
+									
+									$status = false;
+									
 									// Search and replace
 									if ($operation->getElementsByTagName('search')->item(0)->getAttribute('regex') != 'true') {
+										// Search
 										$search = $operation->getElementsByTagName('search')->item(0)->textContent;
 										$trim = $operation->getElementsByTagName('search')->item(0)->getAttribute('trim');
-										$offset = $operation->getElementsByTagName('search')->item(0)->getAttribute('offset');
-										$limit = $operation->getElementsByTagName('search')->item(0)->getAttribute('limit');
-										$add = $operation->getElementsByTagName('add')->item(0)->textContent;
-										$position = $operation->getElementsByTagName('add')->item(0)->getAttribute('position');
-
-										// Trim
+										$index = $operation->getElementsByTagName('search')->item(0)->getAttribute('index');
+										
+										// Trim line if no trim attribute is set or is set to true.
 										if (!$trim || $trim == 'true') {
 											$search = trim($search);
 										}
+																				
+										// Add
+										$add = $operation->getElementsByTagName('add')->item(0)->textContent;
+										$trim = $operation->getElementsByTagName('add')->item(0)->getAttribute('trim');
+										$position = $operation->getElementsByTagName('add')->item(0)->getAttribute('position');
+										$offset = $operation->getElementsByTagName('add')->item(0)->getAttribute('offset');										
 
-										switch ($position) {
-											default:
-											case 'replace':
-												$replace = $add;
-												break;
-											case 'before':
-												$replace = $add . $search;
-												break;
-											case 'after':
-												$replace = $search . $add;
-												break;
+										// Trim line if is set to true.
+										if ($trim == 'true') {
+											$add = trim($add);
 										}
-
-										$i = 0;
-										$pos = -1;
-										$match = array();
-
-										// Create an array of all the start postions of all the matched code
-										while (($pos = strpos($modification[$key], $search, $pos + 1)) !== false) {
-											$match[$i++] = $pos;
-										}
-
-										// Offset
-										if (!$offset) {
-											$offset = 0;
-										}
-
-										// Limit
-										if (!$limit) {
-											$limit = count($match);
-										} else {
-											$limit = $offset + $limit;
-										}
-
+										
 										// Log
 										$log[] = 'CODE: ' . $search;
+										
+										// Check if using indexes
+										if ($index !== '') {
+											$indexes = explode(',', $index);
+										} else {
+											$indexes = array();
+										}
+										
+										// Get all the matches
+										$i = 0;
+										
+										$lines = explode("\n", $modification[$key]);
 
-										$status = false;
-
-										// Only replace the occurance of the string that is equal to the between the offset and limit
-										for ($i = $offset; $i < $limit; $i++) {
-											if (isset($match[$i])) {
-												$modification[$key] = substr_replace($modification[$key], $replace, $match[$i], strlen($search));
-
+										foreach ($lines as $line_id => $line) {
+											// Status
+											$match = false;
+											
+											// Check to see if the line matches the search code.
+											if (stripos($line, $search) !== false) {
+												// If indexes are not used then just set the found status to true.
+												if (!$indexes) {
+													$match = true;
+												} elseif (in_array($i, $indexes)) {
+													$match = true;
+												}
+												
+												$i++;
+											}
+											
+											// Now for replacing or adding to the matched elements
+											if ($match) {
+												switch ($position) {
+													default:
+													case 'replace':
+														if ($offset < 0) {
+															array_splice($lines, $line_id + $offset, abs($offset), array(str_replace($search, $add, $line)));
+														} else {
+															array_splice($lines, $line_id, $offset + 1, array(str_replace($search, $add, $line)));
+														}
+														break;
+													case 'before':
+														array_splice($lines, $line_id - $offset, 0, explode("\n", $add));
+														break;
+													case 'after':
+														array_splice($lines, ($line_id + 1) + $offset, 0, explode("\n", $add));
+														break;
+												}
+												
 												// Log
-												$log[] = 'LINE: ' . (substr_count(substr($modification[$key], 0, $match[$i]), "\n") + 1);
-
-												$status = true;
+												$log[] = 'LINE: ' . $line_id;
+												
+												$status = true;										
 											}
 										}
-
-										if (!$status) {
-											$log[] = 'NOT FOUND!';
-										}
-									} else {
+										
+										$modification[$key] = implode("\n", $lines);
+									} else {									
 										$search = $operation->getElementsByTagName('search')->item(0)->textContent;
-										$replace = $operation->getElementsByTagName('add')->item(0)->textContent;
 										$limit = $operation->getElementsByTagName('search')->item(0)->getAttribute('limit');
-
+										$replace = $operation->getElementsByTagName('add')->item(0)->textContent;
+										
 										// Limit
 										if (!$limit) {
 											$limit = -1;
@@ -243,21 +316,41 @@ class ControllerExtensionModification extends Controller {
 											for ($i = 0; $i < count($match[0]); $i++) {
 												$log[] = 'LINE: ' . (substr_count(substr($modification[$key], 0, $match[0][$i][1]), "\n") + 1);
 											}
-										} else {
-											$log[] = 'NOT FOUND!';
+											
+											$status = true;
 										}
 
 										// Make the modification
 										$modification[$key] = preg_replace($search, $replace, $modification[$key], $limit);
 									}
+									
+									if (!$status) {
+										// Log
+										$log[] = 'NOT FOUND!';
+
+										// Skip current operation
+										if ($error == 'skip') {
+											break;
+										}
+										
+										// Abort applying this modification completely.
+										if ($error == 'abort') {
+											$modification = $recovery;
+											
+											// Log
+											$log[] = 'ABORTING!';
+										
+											break 4;
+										}
+									}									
 								}
 							}
 						}
 					}
-
-					// Log
-					$log[] = '----------------------------------------------------------------';
 				}
+				
+				// Log
+				$log[] = '----------------------------------------------------------------';				
 			}
 
 			// Log
@@ -318,6 +411,8 @@ class ControllerExtensionModification extends Controller {
 		$this->load->model('extension/modification');
 
 		if ($this->validate()) {
+			$files = array();
+			
 			// Make path into an array
 			$path = array(DIR_MODIFICATION . '*');
 

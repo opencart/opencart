@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '2.0.0.0');
+define('VERSION', '2.0.0.1b');
 
 // Configuration
 if (is_file('config.php')) {
@@ -178,7 +178,7 @@ $config->set('config_language', $languages[$code]['code']);
 
 // Language
 $language = new Language($languages[$code]['directory']);
-$language->load($languages[$code]['filename']);
+$language->load('default');
 $registry->set('language', $language);
 
 // Document
@@ -191,10 +191,10 @@ $registry->set('customer', $customer);
 // Customer Group
 if ($customer->isLogged()) {
 	$config->set('config_customer_group_id', $customer->getGroupId());
-} elseif (isset($session->data['customer'])) {
+} elseif (isset($session->data['customer']) && isset($session->data['customer']['customer_group_id'])) {
 	// For API calls
 	$config->set('config_customer_group_id', $session->data['customer']['customer_group_id']);
-} elseif (isset($session->data['guest'])) {
+} elseif (isset($session->data['guest']) && isset($session->data['guest']['customer_group_id'])) {
 	$config->set('config_customer_group_id', $session->data['guest']['customer_group_id']);
 }
 

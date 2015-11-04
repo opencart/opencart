@@ -16,14 +16,14 @@
       <div class="row">
         <div class="col-sm-5">
           <div class="input-group date">
-            <input type="text" class="form-control" id="input-date-start" data-format="YYYY-MM-DD" placeholder="<?php echo $entry_date_start; ?>" value="<?php echo $date_start; ?>" name="filter_date_start">
+            <input type="text" class="form-control" id="input-date-start" data-date-format="YYYY-MM-DD" placeholder="<?php echo $entry_date_start; ?>" value="<?php echo $date_start; ?>" name="filter_date_start">
             <span class="input-group-btn">
             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
             </span> </div>
         </div>
         <div class="col-sm-5">
           <div class="input-group date">
-            <input type="text" class="form-control" id="input-date-end" data-format="YYYY-MM-DD" placeholder="<?php echo $entry_date_end; ?>" value="<?php echo $date_end; ?>" name="filter_date_end">
+            <input type="text" class="form-control" id="input-date-end" data-date-format="YYYY-MM-DD" placeholder="<?php echo $entry_date_end; ?>" value="<?php echo $date_end; ?>" name="filter_date_end">
             <span class="input-group-btn">
             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
             </span> </div>
@@ -31,7 +31,7 @@
         <div class="col-sm-2 text-right"> <a onclick="filter();" class="btn btn-primary" data-toggle="tooltip" title="<?php echo $button_filter; ?>"><i class="fa fa-filter"></i></a> </div>
       </div>
     </div>
-    <table class="table">
+    <table class="table table-bordered table-hover">
       <thead>
         <tr>
           <th class="text-left"><?php echo $column_ref; ?></th>
@@ -61,7 +61,7 @@
         </tr>
         <?php } ?>
           </tr>
-        
+
         <?php } ?>
       </tbody>
     </table>
@@ -84,13 +84,13 @@ function filter() {
   }
   location = url;
 }
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $(document).ready(function() {
   $('#date-start').datepicker({dateFormat: 'yy-mm-dd'});
   $('#date-end').datepicker({dateFormat: 'yy-mm-dd'});
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
   pickTime: false
@@ -104,5 +104,5 @@ $('.datetime').datetimepicker({
 $('.time').datetimepicker({
   pickDate: false
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

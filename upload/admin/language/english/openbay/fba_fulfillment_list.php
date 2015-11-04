@@ -8,7 +8,7 @@ $_['text_fba']						= 'Fulfillment By Amazon';
 //$_['button_pull_orders']        	= 'Start';
 
 // Entry
-//$_['entry_pull_orders']             = 'Pull new orders';
+$_['entry_start_date']             			= 'Start date (format YYYY-MM-DD)';
 
 // Text
 $_['text_no_results'] 						= 'No fulfillment\'s found on Amazon';

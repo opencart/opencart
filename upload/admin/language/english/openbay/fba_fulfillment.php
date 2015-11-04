@@ -34,4 +34,4 @@ $_['column_estimated_ship'] 				= 'Estimated ship';
 $_['column_estimated_arrive'] 				= 'Estimated arrive';
 
 // Errors
-//$_['error_validation']             		= 'You need to register for your API token and enable the module.';
+$_['error_loading_fulfillment']             = 'There was a problem getting the fulfillment order information from Amazon';

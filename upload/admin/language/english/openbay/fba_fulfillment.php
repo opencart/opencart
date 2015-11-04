@@ -6,9 +6,6 @@ $_['text_fba']								= 'Fulfillment By Amazon';
 $_['heading_order_info']					= 'Order info';
 $_['heading_products']						= 'Products';
 
-// Buttons
-//$_['button_pull_orders']        			= 'Start';
-
 // Entry
 $_['entry_seller_fulfillment_order_id']     = 'Seller fulfillment order ID';
 $_['entry_displayable_order_id']     		= 'Displayable order ID';
@@ -18,11 +15,15 @@ $_['entry_shipping_speed_category']     	= 'Shipping speed category';
 $_['entry_fulfillment_policy']     			= 'Fulfillment policy';
 $_['entry_fulfillment_order_status']     	= 'Status';
 $_['entry_notification_email_list']     	= 'Notification email list';
+$_['entry_button_cancel']     				= 'Cancel fulfillment';
+$_['entry_button_ship']     				= 'Ship fulfillment';
 
 // Text
 $_['text_no_results'] 						= 'No fulfillment\'s found on Amazon';
 $_['text_fulfillment_list'] 				= 'Amazon Fulfillment list';
 $_['text_form'] 							= 'Amazon Fulfillment';
+$_['text_ship_success'] 					= 'Fulfillment has been confirmed to ship';
+$_['text_cancel_success'] 					= 'Fulfillment has been cancelled';
 
 // Columns
 $_['column_sku'] 							= 'SKU';
@@ -35,3 +36,5 @@ $_['column_estimated_arrive'] 				= 'Estimated arrive';
 
 // Errors
 $_['error_loading_fulfillment']             = 'There was a problem getting the fulfillment order information from Amazon';
+$_['error_ship']             				= 'There was a problem confirming the shipment with Amazon';
+$_['error_cancel']             				= 'There was a problem cancelling the fulfillment with Amazon';

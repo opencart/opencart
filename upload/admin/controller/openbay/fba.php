@@ -239,6 +239,12 @@ class ControllerOpenbayFba extends Controller {
             $data['can_cancel'] = false;
         }
 
+        if ($data['response']['body']['fulfillment_order']['fulfillment_order_status'] == 'RECEIVED') {
+            $data['can_ship'] = true;
+        } else {
+            $data['can_ship'] = false;
+        }
+
         $data['cancel'] = $this->url->link('openbay/fba/fulfillmentlist', 'token=' . $this->session->data['token'], 'SSL');
 
         $data['token'] = $this->session->data['token'];

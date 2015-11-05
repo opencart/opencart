@@ -199,7 +199,7 @@ class ControllerOpenbayFba extends Controller {
 
     public function fulfillment() {
         if (!isset($this->request->get['fulfillment_id'])) {
-            $this->response->redirect($this->url->link('openbay/fba/fulfillmentlist', 'token=' . $this->session->data['token'], 'SSL'));
+            $this->response->redirect($this->url->link('openbay/fba/fulfillmentlist', 'token=' . $this->session->data['token'] . (!empty($this->request->get['filter_date']) ? '&filter_date=' . $this->request->get['filter_date'] : ''), 'SSL'));
         }
 
         $data = $this->load->language('openbay/fba_fulfillment');
@@ -220,6 +220,11 @@ class ControllerOpenbayFba extends Controller {
         $data['breadcrumbs'][] = array(
             'href' => $this->url->link('openbay/fba', 'token=' . $this->session->data['token'], 'SSL'),
             'text' => $data['text_fba'],
+        );
+
+        $data['breadcrumbs'][] = array(
+            'href' => $this->url->link('openbay/fba/fulfillmentlist', 'token=' . $this->session->data['token'] . (!empty($this->request->get['filter_date']) ? '&filter_date=' . $this->request->get['filter_date'] : ''), 'SSL'),
+            'text' => $data['heading_title'],
         );
 
         $response = $this->openbay->fba->call("v1/fba/fulfillments/" . $this->request->get['fulfillment_id'] . "/", array());
@@ -246,7 +251,8 @@ class ControllerOpenbayFba extends Controller {
             $data['can_ship'] = false;
         }
 
-        $data['cancel'] = $this->url->link('openbay/fba/fulfillmentlist', 'token=' . $this->session->data['token'], 'SSL');
+        $data['cancel'] = $this->url->link('openbay/fba/fulfillmentlist', 'token=' . $this->session->data['token'] . (!empty($this->request->get['filter_date']) ? '&filter_date=' . $this->request->get['filter_date'] : ''), 'SSL');
+        $data['reload_link'] = $this->url->link('', 'token=' . $this->session->data['token'] . '&fulfillment_id=' . $this->request->get['fulfillment_id'] . (!empty($this->request->get['filter_date']) ? '&filter_date=' . $this->request->get['filter_date'] : ''), 'SSL');
 
         $data['token'] = $this->session->data['token'];
 
@@ -318,7 +324,7 @@ class ControllerOpenbayFba extends Controller {
                     'displayable_order_date_time' => $fulfillment_order['displayable_order_date_time'],
                     'shipping_speed_category' => $fulfillment_order['shipping_speed_category'],
                     'fulfillment_order_status' => $fulfillment_order['fulfillment_order_status'],
-                    'edit' => $this->url->link('openbay/fba/fulfillment', 'token=' . $this->session->data['token'] . '&fulfillment_id=' . $fulfillment_order['seller_fulfillment_order_id'], 'SSL'),
+                    'edit' => $this->url->link('openbay/fba/fulfillment', 'token=' . $this->session->data['token'] . '&fulfillment_id=' . $fulfillment_order['seller_fulfillment_order_id'] . (!empty($data['filter_date']) ? '&filter_date=' . $data['filter_date'] : ''), 'SSL'),
                 );
             }
         }
@@ -349,16 +355,16 @@ class ControllerOpenbayFba extends Controller {
     }
 
     public function cancelFulfillment() {
-        $response = $this->openbay->fba->call("v1/fba/fulfillments/" . $this->request->get['fulfillment_id'] . "/cancel/", array(), 'POST');
+        $response = $this->openbay->fba->call("v1/fba/fulfillments/" . $this->request->post['seller_fulfillment_order_id'] . "/cancel/", array(), 'POST');
 
-        echo '<pre>';
-        print_r($response);
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($response));
     }
 
     public function shipFulfillment() {
-        $response = $this->openbay->fba->call("v1/fba/fulfillments/" . $this->request->get['fulfillment_id'] . "/ship/", array(), 'POST');
+        $response = $this->openbay->fba->call("v1/fba/fulfillments/" . $this->request->post['seller_fulfillment_order_id'] . "/ship/", array(), 'POST');
 
-        echo '<pre>';
-        print_r($response);
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($response));
     }
 }

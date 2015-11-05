@@ -22,8 +22,10 @@ $_['entry_button_ship']     				= 'Ship fulfillment';
 $_['text_no_results'] 						= 'No fulfillment\'s found on Amazon';
 $_['text_fulfillment_list'] 				= 'Amazon Fulfillment list';
 $_['text_form'] 							= 'Amazon Fulfillment';
-$_['text_ship_success'] 					= 'Fulfillment has been confirmed to ship';
-$_['text_cancel_success'] 					= 'Fulfillment has been cancelled';
+$_['text_ship_success'] 					= 'Fulfillment has been confirmed to ship, it may take a few minutes for Amazon to update';
+$_['text_cancel_success'] 					= 'Fulfillment has been cancelled, it may take a few minutes for Amazon to update';
+$_['text_cancel_confirm'] 					= 'Are you sure you want to cancel this fulfillment?';
+$_['text_ship_confirm'] 					= 'Are you sure you want to ship this fulfillment?';
 
 // Columns
 $_['column_sku'] 							= 'SKU';

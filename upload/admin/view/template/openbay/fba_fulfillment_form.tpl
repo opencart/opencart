@@ -23,7 +23,7 @@
         <h3 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $text_form; ?></h3>
       </div>
       <div class="panel-body">
-        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-attribute" class="form-horizontal">
+        <div class="form-horizontal">
           <fieldset>
             <legend><?php echo $heading_order_info; ?></legend>
             <div class="form-group">
@@ -66,19 +66,20 @@
               <label class="col-sm-2 control-label" for="input-fulfillment-order-status"><?php echo $entry_fulfillment_order_status; ?></label>
               <div class="col-sm-10">
                 <input disabled type="text" name="fulfillment_order_status" value="<?php echo $response['fulfillment_order_status']; ?>" placeholder="<?php echo $entry_fulfillment_order_status; ?>" id="input-fulfillment-order-status" class="form-control" />
+              </div>
             </div>
 
             <?php if ($can_cancel === true) { ?>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="button-cancel"><?php echo $entry_button_cancel; ?></label>
-                <div class="col-sm-10"><button data-toggle="tooltip" title="<?php echo $entry_button_cancel; ?>" class="btn btn-primary btn-danger" id="button-cancel"><i class="fa fa-times"></i></button></div>
+                <div class="col-sm-10"><a data-toggle="tooltip" title="<?php echo $entry_button_cancel; ?>" class="btn btn-primary btn-danger" id="button-cancel"><i class="fa fa-times"></i></a></div>
               </div>
             <?php } ?>
 
             <?php if ($can_ship === true) { ?>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="button-ship"><?php echo $entry_button_ship; ?></label>
-                <div class="col-sm-10"><button data-toggle="tooltip" title="<?php echo $entry_button_ship; ?>" class="btn btn-primary btn-danger" id="button-ship"><i class="fa fa-truck"></i></button></div>
+                <div class="col-sm-10"><a data-toggle="tooltip" title="<?php echo $entry_button_ship; ?>" class="btn btn-primary btn-danger" id="button-ship"><i class="fa fa-truck"></i></a></div>
               </div>
             <?php } ?>
 
@@ -122,46 +123,58 @@
               </table>
             </div>
           </fieldset>
-        </form>
+        </div>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
 $('#button-cancel').click(function() {
+  if (!confirm("<?php echo $text_cancel_confirm; ?>")) {
+    return;
+  }
+
   $.ajax({
-    url: 'index.php?route=openbay/fba/cancel&token=<?php echo $token; ?>',
+    url: 'index.php?route=openbay/fba/cancelfulfillment&token=<?php echo $token; ?>',
     dataType: 'json',
     method: 'POST',
-    data: { 'seller_fulfillment_order_id' : $('#seller-fulfillment-order-id').val() },
+    data: { 'seller_fulfillment_order_id' : $('#input-seller-fulfillment-order-id').val() },
     beforeSend: function() {
       $('#button-cancel').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+      $('.alert').remove();
     },
     success: function(json) {
-      if (json.error == false) {
-        $('#button-ship').before('<div class="alert alert-success"><?php echo $text_cancel_success; ?></div>').hide();
-
-
-
-
-        // reload the page to get new status.
+      if (json.error === false) {
+        $('#button-cancel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $text_cancel_success; ?></div>').hide();
       } else {
-        $('#button-ship').before('<div class="alert alert-danger"><?php echo $error_cancel; ?></div>').html('<i class="fa fa-times fa-lg"></i>').show();
+        if (json.error_messages) {
+          $.each(json.error_messages, function(error_key, error_message) {
+            $('#button-cancel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> (' + error_message.code + ') ' + error_message.message + '</div>');
+          });
+        } else {
+          $('#button-cancel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_cancel; ?></div>').html('<i class="fa fa-times fa-lg"></i>').show();
+        }
+
       }
+      $('#button-cancel').empty().html('<i class="fa fa-times fa-lg"></i>').removeAttr('disabled');
     },
     failure: function() {
       $('#button-cancel').empty().html('<i class="fa fa-times fa-lg"></i>').removeAttr('disabled');
     }
   });
 });
+
 $('#button-ship').click(function() {
+  if (!confirm("<?php echo $text_ship_confirm; ?>")) {
+    return;
+  }
+
   $.ajax({
-    url: 'index.php?route=openbay/fba/ship&token=<?php echo $token; ?>',
-    dataType: 'json',
+    url: 'index.php?route=openbay/fba/shipfulfillment&token=<?php echo $token; ?>',
     method: 'POST',
-    data: { 'seller_fulfillment_order_id' : $('#seller-fulfillment-order-id').val() },
+    data: { 'seller_fulfillment_order_id' : $('#input-seller-fulfillment-order-id').val() },
     beforeSend: function() {
-      $('#button-cancel').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+      $('#button-ship').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
     },
     success: function(json) {
       if (json.error == false) {

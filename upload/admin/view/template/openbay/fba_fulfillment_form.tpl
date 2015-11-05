@@ -29,43 +29,43 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-seller-fulfillment-order-id"><?php echo $entry_seller_fulfillment_order_id; ?></label>
               <div class="col-sm-10">
-                <input disabled type="text" name="seller_fulfillment_order_id" value="<?php echo $response['body']['fulfillment_order']['seller_fulfillment_order_id']; ?>" placeholder="<?php echo $entry_seller_fulfillment_order_id; ?>" id="input-seller-fulfillment-order-id" class="form-control disabled" />
+                <input disabled type="text" name="seller_fulfillment_order_id" value="<?php echo $response['seller_fulfillment_order_id']; ?>" placeholder="<?php echo $entry_seller_fulfillment_order_id; ?>" id="input-seller-fulfillment-order-id" class="form-control disabled" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-displayable-order-id"><?php echo $entry_displayable_order_id; ?></label>
               <div class="col-sm-10">
-                <input disabled type="text" name="displayable_order_id" value="<?php echo $response['body']['fulfillment_order']['displayable_order_id']; ?>" placeholder="<?php echo $entry_displayable_order_id; ?>" id="input-displayable-order-id" class="form-control" />
+                <input disabled type="text" name="displayable_order_id" value="<?php echo $response['displayable_order_id']; ?>" placeholder="<?php echo $entry_displayable_order_id; ?>" id="input-displayable-order-id" class="form-control" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-displayable-date"><?php echo $entry_displayable_date; ?></label>
               <div class="col-sm-10">
-                <input disabled type="text" name="displayable_date" value="<?php echo $response['body']['fulfillment_order']['displayable_order_date_time']; ?>" placeholder="<?php echo $entry_displayable_date; ?>" id="input-displayable-date" class="form-control" />
+                <input disabled type="text" name="displayable_date" value="<?php echo $response['displayable_order_date_time']; ?>" placeholder="<?php echo $entry_displayable_date; ?>" id="input-displayable-date" class="form-control" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-displayable-comment"><?php echo $entry_displayable_comment; ?></label>
               <div class="col-sm-10">
-                <input disabled type="text" name="displayable_comment" value="<?php echo $response['body']['fulfillment_order']['displayable_order_comment']; ?>" placeholder="<?php echo $entry_displayable_comment; ?>" id="input-displayable-comment" class="form-control" />
+                <input disabled type="text" name="displayable_comment" value="<?php echo $response['displayable_order_comment']; ?>" placeholder="<?php echo $entry_displayable_comment; ?>" id="input-displayable-comment" class="form-control" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-shipping-speed-category"><?php echo $entry_shipping_speed_category; ?></label>
               <div class="col-sm-10">
-                <input disabled type="text" name="shipping_speed_category" value="<?php echo $response['body']['fulfillment_order']['shipping_speed_category']; ?>" placeholder="<?php echo $entry_shipping_speed_category; ?>" id="input-shipping-speed-category" class="form-control" />
+                <input disabled type="text" name="shipping_speed_category" value="<?php echo $response['shipping_speed_category']; ?>" placeholder="<?php echo $entry_shipping_speed_category; ?>" id="input-shipping-speed-category" class="form-control" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-fulfillment-policy"><?php echo $entry_fulfillment_policy; ?></label>
               <div class="col-sm-10">
-                <input disabled type="text" name="fulfillment_policy" value="<?php echo $response['body']['fulfillment_order']['fulfillment_policy']; ?>" placeholder="<?php echo $entry_fulfillment_policy; ?>" id="input-fulfillment-policy" class="form-control" />
+                <input disabled type="text" name="fulfillment_policy" value="<?php echo $response['fulfillment_policy']; ?>" placeholder="<?php echo $entry_fulfillment_policy; ?>" id="input-fulfillment-policy" class="form-control" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-fulfillment-order-status"><?php echo $entry_fulfillment_order_status; ?></label>
               <div class="col-sm-10">
-                <input disabled type="text" name="fulfillment_order_status" value="<?php echo $response['body']['fulfillment_order']['fulfillment_order_status']; ?>" placeholder="<?php echo $entry_fulfillment_order_status; ?>" id="input-fulfillment-order-status" class="form-control" />
+                <input disabled type="text" name="fulfillment_order_status" value="<?php echo $response['fulfillment_order_status']; ?>" placeholder="<?php echo $entry_fulfillment_order_status; ?>" id="input-fulfillment-order-status" class="form-control" />
             </div>
 
             <?php if ($can_cancel === true) { ?>
@@ -85,7 +85,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-notification-email-list"><?php echo $entry_notification_email_list; ?></label>
               <div class="col-sm-10">
-                <input disabled type="text" name="notification_email_list" value="<?php echo $response['body']['fulfillment_order']['notification_email_list']; ?>" placeholder="<?php echo $entry_notification_email_list; ?>" id="input-notification-email-list" class="form-control" />
+                <input disabled type="text" name="notification_email_list" value="<?php echo $response['notification_email_list']; ?>" placeholder="<?php echo $entry_notification_email_list; ?>" id="input-notification-email-list" class="form-control" />
               </div>
             </div>
 
@@ -107,7 +107,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <?php foreach ($response['body']['fulfillment_order_items'] as $item) { ?>
+                  <?php foreach ($response['items'] as $item) { ?>
                     <tr>
                       <td class="text-left"><?php echo $item['seller_sku']; ?></td>
                       <td class="text-left"><?php echo $item['seller_fulfillment_order_item_id']; ?></td>

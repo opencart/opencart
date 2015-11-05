@@ -70,7 +70,7 @@ class fba {
 			echo 'call() - Curl Failed ' . curl_error($ch) . ' ' . curl_errno($ch);
 			$this->log('call() - Curl Failed ' . curl_error($ch) . ' ' . curl_errno($ch));
 
-			$response = array('error' => true, 'body' => null, 'response_http' => 0);
+			$response = array('error' => true, 'error_messages' => array(), 'body' => null, 'response_http' => 0);
 		} else {
 			$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
@@ -82,7 +82,19 @@ class fba {
 				$result = preg_replace('/[^(\x20-\x7F)]*/', '', $result);
 			}
 
-			$response = array('error' => false, 'body' => json_decode($result, 1), 'response_http' => $http_code);
+			$result_parsed = json_decode($result, 1);
+
+			$response = array(
+				'error' => false,
+				'error_messages' => array(),
+				'body' => $result_parsed['result'],
+				'response_http' => $http_code
+			);
+
+			if (!empty($result_parsed['error'])) {
+				$response['error'] = true;
+				$response['error_messages'] = $result_parsed['errors'];
+			}
 		}
 
 		curl_close($ch);

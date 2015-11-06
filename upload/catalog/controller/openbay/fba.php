@@ -4,27 +4,75 @@ class ControllerOpenbayFba extends Controller {
 		if (!empty($order_id)) {
 			$this->load->model('openbay/fba_order');
 			$this->load->model('checkout/order');
+			$this->load->model('account/order');
+			$this->load->model('catalog/product');
 
 			$this->openbay->fba->log('Event fired for order ID: ' . $order_id);
 
 			$order = $this->model_checkout_order->getOrder($order_id);
 
-			$this->openbay->fba->log(print_r($order, true));
-
-			// does the status now match the status where a new fulfillment is triggered?
 			if ($this->config->get('openbay_fba_order_trigger_status') == $order['order_status_id']) {
+				$order_products = $this->model_account_order->getOrderProducts($order_id);
+
+				$fulfillment_items = array();
+
+				foreach ($order_products as $order_product) {
+					$product = $this->model_catalog_product->getProduct($order_product['product_id']);
+
+					$this->openbay->fba->log(print_r($product, true));
+
+					// check for fba
+					if ($product['location'] == 'FBA') {
+						$fulfillment_items[] = array(
+							'order_product' => $order_product,
+							'product' => $product,
+						);
+					}
+				}
+
+				// are any fba items?
+				if (!empty($fulfillment_items)) {
+					$request = array();
+
+					$datetime = new DateTime($order['date_added']);
+					$request['displayable_order_datetime'] = $datetime->format(DateTime::ISO8601);
+
+					$request['seller_fulfillment_order_id'] = $this->config->get('openbay_fba_order_prefix').$order_id;
+					$request['displayable_order_id'] = $order_id;
+					$request['displayable_order_comment'] = '';
+					$request['shipping_speed_category'] = $this->config->get('openbay_fba_shipping_speed');
+					$request['fulfillment_action'] = ($this->config->get('openbay_fba_send_orders') == 1 ? 'Ship' : 'Hold');
+					$request['fulfillment_policy'] = $this->config->get('openbay_fba_fulfill_policy');
+
+					$request['destination_address'] = array(
+						'name' => '',
+						'line_1' => '',
+						'line_2' => '',
+						'line_3' => '',
+						'state_or_province_code' => '',
+						'city' => '',
+						'country_code' => '',
+						'postal_code' => '',
+					);
+
+					$request['items'] = array();
+
+					// create the payload to send over to FBA
+
+					// validation?
+
+					// check for any settings about partially filled orders?
+
+					// try the request
+
+					// catch errors
+
+					// sned email to admin about errors or confirmation
+				}
 
 
-				// loop over the content to see what items are FBA and what are merchant fulfilled
-
-				// create the payload to send over to FBA
-
-				// prepend the order number with the config prepend setting option to odentify
 			}
 
-
-
-			// does it now match the status where it should be cancelled?
 			if ($this->config->get('openbay_fba_cancel_order_trigger_status') != 0) {
 				if ($this->config->get('openbay_fba_cancel_order_trigger_status') == $order['order_status_id']) {
 					$response = $this->openbay->fba->call("v1/fba/fulfillments/" . $this->request->post['seller_fulfillment_order_id'] . "/cancel/", array(), 'POST');

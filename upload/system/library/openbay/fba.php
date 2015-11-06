@@ -1,8 +1,6 @@
 <?php
 namespace openbay;
 
-//curl_setopt($curl, , "DELETE");
-
 class fba {
 	private $api_key;
 	private $api_account_id;

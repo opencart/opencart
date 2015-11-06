@@ -21,6 +21,7 @@ class ModelOpenbayFba extends Model {
         $setting["openbay_fba_cancel_order_trigger_status"] = 7;
         $setting["openbay_fba_fulfill_policy"] = 'FillAllAvailable';
         $setting["openbay_fba_shipping_speed"] = 'Standard';
+        $setting["openbay_fba_order_prefix"] = 'OC-';
 
 		$this->model_setting_setting->editSetting('openbay_fba', $setting);
     }
@@ -43,8 +44,6 @@ class ModelOpenbayFba extends Model {
             $settings = $this->model_setting_setting->getSetting('openbay_fba');
 
             if ($settings) {
-
-
                 if (!$this->config->get('openbay_amazon_processing_listing_reports')) {
                     $settings['openbay_amazon_processing_listing_reports'] = array();
                 }

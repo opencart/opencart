@@ -19,6 +19,8 @@ $_['text_priority']           	= 'Priority';
 $_['text_fillorkill']           = 'Fill or Kill';
 $_['text_fillall']           	= 'Fill All';
 $_['text_fillallavailable']     = 'Fill All Available';
+$_['text_prefix_warning']     	= 'Do not change this setting after orders have been sent to Amazon, only set this when you first install.';
+$_['text_disabled_cancel']     	= 'Disabled - do not automatically cancel fulfillments';
 
 // Entry
 $_['entry_api_key']            	= 'API key';
@@ -29,6 +31,7 @@ $_['entry_shipping_speed']      = 'Default shipping speed';
 $_['entry_debug_log']           = 'Enable debug logging';
 $_['entry_new_order_status']    = 'New fulfillment trigger';
 $_['entry_cancel_order_status'] = 'Cancel fulfillment trigger';
+$_['entry_order_id_prefix'] 	= 'Order ID Prefix';
 
 // Help
 $_['help_api_key']            	= 'This is your API key, obtain this from your OpenBay Pro account area';
@@ -39,6 +42,7 @@ $_['help_shipping_speed']  		= 'This is the default shipping speed category to a
 $_['help_debug_log']  		    = 'Debug logs will record information to a log file about actions the module does. This should be left enabled to help find the cause of any problems.';
 $_['help_new_order_status']  	= 'This is the order status which will trigger the order to be created for fulfillment. Ensure that this is using a status only after you have received payment.';
 $_['help_cancel_order_status']  = 'This is the order status which will trigger the fulfillment to be cancelled (if possible).';
+$_['help_order_id_prefix']  	= 'Having an order prefix will help identify orders that have come from your store not from other integrations. This is very helpful when merchants sell on many marketplaces and use FBA';
 
 // Error
 $_['error_api_connect']         = 'Failed to connect to the API';

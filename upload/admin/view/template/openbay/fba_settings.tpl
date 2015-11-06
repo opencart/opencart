@@ -50,15 +50,15 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="fba_token"><?php echo $entry_api_key; ?></span></label>
+            <label class="col-sm-2 control-label" for="openbay_fba_api_key"><span data-toggle="tooltip" data-container="#tab-content" title="<?php echo $help_api_key; ?>"><?php echo $entry_api_key; ?></span></label>
             <div class="col-sm-10">
-              <input type="text" name="openbay_fba_api_key" value="<?php echo $openbay_fba_api_key; ?>" placeholder="<?php echo $entry_api_key; ?>" id="openbay_fba_api_key" class="form-control credentials" />
+              <input type="text" name="openbay_fba_api_key" value="<?php echo $openbay_fba_api_key; ?>" placeholder="<?php echo $entry_api_key; ?>" id="openbay_fba_api_key" class="form-control" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="openbay_fba_api_account_id"><span data-toggle="tooltip" data-container="#tab-content" title="<?php echo $help_account_id; ?>"><?php echo $entry_account_id; ?></span></label>
             <div class="col-sm-10">
-              <input type="text" name="openbay_fba_api_account_id" value="<?php echo $openbay_fba_api_account_id; ?>" placeholder="<?php echo $entry_account_id; ?>" id="openbay_fba_api_account_id" class="form-control credentials" />
+              <input type="text" name="openbay_fba_api_account_id" value="<?php echo $openbay_fba_api_account_id; ?>" placeholder="<?php echo $entry_account_id; ?>" id="openbay_fba_api_account_id" class="form-control" />
             </div>
           </div>
           <div class="form-group">
@@ -87,6 +87,13 @@
                 <option value="0" selected="selected"><?php echo $text_no; ?></option>
                 <?php } ?>
               </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="openbay_fba_order_prefix"><span data-toggle="tooltip" data-container="#tab-content" title="<?php echo $help_order_id_prefix; ?>"><?php echo $entry_order_id_prefix; ?></span></label>
+            <div class="col-sm-10">
+              <p class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> <?php echo $text_prefix_warning; ?></p>
+              <input type="text" name="openbay_fba_order_prefix" value="<?php echo $openbay_fba_order_prefix ?>" placeholder="<?php echo $entry_order_id_prefix; ?>" id="openbay_fba_order_prefix" class="form-control" />
             </div>
           </div>
           <div class="form-group">
@@ -123,6 +130,7 @@
             <label class="col-sm-2 control-label" for="openbay_fba_cancel_order_trigger_status"><span data-toggle="tooltip" data-container="#tab-content" title="<?php echo $help_cancel_order_status; ?>"><?php echo $entry_cancel_order_status; ?></span></label>
             <div class="col-sm-10">
               <select name="openbay_fba_cancel_order_trigger_status" id="openbay_fba_cancel_order_trigger_status" class="form-control">
+                <option value="0"><?php echo $text_disabled_cancel; ?></option>
                 <?php foreach ($order_statuses as $status) { ?>
                 <option value="<?php echo $status['order_status_id']; ?>" <?php echo ($openbay_fba_cancel_order_trigger_status == $status['order_status_id'] ? ' selected=selected' :''); ?>><?php echo $status['name']; ?></option>
                 <?php } ?>

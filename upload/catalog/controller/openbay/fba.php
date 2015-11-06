@@ -45,17 +45,19 @@ class ControllerOpenbayFba extends Controller {
 					$request['fulfillment_policy'] = $this->config->get('openbay_fba_fulfill_policy');
 
 					$request['destination_address'] = array(
-						'name' => '',
-						'line_1' => '',
-						'line_2' => '',
+						'name' => $order['shipping_firstname'] . ' ' . $order['shipping_lastname'],
+						'line_1' => $order['shipping_address_1'],
+						'line_2' => $order['shipping_address_2'],
 						'line_3' => '',
-						'state_or_province_code' => '',
-						'city' => '',
-						'country_code' => '',
-						'postal_code' => '',
+						'state_or_province_code' => $order['shipping_zone'],
+						'city' => $order['shipping_city'],
+						'country_code' => $order['shipping_iso_code_2'],
+						'postal_code' => $order['shipping_postcode'],
 					);
 
 					$request['items'] = array();
+
+					
 
 					// create the payload to send over to FBA
 

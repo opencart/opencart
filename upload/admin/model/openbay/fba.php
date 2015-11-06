@@ -2,7 +2,15 @@
 class ModelOpenbayFba extends Model {
     public function install() {
         $this->load->model('extension/event');
-        $this->model_extension_event->addEvent('openbay_fba', 'post.order.history.add', 'openbay/amazon/eventAddOrderHistory');
+
+        // register the event triggers
+        if (version_compare(VERSION, '2.0.1', '>=')) {
+            $this->load->model('extension/event');
+            $this->model_extension_event->addEvent('openbay_fba', 'post.order.history.add', 'openbay/fba/eventAddOrderHistory');
+        } else {
+            $this->load->model('tool/event');
+            $this->model_tool_event->addEvent('openbay_fba', 'post.order.history.add', 'openbay/fba/eventAddOrderHistory');
+        }
 
         // Default settings
         $setting = array();

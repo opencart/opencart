@@ -155,8 +155,9 @@ $('#button-cancel').click(function() {
           $('#button-cancel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_cancel; ?></div>').html('<i class="fa fa-times fa-lg"></i>').show();
         }
 
+        $('#button-cancel').empty().html('<i class="fa fa-times fa-lg"></i>').removeAttr('disabled');
       }
-      $('#button-cancel').empty().html('<i class="fa fa-times fa-lg"></i>').removeAttr('disabled');
+
     },
     failure: function() {
       $('#button-cancel').empty().html('<i class="fa fa-times fa-lg"></i>').removeAttr('disabled');
@@ -171,16 +172,26 @@ $('#button-ship').click(function() {
 
   $.ajax({
     url: 'index.php?route=openbay/fba/shipfulfillment&token=<?php echo $token; ?>',
+    dataType: 'json',
     method: 'POST',
     data: { 'seller_fulfillment_order_id' : $('#input-seller-fulfillment-order-id').val() },
     beforeSend: function() {
       $('#button-ship').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+      $('.alert').remove();
     },
     success: function(json) {
-      if (json.error == false) {
-        $('#button-ship').before('<div class="alert alert-success"><?php echo $text_ship_success; ?></div>').hide();
+      if (json.error === false) {
+        $('#button-ship').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $text_ship_success; ?></div>').hide();
       } else {
-        $('#button-ship').before('<div class="alert alert-danger"><?php echo $error_ship; ?></div>').html('<i class="fa fa-times fa-lg"></i>').show();
+        if (json.error_messages) {
+          $.each(json.error_messages, function(error_key, error_message) {
+            $('#button-ship').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> (' + error_message.code + ') ' + error_message.message + '</div>');
+          });
+        } else {
+          $('#button-ship').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_ship; ?></div>').html('<i class="fa fa-times fa-lg"></i>').show();
+        }
+
+        $('#button-ship').empty().html('<i class="fa fa-times fa-lg"></i>').removeAttr('disabled');
       }
     },
     failure: function() {

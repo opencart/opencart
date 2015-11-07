@@ -373,4 +373,13 @@ class ControllerOpenbayFba extends Controller {
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($response));
     }
+
+    public function resendFulfillment() {
+        /**
+         * order id
+         * ship or hold
+         *
+         * any other settings that the user can pre set in the settings area. This is a kind of manual over ride for sending an order to FBA
+         */
+    }
 }

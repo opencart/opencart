@@ -52,6 +52,8 @@ class fba {
 		}
 
 		if ($request_type == "POST") {
+			$this->log('Request body:');
+			$this->log(print_r($data, true));
 			$defaults[CURLOPT_POST] = json_encode($data);
 			$defaults[CURLOPT_POSTFIELDS] = json_encode($data);
 		} else {
@@ -81,6 +83,12 @@ class fba {
 			}
 
 			$result_parsed = json_decode($result, 1);
+
+			$this->log('Raw json response:');
+			$this->log($result);
+
+			$this->log('Parsed response:');
+			$this->log(print_r($result_parsed, true));
 
 			$response = array(
 				'error' => false,

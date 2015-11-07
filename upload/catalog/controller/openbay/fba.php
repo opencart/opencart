@@ -14,30 +14,39 @@ class ControllerOpenbayFba extends Controller {
 			if ($this->config->get('openbay_fba_order_trigger_status') == $order['order_status_id']) {
 				$order_products = $this->model_account_order->getOrderProducts($order_id);
 
+				$total_order_products = count($order_products);
+
 				$fulfillment_items = array();
 
 				foreach ($order_products as $order_product) {
 					$product = $this->model_catalog_product->getProduct($order_product['product_id']);
 
-					$this->openbay->fba->log(print_r($product, true));
-
-					// check for fba
 					if ($product['location'] == 'FBA') {
-						$fulfillment_items[] = array(
-							'order_product' => $order_product,
-							'product' => $product,
+						$fulfillment_items = array(
+							'seller_sku' => $product['sku'],
+							'quantity' => $order_product['quantity'],
+							'seller_fulfillment_order_item_id' => $this->config->get('openbay_fba_order_prefix') . $order_product['order_product_id'],
+							'per_unit_declared_value' => array(
+								'currency_code' => $order['currency_code'],
+								'value' => number_format($order_product['price'], 2)
+							),
 						);
 					}
 				}
 
-				// are any fba items?
+				$total_fulfillment_items = count($fulfillment_items);
+
+				/**
+				 * @todo add setting to disable new fulfillments if not all items can be filled by amazon
+				 */
+
 				if (!empty($fulfillment_items)) {
 					$request = array();
 
 					$datetime = new DateTime($order['date_added']);
 					$request['displayable_order_datetime'] = $datetime->format(DateTime::ISO8601);
 
-					$request['seller_fulfillment_order_id'] = $this->config->get('openbay_fba_order_prefix').$order_id;
+					$request['seller_fulfillment_order_id'] = $this->config->get('openbay_fba_order_prefix') . $order_id;
 					$request['displayable_order_id'] = $order_id;
 					$request['displayable_order_comment'] = '';
 					$request['shipping_speed_category'] = $this->config->get('openbay_fba_shipping_speed');
@@ -46,33 +55,31 @@ class ControllerOpenbayFba extends Controller {
 
 					$request['destination_address'] = array(
 						'name' => $order['shipping_firstname'] . ' ' . $order['shipping_lastname'],
-						'line_1' => $order['shipping_address_1'],
-						'line_2' => $order['shipping_address_2'],
-						'line_3' => '',
+						'line_1' => (!empty($order['shipping_company']) ? $order['shipping_company'] : $order['shipping_address_1']),
+						'line_2' => (!empty($order['shipping_company']) ? $order['shipping_address_1'] : $order['shipping_address_2']),
+						'line_3' => (!empty($order['shipping_company']) ? $order['shipping_address_2'] : ''),
 						'state_or_province_code' => $order['shipping_zone'],
 						'city' => $order['shipping_city'],
 						'country_code' => $order['shipping_iso_code_2'],
 						'postal_code' => $order['shipping_postcode'],
 					);
 
-					$request['items'] = array();
+					$request['items'] = $fulfillment_items;
 
-					
+					$response = $this->openbay->fba->call("v1/fba/fulfillments/", array(), 'POST');
 
-					// create the payload to send over to FBA
+					if ($response['response_http'] != 201) {
+						/**
+						 * @todo notify the admin about any errors
+						 */
+					}
 
-					// validation?
-
-					// check for any settings about partially filled orders?
-
-					// try the request
-
-					// catch errors
-
-					// sned email to admin about errors or confirmation
+					/**
+					 * @todo if setting is enabled for the admin to receive a success email
+					 */
+				} else {
+					$this->openbay->fba->log('No FBA items found for this order');
 				}
-
-
 			}
 
 			if ($this->config->get('openbay_fba_cancel_order_trigger_status') != 0) {

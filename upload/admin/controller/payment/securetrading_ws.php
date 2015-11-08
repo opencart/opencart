@@ -399,9 +399,7 @@ class ControllerPaymentSecureTradingWs extends Controller {
 			}
 		}
 
-		$this->template = 'payment/securetrading_ws_transactions.tpl';
-
-		$this->response->setOutput($this->render());
+		return $this->load->view('payment/securetrading_ws_transactions.tpl', $data);
 	}
 
 	public function order() {

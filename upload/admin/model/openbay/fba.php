@@ -6,11 +6,33 @@ class ModelOpenbayFba extends Model {
         // register the event triggers
         if (version_compare(VERSION, '2.0.1', '>=')) {
             $this->load->model('extension/event');
+            $this->model_extension_event->addEvent('openbay_fba', 'post.order.add', 'openbay/fba/eventAddOrder');
             $this->model_extension_event->addEvent('openbay_fba', 'post.order.history.add', 'openbay/fba/eventAddOrderHistory');
         } else {
             $this->load->model('tool/event');
+            $this->model_tool_event->addEvent('openbay_fba', 'post.order.add', 'openbay/fba/eventAddOrder');
             $this->model_tool_event->addEvent('openbay_fba', 'post.order.history.add', 'openbay/fba/eventAddOrderHistory');
         }
+
+        $this->db->query("
+				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "fba_order` (
+					`fba_order_id` INT(11) NOT NULL AUTO_INCREMENT,
+					`order_id` INT(11) NOT NULL,
+					`status` CHAR(10) NOT NULL,
+					PRIMARY KEY (`fba_order_id`)
+				) ENGINE=InnoDB  DEFAULT CHARSET=latin1;");
+
+        $this->db->query("
+				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "fba_order_fulfillment` (
+					`fba_order_fulfillment_id` INT(11) NOT NULL AUTO_INCREMENT,
+					`fba_order_id` INT(11) NOT NULL,
+				    `created` DATETIME NOT NULL,
+					`request_body` TEXT NOT NULL,
+					`response_body` TEXT NOT NULL,
+					`response_header_code` INT(3) NOT NULL,
+					PRIMARY KEY (`fba_order_fulfillment_id`),
+  				    KEY `fba_order_id` (`fba_order_id`)
+				) ENGINE=InnoDB  DEFAULT CHARSET=latin1;");
 
         // Default settings
         $setting = array();

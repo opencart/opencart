@@ -140,4 +140,18 @@ class fba {
 			$this->logger->write($data);
 		}
 	}
+
+	public function createFBAOrder($order_id) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "fba_order` SET `order_id` = '" . (int)$order_id . "', `status` = 0");
+
+		return $this->db->getLastId();
+	}
+
+	public function getFBAOrder($order_id) {
+
+	}
+
+	public function getFBAOrderFulfillments($order_id) {
+
+	}
 }

@@ -22,7 +22,7 @@ class ControllerOpenbayFba extends Controller {
 					$product = $this->model_catalog_product->getProduct($order_product['product_id']);
 
 					if ($product['location'] == 'FBA') {
-						$fulfillment_items = array(
+						$fulfillment_items[] = array(
 							'seller_sku' => $product['sku'],
 							'quantity' => $order_product['quantity'],
 							'seller_fulfillment_order_item_id' => $this->config->get('openbay_fba_order_prefix') . $order_product['order_product_id'],
@@ -48,7 +48,7 @@ class ControllerOpenbayFba extends Controller {
 
 					$request['seller_fulfillment_order_id'] = $this->config->get('openbay_fba_order_prefix') . $order_id;
 					$request['displayable_order_id'] = $order_id;
-					$request['displayable_order_comment'] = '';
+					$request['displayable_order_comment'] = 'none';
 					$request['shipping_speed_category'] = $this->config->get('openbay_fba_shipping_speed');
 					$request['fulfillment_action'] = ($this->config->get('openbay_fba_send_orders') == 1 ? 'Ship' : 'Hold');
 					$request['fulfillment_policy'] = $this->config->get('openbay_fba_fulfill_policy');
@@ -66,7 +66,9 @@ class ControllerOpenbayFba extends Controller {
 
 					$request['items'] = $fulfillment_items;
 
-					$response = $this->openbay->fba->call("v1/fba/fulfillments/", array(), 'POST');
+					// craete new request entry for the log table
+
+					$response = $this->openbay->fba->call("v1/fba/fulfillments/", $request, 'POST');
 
 					if ($response['response_http'] != 201) {
 						/**
@@ -98,8 +100,10 @@ class ControllerOpenbayFba extends Controller {
 			// how about notifications? does the merchant want a notification that here is a new fulfillment ready to be checked over?
 			// alert of any missing products that were not in FBA?
 			// any errors returned by FBA?
-
-			$this->model_openbay_fba_order->addOrderHistory($order_id);
 		}
+	}
+
+	public function eventAdOrder($order_id) {
+		$this->openbay->fba->createNewFulfillmentOrder($order_id);
 	}
 }

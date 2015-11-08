@@ -1,7 +1,7 @@
 <?php
 class ModelCatalogAttribute extends Model {
 	public function addAttribute($data) {
-		$this->event->trigger('pre.admin.attribute.add', $data);
+		$this->event->trigger('admin/attribute/addAttribute/before', $data);
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "attribute SET attribute_group_id = '" . (int)$data['attribute_group_id'] . "', sort_order = '" . (int)$data['sort_order'] . "'");
 

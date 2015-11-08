@@ -148,10 +148,25 @@ class fba {
 	}
 
 	public function getFBAOrder($order_id) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "fba_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 
+		if ($query->num_rows == 0) {
+			return false;
+		} else {
+			$fba_order = $query->row;
+			$fba_order['fulfillments'] = $this->getFBAOrderFulfillments($fba_order['fba_order_id']);
+
+			return $fba_order;
+		}
 	}
 
-	public function getFBAOrderFulfillments($order_id) {
+	public function getFBAOrderFulfillments($fba_order_id) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "fba_order_fulfillment` WHERE `fba_order_id` = '" . (int)$fba_order_id . "'");
 
+		if ($query->num_rows == 0) {
+			return false;
+		} else {
+			return $query->rows;
+		}
 	}
 }

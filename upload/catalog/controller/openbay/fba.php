@@ -74,6 +74,10 @@ class ControllerOpenbayFba extends Controller {
 						/**
 						 * @todo notify the admin about any errors
 						 */
+					} else {
+						// update the fulfillment status to a success
+
+
 					}
 
 					/**
@@ -103,7 +107,7 @@ class ControllerOpenbayFba extends Controller {
 		}
 	}
 
-	public function eventAdOrder($order_id) {
+	public function eventAddOrder($order_id) {
 		$this->openbay->fba->createNewFulfillmentOrder($order_id);
 	}
 }

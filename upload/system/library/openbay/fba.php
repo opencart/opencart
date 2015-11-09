@@ -142,9 +142,53 @@ class fba {
 	}
 
 	public function createFBAOrder($order_id) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "fba_order` SET `order_id` = '" . (int)$order_id . "', `status` = 0");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "fba_order` SET `order_id` = '" . (int)$order_id . "', `status` = 0, `created` = now()");
 
 		return $this->db->getLastId();
+	}
+
+	public function createFBAFulfillment($order_id, $request_body, $response_body, $header_code) {
+//`fba_order_id` INT(11) NOT NULL,
+//`created` DATETIME NOT NULL,
+//`request_body` TEXT NOT NULL,
+//`response_body` TEXT NOT NULL,
+//`response_header_code` INT(3) NOT NULL,
+
+		$this->db->query("
+			INSERT INTO `" . DB_PREFIX . "fba_order_fulfillment`
+				SET
+					`order_id` = '" . (int)$order_id . "',
+					`status` = 0,
+					`created` = now()
+		");
+
+		return $this->db->getLastId();
+
+	}
+
+	public function getAllFBAOrders($filter) {
+		$sql = "";
+
+		// start date filter
+		if (isset($filter['filter_start'])) {
+			$sql .= " AND `created` >= '".$filter['filter_start']."'";
+		}
+		// end date filter
+		if (isset($filter['filter_end'])) {
+			$sql .= " AND `created` <= '".$filter['filter_end']."'";
+		}
+		// status filter
+		if (isset($filter['filter_status'])) {
+			$sql .= " AND `filter_status` = '".$filter['filter_status']."'";
+		}
+
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "fba_order` WHERE 1 ".$sql);
+
+		if ($query->num_rows == 0) {
+			return false;
+		} else {
+			return $query->rows;
+		}
 	}
 
 	public function getFBAOrder($order_id) {

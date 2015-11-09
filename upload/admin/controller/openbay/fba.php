@@ -382,4 +382,26 @@ class ControllerOpenbayFba extends Controller {
          * any other settings that the user can pre set in the settings area. This is a kind of manual over ride for sending an order to FBA
          */
     }
+
+    public function orderList() {
+        $filters = array();
+
+        $orders = $this->openbay->fba->getAllFBAOrders($filters);
+
+        echo '<pre>';
+        print_r($orders);
+    }
+
+    public function order() {
+        if (!isset($this->request->get['order_id'])) {
+            $this->response->redirect($this->url->link('openbay/fba/orderList', 'token=' . $this->session->data['token'], 'SSL'));
+        }
+
+        $order_id = (int)$this->request->get['order_id'];
+
+        $order = $this->openbay->fba->getFBAOrder($order_id);
+
+        echo '<pre>';
+        print_r($order);
+    }
 }

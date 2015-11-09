@@ -19,6 +19,7 @@ class ModelOpenbayFba extends Model {
 					`fba_order_id` INT(11) NOT NULL AUTO_INCREMENT,
 					`order_id` INT(11) NOT NULL,
 					`status` CHAR(10) NOT NULL,
+				    `created` DATETIME NOT NULL,
 					PRIMARY KEY (`fba_order_id`)
 				) ENGINE=InnoDB  DEFAULT CHARSET=latin1;");
 

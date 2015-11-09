@@ -756,8 +756,8 @@ $(document).delegate('#button-payment-method', 'click', function() {
         data: $('#collapse-payment-method input[type=\'radio\']:checked, #collapse-payment-method input[type=\'checkbox\']:checked, #collapse-payment-method textarea'),
         dataType: 'json',
         beforeSend: function() {
-         	$('#button-payment-method').button('loading');
-		},
+        	$('#button-payment-method').button('loading');
+	},
         success: function(json) {
             $('.alert, .text-danger').remove();
 
@@ -790,6 +790,9 @@ $(document).delegate('#button-payment-method', 'click', function() {
                     }
                 });
             }
+        },
+        complete: function() {
+        	$('#button-payment-method').button('reset');
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

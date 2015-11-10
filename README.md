@@ -8,14 +8,14 @@ OpenCart is a free open source ecommerce platform for online merchants. OpenCart
 
 Read the instructions below before you create a bug report.
 
- 1. Search the [OpenCart forum](http://forum.opencart.com/viewforum.php?f=161), ask the community if they have seen the bug or know how to fix it.
+ 1. Search the [OpenCart forum](http://forum.opencart.com/viewforum.php?f=191), ask the community if they have seen the bug or know how to fix it.
  2. Check all open and closed issues on the [GitHub bug tracker](https://github.com/opencart/opencart/issues).
  3. If your bug is related to the OpenCart core code then please create a bug report on GitHub.
  4. READ the [changelog for the master branch](https://github.com/opencart/opencart/blob/master/changelog.md)
  5. Use [Google](http://www.google.com) to search for your issue.
  6. Make sure that your bug/issue is not related to your hosting environment.
 
-If you are not sure about your issue, it is always best to ask the community on our [bug forum thread](http://forum.opencart.com/viewforum.php?f=161&sid=f5208eb3888b13a5065be051362daa0d)
+If you are not sure about your issue, it is always best to ask the community on our [bug forum thread](http://forum.opencart.com/viewforum.php?f=191)
 
 **Important!**
 - If your bug report is not related to the core code (such as a 3rd party module or your server configuration) then the issue will be closed without a reason. You must contact the extension developer, use the forum or find a commercial partner to resolve a 3rd party code issue.

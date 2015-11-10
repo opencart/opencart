@@ -5,7 +5,8 @@ $_['text_openbay']					= 'OpenBay Pro';
 $_['text_fba']						= 'Fulfillment By Amazon';
 
 // Buttons
-//$_['button_pull_orders']        	= 'Start';
+$_['button_ship_now']        		= 'Ship fulfillment now';
+$_['button_resend']					= 'Resend fulfillment request';
 
 // Entry
 $_['entry_start_date']             	= 'Start date (format YYYY-MM-DD)';

@@ -376,12 +376,112 @@ class ControllerOpenbayFba extends Controller {
     }
 
     public function resendFulfillment() {
-        /**
-         * order id
-         * ship or hold
-         *
-         * any other settings that the user can pre set in the settings area. This is a kind of manual over ride for sending an order to FBA
-         */
+        $this->load->language('openbay/fba_fulfillment');
+
+        $errors = array();
+
+        if (empty($this->request->get['order_id'])) {
+            $this->session->data['error'] = $this->language->get('error_missing_id');
+
+            $this->response->redirect($this->url->link('openbay/fba/orderlist', 'token=' . $this->session->data['token'], 'SSL'));
+        } else {
+
+            $order_id = (int)$this->request->get['order_id'];
+
+            $this->openbay->fba->log('resendFulfillment request for order ID: ' . $order_id);
+
+            $this->load->model('sale/order');
+            $this->load->model('catalog/product');
+
+            $order = $this->model_sale_order->getOrder($order_id);
+
+            if ($order['shipping_method']) {
+                if ($this->config->get('openbay_fba_order_trigger_status') == $order['order_status_id']) {
+                    $fba_fulfillment_id = $this->openbay->fba->createFBAFulfillmentID($order_id);
+
+                    $order_products = $this->model_sale_order->getOrderProducts($order_id);
+
+                    $fulfillment_items = array();
+
+                    foreach ($order_products as $order_product) {
+                        $product = $this->model_catalog_product->getProduct($order_product['product_id']);
+
+                        if ($product['location'] == 'FBA') {
+                            $fulfillment_items[] = array(
+                                'seller_sku' => $product['sku'],
+                                'quantity' => $order_product['quantity'],
+                                'seller_fulfillment_order_item_id' => $this->config->get('openbay_fba_order_prefix') . $fba_fulfillment_id . '-' . $order_product['order_product_id'],
+                                'per_unit_declared_value' => array(
+                                    'currency_code' => $order['currency_code'],
+                                    'value' => number_format($order_product['price'], 2)
+                                ),
+                            );
+                        }
+                    }
+
+                    $total_fulfillment_items = count($fulfillment_items);
+
+                    if (!empty($fulfillment_items)) {
+                        $request = array();
+
+                        $datetime = new DateTime($order['date_added']);
+                        $request['displayable_order_datetime'] = $datetime->format(DateTime::ISO8601);
+
+                        $request['seller_fulfillment_order_id'] = $this->config->get('openbay_fba_order_prefix') . $order_id . '-' . $fba_fulfillment_id;
+                        $request['displayable_order_id'] = $order_id;
+                        $request['displayable_order_comment'] = 'none';
+                        $request['shipping_speed_category'] = $this->config->get('openbay_fba_shipping_speed');
+                        $request['fulfillment_action'] = ($this->config->get('openbay_fba_send_orders') == 1 ? 'Ship' : 'Hold');
+                        $request['fulfillment_policy'] = $this->config->get('openbay_fba_fulfill_policy');
+
+                        $request['destination_address'] = array(
+                            'name' => $order['shipping_firstname'] . ' ' . $order['shipping_lastname'],
+                            'line_1' => (!empty($order['shipping_company']) ? $order['shipping_company'] : $order['shipping_address_1']),
+                            'line_2' => (!empty($order['shipping_company']) ? $order['shipping_address_1'] : $order['shipping_address_2']),
+                            'line_3' => (!empty($order['shipping_company']) ? $order['shipping_address_2'] : ''),
+                            'state_or_province_code' => $order['shipping_zone'],
+                            'city' => $order['shipping_city'],
+                            'country_code' => $order['shipping_iso_code_2'],
+                            'postal_code' => $order['shipping_postcode'],
+                        );
+
+                        $request['items'] = $fulfillment_items;
+
+                        $response = $this->openbay->fba->call("v1/fba/fulfillments/", $request, 'POST');
+
+                        if ($response['response_http'] != 201) {
+                            /**
+                             * @todo notify the admin about any errors
+                             */
+                            $errors[] = $this->language->get('error_amazon_request');
+
+                            $this->openbay->fba->updateFBAOrderStatus($order_id, 1);
+                        } else {
+                            if ($this->config->get('openbay_fba_send_orders') == 1) {
+                                $this->openbay->fba->updateFBAOrderStatus($order_id, 3);
+                            } else {
+                                $this->openbay->fba->updateFBAOrderStatus($order_id, 2);
+                            }
+
+                            $this->session->data['success'] = $this->language->get('text_fulfillment_sent');
+                        }
+
+                        // craete new request entry for the log table
+                        $this->openbay->fba->populateFBAFulfillment($order_id, json_encode($request), json_encode($response), $response['response_http'], $fba_fulfillment_id);
+                    } else {
+                        $errors[] = $this->language->get('error_no_items');
+                    }
+                }
+            } else {
+                $errors[] = $this->language->get('error_no_shipping');
+            }
+        }
+
+        if ($errors) {
+            $this->session->data['error'] = $errors;
+        }
+
+        $this->response->redirect($this->url->link('openbay/fba/order', 'token=' . $this->session->data['token'] . '&order_id=' . $order_id, 'SSL'));
     }
 
     public function orderList() {
@@ -444,7 +544,7 @@ class ControllerOpenbayFba extends Controller {
 
         $data['orders'] = array();
 
-        $orders = $this->openbay->fba->getAllFBAOrders($filters);
+        $orders = $this->openbay->fba->getFBAOrders($filters);
 
         if (!empty($orders)) {
             foreach ($orders as $order) {
@@ -508,6 +608,7 @@ class ControllerOpenbayFba extends Controller {
 
         $data['order_id'] = (int)$this->request->get['order_id'];
         $data['order_link'] = $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $order_id, 'SSL');
+        $data['resend_link'] = $this->url->link('openbay/fba/resendfulfillment', 'token=' . $this->session->data['token'] . '&order_id=' . $order_id, 'SSL');
 
         $data['breadcrumbs'] = array();
 
@@ -631,6 +732,20 @@ class ControllerOpenbayFba extends Controller {
                 'fba'		       => ($product_info['location'] == 'FBA' ? 1 : 0),
                 'href'     		   => $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product['product_id'], 'SSL'),
             );
+        }
+
+        if (isset($this->session->data['error'])) {
+            $data['error_warning'] = $this->session->data['error'];
+            unset($this->session->data['error']);
+        } else {
+            $data['error_warning'] = '';
+        }
+
+        if (isset($this->session->data['success'])) {
+            $data['success'] = $this->session->data['success'];
+            unset($this->session->data['success']);
+        } else {
+            $data['success'] = '';
         }
 
 

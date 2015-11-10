@@ -13,6 +13,8 @@ class ControllerOpenbayFba extends Controller {
 
 			if ($order['shipping_method']) {
 				if ($this->config->get('openbay_fba_order_trigger_status') == $order['order_status_id']) {
+					$fba_fulfillment_id = $this->openbay->fba->createFBAFulfillmentID($order_id);
+
 					$order_products = $this->model_account_order->getOrderProducts($order_id);
 
 					$total_order_products = count($order_products);
@@ -26,7 +28,7 @@ class ControllerOpenbayFba extends Controller {
 							$fulfillment_items[] = array(
 								'seller_sku' => $product['sku'],
 								'quantity' => $order_product['quantity'],
-								'seller_fulfillment_order_item_id' => $this->config->get('openbay_fba_order_prefix') . $order_product['order_product_id'],
+								'seller_fulfillment_order_item_id' => $this->config->get('openbay_fba_order_prefix') . $fba_fulfillment_id . '-' . $order_product['order_product_id'],
 								'per_unit_declared_value' => array(
 									'currency_code' => $order['currency_code'],
 									'value' => number_format($order_product['price'], 2)
@@ -47,7 +49,7 @@ class ControllerOpenbayFba extends Controller {
 						$datetime = new DateTime($order['date_added']);
 						$request['displayable_order_datetime'] = $datetime->format(DateTime::ISO8601);
 
-						$request['seller_fulfillment_order_id'] = $this->config->get('openbay_fba_order_prefix') . $order_id;
+						$request['seller_fulfillment_order_id'] = $this->config->get('openbay_fba_order_prefix') . $order_id . '-' . $fba_fulfillment_id;
 						$request['displayable_order_id'] = $order_id;
 						$request['displayable_order_comment'] = 'none';
 						$request['shipping_speed_category'] = $this->config->get('openbay_fba_shipping_speed');
@@ -83,21 +85,21 @@ class ControllerOpenbayFba extends Controller {
 						}
 
 						// craete new request entry for the log table
-						$this->openbay->fba->createFBAFulfillment($order_id, json_encode($request), json_encode($response), $response['response_http']);
+						$this->openbay->fba->populateFBAFulfillment($order_id, json_encode($request), json_encode($response), $response['response_http'], $fba_fulfillment_id);
 					} else {
 						$this->openbay->fba->log('No FBA items found for this order');
 					}
 				}
 
 				if ($this->config->get('openbay_fba_cancel_order_trigger_status') != 0) {
-					if ($this->config->get('openbay_fba_cancel_order_trigger_status') == $order['order_status_id']) {
-						$response = $this->openbay->fba->call("v1/fba/fulfillments/" . $this->request->post['seller_fulfillment_order_id'] . "/cancel/", array(), 'POST');
-
-						/**
-						 * @todo check the response for any errors and sent alert to admin if there is a problem
-						 **/
-
-					}
+//					if ($this->config->get('openbay_fba_cancel_order_trigger_status') == $order['order_status_id']) {
+//						$response = $this->openbay->fba->call("v1/fba/fulfillments/" . $this->request->post['seller_fulfillment_order_id'] . "/cancel/", array(), 'POST');
+//
+//						/**
+//						 * @todo check the response for any errors and sent alert to admin if there is a problem
+//						 **/
+//
+//					}
 				} else {
 					$this->openbay->fba->log('FBA is not configured to automatically cancel fulfillments');
 				}
@@ -117,7 +119,7 @@ class ControllerOpenbayFba extends Controller {
 		$order = $this->model_checkout_order->getOrder($order_id);
 
 		if ($order['shipping_method']) {
-			$this->openbay->fba->createFBAOrder($order_id);
+			$this->openbay->fba->createFBAOrderID($order_id);
 		}
 	}
 }

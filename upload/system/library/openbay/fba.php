@@ -149,7 +149,7 @@ class fba {
 		}
 	}
 
-	public function createFBAOrder($order_id) {
+	public function createFBAOrderID($order_id) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "fba_order` SET `order_id` = '" . (int)$order_id . "', `status` = 0, `created` = now()");
 
 		return $this->db->getLastId();
@@ -159,22 +159,35 @@ class fba {
 		$this->db->query("UPDATE `" . DB_PREFIX . "fba_order` SET `status` = '" . (int)$status_id . "' WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 	}
 
-	public function createFBAFulfillment($order_id, $request_body, $response_body, $header_code) {
+	public function createFBAFulfillmentID($order_id) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "fba_order_fulfillment` SET `created` = now(), `order_id` = '" . (int)$order_id . "'");
+
+		$id = $this->db->getLastId();
+
+		$this->db->query("UPDATE `" . DB_PREFIX . "fba_order` SET `fba_order_fulfillment_id` = '" . (int)$id . "' WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
+
+		return $id;
+	}
+
+	public function populateFBAFulfillment($order_id, $request_body, $response_body, $header_code, $fba_order_fulfillment_id) {
 		$this->db->query("
-			INSERT INTO `" . DB_PREFIX . "fba_order_fulfillment`
+			UPDATE `" . DB_PREFIX . "fba_order_fulfillment`
 				SET
-					`order_id` = '" . (int)$order_id . "',
-					`created` = now(),
 					`request_body` = '" . $this->db->escape($request_body) . "',
 					`response_body` = '" . $this->db->escape($response_body) . "',
 					`response_header_code` = '" . (int)$header_code . "'
+				WHERE
+					`fba_order_fulfillment_id` = '" . (int)$fba_order_fulfillment_id . "'
 		");
 
-		return $this->db->getLastId();
+		$insert_id = $this->db->getLastId();
 
+		$this->db->query("UPDATE `" . DB_PREFIX . "fba_order` SET `fba_order_fulfillment_id` = '" . (int)$fba_order_fulfillment_id . "' WHERE `order_id` = '" . (int)$order_id . "'");
+
+		return $insert_id;
 	}
 
-	public function getAllFBAOrders($filter) {
+	public function getFBAOrders($filter) {
 		$sql = "";
 
 		// start date filter
@@ -190,7 +203,7 @@ class fba {
 			$sql .= " AND `status` = '".$filter['filter_status']."'";
 		}
 
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "fba_order` WHERE 1 ".$sql);
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "fba_order` WHERE 1 ".$sql." ORDER BY `created` DESC");
 
 		if ($query->num_rows == 0) {
 			return false;
@@ -213,7 +226,7 @@ class fba {
 	}
 
 	public function getFBAOrderFulfillments($order_id) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "fba_order_fulfillment` WHERE `order_id` = '" . (int)$order_id . "'");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "fba_order_fulfillment` WHERE `order_id` = '" . (int)$order_id . "' ORDER BY `created` DESC");
 
 		if ($query->num_rows == 0) {
 			return false;

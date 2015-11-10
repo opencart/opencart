@@ -23,9 +23,15 @@ $_['text_option_shipped'] 			= 'Shipped';
 $_['text_order'] 					= 'Order information';
 $_['text_shipping_address'] 		= 'Shipping address';
 $_['text_history'] 					= 'Fulfillment History';
-$_['text_opencart_order'] 					= 'OpenCart order ID';
-$_['text_order_info'] 						= 'Order info';
-$_['text_status'] 							= 'Fulfillment status';
+$_['text_opencart_order'] 			= 'OpenCart order ID';
+$_['text_order_info'] 				= 'Order info';
+$_['text_status'] 					= 'Fulfillment status';
+$_['text_errors'] 					= 'Response errors';
+$_['text_show_errors'] 				= 'Show errors';
+$_['text_no_errors'] 				= 'There are no errors for this fulfillment request';
+$_['text_no_sku'] 					= 'No SKU found';
+$_['text_show_request'] 			= 'Show request body';
+$_['text_show_response'] 			= 'Show response body';
 
 
 // Columns
@@ -39,3 +45,4 @@ $_['column_quantity'] 				= 'Quantity';
 $_['column_fba'] 					= 'Amazon Fulfillment';
 $_['column_fulfillment_id'] 		= 'Fulfillment ID';
 $_['column_response_code'] 			= 'Response code';
+$_['column_actions'] 				= 'Actions';

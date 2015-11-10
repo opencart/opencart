@@ -71,9 +71,21 @@
               &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
               <?php } ?>
               <?php } ?></td>
-            <td class="text-left"><?php echo $product['sku']; ?></td>
+            <td class="text-left">
+              <?php if (!empty($product['sku'])) { ?>
+                <?php echo $product['sku']; ?>
+              <?php } else { ?>
+                <span class="label label-danger"><?php echo $text_no_sku; ?></span>
+              <?php } ?>
+            </td>
             <td class="text-right"><?php echo $product['quantity']; ?></td>
-            <td class="text-right"><?php echo $product['fba']; ?></td>
+            <td class="text-right">
+              <?php if ($product['fba'] == 1) { ?>
+                <span class="btn btn-success btn-sm"><i class="fa fa-check fa-fw"></i></span>
+              <?php } else { ?>
+              <span class="btn btn-danger btn-sm"><i class="fa fa-minus fa-fw"></i></span>
+              <?php } ?>
+            </td>
           </tr>
           <?php } ?>
           </tbody>
@@ -91,6 +103,7 @@
             <td class="text-left"><?php echo $column_fulfillment_id; ?></td>
             <td class="text-left"><?php echo $column_created; ?></td>
             <td class="text-right"><?php echo $column_response_code; ?></td>
+            <td class="text-right"><?php echo $column_actions; ?></td>
           </tr>
           </thead>
           <tbody>
@@ -99,6 +112,31 @@
             <td class="text-left"><?php echo $fulfillment['fba_order_fulfillment_id']; ?></td>
             <td class="text-left"><?php echo $fulfillment['created']; ?></td>
             <td class="text-right"><?php echo $fulfillment['response_header_code']; ?></td>
+            <td class="text-right">
+              <button data-toggle="tooltip" title="<?php echo $text_show_request; ?>" class="btn btn-info btn-sm" onclick="$('#request-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="fa fa-mail-forward fa-fw"></i></button>
+              <button data-toggle="tooltip" title="<?php echo $text_show_response; ?>" class="btn btn-info btn-sm" onclick="$('#response-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="fa fa-mail-reply fa-fw"></i></button>
+              <button data-toggle="tooltip" title="<?php echo $text_show_errors; ?>" class="btn btn-danger btn-sm" onclick="$('#error-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="fa fa-exclamation fa-fw"></i></button>
+            </td>
+          </tr>
+          <tr id="error-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>" style="display:none;">
+            <td class="text-left" colspan="4">
+              <?php if (empty($fulfillment['errors'])) { ?>
+              <div class="alert alert-info" style="width:100%;"><?php echo $text_no_errors; ?></div>
+              <?php } ?>
+              <?php foreach($fulfillment['errors'] as $fulfillment_error) { ?>
+              <div class="alert alert-warning" style="width:100%;">(<?php echo $fulfillment_error['code']; ?>) <?php echo str_replace(array("\r\n", "\r", "\n"), '', $fulfillment_error['message']); ?></div>
+              <?php } ?>
+            </td>
+          </tr>
+          <tr id="request-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>" style="display:none;">
+            <td class="text-left" colspan="4">
+              <pre><?php print_r($fulfillment['request_body']); ?></pre>
+            </td>
+          </tr>
+          <tr id="response-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>" style="display:none;">
+            <td class="text-left" colspan="4">
+              <pre><?php print_r($fulfillment['response_body']); ?></pre>
+            </td>
           </tr>
           <?php } ?>
           </tbody>

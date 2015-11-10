@@ -535,7 +535,7 @@ class ControllerOpenbayFba extends Controller {
 
         if (is_array($order_fba['fulfillments'])) {
             foreach ($order_fba['fulfillments'] as $fulfillment) {
-                $response_body = json_decode($fulfillment['request_body'], true);
+                $response_body = json_decode($fulfillment['response_body'], true);
 
                 $fulfillment_errors = array();
 
@@ -548,8 +548,8 @@ class ControllerOpenbayFba extends Controller {
                 $data['fulfillments'][] = array(
                     'fba_order_fulfillment_id' => $fulfillment['fba_order_fulfillment_id'],
                     'created' => $fulfillment['created'],
-                    'request_body' => $fulfillment['request_body'],
-                    'response_body' => $fulfillment['response_body'],
+                    'request_body' => json_decode($fulfillment['request_body']),
+                    'response_body' => json_decode($fulfillment['response_body']),
                     'response_header_code' => $fulfillment['response_header_code'],
                     'errors' => $fulfillment_errors,
                 );

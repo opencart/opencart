@@ -57,6 +57,7 @@ class ControllerOpenbayFba extends Controller {
         $data['link_settings'] = $this->url->link('openbay/fba/settings', 'token=' . $this->session->data['token'], 'SSL');
         $data['link_account'] = 'https://account.openbaypro.com/fba/index/';
         $data['link_fulfillments'] = $this->url->link('openbay/fba/fulfillmentlist', 'token=' . $this->session->data['token'], 'SSL');
+        $data['link_orders'] = $this->url->link('openbay/fba/orderlist', 'token=' . $this->session->data['token'], 'SSL');
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
@@ -322,7 +323,7 @@ class ControllerOpenbayFba extends Controller {
 
         $response = $this->openbay->fba->call("v1/fba/fulfillments/".$request_url, array());
 
-        if (isset($response['body']) && !empty($response['body'])) {
+        if (isset($response['body']) && is_array($response['body'])) {
             foreach ($response['body'] as $fulfillment_order) {
                 $data['fulfillments'][] = array(
                     'seller_fulfillment_order_id' => $fulfillment_order['seller_fulfillment_order_id'],
@@ -386,22 +387,257 @@ class ControllerOpenbayFba extends Controller {
     public function orderList() {
         $filters = array();
 
+        $data = $this->load->language('openbay/fba_order');
+
+        $this->document->setTitle($this->language->get('heading_title'));
+
+        $data['breadcrumbs'] = array();
+
+        $data['breadcrumbs'][] = array(
+            'href'      => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
+            'text'      => $this->language->get('text_home'),
+        );
+
+        $data['breadcrumbs'][] = array(
+            'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+            'text' => $this->language->get('text_openbay'),
+        );
+
+        $data['breadcrumbs'][] = array(
+            'href' => $this->url->link('openbay/fba', 'token=' . $this->session->data['token'], 'SSL'),
+            'text' => $data['text_fba'],
+        );
+
+        $data['breadcrumbs'][] = array(
+            'href' => $this->url->link('openbay/fba', 'token=' . $this->session->data['token'], 'SSL'),
+            'text' => $data['heading_title'],
+        );
+
+        $url = '';
+
+        if (isset($this->request->get['filter_start'])) {
+            $filters['filter_start'] = $this->request->get['filter_start'];
+            $data['filter_start'] = $this->request->get['filter_start'];
+            $url .= "&filter_start=".urlencode($this->request->get['filter_start']);
+        } else {
+            $filters['filter_start'] = null;
+            $data['filter_start'] = null;
+        }
+
+        if (isset($this->request->get['filter_end'])) {
+            $filters['filter_end'] = $this->request->get['filter_end'];
+            $data['filter_end'] = $this->request->get['filter_end'];
+            $url .= "&filter_end=".urlencode($this->request->get['filter_end']);
+        } else {
+            $filters['filter_end'] = null;
+            $data['filter_end'] = null;
+        }
+
+        if (isset($this->request->get['filter_status'])) {
+            $filters['filter_status'] = $this->request->get['filter_status'];
+            $data['filter_status'] = $this->request->get['filter_status'];
+            $url .= "&filter_status=".urlencode($this->request->get['filter_status']);
+        } else {
+            $filters['filter_status'] = null;
+            $data['filter_status'] = null;
+        }
+
+        $data['orders'] = array();
+
         $orders = $this->openbay->fba->getAllFBAOrders($filters);
 
-        echo '<pre>';
-        print_r($orders);
+        if (!empty($orders)) {
+            foreach ($orders as $order) {
+                $data['orders'][] = array(
+                    'order_id' => $order['order_id'],
+                    'order_link' => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $order['order_id'] . $url, 'SSL'),
+                    'status' => $order['status'],
+                    'created' => $order['created'],
+                    'view' => $this->url->link('openbay/fba/order', 'token=' . $this->session->data['token'] . '&order_id=' . $order['order_id'] . $url, 'SSL')
+                );
+            }
+        }
+
+        $data['cancel'] = $this->url->link('openbay/fba/index', 'token=' . $this->session->data['token'], 'SSL');
+        $data['token'] = $this->session->data['token'];
+
+        $data['status_options'] = array(
+            0 => $this->language->get('text_option_new'),
+            1 => $this->language->get('text_option_error'),
+            2 => $this->language->get('text_option_held'),
+            3 => $this->language->get('text_option_shipped'),
+        );
+
+        if (isset($this->session->data['error'])) {
+            $data['error_warning'] = $this->session->data['error'];
+            unset($this->session->data['error']);
+        } else {
+            $data['error_warning'] = '';
+        }
+
+        if (isset($this->session->data['success'])) {
+            $data['success'] = $this->session->data['success'];
+
+            unset($this->session->data['success']);
+        } else {
+            $data['success'] = '';
+        }
+
+        $data['header'] = $this->load->controller('common/header');
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['footer'] = $this->load->controller('common/footer');
+
+        $this->response->setOutput($this->load->view('openbay/fba_order_list.tpl', $data));
     }
 
     public function order() {
+        $this->load->model('sale/order');
+        $this->load->model('catalog/product');
+
+        $data = $this->load->language('openbay/fba_order');
+
         if (!isset($this->request->get['order_id'])) {
             $this->response->redirect($this->url->link('openbay/fba/orderList', 'token=' . $this->session->data['token'], 'SSL'));
         }
 
         $order_id = (int)$this->request->get['order_id'];
+        $order_fba = $this->openbay->fba->getFBAOrder($order_id);
+        $order_info = $this->model_sale_order->getOrder($order_id);
 
-        $order = $this->openbay->fba->getFBAOrder($order_id);
+        $data['fba_order_status'] = $order_fba['status'];
 
-        echo '<pre>';
-        print_r($order);
+        $data['order_id'] = (int)$this->request->get['order_id'];
+        $data['order_link'] = $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $order_id, 'SSL');
+
+        $data['breadcrumbs'] = array();
+
+        $data['breadcrumbs'][] = array(
+            'href'      => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
+            'text'      => $this->language->get('text_home'),
+        );
+
+        $data['breadcrumbs'][] = array(
+            'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+            'text' => $this->language->get('text_openbay'),
+        );
+
+        $data['breadcrumbs'][] = array(
+            'href' => $this->url->link('openbay/fba', 'token=' . $this->session->data['token'], 'SSL'),
+            'text' => $data['text_fba'],
+        );
+
+        $data['breadcrumbs'][] = array(
+            'href' => $this->url->link('openbay/fba/orderlist', 'token=' . $this->session->data['token'], 'SSL'),
+            'text' => $data['heading_title'],
+        );
+
+        $data['fulfillments'] = array();
+
+        if (is_array($order_fba['fulfillments'])) {
+            foreach ($order_fba['fulfillments'] as $fulfillment) {
+                $response_body = json_decode($fulfillment['request_body'], true);
+
+                $fulfillment_errors = array();
+
+                if (isset($response_body['error']) && $response_body['error'] == true) {
+                    if (is_array($response_body['error_messages']) && !empty($response_body['error_messages'])) {
+                        $fulfillment_errors = $response_body['error_messages'];
+                    }
+                }
+
+                $data['fulfillments'][] = array(
+                    'fba_order_fulfillment_id' => $fulfillment['fba_order_fulfillment_id'],
+                    'created' => $fulfillment['created'],
+                    'request_body' => $fulfillment['request_body'],
+                    'response_body' => $fulfillment['response_body'],
+                    'response_header_code' => $fulfillment['response_header_code'],
+                    'errors' => $fulfillment_errors,
+                );
+            }
+        }
+
+        $data['cancel'] = $this->url->link('openbay/fba/orderlist', 'token=' . $this->session->data['token'], 'SSL');
+
+        // Shipping Address
+        if ($order_info['shipping_address_format']) {
+            $format = $order_info['shipping_address_format'];
+        } else {
+            $format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
+        }
+
+        $find = array(
+            '{firstname}',
+            '{lastname}',
+            '{company}',
+            '{address_1}',
+            '{address_2}',
+            '{city}',
+            '{postcode}',
+            '{zone}',
+            '{zone_code}',
+            '{country}'
+        );
+
+        $replace = array(
+            'firstname' => $order_info['shipping_firstname'],
+            'lastname'  => $order_info['shipping_lastname'],
+            'company'   => $order_info['shipping_company'],
+            'address_1' => $order_info['shipping_address_1'],
+            'address_2' => $order_info['shipping_address_2'],
+            'city'      => $order_info['shipping_city'],
+            'postcode'  => $order_info['shipping_postcode'],
+            'zone'      => $order_info['shipping_zone'],
+            'zone_code' => $order_info['shipping_zone_code'],
+            'country'   => $order_info['shipping_country']
+        );
+
+        $data['shipping_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+
+        $data['status_options'] = array(
+            0 => $this->language->get('text_option_new'),
+            1 => $this->language->get('text_option_error'),
+            2 => $this->language->get('text_option_held'),
+            3 => $this->language->get('text_option_shipped'),
+        );
+
+        $data['products'] = array();
+
+        $products = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
+
+        foreach ($products as $product) {
+            $option_data = array();
+
+            $product_info = $this->model_catalog_product->getProduct($product['product_id']);
+
+            $options = $this->model_sale_order->getOrderOptions($this->request->get['order_id'], $product['order_product_id']);
+
+            foreach ($options as $option) {
+                if ($option['type'] != 'file') {
+                    $option_data[] = array(
+                        'name'  => $option['name'],
+                        'value' => $option['value'],
+                        'type'  => $option['type']
+                    );
+                }
+            }
+
+            $data['products'][] = array(
+                'order_product_id' => $product['order_product_id'],
+                'product_id'       => $product['product_id'],
+                'name'    	 	   => $product['name'],
+                'sku'    		   => $product_info['sku'],
+                'option'   		   => $option_data,
+                'quantity'		   => $product['quantity'],
+                'fba'		       => ($product_info['location'] == 'FBA' ? 1 : 0),
+                'href'     		   => $this->url->link('catalog/product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product['product_id'], 'SSL'),
+            );
+        }
+
+
+        $data['header'] = $this->load->controller('common/header');
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['footer'] = $this->load->controller('common/footer');
+
+        $this->response->setOutput($this->load->view('openbay/fba_order_info.tpl', $data));
     }
 }

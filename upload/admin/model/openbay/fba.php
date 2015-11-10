@@ -16,23 +16,22 @@ class ModelOpenbayFba extends Model {
 
         $this->db->query("
 				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "fba_order` (
-					`fba_order_id` INT(11) NOT NULL AUTO_INCREMENT,
 					`order_id` INT(11) NOT NULL,
 					`status` CHAR(10) NOT NULL,
 				    `created` DATETIME NOT NULL,
-					PRIMARY KEY (`fba_order_id`)
+  				    KEY `fba_order_id` (`order_id`)
 				) ENGINE=InnoDB  DEFAULT CHARSET=latin1;");
 
         $this->db->query("
 				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "fba_order_fulfillment` (
 					`fba_order_fulfillment_id` INT(11) NOT NULL AUTO_INCREMENT,
-					`fba_order_id` INT(11) NOT NULL,
+					`order_id` INT(11) NOT NULL,
 				    `created` DATETIME NOT NULL,
 					`request_body` TEXT NOT NULL,
 					`response_body` TEXT NOT NULL,
 					`response_header_code` INT(3) NOT NULL,
 					PRIMARY KEY (`fba_order_fulfillment_id`),
-  				    KEY `fba_order_id` (`fba_order_id`)
+  				    KEY `order_id` (`order_id`)
 				) ENGINE=InnoDB  DEFAULT CHARSET=latin1;");
 
         // Default settings

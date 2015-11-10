@@ -20,22 +20,30 @@
           <h4><?php echo $text_heading_settings; ?></h4>
           </a> </div>
       </div>
-      <?php if ( $validation == true) { ?>
-      <div class="col-md-3 text-center">
-        <div class="well"> <a href="<?php echo $link_account; ?>" target="_blank"> <span class="fa-stack fa-3x"> <i class="fa fa-square-o fa-stack-2x"></i> <i class="fa fa-user fa-stack-1x"></i> </span>
-          <h4><?php echo $text_heading_account; ?></h4>
-        </a> </div>
-      </div>
-      <div class="col-md-3 text-center">
-        <div class="well"> <a href="<?php echo $link_fulfillments; ?>"> <span class="fa-stack fa-3x"> <i class="fa fa-square-o fa-stack-2x"></i> <i class="fa fa-truck fa-stack-1x"></i> </span>
-          <h4><?php echo $text_heading_fulfillments; ?></h4>
-        </a> </div>
-      </div>
+      <?php if ($validation == true) { ?>
+        <div class="col-md-3 text-center">
+          <div class="well"> <a href="<?php echo $link_account; ?>" target="_blank"> <span class="fa-stack fa-3x"> <i class="fa fa-square-o fa-stack-2x"></i> <i class="fa fa-user fa-stack-1x"></i> </span>
+            <h4><?php echo $text_heading_account; ?></h4>
+          </a> </div>
+        </div>
+        <div class="col-md-3 text-center">
+          <div class="well"> <a href="<?php echo $link_fulfillments; ?>"> <span class="fa-stack fa-3x"> <i class="fa fa-square-o fa-stack-2x"></i> <i class="fa fa-truck fa-stack-1x"></i> </span>
+            <h4><?php echo $text_heading_fulfillments; ?></h4>
+          </a> </div>
+        </div>
+        <div class="col-md-3 text-center">
+          <div class="well"> <a href="<?php echo $link_orders; ?>"> <span class="fa-stack fa-3x"> <i class="fa fa-square-o fa-stack-2x"></i> <i class="fa fa-truck fa-stack-1x"></i> </span>
+            <h4><?php echo $text_heading_orders; ?></h4>
+          </a> </div>
+        </div>
       <?php } else { ?>
       <div class="col-md-3 text-center">
-        <div class="well"> <a href="https://account.openbaypro.com/fba/apiregister/" target="_BLANK"> <span class="fa-stack fa-3x"> <i class="fa fa-square-o fa-stack-2x"></i> <i class="fa fa-star fa-stack-1x"></i> </span>
-          <h4><?php echo $text_heading_register; ?></h4>
-          </a> </div>
+        <div class="well">
+          <a href="https://account.openbaypro.com/fba/apiregister/" target="_BLANK">
+            <span class="fa-stack fa-3x"> <i class="fa fa-square-o fa-stack-2x"></i> <i class="fa fa-star fa-stack-1x"></i> </span>
+            <h4><?php echo $text_heading_register; ?></h4>
+          </a>
+        </div>
       </div>
       <?php } ?>
     </div>

@@ -26,6 +26,7 @@ $_['text_ship_success'] 					= 'Fulfillment has been confirmed to ship, it may t
 $_['text_cancel_success'] 					= 'Fulfillment has been cancelled, it may take a few minutes for Amazon to update';
 $_['text_cancel_confirm'] 					= 'Are you sure you want to cancel this fulfillment?';
 $_['text_ship_confirm'] 					= 'Are you sure you want to ship this fulfillment?';
+$_['text_status'] 							= 'Fulfillment status';
 
 // Columns
 $_['column_sku'] 							= 'SKU';

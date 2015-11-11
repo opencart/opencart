@@ -5,7 +5,7 @@ $_['text_openbay']					= 'OpenBay Pro';
 $_['text_fba']						= 'Fulfillment By Amazon';
 
 // Buttons
-$_['button_ship_now']        		= 'Ship fulfillment now';
+$_['button_ship']        			= 'Ship fulfillment';
 $_['button_resend']					= 'Resend fulfillment request';
 
 // Entry

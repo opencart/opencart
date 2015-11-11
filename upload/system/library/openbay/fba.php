@@ -101,7 +101,7 @@ class fba {
 			$response = array(
 				'error' => false,
 				'error_messages' => array(),
-				'body' => (isset($result_parsed['result']) ? : ''),
+				'body' => (isset($result_parsed['result']) ? $result_parsed['result'] : ''),
 				'response_http' => $http_code
 			);
 

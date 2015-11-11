@@ -76,13 +76,6 @@
               </div>
             <?php } ?>
 
-            <?php if ($can_ship === true) { ?>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="button-ship"><?php echo $entry_button_ship; ?></label>
-                <div class="col-sm-10"><a data-toggle="tooltip" title="<?php echo $entry_button_ship; ?>" class="btn btn-primary btn-danger" id="button-ship"><i class="fa fa-truck"></i></a></div>
-              </div>
-            <?php } ?>
-
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-notification-email-list"><?php echo $entry_notification_email_list; ?></label>
               <div class="col-sm-10">

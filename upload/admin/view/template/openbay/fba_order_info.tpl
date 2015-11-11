@@ -7,6 +7,9 @@
         <?php if ($fba_order_status == 1) { ?>
           <a href="<?php echo $resend_link; ?>" id="button-resend" data-toggle="tooltip" title="<?php echo $button_resend; ?>" class="btn btn-info" value=""><i class="fa fa-refresh"></i></a>
         <?php } ?>
+        <?php if ($fba_order_status == 2) { ?>
+          <a href="<?php echo $ship_link; ?>" id="button-ship" data-toggle="tooltip" title="<?php echo $button_ship; ?>" class="btn btn-info" value=""><i class="fa fa-truck"></i></a>
+        <?php } ?>
       </div>
       <h1><?php echo $heading_title; ?></h1>
       <ul class="breadcrumb">
@@ -166,77 +169,9 @@ $('#button-resend').click(function() {
   $('#button-resend').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
 });
 
-$('#button-cancel').click(function() {
-  if (!confirm("<?php echo $text_cancel_confirm; ?>")) {
-    return;
-  }
-
-  $.ajax({
-    url: 'index.php?route=openbay/fba/cancelfulfillment&token=<?php echo $token; ?>',
-    dataType: 'json',
-    method: 'POST',
-    data: { 'seller_fulfillment_order_id' : $('#input-seller-fulfillment-order-id').val() },
-    beforeSend: function() {
-      $('#button-cancel').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
-      $('.alert').remove();
-    },
-    success: function(json) {
-      if (json.error === false) {
-        $('#button-cancel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $text_cancel_success; ?></div>').hide();
-      } else {
-        if (json.error_messages) {
-          $.each(json.error_messages, function(error_key, error_message) {
-            $('#button-cancel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> (' + error_message.code + ') ' + error_message.message + '</div>');
-          });
-        } else {
-          $('#button-cancel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_cancel; ?></div>').html('<i class="fa fa-times fa-lg"></i>').show();
-        }
-
-        $('#button-cancel').empty().html('<i class="fa fa-times fa-lg"></i>').removeAttr('disabled');
-      }
-
-    },
-    failure: function() {
-      $('#button-cancel').empty().html('<i class="fa fa-times fa-lg"></i>').removeAttr('disabled');
-    }
-  });
-});
-
 $('#button-ship').click(function() {
-  if (!confirm("<?php echo $text_ship_confirm; ?>")) {
-    return;
-  }
-
-  $.ajax({
-    url: 'index.php?route=openbay/fba/shipfulfillment&token=<?php echo $token; ?>',
-    dataType: 'json',
-    method: 'POST',
-    data: { 'seller_fulfillment_order_id' : $('#input-seller-fulfillment-order-id').val() },
-    beforeSend: function() {
-      $('#button-ship').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
-      $('.alert').remove();
-    },
-    success: function(json) {
-      if (json.error === false) {
-        $('#button-ship').hide();
-        $('#main-body').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $text_ship_success; ?></div>');
-      } else {
-        if (json.error_messages) {
-          $.each(json.error_messages, function(error_key, error_message) {
-            $('#main-body').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> (' + error_message.code + ') ' + error_message.message + '</div>');
-          });
-        } else {
-          $('#button-ship').html('<i class="fa fa-times fa-lg"></i>').show();
-          $('#main-body').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_ship; ?></div>');
-        }
-
-        $('#button-ship').empty().html('<i class="fa fa-times fa-lg"></i>').removeAttr('disabled');
-      }
-    },
-    failure: function() {
-      $('#button-ship').empty().html('<i class="fa fa-times fa-lg"></i>').removeAttr('disabled');
-    }
-  });
+  $('#button-ship').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
 });
+
 //--></script>
 <?php echo $footer; ?>

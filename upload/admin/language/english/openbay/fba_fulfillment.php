@@ -28,6 +28,7 @@ $_['text_cancel_confirm'] 					= 'Are you sure you want to cancel this fulfillme
 $_['text_ship_confirm'] 					= 'Are you sure you want to ship this fulfillment?';
 $_['text_status'] 							= 'Fulfillment status';
 $_['text_fulfillment_sent'] 				= 'Fulfillment has been sent!';
+$_['text_fulfillment_shipped'] 				= 'Fulfillment has been shipped!';
 
 // Columns
 $_['column_sku'] 							= 'SKU';
@@ -43,7 +44,7 @@ $_['error_loading_fulfillment']             = 'There was a problem getting the f
 $_['error_ship']             				= 'There was a problem confirming the shipment with Amazon';
 $_['error_cancel']             				= 'There was a problem cancelling the fulfillment with Amazon';
 $_['error_ship']             				= 'There was a problem confirming the fulfillment with Amazon';
-$_['error_missing_id']             			= 'Missing order ID in the request';
+$_['error_missing_id']             			= 'Missing ID in the request';
 $_['error_no_shipping']             		= 'No shipping method found';
 $_['error_no_items']             			= 'No items found for this order';
 $_['error_amazon_request']             		= 'There was an error response from Amazon, please check the errors for the request';

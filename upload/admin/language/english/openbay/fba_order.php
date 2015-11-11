@@ -33,6 +33,7 @@ $_['text_no_errors'] 				= 'There are no errors for this fulfillment request';
 $_['text_no_sku'] 					= 'No SKU found';
 $_['text_show_request'] 			= 'Show request body';
 $_['text_show_response'] 			= 'Show response body';
+$_['text_fulfillment_id'] 			= 'Fulfillment ID';
 
 
 // Columns
@@ -44,6 +45,6 @@ $_['column_sku'] 					= 'SKU';
 $_['column_product'] 				= 'Product';
 $_['column_quantity'] 				= 'Quantity';
 $_['column_fba'] 					= 'Amazon Fulfillment';
-$_['column_fulfillment_id'] 		= 'Fulfillment ID';
+$_['column_fulfillment_id'] 		= 'Fulfillment Request Reference';
 $_['column_response_code'] 			= 'Response code';
 $_['column_actions'] 				= 'Actions';

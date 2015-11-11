@@ -54,13 +54,19 @@
           </div>
           <table class="table">
             <tr>
-              <td><button data-toggle="tooltip" title="<?php echo $text_opencart_order; ?>" class="btn btn-info btn-xs"><i class="fa fa-group fa-fw"></i></button></td>
+              <td><button data-toggle="tooltip" title="<?php echo $text_opencart_order; ?>" class="btn btn-info btn-xs"><i class="fa fa-shopping-cart fa-fw"></i></button></td>
               <td><a href="<?php echo $order_link; ?>"><?php echo $order_id; ?></a></td>
             </tr>
             <tr>
-              <td style="width: 1%;"><button data-toggle="tooltip" title="<?php echo $text_status; ?>" class="btn btn-info btn-xs"><i class="fa fa-truck fa-fw"></i></button></td>
+              <td style="width: 1%;"><button data-toggle="tooltip" title="<?php echo $text_status; ?>" class="btn btn-info btn-xs"><i class="fa fa-cog fa-fw"></i></button></td>
               <td><?php echo $status_options[$fba_order_status]; ?></td>
             </tr>
+            <?php if($fulfillment_id) { ?>
+            <tr>
+              <td style="width: 1%;"><button data-toggle="tooltip" title="<?php echo $text_fulfillment_id; ?>" class="btn btn-info btn-xs"><i class="fa fa-truck fa-fw"></i></button></td>
+              <td><a href="<?php echo $fulfillment_link; ?>"><?php echo $fulfillment_id; ?></a></td>
+            </tr>
+            <?php } ?>
           </table>
         </div>
       </div>
@@ -131,9 +137,9 @@
             <td class="text-left"><?php echo $fulfillment['created']; ?></td>
             <td class="text-right"><?php echo $fulfillment['response_header_code']; ?></td>
             <td class="text-right">
-              <button data-toggle="tooltip" title="<?php echo $text_show_request; ?>" class="btn btn-info btn-sm" onclick="$('#request-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="fa fa-mail-forward fa-fw"></i></button>
-              <button data-toggle="tooltip" title="<?php echo $text_show_response; ?>" class="btn btn-info btn-sm" onclick="$('#response-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="fa fa-mail-reply fa-fw"></i></button>
-              <button data-toggle="tooltip" title="<?php echo $text_show_errors; ?>" class="btn btn-danger btn-sm" onclick="$('#error-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="fa fa-exclamation fa-fw"></i></button>
+              <?php if (!empty($fulfillment['request_body'])) { ?><button data-toggle="tooltip" title="<?php echo $text_show_request; ?>" class="btn btn-info btn-sm" onclick="$('#request-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="fa fa-mail-forward fa-fw"></i></button><?php } ?>
+              <?php if (!empty($fulfillment['response_body'])) { ?><button data-toggle="tooltip" title="<?php echo $text_show_response; ?>" class="btn btn-info btn-sm" onclick="$('#response-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="fa fa-mail-reply fa-fw"></i></button><?php } ?>
+              <?php if (!empty($fulfillment['errors'])) { ?><button data-toggle="tooltip" title="<?php echo $text_show_errors; ?>" class="btn btn-danger btn-sm" onclick="$('#error-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="fa fa-exclamation fa-fw"></i></button><?php } ?>
             </td>
           </tr>
           <tr id="error-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>" style="display:none;">

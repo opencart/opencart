@@ -156,10 +156,10 @@ class ControllerOpenbayFba extends Controller {
             $data['openbay_fba_order_trigger_status'] = $this->config->get('openbay_fba_order_trigger_status');
         }
 
-        if (isset($this->request->post['openbay_fba_cancel_order_trigger_status'])) {
-            $data['openbay_fba_cancel_order_trigger_status'] = $this->request->post['openbay_fba_cancel_order_trigger_status'];
+        if (isset($this->request->post['openbay_fba_only_fill_complete'])) {
+            $data['openbay_fba_only_fill_complete'] = $this->request->post['openbay_fba_only_fill_complete'];
         } else {
-            $data['openbay_fba_cancel_order_trigger_status'] = $this->config->get('openbay_fba_cancel_order_trigger_status');
+            $data['openbay_fba_only_fill_complete'] = $this->config->get('openbay_fba_only_fill_complete');
         }
 
         $data['fulfillment_policy'] = array(

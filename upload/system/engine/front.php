@@ -11,7 +11,11 @@ final class Front {
 	public function addPreAction($pre_action) {
 		$this->pre_action[] = $pre_action;
 	}
-
+	
+	public function addPostAction($pre_action) {
+		$this->pre_action[] = $pre_action;
+	}
+	
 	public function dispatch($action, $error) {
 		$this->error = $error;
 

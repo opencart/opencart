@@ -113,9 +113,9 @@ class ControllerModuleFeatured extends Controller {
 
 		$data['products'] = array();
 
-		if (isset($this->request->post['product'])) {
+		if (!empty($this->request->post['product'])) {
 			$products = $this->request->post['product'];
-		} elseif (!empty($module_info)) {
+		} elseif (!empty($module_info['product'])) {
 			$products = $module_info['product'];
 		} else {
 			$products = array();

@@ -1,16 +1,17 @@
 <?php
-class Template {
+namespace Template;
+final class Basic {
 	private $data = array();
 	
 	public function set($key, $value) {
 		$this->data[$key] = $value;
 	}
 	
-	public function render() {
+	public function render($template) {
 		$file = DIR_TEMPLATE . $template;
 
 		if (file_exists($file)) {
-			extract($data);
+			extract($this->data);
 
 			ob_start();
 

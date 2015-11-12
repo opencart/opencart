@@ -73,7 +73,7 @@
               <?php } ?></td>
           </tr>
           <tr>
-            <td><?php echo $entry_recurring_description; ?></td>
+            <td><?php echo $entry_description; ?></td>
             <td><?php echo $recurring_description; ?></td>
           </tr>
           <tr>

@@ -388,7 +388,7 @@ class ControllerSaleRecurring extends Controller {
 			$data['entry_status'] = $this->language->get('entry_status');
 			$data['entry_type'] = $this->language->get('entry_type');
 			$data['entry_email'] = $this->language->get('entry_email');
-			$data['entry_recurring_description'] = $this->language->get('entry_recurring_description');
+			$data['entry_description'] = $this->language->get('entry_description');
 			$data['entry_product'] = $this->language->get('entry_product');
 			$data['entry_quantity'] = $this->language->get('entry_quantity');
 			$data['entry_amount'] = $this->language->get('entry_amount');

@@ -769,6 +769,8 @@ $(document).delegate('#button-payment-method', 'click', function() {
                 if (json['error']['warning']) {
                     $('#collapse-payment-method .panel-body').prepend('<div class="alert alert-warning">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
+
+		$('#button-payment-method').button('reset');
             } else {
                 $.ajax({
                     url: 'index.php?route=checkout/confirm',

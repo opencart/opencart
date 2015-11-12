@@ -209,6 +209,7 @@ class ControllerOpenbayFba extends Controller {
         $data = $this->load->language('openbay/fba_fulfillment');
 
         $this->document->setTitle($this->language->get('heading_title'));
+        $this->document->addScript('view/javascript/openbay/js/faq.js');
 
         if (!isset($this->request->get['fulfillment_id'])) {
             $this->response->redirect($this->url->link('openbay/fba/fulfillmentlist', 'token=' . $this->session->data['token'] . (!empty($this->request->get['filter_date']) ? '&filter_date=' . $this->request->get['filter_date'] : ''), 'SSL'));
@@ -285,6 +286,7 @@ class ControllerOpenbayFba extends Controller {
         $data = $this->load->language('openbay/fba_fulfillment_list');
 
         $this->document->setTitle($this->language->get('heading_title'));
+        $this->document->addScript('view/javascript/openbay/js/faq.js');
 
         $data['breadcrumbs'] = array();
 
@@ -515,6 +517,7 @@ class ControllerOpenbayFba extends Controller {
         $data = $this->load->language('openbay/fba_order');
 
         $this->document->setTitle($this->language->get('heading_title'));
+        $this->document->addScript('view/javascript/openbay/js/faq.js');
 
         $data['breadcrumbs'] = array();
 
@@ -621,6 +624,7 @@ class ControllerOpenbayFba extends Controller {
         $data = $this->load->language('openbay/fba_order');
 
         $this->document->setTitle($this->language->get('heading_title'));
+        $this->document->addScript('view/javascript/openbay/js/faq.js');
 
         $this->load->model('sale/order');
         $this->load->model('catalog/product');

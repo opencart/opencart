@@ -197,9 +197,47 @@ class ControllerOpenbayFba extends Controller {
         $this->response->setOutput($this->load->view('openbay/fba_settings.tpl', $data));
     }
 
+    public function verifyCredentials() {
+        $this->load->language('openbay/fba_settings');
+
+        $errors = array();
+
+        if (!$this->request->post['openbay_fba_api_key']) {
+            $errors[] = array('message' => $this->language->get('error_api_key'));
+        }
+
+        if (!$this->request->post['openbay_fba_api_account_id']) {
+            $errors[] = array('message' => $this->language->get('error_api_account_id'));
+        }
+
+        if (!$errors) {
+            $this->openbay->fba->setApiKey($this->request->post['openbay_fba_api_key']);
+            $this->openbay->fba->setAccountId($this->request->post['openbay_fba_api_account_id']);
+
+            $response = $this->openbay->fba->call("v1/fba/status/", array(), 'GET');
+        } else {
+            $response = array(
+                "result" => null,
+                "error" => true,
+                "error_messages" => $errors,
+            );
+        }
+
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($response));
+    }
+
     protected function validate() {
         if (!$this->user->hasPermission('modify', 'openbay/fba')) {
             $this->error['warning'] = $this->language->get('error_permission');
+        }
+
+        if (!$this->request->post['openbay_fba_api_key']) {
+            $this->error['api_key'] = $this->language->get('error_api_key');
+        }
+
+        if (!$this->request->post['openbay_fba_api_account_id']) {
+            $this->error['api_account_id'] = $this->language->get('error_api_account_id');
         }
 
         return !$this->error;

@@ -21,6 +21,7 @@ $_['text_fillall']           	= 'Fill All';
 $_['text_fillallavailable']     = 'Fill All Available';
 $_['text_prefix_warning']     	= 'Do not change this setting after orders have been sent to Amazon, only set this when you first install.';
 $_['text_disabled_cancel']     	= 'Disabled - do not automatically cancel fulfillments';
+$_['text_validate_success']     = 'Your API details are working correctly!';
 
 // Entry
 $_['entry_api_key']            	= 'API key';
@@ -47,6 +48,12 @@ $_['help_only_fill_complete']  	= 'This will only allow orders to be sent for fu
 // Error
 $_['error_api_connect']         = 'Failed to connect to the API';
 $_['error_account_info']    	= 'Unable to verify API connection to Fulfillment by Amazon ';
+$_['error_api_key']    			= 'The API key is invalid';
+$_['error_api_account_id']    	= 'The Account ID is invalid';
+$_['error_validation']    		= 'There was an error validating your details';
 
 // Tabs
 $_['tab_api_info']            	= 'API details';
+
+// Buttons
+$_['button_verify']            	= 'Verify details';

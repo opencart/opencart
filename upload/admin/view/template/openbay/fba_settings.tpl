@@ -29,6 +29,25 @@
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab-general">
+              <div class="well" id="credential-container">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="openbay_fba_api_key"><span data-toggle="tooltip" data-container="#tab-content" title="<?php echo $help_api_key; ?>"><?php echo $entry_api_key; ?></span></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="openbay_fba_api_key" value="<?php echo $openbay_fba_api_key; ?>" placeholder="<?php echo $entry_api_key; ?>" id="openbay_fba_api_key" class="form-control credentials" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="openbay_fba_api_account_id"><span data-toggle="tooltip" data-container="#tab-content" title="<?php echo $help_account_id; ?>"><?php echo $entry_account_id; ?></span></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="openbay_fba_api_account_id" value="<?php echo $openbay_fba_api_account_id; ?>" placeholder="<?php echo $entry_account_id; ?>" id="openbay_fba_api_account_id" class="form-control credentials" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-12 pull-right">
+                    <a class="btn btn-info pull-right" id="button-verify"><?php echo $button_verify; ?></a>
+                  </div>
+                </div>
+              </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="openbay_fba_status"><?php echo $text_status; ?></label>
                 <div class="col-sm-10">
@@ -47,18 +66,6 @@
                 <label class="col-sm-2 control-label"><?php echo $text_api_other; ?></label>
                 <div class="col-sm-10">
                   <p><a href="https://account.openbaypro.com/fba/apiregister/" target="_BLANK"><i class="fa fa-link"></i> <?php echo $text_token_register; ?></a></p>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="openbay_fba_api_key"><span data-toggle="tooltip" data-container="#tab-content" title="<?php echo $help_api_key; ?>"><?php echo $entry_api_key; ?></span></label>
-                <div class="col-sm-10">
-                  <input type="text" name="openbay_fba_api_key" value="<?php echo $openbay_fba_api_key; ?>" placeholder="<?php echo $entry_api_key; ?>" id="openbay_fba_api_key" class="form-control" />
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="openbay_fba_api_account_id"><span data-toggle="tooltip" data-container="#tab-content" title="<?php echo $help_account_id; ?>"><?php echo $entry_account_id; ?></span></label>
-                <div class="col-sm-10">
-                  <input type="text" name="openbay_fba_api_account_id" value="<?php echo $openbay_fba_api_account_id; ?>" placeholder="<?php echo $entry_account_id; ?>" id="openbay_fba_api_account_id" class="form-control" />
                 </div>
               </div>
               <div class="form-group">
@@ -147,4 +154,36 @@
     </div>
   </div>
 </div>
+<script type="text/javascript"><!--
+$('#button-verify').click(function() {
+  $.ajax({
+    url: 'index.php?route=openbay/fba/verifycredentials&token=<?php echo $token; ?>',
+    dataType: 'json',
+    method: 'POST',
+    data: { 'openbay_fba_api_key' : $('#openbay_fba_api_key').val(), 'openbay_fba_api_account_id' : $('#openbay_fba_api_account_id').val() },
+    beforeSend: function() {
+      $('#button-verify').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+      $('.alert').remove();
+    },
+    success: function(json) {
+      if (json.error === false) {
+        $('#credential-container').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $text_validate_success; ?></div>');
+      } else {
+        if (json.error_messages) {
+          $.each(json.error_messages, function(error_key, error_message) {
+            $('#credential-container').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + error_message.message + '</div>');
+          });
+        } else {
+          $('#credential-container').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_validation; ?></div>');
+          $('#button-verify').html('<?php echo $button_verify; ?>');
+        }
+      }
+      $('#button-verify').empty().html('<?php echo $button_verify; ?>').removeAttr('disabled');
+    },
+    failure: function() {
+      $('#button-verify').empty().html('<?php echo $button_verify; ?>').removeAttr('disabled');
+    }
+  });
+});
+//--></script>
 <?php echo $footer; ?>

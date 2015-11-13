@@ -34,6 +34,14 @@ class fba {
 		return $this->registry->get($name);
 	}
 
+	public function setApiKey($api_key) {
+		$this->api_key = $api_key;
+	}
+
+	public function setAccountId($api_account_id) {
+		$this->api_account_id = $api_account_id;
+	}
+
 	public function call($uri, $data = array(), $request_type = 'GET') {
 		$this->log("Request: " . $request_type . " : " . $this->url . $uri);
 

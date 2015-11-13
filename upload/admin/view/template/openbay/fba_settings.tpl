@@ -24,10 +24,7 @@
       </div>
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-fba-settings" class="form-horizontal">
-          <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_api_info; ?></a></li>
-          </ul>
-          <div class="tab-content">
+          <a href="https://account.openbaypro.com/fba/apiregister/" target="_blank"><div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_register_banner; ?></div></a>
             <div class="tab-pane active" id="tab-general">
               <div class="well" id="credential-container">
                 <div class="form-group">
@@ -60,12 +57,6 @@
                     <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                     <?php } ?>
                   </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $text_api_other; ?></label>
-                <div class="col-sm-10">
-                  <p><a href="https://account.openbaypro.com/fba/apiregister/" target="_BLANK"><i class="fa fa-link"></i> <?php echo $text_token_register; ?></a></p>
                 </div>
               </div>
               <div class="form-group">
@@ -148,7 +139,6 @@
                 </div>
               </div>
             </div>
-          </div>
         </form>
       </div>
     </div>

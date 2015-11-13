@@ -114,7 +114,7 @@
                 <label class="col-sm-2 control-label" for="openbay_fba_order_prefix"><span data-toggle="tooltip" data-container="#tab-content" title="<?php echo $help_order_id_prefix; ?>"><?php echo $entry_order_id_prefix; ?></span></label>
                 <div class="col-sm-10">
                   <p class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> <?php echo $text_prefix_warning; ?></p>
-                  <input type="text" name="openbay_fba_order_prefix" value="<?php echo $openbay_fba_order_prefix ?>" placeholder="<?php echo $entry_order_id_prefix; ?>" id="openbay_fba_order_prefix" class="form-control" />
+                  <input <?php echo ($prefix_can_edit === false ? 'disabled' : ''); ?> type="text" name="openbay_fba_order_prefix" value="<?php echo $openbay_fba_order_prefix ?>" placeholder="<?php echo $entry_order_id_prefix; ?>" id="openbay_fba_order_prefix" class="form-control" />
                 </div>
               </div>
               <div class="form-group">

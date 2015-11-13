@@ -145,6 +145,14 @@ class ControllerOpenbayFba extends Controller {
             $data['openbay_fba_debug_log'] = $this->config->get('openbay_fba_debug_log');
         }
 
+        $order_total = $this->model_openbay_fba->countFbaOrders();
+
+        if ($order_total > 0) {
+            $data['prefix_can_edit'] = false;
+        } else {
+            $data['prefix_can_edit'] = true;
+        }
+
         if (isset($this->request->post['openbay_fba_order_prefix'])) {
             $data['openbay_fba_order_prefix'] = $this->request->post['openbay_fba_order_prefix'];
         } else {

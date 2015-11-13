@@ -82,4 +82,10 @@ class ModelOpenbayFba extends Model {
             return true;
         }
     }
+
+    public function countFbaOrders() {
+        $query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "fba_order`");
+
+        return (int)$query->row['total'];
+    }
 }

@@ -71,7 +71,7 @@ $registry->set('config', $config);
 $registry->set('db', $db);
 
 // User
-$user = new User($registry);
+$user = new Cart\User($registry);
 $user->login(ADMIN_USERNAME, ADMIN_PASSWORD);
 
 $registry->set('user', $user);

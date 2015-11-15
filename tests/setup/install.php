@@ -29,7 +29,7 @@ foreach ($settings as $store_id => $store_settings) {
 
 	foreach ($query->rows as $result) {
 		if ($result['serialized'] == 1) {
-			$old_store_config[$result['key']] = unserialize($result['value']);
+			$old_store_config[$result['key']] = json_decode($result['value']);
 		} else {
 			$old_store_config[$result['key']] = $result['value'];
 
@@ -71,7 +71,7 @@ $registry->set('config', $config);
 $registry->set('db', $db);
 
 // User
-$user = new User($registry);
+$user = new Cart\User($registry);
 $user->login(ADMIN_USERNAME, ADMIN_PASSWORD);
 
 $registry->set('user', $user);
@@ -115,7 +115,7 @@ function editSetting($code, $data, $store_id = 0) {
 			if (!is_array($value)) {
 				$db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '" . (int)$store_id . "', `code` = '" . $db->escape($code) . "', `key` = '" . $db->escape($key) . "', `value` = '" . $db->escape($value) . "'");
 			} else {
-				$db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '" . (int)$store_id . "', `code` = '" . $db->escape($code) . "', `key` = '" . $db->escape($key) . "', `value` = '" . $db->escape(serialize($value)) . "', serialized = '1'");
+				$db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '" . (int)$store_id . "', `code` = '" . $db->escape($code) . "', `key` = '" . $db->escape($key) . "', `value` = '" . $db->escape(json_encode($value)) . "', serialized = '1'");
 			}
 		}
 	}

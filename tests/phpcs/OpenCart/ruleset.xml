@@ -2,6 +2,8 @@
 <ruleset name="OpenCart">
     <description>The Code Sniffer rule set for OpenCart</description>
 
+    <exclude-pattern>*/system/vendor/*</exclude-pattern>
+
     <rule ref="Squiz.ControlStructures.InlineIfDeclaration" />
 
     <!-- Closing PHP tags are not allowed -->

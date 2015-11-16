@@ -2,8 +2,6 @@
 class ControllerAccountLogout extends Controller {
 	public function index() {
 		if ($this->customer->isLogged()) {
-			$this->event->trigger('pre.customer.logout');
-
 			$this->customer->logout();
 
 			unset($this->session->data['shipping_address']);
@@ -18,8 +16,6 @@ class ControllerAccountLogout extends Controller {
 			unset($this->session->data['reward']);
 			unset($this->session->data['voucher']);
 			unset($this->session->data['vouchers']);
-
-			$this->event->trigger('post.customer.logout');
 
 			$this->response->redirect($this->url->link('account/logout', '', true));
 		}
@@ -60,10 +56,6 @@ class ControllerAccountLogout extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/common/success.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/common/success.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('common/success.tpl', $data));
 	}
 }

@@ -51,11 +51,7 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 		$data['button_confirm'] = $this->language->get('button_confirm');
 		$data['text_loading'] = $this->language->get('text_loading');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/bluepay_hosted.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/bluepay_hosted.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/bluepay_hosted.tpl', $data);
-		}
+		return $this->load->view('payment/bluepay_hosted.tpl', $data);
 	}
 
 	public function callback() {

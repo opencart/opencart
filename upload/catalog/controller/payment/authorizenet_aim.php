@@ -33,11 +33,7 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 			);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/authorizenet_aim.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/authorizenet_aim.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/authorizenet_aim.tpl', $data);
-		}
+		return $this->load->view('payment/authorizenet_aim.tpl', $data);
 	}
 
 	public function send() {

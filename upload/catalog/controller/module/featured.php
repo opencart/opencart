@@ -74,11 +74,7 @@ class ControllerModuleFeatured extends Controller {
 		}
 
 		if ($data['products']) {
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/featured.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/module/featured.tpl', $data);
-			} else {
-				return $this->load->view('default/template/module/featured.tpl', $data);
-			}
+			return $this->load->view('module/featured.tpl', $data);
 		}
 	}
 }

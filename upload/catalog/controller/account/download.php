@@ -106,11 +106,7 @@ class ControllerAccountDownload extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/download.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/download.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/account/download.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('account/download.tpl', $data));
 	}
 
 	public function download() {

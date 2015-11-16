@@ -116,11 +116,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 			$data['existing_cards'] = $this->model_payment_sagepay_direct->getCards($this->customer->getId());
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/sagepay_direct.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/sagepay_direct.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/sagepay_direct.tpl', $data);
-		}
+		return $this->load->view('payment/sagepay_direct.tpl', $data);
 	}
 
 	public function send() {

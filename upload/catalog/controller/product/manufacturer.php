@@ -58,11 +58,7 @@ class ControllerProductManufacturer extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/product/manufacturer_list.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/product/manufacturer_list.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/product/manufacturer_list.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('product/manufacturer_list.tpl', $data));
 	}
 
 	public function info() {
@@ -363,11 +359,7 @@ class ControllerProductManufacturer extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/product/manufacturer_info.tpl')) {
-				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/product/manufacturer_info.tpl', $data));
-			} else {
-				$this->response->setOutput($this->load->view('default/template/product/manufacturer_info.tpl', $data));
-			}
+			$this->response->setOutput($this->load->view('product/manufacturer_info.tpl', $data));
 		} else {
 			$url = '';
 
@@ -415,11 +407,7 @@ class ControllerProductManufacturer extends Controller {
 			$data['content_top'] = $this->load->controller('common/content_top');
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
-				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/error/not_found.tpl', $data));
-			} else {
-				$this->response->setOutput($this->load->view('default/template/error/not_found.tpl', $data));
-			}
+			$this->response->setOutput($this->load->view('error/not_found.tpl', $data));
 		}
 	}
 }

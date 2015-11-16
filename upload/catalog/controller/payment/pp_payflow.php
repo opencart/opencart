@@ -75,11 +75,7 @@ class ControllerPaymentPPPayflow extends Controller {
 			);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_payflow.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/pp_payflow.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/pp_payflow.tpl', $data);
-		}
+		return $this->load->view('payment/pp_payflow.tpl', $data);
 	}
 
 	public function send() {

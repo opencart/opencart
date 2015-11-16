@@ -1,8 +1,6 @@
 <?php
 class ControllerAccountAccount extends Controller {
 	public function index() {
-		$this->event->trigger('controller/account/account/after');
-		
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/account', '', true);
 
@@ -73,11 +71,7 @@ class ControllerAccountAccount extends Controller {
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		
-		$output = $this->load->view('account/account.tpl', $data);
-		
-		$this->event->trigger('controller/account/account/after', $output);
-		
-		$this->response->setOutput($output);
+		$this->response->setOutput($this->load->view('account/account.tpl', $data));
 	}
 
 	public function country() {

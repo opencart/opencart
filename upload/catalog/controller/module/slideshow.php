@@ -25,10 +25,6 @@ class ControllerModuleSlideshow extends Controller {
 
 		$data['module'] = $module++;
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/slideshow.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/module/slideshow.tpl', $data);
-		} else {
-			return $this->load->view('default/template/module/slideshow.tpl', $data);
-		}
+		return $this->load->view('module/slideshow.tpl', $data);
 	}
 }

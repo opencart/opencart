@@ -473,11 +473,7 @@ class ControllerProductProduct extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/product/product.tpl')) {
-				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/product/product.tpl', $data));
-			} else {
-				$this->response->setOutput($this->load->view('default/template/product/product.tpl', $data));
-			}
+			$this->response->setOutput($this->load->view('product/product.tpl', $data));
 		} else {
 			$url = '';
 
@@ -553,11 +549,7 @@ class ControllerProductProduct extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
-				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/error/not_found.tpl', $data));
-			} else {
-				$this->response->setOutput($this->load->view('default/template/error/not_found.tpl', $data));
-			}
+			$this->response->setOutput($this->load->view('error/not_found.tpl', $data));
 		}
 	}
 
@@ -599,11 +591,7 @@ class ControllerProductProduct extends Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($review_total) ? (($page - 1) * 5) + 1 : 0, ((($page - 1) * 5) > ($review_total - 5)) ? $review_total : ((($page - 1) * 5) + 5), $review_total, ceil($review_total / 5));
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/product/review.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/product/review.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/product/review.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('product/review.tpl', $data));
 	}
 
 	public function write() {

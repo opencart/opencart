@@ -36,11 +36,7 @@ class ControllerModuleAmazonLogin extends Controller {
 				$data['amazon_login_button_size'] = 'medium';
 			}
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/amazon_login.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/module/amazon_login.tpl', $data);
-			} else {
-				return $this->load->view('default/template/module/amazon_login.tpl', $data);
-			}
+			return $this->load->view('module/amazon_login.tpl', $data);
 		}
 	}
 

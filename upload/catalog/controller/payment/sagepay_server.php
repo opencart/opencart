@@ -33,11 +33,7 @@ class ControllerPaymentSagepayServer extends Controller {
 			$data['cards'] = $this->model_payment_sagepay_server->getCards($this->customer->getId());
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/sagepay_server.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/sagepay_server.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/sagepay_server.tpl', $data);
-		}
+		return $this->load->view('payment/sagepay_server.tpl', $data);
 	}
 
 	public function send() {

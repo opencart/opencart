@@ -47,11 +47,7 @@ class ControllerPaymentWorldpay extends Controller {
 			$data['recurring_products'] = true;
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/worldpay.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/worldpay.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/worldpay.tpl', $data);
-		}
+		return $this->load->view('payment/worldpay.tpl', $data);
 	}
 
 	public function send() {

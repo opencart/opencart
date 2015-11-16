@@ -45,11 +45,7 @@ class ControllerCommonLanguage extends Controller {
 			$data['redirect'] = $this->url->link($route, $url, $this->request->server['HTTPS']);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/language.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/common/language.tpl', $data);
-		} else {
-			return $this->load->view('default/template/common/language.tpl', $data);
-		}
+		return $this->load->view('common/language.tpl', $data);
 	}
 
 	public function language() {

@@ -4,10 +4,6 @@ final class Front {
 	private $pre_action = array();
 	private $error;
 
-	public function __construct($registry) {
-		$this->registry = $registry;
-	}
-
 	public function addPreAction($pre_action) {
 		$this->pre_action[] = $pre_action;
 	}
@@ -35,7 +31,7 @@ final class Front {
 	}
 
 	private function execute($action) {
-		$result = $action->execute($this->registry, $action->getArgs());
+		$result = $action->execute();
 
 		if (is_object($result)) {
 			$action = $result;

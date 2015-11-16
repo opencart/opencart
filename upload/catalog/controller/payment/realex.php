@@ -82,11 +82,7 @@ class ControllerPaymentRealex extends Controller {
 
 		$data['response_url'] = HTTPS_SERVER . 'index.php?route=payment/realex/notify';
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/realex.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/realex.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/realex.tpl', $data);
-		}
+		return $this->load->view('payment/realex.tpl', $data);
 	}
 
 	public function notify() {
@@ -257,10 +253,6 @@ class ControllerPaymentRealex extends Controller {
 			}
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/realex_response.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/realex_response.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/payment/realex_response.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('payment/realex_response.tpl', $data));
 	}
 }

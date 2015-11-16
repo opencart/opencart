@@ -52,11 +52,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/amazon_login_pay_address.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/amazon_login_pay_address.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/payment/amazon_login_pay_address.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('payment/amazon_login_pay_address.tpl', $data));
 	}
 
 	public function paymentMethod() {
@@ -103,11 +99,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/amazon_login_pay_payment.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/amazon_login_pay_payment.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/payment/amazon_login_pay_payment.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('payment/amazon_login_pay_payment.tpl', $data));
 	}
 
 	public function confirm() {
@@ -488,11 +480,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/amazon_login_pay_confirm.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/amazon_login_pay_confirm.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/payment/amazon_login_pay_confirm.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('payment/amazon_login_pay_confirm.tpl', $data));
 	}
 
 	public function processOrder() {
@@ -617,11 +605,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/amazon_login_pay_failure.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/amazon_login_pay_failure.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/payment/amazon_login_pay_failure.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('payment/amazon_login_pay_failure.tpl', $data));
 	}
 
 	public function shippingQuotes() {

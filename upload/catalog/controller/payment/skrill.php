@@ -44,11 +44,7 @@ class ControllerPaymentSkrill extends Controller {
 
 		$data['order_id'] = $this->session->data['order_id'];
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/skrill.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/skrill.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/skrill.tpl', $data);
-		}
+		return $this->load->view('payment/skrill.tpl', $data);
 	}
 
 	public function callback() {

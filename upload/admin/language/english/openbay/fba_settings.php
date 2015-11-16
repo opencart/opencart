@@ -8,8 +8,6 @@ $_['text_fba']                  = 'Fulfillment by Amazon';
 $_['text_success']     			= 'Your settings have been saved';
 $_['text_status']         		= 'Status';
 $_['text_account_ok']  			= 'Connection to Fulfillment by Amazon OK';
-$_['text_api_other']            = 'Links';
-$_['text_token_register']       = 'Register';
 $_['text_api_ok']       		= 'API connection OK';
 $_['text_api_status']           = 'API connection';
 $_['text_edit']           		= 'Edit Fulfillment by Amazon settings';
@@ -21,7 +19,8 @@ $_['text_fillall']           	= 'Fill All';
 $_['text_fillallavailable']     = 'Fill All Available';
 $_['text_prefix_warning']     	= 'Do not change this setting after orders have been sent to Amazon, only set this when you first install.';
 $_['text_disabled_cancel']     	= 'Disabled - do not automatically cancel fulfillments';
-$_['text_validate_success']     = 'Your API details are working correctly!';
+$_['text_validate_success']     = 'Your API details are working correctly! You must press save to ensure settings are saved.';
+$_['text_register_banner']      = 'Click here if you need to register for an account';
 
 // Entry
 $_['entry_api_key']            	= 'API key';

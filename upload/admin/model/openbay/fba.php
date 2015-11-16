@@ -17,6 +17,7 @@ class ModelOpenbayFba extends Model {
         $this->db->query("
 				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "fba_order` (
 					`order_id` INT(11) NOT NULL,
+					`fba_order_fulfillment_id` INT(11) NOT NULL,
 					`status` CHAR(10) NOT NULL,
 				    `created` DATETIME NOT NULL,
   				    KEY `fba_order_id` (`order_id`)

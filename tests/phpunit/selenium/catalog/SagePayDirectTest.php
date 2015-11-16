@@ -14,7 +14,7 @@ class CatalogSagePayExpressTest extends OpenCartSeleniumTest {
 
 	public function setUpPage() {
 		if (!$this->moduleInstalled) {
-			$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+			$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
 			$db->query("DROP TABLE IF EXISTS " . DB_PREFIX . "sagepay_direct_order");
 			$db->query("DROP TABLE IF EXISTS " . DB_PREFIX . "sagepay_direct_order_transaction");
 			$db->query("DROP TABLE IF EXISTS " . DB_PREFIX . "sagepay_direct_order_recurring");
@@ -104,7 +104,7 @@ class CatalogSagePayExpressTest extends OpenCartSeleniumTest {
 			$this->byCssSelector('.fa-plus-circle')->click();
 
 			for ($i = 1; ; $i++) {
-				$element = $this->byCssSelector("select[name=\"pp_layout_module[0][layout_id]\"] option:nth-child($i)");
+				$element = $this->byCssSelector("select[name=\"pp_button_module[0][layout_id]\"] option:nth-child($i)");
 
 				if ($element->text() == 'Cart') {
 					$element->click();

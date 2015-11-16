@@ -2,6 +2,9 @@
 // Heading
 $_['heading_title']     = 'Affiliate Commission Report';
 
+// Text
+$_['text_list']         = 'Affiliate Commission List';
+
 // Column
 $_['column_affiliate']  = 'Affiliate Name';
 $_['column_email']      = 'E-Mail';

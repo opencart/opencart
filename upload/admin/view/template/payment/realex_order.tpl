@@ -1,5 +1,5 @@
 <h2><?php echo $text_payment_info; ?></h2>
-<div class="alert alert-success" id="realex_transaction_msg" style="display:none;"></div>
+<div class="alert alert-success" id="realex-transaction-msg" style="display:none;"></div>
 <table class="table table-striped table-bordered">
   <tr>
     <td><?php echo $text_order_ref; ?></td>
@@ -11,19 +11,19 @@
   </tr>
   <tr>
     <td><?php echo $text_total_captured; ?></td>
-    <td id="realex_total_captured"><?php echo $realex_order['total_captured_formatted']; ?></td>
+    <td id="realex-total-captured"><?php echo $realex_order['total_captured_formatted']; ?></td>
   </tr>
   <tr>
     <td><?php echo $text_capture_status; ?></td>
     <td id="capture_status">
       <?php if ($realex_order['capture_status'] == 1) { ?>
-        <span class="capture_text"><?php echo $text_yes; ?></span>
+        <span class="capture-text"><?php echo $text_yes; ?></span>
       <?php } else { ?>
-        <span class="capture_text"><?php echo $text_no; ?></span>&nbsp;&nbsp;
+        <span class="capture-text"><?php echo $text_no; ?></span>&nbsp;&nbsp;
         <?php if ($realex_order['void_status'] == 0) { ?>
-          <input type="text" width="10" id="capture_amount" value="<?php echo $realex_order['total']; ?>"/>
-          <a class="button btn btn-primary" id="btn_capture"><?php echo $btn_capture; ?></a>
-          <span class="btn btn-primary" id="img_loading_capture" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+          <input type="text" width="10" id="capture-amount" value="<?php echo $realex_order['total']; ?>"/>
+          <a class="button btn btn-primary" id="button-capture"><?php echo $button_capture; ?></a>
+          <span class="btn btn-primary" id="loading-capture" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
         <?php } ?>
       <?php } ?>
     </td>
@@ -35,8 +35,8 @@
         <span class="void_text"><?php echo $text_yes; ?></span>
       <?php } else { ?>
         <span class="void_text"><?php echo $text_no; ?></span>&nbsp;&nbsp;
-        <a class="button btn btn-primary" id="btn_void"><?php echo $btn_void; ?></a>
-        <span class="btn btn-primary" id="img_loading_void" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+        <a class="button btn btn-primary" id="button-void"><?php echo $button_void; ?></a>
+        <span class="btn btn-primary" id="loading-void" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
       <?php } ?>
     </td>
   </tr>
@@ -49,9 +49,9 @@
         <span class="rebate_text"><?php echo $text_no; ?></span>&nbsp;&nbsp;
 
         <?php if ($realex_order['total_captured'] > 0 && $realex_order['void_status'] == 0) { ?>
-          <input type="text" width="10" id="rebate_amount" />
-          <a class="button btn btn-primary" id="btn_rebate"><?php echo $btn_rebate; ?></a>
-          <span class="btn btn-primary" id="img_loading_rebate" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
+          <input type="text" width="10" id="rebate-amount" />
+          <a class="button btn btn-primary" id="button-rebate"><?php echo $button_rebate; ?></a>
+          <span class="btn btn-primary" id="loading-rebate" style="display:none;"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i></span>
         <?php } ?>
       <?php } ?>
     </td>
@@ -59,7 +59,7 @@
   <tr>
     <td><?php echo $text_transactions; ?>:</td>
     <td>
-      <table class="table table-striped table-bordered" id="realex_transactions">
+      <table class="table table-striped table-bordered" id="realex-transactions">
         <thead>
           <tr>
             <td class="text-left"><strong><?php echo $text_column_date_added; ?></strong></td>
@@ -81,17 +81,17 @@
   </tr>
 </table>
 <script type="text/javascript"><!--
-  $("#btn_void").click(function () {
+  $("#button-void").click(function () {
     if (confirm('<?php echo $text_confirm_void; ?>')) {
       $.ajax({
         type:'POST',
         dataType: 'json',
-        data: {'order_id': <?php echo $order_id; ?> },
+        data: {'order_id': '<?php echo $order_id; ?>' },
         url: 'index.php?route=payment/realex/void&token=<?php echo $token; ?>',
         beforeSend: function() {
-          $('#btn_void').hide();
-          $('#img_loading_void').show();
-          $('#realex_transaction_msg').hide();
+          $('#button-void').hide();
+          $('#loading-void').show();
+          $('#realex-transaction-msg').hide();
         },
         success: function(data) {
           if (data.error == false) {
@@ -103,36 +103,36 @@
             html += '</tr>';
 
             $('.void_text').text('<?php echo $text_yes; ?>');
-            $('#realex_transactions').append(html);
-            $('#btn_capture').hide();
-            $('#capture_amount').hide();
+            $('#realex-transactions').append(html);
+            $('#button-capture').hide();
+            $('#capture-amount').hide();
 
             if (data.msg != '') {
-              $('#realex_transaction_msg').empty().html('<i class="fa fa-check-circle"></i> '+data.msg).fadeIn();
+              $('#realex-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> '+data.msg).fadeIn();
             }
           }
           if (data.error == true) {
             alert(data.msg);
-            $('#btn_void').show();
+            $('#button-void').show();
           }
 
-          $('#img_loading_void').hide();
+          $('#loading-void').hide();
         }
       });
     }
   });
-  $("#btn_capture").click(function () {
+  $("#button-capture").click(function () {
     if (confirm('<?php echo $text_confirm_capture; ?>')) {
       $.ajax({
         type:'POST',
         dataType: 'json',
-        data: {'order_id' : <?php echo $order_id; ?>, 'amount' : $('#capture_amount').val() },
+        data: {'order_id' : '<?php echo $order_id; ?>', 'amount' : $('#capture-amount').val() },
         url: 'index.php?route=payment/realex/capture&token=<?php echo $token; ?>',
         beforeSend: function() {
-          $('#btn_capture').hide();
-          $('#capture_amount').hide();
-          $('#img_loading_capture').show();
-          $('#realex_transaction_msg').hide();
+          $('#button-capture').hide();
+          $('#capture-amount').hide();
+          $('#loading-capture').show();
+          $('#realex-transaction-msg').hide();
         },
         success: function(data) {
           if (data.error == false) {
@@ -143,51 +143,51 @@
             html += '<td class="text-left">'+data.data.amount+'</td>';
             html += '</tr>';
 
-            $('#realex_transactions').append(html);
-            $('#realex_total_captured').text(data.data.total);
+            $('#realex-transactions').append(html);
+            $('#realex-total-captured').text(data.data.total);
 
             if (data.data.capture_status == 1) {
-              $('#btn_void').hide();
-              $('.capture_text').text('<?php echo $text_yes; ?>');
+              $('#button-void').hide();
+              $('.capture-text').text('<?php echo $text_yes; ?>');
             } else {
-              $('#btn_capture').show();
-              $('#capture_amount').val(0.00);
+              $('#button-capture').show();
+              $('#capture-amount').val('0.00');
 
               <?php if ($auto_settle == 2) { ?>
-                $('#capture_amount').show();
+                $('#capture-amount').show();
               <?php } ?>
             }
 
             if (data.msg != '') {
-              $('#realex_transaction_msg').empty().html('<i class="fa fa-check-circle"></i> '+data.msg).fadeIn();
+              $('#realex-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> '+data.msg).fadeIn();
             }
 
-            $('#btn_rebate').show();
-            $('#rebate_amount').val(0.00).show();
+            $('#button-rebate').show();
+            $('#rebate-amount').val(0.00).show();
           }
           if (data.error == true) {
             alert(data.msg);
-            $('#btn_capture').show();
-            $('#capture_amount').show();
+            $('#button-capture').show();
+            $('#capture-amount').show();
           }
 
-          $('#img_loading_capture').hide();
+          $('#loading-capture').hide();
         }
       });
     }
   });
-  $("#btn_rebate").click(function () {
+  $("#button-rebate").click(function () {
     if (confirm('<?php echo $text_confirm_rebate ?>')) {
       $.ajax({
         type:'POST',
         dataType: 'json',
-        data: {'order_id': <?php echo $order_id; ?>, 'amount' : $('#rebate_amount').val() },
+        data: {'order_id': '<?php echo $order_id; ?>', 'amount' : $('#rebate-amount').val() },
         url: 'index.php?route=payment/realex/rebate&token=<?php echo $token; ?>',
         beforeSend: function() {
-          $('#btn_rebate').hide();
-          $('#rebate_amount').hide();
-          $('#img_loading_rebate').show();
-          $('#realex_transaction_msg').hide();
+          $('#button-rebate').hide();
+          $('#rebate-amount').hide();
+          $('#loading-rebate').show();
+          $('#realex-transaction-msg').hide();
         },
         success: function(data) {
           if (data.error == false) {
@@ -198,26 +198,26 @@
             html += '<td class="text-left">'+data.data.amount+'</td>';
             html += '</tr>';
 
-            $('#realex_transactions').append(html);
-            $('#realex_total_captured').text(data.data.total_captured);
+            $('#realex-transactions').append(html);
+            $('#realex-total-captured').text(data.data.total_captured);
 
             if (data.data.rebate_status == 1) {
               $('.rebate_text').text('<?php echo $text_yes; ?>');
             } else {
-              $('#btn_rebate').show();
-              $('#rebate_amount').val(0.00).show();
+              $('#button-rebate').show();
+              $('#rebate-amount').val(0.00).show();
             }
 
             if (data.msg != '') {
-              $('#realex_transaction_msg').empty().html('<i class="fa fa-check-circle"></i> '+data.msg).fadeIn();
+              $('#realex-transaction-msg').empty().html('<i class="fa fa-check-circle"></i> '+data.msg).fadeIn();
             }
           }
           if (data.error == true) {
             alert(data.msg);
-            $('#btn_rebate').show();
+            $('#button-rebate').show();
           }
 
-          $('#img_loading_rebate').hide();
+          $('#loading-rebate').hide();
         }
       });
     }

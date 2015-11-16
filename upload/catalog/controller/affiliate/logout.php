@@ -4,7 +4,7 @@ class ControllerAffiliateLogout extends Controller {
 		if ($this->affiliate->isLogged()) {
 			$this->affiliate->logout();
 
-			$this->response->redirect($this->url->link('affiliate/logout', '', 'SSL'));
+			$this->response->redirect($this->url->link('affiliate/logout', '', true));
 		}
 
 		$this->load->language('affiliate/logout');
@@ -20,12 +20,12 @@ class ControllerAffiliateLogout extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('affiliate/account', '', 'SSL')
+			'href' => $this->url->link('affiliate/account', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_logout'),
-			'href' => $this->url->link('affiliate/logout', '', 'SSL')
+			'href' => $this->url->link('affiliate/logout', '', true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');

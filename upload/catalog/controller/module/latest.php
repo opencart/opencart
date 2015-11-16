@@ -29,9 +29,9 @@ class ControllerModuleLatest extends Controller {
 		if ($results) {
 			foreach ($results as $result) {
 				if ($result['image']) {
-					$image = $this->model_tool_image->resize($result['image'], $setting['image_width'], $setting['image_height']);
+					$image = $this->model_tool_image->resize($result['image'], $setting['width'], $setting['height']);
 				} else {
-					$image = $this->model_tool_image->resize('placeholder.png', $setting['image_width'], $setting['image_height']);
+					$image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
 				}
 
 				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
@@ -67,7 +67,7 @@ class ControllerModuleLatest extends Controller {
 					'special'     => $special,
 					'tax'         => $tax,
 					'rating'      => $rating,
-					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id']),
+					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
 				);
 			}
 

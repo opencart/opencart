@@ -38,7 +38,7 @@ class ControllerCatalogRecurring extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('catalog/recurring', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			$this->response->redirect($this->url->link('catalog/recurring', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerCatalogRecurring extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('catalog/recurring', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			$this->response->redirect($this->url->link('catalog/recurring', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerCatalogRecurring extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('catalog/recurring', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			$this->response->redirect($this->url->link('catalog/recurring', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
@@ -138,7 +138,7 @@ class ControllerCatalogRecurring extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('catalog/recurring', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			$this->response->redirect($this->url->link('catalog/recurring', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
@@ -177,9 +177,21 @@ class ControllerCatalogRecurring extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['insert'] = $this->url->link('catalog/recurring/add', 'token=' . $this->session->data['token']. $url, 'SSL');
-		$data['copy'] = $this->url->link('catalog/recurring/copy', 'token=' . $this->session->data['token']. $url, 'SSL');
-		$data['delete'] = $this->url->link('catalog/recurring/delete', 'token=' . $this->session->data['token']. $url, 'SSL');
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('catalog/recurring', 'token=' . $this->session->data['token'] . $url, true)
+		);
+
+		$data['add'] = $this->url->link('catalog/recurring/add', 'token=' . $this->session->data['token'] . $url, true);
+		$data['copy'] = $this->url->link('catalog/recurring/copy', 'token=' . $this->session->data['token'] . $url, true);
+		$data['delete'] = $this->url->link('catalog/recurring/delete', 'token=' . $this->session->data['token'] . $url, true);
 
 		$data['recurrings'] = array();
 
@@ -190,7 +202,7 @@ class ControllerCatalogRecurring extends Controller {
 			'limit' => $this->config->get('config_limit_admin')
 		);
 
-		$recurring_total = $this->model_catalog_recurring->getTotalRecurrings($filter_data);
+		$recurring_total = $this->model_catalog_recurring->getTotalRecurrings();
 
 		$results = $this->model_catalog_recurring->getRecurrings($filter_data);
 
@@ -199,24 +211,25 @@ class ControllerCatalogRecurring extends Controller {
 				'recurring_id' => $result['recurring_id'],
 				'name'         => $result['name'],
 				'sort_order'   => $result['sort_order'],
-				'edit'         => $this->url->link('catalog/recurring/edit', 'token=' . $this->session->data['token'] . '&recurring_id=' . $result['recurring_id'] . $url, 'SSL')
+				'edit'         => $this->url->link('catalog/recurring/edit', 'token=' . $this->session->data['token'] . '&recurring_id=' . $result['recurring_id'] . $url, true)
 			);
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
+		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
 		$data['column_action'] = $this->language->get('column_action');
-		
-		$data['button_insert'] = $this->language->get('button_insert');
+
+		$data['button_add'] = $this->language->get('button_add');
 		$data['button_copy'] = $this->language->get('button_copy');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
-		
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -249,8 +262,8 @@ class ControllerCatalogRecurring extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('catalog/recurring', 'token=' . $this->session->data['token'] . '&sort=pd.name' . $url, 'SSL');
-		$data['sort_sort_order'] = $this->url->link('catalog/recurring', 'token=' . $this->session->data['token'] . '&sort=p.sort_order' . $url, 'SSL');
+		$data['sort_name'] = $this->url->link('catalog/recurring', 'token=' . $this->session->data['token'] . '&sort=pd.name' . $url, true);
+		$data['sort_sort_order'] = $this->url->link('catalog/recurring', 'token=' . $this->session->data['token'] . '&sort=p.sort_order' . $url, true);
 
 		$url = '';
 
@@ -266,7 +279,7 @@ class ControllerCatalogRecurring extends Controller {
 		$pagination->total = $recurring_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('catalog/recurring', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
+		$pagination->url = $this->url->link('catalog/recurring', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -276,7 +289,7 @@ class ControllerCatalogRecurring extends Controller {
 		$data['order'] = $order;
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('catalog/recurring_list.tpl', $data));
@@ -284,7 +297,8 @@ class ControllerCatalogRecurring extends Controller {
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
-		
+
+		$data['text_form'] = !isset($this->request->get['recurring_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_profile'] = $this->language->get('text_profile');
@@ -303,7 +317,7 @@ class ControllerCatalogRecurring extends Controller {
 		$data['entry_trial_frequency'] = $this->language->get('entry_trial_frequency');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
-		
+
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
@@ -318,7 +332,7 @@ class ControllerCatalogRecurring extends Controller {
 		} else {
 			$data['error_name'] = array();
 		}
-				
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
@@ -332,25 +346,37 @@ class ControllerCatalogRecurring extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-		
+
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('catalog/recurring', 'token=' . $this->session->data['token'] . $url, true)
+		);
+
 		if (!isset($this->request->get['recurring_id'])) {
-			$data['action'] = $this->url->link('catalog/recurring/add', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('catalog/recurring/add', 'token=' . $this->session->data['token'] . $url, true);
 		} else {
-			$data['action'] = $this->url->link('catalog/recurring/edit', 'token=' . $this->session->data['token'] . '&recurring_id=' . $this->request->get['recurring_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('catalog/recurring/edit', 'token=' . $this->session->data['token'] . '&recurring_id=' . $this->request->get['recurring_id'] . $url, true);
 		}
 
-		$data['cancel'] = $this->url->link('catalog/recurring', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['cancel'] = $this->url->link('catalog/recurring', 'token=' . $this->session->data['token'] . $url, true);
 
 		if (isset($this->request->get['recurring_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$recurring_info = $this->model_catalog_recurring->getRecurring($this->request->get['recurring_id']);
 		}
-		
+
 		$data['token'] = $this->session->data['token'];
-		
+
 		$this->load->model('localisation/language');
 
 		$data['languages'] = $this->model_localisation_language->getLanguages();
-				
+
 		if (isset($this->request->post['recurring_description'])) {
 			$data['recurring_description'] = $this->request->post['recurring_description'];
 		} elseif (!empty($recurring_info)) {
@@ -366,9 +392,9 @@ class ControllerCatalogRecurring extends Controller {
 		} else {
 			$data['price'] = 0;
 		}
-		
+
 		$data['frequencies'] = array();
-		
+
 		$data['frequencies'][] = array(
 			'text'  => $this->language->get('text_day'),
 			'value' => 'day'
@@ -378,22 +404,22 @@ class ControllerCatalogRecurring extends Controller {
 			'text'  => $this->language->get('text_week'),
 			'value' => 'week'
 		);
-		
+
 		$data['frequencies'][] = array(
 			'text'  => $this->language->get('text_semi_month'),
 			'value' => 'semi_month'
 		);
-		
+
 		$data['frequencies'][] = array(
 			'text'  => $this->language->get('text_month'),
 			'value' => 'month'
 		);
-		
+
 		$data['frequencies'][] = array(
 			'text'  => $this->language->get('text_year'),
 			'value' => 'year'
 		);
-		
+
 		if (isset($this->request->post['frequency'])) {
 			$data['frequency'] = $this->request->post['frequency'];
 		} elseif (!empty($recurring_info)) {
@@ -464,7 +490,7 @@ class ControllerCatalogRecurring extends Controller {
 		} else {
 			$data['trial_status'] = 0;
 		}
-				
+
 		if (isset($this->request->post['sort_order'])) {
 			$data['sort_order'] = $this->request->post['sort_order'];
 		} elseif (!empty($recurring_info)) {
@@ -474,7 +500,7 @@ class ControllerCatalogRecurring extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('catalog/recurring_form.tpl', $data));
@@ -506,7 +532,7 @@ class ControllerCatalogRecurring extends Controller {
 		$this->load->model('catalog/product');
 
 		foreach ($this->request->post['selected'] as $recurring_id) {
-			$product_total = $this->model_catalog_product->getTotalProductsByRcurringId($recurring_id);
+			$product_total = $this->model_catalog_product->getTotalProductsByProfileId($recurring_id);
 
 			if ($product_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_product'), $product_total);

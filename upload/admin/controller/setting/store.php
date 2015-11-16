@@ -28,7 +28,7 @@ class ControllerSettingStore extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->data['token'], true));
 		}
 
 		$this->getForm();
@@ -50,7 +50,7 @@ class ControllerSettingStore extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], 'SSL'));
+			$this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true));
 		}
 
 		$this->getForm();
@@ -74,7 +74,7 @@ class ControllerSettingStore extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->data['token'], true));
 		}
 
 		$this->getList();
@@ -91,16 +91,16 @@ class ControllerSettingStore extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('setting/store', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['insert'] = $this->url->link('setting/store/add', 'token=' . $this->session->data['token'], 'SSL');
-		$data['delete'] = $this->url->link('setting/store/delete', 'token=' . $this->session->data['token'], 'SSL');
+		$data['add'] = $this->url->link('setting/store/add', 'token=' . $this->session->data['token'], true);
+		$data['delete'] = $this->url->link('setting/store/delete', 'token=' . $this->session->data['token'], true);
 
 		$data['stores'] = array();
 
@@ -108,7 +108,7 @@ class ControllerSettingStore extends Controller {
 			'store_id' => 0,
 			'name'     => $this->config->get('config_name') . $this->language->get('text_default'),
 			'url'      => HTTP_CATALOG,
-			'edit'     => $this->url->link('setting/setting', 'token=' . $this->session->data['token'], 'SSL')
+			'edit'     => $this->url->link('setting/setting', 'token=' . $this->session->data['token'], true)
 		);
 
 		$store_total = $this->model_setting_store->getTotalStores();
@@ -120,12 +120,13 @@ class ControllerSettingStore extends Controller {
 				'store_id' => $result['store_id'],
 				'name'     => $result['name'],
 				'url'      => $result['url'],
-				'edit'     => $this->url->link('setting/store/edit', 'token=' . $this->session->data['token'] . '&store_id=' . $result['store_id'], 'SSL')
+				'edit'     => $this->url->link('setting/store/edit', 'token=' . $this->session->data['token'] . '&store_id=' . $result['store_id'], true)
 			);
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
+		$data['text_list'] = $this->language->get('text_list');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
@@ -133,7 +134,7 @@ class ControllerSettingStore extends Controller {
 		$data['column_url'] = $this->language->get('column_url');
 		$data['column_action'] = $this->language->get('column_action');
 
-		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_add'] = $this->language->get('button_add');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
 
@@ -158,7 +159,7 @@ class ControllerSettingStore extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('setting/store_list.tpl', $data));
@@ -167,6 +168,7 @@ class ControllerSettingStore extends Controller {
 	public function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
 
+		$data['text_form'] = !isset($this->request->get['store_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_yes'] = $this->language->get('text_yes');
@@ -396,13 +398,25 @@ class ControllerSettingStore extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('setting/store', 'token=' . $this->session->data['token'], true)
 		);
+
+		if (!isset($this->request->get['store_id'])) {
+			$data['breadcrumbs'][] = array(
+				'text' => $this->language->get('text_settings'),
+				'href' => $this->url->link('setting/store/add', 'token=' . $this->session->data['token'], true)
+			);
+		} else {
+			$data['breadcrumbs'][] = array(
+				'text' => $this->language->get('text_settings'),
+				'href' => $this->url->link('setting/store/edit', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true)
+			);
+		}
 
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
@@ -413,12 +427,12 @@ class ControllerSettingStore extends Controller {
 		}
 
 		if (!isset($this->request->get['store_id'])) {
-			$data['action'] = $this->url->link('setting/store/add', 'token=' . $this->session->data['token'], 'SSL');
+			$data['action'] = $this->url->link('setting/store/add', 'token=' . $this->session->data['token'], true);
 		} else {
-			$data['action'] = $this->url->link('setting/store/edit', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], 'SSL');
+			$data['action'] = $this->url->link('setting/store/edit', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], true);
 		}
 
-		$data['cancel'] = $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->link('setting/store', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->get['store_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$this->load->model('setting/setting');
@@ -501,11 +515,11 @@ class ControllerSettingStore extends Controller {
 		}
 
 		if (isset($this->request->post['config_image'])) {
-			$data['image'] = $this->request->post['config_image'];
+			$data['config_image'] = $this->request->post['config_image'];
 		} elseif (isset($store_info['config_image'])) {
-			$data['image'] = $store_info['config_image'];
+			$data['config_image'] = $store_info['config_image'];
 		} else {
-			$data['image'] = '';
+			$data['config_image'] = '';
 		}
 
 		$this->load->model('tool/image');
@@ -515,23 +529,25 @@ class ControllerSettingStore extends Controller {
 		} elseif (isset($store_info['config_image']) && is_file(DIR_IMAGE . $store_info['config_image'])) {
 			$data['thumb'] = $this->model_tool_image->resize($store_info['config_image'], 100, 100);
 		} else {
-			$data['thumb'] = '';
+			$data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
 
-		if (isset($this->request->post['open'])) {
-			$data['open'] = $this->request->post['open'];
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+
+		if (isset($this->request->post['config_open'])) {
+			$data['config_open'] = $this->request->post['config_open'];
 		} elseif (isset($store_info['config_open'])) {
-			$data['open'] = $store_info['open'];
+			$data['config_open'] = $store_info['config_open'];
 		} else {
-			$data['open'] = '';
+			$data['config_open'] = '';
 		}
 
-		if (isset($this->request->post['comment'])) {
-			$data['comment'] = $this->request->post['comment'];
+		if (isset($this->request->post['config_comment'])) {
+			$data['config_comment'] = $this->request->post['config_comment'];
 		} elseif (isset($store_info['config_comment'])) {
-			$data['comment'] = $store_info['comment'];
+			$data['config_comment'] = $store_info['config_comment'];
 		} else {
-			$data['comment'] = '';
+			$data['config_comment'] = '';
 		}
 
 		$this->load->model('localisation/location');
@@ -690,9 +706,9 @@ class ControllerSettingStore extends Controller {
 			$data['config_customer_group_id'] = '';
 		}
 
-		$this->load->model('sale/customer_group');
+		$this->load->model('customer/customer_group');
 
-		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
+		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
 		if (isset($this->request->post['config_customer_group_display'])) {
 			$data['config_customer_group_display'] = $this->request->post['config_customer_group_display'];
@@ -787,8 +803,10 @@ class ControllerSettingStore extends Controller {
 		} elseif (isset($store_info['config_logo']) && is_file(DIR_IMAGE . $store_info['config_logo'])) {
 			$data['logo'] = $this->model_tool_image->resize($store_info['config_logo'], 100, 100);
 		} else {
-			$data['logo'] = '';
+			$data['logo'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
+
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
 		if (isset($this->request->post['config_icon'])) {
 			$data['config_icon'] = $this->request->post['config_icon'];
@@ -803,7 +821,7 @@ class ControllerSettingStore extends Controller {
 		} elseif (isset($store_info['config_icon']) && is_file(DIR_IMAGE . $store_info['config_icon'])) {
 			$data['icon'] = $this->model_tool_image->resize($store_info['config_icon'], 100, 100);
 		} else {
-			$data['icon'] = '';
+			$data['icon'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 		}
 
 		if (isset($this->request->post['config_image_category_height'])) {
@@ -975,7 +993,7 @@ class ControllerSettingStore extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('setting/store_form.tpl', $data));
@@ -1002,7 +1020,7 @@ class ControllerSettingStore extends Controller {
 			$this->error['address'] = $this->language->get('error_address');
 		}
 
-		if ((utf8_strlen($this->request->post['config_email']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['config_email'])) {
+		if ((utf8_strlen($this->request->post['config_email']) > 96) || !preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['config_email'])) {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 
@@ -1107,31 +1125,5 @@ class ControllerSettingStore extends Controller {
 		} else {
 			$this->response->setOutput($server . 'image/no_image.jpg');
 		}
-	}
-
-	public function country() {
-		$json = array();
-
-		$this->load->model('localisation/country');
-
-		$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
-
-		if ($country_info) {
-			$this->load->model('localisation/zone');
-
-			$json = array(
-				'country_id'        => $country_info['country_id'],
-				'name'              => $country_info['name'],
-				'iso_code_2'        => $country_info['iso_code_2'],
-				'iso_code_3'        => $country_info['iso_code_3'],
-				'address_format'    => $country_info['address_format'],
-				'postcode_required' => $country_info['postcode_required'],
-				'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
-				'status'            => $country_info['status']
-			);
-		}
-
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
 	}
 }

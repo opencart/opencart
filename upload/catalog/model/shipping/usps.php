@@ -50,8 +50,6 @@ class ModelShippingUsps extends Model {
 
 				// Calculate girth based on usps calculation
 				$xml .= '		<Girth>' . (round(((float)$this->config->get('usps_length') + (float)$this->config->get('usps_width') * 2 + (float)$this->config->get('usps_height') * 2), 1)) . '</Girth>';
-
-
 				$xml .=	'		<Machinable>' . ($this->config->get('usps_machinable') ? 'true' : 'false') . '</Machinable>';
 				$xml .=	'	</Package>';
 				$xml .= '</RateV4Request>';
@@ -282,6 +280,7 @@ class ModelShippingUsps extends Model {
 
 				if (isset($country[$address['iso_code_2']])) {
 					$xml  = '<IntlRateV2Request USERID="' . $this->config->get('usps_user_id') . '">';
+					$xml .= '	<Revision>2</Revision>';
 					$xml .=	'	<Package ID="1">';
 					$xml .=	'		<Pounds>' . $pounds . '</Pounds>';
 					$xml .=	'		<Ounces>' . $ounces . '</Ounces>';
@@ -304,6 +303,7 @@ class ModelShippingUsps extends Model {
 					$xml .= '		<Length>' . $this->config->get('usps_length') . '</Length>';
 					$xml .= '		<Height>' . $this->config->get('usps_height') . '</Height>';
 					$xml .= '		<Girth>' . $this->config->get('usps_girth') . '</Girth>';
+					$xml .= '		<OriginZip>' . substr($this->config->get('usps_postcode'), 0, 5) . '</OriginZip>';
 					$xml .= '		<CommercialFlag>N</CommercialFlag>';
 					$xml .=	'	</Package>';
 					$xml .=	'</IntlRateV2Request>';
@@ -350,7 +350,7 @@ class ModelShippingUsps extends Model {
 					$firstclasses = array (
 						'First-Class Mail Parcel',
 						'First-Class Mail Large Envelope',
-						'First-Class Mail Letter',
+						'First-Class Mail Stamped Letter',
 						'First-Class Mail Postcards'
 					);
 

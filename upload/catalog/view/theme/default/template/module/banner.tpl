@@ -1,19 +1,21 @@
-<div id="carousel<?php echo $module; ?>" class="flexslider">
-  <ul class="slides">
-    <?php foreach ($banners as $banner) { ?>
+<div id="banner<?php echo $module; ?>" class="owl-carousel">
+  <?php foreach ($banners as $banner) { ?>
+  <div class="item">
     <?php if ($banner['link']) { ?>
-    <li><a href="<?php echo $banner['link']; ?>"><img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" /></a></li>
+    <a href="<?php echo $banner['link']; ?>"><img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" class="img-responsive" /></a>
     <?php } else { ?>
-    <li><img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" /></li>
+    <img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" class="img-responsive" />
     <?php } ?>
-    <?php } ?>
-  </ul>
+  </div>
+  <?php } ?>
 </div>
 <script type="text/javascript"><!--
-$('banner<?php echo $module; ?>').flexslider({
-	animation: 'slide',
-	animationLoop: true,
-	itemWidth: 1,
-	itemMargin: 5
+$('#banner<?php echo $module; ?>').owlCarousel({
+	items: 6,
+	autoPlay: 3000,
+	singleItem: true,
+	navigation: false,
+	pagination: false,
+	transitionStyle: 'fade'
 });
 --></script>

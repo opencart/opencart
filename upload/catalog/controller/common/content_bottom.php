@@ -2,9 +2,6 @@
 class ControllerCommonContentBottom extends Controller {
 	public function index() {
 		$this->load->model('design/layout');
-		$this->load->model('catalog/category');
-		$this->load->model('catalog/product');
-		$this->load->model('catalog/information');
 
 		if (isset($this->request->get['route'])) {
 			$route = (string)$this->request->get['route'];
@@ -15,16 +12,22 @@ class ControllerCommonContentBottom extends Controller {
 		$layout_id = 0;
 
 		if ($route == 'product/category' && isset($this->request->get['path'])) {
+			$this->load->model('catalog/category');
+
 			$path = explode('_', (string)$this->request->get['path']);
 
 			$layout_id = $this->model_catalog_category->getCategoryLayoutId(end($path));
 		}
 
 		if ($route == 'product/product' && isset($this->request->get['product_id'])) {
+			$this->load->model('catalog/product');
+
 			$layout_id = $this->model_catalog_product->getProductLayoutId($this->request->get['product_id']);
 		}
 
 		if ($route == 'information/information' && isset($this->request->get['information_id'])) {
+			$this->load->model('catalog/information');
+
 			$layout_id = $this->model_catalog_information->getInformationLayoutId($this->request->get['information_id']);
 		}
 
@@ -36,43 +39,25 @@ class ControllerCommonContentBottom extends Controller {
 			$layout_id = $this->config->get('config_layout_id');
 		}
 
-		$module_data = array();
-
-		$this->load->model('setting/extension');
-
-		$extensions = $this->model_setting_extension->getExtensions('module');
-
-		foreach ($extensions as $extension) {
-			$modules = $this->config->get($extension['code'] . '_module');
-
-			if ($modules) {
-				foreach ($modules as $module) {
-					if ($module['layout_id'] == $layout_id && $module['position'] == 'content_bottom' && $module['status']) {
-						$module_data[] = array(
-							'code'       => $extension['code'],
-							'setting'    => $module,
-							'sort_order' => $module['sort_order']
-						);
-					}
-				}
-			}
-		}
-
-		$sort_order = array();
-
-		foreach ($module_data as $key => $value) {
-			$sort_order[$key] = $value['sort_order'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $module_data);
+		$this->load->model('extension/module');
 
 		$data['modules'] = array();
 
-		foreach ($module_data as $module) {
-			$module = $this->load->controller('module/' . $module['code'], $module['setting']);
+		$modules = $this->model_design_layout->getLayoutModules($layout_id, 'content_bottom');
 
-			if ($module) {
-				$data['modules'][] = $module;
+		foreach ($modules as $module) {
+			$part = explode('.', $module['code']);
+
+			if (isset($part[0]) && $this->config->get($part[0] . '_status')) {
+				$data['modules'][] = $this->load->controller('module/' . $part[0]);
+			}
+
+			if (isset($part[1])) {
+				$setting_info = $this->model_extension_module->getModule($part[1]);
+
+				if ($setting_info && $setting_info['status']) {
+					$data['modules'][] = $this->load->controller('module/' . $part[0], $setting_info);
+				}
 			}
 		}
 

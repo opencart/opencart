@@ -132,6 +132,13 @@ class ControllerApiShipping extends Controller {
 			}
 		}
 
+		if (isset($this->request->server['HTTP_ORIGIN'])) {
+			$this->response->addHeader('Access-Control-Allow-Origin: ' . $this->request->server['HTTP_ORIGIN']);
+			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+			$this->response->addHeader('Access-Control-Max-Age: 1000');
+			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+		}
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
@@ -156,9 +163,9 @@ class ControllerApiShipping extends Controller {
 				// Shipping Methods
 				$json['shipping_methods'] = array();
 
-				$this->load->model('setting/extension');
+				$this->load->model('extension/extension');
 
-				$results = $this->model_setting_extension->getExtensions('shipping');
+				$results = $this->model_extension_extension->getExtensions('shipping');
 
 				foreach ($results as $result) {
 					if ($this->config->get($result['code'] . '_status')) {
@@ -193,6 +200,13 @@ class ControllerApiShipping extends Controller {
 			}
 		} else {
 			$json['shipping_methods'] = array();
+		}
+
+		if (isset($this->request->server['HTTP_ORIGIN'])) {
+			$this->response->addHeader('Access-Control-Allow-Origin: ' . $this->request->server['HTTP_ORIGIN']);
+			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+			$this->response->addHeader('Access-Control-Max-Age: 1000');
+			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');
@@ -239,6 +253,13 @@ class ControllerApiShipping extends Controller {
 				unset($this->session->data['shipping_method']);
 				unset($this->session->data['shipping_methods']);
 			}
+		}
+
+		if (isset($this->request->server['HTTP_ORIGIN'])) {
+			$this->response->addHeader('Access-Control-Allow-Origin: ' . $this->request->server['HTTP_ORIGIN']);
+			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+			$this->response->addHeader('Access-Control-Max-Age: 1000');
+			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

@@ -1,9 +1,9 @@
 <?php
 class ModelPaymentFreeCheckout extends Model {
-  	public function getMethod($address, $total) {
+	public function getMethod($address, $total) {
 		$this->load->language('payment/free_checkout');
 
-		if ($total <= 0) {
+		if ($total <= 0.00) {
 			$status = true;
 		} else {
 			$status = false;
@@ -20,6 +20,6 @@ class ModelPaymentFreeCheckout extends Model {
 			);
 		}
 
-    	return $method_data;
-  	}
+		return $method_data;
+	}
 }

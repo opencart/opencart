@@ -583,7 +583,6 @@ if (extension_loaded('mbstring')) {
 			if ($unicode[$i] >= 67108864 && $unicode[$i] <= 2147483647) {
 				$string .= chr(($unicode[$i] / 1073741824) + 252) . chr((($unicode[$i] / 16777216) % 64) + 128) . chr((($unicode[$i] / 262144) % 64) + 128) . chr(128 + (($unicode[$i] / 4096) % 64)) . chr((($unicode[$i] / 64) % 64) + 128) . chr(($unicode[$i] % 64) + 128);
 			}
-
 		}
 
 		return $string;

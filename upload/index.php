@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '2.0.0.0a1');
+define('VERSION', '2.1.0.2_rc');
 
 // Configuration
 if (is_file('config.php')) {
@@ -28,7 +28,7 @@ $config = new Config();
 $registry->set('config', $config);
 
 // Database
-$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
 $registry->set('db', $db);
 
 // Store
@@ -51,7 +51,7 @@ foreach ($query->rows as $result) {
 	if (!$result['serialized']) {
 		$config->set($result['key'], $result['value']);
 	} else {
-		$config->set($result['key'], unserialize($result['value']));
+		$config->set($result['key'], json_decode($result['value'], true));
 	}
 }
 
@@ -68,7 +68,7 @@ $registry->set('url', $url);
 $log = new Log($config->get('config_error_filename'));
 $registry->set('log', $log);
 
-function error_handler($errno, $errstr, $errfile, $errline) {
+function error_handler($code, $message, $file, $line) {
 	global $log, $config;
 
 	// error suppressed with @
@@ -76,7 +76,7 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 		return false;
 	}
 
-	switch ($errno) {
+	switch ($code) {
 		case E_NOTICE:
 		case E_USER_NOTICE:
 			$error = 'Notice';
@@ -95,11 +95,11 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 	}
 
 	if ($config->get('config_error_display')) {
-		echo '<b>' . $error . '</b>: ' . $errstr . ' in <b>' . $errfile . '</b> on line <b>' . $errline . '</b>';
+		echo '<b>' . $error . '</b>: ' . $message . ' in <b>' . $file . '</b> on line <b>' . $line . '</b>';
 	}
 
 	if ($config->get('config_error_log')) {
-		$log->write('PHP ' . $error . ':  ' . $errstr . ' in ' . $errfile . ' on line ' . $errline);
+		$log->write('PHP ' . $error . ':  ' . $message . ' in ' . $file . ' on line ' . $line);
 	}
 
 	return true;
@@ -124,6 +124,24 @@ $registry->set('cache', $cache);
 
 // Session
 $session = new Session();
+
+if (isset($request->get['token']) && isset($request->get['route']) && substr($request->get['route'], 0, 4) == 'api/') {
+	$db->query("DELETE FROM `" . DB_PREFIX . "api_session` WHERE TIMESTAMPADD(HOUR, 1, date_modified) < NOW()");
+
+	$query = $db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "api` `a` LEFT JOIN `" . DB_PREFIX . "api_session` `as` ON (a.api_id = as.api_id) LEFT JOIN " . DB_PREFIX . "api_ip `ai` ON (as.api_id = ai.api_id) WHERE a.status = '1' AND as.token = '" . $db->escape($request->get['token']) . "' AND ai.ip = '" . $db->escape($request->server['REMOTE_ADDR']) . "'");
+
+	if ($query->num_rows) {
+		$session->start($query->row['session_id'], $query->row['session_name']);
+		
+		$registry->set('session', $session);
+
+		// keep the session alive
+		$db->query("UPDATE `" . DB_PREFIX . "api_session` SET date_modified = NOW() WHERE api_session_id = '" . (int)$query->row['api_session_id'] . "'");
+	}
+} else {
+	$session->start();
+}
+
 $registry->set('session', $session);
 
 // Language Detection
@@ -135,34 +153,31 @@ foreach ($query->rows as $result) {
 	$languages[$result['code']] = $result;
 }
 
-$detect = '';
+if (isset($session->data['language']) && array_key_exists($session->data['language'], $languages)) {
+	$code = $session->data['language'];
+} elseif (isset($request->cookie['language']) && array_key_exists($request->cookie['language'], $languages)) {
+	$code = $request->cookie['language'];
+} else {
+	$detect = '';
 
-if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && $request->server['HTTP_ACCEPT_LANGUAGE']) {
-	$browser_languages = explode(',', $request->server['HTTP_ACCEPT_LANGUAGE']);
+	if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && $request->server['HTTP_ACCEPT_LANGUAGE']) {
+		$browser_languages = explode(',', $request->server['HTTP_ACCEPT_LANGUAGE']);
 
-	foreach ($browser_languages as $browser_language) {
-		foreach ($languages as $key => $value) {
-			if ($value['status']) {
-				$locale = explode(',', $value['locale']);
+		foreach ($browser_languages as $browser_language) {
+			foreach ($languages as $key => $value) {
+				if ($value['status']) {
+					$locale = explode(',', $value['locale']);
 
-				if (in_array($browser_language, $locale)) {
-					$detect = $key;
-
-					break 2;
+					if (in_array($browser_language, $locale)) {
+						$detect = $key;
+						break 2;
+					}
 				}
 			}
 		}
 	}
-}
 
-if (isset($session->data['language']) && array_key_exists($session->data['language'], $languages) && $languages[$session->data['language']]['status']) {
-	$code = $session->data['language'];
-} elseif (isset($request->cookie['language']) && array_key_exists($request->cookie['language'], $languages) && $languages[$request->cookie['language']]['status']) {
-	$code = $request->cookie['language'];
-} elseif ($detect) {
-	$code = $detect;
-} else {
-	$code = $config->get('config_language');
+	$code = $detect ? $detect : $config->get('config_language');
 }
 
 if (!isset($session->data['language']) || $session->data['language'] != $code) {
@@ -178,23 +193,23 @@ $config->set('config_language', $languages[$code]['code']);
 
 // Language
 $language = new Language($languages[$code]['directory']);
-$language->load($languages[$code]['filename']);
+$language->load($languages[$code]['directory']);
 $registry->set('language', $language);
 
 // Document
 $registry->set('document', new Document());
 
 // Customer
-$customer = new Customer($registry);
+$customer = new Cart\Customer($registry);
 $registry->set('customer', $customer);
 
 // Customer Group
 if ($customer->isLogged()) {
 	$config->set('config_customer_group_id', $customer->getGroupId());
-} elseif (isset($session->data['customer'])) {
+} elseif (isset($session->data['customer']) && isset($session->data['customer']['customer_group_id'])) {
 	// For API calls
 	$config->set('config_customer_group_id', $session->data['customer']['customer_group_id']);
-} elseif (isset($session->data['guest'])) {
+} elseif (isset($session->data['guest']) && isset($session->data['guest']['customer_group_id'])) {
 	$config->set('config_customer_group_id', $session->data['guest']['customer_group_id']);
 }
 
@@ -206,28 +221,38 @@ if (isset($request->get['tracking'])) {
 }
 
 // Affiliate
-$registry->set('affiliate', new Affiliate($registry));
+$registry->set('affiliate', new Cart\Affiliate($registry));
 
 // Currency
-$registry->set('currency', new Currency($registry));
+$registry->set('currency', new Cart\Currency($registry));
 
 // Tax
-$registry->set('tax', new Tax($registry));
+$registry->set('tax', new Cart\Tax($registry));
 
 // Weight
-$registry->set('weight', new Weight($registry));
+$registry->set('weight', new Cart\Weight($registry));
 
 // Length
-$registry->set('length', new Length($registry));
+$registry->set('length', new Cart\Length($registry));
 
 // Cart
-$registry->set('cart', new Cart($registry));
+$registry->set('cart', new Cart\Cart($registry));
 
 // Encryption
 $registry->set('encryption', new Encryption($config->get('config_encryption')));
 
+// OpenBay Pro
+$registry->set('openbay', new Openbay($registry));
+
 // Event
-$registry->set('event', new Event($registry));
+$event = new Event($registry);
+$registry->set('event', $event);
+
+$query = $db->query("SELECT * FROM " . DB_PREFIX . "event");
+
+foreach ($query->rows as $result) {
+	$event->register($result['trigger'], new Action($result['action']));
+}
 
 // Front Controller
 $controller = new Front($registry);

@@ -1,7 +1,5 @@
 <?php
-
 class ModelPaymentSagepayDirect extends Model {
-
 	public function install() {
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "sagepay_direct_order` (
@@ -112,7 +110,7 @@ class ModelPaymentSagepayDirect extends Model {
 		$sagepay_direct_order = $this->getOrder($order_id);
 		$total_released = $this->getTotalReleased($sagepay_direct_order['sagepay_direct_order_id']);
 
-		if (!empty($sagepay_direct_order) && $sagepay_direct_order['release_status'] == 0 && $total_released <= $amount) {
+		if (!empty($sagepay_direct_order) && $sagepay_direct_order['release_status'] == 0 && ($total_released + $amount <= $sagepay_direct_order['total'])) {
 			$release_data = array();
 
 			if ($this->config->get('sagepay_direct_test') == 'live') {
@@ -168,7 +166,7 @@ class ModelPaymentSagepayDirect extends Model {
 			$refund_data['Vendor'] = $this->config->get('sagepay_direct_vendor');
 			$refund_data['VendorTxCode'] = $sagepay_direct_order['sagepay_direct_order_id'] . rand();
 			$refund_data['Amount'] = $amount;
-			$refund_data['Currency'] = $this->currency->getCode();
+			$refund_data['Currency'] = $sagepay_direct_order['currency_code'];
 			$refund_data['Description'] = substr($this->config->get('config_name'), 0, 100);
 			$refund_data['RelatedVPSTxId'] = $sagepay_direct_order['VPSTxId'];
 			$refund_data['RelatedVendorTxCode'] = $sagepay_direct_order['VendorTxCode'];
@@ -264,5 +262,4 @@ class ModelPaymentSagepayDirect extends Model {
 			$log->write($message);
 		}
 	}
-
 }

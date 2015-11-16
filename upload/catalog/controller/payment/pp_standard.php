@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentPPStandard extends Controller {
 	public function index() {
-		$this->language->load('payment/pp_standard');
+		$this->load->language('payment/pp_standard');
 
 		$data['text_testmode'] = $this->language->get('text_testmode');
 		$data['button_confirm'] = $this->language->get('button_confirm');
@@ -29,11 +29,15 @@ class ControllerPaymentPPStandard extends Controller {
 
 				foreach ($product['option'] as $option) {
 					if ($option['type'] != 'file') {
-						$value = $option['option_value'];
+						$value = $option['value'];
 					} else {
-						$filename = $this->encryption->decrypt($option['option_value']);
-
-						$value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
+						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+						
+						if ($upload_info) {
+							$value = $upload_info['name'];
+						} else {
+							$value = '';
+						}
 					}
 
 					$option_data[] = array(
@@ -81,8 +85,8 @@ class ControllerPaymentPPStandard extends Controller {
 			$data['invoice'] = $this->session->data['order_id'] . ' - ' . html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
 			$data['lc'] = $this->session->data['language'];
 			$data['return'] = $this->url->link('checkout/success');
-			$data['notify_url'] = $this->url->link('payment/pp_standard/callback', '', 'SSL');
-			$data['cancel_return'] = $this->url->link('checkout/checkout', '', 'SSL');
+			$data['notify_url'] = $this->url->link('payment/pp_standard/callback', '', true);
+			$data['cancel_return'] = $this->url->link('checkout/checkout', '', true);
 
 			if (!$this->config->get('pp_standard_transaction')) {
 				$data['paymentaction'] = 'authorization';
@@ -151,18 +155,19 @@ class ControllerPaymentPPStandard extends Controller {
 						break;
 					case 'Completed':
 						$receiver_match = (strtolower($this->request->post['receiver_email']) == strtolower($this->config->get('pp_standard_email')));
-						
+
 						$total_paid_match = ((float)$this->request->post['mc_gross'] == $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false));
-						
+
 						if ($receiver_match && $total_paid_match) {
 							$order_status_id = $this->config->get('pp_standard_completed_status_id');
-						} else {
-							if (!$receiver_match) {
-								$this->log->write('PP_STANDARD :: RECEIVER EMAIL MISMATCH! ' . strtolower($this->request->post['receiver_email']));
-							}
-							if (!$total_paid_match) {
-								$this->log->write('PP_STANDARD :: TOTAL PAID MISMATCH! ' . $this->request->post['mc_gross']);
-							}
+						}
+						
+						if (!$receiver_match) {
+							$this->log->write('PP_STANDARD :: RECEIVER EMAIL MISMATCH! ' . strtolower($this->request->post['receiver_email']));
+						}
+						
+						if (!$total_paid_match) {
+							$this->log->write('PP_STANDARD :: TOTAL PAID MISMATCH! ' . $this->request->post['mc_gross']);
 						}
 						break;
 					case 'Denied':
@@ -191,11 +196,7 @@ class ControllerPaymentPPStandard extends Controller {
 						break;
 				}
 
-				if (!$order_info['order_status_id']) {
-					$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
-				} else {
-					$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
-				}
+				$this->model_checkout_order->addOrderHistory($order_id, $order_status_id);
 			} else {
 				$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('config_order_status_id'));
 			}

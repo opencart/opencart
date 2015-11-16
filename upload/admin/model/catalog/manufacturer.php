@@ -1,7 +1,7 @@
 <?php
 class ModelCatalogManufacturer extends Model {
 	public function addManufacturer($data) {
-		$this->event->trigger('pre_admin_add_manufacturer', $data);
+		$this->event->trigger('pre.admin.manufacturer.add', $data);
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "manufacturer SET name = '" . $this->db->escape($data['name']) . "', sort_order = '" . (int)$data['sort_order'] . "'");
 
@@ -23,13 +23,13 @@ class ModelCatalogManufacturer extends Model {
 
 		$this->cache->delete('manufacturer');
 
-		$this->event->trigger('admin_add_manufacturer', $manufacturer_id);
+		$this->event->trigger('post.admin.manufacturer.add', $manufacturer_id);
 
 		return $manufacturer_id;
 	}
 
 	public function editManufacturer($manufacturer_id, $data) {
-		$this->event->trigger('pre_admin_edit_manufacturer', $data);
+		$this->event->trigger('pre.admin.manufacturer.edit', $data);
 
 		$this->db->query("UPDATE " . DB_PREFIX . "manufacturer SET name = '" . $this->db->escape($data['name']) . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
 
@@ -45,7 +45,7 @@ class ModelCatalogManufacturer extends Model {
 			}
 		}
 
-		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'manufacturer_id=" . (int)$manufacturer_id. "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'manufacturer_id=" . (int)$manufacturer_id . "'");
 
 		if ($data['keyword']) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'manufacturer_id=" . (int)$manufacturer_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
@@ -53,11 +53,11 @@ class ModelCatalogManufacturer extends Model {
 
 		$this->cache->delete('manufacturer');
 
-		$this->event->trigger('admin_edit_manufacturer');
+		$this->event->trigger('post.admin.manufacturer.edit', $manufacturer_id);
 	}
 
 	public function deleteManufacturer($manufacturer_id) {
-		$this->event->trigger('pre_admin_delete_manufacturer', $manufacturer_id);
+		$this->event->trigger('pre.admin.manufacturer.delete', $manufacturer_id);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "manufacturer WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "manufacturer_to_store WHERE manufacturer_id = '" . (int)$manufacturer_id . "'");
@@ -65,7 +65,7 @@ class ModelCatalogManufacturer extends Model {
 
 		$this->cache->delete('manufacturer');
 
-		$this->event->trigger('admin_delete_manufacturer', $manufacturer_id);
+		$this->event->trigger('post.admin.manufacturer.delete', $manufacturer_id);
 	}
 
 	public function getManufacturer($manufacturer_id) {

@@ -1,10 +1,12 @@
 <?php
 class ControllerAccountAccount extends Controller {
 	public function index() {
+		$this->event->trigger('controller/account/account/after');
+		
 		if (!$this->customer->isLogged()) {
-			$this->session->data['redirect'] = $this->url->link('account/account', '', 'SSL');
+			$this->session->data['redirect'] = $this->url->link('account/account', '', true);
 
-			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
 		$this->load->language('account/account');
@@ -20,7 +22,7 @@ class ControllerAccountAccount extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', 'SSL')
+			'href' => $this->url->link('account/account', '', true)
 		);
 
 		if (isset($this->session->data['success'])) {
@@ -48,19 +50,19 @@ class ControllerAccountAccount extends Controller {
 		$data['text_newsletter'] = $this->language->get('text_newsletter');
 		$data['text_recurring'] = $this->language->get('text_recurring');
 
-		$data['edit'] = $this->url->link('account/edit', '', 'SSL');
-		$data['password'] = $this->url->link('account/password', '', 'SSL');
-		$data['address'] = $this->url->link('account/address', '', 'SSL');
+		$data['edit'] = $this->url->link('account/edit', '', true);
+		$data['password'] = $this->url->link('account/password', '', true);
+		$data['address'] = $this->url->link('account/address', '', true);
 		$data['wishlist'] = $this->url->link('account/wishlist');
-		$data['order'] = $this->url->link('account/order', '', 'SSL');
-		$data['download'] = $this->url->link('account/download', '', 'SSL');
-		$data['return'] = $this->url->link('account/return', '', 'SSL');
-		$data['transaction'] = $this->url->link('account/transaction', '', 'SSL');
-		$data['newsletter'] = $this->url->link('account/newsletter', '', 'SSL');
-		$data['recurring'] = $this->url->link('account/recurring', '', 'SSL');
+		$data['order'] = $this->url->link('account/order', '', true);
+		$data['download'] = $this->url->link('account/download', '', true);
+		$data['return'] = $this->url->link('account/return', '', true);
+		$data['transaction'] = $this->url->link('account/transaction', '', true);
+		$data['newsletter'] = $this->url->link('account/newsletter', '', true);
+		$data['recurring'] = $this->url->link('account/recurring', '', true);
 
 		if ($this->config->get('reward_status')) {
-			$data['reward'] = $this->url->link('account/reward', '', 'SSL');
+			$data['reward'] = $this->url->link('account/reward', '', true);
 		} else {
 			$data['reward'] = '';
 		}
@@ -70,13 +72,12 @@ class ControllerAccountAccount extends Controller {
 		$data['content_top'] = $this->load->controller('common/content_top');
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
-		$data['header'] = $this->load->controller('common/header');
-
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/account.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/account.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/account/account.tpl', $data));
-		}
+		
+		$output = $this->load->view('account/account.tpl', $data);
+		
+		$this->event->trigger('controller/account/account/after', $output);
+		
+		$this->response->setOutput($output);
 	}
 
 	public function country() {

@@ -1,33 +1,33 @@
 <?php
 
 class CatalogModelAccountDownloadTest extends OpenCartTest {
-	
+
 	/**
 	 * @before
 	 */
-	public function setupTest() {		
+	public function setupTest() {
 		$this->loadModelByRoute('checkout/order');
 		$this->loadModelByRoute('account/custom_field');
 		$this->loadModelByRoute('account/download');
-		
+
 		$this->customerLogout();
 		$this->emptyTables();
-		
+
 		$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET customer_id = 1, email = 'customer@localhost', `status` = 1, customer_group_id = 1, date_added = '1970-01-01 00:00:00', ip = '127.0.0.1'");
 		$this->db->query("INSERT INTO " . DB_PREFIX . "customer_ip SET ip = '127.0.0.1', customer_id = 1");
-		
+
 		$this->customerLogin('customer@localhost', '', true);
-		
+
 		for ($i = 0; $i < 5; $i++) {
 			$this->addDummyOrder();
 		}
-		
+
 		$this->db->query("INSERT INTO ". DB_PREFIX . "download SET filename = '', mask = '', date_added = '1970-01-01 00:00:00'");
 		$downloadId = $this->db->getLastId();
 		$this->db->query("INSERT INTO " . DB_PREFIX . "download_description SET download_id = $downloadId, language_id = 1, `name` = ''");
 		$this->db->query("INSERT INTO " . DB_PREFIX . "product_to_download SET product_id = 1, download_id = $downloadId");
 	}
-	
+
 	/**
 	 * @after
 	 */
@@ -35,13 +35,13 @@ class CatalogModelAccountDownloadTest extends OpenCartTest {
 		$this->emptyTables();
 		$this->customerLogout();
 	}
-	
+
 	private function emptyTables() {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_ban_ip");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_ip");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "address");
-		
+
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_custom_field");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "order_fraud");
@@ -56,7 +56,7 @@ class CatalogModelAccountDownloadTest extends OpenCartTest {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "download_description");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_download");
 	}
-	
+
 	private function addDummyOrder() {
 		$order = array(
 			'invoice_prefix' => '',
@@ -148,7 +148,7 @@ class CatalogModelAccountDownloadTest extends OpenCartTest {
 			'ip' => '',
 			'forwarded_ip' => '',
 			'user_agent' => '',
-			'accept_language' => '',	
+			'accept_language' => '',
 			'totals' => array(
 				array(
 					'code' => '',
@@ -164,28 +164,28 @@ class CatalogModelAccountDownloadTest extends OpenCartTest {
 				),
 			),
 		);
-		
-		$orderId = $this->model_checkout_order->addOrder($order);
-		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = " . (int) $this->config->get('config_complete_status_id')  . " WHERE order_id = $orderId");
+
+		$order_id = $this->model_checkout_order->addOrder($order);
+		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = " . (int)$this->config->get('config_complete_status_id') . " WHERE order_id = " . (int)$order_id);
 	}
-	
+
 	public function testGetDownload() {
 		$downloadId = $this->db->query("SELECT download_id FROM `". DB_PREFIX . "download` ORDER BY download_id ASC LIMIT 1")->row['download_id'];
-		
+
 		$download = $this->model_account_download->getDownload($downloadId);
-		
+
 		$this->assertNotEmpty($download);
 	}
-	
+
 	public function testGetDownloads() {
 		$downloads = $this->model_account_download->getDownloads();
-		
+
 		$this->assertCount(5, $downloads);
 	}
-	
+
 	public function testGetTotalDownloads() {
 		$downloads = $this->model_account_download->getTotalDownloads();
-		
+
 		$this->assertEquals(5, $downloads);
 	}
 }

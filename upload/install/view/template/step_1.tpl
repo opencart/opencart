@@ -4,12 +4,11 @@
     <div class="row">
       <div class="col-sm-6">
         <h1 class="pull-left">1<small>/4</small></h1>
-        <h3><?php echo $heading_step_1; ?><br><small><?php echo $heading_step_1_small; ?></small></h3>
+        <h3><?php echo $heading_step_1; ?><br>
+          <small><?php echo $heading_step_1_small; ?></small></h3>
       </div>
       <div class="col-sm-6">
-        <div id="logo" class="pull-right hidden-xs">
-          <img src="view/image/logo.png" alt="OpenCart" title="OpenCart" />
-        </div>
+        <div id="logo" class="pull-right hidden-xs"> <img src="view/image/logo.png" alt="OpenCart" title="OpenCart" /> </div>
       </div>
     </div>
   </header>

@@ -3,7 +3,7 @@
 $_['heading_title']        = 'Extension Installer';
 
 // Text
-$_['text_success']         = 'Success: You have installed your extension!';
+$_['text_success']         = 'Success: The extension has been installed!';
 $_['text_unzip']           = 'Extracting files!';
 $_['text_ftp']             = 'Copying files!';
 $_['text_sql']             = 'Running SQL!';
@@ -18,7 +18,7 @@ $_['entry_overwrite']      = 'Files that will be overwritten';
 $_['entry_progress']       = 'Progress';
 
 // Help
-$_['help_upload']          = 'Requires a Zip or XML modification file.';
+$_['help_upload']          = 'Requires a modification file with extension ".ocmod.zip" or ".ocmod.xml".';
 
 // Error
 $_['error_permission']     = 'Warning: You do not have permission to modify extensions!';
@@ -27,7 +27,10 @@ $_['error_upload']         = 'File could not be uploaded!';
 $_['error_filetype']       = 'Invalid file type!';
 $_['error_file']           = 'File could not be found!';
 $_['error_unzip']          = 'Zip file could not be opened!';
+$_['error_code']           = 'Modification requires a unique ID code!';
+$_['error_exists']         = 'Modification %s is using the same ID code as the one you are trying to upload!';
 $_['error_directory']      = 'Directory containing files to be uploaded could not be found!';
+$_['error_ftp_status']     = 'FTP needs to be enabled in the settings';
 $_['error_ftp_connection'] = 'Could not connect as %s:%s';
 $_['error_ftp_login']      = 'Could not login as %s';
 $_['error_ftp_root']       = 'Could not set root directory as %s';

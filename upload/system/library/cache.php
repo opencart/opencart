@@ -3,13 +3,9 @@ class Cache {
 	private $cache;
 
 	public function __construct($driver, $expire = 3600) {
-		$file = dirname(__FILE__) . '/driver/cache/' . $driver . '.php';
+		$class = 'Cache\\' . $driver;
 
-		if (file_exists($file)) {
-			require_once($file);
-
-			$class = 'Cache'. $driver;
-
+		if (class_exists($class)) {
 			$this->cache = new $class($expire);
 		} else {
 			exit('Error: Could not load cache driver ' . $driver . ' cache!');

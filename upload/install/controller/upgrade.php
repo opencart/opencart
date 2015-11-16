@@ -42,17 +42,13 @@ class ControllerUpgrade extends Controller {
 				$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct in the config.php file!';
 			} else {
 				if (!mysql_select_db(DB_DATABASE, $connection)) {
-					$this->error['warning'] = 'Error: Database "'. DB_DATABASE . '" does not exist!';
+					$this->error['warning'] = 'Error: Database "' . DB_DATABASE . '" does not exist!';
 				}
 
 				mysql_close($connection);
 			}
 		}
 
-    	if (!$this->error) {
-      		return true;
-    	} else {
-      		return false;
-    	}
+		return !$this->error;
 	}
 }

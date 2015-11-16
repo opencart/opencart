@@ -4,7 +4,7 @@ class ControllerCommonCart extends Controller {
 		$this->load->language('common/cart');
 
 		// Totals
-		$this->load->model('setting/extension');
+		$this->load->model('extension/extension');
 
 		$total_data = array();
 		$total = 0;
@@ -14,7 +14,7 @@ class ControllerCommonCart extends Controller {
 		if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
 			$sort_order = array();
 
-			$results = $this->model_setting_extension->getExtensions('total');
+			$results = $this->model_extension_extension->getExtensions('total');
 
 			foreach ($results as $key => $value) {
 				$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
@@ -97,7 +97,7 @@ class ControllerCommonCart extends Controller {
 			}
 
 			$data['products'][] = array(
-				'key'       => $product['key'],
+				'cart_id'   => $product['cart_id'],
 				'thumb'     => $image,
 				'name'      => $product['name'],
 				'model'     => $product['model'],
@@ -133,7 +133,7 @@ class ControllerCommonCart extends Controller {
 		}
 
 		$data['cart'] = $this->url->link('checkout/cart');
-		$data['checkout'] = $this->url->link('checkout/checkout', '', 'SSL');
+		$data['checkout'] = $this->url->link('checkout/checkout', '', true);
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/cart.tpl')) {
 			return $this->load->view($this->config->get('config_template') . '/template/common/cart.tpl', $data);

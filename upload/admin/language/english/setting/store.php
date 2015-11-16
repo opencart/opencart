@@ -1,9 +1,13 @@
 <?php
 // Heading
-$_['heading_title']                    = 'Settings';
+$_['heading_title']                    = 'Stores';
 
 // Text
-$_['text_success']                     = 'Success: You have modified settings!';
+$_['text_settings']                    = 'Settings';
+$_['text_success']                     = 'Success: You have modified Stores!';
+$_['text_list']                        = 'Store List';
+$_['text_add']                         = 'Add Store';
+$_['text_edit']                        = 'Edit Store';
 $_['text_items']                       = 'Items';
 $_['text_tax']                         = 'Taxes';
 $_['text_account']                     = 'Account';
@@ -81,8 +85,8 @@ $_['help_location']                    = 'The different store locations you have
 $_['help_currency']                    = 'Change the default currency. Clear your browser cache to see the change and reset your existing cookie.';
 $_['help_product_limit'] 	           = 'Determines how many catalog items are shown per page (products, categories, etc)';
 $_['help_product_description_length']  = 'In the list view, short description character limit (categories, special etc)';
-$_['help_tax_default']                 = 'Use the store address to calculate taxes if no one is logged in. You can choose to use the store address for the customers shipping or payment address.';
-$_['help_tax_customer']                = 'Use the customers default address when they login to calculate taxes. You can choose to use the default address for the customers shipping or payment address.';
+$_['help_tax_default']                 = 'Use the store address to calculate taxes if customer is not logged in. You can choose to use the store address for the customer\'s shipping or payment address.';
+$_['help_tax_customer']                = 'Use the customers default address when they login to calculate taxes. You can choose to use the default address for the customer\'s shipping or payment address.';
 $_['help_customer_group']              = 'Default customer group.';
 $_['help_customer_group_display']      = 'Display customer groups that new customers can select to use such as wholesale and business when signing up.';
 $_['help_customer_price']              = 'Only show prices when a customer is logged in.';

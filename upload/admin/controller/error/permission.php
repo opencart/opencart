@@ -9,8 +9,20 @@ class ControllerErrorPermission extends Controller {
 
 		$data['text_permission'] = $this->language->get('text_permission');
 
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('error/permission', 'token=' . $this->session->data['token'], true)
+		);
+
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('error/permission.tpl', $data));
@@ -37,7 +49,15 @@ class ControllerErrorPermission extends Controller {
 				'common/forgotten',
 				'common/reset',
 				'error/not_found',
-				'error/permission'
+				'error/permission',
+				'dashboard/order',
+				'dashboard/sale',
+				'dashboard/customer',
+				'dashboard/online',
+				'dashboard/map',
+				'dashboard/activity',
+				'dashboard/chart',
+				'dashboard/recent'
 			);
 
 			if (!in_array($route, $ignore) && !$this->user->hasPermission('access', $route)) {

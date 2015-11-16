@@ -1,8 +1,8 @@
 <?php
-$_['heading_title'] = 'Recurring payments';
+$_['heading_title'] = 'Recurring Payments';
 $_['button_continue'] = 'Continue';
 $_['button_view'] = 'View';
-$_['text_empty'] = 'No recurring payment recurrings found';
+$_['text_empty'] = 'No recurring payments found';
 $_['text_product'] = 'Product: ';
 $_['text_order'] = 'Order: ';
 $_['text_quantity'] = 'Quantity: ';
@@ -49,4 +49,4 @@ $_['text_transaction_expired'] = 'Expired';
 
 $_['error_not_cancelled'] = 'Error: %s';
 $_['error_not_found'] = 'Could not cancel recurring';
-$_['success_cancelled'] = 'Recurring payment has been cancelled';
+$_['text_cancelled'] = 'Recurring payment has been cancelled';

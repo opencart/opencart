@@ -3,7 +3,7 @@ class Mail {
 	protected $to;
 	protected $from;
 	protected $sender;
-	protected $replyto;
+	protected $reply_to;
 	protected $subject;
 	protected $text;
 	protected $html;
@@ -14,7 +14,6 @@ class Mail {
 	public $smtp_password;
 	public $smtp_port = 25;
 	public $smtp_timeout = 5;
-	public $newline = "\n";
 	public $verp = false;
 	public $parameter = '';
 
@@ -25,31 +24,31 @@ class Mail {
 	}
 
 	public function setTo($to) {
-		$this->to = html_entity_decode($to, ENT_QUOTES, 'UTF-8');
+		$this->to = $to;
 	}
 
 	public function setFrom($from) {
-		$this->from = html_entity_decode($from, ENT_QUOTES, 'UTF-8');
+		$this->from = $from;
 	}
 
 	public function setSender($sender) {
-		$this->sender = html_entity_decode($sender, ENT_QUOTES, 'UTF-8');
+		$this->sender = $sender;
 	}
 
 	public function setReplyTo($reply_to) {
-		$this->replyto = html_entity_decode($reply_to, ENT_QUOTES, 'UTF-8');
+		$this->reply_to = $reply_to;
 	}
 
 	public function setSubject($subject) {
-		$this->subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
+		$this->subject = $subject;
 	}
 
 	public function setText($text) {
-		$this->text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
+		$this->text = $text;
 	}
 
 	public function setHtml($html) {
-		$this->html = html_entity_decode($html, ENT_QUOTES, 'UTF-8');
+		$this->html = $html;
 	}
 
 	public function addAttachment($filename) {
@@ -82,10 +81,6 @@ class Mail {
 			exit();
 		}
 
-		if (!$this->replyto) {
-			$this->setReplyTo($this->sender);
-		}
-
 		if (is_array($this->to)) {
 			$to = implode(',', $this->to);
 		} else {
@@ -94,43 +89,49 @@ class Mail {
 
 		$boundary = '----=_NextPart_' . md5(time());
 
-		$header = 'MIME-Version: 1.0' . $this->newline;
+		$header = 'MIME-Version: 1.0' . PHP_EOL;
 
 		if ($this->protocol != 'mail') {
-			$header .= 'To: ' . $to . $this->newline;
-			$header .= 'Subject: ' . '=?UTF-8?B?' . base64_encode($this->subject) . '?=' . $this->newline;
+			$header .= 'To: ' . $to . PHP_EOL;
+			$header .= 'Subject: =?UTF-8?B?' . base64_encode($this->subject) . '?=' . PHP_EOL;
 		}
 
-		$header .= 'Date: ' . date('D, d M Y H:i:s O') . $this->newline;
-		$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . $this->newline;
-		$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->replyto) . '?=' . ' <' . $this->from . '>' . $this->newline;
-		$header .= 'Return-Path: ' . $this->from . $this->newline;
-		$header .= 'X-Mailer: PHP/' . phpversion() . $this->newline;
-		$header .= 'Content-Type: multipart/related; boundary="' . $boundary . '"' . $this->newline . $this->newline;
+		$header .= 'Date: ' . date('D, d M Y H:i:s O') . PHP_EOL;
+		$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . PHP_EOL;
+		
+		if (!$this->reply_to) {
+			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . PHP_EOL;
+		} else {
+			$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->reply_to) . '?=' . ' <' . $this->reply_to . '>' . PHP_EOL;
+		}
+		
+		$header .= 'Return-Path: ' . $this->from . PHP_EOL;
+		$header .= 'X-Mailer: PHP/' . phpversion() . PHP_EOL;
+		$header .= 'Content-Type: multipart/related; boundary="' . $boundary . '"' . PHP_EOL . PHP_EOL;
 
 		if (!$this->html) {
-			$message  = '--' . $boundary . $this->newline;
-			$message .= 'Content-Type: text/plain; charset="utf-8"' . $this->newline;
-			$message .= 'Content-Transfer-Encoding: 8bit' . $this->newline . $this->newline;
-			$message .= $this->text . $this->newline;
+			$message  = '--' . $boundary . PHP_EOL;
+			$message .= 'Content-Type: text/plain; charset="utf-8"' . PHP_EOL;
+			$message .= 'Content-Transfer-Encoding: 8bit' . PHP_EOL . PHP_EOL;
+			$message .= $this->text . PHP_EOL;
 		} else {
-			$message  = '--' . $boundary . $this->newline;
-			$message .= 'Content-Type: multipart/alternative; boundary="' . $boundary . '_alt"' . $this->newline . $this->newline;
-			$message .= '--' . $boundary . '_alt' . $this->newline;
-			$message .= 'Content-Type: text/plain; charset="utf-8"' . $this->newline;
-			$message .= 'Content-Transfer-Encoding: 8bit' . $this->newline . $this->newline;
+			$message  = '--' . $boundary . PHP_EOL;
+			$message .= 'Content-Type: multipart/alternative; boundary="' . $boundary . '_alt"' . PHP_EOL . PHP_EOL;
+			$message .= '--' . $boundary . '_alt' . PHP_EOL;
+			$message .= 'Content-Type: text/plain; charset="utf-8"' . PHP_EOL;
+			$message .= 'Content-Transfer-Encoding: 8bit' . PHP_EOL . PHP_EOL;
 
 			if ($this->text) {
-				$message .= $this->text . $this->newline;
+				$message .= $this->text . PHP_EOL;
 			} else {
-				$message .= 'This is a HTML email and your email client software does not support HTML email!' . $this->newline;
+				$message .= 'This is a HTML email and your email client software does not support HTML email!' . PHP_EOL;
 			}
 
-			$message .= '--' . $boundary . '_alt' . $this->newline;
-			$message .= 'Content-Type: text/html; charset="utf-8"' . $this->newline;
-			$message .= 'Content-Transfer-Encoding: 8bit' . $this->newline . $this->newline;
-			$message .= $this->html . $this->newline;
-			$message .= '--' . $boundary . '_alt--' . $this->newline;
+			$message .= '--' . $boundary . '_alt' . PHP_EOL;
+			$message .= 'Content-Type: text/html; charset="utf-8"' . PHP_EOL;
+			$message .= 'Content-Transfer-Encoding: 8bit' . PHP_EOL . PHP_EOL;
+			$message .= $this->html . PHP_EOL;
+			$message .= '--' . $boundary . '_alt--' . PHP_EOL;
 		}
 
 		foreach ($this->attachments as $attachment) {
@@ -141,17 +142,17 @@ class Mail {
 
 				fclose($handle);
 
-				$message .= '--' . $boundary . $this->newline;
-				$message .= 'Content-Type: application/octet-stream; name="' . basename($attachment) . '"' . $this->newline;
-				$message .= 'Content-Transfer-Encoding: base64' . $this->newline;
-				$message .= 'Content-Disposition: attachment; filename="' . basename($attachment) . '"' . $this->newline;
-				$message .= 'Content-ID: <' . basename(urlencode($attachment)) . '>' . $this->newline;
-				$message .= 'X-Attachment-Id: ' . basename(urlencode($attachment)) . $this->newline . $this->newline;
+				$message .= '--' . $boundary . PHP_EOL;
+				$message .= 'Content-Type: application/octet-stream; name="' . basename($attachment) . '"' . PHP_EOL;
+				$message .= 'Content-Transfer-Encoding: base64' . PHP_EOL;
+				$message .= 'Content-Disposition: attachment; filename="' . basename($attachment) . '"' . PHP_EOL;
+				$message .= 'Content-ID: <' . basename(urlencode($attachment)) . '>' . PHP_EOL;
+				$message .= 'X-Attachment-Id: ' . basename(urlencode($attachment)) . PHP_EOL . PHP_EOL;
 				$message .= chunk_split(base64_encode($content));
 			}
 		}
 
-		$message .= '--' . $boundary . '--' . $this->newline;
+		$message .= '--' . $boundary . '--' . PHP_EOL;
 
 		if ($this->protocol == 'mail') {
 			ini_set('sendmail_from', $this->from);
@@ -162,8 +163,9 @@ class Mail {
 				mail($to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $message, $header);
 			}
 		} elseif ($this->protocol == 'smtp') {
-			$is_tls = substr($this->smtp_hostname, 0, 3) == 'tls';
-			$hostname = $is_tls ? substr($this->smtp_hostname, 6) : $this->smtp_hostname;
+			$tls = substr($this->smtp_hostname, 0, 3) == 'tls';
+			$hostname = $tls ? substr($this->smtp_hostname, 6) : $this->smtp_hostname;
+
 			$handle = fsockopen($hostname, $this->smtp_port, $errno, $errstr, $this->smtp_timeout);
 
 			if (!$handle) {
@@ -197,7 +199,7 @@ class Mail {
 					exit();
 				}
 
-				if ($is_tls) {
+				if ($tls) {
 					fputs($handle, 'STARTTLS' . "\r\n");
 
 					$reply = '';

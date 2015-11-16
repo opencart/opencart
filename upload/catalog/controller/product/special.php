@@ -26,7 +26,7 @@ class ControllerProductSpecial extends Controller {
 		}
 
 		if (isset($this->request->get['limit'])) {
-			$limit = $this->request->get['limit'];
+			$limit = (int)$this->request->get['limit'];
 		} else {
 			$limit = $this->config->get('config_product_limit');
 		}
@@ -81,6 +81,7 @@ class ControllerProductSpecial extends Controller {
 		$data['button_compare'] = $this->language->get('button_compare');
 		$data['button_list'] = $this->language->get('button_list');
 		$data['button_grid'] = $this->language->get('button_grid');
+		$data['button_continue'] = $this->language->get('button_continue');
 
 		$data['compare'] = $this->url->link('product/compare');
 
@@ -136,6 +137,7 @@ class ControllerProductSpecial extends Controller {
 				'price'       => $price,
 				'special'     => $special,
 				'tax'         => $tax,
+				'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 				'rating'      => $result['rating'],
 				'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'] . $url)
 			);
@@ -251,21 +253,26 @@ class ControllerProductSpecial extends Controller {
 
 		$data['pagination'] = $pagination->render();
 
-		$this->document->addLink($this->url->link('product/manufacturer/info', $url . '&page='. $pagination->page), 'canonical');
-
-		if ($pagination->limit && ceil($pagination->total / $pagination->limit) > $pagination->page) {
-			$this->document->addLink($this->url->link('product/manufacturer/info', $url . '&page='. ($pagination->page + 1)), 'next');
-		}
-
-		if ($pagination->page > 1) {
-			$this->document->addLink($this->url->link('product/manufacturer/info', $url . '&page='. ($pagination->page - 1)), 'prev');
-		}
-
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
+
+		// http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
+		if ($page == 1) {
+		    $this->document->addLink($this->url->link('product/special', '', true), 'canonical');
+		} elseif ($page == 2) {
+		    $this->document->addLink($this->url->link('product/special', '', true), 'prev');
+		} else {
+		    $this->document->addLink($this->url->link('product/special', 'page='. ($page - 1), true), 'prev');
+		}
+
+		if ($limit && ceil($product_total / $limit) > $page) {
+		    $this->document->addLink($this->url->link('product/special', 'page='. ($page + 1), true), 'next');
+		}
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 		$data['limit'] = $limit;
+
+		$data['continue'] = $this->url->link('common/home');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

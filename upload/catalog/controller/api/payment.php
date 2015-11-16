@@ -130,6 +130,13 @@ class ControllerApiPayment extends Controller {
 			}
 		}
 
+		if (isset($this->request->server['HTTP_ORIGIN'])) {
+			$this->response->addHeader('Access-Control-Allow-Origin: ' . $this->request->server['HTTP_ORIGIN']);
+			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+			$this->response->addHeader('Access-Control-Max-Age: 1000');
+			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+		}
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
@@ -153,14 +160,36 @@ class ControllerApiPayment extends Controller {
 
 			if (!$json) {
 				// Totals
-				$total = $this->cart->getSubTotal();
+				$total_data = array();
+				$total = 0;
+				$taxes = $this->cart->getTaxes();
+
+				$this->load->model('extension/extension');
+
+				$sort_order = array();
+
+				$results = $this->model_extension_extension->getExtensions('total');
+
+				foreach ($results as $key => $value) {
+					$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
+				}
+
+				array_multisort($sort_order, SORT_ASC, $results);
+
+				foreach ($results as $result) {
+					if ($this->config->get($result['code'] . '_status')) {
+						$this->load->model('total/' . $result['code']);
+
+						$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
+					}
+				}
 
 				// Payment Methods
 				$json['payment_methods'] = array();
 
-				$this->load->model('setting/extension');
+				$this->load->model('extension/extension');
 
-				$results = $this->model_setting_extension->getExtensions('payment');
+				$results = $this->model_extension_extension->getExtensions('payment');
 
 				$recurring = $this->cart->hasRecurringProducts();
 
@@ -198,6 +227,13 @@ class ControllerApiPayment extends Controller {
 			}
 		}
 
+		if (isset($this->request->server['HTTP_ORIGIN'])) {
+			$this->response->addHeader('Access-Control-Allow-Origin: ' . $this->request->server['HTTP_ORIGIN']);
+			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+			$this->response->addHeader('Access-Control-Max-Age: 1000');
+			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+		}
+
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
@@ -232,6 +268,13 @@ class ControllerApiPayment extends Controller {
 
 				$json['success'] = $this->language->get('text_method');
 			}
+		}
+
+		if (isset($this->request->server['HTTP_ORIGIN'])) {
+			$this->response->addHeader('Access-Control-Allow-Origin: ' . $this->request->server['HTTP_ORIGIN']);
+			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+			$this->response->addHeader('Access-Control-Max-Age: 1000');
+			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

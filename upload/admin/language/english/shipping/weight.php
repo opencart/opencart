@@ -5,6 +5,7 @@ $_['heading_title']    = 'Weight Based Shipping';
 // Text
 $_['text_shipping']    = 'Shipping';
 $_['text_success']     = 'Success: You have modified weight based shipping!';
+$_['text_edit']        = 'Edit Weight Based Shipping';
 
 // Entry
 $_['entry_rate']       = 'Rates';

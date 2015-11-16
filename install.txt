@@ -22,9 +22,11 @@ These instructions are for a manual installation using FTP, cPanel or other web 
 
 3. For Linux/Unix make sure the following folders and files are writeable.
 
-		chmod 0755 or 0777 system/cache/
-		chmod 0755 or 0777 system/logs/
-		chmod 0755 or 0777 system/download/
+		chmod 0755 or 0777 system/storage/cache/
+		chmod 0755 or 0777 system/storage/logs/
+		chmod 0755 or 0777 system/storage/download/
+		chmod 0755 or 0777 system/storage/upload/
+		chmod 0755 or 0777 system/storage/modification/
 		chmod 0755 or 0777 image/
 		chmod 0755 or 0777 image/cache/
 		chmod 0755 or 0777 image/catalog/
@@ -54,6 +56,7 @@ These instructions are for a manual installation using FTP, cPanel or other web 
 		system/cache/
 		system/logs/
 		system/download/
+		system/upload/
 		image/
 		image/cache/
 		image/catalog/
@@ -67,8 +70,6 @@ These instructions are for a manual installation using FTP, cPanel or other web 
 
 6. After successful install, delete the /install/ directory.
 
-
-
 - Local Install -
 
 There are many all-in-one web servers out there and most of them should work with OpenCart out of the box. Some examples...
@@ -77,3 +78,11 @@ http://www.apachefriends.org/en/xampp.html
 http://www.ampps.com/
 http://www.usbwebserver.net
 http://www.wampserver.com/en/
+
+ - Notes -
+
+Godaddy Issues
+
+If your hosting on godaddy you might need to rename the php.ini to user.ini
+
+It seems godadddy has started changing the industry standard names of files.

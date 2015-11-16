@@ -1,4 +1,6 @@
 <?php
+use Cart\User;
+
 class ControllerCommonMaintenance extends Controller {
 	public function index() {
 		if ($this->config->get('config_maintenance')) {
@@ -13,11 +15,9 @@ class ControllerCommonMaintenance extends Controller {
 			}
 
 			// Show site if logged in as admin
-			$this->load->library('user');
-
 			$this->user = new User($this->registry);
 
-			if (($route != 'payment') && !$this->user->isLogged()) {
+			if (($route != 'payment' && $route != 'api') && !$this->user->isLogged()) {
 				return new Action('common/maintenance/info');
 			}
 		}
@@ -28,14 +28,13 @@ class ControllerCommonMaintenance extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$protocol = "HTTP/1.0";
-
-		if ( "HTTP/1.1" == $_SERVER["SERVER_PROTOCOL"] ) {
-			$protocol = "HTTP/1.1";
+		if ($this->request->server['SERVER_PROTOCOL'] == 'HTTP/1.1') {
+			$this->response->addHeader('HTTP/1.1 503 Service Unavailable');
+		} else {
+			$this->response->addHeader('HTTP/1.0 503 Service Unavailable');
 		}
 
-		$this->response->addHeader("$protocol 503 Service Unavailable");
-		$this->response->addHeader("Retry-After: 3600");
+		$this->response->addHeader('Retry-After: 3600');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 

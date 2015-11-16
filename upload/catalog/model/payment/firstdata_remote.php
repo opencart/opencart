@@ -34,7 +34,7 @@ class ModelPaymentFirstdataRemote extends Model {
 
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
-		$order_ref = 'API-' . $order_id . '-' . date("Y-m-d-H-i-s") . '-' . rand(10,500);
+		$order_ref = 'API-' . $order_id . '-' . date("Y-m-d-H-i-s") . '-' . rand(10, 500);
 
 		$amount = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
 
@@ -52,7 +52,7 @@ class ModelPaymentFirstdataRemote extends Model {
 			if (isset($this->request->post['cc_choice']) && $this->request->post['cc_choice'] != 'new') {
 				$payment_token = $this->request->post['cc_choice'];
 			} elseif (isset($this->request->post['cc_store']) && $this->request->post['cc_store'] == 1) {
-				$token = sha1($this->customer->getId()  . '-' . date("Y-m-d-H-i-s").rand(10, 500));
+				$token = sha1($this->customer->getId()  . '-' . date("Y-m-d-H-i-s") . rand(10, 500));
 			}
 		}
 

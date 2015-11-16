@@ -11,7 +11,7 @@ class ControllerApiCoupon extends Controller {
 		if (!isset($this->session->data['api_id'])) {
 			$json['error'] = $this->language->get('error_permission');
 		} else {
-			$this->load->model('checkout/coupon');
+			$this->load->model('total/coupon');
 
 			if (isset($this->request->post['coupon'])) {
 				$coupon = $this->request->post['coupon'];
@@ -19,7 +19,7 @@ class ControllerApiCoupon extends Controller {
 				$coupon = '';
 			}
 
-			$coupon_info = $this->model_checkout_coupon->getCoupon($coupon);
+			$coupon_info = $this->model_total_coupon->getCoupon($coupon);
 
 			if ($coupon_info) {
 				$this->session->data['coupon'] = $this->request->post['coupon'];
@@ -28,6 +28,13 @@ class ControllerApiCoupon extends Controller {
 			} else {
 				$json['error'] = $this->language->get('error_coupon');
 			}
+		}
+
+		if (isset($this->request->server['HTTP_ORIGIN'])) {
+			$this->response->addHeader('Access-Control-Allow-Origin: ' . $this->request->server['HTTP_ORIGIN']);
+			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+			$this->response->addHeader('Access-Control-Max-Age: 1000');
+			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

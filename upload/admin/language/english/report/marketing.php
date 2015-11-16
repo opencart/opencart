@@ -3,6 +3,7 @@
 $_['heading_title']    = 'Marketing Report';
 
 // Text
+$_['text_list']         = 'Marketing List';
 $_['text_all_status']   = 'All Statuses';
 
 // Column

@@ -7,9 +7,9 @@ class ControllerCheckoutShippingMethod extends Controller {
 			// Shipping Methods
 			$method_data = array();
 
-			$this->load->model('setting/extension');
+			$this->load->model('extension/extension');
 
-			$results = $this->model_setting_extension->getExtensions('shipping');
+			$results = $this->model_extension_extension->getExtensions('shipping');
 
 			foreach ($results as $result) {
 				if ($this->config->get($result['code'] . '_status')) {
@@ -83,12 +83,12 @@ class ControllerCheckoutShippingMethod extends Controller {
 
 		// Validate if shipping is required. If not the customer should not have reached this page.
 		if (!$this->cart->hasShipping()) {
-			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
+			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
 		}
 
 		// Validate if shipping address has been set.
 		if (!isset($this->session->data['shipping_address'])) {
-			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
+			$json['redirect'] = $this->url->link('checkout/checkout', '', true);
 		}
 
 		// Validate cart has products and has stock.

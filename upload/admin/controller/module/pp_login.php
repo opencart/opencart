@@ -3,10 +3,9 @@ class ControllerModulePPLogin extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('module/pp_login');
+		$this->load->language('module/pp_login');
 
 		$this->load->model('setting/setting');
-		$this->load->model('design/layout');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -15,36 +14,29 @@ class ControllerModulePPLogin extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
-		$data['text_content_top'] = $this->language->get('text_content_top');
-		$data['text_content_bottom'] = $this->language->get('text_content_bottom');
-		$data['text_column_left'] = $this->language->get('text_column_left');
-		$data['text_column_right'] = $this->language->get('text_column_right');
-		$data['text_grey_button'] = $this->language->get('text_grey_button');
-		$data['text_blue_button'] = $this->language->get('text_blue_button');
+		$data['text_button_grey'] = $this->language->get('text_button_grey');
+		$data['text_button_blue'] = $this->language->get('text_button_blue');
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
 
 		$data['entry_client_id'] = $this->language->get('entry_client_id');
 		$data['entry_secret'] = $this->language->get('entry_secret');
 		$data['entry_sandbox'] = $this->language->get('entry_sandbox');
-		$data['entry_logging'] = $this->language->get('entry_logging');
+		$data['entry_debug'] = $this->language->get('entry_debug');
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$data['entry_button'] = $this->language->get('entry_button');
 		$data['entry_seamless'] = $this->language->get('entry_seamless');
 		$data['entry_locale'] = $this->language->get('entry_locale');
 		$data['entry_return_url'] = $this->language->get('entry_return_url');
 		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_layout'] = $this->language->get('entry_layout');
-		$data['entry_position'] = $this->language->get('entry_position');
-		$data['entry_status'] = $this->language->get('entry_status');
-		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
 		$data['help_sandbox'] = $this->language->get('help_sandbox');
 		$data['help_customer_group'] = $this->language->get('help_customer_group');
@@ -80,27 +72,22 @@ class ControllerModulePPLogin extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => false
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_module'),
-			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => ' :: '
+			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/pp_login', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => ' :: '
+			'href' => $this->url->link('module/pp_login', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('module/pp_login', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('module/pp_login', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
-
-		$data['token'] = $this->session->data['token'];
+		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['pp_login_client_id'])) {
 			$data['pp_login_client_id'] = $this->request->post['pp_login_client_id'];
@@ -120,20 +107,20 @@ class ControllerModulePPLogin extends Controller {
 			$data['pp_login_sandbox'] = $this->config->get('pp_login_sandbox');
 		}
 
-		if (isset($this->request->post['pp_login_logging'])) {
-			$data['pp_login_logging'] = $this->request->post['pp_login_logging'];
+		if (isset($this->request->post['pp_login_debug'])) {
+			$data['pp_login_debug'] = $this->request->post['pp_login_debug'];
 		} else {
-			$data['pp_login_logging'] = $this->config->get('pp_login_logging');
+			$data['pp_login_debug'] = $this->config->get('pp_login_debug');
 		}
 
-		$this->load->model('sale/customer_group');
+		$this->load->model('customer/customer_group');
 
-		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
+		$data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
-		if (isset($this->request->post['customer_group_id'])) {
-			$data['customer_group_id'] = $this->request->post['customer_group_id'];
+		if (isset($this->request->post['pp_login_customer_group_id'])) {
+			$data['pp_login_customer_group_id'] = $this->request->post['pp_login_customer_group_id'];
 		} else {
-			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
+			$data['pp_login_customer_group_id'] = $this->config->get('pp_login_customer_group_id');
 		}
 
 		if (isset($this->request->post['pp_login_button_colour'])) {
@@ -179,7 +166,7 @@ class ControllerModulePPLogin extends Controller {
 		$data['locales'][] = array(
 			'value' => 'zh-xc',
 			'text' => 'Chinese (US)'
-			);
+		);
 
 		$data['locales'][] = array(
 			'value' => 'da-dk',
@@ -198,7 +185,8 @@ class ControllerModulePPLogin extends Controller {
 
 		$data['locales'][] = array(
 			'value' => 'en-us',
-			'text' => 'English (US)',);
+			'text' => 'English (US)',
+		);
 
 		$data['locales'][] = array(
 			'value' => 'fr-fr',
@@ -266,27 +254,27 @@ class ControllerModulePPLogin extends Controller {
 
 		$data['locales'][] = array(
 			'value' => 'es-es',
-			'text' => 'Spanish'
+			'text'  => 'Spanish'
 		);
 
 		$data['locales'][] = array(
 			'value' => 'es-xc',
-			'text' => 'Spanish (Mexico)'
+			'text'  => 'Spanish (Mexico)'
 		);
 
 		$data['locales'][] = array(
 			'value' => 'sv-se',
-			'text' => 'Swedish'
+			'text'  => 'Swedish'
 		);
 
 		$data['locales'][] = array(
 			'value' => 'th-th',
-			'text' => 'Thai'
+			'text'  => 'Thai'
 		);
 
 		$data['locales'][] = array(
 			'value' => 'tr-tr',
-			'text' => 'Turkish'
+			'text'  => 'Turkish'
 		);
 
 		if (isset($this->request->post['pp_login_locale'])) {
@@ -295,7 +283,7 @@ class ControllerModulePPLogin extends Controller {
 			$data['pp_login_locale'] = $this->config->get('pp_login_locale');
 		}
 
-		$data['pp_login_return_url'] = HTTPS_CATALOG . 'index.php?route=module/pp_login/login';
+		$data['return_url'] = HTTPS_CATALOG . 'index.php?route=module/pp_login/login';
 
 		if (isset($this->request->post['pp_login_status'])) {
 			$data['pp_login_status'] = $this->request->post['pp_login_status'];
@@ -303,20 +291,8 @@ class ControllerModulePPLogin extends Controller {
 			$data['pp_login_status'] = $this->config->get('pp_login_status');
 		}
 
-		$data['modules'] = array();
-
-		if (isset($this->request->post['pp_login_module'])) {
-			$data['modules'] = $this->request->post['pp_login_module'];
-		} elseif ($this->config->get('pp_login_module')) {
-			$data['modules'] = $this->config->get('pp_login_module');
-		}
-
-		$this->load->model('design/layout');
-
-		$data['layouts'] = $this->model_design_layout->getLayouts();
-
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('module/pp_login.tpl', $data));
@@ -335,30 +311,18 @@ class ControllerModulePPLogin extends Controller {
 			$this->error['secret'] = $this->language->get('error_secret');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 
 	public function install() {
-		$this->load->model('tool/event');
+		$this->load->model('extension/event');
 
-		$this->model_tool_event->setHandler('customer_logout', array(
-			'type'   => 'module',
-			'code'   => 'pp_login',
-			'method' => 'logout')
-		);
+		$this->model_extension_event->addEvent('pp_login', 'post.customer.logout', 'module/pp_login/logout');
 	}
 
 	public function uninstall() {
-		$this->load->model('tool/event');
+		$this->load->model('extension/event');
 
-		$this->model_tool_event->removeHandler('customer_logout', array(
-			'type'   => 'module',
-			'code'   => 'pp_login',
-			'method' => 'logout')
-		);
+		$this->model_extension_event->deleteEvent('pp_login');
 	}
 }

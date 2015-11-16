@@ -4,6 +4,9 @@ $_['heading_title']       = 'Options';
 
 // Text
 $_['text_success']        = 'Success: You have modified options!';
+$_['text_list']           = 'Option List';
+$_['text_add']            = 'Add Option';
+$_['text_edit']           = 'Edit Option';
 $_['text_choose']         = 'Choose';
 $_['text_select']         = 'Select';
 $_['text_radio']          = 'Radio';

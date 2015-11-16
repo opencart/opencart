@@ -113,28 +113,28 @@ class ControllerPaymentFirstdataRemote extends Controller {
 			if (isset($capture_result['transaction_result']) && strtoupper($capture_result['transaction_result']) == 'APPROVED') {
 				$json['success'] = $this->url->link('checkout/success');
 
-				$message .= $this->language->get('text_result').$capture_result['transaction_result'] . '<br />';
-				$message .= $this->language->get('text_avs').$address_codes[$capture_result['avs']] . ' (' . $capture_result['avs'] . ')<br />';
-				
+				$message .= $this->language->get('text_result') . $capture_result['transaction_result'] . '<br />';
+				$message .= $this->language->get('text_avs') . $address_codes[$capture_result['avs']] . ' (' . $capture_result['avs'] . ')<br />';
+
 				if (!empty($capture_result['ccv'])) {
-					$message .= $this->language->get('text_card_code_verify').$cvv_codes[$capture_result['ccv']] . ' (' . $capture_result['ccv'] . ')<br />';
+					$message .= $this->language->get('text_card_code_verify') . $cvv_codes[$capture_result['ccv']] . ' (' . $capture_result['ccv'] . ')<br />';
 				}
-				
-				$message .= $this->language->get('text_approval_code').$capture_result['approval_code'] . '<br />';
-				$message .= $this->language->get('text_reference_number').$capture_result['reference_number'] . '<br />';
-				$message .= $this->language->get('text_card_brand').$capture_result['brand'] . '<br />';
-				$message .= $this->language->get('text_card_number_ref').$capture_result['card_number_ref'] . '<br />';
-				$message .= $this->language->get('text_response_code').$capture_result['response_code'] . '<br />';
+
+				$message .= $this->language->get('text_approval_code') . $capture_result['approval_code'] . '<br />';
+				$message .= $this->language->get('text_reference_number') . $capture_result['reference_number'] . '<br />';
+				$message .= $this->language->get('text_card_brand') . $capture_result['brand'] . '<br />';
+				$message .= $this->language->get('text_card_number_ref') . $capture_result['card_number_ref'] . '<br />';
+				$message .= $this->language->get('text_response_code') . $capture_result['response_code'] . '<br />';
 
 				$fd_order_id = $this->model_payment_firstdata_remote->addOrder($order_info, $capture_result);
 
 				if ($this->config->get('firstdata_remote_auto_settle') == 1) {
 					$this->model_payment_firstdata_remote->addTransaction($fd_order_id, 'payment', $order_info);
-					
+
 					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('firstdata_remote_order_status_success_settled_id'), $message, false);
 				} else {
 					$this->model_payment_firstdata_remote->addTransaction($fd_order_id, 'auth');
-					
+
 					$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('firstdata_remote_order_status_success_unsettled_id'), $message, false);
 				}
 			} else {
@@ -145,13 +145,13 @@ class ControllerPaymentFirstdataRemote extends Controller {
 				}
 
 				if (isset($capture_result['fault']) && !empty($capture_result['fault'])) {
-					$message .= $this->language->get('text_fault').$capture_result['fault'] . '<br />';
+					$message .= $this->language->get('text_fault') . $capture_result['fault'] . '<br />';
 				}
 
-				$message .= $this->language->get('text_result').$capture_result['transaction_result'] . '<br />';
-				$message .= $this->language->get('text_error').$capture_result['error'] . '<br />';
-				$message .= $this->language->get('text_card_brand').$capture_result['brand'] . '<br />';
-				$message .= $this->language->get('text_card_number_ref').$capture_result['card_number_ref'] . '<br />';
+				$message .= $this->language->get('text_result') . $capture_result['transaction_result'] . '<br />';
+				$message .= $this->language->get('text_error') . $capture_result['error'] . '<br />';
+				$message .= $this->language->get('text_card_brand') . $capture_result['brand'] . '<br />';
+				$message .= $this->language->get('text_card_number_ref') . $capture_result['card_number_ref'] . '<br />';
 
 				$this->model_payment_firstdata_remote->addHistory($order_id, $this->config->get('firstdata_remote_order_status_decline_id'), $message);
 			}

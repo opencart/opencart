@@ -51,7 +51,7 @@
           <td class="text-left" style="width: 50%;">
             <p style="margin:5px;"><?php echo $recurring['recurring_description']; ?></p></td>
           <td class="text-left" style="width: 50%;">
-            <p style="margin:5px;"><?php echo $recurring['recurring_reference']; ?></p></td>
+            <p style="margin:5px;"><?php echo $recurring['reference']; ?></p></td>
         </tr>
         </tbody>
       </table>

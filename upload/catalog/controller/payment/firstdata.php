@@ -22,10 +22,10 @@ class ControllerPaymentFirstdata extends Controller {
 		$data['currency'] = $this->model_payment_firstdata->mapCurrency($order_info['currency_code']);
 		$data['merchant_id'] = $this->config->get('firstdata_merchant_id');
 		$data['timestamp'] = date('Y:m:d-H:i:s');
-		$data['order_id'] = 'CON-' . $this->session->data['order_id'] . 'T' . $data['timestamp'].mt_rand(1, 999);
-		$data['url_success'] = $this->url->link('checkout/success', '', 'SSL');
-		$data['url_fail'] = $this->url->link('payment/firstdata/fail', '', 'SSL');
-		$data['url_notify'] = $this->url->link('payment/firstdata/notify', '', 'SSL');
+		$data['order_id'] = 'CON-' . $this->session->data['order_id'] . 'T' . $data['timestamp'] . mt_rand(1, 999);
+		$data['url_success'] = $this->url->link('checkout/success', '', true);
+		$data['url_fail'] = $this->url->link('payment/firstdata/fail', '', true);
+		$data['url_notify'] = $this->url->link('payment/firstdata/notify', '', true);
 
 		if (preg_match("/Mobile|Android|BlackBerry|iPhone|Windows Phone/", $this->request->server['HTTP_USER_AGENT'])) {
 			$data['mobile'] = true;
@@ -39,11 +39,11 @@ class ControllerPaymentFirstdata extends Controller {
 			$data['txntype'] = 'preauth';
 		}
 
-		$tmp = $data['merchant_id'].$data['timestamp'].$data['amount'].$data['currency'].$this->config->get('firstdata_secret');
+		$tmp = $data['merchant_id'] . $data['timestamp'] . $data['amount'] . $data['currency'] . $this->config->get('firstdata_secret');
 		$ascii = bin2hex($tmp);
 		$data['hash'] = sha1($ascii);
 
-		$data['version'] = 'OPENCART-C-'.VERSION;
+		$data['version'] = 'OPENCART-C-' . VERSION;
 
 		$data['bcompany'] = $order_info['payment_company'];
 		$data['bname'] = $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
@@ -53,6 +53,7 @@ class ControllerPaymentFirstdata extends Controller {
 		$data['bstate'] = substr($order_info['payment_zone'], 0, 30);
 		$data['bcountry'] = $order_info['payment_iso_code_2'];
 		$data['bzip'] = $order_info['payment_postcode'];
+		$data['email'] = $order_info['email'];
 
 		if ($this->cart->hasShipping()) {
 			$data['sname'] = $order_info['shipping_firstname'] . ' ' . $order_info['shipping_lastname'];
@@ -75,7 +76,7 @@ class ControllerPaymentFirstdata extends Controller {
 		if ($this->config->get('firstdata_card_storage') == 1 && $this->customer->isLogged()) {
 			$data['card_storage'] = 1;
 			$data['stored_cards'] = $this->model_payment_firstdata->getStoredCards();
-			$data['new_hosted_id'] = sha1($this->customer->getId()  . '-' . date("Y-m-d-H-i-s").rand(10, 500));
+			$data['new_hosted_id'] = sha1($this->customer->getId()  . '-' . date("Y-m-d-H-i-s") . rand(10, 500));
 		} else {
 			$data['card_storage'] = 0;
 			$data['stored_cards'] = array();
@@ -107,7 +108,7 @@ class ControllerPaymentFirstdata extends Controller {
 			if ($local_hash == $this->request->post['notification_hash']) {
 				$order_id_parts = explode('T', $this->request->post['oid']);
 
-				$order_id = (int)$order_id_parts[0];
+				$order_id = str_replace("CON-","",$order_id_parts[0]);
 
 				$order_info = $this->model_checkout_order->getOrder($order_id);
 
@@ -200,7 +201,7 @@ class ControllerPaymentFirstdata extends Controller {
 							$message = $this->request->post['fail_reason'] . '<br />';
 							$message .= $this->language->get('text_response_code_full') . $this->request->post['approval_code'];
 
-							$this->model_payment_firstdata->addOrderHistory($order_id, $this->config->get('firstdata_order_status_decline_id'), $message);
+							$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('firstdata_order_status_decline_id'), $message);
 						}
 					}
 				}
@@ -245,6 +246,6 @@ class ControllerPaymentFirstdata extends Controller {
 			$this->session->data['error'] = $this->language->get('error_failed');
 		}
 
-		$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
+		$this->response->redirect($this->url->link('checkout/checkout', '', true));
 	}
 }

@@ -15,7 +15,8 @@ class ControllerPaymentNochex extends Controller {
 
 		// Nochex minimum requirements
 		// The merchant ID is usually your Nochex registered email address but can be altered for "Merchant" accounts see below
-		if ($this->config->get('nochex_email') != $this->config->get('nochex_merchant')) { // This MUST be changed on your Nochex account!!!!
+		if ($this->config->get('nochex_email') != $this->config->get('nochex_merchant')) {
+			// This MUST be changed on your Nochex account!!!!
 			$data['merchant_id'] = $this->config->get('nochex_merchant');
 		} else {
 			$data['merchant_id'] = $this->config->get('nochex_email');
@@ -60,10 +61,10 @@ class ControllerPaymentNochex extends Controller {
 		$data['email_address'] = $order_info['email'];
 		$data['customer_phone_number']= $order_info['telephone'];
 		$data['test'] = $this->config->get('nochex_test');
-		$data['success_url'] = $this->url->link('checkout/success', '', 'SSL');
-		$data['cancel_url'] = $this->url->link('checkout/payment', '', 'SSL');
-		$data['declined_url'] = $this->url->link('payment/nochex/callback', 'method=decline', 'SSL');
-		$data['callback_url'] = $this->url->link('payment/nochex/callback', 'order=' . $this->session->data['order_id'], 'SSL');
+		$data['success_url'] = $this->url->link('checkout/success', '', true);
+		$data['cancel_url'] = $this->url->link('checkout/payment', '', true);
+		$data['declined_url'] = $this->url->link('payment/nochex/callback', 'method=decline', true);
+		$data['callback_url'] = $this->url->link('payment/nochex/callback', 'order=' . $this->session->data['order_id'], true);
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/nochex.tpl')) {
 			return $this->load->view($this->config->get('config_template') . '/template/payment/nochex.tpl', $data);
@@ -125,6 +126,6 @@ class ControllerPaymentNochex extends Controller {
 
 		// Since it returned, the customer should see success.
 		// It's up to the store owner to manually verify payment.
-		$this->response->redirect($this->url->link('checkout/success', '', 'SSL'));
+		$this->response->redirect($this->url->link('checkout/success', '', true));
 	}
 }

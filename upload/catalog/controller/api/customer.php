@@ -34,7 +34,7 @@ class ControllerApiCustomer extends Controller {
 
 				$customer_info = $this->model_account_customer->getCustomer($this->request->post['customer_id']);
 
-				if (!$customer_info) {
+				if (!$customer_info || !$this->customer->login($customer_info['email'], '', true)) {
 					$json['error']['warning'] = $this->language->get('error_customer');
 				}
 			}
@@ -47,7 +47,7 @@ class ControllerApiCustomer extends Controller {
 				$json['error']['lastname'] = $this->language->get('error_lastname');
 			}
 
-			if ((utf8_strlen($this->request->post['email']) > 96) || (!preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email']))) {
+			if ((utf8_strlen($this->request->post['email']) > 96) || (!preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['email']))) {
 				$json['error']['email'] = $this->language->get('error_email');
 			}
 
@@ -80,13 +80,20 @@ class ControllerApiCustomer extends Controller {
 					'firstname'         => $this->request->post['firstname'],
 					'lastname'          => $this->request->post['lastname'],
 					'email'             => $this->request->post['email'],
-					'telephone'         => $this->request->post['lastname'],
+					'telephone'         => $this->request->post['telephone'],
 					'fax'               => $this->request->post['fax'],
 					'custom_field'      => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : array()
 				);
 
 				$json['success'] = $this->language->get('text_success');
 			}
+		}
+
+		if (isset($this->request->server['HTTP_ORIGIN'])) {
+			$this->response->addHeader('Access-Control-Allow-Origin: ' . $this->request->server['HTTP_ORIGIN']);
+			$this->response->addHeader('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+			$this->response->addHeader('Access-Control-Max-Age: 1000');
+			$this->response->addHeader('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

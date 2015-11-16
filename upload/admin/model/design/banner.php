@@ -1,7 +1,7 @@
 <?php
 class ModelDesignBanner extends Model {
 	public function addBanner($data) {
-		$this->event->trigger('pre_admin_add_banner', $data);
+		$this->event->trigger('pre.admin.banner.add', $data);
 
 		$this->db->query("INSERT INTO " . DB_PREFIX . "banner SET name = '" . $this->db->escape($data['name']) . "', status = '" . (int)$data['status'] . "'");
 
@@ -19,13 +19,13 @@ class ModelDesignBanner extends Model {
 			}
 		}
 
-		$this->event->trigger('admin_add_banner', $banner_id);
+		$this->event->trigger('post.admin.banner.add', $banner_id);
 
 		return $banner_id;
 	}
 
 	public function editBanner($banner_id, $data) {
-		$this->event->trigger('pre_admin_edit_banner', $data);
+		$this->event->trigger('pre.admin.banner.edit', $data);
 
 		$this->db->query("UPDATE " . DB_PREFIX . "banner SET name = '" . $this->db->escape($data['name']) . "', status = '" . (int)$data['status'] . "' WHERE banner_id = '" . (int)$banner_id . "'");
 
@@ -44,17 +44,17 @@ class ModelDesignBanner extends Model {
 			}
 		}
 
-		$this->event->trigger('admin_edit_banner');
+		$this->event->trigger('post.admin.banner.edit', $banner_id);
 	}
 
 	public function deleteBanner($banner_id) {
-		$this->event->trigger('pre_admin_delete_banner', $banner_id);
+		$this->event->trigger('pre.admin.banner.delete', $banner_id);
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "banner WHERE banner_id = '" . (int)$banner_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "banner_image WHERE banner_id = '" . (int)$banner_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "banner_image_description WHERE banner_id = '" . (int)$banner_id . "'");
 
-		$this->event->trigger('admin_delete_banner', $banner_id);
+		$this->event->trigger('post.admin.banner.delete', $banner_id);
 	}
 
 	public function getBanner($banner_id) {
@@ -126,7 +126,7 @@ class ModelDesignBanner extends Model {
 	}
 
 	public function getTotalBanners() {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "banner");
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "banner");
 
 		return $query->row['total'];
 	}

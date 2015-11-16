@@ -46,7 +46,7 @@ class ControllerPaymentPaypoint extends Controller {
 		}
 
 		$data['currency'] = $this->currency->getCode();
-		$data['callback'] = $this->url->link('payment/paypoint/callback', '', 'SSL');
+		$data['callback'] = $this->url->link('payment/paypoint/callback', '', true);
 
 		switch ($this->config->get('paypoint_test')) {
 			case 'live':
@@ -136,9 +136,9 @@ class ControllerPaymentPaypoint extends Controller {
 				if (isset($this->request->get['valid'])) {
 					$message .= 'valid: ' . $this->request->get['valid'] . "\n";
 				}
-				
+
 				$this->load->model('checkout/order');
-				
+
 				$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('paypoint_order_status_id'), $message, false);
 
 				$data['continue'] = $this->url->link('checkout/success');

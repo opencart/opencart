@@ -14,13 +14,12 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
-		} else {
-			$data['error'] = @$this->error;
+			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_all_zones'] = $this->language->get('text_all_zones');
@@ -57,17 +56,64 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		$data['help_test'] = $this->language->get('help_test');
 		$data['help_partner'] = $this->language->get('help_partner');
 		$data['help_checkout_method'] = $this->language->get('help_checkout_method');
-		
+
 		$data['tab_settings'] = $this->language->get('tab_settings');
 		$data['tab_order_status'] = $this->language->get('tab_order_status');
 		$data['tab_checkout_customisation'] = $this->language->get('tab_checkout_customisation');
-		
+
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
-		$data['action'] = $this->url->link('payment/pp_payflow_iframe', 'token=' . $this->session->data['token'], 'SSL');
+		if (isset($this->error['warning'])) {
+			$data['error_warning'] = $this->error['warning'];
+		} else {
+			$data['error_warning'] = '';
+		}
 
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
+		if (isset($this->error['vendor'])) {
+			$data['error_vendor'] = $this->error['vendor'];
+		} else {
+			$data['error_vendor'] = '';
+		}
+
+		if (isset($this->error['user'])) {
+			$data['error_user'] = $this->error['user'];
+		} else {
+			$data['error_user'] = '';
+		}
+
+		if (isset($this->error['password'])) {
+			$data['error_password'] = $this->error['password'];
+		} else {
+			$data['error_password'] = '';
+		}
+
+		if (isset($this->error['partner'])) {
+			$data['error_partner'] = $this->error['partner'];
+		} else {
+			$data['error_partner'] = '';
+		}
+
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_pp_express'),
+			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('payment/pp_payflow', 'token=' . $this->session->data['token'], true),
+		);
+
+		$data['action'] = $this->url->link('payment/pp_payflow_iframe', 'token=' . $this->session->data['token'], true);
+
+		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['pp_payflow_iframe_vendor'])) {
 			$data['pp_payflow_iframe_vendor'] = $this->request->post['pp_payflow_iframe_vendor'];
@@ -112,6 +158,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		}
 
 		$this->load->model('localisation/order_status');
+
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 		if (isset($this->request->post['pp_payflow_iframe_order_status_id'])) {
@@ -154,13 +201,13 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 			$data['pp_payflow_iframe_debug'] = $this->config->get('pp_payflow_iframe_debug');
 		}
 
+		$data['post_url'] = HTTPS_CATALOG . 'index.php?route=payment/pp_payflow_iframe/paymentipn';
 		$data['cancel_url'] = HTTPS_CATALOG . 'index.php?route=payment/pp_payflow_iframe/paymentcancel';
 		$data['error_url'] = HTTPS_CATALOG . 'index.php?route=payment/pp_payflow_iframe/paymenterror';
 		$data['return_url'] = HTTPS_CATALOG . 'index.php?route=payment/pp_payflow_iframe/paymentreturn';
-		$data['post_url'] = HTTPS_CATALOG . 'index.php?route=payment/pp_payflow_iframe/paymentipn';
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('payment/pp_payflow_iframe.tpl', $data));
@@ -168,11 +215,13 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 
 	public function install() {
 		$this->load->model('payment/pp_payflow_iframe');
+
 		$this->model_payment_pp_payflow_iframe->install();
 	}
 
 	public function uninstall() {
 		$this->load->model('payment/pp_payflow_iframe');
+
 		$this->model_payment_pp_payflow_iframe->uninstall();
 	}
 
@@ -190,31 +239,27 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-				'separator' => false
+				'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_payment'),
-				'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
-				'separator' => ' :: '
+				'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true)
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('payment/pp_payflow_iframe', 'token=' . $this->session->data['token'], 'SSL'),
-				'separator' => ' :: '
+				'href' => $this->url->link('payment/pp_payflow_iframe', 'token=' . $this->session->data['token'], true)
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_refund'),
-				'href' => $this->url->link('payment/pp_payflow_iframe/refund', 'transaction_reference=' . $this->request->get['transaction_reference'] . '&token=' . $this->session->data['token'], 'SSL'),
-				'separator' => ' :: '
+				'href' => $this->url->link('payment/pp_payflow_iframe/refund', 'transaction_reference=' . $this->request->get['transaction_reference'] . '&token=' . $this->session->data['token'], true)
 			);
 
 			$data['transaction_reference'] = $transaction['transaction_reference'];
 			$data['transaction_amount'] = number_format($transaction['amount'], 2);
-			$data['cancel'] = $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $transaction['order_id'], 'SSL');
+			$data['cancel'] = $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $transaction['order_id'], true);
 
 			$data['token'] = $this->session->data['token'];
 
@@ -228,7 +273,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 			$data['button_refund'] = $this->language->get('button_refund');
 
 			$data['header'] = $this->load->controller('common/header');
-			$data['menu'] = $this->load->controller('common/menu');
+			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['footer'] = $this->load->controller('common/footer');
 
 			$this->response->setOutput($this->load->view('payment/pp_payflow_iframe_refund.tpl', $data));
@@ -249,9 +294,9 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 			if ($transaction) {
 				$call_data = array(
 					'TRXTYPE' => 'C',
-					'TENDER' => 'C',
-					'ORIGID' => $transaction['transaction_reference'],
-					'AMT' => $this->request->post['amount'],
+					'TENDER'  => 'C',
+					'ORIGID'  => $transaction['transaction_reference'],
+					'AMT'     => $this->request->post['amount'],
 				);
 
 				$result = $this->model_payment_pp_payflow_iframe->call($call_data);
@@ -300,11 +345,11 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 				}
 
 				$call_data = array(
-					'TRXTYPE' => 'D',
-					'TENDER' => 'C',
-					'ORIGID' => $paypal_order['transaction_reference'],
-					'AMT' => $this->request->post['amount'],
-					'CAPTURECOMPLETE' => $complete,
+					'TRXTYPE'         => 'D',
+					'TENDER'          => 'C',
+					'ORIGID'          => $paypal_order['transaction_reference'],
+					'AMT'             => $this->request->post['amount'],
+					'CAPTURECOMPLETE' => $complete
 				);
 
 				$result = $this->model_payment_pp_payflow_iframe->call($call_data);
@@ -312,10 +357,10 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 				if ($result['RESULT'] == 0) {
 
 					$data = array(
-						'order_id' => $order_id,
-						'type' => 'D',
+						'order_id'              => $order_id,
+						'type'                  => 'D',
 						'transaction_reference' => $result['PNREF'],
-						'amount' => $this->request->post['amount'],
+						'amount'                => $this->request->post['amount']
 					);
 
 					$this->model_payment_pp_payflow_iframe->addTransaction($data);
@@ -400,7 +445,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function orderAction() {
+	public function order() {
 		$this->load->model('payment/pp_payflow_iframe');
 		$this->load->language('payment/pp_payflow_iframe');
 
@@ -452,7 +497,6 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 							'title' => $this->language->get('text_refund'),
 							'href' => $this->url->link('payment/pp_payflow_iframe/refund', 'transaction_reference=' . $transaction['transaction_reference'] . '&token=' . $this->session->data['token']),
 						);
-
 						break;
 					case 'D':
 						$transaction_type = $this->language->get('text_capture');
@@ -461,7 +505,6 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 							'title' => $this->language->get('text_refund'),
 							'href' => $this->url->link('payment/pp_payflow_iframe/refund', 'transaction_reference=' . $transaction['transaction_reference'] . '&token=' . $this->session->data['token']),
 						);
-
 						break;
 					case 'A':
 						$transaction_type = $this->language->get('text_authorise');
@@ -478,10 +521,10 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 
 				$data['transactions'][] = array(
 					'transaction_reference' => $transaction['transaction_reference'],
-					'transaction_type' => $transaction_type,
-					'time' => $transaction['time'],
-					'amount' => $transaction['amount'],
-					'actions' => $actions,
+					'transaction_type'      => $transaction_type,
+					'time'                  => $transaction['time'],
+					'amount'                => $transaction['amount'],
+					'actions'               => $actions
 				);
 			}
 

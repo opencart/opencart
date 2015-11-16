@@ -48,7 +48,6 @@ $_['entry_quantity']     = 'Quantity';
 $_['entry_reason']       = 'Reason for Return';
 $_['entry_opened']       = 'Product is opened';
 $_['entry_fault_detail'] = 'Faulty or other details';
-$_['entry_captcha']      = 'Enter the code in the box below';
 
 // Error
 $_['text_error']         = 'The returns you requested could not be found!';
@@ -60,5 +59,4 @@ $_['error_telephone']    = 'Telephone must be between 3 and 32 characters!';
 $_['error_product']      = 'Product Name must be greater than 3 and less than 255 characters!';
 $_['error_model']        = 'Product Model must be greater than 3 and less than 64 characters!';
 $_['error_reason']       = 'You must select a return product reason!';
-$_['error_captcha']      = 'Verification code does not match the image!';
 $_['error_agree']        = 'Warning: You must agree to the %s!';

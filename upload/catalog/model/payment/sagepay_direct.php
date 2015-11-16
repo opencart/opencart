@@ -1,7 +1,5 @@
 <?php
-
 class ModelPaymentSagePayDirect extends Model {
-
 	public function getMethod($address, $total) {
 		$this->load->language('payment/sagepay_direct');
 
@@ -188,7 +186,6 @@ class ModelPaymentSagePayDirect extends Model {
 	}
 
 	private function setPaymentData($order_info, $sagepay_order_info, $price, $order_recurring_id, $recurring_name, $i = null) {
-
 		if ($this->config->get('sagepay_direct_test') == 'live') {
 			$url = 'https://live.sagepay.com/gateway/service/repeat.vsp';
 			$payment_data['VPSProtocol'] = '3.00';
@@ -210,8 +207,6 @@ class ModelPaymentSagePayDirect extends Model {
 		$payment_data['RelatedVendorTxCode'] = $sagepay_order_info['VendorTxCode'];
 		$payment_data['RelatedSecurityKey'] = $sagepay_order_info['SecurityKey'];
 		$payment_data['RelatedTxAuthNo'] = $sagepay_order_info['TxAuthNo'];
-
-
 
 		if (!empty($order_info['shipping_lastname'])) {
 			$payment_data['DeliverySurname'] = substr($order_info['shipping_lastname'], 0, 20);
@@ -389,8 +384,8 @@ class ModelPaymentSagePayDirect extends Model {
 	}
 
 	public function updateCronJobRunTime() {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `group` = 'sagepay_direct' AND `key` = 'sagepay_direct_last_cron_job_run'");
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` (`store_id`, `group`, `key`, `value`, `serialized`) VALUES (0, 'sagepay_direct', 'sagepay_direct_last_cron_job_run', NOW(), 0)");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `code` = 'sagepay_direct' AND `key` = 'sagepay_direct_last_cron_job_run'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` (`store_id`, `code`, `key`, `value`, `serialized`) VALUES (0, 'sagepay_direct', 'sagepay_direct_last_cron_job_run', NOW(), 0)");
 	}
 
 	public function sendCurl($url, $payment_data, $i = null) {
@@ -438,5 +433,4 @@ class ModelPaymentSagePayDirect extends Model {
 		 */
 		return true;
 	}
-
 }

@@ -14,13 +14,12 @@ class ControllerPaymentRealex extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
-		$data['notify_url'] = HTTPS_CATALOG.'index.php?route=payment/realex/notify';
-
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_live'] = $this->language->get('text_live');
@@ -68,16 +67,16 @@ class ControllerPaymentRealex extends Controller {
 		$data['entry_status_decline_bank'] = $this->language->get('entry_status_decline_bank');
 		$data['entry_status_void'] = $this->language->get('entry_status_void');
 		$data['entry_status_rebate'] = $this->language->get('entry_status_rebate');
-		
+		$data['entry_notification_url'] = $this->language->get('entry_notification_url');
+
 		$data['help_total'] = $this->language->get('help_total');
 		$data['help_card_select'] = $this->language->get('help_card_select');
 		$data['help_debug'] = $this->language->get('help_debug');
 		$data['help_dcc_settle'] = $this->language->get('help_dcc_settle');
-		$data['notification_url'] = $this->language->get('notification_url');
 		$data['help_notification'] = $this->language->get('help_notification');
-		
+
+		$data['tab_api'] = $this->language->get('tab_api');
 		$data['tab_account'] = $this->language->get('tab_account');
-		$data['tab_sub_account'] = $this->language->get('tab_sub_account');
 		$data['tab_order_status'] = $this->language->get('tab_order_status');
 		$data['tab_payment'] = $this->language->get('tab_payment');
 		$data['tab_advanced'] = $this->language->get('tab_advanced');
@@ -87,13 +86,7 @@ class ControllerPaymentRealex extends Controller {
 
 		$data['error_use_select_card'] = $this->language->get('error_use_select_card');
 
-		$this->load->model('localisation/order_status');
-
-		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-
-		$this->load->model('localisation/geo_zone');
-
-		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+		$data['notify_url'] = HTTPS_CATALOG . 'index.php?route=payment/realex/notify';
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -129,21 +122,21 @@ class ControllerPaymentRealex extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/realex', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('payment/realex', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('payment/realex', 'token=' . $this->session->data['token'], 'SSL');
-		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('payment/realex', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['realex_merchant_id'])) {
 			$data['realex_merchant_id'] = $this->request->post['realex_merchant_id'];
@@ -174,6 +167,10 @@ class ControllerPaymentRealex extends Controller {
 		} else {
 			$data['realex_geo_zone_id'] = $this->config->get('realex_geo_zone_id');
 		}
+
+		$this->load->model('localisation/geo_zone');
+
+		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
 		if (isset($this->request->post['realex_total'])) {
 			$data['realex_total'] = $this->request->post['realex_total'];
@@ -259,17 +256,9 @@ class ControllerPaymentRealex extends Controller {
 			$data['realex_order_status_decline_bank_id'] = $this->config->get('realex_order_status_decline_bank_id');
 		}
 
-		if (isset($this->request->post['realex_order_status_void_id'])) {
-			$data['realex_order_status_void_id'] = $this->request->post['realex_order_status_void_id'];
-		} else {
-			$data['realex_order_status_void_id'] = $this->config->get('realex_order_status_void_id');
-		}
+		$this->load->model('localisation/order_status');
 
-		if (isset($this->request->post['realex_order_status_rebated_id'])) {
-			$data['realex_order_status_rebated_id'] = $this->request->post['realex_order_status_rebated_id'];
-		} else {
-			$data['realex_order_status_rebated_id'] = $this->config->get('realex_order_status_rebated_id');
-		}
+		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 		if (isset($this->request->post['realex_live_url'])) {
 			$data['realex_live_url'] = $this->request->post['realex_live_url'];
@@ -292,13 +281,19 @@ class ControllerPaymentRealex extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('payment/realex.tpl', $data));
 	}
 
-	public function orderAction() {
+	public function install() {
+		$this->load->model('payment/realex');
+
+		$this->model_payment_realex->install();
+	}
+
+	public function order() {
 		if ($this->config->get('realex_status')) {
 			$this->load->model('payment/realex');
 
@@ -329,9 +324,9 @@ class ControllerPaymentRealex extends Controller {
 				$data['text_column_amount'] = $this->language->get('text_column_amount');
 				$data['text_column_type'] = $this->language->get('text_column_type');
 				$data['text_column_date_added'] = $this->language->get('text_column_date_added');
-				$data['btn_capture'] = $this->language->get('btn_capture');
-				$data['btn_rebate'] = $this->language->get('btn_rebate');
-				$data['btn_void'] = $this->language->get('btn_void');
+				$data['button_capture'] = $this->language->get('button_capture');
+				$data['button_rebate'] = $this->language->get('button_rebate');
+				$data['button_void'] = $this->language->get('button_void');
 				$data['text_confirm_void'] = $this->language->get('text_confirm_void');
 				$data['text_confirm_capture'] = $this->language->get('text_confirm_capture');
 				$data['text_confirm_rebate'] = $this->language->get('text_confirm_rebate');
@@ -355,23 +350,13 @@ class ControllerPaymentRealex extends Controller {
 
 			$void_response = $this->model_payment_realex->void($this->request->post['order_id']);
 
-			$this->model_payment_realex->logger('Void result:\r\n'.print_r($void_response, 1));
+			$this->model_payment_realex->logger('Void result:\r\n' . print_r($void_response, 1));
 
 			if (isset($void_response->result) && $void_response->result == '00') {
 				$this->model_payment_realex->addTransaction($realex_order['realex_order_id'], 'void', 0.00);
 				$this->model_payment_realex->updateVoidStatus($realex_order['realex_order_id'], 1);
 
 				$json['msg'] = $this->language->get('text_void_ok');
-
-				$this->load->model('sale/order');
-
-				$history = array();
-				$history['order_status_id'] = $this->config->get('realex_order_status_void_id');
-				$history['comment'] = '';
-				$history['notify'] = '';
-
-				$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $history);
-
 				$json['data'] = array();
 				$json['data']['date_added'] = date("Y-m-d H:i:s");
 				$json['error'] = false;
@@ -399,7 +384,7 @@ class ControllerPaymentRealex extends Controller {
 
 			$capture_response = $this->model_payment_realex->capture($this->request->post['order_id'], $this->request->post['amount']);
 
-			$this->model_payment_realex->logger('Settle result:\r\n'.print_r($capture_response, 1));
+			$this->model_payment_realex->logger('Settle result:\r\n' . print_r($capture_response, 1));
 
 			if (isset($capture_response->result) && $capture_response->result == '00') {
 				$this->model_payment_realex->addTransaction($realex_order['realex_order_id'], 'payment', $this->request->post['amount']);
@@ -410,15 +395,6 @@ class ControllerPaymentRealex extends Controller {
 					$this->model_payment_realex->updateCaptureStatus($realex_order['realex_order_id'], 1);
 					$capture_status = 1;
 					$json['msg'] = $this->language->get('text_capture_ok_order');
-
-					$this->load->model('sale/order');
-
-					$history = array();
-					$history['order_status_id'] = $this->config->get('realex_order_status_success_settled_id');
-					$history['comment'] = '';
-					$history['notify'] = '';
-
-					$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $history);
 				} else {
 					$capture_status = 0;
 					$json['msg'] = $this->language->get('text_capture_ok');
@@ -456,7 +432,7 @@ class ControllerPaymentRealex extends Controller {
 
 			$rebate_response = $this->model_payment_realex->rebate($this->request->post['order_id'], $this->request->post['amount']);
 
-			$this->model_payment_realex->logger('Rebate result:\r\n'.print_r($rebate_response, 1));
+			$this->model_payment_realex->logger('Rebate result:\r\n' . print_r($rebate_response, 1));
 
 			if (isset($rebate_response->result) && $rebate_response->result == '00') {
 				$this->model_payment_realex->addTransaction($realex_order['realex_order_id'], 'rebate', $this->request->post['amount']*-1);
@@ -468,15 +444,6 @@ class ControllerPaymentRealex extends Controller {
 					$this->model_payment_realex->updateRebateStatus($realex_order['realex_order_id'], 1);
 					$rebate_status = 1;
 					$json['msg'] = $this->language->get('text_rebate_ok_order');
-
-					$this->load->model('sale/order');
-
-					$history = array();
-					$history['order_status_id'] = $this->config->get('realex_order_status_rebated_id');
-					$history['comment'] = '';
-					$history['notify'] = '';
-
-					$this->model_sale_order->addOrderHistory($this->request->post['order_id'], $history);
 				} else {
 					$rebate_status = 0;
 					$json['msg'] = $this->language->get('text_rebate_ok');
@@ -523,10 +490,6 @@ class ControllerPaymentRealex extends Controller {
 			$this->error['error_demo_url'] = $this->language->get('error_demo_url');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 }

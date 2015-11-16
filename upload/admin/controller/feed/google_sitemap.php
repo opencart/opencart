@@ -14,11 +14,12 @@ class ControllerFeedGoogleSitemap extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/feed', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
+		$data['text_edit'] = $this->language->get('text_edit');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 
@@ -36,9 +37,26 @@ class ControllerFeedGoogleSitemap extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['action'] = $this->url->link('feed/google_sitemap', 'token=' . $this->session->data['token'], 'SSL');
+		$data['breadcrumbs'] = array();
 
-		$data['cancel'] = $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL');
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_feed'),
+			'href' => $this->url->link('extension/feed', 'token=' . $this->session->data['token'], true)
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
+			'href' => $this->url->link('feed/google_sitemap', 'token=' . $this->session->data['token'], true)
+		);
+
+		$data['action'] = $this->url->link('feed/google_sitemap', 'token=' . $this->session->data['token'], true);
+
+		$data['cancel'] = $this->url->link('extension/feed', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['google_sitemap_status'])) {
 			$data['google_sitemap_status'] = $this->request->post['google_sitemap_status'];
@@ -49,7 +67,7 @@ class ControllerFeedGoogleSitemap extends Controller {
 		$data['data_feed'] = HTTP_CATALOG . 'index.php?route=feed/google_sitemap';
 
 		$data['header'] = $this->load->controller('common/header');
-		$data['menu'] = $this->load->controller('common/menu');
+		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('feed/google_sitemap.tpl', $data));

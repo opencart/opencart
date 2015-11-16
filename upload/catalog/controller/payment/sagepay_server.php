@@ -17,7 +17,7 @@ class ControllerPaymentSagepayServer extends Controller {
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
-		$data['action'] = $this->url->link('payment/sagepay_server/send', '', 'SSL');
+		$data['action'] = $this->url->link('payment/sagepay_server/send', '', true);
 
 		if ($this->config->get('sagepay_server_card') == '1') {
 			$data['sagepay_server_card'] = true;
@@ -69,7 +69,7 @@ class ControllerPaymentSagepayServer extends Controller {
 		$payment_data['Amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], false, false);
 		$payment_data['Currency'] = $this->currency->getCode();
 		$payment_data['Description'] = substr($this->config->get('config_name'), 0, 100);
-		$payment_data['NotificationURL'] = $this->url->link('payment/sagepay_server/callback', '', 'SSL');
+		$payment_data['NotificationURL'] = $this->url->link('payment/sagepay_server/callback', '', true);
 		$payment_data['TxType'] = $this->config->get('sagepay_server_transaction');
 
 		$payment_data['BillingSurname'] = substr($order_info['payment_lastname'], 0, 20);
@@ -179,8 +179,8 @@ class ControllerPaymentSagepayServer extends Controller {
 		$this->load->model('checkout/order');
 		$this->load->model('payment/sagepay_server');
 
-		$success_page = $this->url->link('payment/sagepay_server/success', '', 'SSL');
-		$error_page = $this->url->link('payment/sagepay_server/failure', '', 'SSL');
+		$success_page = $this->url->link('payment/sagepay_server/success', '', true);
+		$error_page = $this->url->link('payment/sagepay_server/failure', '', true);
 		$end_ln = chr(13) . chr(10);
 
 		if (isset($this->request->post['VendorTxCode'])) {
@@ -377,29 +377,28 @@ class ControllerPaymentSagepayServer extends Controller {
 		if ($str_card_type == "PAYPAL") {
 			$comment .= "Paypal address status: " . $str_address_status . "<br>";
 			$comment .= "Paypal payer status: " . $str_payer_status . "<br>";
-		} else {
-			$comment .= "Last 4 digits: " . $str_last_4_digits . "<br>";
-
-			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('sagepay_server_order_status_id'), $comment);
-
-			$this->model_payment_sagepay_server->updateOrder($order_info, $str_vps_tx_id, $str_tx_auth_no);
-
-			$this->model_payment_sagepay_server->addTransaction($transaction_info['sagepay_server_order_id'], $this->config->get('sagepay_server_transaction'), $order_info);
-
-			if (!empty($str_token)) {
-				$data = array();
-				$data['customer_id'] = $order_info['customer_id'];
-				$data['ExpiryDate'] = substr($str_expiry_date, -4, 2) . '/' . substr($str_expiry_date, 2);
-				$data['Token'] = $str_token;
-				$data['CardType'] = $str_card_type;
-				$data['Last4Digits'] = $str_last_4_digits;
-
-				$this->model_payment_sagepay_server->addCard($data);
-			}
-
-			echo "Status=OK" . $end_ln;
-			echo "RedirectURL=" . $success_page . $end_ln;
 		}
+		$comment .= "Last 4 digits: " . $str_last_4_digits . "<br>";
+
+		$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('sagepay_server_order_status_id'), $comment);
+
+		$this->model_payment_sagepay_server->updateOrder($order_info, $str_vps_tx_id, $str_tx_auth_no);
+
+		$this->model_payment_sagepay_server->addTransaction($transaction_info['sagepay_server_order_id'], $this->config->get('sagepay_server_transaction'), $order_info);
+
+		if (!empty($str_token)) {
+			$data = array();
+			$data['customer_id'] = $order_info['customer_id'];
+			$data['ExpiryDate'] = substr($str_expiry_date, -4, 2) . '/' . substr($str_expiry_date, 2);
+			$data['Token'] = $str_token;
+			$data['CardType'] = $str_card_type;
+			$data['Last4Digits'] = $str_last_4_digits;
+
+			$this->model_payment_sagepay_server->addCard($data);
+		}
+
+		echo "Status=OK" . $end_ln;
+		echo "RedirectURL=" . $success_page . $end_ln;
 	}
 
 	public function success() {
@@ -419,9 +418,9 @@ class ControllerPaymentSagepayServer extends Controller {
 				}
 			}
 
-			$this->response->redirect($this->url->link('checkout/success', '', 'SSL'));
+			$this->response->redirect($this->url->link('checkout/success', '', true));
 		} else {
-			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 	}
 
@@ -430,7 +429,7 @@ class ControllerPaymentSagepayServer extends Controller {
 
 		$this->session->data['error'] = $this->language->get('text_generic_error');
 
-		$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
+		$this->response->redirect($this->url->link('checkout/checkout', '', true));
 	}
 
 	public function cron() {

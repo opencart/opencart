@@ -242,4 +242,14 @@ class fba {
 			return $query->rows;
 		}
 	}
+
+	public function hasOrderFBAItems($order_id) {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_product` `op` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `op`.`product_id` = `p`.`product_id` WHERE `p`.`location` = 'FBA' AND `op`.`order_id` = '".(int)$order_id."'");
+
+		if ($query->num_rows == 0) {
+			return false;
+		} else {
+			return $query->row['total'];
+		}
+	}
 }

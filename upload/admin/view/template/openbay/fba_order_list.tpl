@@ -74,7 +74,8 @@
                 <th class="text-left"><?php echo $column_order_id; ?></th>
                 <th class="text-left"><?php echo $column_created; ?></th>
                 <th class="text-left"><?php echo $column_status; ?></th>
-                <td class="text-left"><?php echo $column_action; ?></td>
+                <th class="text-center"><?php echo $column_fba_item_count; ?></th>
+                <td class="text-right"><?php echo $column_action; ?></td>
               </tr>
             </thead>
             <tbody>
@@ -88,6 +89,7 @@
                     <td class="text-left"><a href="<?php echo $order['order_link']; ?>"><?php echo $order['order_id']; ?></a></td>
                     <td class="text-left"><?php echo $order['created']; ?></td>
                     <td class="text-left"><?php echo $status_options[$order['status']]; ?></td>
+                    <td class="text-center"><?php echo $order['fba_item_count']; ?></td>
                     <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                   </tr>
                 <?php } ?>

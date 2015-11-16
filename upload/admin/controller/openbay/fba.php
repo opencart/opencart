@@ -423,7 +423,7 @@ class ControllerOpenbayFba extends Controller {
 
                 //$this->openbay->fba->updateFBAOrderStatus($order_id, 1);
             } else {
-                $this->openbay->fba->populateFBAFulfillment($order_id, json_encode(array()), json_encode($response), $response['response_http'], $fba_fulfillment_id);
+                $this->openbay->fba->populateFBAFulfillment(json_encode(array()), json_encode($response), $response['response_http'], $fba_fulfillment_id);
 
                 $this->openbay->fba->updateFBAOrderStatus($order_id, 3);
 
@@ -463,7 +463,7 @@ class ControllerOpenbayFba extends Controller {
                  */
                 $errors[] = $this->language->get('error_amazon_request');
             } else {
-                $this->openbay->fba->populateFBAFulfillment($order_id, json_encode(array()), json_encode($response), $response['response_http'], $fba_fulfillment_id);
+                $this->openbay->fba->populateFBAFulfillment(json_encode(array()), json_encode($response), $response['response_http'], $fba_fulfillment_id);
 
                 $this->openbay->fba->updateFBAOrderStatus($order_id, 4);
 
@@ -570,8 +570,8 @@ class ControllerOpenbayFba extends Controller {
                             $this->session->data['success'] = $this->language->get('text_fulfillment_sent');
                         }
 
-                        // craete new request entry for the log table
-                        $this->openbay->fba->populateFBAFulfillment($order_id, json_encode($request), json_encode($response), $response['response_http'], $fba_fulfillment_id);
+                        $this->openbay->fba->populateFBAFulfillment(json_encode($request), json_encode($response), $response['response_http'], $fba_fulfillment_id);
+                        $this->openbay->fba->updateFBAOrderFulfillmentID($order_id, $fba_fulfillment_id);
                     } else {
                         $errors[] = $this->language->get('error_no_items');
                     }
@@ -658,6 +658,7 @@ class ControllerOpenbayFba extends Controller {
                     'order_link' => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $order['order_id'] . $url, 'SSL'),
                     'status' => $order['status'],
                     'created' => $order['created'],
+                    'fba_item_count' => $this->openbay->fba->hasOrderFBAItems($order['order_id']),
                     'view' => $this->url->link('openbay/fba/order', 'token=' . $this->session->data['token'] . '&order_id=' . $order['order_id'] . $url, 'SSL')
                 );
             }
@@ -712,8 +713,8 @@ class ControllerOpenbayFba extends Controller {
         $order_fba = $this->openbay->fba->getFBAOrder($order_id);
         $order_info = $this->model_sale_order->getOrder($order_id);
 
-        if ($order_fba['status'] == 2 || $order_fba['status'] == 3) {
-            $data['fulfillment_id'] = $this->config->get('openbay_fba_order_prefix') . $order_id . '-' . $order_fba['fba_order_fulfillment_id'];
+        if ($order_fba['status'] == 2 || $order_fba['status'] == 3 || $order_fba['status'] == 4) {
+            $data['fulfillment_id'] = $order_fba['fba_order_fulfillment_ref'];
             $data['fulfillment_link'] = $this->url->link('openbay/fba/fulfillment', 'token=' . $this->session->data['token'] . '&fulfillment_id=' . $data['fulfillment_id'], 'SSL');
         } else {
             $data['fulfillment_id'] = '';
@@ -724,10 +725,8 @@ class ControllerOpenbayFba extends Controller {
         $data['order_id'] = $order_id;
         $data['order_link'] = $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $order_id, 'SSL');
         $data['resend_link'] = $this->url->link('openbay/fba/resendfulfillment', 'token=' . $this->session->data['token'] . '&order_id=' . $order_id, 'SSL');
-
-
         $data['ship_link'] = $this->url->link('openbay/fba/shipfulfillment', 'token=' . $this->session->data['token'] . '&order_id=' . $order_id . '&fba_order_fulfillment_id=' . $order_fba['fba_order_fulfillment_id'], 'SSL');
-
+        $data['cancel_link'] = $this->url->link('openbay/fba/cancelfulfillment', 'token=' . $this->session->data['token'] . '&order_id=' . $order_id . '&fba_order_fulfillment_id=' . $order_fba['fba_order_fulfillment_id'], 'SSL');
 
         $data['cancel'] = $this->url->link('openbay/fba/orderlist', 'token=' . $this->session->data['token'], 'SSL');
 
@@ -819,6 +818,7 @@ class ControllerOpenbayFba extends Controller {
             1 => $this->language->get('text_option_error'),
             2 => $this->language->get('text_option_held'),
             3 => $this->language->get('text_option_shipped'),
+            4 => $this->language->get('text_option_cancelled'),
         );
 
         $data['type_options'] = array(

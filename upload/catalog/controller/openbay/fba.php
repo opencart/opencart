@@ -83,7 +83,8 @@ class ControllerOpenbayFba extends Controller {
 								$this->openbay->fba->updateFBAOrderRef($order_id, $this->config->get('openbay_fba_order_prefix') . $order_id . '-' . $fba_fulfillment_id);
 							}
 
-							$this->openbay->fba->populateFBAFulfillment($order_id, json_encode($request), json_encode($response), $response['response_http'], $fba_fulfillment_id);
+							$this->openbay->fba->populateFBAFulfillment(json_encode($request), json_encode($response), $response['response_http'], $fba_fulfillment_id);
+							$this->openbay->fba->updateFBAOrderFulfillmentID($order_id, $fba_fulfillment_id);
 						} else {
 							$this->openbay->fba->log('No FBA items found for this order');
 						}

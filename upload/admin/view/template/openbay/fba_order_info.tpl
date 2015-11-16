@@ -11,7 +11,7 @@
           <a href="<?php echo $ship_link; ?>" id="button-ship" data-toggle="tooltip" title="<?php echo $button_ship; ?>" class="btn btn-info" value=""><i class="fa fa-truck"></i></a>
         <?php } ?>
         <?php if ($fba_order_status == 0 || $fba_order_status == 2) { ?>
-          <a href="<?php echo $ship_link; ?>" id="button-cancel" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-danger" value=""><i class="fa fa-times-circle"></i></a>
+          <a onclick="confirm('<?php echo $text_confirm; ?>') ? location.href='<?php echo $cancel_link; ?>' : false;" id="button-cancel" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-danger" value=""><i class="fa fa-times-circle"></i></a>
         <?php } ?>
       </div>
       <h1><?php echo $heading_title; ?></h1>
@@ -78,8 +78,10 @@
                       <label class="label label-danger"><?php echo $status_options[$fba_order_status]; ?></label>
                       <?php } elseif ($fba_order_status == 2)  { ?>
                       <label class="label label-warning"><?php echo $status_options[$fba_order_status]; ?></label>
-                      <?php } else { ?>
+                      <?php } elseif ($fba_order_status == 3)  { ?>
                       <label class="label label-success"><?php echo $status_options[$fba_order_status]; ?></label>
+                      <?php } elseif ($fba_order_status == 4)  { ?>
+                      <label class="label label-danger"><?php echo $status_options[$fba_order_status]; ?></label>
                       <?php } ?>
                     </td>
                   </tr>

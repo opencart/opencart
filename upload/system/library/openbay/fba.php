@@ -179,6 +179,10 @@ class fba {
 		$this->db->query("UPDATE `" . DB_PREFIX . "fba_order` SET `fba_order_fulfillment_ref` = '" . $this->db->escape($ref) . "' WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 	}
 
+	public function updateFBAOrderFulfillmentID($order_id, $fba_order_fulfillment_id) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "fba_order` SET `fba_order_fulfillment_id` = '" . (int)$fba_order_fulfillment_id . "' WHERE `order_id` = '" . (int)$order_id . "'");
+	}
+
 	public function createFBAFulfillmentID($order_id, $type) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "fba_order_fulfillment` SET `created` = now(), `order_id` = '" . (int)$order_id . "', `type` = '" . (int)$type . "'");
 
@@ -189,7 +193,7 @@ class fba {
 		return $id;
 	}
 
-	public function populateFBAFulfillment($order_id, $request_body, $response_body, $header_code, $fba_order_fulfillment_id) {
+	public function populateFBAFulfillment($request_body, $response_body, $header_code, $fba_order_fulfillment_id) {
 		$this->db->query("
 			UPDATE `" . DB_PREFIX . "fba_order_fulfillment`
 				SET
@@ -201,8 +205,6 @@ class fba {
 		");
 
 		$insert_id = $this->db->getLastId();
-
-		$this->db->query("UPDATE `" . DB_PREFIX . "fba_order` SET `fba_order_fulfillment_id` = '" . (int)$fba_order_fulfillment_id . "' WHERE `order_id` = '" . (int)$order_id . "'");
 
 		return $insert_id;
 	}
@@ -265,6 +267,16 @@ class fba {
 			return false;
 		} else {
 			return $query->rows;
+		}
+	}
+
+	public function hasOrderFBAItems($order_id) {
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order_product` `op` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `op`.`product_id` = `p`.`product_id` WHERE `p`.`location` = 'FBA' AND `op`.`order_id` = '".(int)$order_id."'");
+
+		if ($query->num_rows == 0) {
+			return false;
+		} else {
+			return $query->row['total'];
 		}
 	}
 }

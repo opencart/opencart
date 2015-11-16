@@ -300,7 +300,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$logger->write("Finished processing the order");
 
 		$logger->write("Notifying Openbay::addOrder($order_id)");
-		$this->openbay->addOrder($order_id);
+		$this->openbay->orderNew($order_id);
 		$logger->write("Openbay notified");
 
 		$this->model_openbay_amazon_order->acknowledgeOrder($order_id);

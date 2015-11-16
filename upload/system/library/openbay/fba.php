@@ -18,6 +18,14 @@ class fba {
 	 * 1 = error
 	 * 2 = held
 	 * 3 = shipped
+	 * 4 = cancelled
+	 */
+
+	/**
+	 * Type IDs =
+	 * 0 = new
+	 * 1 = shipping
+	 * 2 = cancel
 	 */
 
 	public function __construct($registry) {
@@ -167,8 +175,12 @@ class fba {
 		$this->db->query("UPDATE `" . DB_PREFIX . "fba_order` SET `status` = '" . (int)$status_id . "' WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 	}
 
-	public function createFBAFulfillmentID($order_id) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "fba_order_fulfillment` SET `created` = now(), `order_id` = '" . (int)$order_id . "'");
+	public function updateFBAOrderRef($order_id, $ref) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "fba_order` SET `fba_order_fulfillment_ref` = '" . $this->db->escape($ref) . "' WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
+	}
+
+	public function createFBAFulfillmentID($order_id, $type) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "fba_order_fulfillment` SET `created` = now(), `order_id` = '" . (int)$order_id . "', `type` = '" . (int)$type . "'");
 
 		$id = $this->db->getLastId();
 
@@ -228,6 +240,19 @@ class fba {
 		} else {
 			$fba_order = $query->row;
 			$fba_order['fulfillments'] = $this->getFBAOrderFulfillments($order_id);
+
+			return $fba_order;
+		}
+	}
+
+	public function getFBAOrderByRef($ref) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "fba_order` WHERE `fba_order_fulfillment_ref` = '" . $this->db->escape($ref) . "' LIMIT 1");
+
+		if ($query->num_rows == 0) {
+			return false;
+		} else {
+			$fba_order = $query->row;
+			$fba_order['fulfillments'] = $fba_order['order_id'];
 
 			return $fba_order;
 		}

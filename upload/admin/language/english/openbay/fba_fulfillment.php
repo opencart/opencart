@@ -29,6 +29,7 @@ $_['text_ship_confirm'] 					= 'Are you sure you want to ship this fulfillment?'
 $_['text_status'] 							= 'Fulfillment status';
 $_['text_fulfillment_sent'] 				= 'Fulfillment has been sent!';
 $_['text_fulfillment_shipped'] 				= 'Fulfillment has been shipped!';
+$_['text_fulfillment_shipped'] 				= 'Fulfillment has been cancelled!';
 
 // Columns
 $_['column_sku'] 							= 'SKU';

@@ -18,6 +18,7 @@ class ModelOpenbayFba extends Model {
 				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "fba_order` (
 					`order_id` INT(11) NOT NULL,
 					`fba_order_fulfillment_id` INT(11) NOT NULL,
+					`fba_order_fulfillment_ref` CHAR(50) NOT NULL,
 					`status` CHAR(10) NOT NULL,
 				    `created` DATETIME NOT NULL,
   				    KEY `fba_order_id` (`order_id`)
@@ -31,6 +32,7 @@ class ModelOpenbayFba extends Model {
 					`request_body` TEXT NOT NULL,
 					`response_body` TEXT NOT NULL,
 					`response_header_code` INT(3) NOT NULL,
+					`type` INT(3) NOT NULL,
 					PRIMARY KEY (`fba_order_fulfillment_id`),
   				    KEY `order_id` (`order_id`)
 				) ENGINE=InnoDB  DEFAULT CHARSET=latin1;");

@@ -8,6 +8,9 @@ $_['text_fba']						= 'Fulfillment By Amazon';
 $_['button_ship']        			= 'Ship fulfillment';
 $_['button_resend']					= 'Resend fulfillment request';
 
+// Tab
+$_['tab_history']        			= 'Request history';
+
 // Entry
 $_['entry_start_date']             	= 'Start date (format YYYY-MM-DD)';
 $_['entry_end_date']             	= 'End date (format YYYY-MM-DD)';
@@ -34,6 +37,9 @@ $_['text_no_sku'] 					= 'No SKU found';
 $_['text_show_request'] 			= 'Show request body';
 $_['text_show_response'] 			= 'Show response body';
 $_['text_fulfillment_id'] 			= 'Fulfillment ID';
+$_['text_type_new'] 				= 'Create';
+$_['text_type_ship'] 				= 'Shipment';
+$_['text_type_cancel'] 				= 'Cancellation';
 
 
 // Columns
@@ -48,3 +54,4 @@ $_['column_fba'] 					= 'Amazon Fulfillment';
 $_['column_fulfillment_id'] 		= 'Fulfillment Request Reference';
 $_['column_response_code'] 			= 'Response code';
 $_['column_actions'] 				= 'Actions';
+$_['column_type'] 					= 'Request type';

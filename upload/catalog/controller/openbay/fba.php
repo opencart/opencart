@@ -13,7 +13,7 @@ class ControllerOpenbayFba extends Controller {
 
 			if ($order['shipping_method']) {
 				if ($this->config->get('openbay_fba_order_trigger_status') == $order['order_status_id']) {
-					$fba_fulfillment_id = $this->openbay->fba->createFBAFulfillmentID($order_id);
+					$fba_fulfillment_id = $this->openbay->fba->createFBAFulfillmentID($order_id, 0);
 
 					$order_products = $this->model_account_order->getOrderProducts($order_id);
 
@@ -79,6 +79,8 @@ class ControllerOpenbayFba extends Controller {
 								} else {
 									$this->openbay->fba->updateFBAOrderStatus($order_id, 2);
 								}
+
+								$this->openbay->fba->updateFBAOrderRef($order_id, $this->config->get('openbay_fba_order_prefix') . $order_id . '-' . $fba_fulfillment_id);
 							}
 
 							$this->openbay->fba->populateFBAFulfillment($order_id, json_encode($request), json_encode($response), $response['response_http'], $fba_fulfillment_id);

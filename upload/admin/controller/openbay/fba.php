@@ -122,15 +122,15 @@ class ControllerOpenbayFba extends Controller {
         }
 
         if (isset($this->request->post['openbay_fba_api_key'])) {
-            $data['openbay_fba_api_key'] = $this->request->post['openbay_fba_api_key'];
+            $data['openbay_fba_api_key'] = trim($this->request->post['openbay_fba_api_key']);
         } else {
-            $data['openbay_fba_api_key'] = $this->config->get('openbay_fba_api_key');
+            $data['openbay_fba_api_key'] = trim($this->config->get('openbay_fba_api_key'));
         }
 
         if (isset($this->request->post['openbay_fba_api_account_id'])) {
-            $data['openbay_fba_api_account_id'] = $this->request->post['openbay_fba_api_account_id'];
+            $data['openbay_fba_api_account_id'] = trim($this->request->post['openbay_fba_api_account_id']);
         } else {
-            $data['openbay_fba_api_account_id'] = $this->config->get('openbay_fba_api_account_id');
+            $data['openbay_fba_api_account_id'] = trim($this->config->get('openbay_fba_api_account_id'));
         }
 
         if (isset($this->request->post['openbay_fba_send_orders'])) {

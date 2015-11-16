@@ -138,27 +138,27 @@ class ControllerOpenbayEbay extends Controller {
 		}
 
 		if (isset($this->request->post['ebay_token'])) {
-			$data['ebay_token'] = $this->request->post['ebay_token'];
+			$data['ebay_token'] = trim($this->request->post['ebay_token']);
 		} else {
-			$data['ebay_token'] = $this->config->get('ebay_token');
+			$data['ebay_token'] = trim($this->config->get('ebay_token'));
 		}
 
 		if (isset($this->request->post['ebay_secret'])) {
-			$data['ebay_secret'] = $this->request->post['ebay_secret'];
+			$data['ebay_secret'] = trim($this->request->post['ebay_secret']);
 		} else {
-			$data['ebay_secret'] = $this->config->get('ebay_secret');
+			$data['ebay_secret'] = trim($this->config->get('ebay_secret'));
 		}
 
 		if (isset($this->request->post['ebay_string1'])) {
-			$data['ebay_string1'] = $this->request->post['ebay_string1'];
+			$data['ebay_string1'] = trim($this->request->post['ebay_string1']);
 		} else {
-			$data['ebay_string1'] = $this->config->get('ebay_string1');
+			$data['ebay_string1'] = trim($this->config->get('ebay_string1'));
 		}
 
 		if (isset($this->request->post['ebay_string2'])) {
-			$data['ebay_string2'] = $this->request->post['ebay_string2'];
+			$data['ebay_string2'] = trim($this->request->post['ebay_string2']);
 		} else {
-			$data['ebay_string2'] = $this->config->get('ebay_string2');
+			$data['ebay_string2'] = trim($this->config->get('ebay_string2'));
 		}
 
 		if (isset($this->request->post['ebay_enditems'])) {

@@ -14,7 +14,7 @@ $_['tab_modify']                    = 'Modify Plan';
 // Text
 $_['text_payment']                  = 'Payment';
 $_['text_success']                  = 'Success: You have modified Lay-Buy payment module!';
-$_['text_laybuy']                   = '<a href="https://www.lay-buys.com" target="_blank"><img src="view/image/payment/laybuys.png" alt="Lay-Buys" title="Lay-Buys"></a>';
+$_['text_laybuy']                   = '<a href="https://www.lay-buys.com" target="_blank"><img src="view/image/payment/laybuys.png" style="width:94px;height:25px" alt="Lay-Buys" title="Lay-Buys"></a>';
 $_['text_cancel_success']           = 'Transaction was canceled successfully.';
 $_['text_cancel_failure']           = 'Cancel request was unsuccessful. Please try again!';
 $_['text_revise_success']           = 'Revise request was successful.';

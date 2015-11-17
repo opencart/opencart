@@ -251,30 +251,30 @@ $registry->set('event', $event);
 $query = $db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `trigger` LIKE 'catalog/%'");
 
 foreach ($query->rows as $result) {
-	$event->register(substr($result['trigger'], strpos($result['trigger'], '/') + 1), new Action($result['action'], $registry));
+	$event->register(substr($result['trigger'], strpos($result['trigger'], '/') + 1), new Action($result['action']));
 }
 
-//$event->register('contoller/*', new Action('common/maintenance', $registry));
-//$event->register('contoller/*', new Action('common/seo_url', $registry));
+//$event->register('contoller/*', new Action('common/maintenance'));
+//$event->register('contoller/*', new Action('common/seo_url'));
 
 // Front Controller
 $controller = new Front($registry);
 
 // Maintenance Mode
-//$controller->addPreAction('*', new Action('common/maintenance', $registry));
+//$controller->addPreAction('*', new Action('common/maintenance'));
 
 // SEO URL's
-//$controller->addPreAction('*', new Action('common/seo_url', $registry));
+//$controller->addPreAction('*', new Action('common/seo_url'));
 
 // Router
 if (isset($request->get['route'])) {
-	$action = new Action($request->get['route'], $registry);
+	$action = new Action($request->get['route']);
 } else {
-	$action = new Action('common/home', $registry);
+	$action = new Action('common/home');
 }
 
 // Dispatch
-$controller->dispatch($action, new Action('error/not_found', $registry));
+$controller->dispatch($action, new Action('error/not_found'));
 
 // Output
 $response->output();

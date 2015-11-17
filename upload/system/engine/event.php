@@ -21,11 +21,11 @@ class Event {
 		foreach ($this->data as $key => $value) {
 			if (preg_match('/^' . str_replace(array('\*', '\?'), array('.*', '.'), preg_quote($key, '/')) . '/', $trigger)) {
 				foreach ($value as $event) {
-					$result = $event->execute($args);
+					$result = $event->execute($this->registry, $args);
 				
 					if (!is_null($result)) {
 						return $result;
-					}	
+					}
 				}
 			}
 		}

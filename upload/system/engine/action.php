@@ -4,9 +4,7 @@ class Action {
 	private $class;
 	private $method;
 
-	public function __construct($route, $registry) {
-		$this->registry = $registry;
-		
+	public function __construct($route) {
 		$parts = explode('/', str_replace('../', '', (string)$route));
 
 		// Break apart the route
@@ -28,7 +26,7 @@ class Action {
 		}
 	}
 
-	public function execute($args = array()) {
+	public function execute($registry, $args = array()) {
 		// Stop any magical methods being called
 		if (substr($this->method, 0, 2) == '__') {
 			return false;
@@ -39,7 +37,7 @@ class Action {
 
 			$class = $this->class;
 
-			$controller = new $class($this->registry);
+			$controller = new $class($registry);
 
 			if (is_callable(array($controller, $this->method))) {
 				return call_user_func_array(array($controller, $this->method), $args);

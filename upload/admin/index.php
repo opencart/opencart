@@ -149,30 +149,30 @@ $registry->set('event', $event);
 $query = $db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `trigger` LIKE 'admin/%'");
 
 foreach ($query->rows as $result) {
-	$event->register($substr($result['trigger'], strrpos($result['trigger'], '/') + 1), new Action($result['action'], $registry));
+	$event->register($substr($result['trigger'], strrpos($result['trigger'], '/') + 1), new Action($result['action']));
 }
 
 // Front Controller
 $controller = new Front($registry);
 
 // Compile Sass
-$controller->addPreAction(new Action('common/sass', $registry));
+$controller->addPreAction(new Action('common/sass'));
 
 // Login
-$controller->addPreAction(new Action('common/login/check', $registry));
+$controller->addPreAction(new Action('common/login/check'));
 
 // Permission
-$controller->addPreAction(new Action('error/permission/check', $registry));
+$controller->addPreAction(new Action('error/permission/check'));
 
 // Router
 if (isset($request->get['route'])) {
-	$action = new Action($request->get['route'], $registry);
+	$action = new Action($request->get['route']);
 } else {
-	$action = new Action('common/dashboard', $registry);
+	$action = new Action('common/dashboard');
 }
 
 // Dispatch
-$controller->dispatch($action, new Action('error/not_found', $registry));
+$controller->dispatch($action, new Action('error/not_found'));
 
 // Output
 $response->output();

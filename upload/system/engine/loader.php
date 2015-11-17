@@ -6,14 +6,6 @@ final class Loader {
 		$this->registry = $registry;
 	}
 	
-	public function __get($key) {
-		return $this->registry->get($key);
-	}
-
-	public function __set($key, $value) {
-		$this->registry->set($key, $value);
-	}
-	
 	public function controller($route) {
 		// Get args by reference
 		$trace = debug_backtrace();
@@ -30,14 +22,14 @@ final class Loader {
 			return $result;
 		}
 			
-		$action = new Action($args[0], $this->registry);
+		$action = new Action($args[0]);
 		
 		array_shift($args);
 				
-		$output = $action->execute($args);
+		$output = $action->execute($this->registry, $args);
 
 		// Trigger the post events
-		$result = $this->registry->get('event')->trigger('controller/' . $route . '/after', $output);
+		$result = $this->registry->get('event')->trigger('controller/' . $route . '/after', array(&$output));
 		
 		if (!is_null($result)) {
 			return $result;
@@ -47,48 +39,29 @@ final class Loader {
 	}
 	
 	public function model($model) {
+		// Get args by reference
+		$trace = debug_backtrace();
+
+		$args = $trace[0]['args'];		
+		
 		// Sanitize the call
 		$model = str_replace('../', '', (string)$model);
 
-		if (!$this->registry->has('model_' . str_replace('/', '_', $model))) {
+		$file = DIR_APPLICATION . 'model/' . $model . '.php';
+		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $model);
 
-			$file = DIR_APPLICATION . 'model/' . $model . '.php';
-			$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $model);
+		if (file_exists($file)) {
+			include_once($file);
+			
+			$object = new $class($this->registry);
+
+			//$mock = new Mock($object);
+			//$object = $mock->render($this->registry);
 	
-			if (file_exists($file)) {
-				include_once($file);
-				
-				$object = new $class($this->registry);
-
-				//$mock = new Interceptor($object);
-
-				//$interceptor->addPreAction(new Action('override/test/model', $this->registry));	
-									
-				/*			
-				$interceptor = new Interceptor($object);
-				
-				$interceptor->addPreAction(new Action('override/test/model', $this->registry));
-								
-				// Call any events
-				//$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "event WHERE `trigger` LIKE 'catalog/model/" . $this->db->escape($model) . "/%'");
-				
-				foreach ($query->rows as $result) {
-					//$interceptor->addPreAction(substr($result['trigger'], strrpos($result['trigger'], '/') + 1), new Action($result['action'], $this->registry));
-				}
-				
-				//$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "event WHERE `trigger` = 'catalog/model/" . $this->db->escape($model) . "/%'");
-				
-				foreach ($query->rows as $result) {
-					//$interceptor->addPostAction(substr($result['trigger'], strrpos($result['trigger'], '/') + 1), new Action($result['action']));
-				}
-				*/	
-		
-		
-				$this->registry->set('model_' . str_replace('/', '_', $model), $object);
-			} else {
-				trigger_error('Error: Could not load model ' . $file . '!');
-				exit();
-			}
+			$this->registry->set('model_' . str_replace('/', '_', $model), $object);
+		} else {
+			trigger_error('Error: Could not load model ' . $file . '!');
+			exit();
 		}
 	}
 
@@ -100,7 +73,8 @@ final class Loader {
 		
 		// Sanitize the call
 		$view = str_replace('../', '', (string)$args[0]);
-
+		
+		// Trigger the pre events
 		$result = $this->registry->get('event')->trigger('view/' . $view . '/before', $args);
 		
 		if (!is_null($result)) {
@@ -114,7 +88,8 @@ final class Loader {
 		}
 		
 		$output = $template->render($args[0]);	
-
+		
+		// Trigger the post events
 		$result = $this->registry->get('event')->trigger('view/' . $view . '/after', array(&$output));
 		
 		if (!is_null($result)) {
@@ -140,7 +115,7 @@ final class Loader {
 		
 		$this->registry->get('config')->load($config);
 		
-		$this->registry->get('event')->trigger('config/' . $config . '/after');
+		$this->registry->get('event')->trigger('config/' . $config . '/after', $config);
 	}
 
 	public function language($language) {
@@ -148,6 +123,6 @@ final class Loader {
 		
 		$this->registry->get('language')->load($language);
 		
-		$this->registry->get('event')->trigger('language/' . $language . '/after');
+		$this->registry->get('event')->trigger('language/' . $language . '/after', $language);
 	}
 }

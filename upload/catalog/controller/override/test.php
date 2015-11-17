@@ -40,7 +40,7 @@ class ControllerOverrideTest extends Controller {
 		//return 'return controller test';
 	}
 
-	public function model($model, $data) {
+	public function model(&$model, &$data) {
 		//$this->event->trigger($model . '/' . __METHOD__ . '/before', $data);
 		
 		//echo __METHOD__;
@@ -61,6 +61,8 @@ class ControllerOverrideTest extends Controller {
 	}	
 	
 	public function after(&$output) {
-		//return $output;
+		//$output = 1;
+		
+		//return 'hi';
 	}	
 }

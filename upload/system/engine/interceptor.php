@@ -42,6 +42,9 @@ class Interceptor {
 		return $output;
 	}
 }
+
+
+
 /*
 class Mock {
 	$this->code = '';
@@ -77,3 +80,33 @@ class Mock {
 	//eval();	
 }
 */
+
+
+class Mock {
+	public function __construct($registry) {
+		$this->registry = $registry;
+	}		
+	
+	function method() {
+		// Get args by reference
+		$trace = debug_backtrace();
+
+		$args = $trace[0]['args'];		
+		
+		// Trigger the pre events
+		$result = $this->registry->get('event')->trigger('model/' . $model . '/before', $args);
+		
+		if (!is_null($result)) {
+			return $result;
+		}
+		
+		
+		
+		// Trigger the post events
+		$result = $this->registry->get('event')->trigger('model/' . $route . '/after', array(&$output));					
+		
+		if (!is_null($result)) {
+			return $result;
+		}	
+	}	
+}

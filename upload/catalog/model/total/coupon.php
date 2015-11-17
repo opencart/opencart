@@ -126,11 +126,7 @@ class ModelTotalCoupon extends Model {
 					if (!$coupon_info['product']) {
 						$status = true;
 					} else {
-						if (in_array($product['product_id'], $coupon_info['product'])) {
-							$status = true;
-						} else {
-							$status = false;
-						}
+						$status = in_array($product['product_id'], $coupon_info['product']);
 					}
 
 					if ($status) {

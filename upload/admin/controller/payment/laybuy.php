@@ -155,13 +155,13 @@ class ControllerPaymentLaybuy extends Controller {
 			$data['laybuy_max_months'] = '3';
 		}
 
-    	if (isset($this->request->post['laybuy_category'])) {
-      		$data['laybuy_category'] = $this->request->post['laybuy_category'];
-    	} elseif ($this->config->get('laybuy_category')) {
+		if (isset($this->request->post['laybuy_category'])) {
+			$data['laybuy_category'] = $this->request->post['laybuy_category'];
+		} elseif ($this->config->get('laybuy_category')) {
 			$data['laybuy_category'] = $this->config->get('laybuy_category');
 		} else {
-      		$data['laybuy_category'] = array();
-    	}
+			$data['laybuy_category'] = array();
+		}
 
 		$data['categories'] = array();
 
@@ -184,13 +184,13 @@ class ControllerPaymentLaybuy extends Controller {
 			$data['laybuy_xproducts'] = $this->config->get('laybuy_xproducts');
 		}
 
-    	if (isset($this->request->post['laybuy_customer_group'])) {
-      		$data['laybuy_customer_group'] = $this->request->post['laybuy_customer_group'];
-    	} elseif ($this->config->get('laybuy_customer_group')) {
+		if (isset($this->request->post['laybuy_customer_group'])) {
+			$data['laybuy_customer_group'] = $this->request->post['laybuy_customer_group'];
+		} elseif ($this->config->get('laybuy_customer_group')) {
 			$data['laybuy_customer_group'] = $this->config->get('laybuy_customer_group');
 		} else {
-      		$data['laybuy_customer_group'] = array();
-    	}
+			$data['laybuy_customer_group'] = array();
+		}
 
 		$data['customer_groups'] = array();
 
@@ -1073,10 +1073,10 @@ class ControllerPaymentLaybuy extends Controller {
 
 				$this->model_payment_laybuy->log('Revised transaction: ' . print_r($revised_transaction, true));
 
-				if ($revised_transaction['payment_type'] == '1') { // Lay-Buy payment
+				if ($revised_transaction['payment_type'] == '1') {
 					$pp = '1';
 					$pplan = '1';
-				} else { // Buy-Now payment
+				} else {
 					$pp = '0';
 					$pplan = '0';
 				}

@@ -70,7 +70,7 @@ class ModelPaymentLaybuy extends Model {
 
 		/* Condition for categories and products */
 		if ($status && $this->config->get('laybuy_category')) {
-			$allowedCategories = $this->config->get('laybuy_category');
+			$allowed_categories = $this->config->get('laybuy_category');
 
 			$xproducts = explode(',', $this->config->get('laybuy_xproducts'));
 
@@ -89,7 +89,7 @@ class ModelPaymentLaybuy extends Model {
 
 					$product = explode(',', $product['categories']);
 
-					if ($product && count(array_diff($product, $allowedCategories)) > 0) {
+					if ($product && count(array_diff($product, $allowed_categories)) > 0) {
 						$status = false;
 						break;
 					}

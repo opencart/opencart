@@ -59,4 +59,8 @@ class ControllerOverrideTest extends Controller {
 			$view = 'default/template/' . $view;
 		}
 	}	
+	
+	public function after(&$output) {
+		//return $output;
+	}	
 }

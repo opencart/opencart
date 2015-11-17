@@ -62,28 +62,26 @@ final class Loader {
 
 				//$mock = new Interceptor($object);
 
-				//$interceptor = new Interceptor($object);
-
 				//$interceptor->addPreAction(new Action('override/test/model', $this->registry));	
-					
-/*			
-$interceptor = new Interceptor($object);
-
-$interceptor->addPreAction(new Action('override/test/model', $this->registry));
+									
+				/*			
+				$interceptor = new Interceptor($object);
 				
-// Call any events
-//$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "event WHERE `trigger` LIKE 'catalog/model/" . $this->db->escape($model) . "/%'");
-
-foreach ($query->rows as $result) {
-	//$interceptor->addPreAction(substr($result['trigger'], strrpos($result['trigger'], '/') + 1), new Action($result['action'], $this->registry));
-}
-
-//$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "event WHERE `trigger` = 'catalog/model/" . $this->db->escape($model) . "/%'");
-
-foreach ($query->rows as $result) {
-	//$interceptor->addPostAction(substr($result['trigger'], strrpos($result['trigger'], '/') + 1), new Action($result['action']));
-}
-*/	
+				$interceptor->addPreAction(new Action('override/test/model', $this->registry));
+								
+				// Call any events
+				//$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "event WHERE `trigger` LIKE 'catalog/model/" . $this->db->escape($model) . "/%'");
+				
+				foreach ($query->rows as $result) {
+					//$interceptor->addPreAction(substr($result['trigger'], strrpos($result['trigger'], '/') + 1), new Action($result['action'], $this->registry));
+				}
+				
+				//$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "event WHERE `trigger` = 'catalog/model/" . $this->db->escape($model) . "/%'");
+				
+				foreach ($query->rows as $result) {
+					//$interceptor->addPostAction(substr($result['trigger'], strrpos($result['trigger'], '/') + 1), new Action($result['action']));
+				}
+				*/	
 		
 		
 				$this->registry->set('model_' . str_replace('/', '_', $model), $object);
@@ -117,7 +115,7 @@ foreach ($query->rows as $result) {
 		
 		$output = $template->render($args[0]);	
 
-		$result = $this->registry->get('event')->trigger('view/' . $view . '/after', $output);
+		$result = $this->registry->get('event')->trigger('view/' . $view . '/after', array(&$output));
 		
 		if (!is_null($result)) {
 			return $result;

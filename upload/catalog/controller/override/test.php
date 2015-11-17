@@ -29,14 +29,12 @@ class ControllerOverrideTest extends Controller {
 	*
 	*/	
 	public function controller(&$controller, &$data) {
-		//echo 'Controller method args:' . "\n";
-		
 		//$controller = 'test';
+				
+		//$data['test'] = 'This is a test var!';
 		
-		$args = func_get_args();
-		
-		$data['test'] = 'This is a test var!';
-		
+		//echo 'Controller method args:' . "\n";
+
 		//print_r($args);
 		
 		//return 'return controller test';

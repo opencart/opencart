@@ -23,6 +23,7 @@ final class Loader {
 		// Sanitize the call
 		$route = str_replace('../', '', (string)$args[0]);
 	
+		// Trigger the pre events
 		$result = $this->registry->get('event')->trigger('controller/' . $route . '/before', $args);
 		
 		if (!is_null($result)) {
@@ -35,6 +36,7 @@ final class Loader {
 				
 		$output = $action->execute($args);
 
+		// Trigger the post events
 		$result = $this->registry->get('event')->trigger('controller/' . $route . '/after', $output);
 		
 		if (!is_null($result)) {
@@ -63,7 +65,25 @@ final class Loader {
 				//$interceptor = new Interceptor($object);
 
 				//$interceptor->addPreAction(new Action('override/test/model', $this->registry));	
-		
+					
+/*			
+$interceptor = new Interceptor($object);
+
+$interceptor->addPreAction(new Action('override/test/model', $this->registry));
+				
+// Call any events
+//$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "event WHERE `trigger` LIKE 'catalog/model/" . $this->db->escape($model) . "/%'");
+
+foreach ($query->rows as $result) {
+	//$interceptor->addPreAction(substr($result['trigger'], strrpos($result['trigger'], '/') + 1), new Action($result['action'], $this->registry));
+}
+
+//$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "event WHERE `trigger` = 'catalog/model/" . $this->db->escape($model) . "/%'");
+
+foreach ($query->rows as $result) {
+	//$interceptor->addPostAction(substr($result['trigger'], strrpos($result['trigger'], '/') + 1), new Action($result['action']));
+}
+*/	
 		
 		
 				$this->registry->set('model_' . str_replace('/', '_', $model), $object);
@@ -133,23 +153,3 @@ final class Loader {
 		$this->registry->get('event')->trigger('language/' . $language . '/after');
 	}
 }
-
-				
-/*			
-$interceptor = new Interceptor($object);
-
-$interceptor->addPreAction(new Action('override/test/model', $this->registry));
-				
-// Call any events
-//$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "event WHERE `trigger` LIKE 'catalog/model/" . $this->db->escape($model) . "/%'");
-
-foreach ($query->rows as $result) {
-	//$interceptor->addPreAction(substr($result['trigger'], strrpos($result['trigger'], '/') + 1), new Action($result['action'], $this->registry));
-}
-
-//$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "event WHERE `trigger` = 'catalog/model/" . $this->db->escape($model) . "/%'");
-
-foreach ($query->rows as $result) {
-	//$interceptor->addPostAction(substr($result['trigger'], strrpos($result['trigger'], '/') + 1), new Action($result['action']));
-}
-*/

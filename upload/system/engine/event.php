@@ -13,41 +13,20 @@ class Event {
 	
 	public function unregister($trigger, $action) {
 		if (isset($this->data[$trigger])) {
-			foreach ($this->data[$trigger] as $key => $event) {
-				if ($event == $action) {
-					unset($this->data[$trigger][$key]);
-				}
-			}
+			unset($this->data[$trigger]);
 		}
 	}
 
 	public function trigger($trigger, $args = array()) {
-		
-		foreach ($this->data as $key => $event) {
-			//echo $key . "\n";
-			//'catalog/view/*/before'
-			
-			//$keywords = preg_quote($keywords, '/');
-			//'/^view\/(.*)$/i'
-			$matches = array();
-			
-			if (preg_match('/^({' . preg_quote($key, '/') . '})/', $trigger, $matches)) {
-				echo 'Trigger: ' . $trigger . "\n";
-				echo 'Matched: ' . $key . "\n";
+		foreach ($this->data as $key => $value) {
+			if (preg_match('/^' . str_replace(array('\*', '\?'), array('.*', '.'), preg_quote($key, '/')) . '/', $trigger)) {
+				foreach ($value as $event) {
+					$result = $event->execute($args);
 				
-				print_r($matches);
-				exit();
-								
-				
-				//'/#' . preg_quote('view/', '/') . '#/'
-				
-
-								
-				//$result = $event->execute($args);
-			
-				//if (!is_null($result)) {
-				//	return $result;
-				//}				
+					if (!is_null($result)) {
+						return $result;
+					}	
+				}
 			}
 		}
 	}

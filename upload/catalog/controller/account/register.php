@@ -40,6 +40,8 @@ class ControllerAccountRegister extends Controller {
 			$this->response->redirect($this->url->link('account/success'));
 		}
 
+		$this->load->language('account/register');
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(

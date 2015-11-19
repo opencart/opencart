@@ -272,11 +272,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				);
 			}
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/klarna_account.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/payment/klarna_account.tpl', $data);
-			} else {
-				return $this->load->view('default/template/payment/klarna_account.tpl', $data);
-			}
+			return $this->load->view('payment/klarna_account.tpl', $data);
 		}
 	}
 

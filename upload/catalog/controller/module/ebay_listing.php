@@ -36,11 +36,7 @@ class ControllerModuleEbayListing extends Controller {
 
 			$data['tracking_pixel'] = $products['tracking_pixel'];
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/ebay.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/module/ebay.tpl', $data);
-			} else {
-				return $this->load->view('default/template/module/ebay.tpl', $data);
-			}
+			return $this->load->view('module/ebay.tpl', $data);
 		}
 	}
 }

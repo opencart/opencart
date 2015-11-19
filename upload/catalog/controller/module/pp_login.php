@@ -48,11 +48,7 @@ class ControllerModulePPLogin extends Controller {
 
 			$data['scopes'] = implode(' ', $scopes);
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/pp_login.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/module/pp_login.tpl', $data);
-			} else {
-				return $this->load->view('default/template/module/pp_login.tpl', $data);
-			}
+			return $this->load->view('module/pp_login.tpl', $data);
 		}
 	}
 

@@ -46,11 +46,7 @@ class ControllerCommonCurrency extends Controller {
 			$data['redirect'] = $this->url->link($route, $url, $this->request->server['HTTPS']);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/currency.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/common/currency.tpl', $data);
-		} else {
-			return $this->load->view('default/template/common/currency.tpl', $data);
-		}
+		return $this->load->view('common/currency.tpl', $data);
 	}
 
 	public function currency() {

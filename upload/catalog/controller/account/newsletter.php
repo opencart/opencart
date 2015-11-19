@@ -61,10 +61,6 @@ class ControllerAccountNewsletter extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/newsletter.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/newsletter.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/account/newsletter.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('account/newsletter.tpl', $data));
 	}
 }

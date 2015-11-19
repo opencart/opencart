@@ -25,11 +25,7 @@ class ControllerPaymentLiqPay extends Controller {
 		$data['xml'] = base64_encode($xml);
 		$data['signature'] = base64_encode(sha1($this->config->get('liqpay_signature') . $xml . $this->config->get('liqpay_signature'), true));
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/liqpay.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/liqpay.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/liqpay.tpl', $data);
-		}
+		return $this->load->view('payment/liqpay.tpl', $data);
 	}
 
 	public function callback() {

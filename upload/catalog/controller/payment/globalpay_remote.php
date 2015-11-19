@@ -58,11 +58,7 @@ class ControllerPaymentGlobalpayRemote extends Controller {
 			);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/globalpay_remote.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/globalpay_remote.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/globalpay_remote.tpl', $data);
-		}
+		return $this->load->view('payment/globalpay_remote.tpl', $data);
 	}
 
 	public function send() {

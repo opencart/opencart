@@ -82,11 +82,7 @@ class ControllerPaymentFirstdata extends Controller {
 			$data['stored_cards'] = array();
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/firstdata.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/firstdata.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/firstdata.tpl', $data);
-		}
+		return $this->load->view('payment/firstdata.tpl', $data);
 	}
 
 	public function notify() {

@@ -89,10 +89,6 @@ class ControllerAffiliateTransaction extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/affiliate/transaction.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/affiliate/transaction.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/affiliate/transaction.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('affiliate/transaction.tpl', $data));
 	}
 }

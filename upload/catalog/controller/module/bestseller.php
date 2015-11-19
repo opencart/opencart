@@ -64,11 +64,7 @@ class ControllerModuleBestSeller extends Controller {
 				);
 			}
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/bestseller.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/module/bestseller.tpl', $data);
-			} else {
-				return $this->load->view('default/template/module/bestseller.tpl', $data);
-			}
+			return $this->load->view('module/bestseller.tpl', $data);
 		}
 	}
 }

@@ -192,6 +192,8 @@ class ControllerCheckoutCart extends Controller {
 			if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
 				$sort_order = array();
 
+
+				$results = $this->load->model('extension/extension/getExtensions', 'total');
 				$results = $this->model_extension_extension->getExtensions('total');
 
 				foreach ($results as $key => $value) {
@@ -249,11 +251,7 @@ class ControllerCheckoutCart extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/cart.tpl')) {
-				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/cart.tpl', $data));
-			} else {
-				$this->response->setOutput($this->load->view('default/template/checkout/cart.tpl', $data));
-			}
+			$this->response->setOutput($this->load->view('checkout/cart.tpl', $data));
 		} else {
 			$data['heading_title'] = $this->language->get('heading_title');
 
@@ -272,11 +270,7 @@ class ControllerCheckoutCart extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
-				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/error/not_found.tpl', $data));
-			} else {
-				$this->response->setOutput($this->load->view('default/template/error/not_found.tpl', $data));
-			}
+			$this->response->setOutput($this->load->view('error/not_found.tpl', $data));
 		}
 	}
 

@@ -28,10 +28,6 @@ class ControllerModuleAffiliate extends Controller {
 		$data['tracking'] = $this->url->link('affiliate/tracking', '', true);
 		$data['transaction'] = $this->url->link('affiliate/transaction', '', true);
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/affiliate.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/module/affiliate.tpl', $data);
-		} else {
-			return $this->load->view('default/template/module/affiliate.tpl', $data);
-		}
+		return $this->load->view('module/affiliate.tpl', $data);
 	}
 }

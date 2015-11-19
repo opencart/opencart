@@ -7,11 +7,7 @@ class ControllerPaymentG2APay extends Controller {
 
 		$data['action'] = $this->url->link('payment/g2apay/checkout', '', true);
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/g2apay.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/g2apay.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/g2apay.tpl', $data);
-		}
+		return $this->load->view('payment/g2apay.tpl', $data);
 	}
 
 	public function checkout() {

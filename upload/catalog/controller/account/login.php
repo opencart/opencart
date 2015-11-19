@@ -51,9 +51,6 @@ class ControllerAccountLogin extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			// Trigger customer pre login event
-			$this->event->trigger('pre.customer.login');
-
 			// Unset guest
 			unset($this->session->data['guest']);
 
@@ -88,9 +85,6 @@ class ControllerAccountLogin extends Controller {
 			);
 
 			$this->model_account_activity->addActivity('login', $activity_data);
-
-			// Trigger customer post login event
-			$this->event->trigger('post.customer.login');
 
 			// Added strpos check to pass McAfee PCI compliance test (http://forum.opencart.com/viewtopic.php?f=10&t=12043&p=151494#p151295)
 			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], $this->config->get('config_url')) !== false || strpos($this->request->post['redirect'], $this->config->get('config_ssl')) !== false)) {
@@ -180,16 +174,10 @@ class ControllerAccountLogin extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/login.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/login.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/account/login.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('account/login.tpl', $data));
 	}
 
 	protected function validate() {
-		$this->event->trigger('pre.customer.login');
-
 		// Check how many login attempts have been made.
 		$login_info = $this->model_account_customer->getLoginAttempts($this->request->post['email']);
 

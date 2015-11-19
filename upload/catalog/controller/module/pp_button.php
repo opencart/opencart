@@ -18,11 +18,7 @@ class ControllerModulePPButton extends Controller {
 
 			$data['payment_url'] = $this->url->link('payment/pp_express/express', '', true);
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/pp_button.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/module/pp_button.tpl', $data);
-			} else {
-				return $this->load->view('default/template/module/pp_button.tpl', $data);
-			}
+			return $this->load->view('module/pp_button.tpl', $data);
 		}
 	}
 }

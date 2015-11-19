@@ -168,11 +168,7 @@ class ControllerAccountVoucher extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/voucher.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/voucher.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/account/voucher.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('account/voucher.tpl', $data));
 	}
 
 	public function success() {
@@ -207,11 +203,7 @@ class ControllerAccountVoucher extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/common/success.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/common/success.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('common/success.tpl', $data));
 	}
 
 	protected function validate() {

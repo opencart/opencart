@@ -54,11 +54,7 @@ class ControllerPaymentSecureTradingWs extends Controller {
 				$data['cards'][$card_type] = $cards[$card_type];
 			}
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/securetrading_ws.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/payment/securetrading_ws.tpl', $data);
-			} else {
-				return $this->load->view('default/template/payment/securetrading_ws.tpl', $data);
-			}
+			return $this->load->view('payment/securetrading_ws.tpl', $data);
 		}
 	}
 

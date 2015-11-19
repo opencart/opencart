@@ -251,11 +251,7 @@ class ControllerAccountAddress extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/address_list.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/address_list.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/account/address_list.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('account/address_list.tpl', $data));
 	}
 
 	protected function getForm() {
@@ -476,11 +472,8 @@ class ControllerAccountAddress extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/address_form.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/address_form.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/account/address_form.tpl', $data));
-		}
+
+		$this->response->setOutput($this->load->view('account/address_form.tpl', $data));
 	}
 
 	protected function validateForm() {

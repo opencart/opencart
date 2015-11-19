@@ -37,11 +37,7 @@ class ControllerModuleAmazonPay extends Controller {
 				$data['amazon_pay_button_size'] = 'medium';
 			}
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/amazon_pay.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/module/amazon_pay.tpl', $data);
-			} else {
-				return $this->load->view('default/template/module/amazon_pay.tpl', $data);
-			}
+			return $this->load->view('module/amazon_pay.tpl', $data);
 		}
 	}
 

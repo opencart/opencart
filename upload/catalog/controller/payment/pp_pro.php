@@ -81,11 +81,7 @@ class ControllerPaymentPPPro extends Controller {
 			);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_pro.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/pp_pro.tpl', $data);
-		} else {
-			return $this->load->view('default/template/payment/pp_pro.tpl', $data);
-		}
+		return $this->load->view('payment/pp_pro.tpl', $data);
 	}
 
 	public function send() {

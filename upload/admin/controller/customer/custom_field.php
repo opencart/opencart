@@ -322,17 +322,20 @@ class ControllerCustomerCustomField extends Controller {
 		$data['text_address'] = $this->language->get('text_address');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
+		$data['text_regex'] = $this->language->get('text_regex');
 
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_location'] = $this->language->get('entry_location');
 		$data['entry_type'] = $this->language->get('entry_type');
 		$data['entry_value'] = $this->language->get('entry_value');
+		$data['entry_validation'] = $this->language->get('entry_validation');
 		$data['entry_custom_value'] = $this->language->get('entry_custom_value');
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$data['entry_required'] = $this->language->get('entry_required');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
+		$data['help_regex'] = $this->language->get('help_regex');
 		$data['help_sort_order'] = $this->language->get('help_sort_order');
 
 		$data['button_save'] = $this->language->get('button_save');
@@ -432,6 +435,14 @@ class ControllerCustomerCustomField extends Controller {
 			$data['value'] = $custom_field_info['value'];
 		} else {
 			$data['value'] = '';
+		}
+
+		if (isset($this->request->post['validation'])) {
+			$data['validation'] = $this->request->post['validation'];
+		} elseif (!empty($custom_field_info)) {
+			$data['validation'] = $custom_field_info['validation'];
+		} else {
+			$data['validation'] = '';
 		}
 
 		if (isset($this->request->post['status'])) {

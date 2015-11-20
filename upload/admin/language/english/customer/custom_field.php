@@ -20,6 +20,7 @@ $_['text_datetime']         = 'Date &amp; Time';
 $_['text_time']             = 'Time';
 $_['text_account']          = 'Account';
 $_['text_address']          = 'Address';
+$_['text_regex']            = 'Regex';
 
 // Column
 $_['column_name']           = 'Custom Field Name';
@@ -33,6 +34,7 @@ $_['entry_name']            = 'Custom Field Name';
 $_['entry_location']        = 'Location';
 $_['entry_type']            = 'Type';
 $_['entry_value']           = 'Value';
+$_['entry_validation']      = 'Validation';
 $_['entry_custom_value']    = 'Custom Field Value Name';
 $_['entry_customer_group']  = 'Customer Group';
 $_['entry_required']        = 'Required';
@@ -40,6 +42,7 @@ $_['entry_status']          = 'Status';
 $_['entry_sort_order']      = 'Sort Order';
 
 // Help
+$_['help_regex']            = 'Use regex. E.g: /[a-zA-Z0-9_-]/';
 $_['help_sort_order']       = 'Use minus to count backwards from the last field in the set.';
 
 // Error

@@ -121,6 +121,12 @@
               <input type="text" name="value" value="<?php echo $value; ?>" placeholder="<?php echo $entry_value; ?>" id="input-value" class="form-control" />
             </div>
           </div>
+          <div class="form-group" id="display-validation">
+            <label class="col-sm-2 control-label" for="input-validation"><span data-toggle="tooltip" title="<?php echo $help_regex ?>"><?php echo $entry_validation ?></span></label>
+            <div class="col-sm-10">
+              <input type="text" name="validation" id="input-validation" value="<?php echo $validation ?>" placeholder="<?php echo $text_regex ?>"  class="form-control"/>
+            </div>
+          </div>
           <div class="form-group">
             <label class="col-sm-2 control-label"><?php echo $entry_customer_group; ?></label>
             <div class="col-sm-10">
@@ -223,10 +229,10 @@
 $('select[name=\'type\']').on('change', function() {
 	if (this.value == 'select' || this.value == 'radio' || this.value == 'checkbox') {
 		$('#custom-field-value').show();
-		$('#display-value').hide();
+		$('#display-value, #display-validation').hide();
 	} else {
 		$('#custom-field-value').hide();
-		$('#display-value').show();
+		$('#display-value, #display-validation').show();
 	}
 	
 	if (this.value == 'date') {

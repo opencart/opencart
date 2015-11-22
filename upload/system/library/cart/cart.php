@@ -378,42 +378,32 @@ class Cart {
 	}
 
 	public function hasStock() {
-		$stock = true;
-
 		foreach ($this->getProducts() as $product) {
 			if (!$product['stock']) {
-				$stock = false;
+				return false;
 			}
 		}
 
-		return $stock;
+		return true;
 	}
 
 	public function hasShipping() {
-		$shipping = false;
-
 		foreach ($this->getProducts() as $product) {
 			if ($product['shipping']) {
-				$shipping = true;
-
-				break;
+				return true;
 			}
 		}
 
-		return $shipping;
+		return false;
 	}
 
 	public function hasDownload() {
-		$download = false;
-
 		foreach ($this->getProducts() as $product) {
 			if ($product['download']) {
-				$download = true;
-
-				break;
+				return true;
 			}
 		}
 
-		return $download;
+		return false;
 	}
 }

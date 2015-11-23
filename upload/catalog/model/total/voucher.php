@@ -79,12 +79,8 @@ class ModelTotalVoucher extends Model {
 			$voucher_info = $this->getVoucher($this->session->data['voucher']);
 
 			if ($voucher_info) {
-				if ($voucher_info['amount'] > $total) {
-					$amount = $total;
-				} else {
-					$amount = $voucher_info['amount'];
-				}
-
+				$amount = min($voucher_info['amount'], $total);
+				
 				if ($amount > 0) {
 					$total_data[] = array(
 						'code'       => 'voucher',

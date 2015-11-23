@@ -52,6 +52,10 @@ $registry->set('document', $document);
 $session = new Session();
 $registry->set('session', $session);
 
+// Event
+$event = new Event($registry);
+$registry->set('event', $event);
+
 // Upgrade
 $upgrade = false;
 

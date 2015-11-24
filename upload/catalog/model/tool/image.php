@@ -1,6 +1,6 @@
 <?php
 class ModelToolImage extends Model {
-	public function resize($filename, $width, $height) {
+	public function resize($filename, $width, $height = false) {
 		if (!is_file(DIR_IMAGE . $filename)) {
 			return;
 		}
@@ -8,6 +8,14 @@ class ModelToolImage extends Model {
 		$extension = pathinfo($filename, PATHINFO_EXTENSION);
 
 		$old_image = $filename;
+		
+		list($width_orig, $height_orig) = getimagesize(DIR_IMAGE . $old_image);
+		
+		if (!$height) {
+			$image_ratio = $width_orig/$height_orig;
+			$height = round($width/$image_ratio);
+		} 
+		
 		$new_image = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . $width . 'x' . $height . '.' . $extension;
 
 		if (!is_file(DIR_IMAGE . $new_image) || (filectime(DIR_IMAGE . $old_image) > filectime(DIR_IMAGE . $new_image))) {
@@ -22,8 +30,6 @@ class ModelToolImage extends Model {
 					@mkdir(DIR_IMAGE . $path, 0777);
 				}
 			}
-
-			list($width_orig, $height_orig) = getimagesize(DIR_IMAGE . $old_image);
 
 			if ($width_orig != $width || $height_orig != $height) {
 				$image = new Image(DIR_IMAGE . $old_image);

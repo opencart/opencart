@@ -22,7 +22,7 @@
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <th class="text-center"><input type="checkbox"/></th>
+            <th class="text-center"><input type="checkbox" onclick="$('input[name*=\'product_ids[]\']').prop('checked', this.checked);"/></th>
             <th class="text-center"><?php echo $column_image; ?></th>
             <th class="text-left"><?php echo $column_name; ?></th>
             <th class="text-right"><?php echo $column_model; ?></th>
@@ -198,7 +198,7 @@ $('#button-search').bind('click', function(e) {
     request_data += '&marketplace=<?php echo $filter_marketplace ?>';
 
     $.ajax({
-      url: 'index.php?route=openbay/amazonus/doBulkSearch&token=<?php echo $token ?>',
+      url: 'index.php?route=openbay/amazonus/dobulksearch&token=<?php echo $token ?>',
       data: request_data,
       dataType: 'json',
       type: 'POST',

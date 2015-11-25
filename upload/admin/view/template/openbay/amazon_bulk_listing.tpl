@@ -38,7 +38,7 @@
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <th class="text-center"><input type="checkbox"/></th>
+            <th class="text-center"><input type="checkbox" onclick="$('input[name*=\'product_ids[]\']').prop('checked', this.checked);"/></th>
             <th class="text-center"><?php echo $column_image; ?></th>
             <th class="text-left"><?php echo $column_name; ?></th>
             <th class="text-right"><?php echo $column_model; ?></th>

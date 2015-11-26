@@ -60,39 +60,27 @@ class Currency {
 			$currency = $this->code;
 		}
 
-		if ($value) {
-			$value = $value;
-		} else {
+		if (!$value) {
 			$value = $this->currencies[$currency]['value'];
 		}
 
-		if ($value) {
-			$value = (float)$number * $value;
-		} else {
-			$value = $number;
+		$amount = $value ? (float)$number * $value : (float)$number;
+		
+		$amount = round($amount, (int)$decimal_place);
+		
+		if (!$format) {
+			return $amount;
 		}
 
 		$string = '';
 
-		if (($symbol_left) && ($format)) {
+		if ($symbol_left) {
 			$string .= $symbol_left;
 		}
 
-		if ($format) {
-			$decimal_point = $this->language->get('decimal_point');
-		} else {
-			$decimal_point = '.';
-		}
+		$string .= number_format($amount, (int)$decimal_place, $this->language->get('decimal_point'), $this->language->get('thousand_point'));
 
-		if ($format) {
-			$thousand_point = $this->language->get('thousand_point');
-		} else {
-			$thousand_point = '';
-		}
-
-		$string .= number_format(round($value, (int)$decimal_place), (int)$decimal_place, $decimal_point, $thousand_point);
-
-		if (($symbol_right) && ($format)) {
+		if ($symbol_right) {
 			$string .= $symbol_right;
 		}
 

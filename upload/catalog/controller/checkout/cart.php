@@ -193,7 +193,7 @@ class ControllerCheckoutCart extends Controller {
 				$sort_order = array();
 
 
-				$results = $this->load->model('extension/extension/getExtensions', 'total');
+				$results = $this->load->model('extension/extension', 'total');
 				$results = $this->model_extension_extension->getExtensions('total');
 
 				foreach ($results as $key => $value) {

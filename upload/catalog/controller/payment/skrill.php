@@ -44,7 +44,7 @@ class ControllerPaymentSkrill extends Controller {
 
 		$data['order_id'] = $this->session->data['order_id'];
 
-		return $this->load->view('payment/skrill.tpl', $data);
+		return $this->load->view('payment/skrill', $data);
 	}
 
 	public function callback() {

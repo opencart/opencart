@@ -195,7 +195,7 @@ class ControllerCommonFileManager extends Controller {
 
 		$data['pagination'] = $pagination->render();
 
-		$this->response->setOutput($this->load->view('common/filemanager.tpl', $data));
+		$this->response->setOutput($this->load->view('common/filemanager', $data));
 	}
 
 	public function upload() {

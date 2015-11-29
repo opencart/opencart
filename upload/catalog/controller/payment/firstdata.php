@@ -82,7 +82,7 @@ class ControllerPaymentFirstdata extends Controller {
 			$data['stored_cards'] = array();
 		}
 
-		return $this->load->view('payment/firstdata.tpl', $data);
+		return $this->load->view('payment/firstdata', $data);
 	}
 
 	public function notify() {

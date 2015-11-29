@@ -105,7 +105,7 @@ class ControllerAffiliateForgotten extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('affiliate/forgotten.tpl', $data));
+		$this->response->setOutput($this->load->view('affiliate/forgotten', $data));
 	}
 
 	protected function validate() {

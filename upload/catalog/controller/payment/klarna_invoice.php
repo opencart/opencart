@@ -148,7 +148,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 				$data['klarna_fee'] = '';
 			}
 
-			return $this->load->view('payment/klarna_invoice.tpl', $data);
+			return $this->load->view('payment/klarna_invoice', $data);
 		}
 	}
 

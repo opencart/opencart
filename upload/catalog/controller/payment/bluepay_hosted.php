@@ -51,7 +51,7 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 		$data['button_confirm'] = $this->language->get('button_confirm');
 		$data['text_loading'] = $this->language->get('text_loading');
 
-		return $this->load->view('payment/bluepay_hosted.tpl', $data);
+		return $this->load->view('payment/bluepay_hosted', $data);
 	}
 
 	public function callback() {

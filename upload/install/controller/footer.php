@@ -6,6 +6,6 @@ class ControllerFooter extends Controller {
 		$data['text_support'] = $this->language->get('text_support');
 		$data['text_footer'] = $this->language->get('text_footer');
 
-		return $this->load->view('footer.tpl', $data);
+		return $this->load->view('footer', $data);
 	}
 }

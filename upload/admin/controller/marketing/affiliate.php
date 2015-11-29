@@ -561,7 +561,7 @@ class ControllerMarketingAffiliate extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('marketing/affiliate_list.tpl', $data));
+		$this->response->setOutput($this->load->view('marketing/affiliate_list', $data));
 	}
 
 	protected function getForm() {
@@ -1009,7 +1009,7 @@ class ControllerMarketingAffiliate extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('marketing/affiliate_form.tpl', $data));
+		$this->response->setOutput($this->load->view('marketing/affiliate_form', $data));
 	}
 
 	protected function validateForm() {
@@ -1176,7 +1176,7 @@ class ControllerMarketingAffiliate extends Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($transaction_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($transaction_total - 10)) ? $transaction_total : ((($page - 1) * 10) + 10), $transaction_total, ceil($transaction_total / 10));
 
-		$this->response->setOutput($this->load->view('marketing/affiliate_transaction.tpl', $data));
+		$this->response->setOutput($this->load->view('marketing/affiliate_transaction', $data));
 	}
 
 	public function addTransaction() {

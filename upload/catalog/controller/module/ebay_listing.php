@@ -36,7 +36,7 @@ class ControllerModuleEbayListing extends Controller {
 
 			$data['tracking_pixel'] = $products['tracking_pixel'];
 
-			return $this->load->view('module/ebay.tpl', $data);
+			return $this->load->view('module/ebay', $data);
 		}
 	}
 }

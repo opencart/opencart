@@ -89,7 +89,7 @@ class ControllerCheckoutGuestShipping extends Controller {
 			$data['address_custom_field'] = array();
 		}
 
-		$this->response->setOutput($this->load->view('checkout/guest_shipping.tpl', $data));
+		$this->response->setOutput($this->load->view('checkout/guest_shipping', $data));
 	}
 
 	public function save() {

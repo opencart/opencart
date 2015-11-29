@@ -207,6 +207,6 @@ class ControllerCommonMenu extends Controller {
 			'etsy' => $this->config->get('etsy_status'),
 		);
 
-		return $this->load->view('common/menu.tpl', $data);
+		return $this->load->view('common/menu', $data);
 	}
 }

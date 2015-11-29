@@ -182,7 +182,7 @@ class ControllerPaymentPPPayflow extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/pp_payflow.tpl', $data));
+		$this->response->setOutput($this->load->view('payment/pp_payflow', $data));
 	}
 
 	private function validate() {

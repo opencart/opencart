@@ -48,7 +48,7 @@ class ControllerModulePPLogin extends Controller {
 
 			$data['scopes'] = implode(' ', $scopes);
 
-			return $this->load->view('module/pp_login.tpl', $data);
+			return $this->load->view('module/pp_login', $data);
 		}
 	}
 

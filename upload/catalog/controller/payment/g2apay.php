@@ -7,7 +7,7 @@ class ControllerPaymentG2APay extends Controller {
 
 		$data['action'] = $this->url->link('payment/g2apay/checkout', '', true);
 
-		return $this->load->view('payment/g2apay.tpl', $data);
+		return $this->load->view('payment/g2apay', $data);
 	}
 
 	public function checkout() {

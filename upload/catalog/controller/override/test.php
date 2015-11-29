@@ -28,7 +28,7 @@ class ControllerOverrideTest extends Controller {
 	* @return value the output
 	*
 	*/	
-	public function controller(&$controller, &$data) {
+	public function controller($controller, &$data) {
 		//$controller = 'test';
 				
 		//$data['test'] = 'This is a test var!';
@@ -39,30 +39,35 @@ class ControllerOverrideTest extends Controller {
 		
 		//return 'return controller test';
 	}
-
-	public function model(&$model, &$data) {
-		//$this->event->trigger($model . '/' . __METHOD__ . '/before', $data);
+	
+	/**
+	*
+	* @param $controller String structure to count the elements of.
+	*
+	* @return value the output
+	*
+	*/	
+	public function model($model, &$data) {
+		// Get args by reference
+		$args = func_get_args();
+					
+		print_r($args);
 		
-		//echo __METHOD__;
-		
-		//$this->event->trigger($model . '/' . __METHOD__ . '/after', $data);
+		echo __METHOD__;
 		
 		//return $output;
-		
-		//return array('return model test');
+		//'return model test'
+		//return array();
 	}
 	
+	/**
+	*
+	* @param $controller String structure to count the elements of.
+	*
+	* @return value the output
+	*
+	*/		
 	public function view(&$view, &$data) {
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/' . $view)) {
-			$view = $this->config->get('config_template') . '/template/' . $view;
-		} else {
-			$view = 'default/template/' . $view;
-		}
-	}	
 	
-	public function after(&$output) {
-		//$output = 1;
-		
-		//return 'hi';
 	}	
 }

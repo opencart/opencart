@@ -161,7 +161,7 @@ class ControllerPaymentAuthorizenetAim extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/authorizenet_aim.tpl', $data));
+		$this->response->setOutput($this->load->view('payment/authorizenet_aim', $data));
 	}
 
 	protected function validate() {

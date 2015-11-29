@@ -119,7 +119,7 @@ class ControllerCheckoutPaymentMethod extends Controller {
 			$data['agree'] = '';
 		}
 
-		$this->response->setOutput($this->load->view('checkout/payment_method.tpl', $data));
+		$this->response->setOutput($this->load->view('checkout/payment_method', $data));
 	}
 
 	public function save() {

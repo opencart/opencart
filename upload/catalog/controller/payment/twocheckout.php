@@ -72,7 +72,7 @@ class ControllerPaymentTwoCheckout extends Controller {
 
 		$data['return_url'] = $this->url->link('payment/twocheckout/callback', '', true);
 
-		return $this->load->view('payment/twocheckout.tpl', $data);
+		return $this->load->view('payment/twocheckout', $data);
 	}
 
 	public function callback() {

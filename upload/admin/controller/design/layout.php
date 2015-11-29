@@ -253,7 +253,7 @@ class ControllerDesignLayout extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('design/layout_list.tpl', $data));
+		$this->response->setOutput($this->load->view('design/layout_list', $data));
 	}
 
 	protected function getForm() {
@@ -396,7 +396,7 @@ class ControllerDesignLayout extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('design/layout_form.tpl', $data));
+		$this->response->setOutput($this->load->view('design/layout_form', $data));
 	}
 
 	protected function validateForm() {

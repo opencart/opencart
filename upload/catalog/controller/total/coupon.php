@@ -18,7 +18,7 @@ class ControllerTotalCoupon extends Controller {
 				$data['coupon'] = '';
 			}
 
-			return $this->load->view('total/coupon.tpl', $data);
+			return $this->load->view('total/coupon', $data);
 		}
 	}
 

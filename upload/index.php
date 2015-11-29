@@ -23,6 +23,9 @@ $registry = new Registry();
 $loader = new Loader($registry);
 $registry->set('load', $loader);
 
+// Factory for controllers and models
+$registry->set('factory', new Factory($registry));
+
 // Config
 $config = new Config();
 $registry->set('config', $config);
@@ -254,17 +257,17 @@ foreach ($query->rows as $result) {
 	$event->register(substr($result['trigger'], strpos($result['trigger'], '/') + 1), new Action($result['action']));
 }
 
-//$event->register('contoller/*', new Action('common/maintenance'));
-//$event->register('contoller/*', new Action('common/seo_url'));
+// Template
+$event->register('view/*/before', new Action('override/template'));
 
 // Front Controller
 $controller = new Front($registry);
 
 // Maintenance Mode
-//$controller->addPreAction('*', new Action('common/maintenance'));
+$controller->addPreAction(new Action('common/maintenance'));
 
 // SEO URL's
-//$controller->addPreAction('*', new Action('common/seo_url'));
+$controller->addPreAction(new Action('common/seo_url'));
 
 // Router
 if (isset($request->get['route'])) {
@@ -275,6 +278,7 @@ if (isset($request->get['route'])) {
 
 // Dispatch
 $controller->dispatch($action, new Action('error/not_found'));
+
 
 // Output
 $response->output();

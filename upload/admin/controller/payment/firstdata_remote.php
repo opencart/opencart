@@ -311,7 +311,7 @@ class ControllerPaymentFirstdataRemote extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/firstdata_remote.tpl', $data));
+		$this->response->setOutput($this->load->view('payment/firstdata_remote', $data));
 	}
 
 	public function install() {
@@ -364,7 +364,7 @@ class ControllerPaymentFirstdataRemote extends Controller {
 				$data['order_id'] = $this->request->get['order_id'];
 				$data['token'] = $this->request->get['token'];
 
-				return $this->load->view('payment/firstdata_remote_order.tpl', $data);
+				return $this->load->view('payment/firstdata_remote_order', $data);
 			}
 		}
 	}

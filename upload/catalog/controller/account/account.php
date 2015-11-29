@@ -71,7 +71,7 @@ class ControllerAccountAccount extends Controller {
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		
-		$this->response->setOutput($this->load->view('account/account.tpl', $data));
+		$this->response->setOutput($this->load->view('account/account', $data));
 	}
 
 	public function country() {

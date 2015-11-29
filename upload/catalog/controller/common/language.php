@@ -45,7 +45,7 @@ class ControllerCommonLanguage extends Controller {
 			$data['redirect'] = $this->url->link($route, $url, $this->request->server['HTTPS']);
 		}
 
-		return $this->load->view('common/language.tpl', $data);
+		return $this->load->view('common/language', $data);
 	}
 
 	public function language() {

@@ -159,6 +159,6 @@ class ControllerCommonHeader extends Controller {
 			$data['class'] = 'common-home';
 		}
 
-		return $this->load->view('common/header.tpl', $data);
+		return $this->load->view('common/header', $data);
 	}
 }

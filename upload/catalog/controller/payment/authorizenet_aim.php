@@ -33,7 +33,7 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 			);
 		}
 
-		return $this->load->view('payment/authorizenet_aim.tpl', $data);
+		return $this->load->view('payment/authorizenet_aim', $data);
 	}
 
 	public function send() {

@@ -227,7 +227,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/amazon_listing_advanced.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay/amazon_listing_advanced', $data));
 	}
 
 	public function removeErrors() {

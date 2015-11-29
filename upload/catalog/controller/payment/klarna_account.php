@@ -272,7 +272,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				);
 			}
 
-			return $this->load->view('payment/klarna_account.tpl', $data);
+			return $this->load->view('payment/klarna_account', $data);
 		}
 	}
 

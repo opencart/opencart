@@ -65,7 +65,7 @@ class ControllerCheckoutShippingAddress extends Controller {
 			$data['shipping_address_custom_field'] = array();
 		}
 
-		$this->response->setOutput($this->load->view('checkout/shipping_address.tpl', $data));
+		$this->response->setOutput($this->load->view('checkout/shipping_address', $data));
 	}
 
 	public function save() {

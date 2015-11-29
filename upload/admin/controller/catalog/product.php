@@ -517,7 +517,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('catalog/product_list.tpl', $data));
+		$this->response->setOutput($this->load->view('catalog/product_list', $data));
 	}
 
 	protected function getForm() {
@@ -1296,7 +1296,7 @@ class ControllerCatalogProduct extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('catalog/product_form.tpl', $data));
+		$this->response->setOutput($this->load->view('catalog/product_form', $data));
 	}
 
 	protected function validateForm() {

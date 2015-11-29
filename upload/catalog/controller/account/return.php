@@ -93,7 +93,7 @@ class ControllerAccountReturn extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('account/return_list.tpl', $data));
+		$this->response->setOutput($this->load->view('account/return_list', $data));
 	}
 
 	public function info() {
@@ -210,7 +210,7 @@ class ControllerAccountReturn extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			$this->response->setOutput($this->load->view('account/return_info.tpl', $data));
+			$this->response->setOutput($this->load->view('account/return_info', $data));
 		} else {
 			$this->document->setTitle($this->language->get('text_return'));
 
@@ -257,7 +257,7 @@ class ControllerAccountReturn extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			$this->response->setOutput($this->load->view('error/not_found.tpl', $data));
+			$this->response->setOutput($this->load->view('error/not_found', $data));
 		}
 	}
 
@@ -534,7 +534,7 @@ class ControllerAccountReturn extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('account/return_form.tpl', $data));
+		$this->response->setOutput($this->load->view('account/return_form', $data));
 	}
 
 	protected function validate() {
@@ -623,6 +623,6 @@ class ControllerAccountReturn extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('common/success.tpl', $data));
+		$this->response->setOutput($this->load->view('common/success', $data));
 	}
 }

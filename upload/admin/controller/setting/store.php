@@ -162,7 +162,7 @@ class ControllerSettingStore extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('setting/store_list.tpl', $data));
+		$this->response->setOutput($this->load->view('setting/store_list', $data));
 	}
 
 	public function getForm() {
@@ -996,7 +996,7 @@ class ControllerSettingStore extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('setting/store_form.tpl', $data));
+		$this->response->setOutput($this->load->view('setting/store_form', $data));
 	}
 
 	protected function validateForm() {

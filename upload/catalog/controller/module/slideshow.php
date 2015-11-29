@@ -25,6 +25,6 @@ class ControllerModuleSlideshow extends Controller {
 
 		$data['module'] = $module++;
 
-		return $this->load->view('module/slideshow.tpl', $data);
+		return $this->load->view('module/slideshow', $data);
 	}
 }

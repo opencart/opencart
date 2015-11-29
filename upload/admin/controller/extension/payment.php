@@ -152,7 +152,7 @@ class ControllerExtensionPayment extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/payment.tpl', $data));
+		$this->response->setOutput($this->load->view('extension/payment', $data));
 	}
 
 	protected function validate() {

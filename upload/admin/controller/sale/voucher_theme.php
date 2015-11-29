@@ -253,7 +253,7 @@ class ControllerSaleVoucherTheme extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('sale/voucher_theme_list.tpl', $data));
+		$this->response->setOutput($this->load->view('sale/voucher_theme_list', $data));
 	}
 
 	protected function getForm() {
@@ -361,7 +361,7 @@ class ControllerSaleVoucherTheme extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('sale/voucher_theme_form.tpl', $data));
+		$this->response->setOutput($this->load->view('sale/voucher_theme_form', $data));
 	}
 
 	protected function validateForm() {

@@ -143,7 +143,7 @@ class ControllerExtensionShipping extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/shipping.tpl', $data));
+		$this->response->setOutput($this->load->view('extension/shipping', $data));
 	}
 
 	protected function validate() {

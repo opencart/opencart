@@ -473,7 +473,7 @@ class ControllerProductProduct extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			$this->response->setOutput($this->load->view('product/product.tpl', $data));
+			$this->response->setOutput($this->load->view('product/product', $data));
 		} else {
 			$url = '';
 
@@ -549,7 +549,7 @@ class ControllerProductProduct extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			$this->response->setOutput($this->load->view('error/not_found.tpl', $data));
+			$this->response->setOutput($this->load->view('error/not_found', $data));
 		}
 	}
 
@@ -591,7 +591,7 @@ class ControllerProductProduct extends Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($review_total) ? (($page - 1) * 5) + 1 : 0, ((($page - 1) * 5) > ($review_total - 5)) ? $review_total : ((($page - 1) * 5) + 5), $review_total, ceil($review_total / 5));
 
-		$this->response->setOutput($this->load->view('product/review.tpl', $data));
+		$this->response->setOutput($this->load->view('product/review', $data));
 	}
 
 	public function write() {

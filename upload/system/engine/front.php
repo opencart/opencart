@@ -12,10 +12,6 @@ final class Front {
 		$this->pre_action[] = $pre_action;
 	}
 	
-	public function addPostAction($pre_action) {
-		$this->pre_action[] = $pre_action;
-	}
-	
 	public function dispatch($action, $error) {
 		$this->error = $error;
 
@@ -34,19 +30,17 @@ final class Front {
 		}
 	}
 
-	private function execute($action) {
-		$result = $action->execute($this->registry);
+	private function execute($action, $args = array()) {
+		$result = $action->execute($this->registry, $args);
 
-		if (is_object($result)) {
+		if (!is_null($result)) {
 			$action = $result;
 		} elseif ($result === false) {
 			$action = $this->error;
 
 			$this->error = '';
-		} else {
-			$action = false;
 		}
 
-		return $action;
+		 $action;
 	}
 }

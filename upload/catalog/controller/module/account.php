@@ -40,6 +40,6 @@ class ControllerModuleAccount extends Controller {
 		$data['newsletter'] = $this->url->link('account/newsletter', '', true);
 		$data['recurring'] = $this->url->link('account/recurring', '', true);
 
-		return $this->load->view('module/account.tpl', $data);
+		return $this->load->view('module/account', $data);
 	}
 }

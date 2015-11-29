@@ -25,6 +25,6 @@ class ControllerModuleCarousel extends Controller {
 
 		$data['module'] = $module++;
 
-		return $this->load->view('module/carousel.tpl', $data);
+		return $this->load->view('module/carousel', $data);
 	}
 }

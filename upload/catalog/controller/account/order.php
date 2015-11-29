@@ -98,7 +98,7 @@ class ControllerAccountOrder extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('account/order_list.tpl', $data));
+		$this->response->setOutput($this->load->view('account/order_list', $data));
 	}
 
 	public function info() {
@@ -375,7 +375,7 @@ class ControllerAccountOrder extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			$this->response->setOutput($this->load->view('account/order_info.tpl', $data));
+			$this->response->setOutput($this->load->view('account/order_info', $data));
 		} else {
 			$this->document->setTitle($this->language->get('text_order'));
 
@@ -416,7 +416,7 @@ class ControllerAccountOrder extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			$this->response->setOutput($this->load->view('error/not_found.tpl', $data));
+			$this->response->setOutput($this->load->view('error/not_found', $data));
 		}
 	}
 

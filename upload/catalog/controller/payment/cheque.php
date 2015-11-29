@@ -16,7 +16,7 @@ class ControllerPaymentCheque extends Controller {
 
 		$data['continue'] = $this->url->link('checkout/success');
 
-		return $this->load->view('payment/cheque.tpl', $data);
+		return $this->load->view('payment/cheque', $data);
 	}
 
 	public function confirm() {

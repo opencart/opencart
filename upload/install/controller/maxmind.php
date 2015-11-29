@@ -71,7 +71,7 @@ class ControllerMaxmind extends Controller {
 			$data['footer'] = $this->load->controller('footer');
 			$data['header'] = $this->load->controller('header');
 
-			$this->response->setOutput($this->load->view('maxmind.tpl', $data));
+			$this->response->setOutput($this->load->view('maxmind', $data));
 		}
 	}
 

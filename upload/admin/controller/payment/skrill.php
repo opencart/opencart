@@ -166,7 +166,7 @@ class ControllerPaymentSkrill extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/skrill.tpl', $data));
+		$this->response->setOutput($this->load->view('payment/skrill', $data));
 	}
 
 	protected function validate() {

@@ -96,7 +96,7 @@ class ControllerPaymentPPStandard extends Controller {
 
 			$data['custom'] = $this->session->data['order_id'];
 
-			return $this->load->view('payment/pp_standard.tpl', $data);
+			return $this->load->view('payment/pp_standard', $data);
 		}
 	}
 

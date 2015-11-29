@@ -1,6 +1,6 @@
 <?php
 final class Loader {
-	public $registry;
+	protected $registry;
 
 	public function __construct($registry) {
 		$this->registry = $registry;
@@ -13,69 +13,59 @@ final class Loader {
 		$args = $trace[0]['args'];
 		
 		// Sanitize the call
-		$route = str_replace('../', '', (string)$args[0]);
-	
+		$route = str_replace('../', '', (string)$route);
+		
 		// Trigger the pre events
 		$result = $this->registry->get('event')->trigger('controller/' . $route . '/before', $args);
 		
 		if (!is_null($result)) {
 			return $result;
 		}
-			
-		$action = new Action($args[0]);
 		
 		array_shift($args);
-				
+		
+		$action = new Action($route);
 		$output = $action->execute($this->registry, $args);
-
+			
 		// Trigger the post events
 		$result = $this->registry->get('event')->trigger('controller/' . $route . '/after', array(&$output));
 		
 		if (!is_null($result)) {
 			return $result;
 		}
-				
-		return $output;
+		
+		return $output;		
 	}
 	
-	public function model($model) {
-		// Get args by reference
-		$trace = debug_backtrace();
-
-		$args = $trace[0]['args'];		
-		
+	public function model($route) {
 		// Sanitize the call
-		$model = str_replace('../', '', (string)$model);
+		$route = str_replace('../', '', (string)$route);
+		
+		$file = DIR_APPLICATION . 'model/' . $route . '.php';
 
-		$file = DIR_APPLICATION . 'model/' . $model . '.php';
-		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $model);
-
-		if (file_exists($file)) {
+		if (is_file($file)) {
 			include_once($file);
 			
-			$object = new $class($this->registry);
-
-			//$mock = new Mock($object);
-			//$object = $mock->render($this->registry);
-	
-			$this->registry->set('model_' . str_replace('/', '_', $model), $object);
+			$this->registry->set('model_' . str_replace('/', '_', (string)$route), $this->registry->get('factory')->mockModel($route));
 		} else {
-			trigger_error('Error: Could not load model ' . $file . '!');
+			trigger_error('Error: Could not load model ' . $route . '!');
 			exit();
 		}
 	}
 
-	public function view($view, $data = array()) {
+	public function view($route, $data) {
 		// Get args by reference
 		$trace = debug_backtrace();
 
-		$args = $trace[0]['args'];		
+		$args = $trace[0]['args'];			
 		
 		// Sanitize the call
-		$view = str_replace('../', '', (string)$args[0]);
+		$route = str_replace('../', '', (string)$route);
 		
 		// Trigger the pre events
-		$result = $this->registry->get('event')->trigger('view/' . $view . '/before', $args);
+		$result = $this->registry->get('event')->trigger('view/' . $args[0] . '/before', $args);
+		
+		print_r($result);
 		
 		if (!is_null($result)) {
 			return $result;
@@ -87,10 +77,10 @@ final class Loader {
 			$template->set($key, $value);
 		}
 		
-		$output = $template->render($args[0]);	
+		$output = $template->render($args[0] . '.tpl');
 		
 		// Trigger the post events
-		$result = $this->registry->get('event')->trigger('view/' . $view . '/after', array(&$output));
+		$result = $this->registry->get('event')->trigger('view/' . $args[0] . '/after', array(&$output));
 		
 		if (!is_null($result)) {
 			return $result;
@@ -99,30 +89,30 @@ final class Loader {
 		return $output;
 	}
 
-	public function helper($helper) {
-		$file = DIR_SYSTEM . 'helper/' . str_replace('../', '', (string)$helper) . '.php';
+	public function helper($route) {
+		$file = DIR_SYSTEM . 'helper/' . str_replace('../', '', (string)$route) . '.php';
 
-		if (file_exists($file)) {
+		if (is_file($file)) {
 			include_once($file);
 		} else {
-			trigger_error('Error: Could not load helper ' . $file . '!');
+			trigger_error('Error: Could not load helper ' . $route . '!');
 			exit();
 		}
 	}
 
-	public function config($config) {
-		$this->registry->get('event')->trigger('config/' . $config . '/before', $config);
+	public function config($route) {
+		$this->registry->get('event')->trigger('config/' . $route . '/before', $route);
 		
-		$this->registry->get('config')->load($config);
+		$this->registry->get('config')->load($route);
 		
-		$this->registry->get('event')->trigger('config/' . $config . '/after', $config);
+		$this->registry->get('event')->trigger('config/' . $route . '/after', $route);
 	}
 
-	public function language($language) {
-		$this->registry->get('event')->trigger('language/' . $language . '/before', $language);
+	public function language($route) {
+		$this->registry->get('event')->trigger('language/' . $route . '/before', $route);
 		
-		$this->registry->get('language')->load($language);
+		$this->registry->get('language')->load($route);
 		
-		$this->registry->get('event')->trigger('language/' . $language . '/after', $language);
+		$this->registry->get('event')->trigger('language/' . $route . '/after', $route);
 	}
 }

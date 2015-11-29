@@ -295,7 +295,7 @@ class ControllerSaleRecurring extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('sale/recurring_list.tpl', $data));
+		$this->response->setOutput($this->load->view('sale/recurring_list', $data));
 	}
 
 	public function info() {
@@ -450,7 +450,7 @@ class ControllerSaleRecurring extends Controller {
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['footer'] = $this->load->controller('common/footer');
 
-			$this->response->setOutput($this->load->view('sale/recurring_info.tpl', $data));
+			$this->response->setOutput($this->load->view('sale/recurring_info', $data));
 		} else {
 			return new Action('error/not_found');
 		}

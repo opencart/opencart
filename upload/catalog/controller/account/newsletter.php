@@ -61,6 +61,6 @@ class ControllerAccountNewsletter extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('account/newsletter.tpl', $data));
+		$this->response->setOutput($this->load->view('account/newsletter', $data));
 	}
 }

@@ -23,6 +23,6 @@ class ControllerStep1 extends Controller {
 		$data['footer'] = $this->load->controller('footer');
 		$data['header'] = $this->load->controller('header');
 
-		$this->response->setOutput($this->load->view('step_1.tpl', $data));
+		$this->response->setOutput($this->load->view('step_1', $data));
 	}
 }

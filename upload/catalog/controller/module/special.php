@@ -71,7 +71,7 @@ class ControllerModuleSpecial extends Controller {
 				);
 			}
 
-			return $this->load->view('module/special.tpl', $data);
+			return $this->load->view('module/special', $data);
 		}
 	}
 }

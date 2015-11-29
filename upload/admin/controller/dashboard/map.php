@@ -10,7 +10,7 @@ class ControllerDashboardMap extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 
-		return $this->load->view('dashboard/map.tpl', $data);
+		return $this->load->view('dashboard/map', $data);
 	}
 
 	public function map() {

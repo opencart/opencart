@@ -51,7 +51,7 @@ class ControllerAffiliateTracking extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('affiliate/tracking.tpl', $data));
+		$this->response->setOutput($this->load->view('affiliate/tracking', $data));
 	}
 
 	public function autocomplete() {

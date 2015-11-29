@@ -52,7 +52,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('payment/amazon_login_pay_address.tpl', $data));
+		$this->response->setOutput($this->load->view('payment/amazon_login_pay_address', $data));
 	}
 
 	public function paymentMethod() {
@@ -99,7 +99,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('payment/amazon_login_pay_payment.tpl', $data));
+		$this->response->setOutput($this->load->view('payment/amazon_login_pay_payment', $data));
 	}
 
 	public function confirm() {
@@ -480,7 +480,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('payment/amazon_login_pay_confirm.tpl', $data));
+		$this->response->setOutput($this->load->view('payment/amazon_login_pay_confirm', $data));
 	}
 
 	public function processOrder() {
@@ -605,7 +605,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('payment/amazon_login_pay_failure.tpl', $data));
+		$this->response->setOutput($this->load->view('payment/amazon_login_pay_failure', $data));
 	}
 
 	public function shippingQuotes() {

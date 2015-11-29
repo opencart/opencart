@@ -68,7 +68,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/amazon.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay/amazon', $data));
 	}
 
 	public function stockUpdates() {
@@ -149,7 +149,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/amazon_stock_updates.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay/amazon_stock_updates', $data));
 
 	}
 
@@ -224,7 +224,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/amazon_subscription.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay/amazon_subscription', $data));
 	}
 
 	public function settings() {
@@ -362,7 +362,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/amazon_settings.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay/amazon_settings', $data));
 	}
 
 	public function itemLinks() {
@@ -405,7 +405,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/amazon_item_links.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay/amazon_item_links', $data));
 	}
 
 	public function savedListings() {
@@ -460,7 +460,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/amazon_saved_listings.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay/amazon_saved_listings', $data));
 	}
 
 	protected function validate() {
@@ -854,7 +854,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/amazon_bulk_listing.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay/amazon_bulk_listing', $data));
 	}
 
 	public function bulkLinking() {
@@ -994,7 +994,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/amazon_bulk_linking.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay/amazon_bulk_linking', $data));
 	}
 
 	public function loadListingReport() {

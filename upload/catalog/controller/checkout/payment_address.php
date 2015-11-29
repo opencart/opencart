@@ -59,7 +59,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 			$data['payment_address_custom_field'] = array();
 		}
 
-		$this->response->setOutput($this->load->view('checkout/payment_address.tpl', $data));
+		$this->response->setOutput($this->load->view('checkout/payment_address', $data));
 	}
 
 	public function save() {

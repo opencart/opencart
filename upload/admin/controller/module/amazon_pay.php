@@ -118,7 +118,7 @@ class ControllerModuleAmazonPay extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/amazon_pay.tpl', $data));
+		$this->response->setOutput($this->load->view('module/amazon_pay', $data));
 	}
 
 	protected function validate() {

@@ -42,6 +42,9 @@ foreach ($query->rows as $setting) {
 $loader = new Loader($registry);
 $registry->set('load', $loader);
 
+// Factory for controllers and models
+$registry->set('factory', new Factory($registry));
+
 // Url
 $url = new Url(HTTP_SERVER, $config->get('config_secure') ? HTTPS_SERVER : HTTP_SERVER);
 $registry->set('url', $url);

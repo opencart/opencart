@@ -99,7 +99,7 @@ class ControllerAccountRecurring extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('account/recurring_list.tpl', $data));
+		$this->response->setOutput($this->load->view('account/recurring_list', $data));
 	}
 
 	public function info() {
@@ -222,7 +222,7 @@ class ControllerAccountRecurring extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			$this->response->setOutput($this->load->view('account/recurring_info.tpl', $data));
+			$this->response->setOutput($this->load->view('account/recurring_info', $data));
 		} else {
 			$this->response->redirect($this->url->link('account/recurring', '', true));
 		}

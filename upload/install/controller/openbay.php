@@ -19,6 +19,6 @@ class ControllerOpenbay extends Controller {
 		$data['footer'] = $this->load->controller('footer');
 		$data['header'] = $this->load->controller('header');
 
-		$this->response->setOutput($this->load->view('openbay.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay', $data));
 	}
 }

@@ -37,7 +37,7 @@ class ControllerModuleAmazonPay extends Controller {
 				$data['amazon_pay_button_size'] = 'medium';
 			}
 
-			return $this->load->view('module/amazon_pay.tpl', $data);
+			return $this->load->view('module/amazon_pay', $data);
 		}
 	}
 

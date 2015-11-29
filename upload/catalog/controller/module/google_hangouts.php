@@ -11,6 +11,6 @@ class ControllerModuleGoogleHangouts extends Controller {
 			$data['code'] = html_entity_decode($this->config->get('google_hangouts_code'));
 		}
 
-		return $this->load->view('module/google_hangouts.tpl', $data);
+		return $this->load->view('module/google_hangouts', $data);
 	}
 }

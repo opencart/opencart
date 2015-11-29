@@ -157,6 +157,6 @@ class ControllerAffiliatePayment extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('affiliate/payment.tpl', $data));
+		$this->response->setOutput($this->load->view('affiliate/payment', $data));
 	}
 }

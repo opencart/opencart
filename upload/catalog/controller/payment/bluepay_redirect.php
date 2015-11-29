@@ -63,7 +63,7 @@ class ControllerPaymentBluePayRedirect extends Controller {
 			$data['existing_cards'] = $cards;
 		}
 
-		return $this->load->view('payment/bluepay_redirect.tpl', $data);
+		return $this->load->view('payment/bluepay_redirect', $data);
 	}
 
 	public function send() {

@@ -41,6 +41,6 @@ class ControllerDashboardRecent extends Controller {
 			);
 		}
 
-		return $this->load->view('dashboard/recent.tpl', $data);
+		return $this->load->view('dashboard/recent', $data);
 	}
 }

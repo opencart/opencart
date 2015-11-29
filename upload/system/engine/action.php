@@ -1,8 +1,7 @@
 <?php
 class Action {
-	private $file;
-	private $class;
-	private $method;
+	private $route;
+	private $method = 'index';
 
 	public function __construct($route) {
 		$parts = explode('/', str_replace('../', '', (string)$route));
@@ -12,17 +11,11 @@ class Action {
 			$file = DIR_APPLICATION . 'controller/' . implode('/', $parts) . '.php';
 
 			if (is_file($file)) {
-				$this->file = $file;
-
-				$this->class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', implode('/', $parts));
+				$this->route = implode('/', $parts);
 				break;
 			} else {
 				$this->method = array_pop($parts);
 			}
-		}
-
-		if (!$this->method) {
-			$this->method = 'index';
 		}
 	}
 
@@ -32,18 +25,10 @@ class Action {
 			return false;
 		}
 
-		if (is_file($this->file)) {
-			include_once($this->file);
+		$controller = $registry->get('factory')->controller($this->route);
 
-			$class = $this->class;
-
-			$controller = new $class($registry);
-
-			if (is_callable(array($controller, $this->method))) {
-				return call_user_func_array(array($controller, $this->method), $args);
-			} else {
-				return false;
-			}
+		if (method_exists($controller, $this->method)) {
+			return call_user_func_array(array($controller, $this->method), $args);
 		} else {
 			return false;
 		}

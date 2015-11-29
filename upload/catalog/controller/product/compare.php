@@ -153,7 +153,7 @@ class ControllerProductCompare extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('product/compare.tpl', $data));
+		$this->response->setOutput($this->load->view('product/compare', $data));
 	}
 
 	public function add() {

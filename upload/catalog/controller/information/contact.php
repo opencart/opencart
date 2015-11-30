@@ -27,6 +27,8 @@ class ControllerInformationContact extends Controller {
 			$this->response->redirect($this->url->link('information/contact/success'));
 		}
 
+		$this->load->language('information/contact');
+
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(

@@ -65,8 +65,6 @@ final class Loader {
 		// Trigger the pre events
 		$result = $this->registry->get('event')->trigger('view/' . $args[0] . '/before', $args);
 		
-		print_r($result);
-		
 		if (!is_null($result)) {
 			return $result;
 		}

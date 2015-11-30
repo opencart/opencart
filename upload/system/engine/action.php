@@ -27,7 +27,7 @@ class Action {
 
 		$controller = $registry->get('factory')->controller($this->route);
 
-		if (method_exists($controller, $this->method)) {
+		if ($controller && method_exists($controller, $this->method)) {
 			return call_user_func_array(array($controller, $this->method), $args);
 		} else {
 			return false;

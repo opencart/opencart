@@ -46,7 +46,7 @@ final class Loader {
 		if (is_file($file)) {
 			include_once($file);
 			
-			$this->registry->set('model_' . str_replace('/', '_', (string)$route), $this->registry->get('factory')->mockModel($route));
+			$this->registry->set('model_' . str_replace('/', '_', (string)$route), new DIContainer($this->registry, $route));
 		} else {
 			trigger_error('Error: Could not load model ' . $route . '!');
 			exit();
@@ -112,5 +112,18 @@ final class Loader {
 		$this->registry->get('language')->load($route);
 		
 		$this->registry->get('event')->trigger('language/' . $route . '/after', $route);
+	}
+	
+	public function call($route) {
+		$file  = DIR_APPLICATION . $route . '.php';
+		$class = preg_replace('/[^a-zA-Z0-9]/', '', $route);
+
+		if (file_exists($file)) {
+			include_once($file);
+		
+			return new $class($this->registry);
+		} else {
+			return false;
+		}		
 	}
 }

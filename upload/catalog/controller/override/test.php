@@ -47,11 +47,16 @@ class ControllerOverrideTest extends Controller {
 	* @return value the output
 	*
 	*/	
-	public function model($model, &$data) {
+	public function model(&$model, &$data) {
 		// Get args by reference
-		$args = func_get_args();
+		//$args = func_get_args();
+		
+		//print_r($args);
+		
+		$model = 'product';			
+		$data[0] = 3;
 					
-		print_r($args);
+		
 		
 		echo __METHOD__;
 		

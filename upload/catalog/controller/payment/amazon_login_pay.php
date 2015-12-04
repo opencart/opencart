@@ -197,8 +197,9 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			}
 			if ($this->config->get($code . '_status')) {
 				$this->load->model('total/' . $code);
-
-				$this->{'model_total_' . $code}->getTotal($total_data, $total, $taxes);
+				
+				// We have to put the totals in an array so that they pass by reference.
+				$this->{'model_total_' . $code}->getTotal(array($total_data, $total, $taxes));
 
 				if (!empty($total_data[count($total_data) - 1]) && !isset($total_data[count($total_data) - 1]['code'])) {
 					$total_data[count($total_data) - 1]['code'] = $code;

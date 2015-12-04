@@ -152,7 +152,7 @@ $registry->set('event', $event);
 $query = $db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `trigger` LIKE 'admin/%'");
 
 foreach ($query->rows as $result) {
-	$event->register($substr($result['trigger'], strrpos($result['trigger'], '/') + 1), new Action($result['action']));
+	$event->register($substr($result['trigger'], strrpos($result['trigger'], '/') + 1), new Action('controller/' . $result['action']));
 }
 
 // Front Controller

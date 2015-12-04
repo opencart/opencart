@@ -1,6 +1,8 @@
 <?php
 class ModelTotalLowOrderFee extends Model {
-	public function getTotal(&$total_data, &$total, &$taxes) {
+	public function getTotal($totals) {
+		extract($totals);
+
 		if ($this->cart->getSubTotal() && ($this->cart->getSubTotal() < $this->config->get('low_order_fee_total'))) {
 			$this->load->language('total/low_order_fee');
 

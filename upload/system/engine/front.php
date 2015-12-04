@@ -33,7 +33,7 @@ final class Front {
 	private function execute($action, $args = array()) {
 		$result = $action->execute($this->registry, $args);
 
-		if ($result) {
+		if (is_object($result)) {
 			$action = $result;
 		} elseif ($result === false) {
 			$action = $this->error;

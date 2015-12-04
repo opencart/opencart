@@ -24,10 +24,21 @@ class Action {
 		if (substr($this->method, 0, 2) == '__') {
 			return false;
 		}
+		
+		// Initialize the class
+		$file  = DIR_APPLICATION . 'controller/' . $this->route . '.php';
+		$class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', $this->route);
 
-		$controller = $registry->get('factory')->controller($this->route);
+		if (is_file($file)) {
+			include_once($file);
+		
+			$controller = new $class($registry);
+		} else {
+			return false;
+		}
 
-		if ($controller && method_exists($controller, $this->method)) {
+		// Call the method if set
+		if (method_exists($controller, $this->method)) {
 			return call_user_func_array(array($controller, $this->method), $args);
 		} else {
 			return false;

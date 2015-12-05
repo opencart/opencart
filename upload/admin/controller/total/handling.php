@@ -100,7 +100,7 @@ class ControllerTotalHandling extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('total/handling.tpl', $data));
+		$this->response->setOutput($this->load->view('total/handling', $data));
 	}
 
 	protected function validate() {

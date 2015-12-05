@@ -17,7 +17,7 @@ class ControllerCaptchaGoogleCaptcha extends Controller {
 
         $data['route'] = $this->request->get['route']; 
 
-		return $this->load->view('captcha/google_captcha.tpl', $data);
+		return $this->load->view('captcha/google_captcha', $data);
     }
 
     public function validate() {

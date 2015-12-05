@@ -55,7 +55,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/ebay_profile_list.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay/ebay_profile_list', $data));
 
 	}
 
@@ -266,10 +266,10 @@ class ControllerOpenbayEbayProfile extends Controller {
 				$data['data']['international']['shipping_type'] = 'flat';
 			}
 
-			$data['html_national_flat']         		= $this->load->view('openbay/ebay_profile_shipping_national_flat.tpl', $data);
-			$data['html_international_flat']         	= $this->load->view('openbay/ebay_profile_shipping_international_flat.tpl', $data);
-			$data['html_national_calculated']         	= $this->load->view('openbay/ebay_profile_shipping_national_calculated.tpl', $data);
-			$data['html_international_calculated']		= $this->load->view('openbay/ebay_profile_shipping_international_calculated.tpl', $data);
+			$data['html_national_flat']         		= $this->load->view('openbay/ebay_profile_shipping_national_flat', $data);
+			$data['html_international_flat']         	= $this->load->view('openbay/ebay_profile_shipping_international_flat', $data);
+			$data['html_national_calculated']         	= $this->load->view('openbay/ebay_profile_shipping_national_calculated', $data);
+			$data['html_international_calculated']		= $this->load->view('openbay/ebay_profile_shipping_international_calculated', $data);
 		}
 
 		$data['cancel'] = $this->url->link('openbay/ebay_profile/profileAll', 'token=' . $this->session->data['token'], true);
@@ -327,16 +327,16 @@ class ControllerOpenbayEbayProfile extends Controller {
 			$return['international']['type'] 			= $data['data']['international']['shipping_type'];
 
 			$return['national_flat_count']   			= (int)$data['data']['national']['flat']['count'];
-			$return['national_flat']         			= $this->load->view('openbay/ebay_profile_shipping_national_flat.tpl', $data);
+			$return['national_flat']         			= $this->load->view('openbay/ebay_profile_shipping_national_flat', $data);
 
 			$return['international_flat_count']   		= (int)$data['data']['international']['flat']['count'];
-			$return['international_flat']         		= $this->load->view('openbay/ebay_profile_shipping_international_flat.tpl', $data);
+			$return['international_flat']         		= $this->load->view('openbay/ebay_profile_shipping_international_flat', $data);
 
 			$return['national_calculated_count']   		= (int)$data['data']['national']['calculated']['count'];
-			$return['national_calculated']         		= $this->load->view('openbay/ebay_profile_shipping_national_calculated.tpl', $data);
+			$return['national_calculated']         		= $this->load->view('openbay/ebay_profile_shipping_national_calculated', $data);
 
 			$return['international_calculated_count']   = (int)$data['data']['international']['flat']['count'];
-			$return['international_calculated']         = $this->load->view('openbay/ebay_profile_shipping_international_calculated.tpl', $data);
+			$return['international_calculated']         = $this->load->view('openbay/ebay_profile_shipping_international_calculated', $data);
 
 			$profile_info['html']           			= $return;
 		}

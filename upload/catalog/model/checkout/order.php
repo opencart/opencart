@@ -656,7 +656,7 @@ class ModelCheckoutOrder extends Model {
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
 				$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
-				$mail->setHtml($this->load->view('mail/order.tpl', $data));
+				$mail->setHtml($this->load->view('mail/order', $data));
 				$mail->setText($text);
 				$mail->send();
 
@@ -744,7 +744,7 @@ class ModelCheckoutOrder extends Model {
 					$mail->setFrom($this->config->get('config_email'));
 					$mail->setSender(html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'));
 					$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
-					$mail->setHtml($this->load->view('mail/order.tpl', $data));
+					$mail->setHtml($this->load->view('mail/order', $data));
 					$mail->setText($text);
 					$mail->send();
 

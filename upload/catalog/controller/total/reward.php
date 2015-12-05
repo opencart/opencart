@@ -28,7 +28,7 @@ class ControllerTotalReward extends Controller {
 				$data['reward'] = '';
 			}
 
-			return $this->load->view('total/reward.tpl', $data);
+			return $this->load->view('total/reward', $data);
 		}
 	}
 

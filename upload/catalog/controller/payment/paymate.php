@@ -33,7 +33,7 @@ class ControllerPaymentPaymate extends Controller {
 
 		$data['return'] = $this->url->link('payment/paymate/callback', 'hash=' . md5($order_info['order_id'] . $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false) . $order_info['currency_code'] . $this->config->get('paymate_password')));
 
-		return $this->load->view('payment/paymate.tpl', $data);
+		return $this->load->view('payment/paymate', $data);
 	}
 
 	public function callback() {
@@ -101,7 +101,7 @@ class ControllerPaymentPaymate extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			$this->response->setOutput($this->load->view('common/success.tpl', $data));
+			$this->response->setOutput($this->load->view('common/success', $data));
 		} else {
 			$this->model_checkout_order->addOrderHistory($order_id, $this->config->get('paymate_order_status_id'));
 

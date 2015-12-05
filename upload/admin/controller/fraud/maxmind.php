@@ -102,7 +102,7 @@ class ControllerFraudMaxMind extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('fraud/maxmind.tpl', $data));
+		$this->response->setOutput($this->load->view('fraud/maxmind', $data));
 	}
 
 	public function install() {
@@ -443,7 +443,7 @@ class ControllerFraudMaxMind extends Controller {
 			$data['maxmind_id'] = $fraud_info['maxmind_id'];
 			$data['error'] = $fraud_info['error'];
 
-			return $this->load->view('fraud/maxmind_info.tpl', $data);
+			return $this->load->view('fraud/maxmind_info', $data);
 		}
 	}
 }

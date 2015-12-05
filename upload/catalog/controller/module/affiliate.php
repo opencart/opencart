@@ -28,6 +28,6 @@ class ControllerModuleAffiliate extends Controller {
 		$data['tracking'] = $this->url->link('affiliate/tracking', '', true);
 		$data['transaction'] = $this->url->link('affiliate/transaction', '', true);
 
-		return $this->load->view('module/affiliate.tpl', $data);
+		return $this->load->view('module/affiliate', $data);
 	}
 }

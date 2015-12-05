@@ -33,7 +33,7 @@ class ControllerPaymentSagepayUS extends Controller {
 			);
 		}
 
-		return $this->load->view('payment/sagepay_us.tpl', $data);
+		return $this->load->view('payment/sagepay_us', $data);
 	}
 
 	public function send() {

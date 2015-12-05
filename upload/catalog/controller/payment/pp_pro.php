@@ -81,7 +81,7 @@ class ControllerPaymentPPPro extends Controller {
 			);
 		}
 
-		return $this->load->view('payment/pp_pro.tpl', $data);
+		return $this->load->view('payment/pp_pro', $data);
 	}
 
 	public function send() {

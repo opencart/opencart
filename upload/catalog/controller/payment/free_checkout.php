@@ -7,7 +7,7 @@ class ControllerPaymentFreeCheckout extends Controller {
 
 		$data['continue'] = $this->url->link('checkout/success');
 
-		return $this->load->view('payment/free_checkout.tpl', $data);
+		return $this->load->view('payment/free_checkout', $data);
 	}
 
 	public function confirm() {

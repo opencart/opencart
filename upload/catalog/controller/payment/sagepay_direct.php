@@ -116,7 +116,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 			$data['existing_cards'] = $this->model_payment_sagepay_direct->getCards($this->customer->getId());
 		}
 
-		return $this->load->view('payment/sagepay_direct.tpl', $data);
+		return $this->load->view('payment/sagepay_direct', $data);
 	}
 
 	public function send() {

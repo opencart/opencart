@@ -75,7 +75,7 @@ class ControllerFeedGoogleBase extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('feed/google_base.tpl', $data));
+		$this->response->setOutput($this->load->view('feed/google_base', $data));
 	}
 
 	protected function validate() {
@@ -194,7 +194,7 @@ class ControllerFeedGoogleBase extends Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($category_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($category_total - 10)) ? $category_total : ((($page - 1) * 10) + 10), $category_total, ceil($category_total / 10));
 
-		$this->response->setOutput($this->load->view('feed/google_base_category.tpl', $data));
+		$this->response->setOutput($this->load->view('feed/google_base_category', $data));
 	}
 
 	public function addCategory() {

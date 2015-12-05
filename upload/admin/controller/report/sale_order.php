@@ -183,6 +183,6 @@ class ControllerReportSaleOrder extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('report/sale_order.tpl', $data));
+		$this->response->setOutput($this->load->view('report/sale_order', $data));
 	}
 }

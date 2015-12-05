@@ -144,7 +144,7 @@ class ControllerModuleSlideshow extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('module/slideshow.tpl', $data));
+		$this->response->setOutput($this->load->view('module/slideshow', $data));
 	}
 
 	protected function validate() {

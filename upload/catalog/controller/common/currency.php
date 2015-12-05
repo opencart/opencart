@@ -46,7 +46,7 @@ class ControllerCommonCurrency extends Controller {
 			$data['redirect'] = $this->url->link($route, $url, $this->request->server['HTTPS']);
 		}
 
-		return $this->load->view('common/currency.tpl', $data);
+		return $this->load->view('common/currency', $data);
 	}
 
 	public function currency() {

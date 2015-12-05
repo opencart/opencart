@@ -47,7 +47,7 @@ class ControllerPaymentWorldpay extends Controller {
 			$data['recurring_products'] = true;
 		}
 
-		return $this->load->view('payment/worldpay.tpl', $data);
+		return $this->load->view('payment/worldpay', $data);
 	}
 
 	public function send() {

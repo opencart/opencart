@@ -134,7 +134,7 @@ class ControllerFraudFraudLabsPro extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('fraud/fraudlabspro.tpl', $data));
+		$this->response->setOutput($this->load->view('fraud/fraudlabspro', $data));
 	}
 
 	public function install() {
@@ -398,7 +398,7 @@ class ControllerFraudFraudLabsPro extends Controller {
 				$data['flp_credits'] = '';
 			}
 
-			return $this->load->view('fraud/fraudlabspro_info.tpl', $data);
+			return $this->load->view('fraud/fraudlabspro_info', $data);
 		}
 	}
 

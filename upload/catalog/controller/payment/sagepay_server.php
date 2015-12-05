@@ -33,7 +33,7 @@ class ControllerPaymentSagepayServer extends Controller {
 			$data['cards'] = $this->model_payment_sagepay_server->getCards($this->customer->getId());
 		}
 
-		return $this->load->view('payment/sagepay_server.tpl', $data);
+		return $this->load->view('payment/sagepay_server', $data);
 	}
 
 	public function send() {

@@ -7,7 +7,7 @@ class ControllerPaymentCod extends Controller {
 
 		$data['continue'] = $this->url->link('checkout/success');
 
-		return $this->load->view('payment/cod.tpl', $data);
+		return $this->load->view('payment/cod', $data);
 	}
 
 	public function confirm() {

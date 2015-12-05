@@ -11,6 +11,6 @@ class ControllerCommonSearch extends Controller {
 			$data['search'] = '';
 		}
 
-		return $this->load->view('common/search.tpl', $data);
+		return $this->load->view('common/search', $data);
 	}
 }

@@ -18,7 +18,7 @@ class ControllerModulePPButton extends Controller {
 
 			$data['payment_url'] = $this->url->link('payment/pp_express/express', '', true);
 
-			return $this->load->view('module/pp_button.tpl', $data);
+			return $this->load->view('module/pp_button', $data);
 		}
 	}
 }

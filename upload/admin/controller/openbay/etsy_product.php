@@ -121,7 +121,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/etsy_create.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay/etsy_create', $data));
 	}
 
 	public function createSubmit() {
@@ -254,7 +254,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/etsy_edit.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay/etsy_edit', $data));
 	}
 
 	public function editSubmit() {
@@ -492,7 +492,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/etsy_links.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay/etsy_links', $data));
 	}
 
 	public function listings() {
@@ -634,7 +634,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/etsy_listings.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay/etsy_listings', $data));
 	}
 
 	public function endListing() {

@@ -71,7 +71,7 @@ class ControllerModuleFilter extends Controller {
 					);
 				}
 
-				return $this->load->view('module/filter.tpl', $data);
+				return $this->load->view('module/filter', $data);
 			}
 		}
 	}

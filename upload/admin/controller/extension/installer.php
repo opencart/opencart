@@ -47,7 +47,7 @@ class ControllerExtensionInstaller extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('extension/installer.tpl', $data));
+		$this->response->setOutput($this->load->view('extension/installer', $data));
 	}
 
 	public function upload() {

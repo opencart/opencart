@@ -37,7 +37,6 @@ class ControllerAccountLogin extends Controller {
 					$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 				}
 
-
 				$this->response->redirect($this->url->link('account/account', '', true));
 			}
 		}
@@ -174,7 +173,7 @@ class ControllerAccountLogin extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('account/login.tpl', $data));
+		$this->response->setOutput($this->load->view('account/login', $data));
 	}
 
 	protected function validate() {

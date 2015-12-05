@@ -42,6 +42,9 @@ foreach ($query->rows as $setting) {
 $loader = new Loader($registry);
 $registry->set('load', $loader);
 
+// Factory for controllers and models
+$registry->set('factory', new Factory($registry));
+
 // Url
 $url = new Url(HTTP_SERVER, $config->get('config_secure') ? HTTPS_SERVER : HTTP_SERVER);
 $registry->set('url', $url);
@@ -149,7 +152,7 @@ $registry->set('event', $event);
 $query = $db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `trigger` LIKE 'admin/%'");
 
 foreach ($query->rows as $result) {
-	$event->register($substr($result['trigger'], strrpos($result['trigger'], '/') + 1), new Action($result['action']));
+	$event->register($substr($result['trigger'], strrpos($result['trigger'], '/') + 1), new Action('controller/' . $result['action']));
 }
 
 // Front Controller

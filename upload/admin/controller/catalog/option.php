@@ -256,7 +256,7 @@ class ControllerCatalogOption extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('catalog/option_list.tpl', $data));
+		$this->response->setOutput($this->load->view('catalog/option_list', $data));
 	}
 
 	protected function getForm() {
@@ -409,7 +409,7 @@ class ControllerCatalogOption extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('catalog/option_form.tpl', $data));
+		$this->response->setOutput($this->load->view('catalog/option_form', $data));
 	}
 
 	protected function validateForm() {

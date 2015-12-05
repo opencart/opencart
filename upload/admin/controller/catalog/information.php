@@ -256,7 +256,7 @@ class ControllerCatalogInformation extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('catalog/information_list.tpl', $data));
+		$this->response->setOutput($this->load->view('catalog/information_list', $data));
 	}
 
 	protected function getForm() {
@@ -431,7 +431,7 @@ class ControllerCatalogInformation extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('catalog/information_form.tpl', $data));
+		$this->response->setOutput($this->load->view('catalog/information_form', $data));
 	}
 
 	protected function validateForm() {

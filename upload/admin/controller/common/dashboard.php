@@ -52,6 +52,6 @@ class ControllerCommonDashboard extends Controller {
 			$this->model_localisation_currency->refresh();
 		}
 
-		$this->response->setOutput($this->load->view('common/dashboard.tpl', $data));
+		$this->response->setOutput($this->load->view('common/dashboard', $data));
 	}
 }

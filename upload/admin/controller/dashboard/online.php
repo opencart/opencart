@@ -29,6 +29,6 @@ class ControllerDashboardOnline extends Controller {
 
 		$data['online'] = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'], true);
 
-		return $this->load->view('dashboard/online.tpl', $data);
+		return $this->load->view('dashboard/online', $data);
 	}
 }

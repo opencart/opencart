@@ -6,12 +6,12 @@ class Event {
 	public function __construct($registry) {
 		$this->registry = $registry;
 	}
-	
+		
 	public function register($trigger, $action) {
 		$this->data[$trigger][] = $action;
 	}
 	
-	public function unregister($trigger, $action) {
+	public function unregister($trigger) {
 		if (isset($this->data[$trigger])) {
 			unset($this->data[$trigger]);
 		}

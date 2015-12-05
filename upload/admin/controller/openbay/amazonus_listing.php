@@ -209,7 +209,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/amazonus_listing.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay/amazonus_listing', $data));
 	}
 
 	public function edit() {
@@ -348,7 +348,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/amazonus_listing_edit.tpl', $data));
+		$this->response->setOutput($this->load->view('openbay/amazonus_listing_edit', $data));
 	}
 
 	public function createNew() {

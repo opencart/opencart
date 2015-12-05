@@ -40,6 +40,6 @@ class ControllerDashboardCustomer extends Controller {
 
 		$data['customer'] = $this->url->link('customer/customer', 'token=' . $this->session->data['token'], true);
 
-		return $this->load->view('dashboard/customer.tpl', $data);
+		return $this->load->view('dashboard/customer', $data);
 	}
 }

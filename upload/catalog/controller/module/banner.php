@@ -26,6 +26,6 @@ class ControllerModuleBanner extends Controller {
 
 		$data['module'] = $module++;
 
-		return $this->load->view('module/banner.tpl', $data);
+		return $this->load->view('module/banner', $data);
 	}
 }

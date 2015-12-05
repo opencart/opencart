@@ -168,7 +168,7 @@ class ControllerCheckoutGuest extends Controller {
 			$data['captcha'] = '';
 		}
 
-		$this->response->setOutput($this->load->view('checkout/guest.tpl', $data));
+		$this->response->setOutput($this->load->view('checkout/guest', $data));
 	}
 
 	public function save() {

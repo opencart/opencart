@@ -82,7 +82,7 @@ class ControllerPaymentRealex extends Controller {
 
 		$data['response_url'] = HTTPS_SERVER . 'index.php?route=payment/realex/notify';
 
-		return $this->load->view('payment/realex.tpl', $data);
+		return $this->load->view('payment/realex', $data);
 	}
 
 	public function notify() {
@@ -253,6 +253,6 @@ class ControllerPaymentRealex extends Controller {
 			}
 		}
 
-		$this->response->setOutput($this->load->view('payment/realex_response.tpl', $data));
+		$this->response->setOutput($this->load->view('payment/realex_response', $data));
 	}
 }

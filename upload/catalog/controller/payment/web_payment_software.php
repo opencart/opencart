@@ -34,7 +34,7 @@ class ControllerPaymentWebPaymentSoftware extends Controller {
 			);
 		}
 
-		return $this->load->view('payment/web_payment_software.tpl', $data);
+		return $this->load->view('payment/web_payment_software', $data);
 	}
 
 	public function send() {

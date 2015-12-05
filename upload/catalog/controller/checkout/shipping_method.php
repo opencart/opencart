@@ -69,7 +69,7 @@ class ControllerCheckoutShippingMethod extends Controller {
 			$data['comment'] = '';
 		}
 
-		$this->response->setOutput($this->load->view('checkout/shipping_method.tpl', $data));
+		$this->response->setOutput($this->load->view('checkout/shipping_method', $data));
 	}
 
 	public function save() {

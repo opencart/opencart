@@ -259,7 +259,7 @@ class ControllerUserUser extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('user/user_list.tpl', $data));
+		$this->response->setOutput($this->load->view('user/user_list', $data));
 	}
 
 	protected function getForm() {
@@ -444,7 +444,7 @@ class ControllerUserUser extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('user/user_form.tpl', $data));
+		$this->response->setOutput($this->load->view('user/user_form', $data));
 	}
 
 	protected function validateForm() {

@@ -48,7 +48,7 @@ class ControllerTotalShipping extends Controller {
 				$data['shipping_method'] = '';
 			}
 
-			return $this->load->view('total/shipping.tpl', $data);
+			return $this->load->view('total/shipping', $data);
 		}
 	}
 

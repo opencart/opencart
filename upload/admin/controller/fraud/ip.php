@@ -89,7 +89,7 @@ class ControllerFraudIp extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('fraud/ip.tpl', $data));
+		$this->response->setOutput($this->load->view('fraud/ip', $data));
 	}
 
 	public function install() {
@@ -159,7 +159,7 @@ class ControllerFraudIp extends Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($ip_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($ip_total - 10)) ? $ip_total : ((($page - 1) * 10) + 10), $ip_total, ceil($ip_total / 10));
 
-		$this->response->setOutput($this->load->view('fraud/ip_ip.tpl', $data));
+		$this->response->setOutput($this->load->view('fraud/ip_ip', $data));
 	}
 
 	public function addIp() {

@@ -33,8 +33,6 @@ class ControllerAccountAddress extends Controller {
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
 		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
-		$this->load->model('account/address');
-
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_account_address->addAddress($this->request->post);
 			
@@ -147,7 +145,7 @@ class ControllerAccountAddress extends Controller {
 				'customer_id' => $this->customer->getId(),
 				'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
 			);
-
+			
 			$this->model_account_activity->addActivity('address_delete', $activity_data);
 
 			$this->response->redirect($this->url->link('account/address', '', true));
@@ -251,7 +249,7 @@ class ControllerAccountAddress extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('account/address_list.tpl', $data));
+		$this->response->setOutput($this->load->view('account/address_list', $data));
 	}
 
 	protected function getForm() {
@@ -473,7 +471,7 @@ class ControllerAccountAddress extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 
 
-		$this->response->setOutput($this->load->view('account/address_form.tpl', $data));
+		$this->response->setOutput($this->load->view('account/address_form', $data));
 	}
 
 	protected function validateForm() {

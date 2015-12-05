@@ -80,8 +80,9 @@ class ControllerPaymentKlarnaAccount extends Controller {
 					$this->load->model('total/' . $result['code']);
 
 					$taxes = array();
-
-					$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
+					
+					// We have to put the totals in an array so that they pass by reference.
+					$this->{'model_total_' . $result['code']}->getTotal(array($total_data, $total, $taxes));
 
 					$amount = 0;
 
@@ -272,7 +273,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				);
 			}
 
-			return $this->load->view('payment/klarna_account.tpl', $data);
+			return $this->load->view('payment/klarna_account', $data);
 		}
 	}
 

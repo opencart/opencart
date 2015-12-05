@@ -64,7 +64,7 @@ class ControllerModuleBestSeller extends Controller {
 				);
 			}
 
-			return $this->load->view('module/bestseller.tpl', $data);
+			return $this->load->view('module/bestseller', $data);
 		}
 	}
 }

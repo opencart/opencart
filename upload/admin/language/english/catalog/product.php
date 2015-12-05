@@ -17,6 +17,8 @@ $_['text_amount']            = 'Fixed Amount';
 
 // Column
 $_['column_name']            = 'Product Name';
+$_['column_category']        = 'Category';
+$_['column_manufacturer']    = 'Manufacturer';
 $_['column_model']           = 'Model';
 $_['column_image']           = 'Image';
 $_['column_price']           = 'Price';

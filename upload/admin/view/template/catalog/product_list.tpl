@@ -41,6 +41,11 @@
                 <label class="control-label" for="input-model"><?php echo $entry_model; ?></label>
                 <input type="text" name="filter_model" value="<?php echo $filter_model; ?>" placeholder="<?php echo $entry_model; ?>" id="input-model" class="form-control" />
               </div>
+              <div class="form-group">
+                <label class="control-label" for="input-category"><?php echo $entry_category; ?></label>
+                <input type="text" name="filter_category_name" value="<?php echo $filter_category_name; ?>" placeholder="<?php echo $entry_category; ?>" id="input-category-name" class="form-control" />
+                <input type="hidden" name="filter_category" value="<?php echo $filter_category; ?>" id="input-category" class="form-control" />
+              </div>
             </div>
             <div class="col-sm-4">
               <div class="form-group">
@@ -50,6 +55,11 @@
               <div class="form-group">
                 <label class="control-label" for="input-quantity"><?php echo $entry_quantity; ?></label>
                 <input type="text" name="filter_quantity" value="<?php echo $filter_quantity; ?>" placeholder="<?php echo $entry_quantity; ?>" id="input-quantity" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="input-manufacturer"><?php echo $entry_manufacturer; ?></label>
+                <input type="text" name="filter_manufacturer_name" value="<?php echo $filter_manufacturer_name; ?>" placeholder="<?php echo $entry_manufacturer; ?>" id="input-manufacturer-name" class="form-control" />
+                <input type="hidden" name="filter_manufacturer" value="<?php echo $filter_manufacturer; ?>" id="input-manufacturer" class="form-control" />
               </div>
             </div>
             <div class="col-sm-4">
@@ -90,6 +100,8 @@
                     <?php } else { ?>
                     <a href="<?php echo $sort_model; ?>"><?php echo $column_model; ?></a>
                     <?php } ?></td>
+                  <td class="text-left"><?php echo $column_category; ?></td>
+                  <td class="text-left"><?php echo $column_manufacturer; ?></td>
                   <td class="text-right"><?php if ($sort == 'p.price') { ?>
                     <a href="<?php echo $sort_price; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_price; ?></a>
                     <?php } else { ?>
@@ -124,6 +136,8 @@
                     <?php } ?></td>
                   <td class="text-left"><?php echo $product['name']; ?></td>
                   <td class="text-left"><?php echo $product['model']; ?></td>
+                  <td class="text-left"><?php foreach ($product['category'] as $category_name) { echo $category_name . '<br />'; } ?></td>
+                  <td class="text-left"><?php echo $product['manufacturer']; ?></td>
                   <td class="text-right"><?php if ($product['special']) { ?>
                     <span style="text-decoration: line-through;"><?php echo $product['price']; ?></span><br/>
                     <div class="text-danger"><?php echo $product['special']; ?></div>
@@ -191,6 +205,18 @@ $('#button-filter').on('click', function() {
 		url += '&filter_status=' + encodeURIComponent(filter_status);
 	}
 
+	var filter_category = $('input[name=\'filter_category\']').val();
+
+	if (filter_category) {
+		url += '&filter_category=' + encodeURIComponent(filter_category);
+	}
+
+	var filter_manufacturer = $('input[name=\'filter_manufacturer\']').val();
+
+	if (filter_manufacturer) {
+		url += '&filter_manufacturer=' + encodeURIComponent(filter_manufacturer);
+	}
+
 	location = url;
 });
 //--></script>
@@ -232,6 +258,68 @@ $('input[name=\'filter_model\']').autocomplete({
 	},
 	'select': function(item) {
 		$('input[name=\'filter_model\']').val(item['label']);
+	}
+});
+
+$('input[name=\'filter_category_name\']').autocomplete({
+	'source': function(request, response) {
+		if ($('input[name=\'filter_category_name\']').val().length==0) {
+			$('input[name=\'filter_category\']').val(null);
+		}
+		$.ajax({
+			url: 'index.php?route=catalog/category/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				if (json.length>0) {
+					json.unshift({'category_id':null,'name':'<?php echo $text_all; ?>'});
+				}
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['category_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		if (item['label']!='<?php echo $text_all; ?>') {
+			$('input[name=\'filter_category_name\']').val(item['label']);
+		} else {
+			$('input[name=\'filter_category_name\']').val('');
+		}
+		$('input[name=\'filter_category\']').val(item['value']);
+	}
+});
+
+$('input[name=\'filter_manufacturer_name\']').autocomplete({
+	'source': function(request, response) {
+		if ($('input[name=\'filter_manufacturer_name\']').val().length==0) {
+			$('input[name=\'filter_manufacturer\']').val(null);
+		}
+		$.ajax({
+			url: 'index.php?route=catalog/manufacturer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				if (json.length>0) {
+					json.unshift({'manufacturer_id':null,'name':'<?php echo $text_all; ?>'},{'manufacturer_id':0,'name':'<?php echo $text_none; ?>'});
+				}
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['manufacturer_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		if (item['label']!='<?php echo $text_all; ?>') {
+			$('input[name=\'filter_manufacturer_name\']').val(item['label']);
+		} else {
+			$('input[name=\'filter_manufacturer_name\']').val('');
+		}
+		$('input[name=\'filter_manufacturer\']').val(item['value']);
 	}
 });
 //--></script></div>

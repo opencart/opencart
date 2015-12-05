@@ -69,6 +69,11 @@
                   <?php } ?>
                 </select>
               </div>
+              <div class="form-group">
+                <label class="control-label" for="input-manufacturer"><?php echo $entry_manufacturer; ?></label>
+                <input type="text" name="filter_manufacturer_name" value="<?php echo $filter_manufacturer_name; ?>" placeholder="<?php echo $entry_manufacturer; ?>" id="input-manufacturer-name" class="form-control" />
+                <input type="hidden" name="filter_manufacturer" value="<?php echo $filter_manufacturer; ?>" id="input-manufacturer" class="form-control" />
+              </div>
               <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
             </div>
           </div>
@@ -191,6 +196,12 @@ $('#button-filter').on('click', function() {
 		url += '&filter_status=' + encodeURIComponent(filter_status);
 	}
 
+	var filter_manufacturer = $('input[name=\'filter_manufacturer\']').val();
+
+	if (filter_manufacturer) {
+		url += '&filter_manufacturer=' + encodeURIComponent(filter_manufacturer);
+	}
+
 	location = url;
 });
 //--></script>
@@ -232,6 +243,30 @@ $('input[name=\'filter_model\']').autocomplete({
 	},
 	'select': function(item) {
 		$('input[name=\'filter_model\']').val(item['label']);
+	}
+});
+
+$('input[name=\'filter_manufacturer_name\']').autocomplete({
+	'source': function(request, response) {
+		if ($('input[name=\'filter_manufacturer_name\']').val().length==0) {
+			$('input[name=\'filter_manufacturer\']').val(null);
+		}
+		$.ajax({
+			url: 'index.php?route=catalog/manufacturer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['manufacturer_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'filter_manufacturer_name\']').val(item['label']);
+		$('input[name=\'filter_manufacturer\']').val(item['value']);
 	}
 });
 //--></script></div>

@@ -53,12 +53,10 @@ class ControllerOverrideTest extends Controller {
 		
 		//print_r($args);
 		
-		$model = 'product';			
+		$model = 'catalog/product/getProduct';			
 		$data[0] = 3;
 					
-		
-		
-		echo __METHOD__;
+		//echo __METHOD__;
 		
 		//return $output;
 		//'return model test'

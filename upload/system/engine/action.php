@@ -1,6 +1,6 @@
 <?php
 class Action {
-	private $route;
+	private $controller;
 	private $method = 'index';
 
 	public function __construct($route) {
@@ -11,7 +11,7 @@ class Action {
 			$file = DIR_APPLICATION . 'controller/' . implode('/', $parts) . '.php';
 
 			if (is_file($file)) {
-				$this->route = implode('/', $parts);
+				$this->controller = implode('/', $parts);
 				break;
 			} else {
 				$this->method = array_pop($parts);
@@ -26,8 +26,8 @@ class Action {
 		}
 		
 		// Initialize the class
-		$file  = DIR_APPLICATION . 'controller/' . $this->route . '.php';
-		$class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', $this->route);
+		$file  = DIR_APPLICATION . 'controller/' . $this->controller . '.php';
+		$class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', $this->controller);
 
 		if (is_file($file)) {
 			include_once($file);

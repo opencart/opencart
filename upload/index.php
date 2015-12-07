@@ -23,9 +23,6 @@ $registry = new Registry();
 $loader = new Loader($registry);
 $registry->set('load', $loader);
 
-// Factory for controllers and models
-$registry->set('factory', new Factory($registry));
-
 // Config
 $config = new Config();
 $registry->set('config', $config);
@@ -261,7 +258,7 @@ foreach ($query->rows as $result) {
 $event->register('view/*/before', new Action('override/template'));
 
 // Test
-$event->register('model/catalog/information/getInformation/before', new Action('override/test/model'));
+//$event->register('model/catalog/information/getInformation/before', new Action('override/test/model'));
 
 // Front Controller
 $controller = new Front($registry);

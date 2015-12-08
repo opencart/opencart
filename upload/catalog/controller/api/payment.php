@@ -160,9 +160,9 @@ class ControllerApiPayment extends Controller {
 
 			if (!$json) {
 				// Totals
-				$total_data = array();
-				$total = 0;
-				$taxes = $this->cart->getTaxes();
+				$total_data['totals'] = array();
+				$total_data['total'] = 0;
+				$total_data['taxes'] = $this->cart->getTaxes();
 
 				$this->load->model('extension/extension');
 
@@ -181,7 +181,7 @@ class ControllerApiPayment extends Controller {
 						$this->load->model('total/' . $result['code']);
 						
 						// We have to put the totals in an array so that they pass by reference.
-						$this->{'model_total_' . $result['code']}->getTotal(array($total_data, $total, $taxes));
+						$this->{'model_total_' . $result['code']}->getTotal($total_data);
 					}
 				}
 

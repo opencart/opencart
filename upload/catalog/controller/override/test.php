@@ -51,10 +51,10 @@ class ControllerOverrideTest extends Controller {
 		// Get args by reference
 		//$args = func_get_args();
 		
-		//print_r($args);
+		//print_r($data);
 		
-		$model = 'catalog/product/getProduct';			
-		$data[0] = 3;
+		//$model = 'catalog/product/getProduct';			
+		//$data[0] = 43;
 					
 		//echo __METHOD__;
 		

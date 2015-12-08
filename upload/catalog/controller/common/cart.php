@@ -6,9 +6,9 @@ class ControllerCommonCart extends Controller {
 		// Totals
 		$this->load->model('extension/extension');
 
-		$total_data = array();
-		$total = 0;
-		$taxes = $this->cart->getTaxes();
+		$total_data['totals'] = array();  
+		$total_data['total'] = 0;
+		$total_data['taxes'] = $this->cart->getTaxes();
 
 		// Display prices
 		if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
@@ -27,24 +27,24 @@ class ControllerCommonCart extends Controller {
 					$this->load->model('total/' . $result['code']);
 
 					// We have to put the totals in an array so that they pass by reference.
-					$this->{'model_total_' . $result['code']}->getTotal(array($total_data, $total, $taxes));
+					$this->{'model_total_' . $result['code']}->getTotal($total_data);
 				}
 			}
 
 			$sort_order = array();
 
-			foreach ($total_data as $key => $value) {
+			foreach ($total_data['totals'] as $key => $value) {
 				$sort_order[$key] = $value['sort_order'];
 			}
 
-			array_multisort($sort_order, SORT_ASC, $total_data);
+			array_multisort($sort_order, SORT_ASC, $total_data['totals']);
 		}
 
 		$data['text_empty'] = $this->language->get('text_empty');
 		$data['text_cart'] = $this->language->get('text_cart');
 		$data['text_checkout'] = $this->language->get('text_checkout');
 		$data['text_recurring'] = $this->language->get('text_recurring');
-		$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
+		$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total_data['total']));
 		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['button_remove'] = $this->language->get('button_remove');
@@ -126,7 +126,7 @@ class ControllerCommonCart extends Controller {
 
 		$data['totals'] = array();
 
-		foreach ($total_data as $result) {
+		foreach ($total_data['totals'] as $result) {
 			$data['totals'][] = array(
 				'title' => $result['title'],
 				'text'  => $this->currency->format($result['value']),

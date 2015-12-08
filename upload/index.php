@@ -258,7 +258,7 @@ foreach ($query->rows as $result) {
 $event->register('view/*/before', new Action('override/template'));
 
 // Test
-//$event->register('model/catalog/information/getInformation/before', new Action('override/test/model'));
+$event->register('model/catalog/information/getInformation/before', new Action('override/test/model'));
 
 // Front Controller
 $controller = new Front($registry);

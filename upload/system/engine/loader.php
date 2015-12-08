@@ -75,7 +75,7 @@ final class Loader {
 		
 		foreach ($data as $key => $value) {
 			$template->set($key, $value);
-		}
+		}v
 		
 		$output = $template->render($route . '.tpl');
 		

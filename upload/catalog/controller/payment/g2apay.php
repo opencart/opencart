@@ -18,12 +18,22 @@ class ControllerPaymentG2APay extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$this->load->model('extension/extension');
+		
 		$results = $this->model_extension_extension->getExtensions('total');
+		
 		$order_data = array();
-		$total = 0;
-		$items = array();
+		
+		$totals = array();
 		$taxes = $this->cart->getTaxes();
+		$total = 0;
 
+		// Because __call can not keep var references so we put them into an array.
+		$total_data = array(
+			'totals' => &$totals,
+			'taxes'  => &$taxes,
+			'total'  => &$total
+		);
+			
 		$i = 0;
 		foreach ($results as $result) {
 			if ($this->config->get($result['code'] . '_status')) {

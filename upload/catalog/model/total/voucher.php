@@ -70,9 +70,7 @@ class ModelTotalVoucher extends Model {
 		}
 	}
 
-	public function getTotal($totals) {
-		extract($totals);		
-		
+	public function getTotal($total) {
 		if (isset($this->session->data['voucher'])) {
 			$this->load->language('total/voucher');
 
@@ -81,17 +79,17 @@ class ModelTotalVoucher extends Model {
 			$voucher_info = $this->getVoucher($this->session->data['voucher']);
 
 			if ($voucher_info) {
-				$amount = min($voucher_info['amount'], $total);
+				$amount = min($voucher_info['amount'], $total['total']);
 				
 				if ($amount > 0) {
-					$total_data[] = array(
+					$total['totals'][] = array(
 						'code'       => 'voucher',
 						'title'      => sprintf($this->language->get('text_voucher'), $this->session->data['voucher']),
 						'value'      => -$amount,
 						'sort_order' => $this->config->get('voucher_sort_order')
 					);
 
-					$total -= $amount;
+					$total['total'] -= $amount;
 				} else {
 					unset($this->session->data['voucher']);
 				}

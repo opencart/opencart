@@ -184,10 +184,17 @@ class ControllerCheckoutCart extends Controller {
 			// Totals
 			$this->load->model('extension/extension');
 
-			$total_data['totals'] = array();
-			$total_data['total'] = 0;
-			$total_data['taxes'] = $this->cart->getTaxes();
-
+			$totals = array();
+			$taxes = $this->cart->getTaxes();
+			$total = 0;
+			
+			// Because __call can not keep var references so we put them into an array. 			
+			$total_data = array(
+				'totals' => &$totals,
+				'taxes'  => &$taxes,
+				'total'  => &$total
+			);
+			
 			// Display prices
 			if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
 				$sort_order = array();
@@ -239,7 +246,11 @@ class ControllerCheckoutCart extends Controller {
 
 			if ($files) {
 				foreach ($files as $file) {
-					$data['modules'][] = $this->load->controller('total/' . basename($file, '.php'));
+					$result = $this->load->controller('total/' . basename($file, '.php'));
+					
+					if ($result) {
+						$data['modules'][] = $result;
+					}
 				}
 			}
 
@@ -343,9 +354,12 @@ class ControllerCheckoutCart extends Controller {
 				// Totals
 				$this->load->model('extension/extension');
 
-				$total_data = array();
-				$total = 0;
-				$taxes = $this->cart->getTaxes();
+				// Because __call can not keep var references so we put them into an array. 
+				$total_data = array(
+					'data'  => array(),
+					'total' => 0,
+					'taxes' => $this->cart->getTaxes()
+				);
 
 				// Display prices
 				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
@@ -364,7 +378,7 @@ class ControllerCheckoutCart extends Controller {
 							$this->load->model('total/' . $result['code']);
 
 							// We have to put the totals in an array so that they pass by reference.
-							$this->{'model_total_' . $result['code']}->getTotal(array($total_data, $total, $taxes));
+							$this->{'model_total_' . $result['code']}->getTotal($total_data);
 						}
 					}
 

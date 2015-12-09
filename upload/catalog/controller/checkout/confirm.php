@@ -56,10 +56,17 @@ class ControllerCheckoutConfirm extends Controller {
 		if (!$redirect) {
 			$order_data = array();
 
-			$order_data['totals'] = array();
-			$total = 0;
+			$totals = array();
 			$taxes = $this->cart->getTaxes();
+			$total = 0;
 
+			// Because __call can not keep var references so we put them into an array. 
+			$total_data = array(
+				'totals' => &$totals,
+				'taxes'  => &$taxes,
+				'total'  => &$total
+			);
+			
 			$this->load->model('extension/extension');
 
 			$sort_order = array();
@@ -77,7 +84,7 @@ class ControllerCheckoutConfirm extends Controller {
 					$this->load->model('total/' . $result['code']);
 
 					// We have to put the totals in an array so that they pass by reference.
-					$this->{'model_total_' . $result['code']}->getTotal(array($order_data['totals'], $total, $taxes));
+					$this->{'model_total_' . $result['code']}->getTotal($total_data);
 				}
 			}
 

@@ -225,10 +225,17 @@ class ControllerApiCart extends Controller {
 			// Totals
 			$this->load->model('extension/extension');
 
-			$total_data = array();
-			$total = 0;
+			$totals = array();
 			$taxes = $this->cart->getTaxes();
+			$total = 0;
 
+			// Because __call can not keep var references so we put them into an array. 
+			$total_data = array(
+				'totals' => &$totals,
+				'taxes'  => &$taxes,
+				'total'  => &$total
+			);
+			
 			$sort_order = array();
 
 			$results = $this->model_extension_extension->getExtensions('total');
@@ -244,21 +251,21 @@ class ControllerApiCart extends Controller {
 					$this->load->model('total/' . $result['code']);
 					
 					// We have to put the totals in an array so that they pass by reference.
-					$this->{'model_total_' . $result['code']}->getTotal(array($total_data, $total, $taxes));
+					$this->{'model_total_' . $result['code']}->getTotal($total_data);
 				}
 			}
 
 			$sort_order = array();
 
-			foreach ($total_data as $key => $value) {
+			foreach ($total_data['totals'] as $key => $value) {
 				$sort_order[$key] = $value['sort_order'];
 			}
 
-			array_multisort($sort_order, SORT_ASC, $total_data);
+			array_multisort($sort_order, SORT_ASC, $total_data['totals']);
 
 			$json['totals'] = array();
 
-			foreach ($total_data as $total) {
+			foreach ($total_data['totals'] as $total) {
 				$json['totals'][] = array(
 					'title' => $total['title'],
 					'text'  => $this->currency->format($total['value'])

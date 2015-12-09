@@ -1,23 +1,23 @@
 <?php
 class ModelTotalSubTotal extends Model {
-	public function getTotal($data) {
+	public function getTotal($total) {
 		$this->load->language('total/sub_total');
 
-		$data['sub_total'] = $this->cart->getSubTotal();
+		$sub_total = $this->cart->getSubTotal();
 
-		if (isset($this->session->data['vouchers']) && $this->session->data['vouchers']) {
+		if (!empty($this->session->data['vouchers'])) {
 			foreach ($this->session->data['vouchers'] as $voucher) {
-				$data['sub_total'] += $voucher['amount'];
+				$sub_total += $voucher['amount'];
 			}
 		}
 
-		$data['totals'][] = array(
+		$total['totals'][] = array(
 			'code'       => 'sub_total',
 			'title'      => $this->language->get('text_sub_total'),
-			'value'      => $data['sub_total'],
+			'value'      => $sub_total,
 			'sort_order' => $this->config->get('sub_total_sort_order')
 		);
 
-		$data['total'] += $data['sub_total'];
+		$total['total'] += $sub_total;
 	}
 }

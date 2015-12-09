@@ -12,11 +12,6 @@ class Proxy {
 	}
 		
 	public function __call($method, $args) {
-		if (array_key_exists($method, $this->data)) {
-			return call_user_func($this->data[$method]->bindTo($this), $args);	
-		} else {
-			trigger_error('Error: Could not call ' . $method . '!');
-			exit();	
-		}
+		return call_user_func($this->data[$method]->bindTo($this), $args);	
 	}
 }

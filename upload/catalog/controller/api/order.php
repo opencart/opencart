@@ -241,10 +241,17 @@ class ControllerApiOrder extends Controller {
 				// Order Totals
 				$this->load->model('extension/extension');
 
-				$order_data['totals'] = array();
-				$total = 0;
+				$totals = array();
 				$taxes = $this->cart->getTaxes();
+				$total = 0;
 
+				// Because __call can not keep var references so we put them into an array.
+				$total_data = array(
+					'totals' => &$totals,
+					'taxes'  => &$taxes,
+					'total'  => &$total
+				);
+			
 				$sort_order = array();
 
 				$results = $this->model_extension_extension->getExtensions('total');
@@ -260,17 +267,17 @@ class ControllerApiOrder extends Controller {
 						$this->load->model('total/' . $result['code']);
 						
 						// We have to put the totals in an array so that they pass by reference.
-						$this->{'model_total_' . $result['code']}->getTotal(array($order_data['totals'], $total, $taxes));
+						$this->{'model_total_' . $result['code']}->getTotal($total_data);
 					}
 				}
 
 				$sort_order = array();
 
-				foreach ($order_data['totals'] as $key => $value) {
+				foreach ($total_data['totals'] as $key => $value) {
 					$sort_order[$key] = $value['sort_order'];
 				}
 
-				array_multisort($sort_order, SORT_ASC, $order_data['totals']);
+				array_multisort($sort_order, SORT_ASC, $total_data['totals']);
 
 				if (isset($this->request->post['comment'])) {
 					$order_data['comment'] = $this->request->post['comment'];
@@ -278,7 +285,7 @@ class ControllerApiOrder extends Controller {
 					$order_data['comment'] = '';
 				}
 
-				$order_data['total'] = $total;
+				$order_data['total'] = $total_data['total'];
 
 				if (isset($this->request->post['affiliate_id'])) {
 					$subtotal = $this->cart->getSubTotal();
@@ -609,10 +616,17 @@ class ControllerApiOrder extends Controller {
 					// Order Totals
 					$this->load->model('extension/extension');
 
-					$order_data['totals'] = array();
-					$total = 0;
+					$totals = array();
 					$taxes = $this->cart->getTaxes();
-
+					$total = 0;
+					
+					// Because __call can not keep var references so we put them into an array. 
+					$total_data = array(
+						'totals' => &$totals,
+						'taxes'  => &$taxes,
+						'total'  => &$total
+					);
+			
 					$sort_order = array();
 
 					$results = $this->model_extension_extension->getExtensions('total');
@@ -646,7 +660,7 @@ class ControllerApiOrder extends Controller {
 						$order_data['comment'] = '';
 					}
 
-					$order_data['total'] = $total;
+					$order_data['total'] = $total_data['total'];
 
 					if (isset($this->request->post['affiliate_id'])) {
 						$subtotal = $this->cart->getSubTotal();

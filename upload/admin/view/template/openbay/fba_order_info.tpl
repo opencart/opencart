@@ -158,38 +158,44 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($fulfillments as $fulfillment) { ?>
-                <tr>
-                  <td class="text-left"><?php echo $fulfillment['fba_order_fulfillment_id']; ?></td>
-                  <td class="text-left"><?php echo $fulfillment['created']; ?></td>
-                  <td class="text-left"><?php echo $type_options[$fulfillment['type']]; ?></td>
-                  <td class="text-right"><label class="label <?php echo ($fulfillment['response_header_code'] == 200 || $fulfillment['response_header_code'] == 201) ? 'label-success' : 'label-danger'; ?>"><?php echo $fulfillment['response_header_code']; ?></label></td>
-                  <td class="text-right">
-                    <?php if (!empty($fulfillment['request_body'])) { ?><button data-toggle="tooltip" title="<?php echo $text_show_request; ?>" class="btn btn-info btn-sm" onclick="$('#request-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="fa fa-mail-forward fa-fw"></i></button><?php } ?>
-                    <?php if (!empty($fulfillment['response_body'])) { ?><button data-toggle="tooltip" title="<?php echo $text_show_response; ?>" class="btn btn-info btn-sm" onclick="$('#response-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="fa fa-mail-reply fa-fw"></i></button><?php } ?>
-                    <?php if (!empty($fulfillment['errors'])) { ?><button data-toggle="tooltip" title="<?php echo $text_show_errors; ?>" class="btn btn-danger btn-sm" onclick="$('#error-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="fa fa-exclamation fa-fw"></i></button><?php } ?>
-                  </td>
-                </tr>
-                <tr id="error-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>" style="display:none;">
-                  <td class="text-left" colspan="4">
-                    <?php if (empty($fulfillment['errors'])) { ?>
-                    <div class="alert alert-info" style="width:100%;"><?php echo $text_no_errors; ?></div>
-                    <?php } ?>
-                    <?php foreach($fulfillment['errors'] as $fulfillment_error) { ?>
-                    <div class="alert alert-warning" style="width:100%;">(<?php echo $fulfillment_error['code']; ?>) <?php echo str_replace(array("\r\n", "\r", "\n"), '', $fulfillment_error['message']); ?></div>
-                    <?php } ?>
-                  </td>
-                </tr>
-                <tr id="request-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>" style="display:none;">
-                  <td class="text-left" colspan="4">
-                    <pre><?php print_r($fulfillment['request_body']); ?></pre>
-                  </td>
-                </tr>
-                <tr id="response-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>" style="display:none;">
-                  <td class="text-left" colspan="4">
-                    <pre><?php print_r($fulfillment['response_body']); ?></pre>
-                  </td>
-                </tr>
+                <?php if (!empty($fulfillments)) { ?>
+                  <?php foreach ($fulfillments as $fulfillment) { ?>
+                    <tr>
+                      <td class="text-left"><?php echo $fulfillment['fba_order_fulfillment_id']; ?></td>
+                      <td class="text-left"><?php echo $fulfillment['created']; ?></td>
+                      <td class="text-left"><?php echo $type_options[$fulfillment['type']]; ?></td>
+                      <td class="text-right"><label class="label <?php echo ($fulfillment['response_header_code'] == 200 || $fulfillment['response_header_code'] == 201) ? 'label-success' : 'label-danger'; ?>"><?php echo $fulfillment['response_header_code']; ?></label></td>
+                      <td class="text-right">
+                        <?php if (!empty($fulfillment['request_body'])) { ?><button data-toggle="tooltip" title="<?php echo $text_show_request; ?>" class="btn btn-info btn-sm" onclick="$('#request-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="fa fa-mail-forward fa-fw"></i></button><?php } ?>
+                        <?php if (!empty($fulfillment['response_body'])) { ?><button data-toggle="tooltip" title="<?php echo $text_show_response; ?>" class="btn btn-info btn-sm" onclick="$('#response-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="fa fa-mail-reply fa-fw"></i></button><?php } ?>
+                        <?php if (!empty($fulfillment['errors'])) { ?><button data-toggle="tooltip" title="<?php echo $text_show_errors; ?>" class="btn btn-danger btn-sm" onclick="$('#error-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>').toggle();"><i class="fa fa-exclamation fa-fw"></i></button><?php } ?>
+                      </td>
+                    </tr>
+                    <tr id="error-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>" style="display:none;">
+                      <td class="text-left" colspan="4">
+                        <?php if (empty($fulfillment['errors'])) { ?>
+                        <div class="alert alert-info" style="width:100%;"><?php echo $text_no_errors; ?></div>
+                        <?php } ?>
+                        <?php foreach($fulfillment['errors'] as $fulfillment_error) { ?>
+                        <div class="alert alert-warning" style="width:100%;">(<?php echo $fulfillment_error['code']; ?>) <?php echo str_replace(array("\r\n", "\r", "\n"), '', $fulfillment_error['message']); ?></div>
+                        <?php } ?>
+                      </td>
+                    </tr>
+                    <tr id="request-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>" style="display:none;">
+                      <td class="text-left" colspan="4">
+                        <pre><?php print_r($fulfillment['request_body']); ?></pre>
+                      </td>
+                    </tr>
+                    <tr id="response-row-<?php echo $fulfillment['fba_order_fulfillment_id']; ?>" style="display:none;">
+                      <td class="text-left" colspan="4">
+                        <pre><?php print_r($fulfillment['response_body']); ?></pre>
+                      </td>
+                    </tr>
+                  <?php } ?>
+                <?php } else { ?>
+                  <tr>
+                    <td class="text-center" colspan="5"><?php echo $text_no_requests; ?></td>
+                  </tr>
                 <?php } ?>
                 </tbody>
               </table>

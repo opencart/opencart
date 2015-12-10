@@ -17,9 +17,9 @@ class ControllerPaymentG2APay extends Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		$this->load->model('extension/extension');
-		
 		$order_data = array();
+		
+		$this->load->model('extension/extension');
 		
 		$totals = array();
 		$taxes = $this->cart->getTaxes();
@@ -52,6 +52,7 @@ class ControllerPaymentG2APay extends Controller {
 						$item->qty = 1;
 						$items[] = $item;
 					}
+					
 					$i++;
 				}
 			}
@@ -130,6 +131,7 @@ class ControllerPaymentG2APay extends Controller {
 
 		if ($order_info) {
 			$this->load->model('payment/g2apay');
+			
 			$g2apay_order_info = $this->model_payment_g2apay->getG2aOrder($order_id);
 
 			$this->model_payment_g2apay->updateOrder($g2apay_order_info['g2apay_order_id'], $g2apay_transaction_id, 'payment', $order_info);

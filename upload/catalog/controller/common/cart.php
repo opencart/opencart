@@ -6,10 +6,17 @@ class ControllerCommonCart extends Controller {
 		// Totals
 		$this->load->model('extension/extension');
 
-		$total_data['totals'] = array();  
-		$total_data['total'] = 0;
-		$total_data['taxes'] = $this->cart->getTaxes();
+		$totals = array();
+		$taxes = $this->cart->getTaxes();
+		$total = 0;
 
+		// Because __call can not keep var references so we put them into an array.
+		$total_data = array(
+			'totals' => &$totals,
+			'taxes'  => &$taxes,
+			'total'  => &$total
+		);
+			
 		// Display prices
 		if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
 			$sort_order = array();
@@ -33,18 +40,18 @@ class ControllerCommonCart extends Controller {
 
 			$sort_order = array();
 
-			foreach ($total_data['totals'] as $key => $value) {
+			foreach ($totals as $key => $value) {
 				$sort_order[$key] = $value['sort_order'];
 			}
 
-			array_multisort($sort_order, SORT_ASC, $total_data['totals']);
+			array_multisort($sort_order, SORT_ASC, $totals);
 		}
 
 		$data['text_empty'] = $this->language->get('text_empty');
 		$data['text_cart'] = $this->language->get('text_cart');
 		$data['text_checkout'] = $this->language->get('text_checkout');
 		$data['text_recurring'] = $this->language->get('text_recurring');
-		$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total_data['total']));
+		$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
 		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['button_remove'] = $this->language->get('button_remove');
@@ -126,10 +133,10 @@ class ControllerCommonCart extends Controller {
 
 		$data['totals'] = array();
 
-		foreach ($total_data['totals'] as $result) {
+		foreach ($totals as $total) {
 			$data['totals'][] = array(
-				'title' => $result['title'],
-				'text'  => $this->currency->format($result['value']),
+				'title' => $total['title'],
+				'text'  => $this->currency->format($total['value']),
 			);
 		}
 

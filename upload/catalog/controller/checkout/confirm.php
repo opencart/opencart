@@ -90,13 +90,13 @@ class ControllerCheckoutConfirm extends Controller {
 
 			$sort_order = array();
 
-			foreach ($total_data['totals'] as $key => $value) {
+			foreach ($totals as $key => $value) {
 				$sort_order[$key] = $value['sort_order'];
 			}
 
-			array_multisort($sort_order, SORT_ASC, $total_data['totals']);
+			array_multisort($sort_order, SORT_ASC, $totals);
 
-			$order_data['totals'] = $total_data['totals'];
+			$order_data['totals'] = $totals;
 
 			$this->load->language('checkout/checkout');
 
@@ -256,7 +256,7 @@ class ControllerCheckoutConfirm extends Controller {
 			}
 
 			$order_data['comment'] = $this->session->data['comment'];
-			$order_data['total'] = $total;
+			$order_data['total'] = $total_data['total'];
 
 			if (isset($this->request->cookie['tracking'])) {
 				$order_data['tracking'] = $this->request->cookie['tracking'];

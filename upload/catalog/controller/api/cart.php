@@ -257,15 +257,15 @@ class ControllerApiCart extends Controller {
 
 			$sort_order = array();
 
-			foreach ($total_data['totals'] as $key => $value) {
+			foreach ($totals as $key => $value) {
 				$sort_order[$key] = $value['sort_order'];
 			}
 
-			array_multisort($sort_order, SORT_ASC, $total_data['totals']);
+			array_multisort($sort_order, SORT_ASC, $totals);
 
 			$json['totals'] = array();
 
-			foreach ($total_data['totals'] as $total) {
+			foreach ($totals as $total) {
 				$json['totals'][] = array(
 					'title' => $total['title'],
 					'text'  => $this->currency->format($total['value'])

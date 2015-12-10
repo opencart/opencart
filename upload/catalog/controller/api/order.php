@@ -273,11 +273,11 @@ class ControllerApiOrder extends Controller {
 
 				$sort_order = array();
 
-				foreach ($total_data['totals'] as $key => $value) {
+				foreach ($totals as $key => $value) {
 					$sort_order[$key] = $value['sort_order'];
 				}
 
-				array_multisort($sort_order, SORT_ASC, $total_data['totals']);
+				array_multisort($sort_order, SORT_ASC, $totals);
 
 				if (isset($this->request->post['comment'])) {
 					$order_data['comment'] = $this->request->post['comment'];
@@ -285,7 +285,7 @@ class ControllerApiOrder extends Controller {
 					$order_data['comment'] = '';
 				}
 
-				$order_data['total'] = $total_data['total'];
+				$order_data['total'] = $total;
 
 				if (isset($this->request->post['affiliate_id'])) {
 					$subtotal = $this->cart->getSubTotal();
@@ -648,11 +648,11 @@ class ControllerApiOrder extends Controller {
 
 					$sort_order = array();
 
-					foreach ($order_data['totals'] as $key => $value) {
+					foreach ($totals as $key => $value) {
 						$sort_order[$key] = $value['sort_order'];
 					}
 
-					array_multisort($sort_order, SORT_ASC, $order_data['totals']);
+					array_multisort($sort_order, SORT_ASC, $totals);
 
 					if (isset($this->request->post['comment'])) {
 						$order_data['comment'] = $this->request->post['comment'];

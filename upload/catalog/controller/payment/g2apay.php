@@ -19,8 +19,6 @@ class ControllerPaymentG2APay extends Controller {
 
 		$this->load->model('extension/extension');
 		
-		$results = $this->model_extension_extension->getExtensions('total');
-		
 		$order_data = array();
 		
 		$totals = array();
@@ -35,12 +33,15 @@ class ControllerPaymentG2APay extends Controller {
 		);
 			
 		$i = 0;
+		
+		$results = $this->model_extension_extension->getExtensions('total');
+		
 		foreach ($results as $result) {
 			if ($this->config->get($result['code'] . '_status')) {
 				$this->load->model('total/' . $result['code']);
 				
 				// We have to put the totals in an array so that they pass by reference.
-				$this->{'model_total_' . $result['code']}->getTotal(array($order_data['totals'], $total, $taxes));
+				$this->{'model_total_' . $result['code']}->getTotal($total_data);
 
 				if (isset($order_data['totals'][$i])) {
 					if (strstr(strtolower($order_data['totals'][$i]['code']), 'total') === false) {

@@ -191,6 +191,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 			} else {
 				$code = $value['key'];
 			}
+			
 			$sort_order[$key] = $this->config->get($code . '_sort_order');
 		}
 

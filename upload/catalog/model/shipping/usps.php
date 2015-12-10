@@ -13,14 +13,19 @@ class ModelShippingUsps extends Model {
 			$status = false;
 		}
 
+		$weight = $this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->config->get('usps_weight_class_id'));
+		
+		// 70 pound limit
+		if ($weight > 70) {
+			$status = false;
+		}
+
 		$method_data = array();
 
 		if ($status) {
 			$this->load->model('localisation/country');
 
 			$quote_data = array();
-
-			$weight = $this->weight->convert($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->config->get('usps_weight_class_id'));
 
 			$weight = ($weight < 0.1 ? 0.1 : $weight);
 			$pounds = floor($weight);

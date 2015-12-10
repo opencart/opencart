@@ -255,7 +255,7 @@ class ModelPaymentPPExpress extends Model {
 					$this->load->model('total/' . $result['code']);
 
 					// We have to put the totals in an array so that they pass by reference.
-					$this->{'model_total_' . $result['code']}->getTotal(array($total_data, $total, $taxes));
+					$this->{'model_total_' . $result['code']}->getTotal($total_data);
 				}
 
 				$sort_order = array();

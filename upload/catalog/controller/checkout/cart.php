@@ -354,11 +354,15 @@ class ControllerCheckoutCart extends Controller {
 				// Totals
 				$this->load->model('extension/extension');
 
-				// Because __call can not keep var references so we put them into an array. 
+				$totals = array();
+				$taxes = $this->cart->getTaxes();
+				$total = 0;
+		
+				// Because __call can not keep var references so we put them into an array. 			
 				$total_data = array(
-					'data'  => array(),
-					'total' => 0,
-					'taxes' => $this->cart->getTaxes()
+					'totals' => &$totals,
+					'taxes'  => &$taxes,
+					'total'  => &$total
 				);
 
 				// Display prices
@@ -384,14 +388,14 @@ class ControllerCheckoutCart extends Controller {
 
 					$sort_order = array();
 
-					foreach ($total_data as $key => $value) {
+					foreach ($total_data['totals'] as $key => $value) {
 						$sort_order[$key] = $value['sort_order'];
 					}
 
-					array_multisort($sort_order, SORT_ASC, $total_data);
+					array_multisort($sort_order, SORT_ASC, $total_data['totals']);
 				}
 
-				$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
+				$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total_data['total']));
 			} else {
 				$json['redirect'] = str_replace('&amp;', '&', $this->url->link('product/product', 'product_id=' . $this->request->post['product_id']));
 			}
@@ -447,9 +451,16 @@ class ControllerCheckoutCart extends Controller {
 			// Totals
 			$this->load->model('extension/extension');
 
-			$total_data['totals'] = array();
-			$total_data['total'] = 0;
-			$total_data['taxes'] = $this->cart->getTaxes();
+			$totals = array();
+			$taxes = $this->cart->getTaxes();
+			$total = 0;
+
+			// Because __call can not keep var references so we put them into an array. 			
+			$total_data = array(
+				'totals' => &$totals,
+				'taxes'  => &$taxes,
+				'total'  => &$total
+			);
 
 			// Display prices
 			if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
@@ -481,7 +492,7 @@ class ControllerCheckoutCart extends Controller {
 				array_multisort($sort_order, SORT_ASC, $total_data['totals']);
 			}
 
-			$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
+			$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total_data['total']));
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

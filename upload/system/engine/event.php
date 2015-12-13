@@ -6,7 +6,7 @@ class Event {
 	public function __construct($registry) {
 		$this->registry = $registry;
 	}
-		
+
 	public function register($trigger, $action) {
 		$this->data[$trigger][] = $action;
 	}

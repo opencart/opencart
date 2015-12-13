@@ -1,22 +1,22 @@
 <?php
 class Template {
-	private $template;
+	private $adaptor;
 
-  	public function __construct($driver) {
-	    $class = 'Template\\' . $driver;
+  	public function __construct($adaptor) {
+	    $class = 'Template\\' . $adaptor;
 
 		if (class_exists($class)) {
-			$this->template = new $class($expire);
+			$this->adaptor = new $class($expire);
 		} else {
-			exit('Error: Could not load template driver ' . $driver . '!');
+			exit('Error: Could not load template driver ' . $adaptor . '!');
 		}
 	}
 
 	public function set($key, $value) {
-		$this->template->set($key, $value);
+		$this->adaptor->set($key, $value);
 	}
 
 	public function render($template) {
-		return $this->template->render($template);
+		return $this->adaptor->render($template);
 	}
 }

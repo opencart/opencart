@@ -30,6 +30,7 @@
       <li><a href="<?php echo $module; ?>"><?php echo $text_module; ?></a></li>
       <li><a href="<?php echo $payment; ?>"><?php echo $text_payment; ?></a></li>
       <li><a href="<?php echo $shipping; ?>"><?php echo $text_shipping; ?></a></li>
+      <li><a href="<?php echo $theme; ?>"><?php echo $text_theme; ?></a></li>
       <li><a href="<?php echo $total; ?>"><?php echo $text_total; ?></a></li>
       <?php if ($openbay_show_menu == 1) { ?>
       <li><a class="parent"><?php echo $text_openbay_extension; ?></a>

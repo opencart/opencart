@@ -149,20 +149,20 @@ $registry->set('event', $event);
 $query = $db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `trigger` LIKE 'admin/%'");
 
 foreach ($query->rows as $result) {
-	$event->register($substr($result['trigger'], strrpos($result['trigger'], '/') + 1), new Action('controller/' . $result['action']));
+	$event->register(substr($result['trigger'], strrpos($result['trigger'], '/') + 1), new Action($result['action']));
 }
 
 // Front Controller
 $controller = new Front($registry);
 
 // Compile Sass
-$controller->addPreAction(new Action('common/sass'));
+$controller->addPreAction(new Action('override/sass'));
 
 // Login
-$controller->addPreAction(new Action('common/login/check'));
+$controller->addPreAction(new Action('override/login'));
 
 // Permission
-$controller->addPreAction(new Action('error/permission/check'));
+$controller->addPreAction(new Action('override/permission'));
 
 // Router
 if (isset($request->get['route'])) {

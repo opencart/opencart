@@ -6,26 +6,19 @@ final class Loader {
 		$this->registry = $registry;
 	}
 	
-	public function controller($route) {
-		// Get args by reference
-		$trace = debug_backtrace();
-
-		$args = $trace[0]['args'];
-		
+	public function controller($route, $data = array()) {
 		// Sanitize the call
 		$route = str_replace('../', '', (string)$route);
 		
 		// Trigger the pre events
-		$result = $this->registry->get('event')->trigger('controller/' . $route . '/before', $args);
+		$result = $this->registry->get('event')->trigger('controller/' . $route . '/before', array(&$route, &$data));
 		
 		if (!is_null($result)) {
 			return $result;
 		}
 		
-		array_shift($args);
-		
 		$action = new Action($route);
-		$output = $action->execute($this->registry, $args);
+		$output = $action->execute($this->registry, array(&$data));
 			
 		// Trigger the post events
 		$result = $this->registry->get('event')->trigger('controller/' . $route . '/after', array(&$output));
@@ -51,6 +44,7 @@ final class Loader {
 
 			foreach (get_class_methods($class) as $method) {
 				$proxy->attach($method, $this->closure($this->registry, $route . '/' . $method));
+				//$proxy->attach($method, new Action('override/event', array($route . '/' . $method)));
 			}
 			
 			$this->registry->set('model_' . str_replace('/', '_', (string)$route), $proxy);
@@ -60,7 +54,7 @@ final class Loader {
 		}
 	}
 
-	public function view($route, $data) {
+	public function view($route, $data = array()) {
 		// Sanitize the call
 		$route = str_replace('../', '', (string)$route);
 		
@@ -125,8 +119,8 @@ final class Loader {
 				return $result;
 			}
 			
-			$file   = DIR_APPLICATION . 'model/' .  substr($route, 0, strrpos($route, '/')) . '.php';
-			$class  = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', substr($route, 0, strrpos($route, '/')));
+			$file = DIR_APPLICATION . 'model/' .  substr($route, 0, strrpos($route, '/')) . '.php';
+			$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', substr($route, 0, strrpos($route, '/')));
 			$method = substr($route, strrpos($route, '/') + 1);
 	
 			if (is_file($file)) {

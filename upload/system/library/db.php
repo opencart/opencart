@@ -2,13 +2,13 @@
 class DB {
 	private $adaptor;
 
-	public function __construct($driver, $hostname, $username, $password, $database, $port = NULL) {
-		$class = 'DB\\' . $driver;
+	public function __construct($adaptor, $hostname, $username, $password, $database, $port = NULL) {
+		$class = 'DB\\' . $adaptor;
 
 		if (class_exists($class)) {
 			$this->adaptor = new $class($hostname, $username, $password, $database, $port);
 		} else {
-			exit('Error: Could not load database driver ' . $driver . '!');
+			exit('Error: Could not load database driver ' . $adaptor . '!');
 		}
 	}
 

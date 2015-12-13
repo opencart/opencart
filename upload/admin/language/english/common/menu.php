@@ -71,6 +71,7 @@ $_['text_system']                      = 'System';
 $_['text_tax']                         = 'Taxes';
 $_['text_tax_class']                   = 'Tax Classes';
 $_['text_tax_rate']                    = 'Tax Rates';
+$_['text_theme']                       = 'Themes';
 $_['text_tools']                       = 'Tools';
 $_['text_total']                       = 'Order Totals';
 $_['text_upload']                      = 'Uploads';

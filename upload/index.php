@@ -68,46 +68,6 @@ $registry->set('url', $url);
 $log = new Log($config->get('config_error_filename'));
 $registry->set('log', $log);
 
-function error_handler($code, $message, $file, $line) {
-	global $log, $config;
-
-	// error suppressed with @
-	if (error_reporting() === 0) {
-		return false;
-	}
-
-	switch ($code) {
-		case E_NOTICE:
-		case E_USER_NOTICE:
-			$error = 'Notice';
-			break;
-		case E_WARNING:
-		case E_USER_WARNING:
-			$error = 'Warning';
-			break;
-		case E_ERROR:
-		case E_USER_ERROR:
-			$error = 'Fatal Error';
-			break;
-		default:
-			$error = 'Unknown';
-			break;
-	}
-
-	if ($config->get('config_error_display')) {
-		echo '<b>' . $error . '</b>: ' . $message . ' in <b>' . $file . '</b> on line <b>' . $line . '</b>';
-	}
-
-	if ($config->get('config_error_log')) {
-		$log->write('PHP ' . $error . ':  ' . $message . ' in ' . $file . ' on line ' . $line);
-	}
-
-	return true;
-}
-
-// Error Handler
-set_error_handler('error_handler');
-
 // Request
 $request = new Request();
 $registry->set('request', $request);
@@ -248,23 +208,26 @@ $registry->set('openbay', new Openbay($registry));
 $event = new Event($registry);
 $registry->set('event', $event);
 
+// Template Override
+$event->register('view/*/before', new Action('override/template'));
+
 $query = $db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `trigger` LIKE 'catalog/%'");
 
 foreach ($query->rows as $result) {
 	$event->register(substr($result['trigger'], strpos($result['trigger'], '/') + 1), new Action($result['action']));
 }
 
-// Template
-$event->register('view/*/before', new Action('override/template'));
-
 // Front Controller
 $controller = new Front($registry);
 
 // Maintenance Mode
-$controller->addPreAction(new Action('common/maintenance'));
+$controller->addPreAction(new Action('override/maintenance'));
 
 // SEO URL's
-$controller->addPreAction(new Action('common/seo_url'));
+$controller->addPreAction(new Action('override/seo_url'));
+
+// Error Handling
+$controller->addPreAction(new Action('override/error'));
 
 // Router
 if (isset($request->get['route'])) {
@@ -275,7 +238,6 @@ if (isset($request->get['route'])) {
 
 // Dispatch
 $controller->dispatch($action, new Action('error/not_found'));
-
 
 // Output
 $response->output();

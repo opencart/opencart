@@ -80,6 +80,7 @@ class ControllerCommonMenu extends Controller {
 		$data['text_tax'] = $this->language->get('text_tax');
 		$data['text_tax_class'] = $this->language->get('text_tax_class');
 		$data['text_tax_rate'] = $this->language->get('text_tax_rate');
+		$data['text_theme'] = $this->language->get('text_theme');
 		$data['text_tools'] = $this->language->get('text_tools');
 		$data['text_total'] = $this->language->get('text_total');
 		$data['text_upload'] = $this->language->get('text_upload');
@@ -171,6 +172,7 @@ class ControllerCommonMenu extends Controller {
 		$data['stock_status'] = $this->url->link('localisation/stock_status', 'token=' . $this->session->data['token'], true);
 		$data['tax_class'] = $this->url->link('localisation/tax_class', 'token=' . $this->session->data['token'], true);
 		$data['tax_rate'] = $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'], true);
+		$data['theme'] = $this->url->link('extension/theme', 'token=' . $this->session->data['token'], true);
 		$data['total'] = $this->url->link('extension/total', 'token=' . $this->session->data['token'], true);
 		$data['upload'] = $this->url->link('tool/upload', 'token=' . $this->session->data['token'], true);
 		$data['user'] = $this->url->link('user/user', 'token=' . $this->session->data['token'], true);

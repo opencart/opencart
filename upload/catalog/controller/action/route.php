@@ -1,5 +1,5 @@
 <?php
-class ControllerOverrideRoute extends Controller {
+class ControllerActionStart extends Controller {
 	public function index() {
 		if (isset($request->get['route'])) {
 			$route = $request->get['route'];

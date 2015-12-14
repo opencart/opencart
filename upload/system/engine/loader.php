@@ -27,7 +27,7 @@ final class Loader {
 			return $result;
 		}
 		
-		return $output;		
+		return $output;
 	}
 	
 	public function model($route) {

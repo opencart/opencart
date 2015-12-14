@@ -3,14 +3,14 @@ class ControllerThemeThemeDefault extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->load->language('theme/oc_basic');
+		$this->load->language('theme/theme_default');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('default', $this->request->post);
+			$this->model_setting_setting->editSetting('theme_default', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -286,7 +286,7 @@ class ControllerThemeThemeDefault extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('theme/default', $data));
+		$this->response->setOutput($this->load->view('theme/theme_default', $data));
 	}
 
 	protected function validate() {

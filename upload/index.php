@@ -217,6 +217,21 @@ foreach ($query->rows as $result) {
 	$event->register(substr($result['trigger'], strpos($result['trigger'], '/') + 1), new Action($result['action']));
 }
 
+// Router
+if (isset($request->get['route'])) {
+	$loader->controller($request->get['route']);
+} else {
+	$loader->controller('common/home');
+}
+
+/*
+// Router
+if (isset($request->get['route'])) {
+	$action = new Action($request->get['route']);
+} else {
+	$action = new Action('common/home');
+}
+
 // Front Controller
 $controller = new Front($registry);
 
@@ -229,15 +244,8 @@ $controller->addPreAction(new Action('override/seo_url'));
 // Error Handling
 $controller->addPreAction(new Action('override/error'));
 
-// Router
-if (isset($request->get['route'])) {
-	$action = new Action($request->get['route']);
-} else {
-	$action = new Action('common/home');
-}
-
 // Dispatch
-$controller->dispatch($action, new Action('error/not_found'));
-
+$controller->dispatch(new Action('common/start'), new Action('error/not_found'));
+*/
 // Output
 $response->output();

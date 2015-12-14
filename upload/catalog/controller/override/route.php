@@ -11,16 +11,14 @@ class ControllerOverrideRoute extends Controller {
 		$route = str_replace('../', '', (string)$route);
 		
 		// Trigger the pre events
-		$result = $this->registry->get('event')->trigger('controller/' . $route . '/before', $args);
+		$result = $this->registry->get('event')->trigger('controller/' . $route . '/before', array(&$route));
 		
 		if (!is_null($result)) {
 			return $result;
 		}
 		
-		array_shift($args);
-		
 		$action = new Action($route);
-		$output = $action->execute($this->registry, $args);
+		$output = $action->execute($this->registry);
 			
 		// Trigger the post events
 		$result = $this->registry->get('event')->trigger('controller/' . $route . '/after', array(&$output));

@@ -1,6 +1,7 @@
 <?php
 class Action {
-	private $controller;
+	private $file;
+	private $class;
 	private $method = 'index';
 
 	public function __construct($route) {
@@ -11,7 +12,9 @@ class Action {
 			$file = DIR_APPLICATION . 'controller/' . implode('/', $parts) . '.php';
 
 			if (is_file($file)) {
-				$this->controller = implode('/', $parts);
+				$this->file  = DIR_APPLICATION . 'controller/' . implode('/', $parts) . '.php';		
+				$this->class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', implode('/', $parts));
+				
 				break;
 			} else {
 				$this->method = array_pop($parts);
@@ -26,16 +29,32 @@ class Action {
 		}
 		
 		// Initialize the class
-		$file  = DIR_APPLICATION . 'controller/' . $this->controller . '.php';
-		$class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', $this->controller);
-
-		if (is_file($file)) {
-			include_once($file);
+		if (is_file($this->file)) {
+			include_once($this->file);
 		
-			$controller = new $class($registry);
+			$controller = new $this->class($registry);
 		} else {
 			return false;
 		}
+
+
+		//print_r($args);
+		
+		// Now we have the controller we want to check if the corrasponding number of arguments matches the method being called.
+
+		$reflection = new ReflectionObject($controller);
+
+		$parameters = $reflection->getMethod($this->method)->getParameters();
+
+		foreach ($perameters as $perameter) {
+			echo $perameter->name . "\n";
+		}
+
+		if (count($perameters) != count($args)) {
+			
+		}
+
+		print_r($perameters);
 
 		// Call the method if set
 		if (method_exists($controller, $this->method)) {

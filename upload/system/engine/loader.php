@@ -44,7 +44,6 @@ final class Loader {
 
 			foreach (get_class_methods($class) as $method) {
 				$proxy->attach($method, $this->closure($this->registry, $route . '/' . $method));
-				//$proxy->attach($method, new Action('override/event', array($route . '/' . $method)));
 			}
 			
 			$this->registry->set('model_' . str_replace('/', '_', (string)$route), $proxy);
@@ -73,7 +72,7 @@ final class Loader {
 		
 		$output = $template->render($route . '.tpl');
 		
-		// Trigger the post events
+		// Trigger the post e
 		$result = $this->registry->get('event')->trigger('view/' . $route . '/after', array(&$output));
 		
 		if (!is_null($result)) {

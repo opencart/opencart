@@ -1,6 +1,9 @@
 <?php
-class ControllerOverrideMaintenance extends Controller {
+class ControllerEventMaintenance extends Controller {
 	public function index() {
+		// Remove the event
+		$this->event->unregister('override/maintenance');
+					
 		if ($this->config->get('config_maintenance')) {
 			$route = '';
 

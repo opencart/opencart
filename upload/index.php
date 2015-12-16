@@ -209,43 +209,29 @@ $event = new Event($registry);
 $registry->set('event', $event);
 
 // Template Override
-$event->register('view/*/before', new Action('override/template'));
+$event->register('view/*/before', new Action('event/template'));
 
+// Add events from the DB
 $query = $db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `trigger` LIKE 'catalog/%'");
 
 foreach ($query->rows as $result) {
-	$event->register(substr($result['trigger'], strpos($result['trigger'], '/') + 1), new Action($result['action']));
-}
-
-// Router
-if (isset($request->get['route'])) {
-	$loader->controller($request->get['route']);
-} else {
-	$loader->controller('common/home');
-}
-
-/*
-// Router
-if (isset($request->get['route'])) {
-	$action = new Action($request->get['route']);
-} else {
-	$action = new Action('common/home');
+	$event->register(substr($result['trigger'], strpos($result['trigger'], '/') + 1), new Hook($result['action']));
 }
 
 // Front Controller
 $controller = new Front($registry);
 
 // Maintenance Mode
-$controller->addPreAction(new Action('override/maintenance'));
+$controller->addPreAction(new Action('event/maintenance'));
 
 // SEO URL's
-$controller->addPreAction(new Action('override/seo_url'));
+$controller->addPreAction(new Action('event/seo_url'));
 
 // Error Handling
-$controller->addPreAction(new Action('override/error'));
+$controller->addPreAction(new Action('common/error'));
 
 // Dispatch
-$controller->dispatch(new Action('common/start'), new Action('error/not_found'));
-*/
+$controller->dispatch(new Action('event/route'), new Action('error/not_found'));
+
 // Output
 $response->output();

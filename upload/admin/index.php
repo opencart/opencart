@@ -166,13 +166,13 @@ $controller->addPreAction(new Action('override/permission'));
 
 // Router
 if (isset($request->get['route'])) {
-	$action = new Action($request->get['route']);
+	$route = new Action($request->get['route']);
 } else {
-	$action = new Action('common/dashboard');
+	$route = new Action('common/dashboard');
 }
 
 // Dispatch
-$controller->dispatch($action, new Action('error/not_found'));
+$controller->dispatch($route, new Action('error/not_found'));
 
 // Output
 $response->output();

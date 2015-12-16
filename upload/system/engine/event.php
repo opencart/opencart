@@ -2,6 +2,7 @@
 class Event {
 	protected $registry;
 	public $data = array();
+	protected $current;
 
 	public function __construct($registry) {
 		$this->registry = $registry;

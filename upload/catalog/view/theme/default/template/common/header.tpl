@@ -7,16 +7,17 @@
 <!--<![endif]-->
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title><?php echo $title; ?></title>
 <base href="<?php echo $base; ?>" />
 <?php if ($description) { ?>
 <meta name="description" content="<?php echo $description; ?>" />
 <?php } ?>
 <?php if ($keywords) { ?>
-<meta name="keywords" content= "<?php echo $keywords; ?>" />
+<meta name="keywords" content="<?php echo $keywords; ?>" />
 <?php } ?>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="generator" content="<?php echo $generator; ?>" />
 <?php if ($icon) { ?>
 <link href="<?php echo $icon; ?>" rel="icon" />
 <?php } ?>

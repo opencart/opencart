@@ -1,5 +1,5 @@
 <?php
-class ControllerOverrideSass extends Controller {
+class ControllerEventSass extends Controller {
 	public function index() {
 		$file = DIR_APPLICATION . 'view/stylesheet/bootstrap.css';
 

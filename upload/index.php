@@ -215,20 +215,23 @@ $event->register('view/*/before', new Action('event/template'));
 $query = $db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `trigger` LIKE 'catalog/%'");
 
 foreach ($query->rows as $result) {
-	$event->register(substr($result['trigger'], strpos($result['trigger'], '/') + 1), new Hook($result['action']));
+	$event->register(substr($result['trigger'], strpos($result['trigger'], '/') + 1), new Action($result['action']));
 }
 
 // Front Controller
 $controller = new Front($registry);
 
+// Error Handling
+//$controller->addPreAction(new Action('event/error'));
+
+// Language
+//$controller->addPreAction(new Action('event/language'));
+
 // Maintenance Mode
-$controller->addPreAction(new Action('event/maintenance'));
+//$controller->addPreAction(new Action('event/maintenance'));
 
 // SEO URL's
-$controller->addPreAction(new Action('event/seo_url'));
-
-// Error Handling
-$controller->addPreAction(new Action('common/error'));
+//$controller->addPreAction(new Action('event/seo_url'));
 
 // Dispatch
 $controller->dispatch(new Action('event/route'), new Action('error/not_found'));

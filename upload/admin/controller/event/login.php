@@ -1,5 +1,5 @@
 <?php
-class ControllerOverrideLogin extends Controller {
+class ControllerEventLogin extends Controller {
 	public function index() {
 		$route = isset($this->request->get['route']) ? $this->request->get['route'] : '';
 

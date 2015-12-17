@@ -6,7 +6,5 @@ class ControllerEventTemplate extends Controller {
 		} else {
 			$view = 'default/template/' . $view;
 		}
-		
-		return true;
 	}
 }

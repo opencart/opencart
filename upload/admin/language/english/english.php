@@ -14,6 +14,7 @@ $_['text_yes']                      = 'Yes';
 $_['text_no']                       = 'No';
 $_['text_enabled']                  = 'Enabled';
 $_['text_disabled']                 = 'Disabled';
+$_['text_all']                      = ' --- All --- ';
 $_['text_none']                     = ' --- None --- ';
 $_['text_select']                   = ' --- Please Select --- ';
 $_['text_select_all']               = 'Select All';

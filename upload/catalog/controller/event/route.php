@@ -24,7 +24,7 @@ class ControllerEventRoute extends Controller {
 		$action = new Action($route);
 		
 		// Any output needs to be another Action object. 
-		$output = $action->execute($this->registry);
+		$output = $action->execute($this->registry); 
 		
 		// Trigger the post events
 		$result = $this->event->trigger('controller/' . $route . '/after', array(&$output));

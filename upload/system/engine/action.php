@@ -26,8 +26,6 @@ class Action {
 			return false;
 		}
 
-		//echo $this->route . '<br/>';
-
 		$file = DIR_APPLICATION . 'controller/' . $this->route . '.php';		
 		$class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', $this->route);
 		
@@ -40,19 +38,9 @@ class Action {
 			return false;
 		}
 		
-		// Now we have the controller we want to check if the corresponding number of arguments matches the method being called.
-		//$reflection = new ReflectionObject($controller);
-
-		//$parameters = $reflection->getMethod($this->method)->getParameters();
-
-		//if (count($parameters) != count($args)) {
-			//return false;
-		//}
-
-		//print_r($parameters);
-
-		// Call the method if set
-		if (method_exists($controller, $this->method)) {
+		$reflection = new ReflectionClass($class);
+		
+		if ($reflection->hasMethod($this->method) && $reflection->getMethod($this->method)->getNumberOfRequiredParameters() <= count($args)) {
 			return call_user_func_array(array($controller, $this->method), $args);
 		} else {
 			return false;

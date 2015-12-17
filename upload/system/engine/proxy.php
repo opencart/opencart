@@ -1,11 +1,6 @@
 <?php
 class Proxy {
-	protected $registry;	
 	protected $data = array();
-
-	public function __construct($registry) {
-		$this->registry = $registry;
-	}
 	
 	public function attach($method, $value) {
 		$this->data[$method] = $value;

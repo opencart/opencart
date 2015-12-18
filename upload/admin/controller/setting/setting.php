@@ -66,8 +66,8 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_meta_title'] = $this->language->get('entry_meta_title');
 		$data['entry_meta_description'] = $this->language->get('entry_meta_description');
 		$data['entry_meta_keyword'] = $this->language->get('entry_meta_keyword');
+		$data['entry_theme'] = $this->language->get('entry_theme');
 		$data['entry_layout'] = $this->language->get('entry_layout');
-		$data['entry_template'] = $this->language->get('entry_template');
 		$data['entry_country'] = $this->language->get('entry_country');
 		$data['entry_zone'] = $this->language->get('entry_zone');
 		$data['entry_language'] = $this->language->get('entry_language');
@@ -384,6 +384,57 @@ class ControllerSettingSetting extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 
+		if (isset($this->request->post['config_meta_title'])) {
+			$data['config_meta_title'] = $this->request->post['config_meta_title'];
+		} else {
+			$data['config_meta_title'] = $this->config->get('config_meta_title');
+		}
+
+		if (isset($this->request->post['config_meta_description'])) {
+			$data['config_meta_description'] = $this->request->post['config_meta_description'];
+		} else {
+			$data['config_meta_description'] = $this->config->get('config_meta_description');
+		}
+
+		if (isset($this->request->post['config_meta_keyword'])) {
+			$data['config_meta_keyword'] = $this->request->post['config_meta_keyword'];
+		} else {
+			$data['config_meta_keyword'] = $this->config->get('config_meta_keyword');
+		}
+
+		if (isset($this->request->post['config_theme'])) {
+			$data['config_theme'] = $this->request->post['config_theme'];
+		} else {
+			$data['config_theme'] = $this->config->get('config_theme');
+		}
+
+		$data['themes'] = array();
+
+		$this->load->model('extension/extension');
+
+		$extensions = $this->model_extension_extension->getInstalled('theme');
+
+		foreach ($extensions as $code) {
+			$this->load->language('theme/' . $code);
+			
+			if ($this->config->get($code . '_status')) {
+				$data['themes'][] = array(
+					'text'  => $this->language->get('heading_title'),
+					'value' => $code
+				);
+			}
+		}
+			
+		if (isset($this->request->post['config_layout_id'])) {
+			$data['config_layout_id'] = $this->request->post['config_layout_id'];
+		} else {
+			$data['config_layout_id'] = $this->config->get('config_layout_id');
+		}
+
+		$this->load->model('design/layout');
+
+		$data['layouts'] = $this->model_design_layout->getLayouts();
+
 		if (isset($this->request->post['config_name'])) {
 			$data['config_name'] = $this->request->post['config_name'];
 		} else {
@@ -467,57 +518,6 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_location'] = array();
 		}
-
-		if (isset($this->request->post['config_meta_title'])) {
-			$data['config_meta_title'] = $this->request->post['config_meta_title'];
-		} else {
-			$data['config_meta_title'] = $this->config->get('config_meta_title');
-		}
-
-		if (isset($this->request->post['config_meta_description'])) {
-			$data['config_meta_description'] = $this->request->post['config_meta_description'];
-		} else {
-			$data['config_meta_description'] = $this->config->get('config_meta_description');
-		}
-
-		if (isset($this->request->post['config_meta_keyword'])) {
-			$data['config_meta_keyword'] = $this->request->post['config_meta_keyword'];
-		} else {
-			$data['config_meta_keyword'] = $this->config->get('config_meta_keyword');
-		}
-
-		if (isset($this->request->post['config_theme'])) {
-			$data['config_theme'] = $this->request->post['config_theme'];
-		} else {
-			$data['config_theme'] = $this->config->get('config_theme');
-		}
-
-		$data['themes'] = array();
-
-		$this->load->model('extension/extension');
-
-		$extensions = $this->model_extension_extension->getInstalled('theme');
-
-		foreach ($extensions as $code) {
-			$this->load->language('theme/' . $code);
-			
-			if ($this->config->get($code . '_status')) {
-				$data['themes'][] = array(
-					'text'  => $this->language->get('heading_title'),
-					'value' => $code
-				);
-			}
-		}
-			
-		if (isset($this->request->post['config_layout_id'])) {
-			$data['config_layout_id'] = $this->request->post['config_layout_id'];
-		} else {
-			$data['config_layout_id'] = $this->config->get('config_layout_id');
-		}
-
-		$this->load->model('design/layout');
-
-		$data['layouts'] = $this->model_design_layout->getLayouts();
 
 		if (isset($this->request->post['config_country_id'])) {
 			$data['config_country_id'] = $this->request->post['config_country_id'];
@@ -1124,6 +1124,10 @@ class ControllerSettingSetting extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
+		if (!$this->request->post['config_meta_title']) {
+			$this->error['meta_title'] = $this->language->get('error_meta_title');
+		}
+
 		if (!$this->request->post['config_name']) {
 			$this->error['name'] = $this->language->get('error_name');
 		}
@@ -1142,10 +1146,6 @@ class ControllerSettingSetting extends Controller {
 
 		if ((utf8_strlen($this->request->post['config_telephone']) < 3) || (utf8_strlen($this->request->post['config_telephone']) > 32)) {
 			$this->error['telephone'] = $this->language->get('error_telephone');
-		}
-
-		if (!$this->request->post['config_meta_title']) {
-			$this->error['meta_title'] = $this->language->get('error_meta_title');
 		}
 
 		if (!empty($this->request->post['config_customer_group_display']) && !in_array($this->request->post['config_customer_group_id'], $this->request->post['config_customer_group_display'])) {
@@ -1211,19 +1211,5 @@ class ControllerSettingSetting extends Controller {
 		}
 
 		return !$this->error;
-	}
-
-	public function template() {
-		if ($this->request->server['HTTPS']) {
-			$server = HTTPS_CATALOG;
-		} else {
-			$server = HTTP_CATALOG;
-		}
-
-		if (is_file(DIR_IMAGE . 'templates/' . basename($this->request->get['template']) . '.png')) {
-			$this->response->setOutput($server . 'image/templates/' . basename($this->request->get['template']) . '.png');
-		} else {
-			$this->response->setOutput($server . 'image/no_image.png');
-		}
 	}
 }

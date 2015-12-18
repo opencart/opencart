@@ -39,7 +39,7 @@
             <li><a href="#tab-server" data-toggle="tab"><?php echo $tab_server; ?></a></li>
           </ul>
           <div class="tab-content">
-            <div class="tab-pane active" id="tab-general">
+            <div class="tab-pane" id="tab-general">
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-url"><span data-toggle="tooltip" data-html="true" title="<?php echo htmlspecialchars($help_url); ?>"><?php echo $entry_url; ?></span></label>
                 <div class="col-sm-10">
@@ -55,6 +55,58 @@
                   <input type="text" name="config_ssl" value="<?php echo $config_ssl; ?>" placeholder="<?php echo $entry_ssl; ?>" id="input-ssl" class="form-control" />
                 </div>
               </div>
+              <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-meta-title"><?php echo $entry_meta_title; ?></label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_meta_title" value="<?php echo $config_meta_title; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title" class="form-control" />
+                  <?php if ($error_meta_title) { ?>
+                  <div class="text-danger"><?php echo $error_meta_title; ?></div>
+                  <?php } ?>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-meta-description"><?php echo $entry_meta_description; ?></label>
+                <div class="col-sm-10">
+                  <textarea name="config_meta_description" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description" class="form-control"><?php echo $config_meta_description; ?></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-meta-keyword"><?php echo $entry_meta_keyword; ?></label>
+                <div class="col-sm-10">
+                  <textarea name="config_meta_keyword" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta-keyword" class="form-control"><?php echo $config_meta_keyword; ?></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-theme"><?php echo $entry_theme; ?></label>
+                <div class="col-sm-10">
+                  <select name="config_theme" id="input-theme" class="form-control">
+                    <?php foreach ($themes as $theme) { ?>
+                    <?php if ($theme == $config_theme) { ?>
+                    <option value="<?php echo $theme['value']; ?>" selected="selected"><?php echo $theme['text']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $theme['value']; ?>"><?php echo $theme['text']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                  <br />
+                  <img src="" alt="" id="template" class="img-thumbnail" /></div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-layout"><?php echo $entry_layout; ?></label>
+                <div class="col-sm-10">
+                  <select name="config_layout_id" id="input-layout" class="form-control">
+                    <?php foreach ($layouts as $layout) { ?>
+                    <?php if ($layout['layout_id'] == $config_layout_id) { ?>
+                    <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane active" id="tab-store">
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
                 <div class="col-sm-10">
@@ -150,58 +202,6 @@
                 </div>
               </div>
               <?php } ?>
-            </div>
-            <div class="tab-pane" id="tab-store">
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-meta-title"><?php echo $entry_meta_title; ?></label>
-                <div class="col-sm-10">
-                  <input type="text" name="config_meta_title" value="<?php echo $config_meta_title; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title" class="form-control" />
-                  <?php if ($error_meta_title) { ?>
-                  <div class="text-danger"><?php echo $error_meta_title; ?></div>
-                  <?php } ?>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-meta-description"><?php echo $entry_meta_description; ?></label>
-                <div class="col-sm-10">
-                  <textarea name="config_meta_description" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description" class="form-control"><?php echo $config_meta_description; ?></textarea>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-meta-keyword"><?php echo $entry_meta_keyword; ?></label>
-                <div class="col-sm-10">
-                  <textarea name="config_meta_keyword" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta-keyword" class="form-control"><?php echo $config_meta_keyword; ?></textarea>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-template"><?php echo $entry_template; ?></label>
-                <div class="col-sm-10">
-                  <select name="config_template" id="input-template" class="form-control">
-                    <?php foreach ($templates as $template) { ?>
-                    <?php if ($template == $config_template) { ?>
-                    <option value="<?php echo $template; ?>" selected="selected"><?php echo $template; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $template; ?>"><?php echo $template; ?></option>
-                    <?php } ?>
-                    <?php } ?>
-                  </select>
-                  <br />
-                  <img src="" alt="" id="template" class="img-thumbnail" /></div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-layout"><?php echo $entry_layout; ?></label>
-                <div class="col-sm-10">
-                  <select name="config_layout_id" id="input-layout" class="form-control">
-                    <?php foreach ($layouts as $layout) { ?>
-                    <?php if ($layout['layout_id'] == $config_layout_id) { ?>
-                    <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
-                    <?php } ?>
-                    <?php } ?>
-                  </select>
-                </div>
-              </div>
             </div>
             <div class="tab-pane" id="tab-local">
               <div class="form-group">
@@ -588,7 +588,7 @@ $('select[name=\'config_template\']').on('change', function() {
 });
 
 $('select[name=\'config_template\']').trigger('change');
-//--></script>
+//--></script> 
   <script type="text/javascript"><!--
 $('select[name=\'config_country_id\']').on('change', function() {
 	$.ajax({
@@ -627,4 +627,4 @@ $('select[name=\'config_country_id\']').on('change', function() {
 
 $('select[name=\'config_country_id\']').trigger('change');
 //--></script></div>
-<?php echo $footer; ?>
+<?php echo $footer; ?> 

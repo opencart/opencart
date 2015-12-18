@@ -12,6 +12,8 @@ class ModelLocalisationReturnStatus extends Model {
 		}
 
 		$this->cache->delete('return_status');
+		
+		return $return_status_id;
 	}
 
 	public function editReturnStatus($return_status_id, $data) {

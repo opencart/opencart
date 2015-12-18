@@ -1,6 +1,6 @@
 <?php
 class Language {
-	private $default = 'english';
+	private $default = 'en-GB';
 	private $directory;
 	private $data = array();
 
@@ -20,7 +20,7 @@ class Language {
 		return $this->data;
 	}
 	
-	public function load($filename) {
+	public function load($filename, &$data = array()) {
 		$_ = array();
 
 		$file = DIR_LANGUAGE . $this->default . '/' . $filename . '.php';

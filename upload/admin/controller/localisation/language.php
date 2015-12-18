@@ -269,16 +269,9 @@ class ControllerLocalisationLanguage extends Controller {
 
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_code'] = $this->language->get('entry_code');
-		$data['entry_locale'] = $this->language->get('entry_locale');
-		$data['entry_image'] = $this->language->get('entry_image');
-		$data['entry_directory'] = $this->language->get('entry_directory');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$data['entry_status'] = $this->language->get('entry_status');
 
-		$data['help_code'] = $this->language->get('help_code');
-		$data['help_locale'] = $this->language->get('help_locale');
-		$data['help_image'] = $this->language->get('help_image');
-		$data['help_directory'] = $this->language->get('help_directory');
 		$data['help_status'] = $this->language->get('help_status');
 
 		$data['button_save'] = $this->language->get('button_save');
@@ -300,30 +293,6 @@ class ControllerLocalisationLanguage extends Controller {
 			$data['error_code'] = $this->error['code'];
 		} else {
 			$data['error_code'] = '';
-		}
-
-		if (isset($this->error['locale'])) {
-			$data['error_locale'] = $this->error['locale'];
-		} else {
-			$data['error_locale'] = '';
-		}
-
-		if (isset($this->error['image'])) {
-			$data['error_image'] = $this->error['image'];
-		} else {
-			$data['error_image'] = '';
-		}
-
-		if (isset($this->error['directory'])) {
-			$data['error_directory'] = $this->error['directory'];
-		} else {
-			$data['error_directory'] = '';
-		}
-
-		if (isset($this->error['filename'])) {
-			$data['error_filename'] = $this->error['filename'];
-		} else {
-			$data['error_filename'] = '';
 		}
 
 		$url = '';
@@ -379,29 +348,13 @@ class ControllerLocalisationLanguage extends Controller {
 		} else {
 			$data['code'] = '';
 		}
+		
+		$data['languages'] = array();
+		
+		$folders = glob(DIR_LANGUAGE . '*', GLOB_ONLYDIR);
 
-		if (isset($this->request->post['locale'])) {
-			$data['locale'] = $this->request->post['locale'];
-		} elseif (!empty($language_info)) {
-			$data['locale'] = $language_info['locale'];
-		} else {
-			$data['locale'] = '';
-		}
-
-		if (isset($this->request->post['image'])) {
-			$data['image'] = $this->request->post['image'];
-		} elseif (!empty($language_info)) {
-			$data['image'] = $language_info['image'];
-		} else {
-			$data['image'] = '';
-		}
-
-		if (isset($this->request->post['directory'])) {
-			$data['directory'] = $this->request->post['directory'];
-		} elseif (!empty($language_info)) {
-			$data['directory'] = $language_info['directory'];
-		} else {
-			$data['directory'] = '';
+		foreach ($folders as $folder) {
+			$data['languages'][] = basename($folder);
 		}
 
 		if (isset($this->request->post['sort_order'])) {
@@ -438,18 +391,6 @@ class ControllerLocalisationLanguage extends Controller {
 
 		if (utf8_strlen($this->request->post['code']) < 2) {
 			$this->error['code'] = $this->language->get('error_code');
-		}
-
-		if (!$this->request->post['locale']) {
-			$this->error['locale'] = $this->language->get('error_locale');
-		}
-
-		if (!$this->request->post['directory']) {
-			$this->error['directory'] = $this->language->get('error_directory');
-		}
-
-		if ((utf8_strlen($this->request->post['image']) < 3) || (utf8_strlen($this->request->post['image']) > 32)) {
-			$this->error['image'] = $this->language->get('error_image');
 		}
 
 		return !$this->error;

@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '2.1.0.2_rc');
+define('VERSION', '2.2.0.0_rc');
 
 // Configuration
 if (is_file('config.php')) {
@@ -68,19 +68,17 @@ $session->start();
 $registry->set('session', $session);
 
 // Language
-$languages = array();
+$query = $db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE code = '" . $db->escape($config->get('config_admin_language')) . "'");
 
-$query = $db->query("SELECT * FROM `" . DB_PREFIX . "language`");
-
-foreach ($query->rows as $result) {
-	$languages[$result['code']] = $result;
+if ($query->num_rows) {
+	$config->set('config_language_id', $query->row['language_id']);
+} else {
+	exit();
 }
 
-$config->set('config_language_id', $languages[$config->get('config_admin_language')]['language_id']);
-
 // Language
-$language = new Language($languages[$config->get('config_admin_language')]['directory']);
-$language->load($languages[$config->get('config_admin_language')]['directory']);
+$language = new Language($config->get('config_admin_language'));
+$language->load($config->get('config_admin_language'));
 $registry->set('language', $language);
 
 // Document

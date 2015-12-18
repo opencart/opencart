@@ -2,6 +2,8 @@
 class ModelExtensionEvent extends Model {
 	public function addEvent($code, $trigger, $action) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "event SET `code` = '" . $this->db->escape($code) . "', `trigger` = '" . $this->db->escape($trigger) . "', `action` = '" . $this->db->escape($action) . "'");
+	
+		return $this->db->getLastId();
 	}
 
 	public function deleteEvent($code) {

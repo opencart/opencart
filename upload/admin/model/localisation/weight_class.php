@@ -10,6 +10,8 @@ class ModelLocalisationWeightClass extends Model {
 		}
 
 		$this->cache->delete('weight_class');
+		
+		return $weight_class_id;
 	}
 
 	public function editWeightClass($weight_class_id, $data) {

@@ -16,6 +16,8 @@ class ModelCustomerCustomer extends Model {
 				}
 			}
 		}
+		
+		return $customer_id;
 	}
 
 	public function editCustomer($customer_id, $data) {
@@ -515,6 +517,7 @@ class ModelCustomerCustomer extends Model {
 		}
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_ip WHERE customer_id = '" . (int)$customer_id . "' ORDER BY date_added DESC LIMIT " . (int)$start . "," . (int)$limit);
+		
 		return $query->rows;
 	}
 

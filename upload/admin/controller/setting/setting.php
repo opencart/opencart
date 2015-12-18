@@ -486,6 +486,29 @@ class ControllerSettingSetting extends Controller {
 			$data['config_meta_keyword'] = $this->config->get('config_meta_keyword');
 		}
 
+		if (isset($this->request->post['config_theme'])) {
+			$data['config_theme'] = $this->request->post['config_theme'];
+		} else {
+			$data['config_theme'] = $this->config->get('config_theme');
+		}
+
+		$data['themes'] = array();
+
+		$this->load->model('extension/extension');
+
+		$extensions = $this->model_extension_extension->getInstalled('theme');
+
+		foreach ($extensions as $code) {
+			$this->load->language('theme/' . $code);
+			
+			if ($this->config->get($code . '_status')) {
+				$data['themes'][] = array(
+					'text'  => $this->language->get('heading_title'),
+					'value' => $code
+				);
+			}
+		}
+			
 		if (isset($this->request->post['config_layout_id'])) {
 			$data['config_layout_id'] = $this->request->post['config_layout_id'];
 		} else {
@@ -495,20 +518,6 @@ class ControllerSettingSetting extends Controller {
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
-
-		if (isset($this->request->post['config_template'])) {
-			$data['config_template'] = $this->request->post['config_template'];
-		} else {
-			$data['config_template'] = $this->config->get('config_template');
-		}
-
-		$data['templates'] = array();
-
-		$directories = glob(DIR_CATALOG . 'view/theme/*', GLOB_ONLYDIR);
-
-		foreach ($directories as $directory) {
-			$data['templates'][] = basename($directory);
-		}
 
 		if (isset($this->request->post['config_country_id'])) {
 			$data['config_country_id'] = $this->request->post['config_country_id'];
@@ -854,7 +863,7 @@ class ControllerSettingSetting extends Controller {
 		foreach ($extensions as $code) {
 			$this->load->language('captcha/' . $code);
 
-			if ($this->config->has($code . '_status')) {
+			if ($this->config->get($code . '_status')) {
 				$data['captchas'][] = array(
 					'text'  => $this->language->get('heading_title'),
 					'value' => $code

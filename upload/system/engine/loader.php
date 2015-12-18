@@ -40,7 +40,7 @@ final class Loader {
 		if (is_file($file)) {
 			include_once($file);
 			
-			$proxy = new Proxy($this->registry);
+			$proxy = new Proxy();
 
 			foreach (get_class_methods($class) as $method) {
 				$proxy->attach($method, $this->closure($this->registry, $route . '/' . $method));

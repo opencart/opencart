@@ -1,5 +1,5 @@
 <?php
-class ControllerEventError extends Controller {
+class ControllerActionError extends Controller {
 	public function index() {
 		set_error_handler(array($this, 'handler'));	
 	}

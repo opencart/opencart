@@ -89,7 +89,7 @@
                     <?php } ?>
                   </select>
                   <br />
-                  <img src="" alt="" id="template" class="img-thumbnail" /></div>
+                  <img src="" alt="" class="img-thumbnail" /></div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-layout"><?php echo $entry_layout; ?></label>
@@ -567,27 +567,10 @@
   </div>
   <script type="text/javascript"><!--
 $('select[name=\'config_template\']').on('change', function() {
-	$.ajax({
-		url: 'index.php?route=setting/setting/template&token=<?php echo $token; ?>&template=' + encodeURIComponent(this.value),
-		dataType: 'html',
-		beforeSend: function() {
-			$('select[name=\'config_template\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
-		},
-		complete: function() {
-			$('.fa-spin').remove();
-		},
-		success: function(html) {
-			$('.fa-spin').remove();
-
-			$('#template').attr('src', html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+	$('#theme').attr('src', $('input[name=\'config_url\']') + '/catalog/view/theme/' + this.value + '/image/' + this.value + '.png');
 });
 
-$('select[name=\'config_template\']').trigger('change');
+$('select[name=\'config_theme\']').trigger('change');
 //--></script> 
   <script type="text/javascript"><!--
 $('select[name=\'config_country_id\']').on('change', function() {

@@ -23,16 +23,14 @@ require_once(DIR_SYSTEM . 'startup.php');
 $registry = new Registry();
 
 // Loader
-$loader = new Loader($registry);
-$registry->set('load', $loader);
+$registry->set('load', new Loader($registry));
 
 // Url
 $url = new Url(HTTP_SERVER);
 $registry->set('url', $url);
 
 // Request
-$request = new Request();
-$registry->set('request', $request);
+$registry->set('request', new Request());
 
 // Response
 $response = new Response();
@@ -40,21 +38,18 @@ $response->addHeader('Content-Type: text/html; charset=UTF-8');
 $registry->set('response', $response);
 
 // Language
-$language = new Language('english');
-$language->load('english');
+$language = new Language('en-gb');
+$language->load('en-gb');
 $registry->set('language', $language);
 
 // Document
-$document = new Document();
-$registry->set('document', $document);
+$registry->set('document', new Document());
 
 // Session
-$session = new Session();
-$registry->set('session', $session);
+$registry->set('session', new Session());
 
 // Event
-$event = new Event($registry);
-$registry->set('event', $event);
+$registry->set('event', new Event($registry));
 
 // Upgrade
 $upgrade = false;

@@ -1,5 +1,5 @@
 <?php
-class ControllerEventPermission extends Controller {
+class ControllerActionPermission extends Controller {
 	public function index() {
 		if (isset($this->request->get['route'])) {
 			$route = '';

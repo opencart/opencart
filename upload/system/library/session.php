@@ -2,7 +2,7 @@
 class Session {
 	public $data = array();
 
-	public function __construct($driver = '') {
+	public function __construct($adaptor = '') {
 		$args = func_get_args();
 		
 		array_shift($args);

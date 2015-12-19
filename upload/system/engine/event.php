@@ -12,7 +12,7 @@ class Event {
 		$this->data[$trigger][] = $action;
 	}
 	
-	public function unregister($trigger) {
+	public function unregister($trigger, $action) {
 		if (isset($this->data[$trigger])) {
 			unset($this->data[$trigger]);
 		}

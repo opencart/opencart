@@ -1,5 +1,5 @@
 <?php
-class ControllerEventSass extends Controller {
+class ControllerActionSass extends Controller {
 	public function index() {
 		$file = DIR_APPLICATION . 'view/stylesheet/bootstrap.css';
 

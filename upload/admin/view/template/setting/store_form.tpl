@@ -39,7 +39,7 @@
             <li><a href="#tab-server" data-toggle="tab"><?php echo $tab_server; ?></a></li>
           </ul>
           <div class="tab-content">
-            <div class="tab-pane active" id="tab-general">
+            <div class="tab-pane" id="tab-general">
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-url"><span data-toggle="tooltip" data-html="true" title="<?php echo htmlspecialchars($help_url); ?>"><?php echo $entry_url; ?></span></label>
                 <div class="col-sm-10">
@@ -55,6 +55,58 @@
                   <input type="text" name="config_ssl" value="<?php echo $config_ssl; ?>" placeholder="<?php echo $entry_ssl; ?>" id="input-ssl" class="form-control" />
                 </div>
               </div>
+              <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-meta-title"><?php echo $entry_meta_title; ?></label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_meta_title" value="<?php echo $config_meta_title; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title" class="form-control" />
+                  <?php if ($error_meta_title) { ?>
+                  <div class="text-danger"><?php echo $error_meta_title; ?></div>
+                  <?php } ?>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-meta-description"><?php echo $entry_meta_description; ?></label>
+                <div class="col-sm-10">
+                  <textarea name="config_meta_description" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description" class="form-control"><?php echo $config_meta_description; ?></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-meta-keyword"><?php echo $entry_meta_keyword; ?></label>
+                <div class="col-sm-10">
+                  <textarea name="config_meta_keyword" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta-keyword" class="form-control"><?php echo $config_meta_keyword; ?></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-theme"><?php echo $entry_theme; ?></label>
+                <div class="col-sm-10">
+                  <select name="config_theme" id="input-theme" class="form-control">
+                    <?php foreach ($themes as $theme) { ?>
+                    <?php if ($theme == $config_theme) { ?>
+                    <option value="<?php echo $theme['value']; ?>" selected="selected"><?php echo $theme['text']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $theme['value']; ?>"><?php echo $theme['text']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                  <br />
+                  <img src="" alt="" class="img-thumbnail" /></div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-layout"><?php echo $entry_layout; ?></label>
+                <div class="col-sm-10">
+                  <select name="config_layout_id" id="input-layout" class="form-control">
+                    <?php foreach ($layouts as $layout) { ?>
+                    <?php if ($layout['layout_id'] == $config_layout_id) { ?>
+                    <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane active" id="tab-store">
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
                 <div class="col-sm-10">
@@ -151,58 +203,6 @@
               </div>
               <?php } ?>
             </div>
-            <div class="tab-pane" id="tab-store">
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-meta-title"><?php echo $entry_meta_title; ?></label>
-                <div class="col-sm-10">
-                  <input type="text" name="config_meta_title" value="<?php echo $config_meta_title; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title" class="form-control" />
-                  <?php if ($error_meta_title) { ?>
-                  <div class="text-danger"><?php echo $error_meta_title; ?></div>
-                  <?php } ?>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-meta-description"><?php echo $entry_meta_description; ?></label>
-                <div class="col-sm-10">
-                  <textarea name="config_meta_description" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description" class="form-control"><?php echo $config_meta_description; ?></textarea>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-meta-keyword"><?php echo $entry_meta_keyword; ?></label>
-                <div class="col-sm-10">
-                  <textarea name="config_meta_keyword" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta-keyword" class="form-control"><?php echo $config_meta_keyword; ?></textarea>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-template"><?php echo $entry_template; ?></label>
-                <div class="col-sm-10">
-                  <select name="config_template" id="input-template" class="form-control">
-                    <?php foreach ($templates as $template) { ?>
-                    <?php if ($template == $config_template) { ?>
-                    <option value="<?php echo $template; ?>" selected="selected"><?php echo $template; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $template; ?>"><?php echo $template; ?></option>
-                    <?php } ?>
-                    <?php } ?>
-                  </select>
-                  <br />
-                  <img src="" alt="" id="template" class="img-thumbnail" /></div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-layout"><?php echo $entry_layout; ?></label>
-                <div class="col-sm-10">
-                  <select name="config_layout_id" id="input-layout" class="form-control">
-                    <?php foreach ($layouts as $layout) { ?>
-                    <?php if ($layout['layout_id'] == $config_layout_id) { ?>
-                    <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
-                    <?php } ?>
-                    <?php } ?>
-                  </select>
-                </div>
-              </div>
-            </div>
             <div class="tab-pane" id="tab-local">
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-country"><?php echo $entry_country; ?></label>
@@ -255,27 +255,6 @@
               </div>
             </div>
             <div class="tab-pane" id="tab-option">
-              <fieldset>
-                <legend><?php echo $text_items; ?></legend>
-                <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-catalog-limit"><span data-toggle="tooltip" title="<?php echo $help_product_limit; ?>"><?php echo $entry_product_limit; ?></span></label>
-                  <div class="col-sm-10">
-                    <input type="text" name="config_product_limit" value="<?php echo $config_product_limit; ?>" placeholder="<?php echo $entry_product_limit; ?>" id="input-catalog-limit" class="form-control" />
-                    <?php if ($error_product_limit) { ?>
-                    <div class="text-danger"><?php echo $error_product_limit; ?></div>
-                    <?php } ?>
-                  </div>
-                </div>
-                <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-list-description-limit"><span data-toggle="tooltip" title="<?php echo $help_product_description_length; ?>"><?php echo $entry_product_description_length; ?></span></label>
-                  <div class="col-sm-10">
-                    <input type="text" name="config_product_description_length" value="<?php echo $config_product_description_length; ?>" placeholder="<?php echo $entry_product_description_length; ?>" id="input-list-description-limit" class="form-control" />
-                    <?php if ($error_product_description_length) { ?>
-                    <div class="text-danger"><?php echo $error_product_description_length; ?></div>
-                    <?php } ?>
-                  </div>
-                </div>
-              </fieldset>
               <fieldset>
                 <legend><?php echo $text_tax; ?></legend>
                 <div class="form-group">
@@ -555,166 +534,6 @@
                   <input type="hidden" name="config_icon" value="<?php echo $config_icon; ?>" id="input-icon" />
                 </div>
               </div>
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-image-category-width"><?php echo $entry_image_category; ?></label>
-                <div class="col-sm-10">
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <input type="text" name="config_image_category_width" value="<?php echo $config_image_category_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-category-width" class="form-control" />
-                    </div>
-                    <div class="col-sm-6">
-                      <input type="text" name="config_image_category_height" value="<?php echo $config_image_category_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
-                    </div>
-                  </div>
-                  <?php if ($error_image_category) { ?>
-                  <div class="text-danger"><?php echo $error_image_category; ?></div>
-                  <?php } ?>
-                </div>
-              </div>
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-image-thumb-width"><?php echo $entry_image_thumb; ?></label>
-                <div class="col-sm-10">
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <input type="text" name="config_image_thumb_width" value="<?php echo $config_image_thumb_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-thumb-width" class="form-control" />
-                    </div>
-                    <div class="col-sm-6">
-                      <input type="text" name="config_image_thumb_height" value="<?php echo $config_image_thumb_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
-                    </div>
-                  </div>
-                  <?php if ($error_image_thumb) { ?>
-                  <div class="text-danger"><?php echo $error_image_thumb; ?></div>
-                  <?php } ?>
-                </div>
-              </div>
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-image-popup-width"><?php echo $entry_image_popup; ?></label>
-                <div class="col-sm-10">
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <input type="text" name="config_image_popup_width" value="<?php echo $config_image_popup_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-popup-width" class="form-control" />
-                    </div>
-                    <div class="col-sm-6">
-                      <input type="text" name="config_image_popup_height" value="<?php echo $config_image_popup_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
-                    </div>
-                  </div>
-                  <?php if ($error_image_popup) { ?>
-                  <div class="text-danger"><?php echo $error_image_popup; ?></div>
-                  <?php } ?>
-                </div>
-              </div>
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-image-product-width"><?php echo $entry_image_product; ?></label>
-                <div class="col-sm-10">
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <input type="text" name="config_image_product_width" value="<?php echo $config_image_product_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-product-width" class="form-control" />
-                    </div>
-                    <div class="col-sm-6">
-                      <input type="text" name="config_image_product_height" value="<?php echo $config_image_product_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
-                    </div>
-                  </div>
-                  <?php if ($error_image_product) { ?>
-                  <div class="text-danger"><?php echo $error_image_product; ?></div>
-                  <?php } ?>
-                </div>
-              </div>
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-image-additional-width"><?php echo $entry_image_additional; ?></label>
-                <div class="col-sm-10">
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <input type="text" name="config_image_additional_width" value="<?php echo $config_image_additional_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-additional-width" class="form-control" />
-                    </div>
-                    <div class="col-sm-6">
-                      <input type="text" name="config_image_additional_height" value="<?php echo $config_image_additional_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
-                    </div>
-                  </div>
-                  <?php if ($error_image_additional) { ?>
-                  <div class="text-danger"><?php echo $error_image_additional; ?></div>
-                  <?php } ?>
-                </div>
-              </div>
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-image-related-width"><?php echo $entry_image_related; ?></label>
-                <div class="col-sm-10">
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <input type="text" name="config_image_related_width" value="<?php echo $config_image_related_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-related-width" class="form-control" />
-                    </div>
-                    <div class="col-sm-6">
-                      <input type="text" name="config_image_related_height" value="<?php echo $config_image_related_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
-                    </div>
-                  </div>
-                  <?php if ($error_image_related) { ?>
-                  <div class="text-danger"><?php echo $error_image_related; ?></div>
-                  <?php } ?>
-                </div>
-              </div>
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-image-compare-width"><?php echo $entry_image_compare; ?></label>
-                <div class="col-sm-10">
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <input type="text" name="config_image_compare_width" value="<?php echo $config_image_compare_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-compare-width" class="form-control" />
-                    </div>
-                    <div class="col-sm-6">
-                      <input type="text" name="config_image_compare_height" value="<?php echo $config_image_compare_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
-                    </div>
-                  </div>
-                  <?php if ($error_image_compare) { ?>
-                  <div class="text-danger"><?php echo $error_image_compare; ?></div>
-                  <?php } ?>
-                </div>
-              </div>
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-image-wishlist-width"><?php echo $entry_image_wishlist; ?></label>
-                <div class="col-sm-10">
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <input type="text" name="config_image_wishlist_width" value="<?php echo $config_image_wishlist_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-wishlist-width" class="form-control" />
-                    </div>
-                    <div class="col-sm-6">
-                      <input type="text" name="config_image_wishlist_height" value="<?php echo $config_image_wishlist_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
-                    </div>
-                  </div>
-                  <?php if ($error_image_wishlist) { ?>
-                  <div class="text-danger"><?php echo $error_image_wishlist; ?></div>
-                  <?php } ?>
-                </div>
-              </div>
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-image-cart-width"><?php echo $entry_image_cart; ?></label>
-                <div class="col-sm-10">
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <input type="text" name="config_image_cart_width" value="<?php echo $config_image_cart_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-cart-width" class="form-control" />
-                    </div>
-                    <div class="col-sm-6">
-                      <input type="text" name="config_image_cart_height" value="<?php echo $config_image_cart_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
-                    </div>
-                  </div>
-                  <?php if ($error_image_cart) { ?>
-                  <div class="text-danger"><?php echo $error_image_cart; ?></div>
-                  <?php } ?>
-                </div>
-              </div>
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-image-location"><?php echo $entry_image_location; ?></label>
-                <div class="col-sm-10">
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <input type="text" name="config_image_location_width" value="<?php echo $config_image_location_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-location" class="form-control" />
-                    </div>
-                    <div class="col-sm-6">
-                      <input type="text" name="config_image_location_height" value="<?php echo $config_image_location_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
-                    </div>
-                  </div>
-                  <?php if ($error_image_location) { ?>
-                  <div class="text-danger"><?php echo $error_image_location; ?></div>
-                  <?php } ?>
-                </div>
-              </div>
             </div>
             <div class="tab-pane" id="tab-server">
               <div class="form-group">
@@ -748,28 +567,11 @@
   </div>
   <script type="text/javascript"><!--
 $('select[name=\'config_template\']').on('change', function() {
-	$.ajax({
-		url: 'index.php?route=setting/setting/template&token=<?php echo $token; ?>&template=' + encodeURIComponent(this.value),
-		dataType: 'html',
-		beforeSend: function() {
-			$('select[name=\'config_template\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
-		},
-		complete: function() {
-			$('.fa-spin').remove();
-		},
-		success: function(html) {
-			$('.fa-spin').remove();
-
-			$('#template').attr('src', html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+	$('#theme').attr('src', $('input[name=\'config_url\']') + '/catalog/view/theme/' + this.value + '/image/' + this.value + '.png');
 });
 
-$('select[name=\'config_template\']').trigger('change');
-//--></script>
+$('select[name=\'config_theme\']').trigger('change');
+//--></script> 
   <script type="text/javascript"><!--
 $('select[name=\'config_country_id\']').on('change', function() {
 	$.ajax({
@@ -808,4 +610,4 @@ $('select[name=\'config_country_id\']').on('change', function() {
 
 $('select[name=\'config_country_id\']').trigger('change');
 //--></script></div>
-<?php echo $footer; ?>
+<?php echo $footer; ?> 

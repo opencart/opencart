@@ -85,20 +85,6 @@ class ControllerCommonHeader extends Controller {
 		$data['contact'] = $this->url->link('information/contact');
 		$data['telephone'] = $this->config->get('config_telephone');
 
-		$status = true;
-
-		if (isset($this->request->server['HTTP_USER_AGENT'])) {
-			$robots = explode("\n", str_replace(array("\r\n", "\r"), "\n", trim($this->config->get('config_robots'))));
-
-			foreach ($robots as $robot) {
-				if ($robot && strpos($this->request->server['HTTP_USER_AGENT'], trim($robot)) !== false) {
-					$status = false;
-
-					break;
-				}
-			}
-		}
-
 		// Menu
 		$this->load->model('catalog/category');
 
@@ -141,23 +127,6 @@ class ControllerCommonHeader extends Controller {
 		$data['currency'] = $this->load->controller('common/currency');
 		$data['search'] = $this->load->controller('common/search');
 		$data['cart'] = $this->load->controller('common/cart');
-
-		// For page specific css
-		if (isset($this->request->get['route'])) {
-			if (isset($this->request->get['product_id'])) {
-				$class = '-' . $this->request->get['product_id'];
-			} elseif (isset($this->request->get['path'])) {
-				$class = '-' . $this->request->get['path'];
-			} elseif (isset($this->request->get['manufacturer_id'])) {
-				$class = '-' . $this->request->get['manufacturer_id'];
-			} else {
-				$class = '';
-			}
-
-			$data['class'] = str_replace('/', '-', $this->request->get['route']) . $class;
-		} else {
-			$data['class'] = 'common-home';
-		}
 
 		return $this->load->view('common/header', $data);
 	}

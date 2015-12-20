@@ -184,10 +184,17 @@ class ControllerCheckoutCart extends Controller {
 			// Totals
 			$this->load->model('extension/extension');
 
-			$total_data = array();
-			$total = 0;
+			$totals = array();
 			$taxes = $this->cart->getTaxes();
-
+			$total = 0;
+			
+			// Because __call can not keep var references so we put them into an array. 			
+			$total_data = array(
+				'totals' => &$totals,
+				'taxes'  => &$taxes,
+				'total'  => &$total
+			);
+			
 			// Display prices
 			if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
 				$sort_order = array();
@@ -205,22 +212,22 @@ class ControllerCheckoutCart extends Controller {
 						$this->load->model('total/' . $result['code']);
 						
 						// We have to put the totals in an array so that they pass by reference.
-						$this->{'model_total_' . $result['code']}->getTotal(array($total_data, $total, $taxes));
+						$this->{'model_total_' . $result['code']}->getTotal($total_data);
 					}
 				}
 
 				$sort_order = array();
 
-				foreach ($total_data as $key => $value) {
+				foreach ($totals as $key => $value) {
 					$sort_order[$key] = $value['sort_order'];
 				}
 
-				array_multisort($sort_order, SORT_ASC, $total_data);
+				array_multisort($sort_order, SORT_ASC, $totals);
 			}
 
 			$data['totals'] = array();
 
-			foreach ($total_data as $total) {
+			foreach ($totals as $total) {
 				$data['totals'][] = array(
 					'title' => $total['title'],
 					'text'  => $this->currency->format($total['value'])
@@ -239,7 +246,11 @@ class ControllerCheckoutCart extends Controller {
 
 			if ($files) {
 				foreach ($files as $file) {
-					$data['modules'][] = $this->load->controller('total/' . basename($file, '.php'));
+					$result = $this->load->controller('total/' . basename($file, '.php'));
+					
+					if ($result) {
+						$data['modules'][] = $result;
+					}
 				}
 			}
 
@@ -343,9 +354,16 @@ class ControllerCheckoutCart extends Controller {
 				// Totals
 				$this->load->model('extension/extension');
 
-				$total_data = array();
-				$total = 0;
+				$totals = array();
 				$taxes = $this->cart->getTaxes();
+				$total = 0;
+		
+				// Because __call can not keep var references so we put them into an array. 			
+				$total_data = array(
+					'totals' => &$totals,
+					'taxes'  => &$taxes,
+					'total'  => &$total
+				);
 
 				// Display prices
 				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
@@ -364,17 +382,17 @@ class ControllerCheckoutCart extends Controller {
 							$this->load->model('total/' . $result['code']);
 
 							// We have to put the totals in an array so that they pass by reference.
-							$this->{'model_total_' . $result['code']}->getTotal(array($total_data, $total, $taxes));
+							$this->{'model_total_' . $result['code']}->getTotal($total_data);
 						}
 					}
 
 					$sort_order = array();
 
-					foreach ($total_data as $key => $value) {
+					foreach ($totals as $key => $value) {
 						$sort_order[$key] = $value['sort_order'];
 					}
 
-					array_multisort($sort_order, SORT_ASC, $total_data);
+					array_multisort($sort_order, SORT_ASC, $totals);
 				}
 
 				$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
@@ -433,9 +451,16 @@ class ControllerCheckoutCart extends Controller {
 			// Totals
 			$this->load->model('extension/extension');
 
-			$total_data = array();
-			$total = 0;
+			$totals = array();
 			$taxes = $this->cart->getTaxes();
+			$total = 0;
+
+			// Because __call can not keep var references so we put them into an array. 			
+			$total_data = array(
+				'totals' => &$totals,
+				'taxes'  => &$taxes,
+				'total'  => &$total
+			);
 
 			// Display prices
 			if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
@@ -454,17 +479,17 @@ class ControllerCheckoutCart extends Controller {
 						$this->load->model('total/' . $result['code']);
 
 						// We have to put the totals in an array so that they pass by reference.
-						$this->{'model_total_' . $result['code']}->getTotal(array($total_data, $total, $taxes));
+						$this->{'model_total_' . $result['code']}->getTotal($total_data);
 					}
 				}
 
 				$sort_order = array();
 
-				foreach ($total_data as $key => $value) {
+				foreach ($totals as $key => $value) {
 					$sort_order[$key] = $value['sort_order'];
 				}
 
-				array_multisort($sort_order, SORT_ASC, $total_data);
+				array_multisort($sort_order, SORT_ASC, $totals);
 			}
 
 			$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));

@@ -2,15 +2,13 @@
 class ModelModulePPLogin extends Model {
 	public function getTokens($code) {
 		if ($this->config->get('pp_login_sandbox')) {
-			$endpoint = 'https://api.sandbox.paypal.com/v1/oauth2/token';
+			$endpoint = 'https://api.sandbox.paypal.com/v1/identity/openidconnect/tokenservice';
 		} else {
-			$endpoint = 'https://api.paypal.com/v1/oauth2/token';
+			$endpoint = 'https://api.paypal.com/v1/identity/openidconnect/tokenservice';
 		}
 
 		$request  = '';
-		$request .= 'client_id=' . $this->config->get('pp_login_client_id');
-		$request .= '&client_secret=' . $this->config->get('pp_login_secret');
-		$request .= '&grant_type=authorization_code';
+		$request .= 'grant_type=authorization_code';
 		$request .= '&code=' . $code;
 		$request .= '&redirect_uri=' . urlencode($this->url->link('module/pp_login/login', '', true));
 

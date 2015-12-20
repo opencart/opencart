@@ -1,28 +1,26 @@
 <?php
 class ModelTotalCredit extends Model {
-	public function getTotal($totals) {
-		extract($totals);
-		
+	public function getTotal($total) {
 		$this->load->language('total/credit');
 
 		$balance = $this->customer->getBalance();
 
 		if ((float)$balance) {
-			if ($balance > $total) {
-				$credit = $total;
+			if ($balance > $total['total']) {
+				$credit = $total['total'];
 			} else {
 				$credit = $balance;
 			}
 
 			if ($credit > 0) {
-				$total_data[] = array(
+				$total['totals'][] = array(
 					'code'       => 'credit',
 					'title'      => $this->language->get('text_credit'),
 					'value'      => -$credit,
 					'sort_order' => $this->config->get('credit_sort_order')
 				);
 
-				$total -= $credit;
+				$total['total'] -= $credit;
 			}
 		}
 	}

@@ -55,7 +55,7 @@ class ControllerToolUpload extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('tool/upload', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->ssl('tool/upload', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
@@ -118,15 +118,15 @@ class ControllerToolUpload extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('tool/upload', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->ssl('tool/upload', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
-		$data['delete'] = $this->url->link('tool/upload/delete', 'token=' . $this->session->data['token'] . $url, true);
+		$data['delete'] = $this->url->ssl('tool/upload/delete', 'token=' . $this->session->data['token'] . $url, true);
 
 		$data['uploads'] = array();
 
@@ -149,7 +149,7 @@ class ControllerToolUpload extends Controller {
 				'name'       => $result['name'],
 				'filename'   => $result['filename'],
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'download'   => $this->url->link('tool/upload/download', 'token=' . $this->session->data['token'] . '&code=' . $result['code'] . $url, true)
+				'download'   => $this->url->ssl('tool/upload/download', 'token=' . $this->session->data['token'] . '&code=' . $result['code'] . $url, true)
 			);
 		}
 
@@ -205,9 +205,9 @@ class ControllerToolUpload extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('tool/upload', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
-		$data['sort_filename'] = $this->url->link('tool/upload', 'token=' . $this->session->data['token'] . '&sort=filename' . $url, true);
-		$data['sort_date_added'] = $this->url->link('tool/upload', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, true);
+		$data['sort_name'] = $this->url->ssl('tool/upload', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
+		$data['sort_filename'] = $this->url->ssl('tool/upload', 'token=' . $this->session->data['token'] . '&sort=filename' . $url, true);
+		$data['sort_date_added'] = $this->url->ssl('tool/upload', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, true);
 
 		$url = '';
 
@@ -231,7 +231,7 @@ class ControllerToolUpload extends Controller {
 		$pagination->total = $upload_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('tool/upload', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->ssl('tool/upload', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -305,12 +305,12 @@ class ControllerToolUpload extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+				'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('error/not_found', 'token=' . $this->session->data['token'], true)
+				'href' => $this->url->ssl('error/not_found', 'token=' . $this->session->data['token'], true)
 			);
 
 			$data['header'] = $this->load->controller('common/header');

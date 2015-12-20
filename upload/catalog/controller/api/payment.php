@@ -160,9 +160,16 @@ class ControllerApiPayment extends Controller {
 
 			if (!$json) {
 				// Totals
-				$total_data = array();
-				$total = 0;
+				$totals = array();
 				$taxes = $this->cart->getTaxes();
+				$total = 0;
+
+				// Because __call can not keep var references so we put them into an array. 
+				$total_data = array(
+					'totals' => &$totals,
+					'taxes'  => &$taxes,
+					'total'  => &$total
+				);
 
 				$this->load->model('extension/extension');
 
@@ -181,7 +188,7 @@ class ControllerApiPayment extends Controller {
 						$this->load->model('total/' . $result['code']);
 						
 						// We have to put the totals in an array so that they pass by reference.
-						$this->{'model_total_' . $result['code']}->getTotal(array($total_data, $total, $taxes));
+						$this->{'model_total_' . $result['code']}->getTotal($total_data);
 					}
 				}
 

@@ -38,7 +38,7 @@ class ControllerMarketingCoupon extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->ssl('marketing/coupon', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerMarketingCoupon extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->ssl('marketing/coupon', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerMarketingCoupon extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->ssl('marketing/coupon', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
@@ -147,16 +147,16 @@ class ControllerMarketingCoupon extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->ssl('marketing/coupon', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
-		$data['add'] = $this->url->link('marketing/coupon/add', 'token=' . $this->session->data['token'] . $url, true);
-		$data['delete'] = $this->url->link('marketing/coupon/delete', 'token=' . $this->session->data['token'] . $url, true);
+		$data['add'] = $this->url->ssl('marketing/coupon/add', 'token=' . $this->session->data['token'] . $url, true);
+		$data['delete'] = $this->url->ssl('marketing/coupon/delete', 'token=' . $this->session->data['token'] . $url, true);
 
 		$data['coupons'] = array();
 
@@ -180,7 +180,7 @@ class ControllerMarketingCoupon extends Controller {
 				'date_start' => date($this->language->get('date_format_short'), strtotime($result['date_start'])),
 				'date_end'   => date($this->language->get('date_format_short'), strtotime($result['date_end'])),
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-				'edit'       => $this->url->link('marketing/coupon/edit', 'token=' . $this->session->data['token'] . '&coupon_id=' . $result['coupon_id'] . $url, true)
+				'edit'       => $this->url->ssl('marketing/coupon/edit', 'token=' . $this->session->data['token'] . '&coupon_id=' . $result['coupon_id'] . $url, true)
 			);
 		}
 
@@ -234,12 +234,12 @@ class ControllerMarketingCoupon extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
-		$data['sort_code'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=code' . $url, true);
-		$data['sort_discount'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=discount' . $url, true);
-		$data['sort_date_start'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=date_start' . $url, true);
-		$data['sort_date_end'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=date_end' . $url, true);
-		$data['sort_status'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=status' . $url, true);
+		$data['sort_name'] = $this->url->ssl('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
+		$data['sort_code'] = $this->url->ssl('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=code' . $url, true);
+		$data['sort_discount'] = $this->url->ssl('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=discount' . $url, true);
+		$data['sort_date_start'] = $this->url->ssl('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=date_start' . $url, true);
+		$data['sort_date_end'] = $this->url->ssl('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=date_end' . $url, true);
+		$data['sort_status'] = $this->url->ssl('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=status' . $url, true);
 
 		$url = '';
 
@@ -255,7 +255,7 @@ class ControllerMarketingCoupon extends Controller {
 		$pagination->total = $coupon_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->ssl('marketing/coupon', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -369,21 +369,21 @@ class ControllerMarketingCoupon extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->ssl('marketing/coupon', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
 		if (!isset($this->request->get['coupon_id'])) {
-			$data['action'] = $this->url->link('marketing/coupon/add', 'token=' . $this->session->data['token'] . $url, true);
+			$data['action'] = $this->url->ssl('marketing/coupon/add', 'token=' . $this->session->data['token'] . $url, true);
 		} else {
-			$data['action'] = $this->url->link('marketing/coupon/edit', 'token=' . $this->session->data['token'] . '&coupon_id=' . $this->request->get['coupon_id'] . $url, true);
+			$data['action'] = $this->url->ssl('marketing/coupon/edit', 'token=' . $this->session->data['token'] . '&coupon_id=' . $this->request->get['coupon_id'] . $url, true);
 		}
 
-		$data['cancel'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . $url, true);
+		$data['cancel'] = $this->url->ssl('marketing/coupon', 'token=' . $this->session->data['token'] . $url, true);
 
 		if (isset($this->request->get['coupon_id']) && (!$this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$coupon_info = $this->model_marketing_coupon->getCoupon($this->request->get['coupon_id']);
@@ -609,7 +609,7 @@ class ControllerMarketingCoupon extends Controller {
 		$pagination->total = $history_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->url = $this->url->link('marketing/coupon/history', 'token=' . $this->session->data['token'] . '&coupon_id=' . $this->request->get['coupon_id'] . '&page={page}', true);
+		$pagination->url = $this->url->ssl('marketing/coupon/history', 'token=' . $this->session->data['token'] . '&coupon_id=' . $this->request->get['coupon_id'] . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 

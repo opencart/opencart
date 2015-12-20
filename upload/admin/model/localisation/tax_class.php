@@ -12,6 +12,8 @@ class ModelLocalisationTaxClass extends Model {
 		}
 
 		$this->cache->delete('tax_class');
+		
+		return $tax_class_id;
 	}
 
 	public function editTaxClass($tax_class_id, $data) {

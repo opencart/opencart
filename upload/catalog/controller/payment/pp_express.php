@@ -619,10 +619,17 @@ class ControllerPaymentPPExpress extends Controller {
 		// Totals
 		$this->load->model('extension/extension');
 
-		$total_data = array();
-		$total = 0;
+		$totals = array();
 		$taxes = $this->cart->getTaxes();
+		$total = 0;
 
+		// Because __call can not keep var references so we put them into an array.
+		$total_data = array(
+			'totals' => &$totals,
+			'taxes'  => &$taxes,
+			'total'  => &$total
+		);
+			
 		// Display prices
 		if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
 			$sort_order = array();
@@ -640,22 +647,22 @@ class ControllerPaymentPPExpress extends Controller {
 					$this->load->model('total/' . $result['code']);
 
 					// We have to put the totals in an array so that they pass by reference.
-					$this->{'model_total_' . $result['code']}->getTotal(array($total_data, $total, $taxes));
+					$this->{'model_total_' . $result['code']}->getTotal($total_data);
 				}
 			}
 
 			$sort_order = array();
 
-			foreach ($total_data as $key => $value) {
+			foreach ($totals as $key => $value) {
 				$sort_order[$key] = $value['sort_order'];
 			}
 
-			array_multisort($sort_order, SORT_ASC, $total_data);
+			array_multisort($sort_order, SORT_ASC, $totals);
 		}
 
 		$data['totals'] = array();
 
-		foreach ($total_data as $total) {
+		foreach ($totals as $total) {
 			$data['totals'][] = array(
 				'title' => $total['title'],
 				'text'  => $this->currency->format($total['value']),
@@ -803,10 +810,17 @@ class ControllerPaymentPPExpress extends Controller {
 		}
 
 		if ($redirect == '') {
-			$total_data = array();
-			$total = 0;
+			$totals = array();
 			$taxes = $this->cart->getTaxes();
+			$total = 0;
 
+			// Because __call can not keep var references so we put them into an array.
+			$total_data = array(
+				'totals' => &$totals,
+				'taxes'  => &$taxes,
+				'total'  => &$total
+			);
+			
 			$this->load->model('extension/extension');
 
 			$sort_order = array();
@@ -824,17 +838,17 @@ class ControllerPaymentPPExpress extends Controller {
 					$this->load->model('total/' . $result['code']);
 
 					// We have to put the totals in an array so that they pass by reference.
-					$this->{'model_total_' . $result['code']}->getTotal(array($total_data, $total, $taxes));
+					$this->{'model_total_' . $result['code']}->getTotal($total_data);
 				}
 			}
 
 			$sort_order = array();
 
-			foreach ($total_data as $key => $value) {
+			foreach ($totals as $key => $value) {
 				$sort_order[$key] = $value['sort_order'];
 			}
 
-			array_multisort($sort_order, SORT_ASC, $total_data);
+			array_multisort($sort_order, SORT_ASC, $totals);
 
 			$this->load->language('checkout/checkout');
 
@@ -1000,7 +1014,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 			$data['products'] = $product_data;
 			$data['vouchers'] = $voucher_data;
-			$data['totals'] = $total_data;
+			$data['totals'] = $totals;
 			$data['comment'] = $this->session->data['comment'];
 			$data['total'] = $total;
 

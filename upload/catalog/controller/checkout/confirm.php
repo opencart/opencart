@@ -56,10 +56,17 @@ class ControllerCheckoutConfirm extends Controller {
 		if (!$redirect) {
 			$order_data = array();
 
-			$order_data['totals'] = array();
-			$total = 0;
+			$totals = array();
 			$taxes = $this->cart->getTaxes();
+			$total = 0;
 
+			// Because __call can not keep var references so we put them into an array. 
+			$total_data = array(
+				'totals' => &$totals,
+				'taxes'  => &$taxes,
+				'total'  => &$total
+			);
+			
 			$this->load->model('extension/extension');
 
 			$sort_order = array();
@@ -77,17 +84,19 @@ class ControllerCheckoutConfirm extends Controller {
 					$this->load->model('total/' . $result['code']);
 
 					// We have to put the totals in an array so that they pass by reference.
-					$this->{'model_total_' . $result['code']}->getTotal(array($order_data['totals'], $total, $taxes));
+					$this->{'model_total_' . $result['code']}->getTotal($total_data);
 				}
 			}
 
 			$sort_order = array();
 
-			foreach ($order_data['totals'] as $key => $value) {
+			foreach ($totals as $key => $value) {
 				$sort_order[$key] = $value['sort_order'];
 			}
 
-			array_multisort($sort_order, SORT_ASC, $order_data['totals']);
+			array_multisort($sort_order, SORT_ASC, $totals);
+
+			$order_data['totals'] = $totals;
 
 			$this->load->language('checkout/checkout');
 
@@ -247,7 +256,7 @@ class ControllerCheckoutConfirm extends Controller {
 			}
 
 			$order_data['comment'] = $this->session->data['comment'];
-			$order_data['total'] = $total;
+			$order_data['total'] = $total_data['total'];
 
 			if (isset($this->request->cookie['tracking'])) {
 				$order_data['tracking'] = $this->request->cookie['tracking'];

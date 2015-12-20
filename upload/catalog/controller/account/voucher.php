@@ -211,7 +211,7 @@ class ControllerAccountVoucher extends Controller {
 			$this->error['to_name'] = $this->language->get('error_to_name');
 		}
 
-		if ((utf8_strlen($this->request->post['to_email']) > 96) || !preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['to_email'])) {
+		if ((utf8_strlen($this->request->post['to_email']) > 96) || !filter_var($this->request->post['to_email'], FILTER_VALIDATE_EMAIL)) {
 			$this->error['to_email'] = $this->language->get('error_email');
 		}
 
@@ -219,7 +219,7 @@ class ControllerAccountVoucher extends Controller {
 			$this->error['from_name'] = $this->language->get('error_from_name');
 		}
 
-		if ((utf8_strlen($this->request->post['from_email']) > 96) || !preg_match('/^[^\@]+@.*.[a-z]{2,15}$/i', $this->request->post['from_email'])) {
+		if ((utf8_strlen($this->request->post['from_email']) > 96) || !filter_var($this->request->post['from_email'], FILTER_VALIDATE_EMAIL)) {
 			$this->error['from_email'] = $this->language->get('error_email');
 		}
 

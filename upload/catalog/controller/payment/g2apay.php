@@ -17,20 +17,31 @@ class ControllerPaymentG2APay extends Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		$this->load->model('extension/extension');
-		$results = $this->model_extension_extension->getExtensions('total');
 		$order_data = array();
-		$total = 0;
-		$items = array();
+		
+		$this->load->model('extension/extension');
+		
+		$totals = array();
 		$taxes = $this->cart->getTaxes();
+		$total = 0;
 
+		// Because __call can not keep var references so we put them into an array.
+		$total_data = array(
+			'totals' => &$totals,
+			'taxes'  => &$taxes,
+			'total'  => &$total
+		);
+			
 		$i = 0;
+		
+		$results = $this->model_extension_extension->getExtensions('total');
+		
 		foreach ($results as $result) {
 			if ($this->config->get($result['code'] . '_status')) {
 				$this->load->model('total/' . $result['code']);
 				
 				// We have to put the totals in an array so that they pass by reference.
-				$this->{'model_total_' . $result['code']}->getTotal(array($order_data['totals'], $total, $taxes));
+				$this->{'model_total_' . $result['code']}->getTotal($total_data);
 
 				if (isset($order_data['totals'][$i])) {
 					if (strstr(strtolower($order_data['totals'][$i]['code']), 'total') === false) {
@@ -41,6 +52,7 @@ class ControllerPaymentG2APay extends Controller {
 						$item->qty = 1;
 						$items[] = $item;
 					}
+					
 					$i++;
 				}
 			}
@@ -119,6 +131,7 @@ class ControllerPaymentG2APay extends Controller {
 
 		if ($order_info) {
 			$this->load->model('payment/g2apay');
+			
 			$g2apay_order_info = $this->model_payment_g2apay->getG2aOrder($order_id);
 
 			$this->model_payment_g2apay->updateOrder($g2apay_order_info['g2apay_order_id'], $g2apay_transaction_id, 'payment', $order_info);

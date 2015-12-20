@@ -117,7 +117,7 @@
             <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_locale; ?>"><?php echo $entry_locale; ?></span></label>
             <div class="col-sm-10">
               <?php foreach ($languages as $language) { ?>
-              <div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
+              <div class="input-group"><span class="input-group-addon"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /></span>
                 <select name="pp_login_locale[<?php echo $language['language_id']; ?>]" class="form-control">
                   <?php foreach ($locales as $locale) { ?>
                   <?php if (isset($pp_login_locale[$language['language_id']]) && $pp_login_locale[$language['language_id']] == $locale['value']) { ?>

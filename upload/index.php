@@ -24,12 +24,16 @@ $registry->set('load', new Loader($registry));
 
 // Config
 $config = new Config();
+
+// Load config defaults
 $config->load('default');
 $config->load('catalog');
-$registry->set('config', $config);
+// Get additional config settings setup by the default config file
+//foreach ($config->get('') as $file) {
+//	$config->load('catalog');
+//}
 
-// Log
-//$registry->set('log', new Log($config->get('config_error_filename')));
+$registry->set('config', $config);
 
 // Request
 $registry->set('request', new Request());
@@ -41,16 +45,19 @@ $response->setCompression($config->get('config_compression'));
 $registry->set('response', $response);
 
 // Session
-$registry->set('session', new Session($config->get('config_session')));
+$registry->set('session', new Session());
 
 // Cache
 $registry->set('cache', new Cache($config->get('config_cache')));
 
 // Url
-$registry->set('url', new Url($config->get('config_url'), $config->get('config_secure') ? $config->get('config_ssl') : $config->get('config_url')));
+$registry->set('url', new Url($config->get('config_url')));
 
 // Event
 $registry->set('event', new Event($registry));
+
+// Language
+$registry->set('language', new Language('en-gb'));
 
 // Document
 $registry->set('document', new Document());

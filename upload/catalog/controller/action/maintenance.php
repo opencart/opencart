@@ -1,5 +1,5 @@
 <?php
-class ControllerEventMaintenance extends Controller {
+class ControllerActionMaintenance extends Controller {
 	public function index() {
 		if ($this->config->get('config_maintenance')) {
 			$route = '';

@@ -1,5 +1,5 @@
 <?php
-class ControllerEventLanguage extends Controller {
+class ControllerActionLanguage extends Controller {
 	public function index() {
 		// Language Detection
 		$languages = array();
@@ -36,7 +36,7 @@ class ControllerEventLanguage extends Controller {
 		}
 		
 		if (!isset($this->request->cookie['language']) || $this->request->cookie['language'] != $code) {
-			setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $request->server['HTTP_HOST']);
+			setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
 		}
 		
 		$this->config->set('config_language_id', $languages[$code]['language_id']);

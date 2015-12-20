@@ -80,10 +80,10 @@ class ControllerOpenbayAmazonusListing extends Controller{
 
 			if ($result['status'] === 1) {
 				$this->session->data['success'] = $this->language->get('text_product_sent');
-				$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, true));
+				$this->response->redirect($this->url->ssl('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, true));
 			} else {
 				$this->session->data['error'] = sprintf($this->language->get('text_product_not_sent'), $result['message']);
-				$this->response->redirect($this->url->link('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->post['product_id'] . $url, true));
+				$this->response->redirect($this->url->ssl('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->post['product_id'] . $url, true));
 			}
 		}
 
@@ -91,23 +91,23 @@ class ControllerOpenbayAmazonusListing extends Controller{
 			$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
 
 			if (empty($product_info)) {
-				$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, true));
+				$this->response->redirect($this->url->ssl('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, true));
 			}
 
 			$listing_status = $this->model_openbay_amazonus->getProductStatus($this->request->get['product_id']);
 
 			if ($listing_status === 'processing' || $listing_status === 'ok') {
-				$this->response->redirect($this->url->link('openbay/amazonus_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'] . $url, true));
+				$this->response->redirect($this->url->ssl('openbay/amazonus_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'] . $url, true));
 			} else if ($listing_status === 'error_advanced' || $listing_status === 'saved' || $listing_status === 'error_few') {
-				$this->response->redirect($this->url->link('openbay/amazonus_product', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'] . $url, true));
+				$this->response->redirect($this->url->ssl('openbay/amazonus_product', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'] . $url, true));
 			}
 		} else {
-			$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->ssl('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
-		$data['url_return']  = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, true);
-		$data['url_search']  = $this->url->link('openbay/amazonus_listing/search', 'token=' . $this->session->data['token'], true);
-		$data['url_advanced']  = $this->url->link('openbay/amazonus_product', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'] . $url, true);
+		$data['url_return']  = $this->url->ssl('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, true);
+		$data['url_search']  = $this->url->ssl('openbay/amazonus_listing/search', 'token=' . $this->session->data['token'], true);
+		$data['url_advanced']  = $this->url->ssl('openbay/amazonus_product', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'] . $url, true);
 
 		$data['button_search'] = $this->language->get('button_search');
 		$data['button_new'] = $this->language->get('button_new');
@@ -146,7 +146,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 		$data['error_sku'] = $this->language->get('error_sku');
 		$data['error_stock'] = $this->language->get('error_stock');
 
-		$data['form_action'] = $this->url->link('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'], true);
+		$data['form_action'] = $this->url->ssl('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'], true);
 
 		$data['sku'] = trim($product_info['sku']);
 
@@ -186,22 +186,22 @@ class ControllerOpenbayAmazonusListing extends Controller{
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('text_home'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('extension/openbay', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('text_openbay'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/amazonus', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('openbay/amazonus', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('text_amazon'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . $url, true),
+			'href' => $this->url->ssl('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . $url, true),
 			'text' => $this->language->get('heading_title'),
 		);
 
@@ -281,43 +281,43 @@ class ControllerOpenbayAmazonusListing extends Controller{
 		if (isset($this->request->get['product_id'])) {
 			$product_id = $this->request->get['product_id'];
 		} else {
-			$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->ssl('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('text_home'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('extension/openbay', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('text_openbay'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/amazonus', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('openbay/amazonus', 'token=' . $this->session->data['token'], true),
 			'text' => $this->language->get('text_amazon'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/amazonus_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, true),
+			'href' => $this->url->ssl('openbay/amazonus_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, true),
 			'text' => $this->language->get('text_edit_heading'),
 		);
 
 		$status = $this->model_openbay_amazonus->getProductStatus($product_id);
 
 		if ($status === false) {
-			$this->response->redirect($this->url->link('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, true));
+			$this->response->redirect($this->url->ssl('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, true));
 			return;
 		}
 
 		$data['product_links'] = $this->model_openbay_amazonus->getProductLinks($product_id);
-		$data['url_return']  = $this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, true);
+		$data['url_return']  = $this->url->ssl('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, true);
 		if ($status == 'ok' || $status == 'linked') {
-			$data['url_create_new']  = $this->url->link('openbay/amazonus_listing/createNew', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, true);
-			$data['url_delete_links']  = $this->url->link('openbay/amazonus_listing/deleteLinks', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, true);
+			$data['url_create_new']  = $this->url->ssl('openbay/amazonus_listing/createNew', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, true);
+			$data['url_delete_links']  = $this->url->ssl('openbay/amazonus_listing/deleteLinks', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, true);
 		}
 
 		if ($status == 'saved') {
@@ -326,7 +326,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 			$data['has_saved_listings'] = false;
 		}
 
-		$data['url_saved_listings']  = $this->url->link('openbay/amazonus/savedListings', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id, true);
+		$data['url_saved_listings']  = $this->url->ssl('openbay/amazonus/savedListings', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id, true);
 
 		$data['token'] = $this->session->data['token'];
 
@@ -413,11 +413,11 @@ class ControllerOpenbayAmazonusListing extends Controller{
 		if (isset($this->request->get['product_id'])) {
 			$product_id = $this->request->get['product_id'];
 		} else {
-			$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->ssl('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, true));
 		}
 		$this->load->model('openbay/amazonus');
 		$this->model_openbay_amazonus->deleteProduct($product_id);
-		$this->response->redirect($this->url->link('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, true));
+		$this->response->redirect($this->url->ssl('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, true));
 	}
 
 	public function deleteLinks() {
@@ -483,7 +483,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 		if (isset($this->request->get['product_id'])) {
 			$product_id = $this->request->get['product_id'];
 		} else {
-			$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->ssl('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->load->model('openbay/amazonus');
@@ -496,7 +496,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 		$this->model_openbay_amazonus->deleteProduct($product_id);
 		$this->session->data['success'] = $this->language->get('text_links_removed');
 
-		$this->response->redirect($this->url->link('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, true));
+		$this->response->redirect($this->url->ssl('extension/openbay/items', 'token=' . $this->session->data['token'] . $url, true));
 	}
 
 	public function search() {

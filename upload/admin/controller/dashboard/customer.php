@@ -38,7 +38,7 @@ class ControllerDashboardCustomer extends Controller {
 			$data['total'] = $customer_total;
 		}
 
-		$data['customer'] = $this->url->link('customer/customer', 'token=' . $this->session->data['token'], true);
+		$data['customer'] = $this->url->ssl('customer/customer', 'token=' . $this->session->data['token'], true);
 
 		return $this->load->view('dashboard/customer', $data);
 	}

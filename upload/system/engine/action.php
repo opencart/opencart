@@ -25,7 +25,7 @@ class Action {
 		if (substr($this->method, 0, 2) == '__') {
 			return false;
 		}
-
+		
 		$file = DIR_APPLICATION . 'controller/' . $this->route . '.php';		
 		$class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', $this->route);
 		

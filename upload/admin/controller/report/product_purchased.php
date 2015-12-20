@@ -51,12 +51,12 @@ class ControllerReportProductPurchased extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('report/product_purchased', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->ssl('report/product_purchased', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
 		$this->load->model('report/product');
@@ -126,7 +126,7 @@ class ControllerReportProductPurchased extends Controller {
 		$pagination->total = $product_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('report/product_purchased', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->ssl('report/product_purchased', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 

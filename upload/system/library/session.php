@@ -7,9 +7,9 @@ class Session {
 		
 		array_shift($args);
 		
-		$class = 'Session\\' . $driver;
+		$class = 'Session\\' . $adaptor;
 		
-		if ($driver && class_exists($class)) {
+		if ($adaptor && class_exists($class)) {
 			call_user_func($class, $registry);
 		
 			session_set_save_handler(

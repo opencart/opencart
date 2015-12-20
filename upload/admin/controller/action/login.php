@@ -9,6 +9,9 @@ class ControllerActionLogin extends Controller {
 			'common/reset'
 		);
 
+		// User
+		$this->registry->set('user', new Cart\User($this->registry));
+
 		if (!$this->user->isLogged() && !in_array($route, $ignore)) {
 			return new Action('common/login');
 		}

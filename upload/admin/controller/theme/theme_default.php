@@ -14,7 +14,7 @@ class ControllerThemeThemeDefault extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/theme', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->ssl('extension/theme', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -127,22 +127,22 @@ class ControllerThemeThemeDefault extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_theme'),
-			'href' => $this->url->link('extension/theme', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('extension/theme', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('theme/theme_default', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('theme/theme_default', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('theme/theme_default', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->ssl('theme/theme_default', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/theme', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->ssl('extension/theme', 'token=' . $this->session->data['token'], true);
 
 		if (isset($this->request->post['theme_default_product_limit'])) {
 			$data['theme_default_product_limit'] = $this->request->post['theme_default_product_limit'];

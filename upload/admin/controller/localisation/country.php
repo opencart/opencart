@@ -38,7 +38,7 @@ class ControllerLocalisationCountry extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('localisation/country', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->ssl('localisation/country', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerLocalisationCountry extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('localisation/country', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->ssl('localisation/country', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerLocalisationCountry extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('localisation/country', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->ssl('localisation/country', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
@@ -147,16 +147,16 @@ class ControllerLocalisationCountry extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/country', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->ssl('localisation/country', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
-		$data['add'] = $this->url->link('localisation/country/add', 'token=' . $this->session->data['token'] . $url, true);
-		$data['delete'] = $this->url->link('localisation/country/delete', 'token=' . $this->session->data['token'] . $url, true);
+		$data['add'] = $this->url->ssl('localisation/country/add', 'token=' . $this->session->data['token'] . $url, true);
+		$data['delete'] = $this->url->ssl('localisation/country/delete', 'token=' . $this->session->data['token'] . $url, true);
 
 		$data['countries'] = array();
 
@@ -177,7 +177,7 @@ class ControllerLocalisationCountry extends Controller {
 				'name'       => $result['name'] . (($result['country_id'] == $this->config->get('config_country_id')) ? $this->language->get('text_default') : null),
 				'iso_code_2' => $result['iso_code_2'],
 				'iso_code_3' => $result['iso_code_3'],
-				'edit'       => $this->url->link('localisation/country/edit', 'token=' . $this->session->data['token'] . '&country_id=' . $result['country_id'] . $url, true)
+				'edit'       => $this->url->ssl('localisation/country/edit', 'token=' . $this->session->data['token'] . '&country_id=' . $result['country_id'] . $url, true)
 			);
 		}
 
@@ -228,9 +228,9 @@ class ControllerLocalisationCountry extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('localisation/country', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
-		$data['sort_iso_code_2'] = $this->url->link('localisation/country', 'token=' . $this->session->data['token'] . '&sort=iso_code_2' . $url, true);
-		$data['sort_iso_code_3'] = $this->url->link('localisation/country', 'token=' . $this->session->data['token'] . '&sort=iso_code_3' . $url, true);
+		$data['sort_name'] = $this->url->ssl('localisation/country', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
+		$data['sort_iso_code_2'] = $this->url->ssl('localisation/country', 'token=' . $this->session->data['token'] . '&sort=iso_code_2' . $url, true);
+		$data['sort_iso_code_3'] = $this->url->ssl('localisation/country', 'token=' . $this->session->data['token'] . '&sort=iso_code_3' . $url, true);
 
 		$url = '';
 
@@ -246,7 +246,7 @@ class ControllerLocalisationCountry extends Controller {
 		$pagination->total = $country_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('localisation/country', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->ssl('localisation/country', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -313,21 +313,21 @@ class ControllerLocalisationCountry extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('localisation/country', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->ssl('localisation/country', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
 		if (!isset($this->request->get['country_id'])) {
-			$data['action'] = $this->url->link('localisation/country/add', 'token=' . $this->session->data['token'] . $url, true);
+			$data['action'] = $this->url->ssl('localisation/country/add', 'token=' . $this->session->data['token'] . $url, true);
 		} else {
-			$data['action'] = $this->url->link('localisation/country/edit', 'token=' . $this->session->data['token'] . '&country_id=' . $this->request->get['country_id'] . $url, true);
+			$data['action'] = $this->url->ssl('localisation/country/edit', 'token=' . $this->session->data['token'] . '&country_id=' . $this->request->get['country_id'] . $url, true);
 		}
 
-		$data['cancel'] = $this->url->link('localisation/country', 'token=' . $this->session->data['token'] . $url, true);
+		$data['cancel'] = $this->url->ssl('localisation/country', 'token=' . $this->session->data['token'] . $url, true);
 
 		if (isset($this->request->get['country_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);

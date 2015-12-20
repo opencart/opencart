@@ -2,45 +2,44 @@
 class ControllerActionCart extends Controller {
 	public function index() {
 		// Customer
-		$customer = new Cart\Customer($registry);
-		$registry->set('customer', $customer);
+		$this->registry->set('customer', new Cart\Customer($this->registry));
 		
 		// Customer Group
-		if ($customer->isLogged()) {
-			$config->set('config_customer_group_id', $customer->getGroupId());
-		} elseif (isset($session->data['customer']) && isset($session->data['customer']['customer_group_id'])) {
+		if ($this->customer->isLogged()) {
+			$this->config->set('config_customer_group_id', $this->customer->getGroupId());
+		} elseif (isset($this->session->data['customer']) && isset($this->session->data['customer']['customer_group_id'])) {
 			// For API calls
-			$config->set('config_customer_group_id', $session->data['customer']['customer_group_id']);
-		} elseif (isset($session->data['guest']) && isset($session->data['guest']['customer_group_id'])) {
-			$config->set('config_customer_group_id', $session->data['guest']['customer_group_id']);
+			$this->config->set('config_customer_group_id', $this->session->data['customer']['customer_group_id']);
+		} elseif (isset($this->session->data['guest']) && isset($this->session->data['guest']['customer_group_id'])) {
+			$this->config->set('config_customer_group_id', $this->session->data['guest']['customer_group_id']);
 		}
 		
 		// Tracking Code
-		if (isset($request->get['tracking'])) {
+		if (isset($this->request->get['tracking'])) {
 			setcookie('tracking', $request->get['tracking'], time() + 3600 * 24 * 1000, '/');
 		
-			$db->query("UPDATE `" . DB_PREFIX . "marketing` SET clicks = (clicks + 1) WHERE code = '" . $db->escape($request->get['tracking']) . "'");
+			$this->db->query("UPDATE `" . DB_PREFIX . "marketing` SET clicks = (clicks + 1) WHERE code = '" . $this->db->escape($request->get['tracking']) . "'");
 		}
 		
 		// Affiliate
-		$registry->set('affiliate', new Cart\Affiliate($registry));
+		$this->registry->set('affiliate', new Cart\Affiliate($this->registry));
 		
 		// Currency
-		$registry->set('currency', new Cart\Currency($registry));
+		$this->registry->set('currency', new Cart\Currency($this->registry));
 		
 		// Tax
-		$registry->set('tax', new Cart\Tax($registry));
+		$this->registry->set('tax', new Cart\Tax($this->registry));
 		
 		// Weight
-		$registry->set('weight', new Cart\Weight($registry));
+		$this->registry->set('weight', new Cart\Weight($this->registry));
 		
 		// Length
-		$registry->set('length', new Cart\Length($registry));
+		$this->registry->set('length', new Cart\Length($this->registry));
 		
 		// Cart
-		$registry->set('cart', new Cart\Cart($registry));
+		$this->registry->set('cart', new Cart\Cart($this->registry));
 		
 		// OpenBay Pro
-		$registry->set('openbay', new Openbay($registry));
+		$this->registry->set('openbay', new Openbay($this->registry));
 	}
 }

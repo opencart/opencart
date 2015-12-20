@@ -38,7 +38,7 @@ class ControllerDesignLanguage extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('design/language', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->ssl('design/language', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -70,7 +70,7 @@ class ControllerDesignLanguage extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('design/language', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->ssl('design/language', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getForm();
@@ -104,7 +104,7 @@ class ControllerDesignLanguage extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('design/language', 'token=' . $this->session->data['token'] . $url, true));
+			$this->response->redirect($this->url->ssl('design/language', 'token=' . $this->session->data['token'] . $url, true));
 		}
 
 		$this->getList();
@@ -147,16 +147,16 @@ class ControllerDesignLanguage extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('design/language', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->ssl('design/language', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
-		$data['add'] = $this->url->link('design/language/add', 'token=' . $this->session->data['token'] . $url, true);
-		$data['delete'] = $this->url->link('design/language/delete', 'token=' . $this->session->data['token'] . $url, true);
+		$data['add'] = $this->url->ssl('design/language/add', 'token=' . $this->session->data['token'] . $url, true);
+		$data['delete'] = $this->url->ssl('design/language/delete', 'token=' . $this->session->data['token'] . $url, true);
 
 		$data['languages'] = array();
 
@@ -176,7 +176,7 @@ class ControllerDesignLanguage extends Controller {
 				'language_id' => $result['language_id'],
 				'name'        => $result['name'],
 				'status'      => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-				'edit'        => $this->url->link('design/language/edit', 'token=' . $this->session->data['token'] . '&language_id=' . $result['language_id'] . $url, true)
+				'edit'        => $this->url->ssl('design/language/edit', 'token=' . $this->session->data['token'] . '&language_id=' . $result['language_id'] . $url, true)
 			);
 		}
 
@@ -226,8 +226,8 @@ class ControllerDesignLanguage extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['sort_name'] = $this->url->link('design/language', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
-		$data['sort_status'] = $this->url->link('design/language', 'token=' . $this->session->data['token'] . '&sort=status' . $url, true);
+		$data['sort_name'] = $this->url->ssl('design/language', 'token=' . $this->session->data['token'] . '&sort=name' . $url, true);
+		$data['sort_status'] = $this->url->ssl('design/language', 'token=' . $this->session->data['token'] . '&sort=status' . $url, true);
 
 		$url = '';
 
@@ -243,7 +243,7 @@ class ControllerDesignLanguage extends Controller {
 		$pagination->total = $language_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('design/language', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->ssl('design/language', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 
@@ -315,21 +315,21 @@ class ControllerDesignLanguage extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('design/language', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->ssl('design/language', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
 		if (!isset($this->request->get['language_id'])) {
-			$data['action'] = $this->url->link('design/language/add', 'token=' . $this->session->data['token'] . $url, true);
+			$data['action'] = $this->url->ssl('design/language/add', 'token=' . $this->session->data['token'] . $url, true);
 		} else {
-			$data['action'] = $this->url->link('design/language/edit', 'token=' . $this->session->data['token'] . '&language_id=' . $this->request->get['language_id'] . $url, true);
+			$data['action'] = $this->url->ssl('design/language/edit', 'token=' . $this->session->data['token'] . '&language_id=' . $this->request->get['language_id'] . $url, true);
 		}
 
-		$data['cancel'] = $this->url->link('design/language', 'token=' . $this->session->data['token'] . $url, true);
+		$data['cancel'] = $this->url->ssl('design/language', 'token=' . $this->session->data['token'] . $url, true);
 
 		if (isset($this->request->get['language_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$language_info = $this->model_design_language->getLanguage($this->request->get['language_id']);

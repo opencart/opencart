@@ -14,7 +14,7 @@ class ControllerShippingWeight extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/shipping', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->ssl('extension/shipping', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -46,22 +46,22 @@ class ControllerShippingWeight extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_shipping'),
-			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('extension/shipping', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('shipping/weight', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('shipping/weight', 'token=' . $this->session->data['token'], true)
 		);
 
-		$data['action'] = $this->url->link('shipping/weight', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->ssl('shipping/weight', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->ssl('extension/shipping', 'token=' . $this->session->data['token'], true);
 
 		$this->load->model('localisation/geo_zone');
 

@@ -1,14 +1,14 @@
 <?php
-class ControllerStartEvent extends Controller {
+class ControllerActionEvent extends Controller {
 	public function index() {
 		// Template Override
-		$event->register('view/*/before', new Action('event/template'));
+		$this->event->register('view/*/before', new Action('event/theme'));
 		
 		// Account Mail
-		$event->register('model/account/customer/addCustomer/after', new Action('mail/account'));
+		$this->event->register('model/account/customer/addCustomer/after', new Action('mail/account'));
 		
 		// Checkout Mail
-		$event->register('model/checkout/order/addOrder/after', new Action('mail/order'));
+		$this->event->register('model/checkout/order/addOrder/after', new Action('mail/order'));
 		
 		// Add events from the DB
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `trigger` LIKE 'catalog/%'");

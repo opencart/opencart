@@ -16,7 +16,7 @@ class ControllerModuleAmazonLogin extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->ssl('extension/module', 'token=' . $this->session->data['token'], true));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -61,25 +61,25 @@ class ControllerModuleAmazonLogin extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true),
 			'separator' => false
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_module'),
-			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('extension/module', 'token=' . $this->session->data['token'], true),
 			'separator' => ' :: '
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('module/amazon_login', 'token=' . $this->session->data['token'], true),
+			'href' => $this->url->ssl('module/amazon_login', 'token=' . $this->session->data['token'], true),
 			'separator' => ' :: '
 		);
 
-		$data['action'] = $this->url->link('module/amazon_login', 'token=' . $this->session->data['token'], true);
+		$data['action'] = $this->url->ssl('module/amazon_login', 'token=' . $this->session->data['token'], true);
 
-		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], true);
+		$data['cancel'] = $this->url->ssl('extension/module', 'token=' . $this->session->data['token'], true);
 
 		$data['token'] = $this->session->data['token'];
 

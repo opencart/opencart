@@ -34,8 +34,12 @@ class Url {
 	}
 	
 	public function ssl($route, $args = '') {
-		$url = 'https://' . $this->domain . '/index.php?route=' . $route;
-
+		if ($_SERVER['HTTPS']) {
+			$url = 'https://' . $this->domain . '/index.php?route=' . $route;
+		} else {
+			$url = 'http://' . $this->domain . '/index.php?route=' . $route;
+		}
+		
 		if ($args) {
 			if (is_array($args)) {
 				$url .= '&amp;' . http_build_query($args);

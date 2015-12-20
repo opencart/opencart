@@ -93,6 +93,17 @@ final class Loader {
 		}
 	}
 
+	public function library($route) {
+		$file = DIR_SYSTEM . 'library/' . str_replace('../', '', (string)$route) . '.php';
+
+		if (is_file($file)) {
+			include_once($file);
+		} else {
+			trigger_error('Error: Could not load helper ' . $route . '!');
+			exit();
+		}
+	}
+	
 	public function config($route) {
 		$this->registry->get('event')->trigger('config/' . $route . '/before', $route);
 		

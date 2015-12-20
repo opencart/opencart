@@ -41,12 +41,12 @@ class ControllerReportAffiliate extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('report/affiliate', 'token=' . $this->session->data['token'] . $url, true)
+			'href' => $this->url->ssl('report/affiliate', 'token=' . $this->session->data['token'] . $url, true)
 		);
 
 		$this->load->model('report/affiliate');
@@ -72,7 +72,7 @@ class ControllerReportAffiliate extends Controller {
 				'commission' => $this->currency->format($result['commission'], $this->config->get('config_currency')),
 				'orders'     => $result['orders'],
 				'total'      => $this->currency->format($result['total'], $this->config->get('config_currency')),
-				'edit'       => $this->url->link('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, true)
+				'edit'       => $this->url->ssl('marketing/affiliate/edit', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, true)
 			);
 		}
 
@@ -112,7 +112,7 @@ class ControllerReportAffiliate extends Controller {
 		$pagination->total = $affiliate_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_limit_admin');
-		$pagination->url = $this->url->link('report/affiliate', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
+		$pagination->url = $this->url->ssl('report/affiliate', 'token=' . $this->session->data['token'] . $url . '&page={page}', true);
 
 		$data['pagination'] = $pagination->render();
 

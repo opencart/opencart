@@ -32,7 +32,7 @@ class ControllerExtensionAnalytics extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/analytics', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->ssl('extension/analytics', 'token=' . $this->session->data['token'], true));
 		}
 
 		$this->getList();
@@ -57,7 +57,7 @@ class ControllerExtensionAnalytics extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/analytics', 'token=' . $this->session->data['token'], true));
+			$this->response->redirect($this->url->ssl('extension/analytics', 'token=' . $this->session->data['token'], true));
 		}
 	}
 
@@ -66,12 +66,12 @@ class ControllerExtensionAnalytics extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('common/dashboard', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('extension/analytics', 'token=' . $this->session->data['token'], true)
+			'href' => $this->url->ssl('extension/analytics', 'token=' . $this->session->data['token'], true)
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -125,10 +125,10 @@ class ControllerExtensionAnalytics extends Controller {
 				$data['extensions'][] = array(
 					'name'      => $this->language->get('heading_title'),
 					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'install'   => $this->url->link('extension/analytics/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'uninstall' => $this->url->link('extension/analytics/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'install'   => $this->url->ssl('extension/analytics/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
+					'uninstall' => $this->url->ssl('extension/analytics/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->link('analytics/' . $extension . '', 'token=' . $this->session->data['token'], true)
+					'edit'      => $this->url->ssl('analytics/' . $extension . '', 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}

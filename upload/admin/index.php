@@ -28,9 +28,6 @@ $config->load('default');
 $config->load('admin');
 $registry->set('config', $config);
 
-// Log
-//$registry->set('log', new Log($config->get('config_error_filename')));
-
 // Request
 $registry->set('request', new Request());
 
@@ -48,10 +45,13 @@ $registry->set('session', $session);
 $registry->set('cache', new Cache('file'));
 
 // Url
-$registry->set('url', new Url(HTTP_SERVER, $config->get('config_secure') ? HTTPS_SERVER : HTTP_SERVER));
+$registry->set('url', new Url($_SERVER['HTTP_HOST']));
 
 // Event
 $registry->set('event', new Event($registry));
+
+// Language
+$registry->set('language', new Language('en-gb'));
 
 // Document
 $registry->set('document', new Document());

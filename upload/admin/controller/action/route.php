@@ -1,5 +1,5 @@
 <?php
-class ControllerEventRoute extends Controller {
+class ControllerActionRoute extends Controller {
 	public function index() {
 		// Route
 		if (isset($this->request->get['route'])) {

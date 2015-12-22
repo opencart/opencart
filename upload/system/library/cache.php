@@ -2,13 +2,13 @@
 class Cache {
 	private $adaptor;
 
-	public function __construct($driver, $expire = 3600) {
-		$class = 'Cache\\' . $driver;
+	public function __construct($adaptor, $expire = 3600) {
+		$class = 'Cache\\' . $adaptor;
 
 		if (class_exists($class)) {
 			$this->adaptor = new $class($expire);
 		} else {
-			exit('Error: Could not load cache driver ' . $driver . ' cache!');
+			exit('Error: Could not load cache adaptor ' . $adaptor . ' cache!');
 		}
 	}
 	

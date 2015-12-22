@@ -33,7 +33,7 @@ $registry->set('session', new Session());
 $registry->set('cache', new Cache($config->get('cache.type'), $config->get('cache.expire')));
 
 // Url
-$registry->set('url', new Url($config->get('url.base'), $config->get('url.ssl')));
+$registry->set('url', new Url($config->get('site.base'), $config->get('site.ssl')));
 
 // Language
 $language = new Language($config->get('language.default'));

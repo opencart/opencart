@@ -18,7 +18,7 @@ class Url {
 			return $this->ssl($route, $args);
 		}
 
-		$url = 'http://' . $this->domain . '/index.php?route=' . $route;
+		$url = 'http://' . $this->base . 'index.php?route=' . $route;
 
 		if ($args) {
 			if (is_array($args)) {

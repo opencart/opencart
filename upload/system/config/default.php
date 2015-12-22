@@ -1,12 +1,69 @@
 <?php
-$_['config_language']    = 'en-gb';
-$_['config_cache']       = 'file';
-$_['config_session']     = 'file';
-$_['session_auto_start'] = false;
-$_['config_error_log']   = 'error.txt';
-$_['config_url']         = '';
-$_['config_default']     = 'common/home';
-$_['config_route']       = 'action/route';
-$_['config_error']       = 'error/not_found';
-$_['config_autoload']    = array();
-$_['config_pre_action']  = array();
+// Config
+$_['site.base']            = '';
+$_['site.ssl']             = false;
+
+// Language
+$_['language.default']     = 'en-gb';
+$_['language.autoload']    = array('en-gb');
+
+// Database
+$_['db.autostart']         = false;
+$_['db.type']              = 'mysqli'; // mpdo, mssql, mysql, mysqli or postgre
+$_['db.hostname']          = 'localhost';
+$_['db.username']          = 'root';
+$_['db.password']          = '';
+$_['db.database']          = '';
+$_['db.port']              = 3306;
+
+// Mail
+$_['mail.protocol']        = 'mail'; // mail or smtp
+$_['mail.from']            = ''; // Your E-Mail
+$_['mail.sender']          = ''; // Your name or company name
+$_['mail.reply_to']        = ''; // Reply to E-Mail
+$_['mail.smtp_hostname']   = '';
+$_['mail.smtp_username']   = '';
+$_['mail.smtp_password']   = '';
+$_['mail.smtp_port']       = 25;
+$_['mail.smtp_timeout']    = 5;
+$_['mail.verp']            = false;
+$_['mail.parameter']       = '';
+
+// Cache
+$_['cache.type']           = 'file'; // apc, file or mem
+$_['cache.expire']         = 3600;
+
+// Session
+$_['session.name']         = 'PHPSESSID';
+$_['session.type']         = 'file'; // file or db
+$_['session.autostart']    = false;
+
+// Template
+$_['template.type']        = 'basic';
+
+// Error
+$_['error.display']        = true;
+$_['error.log']            = true;
+$_['error.filename']       = 'error.txt';
+
+// Reponse
+$_['response.header']      = array('Content-Type: text/html; charset=utf-8');
+$_['response.compression'] = 0;
+
+// Actions
+$_['action.default']       = 'common/home';
+$_['action.router']        = 'action/route';
+$_['action.error']         = 'error/not_found';
+$_['action.event']         = array();
+
+// Autoload Configs
+$_['config.autoload']      = array();
+
+// Autoload Libraries
+$_['library.autoload']     = array();
+
+// Autoload Libraries
+$_['model.autoload']       = array();
+
+// Pre Action
+$_['action.pre_action']    = array();

@@ -35,17 +35,19 @@ class ControllerActionLanguage extends Controller {
 			$code = $detect ? $detect : $this->config->get('config_language');
 		}
 		
-		if (!isset($this->request->cookie['language']) || $this->request->cookie['language'] != $code) {
-			setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
+		if (array_key_exists($code, $languages) && is_dir(DIR_LANGUAGE . $code)) {
+			if (!isset($this->request->cookie['language']) || $this->request->cookie['language'] != $code) {
+				setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
+			}
+			
+			$this->config->set('config_language_id', $languages[$code]['language_id']);
+			$this->config->set('config_language', $languages[$code]['code']);
+	
+			$this->registry->set('language', $language);
+			
+			// Overwrite the default language object
+			$language = new Language($languages[$code]['directory']);
+			$language->load($languages[$code]['directory']);
 		}
-		
-		$this->config->set('config_language_id', $languages[$code]['language_id']);
-		$this->config->set('config_language', $languages[$code]['code']);
-
-		// Language
-		$language = new Language($languages[$code]['directory']);
-		$language->load($languages[$code]['directory']);
-		
-		$this->registry->set('language', $language);
 	}
 }

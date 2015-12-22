@@ -98,6 +98,8 @@ final class Loader {
 
 		if (is_file($file)) {
 			include_once($file);
+			
+			
 		} else {
 			trigger_error('Error: Could not load helper ' . $route . '!');
 			exit();

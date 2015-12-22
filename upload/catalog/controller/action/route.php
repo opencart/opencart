@@ -5,7 +5,7 @@ class ControllerActionRoute extends Controller {
 		if (isset($this->request->get['route'])) {
 			$route = $this->request->get['route'];
 		} else {
-			$route = 'common/home';
+			$route = $this->config->get('action.default');
 		}
 		
 		$data = array();

@@ -1,5 +1,5 @@
 <?php
-// Config
+// Site
 $_['site.base']            = '';
 $_['site.ssl']             = false;
 
@@ -50,12 +50,6 @@ $_['error.filename']       = 'error.txt';
 $_['response.header']      = array('Content-Type: text/html; charset=utf-8');
 $_['response.compression'] = 0;
 
-// Actions
-$_['action.default']       = 'common/home';
-$_['action.router']        = 'action/route';
-$_['action.error']         = 'error/not_found';
-$_['action.event']         = array();
-
 // Autoload Configs
 $_['config.autoload']      = array();
 
@@ -65,5 +59,9 @@ $_['library.autoload']     = array();
 // Autoload Libraries
 $_['model.autoload']       = array();
 
-// Pre Action
+// Actions
+$_['action.default']       = 'common/home';
+$_['action.router']        = 'action/route';
+$_['action.error']         = 'error/not_found';
 $_['action.pre_action']    = array();
+$_['action.event']         = array();

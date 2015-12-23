@@ -82,24 +82,28 @@ final class Loader {
 		return $output;
 	}
 
+	public function library($route) {
+		// Sanitize the call
+		$route = str_replace('../', '', (string)$route);
+			
+		$file = DIR_SYSTEM . 'library/' . $route . '.php';
+		$class = str_replace('/', '\\', $route);
+
+		if (is_file($file)) {
+			include_once($file);
+
+			$this->registry->set(basename($route), new $class($this->registry));
+		} else {
+			trigger_error('Error: Could not load library ' . $route . '!');
+			exit();
+		}
+	}
+	
 	public function helper($route) {
 		$file = DIR_SYSTEM . 'helper/' . str_replace('../', '', (string)$route) . '.php';
 
 		if (is_file($file)) {
 			include_once($file);
-		} else {
-			trigger_error('Error: Could not load helper ' . $route . '!');
-			exit();
-		}
-	}
-
-	public function library($route) {
-		$file = DIR_SYSTEM . 'library/' . str_replace('../', '', (string)$route) . '.php';
-
-		if (is_file($file)) {
-			include_once($file);
-			
-			
 		} else {
 			trigger_error('Error: Could not load helper ' . $route . '!');
 			exit();
@@ -147,7 +151,7 @@ final class Loader {
 			if (method_exists($model, $method)) {			
 				$output = call_user_func_array(array($model, $method), $args);
 			} else {
-				trigger_error('Error: Could not call model ' . $route . '!');
+				trigger_error('Error: Could not call model model/' . $route . '!');
 				exit();				
 			}
 			

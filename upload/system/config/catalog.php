@@ -1,5 +1,5 @@
 <?php
-// Config
+// Site
 $_['site.base']            = substr(HTTP_SERVER, 7);
 $_['site.ssl']             = false;
 
@@ -12,25 +12,6 @@ $_['db.password']          = DB_PASSWORD;
 $_['db.database']          = DB_DATABASE;
 $_['db.port']              = DB_PORT;
 
-// Pre Action
-$_['action.pre_action'] = array(
-	'action/setting',
-	'action/error',
-	'action/event',
-	'action/session',
-	'action/language',
-	'action/cart',
-	'action/maintenance',
-	'action/seo_url'
-);
-
-// Action Events
-$_['action.event'] = array(
-	'view/*/before'                            => 'event/theme',
-	'model/account/customer/addCustomer/after' => 'mail/account',
-	'model/checkout/order/addOrder/after'      => 'mail/order'
-);
-
 // Autoload Libraries
 $_['library.autoload'] = array(
 	'cart/customer',
@@ -41,4 +22,25 @@ $_['library.autoload'] = array(
 	'cart/length',
 	'cart/cart',
 	'openbay'
+);
+
+// Actions
+$_['action.pre_action'] = array(
+	'action/setting',
+	'action/error',
+	'action/event',
+	'action/session',
+	'action/language',
+	'action/currency',
+	'action/customer_group',
+	'action/tracking',
+	'action/maintenance',
+	'action/seo_url'
+);
+
+// Action Events
+$_['action.event'] = array(
+	'view/*/before'                            => 'event/theme',
+	'model/account/customer/addCustomer/after' => 'mail/account',
+	'model/checkout/order/addOrder/after'      => 'mail/order'
 );

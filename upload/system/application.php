@@ -27,7 +27,11 @@ if ($config->get('db.autostart')) {
 }
 
 // Session
-$registry->set('session', new Session());
+if ($config->get('session.autostart')) {
+	$session = new Session();
+	$session->start();
+	$registry->set('session', $session);
+}
 
 // Cache 
 $registry->set('cache', new Cache($config->get('cache.type'), $config->get('cache.expire')));

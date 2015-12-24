@@ -3153,7 +3153,7 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (186, 0, 'config', 'config_country_id', '222', 0),
 (187, 0, 'config', 'config_zone_id', '3563', 0),
 (188, 0, 'config', 'config_language', 'en-gb', 0),
-(189, 0, 'config', 'config_admin_language', 'en', 0),
+(189, 0, 'config', 'config_admin_language', 'en-gb', 0),
 (190, 0, 'config', 'config_currency', 'USD', 0),
 (191, 0, 'config', 'config_currency_auto', '1', 0),
 (192, 0, 'config', 'config_length_class_id', '1', 0),

@@ -34,9 +34,8 @@ $_['cache.type']           = 'file'; // apc, file or mem
 $_['cache.expire']         = 3600;
 
 // Session
+$_['session.autostart']    = true;
 $_['session.name']         = 'PHPSESSID';
-$_['session.type']         = 'file'; // file or db
-$_['session.autostart']    = false;
 
 // Template
 $_['template.type']        = 'basic';

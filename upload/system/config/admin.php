@@ -12,8 +12,11 @@ $_['db.password']       = DB_PASSWORD;
 $_['db.database']       = DB_DATABASE;
 $_['db.port']           = DB_PORT;
 
+// Session
+$_['session.autostart'] = true;
+
 // Autoload Libraries
-$_['library.autoload'] = array(
+$_['library.autoload']  = array(
 	'cart/customer',
 	'cart/affiliate',
 	'cart/currency',
@@ -25,15 +28,15 @@ $_['library.autoload'] = array(
 );
 
 // Actions
-$_['action.pre_action'] = array(
+$_['action.pre_action']  = array(
 	'action/setting',
 	'action/error',
 	'action/event',
 	'action/sass',
+	'action/language',	
 	'action/login',
 	'action/permission'
 );
 
-
 // Actions
-$_['action.default']       = 'common/dashboard';
+$_['action.default']     = 'common/dashboard';

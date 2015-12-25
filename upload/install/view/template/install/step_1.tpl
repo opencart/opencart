@@ -5,10 +5,10 @@
       <div class="col-sm-6">
         <h1 class="pull-left">1<small>/4</small></h1>
         <h3><?php echo $heading_title; ?><br>
-          <small><?php echo $heading_step_1_small; ?></small></h3>
+          <small><?php echo $text_step_1; ?></small></h3>
       </div>
       <div class="col-sm-6">
-        <div id="logo" class="pull-right hidden-xs"> <img src="view/image/logo.png" alt="OpenCart" title="OpenCart" /> </div>
+        <div id="logo" class="pull-right hidden-xs"><img src="view/image/logo.png" alt="OpenCart" title="OpenCart" /></div>
       </div>
     </div>
   </header>
@@ -23,7 +23,7 @@
         </div>
       </form>
     </div>
-    <div class="col-sm-3"> <?php echo $column_left; ?> </div>
+    <div class="col-sm-3"><?php echo $column_left; ?></div>
   </div>
 </div>
 <?php echo $footer; ?>

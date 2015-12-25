@@ -3,16 +3,13 @@ class ControllerInstallStep4 extends Controller {
 	public function index() {
 		$this->language->load('install/step_4');
 		
-		$this->document->setTitle($this->language->get('heading_step_4'));
+		$this->document->setTitle($this->language->get('heading_title4'));
 
-		$data['heading_step_4'] = $this->language->get('heading_step_4');
-		$data['heading_step_4_small'] = $this->language->get('heading_step_4_small');
-
-		$data['text_license'] = $this->language->get('text_license');
-		$data['text_installation'] = $this->language->get('text_installation');
-		$data['text_configuration'] = $this->language->get('text_configuration');
-		$data['text_finished'] = $this->language->get('text_finished');
+		$data['heading_title'] = $this->language->get('heading_title');
+		
+		$data['text_step_4'] = $this->language->get('text_step_4');
 		$data['text_congratulation'] = $this->language->get('text_congratulation');
+		
 		$data['text_forget'] = $this->language->get('text_forget');
 		$data['text_shop'] = $this->language->get('text_shop');
 		$data['text_login'] = $this->language->get('text_login');
@@ -77,10 +74,11 @@ class ControllerInstallStep4 extends Controller {
 			$data['language'] = '';
 		}
 
-		$data['footer'] = $this->load->controller('footer');
-		$data['header'] = $this->load->controller('header');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
 
-		$this->response->setOutput($this->load->view('step_4', $data));
+		$this->response->setOutput($this->load->view('install/step_4', $data));
 	}
 
 	public function extensions() {

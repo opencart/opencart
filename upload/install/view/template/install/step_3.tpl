@@ -4,12 +4,11 @@
     <div class="row">
       <div class="col-sm-6">
         <h1 class="pull-left">3<small>/4</small></h1>
-        <h3><?php echo $heading_step_3; ?><br><small><?php echo $heading_step_3_small; ?></small></h3>
+        <h3><?php echo $heading_title; ?><br>
+          <small><?php echo $text_step_3; ?></small></h3>
       </div>
       <div class="col-sm-6">
-        <div id="logo" class="pull-right hidden-xs">
-          <img src="view/image/logo.png" alt="OpenCart" title="OpenCart" />
-        </div>
+        <div id="logo" class="pull-right hidden-xs"> <img src="view/image/logo.png" alt="OpenCart" title="OpenCart" /> </div>
       </div>
     </div>
   </header>
@@ -47,7 +46,7 @@
                 <?php } else { ?>
                 <option value="pgsql"><?php echo $text_pgsql; ?></option>
                 <?php } ?>
-                <?php } ?>                
+                <?php } ?>
               </select>
             </div>
           </div>
@@ -92,15 +91,15 @@
               <div class="text-danger"><?php echo $error_db_port; ?></div>
               <?php } ?>
             </div>
-          </div>          
+          </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-db-prefix"><?php echo $entry_db_prefix; ?></label>
             <div class="col-sm-10">
               <input type="text" name="db_prefix" value="<?php echo $db_prefix; ?>" id="input-db-prefix" class="form-control" />
               <?php if ($error_db_prefix) { ?>
               <div class="text-danger"><?php echo $error_db_prefix; ?></div>
-              <?php } ?>           
-           </div>
+              <?php } ?>
+            </div>
           </div>
         </fieldset>
         <p><?php echo $text_db_administration; ?></p>
@@ -141,14 +140,7 @@
         </div>
       </form>
     </div>
-    <div class="col-sm-3">
-      <ul class="list-group">
-        <li class="list-group-item"><?php echo $text_license; ?></li>
-        <li class="list-group-item"><?php echo $text_installation; ?></li>
-        <li class="list-group-item"><b><?php echo $text_configuration; ?></b></li>
-        <li class="list-group-item"><?php echo $text_finished; ?></li>
-      </ul>
-    </div>
+    <div class="col-sm-3"><?php echo $column_left; ?></div>
   </div>
 </div>
 <?php echo $footer; ?>

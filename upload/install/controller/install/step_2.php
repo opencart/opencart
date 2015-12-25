@@ -9,15 +9,11 @@ class ControllerInstallStep2 extends Controller {
 			$this->response->redirect($this->url->link('install/step_3'));
 		}
 
-		$this->document->setTitle($this->language->get('heading_step_2'));
+		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['heading_step_2'] = $this->language->get('heading_step_2');
-		$data['heading_step_2_small'] = $this->language->get('heading_step_2_small');
-
-		$data['text_license'] = $this->language->get('text_license');
-		$data['text_installation'] = $this->language->get('text_installation');
-		$data['text_configuration'] = $this->language->get('text_configuration');
-		$data['text_finished'] = $this->language->get('text_finished');
+		$data['heading_title'] = $this->language->get('heading_title');
+		
+		$data['text_step_2'] = $this->language->get('text_step_2');
 		$data['text_install_php'] = $this->language->get('text_install_php');
 		$data['text_install_extension'] = $this->language->get('text_install_extension');
 		$data['text_install_file'] = $this->language->get('text_install_file');
@@ -39,12 +35,7 @@ class ControllerInstallStep2 extends Controller {
 		$data['text_magic'] = $this->language->get('text_magic');
 		$data['text_file_upload'] = $this->language->get('text_file_upload');
 		$data['text_session'] = $this->language->get('text_session');
-		$data['text_global'] = $this->language->get('text_global');
 		$data['text_db'] = $this->language->get('text_db');
-		$data['text_mysqli'] = $this->language->get('text_mysqli');
-		$data['text_mysql'] = $this->language->get('text_mysql');
-		$data['text_mpdo'] = $this->language->get('text_mpdo');
-		$data['text_pgsql'] = $this->language->get('text_pgsql');
 		$data['text_gd'] = $this->language->get('text_gd');
 		$data['text_curl'] = $this->language->get('text_curl');
 		$data['text_mcrypt'] = $this->language->get('text_mcrypt');
@@ -61,7 +52,7 @@ class ControllerInstallStep2 extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['action'] = $this->url->link('step_2');
+		$data['action'] = $this->url->link('install/step_2');
 
 		$data['php_version'] = phpversion();
 		$data['register_globals'] = ini_get('register_globals');
@@ -69,7 +60,14 @@ class ControllerInstallStep2 extends Controller {
 		$data['file_uploads'] = ini_get('file_uploads');
 		$data['session_auto_start'] = ini_get('session_auto_start');
 
-		if (!array_filter(array('mysql', 'mysqli', 'pgsql', 'pdo'), 'extension_loaded')) {
+		$db = array(
+			'mysql', 
+			'mysqli', 
+			'pgsql', 
+			'pdo'
+		);
+
+		if (!array_filter($db, 'extension_loaded')) {
 			$data['db'] = false;
 		} else {
 			$data['db'] = true;
@@ -80,6 +78,7 @@ class ControllerInstallStep2 extends Controller {
 		$data['mcrypt_encrypt'] = function_exists('mcrypt_encrypt');
 		$data['zlib'] = extension_loaded('zlib');
 		$data['zip'] = extension_loaded('zip');
+		
 		$data['iconv'] = function_exists('iconv');
 		$data['mbstring'] = extension_loaded('mbstring');
 
@@ -95,55 +94,61 @@ class ControllerInstallStep2 extends Controller {
 		$data['upload'] = DIR_SYSTEM . 'storage/upload';
 		$data['modification'] = DIR_SYSTEM . 'storage/modification';
 
-		$data['back'] = $this->url->link('step_1');
+		$data['back'] = $this->url->link('install/step_1');
 
-		$data['footer'] = $this->load->controller('footer');
-		$data['header'] = $this->load->controller('header');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
+		$data['column_left'] = $this->load->controller('common/column_left');
 
-		$this->response->setOutput($this->load->view('step_2', $data));
+		$this->response->setOutput($this->load->view('install/step_2', $data));
 	}
 
 	private function validate() {
 		if (phpversion() < '5.3') {
-			$this->error['warning'] = 'Warning: You need to use PHP5.3 or above for OpenCart to work!';
+			$this->error['warning'] = $this->language->get('error_version');
 		}
 
 		if (!ini_get('file_uploads')) {
-			$this->error['warning'] = 'Warning: file_uploads needs to be enabled!';
+			$this->error['warning'] = $this->language->get('error_file_upload');
 		}
 
 		if (ini_get('session.auto_start')) {
-			$this->error['warning'] = 'Warning: OpenCart will not work with session.auto_start enabled!';
+			$this->error['warning'] = $this->language->get('error_session');
 		}
 
-		if (!array_filter(array('mysql', 'mysqli', 'pdo', 'pgsql'), 'extension_loaded')) {
-			$this->error['warning'] = 'Warning: A database extension needs to be loaded in the php.ini for OpenCart to work!';
+		$db = array(
+			'mysql', 
+			'mysqli', 
+			'pdo', 
+			'pgsql'
+		);
+
+		if (!array_filter($db, 'extension_loaded')) {
+			$this->error['warning'] = $this->language->get('error_db');
 		}
 
 		if (!extension_loaded('gd')) {
-			$this->error['warning'] = 'Warning: GD extension needs to be loaded for OpenCart to work!';
+			$this->error['warning'] = $this->language->get('error_gd');
 		}
 
 		if (!extension_loaded('curl')) {
-			$this->error['warning'] = 'Warning: CURL extension needs to be loaded for OpenCart to work!';
+			$this->error['warning'] = $this->language->get('error_curl');
 		}
 
-		if (!function_exists('mcrypt_encrypt')) {
-			$this->error['warning'] = 'Warning: mCrypt extension needs to be loaded for OpenCart to work!';
+		if (!function_exists('mcrypt_mcrypt')) {
+			$this->error['warning'] = $this->language->get('error_mcrypt');
 		}
 
 		if (!extension_loaded('zlib')) {
-			$this->error['warning'] = 'Warning: ZLIB extension needs to be loaded for OpenCart to work!';
+			$this->error['warning'] = $this->language->get('error_zlib');
 		}
 
 		if (!extension_loaded('zip')) {
-			$this->error['warning'] = 'Warning: ZIP extension needs to be loaded for OpenCart to work!';
+			$this->error['warning'] = $this->language->get('error_zip');
 		}
 
-		if (!function_exists('iconv')) {
-			if (!extension_loaded('mbstring')) {
-				$this->error['warning'] = 'Warning: mbstring extension needs to be loaded for OpenCart to work!';
-			}
+		if (!function_exists('iconv') && !extension_loaded('mbstring')) {
+			$this->error['warning'] = $this->language->get('error_mbstring');
 		}
 
 		if (!file_exists(DIR_OPENCART . 'config.php')) {

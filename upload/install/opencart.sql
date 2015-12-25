@@ -3148,7 +3148,7 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (181, 0, 'config', 'config_meta_title', 'Your Store', 0),
 (182, 0, 'config', 'config_meta_description', 'My Store', 0),
 (183, 0, 'config', 'config_meta_keyword', '', 0),
-(184, 0, 'config', 'config_template', 'default', 0),
+(184, 0, 'config', 'config_theme', 'theme_default', 0),
 (185, 0, 'config', 'config_layout_id', '4', 0),
 (186, 0, 'config', 'config_country_id', '222', 0),
 (187, 0, 'config', 'config_zone_id', '3563', 0),

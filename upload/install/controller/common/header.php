@@ -1,6 +1,8 @@
 <?php
-class ControllerHeader extends Controller {
+class ControllerCommonHeader extends Controller {
 	public function index() {
+		$this->language->load('common/header');
+		
 		$data['title'] = $this->document->getTitle();
 		$data['description'] = $this->document->getDescription();
 		$data['links'] = $this->document->getLinks();
@@ -9,6 +11,6 @@ class ControllerHeader extends Controller {
 
 		$data['base'] = HTTP_SERVER;
 
-		return $this->load->view('header', $data);
+		return $this->load->view('common/header', $data);
 	}
 }

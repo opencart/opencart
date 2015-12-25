@@ -6,8 +6,6 @@ class ControllerActionLanguage extends Controller {
 		
 		if ($query->num_rows) {
 			$this->config->set('config_language_id', $query->row['language_id']);
-		} else {
-			exit();
 		}
 		
 		// Language

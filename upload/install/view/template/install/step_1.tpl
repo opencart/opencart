@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-sm-6">
         <h1 class="pull-left">1<small>/4</small></h1>
-        <h3><?php echo $heading_step_1; ?><br>
+        <h3><?php echo $heading_title; ?><br>
           <small><?php echo $heading_step_1_small; ?></small></h3>
       </div>
       <div class="col-sm-6">
@@ -23,14 +23,7 @@
         </div>
       </form>
     </div>
-    <div class="col-sm-3">
-      <ul class="list-group">
-        <li class="list-group-item"><b><?php echo $text_license; ?></b></li>
-        <li class="list-group-item"><?php echo $text_installation; ?></li>
-        <li class="list-group-item"><?php echo $text_configuration; ?></li>
-        <li class="list-group-item"><?php echo $text_finished; ?></li>
-      </ul>
-    </div>
+    <div class="col-sm-3"> <?php echo $column_left; ?> </div>
   </div>
 </div>
 <?php echo $footer; ?>

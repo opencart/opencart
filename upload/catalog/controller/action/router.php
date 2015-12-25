@@ -1,5 +1,5 @@
 <?php
-class ControllerActionRoute extends Controller {
+class ControllerActionRouter extends Controller {
 	public function index() {
 		// Route
 		if (isset($this->request->get['route'])) {

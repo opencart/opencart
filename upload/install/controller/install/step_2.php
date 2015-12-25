@@ -1,10 +1,12 @@
 <?php
-class ControllerStep2 extends Controller {
+class ControllerInstallStep2 extends Controller {
 	private $error = array();
 
 	public function index() {
+		$this->language->load('install/step_2');
+		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->response->redirect($this->url->link('step_3'));
+			$this->response->redirect($this->url->link('install/step_3'));
 		}
 
 		$this->document->setTitle($this->language->get('heading_step_2'));

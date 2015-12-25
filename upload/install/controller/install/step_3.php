@@ -1,8 +1,10 @@
 <?php
-class ControllerStep3 extends Controller {
+class ControllerInstallStep3 extends Controller {
 	private $error = array();
 
 	public function index() {
+		$this->language->load('install/step_3');
+		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->load->model('install');
 

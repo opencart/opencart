@@ -15,20 +15,26 @@ class ControllerInstallStep4 extends Controller {
 		
 		$data['text_loading'] = $this->language->get('text_loading');
 		$data['text_store'] = $this->language->get('text_store');
+		
 		$data['text_mail_list'] = $this->language->get('text_mail_list');
 		$data['text_mail_list_small'] = $this->language->get('text_mail_list_small');
+		
 		$data['text_openbay'] = $this->language->get('text_openbay');
 		$data['text_maxmind'] = $this->language->get('text_maxmind');
 		$data['text_more_info'] = $this->language->get('text_more_info');
+		
 		$data['text_facebook'] = $this->language->get('text_facebook');
 		$data['text_facebook_info'] = $this->language->get('text_facebook_info');
 		$data['text_facebook_link'] = $this->language->get('text_facebook_link');
+		
 		$data['text_forum'] = $this->language->get('text_forum');
 		$data['text_forum_info'] = $this->language->get('text_forum_info');
 		$data['text_forum_link'] = $this->language->get('text_forum_link');
+		
 		$data['text_commercial'] = $this->language->get('text_commercial');
 		$data['text_commercial_info'] = $this->language->get('text_commercial_info');
 		$data['text_commercial_link'] = $this->language->get('text_commercial_link');
+		
 		$data['text_view'] = $this->language->get('text_view');
 		$data['text_download'] = $this->language->get('text_download');
 		$data['text_downloads'] = $this->language->get('text_downloads');
@@ -40,8 +46,8 @@ class ControllerInstallStep4 extends Controller {
 
 		$data['error_warning'] = $this->language->get('error_warning');
 
-		$data['link_maxmind'] = $this->url->link('maxmind');
-		$data['link_openbay'] = $this->url->link('openbay');
+		$data['maxmind'] = $this->url->link('install/maxmind');
+		$data['openbay'] = $this->url->link('install/openbay');
 
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
@@ -71,6 +77,7 @@ class ControllerInstallStep4 extends Controller {
 
 		if (!empty($languages)) {
 			reset($languages);
+			
 			$data['language'] = key($languages);
 		} else {
 			$data['language'] = '';
@@ -78,12 +85,12 @@ class ControllerInstallStep4 extends Controller {
 
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['step'] = $this->load->controller('common/step');
 
 		$this->response->setOutput($this->load->view('install/step_4', $data));
 	}
 
-	public function extensions() {
+	public function extension() {
 		$curl = curl_init();
 		
 		curl_setopt($curl, CURLOPT_POST, true);
@@ -107,8 +114,6 @@ class ControllerInstallStep4 extends Controller {
 	}
 
 	public function language() {
-		$language = $this->request->post['language'];
-
 		$curl = curl_init();
 
 		curl_setopt($curl, CURLOPT_POST, true);
@@ -121,7 +126,7 @@ class ControllerInstallStep4 extends Controller {
 		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, array('language' => $language));
+		curl_setopt($curl, CURLOPT_POSTFIELDS, array('language' => $this->request->post['language']));
 
 		$response = curl_exec($curl);
 		

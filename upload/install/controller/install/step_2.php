@@ -98,7 +98,7 @@ class ControllerInstallStep2 extends Controller {
 
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
-		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['step'] = $this->load->controller('common/step');
 
 		$this->response->setOutput($this->load->view('install/step_2', $data));
 	}

@@ -19,7 +19,7 @@ class ControllerActionRouter extends Controller {
 		}		
 		
 		// Router
-		if (isset($this->request->get['route'])) {
+		if (isset($this->request->get['route']) && $this->request->get['route'] != 'action/route') {
 			return new Action($this->request->get['route']);
 		} elseif ($upgrade) {
 			return new Action('upgrade/upgrade');

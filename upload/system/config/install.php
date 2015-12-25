@@ -63,4 +63,6 @@ $_['action.default']       = 'install/step_1';
 $_['action.router']        = 'action/router';
 $_['action.error']         = 'error/not_found';
 $_['action.pre_action']    = array();
-$_['action.event']         = array();
+$_['action.event']         = array(
+	'model/upgrade/after' => 'upgrade/upgrade/2011'
+);

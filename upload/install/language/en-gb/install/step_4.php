@@ -23,14 +23,12 @@ $_['text_commercial']       = 'Commercial support';
 $_['text_commercial_info']  = 'Development services from OpenCart partners';
 $_['text_commercial_link']  = 'Visit our partner page';
 
-
 $_['text_price']   	        = 'Price';
 
 $_['text_view']             = 'View details';
 $_['text_download']         = 'Download';
 $_['text_downloads']        = 'Downloads';
 $_['text_more_info']        = 'More information';
-
 
 // Buttons
 $_['button_join']           = 'Join here';

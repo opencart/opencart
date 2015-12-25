@@ -1,7 +1,7 @@
 <?php
-class ControllerCommonColumnLeft extends Controller {
+class ControllerCommonStep extends Controller {
 	public function index() {
-		$this->language->load('common/column_left');
+		$this->language->load('common/step');
 
 		$data['text_license'] = $this->language->get('text_license');
 		$data['text_installation'] = $this->language->get('text_installation');
@@ -14,6 +14,6 @@ class ControllerCommonColumnLeft extends Controller {
 			$data['route'] = 'install/step_1';
 		}
 		
-		return $this->load->view('common/column_left', $data);
+		return $this->load->view('common/step', $data);
 	}
 }

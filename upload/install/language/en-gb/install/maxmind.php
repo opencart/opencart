@@ -1,18 +1,16 @@
 <?php
 // Heading
-$_['heading_maxmind']       = 'MaxMind';
-$_['heading_maxmind_small'] = 'Fraud detection service.';
+$_['heading_title']       = 'MaxMind';
 
-$_['text_maxmind_success']   = 'MaxMind fraud service has been installed';
-$_['text_maxmind_top']   	 = 'If you don\'t have a license key you can';
+$_['text_maxmind_small']   = 'Fraud detection service.';
+$_['text_maxmind_success'] = 'MaxMind fraud service has been installed';
+$_['text_maxmind_top']     = 'If you don\'t have a license key you can';
 $_['text_maxmind_link']   	 = 'sign up here';
 
 // Entry
 $_['entry_key']              = 'License Key';
 $_['entry_score']      		 = 'Risk score';
 $_['entry_order_status']     = 'Fraud Order Status';
-
-
 
 // Help
 $_['help_score']             = 'The higher the score the more likely the order is fraudulent. Set a score between 0 - 100.';

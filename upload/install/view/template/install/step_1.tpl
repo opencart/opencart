@@ -23,7 +23,7 @@
         </div>
       </form>
     </div>
-    <div class="col-sm-3"><?php echo $column_left; ?></div>
+    <div class="col-sm-3"><?php echo $language; ?><?php echo $step; ?></div>
   </div>
 </div>
 <?php echo $footer; ?>

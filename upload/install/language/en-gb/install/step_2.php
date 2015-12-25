@@ -36,7 +36,7 @@ $_['text_unwritable']        = 'Unwritable';
 $_['text_missing']           = 'Missing';
 
 // Error
-$_['error_version']          = 'Warning: You need to use PHP5.3 or above for OpenCart to work!';
+$_['error_version']          = 'Warning: You need to use PHP 5.3 or above for OpenCart to work!';
 $_['error_file_upload']      = 'Warning: file_uploads needs to be enabled!';
 $_['error_session']          = 'Warning: OpenCart will not work with session.auto_start enabled!';
 $_['error_db']               = 'Warning: A database extension needs to be loaded in the php.ini for OpenCart to work!';
@@ -46,27 +46,15 @@ $_['error_mcrypt']           = 'Warning: mCrypt extension needs to be loaded for
 $_['error_zlib']             = 'Warning: ZLIB extension needs to be loaded for OpenCart to work!';
 $_['error_zip']              = 'Warning: ZIP extension needs to be loaded for OpenCart to work!';
 $_['error_mbstring']         = 'Warning: mbstring extension needs to be loaded for OpenCart to work!';
-
-$_['error_config_exist']     = 'Warning: config.php does not exist. You need to rename config-dist.php to config.php!';
-$_['error_config_writable']  = 'Warning: config.php needs to be writable for OpenCart to be installed!';
-
-$_['error_']      = 'Warning: admin/config.php does not exist. You need to rename admin/config-dist.php to admin/config.php!';
-$_['error_']      = 'Warning: admin/config.php needs to be writable for OpenCart to be installed!';
-
-
-$_['error_image_directory']  = 'Warning: Image directory needs to be writable for OpenCart to work!';
+$_['error_catalog_exist']    = 'Warning: config.php does not exist. You need to rename config-dist.php to config.php!';
+$_['error_catalog_writable'] = 'Warning: config.php needs to be writable for OpenCart to be installed!';
+$_['error_admin_exist']      = 'Warning: admin/config.php does not exist. You need to rename admin/config-dist.php to admin/config.php!';
+$_['error_admin_writable']   = 'Warning: admin/config.php needs to be writable for OpenCart to be installed!';
+$_['error_image']            = 'Warning: Image directory needs to be writable for OpenCart to work!';
 $_['error_image_cache']      = 'Warning: Image cache directory needs to be writable for OpenCart to work!';
 $_['error_image_catalog']    = 'Warning: Image catalog directory needs to be writable for OpenCart to work!';
 $_['error_cache']            = 'Warning: Cache directory needs to be writable for OpenCart to work!';
 $_['error_log']              = 'Warning: Logs directory needs to be writable for OpenCart to work!';
-
 $_['error_download']         = 'Warning: Download directory needs to be writable for OpenCart to work!';
 $_['error_upload']           = 'Warning: Upload directory needs to be writable for OpenCart to work!';
 $_['error_modification']     = 'Warning: Modification directory needs to be writable for OpenCart to work!';
-
-
-
-
-
-
-

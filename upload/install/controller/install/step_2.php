@@ -135,7 +135,7 @@ class ControllerInstallStep2 extends Controller {
 			$this->error['warning'] = $this->language->get('error_curl');
 		}
 
-		if (!function_exists('mcrypt_mcrypt')) {
+		if (!function_exists('mcrypt_encrypt')) {
 			$this->error['warning'] = $this->language->get('error_mcrypt');
 		}
 
@@ -146,53 +146,53 @@ class ControllerInstallStep2 extends Controller {
 		if (!extension_loaded('zip')) {
 			$this->error['warning'] = $this->language->get('error_zip');
 		}
-
+		
 		if (!function_exists('iconv') && !extension_loaded('mbstring')) {
 			$this->error['warning'] = $this->language->get('error_mbstring');
 		}
-
+		
 		if (!file_exists(DIR_OPENCART . 'config.php')) {
-			$this->error['warning'] = 'Warning: config.php does not exist. You need to rename config-dist.php to config.php!';
+			$this->error['warning'] = $this->language->get('error_catalog_exist');
 		} elseif (!is_writable(DIR_OPENCART . 'config.php')) {
-			$this->error['warning'] = 'Warning: config.php needs to be writable for OpenCart to be installed!';
+			$this->error['warning'] = $this->language->get('error_catalog_writable');
 		}
 
 		if (!file_exists(DIR_OPENCART . 'admin/config.php')) {
-			$this->error['warning'] = 'Warning: admin/config.php does not exist. You need to rename admin/config-dist.php to admin/config.php!';
+			$this->error['warning'] = $this->language->get('error_admin_exist');
 		} elseif (!is_writable(DIR_OPENCART . 'admin/config.php')) {
-			$this->error['warning'] = 'Warning: admin/config.php needs to be writable for OpenCart to be installed!';
+			$this->error['warning'] = $this->language->get('error_admin_writable');
 		}
 
 		if (!is_writable(DIR_OPENCART . 'image')) {
-			$this->error['warning'] = 'Warning: Image directory needs to be writable for OpenCart to work!';
+			$this->error['warning'] = $this->language->get('error_image');
 		}
 
 		if (!is_writable(DIR_OPENCART . 'image/cache')) {
-			$this->error['warning'] = 'Warning: Image cache directory needs to be writable for OpenCart to work!';
+			$this->error['warning'] = $this->language->get('error_image_cache');
 		}
 
 		if (!is_writable(DIR_OPENCART . 'image/catalog')) {
-			$this->error['warning'] = 'Warning: Image catalog directory needs to be writable for OpenCart to work!';
+			$this->error['warning'] = $this->language->get('error_image_catalog');
 		}
 		
 		if (!is_writable(DIR_SYSTEM . 'storage/cache')) {
-			$this->error['warning'] = 'Warning: Cache directory needs to be writable for OpenCart to work!';
+			$this->error['warning'] = $this->language->get('error_cache');
 		}
 
 		if (!is_writable(DIR_SYSTEM . 'storage/logs')) {
-			$this->error['warning'] = 'Warning: Logs directory needs to be writable for OpenCart to work!';
+			$this->error['warning'] = $this->language->get('error_log');
 		}
 
 		if (!is_writable(DIR_SYSTEM . 'storage/download')) {
-			$this->error['warning'] = 'Warning: Download directory needs to be writable for OpenCart to work!';
+			$this->error['warning'] = $this->language->get('error_download');
 		}
 
 		if (!is_writable(DIR_SYSTEM . 'storage/upload')) {
-			$this->error['warning'] = 'Warning: Upload directory needs to be writable for OpenCart to work!';
+			$this->error['warning'] = $this->language->get('error_upload');
 		}
 
 		if (!is_writable(DIR_SYSTEM . 'storage/modification')) {
-			$this->error['warning'] = 'Warning: Modification directory needs to be writable for OpenCart to work!';
+			$this->error['warning'] = $this->language->get('error_modification');
 		}
 
 		return !$this->error;

@@ -3,16 +3,16 @@ class ControllerInstallStep4 extends Controller {
 	public function index() {
 		$this->language->load('install/step_4');
 		
-		$this->document->setTitle($this->language->get('heading_title4'));
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['heading_title'] = $this->language->get('heading_title');
 		
 		$data['text_step_4'] = $this->language->get('text_step_4');
 		$data['text_congratulation'] = $this->language->get('text_congratulation');
 		
-		$data['text_forget'] = $this->language->get('text_forget');
-		$data['text_shop'] = $this->language->get('text_shop');
-		$data['text_login'] = $this->language->get('text_login');
+		$data['text_catalog'] = $this->language->get('text_catalog');
+		$data['text_admin'] = $this->language->get('text_admin');
+		
 		$data['text_loading'] = $this->language->get('text_loading');
 		$data['text_store'] = $this->language->get('text_store');
 		$data['text_mail_list'] = $this->language->get('text_mail_list');
@@ -37,6 +37,8 @@ class ControllerInstallStep4 extends Controller {
 
 		$data['button_join'] = $this->language->get('button_join');
 		$data['button_setup'] = $this->language->get('button_setup');
+
+		$data['error_warning'] = $this->language->get('error_warning');
 
 		$data['link_maxmind'] = $this->url->link('maxmind');
 		$data['link_openbay'] = $this->url->link('openbay');
@@ -82,52 +84,50 @@ class ControllerInstallStep4 extends Controller {
 	}
 
 	public function extensions() {
-		$defaults = array(
-			CURLOPT_POST => 1,
-			CURLOPT_HEADER => 0,
-			CURLOPT_URL => 'http://www.opencart.com/index.php?route=extension/json/extensions',
-			CURLOPT_USERAGENT => "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.1) Gecko/20061204 Firefox/2.0.0.1",
-			CURLOPT_FRESH_CONNECT => 1,
-			CURLOPT_RETURNTRANSFER => 1,
-			CURLOPT_FORBID_REUSE => 1,
-			CURLOPT_TIMEOUT => 30,
-			CURLOPT_SSL_VERIFYPEER => 0,
-			CURLOPT_SSL_VERIFYHOST => 0,
-			CURLOPT_POSTFIELDS => array(),
-		);
-
-		$ch = curl_init();
-		curl_setopt_array($ch, ($defaults));
-		$result = curl_exec($ch);
-		curl_close($ch);
+		$curl = curl_init();
+		
+		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_HEADER, false);
+		curl_setopt($curl, CURLOPT_URL, 'http://www.opencart.com/index.php?route=extension/json/extensions');
+		curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.1) Gecko/20061204 Firefox/2.0.0.1');
+		curl_setopt($curl, CURLOPT_FRESH_CONNECT, true);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_FORBID_REUSE, true);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, array());
+		
+		$response = curl_exec($curl);
+		
+		curl_close($curl);
 
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput($result);
+		$this->response->setOutput($response);
 	}
 
 	public function language() {
 		$language = $this->request->post['language'];
 
-		$defaults = array(
-			CURLOPT_POST => 1,
-			CURLOPT_HEADER => 0,
-			CURLOPT_URL => 'http://www.opencart.com/index.php?route=extension/json/languages',
-			CURLOPT_USERAGENT => "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.1) Gecko/20061204 Firefox/2.0.0.1",
-			CURLOPT_FRESH_CONNECT => 1,
-			CURLOPT_RETURNTRANSFER => 1,
-			CURLOPT_FORBID_REUSE => 1,
-			CURLOPT_TIMEOUT => 30,
-			CURLOPT_SSL_VERIFYPEER => 0,
-			CURLOPT_SSL_VERIFYHOST => 0,
-			CURLOPT_POSTFIELDS => array('language' => $language),
-		);
+		$curl = curl_init();
 
-		$ch = curl_init();
-		curl_setopt_array($ch, ($defaults));
-		$result = curl_exec($ch);
-		curl_close($ch);
+		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_HEADER, false);
+		curl_setopt($curl, CURLOPT_URL, 'http://www.opencart.com/index.php?route=extension/json/languages');
+		curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.1) Gecko/20061204 Firefox/2.0.0.1');
+		curl_setopt($curl, CURLOPT_FRESH_CONNECT, true);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_FORBID_REUSE, true);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, array('language' => $language));
+
+		$response = curl_exec($curl);
+		
+		curl_close($curl);
 
 		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput($result);
+		$this->response->setOutput($response);
 	}
 }

@@ -255,7 +255,7 @@ class ControllerAccountRegister extends Controller {
 		}
 
 		if (isset($this->request->post['country_id'])) {
-			$data['country_id'] = $this->request->post['country_id'];
+			$data['country_id'] = (int)$this->request->post['country_id'];
 		} elseif (isset($this->session->data['shipping_address']['country_id'])) {
 			$data['country_id'] = $this->session->data['shipping_address']['country_id'];
 		} else {
@@ -263,7 +263,7 @@ class ControllerAccountRegister extends Controller {
 		}
 
 		if (isset($this->request->post['zone_id'])) {
-			$data['zone_id'] = $this->request->post['zone_id'];
+			$data['zone_id'] = (int)$this->request->post['zone_id'];
 		} elseif (isset($this->session->data['shipping_address']['zone_id'])) {
 			$data['zone_id'] = $this->session->data['shipping_address']['zone_id'];
 		} else {
@@ -393,7 +393,7 @@ class ControllerAccountRegister extends Controller {
 			$this->error['country'] = $this->language->get('error_country');
 		}
 
-		if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
+		if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '' || !is_numeric($this->request->post['zone_id'])) {
 			$this->error['zone'] = $this->language->get('error_zone');
 		}
 

@@ -3,16 +3,14 @@ class Controller3rdPartyMaxmind extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('install/maxmind');
+		$this->language->load('3rd-party/maxmind');
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('3rd-party/maxmind');
-
+		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
-
-			$this->model_3rdparty_maxmind->mysql($this->request->post);
+			$this->model_3rd_party_maxmind->editSetting($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -65,14 +63,14 @@ class Controller3rdPartyMaxmind extends Controller {
 				$data['maxmind_order_status_id'] = '';
 			}
 			
-			$data['order_statuses'] = $this->model_3rdparty_maxmind->getOrderStatuses();
+			$data['order_statuses'] = $this->model_3rd_party_maxmind->getOrderStatuses();
 
 			$data['back'] = $this->url->link('install/step_4');
 
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
-			$this->response->setOutput($this->load->view('install/maxmind', $data));
+			$this->response->setOutput($this->load->view('3rd-party/maxmind', $data));
 		}
 	}
 

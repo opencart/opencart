@@ -46,7 +46,7 @@ final class Loader {
 				$proxy->attach($method, $this->closure($this->registry, $route . '/' . $method));
 			}
 			
-			$this->registry->set('model_' . str_replace('/', '_', (string)$route), $proxy);
+			$this->registry->set('model_' . str_replace(array('/', '-'), '_', (string)$route), $proxy);
 		} else {
 			trigger_error('Error: Could not load model ' . $route . '!');
 			exit();

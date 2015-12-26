@@ -11,29 +11,29 @@ class ControllerUpgradeUpgrade extends Controller {
 			$this->response->redirect($this->url->link('upgrade/success'));
 		}
 
-		$data = array();
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
 		}
 
-		$data['action'] = $this->url->link('upgrade');
+		$data['action'] = $this->url->link('common/upgrade');
 
-		$data['header'] = $this->load->controller('header');
-		$data['footer'] = $this->load->controller('footer');
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['language'] = $this->load->controller('common/language');
 
-		$this->response->setOutput($this->load->view('upgrade', $data));
+		$this->response->setOutput($this->load->view('upgrade/upgrade', $data));
 	}
 
 	public function success() {
 		$data = array();
 
-		$data['header'] = $this->load->controller('header');
-		$data['footer'] = $this->load->controller('footer');
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['language'] = $this->load->controller('common/language');
 
-		$this->response->setOutput($this->load->view('success', $data));
+		$this->response->setOutput($this->load->view('upgrade/success', $data));
 	}
 
 	private function validate() {

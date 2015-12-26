@@ -29,8 +29,6 @@ class ControllerCommonLanguage extends Controller {
 		} else {
 			$url_data = $this->request->get;
 
-			unset($url_data['_route_']);
-
 			$route = $url_data['route'];
 
 			unset($url_data['route']);

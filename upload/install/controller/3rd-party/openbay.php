@@ -1,5 +1,5 @@
 <?php
-class ControllerInstallOpenbay extends Controller {
+class Controller3rdPartyOpenbay extends Controller {
 	public function index() {
 		$this->document->setTitle($this->language->get('heading_openbay'));
 
@@ -14,11 +14,11 @@ class ControllerInstallOpenbay extends Controller {
 		$data['button_register_us'] = $this->language->get('button_register_us');
 		$data['button_back'] = $this->language->get('button_back');
 
-		$data['back'] = $this->url->link('step_4');
+		$data['back'] = $this->url->link('install/step_4');
 
-		$data['footer'] = $this->load->controller('footer');
-		$data['header'] = $this->load->controller('header');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('openbay', $data));
+		$this->response->setOutput($this->load->view('3rd-party/openbay', $data));
 	}
 }

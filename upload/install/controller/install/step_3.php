@@ -6,9 +6,9 @@ class ControllerInstallStep3 extends Controller {
 		$this->language->load('install/step_3');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->load->model('install');
+			$this->load->model('install/install');
 
-			$this->model_install->database($this->request->post);
+			$this->model_install_install->database($this->request->post);
 
 			$output  = '<?php' . "\n";
 			$output .= '// HTTP' . "\n";
@@ -236,7 +236,7 @@ class ControllerInstallStep3 extends Controller {
 
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
-		$data['step'] = $this->load->controller('common/step');
+		$data['column_left'] = $this->load->controller('common/column_left');
 
 		$this->response->setOutput($this->load->view('install/step_3', $data));
 	}

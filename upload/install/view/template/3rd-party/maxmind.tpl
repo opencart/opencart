@@ -3,24 +3,23 @@
   <header>
     <div class="row">
       <div class="col-sm-6">
-        <h3><?php echo $heading_maxmind; ?><br><small><?php echo $heading_maxmind_small; ?></small></h3>
+        <h3><?php echo $heading_title; ?><br>
+          <small><?php echo $text_maxmind; ?></small></h3>
       </div>
       <div class="col-sm-6">
-        <div id="logo" class="pull-right hidden-xs">
-          <img src="view/image/logo.png" alt="OpenCart" title="OpenCart" />
-        </div>
+        <div id="logo" class="pull-right hidden-xs"><img src="view/image/logo.png" alt="OpenCart" title="OpenCart" /></div>
       </div>
     </div>
   </header>
   <div class="row">
     <div class="col-sm-12">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <p><?php echo $text_maxmind_top; ?> <a target="_blank" href="http://www.maxmind.com/?rId=opencart"><u><?php echo $text_maxmind_link; ?></u></a></p>
+        <p><?php echo $text_signup; ?></p>
         <fieldset>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-key"><?php echo $entry_key; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="maxmind_key" id="input-key" class="form-control" value="<?php echo $maxmind_key; ?>" placeholder="<?php echo $entry_key; ?>"/>
+              <input type="text" name="maxmind_key" value="<?php echo $maxmind_key; ?>" placeholder="<?php echo $entry_key; ?>" id="input-key" class="form-control" />
               <?php if ($error_key) { ?>
               <div class="text-danger"><?php echo $error_key; ?></div>
               <?php } ?>
@@ -40,13 +39,13 @@
             <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
             <div class="col-sm-10">
               <select name="maxmind_order_status_id" id="input-order-status" class="form-control">
-              <?php foreach ($order_statuses as $order_status) { ?>
+                <?php foreach ($order_statuses as $order_status) { ?>
                 <?php if ($order_status['order_status_id'] == $maxmind_status_id) { ?>
-                  <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                 <?php } else { ?>
-                  <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
                 <?php } ?>
-              <?php } ?>
+                <?php } ?>
               </select>
               <div class="help"><?php echo $help_order_status; ?></div>
             </div>
@@ -62,4 +61,4 @@
     </div>
   </div>
 </div>
-<?php echo $footer; ?>
+<?php echo $footer; ?> 

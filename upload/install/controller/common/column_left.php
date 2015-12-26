@@ -1,7 +1,22 @@
 <?php
-class ControllerCommonLanguage extends Controller {
+class ControllerCommonColumnLeft extends Controller {
 	public function index() {
-		$data['action'] = $this->url->link('common/language/language', '', $this->request->server['HTTPS']);
+		$this->language->load('common/column_left');
+	
+		// Step
+		$data['text_license'] = $this->language->get('text_license');
+		$data['text_installation'] = $this->language->get('text_installation');
+		$data['text_configuration'] = $this->language->get('text_configuration');
+		$data['text_finished'] = $this->language->get('text_finished');
+
+		if (isset($this->request->get['route'])) {
+			$data['route'] = $this->request->get['route'];
+		} else {
+			$data['route'] = 'install/step_1';
+		}
+		
+		// Language
+		$data['action'] = $this->url->link('common/column_left/language', '', $this->request->server['HTTPS']);
 		
 		if (isset($this->session->data['language'])) {
 			$data['code'] = $this->session->data['language'];
@@ -35,9 +50,9 @@ class ControllerCommonLanguage extends Controller {
 			$data['redirect'] = $this->url->link($route, $url, $this->request->server['HTTPS']);
 		}
 		
-		return $this->load->view('common/language', $data);
+		return $this->load->view('common/column_left', $data);
 	}
-
+	
 	public function language() {
 		if (isset($this->request->post['language']) && is_dir(DIR_LANGUAGE . str_replace('../', '/', $this->request->post['language']))) {
 			$this->session->data['language'] = $this->request->post['language'];

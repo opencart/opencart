@@ -1,26 +1,26 @@
 <?php
-class ControllerInstallMaxmind extends Controller {
+class Controller3rdPartyMaxmind extends Controller {
 	private $error = array();
 
 	public function index() {
+		$this->language->load('install/maxmind');
+		
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$db->query("REPLACE INTO `" . DB_PREFIX . "setting` SET `maxmind_key` = '" . $db->escape($this->request->post['maxmind_key']) . "', `maxmind_score` = '" . (int)$this->request->post['maxmind_score'] . "', `maxmind_order_status_id` = '" . (int)$this->request->post['maxmind_order_status_id'] . "'  WHERE `store_id` = '0' AND `code` = 'maxmind'");
 
-			$db->query("INSERT INTO `oc_extension` (`type`, `code`) VALUES ('fraud', 'maxmind')");
+			
 
-			$this->session->data['success'] = $this->language->get('text_maxmind_success');
+			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('step_4'));
+			$this->response->redirect($this->url->link('install/step_4'));
 		} else {
-			$this->document->setTitle($this->language->get('heading_maxmind'));
-
-			$data['heading_maxmind'] = $this->language->get('heading_maxmind');
-			$data['heading_maxmind_small'] = $this->language->get('heading_maxmind_small');
-
-			$data['text_maxmind_top'] = $this->language->get('text_maxmind_top');
-			$data['text_maxmind_link'] = $this->language->get('text_maxmind_link');
+			$data['heading_title'] = $this->language->get('heading_title');
+			
+			$data['text_maxmind'] = $this->language->get('text_maxmind');
+			$data['text_signup'] = sprintf($this->language->get('text_signup'), '');
 
 			$data['entry_key'] = $this->language->get('entry_key');
 			$data['entry_score'] = $this->language->get('entry_score');
@@ -32,7 +32,7 @@ class ControllerInstallMaxmind extends Controller {
 			$data['button_continue'] = $this->language->get('button_continue');
 			$data['button_back'] = $this->language->get('button_back');
 
-			$data['action'] = $this->url->link('maxmind');
+			$data['action'] = $this->url->link('3rd-party/maxmind');
 
 			if (isset($this->error['key'])) {
 				$data['error_key'] = $this->error['key'];
@@ -58,20 +58,22 @@ class ControllerInstallMaxmind extends Controller {
 				$data['maxmind_score'] = '80';
 			}
 
-			$data['order_statuses'] = $db->query("SELECT * FROM " . DB_PREFIX . "order_status WHERE language_id = '1'  ORDER BY name ASC")->rows;
-
 			if (isset($this->request->post['maxmind_order_status_id'])) {
 				$data['maxmind_order_status_id'] = $this->request->post['maxmind_order_status_id'];
 			} else {
 				$data['maxmind_order_status_id'] = '';
 			}
+			
+			$this->load->model('3rd-party/maxmind');			
 
-			$data['back'] = $this->url->link('step_4');
+			$data['order_statuses'] = $this->model_3rdparty_maxmind->getOrderStatuses();
 
-			$data['footer'] = $this->load->controller('footer');
-			$data['header'] = $this->load->controller('header');
+			$data['back'] = $this->url->link('install/step_4');
 
-			$this->response->setOutput($this->load->view('maxmind', $data));
+			$data['footer'] = $this->load->controller('common/footer');
+			$data['header'] = $this->load->controller('common/header');
+
+			$this->response->setOutput($this->load->view('install/maxmind', $data));
 		}
 	}
 

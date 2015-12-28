@@ -15,7 +15,9 @@
   <?php if ($success) { ?>
   <div class="alert alert-success"><?php echo $text_success; ?></div>
   <?php } ?>
-  <div class="alert alert-danger"><?php echo $error_warning; ?></div>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <div class="visit">
     <div class="row">
       <div class="col-sm-5 col-sm-offset-1 text-center">

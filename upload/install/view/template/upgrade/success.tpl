@@ -2,29 +2,33 @@
 <div class="container">
   <header>
     <div class="row">
-      <div class="col-sm-12"><img src="view/image/logo.png" alt="OpenCart" title="OpenCart" /></div>
+      <div class="col-sm-6">
+        <h1 class="pull-left">2<small>/2</small></h1>
+        <h3><?php echo $heading_title; ?><br>
+          <small><?php echo $text_success; ?></small></h3>
+      </div>
+      <div class="col-sm-6">
+        <div id="logo" class="pull-right hidden-xs"><img src="view/image/logo.png" alt="OpenCart" title="OpenCart" /></div>
+      </div>
     </div>
   </header>
-  <h1>Upgrade - Complete!</h1>
   <div class="row">
     <div class="col-sm-9">
-      <div class="alert alert-danger">Don't forget to delete your installation directory!</div>
-      <p>Congratulations! You have successfully upgraded OpenCart.</p>
-      <div class="row">
-        <div class="col-lg-6"><a href="../"><img src="view/image/screenshot_1.png" alt="" class="img-thumbnail" /></a><br />
-          <p class="text-center"><a href="../">Goto your Online Shop</a></p>
-        </div>
-        <div class="col-lg-6"><a href="../admin/"><img src="view/image/screenshot_2.png" alt="" class="img-thumbnail" /></a><br />
-          <p class="text-center"><a href="../admin/">Login to your Administration</a></p>
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+      </div>
+      <div class="visit">
+        <div class="row">
+          <div class="col-sm-5 col-sm-offset-1 text-center">
+            <p><i class="fa fa-shopping-cart fa-5x"></i></p>
+            <a href="../" class="btn btn-secondary"><?php echo $text_catalog; ?></a></div>
+          <div class="col-sm-5 text-center">
+            <p><i class="fa fa-cog fa-5x white"></i></p>
+            <a href="../admin/" class="btn btn-secondary"><?php echo $text_admin; ?></a></div>
         </div>
       </div>
     </div>
-    <div class="col-sm-3">
-      <ul class="list-group">
-        <li class="list-group-item">Upgrade</li>
-        <li class="list-group-item"><b>Finished</b></li>
-      </ul>
-    </div>
+    <div class="col-sm-3"><?php echo $column_left; ?></div>
   </div>
 </div>
 <?php echo $footer; ?>

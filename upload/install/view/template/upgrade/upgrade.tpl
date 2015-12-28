@@ -2,10 +2,16 @@
 <div class="container">
   <header>
     <div class="row">
-      <div class="col-sm-12"><img src="view/image/logo.png" alt="OpenCart" title="OpenCart" /></div>
+      <div class="col-sm-6">
+        <h1 class="pull-left">1<small>/2</small></h1>
+        <h3><?php echo $heading_title; ?><br>
+          <small><?php echo $text_upgrade; ?></small></h3>
+      </div>
+      <div class="col-sm-6">
+        <div id="logo" class="pull-right hidden-xs"><img src="view/image/logo.png" alt="OpenCart" title="OpenCart" /></div>
+      </div>
     </div>
   </header>
-  <h1>Upgrade</h1>
   <div class="row">
     <div class="col-sm-9">
       <?php if ($error_warning) { ?>
@@ -15,29 +21,24 @@
       <?php } ?>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
         <fieldset>
-          <p><b>Follow these steps carefully!</b></p>
+          <p><b><?php echo $text_steps; ?></b></p>
           <ol>
-            <li>Post any upgrade script errors problems in the forums</li>
-            <li>After upgrade, clear any cookies in your browser to avoid getting token errors.</li>
-            <li>Load the admin page & press Ctrl+F5 twice to force the browser to update the css changes.</li>
-            <li>Goto Admin -> Users -> User Groups and Edit the Top Adminstrator group. Check All boxes.</li>
-            <li>Goto Admin and Edit the main System Settings. Update all fields and click save, even if nothing changed.</li>
-            <li>Load the store front & press Ctrl+F5 twice to force the browser to update the css changes.</li>
+            <li><?php echo $text_error; ?></li>
+            <li><?php echo $text_clear; ?></li>
+            <li><?php echo $text_admin; ?></li>
+            <li><?php echo $text_user; ?></li>
+            <li><?php echo $text_setting; ?></li>
+            <li><?php echo $text_store; ?></li>
           </ol>
         </fieldset>
         <div class="buttons">
           <div class="text-right">
-            <input type="submit" value="Continue" class="button" />
+            <input type="submit" value="<?php echo $button_continue; ?>" class="btn btn-primary" />
           </div>
         </div>
       </form>
     </div>
-    <div class="col-sm-3">
-      <ul class="list-group">
-        <li class="list-group-item"><b>Upgrade</b></li>
-        <li class="list-group-item">Finished</li>
-      </ul>
-    </div>
+    <div class="col-sm-3"><?php echo $column_left; ?></div>
   </div>
 </div>
 <?php echo $footer; ?>

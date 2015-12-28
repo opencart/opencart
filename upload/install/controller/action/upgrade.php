@@ -1,10 +1,9 @@
 <?php
 class ControllerActionUpgrade extends Controller {
 	public function index() {
-		// Upgrade
 		$upgrade = false;
 		
-		if (file_exists('../config.php')) {
+		if ((substr($this->request->get['route'], 0, 8) != 'upgrade/') && file_exists('../config.php')) {
 			if (filesize('../config.php') > 0) {
 				$upgrade = true;
 		
@@ -18,7 +17,7 @@ class ControllerActionUpgrade extends Controller {
 			}
 			
 			if ($upgrade) {
-				//return new Action('upgrade/upgrade');
+				$this->response->redirect($this->url->link('upgrade/upgrade'));
 			}
 		}		
 	}

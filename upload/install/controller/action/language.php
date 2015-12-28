@@ -1,28 +1,28 @@
 <?php
 class ControllerActionLanguage extends Controller {
 	public function index() {
-		if (!isset($this->session->data['language'])) {
-			$languages = glob(DIR_LANGUAGE . '*', GLOB_ONLYDIR);
-			
-			foreach ($languages as $language) {
-				$languages[] = basename($language);
-			}
-	
-			if (isset($this->request->server['HTTP_ACCEPT_LANGUAGE'])) {
-				$browser_languages = explode(',', $this->request->server['HTTP_ACCEPT_LANGUAGE']);
+		// Default language code
+		$code = $this->config->get('language.default');
 		
-				foreach ($browser_languages as $browser_language) {
-					if (in_array($browser_language, $languages)) {
-						$this->session->data['language'] = $browser_language;
-						break;
-					}
-				}		
-			
-			}
+		$languages = glob(DIR_LANGUAGE . '*', GLOB_ONLYDIR);
+		
+		foreach ($languages as $language) {
+			$languages[] = basename($language);
+		}
+
+		if (isset($this->request->server['HTTP_ACCEPT_LANGUAGE'])) {
+			$browser_languages = explode(',', $this->request->server['HTTP_ACCEPT_LANGUAGE']);
+	
+			foreach ($browser_languages as $browser_language) {
+				if (in_array($browser_language, $languages)) {
+					$code = $browser_language;
+					break;
+				}
+			}		
 		}
 		
 		if (!isset($this->session->data['language']) || !is_dir(DIR_LANGUAGE . str_replace('../', '/', $this->session->data['language']))) {
-			$this->session->data['language'] = $this->config->get('language.default');
+			$this->session->data['language'] = $code;
 		}
 		
 		// Language

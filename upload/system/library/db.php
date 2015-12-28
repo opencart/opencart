@@ -27,4 +27,8 @@ class DB {
 	public function getLastId() {
 		return $this->adaptor->getLastId();
 	}
+	
+	public function connected() {
+		return $this->adaptor->connected();
+	}	
 }

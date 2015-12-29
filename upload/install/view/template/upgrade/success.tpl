@@ -27,6 +27,14 @@
             <a href="../admin/" class="btn btn-secondary"><?php echo $text_admin; ?></a></div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <h2>Log</h2>
+          <textarea class="form-control">
+          
+          </textarea>
+        </div>
+      </div>
     </div>
     <div class="col-sm-3"><?php echo $column_left; ?></div>
   </div>

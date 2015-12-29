@@ -1,5 +1,5 @@
 <?php
-class ControllerUpgrade2001 extends Controller {
+class ControllerUpgrade2200 extends Controller {
 	public function index() {
 		// Update some language settings
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `value` = 'en-gb' WHERE `key` = 'config_language' AND `value` = 'en'");
@@ -7,5 +7,41 @@ class ControllerUpgrade2001 extends Controller {
 		
 		// Update the template setting
 		$this->db->query("UPDATE `" . DB_PREFIX . "setting` SET `key` = 'config_theme', value = 'theme_default' WHERE `key` = 'config_template'");
+	
+		// Update the config.php buy adding a DB_PORT
+		if (is_file(DIR_OPENCART . 'config.php')) {
+			$files = glob(DIR_OPENCART . '{config.php,*/config.php}', GLOB_BRACE);
+		
+			foreach ($files as $file) {
+				$upgrade = true;
+		
+				$lines = file($file);
+		
+				foreach ($lines as $line) {
+					if (strpos(strtoupper($line), 'DB_PORT') !== false) {
+						$upgrade = false;
+					}
+				}
+				
+				if ($upgrade) {
+					$output = '';
+					
+					foreach ($lines as $line_id => $line) {
+						if (strpos($line, 'DB_PREFIX') !== false) {
+							$output .= 'define(\'DB_PORT\', \'3306\');' . "\n";
+							$output .= $line;
+						} else {
+							$output .= $line;
+						}
+					}
+					
+					$file = fopen($file, 'w');
+		
+					fwrite($file, $output);
+		
+					fclose($file);			
+				}			
+			}
+		}
 	}
 }

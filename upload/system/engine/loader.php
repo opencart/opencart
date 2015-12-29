@@ -45,7 +45,7 @@ final class Loader {
 			foreach (get_class_methods($class) as $method) {
 				$proxy->attach($method, $this->closure($this->registry, $route . '/' . $method));
 			}
-			
+
 			$this->registry->set('model_' . str_replace(array('/', '-'), '_', (string)$route), $proxy);
 		} else {
 			trigger_error('Error: Could not load model ' . $route . '!');

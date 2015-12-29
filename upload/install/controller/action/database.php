@@ -10,7 +10,13 @@ class ControllerActionDatabase extends Controller {
 				}
 			}
 			
-			$this->registry->set('db', new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT));
+			if (defined('DB_PORT')) {
+				$port = DB_PORT;
+			} else {
+				$port = ini_get('mysqli.default_port');
+			}
+			
+			$this->registry->set('db', new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, $port));
 		}
 	}
 }

@@ -11,6 +11,8 @@ class Action {
 			$file = DIR_APPLICATION . 'controller/' . implode('/', $parts) . '.php';
 
 			if (is_file($file)) {
+				echo $file . '<br>';
+				
 				$this->route = implode('/', $parts);		
 				
 				break;

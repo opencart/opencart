@@ -12,7 +12,7 @@ class ControllerUpgradeUpgrade extends Controller {
 
 			$this->model_upgrade_upgrade->upgrade();
 
-		//	$this->response->redirect($this->url->link('upgrade/upgrade/success'));
+			$this->response->redirect($this->url->link('upgrade/upgrade/success'));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');

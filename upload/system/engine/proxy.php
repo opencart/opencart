@@ -7,6 +7,6 @@ class Proxy {
 	}
 		
 	public function __call($method, $args) {
-		return call_user_func($this->data[$method]->bindTo($this), $args);	
+		return call_user_func($this->data[$method], $args);	
 	}
 }

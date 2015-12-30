@@ -14,31 +14,81 @@
   </header>
   <div class="row">
     <div class="col-sm-9">
-      <?php if ($error_warning) { ?>
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>
-      <?php } ?>
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
-        <fieldset>
-          <p><b><?php echo $text_steps; ?></b></p>
-          <ol>
-            <li><?php echo $text_error; ?></li>
-            <li><?php echo $text_clear; ?></li>
-            <li><?php echo $text_admin; ?></li>
-            <li><?php echo $text_user; ?></li>
-            <li><?php echo $text_setting; ?></li>
-            <li><?php echo $text_store; ?></li>
-          </ol>
-        </fieldset>
-        <div class="buttons">
-          <div class="text-right">
-            <input type="submit" value="<?php echo $button_continue; ?>" class="btn btn-primary" />
+      <h3><?php echo $text_steps; ?></h3>
+      <fieldset>
+        <ol>
+          <li><?php echo $text_error; ?></li>
+          <li><?php echo $text_clear; ?></li>
+          <li><?php echo $text_admin; ?></li>
+          <li><?php echo $text_user; ?></li>
+          <li><?php echo $text_setting; ?></li>
+          <li><?php echo $text_store; ?></li>
+        </ol>
+      </fieldset>
+      <h3>Upgrade Progress</h3>
+      <fieldset>
+        <div class="form-group">
+          <label class="col-sm-2 control-label"><?php echo $entry_progress; ?></label>
+          <div class="col-sm-10">
+            <div class="progress">
+              <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+            </div>
+            <div id="progress-text"></div>
           </div>
         </div>
-      </form>
+      </fieldset>
+      <div class="buttons">
+        <div class="text-right">
+          <input type="submit" value="<?php echo $button_continue; ?>" id="button-continue" class="btn btn-primary" />
+        </div>
+      </div>
     </div>
     <div class="col-sm-3"><?php echo $column_left; ?></div>
   </div>
-</div>
+  <script type="text/javascript"><!--
+var step = 1;
+
+$('#button-continue').on('click', function() {
+	$('#button-continue').prop('disabled', true);
+	
+	start('index.php?route=upgrade/upgrade/next');
+});
+
+function start(url) {
+	$('#progress-bar').css('width', ((step / <?php echo $total; ?>) * 100) + '%');
+	$('#progress-text').html('<span class="text-info"></span>');
+
+	$.ajax({
+		url: url,
+		type: 'get',
+		dataType: 'json',
+		success: function(json) {
+			if (json['error']) {
+				$('#progress-bar').addClass('progress-bar-danger');
+				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+				
+				$('#button-continue').prop('disabled', false);
+			}
+
+			if (json['success']) {
+				$('#progress-bar').addClass('progress-bar-success');
+				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+			}
+			
+			if (json['next']) {
+				//start(json['next']);
+			}
+			
+			if (json['redirect']) {
+				location = json['redirect'];
+			}	
+			
+			step++;		
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+}
+//--></script></div>
 <?php echo $footer; ?>

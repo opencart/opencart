@@ -9,7 +9,6 @@ final class mPDO {
 			$this->connection = new \PDO("mysql:host=" . $hostname . ";port=" . $port . ";dbname=" . $database, $username, $password, array(\PDO::ATTR_PERSISTENT => true));
 		} catch(\PDOException $e) {
 			throw new \Exception('Unknown database \'' . $database . '\'');
-			exit();
 		}
 
 		$this->connection->exec("SET NAMES 'utf8'");
@@ -45,7 +44,7 @@ final class mPDO {
 				$result->num_rows = $this->statement->rowCount();
 			}
 		} catch(\PDOException $e) {
-			trigger_error('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode());
+			throw new \Exception('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode());
 		}
 	}
 
@@ -68,8 +67,7 @@ final class mPDO {
 				$result->num_rows = $this->statement->rowCount();
 			}
 		} catch (\PDOException $e) {
-			trigger_error('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode() . ' <br />' . $sql);
-			exit();
+			throw new \Exception('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode() . ' <br />' . $sql);
 		}
 
 		if ($result) {

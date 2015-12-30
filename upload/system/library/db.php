@@ -8,7 +8,7 @@ class DB {
 		if (class_exists($class)) {
 			$this->adaptor = new $class($hostname, $username, $password, $database, $port);
 		} else {
-			exit('Error: Could not load database adaptor ' . $adaptor . '!');
+			throw new \Exception('Error: Could not load database adaptor ' . $adaptor . '!');
 		}
 	}
 

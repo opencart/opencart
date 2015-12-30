@@ -3,22 +3,18 @@ class ControllerActionUpgrade extends Controller {
 	public function index() {
 		$upgrade = false;
 		
-		if ((substr($this->request->get['route'], 0, 8) != 'upgrade/') && file_exists('../config.php')) {
-			if (filesize('../config.php') > 0) {
-				$upgrade = true;
+		if (is_file(DIR_OPENCART . 'config.php') && filesize(DIR_OPENCART . 'config.php') > 0) {
+			$upgrade = true;
+		}
 		
-				$lines = file(DIR_OPENCART . 'config.php');
+		if (isset($this->request->get['route'])) {
+			if (($this->request->get['route'] == 'install/step_4') || (substr($this->request->get['route'], 0, 8) == 'upgrade/')) {
+				$upgrade = false;
+			}
+		}
 		
-				foreach ($lines as $line) {
-					if (strpos(strtoupper($line), 'DB_') !== false) {
-						eval($line);
-					}
-				}
-			}
-			
-			if ($upgrade) {
-				$this->response->redirect($this->url->link('upgrade/upgrade'));
-			}
-		}		
+		if ($upgrade) {
+			$this->response->redirect($this->url->link('upgrade/upgrade'));
+		}
 	}
 }

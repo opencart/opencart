@@ -10,8 +10,7 @@ final class MySQL {
 		}
 
 		if (!mysql_select_db($database, $this->connection)) {
-			trigger_error('Error: Could not connect to database ' . $database);
-			exit();
+			throw new \Exception('Error: Could not connect to database ' . $database);
 		}
 
 		mysql_query("SET NAMES 'utf8'", $this->connection);
@@ -52,7 +51,7 @@ final class MySQL {
 			} else {
 				$trace = debug_backtrace();
 
-				trigger_error('Error: ' . mysql_error($this->connection) . '<br />Error No: ' . mysql_errno($this->connection) . '<br /> Error in: <b>' . $trace[1]['file'] . '</b> line <b>' . $trace[1]['line'] . '</b><br />' . $sql);
+				throw new \Exception('Error: ' . mysql_error($this->connection) . '<br />Error No: ' . mysql_errno($this->connection) . '<br /> Error in: <b>' . $trace[1]['file'] . '</b> line <b>' . $trace[1]['line'] . '</b><br />' . $sql);
 			}
 		}
 	}

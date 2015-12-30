@@ -46,10 +46,9 @@ final class Loader {
 				$proxy->attach($method, $this->closure($this->registry, $route . '/' . $method));
 			}
 
-			$this->registry->set('model_' . str_replace(array('/', '-'), '_', (string)$route), $proxy);
+			$this->registry->set('model_' . str_replace(array('/', '-', '.'), array('_', '', ''), (string)$route), $proxy);
 		} else {
-			trigger_error('Error: Could not load model ' . $route . '!');
-			exit();
+			throw new \Exception('Error: Could not load model ' . $route . '!');
 		}
 	}
 
@@ -94,8 +93,7 @@ final class Loader {
 
 			$this->registry->set(basename($route), new $class($this->registry));
 		} else {
-			trigger_error('Error: Could not load library ' . $route . '!');
-			exit();
+			throw new \Exception('Error: Could not load library ' . $route . '!');
 		}
 	}
 	
@@ -105,8 +103,7 @@ final class Loader {
 		if (is_file($file)) {
 			include_once($file);
 		} else {
-			trigger_error('Error: Could not load helper ' . $route . '!');
-			exit();
+			throw new \Exception('Error: Could not load helper ' . $route . '!');
 		}
 	}
 	
@@ -144,15 +141,13 @@ final class Loader {
 			
 				$model = new $class($registry);
 			} else {
-				trigger_error('Error: Could not load model ' . substr($route, 0, strrpos($route, '/')) . '!');
-				exit();
+				throw new \Exception('Error: Could not load model ' . substr($route, 0, strrpos($route, '/')) . '!');
 			}
 			
 			if (method_exists($model, $method)) {			
 				$output = call_user_func_array(array($model, $method), $args);
 			} else {
-				trigger_error('Error: Could not call model model/' . $route . '!');
-				exit();				
+				throw new \Exception('Error: Could not call model model/' . $route . '!');
 			}
 			
 			// Trigger the post events

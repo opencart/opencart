@@ -1,6 +1,7 @@
 <?php
-class ModelUpgradeUpgrade extends Model {
+class ModelUpgrade1000 extends Model {
 	public function upgrade() {
+			
 		// This is a generic upgrade script. 
 		// Specific DB changes should be done using event actions.
 		// Upgrade script to opgrade opencart to the latest version.
@@ -68,7 +69,7 @@ class ModelUpgradeUpgrade extends Model {
 					'unsigned'      => trim($match[8][$key]),
 					'notnull'       => trim($match[9][$key]),
 					'autoincrement' => trim($match[12][$key]),
-					'default'       => trim($match[14][$key]),
+					'default'       => trim($match[14][$key])
 				);
 			}
 
@@ -124,7 +125,7 @@ class ModelUpgradeUpgrade extends Model {
 			}
 
 			// Get Table Name
-			preg_match_all('#create\s*table\s*if\s*not\s*exists\s*`(\w[\w\d]*)`#i', $sql, $table);
+			preg_match_all('#create\s*table\s*`(\w[\w\d]*)`#i', $sql, $table);
 
 			if (isset($table[1][0])) {
 				$table_new_data[] = array(

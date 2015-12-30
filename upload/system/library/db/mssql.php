@@ -5,11 +5,11 @@ final class MSSQL {
 
 	public function __construct($hostname, $username, $password, $database, $port = '1433') {
 		if (!$this->connection = mssql_connect($hostname. ':' . $port, $username, $password)) {
-			exit('Error: Could not make a database connection using ' . $username . '@' . $hostname);
+			throw new \Exception('Error: Could not make a database connection using ' . $username . '@' . $hostname);
 		}
 
 		if (!mssql_select_db($database, $this->link)) {
-			exit('Error: Could not connect to database ' . $database);
+			throw new \Exception('Error: Could not connect to database ' . $database);
 		}
 
 		mssql_query("SET NAMES 'utf8'", $this->connection);
@@ -45,8 +45,7 @@ final class MSSQL {
 				return true;
 			}
 		} else {
-			trigger_error('Error: ' . mssql_get_last_message($this->connection) . '<br />' . $sql);
-			exit();
+			throw new \Exception('Error: ' . mssql_get_last_message($this->connection) . '<br />' . $sql);
 		}
 	}
 

@@ -1,20 +1,10 @@
 <?php
 class ControllerUpgradeUpgrade extends Controller {
-	private $error = array();
-
 	public function index() {
 		$this->language->load('upgrade/upgrade');
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->load->model('upgrade/upgrade');
-
-			$this->model_upgrade_upgrade->upgrade();
-
-			$this->response->redirect($this->url->link('upgrade/upgrade/success'));
-		}
-
 		$data['heading_title'] = $this->language->get('heading_title');
 		
 		$data['text_upgrade'] = $this->language->get('text_upgrade');
@@ -26,15 +16,11 @@ class ControllerUpgradeUpgrade extends Controller {
 		$data['text_setting'] = $this->language->get('text_setting');
 		$data['text_store'] = $this->language->get('text_store');
 		
+		$data['entry_progress'] = $this->language->get('entry_progress');
+		
 		$data['button_continue'] = $this->language->get('button_continue');
 
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		$data['action'] = $this->url->link('upgrade/upgrade');
+		$data['total'] = count(glob(DIR_APPLICATION . 'model/upgrade/*.php'));
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -42,7 +28,56 @@ class ControllerUpgradeUpgrade extends Controller {
 
 		$this->response->setOutput($this->load->view('upgrade/upgrade', $data));
 	}
+	
+	public function next() {
+		$this->load->language('upgrade/upgrade');
+				
+		$json = array();
 
+		if (isset($this->request->get['step'])) {
+			$step = $this->request->get['step'];
+		} else {
+			$step = 1;
+		}
+		
+		$files = glob(DIR_APPLICATION . 'model/upgrade/*.php');
+
+		if (isset($files[$step - 1])) {
+			try {
+				$model = basename($files[$step - 1], '.php');
+				
+				$this->load->model('upgrade/' . $model);
+				
+				$this->db->query("CREATE TABLE `oc_");
+
+				//echo 'model_upgrade_' . str_replace('.', '', $model);
+				
+				//$this->model_upgrade_{str_replace('.', '', $model)}->upgrade();
+				
+				//trigger_error('hi');
+			} catch(Exception $exception) {
+				$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
+			}		
+			
+			/*
+				$json['success'] = sprintf($this->language->get('text_progress'), basename($files[$step], '.php'), $step, count($files));
+			
+				if ($files[$step]) {
+					$json['next'] = $this->url->link('upgrade/upgrade/next', 'step=' . ($step + 1));
+				} else {
+					$json['redirect'] = $this->url->link('upgrade/upgrade/success');
+				}
+	*/
+			
+		} else {
+			$json['error'] = 'Missing file';
+		}
+		
+				
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));			
+	}
+	
 	public function success() {
 		$this->language->load('upgrade/upgrade');
 		
@@ -61,21 +96,5 @@ class ControllerUpgradeUpgrade extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 
 		$this->response->setOutput($this->load->view('upgrade/success', $data));
-	}
-
-	private function validate() {
-		if (DB_DRIVER == 'mysql') {
-			if (!$connection = @mysql_connect(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD)) {
-				$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct in the config.php file!';
-			} else {
-				if (!mysql_select_db(DB_DATABASE, $connection)) {
-					$this->error['warning'] = 'Error: Database "' . DB_DATABASE . '" does not exist!';
-				}
-
-				mysql_close($connection);
-			}
-		}
-
-		return !$this->error;
 	}
 }

@@ -7,8 +7,7 @@ final class MySQLi {
 		$this->connection = new \mysqli($hostname, $username, $password, $database, $port);
 
 		if ($this->connection->connect_error) {
-			trigger_error('Error: Could not make a database link (' . $this->connection->connect_errno . ') ' . $this->connection->connect_error);
-			exit();
+			throw new \Exception('Error: ' . mysql_error($this->connection) . '<br />Error No: ' . mysql_errno($this->connection) . '<br /> Error in: <b>' . $trace[1]['file'] . '</b> line <b>' . $trace[1]['line'] . '</b><br />' . $sql);
 		}
 
 		$this->connection->set_charset("utf8");
@@ -38,7 +37,7 @@ final class MySQLi {
 				return true;
 			}
 		} else {
-			trigger_error('Error: ' . $this->connection->error  . '<br />Error No: ' . $this->connection->errno . '<br />' . $sql);
+			throw new \Exception('Error: ' . $this->connection->error  . '<br />Error No: ' . $this->connection->errno . '<br />' . $sql);
 		}
 	}
 

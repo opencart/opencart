@@ -8,7 +8,7 @@ class Cache {
 		if (class_exists($class)) {
 			$this->adaptor = new $class($expire);
 		} else {
-			exit('Error: Could not load cache adaptor ' . $adaptor . ' cache!');
+			throw new \Exception('Error: Could not load cache adaptor ' . $adaptor . ' cache!');
 		}
 	}
 	

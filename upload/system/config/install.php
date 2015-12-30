@@ -16,9 +16,4 @@ $_['action.pre_action'] = array(
 	'action/upgrade',
 	'action/database'
 );
-$_['action.event']      = array(
-	'model/upgrade/upgrade/upgrade/after' => 'upgrade/1.5.5.0',
-	'model/upgrade/upgrade/upgrade/after' => 'upgrade/2.0.1.1',
-	'model/upgrade/upgrade/upgrade/after' => 'upgrade/2.10.0',
-	'model/upgrade/upgrade/upgrade/after' => 'upgrade/2.2.0.0'
-);
+$_['action.event']      = array();

@@ -20,6 +20,8 @@ class ControllerUpgradeUpgrade extends Controller {
 		
 		$data['button_continue'] = $this->language->get('button_continue');
 
+		$data['store'] = HTTP_OPENCART;
+
 		$data['total'] = count(glob(DIR_APPLICATION . 'model/upgrade/*.php'));
 
 		$data['header'] = $this->load->controller('common/header');
@@ -43,58 +45,26 @@ class ControllerUpgradeUpgrade extends Controller {
 		$files = glob(DIR_APPLICATION . 'model/upgrade/*.php');
 
 		if (isset($files[$step - 1])) {
+			// Get the upgrade file
+			$code = basename($files[$step - 1], '.php');
+			
 			try {
-				$model = basename($files[$step - 1], '.php');
+				$this->load->model('upgrade/' . $code);
 				
-				$this->load->model('upgrade/' . $model);
-				
-				$this->db->query("CREATE TABLE `oc_");
-
-				//echo 'model_upgrade_' . str_replace('.', '', $model);
-				
-				//$this->model_upgrade_{str_replace('.', '', $model)}->upgrade();
-				
-				//trigger_error('hi');
+				// All upgrade methods require a upgrade method
+				$this->{'model_upgrade_' . str_replace('.', '', $code)}->upgrade();
+			
+				$json['success'] = sprintf($this->language->get('text_progress'), $code, $step, count($files));
+			
+				$json['next'] = str_replace('&amp;', '&', $this->url->link('upgrade/upgrade/next', 'step=' . ($step + 1)));
 			} catch(Exception $exception) {
 				$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 			}		
-			
-			/*
-				$json['success'] = sprintf($this->language->get('text_progress'), basename($files[$step], '.php'), $step, count($files));
-			
-				if ($files[$step]) {
-					$json['next'] = $this->url->link('upgrade/upgrade/next', 'step=' . ($step + 1));
-				} else {
-					$json['redirect'] = $this->url->link('upgrade/upgrade/success');
-				}
-	*/
-			
 		} else {
-			$json['error'] = 'Missing file';
+			$json['success'] = $this->language->get('text_success');
 		}
-		
 				
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));			
-	}
-	
-	public function success() {
-		$this->language->load('upgrade/upgrade');
-		
-		$this->document->setTitle($this->language->get('heading_success'));
-	
-		$data['heading_title'] = $this->language->get('heading_success');
-
-		$data['text_success'] = $this->language->get('text_success');
-		$data['text_catalog'] = $this->language->get('text_catalog');
-		$data['text_admin'] = $this->language->get('text_admin');
-		
-		$data['error_warning'] = $this->language->get('error_warning');
-		
-		$data['header'] = $this->load->controller('common/header');
-		$data['footer'] = $this->load->controller('common/footer');
-		$data['column_left'] = $this->load->controller('common/column_left');
-
-		$this->response->setOutput($this->load->view('upgrade/success', $data));
 	}
 }

@@ -1,6 +1,7 @@
 <?php
-class ControllerUpgrade1550 extends Controller {
-	public function index() {
+class ModelUpgrade1550 extends Model {
+	public function upgrade() {
+		/*
 		// Settings
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '0' ORDER BY `store_id` ASC");
 
@@ -46,6 +47,7 @@ class ControllerUpgrade1550 extends Controller {
 						
 		// Sort the categories to take advantage of the nested set model
 		$this->repairCategories(0);
+		*/
 	}
 	
 	// Function to repair any erroneous categories that are not in the category path table.

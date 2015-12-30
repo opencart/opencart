@@ -39,7 +39,7 @@ final class Loader {
 
 		if (is_file($file)) {
 			include_once($file);
-			
+			//echo $class;
 			$proxy = new Proxy();
 
 			foreach (get_class_methods($class) as $method) {

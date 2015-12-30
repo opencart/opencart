@@ -1,7 +1,7 @@
 <?php
 class ModelUpgrade1000 extends Model {
 	public function upgrade() {
-			
+		/*	
 		// This is a generic upgrade script. 
 		// Specific DB changes should be done using event actions.
 		// Upgrade script to opgrade opencart to the latest version.
@@ -306,5 +306,6 @@ class ModelUpgrade1000 extends Model {
 				}
 			}
 		}
+		*/
 	}
 }

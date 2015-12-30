@@ -46,49 +46,49 @@
     <div class="col-sm-3"><?php echo $column_left; ?></div>
   </div>
   <script type="text/javascript"><!--
-var step = 1;
+var step = 0;
 
 $('#button-continue').on('click', function() {
+	$('#progress-bar').addClass('progress-bar-success').css('width', '0%');
+	$('#progress-text').html('');
+
 	$('#button-continue').prop('disabled', true);
 	
 	start('index.php?route=upgrade/upgrade/next');
 });
 
 function start(url) {
-	$('#progress-bar').css('width', ((step / <?php echo $total; ?>) * 100) + '%');
-	$('#progress-text').html('<span class="text-info"></span>');
-
-	$.ajax({
-		url: url,
-		type: 'get',
-		dataType: 'json',
-		success: function(json) {
-			if (json['error']) {
-				$('#progress-bar').addClass('progress-bar-danger');
-				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+	setTimeout(function(){
+		$.ajax({
+			url: url,
+			type: 'post',
+			dataType: 'json',
+			success: function(json) {
+				if (json['error']) {
+					$('#progress-bar').addClass('progress-bar-danger');
+					$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+					
+					$('#button-continue').prop('disabled', false);
+				}
+	
+				if (json['success']) {
+					$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
+					$('#progress-bar').css('width', ((step / <?php echo $total; ?>) * 100) + '%');
+				}
 				
-				$('#button-continue').prop('disabled', false);
+				if (json['next']) {
+					start(json['next']);
+				} else {
+					$('#button-continue').replaceWith('<a href="<?php echo $store; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a>');
+				}
+				
+				step++;
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
-
-			if (json['success']) {
-				$('#progress-bar').addClass('progress-bar-success');
-				$('#progress-text').html('<span class="text-success">' + json['success'] + '</span>');
-			}
-			
-			if (json['next']) {
-				//start(json['next']);
-			}
-			
-			if (json['redirect']) {
-				location = json['redirect'];
-			}	
-			
-			step++;		
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+		});
+	}, 1000);
 }
 //--></script></div>
 <?php echo $footer; ?>

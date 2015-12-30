@@ -1,6 +1,7 @@
 <?php
-class ControllerUpgrade2011 extends Controller {
-	public function index() {
+class ModelUpgrade2011 extends Model {
+	public function upgrade() {
+		/*
 		//  Change any serialized values to json values and restore in the DB
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting`");
 
@@ -111,5 +112,7 @@ class ControllerUpgrade2011 extends Controller {
 				$this->db->query("UPDATE `" . DB_PREFIX . "module` SET `setting` = '" . $this->db->escape(json_encode($setting)) . "' WHERE `module_id` = '" . (int)$result['module_id'] . "'");
 			}
 		}	
+		
+		*/
 	}
 }

@@ -1,8 +1,12 @@
-# OpenCart 2.0 change log
+# OpenCart change log
+
+## v2.1.0.2 (06.10.2015)
+#### Bugs fixed
+* XSS issue resolved for zone_id. Thanks to www.netsparker.com for finding. (https://github.com/opencart/opencart/commit/33642ba18dc2645396dd35a0434964d7721d5eb3)
 
 ## v2.1.0.1 (06.10.2015)
 #### Bugs fixed
-* Use the ip address from data in Fraudlanbs module and update language strings
+* Use the ip address from data in Fraudlabs module and update language strings
 #### Changes
 * Allow download of the error log
 

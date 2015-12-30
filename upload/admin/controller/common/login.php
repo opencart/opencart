@@ -13,7 +13,7 @@ class ControllerCommonLogin extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->session->data['token'] = token(32);
-
+			
 			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0 || strpos($this->request->post['redirect'], HTTPS_SERVER) === 0)) {
 				$this->response->redirect($this->request->post['redirect'] . '&token=' . $this->session->data['token']);
 			} else {

@@ -56,32 +56,13 @@ if (!isset($_SERVER['HTTP_HOST'])) {
 }
 
 // Check if SSL
-if (isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTPS'] == '1'))) {
+if (isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTPS'] == '1')) || $_SERVER['SERVER_PORT'] == 443) {
 	$_SERVER['HTTPS'] = true;
 } elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
 	$_SERVER['HTTPS'] = true;
 } else {
 	$_SERVER['HTTPS'] = false;
 }
-
-/*
-// HTTP
-$protocol = $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-define('HTTP_SERVER', 'http://' . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/.\\') . '/');
-define('HTTP_OPENCART', 'http://' . $_SERVER['HTTP_HOST'] . rtrim(rtrim(dirname($_SERVER['SCRIPT_NAME']), 'install'), '/.\\') . '/');
-
-// DIR
-define('DIR_APPLICATION', str_replace('\\', '/', realpath(dirname(__FILE__))) . '/');
-define('DIR_SYSTEM', str_replace('\\', '/', realpath(dirname(__FILE__) . '/../')) . '/system/');
-define('DIR_OPENCART', str_replace('\\', '/', realpath(DIR_APPLICATION . '../')) . '/');
-define('DIR_MODIFICATION', DIR_SYSTEM . 'storage/modification/');
-define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
-define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');
-define('DIR_CONFIG', DIR_SYSTEM . 'config/');
-*/
-
-
-
 
 // Modification Override
 function modification($filename) {

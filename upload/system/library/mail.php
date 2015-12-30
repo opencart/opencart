@@ -57,28 +57,23 @@ class Mail {
 
 	public function send() {
 		if (!$this->to) {
-			trigger_error('Error: E-Mail to required!');
-			exit();
+			throw new \Exception('Error: E-Mail to required!');
 		}
 
 		if (!$this->from) {
-			trigger_error('Error: E-Mail from required!');
-			exit();
+			throw new \Exception('Error: E-Mail from required!');
 		}
 
 		if (!$this->sender) {
-			trigger_error('Error: E-Mail sender required!');
-			exit();
+			throw new \Exception('Error: E-Mail sender required!');
 		}
 
 		if (!$this->subject) {
-			trigger_error('Error: E-Mail subject required!');
-			exit();
+			throw new \Exception('Error: E-Mail subject required!');
 		}
 
 		if ((!$this->text) && (!$this->html)) {
-			trigger_error('Error: E-Mail message required!');
-			exit();
+			throw new \Exception('Error: E-Mail message required!');
 		}
 
 		if (is_array($this->to)) {
@@ -172,8 +167,7 @@ class Mail {
 			$handle = fsockopen($hostname, $this->smtp_port, $errno, $errstr, $this->smtp_timeout);
 
 			if (!$handle) {
-				trigger_error('Error: ' . $errstr . ' (' . $errno . ')');
-				exit();
+				throw new \Exception('Error: ' . $errstr . ' (' . $errno . ')');
 			} else {
 				if (substr(PHP_OS, 0, 3) != 'WIN') {
 					socket_set_timeout($handle, $this->smtp_timeout, 0);
@@ -198,8 +192,7 @@ class Mail {
 				}
 
 				if (substr($reply, 0, 3) != 250) {
-					trigger_error('Error: EHLO not accepted from server!');
-					exit();
+					throw new \Exception('Error: EHLO not accepted from server!');
 				}
 
 				if (substr($this->smtp_hostname, 0, 3) == 'tls') {
@@ -216,8 +209,7 @@ class Mail {
 					}
 
 					if (substr($reply, 0, 3) != 220) {
-						trigger_error('Error: STARTTLS not accepted from server!');
-						exit();
+						throw new \Exception('Error: STARTTLS not accepted from server!');
 					}
 
 					stream_socket_enable_crypto($handle, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
@@ -237,8 +229,7 @@ class Mail {
 					}
 
 					if (substr($reply, 0, 3) != 250) {
-						trigger_error('Error: EHLO not accepted from server!');
-						exit();
+						throw new \Exception('Error: EHLO not accepted from server!');
 					}
 
 					fputs($handle, 'AUTH LOGIN' . "\r\n");
@@ -254,8 +245,7 @@ class Mail {
 					}
 
 					if (substr($reply, 0, 3) != 334) {
-						trigger_error('Error: AUTH LOGIN not accepted from server!');
-						exit();
+						throw new \Exception('Error: AUTH LOGIN not accepted from server!');
 					}
 
 					fputs($handle, base64_encode($this->smtp_username) . "\r\n");
@@ -271,8 +261,7 @@ class Mail {
 					}
 
 					if (substr($reply, 0, 3) != 334) {
-						trigger_error('Error: Username not accepted from server!');
-						exit();
+						throw new \Exception('Error: Username not accepted from server!');
 					}
 
 					fputs($handle, base64_encode($this->smtp_password) . "\r\n");
@@ -288,8 +277,7 @@ class Mail {
 					}
 
 					if (substr($reply, 0, 3) != 235) {
-						trigger_error('Error: Password not accepted from server!');
-						exit();
+						throw new \Exception('Error: Password not accepted from server!');
 					}
 				} else {
 					fputs($handle, 'HELO ' . getenv('SERVER_NAME') . "\r\n");
@@ -305,8 +293,7 @@ class Mail {
 					}
 
 					if (substr($reply, 0, 3) != 250) {
-						trigger_error('Error: HELO not accepted from server!');
-						exit();
+						throw new \Exception('Error: HELO not accepted from server!');
 					}
 				}
 
@@ -327,8 +314,7 @@ class Mail {
 				}
 
 				if (substr($reply, 0, 3) != 250) {
-					trigger_error('Error: MAIL FROM not accepted from server!');
-					exit();
+					throw new \Exception('Error: MAIL FROM not accepted from server!');
 				}
 
 				if (!is_array($this->to)) {
@@ -345,8 +331,7 @@ class Mail {
 					}
 
 					if ((substr($reply, 0, 3) != 250) && (substr($reply, 0, 3) != 251)) {
-						trigger_error('Error: RCPT TO not accepted from server!');
-						exit();
+						throw new \Exception('Error: RCPT TO not accepted from server!');
 					}
 				} else {
 					foreach ($this->to as $recipient) {
@@ -363,8 +348,7 @@ class Mail {
 						}
 
 						if ((substr($reply, 0, 3) != 250) && (substr($reply, 0, 3) != 251)) {
-							trigger_error('Error: RCPT TO not accepted from server!');
-							exit();
+							throw new \Exception('Error: RCPT TO not accepted from server!');
 						}
 					}
 				}
@@ -382,8 +366,7 @@ class Mail {
 				}
 
 				if (substr($reply, 0, 3) != 354) {
-					trigger_error('Error: DATA not accepted from server!');
-					exit();
+					throw new \Exception('Error: DATA not accepted from server!');
 				}
 
 				// According to rfc 821 we should not send more than 1000 including the CRLF
@@ -417,8 +400,7 @@ class Mail {
 				}
 
 				if (substr($reply, 0, 3) != 250) {
-					trigger_error('Error: DATA not accepted from server!');
-					exit();
+					throw new \Exception('Error: DATA not accepted from server!');
 				}
 
 				fputs($handle, 'QUIT' . "\r\n");
@@ -434,8 +416,7 @@ class Mail {
 				}
 
 				if (substr($reply, 0, 3) != 221) {
-					trigger_error('Error: QUIT not accepted from server!');
-					exit();
+					throw new \Exception('Error: QUIT not accepted from server!');
 				}
 
 				fclose($handle);

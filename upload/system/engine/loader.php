@@ -39,17 +39,16 @@ final class Loader {
 
 		if (is_file($file)) {
 			include_once($file);
-			
+			//echo $class;
 			$proxy = new Proxy();
 
 			foreach (get_class_methods($class) as $method) {
 				$proxy->attach($method, $this->closure($this->registry, $route . '/' . $method));
 			}
-			
-			$this->registry->set('model_' . str_replace('/', '_', (string)$route), $proxy);
+
+			$this->registry->set('model_' . str_replace(array('/', '-', '.'), array('_', '', ''), (string)$route), $proxy);
 		} else {
-			trigger_error('Error: Could not load model ' . $route . '!');
-			exit();
+			throw new \Exception('Error: Could not load model ' . $route . '!');
 		}
 	}
 
@@ -82,25 +81,29 @@ final class Loader {
 		return $output;
 	}
 
+	public function library($route) {
+		// Sanitize the call
+		$route = str_replace('../', '', (string)$route);
+			
+		$file = DIR_SYSTEM . 'library/' . $route . '.php';
+		$class = str_replace('/', '\\', $route);
+
+		if (is_file($file)) {
+			include_once($file);
+
+			$this->registry->set(basename($route), new $class($this->registry));
+		} else {
+			throw new \Exception('Error: Could not load library ' . $route . '!');
+		}
+	}
+	
 	public function helper($route) {
 		$file = DIR_SYSTEM . 'helper/' . str_replace('../', '', (string)$route) . '.php';
 
 		if (is_file($file)) {
 			include_once($file);
 		} else {
-			trigger_error('Error: Could not load helper ' . $route . '!');
-			exit();
-		}
-	}
-
-	public function library($route) {
-		$file = DIR_SYSTEM . 'library/' . str_replace('../', '', (string)$route) . '.php';
-
-		if (is_file($file)) {
-			include_once($file);
-		} else {
-			trigger_error('Error: Could not load helper ' . $route . '!');
-			exit();
+			throw new \Exception('Error: Could not load helper ' . $route . '!');
 		}
 	}
 	
@@ -138,15 +141,13 @@ final class Loader {
 			
 				$model = new $class($registry);
 			} else {
-				trigger_error('Error: Could not load model ' . substr($route, 0, strrpos($route, '/')) . '!');
-				exit();
+				throw new \Exception('Error: Could not load model ' . substr($route, 0, strrpos($route, '/')) . '!');
 			}
 			
 			if (method_exists($model, $method)) {			
 				$output = call_user_func_array(array($model, $method), $args);
 			} else {
-				trigger_error('Error: Could not call model ' . $route . '!');
-				exit();				
+				throw new \Exception('Error: Could not call model model/' . $route . '!');
 			}
 			
 			// Trigger the post events

@@ -1,46 +1,46 @@
 <?php
-$_['config_language']    = 'en-gb';
-$_['config_cache']       = 'file';
-$_['config.session_type'] = array(
-	'type'      => 'file',
-	'autostart' => false
-);
+// Site
+$_['site.base']            = substr(HTTP_SERVER, 7);
+$_['site.ssl']             = false;
 
+// Database
+$_['db.autostart']         = true;
+$_['db.type']              = DB_DRIVER; // mpdo, mssql, mysql, mysqli or postgre
+$_['db.hostname']          = DB_HOSTNAME;
+$_['db.username']          = DB_USERNAME;
+$_['db.password']          = DB_PASSWORD;
+$_['db.database']          = DB_DATABASE;
+$_['db.port']              = DB_PORT;
 
-
-$_['config_error_log']   = 'error.txt';
-
-/*
-Pre actions are paths to controllers to let you put in code that 
-*/
-$_['config_default']     = 'common/home';
-$_['config_route']       = 'action/route';
-$_['config_error']       = 'error/not_found';
-
-
-$_['config_autoload'] = array(
-	'customer',
-	'affiliate',
-	'currency',
-	'tax',
-	'weight',
-	'length',
-	'cart',
+// Autoload Libraries
+$_['library.autoload'] = array(
+	'cart/customer',
+	'cart/affiliate',
+	'cart/currency',
+	'cart/tax',
+	'cart/weight',
+	'cart/length',
+	'cart/cart',
 	'openbay'
 );
 
-/*
-Pre actions are paths to controllers to let you put in code that 
-
-*/
-$_['config_pre_action'] = array(
+// Actions
+$_['action.pre_action'] = array(
 	'action/setting',
 	'action/error',
 	'action/event',
 	'action/session',
 	'action/language',
-	'action/cart',
+	'action/currency',
+	'action/customer_group',
+	'action/tracking',
 	'action/maintenance',
-	'action/seo_url',
-	'action/route'
+	'action/seo_url'
+);
+
+// Action Events
+$_['action.event'] = array(
+	'view/*/before'                            => 'event/theme',
+	'model/account/customer/addCustomer/after' => 'mail/account',
+	'model/checkout/order/addOrder/after'      => 'mail/order'
 );

@@ -9,7 +9,6 @@ class Currency {
 		$this->db = $registry->get('db');
 		$this->language = $registry->get('language');
 		$this->request = $registry->get('request');
-		$this->session = $registry->get('session');
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "currency");
 
@@ -23,24 +22,10 @@ class Currency {
 				'value'         => $result['value']
 			);
 		}
-
-		if (isset($this->request->get['currency']) && (array_key_exists($this->request->get['currency'], $this->currencies))) {
-			$this->set($this->request->get['currency']);
-		} elseif ((isset($this->session->data['currency'])) && (array_key_exists($this->session->data['currency'], $this->currencies))) {
-			$this->set($this->session->data['currency']);
-		} elseif ((isset($this->request->cookie['currency'])) && (array_key_exists($this->request->cookie['currency'], $this->currencies))) {
-			$this->set($this->request->cookie['currency']);
-		} else {
-			$this->set($this->config->get('config_currency'));
-		}
 	}
-
+	
 	public function set($currency) {
 		$this->code = $currency;
-
-		if (!isset($this->session->data['currency']) || ($this->session->data['currency'] != $currency)) {
-			$this->session->data['currency'] = $currency;
-		}
 
 		if (!isset($this->request->cookie['currency']) || ($this->request->cookie['currency'] != $currency)) {
 			setcookie('currency', $currency, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);

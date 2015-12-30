@@ -1651,7 +1651,7 @@ CREATE TABLE `oc_language` (
 --
 
 INSERT INTO `oc_language` (`language_id`, `name`, `code`, `locale`, `image`, `directory`, `sort_order`, `status`) VALUES
-(1, 'English', 'en', 'en_US.UTF-8,en_US,en-gb,english', 'gb.png', 'english', 1, 1);
+(1, 'English', 'en-gb', 'en_US.UTF-8,en_US,en-gb,english', 'gb.png', 'english', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -3148,12 +3148,12 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (181, 0, 'config', 'config_meta_title', 'Your Store', 0),
 (182, 0, 'config', 'config_meta_description', 'My Store', 0),
 (183, 0, 'config', 'config_meta_keyword', '', 0),
-(184, 0, 'config', 'config_template', 'default', 0),
+(184, 0, 'config', 'config_theme', 'theme_default', 0),
 (185, 0, 'config', 'config_layout_id', '4', 0),
 (186, 0, 'config', 'config_country_id', '222', 0),
 (187, 0, 'config', 'config_zone_id', '3563', 0),
-(188, 0, 'config', 'config_language', 'en', 0),
-(189, 0, 'config', 'config_admin_language', 'en', 0),
+(188, 0, 'config', 'config_language', 'en-gb', 0),
+(189, 0, 'config', 'config_admin_language', 'en-gb', 0),
 (190, 0, 'config', 'config_currency', 'USD', 0),
 (191, 0, 'config', 'config_currency_auto', '1', 0),
 (192, 0, 'config', 'config_length_class_id', '1', 0),

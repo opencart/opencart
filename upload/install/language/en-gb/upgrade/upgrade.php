@@ -5,8 +5,8 @@ $_['heading_success'] = 'Upgrade - Complete!';
 
 // Text
 $_['text_upgrade']    = 'Prepare for your upgrade';
-$_['text_steps']      = 'Check your server is set-up correctly';
-$_['text_upgrade']    = 'Upgrade Progress';
+$_['text_server']     = 'Check your server is set-up correctly';
+$_['text_steps']      = 'Upgrade Progress';
 $_['text_error']      = 'Post any upgrade script errors problems in the forums';
 $_['text_clear']      = 'After upgrade, clear any cookies in your browser to avoid getting token errors.';
 $_['text_admin']      = 'Load the admin page & press Ctrl+F5 twice to force the browser to update the css changes.';

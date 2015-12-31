@@ -10,12 +10,15 @@ class ControllerActionLanguage extends Controller {
 		
 		if (isset($this->request->cookie['language'])) {
 			$code = $this->request->cookie['language'];
-		} elseif (!empty($this->request->server['HTTP_ACCEPT_LANGUAGE'])) {	
+		}
+		
+		if (!array_key_exists($code, $languages) || !is_dir(DIR_LANGUAGE . strtolower($code)) && !empty($this->request->server['HTTP_ACCEPT_LANGUAGE'])) {
 			$browser_languages = explode(',', $this->request->server['HTTP_ACCEPT_LANGUAGE']);
-	
+			
 			foreach ($browser_languages as $browser_language) {
-				if (array_key_exists($browser_language, $languages)) {
-					$code = $browser_language;
+				if (array_key_exists(strtolower($browser_language), $languages)) {
+					$code = strtolower($browser_language);
+					
 					break;
 				}
 			}
@@ -28,7 +31,7 @@ class ControllerActionLanguage extends Controller {
 		if (!isset($this->request->cookie['language']) || $this->request->cookie['language'] != $code) {
 			setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
 		}
-					
+				
 		if (array_key_exists($code, $languages) && is_dir(DIR_LANGUAGE . strtolower($code))) {
 			// Overwrite the default language object
 			$language = new Language(strtolower($code));

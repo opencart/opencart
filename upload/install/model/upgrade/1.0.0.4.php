@@ -35,6 +35,9 @@ class ModelUpgrade1004 extends Model {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "custom_field` ADD `status` tinyint(1) NOT NULL AFTER `location`");
 		}
 		
+		// custom_field
+		$this->db->query("ALTER TABLE `" . DB_PREFIX . "custom_field` CHANGE `location` `location` varchar(7) NOT NULL");
+
 		// order_custom_field
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_field'");
 		

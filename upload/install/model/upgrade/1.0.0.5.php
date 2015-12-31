@@ -42,6 +42,13 @@ class ModelUpgrade1005 extends Model {
 		// product
 		$this->db->query("ALTER TABLE `" . DB_PREFIX . "product` CHANGE `isbn` `isbn` VARCHAR(17) NOT NULL");	
 		
+		// product_description
+		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "product_description' AND COLUMN_NAME = 'meta_title'");
+		
+		if (!$query->num_rows) {
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "product_description` ADD `meta_title` varchar(255) NOT NULL AFTER `description`");
+		}	
+				
 		// product_image
 		$index_data = array();
 		

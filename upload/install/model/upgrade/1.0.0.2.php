@@ -1,18 +1,25 @@
 <?php
 class ModelUpgrade1002 extends Model {
 	public function upgrade() {
+		// Setting
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_product_limit'");
+
+		if (!$query->num_rows) {
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_product_limit', `value` = '20', `code` = 'config', `store_id` = 0");
+		}
+			
 		// Vouchers
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '0' AND `key` = 'config_voucher_min'");
 
 		if (!$query->num_rows) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '1', `key` = 'config_voucher_min', `code` = 'config', `store_id` = 0");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_voucher_min', `value` = '1', `code` = 'config', `store_id` = 0");
 		}
 		
 		// Vouchers
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '0' AND `key` = 'config_voucher_max'");
 
 		if (!$query->num_rows) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '1000', `key` = 'config_voucher_max', `code` = 'config', `store_id` = 0");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_voucher_max', `value` = '1000', `code` = 'config', `store_id` = 0");
 		}	
 			
 		// Customers

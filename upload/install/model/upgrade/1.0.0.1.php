@@ -1,7 +1,7 @@
 <?php
 class ModelUpgrade1001 extends Model {
 	public function upgrade() {
-		//  Change any serialized values to json values and restore in the DB
+		// setting
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting`");
 
 		foreach ($query->rows as $result) {
@@ -12,7 +12,7 @@ class ModelUpgrade1001 extends Model {
 			}
 		}
 
-		// Customer
+		// customer
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer`");
 
 		foreach ($query->rows as $result) {
@@ -35,7 +35,7 @@ class ModelUpgrade1001 extends Model {
 			}
 		}
 
-		// Address
+		// address
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "address`");
 
 		foreach ($query->rows as $result) {
@@ -46,7 +46,7 @@ class ModelUpgrade1001 extends Model {
 			}
 		}
 
-		// Order
+		// order
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order`");
 
 		foreach ($query->rows as $result) {
@@ -69,7 +69,7 @@ class ModelUpgrade1001 extends Model {
 			}
 		}
 
-		// User Group
+		// user_group
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "user_group`");
 
 		foreach ($query->rows as $result) {
@@ -80,7 +80,7 @@ class ModelUpgrade1001 extends Model {
 			}
 		}
 
-		// Activity
+		// affiliate_activity
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "affiliate_activity`");
 
 		foreach ($query->rows as $result) {
@@ -91,6 +91,7 @@ class ModelUpgrade1001 extends Model {
 			}
 		}
 		
+		// customer_activity
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_activity`");
 
 		foreach ($query->rows as $result) {
@@ -101,7 +102,7 @@ class ModelUpgrade1001 extends Model {
 			}
 		}	
 		
-		// Module
+		// module
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module`");
 
 		foreach ($query->rows as $result) {

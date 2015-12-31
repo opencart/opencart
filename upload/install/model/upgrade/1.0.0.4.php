@@ -1,7 +1,7 @@
 <?php
 class ModelUpgrade1004 extends Model {
 	public function upgrade() {
-		// Categories
+		// category
 		$primary_data = array();
 		
 		$query = $this->db->query("SHOW KEYS FROM `" . DB_PREFIX . "category` WHERE Key_name = 'PRIMARY'");
@@ -14,28 +14,28 @@ class ModelUpgrade1004 extends Model {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "category` DROP PRIMARY KEY, ADD PRIMARY KEY(`category_id`, `parent_id`)");
 		}
 				
-		// Custom field
+		// custom_field
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "custom_field' AND COLUMN_NAME = 'required'");
 		
 		if ($query->num_rows) {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "custom_field` DROP `required`");
 		}
 		
-		// Custom field
+		// custom_field
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "custom_field' AND COLUMN_NAME = 'position'");
 		
 		if ($query->num_rows) {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "custom_field` DROP `position`");
 		}
 				
-		// Custom field
+		// custom_field
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "custom_field' AND COLUMN_NAME = 'status'");
 		
 		if (!$query->num_rows) {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "custom_field` ADD `status` tinyint(1) NOT NULL AFTER `location`");
 		}
 		
-		// Custom field
+		// order_custom_field
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order_field'");
 		
 		if ($query->num_rows) {
@@ -52,42 +52,42 @@ class ModelUpgrade1004 extends Model {
 			$this->db->query("DROP TABLE `" . DB_PREFIX . "order_field`");
 		}
 		
-		// Downloads
+		// download
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "download' AND COLUMN_NAME = 'remaining'");
 		
 		if ($query->num_rows) {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "download` DROP `remaining`");
 		}	
 		
-		// Information
+		// information_description
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "information_description' AND COLUMN_NAME = 'meta_title'");
 
 		if (!$query->num_rows) {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "information_description` ADD `meta_title` varchar(255) NOT NULL AFTER `description`");
 		}
 		
-		// Information
+		// information_description
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "information_description' AND COLUMN_NAME = 'meta_description'");
 
 		if (!$query->num_rows) {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "information_description` ADD `meta_description` varchar(255) NOT NULL AFTER `meta_title`");
 		}
 		
-		// Information
+		// information_description
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "information_description' AND COLUMN_NAME = 'meta_keyword'");
 
 		if (!$query->num_rows) {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "information_description` ADD `meta_keyword` varchar(255) NOT NULL AFTER `meta_description`");
 		}
 			
-		// Orders
+		// order
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order' AND COLUMN_NAME = 'marketing_id'");
 		
 		if (!$query->num_rows) {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "order` ADD `marketing_id` int(11) NOT NULL AFTER `commission`");
 		}	
 			
-		// Orders
+		// order
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "order' AND COLUMN_NAME = 'tracking'");
 		
 		if (!$query->num_rows) {

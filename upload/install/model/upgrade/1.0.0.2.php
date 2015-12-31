@@ -1,35 +1,35 @@
 <?php
 class ModelUpgrade1002 extends Model {
 	public function upgrade() {
-		// Setting
+		// setting
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `key` = 'config_product_limit'");
 
 		if (!$query->num_rows) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_product_limit', `value` = '20', `code` = 'config', `store_id` = 0");
 		}
 			
-		// Vouchers
+		//  setting
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '0' AND `key` = 'config_voucher_min'");
 
 		if (!$query->num_rows) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_voucher_min', `value` = '1', `code` = 'config', `store_id` = 0");
 		}
 		
-		// Vouchers
+		//  setting
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "setting` WHERE `store_id` = '0' AND `key` = 'config_voucher_max'");
 
 		if (!$query->num_rows) {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `key` = 'config_voucher_max', `value` = '1000', `code` = 'config', `store_id` = 0");
 		}	
 			
-		// Customers
+		// customer
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer' AND COLUMN_NAME = 'safe'");
 		
 		if (!$query->num_rows) {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer` ADD `safe` tinyint(1) NOT NULL AFTER `approved`");	
 		}
 		
-		// Customers
+		// customer
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "customer_group' AND COLUMN_NAME = 'name'");
 
 		if ($query->num_rows) {
@@ -57,10 +57,10 @@ class ModelUpgrade1002 extends Model {
 				$this->db->query("ALTER TABLE `" . DB_PREFIX . "product_option` DROP `value`");
 			}
 			
-			$this->db->query("ALTER TABLE `" . DB_PREFIX . "product_option` CHANGE `option_value` `value` TEXT");
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "product_option` CHANGE `option_value` `value` TEXT NOT NULL");
 		}
 					
-		// Categories
+		// category
 		$primary_data = array();
 		
 		$query = $this->db->query("SHOW KEYS FROM `" . DB_PREFIX . "category` WHERE Key_name = 'PRIMARY'");
@@ -73,7 +73,7 @@ class ModelUpgrade1002 extends Model {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "category` DROP PRIMARY KEY, ADD PRIMARY KEY(`category_id`, `parent_id`)");
 		}
 		
-		// Categories
+		// category
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . "category_description' AND COLUMN_NAME = 'meta_title'");
 		
 		if (!$query->num_rows) {

@@ -197,8 +197,8 @@ class ControllerApiCart extends Controller {
 					'quantity'   => $product['quantity'],
 					'stock'      => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
 					'shipping'   => $product['shipping'],
-					'price'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'))),
-					'total'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity']),
+					'price'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->request->cookie['currency']),
+					'total'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->request->cookie['currency']),
 					'reward'     => $product['reward']
 				);
 			}
@@ -217,7 +217,7 @@ class ControllerApiCart extends Controller {
 						'to_email'         => $voucher['to_email'],
 						'voucher_theme_id' => $voucher['voucher_theme_id'],
 						'message'          => $voucher['message'],
-						'amount'           => $this->currency->format($voucher['amount'])
+						'amount'           => $this->currency->format($voucher['amount'], $this->request->cookie['currency'])
 					);
 				}
 			}
@@ -268,7 +268,7 @@ class ControllerApiCart extends Controller {
 			foreach ($totals as $total) {
 				$json['totals'][] = array(
 					'title' => $total['title'],
-					'text'  => $this->currency->format($total['value'])
+					'text'  => $this->currency->format($total['value'], $this->request->cookie['currency'])
 				);
 			}
 		}

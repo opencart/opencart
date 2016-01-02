@@ -73,14 +73,14 @@ class ControllerApiVoucher extends Controller {
 					if (isset($voucher['code']) && isset($voucher['to_name']) && isset($voucher['to_email']) && isset($voucher['from_name']) && isset($voucher['from_email']) && isset($voucher['voucher_theme_id']) && isset($voucher['message']) && isset($voucher['amount'])) {
 						$this->session->data['vouchers'][$voucher['code']] = array(
 							'code'             => $voucher['code'],
-							'description'      => sprintf($this->language->get('text_for'), $this->currency->format($this->currency->convert($voucher['amount'], $this->currency->getCode(), $this->config->get('config_currency'))), $voucher['to_name']),
+							'description'      => sprintf($this->language->get('text_for'), $this->currency->format($this->currency->convert($voucher['amount'], $this->request->cookie['currency'], $this->config->get('config_currency')), $this->request->cookie['currency']), $voucher['to_name']),
 							'to_name'          => $voucher['to_name'],
 							'to_email'         => $voucher['to_email'],
 							'from_name'        => $voucher['from_name'],
 							'from_email'       => $voucher['from_email'],
 							'voucher_theme_id' => $voucher['voucher_theme_id'],
 							'message'          => $voucher['message'],
-							'amount'           => $this->currency->convert($voucher['amount'], $this->currency->getCode(), $this->config->get('config_currency'))
+							'amount'           => $this->currency->convert($voucher['amount'], $this->request->cookie['currency'], $this->config->get('config_currency'))
 						);
 					}
 				}
@@ -110,7 +110,7 @@ class ControllerApiVoucher extends Controller {
 				}
 
 				if (($this->request->post['amount'] < $this->config->get('config_voucher_min')) || ($this->request->post['amount'] > $this->config->get('config_voucher_max'))) {
-					$json['error']['amount'] = sprintf($this->language->get('error_amount'), $this->currency->format($this->config->get('config_voucher_min')), $this->currency->format($this->config->get('config_voucher_max')));
+					$json['error']['amount'] = sprintf($this->language->get('error_amount'), $this->currency->format($this->config->get('config_voucher_min'), $this->request->cookie['currency']), $this->currency->format($this->config->get('config_voucher_max'), $this->request->cookie['currency']));
 				}
 
 				if (!$json) {
@@ -118,14 +118,14 @@ class ControllerApiVoucher extends Controller {
 
 					$this->session->data['vouchers'][$code] = array(
 						'code'             => $code,
-						'description'      => sprintf($this->language->get('text_for'), $this->currency->format($this->currency->convert($this->request->post['amount'], $this->currency->getCode(), $this->config->get('config_currency'))), $this->request->post['to_name']),
+						'description'      => sprintf($this->language->get('text_for'), $this->currency->format($this->currency->convert($this->request->post['amount'], $this->request->cookie['currency'], $this->config->get('config_currency')), $this->request->cookie['currency']), $this->request->post['to_name']),
 						'to_name'          => $this->request->post['to_name'],
 						'to_email'         => $this->request->post['to_email'],
 						'from_name'        => $this->request->post['from_name'],
 						'from_email'       => $this->request->post['from_email'],
 						'voucher_theme_id' => $this->request->post['voucher_theme_id'],
 						'message'          => $this->request->post['message'],
-						'amount'           => $this->currency->convert($this->request->post['amount'], $this->currency->getCode(), $this->config->get('config_currency'))
+						'amount'           => $this->currency->convert($this->request->post['amount'], $this->request->cookie['currency'], $this->config->get('config_currency'))
 					);
 
 					$json['success'] = $this->language->get('text_cart');

@@ -391,7 +391,7 @@ class ControllerCheckoutConfirm extends Controller {
 					'subtract'   => $product['subtract'],
 					'price'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->request->cookie['currency']),
 					'total'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->request->cookie['currency']),
-					'href'       => $this->url->link('product/product', 'product_id=' . $product['product_id']),
+					'href'       => $this->url->link('product/product', 'product_id=' . $product['product_id'])
 				);
 			}
 
@@ -412,7 +412,7 @@ class ControllerCheckoutConfirm extends Controller {
 			foreach ($order_data['totals'] as $total) {
 				$data['totals'][] = array(
 					'title' => $total['title'],
-					'text'  => $this->currency->format($total['value'], $this->request->cookie['currency']),
+					'text'  => $this->currency->format($total['value'], $this->request->cookie['currency'])
 				);
 			}
 

@@ -276,7 +276,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 			foreach ($payment_option as $payment_option) {
 				$data['payment_options'][] = array(
 					'code'  => $payment_option['pclass_id'],
-					'title' => sprintf($this->language->get('text_monthly_payment'), $payment_option['title'], $this->currency->format($this->currency->convert($payment_option['monthly_cost'], $country_to_currency[$order_info['payment_iso_code_3']], $this->currency->getCode()), 1, 1))
+					'title' => sprintf($this->language->get('text_monthly_payment'), $payment_option['title'], $this->currency->format($this->currency->convert($payment_option['monthly_cost'], $country_to_currency[$order_info['payment_iso_code_3']], $this->request->cookie['currency']), $this->request->cookie['currency'], 1))
 				);
 			}
 

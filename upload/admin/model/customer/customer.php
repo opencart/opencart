@@ -385,7 +385,7 @@ class ModelCustomerCustomer extends Model {
 			}
 
 			$message  = sprintf($this->language->get('text_transaction_received'), $this->currency->format($amount, $this->config->get('config_currency'))) . "\n\n";
-			$message .= sprintf($this->language->get('text_transaction_total'), $this->currency->format($this->getTransactionTotal($customer_id)));
+			$message .= sprintf($this->language->get('text_transaction_total'), $this->currency->format($this->getTransactionTotal($customer_id), $this->request->cookie['currency']));
 
 			$mail = new Mail();
 			$mail->protocol = $this->config->get('config_mail_protocol');

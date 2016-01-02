@@ -16,11 +16,6 @@ class ControllerActionCurrency extends Controller {
 			setcookie('currency', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
 		}		
 		
-		$currency = new Cart\Currency($code, $currencies);
-		$this->registry->set('currency', new Cart\Currency($code, $currencies));
-		
-		foreach ($currencies as $currency) {
-			$this->currency->addCurrency($currency['code']);
-		}
+		$this->registry->set('currency', new Cart\Currency($this->registry));
 	}
 }

@@ -1,10 +1,26 @@
 <?php
 class ControllerActionCurrency extends Controller {
 	public function index() {
-		if ((isset($this->request->cookie['currency'])) && (array_key_exists($this->request->cookie['currency'], $this->currencies))) {
-			$this->currency->set($this->request->cookie['currency']);
+		// Currency Detection
+		$this->load->model('localisation/currency');
+		
+		$currencies = $this->model_localisation_currency->getCurrencies();
+		
+		if (isset($this->request->cookie['currency']) && in_array($this->request->cookie['currency'], $currencies)) {
+			$code = $this->request->cookie['currency'];
 		} else {
-			$this->currency->set($this->config->get('config_currency'));
-		}	
+			$code = $this->config->get('config_currency');
+		}
+		
+		if (!isset($this->request->cookie['currency']) || $this->request->cookie['currency'] != $code) {
+			setcookie('currency', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
+		}		
+		
+		$currency = new Cart\Currency($code, $currencies);
+		$this->registry->set('currency', new Cart\Currency($code, $currencies));
+		
+		foreach ($currencies as $currency) {
+			$this->currency->addCurrency($currency['code']);
+		}
 	}
 }

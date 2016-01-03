@@ -1,6 +1,6 @@
 <?php
 class ControllerMailOrder extends Controller {
-	public function index($route, $data) {		// If order status is 0 then becomes greater than 0 send main html email
+	public function index($order_id) {		// If order status is 0 then becomes greater than 0 send main html email
 		if (!$order_info['order_status_id'] && $order_status_id) {
 			// Check for any downloadable products
 			$download_status = false;

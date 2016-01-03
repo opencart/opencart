@@ -66,7 +66,7 @@ if (isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTPS
 
 // Modification Override
 function modification($filename) {
-	if (!defined('DIR_CATALOG')) {
+	if (defined('DIR_CATALOG')) {
 		$file = DIR_MODIFICATION . 'catalog/' . substr($filename, strlen(DIR_APPLICATION));
 	} else {
 		$file = DIR_MODIFICATION . 'admin/' .  substr($filename, strlen(DIR_APPLICATION));

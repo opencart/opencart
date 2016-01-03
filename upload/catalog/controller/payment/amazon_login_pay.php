@@ -13,7 +13,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		}
 
 		if ($this->config->get('amazon_login_pay_minimum_total') > 0 && $this->config->get('amazon_login_pay_minimum_total') > $this->cart->getTotal()) {
-			$this->failure(sprintf($this->language->get('error_minimum'), $this->currency->format($this->config->get('amazon_login_pay_minimum_total'), $this->request->cookie['currency'])));
+			$this->failure(sprintf($this->language->get('error_minimum'), $this->currency->format($this->config->get('amazon_login_pay_minimum_total'), $this->session->data['currency'])));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -68,7 +68,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		}
 
 		if ($this->config->get('amazon_login_pay_minimum_total') > 0 && $this->config->get('amazon_login_pay_minimum_total') > $this->cart->getTotal()) {
-			$this->failure(sprintf($this->language->get('error_minimum'), $this->currency->format($this->config->get('amazon_login_pay_minimum_total'), $this->request->cookie['currency'])));
+			$this->failure(sprintf($this->language->get('error_minimum'), $this->currency->format($this->config->get('amazon_login_pay_minimum_total'), $this->session->data['currency'])));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -117,7 +117,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		}
 
 		if ($this->config->get('amazon_login_pay_minimum_total') > 0 && $this->config->get('amazon_login_pay_minimum_total') > $this->cart->getTotal()) {
-			$this->failure(sprintf($this->language->get('error_minimum'), $this->currency->format($this->config->get('amazon_login_pay_minimum_total'), $this->request->cookie['currency'])));
+			$this->failure(sprintf($this->language->get('error_minimum'), $this->currency->format($this->config->get('amazon_login_pay_minimum_total'), $this->session->data['currency'])));
 		}
 
 		$data['amazon_login_pay_merchant_id'] = $this->config->get('amazon_login_pay_merchant_id');
@@ -465,8 +465,8 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 				'model' => $product['model'],
 				'option' => $option_data,
 				'quantity' => $product['quantity'],
-				'price' => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->request->cookie['currency']),
-				'total' => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->request->cookie['currency'])
+				'price' => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']),
+				'total' => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'], $this->session->data['currency'])
 			);
 		}
 
@@ -477,7 +477,7 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		foreach ($totals as $total) {
 			$data['totals'][] = array(
 				'title' => $total['title'],
-				'text' => $this->currency->format($total['value'], $this->request->cookie['currency'])
+				'text' => $this->currency->format($total['value'], $this->session->data['currency'])
 			);
 		}
 

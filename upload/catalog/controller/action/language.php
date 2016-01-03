@@ -1,7 +1,8 @@
 <?php
 class ControllerActionLanguage extends Controller {
 	public function index() {
-		// Language Detection
+		$code = '';
+		
 		$this->load->model('localisation/language');
 		
 		$languages = $this->model_localisation_language->getLanguages();
@@ -10,7 +11,8 @@ class ControllerActionLanguage extends Controller {
 			$code = $this->request->cookie['language'];
 		}
 		
-		if ((!array_key_exists($code, $languages) || !is_dir(DIR_LANGUAGE . strtolower($code))) && !empty($this->request->server['HTTP_ACCEPT_LANGUAGE'])) {
+		// Language Detection
+		if (!empty($this->request->server['HTTP_ACCEPT_LANGUAGE']) && !array_key_exists($code, $languages)) {
 			$browser_languages = explode(',', $this->request->server['HTTP_ACCEPT_LANGUAGE']);
 			
 			foreach ($browser_languages as $browser_language) {
@@ -22,7 +24,7 @@ class ControllerActionLanguage extends Controller {
 			}
 		}
 		
-		if (!array_key_exists($code, $languages) || !is_dir(DIR_LANGUAGE . strtolower($code))) {
+		if (!array_key_exists($code, $languages)) {
 			$code = $this->config->get('config_language');
 		}
 		
@@ -31,8 +33,8 @@ class ControllerActionLanguage extends Controller {
 		}
 				
 		// Overwrite the default language object
-		$language = new Language(strtolower($code));
-		$language->load(strtolower($code));
+		$language = new Language($code);
+		$language->load($code);
 		
 		$this->registry->set('language', $language);
 		

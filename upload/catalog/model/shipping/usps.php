@@ -392,7 +392,7 @@ class ModelShippingUsps extends Model {
 													'title'        => $postage->getElementsByTagName('MailService')->item(0)->nodeValue,
 													'cost'         => $this->currency->convert($cost, 'USD', $this->config->get('config_currency')),
 													'tax_class_id' => $this->config->get('usps_tax_class_id'),
-													'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, 'USD', $this->request->cookie['currency']), $this->config->get('usps_tax_class_id'), $this->config->get('config_tax')), $this->request->cookie['currency'], 1.0000000)
+													'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, 'USD', $this->session->data['currency']), $this->config->get('usps_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'], 1.0000000)
 												);
 											}
 
@@ -404,7 +404,7 @@ class ModelShippingUsps extends Model {
 												'title'        => $postage->getElementsByTagName('MailService')->item(0)->nodeValue,
 												'cost'         => $this->currency->convert($cost, 'USD', $this->config->get('config_currency')),
 												'tax_class_id' => $this->config->get('usps_tax_class_id'),
-												'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, 'USD', $this->request->cookie['currency']), $this->config->get('usps_tax_class_id'), $this->config->get('config_tax')), $this->request->cookie['currency'], 1.0000000)
+												'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, 'USD', $this->session->data['currency']), $this->config->get('usps_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'], 1.0000000)
 											);
 										}
 									}
@@ -444,7 +444,7 @@ class ModelShippingUsps extends Model {
 										'title'        => $title,
 										'cost'         => $this->currency->convert($cost, 'USD', $this->config->get('config_currency')),
 										'tax_class_id' => $this->config->get('usps_tax_class_id'),
-										'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, 'USD', $this->request->cookie['currency']), $this->config->get('usps_tax_class_id'), $this->config->get('config_tax')), $this->request->cookie['currency'], 1.0000000)
+										'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, 'USD', $this->session->data['currency']), $this->config->get('usps_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'], 1.0000000)
 									);
 								}
 							}

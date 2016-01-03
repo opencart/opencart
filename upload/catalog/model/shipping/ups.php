@@ -186,8 +186,8 @@ class ModelShippingUps extends Model {
 			if ($this->config->get('ups_insurance')) {
 				$xml .= '           <PackageServiceOptions>';
 				$xml .= '               <InsuredValue>';
-				$xml .= '                   <CurrencyCode>' . $this->request->cookie['currency'] . '</CurrencyCode>';
-				$xml .= '                   <MonetaryValue>' . $this->currency->format($this->cart->getSubTotal(), $this->request->cookie['currency'], false, false) . '</MonetaryValue>';
+				$xml .= '                   <CurrencyCode>' . $this->session->data['currency'] . '</CurrencyCode>';
+				$xml .= '                   <MonetaryValue>' . $this->currency->format($this->cart->getSubTotal(), $this->session->data['currency'], false, false) . '</MonetaryValue>';
 				$xml .= '               </InsuredValue>';
 				$xml .= '           </PackageServiceOptions>';
 			}
@@ -262,7 +262,7 @@ class ModelShippingUps extends Model {
 								'title'        => $service_code[$this->config->get('ups_origin')][$code],
 								'cost'         => $this->currency->convert($cost, $currency, $this->config->get('config_currency')),
 								'tax_class_id' => $this->config->get('ups_tax_class_id'),
-								'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, $currency, $this->request->cookie['currency']), $this->config->get('ups_tax_class_id'), $this->config->get('config_tax')), $this->request->cookie['currency'], 1.0000000)
+								'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, $currency, $this->session->data['currency']), $this->config->get('ups_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'], 1.0000000)
 							);
 						}
 					}

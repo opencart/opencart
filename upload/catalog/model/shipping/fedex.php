@@ -206,7 +206,7 @@ class ModelShippingFedex extends Model {
 							'title'        => $title,
 							'cost'         => $this->currency->convert($cost, $currency, $this->config->get('config_currency')),
 							'tax_class_id' => $this->config->get('fedex_tax_class_id'),
-							'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, $currency, $this->request->cookie['currency']), $this->config->get('fedex_tax_class_id'), $this->config->get('config_tax')), $this->request->cookie['currency'], 1.0000000)
+							'text'         => $this->currency->format($this->tax->calculate($this->currency->convert($cost, $currency, $this->session->data['currency']), $this->config->get('fedex_tax_class_id'), $this->config->get('config_tax')), $this->session->data['currency'], 1.0000000)
 						);
 					}
 				}

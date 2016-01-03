@@ -7,7 +7,7 @@ class ControllerCommonCurrency extends Controller {
 
 		$data['action'] = $this->url->link('common/currency/currency', '', $this->request->server['HTTPS']);
 
-		$data['code'] = $this->request->cookie['currency'];
+		$data['code'] = $this->session->data['currency'];
 
 		$this->load->model('localisation/currency');
 
@@ -51,7 +51,7 @@ class ControllerCommonCurrency extends Controller {
 
 	public function currency() {
 		if (isset($this->request->post['code'])) {
-			setcookie('currency', $this->request->post['code'], time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
+			$this->session->data['currency'] = $this->request->post['code'];
 		
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);

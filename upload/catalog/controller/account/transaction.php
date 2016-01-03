@@ -78,7 +78,7 @@ class ControllerAccountTransaction extends Controller {
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($transaction_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($transaction_total - 10)) ? $transaction_total : ((($page - 1) * 10) + 10), $transaction_total, ceil($transaction_total / 10));
 
-		$data['total'] = $this->currency->format($this->customer->getBalance(), $this->request->cookie['currency']);
+		$data['total'] = $this->currency->format($this->customer->getBalance(), $this->session->data['currency']);
 
 		$data['continue'] = $this->url->link('account/account', '', true);
 

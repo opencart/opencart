@@ -65,9 +65,9 @@ class ControllerFeedGoogleBase extends Controller {
 							'GBP'
 						);
 
-						if (in_array($this->request->cookie['currency'], $currencies)) {
-							$currency_code = $this->request->cookie['currency'];
-							$currency_value = $this->currency->getValue($this->request->cookie['currency']);
+						if (in_array($this->session->data['currency'], $currencies)) {
+							$currency_code = $this->session->data['currency'];
+							$currency_value = $this->currency->getValue($this->session->data['currency']);
 						} else {
 							$currency_code = 'USD';
 							$currency_value = $this->currency->getValue('USD');

@@ -29,7 +29,7 @@ class ControllerModuleEbayListing extends Controller {
 				$data['products'][] = array(
 					'thumb' => $image, 
 					'name'  => base64_decode($product['Title']), 
-					'price' => $this->currency->format($product['priceGross'], $this->request->cookie['currency']), 
+					'price' => $this->currency->format($product['priceGross'], $this->session->data['currency']), 
 					'href' => (string)$product['link']
 				);
 			}

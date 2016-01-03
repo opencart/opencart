@@ -1,5 +1,5 @@
 <?php
-class ControllerActionCustomerGroup extends Controller {
+class ControllerStartupCustomerGroup extends Controller {
 	public function index() {
 		// Customer Group
 		if ($this->customer->isLogged()) {

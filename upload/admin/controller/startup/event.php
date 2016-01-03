@@ -1,5 +1,5 @@
 <?php
-class ControllerActionEvent extends Controller {
+class ControllerStartupEvent extends Controller {
 	public function index() {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "event` WHERE `trigger` LIKE 'admin/%'");
 		

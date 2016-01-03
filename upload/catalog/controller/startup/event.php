@@ -1,5 +1,5 @@
 <?php
-class ControllerActionEvent extends Controller {
+class ControllerStartupEvent extends Controller {
 	public function index() {
 		// Add events from the DB
 		$this->load->model('extension/event');

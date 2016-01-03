@@ -1,5 +1,5 @@
 <?php
-class ControllerActionUpgrade extends Controller {
+class ControllerStartupUpgrade extends Controller {
 	public function index() {
 		$upgrade = false;
 		

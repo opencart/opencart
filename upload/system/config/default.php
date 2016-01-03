@@ -60,7 +60,7 @@ $_['model.autoload']       = array();
 
 // Actions
 $_['action.default']       = 'common/home';
-$_['action.router']        = 'action/router';
+$_['action.router']        = 'startup/router';
 $_['action.error']         = 'error/not_found';
 $_['action.pre_action']    = array();
 $_['action.event']         = array();

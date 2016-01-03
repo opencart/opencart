@@ -29,13 +29,13 @@ $_['library.autoload']  = array(
 
 // Actions
 $_['action.pre_action']  = array(
-	'action/setting',
-	'action/error',
-	'action/event',
-	'action/sass',
-	'action/language',	
-	'action/login',
-	'action/permission'
+	'startup/setting',
+	'startup/error',
+	'startup/event',
+	'startup/sass',
+	'startup/language',	
+	'startup/login',
+	'startup/permission'
 );
 
 // Actions

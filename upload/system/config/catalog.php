@@ -26,16 +26,16 @@ $_['library.autoload'] = array(
 
 // Actions
 $_['action.pre_action'] = array(
-	'action/setting',
-	'action/error',
-	'action/event',
-	'action/session',
-	'action/language',
-	'action/currency',
-	'action/customer_group',
-	'action/tracking',
-	'action/maintenance',
-	'action/seo_url'
+	'startup/setting',
+	'startup/error',
+	'startup/event',
+	'startup/session',
+	'startup/language',
+	'startup/currency',
+	'startup/customer_group',
+	'startup/tracking',
+	'startup/maintenance',
+	'startup/seo_url'
 );
 
 // Action Events

@@ -1,5 +1,5 @@
 <?php
-class ControllerActionSeoUrl extends Controller {
+class ControllerStartupSeoUrl extends Controller {
 	public function index() {
 		// Add rewrite to url class
 		if ($this->config->get('config_seo_url')) {

@@ -1,5 +1,5 @@
 <?php
-class ControllerActionCurrency extends Controller {
+class ControllerStartupCurrency extends Controller {
 	public function index() {
 		$code = '';
 		

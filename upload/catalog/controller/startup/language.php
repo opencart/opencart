@@ -1,5 +1,5 @@
 <?php
-class ControllerActionLanguage extends Controller {
+class ControllerStartupLanguage extends Controller {
 	public function index() {
 		$code = '';
 		

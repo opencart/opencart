@@ -1,5 +1,5 @@
 <?php
-class ControllerActionSetting extends Controller {
+class ControllerStartupSetting extends Controller {
 	public function index() {
 		// Settings
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '0'");

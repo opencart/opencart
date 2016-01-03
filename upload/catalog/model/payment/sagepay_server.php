@@ -192,7 +192,7 @@ class ModelPaymentSagePayServer extends Model {
 		$payment_data['Vendor'] = $this->config->get('sagepay_server_vendor');
 		$payment_data['VendorTxCode'] = $order_recurring_id . 'RSD' . strftime("%Y%m%d%H%M%S") . mt_rand(1, 999);
 		$payment_data['Amount'] = $this->currency->format($price, $this->session->data['currency'], false, false);
-		$payment_data['Currency'] = $this->currency->getCode();
+		$payment_data['Currency'] = $this->session->data['currency'];
 		$payment_data['Description'] = substr($recurring_name, 0, 100);
 		$payment_data['RelatedVPSTxId'] = trim($sagepay_order_info['VPSTxId'], '{}');
 		$payment_data['RelatedVendorTxCode'] = $sagepay_order_info['VendorTxCode'];

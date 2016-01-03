@@ -155,7 +155,7 @@ class ModelPaymentPPExpress extends Model {
 	public function paymentRequestInfo() {
 
 		$data['PAYMENTREQUEST_0_SHIPPINGAMT'] = '';
-		$data['PAYMENTREQUEST_0_CURRENCYCODE'] = $this->currency->getCode();
+		$data['PAYMENTREQUEST_0_CURRENCYCODE'] = $this->session->data['currency'];
 		$data['PAYMENTREQUEST_0_PAYMENTACTION'] = $this->config->get('pp_express_method');
 
 		$i = 0;

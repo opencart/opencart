@@ -125,7 +125,7 @@ class ModelPaymentSagePayDirect extends Model {
 		//trial information
 		if ($item['recurring_trial'] == 1) {
 			$price = $item['recurring_trial_price'];
-			$trial_amt = $this->currency->format($this->tax->calculate($item['recurring_trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->currency->getCode();
+			$trial_amt = $this->currency->format($this->tax->calculate($item['recurring_trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency'], false, false) * $item['quantity'] . ' ' . $this->session->data['currency'];
 			$trial_text = sprintf($this->language->get('text_trial'), $trial_amt, $item['recurring_trial_cycle'], $item['recurring_trial_frequency'], $item['recurring_trial_duration']);
 		} else {
 			$price = $item['recurring_price'];
@@ -201,7 +201,7 @@ class ModelPaymentSagePayDirect extends Model {
 		$payment_data['Vendor'] = $this->config->get('sagepay_direct_vendor');
 		$payment_data['VendorTxCode'] = $order_recurring_id . 'RSD' . strftime("%Y%m%d%H%M%S") . mt_rand(1, 999);
 		$payment_data['Amount'] = $this->currency->format($price, $this->session->data['currency'], false, false);
-		$payment_data['Currency'] = $this->currency->getCode();
+		$payment_data['Currency'] = $this->session->data['currency'];
 		$payment_data['Description'] = substr($recurring_name, 0, 100);
 		$payment_data['RelatedVPSTxId'] = trim($sagepay_order_info['VPSTxId'], '{}');
 		$payment_data['RelatedVendorTxCode'] = $sagepay_order_info['VendorTxCode'];

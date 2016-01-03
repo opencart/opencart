@@ -143,7 +143,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 		$payment_data['Vendor'] = $this->config->get('sagepay_direct_vendor');
 		$payment_data['VendorTxCode'] = $this->session->data['order_id'] . 'SD' . strftime("%Y%m%d%H%M%S") . mt_rand(1, 999);
 		$payment_data['Amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], false, false);
-		$payment_data['Currency'] = $this->currency->getCode();
+		$payment_data['Currency'] = $this->session->data['currency'];
 		$payment_data['Description'] = substr($this->config->get('config_name'), 0, 100);
 		$payment_data['TxType'] = $this->config->get('sagepay_direct_transaction');
 

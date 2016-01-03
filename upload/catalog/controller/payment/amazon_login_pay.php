@@ -403,11 +403,11 @@ class ControllerPaymentAmazonLoginPay extends Controller {
 		}
 
 		$order_data['language_id'] = $this->config->get('config_language_id');
-		$order_data['currency_id'] = $this->currency->getId();
-		$order_data['currency_code'] = $this->currency->getCode();
-		$order_data['currency'] = $this->currency->getCode();
-		$order_data['currency_value'] = $this->currency->getValue($this->currency->getCode());
-		$order_data['value'] = $this->currency->getValue($this->currency->getCode());
+		$order_data['currency_id'] = $this->currency->getId($this->session->data['currency']);
+		$order_data['currency_code'] = $this->session->data['currency'];
+		$order_data['currency'] = $this->session->data['currency'];
+		$order_data['currency_value'] = $this->currency->getValue($this->session->data['currency']);
+		$order_data['value'] = $this->currency->getValue($this->session->data['currency']);
 		$order_data['ip'] = $this->request->server['REMOTE_ADDR'];
 
 		if (!empty($this->request->server['HTTP_X_FORWARDED_FOR'])) {

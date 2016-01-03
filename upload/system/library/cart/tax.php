@@ -140,4 +140,8 @@ final class Tax {
 	public function has($tax_class_id) {
 		return isset($this->tax_rates[$tax_class_id]);
 	}
+	
+	public function clearRates(){
+		$this->tax_rates = array();
+	}
 }

@@ -1997,6 +1997,6 @@ class ControllerPaymentPPExpress extends Controller {
 			'link' => $this->url->link('account/recurring', '', true)
 		);
 
-		return $this->load->view('common/buttons', $data);
+		return $this->load->view('sale/recurring_button', $data);
 	}
 }

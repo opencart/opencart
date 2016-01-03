@@ -24,7 +24,7 @@ class ControllerActionCurrency extends Controller {
 			$this->session->data['currency'] = $code;
 		}
 		
-		if (!isset($this->session->data['currency']) || $this->session->data['currency'] != $code) {
+		if (!isset($this->request->cookie['currency']) || $this->request->cookie['currency'] != $code) {
 			setcookie('currency', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
 		}		
 			

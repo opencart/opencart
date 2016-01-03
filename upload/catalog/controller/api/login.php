@@ -13,7 +13,7 @@ class ControllerApiLogin extends Controller {
 		$results = $this->model_account_api->getApiIps($this->config->get('config_api_id'));
 
 		foreach ($results as $result) {
-			$ip_data[] = $result['ip'];
+			$ip_data[] = trim($result['ip']);
 		}
 
 		if (!in_array($this->request->server['REMOTE_ADDR'], $ip_data)) {

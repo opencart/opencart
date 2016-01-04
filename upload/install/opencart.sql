@@ -1375,7 +1375,7 @@ CREATE TABLE `oc_custom_field_value_description` (
 DROP TABLE IF EXISTS `oc_download`;
 CREATE TABLE `oc_download` (
   `download_id` int(11) NOT NULL AUTO_INCREMENT,
-  `filename` varchar(128) NOT NULL,
+  `filename` varchar(160) NOT NULL,
   `mask` varchar(128) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`download_id`)

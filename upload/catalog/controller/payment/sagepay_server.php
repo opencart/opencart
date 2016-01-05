@@ -8,6 +8,7 @@ class ControllerPaymentSagepayServer extends Controller {
 		$data['text_card_digits'] = $this->language->get('text_card_digits');
 		$data['text_card_expiry'] = $this->language->get('text_card_expiry');
 		$data['text_loading'] = $this->language->get('text_loading');
+		$data['text_confirm_delete'] = $this->language->get('text_confirm_delete');
 
 		$data['entry_card'] = $this->language->get('entry_card');
 		$data['entry_card_existing'] = $this->language->get('entry_card_existing');
@@ -16,6 +17,7 @@ class ControllerPaymentSagepayServer extends Controller {
 		$data['entry_cc_choice'] = $this->language->get('entry_cc_choice');
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
+		$data['button_delete_card'] = $this->language->get('button_delete_card');
 
 		$data['action'] = $this->url->link('payment/sagepay_server/send', '', true);
 
@@ -56,6 +58,7 @@ class ControllerPaymentSagepayServer extends Controller {
 
 		$this->load->model('checkout/order');
 		$this->load->model('payment/sagepay_server');
+		$this->load->model('account/order');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
@@ -124,6 +127,29 @@ class ControllerPaymentSagepayServer extends Controller {
 
 			$payment_data['DeliveryPhone'] = $order_info['telephone'];
 		}
+
+		$order_products = $this->model_account_order->getOrderProducts($this->session->data['order_id']);
+		$cart_rows = 0;
+		$strBasket = "";
+		foreach ($order_products as $product) {
+			$strBasket .=
+					":" . str_replace(":", " ", $product['name'] . " " . $product['model']) .
+					":" . $product['quantity'] .
+					":" . $this->currency->format($product['price'], $order_info['currency_code'], false, false) .
+					":" . $this->currency->format($product['tax'], $order_info['currency_code'], false, false) .
+					":" . $this->currency->format(($product['price'] + $product['tax']), $order_info['currency_code'], false, false) .
+					":" . $this->currency->format(($product['price'] + $product['tax']) * $product['quantity'], $order_info['currency_code'], false, false);
+			$cart_rows++;
+		}
+
+		$order_totals = $this->model_account_order->getOrderTotals($this->session->data['order_id']);
+		foreach ($order_totals as $total) {
+			$strBasket .= ":" . str_replace(":", " ", $total['title']) . ":::::" . $this->currency->format($total['value'], $order_info['currency_code'], false, false);
+			$cart_rows++;
+		}
+		$strBasket = $cart_rows . $strBasket;
+
+		$payment_data['Basket'] = $strBasket;
 
 		$payment_data['CustomerEMail'] = substr($order_info['email'], 0, 255);
 		$payment_data['Apply3DSecure'] = '0';
@@ -319,7 +345,7 @@ class ControllerPaymentSagepayServer extends Controller {
 
 			$this->model_payment_sagepay_server->logger('StatusDetail= Order IDs could not be matched. Order might be tampered with.');
 
-			return;
+			exit;
 		}
 
 		if (isset($transaction_info['SecurityKey'])) {
@@ -347,8 +373,7 @@ class ControllerPaymentSagepayServer extends Controller {
 			echo "RedirectURL=" . $error_page . $end_ln;
 
 			$this->model_payment_sagepay_server->logger('StatusDetail= Cannot match the MD5 Hash. Order might be tampered with.');
-
-			return;
+			exit;
 		}
 
 		if ($str_status != "OK" || !$order_info) {
@@ -359,8 +384,7 @@ class ControllerPaymentSagepayServer extends Controller {
 			echo "RedirectURL=" . $error_page . $end_ln;
 
 			$this->model_payment_sagepay_server->logger('StatusDetail= Either status invalid or order info was not found.');
-
-			return;
+			exit;
 		}
 
 		$comment = "Paid with Sagepay Server<br><br>";
@@ -383,7 +407,6 @@ class ControllerPaymentSagepayServer extends Controller {
 		$this->model_payment_sagepay_server->addTransaction($transaction_info['sagepay_server_order_id'], $this->config->get('sagepay_server_transaction'), $order_info);
 
 		if (!empty($str_token)) {
-			$data = array();
 			$data['customer_id'] = $order_info['customer_id'];
 			$data['ExpiryDate'] = substr($str_expiry_date, -4, 2) . '/' . substr($str_expiry_date, 2);
 			$data['Token'] = $str_token;
@@ -428,6 +451,38 @@ class ControllerPaymentSagepayServer extends Controller {
 		$this->response->redirect($this->url->link('checkout/checkout', '', true));
 	}
 
+	public function delete() {
+		$this->load->language('account/sagepay_server_cards');
+
+		$this->load->model('payment/sagepay_server');
+
+		$card = $this->model_payment_sagepay_server->getCard(false, $this->request->post['Token']);
+
+		if (!empty($card['token'])) {
+			if ($this->config->get('sagepay_server_test') == 'live') {
+				$url = 'https://live.sagepay.com/gateway/service/ removetoken.vsp';
+			} else {
+				$url = 'https://test.sagepay.com/gateway/service/removetoken.vsp';
+			}
+			$payment_data['VPSProtocol'] = '3.00';
+			$payment_data['Vendor'] = $this->config->get('sagepay_server_vendor');
+			$payment_data['TxType'] = 'REMOVETOKEN';
+			$payment_data['Token'] = $card['token'];
+
+			$response_data = $this->model_payment_sagepay_server->sendCurl($url, $payment_data);
+			if ($response_data['Status'] == 'OK') {
+				$this->model_payment_sagepay_server->deleteCard($card['card_id']);
+				$this->session->data['success'] = $this->language->get('text_success_card');
+				$json['success'] = true;
+			} else {
+				$json['error'] = $this->language->get('text_fail_card');
+			}
+		} else {
+			$json['error'] = $this->language->get('text_fail_card');
+		}
+		$this->response->setOutput(json_encode($json));
+	}
+
 	public function cron() {
 		if ($this->request->get['token'] == $this->config->get('sagepay_server_cron_job_token')) {
 			$this->load->model('payment/sagepay_server');
@@ -439,4 +494,5 @@ class ControllerPaymentSagepayServer extends Controller {
 			$this->model_payment_sagepay_server->logger('Repeat Orders: ' . print_r($orders, 1));
 		}
 	}
+
 }

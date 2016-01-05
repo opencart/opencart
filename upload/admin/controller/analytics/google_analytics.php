@@ -10,7 +10,7 @@ class ControllerAnalyticsGoogleAnalytics extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('google_analytics', $this->request->post);
+			$this->model_setting_setting->editSetting('google_analytics', $this->request->post, $this->request->post['store_id']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -23,7 +23,8 @@ class ControllerAnalyticsGoogleAnalytics extends Controller {
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_signup'] = $this->language->get('text_signup');
-
+		
+		$data['entry_store'] = $this->language->get('entry_store');
 		$data['entry_code'] = $this->language->get('entry_code');
 		$data['entry_status'] = $this->language->get('entry_status');
 
@@ -62,7 +63,34 @@ class ControllerAnalyticsGoogleAnalytics extends Controller {
 		$data['action'] = $this->url->ssl('analytics/google_analytics', 'token=' . $this->session->data['token'], true);
 
 		$data['cancel'] = $this->url->ssl('extension/analytics', 'token=' . $this->session->data['token'], true);
+		
+		$data['token'] = $this->session->data['token'];
+		
+		if (isset($this->request->post['store_id'])) {
+			$data['store_id'] = $this->request->post['store_id'];
+		} else {
+			$data['store_id'] = $this->config->get('store_id');
+		}
+		
+		// Stores
+		$this->load->model('setting/store');
 
+		$data['stores'] = array();
+
+		$data['stores'][] = array(
+			'store_id' => 0,
+			'name'     => $this->language->get('text_default')
+		);
+		
+		$results = $this->model_setting_store->getStores();
+
+		foreach ($results as $result) {
+			$data['stores'][] = array(
+				'store_id' => $result['store_id'],
+				'name'     => $result['name']
+			);
+		}
+					
 		if (isset($this->request->post['google_analytics_code'])) {
 			$data['google_analytics_code'] = $this->request->post['google_analytics_code'];
 		} else {
@@ -92,5 +120,12 @@ class ControllerAnalyticsGoogleAnalytics extends Controller {
 		}
 
 		return !$this->error;
+	}
+	
+	public function setting() {
+		$this->load->model('setting/setting');
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($this->model_setting_setting->getSetting('google_analytics', $this->request->get['store_id'])));
 	}
 }

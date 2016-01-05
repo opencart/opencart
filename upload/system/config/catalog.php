@@ -33,6 +33,7 @@ $_['action.pre_action'] = array(
 	'startup/language',
 	'startup/currency',
 	'startup/customer_group',
+	'startup/tax',
 	'startup/tracking',
 	'startup/maintenance',
 	'startup/seo_url'

@@ -26,7 +26,22 @@
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-coupon" class="form-horizontal">
           <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_signup; ?>
-            <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-store"><?php echo $entry_store; ?></label>
+            <div class="col-sm-10">
+              <select name="store_id" id="input-store" class="form-control">
+                <?php foreach ($stores as $store) { ?>
+                <?php if ($store['store_id'] == $store_id) { ?>
+                <option value="<?php echo $store['store_id']; ?>" selected="selected"><?php echo $store['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-code"><?php echo $entry_code; ?></label>
             <div class="col-sm-10">
@@ -54,5 +69,28 @@
       </div>
     </div>
   </div>
+  <script type="text/javascript"><!--
+$('select[name=\'store_id\']').on('change', function() {
+	$.ajax({
+		url: 'index.php?route=analytics/google_analytics/setting&token=<?php echo $token; ?>&store_id=' + this.value,
+		type: 'get',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-reward').button('loading');
+		},
+		complete: function() {
+			$('#button-reward').button('reset');
+		},
+		success: function(json) {
+			for (i in json) {
+				$('#input-' + i).val(json[i]);
+			}
+
+		}
+	});
+}); 
+
+$('select[name=\'store_id\']').trigger('change');
+//--></script> 
 </div>
-<?php echo $footer; ?>
+<?php echo $footer; ?> 

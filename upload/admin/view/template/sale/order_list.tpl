@@ -194,7 +194,7 @@ $('#button-filter').on('click', function() {
 
 	location = url;
 });
-//--></script>
+//--></script> 
   <script type="text/javascript"><!--
 $('input[name=\'filter_customer\']').autocomplete({
 	'source': function(request, response) {
@@ -215,7 +215,7 @@ $('input[name=\'filter_customer\']').autocomplete({
 		$('input[name=\'filter_customer\']').val(item['label']);
 	}
 });
-//--></script>
+//--></script> 
   <script type="text/javascript"><!--
 $('input[name^=\'selected\']').on('change', function() {
 	$('#button-shipping, #button-invoice').prop('disabled', true);
@@ -236,37 +236,6 @@ $('input[name^=\'selected\']').on('change', function() {
 });
 
 $('input[name^=\'selected\']:first').trigger('change');
-
-// Login to the API
-var token = '';
-
-$.ajax({
-	url: '<?php echo $store; ?>index.php?route=api/login',
-	type: 'post',
-	data: 'key=<?php echo $api_key; ?>',
-	dataType: 'json',
-	crossDomain: true,
-	success: function(json) {
-        $('.alert').remove();
-
-        if (json['error']) {
-    		if (json['error']['key']) {
-    			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['key'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-    		}
-
-            if (json['error']['ip']) {
-    			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['ip'] + ' <button type="button" id="button-ip-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger btn-xs pull-right"><i class="fa fa-plus"></i> <?php echo $button_ip_add; ?></button></div>');
-    		}
-        }
-
-		if (json['token']) {
-			token = json['token'];
-		}
-	},
-	error: function(xhr, ajaxOptions, thrownError) {
-		alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-	}
-});
 
 $(document).delegate('#button-ip-add', 'click', function() {
 	$.ajax({
@@ -297,12 +266,43 @@ $(document).delegate('#button-ip-add', 'click', function() {
 	});
 });
 
+// Login to the API
+var token = '';
+
+$.ajax({
+	url: '<?php echo $store_url; ?>index.php?route=api/login',
+	type: 'post',
+	data: 'key=<?php echo $api_key; ?>',
+	dataType: 'json',
+	crossDomain: true,
+	success: function(json) {
+        $('.alert').remove();
+
+        if (json['error']) {
+    		if (json['error']['key']) {
+    			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['key'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+    		}
+
+            if (json['error']['ip']) {
+    			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['ip'] + ' <button type="button" id="button-ip-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger btn-xs pull-right"><i class="fa fa-plus"></i> <?php echo $button_ip_add; ?></button></div>');
+    		}
+        }
+
+		if (json['token']) {
+			token = json['token'];
+		}
+	},
+	error: function(xhr, ajaxOptions, thrownError) {
+		alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	}
+});
+
 $('button[id^=\'button-delete\']').on('click', function(e) {
 	if (confirm('<?php echo $text_confirm; ?>')) {
 		var node = this;
 
 		$.ajax({
-			url: '<?php echo $store; ?>index.php?route=api/order/delete&token=' + token + '&order_id=' + $(node).val(),
+			url: '<?php echo $store_url; ?>index.php?route=api/order/delete&token=' + token + '&order_id=' + $(node).val(),
 			dataType: 'json',
 			crossDomain: true,
 			beforeSend: function() {
@@ -330,7 +330,7 @@ $('button[id^=\'button-delete\']').on('click', function(e) {
 		});
 	}
 });
-//--></script>
+//--></script> 
   <script src="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
   <link href="view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" media="screen" />
   <script type="text/javascript"><!--
@@ -338,4 +338,4 @@ $('.date').datetimepicker({
 	pickTime: false
 });
 //--></script></div>
-<?php echo $footer; ?>
+<?php echo $footer; ?> 

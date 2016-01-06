@@ -226,10 +226,18 @@ class ModelShippingUps extends Model {
 					$this->log->write("UPS DATA SENT: " . $xml);
 					$this->log->write("UPS DATA RECV: " . $result);
 				}
-
+				
+				$previous_value = libxml_use_internal_errors(true);
+				
 				$dom = new DOMDocument('1.0', 'UTF-8');
 				$dom->loadXml($result);
 
+				libxml_use_internal_errors($previous_value);
+				
+				if (libxml_get_errors()) {
+					return false;
+				}
+				
 				$rating_service_selection_response = $dom->getElementsByTagName('RatingServiceSelectionResponse')->item(0);
 
 				$response = $rating_service_selection_response->getElementsByTagName('Response')->item(0);

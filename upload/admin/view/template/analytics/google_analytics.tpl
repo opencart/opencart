@@ -28,29 +28,21 @@
           <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_signup; ?>
             <button type="button" class="close" data-dismiss="alert">&times;</button>
           </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-store"><?php echo $entry_store; ?></label>
-            <div class="col-sm-10">
-              <select name="store_id" id="input-store" class="form-control">
-                <?php foreach ($stores as $store) { ?>
-                <?php if ($store['store_id'] == $store_id) { ?>
-                <option value="<?php echo $store['store_id']; ?>" selected="selected"><?php echo $store['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
+          <?php foreach ($stores as $store) { ?>
+          <fieldset>
+            <legend><?php echo $store['name']; ?></legend>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-code"><?php echo $entry_code; ?></label>
+              <div class="col-sm-10">
+                <textarea name="google_analytics[<?php echo $store['store_id']; ?>][code]" rows="5" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control"><?php echo (isset($google_analytics[$store['store_id']]) ? $google_analytics[$store['store_id']]['code'] : ''); ?></textarea>
+                <?php if ($error_code) { ?>
+                <div class="text-danger"><?php echo $error_code; ?></div>
                 <?php } ?>
-                <?php } ?>
-              </select>
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-code"><?php echo $entry_code; ?></label>
-            <div class="col-sm-10">
-              <textarea name="google_analytics_code" rows="5" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control"><?php echo $google_analytics_code; ?></textarea>
-              <?php if ($error_code) { ?>
-              <div class="text-danger"><?php echo $error_code; ?></div>
-              <?php } ?>
-            </div>
-          </div>
+          </fieldset>
+          <?php } ?>
+          <hr />
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
             <div class="col-sm-10">
@@ -69,28 +61,5 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript"><!--
-$('select[name=\'store_id\']').on('change', function() {
-	$.ajax({
-		url: 'index.php?route=analytics/google_analytics/setting&token=<?php echo $token; ?>&store_id=' + this.value,
-		type: 'get',
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-reward').button('loading');
-		},
-		complete: function() {
-			$('#button-reward').button('reset');
-		},
-		success: function(json) {
-			for (i in json) {
-				$('#input-' + i).val(json[i]);
-			}
-
-		}
-	});
-}); 
-
-$('select[name=\'store_id\']').trigger('change');
-//--></script> 
 </div>
 <?php echo $footer; ?> 

@@ -30,12 +30,12 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-store"><?php echo $entry_store; ?></label>
                 <div class="col-sm-10">
-                  <select name="store" id="input-store" class="form-control">
+                  <select name="store_id" id="input-store" class="form-control">
                     <?php foreach ($stores as $store) { ?>
                     <?php if ($store['store_id'] == $store_id) { ?>
-                    <option value="<?php echo $store['href']; ?>" selected="selected"><?php echo $store['name']; ?></option>
+                    <option value="<?php echo $store['store_id']; ?>" selected="selected"><?php echo $store['name']; ?></option>
                     <?php } else { ?>
-                    <option value="<?php echo $store['href']; ?>"><?php echo $store['name']; ?></option>
+                    <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
                     <?php } ?>
                     <?php } ?>
                   </select>
@@ -952,39 +952,6 @@ $('#order a[data-toggle=\'tab\']').on('click', function(e) {
 	return false;
 });
 
-var token = '';
-
-// Login to the API
-$.ajax({
-	url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/login',
-	type: 'post',
-	data: 'key=<?php echo $api_key; ?>',
-	dataType: 'json',
-	crossDomain: true,
-	success: function(json) {
-        $('.alert').remove();
-
-        if (json['error']) {
-    		if (json['error']['key']) {
-    			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['key'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-    		}
-
-            if (json['error']['ip']) {
-    			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['ip'] + ' <button type="button" id="button-ip-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger btn-xs pull-right"><i class="fa fa-plus"></i> <?php echo $button_ip_add; ?></button></div>');
-    		}
-        }
-
-		if (json['token']) {
-			token = json['token'];
-
-            $('select[name=\'currency\']').trigger('change');
-		}
-	},
-	error: function(xhr, ajaxOptions, thrownError) {
-		alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-	}
-});
-
 $(document).delegate('#button-ip-add', 'click', function() {
 	$.ajax({
 		url: 'index.php?route=user/api/addip&token=<?php echo $token; ?>&api_id=<?php echo $api_id; ?>',
@@ -1014,10 +981,43 @@ $(document).delegate('#button-ip-add', 'click', function() {
 	});
 });
 
+var token = '';
+
+// Login to the API
+$.ajax({
+	url: '<?php echo $store_url; ?>index.php?route=api/login',
+	type: 'post',
+	data: 'key=<?php echo $api_key; ?>',
+	dataType: 'json',
+	crossDomain: true,
+	success: function(json) {
+        $('.alert').remove();
+
+        if (json['error']) {
+    		if (json['error']['key']) {
+    			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['key'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+    		}
+
+            if (json['error']['ip']) {
+    			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['ip'] + ' <button type="button" id="button-ip-add" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger btn-xs pull-right"><i class="fa fa-plus"></i> <?php echo $button_ip_add; ?></button></div>');
+    		}
+        }
+
+		if (json['token']) {
+			token = json['token'];
+
+            $('select[name=\'currency\']').trigger('change');
+		}
+	},
+	error: function(xhr, ajaxOptions, thrownError) {
+		alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	}
+});
+
 // Currency
 $('select[name=\'currency\']').on('change', function() {
 	$.ajax({
-		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/currency&token=' + token,
+		url: '<?php echo $store_url; ?>index.php?route=api/currency&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: 'currency=' + $('select[name=\'currency\'] option:selected').val(),
 		dataType: 'json',
@@ -1048,7 +1048,7 @@ $('select[name=\'currency\']').on('change', function() {
 // Add all products to the cart using the api
 $('#button-refresh').on('click', function() {
 	$.ajax({
-		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/cart/products&token=' + token,
+		url: '<?php echo $store_url; ?>index.php?route=api/cart/products&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		dataType: 'json',
 		crossDomain: true,
 		success: function(json) {
@@ -1338,7 +1338,7 @@ $('select[name=\'customer_group_id\']').trigger('change');
 
 $('#button-customer').on('click', function() {
 	$.ajax({
-		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/customer&token=' + token,
+		url: '<?php echo $store_url; ?>index.php?route=api/customer&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: $('#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'], #tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea'),
 		dataType: 'json',
@@ -1373,7 +1373,7 @@ $('#button-customer').on('click', function() {
 			} else {
                 // Refresh products, vouchers and totals
                 var request_1 = $.ajax({
-                    url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/cart/add&token=' + token,
+                    url: '<?php echo $store_url; ?>index.php?route=api/cart/add&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
                     type: 'post',
                     data: $('#cart input[name^=\'product\'][type=\'text\'], #cart input[name^=\'product\'][type=\'hidden\'], #cart input[name^=\'product\'][type=\'radio\']:checked, #cart input[name^=\'product\'][type=\'checkbox\']:checked, #cart select[name^=\'product\'], #cart textarea[name^=\'product\']'),
                     dataType: 'json',
@@ -1399,7 +1399,7 @@ $('#button-customer').on('click', function() {
 
                 var request_2 = request_1.then(function() {
                     $.ajax({
-                        url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/voucher/add&token=' + token,
+                        url: '<?php echo $store_url; ?>index.php?route=api/voucher/add&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
                         type: 'post',
                         data: $('#cart input[name^=\'voucher\'][type=\'text\'], #cart input[name^=\'voucher\'][type=\'hidden\'], #cart input[name^=\'voucher\'][type=\'radio\']:checked, #cart input[name^=\'voucher\'][type=\'checkbox\']:checked, #cart select[name^=\'voucher\'], #cart textarea[name^=\'voucher\']'),
                         dataType: 'json',
@@ -1634,7 +1634,7 @@ $('#tab-product input[name=\'product\']').autocomplete({
 
 $('#button-product-add').on('click', function() {
 	$.ajax({
-		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/cart/add&token=' + token,
+		url: '<?php echo $store_url; ?>index.php?route=api/cart/add&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: $('#tab-product input[name=\'product_id\'], #tab-product input[name=\'quantity\'], #tab-product input[name^=\'option\'][type=\'text\'], #tab-product input[name^=\'option\'][type=\'hidden\'], #tab-product input[name^=\'option\'][type=\'radio\']:checked, #tab-product input[name^=\'option\'][type=\'checkbox\']:checked, #tab-product select[name^=\'option\'], #tab-product textarea[name^=\'option\']'),
 		dataType: 'json',
@@ -1686,7 +1686,7 @@ $('#button-product-add').on('click', function() {
 // Voucher
 $('#button-voucher-add').on('click', function() {
 	$.ajax({
-		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/voucher/add&token=' + token,
+		url: '<?php echo $store_url; ?>index.php?route=api/voucher/add&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: $('#tab-voucher input[type=\'text\'], #tab-voucher input[type=\'hidden\'], #tab-voucher input[type=\'radio\']:checked, #tab-voucher input[type=\'checkbox\']:checked, #tab-voucher select, #tab-voucher textarea'),
 		dataType: 'json',
@@ -1740,7 +1740,7 @@ $('#cart').delegate('.btn-danger', 'click', function() {
 	var node = this;
 
 	$.ajax({
-		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/cart/remove&token=' + token,
+		url: '<?php echo $store_url; ?>index.php?route=api/cart/remove&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: 'key=' + encodeURIComponent(this.value),
 		dataType: 'json',
@@ -1773,7 +1773,7 @@ $('#cart').delegate('.btn-primary', 'click', function() {
 
     // Refresh products, vouchers and totals
     $.ajax({
-        url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/cart/add&token=' + token,
+        url: '<?php echo $store_url; ?>index.php?route=api/cart/add&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
         type: 'post',
         data: $('#cart input[name^=\'product\'][type=\'text\'], #cart input[name^=\'product\'][type=\'hidden\'], #cart input[name^=\'product\'][type=\'radio\']:checked, #cart input[name^=\'product\'][type=\'checkbox\']:checked, #cart select[name^=\'product\'], #cart textarea[name^=\'product\']'),
         dataType: 'json',
@@ -1906,7 +1906,7 @@ $('#tab-payment select[name=\'country_id\']').trigger('change');
 
 $('#button-payment-address').on('click', function() {
 	$.ajax({
-		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/payment/address&token=' + token,
+		url: '<?php echo $store_url; ?>index.php?route=api/payment/address&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: $('#tab-payment input[type=\'text\'], #tab-payment input[type=\'hidden\'], #tab-payment input[type=\'radio\']:checked, #tab-payment input[type=\'checkbox\']:checked, #tab-payment select, #tab-payment textarea'),
 		dataType: 'json',
@@ -1942,7 +1942,7 @@ $('#button-payment-address').on('click', function() {
 			} else {
 				// Payment Methods
 				$.ajax({
-					url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/payment/methods&token=' + token,
+					url: '<?php echo $store_url; ?>index.php?route=api/payment/methods&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 					dataType: 'json',
 					crossDomain: true,
 					beforeSend: function() {
@@ -2092,7 +2092,7 @@ $('#tab-shipping select[name=\'country_id\']').trigger('change');
 
 $('#button-shipping-address').on('click', function() {
 	$.ajax({
-		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/shipping/address&token=' + token,
+		url: '<?php echo $store_url; ?>index.php?route=api/shipping/address&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: $('#tab-shipping input[type=\'text\'], #tab-shipping input[type=\'hidden\'], #tab-shipping input[type=\'radio\']:checked, #tab-shipping input[type=\'checkbox\']:checked, #tab-shipping select, #tab-shipping textarea'),
 		dataType: 'json',
@@ -2128,7 +2128,7 @@ $('#button-shipping-address').on('click', function() {
 			} else {
 				// Shipping Methods
 				var request = $.ajax({
-					url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/shipping/methods&token=' + token,
+					url: '<?php echo $store_url; ?>index.php?route=api/shipping/methods&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 					dataType: 'json',
 					beforeSend: function() {
 						$('#button-shipping-address i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
@@ -2188,7 +2188,7 @@ $('#button-shipping-address').on('click', function() {
 // Shipping Method
 $('#button-shipping-method').on('click', function() {
 	$.ajax({
-		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/shipping/method&token=' + token,
+		url: '<?php echo $store_url; ?>index.php?route=api/shipping/method&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: 'shipping_method=' + $('select[name=\'shipping_method\'] option:selected').val(),
 		dataType: 'json',
@@ -2226,7 +2226,7 @@ $('#button-shipping-method').on('click', function() {
 // Payment Method
 $('#button-payment-method').on('click', function() {
 	$.ajax({
-		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/payment/method&token=' + token,
+		url: '<?php echo $store_url; ?>index.php?route=api/payment/method&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: 'payment_method=' + $('select[name=\'payment_method\'] option:selected').val(),
 		dataType: 'json',
@@ -2264,7 +2264,7 @@ $('#button-payment-method').on('click', function() {
 // Coupon
 $('#button-coupon').on('click', function() {
 	$.ajax({
-		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/coupon&token=' + token,
+		url: '<?php echo $store_url; ?>index.php?route=api/coupon&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: 'coupon=' + $('input[name=\'coupon\']').val(),
 		dataType: 'json',
@@ -2302,7 +2302,7 @@ $('#button-coupon').on('click', function() {
 // Voucher
 $('#button-voucher').on('click', function() {
 	$.ajax({
-		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/voucher&token=' + token,
+		url: '<?php echo $store_url; ?>index.php?route=api/voucher&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: 'voucher=' + $('input[name=\'voucher\']').val(),
 		dataType: 'json',
@@ -2340,7 +2340,7 @@ $('#button-voucher').on('click', function() {
 // Reward
 $('#button-reward').on('click', function() {
 	$.ajax({
-		url: $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/reward&token=' + token,
+		url: '<?php echo $store_url; ?>index.php?route=api/reward&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val(),
 		type: 'post',
 		data: 'reward=' + $('input[name=\'reward\']').val(),
 		dataType: 'json',
@@ -2405,9 +2405,9 @@ $('input[name=\'affiliate\']').autocomplete({
 // Checkout
 $('#button-save').on('click', function() {
 	if ($('input[name=\'order_id\']').val() == 0) {
-		var url = $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/order/add&token=' + token;
+		var url = '<?php echo $store_url; ?>index.php?route=api/order/add&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val();
 	} else {
-		var url = $('select[name=\'store\'] option:selected').val() + 'index.php?route=api/order/edit&token=' + token + '&order_id=' + $('input[name=\'order_id\']').val();
+		var url = '<?php echo $store_url; ?>index.php?route=api/order/edit&token=' + token + '&store_id=' + $('select[name=\'store_id\'] option:selected').val() + '&order_id=' + $('input[name=\'order_id\']').val();
 	}
 
 	$.ajax({

@@ -29,7 +29,8 @@ function oc_route_ssl_inst($ssl_pool) {
 }
 
 define('HTTP_SERVER', $_SERVER['PROTOCOL'] . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['SCRIPT_NAME']), '/.\\') . '/');
-define('HTTP_OPENCART', $_SERVER['PROTOCOL'] . $_SERVER['HTTP_HOST'] . rtrim(rtrim(dirname($_SERVER['SCRIPT_NAME']), 'install'), '/.\\') . '/');
+define('HTTP_OPENCART', 'http://' . $_SERVER['HTTP_HOST'] . rtrim(rtrim(dirname($_SERVER['SCRIPT_NAME']), 'install'), '/.\\') . '/');
+define('HTTPS_OPENCART', $_SERVER['PROTOCOL'] . $_SERVER['HTTP_HOST'] . rtrim(rtrim(dirname($_SERVER['SCRIPT_NAME']), 'install'), '/.\\') . '/');
 
 // DIR
 define('DIR_APPLICATION', str_replace('\\', '/', realpath(dirname(__FILE__))) . '/');

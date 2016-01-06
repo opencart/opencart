@@ -55,13 +55,51 @@ if (!isset($_SERVER['HTTP_HOST'])) {
 	$_SERVER['HTTP_HOST'] = getenv('HTTP_HOST');
 }
 
-// Check if SSL
-if (isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTPS'] == '1')) || $_SERVER['SERVER_PORT'] == 443) {
-	$_SERVER['HTTPS'] = true;
-} elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
-	$_SERVER['HTTPS'] = true;
-} else {
-	$_SERVER['HTTPS'] = false;
+// Rewrite client IP based on proxy headers
+$ip_pool = array(
+	!empty($_SERVER['HTTP_CF_CONNECTING_IP']) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : '',
+	!empty($_SERVER['HTTP_CF_PSEUDO_IPV4']) ? $_SERVER['HTTP_CF_PSEUDO_IPV4'] : '',
+	!empty($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : '',
+	!empty($_SERVER['HTTP_X_FORWARDED']) ? $_SERVER['HTTP_X_FORWARDED'] : '',
+	!empty($_SERVER['HTTP_FORWARDED_FOR']) ? $_SERVER['HTTP_FORWARDED_FOR'] : '',
+	!empty($_SERVER['HTTP_FORWARDED']) ? $_SERVER['HTTP_FORWARDED'] : '',
+	!empty($_SERVER['HTTP_X_CLUSTER_CLIENT_IP']) ? $_SERVER['HTTP_X_CLUSTER_CLIENT_IP'] : '',
+	!empty($_SERVER['HTTP_CLIENT_IP']) ? $_SERVER['HTTP_CLIENT_IP'] : ''
+);
+
+oc_route_ip($ip_pool);
+
+function oc_route_ip($ip_pool) {
+	foreach ($ip_pool as $ip) {
+		if (isset($ip)) {
+			$_SERVER['REMOTE_ADDR'] = $ip;
+			break;
+		}
+	}
+}
+
+// Rewrite HTTPS mode based on proxy headers
+$ssl_pool = array(
+	!empty($_SERVER['PROTOCOL']) ? $_SERVER['PROTOCOL'] : $_SERVER['PROTOCOL'] = 'http://',
+	!empty($_SERVER['HTTPS']) ? $_SERVER['HTTPS'] : $_SERVER['HTTPS'] = false,
+	!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) ? $_SERVER['HTTP_X_FORWARDED_PROTO'] : '',
+	!empty($_SERVER['HTTP_X_FORWARDED_PROTOCOL']) ? $_SERVER['HTTP_X_FORWARDED_PROTOCOL'] : '',
+	!empty($_SERVER['HTTP_X_FORWARDED_SSL']) ? $_SERVER['HTTP_X_FORWARDED_SSL'] : '',
+	!empty($_SERVER['HTTP_FRONT_END_HTTPS']) ? $_SERVER['HTTP_FRONT_END_HTTPS'] : '',
+	!empty($_SERVER['HTTP_X_URL_SCHEME']) ? $_SERVER['HTTP_X_URL_SCHEME'] : '',
+	!empty($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : ''
+);	
+	
+oc_route_ssl($ssl_pool);
+
+function oc_route_ssl($ssl_pool) {
+	foreach ($ssl_pool as $ssl) {
+		if (isset($ssl) && ($ssl == 'https' || $ssl == 'on' || $ssl == 1 || $ssl == 443)) {
+			$_SERVER['HTTPS'] = true;
+			$_SERVER['PROTOCOL'] = 'https://';
+			break;
+		}
+	}
 }
 
 // Modification Override

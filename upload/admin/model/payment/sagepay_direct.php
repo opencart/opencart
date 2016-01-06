@@ -259,8 +259,7 @@ class ModelPaymentSagepayDirect extends Model {
 	public function logger($title, $data) {
 		if ($this->config->get('sagepay_direct_debug')) {
 			$log = new Log('sagepay_direct.log');
-			$backtrace = debug_backtrace();
-			$log->write($backtrace[1]['class'] . '::' . $backtrace[1]['function'] . ' - ' . $title . ': ' . print_r($data, 1));
+			$log->write($title . ': ' . print_r($data, 1));
 		}
 	}
 }

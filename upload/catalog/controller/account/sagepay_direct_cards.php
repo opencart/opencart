@@ -92,11 +92,7 @@ class ControllerAccountSagepayDirectCards extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/sagepay_direct_cards_list.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/sagepay_direct_cards_list.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/account/sagepay_direct_cards_list.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('account/sagepay_direct_cards_list', $data));
 	}
 
 	public function add() {
@@ -129,14 +125,9 @@ class ControllerAccountSagepayDirectCards extends Controller {
 		$data['entry_cc_owner'] = $this->language->get('entry_cc_owner');
 		$data['entry_cc_type'] = $this->language->get('entry_cc_type');
 		$data['entry_cc_number'] = $this->language->get('entry_cc_number');
-		$data['entry_cc_start_date'] = $this->language->get('entry_cc_start_date');
 		$data['entry_cc_expire_date'] = $this->language->get('entry_cc_expire_date');
 		$data['entry_cc_cvv2'] = $this->language->get('entry_cc_cvv2');
-		$data['entry_cc_issue'] = $this->language->get('entry_cc_issue');
 		$data['entry_cc_choice'] = $this->language->get('entry_cc_choice');
-
-		$data['help_start_date'] = $this->language->get('help_start_date');
-		$data['help_issue'] = $this->language->get('help_issue');
 
 		$data['button_back'] = $this->language->get('button_back');
 		$data['button_add_card'] = $this->language->get('button_add_card');
@@ -226,24 +217,18 @@ class ControllerAccountSagepayDirectCards extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/sagepay_direct_cards_form.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/sagepay_direct_cards_form.tpl', $data));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/account/sagepay_direct_cards_form.tpl', $data));
-		}
+		$this->response->setOutput($this->load->view('account/sagepay_direct_cards_form', $data));
 	}
 
 	public function delete() {
-
 		$this->load->language('account/sagepay_direct_cards');
-
 		$this->load->model('payment/sagepay_direct');
 
 		$card = $this->model_payment_sagepay_direct->getCard($this->request->get['card_id'], false);
 
 		if (!empty($card['token'])) {
 			if ($this->config->get('sagepay_direct_test') == 'live') {
-				$url = 'https://live.sagepay.com/gateway/service/ removetoken.vsp';
+				$url = 'https://live.sagepay.com/gateway/service/removetoken.vsp';
 			} else {
 				$url = 'https://test.sagepay.com/gateway/service/removetoken.vsp';
 			}
@@ -266,7 +251,7 @@ class ControllerAccountSagepayDirectCards extends Controller {
 	}
 
 	public function addCard() {
-		$this->load->language('payment/sagepay_direct');
+		$this->load->language('account/sagepay_direct_cards');
 		$this->load->model('checkout/order');
 		$this->load->model('payment/sagepay_direct');
 

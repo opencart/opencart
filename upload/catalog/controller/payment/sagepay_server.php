@@ -337,13 +337,18 @@ class ControllerPaymentSagepayServer extends Controller {
 
 		$transaction_info = $this->model_payment_sagepay_server->getOrder($order_id);
 
+		$this->model_payment_sagepay_server->logger('$order_id', $order_id);
+		$this->model_payment_sagepay_server->logger('$order_info', $order_info);
+		$this->model_payment_sagepay_server->logger('$transaction_info', $transaction_info);
+		$this->model_payment_sagepay_server->logger('$strStatus', $str_status);
+
 		//Check if order we have saved in database maches with callback sagepay does
 		if (!isset($transaction_info['order_id']) || $transaction_info['order_id'] != $order_id) {
 			echo "Status=INVALID" . $end_ln;
 			echo "StatusDetail= Order IDs could not be matched. Order might be tampered with." . $end_ln;
 			echo "RedirectURL=" . $error_page . $end_ln;
 
-			$this->model_payment_sagepay_server->logger('StatusDetail= Order IDs could not be matched. Order might be tampered with.');
+			$this->model_payment_sagepay_server->logger('StatusDetail', 'Order IDs could not be matched. Order might be tampered with');
 
 			exit;
 		}
@@ -372,18 +377,18 @@ class ControllerPaymentSagepayServer extends Controller {
 			echo "StatusDetail= Cannot match the MD5 Hash. Order might be tampered with." . $end_ln;
 			echo "RedirectURL=" . $error_page . $end_ln;
 
-			$this->model_payment_sagepay_server->logger('StatusDetail= Cannot match the MD5 Hash. Order might be tampered with.');
+			$this->model_payment_sagepay_server->logger('StatusDetail', 'Cannot match the MD5 Hash. Order might be tampered with');
 			exit;
 		}
 
-		if ($str_status != "OK" || !$order_info) {
+		if (($str_status != "OK" && $str_status != "REGISTERED" && $str_status != "AUTHENTICATED") || !$order_info) {
 			$this->model_payment_sagepay_server->deleteOrder($order_id);
 
 			echo "Status=INVALID" . $end_ln;
 			echo "StatusDetail= Either status invalid or order info was not found.";
 			echo "RedirectURL=" . $error_page . $end_ln;
 
-			$this->model_payment_sagepay_server->logger('StatusDetail= Either status invalid or order info was not found.');
+			$this->model_payment_sagepay_server->logger('StatusDetail', 'Either status invalid or order info was not found');
 			exit;
 		}
 
@@ -460,7 +465,7 @@ class ControllerPaymentSagepayServer extends Controller {
 
 		if (!empty($card['token'])) {
 			if ($this->config->get('sagepay_server_test') == 'live') {
-				$url = 'https://live.sagepay.com/gateway/service/ removetoken.vsp';
+				$url = 'https://live.sagepay.com/gateway/service/removetoken.vsp';
 			} else {
 				$url = 'https://test.sagepay.com/gateway/service/removetoken.vsp';
 			}
@@ -491,7 +496,7 @@ class ControllerPaymentSagepayServer extends Controller {
 
 			$this->model_payment_sagepay_server->updateCronJobRunTime();
 
-			$this->model_payment_sagepay_server->logger('Repeat Orders: ' . print_r($orders, 1));
+			$this->model_payment_sagepay_server->logger('Repeat Orders', $orders);
 		}
 	}
 

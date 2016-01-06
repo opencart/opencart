@@ -7,11 +7,7 @@ class ControllerModuleSagepayDirectCards extends Controller {
 			$data['text_card'] = $this->language->get('text_card');
 			$data['card'] = $this->url->link('account/sagepay_direct_cards', '', true);
 
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/sagepay_direct_cards.tpl')) {
-				return $this->load->view($this->config->get('config_template') . '/template/module/sagepay_direct_cards.tpl', $data);
-			} else {
-				return $this->load->view('default/template/module/sagepay_direct_cards.tpl', $data);
-			}
+			return $this->load->view('module/sagepay_direct_cards', $data);
 		}
 	}
 

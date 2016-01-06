@@ -66,23 +66,6 @@
 		  </div>
 		</div>
 		<div class="form-group required">
-        <label class="col-sm-2 control-label" for="input-cc-start-date"><span data-toggle="tooltip" title="<?php echo $help_start_date; ?>"><?php echo $entry_cc_start_date; ?></span></label>
-		  <div class="col-sm-3">
-			<select name="cc_start_date_month" id="input-cc-start-date" class="form-control">
-			  <?php foreach ($months as $month) { ?>
-				  <option value="<?php echo $month['value']; ?>"><?php echo $month['text']; ?></option>
-			  <?php } ?>
-			</select>
-        </div>
-		  <div class="col-sm-3">
-			<select name="cc_start_date_year" class="form-control">
-			  <?php foreach ($year_valid as $year) { ?>
-				  <option value="<?php echo $year['value']; ?>"><?php echo $year['text']; ?></option>
-			  <?php } ?>
-			</select>
-		  </div>
-		</div>
-		<div class="form-group required">
 		  <label class="col-sm-2 control-label" for="input-cc-expire-date"><?php echo $entry_cc_expire_date; ?></label>
 		  <div class="col-sm-3">
 			<select name="cc_expire_date_month" id="input-cc-expire-date" class="form-control">
@@ -105,12 +88,6 @@
 			<input type="text" name="cc_cvv2" value="" placeholder="<?php echo $entry_cc_cvv2; ?>" id="input-cc-cvv2" class="form-control" />
 		  </div>
 		</div>
-		<div class="form-group">
-        <label class="col-sm-2 control-label" for="input-cc-issue"><span data-toggle="tooltip" title="<?php echo $help_issue; ?>"><?php echo $entry_cc_issue; ?></span></label>
-		  <div class="col-sm-10">
-			<input type="text" name="cc_issue" value="" placeholder="<?php echo $entry_cc_issue; ?>" id="input-cc-issue" class="form-control" />
-		</div>
-      </div>
 		<?php if ($sagepay_direct_card) { ?>
 			<div class="form-group">
 			  <label class="col-sm-2 control-label" for="input-cc-save"><?php echo $entry_card_save; ?></label>

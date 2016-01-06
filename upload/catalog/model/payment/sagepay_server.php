@@ -427,8 +427,7 @@ class ModelPaymentSagePayServer extends Model {
 	public function logger($title, $data) {
 		if ($this->config->get('sagepay_server_debug')) {
 			$log = new Log('sagepay_server.log');
-			$backtrace = debug_backtrace();
-			$log->write($backtrace[1]['class'] . '::' . $backtrace[1]['function'] . ' - ' . $title . ': ' . print_r($data, 1));
+			$log->write($title . ': ' . print_r($data, 1));
 		}
 	}
 

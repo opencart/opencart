@@ -9,7 +9,6 @@ $_['text_signup']      = 'Login to your <a href="http://www.google.com/analytics
 $_['text_default']     = 'Default';
 
 // Entry
-$_['entry_store']      = 'Store';
 $_['entry_code']       = 'Google Analytics Code';
 $_['entry_status']     = 'Status';
 

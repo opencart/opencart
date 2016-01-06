@@ -123,7 +123,7 @@ class ControllerExtensionTheme extends Controller {
 				$this->load->language('theme/' . $extension);
 
 				$data['extensions'][] = array(
-					'name'      => $this->language->get('heading_title'),
+					'name'      => $this->language->get('heading_title') . (($extension == $this->config->get('config_theme')) ? $this->language->get('text_default') : null),
 					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'install'   => $this->url->ssl('extension/theme/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'uninstall' => $this->url->ssl('extension/theme/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),

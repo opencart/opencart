@@ -10,7 +10,7 @@ class ControllerCommonHeader extends Controller {
 
 		foreach ($analytics as $analytic) {
 			if ($this->config->get($analytic['code'] . '_status')) {
-				$data['analytics'][] = $this->load->controller('analytics/' . $analytic['code']);
+				$data['analytics'][] = $this->load->controller('analytics/' . $analytic['code'], $this->config->get($analytic['code'] . '_status'));
 			}
 		}
 

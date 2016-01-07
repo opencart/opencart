@@ -8,8 +8,6 @@ class ControllerAnalyticsGoogleAnalytics extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('setting/setting');
-
-		$this->load->model('setting/store');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->model_setting_setting->editSetting('google_analytics', $this->request->post, $this->request->post['store_id']);
@@ -67,29 +65,10 @@ class ControllerAnalyticsGoogleAnalytics extends Controller {
 		
 		$data['token'] = $this->session->data['token'];
 				
-		// Stores
-		$data['stores'] = array();
-
-		$data['stores'][] = array(
-			'store_id' => 0,
-			'name'     => $this->language->get('text_default')
-		);
-		
-		$results = $this->model_setting_store->getStores();
-		
-		foreach ($results as $result) {	
-			$data['stores'][] = array(
-				'store_id' => $result['store_id'],
-				'name'     => $result['name']
-			);		
-		}
-		
-		if (isset($this->request->post['google_analytics'])) {
-			$data['google_analytics'] = $this->request->post['google_analytics'];
-		} elseif ($this->config->has('google_analytics')) {
-			$data['google_analytics'] = $this->config->get('google_analytics');
+		if (isset($this->request->post['google_analytics_code'])) {
+			$data['google_analytics_code'] = $this->request->post['google_analytics_code'];
 		} else {
-			$data['google_analytics'] = array();
+			$data['google_analytics_code'] = $this->config->get('google_analytics_code');
 		}
 		
 		if (isset($this->request->post['google_analytics_status'])) {
@@ -110,13 +89,9 @@ class ControllerAnalyticsGoogleAnalytics extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		$results = $this->model_setting_store->getStores();
-		
-		foreach ($results as $result) {
-			if (!$this->request->post['google_analytics']) {
-				$this->error['code'][$result['store_id']] = $this->language->get('error_code');
-			}			
-		}
+		if (!$this->request->post['google_analytics_code']) {
+			$this->error['code'] = $this->language->get('error_code');
+		}			
 
 		return !$this->error;
 	}

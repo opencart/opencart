@@ -26,6 +26,8 @@ class ControllerThemeThemeDefault extends Controller {
 		$data['text_image'] = $this->language->get('text_image');
 		$data['text_general'] = $this->language->get('text_general');
 		
+		$data['entry_directory'] = $this->language->get('entry_directory');
+		$data['entry_status'] = $this->language->get('entry_status');		
 		$data['entry_product_limit'] = $this->language->get('entry_product_limit');
 		$data['entry_product_description_length'] = $this->language->get('entry_product_description_length');
 		$data['entry_image_category'] = $this->language->get('entry_image_category');
@@ -40,8 +42,6 @@ class ControllerThemeThemeDefault extends Controller {
 		$data['entry_image_location'] = $this->language->get('entry_image_location');
 		$data['entry_width'] = $this->language->get('entry_width');
 		$data['entry_height'] = $this->language->get('entry_height');
-		$data['entry_directory'] = $this->language->get('entry_directory');
-		$data['entry_status'] = $this->language->get('entry_status');
 		
 		$data['help_product_limit'] = $this->language->get('help_product_limit');
 		$data['help_product_description_length'] = $this->language->get('help_product_description_length');
@@ -152,7 +152,39 @@ class ControllerThemeThemeDefault extends Controller {
 		if (isset($this->request->get['store_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$setting_info = $this->model_setting_setting->getSetting('theme_default', $this->request->get['store_id']);
 		}
+		
+		if (isset($this->request->post['theme_default_directory'])) {
+			$data['theme_default_directory'] = $this->request->post['theme_default_directory'];
+		} elseif (isset($setting_info['theme_default_directory'])) {
+			$data['theme_default_directory'] = $setting_info['theme_default_directory'];
+		} else {
+			$data['theme_default_directory'] = 'default';
+		}		
 
+		$data['directories'] = array();
+
+		$directories = glob(DIR_CATALOG . 'view/theme/*', GLOB_ONLYDIR);
+
+		foreach ($directories as $directory) {
+			$data['directories'][] = basename($directory);
+		}
+
+		if (isset($this->request->post['theme_default_product_limit'])) {
+			$data['theme_default_product_limit'] = $this->request->post['theme_default_product_limit'];
+		} elseif (isset($setting_info['theme_default_product_limit'])) {
+			$data['theme_default_product_limit'] = $setting_info['theme_default_product_limit'];
+		} else {
+			$data['theme_default_product_limit'] = 15;
+		}		
+		
+		if (isset($this->request->post['theme_default_status'])) {
+			$data['theme_default_status'] = $this->request->post['theme_default_status'];
+		} elseif (isset($setting_info['theme_default_status'])) {
+			$data['theme_default_status'] = $this->config->get('theme_default_status');
+		} else {
+			$data['theme_default_status'] = '';
+		}
+		
 		if (isset($this->request->post['theme_default_product_description_length'])) {
 			$data['theme_default_product_description_length'] = $this->request->post['theme_default_product_description_length'];
 		} elseif (isset($setting_info['theme_default_product_description_length'])) {
@@ -321,38 +353,6 @@ class ControllerThemeThemeDefault extends Controller {
 			$data['theme_default_image_location_height'] = 50;
 		}
 		
-		if (isset($this->request->post['theme_default_directory'])) {
-			$data['theme_default_directory'] = $this->request->post['theme_default_directory'];
-		} elseif (isset($setting_info['theme_default_directory'])) {
-			$data['theme_default_directory'] = $setting_info['theme_default_directory'];
-		} else {
-			$data['theme_default_directory'] = 'default';
-		}		
-
-		$data['directories'] = array();
-
-		$directories = glob(DIR_CATALOG . 'view/theme/*', GLOB_ONLYDIR);
-
-		foreach ($directories as $directory) {
-			$data['directories'][] = basename($directory);
-		}
-
-		if (isset($this->request->post['theme_default_product_limit'])) {
-			$data['theme_default_product_limit'] = $this->request->post['theme_default_product_limit'];
-		} elseif (isset($setting_info['theme_default_product_limit'])) {
-			$data['theme_default_product_limit'] = $setting_info['theme_default_product_limit'];
-		} else {
-			$data['theme_default_product_limit'] = 15;
-		}		
-		
-		if (isset($this->request->post['theme_default_status'])) {
-			$data['theme_default_status'] = $this->request->post['theme_default_status'];
-		} elseif (isset($setting_info['theme_default_status'])) {
-			$data['theme_default_status'] = $this->config->get('theme_default_status');
-		} else {
-			$data['theme_default_status'] = '';
-		}
-		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -415,4 +415,12 @@ class ControllerThemeThemeDefault extends Controller {
 
 		return !$this->error;
 	}
+	
+	public function install() {
+		
+	}
+	
+	public function uninstall() {
+		
+	}	
 }

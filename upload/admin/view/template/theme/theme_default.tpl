@@ -26,6 +26,37 @@
       <div class="panel-body">
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-theme-default" class="form-horizontal">
           <fieldset>
+            <legend><?php echo $text_general; ?></legend>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-directory"><span data-toggle="tooltip" title="<?php echo $help_directory; ?>"><?php echo $entry_directory; ?></span></label>
+              <div class="col-sm-10">
+                <select name="theme_default_directory" id="input-directory" class="form-control">
+                  <?php foreach ($directories as $directory) { ?>
+                  <?php if ($directory == $theme_default_directory) { ?>
+                  <option value="<?php echo $directory; ?>" selected="selected"><?php echo $directory; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $directory; ?>"><?php echo $directory; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+              <div class="col-sm-10">
+                <select name="theme_default_status" id="input-status" class="form-control">
+                  <?php if ($theme_default_status) { ?>
+                  <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                  <option value="0"><?php echo $text_disabled; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_enabled; ?></option>
+                  <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
             <legend><?php echo $text_product; ?></legend>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-catalog-limit"><span data-toggle="tooltip" title="<?php echo $help_product_limit; ?>"><?php echo $entry_product_limit; ?></span></label>
@@ -206,37 +237,6 @@
                 <?php if ($error_image_location) { ?>
                 <div class="text-danger"><?php echo $error_image_location; ?></div>
                 <?php } ?>
-              </div>
-            </div>
-          </fieldset>
-          <fieldset>
-            <legend><?php echo $text_general; ?></legend>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-directory"><span data-toggle="tooltip" title="<?php echo $help_directory; ?>"><?php echo $entry_directory; ?></span></label>
-              <div class="col-sm-10">
-                <select name="theme_default_directory" id="input-directory" class="form-control">
-                  <?php foreach ($directories as $directory) { ?>
-                  <?php if ($directory == $theme_default_directory) { ?>
-                  <option value="<?php echo $directory; ?>" selected="selected"><?php echo $directory; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $directory; ?>"><?php echo $directory; ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
-              <div class="col-sm-10">
-                <select name="theme_default_status" id="input-status" class="form-control">
-                  <?php if ($theme_default_status) { ?>
-                  <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                  <option value="0"><?php echo $text_disabled; ?></option>
-                  <?php } else { ?>
-                  <option value="1"><?php echo $text_enabled; ?></option>
-                  <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                  <?php } ?>
-                </select>
               </div>
             </div>
           </fieldset>

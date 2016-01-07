@@ -35,9 +35,9 @@
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-list-description-limit"><span data-toggle="tooltip" title="<?php echo $help_product_description_length; ?>"><?php echo $entry_product_description_length; ?></span></label>
+            <label class="col-sm-2 control-label" for="input-description-limit"><span data-toggle="tooltip" title="<?php echo $help_product_description_length; ?>"><?php echo $entry_product_description_length; ?></span></label>
             <div class="col-sm-10">
-              <input type="text" name="theme_default_product_description_length" value="<?php echo $theme_default_product_description_length; ?>" placeholder="<?php echo $entry_product_description_length; ?>" id="input-list-description-limit" class="form-control" />
+              <input type="text" name="theme_default_product_description_length" value="<?php echo $theme_default_product_description_length; ?>" placeholder="<?php echo $entry_product_description_length; ?>" id="input-description-limit" class="form-control" />
               <?php if ($error_product_description_length) { ?>
               <div class="text-danger"><?php echo $error_product_description_length; ?></div>
               <?php } ?>

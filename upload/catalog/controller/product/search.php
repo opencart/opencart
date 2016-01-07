@@ -62,7 +62,7 @@ class ControllerProductSearch extends Controller {
 		if (isset($this->request->get['limit'])) {
 			$limit = (int)$this->request->get['limit'];
 		} else {
-			$limit = $this->config->get('config_product_limit');
+			$limit = $this->config->get($this->config->get('config_theme') . '_product_limit');
 		}
 
 		if (isset($this->request->get['search'])) {
@@ -374,7 +374,7 @@ class ControllerProductSearch extends Controller {
 
 			$data['limits'] = array();
 
-			$limits = array_unique(array($this->config->get('config_product_limit'), 25, 50, 75, 100));
+			$limits = array_unique(array($this->config->get($this->config->get('config_theme') . '_product_limit'), 25, 50, 75, 100));
 
 			sort($limits);
 

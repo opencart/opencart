@@ -41,7 +41,7 @@
               <tbody>
                 <?php if ($extensions) { ?>
                 <?php foreach ($extensions as $extension) { ?>
-                <tr>
+                <tr class="active">
                   <td><?php echo $extension['name']; ?></td>
                   <td class="text-right"><?php if (!$extension['installed']) { ?>
                     <a href="<?php echo $extension['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>

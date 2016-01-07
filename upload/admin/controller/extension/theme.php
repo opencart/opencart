@@ -102,6 +102,10 @@ class ControllerExtensionTheme extends Controller {
 			$data['success'] = '';
 		}
 
+		$this->load->model('setting/store');
+
+		$stores = $this->model_setting_store->getStores();
+
 		$extensions = $this->model_extension_extension->getInstalled('theme');
 
 		foreach ($extensions as $key => $value) {
@@ -119,16 +123,31 @@ class ControllerExtensionTheme extends Controller {
 		if ($files) {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
-
+				
 				$this->load->language('theme/' . $extension);
-
+					
+				$store_data = array();
+				
+				$store_data[] = array(
+					'name'   => ' --- ' . $this->config->get('config_name'),
+					'edit'   => $this->url->ssl('theme/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=0', true),
+					'status' => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
+				);
+									
+				foreach ($stores as $store) {
+					$store_data[] = array(
+						'name'   => $store['name'],
+						'edit'   => $this->url->ssl('theme/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=' . $store['store_id'], true),
+						'status' => $this->model_setting_setting->getSetting($extension . '_status', $store['store_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
+					);
+				}
+				
 				$data['extensions'][] = array(
-					'name'      => $this->language->get('heading_title') . (($extension == $this->config->get('config_theme')) ? $this->language->get('text_default') : null),
-					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+					'name'      => $this->language->get('heading_title'),
+					'store'     => $store_data,
 					'install'   => $this->url->ssl('extension/theme/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'uninstall' => $this->url->ssl('extension/theme/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
-					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->ssl('theme/' . $extension . '', 'token=' . $this->session->data['token'], true)
+					'installed' => in_array($extension, $extensions)
 				);
 			}
 		}

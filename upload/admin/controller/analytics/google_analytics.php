@@ -97,7 +97,7 @@ class ControllerAnalyticsGoogleAnalytics extends Controller {
 		} else {
 			$data['google_analytics_status'] = $this->config->get('google_analytics_status');
 		}
-					
+		
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -114,7 +114,7 @@ class ControllerAnalyticsGoogleAnalytics extends Controller {
 		
 		foreach ($results as $result) {
 			if (!$this->request->post['google_analytics']) {
-				$this->error['code'][] = $this->language->get('error_code');
+				$this->error['code'][$result['store_id']] = $this->language->get('error_code');
 			}			
 		}
 

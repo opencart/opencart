@@ -41,6 +41,20 @@
               </div>
             </div>
           </fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+            <div class="col-sm-10">
+              <select name="google_analytics[<?php echo $store['store_id']; ?>][status]" id="input-status" class="form-control">
+                <?php if (isset($google_analytics[$store['store_id']]) ? $google_analytics[$store['store_id']]['status'] : false) { ?>
+                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                <option value="0"><?php echo $text_disabled; ?></option>
+                <?php } else { ?>
+                <option value="1"><?php echo $text_enabled; ?></option>
+                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
           <?php } ?>
           <hr />
           <div class="form-group">

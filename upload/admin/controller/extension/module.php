@@ -164,7 +164,7 @@ class ControllerExtensionModule extends Controller {
 				foreach ($modules as $module) {
 					$module_data[] = array(
 						'module_id' => $module['module_id'],
-						'name'      => $this->language->get('heading_title') . ' &gt; ' . $module['name'],
+						'name'      => ' - - - ' . $module['name'],
 						'edit'      => $this->url->ssl('module/' . $extension, 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], true),
 						'delete'    => $this->url->ssl('extension/module/delete', 'token=' . $this->session->data['token'] . '&module_id=' . $module['module_id'], true)
 					);

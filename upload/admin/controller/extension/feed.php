@@ -128,7 +128,7 @@ class ControllerExtensionFeed extends Controller {
 					'install'   => $this->url->ssl('extension/feed/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'uninstall' => $this->url->ssl('extension/feed/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->ssl('feed/' . $extension . '', 'token=' . $this->session->data['token'], true)
+					'edit'      => $this->url->ssl('feed/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}

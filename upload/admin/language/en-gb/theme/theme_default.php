@@ -11,7 +11,6 @@ $_['text_image']                       = 'Image Sizes';
 $_['text_general']                     = 'General';
 
 // Entry
-$_['entry_directory']                  = 'Theme Directory';
 $_['entry_product_limit']              = 'Default Items Per Page';
 $_['entry_product_description_length'] = 'List Description Limit';
 $_['entry_image_category']             = 'Category Image Size (W x H)';
@@ -26,12 +25,13 @@ $_['entry_image_cart']                 = 'Cart Image Size (W x H)';
 $_['entry_image_location']             = 'Store Image Size (W x H)';
 $_['entry_width']                      = 'Width';
 $_['entry_height']                     = 'Height';
+$_['entry_directory']                  = 'Theme Directory';
 $_['entry_status']                     = 'Status';
 
 // Help
-$_['help_directory'] 	               = 'This field is only for older themes that rely on the settings page to contain the image size settings';
 $_['help_product_limit'] 	           = 'Determines how many catalog items are shown per page (products, categories, etc)';
 $_['help_product_description_length']  = 'In the list view, short description character limit (categories, special etc)';
+$_['help_directory'] 	               = 'This field is only to enable older themes compatibility with the new theme system. You can set the theme directory to use on the image size settings defined here.';
 
 // Error
 $_['error_permission']                 = 'Warning: You do not have permission to modify the default store theme!';

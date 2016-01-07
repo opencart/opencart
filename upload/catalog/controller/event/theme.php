@@ -8,7 +8,7 @@ class ControllerEventTheme extends Controller {
 		if (is_file(DIR_TEMPLATE . $this->config->get('config_theme') . '/template/' . $view . '.tpl')) {
 			$view = $this->config->get('config_theme') . '/template/' . $view;
 		} else {
-			$view = 'theme_default/template/' . $view;
+			$view = 'default/template/' . $view;
 		}
 	}
 }

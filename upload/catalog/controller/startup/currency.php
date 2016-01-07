@@ -12,7 +12,7 @@ class ControllerStartupCurrency extends Controller {
 			$code = $this->session->data['currency'];
 		}
 		
-		if (isset($this->request->cookie['currency']) && in_array($code, $currencies)) {
+		if (isset($this->request->cookie['currency']) && !in_array($code, $currencies)) {
 			$code = $this->request->cookie['currency'];
 		}
 		

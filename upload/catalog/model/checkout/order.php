@@ -805,6 +805,5 @@ class ModelCheckoutOrder extends Model {
 			$mail->setText($message);
 			$mail->send();
 		}
-		
 	}
 }

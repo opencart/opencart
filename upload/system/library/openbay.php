@@ -275,7 +275,7 @@ final class Openbay {
 			}
 		}
 
-		if(isset($order_voucher_query) && is_array($order_voucher_query)) {
+		if (isset($order_voucher_query) && is_array($order_voucher_query)) {
 			foreach ($order_voucher_query->rows as $voucher) {
 				$text .= '1x ' . $voucher['description'] . ' ' . $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']);
 			}

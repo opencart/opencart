@@ -6,8 +6,12 @@ $_['heading_title']                    = 'Default Store Theme';
 $_['text_theme']                       = 'Themes';
 $_['text_success']                     = 'Success: You have modified the default store theme!';
 $_['text_edit']                        = 'Edit Default Store Theme';
+$_['text_product']                     = 'Product';
+$_['text_image']                       = 'Image Sizes';
+$_['text_general']                     = 'General';
 
 // Entry
+$_['entry_directory']                  = 'Theme Directory';
 $_['entry_product_limit']              = 'Default Items Per Page';
 $_['entry_product_description_length'] = 'List Description Limit';
 $_['entry_image_category']             = 'Category Image Size (W x H)';
@@ -25,6 +29,7 @@ $_['entry_height']                     = 'Height';
 $_['entry_status']                     = 'Status';
 
 // Help
+$_['help_directory'] 	               = 'This field is only for older themes that rely on the settings page to contain the image size settings';
 $_['help_product_limit'] 	           = 'Determines how many catalog items are shown per page (products, categories, etc)';
 $_['help_product_description_length']  = 'In the list view, short description character limit (categories, special etc)';
 

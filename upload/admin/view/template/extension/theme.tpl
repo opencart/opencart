@@ -50,7 +50,7 @@
               <?php if ($extension['installed']) { ?>
               <?php foreach ($extension['store'] as $store) { ?>
               <tr>
-                <td class="text-left"><?php echo $store['name']; ?></td>
+                <td class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $store['name']; ?></td>
                 <td class="text-left"><?php echo $store['status'] ?></td>
                 <td class="text-right"><a href="<?php echo $store['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>

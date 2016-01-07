@@ -47,10 +47,6 @@ class ControllerExtensionTotal extends Controller {
 		if ($this->validate()) {
 			$this->model_extension_extension->uninstall('total', $this->request->get['extension']);
 
-			$this->load->model('setting/setting');
-
-			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
-
 			$this->load->controller('total/' . $this->request->get['extension'] . '/uninstall');
 
 			$this->session->data['success'] = $this->language->get('text_success');

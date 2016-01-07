@@ -48,10 +48,6 @@ class ControllerExtensionTheme extends Controller {
 		if ($this->validate()) {
 			$this->model_extension_extension->uninstall('theme', $this->request->get['extension']);
 
-			$this->load->model('setting/setting');
-
-			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
-
 			// Call uninstall method if it exsits
 			$this->load->controller('theme/' . $this->request->get['extension'] . '/uninstall');
 
@@ -129,7 +125,7 @@ class ControllerExtensionTheme extends Controller {
 				$store_data = array();
 				
 				$store_data[] = array(
-					'name'   => ' --- ' . $this->config->get('config_name'),
+					'name'   => $this->config->get('config_name'),
 					'edit'   => $this->url->ssl('theme/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=0', true),
 					'status' => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
 				);

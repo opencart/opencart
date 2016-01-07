@@ -48,10 +48,6 @@ class ControllerExtensionFeed extends Controller {
 		if ($this->validate()) {
 			$this->model_extension_extension->uninstall('feed', $this->request->get['extension']);
 
-			$this->load->model('setting/setting');
-
-			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
-
 			// Call uninstall method if it exsits
 			$this->load->controller('feed/' . $this->request->get['extension'] . '/uninstall');
 

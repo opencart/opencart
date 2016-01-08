@@ -204,7 +204,7 @@ class ControllerPaymentEway extends Controller {
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/eway.tpl', $data));
+		$this->response->setOutput($this->load->view('payment/eway', $data));
 	}
 
 	public function install() {
@@ -216,7 +216,7 @@ class ControllerPaymentEway extends Controller {
 		$this->load->model('payment/eway');
 		$this->model_payment_eway->uninstall();
 	}
-	
+
 	// Legacy 2.0.0
 	public function orderAction() {
 		return $this->order();
@@ -226,7 +226,7 @@ class ControllerPaymentEway extends Controller {
 	public function action() {
 		return $this->order();
 	}
-	
+
 	public function order() {
 		if ($this->config->get('eway_status')) {
 			$this->load->model('payment/eway');
@@ -274,7 +274,7 @@ class ControllerPaymentEway extends Controller {
 				$data['token'] = $this->request->get['token'];
 				$data['order_id'] = $this->request->get['order_id'];
 
-				return $this->load->view('payment/eway_order.tpl', $data);
+				return $this->load->view('payment/eway_order', $data);
 			}
 		}
 	}

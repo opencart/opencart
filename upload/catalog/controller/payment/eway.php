@@ -46,6 +46,8 @@ class ControllerPaymentEway extends Controller {
 		$this->load->model('checkout/order');
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
+		$order_info['currency_code'] = 'GBP';
+
 		$amount = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
 
 		if ($this->config->get('eway_test')) {
@@ -136,13 +138,13 @@ class ControllerPaymentEway extends Controller {
 		$request->CustomerIP = $this->request->server['REMOTE_ADDR'];
 
 		$this->load->model('payment/eway');
-		$template = 'eway.tpl';
+		$template = 'eway';
 		if ($this->config->get('eway_paymode') == 'iframe') {
 			$request->CancelUrl = 'http://www.example.org';
 			$request->CustomerReadOnly = true;
 			$result = $this->model_payment_eway->getSharedAccessCode($request);
 
-			$template = 'eway_iframe.tpl';
+			$template = 'eway_iframe';
 		} else {
 			$result = $this->model_payment_eway->getAccessCode($request);
 		}
@@ -169,11 +171,7 @@ class ControllerPaymentEway extends Controller {
 		    $data['AccessCode'] = $result->AccessCode;
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/' . $template)) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/' . $template, $data);
-		} else {
-			return $this->load->view('default/template/payment/' . $template, $data);
-		}
+		return $this->load->view('payment/'. $template, $data);
 	}
 
 	public function callback() {

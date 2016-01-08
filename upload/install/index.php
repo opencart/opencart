@@ -24,4 +24,4 @@ require_once(DIR_SYSTEM . 'startup.php');
 $application_config = 'install';
 
 // Application
-require_once(DIR_SYSTEM . 'application.php');
+require_once(DIR_SYSTEM . 'framework.php');

@@ -5,10 +5,17 @@ class ControllerEventTheme extends Controller {
 			exit('Error: A theme has not been assigned to this store!');
 		}
 		
-		if (is_file(DIR_TEMPLATE . $this->config->get('config_theme') . '/template/' . $view . '.tpl')) {
-			$view = $this->config->get('config_theme') . '/template/' . $view;
+		// This is only here for compatibility with old themes.
+		if ($this->config->get('config_theme') == 'theme_default') {
+			$directory = $this->config->get('theme_default_directory');
+		} else {
+			$directory = $this->config->get('config_theme');
+		}
+
+		if (is_file(DIR_TEMPLATE . $directory . '/template/' . $view . '.tpl')) {
+			$view = $directory . '/template/' . $view;
 		} else {
 			$view = 'default/template/' . $view;
-		}
+		}			
 	}
 }

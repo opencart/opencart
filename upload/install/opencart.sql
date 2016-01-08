@@ -3239,13 +3239,14 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (303, 0, 'theme_default', 'theme_default_image_related_height', '80', 0),
 (304, 0, 'theme_default', 'theme_default_image_compare_width', '90', 0),
 (305, 0, 'theme_default', 'theme_default_image_compare_height', '90', 0),
-(306, 0, 'theme_default', 'theme_default_image_wishlist_width', '47', 0);
+(306, 0, 'theme_default', 'theme_default_image_wishlist_width', '47', 0),
 (307, 0, 'theme_default', 'theme_default_image_wishlist_height', '47', 0),
 (308, 0, 'theme_default', 'theme_default_image_cart_height', '47', 0),
 (309, 0, 'theme_default', 'theme_default_image_cart_width', '47', 0),
 (310, 0, 'theme_default', 'theme_default_image_location_height', '50', 0),
 (311, 0, 'theme_default', 'theme_default_image_location_width', '268', 0),
-(312, 0, 'theme_default', 'theme_default_status', '1', 0);
+(312, 0, 'theme_default', 'theme_default_directory', 'default', 0),
+(313, 0, 'theme_default', 'theme_default_status', '1', 0);
 
 -- --------------------------------------------------------
 

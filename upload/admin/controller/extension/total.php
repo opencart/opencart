@@ -47,10 +47,6 @@ class ControllerExtensionTotal extends Controller {
 		if ($this->validate()) {
 			$this->model_extension_extension->uninstall('total', $this->request->get['extension']);
 
-			$this->load->model('setting/setting');
-
-			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
-
 			$this->load->controller('total/' . $this->request->get['extension'] . '/uninstall');
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -132,7 +128,7 @@ class ControllerExtensionTotal extends Controller {
 					'install'   => $this->url->ssl('extension/total/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'uninstall' => $this->url->ssl('extension/total/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->ssl('total/' . $extension . '', 'token=' . $this->session->data['token'], true)
+					'edit'      => $this->url->ssl('total/' . $extension, 'token=' . $this->session->data['token'], true)
 				);
 			}
 		}

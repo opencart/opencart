@@ -9,6 +9,8 @@ class ControllerSettingStore extends Controller {
 
 		$this->load->model('setting/store');
 
+		$this->load->model('setting/setting');
+
 		$this->getList();
 	}
 
@@ -63,9 +65,9 @@ class ControllerSettingStore extends Controller {
 
 		$this->load->model('setting/store');
 
-		$this->load->model('setting/setting');
-
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
+			$this->load->model('setting/setting');
+			
 			foreach ($this->request->post['selected'] as $store_id) {
 				$this->model_setting_store->deleteStore($store_id);
 
@@ -410,12 +412,10 @@ class ControllerSettingStore extends Controller {
 		foreach ($extensions as $code) {
 			$this->load->language('theme/' . $code);
 			
-			if ($this->config->get($code . '_status')) {
-				$data['themes'][] = array(
-					'text'  => $this->language->get('heading_title'),
-					'value' => $code
-				);
-			}
+			$data['themes'][] = array(
+				'text'  => $this->language->get('heading_title'),
+				'value' => $code
+			);
 		}
 
 		if (isset($this->request->post['config_layout_id'])) {
@@ -577,22 +577,6 @@ class ControllerSettingStore extends Controller {
 		$this->load->model('localisation/currency');
 
 		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
-
-		if (isset($this->request->post['config_product_limit'])) {
-			$data['config_product_limit'] = $this->request->post['config_product_limit'];
-		} elseif (isset($store_info['config_product_limit'])) {
-			$data['config_product_limit'] = $store_info['config_product_limit'];
-		} else {
-			$data['config_product_limit'] = '15';
-		}
-
-		if (isset($this->request->post['config_product_description_length'])) {
-			$data['config_product_description_length'] = $this->request->post['config_product_description_length'];
-		} elseif (isset($store_info['config_product_description_length'])) {
-			$data['config_product_description_length'] = $store_info['config_product_description_length'];
-		} else {
-			$data['config_product_description_length'] = '100';
-		}
 
 		if (isset($this->request->post['config_tax'])) {
 			$data['config_tax'] = $this->request->post['config_tax'];

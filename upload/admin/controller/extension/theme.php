@@ -48,10 +48,6 @@ class ControllerExtensionTheme extends Controller {
 		if ($this->validate()) {
 			$this->model_extension_extension->uninstall('theme', $this->request->get['extension']);
 
-			$this->load->model('setting/setting');
-
-			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
-
 			// Call uninstall method if it exsits
 			$this->load->controller('theme/' . $this->request->get['extension'] . '/uninstall');
 
@@ -112,6 +108,10 @@ class ControllerExtensionTheme extends Controller {
 			}
 		}
 
+		$this->load->model('setting/store');
+
+		$stores = $this->model_setting_store->getStores();
+
 		$data['extensions'] = array();
 
 		$files = glob(DIR_APPLICATION . 'controller/theme/*.php');
@@ -119,16 +119,31 @@ class ControllerExtensionTheme extends Controller {
 		if ($files) {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
-
+				
 				$this->load->language('theme/' . $extension);
-
+					
+				$store_data = array();
+				
+				$store_data[] = array(
+					'name'   => $this->config->get('config_name'),
+					'edit'   => $this->url->ssl('theme/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=0', true),
+					'status' => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
+				);
+									
+				foreach ($stores as $store) {
+					$store_data[] = array(
+						'name'   => $store['name'],
+						'edit'   => $this->url->ssl('theme/' . $extension, 'token=' . $this->session->data['token'] . '&store_id=' . $store['store_id'], true),
+						'status' => $this->model_setting_setting->getSetting($extension . '_status', $store['store_id']) ? $this->language->get('text_enabled') : $this->language->get('text_disabled')
+					);
+				}
+				
 				$data['extensions'][] = array(
-					'name'      => $this->language->get('heading_title') . (($extension == $this->config->get('config_theme')) ? $this->language->get('text_default') : null),
-					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+					'name'      => $this->language->get('heading_title'),
 					'install'   => $this->url->ssl('extension/theme/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'uninstall' => $this->url->ssl('extension/theme/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, true),
 					'installed' => in_array($extension, $extensions),
-					'edit'      => $this->url->ssl('theme/' . $extension . '', 'token=' . $this->session->data['token'], true)
+					'store'     => $store_data
 				);
 			}
 		}

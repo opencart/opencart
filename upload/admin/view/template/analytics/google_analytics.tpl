@@ -28,21 +28,15 @@
           <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_signup; ?>
             <button type="button" class="close" data-dismiss="alert">&times;</button>
           </div>
-          <?php foreach ($stores as $store) { ?>
-          <fieldset>
-            <legend><?php echo $store['name']; ?></legend>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-code"><?php echo $entry_code; ?></label>
-              <div class="col-sm-10">
-                <textarea name="google_analytics[<?php echo $store['store_id']; ?>][code]" rows="5" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control"><?php echo (isset($google_analytics[$store['store_id']]) ? $google_analytics[$store['store_id']]['code'] : ''); ?></textarea>
-                <?php if ($error_code) { ?>
-                <div class="text-danger"><?php echo $error_code; ?></div>
-                <?php } ?>
-              </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-code"><?php echo $entry_code; ?></label>
+            <div class="col-sm-10">
+              <textarea name="google_analytics_code" rows="5" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control"><?php echo $google_analytics_code; ?></textarea>
+              <?php if ($error_code) { ?>
+              <div class="text-danger"><?php echo $error_code; ?></div>
+              <?php } ?>
             </div>
-          </fieldset>
-          <?php } ?>
-          <hr />
+          </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
             <div class="col-sm-10">

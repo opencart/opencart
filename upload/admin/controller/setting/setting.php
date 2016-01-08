@@ -417,12 +417,10 @@ class ControllerSettingSetting extends Controller {
 		foreach ($extensions as $code) {
 			$this->load->language('theme/' . $code);
 			
-			if ($this->config->get($code . '_status')) {
-				$data['themes'][] = array(
-					'text'  => $this->language->get('heading_title'),
-					'value' => $code
-				);
-			}
+			$data['themes'][] = array(
+				'text'  => $this->language->get('heading_title'),
+				'value' => $code
+			);
 		}
 			
 		if (isset($this->request->post['config_layout_id'])) {

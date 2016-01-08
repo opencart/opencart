@@ -1,6 +1,5 @@
 <?php
 class ControllerPaymentEway extends Controller {
-
 	public function index() {
 		$this->load->language('payment/eway');
 
@@ -163,15 +162,15 @@ class ControllerPaymentEway extends Controller {
 		if (isset($lbl_error)) {
 			$data['error'] = $lbl_error;
 		} else {
-		    if ($this->config->get('eway_paymode') == 'iframe') {
-			$data['callback'] = $this->url->link('payment/eway/callback', 'AccessCode=' . $result->AccessCode, 'SSL');
-			$data['SharedPaymentUrl'] = $result->SharedPaymentUrl;
-		    }
-		    $data['action'] = $result->FormActionURL;
-		    $data['AccessCode'] = $result->AccessCode;
+			if ($this->config->get('eway_paymode') == 'iframe') {
+				$data['callback'] = $this->url->link('payment/eway/callback', 'AccessCode=' . $result->AccessCode, 'SSL');
+				$data['SharedPaymentUrl'] = $result->SharedPaymentUrl;
+			}
+			$data['action'] = $result->FormActionURL;
+			$data['AccessCode'] = $result->AccessCode;
 		}
 
-		return $this->load->view('payment/'. $template, $data);
+		return $this->load->view('payment/' . $template, $data);
 	}
 
 	public function callback() {
@@ -290,4 +289,5 @@ class ControllerPaymentEway extends Controller {
 			}
 		}
 	}
+
 }

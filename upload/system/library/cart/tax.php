@@ -122,8 +122,4 @@ final class Tax {
 
 		return $tax_rate_data;
 	}
-
-	public function has($tax_class_id) {
-		return isset($this->tax_rates[$tax_class_id]);
-	}
 }

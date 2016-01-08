@@ -7,7 +7,11 @@ class ControllerStartupLanguage extends Controller {
 		
 		$languages = $this->model_localisation_language->getLanguages();
 		
-		if (isset($this->request->cookie['language'])) {
+		if (isset($this->session->data['currency'])) {
+			$code = $this->session->data['currency'];
+		}
+				
+		if (isset($this->request->cookie['language']) && !in_array($code, $languages)) {
 			$code = $this->request->cookie['language'];
 		}
 		
@@ -28,6 +32,10 @@ class ControllerStartupLanguage extends Controller {
 			$code = $this->config->get('config_language');
 		}
 		
+		if (!isset($this->session->data['language']) || $this->session->data['language'] != $code) {
+			$this->session->data['language'] = $code;
+		}
+				
 		if (!isset($this->request->cookie['language']) || $this->request->cookie['language'] != $code) {
 			setcookie('language', $code, time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
 		}

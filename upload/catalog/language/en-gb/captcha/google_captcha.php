@@ -1,6 +1,6 @@
 <?php
-// Heading
-$_['heading_title'] = 'Captcha';
+// Text
+$_['text_captcha'] = 'Captcha';
 
 // Entry
 $_['entry_captcha'] = 'Please complete the captcha validation below';

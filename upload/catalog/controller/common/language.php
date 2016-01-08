@@ -7,7 +7,7 @@ class ControllerCommonLanguage extends Controller {
 
 		$data['action'] = $this->url->link('common/language/language', '', $this->request->server['HTTPS']);
 
-		$data['code'] = $this->request->cookie['language'];
+		$data['code'] = $this->session->data['language'];
 
 		$this->load->model('localisation/language');
 
@@ -47,7 +47,7 @@ class ControllerCommonLanguage extends Controller {
 
 	public function language() {
 		if (isset($this->request->post['code'])) {
-			setcookie('language', $this->request->post['code'], time() + 60 * 60 * 24 * 30, '/', $this->request->server['HTTP_HOST']);
+			$this->session->data['language'] = $this->request->post['code'];
 		}
 
 		if (isset($this->request->post['redirect'])) {

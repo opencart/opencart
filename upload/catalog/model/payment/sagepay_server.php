@@ -73,8 +73,8 @@ class ModelPaymentSagePayServer extends Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "sagepay_server_order` SET `order_id` = '" . (int)$order_info['order_id'] . "', `customer_id` = '" . (int)$this->customer->getId() . "', `VPSTxId` = '" . $this->db->escape($order_info['VPSTxId']) . "',  `VendorTxCode` = '" . $this->db->escape($order_info['VendorTxCode']) . "', `SecurityKey` = '" . $this->db->escape($order_info['SecurityKey']) . "', `date_added` = now(), `date_modified` = now(), `currency_code` = '" . $this->db->escape($order_info['currency_code']) . "', `total` = '" . $this->currency->format($order_info['total'], $order_info['currency_code'], false, false) . "'");
 	}
 
-	public function getOrder($order_id, $VPSTxId = null) {
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "sagepay_server_order` WHERE `order_id` = '" . (int)$order_id . "' OR `VPSTxId` = '" . $this->db->escape($VPSTxId) . "' LIMIT 1");
+	public function getOrder($order_id, $vpstx_id = null) {
+		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "sagepay_server_order` WHERE `order_id` = '" . (int)$order_id . "' OR `VPSTxId` = '" . $this->db->escape($vpstx_id) . "' LIMIT 1");
 
 		if ($qry->num_rows) {
 			$order = $qry->row;

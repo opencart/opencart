@@ -130,9 +130,9 @@ class ControllerPaymentSagepayServer extends Controller {
 
 		$order_products = $this->model_account_order->getOrderProducts($this->session->data['order_id']);
 		$cart_rows = 0;
-		$strBasket = "";
+		$str_basket = "";
 		foreach ($order_products as $product) {
-			$strBasket .=
+			$str_basket .=
 					":" . str_replace(":", " ", $product['name'] . " " . $product['model']) .
 					":" . $product['quantity'] .
 					":" . $this->currency->format($product['price'], $order_info['currency_code'], false, false) .
@@ -144,12 +144,12 @@ class ControllerPaymentSagepayServer extends Controller {
 
 		$order_totals = $this->model_account_order->getOrderTotals($this->session->data['order_id']);
 		foreach ($order_totals as $total) {
-			$strBasket .= ":" . str_replace(":", " ", $total['title']) . ":::::" . $this->currency->format($total['value'], $order_info['currency_code'], false, false);
+			$str_basket .= ":" . str_replace(":", " ", $total['title']) . ":::::" . $this->currency->format($total['value'], $order_info['currency_code'], false, false);
 			$cart_rows++;
 		}
-		$strBasket = $cart_rows . $strBasket;
+		$str_basket = $cart_rows . $str_basket;
 
-		$payment_data['Basket'] = $strBasket;
+		$payment_data['Basket'] = $str_basket;
 
 		$payment_data['CustomerEMail'] = substr($order_info['email'], 0, 255);
 		$payment_data['Apply3DSecure'] = '0';

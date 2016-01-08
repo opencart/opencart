@@ -1,5 +1,6 @@
 <?php
 class ControllerPaymentEway extends Controller {
+
 	private $error = array();
 
 	public function index() {
@@ -290,7 +291,7 @@ class ControllerPaymentEway extends Controller {
 			$result = $this->model_payment_eway->refund($order_id, $refund_amount);
 
 			// Check if any error returns
-			if (isset($result->Errors) || $result === false ) {
+			if (isset($result->Errors) || $result === false) {
 				$json['error'] = true;
 				$reason = '';
 				if ($result === false) {
@@ -304,7 +305,7 @@ class ControllerPaymentEway extends Controller {
 				$json['message'] = $this->config->get('text_refund_failed') . $reason;
 			} else {
 				$eway_order = $this->model_payment_eway->getOrder($order_id);
-				$this->model_payment_eway->addTransaction($eway_order['eway_order_id'], $result->Refund->TransactionID, 'refund', $result->Refund->TotalAmount/100, $eway_order['currency_code']);
+				$this->model_payment_eway->addTransaction($eway_order['eway_order_id'], $result->Refund->TransactionID, 'refund', $result->Refund->TotalAmount / 100, $eway_order['currency_code']);
 
 				$total_captured = $this->model_payment_eway->getTotalCaptured($eway_order['eway_order_id']);
 				$total_refunded = $this->model_payment_eway->getTotalRefunded($eway_order['eway_order_id']);
@@ -346,7 +347,7 @@ class ControllerPaymentEway extends Controller {
 			$result = $this->model_payment_eway->capture($order_id, $capture_amount, $eway_order['currency_code']);
 
 			// Check if any error returns
-			if (isset($result->Errors) || $result === false ) {
+			if (isset($result->Errors) || $result === false) {
 				$json['error'] = true;
 				$reason = '';
 				if ($result === false) {
@@ -407,4 +408,5 @@ class ControllerPaymentEway extends Controller {
 
 		return !$this->error;
 	}
+
 }

@@ -25,7 +25,7 @@ final class Front {
 			}
 		}
 
-		while ($action) {
+		while ($action instanceof Action) {
 			$action = $this->execute($action);
 		}
 	}

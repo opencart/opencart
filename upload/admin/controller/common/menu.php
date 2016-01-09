@@ -208,6 +208,15 @@ class ControllerCommonMenu extends Controller {
 			'amazonus' => $this->config->get('openbay_amazonus_status'),
 			'etsy' => $this->config->get('etsy_status'),
 		);
+		
+		//Adding access info so we can hide links that user don't have access
+		$this->load->model('user/user_group');
+		$this->load->model('user/user');
+
+		$user_info = $this->model_user_user->getUser($this->session->data['user_id']);
+		$user_group_info = $this->model_user_user_group->getUserGroup($user_info['user_group_id']);
+		
+		$data['user_group_info'] = $user_group_info;
 
 		return $this->load->view('common/menu', $data);
 	}

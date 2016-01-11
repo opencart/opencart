@@ -173,13 +173,6 @@ final class Loader {
 			}
 			
 			if ($route == 'checkout/order/addOrderHistory') {
-				//$test = array();
-				
-				//$test[] = &$route;
-				
-				//$test = array_merge($test, $args);
-				
-				//$test[] = &$output;
 				//$registry->get('log')->write('hi');
 				$registry->get('log')->write(array_merge(array(&$route), $args, array(&$output)));
 			}

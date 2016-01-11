@@ -316,7 +316,7 @@ class ControllerSaleOrder extends Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$data['store'] = HTTPS_CATALOG;
+		$data['store_url'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
 
 		// API login
 		$this->load->model('user/api');
@@ -481,6 +481,7 @@ class ControllerSaleOrder extends Controller {
 		if (!empty($order_info)) {
 			$data['order_id'] = $this->request->get['order_id'];
 			$data['store_id'] = $order_info['store_id'];
+			$data['store_url'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
 
 			$data['customer'] = $order_info['customer'];
 			$data['customer_id'] = $order_info['customer_id'];
@@ -569,6 +570,8 @@ class ControllerSaleOrder extends Controller {
 		} else {
 			$data['order_id'] = 0;
 			$data['store_id'] = '';
+			$data['store_url'] = $this->request->server['HTTPS'] ? HTTPS_CATALOG : HTTP_CATALOG;
+			
 			$data['customer'] = '';
 			$data['customer_id'] = '';
 			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
@@ -630,7 +633,6 @@ class ControllerSaleOrder extends Controller {
 		$data['stores'][] = array(
 			'store_id' => 0,
 			'name'     => $this->language->get('text_default'),
-			'href'     => HTTP_CATALOG
 		);
 
 		$results = $this->model_setting_store->getStores();
@@ -638,8 +640,7 @@ class ControllerSaleOrder extends Controller {
 		foreach ($results as $result) {
 			$data['stores'][] = array(
 				'store_id' => $result['store_id'],
-				'name'     => $result['name'],
-				'href'     => $result['url']
+				'name'     => $result['name']
 			);
 		}
 
@@ -1728,25 +1729,25 @@ class ControllerSaleOrder extends Controller {
 				}
 
 				$data['orders'][] = array(
-					'order_id'	         => $order_id,
-					'invoice_no'         => $invoice_no,
-					'date_added'         => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
-					'store_name'         => $order_info['store_name'],
-					'store_url'          => rtrim($order_info['store_url'], '/'),
-					'store_address'      => nl2br($store_address),
-					'store_email'        => $store_email,
-					'store_telephone'    => $store_telephone,
-					'store_fax'          => $store_fax,
-					'email'              => $order_info['email'],
-					'telephone'          => $order_info['telephone'],
-					'shipping_address'   => $shipping_address,
-					'shipping_method'    => $order_info['shipping_method'],
-					'payment_address'    => $payment_address,
-					'payment_method'     => $order_info['payment_method'],
-					'product'            => $product_data,
-					'voucher'            => $voucher_data,
-					'total'              => $total_data,
-					'comment'            => nl2br($order_info['comment'])
+					'order_id'	       => $order_id,
+					'invoice_no'       => $invoice_no,
+					'date_added'       => date($this->language->get('date_format_short'), strtotime($order_info['date_added'])),
+					'store_name'       => $order_info['store_name'],
+					'store_url'        => rtrim($order_info['store_url'], '/'),
+					'store_address'    => nl2br($store_address),
+					'store_email'      => $store_email,
+					'store_telephone'  => $store_telephone,
+					'store_fax'        => $store_fax,
+					'email'            => $order_info['email'],
+					'telephone'        => $order_info['telephone'],
+					'shipping_address' => $shipping_address,
+					'shipping_method'  => $order_info['shipping_method'],
+					'payment_address'  => $payment_address,
+					'payment_method'   => $order_info['payment_method'],
+					'product'          => $product_data,
+					'voucher'          => $voucher_data,
+					'total'            => $total_data,
+					'comment'          => nl2br($order_info['comment'])
 				);
 			}
 		}

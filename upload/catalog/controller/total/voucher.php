@@ -64,8 +64,8 @@ class ControllerTotalVoucher extends Controller {
 
 			if ($voucher_query->num_rows) {
 				// Send out any gift voucher mails
-				$language = new Language($order_info['language_directory']);
-				$language->load($order_info['language_directory']);
+				$language = new Language($order_info['language_code']);
+				$language->load($order_info['language_code']);
 				$language->load('mail/voucher');
 
 				foreach ($voucher_query->rows as $voucher) {

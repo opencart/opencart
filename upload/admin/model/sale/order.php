@@ -4,14 +4,6 @@ class ModelSaleOrder extends Model {
 		$order_query = $this->db->query("SELECT *, (SELECT CONCAT(c.firstname, ' ', c.lastname) FROM " . DB_PREFIX . "customer c WHERE c.customer_id = o.customer_id) AS customer FROM `" . DB_PREFIX . "order` o WHERE o.order_id = '" . (int)$order_id . "'");
 
 		if ($order_query->num_rows) {
-			$reward = 0;
-
-			$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
-
-			foreach ($order_product_query->rows as $product) {
-				$reward += $product['reward'];
-			}
-
 			$country_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE country_id = '" . (int)$order_query->row['payment_country_id'] . "'");
 
 			if ($country_query->num_rows) {
@@ -48,6 +40,14 @@ class ModelSaleOrder extends Model {
 				$shipping_zone_code = '';
 			}
 
+			$reward = 0;
+
+			$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+
+			foreach ($order_product_query->rows as $product) {
+				$reward += $product['reward'];
+			}
+			
 			if ($order_query->row['affiliate_id']) {
 				$affiliate_id = $order_query->row['affiliate_id'];
 			} else {
@@ -72,10 +72,8 @@ class ModelSaleOrder extends Model {
 
 			if ($language_info) {
 				$language_code = $language_info['code'];
-				$language_directory = $language_info['directory'];
 			} else {
-				$language_code = '';
-				$language_directory = '';
+				$language_code = $this->config->get('config_language');
 			}
 
 			return array(
@@ -140,7 +138,6 @@ class ModelSaleOrder extends Model {
 				'commission'              => $order_query->row['commission'],
 				'language_id'             => $order_query->row['language_id'],
 				'language_code'           => $language_code,
-				'language_directory'      => $language_directory,
 				'currency_id'             => $order_query->row['currency_id'],
 				'currency_code'           => $order_query->row['currency_code'],
 				'currency_value'          => $order_query->row['currency_value'],

@@ -8,7 +8,9 @@ class ControllerStartupSetting extends Controller {
 			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "store WHERE REPLACE(`url`, 'www.', '') = '" . $this->db->escape('http://' . str_replace('www.', '', $_SERVER['HTTP_HOST']) . rtrim(dirname($_SERVER['PHP_SELF']), '/.\\') . '/') . "'");
 		}
 		
-		if ($query->num_rows) {
+		if (isset($this->request->get['store_id'])) {
+			$this->config->set('config_store_id', $this->request->get['store_id']);
+		} else if ($query->num_rows) {
 			$this->config->set('config_store_id', $query->row['store_id']);
 		} else {
 			$this->config->set('config_store_id', 0);

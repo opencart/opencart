@@ -252,7 +252,7 @@ class ControllerPaymentSagepayServer extends Controller {
 
 			$void_response = $this->model_payment_sagepay_server->void($this->request->post['order_id']);
 
-			$this->model_payment_sagepay_server->logger('Void result:\r\n' . print_r($void_response, 1));
+			$this->model_payment_sagepay_server->logger('Void result', $void_response);
 
 			if ($void_response['Status'] == 'OK') {
 				$this->model_payment_sagepay_server->addTransaction($sagepay_server_order['sagepay_server_order_id'], 'void', 0.00);
@@ -287,7 +287,7 @@ class ControllerPaymentSagepayServer extends Controller {
 
 			$release_response = $this->model_payment_sagepay_server->release($this->request->post['order_id'], $this->request->post['amount']);
 
-			$this->model_payment_sagepay_server->logger('Release result:\r\n' . print_r($release_response, 1));
+			$this->model_payment_sagepay_server->logger('Release result', $release_response);
 
 			if ($release_response['Status'] == 'OK') {
 				$this->model_payment_sagepay_server->addTransaction($sagepay_server_order['sagepay_server_order_id'], 'payment', $this->request->post['amount']);
@@ -333,7 +333,7 @@ class ControllerPaymentSagepayServer extends Controller {
 
 			$rebate_response = $this->model_payment_sagepay_server->rebate($this->request->post['order_id'], $this->request->post['amount']);
 
-			$this->model_payment_sagepay_server->logger('Rebate result:\r\n' . print_r($rebate_response, 1));
+			$this->model_payment_sagepay_server->logger('Rebate result', $rebate_response);
 
 			if ($rebate_response['Status'] == 'OK') {
 				$this->model_payment_sagepay_server->addTransaction($sagepay_server_order['sagepay_server_order_id'], 'rebate', $this->request->post['amount'] * -1);

@@ -35,8 +35,6 @@ class ControllerAffiliateRegister extends Controller {
 			$this->response->redirect($this->url->link('affiliate/success'));
 		}
 
-		$this->load->language('affiliate/register');
-
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(

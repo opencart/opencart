@@ -16,4 +16,3 @@ $_['action.pre_action'] = array(
 	'startup/upgrade',
 	'startup/database'
 );
-$_['action.event']      = array();

@@ -18,7 +18,6 @@ $registry->set('request', new Request());
 // Response
 $response = new Response();
 $response->addHeader('Content-Type: text/html; charset=utf-8');
-$response->setCompression($config->get('config_compression'));
 $registry->set('response', $response);
 
 // Database
@@ -103,4 +102,5 @@ if ($config->has('action.pre_action')) {
 $controller->dispatch(new Action($config->get('action.router')), new Action($config->get('action.error')));
 
 // Output
+$response->setCompression($config->get('config_compression'));
 $response->output();

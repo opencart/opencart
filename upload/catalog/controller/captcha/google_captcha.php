@@ -3,7 +3,7 @@ class ControllerCaptchaGoogleCaptcha extends Controller {
     public function index($error = array()) {
         $this->load->language('captcha/google_captcha');
 
-        $data['heading_title'] = $this->language->get('heading_title');
+		$data['text_captcha'] = $this->language->get('text_captcha');
 
 		$data['entry_captcha'] = $this->language->get('entry_captcha');
 

@@ -18,13 +18,16 @@
 			<div id="card-existing">
 				<div class="form-group required">
 					<label class="col-sm-2 control-label" for="Token"><?php echo $entry_cc_choice; ?></label>
-					<div class="col-sm-10">
+					<div class="col-sm-8">
 						<select name="Token" class="form-control">
 							<?php foreach ($cards as $card) { ?>
 								<option value="<?php echo $card['token']; ?>"><?php echo $text_card_type . ' ' . $card['type']; ?>, <?php echo $text_card_digits . ' ' . $card['digits']; ?>, <?php echo $text_card_expiry . ' ' . $card['expiry']; ?></option>
 							<?php } ?>
 						</select>
 					</div>
+					<div class="col-sm-2">
+			  <input type="button" value="<?php echo $button_delete_card; ?>" id="button-delete" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-danger" />
+			</div>
 				</div>
 			</div>
 			<div style="display:none" id="card-save" class="form-group">
@@ -116,4 +119,41 @@
 			}
 		});
 	});
+//--></script>
+<script type="text/javascript"><!--
+    $('#button-delete').bind('click', function () {
+      if (confirm('<?php echo $text_confirm_delete; ?>')) {
+        $.ajax({
+          url: 'index.php?route=payment/sagepay_server/delete',
+          type: 'post',
+          data: $('#card-existing :input[name=\'Token\']'),
+          dataType: 'json',
+          beforeSend: function () {
+            $('#button-delete').button('loading');
+          },
+          complete: function () {
+            $('#button-delete').button('reset');
+          },
+          success: function (json) {
+            if (json['error']) {
+              alert(json['error']);
+            }
+
+            if (json['success']) {
+              $.ajax({
+                url: 'index.php?route=checkout/confirm',
+                dataType: 'html',
+                success: function (html) {
+                  $('#collapse-checkout-confirm .panel-body').html(html);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                  alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+              });
+            }
+
+          }
+        });
+      }
+    });
 //--></script>

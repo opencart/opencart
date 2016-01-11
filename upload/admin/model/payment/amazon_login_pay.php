@@ -406,7 +406,7 @@ class ModelPaymentAmazonLoginPay extends Model {
 		if ($this->config->get('amazon_login_pay_debug') == 1) {
 			$log = new Log('amazon_login_pay.log');
 			$backtrace = debug_backtrace();
-			$log->write('Origin: ' . $backtrace[1]['class'] . '::' . $backtrace[1]['function']);
+			$log->write('Origin: ' . $backtrace[6]['class'] . '::' . $backtrace[6]['function']);
 			$log->write(print_r($message, 1));
 		}
 	}

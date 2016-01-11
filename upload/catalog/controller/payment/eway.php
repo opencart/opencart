@@ -124,7 +124,7 @@ class ControllerPaymentEway extends Controller {
 		$request->Payment->InvoiceReference = (string)substr($this->config->get('config_name'), 0, 40) . ' - #' . $order_info['order_id'];
 		$request->Payment->CurrencyCode = $order_info['currency_code'];
 
-		$request->RedirectUrl = $this->url->link('payment/eway/callback', '', 'SSL');
+		$request->RedirectUrl = $this->url->link('payment/eway/callback', '', true);
 		if ($this->config->get('eway_transaction_method') == 'auth') {
 			$request->Method = 'Authorise';
 		} else {
@@ -161,7 +161,7 @@ class ControllerPaymentEway extends Controller {
 			$data['error'] = $lbl_error;
 		} else {
 			if ($this->config->get('eway_paymode') == 'iframe') {
-				$data['callback'] = $this->url->link('payment/eway/callback', 'AccessCode=' . $result->AccessCode, 'SSL');
+				$data['callback'] = $this->url->link('payment/eway/callback', 'AccessCode=' . $result->AccessCode, true);
 				$data['SharedPaymentUrl'] = $result->SharedPaymentUrl;
 			}
 			$data['action'] = $result->FormActionURL;
@@ -224,10 +224,10 @@ class ControllerPaymentEway extends Controller {
 
 			if ($is_error) {
 				if ($fraud) {
-					$this->response->redirect($this->url->link('checkout/failure', '', 'SSL'));
+					$this->response->redirect($this->url->link('checkout/failure', '', true));
 				} else {
 					$this->session->data['error'] = $this->language->get('text_transaction_failed');
-					$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
+					$this->response->redirect($this->url->link('checkout/checkout', '', true));
 				}
 			} else {
 				$order_id = $result->Options[0]->Value;
@@ -283,7 +283,7 @@ class ControllerPaymentEway extends Controller {
 					$this->model_payment_eway->addFullCard($this->session->data['order_id'], $card_data);
 				}
 
-				$this->response->redirect($this->url->link('checkout/success', '', 'SSL'));
+				$this->response->redirect($this->url->link('checkout/success', '', true));
 			}
 		}
 	}

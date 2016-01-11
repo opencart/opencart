@@ -25,6 +25,7 @@ $_['entry_order_status']				 = 'Order Status';
 $_['entry_complete_status']				 = 'Complete Status:';
 $_['entry_rejected_status']				 = 'Rejected Status:';
 $_['entry_cancelled_status']			 = 'Canceled Status:';
+$_['entry_pending_status']               = 'Pending Status:';
 $_['entry_refunded_status']				 = 'Refunded Status:';
 $_['entry_partially_refunded_status']	 = 'Partially Refunded Status:';
 

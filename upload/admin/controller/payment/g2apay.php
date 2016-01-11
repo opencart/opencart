@@ -37,6 +37,7 @@ class ControllerPaymentG2APay extends Controller {
 		$data['entry_complete_status'] = $this->language->get('entry_complete_status');
 		$data['entry_rejected_status'] = $this->language->get('entry_rejected_status');
 		$data['entry_cancelled_status'] = $this->language->get('entry_cancelled_status');
+		$data['entry_pending_status'] = $this->language->get('entry_pending_status');
 		$data['entry_refunded_status'] = $this->language->get('entry_refunded_status');
 		$data['entry_partially_refunded_status'] = $this->language->get('entry_partially_refunded_status');
 
@@ -106,6 +107,12 @@ class ControllerPaymentG2APay extends Controller {
 			$data['g2apay_cancelled_status_id'] = $this->request->post['g2apay_cancelled_status_id'];
 		} else {
 			$data['g2apay_cancelled_status_id'] = $this->config->get('g2apay_cancelled_status_id');
+		}
+
+		if (isset($this->request->post['g2apay_pending_status_id'])) {
+			$data['g2apay_pending_status_id'] = $this->request->post['g2apay_pending_status_id'];
+		} else {
+			$data['g2apay_pending_status_id'] = $this->config->get('g2apay_pending_status_id');
 		}
 
 		if (isset($this->request->post['g2apay_refunded_status_id'])) {

@@ -14,27 +14,27 @@
 			  <?php if ($payment_type['visa'] == 1 || $payment_type['mastercard'] == 1 || $payment_type['diners'] == 1 || $payment_type['jcb'] == 1 || $payment_type['amex'] == 1) { ?>
 				  <label><input type="radio" name="EWAY_PAYMENTTYPE" id="eway-radio-cc" value="creditcard" checked="checked" onchange="javascript:select_eWAYPaymentOption('creditcard')" />
 					<?php if ($payment_type['visa'] == 1) { ?>
-						<img src="catalog/view/theme/theme_default/image/eway_creditcard_visa.png" height="30" alt="Visa" />
+						<img src="catalog/view/theme/default/image/eway_creditcard_visa.png" height="30" alt="Visa" />
 					<?php } ?>
 					<?php if ($payment_type['mastercard'] == 1) { ?>
-						<img src="catalog/view/theme/theme_default/image/eway_creditcard_master.png" height="30" alt="MasterCard" />
+						<img src="catalog/view/theme/default/image/eway_creditcard_master.png" height="30" alt="MasterCard" />
 					<?php } ?>
 					<?php if ($payment_type['diners'] == 1) { ?>
-						<img src="catalog/view/theme/theme_default/image/eway_creditcard_diners.png" height="30" alt="Diners Club" />
+						<img src="catalog/view/theme/default/image/eway_creditcard_diners.png" height="30" alt="Diners Club" />
 					<?php } ?>
 					<?php if ($payment_type['jcb'] == 1) { ?>
-						<img src="catalog/view/theme/theme_default/image/eway_creditcard_jcb.png" height="30" alt="JCB" />
+						<img src="catalog/view/theme/default/image/eway_creditcard_jcb.png" height="30" alt="JCB" />
 					<?php } ?>
 					<?php if ($payment_type['amex'] == 1) { ?>
-						<img src="catalog/view/theme/theme_default/image/eway_creditcard_amex.png" height="30" alt="AMEX" />
+						<img src="catalog/view/theme/default/image/eway_creditcard_amex.png" height="30" alt="AMEX" />
 					<?php } ?>
 				  </label>
 			  <?php } ?>
 			  <?php if ($payment_type['paypal'] == 1) { ?>
-				  <label><input type="radio" name="EWAY_PAYMENTTYPE" value="paypal" onchange="javascript:select_eWAYPaymentOption(paypal)" /> <img src="catalog/view/theme/theme_default/image/eway_paypal.png" height="30" alt="'.$text_card_type_pp.'" /></label> ';
+				  <label><input type="radio" name="EWAY_PAYMENTTYPE" value="paypal" onchange="javascript:select_eWAYPaymentOption(paypal)" /> <img src="catalog/view/theme/default/image/eway_paypal.png" height="30" alt="'.$text_card_type_pp.'" /></label> ';
 			  <?php } ?>
 			  <?php if ($payment_type['masterpass'] == 1) { ?>
-				  <label><input type="radio" name="EWAY_PAYMENTTYPE" value="masterpass" onchange="javascript:select_eWAYPaymentOption(masterpass)" /> <img src="catalog/view/theme/theme_default/image/eway_masterpass.png" height="30" alt="'.$text_card_type_mp.'" /></label> ';
+				  <label><input type="radio" name="EWAY_PAYMENTTYPE" value="masterpass" onchange="javascript:select_eWAYPaymentOption(masterpass)" /> <img src="catalog/view/theme/default/image/eway_masterpass.png" height="30" alt="'.$text_card_type_mp.'" /></label> ';
 			  <?php } ?>
 			</ul>
 		  </div>

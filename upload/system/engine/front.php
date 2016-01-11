@@ -8,41 +8,42 @@ final class Front {
 		$this->registry = $registry;
 	}
 	
-	public function addPreAction($pre_action) {
+	public function addPreAction(Action $pre_action) {
 		$this->pre_action[] = $pre_action;
 	}
 	
-	public function dispatch($action, $error) {
+	public function dispatch(Action $action, Action $error) {
 		$this->error = $error;
 
 		foreach ($this->pre_action as $pre_action) {
 			$result = $this->execute($pre_action);
 
-			if ($result) {
+			if ($result instanceof Action) {
 				$action = $result;
 
 				break;
 			}
 		}
 
-		while ($action) {
+		while ($action instanceof Action) {
 			$action = $this->execute($action);
 		}
 	}
 
-	private function execute($action) {
+	private function execute(Action $action) {
 		$result = $action->execute($this->registry);
 
-		if (is_object($result)) {
-			$action = $result;
-		} elseif ($result === false) {
+		if ($result instanceof Action) {
+			return $result;
+		} 
+		
+		if ($result === false) {
 			$action = $this->error;
-
-			$this->error = '';
-		} else {
-			$action = '';	
+			$this->error = null;
+			
+			return $action;
 		}
-
-		return $action;
+		
+		return null;
 	}
 }

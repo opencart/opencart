@@ -45,8 +45,6 @@ class ControllerPaymentEway extends Controller {
 		$this->load->model('checkout/order');
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		$order_info['currency_code'] = 'GBP';
-
 		$amount = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
 
 		if ($this->config->get('eway_test')) {

@@ -7,7 +7,6 @@ class ControllerEventDebug extends Controller {
 			//$args['order_id']
 			//$args['data']['name']
 			//$args['data']['name']
-			
 		}
 	}
 }

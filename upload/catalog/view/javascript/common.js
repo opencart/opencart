@@ -85,7 +85,6 @@ $(document).ready(function() {
 	$('#list-view').click(function() {
 		$('#content .product-grid > .clearfix').remove();
 
-		//$('#content .product-layout').attr('class', 'product-layout product-list col-xs-12');
 		$('#content .row > .product-grid').attr('class', 'product-layout product-list col-xs-12');
 
 		localStorage.setItem('display', 'list');
@@ -104,7 +103,7 @@ $(document).ready(function() {
 			$('#content .product-list').attr('class', 'product-layout product-grid col-lg-3 col-md-3 col-sm-6 col-xs-12');
 		}
 
-		 localStorage.setItem('display', 'grid');
+		localStorage.setItem('display', 'grid');
 	});
 
 	if (localStorage.getItem('display') == 'list') {

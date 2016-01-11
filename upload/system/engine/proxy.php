@@ -12,7 +12,7 @@ class Proxy {
 		} else {
 			$trace = debug_backtrace();
 
-			throw new \Exception('Error in: <b>' . $trace[1]['file'] . '</b> line <b>' . $trace[1]['line'] . '</b><br />' . $sql);
+			throw new \Exception('Error in: ' . $trace[0]['file'] . ' line ' . $trace[0]['line'] . '!');
 		}
 	}
 }

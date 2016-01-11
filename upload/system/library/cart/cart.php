@@ -168,9 +168,7 @@ class Cart {
 				// Product Discounts
 				$discount_quantity = 0;
 
-				$cart_2_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "cart WHERE customer_id = '" . (int)$this->customer->getId() . "' AND session_id = '" . $this->db->escape($this->session->getId()) . "'");
-
-				foreach ($cart_2_query->rows as $cart_2) {
+				foreach ($cart_query->rows as $cart_2) {
 					if ($cart_2['product_id'] == $cart['product_id']) {
 						$discount_quantity += $cart_2['quantity'];
 					}

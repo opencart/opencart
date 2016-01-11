@@ -77,7 +77,7 @@
             </div>
           </div>
         </div>
-        <form method="post" enctype="multipart/form-data" target="_blank" id="form-order">
+        <form method="post" action="" enctype="multipart/form-data" target="_blank" id="form-order">
           <div class="table-responsive">
             <table class="table table-bordered table-hover">
               <thead>
@@ -236,6 +236,11 @@ $('input[name^=\'selected\']').on('change', function() {
 });
 
 $('input[name^=\'selected\']:first').trigger('change');
+
+// IE and Edge fix!
+$('#button-shipping, #button-invoice').on('click', function(e) {
+	$('#form-order').attr('action', this.getAttribute('formAction'));
+});
 
 $(document).delegate('#button-ip-add', 'click', function() {
 	$.ajax({

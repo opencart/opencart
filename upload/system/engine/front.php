@@ -37,13 +37,12 @@ final class Front {
 			return $result;
 		} 
 		
-		if ($result === false) {
+		if ($result instanceof Exception) {
 			$action = $this->error;
+			
 			$this->error = null;
 			
 			return $action;
 		}
-		
-		return null;
 	}
 }

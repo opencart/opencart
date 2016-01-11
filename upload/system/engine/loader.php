@@ -13,7 +13,7 @@ final class Loader {
 		// Trigger the pre events
 		$result = $this->registry->get('event')->trigger('controller/' . $route . '/before', array(&$route, &$data));
 		
-		if (!is_null($result)) {
+		if ($result) {
 			return $result;
 		}
 		
@@ -21,9 +21,9 @@ final class Loader {
 		$output = $action->execute($this->registry, array(&$data));
 			
 		// Trigger the post events
-		$result = $this->registry->get('event')->trigger('controller/' . $route . '/after', array(&$output));
+		$result = $this->registry->get('event')->trigger('controller/' . $route . '/after', array(&$route, &$data, &$output));
 		
-		if (!is_null($result)) {
+		if ($result) {
 			return $result;
 		}
 		
@@ -43,7 +43,7 @@ final class Loader {
 			$proxy = new Proxy();
 
 			foreach (get_class_methods($class) as $method) {
-				$proxy->attach($method, $this->closure($this->registry, $route . '/' . $method));
+				$proxy->attach($method, $this->callback($this->registry, $route . '/' . $method));
 			}
 
 			$this->registry->set('model_' . str_replace(array('/', '-', '.'), array('_', '', ''), (string)$route), $proxy);
@@ -59,7 +59,7 @@ final class Loader {
 		// Trigger the pre events
 		$result = $this->registry->get('event')->trigger('view/' . $route . '/before', array(&$route, &$data));
 		
-		if (!is_null($result)) {
+		if ($result) {
 			return $result;
 		}
 		
@@ -72,9 +72,9 @@ final class Loader {
 		$output = $template->render($route . '.tpl');
 		
 		// Trigger the post e
-		$result = $this->registry->get('event')->trigger('view/' . $route . '/after', array(&$output));
+		$result = $this->registry->get('event')->trigger('view/' . $route . '/after', array(&$route, &$data, &$output));
 		
-		if (!is_null($result)) {
+		if ($result) {
 			return $result;
 		}
 		
@@ -123,12 +123,12 @@ final class Loader {
 		$this->registry->get('event')->trigger('language/' . $route . '/after', $route);
 	}
 	
-	protected function closure($registry, $route) {
-		return function($args) use($registry, $route) {
+	protected function callback($registry, $route) {
+		return function($args) use($registry, &$route) {
 			// Trigger the pre events
-			$result = $registry->get('event')->trigger('model/' . $route . '/before', array(&$route, &$args));
+			$result = $registry->get('event')->trigger('model/' . $route . '/before', array(&$route, $args));
 			
-			if (!is_null($result)) {
+			if ($result) {
 				return $result;
 			}
 			
@@ -144,19 +144,46 @@ final class Loader {
 				throw new \Exception('Error: Could not load model ' . substr($route, 0, strrpos($route, '/')) . '!');
 			}
 			
-			if (method_exists($model, $method)) {			
+			if (method_exists($model, $method)) {
 				$output = call_user_func_array(array($model, $method), $args);
 			} else {
-				throw new \Exception('Error: Could not call model model/' . $route . '!');
+				throw new \Exception('Error: Could not call model/' . $route . '!');
 			}
 			
+			if ($route == 'checkout/order/addOrderHistory') {
+				//$registry->get('log')->write('hi');
+				
+				//$test = array();
+				
+				//$test[] = &$route;
+				
+				//$test = array_merge($test, $args);
+				
+				//$test[] = &$output;
+				
+				//$registry->get('log')->write('after');
+				//$registry->get('log')->write($test);
+			}
+													
 			// Trigger the post events
-			$result = $registry->get('event')->trigger('model/' . $route . '/after', array(&$output));
+			$result = $registry->get('event')->trigger('model/' . $route . '/after', array_merge(array(&$route), $args, array(&$output)));
 			
-			if (!is_null($result)) {
+			if ($result) {
 				return $result;
 			}
 			
+			if ($route == 'checkout/order/addOrderHistory') {
+				//$test = array();
+				
+				//$test[] = &$route;
+				
+				//$test = array_merge($test, $args);
+				
+				//$test[] = &$output;
+				//$registry->get('log')->write('hi');
+				$registry->get('log')->write(array_merge(array(&$route), $args, array(&$output)));
+			}
+						
 			return $output;
 		};
 	}	

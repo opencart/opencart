@@ -14,7 +14,7 @@ class ControllerStartupRouter extends Controller {
 		$route = str_replace('../', '', (string)$route);
 		
 		// Trigger the pre events
-		$result = $this->event->trigger('controller/' . $route . '/before', array(&$route, $data));
+		$result = $this->event->trigger('controller/' . $route . '/before', array(&$route, &$data));
 		
 		if (!is_null($result)) {
 			return $result;
@@ -23,11 +23,11 @@ class ControllerStartupRouter extends Controller {
 		// We dont want to use the loader class as it would make an controller callable.
 		$action = new Action($route);
 		
-		// Any output needs to be another Action object. 
+		// Any output needs to be another Action object.
 		$output = $action->execute($this->registry); 
 		
 		// Trigger the post events
-		$result = $this->event->trigger('controller/' . $route . '/after', array(&$output));
+		$result = $this->event->trigger('controller/' . $route . '/after', array(&$route, &$data, &$output));
 		
 		if (!is_null($result)) {
 			return $result;

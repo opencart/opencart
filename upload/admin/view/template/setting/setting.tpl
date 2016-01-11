@@ -68,7 +68,7 @@
                 <div class="col-sm-10">
                   <select name="config_theme" id="input-theme" class="form-control">
                     <?php foreach ($themes as $theme) { ?>
-                    <?php if ($theme['code'] == $config_theme) { ?>
+                    <?php if ($theme['value'] == $config_theme) { ?>
                     <option value="<?php echo $theme['value']; ?>" selected="selected"><?php echo $theme['text']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $theme['value']; ?>"><?php echo $theme['text']; ?></option>
@@ -1164,7 +1164,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-mail-smtp-password"><?php echo $entry_mail_smtp_password; ?></label>
+                <label class="col-sm-2 control-label" for="input-mail-smtp-password"><span data-toggle="tooltip" title="<?php echo $help_mail_smtp_password; ?>"><?php echo $entry_mail_smtp_password; ?></span></label>
                 <div class="col-sm-10">
                   <input type="text" name="config_mail_smtp_password" value="<?php echo $config_mail_smtp_password; ?>" placeholder="<?php echo $entry_mail_smtp_password; ?>" id="input-mail-smtp-password" class="form-control" />
                 </div>

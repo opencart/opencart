@@ -1,16 +1,16 @@
 <?php
 // Site
-$_['site.base']            = substr(HTTP_SERVER, 7);
-$_['site.ssl']             = false;
+$_['site.base']        = substr(HTTP_SERVER, 7);
+$_['site.ssl']         = false;
 
 // Database
-$_['db.autostart']         = true;
-$_['db.type']              = DB_DRIVER; // mpdo, mssql, mysql, mysqli or postgre
-$_['db.hostname']          = DB_HOSTNAME;
-$_['db.username']          = DB_USERNAME;
-$_['db.password']          = DB_PASSWORD;
-$_['db.database']          = DB_DATABASE;
-$_['db.port']              = DB_PORT;
+$_['db.autostart']     = true;
+$_['db.type']          = DB_DRIVER; // mpdo, mssql, mysql, mysqli or postgre
+$_['db.hostname']      = DB_HOSTNAME;
+$_['db.username']      = DB_USERNAME;
+$_['db.password']      = DB_PASSWORD;
+$_['db.database']      = DB_DATABASE;
+$_['db.port']          = DB_PORT;
 
 // Autoload Libraries
 $_['library.autoload'] = array(
@@ -41,7 +41,6 @@ $_['action.pre_action'] = array(
 
 // Action Events
 $_['action.event'] = array(
-	'view/*/before'                            => 'event/theme',
-	'model/account/customer/addCustomer/after' => 'mail/account',
-	'model/checkout/order/addOrder/after'      => 'mail/order'
+	'view/*/before' => 'event/theme',
+	//'model/*/after' => 'event/debug',
 );

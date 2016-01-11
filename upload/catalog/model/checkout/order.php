@@ -240,7 +240,7 @@ class ModelCheckoutOrder extends Model {
 
 	public function addOrderHistory($order_id, $order_status_id, $comment = '', $notify = false, $override = false) {
 		$order_info = $this->getOrder($order_id);
-
+		
 		if ($order_info) {
 			// Fraud Detection
 			$this->load->model('account/customer');

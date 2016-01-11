@@ -645,7 +645,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	public function doBulkSearch() {
 		$this->load->model('catalog/product');
 		$this->load->model('openbay/amazonus_listing');
-		$this->load->language('openbay/amazonus_bulk');
+		$this->load->language('openbay/amazonus_bulk_listing');
 
 		$json = array();
 		$search_data = array();

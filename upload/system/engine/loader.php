@@ -126,7 +126,7 @@ final class Loader {
 	protected function callback($registry, $route) {
 		return function($args) use($registry, &$route) {
 			// Trigger the pre events
-			$result = $registry->get('event')->trigger('model/' . $route . '/before', array_merge(array(&$route), $args));
+			$result = $registry->get('event')->trigger('model/' . $route . '/before', array(&$route, $args));
 			
 			if ($result) {
 				return $result;
@@ -149,32 +149,14 @@ final class Loader {
 			} else {
 				throw new \Exception('Error: Could not call model/' . $route . '!');
 			}
-			
-			if ($route == 'checkout/order/addOrderHistory') {
-				//$registry->get('log')->write('hi');
-				
-				//$test = array();
-				
-				//$test[] = &$route;
-				
-				//$test = array_merge($test, $args);
-				
-				//$test[] = &$output;
-				
-				//$registry->get('log')->write('after');
-				//$registry->get('log')->write($test);
-			}
 													
 			// Trigger the post events
-			$result = $registry->get('event')->trigger('model/' . $route . '/after', array_merge(array(&$route), $args, array(&$output)));
+			$result = $registry->get('event')->trigger('model/' . $route . '/after', array(&$route, $args, &$output));
 			
 			if ($result) {
+				$this->log->write('hi');
+				
 				return $result;
-			}
-			
-			if ($route == 'checkout/order/addOrderHistory') {
-				//$registry->get('log')->write('hi');
-				$registry->get('log')->write(array_merge(array(&$route), $args, array(&$output)));
 			}
 						
 			return $output;

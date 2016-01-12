@@ -12,7 +12,7 @@ class ControllerCommonStats extends Controller {
 		$order_total = $this->model_sale_order->getTotalOrders();
 
 		$complete_total = $this->model_sale_order->getTotalOrders(array('filter_order_status' => implode(',', $this->config->get('config_complete_status'))));
-
+		
 		if ($complete_total) {
 			$data['complete_status'] = round(($complete_total / $order_total) * 100);
 		} else {

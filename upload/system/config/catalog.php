@@ -42,5 +42,6 @@ $_['action.pre_action'] = array(
 // Action Events
 $_['action.event'] = array(
 	'view/*/before' => 'event/theme',
-	//'model/*/after' => 'event/debug',
+	'model/*/after' => 'event/debug',
+	//'model/*/after' => 'event/debug'
 );

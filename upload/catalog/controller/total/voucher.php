@@ -53,7 +53,9 @@ class ControllerTotalVoucher extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function send($order_id) {
+	public function send($route, $output, $order_id, $order_status_id) {
+		$this->log->write(array($route, $output));
+
 		$this->load->model('checkout/order');
 
 		$order_info = $this->model_checkout_order->getOrder($order_id);

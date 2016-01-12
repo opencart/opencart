@@ -57,7 +57,7 @@ class ControllerAccountSagepayDirectCards extends Controller {
 
 		if ($this->config->get('sagepay_direct_card')) {
 			$data['cards'] = $this->model_payment_sagepay_direct->getCards($this->customer->getId());
-			$data['delete'] = $this->url->link('account/sagepay_direct_cards/delete', 'card_id=', 'SSL');
+			$data['delete'] = $this->url->link('account/sagepay_direct_cards/delete', 'card_id=', true);
 
 			if (isset($this->request->get['page'])) {
 				$page = $this->request->get['page'];
@@ -71,7 +71,7 @@ class ControllerAccountSagepayDirectCards extends Controller {
 			$pagination->total = $cards_total;
 			$pagination->page = $page;
 			$pagination->limit = 10;
-			$pagination->url = $this->url->link('account/sagepay_direct_cards', 'page={page}', 'SSL');
+			$pagination->url = $this->url->link('account/sagepay_direct_cards', 'page={page}', true);
 
 			$data['pagination'] = $pagination->render();
 

@@ -1415,7 +1415,7 @@ CREATE TABLE `oc_event` (
 --
 
 INSERT INTO `oc_event` (`event_id`, `code`, `trigger`, `action`) VALUES
-(1, 'voucher', 'catalog/model/checkout/order/addHistory/after', 'total/voucher/send');
+(1, 'voucher', 'catalog/model/checkout/order/addOrderHistory/after', 'total/voucher/send');
 
 -- --------------------------------------------------------
 

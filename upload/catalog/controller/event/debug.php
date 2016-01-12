@@ -1,6 +1,6 @@
 <?php
 class ControllerEventDebug extends Controller {
-	public function index(&$route, $args, &$output) {
+	public function index(&$route, &$output) {
 		//$this->log->write(func_get_args());
 		
 		if ($route == 'checkout/order/addOrderHistory') {
